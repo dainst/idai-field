@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>Angular 2 QuickStart</title>
+
+    <link rel="stylesheet" type="text/css" href="css/idai-field-client.css">
+
+    <!-- 1. Load libraries -->
+    <script src="lib/idai-field-client-deps.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script>
+        System.config({
+            packages: {
+                app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('app/boot')
+                .then(null, console.error.bind(console));
+    </script>
+
+</head>
+
+<!-- 3. Display the application -->
+<body>
+<idai-field-client>Loading...</idai-field-client>
+</body>
+
+</html>

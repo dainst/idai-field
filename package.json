@@ -1,7 +1,12 @@
 {
   "name": "idai-field-client",
+  "description": "iDAI.field 2 Client",
   "version": "0.0.1",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codarchlab/idai-field-client.git"
+  },
   "dependencies": {
     "angular2": "2.0.0-beta.0",
     "systemjs": "0.19.6",

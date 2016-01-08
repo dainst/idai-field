@@ -48,11 +48,19 @@ gulp.task('copy-templates', function() {
 		.pipe(reload({ stream:true }));
 });
 
+gulp.task('copy-img', function() {
+
+	return gulp.src('src/img/**/*')
+		.pipe(gulp.dest(paths.build + '/img'))
+		.pipe(reload({ stream:true }));
+});
+
 gulp.task('build', [
 	'sass',
 	'compile-ts',
 	'copy-html',
 	'copy-templates',
+	'copy-img',
 	'copy-fonts',
 	'concat-deps'
 ]);
@@ -85,7 +93,7 @@ gulp.task('concat-deps', function() {
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-templates', 'concat-deps'], function() {
+gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps'], function() {
 
 	browserSync({
 		server: {
@@ -98,6 +106,7 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-templates', 'conca
 	gulp.watch('src/app/**/*.ts', ['compile-ts']);
 	gulp.watch('src/templates/**/*.html', ['copy-templates']);
 	gulp.watch('src/index.html', ['copy-html']);
+	gulp.watch('src/img/**/*', ['copy-img']);
 });
 
 gulp.task('default', function() {

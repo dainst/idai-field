@@ -1,0 +1,42 @@
+//
+// Variables
+// --------------------------------------------------
+
+//== Colors
+$brand-primary:         #37588e !default;
+
+//== Typography
+$font-family-sans-serif:  'Roboto', Helvetica, Arial, sans-serif;
+
+//== Media queries breakpoints
+$screen-xs:                  480px !default;
+$screen-sm:                  768px !default;
+$screen-md:                  992px !default;
+$screen-lg:                  1200px !default;
+
+//== Navbar
+$navbar-default-color:             #fff !default;
+$navbar-default-bg:                rgba(85, 114, 161, 0.9) !default;
+$navbar-default-border:            transparent !default;
+
+// Navbar links
+$navbar-default-link-color:                #fff !default;
+$navbar-default-link-hover-color:          #fff !default;
+$navbar-default-link-hover-bg:             lighten($navbar-default-bg, 10%) !default;
+$navbar-default-link-active-color:         #fff !default;
+$navbar-default-link-active-bg:            lighten($navbar-default-bg, 10%) !default;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           lighten($navbar-default-bg, 10%) !default;
+$navbar-default-toggle-border-color:       #ddd !default;
+$navbar-default-toggle-icon-bar-bg:        $navbar-default-toggle-border-color;
+
+//== Forms
+$input-border-focus:             lighten($brand-primary, 40%) !default;
+
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+// Bootstrap default: $grid-float-breakpoint:     $screen-sm-min !default;
+$grid-float-breakpoint:     $screen-md !default;
+//** Point at which the navbar begins collapsing.
+$grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;

@@ -1,2 +1,30 @@
-@import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
+@import "variables";
+@import "bootstrap";
+@import "navbar";
+@import "footer";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Footer height */
+  margin-bottom: 73px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#app {
+  margin-top: 60px;
+}
+
+#idaifieldlogo {
+  height: 35px;
+}

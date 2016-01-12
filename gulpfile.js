@@ -1,14 +1,13 @@
 var gulp = require('gulp');
 var del = require('del');
 var runSequence = require('run-sequence');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
 var modRewrite = require('connect-modrewrite');
+var electron = require('electron-connect').server.create();
 
 var pkg = require('./package.json');
 
@@ -26,8 +25,7 @@ gulp.task('sass', function() {
 	return gulp.src('src/scss/app.scss')
 	  	.pipe(sass({includePaths: [paths.bootstrap + 'stylesheets/'], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
-	    .pipe(gulp.dest(paths.build + '/css'))
-	    .pipe(reload({ stream:true }));
+	    .pipe(gulp.dest(paths.build + '/css'));
 });
 
 gulp.task('copy-fonts', function() {
@@ -38,22 +36,19 @@ gulp.task('copy-fonts', function() {
 gulp.task('copy-html', function() {
 
 	return gulp.src('src/index.html')
-		.pipe(gulp.dest(paths.build))
-		.pipe(reload({ stream:true }));
+		.pipe(gulp.dest(paths.build));
 });
 
 gulp.task('copy-templates', function() {
 
 	return gulp.src('src/templates/**/*.html')
-		.pipe(gulp.dest(paths.build + '/templates'))
-		.pipe(reload({ stream:true }));
+		.pipe(gulp.dest(paths.build + '/templates'));
 });
 
 gulp.task('copy-img', function() {
 
 	return gulp.src('src/img/**/*')
-		.pipe(gulp.dest(paths.build + '/img'))
-		.pipe(reload({ stream:true }));
+		.pipe(gulp.dest(paths.build + '/img'));
 });
 
 gulp.task('build', [
@@ -76,8 +71,7 @@ gulp.task('compile-ts', function () {
 	return gulp
 		.src('src/app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('dist/app'))
-		.pipe(reload({ stream:true }));
+		.pipe(gulp.dest('dist/app'));
 });
 
 gulp.task('concat-deps', function() {
@@ -97,16 +91,9 @@ gulp.task('concat-deps', function() {
 // runs the development server and sets up browser reloading
 gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps'], function() {
 
-	browserSync({
-		server: {
-		  baseDir: './dist',
-            middleware: [
-                // rewrite for AngularJS HTML5 mode, redirect all non-file urls to index.html
-                modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.gif|\\.json|\\.woff2|\\.woff|\\.ttf$ /index.html [L]']),
-            ]
-		},
-		port: 1235
-	});
+	electron.start();
+
+	gulp.watch('main.js', electron.restart);
 
 	gulp.watch('src/scss/**/*.scss', ['sass']);
 	gulp.watch('src/app/**/*.ts', ['compile-ts']);

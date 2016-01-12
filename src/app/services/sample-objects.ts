@@ -1,4 +1,4 @@
-import {IdaiFieldObject} from './model/idai-field-objects';
+import {IdaiFieldObject} from '../model/idai-field-objects';
 
 export var OBJECTS: IdaiFieldObject[] = [
     { "identifier": "ob1", "title": "Obi One Kenobi" },

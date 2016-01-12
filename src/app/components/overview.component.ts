@@ -1,5 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
 import {DatastoreService} from '../services/datastore.service';
+import {IdaiFieldObject} from '../model/idai-field-object';
 
 @Component({
     templateUrl: 'templates/overview.html',

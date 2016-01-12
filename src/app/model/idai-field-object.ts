@@ -1,4 +1,4 @@
-interface IdaiFieldObject {
-    identifier: number;
+export interface IdaiFieldObject {
+    identifier: string;
     title: string;
 }

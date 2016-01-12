@@ -1,1 +1,7 @@
 <div>Objects Overview</div>
+
+<ul>
+    <li *ngFor="#object of objects">
+        <span class="badge">{{object.identifier}}</span> {{object.title}}
+    </li>
+</ul>

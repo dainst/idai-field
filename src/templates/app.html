@@ -1,5 +1,50 @@
-<div class="row">
-    <div class="col-md-12">
-        <h1>iDAI.field 2.0</h1>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" [routerLink]="['Home']">iDAI.field 2.0</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a [routerLink]="['Overview']">Overview</a>
+                </li>
+            </ul>
+        </div>
     </div>
+</nav>
+
+<div class="container-fluid" id="app">
+
+    <div class="row">
+        <div class="col-md-12">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
 </div>
+
+<footer class="footer">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="http://www.dainst.de/">
+                    <img src="img/logo_dai.png" class="logoImage">
+                </a>
+                <a href="http://archaeologie.uni-koeln.de/">
+                    <img src="img/logo_unikoeln.png" class="logoImage">
+                </a>
+                <a href="http://archaeologie.uni-koeln.de/node/23">
+                    <img src="img/logo_codarchlab.png" class="logoImage">
+                </a>
+            </div>
+        </div>
+
+    </div>
+</footer>

@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
+var modRewrite = require('connect-modrewrite');
 
 var pkg = require('./package.json');
 
@@ -85,7 +86,8 @@ gulp.task('concat-deps', function() {
 			paths.lib + '/angular2/bundles/angular2-polyfills.js',
 			paths.lib + '/systemjs/dist/system.src.js',
 			paths.lib + '/rxjs/bundles/Rx.js',
-			paths.lib + '/angular2/bundles/angular2.dev.js'
+			paths.lib + '/angular2/bundles/angular2.dev.js',
+			paths.lib + '/angular2/bundles/router.dev.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		.pipe(uglify())
@@ -97,7 +99,11 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 
 	browserSync({
 		server: {
-		  baseDir: './dist'
+		  baseDir: './dist',
+            middleware: [
+                // rewrite for AngularJS HTML5 mode, redirect all non-file urls to index.html
+                modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.gif|\\.json|\\.woff2|\\.woff|\\.ttf$ /index.html [L]']),
+            ]
 		},
 		port: 1235
 	});

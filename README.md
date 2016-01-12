@@ -35,7 +35,8 @@ Any changes made to HTML, SCSS or JS files should automatically trigger a reload
 Build the iDAI.field 2 Client application by running
 
 ```
-gulp build
+gulp
 ```
 
-After building you find the application in the "dist"-directory. 
+After building you find packages of the application for different operating systems
+in the "release"-directory. 

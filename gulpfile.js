@@ -100,6 +100,10 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 	gulp.watch('src/templates/**/*.html', ['copy-templates']);
 	gulp.watch('src/index.html', ['copy-html']);
 	gulp.watch('src/img/**/*', ['copy-img']);
+
+	// TODO: get electron.reload working
+	gulp.watch('dist/**/*', electron.restart);
+
 });
 
 gulp.task('default', function() {

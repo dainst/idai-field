@@ -26,9 +26,9 @@ In order to run the frontend in the development server use the following command
 gulp server
 ```
 
-After that you should be able to access the frontend under [http://localhost:1235/](http://localhost:1235/).
+This should open the app in a separate window.
 
-Any changes made to HTML, SCSS or JS files should automatically trigger a browser reload.
+Any changes made to HTML, SCSS or JS files should automatically trigger a reload.
 
 ## Deployment
 

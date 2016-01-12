@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {DatastoreService} from './services/datastore.service';
+import {DatastoreService} from '../services/datastore.service';
 
 @Component({
     templateUrl: 'templates/overview.html',

@@ -5,7 +5,7 @@ import {OverviewComponent} from './overview.component';
 import {HomeComponent} from './home.component';
 
 @Component({
-    selector: 'idai-field-client',
+    selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
     directives: [RouterOutlet,RouterLink]
 })

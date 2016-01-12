@@ -7,17 +7,23 @@ var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
 var modRewrite = require('connect-modrewrite');
-var electron = require('electron-connect').server.create();
+var electronConnect = require('electron-connect');
+var electron = require('gulp-electron');
+var process = require('process');
 
 var pkg = require('./package.json');
 
 var paths = {
 	'build': 'dist/',
+	'release': 'release/',
+	'cache': 'cache/',
 	'lib': 'node_modules/',
 	'bootstrap': 'node_modules/bootstrap-sass/assets/'
 };
 
 const tscConfig = require('./tsconfig.json');
+
+var electronServer = electronConnect.server.create({path: paths.build});
 
 // compile sass and concatenate to single css file in build dir
 gulp.task('sass', function() {
@@ -63,7 +69,7 @@ gulp.task('build', [
 
 // clean
 gulp.task('clean', function() {
-	return del(paths.build + '/**/*');
+	return del([paths.build + '/**/*', paths.release + '/**/*']);
 });
 
 gulp.task('compile-ts', function () {
@@ -89,11 +95,11 @@ gulp.task('concat-deps', function() {
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps'], function() {
+gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps', 'prepare-package'], function() {
 
-	electron.start();
+	electronServer.start();
 
-	gulp.watch('main.js', electron.restart);
+	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
 
 	gulp.watch('src/scss/**/*.scss', ['sass']);
 	gulp.watch('src/app/**/*.ts', ['compile-ts']);
@@ -102,10 +108,45 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 	gulp.watch('src/img/**/*', ['copy-img']);
 
 	// TODO: get electron.reload working
-	gulp.watch('dist/**/*', electron.restart);
+	gulp.watch('dist/**/*', electronServer.restart);
+});
 
+// copy necessary files to dist in order for them to be included in package
+gulp.task('prepare-package', function() {
+	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
+})
+
+// builds an electron app package for different platforms
+gulp.task('package', ['build', 'prepare-package'], function() {
+ 
+    gulp.src("")
+	    .pipe(electron({
+	        src: paths.build,
+	        packageJson: pkg,
+	        release: paths.release,
+	        cache: paths.cache,
+	        version: 'v0.36.3',
+	        packaging: true,
+	        platforms: ['win32-ia32', 'darwin-x64'],
+	        platformResources: {
+	            darwin: {
+	                CFBundleDisplayName: pkg.name,
+	                CFBundleIdentifier: pkg.name,
+	                CFBundleName: pkg.name,
+	                CFBundleVersion: pkg.version,
+	                icon: 'dist/img/logo.icns'
+	            },
+	            win: {
+	                "version-string": pkg.version,
+	                "file-version": pkg.version,
+	                "product-version": pkg.version,
+	                "icon": 'dist/img/logo.ico'
+	            }
+	        }
+	    }))
+    .pipe(gulp.dest(""));
 });
 
 gulp.task('default', function() {
-	runSequence('clean', 'build');
+	runSequence('clean', 'package');
 });

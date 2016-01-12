@@ -27,6 +27,10 @@ build/Release
 node_modules
 
 dist
+release
+cache
 
 /.idea
 *iml
+
+.DS_Store

@@ -5,8 +5,6 @@ const electron = require('electron');
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-// module to control client
-const client = require('electron-connect').client;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +15,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 1200, height: 800});
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -29,8 +27,6 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-
-  client.create(mainWindow);
 }
 
 // This method will be called when Electron has finished

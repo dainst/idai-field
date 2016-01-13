@@ -111,7 +111,7 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 	gulp.watch('src/img/**/*', ['copy-img']);
 
 	// TODO: get electron.reload working
-	gulp.watch('dist/**/*', electronServer.restart);
+	gulp.watch('dist/**/*', electronServer.reload);
 });
 
 // copy necessary files to dist in order for them to be included in package

@@ -8,8 +8,11 @@ var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
 var modRewrite = require('connect-modrewrite');
 var electronConnect = require('electron-connect');
-var electron = require('gulp-electron');
 var process = require('process');
+var packager = require('electron-packager');
+var archiver = require('archiver');
+var fs = require('fs');
+var path = require('path');
 
 var pkg = require('./package.json');
 
@@ -119,32 +122,37 @@ gulp.task('prepare-package', function() {
 // builds an electron app package for different platforms
 gulp.task('package', ['build', 'prepare-package'], function() {
  
-    gulp.src("")
-	    .pipe(electron({
-	        src: paths.build,
-	        packageJson: pkg,
-	        release: paths.release,
-	        cache: paths.cache,
-	        version: 'v0.36.3',
-	        packaging: true,
-	        platforms: ['win32-ia32', 'darwin-x64'],
-	        platformResources: {
-	            darwin: {
-	                CFBundleDisplayName: pkg.name,
-	                CFBundleIdentifier: pkg.name,
-	                CFBundleName: pkg.name,
-	                CFBundleVersion: pkg.version,
-	                icon: 'dist/img/logo.icns'
-	            },
-	            win: {
-	                "version-string": pkg.version,
-	                "file-version": pkg.version,
-	                "product-version": pkg.version,
-	                "icon": 'dist/img/logo.ico'
-	            }
-	        }
-	    }))
-    .pipe(gulp.dest(""));
+	packager({
+		dir: paths.build,
+		name: pkg.name,
+		platform: ['win32', 'darwin'],
+		arch: 'all',
+		version: '0.36.3',
+		appBundleId: pkg.name,
+		appVersion: pkg.version,
+		buildVersion: pkg.version,
+		cache: paths.cache,
+		helperBundleId: pkg.name,
+		icon: 'dist/img/logo',
+		out: paths.release
+	}, function(err, appPath) {
+		if (err)
+			throw err;
+		
+		var folderPaths = appPath.toString().split(',');
+		for (var i in folderPaths) {
+			var fileName = folderPaths[i].substring(folderPaths[i].lastIndexOf(path.sep) + 1);
+    		var output = fs.createWriteStream(paths.release + '/' + fileName + '.zip');
+    		
+    		var archive = archiver('zip');
+    		archive.on('error', function(err) {
+  				throw err;
+			});
+    		archive.pipe(output);
+    		archive.directory(folderPaths[i], fileName, { 'name': fileName });
+    		archive.finalize();
+		}
+    });
 });
 
 gulp.task('default', function() {

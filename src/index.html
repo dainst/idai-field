@@ -32,11 +32,14 @@
 
 </head>
 
-<base href="./">
-
 <body>
 
     <idai-field-app>Loading...</idai-field-app>
+
+    <!-- build:remove -->
+    <!-- Connect to server process -->
+    <script>require('electron-connect').client.create()</script> 
+    <!-- end:build -->
 
 </body>
 

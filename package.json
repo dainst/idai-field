@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.6",
-    "connect-modrewrite": "^0.8.2",
     "del": "^2.2.0",
     "electron-connect": "^0.3.4",
     "electron-packager": "^5.2.0",

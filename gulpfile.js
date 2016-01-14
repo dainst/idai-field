@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
+var sourcemaps = require('gulp-sourcemaps');
 var modRewrite = require('connect-modrewrite');
 var electronConnect = require('electron-connect');
 var process = require('process');
@@ -79,13 +80,16 @@ gulp.task('compile-ts', function () {
 
 	return gulp
 		.src('src/app/**/*.ts')
+		//.pipe(sourcemaps.init())
 		.pipe(typescript(tscConfig.compilerOptions))
+		//.pipe(sourcemaps.write('dist/app/maps'))
 		.pipe(gulp.dest('dist/app'));
 });
 
 gulp.task('concat-deps', function() {
 
 	return gulp.src([
+			paths.lib + '/pouchdb/dist/pouchdb.js',
 			paths.lib + '/angular2/bundles/angular2-polyfills.js',
 			paths.lib + '/systemjs/dist/system.src.js',
 			paths.lib + '/rxjs/bundles/Rx.js',
@@ -98,7 +102,7 @@ gulp.task('concat-deps', function() {
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps', 'prepare-package'], function() {
+gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps', 'compile-ts', 'prepare-package'], function() {
 
 	electronServer.start();
 
@@ -117,7 +121,7 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 // copy necessary files to dist in order for them to be included in package
 gulp.task('prepare-package', function() {
 	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
-})
+});
 
 // builds an electron app package for different platforms
 gulp.task('package', ['build', 'prepare-package'], function() {

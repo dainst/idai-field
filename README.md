@@ -8,8 +8,7 @@ You need the following components in order for the local server to work:
 
 * [NodeJS](https://nodejs.org/download/)
 * [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
-
-To create Electron packages for MS Windows, [7-Zip](http://www.7-zip.de/download.html) is needed (be sure to add your local 7-Zip path to your environment (PATH) variables. 
+* Under MS Windows [7-Zip](http://www.7-zip.de/download.html) is needed to create [Electron](http://electron.atom.io) packages (be sure to add your local 7-Zip path to your environment (PATH) variables).
 
 ### Installation
 

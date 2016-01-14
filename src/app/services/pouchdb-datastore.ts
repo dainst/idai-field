@@ -13,10 +13,8 @@ export class PouchdbDatastore implements Datastore {
     constructor() {
 
         this.db = new PouchDB('objects');
-        /*
-        this.db.put({ "_id": "ob5", "title": "Obi Five Kenobi" });
-        this.db.put({ "_id": "ob6", "title": "Jar Jar Six" });
-        */
+        this.db.put({ "_id": "ob1", "title": "Obi One Kenobi" });
+        this.db.put({ "_id": "ob2", "title": "Jar Jar Two" });
     }
 
     getObjects(): Promise<IdaiFieldObject[]> {

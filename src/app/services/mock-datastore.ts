@@ -7,9 +7,9 @@ import {OBJECTS} from "./sample-objects";
 @Injectable()
 export class MockDatastore implements Datastore {
 
-    getObjects(): IdaiFieldObject[] {
+    getObjects(): Promise<IdaiFieldObject[]> {
 
-        return OBJECTS;
+        return Promise.resolve(OBJECTS);
     }
 
 }

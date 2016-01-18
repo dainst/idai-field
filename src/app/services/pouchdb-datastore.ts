@@ -19,16 +19,19 @@ export class PouchdbDatastore implements Datastore {
 
     getObjects(): Promise<IdaiFieldObject[]> {
 
-        return this.db.allDocs({
-            include_docs: true,
-            attachments: true
-        }).then(data => {
+        return new Promise<IdaiFieldObject[]>(resolve => {
+            this.db.allDocs({
+                include_docs: true,
+                attachments: true
+            }).then(data => {
 
-            var result: IdaiFieldObject[] = [];
-            for (var row of data.rows) {
-                result.push(row.doc);
-            }
-            return result;
+                var result:IdaiFieldObject[] = [];
+                for (var row of data.rows) {
+                    result.push(row.doc);
+                }
+                resolve(result);
+            });
         });
     }
+
 }

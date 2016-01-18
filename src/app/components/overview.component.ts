@@ -18,7 +18,7 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
 
-        this.datastore.getObjects().then((objects) => {
+        this.datastore.getObjects().then(objects => {
             this.objects = objects;
         });
     }

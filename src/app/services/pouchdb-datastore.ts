@@ -13,8 +13,16 @@ export class PouchdbDatastore implements Datastore {
     constructor() {
 
         this.db = new PouchDB('objects');
-        this.db.put({ "_id": "ob1", "title": "Obi One Kenobi" });
-        this.db.put({ "_id": "ob2", "title": "Jar Jar Two" });
+        this.loadSampleData();
+    }
+
+    loadSampleData(): void {
+        var promises = [];
+        for (var ob of OBJECTS) promises.push(this.db.put(ob));
+        Promise.all(promises).then(
+            () => console.log("Successfully stored sample objects in PouchDB"),
+            err => console.error("Problem when storing sample data in PouchDB", err)
+        );
     }
 
     getObjects(): Promise<IdaiFieldObject[]> {

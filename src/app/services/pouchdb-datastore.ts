@@ -17,6 +17,7 @@ export class PouchdbDatastore implements Datastore {
     }
 
     loadSampleData(): void {
+
         var promises = [];
         for (var ob of OBJECTS) promises.push(this.db.put(ob));
         Promise.all(promises).then(
@@ -25,9 +26,33 @@ export class PouchdbDatastore implements Datastore {
         );
     }
 
-    getObjects(): Promise<IdaiFieldObject[]> {
+    save(object:IdaiFieldObject):Promise<any> {
 
-        return new Promise<IdaiFieldObject[]>(resolve => {
+        return new Promise((resolve, reject) => {
+            this.db.put(object).then(data => resolve(data), err => reject(err));
+        });
+    }
+
+    get(id:string):Promise<IdaiFieldObject> {
+
+        return new Promise((resolve, reject) => {
+            this.db.get(id).then(data => resolve(data), err => reject(err));
+        });
+    }
+
+    find(query:string, options:any):Promise<IdaiFieldObject[]> {
+
+        // TODO implement based on allDocs() and intelligent id generation,
+        // using query() or using pouchdb-find plugin
+        // see: http://pouchdb.com/guides/queries.html
+        return new Promise(resolve => resolve([]));
+    }
+
+    all(options:any):Promise<IdaiFieldObject[]> {
+
+        // TODO implement query options
+
+        return new Promise<IdaiFieldObject[]>((resolve, reject) => {
             this.db.allDocs({
                 include_docs: true,
                 attachments: true
@@ -38,7 +63,7 @@ export class PouchdbDatastore implements Datastore {
                     result.push(row.doc);
                 }
                 resolve(result);
-            });
+            }, err => reject(err));
         });
     }
 

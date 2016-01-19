@@ -4,10 +4,15 @@
     <div class="col-md-3">
 
         <ul *ngIf="objects" class="list-group" id="objectOverview">
-            <li *ngFor="#object of objects" (click)="onSelect(object)" class="list-group-item">
+            <li *ngFor="#object of objects"
+                [class.selected]="false"
+                (click)="onSelect(object)" class="list-group-item">
                 <div class="title">{{object.title}}</div>
                 <div class="identifier">{{object._id}}</div>
-                <div class="status synced">&#10003;</div>
+                <div class="status"
+                     [class.synced]="object.synced"
+                     [class.unsynced]="!object.synced"
+                >&#10003;</div>
             </li>
         </ul>
 

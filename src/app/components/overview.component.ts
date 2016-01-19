@@ -24,10 +24,11 @@ export class OverviewComponent implements OnInit {
         to._id = from._id;
         to.title = from.title;
         to._rev = from._rev;
+        to.synced = from.synced;
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject = { _id: "", title: "", _rev: ""};
+        this.selectedObject = { _id: "", title: "", _rev: "", synced: true};
         this.deepCopyObject(object,this.selectedObject);
     }
 
@@ -46,6 +47,7 @@ export class OverviewComponent implements OnInit {
                     object,
                     this.objects[this.getObjectIndex(object._id)]
                 );
+                this.objects[this.getObjectIndex(object._id)].synced = false;
             },
             err=>{console.log(err)}
         )
@@ -53,6 +55,9 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
         this.datastore.all({}).then(objects => {
+            
+            // ToDo: Remove
+            for (o of objects) o.synced=true;
             this.objects = objects;
             console.log(this.objects)
         });

@@ -39,6 +39,10 @@ export class OverviewComponent implements OnInit {
         return null;
     }
 
+    fakeSync() {
+        for (var o of this.objects) o.synced=true;
+    }
+
     save(object: IdaiFieldObject) {
 
         this.datastore.save(object).then(
@@ -56,8 +60,6 @@ export class OverviewComponent implements OnInit {
     ngOnInit() {
         this.datastore.all({}).then(objects => {
 
-            // ToDo: Remove
-            for (var o of objects) o.synced=true;
             this.objects = objects;
             console.log(this.objects)
         });

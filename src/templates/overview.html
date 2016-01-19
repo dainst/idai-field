@@ -5,7 +5,7 @@
 
         <ul *ngIf="objects" class="list-group" id="objectOverview">
             <li *ngFor="#object of objects"
-                [class.selected]="false"
+                [class.selected]="selectedObject && (selectedObject._id === object._id)"
                 (click)="onSelect(object)" class="list-group-item">
                 <div class="title">{{object.title}}</div>
                 <div class="identifier">{{object._id}}</div>

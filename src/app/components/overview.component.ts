@@ -55,9 +55,9 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
         this.datastore.all({}).then(objects => {
-            
+
             // ToDo: Remove
-            for (o of objects) o.synced=true;
+            for (var o of objects) o.synced=true;
             this.objects = objects;
             console.log(this.objects)
         });

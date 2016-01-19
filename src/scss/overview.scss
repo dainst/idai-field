@@ -1,0 +1,33 @@
+#objectOverview .list-group-item {
+  cursor: pointer;
+}
+
+#objectOverview .list-group-item:hover {
+  background-color: #d9e1ed;
+}
+
+#objectOverview .title {
+  color: #111;
+}
+
+#objectOverview .identifier {
+  font-size: 0.7em;
+  color: #999;
+}
+
+#objectOverview .status {
+  position: absolute;
+  right: 0;
+  padding: 9px 5px 5px 5px;
+  top: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#objectOverview .synced {
+  color: #00d637;
+}
+
+#objectOverview .unsynced {
+  color: #ffc600;
+}

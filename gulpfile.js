@@ -137,7 +137,7 @@ gulp.task('package', ['build', 'prepare-package','package-node-dependencies'], f
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',
-		version: '0.36.3',
+		version: '0.36.4',
 		appBundleId: pkg.name,
 		appVersion: pkg.version,
 		buildVersion: pkg.version,

@@ -2,24 +2,24 @@
  * @author: Jan G. Wieners
  */
 
-#objectOverview .list-group-item {
+#objectList .list-group-item {
   cursor: pointer;
 }
 
-#objectOverview .list-group-item:hover {
+#objectList .list-group-item:hover {
   background-color: #d9e1ed;
 }
 
-#objectOverview .title {
+#objectList .title {
   color: #111;
 }
 
-#objectOverview .identifier {
+#objectList .identifier {
   font-size: 0.7em;
   color: #999;
 }
 
-#objectOverview .status {
+#objectList .status {
   position: absolute;
   right: 0;
   padding: 9px 5px 5px 5px;
@@ -28,14 +28,17 @@
   font-weight: bold;
 }
 
-#objectOverview .synced {
+#objectList .synced {
   color: #00d637;
 }
 
-#objectOverview .unsynced {
+#objectList .unsynced {
   color: #ffc600;
 }
 
 .selected {
   background-color: #d9e1ed;
+}
+
+.selectedObject {
 }

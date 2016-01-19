@@ -1,9 +1,7 @@
-
-
 <div class="row">
     <div class="col-md-3">
 
-        <ul *ngIf="objects" class="list-group" id="objectOverview">
+        <ul *ngIf="objects" class="list-group" id="objectList">
             <li *ngFor="#object of objects"
                 [class.selected]="selectedObject && (selectedObject._id === object._id)"
                 (click)="onSelect(object)" class="list-group-item">
@@ -20,8 +18,12 @@
 
     <div class="col-md-9">
         <div *ngIf="selectedObject">
-            <span class="badge">{{selectedObject._id}}</span> <input [(ngModel)]="selectedObject.title">
-            <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
+            <div class="selectedObject">
+
+                <input [(ngModel)]="selectedObject.title">
+                <div class="identifier">{{selectedObject._id}}</div>
+               <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
+            </div>
         </div>
     </div>
 </div>

@@ -123,8 +123,14 @@ gulp.task('prepare-package', function() {
 	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
 });
 
+gulp.task('package-node-dependencies', function() {
+    gulp.src('node_modules/express/**/*' )
+        .pipe(gulp.dest('dist/node_modules/express'));
+});
+
+
 // builds an electron app package for different platforms
-gulp.task('package', ['build', 'prepare-package'], function() {
+gulp.task('package', ['build', 'prepare-package','package-node-dependencies'], function() {
  
 	packager({
 		dir: paths.build,

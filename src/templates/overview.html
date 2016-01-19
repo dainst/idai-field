@@ -1,7 +1,22 @@
-<div>Objects Overview</div>
 
-<ul *ngIf="objects">
-    <li *ngFor="#object of objects">
-        <span class="badge">{{object._id}}</span> {{object.title}}
-    </li>
-</ul>
+
+<div class="row">
+    <div class="col-md-3">
+
+        <ul *ngIf="objects" class="list-group">
+            <li *ngFor="#object of objects" (click)="onSelect(object)" class="list-group-item">
+                <span class="badge">{{object._id}}</span> {{object.title}}
+
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-9">
+        <div *ngIf="selectedObject">
+            <span class="badge">{{selectedObject._id}}</span> <input [(ngModel)]="selectedObject.title">
+            <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
+        </div>
+    </div>
+</div>
+

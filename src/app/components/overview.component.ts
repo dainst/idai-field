@@ -47,10 +47,13 @@ export class OverviewComponent implements OnInit {
 
         this.datastore.save(object).then(
             data=>{
+
+                object._rev = data.rev;
                 this.deepCopyObject(
                     object,
                     this.objects[this.getObjectIndex(object._id)]
                 );
+
                 this.objects[this.getObjectIndex(object._id)].synced = false;
             },
             err=>{console.log(err)}

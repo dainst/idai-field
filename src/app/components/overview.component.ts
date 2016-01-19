@@ -23,10 +23,11 @@ export class OverviewComponent implements OnInit {
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
         to._id = from._id;
         to.title = from.title;
+        to._rev = from._rev;
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject = { _id: "", title: ""};
+        this.selectedObject = { _id: "", title: "", _rev: ""};
         this.deepCopyObject(object,this.selectedObject);
     }
 
@@ -38,15 +39,22 @@ export class OverviewComponent implements OnInit {
     }
 
     save(object: IdaiFieldObject) {
-        this.deepCopyObject(
-            object,
-            this.objects[this.getObjectIndex(object._id)]
-        );
+
+        this.datastore.save(object).then(
+            data=>{
+                this.deepCopyObject(
+                    object,
+                    this.objects[this.getObjectIndex(object._id)]
+                );
+            },
+            err=>{console.log(err)}
+        )
     }
 
     ngOnInit() {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
+            console.log(this.objects)
         });
     }
 }

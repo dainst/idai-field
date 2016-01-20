@@ -22,19 +22,19 @@ export class OverviewComponent implements OnInit {
     }
 
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
-        to._id = from._id;
+        to.identifier = from.identifier;
         to.title = from.title;
         to.synced = from.synced;
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject = { _id: "", title: "", synced: true};
+        this.selectedObject = { identifier: "", title: "", synced: true};
         this.deepCopyObject(object,this.selectedObject);
     }
 
     getObjectIndex( id: String ) {
         for (var i in this.objects) {
-            if (this.objects[i]._id==id) return i;
+            if (this.objects[i].identifier==id) return i;
         }
         return null;
     }
@@ -44,7 +44,19 @@ export class OverviewComponent implements OnInit {
     }
 
     sync() {
-        this.elasticsearch.isOnline();
+
+        for (var o of this.objects) {
+
+            this.elasticsearch.save(o)
+                .then(
+                    object => {
+
+                        object.synced = true;
+                    },
+                    err => {
+                    }
+                );
+        }
     }
 
     save(object: IdaiFieldObject) {
@@ -53,10 +65,10 @@ export class OverviewComponent implements OnInit {
 
             this.deepCopyObject(
                 object,
-                this.objects[this.getObjectIndex(object._id)]
+                this.objects[this.getObjectIndex(object.identifier)]
             );
 
-            this.objects[this.getObjectIndex(object._id)].synced = false;
+            this.objects[this.getObjectIndex(object.identifier)].synced = false;
         }).catch( err => { console.error(err) });
 
     }

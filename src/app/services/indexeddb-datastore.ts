@@ -10,7 +10,7 @@ export class IndexeddbDatastore implements Datastore {
     constructor() {
 
         this.db = new Promise((resolve, reject) => {
-            var request = indexedDB.open("IdaiFieldClient", 2);
+            var request = indexedDB.open("IdaiFieldClient", 3);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB!", event);
                 reject(event);
@@ -21,8 +21,9 @@ export class IndexeddbDatastore implements Datastore {
             request.onupgradeneeded = (event) => {
                 var db = request.result;
                 db.deleteObjectStore("idai-field-object");
-                db.createObjectStore("idai-field-object", { keyPath: "_id" });
-                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "_id" });
+                db.deleteObjectStore("fulltext");
+                db.createObjectStore("idai-field-object", { keyPath: "identifier" });
+                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "identifier" });
                 fulltextStore.createIndex("terms", "terms", { multiEntry: true} );
             };
         });
@@ -74,7 +75,7 @@ export class IndexeddbDatastore implements Datastore {
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
-                        ids.add(cursor.value._id);
+                        ids.add(cursor.value.identifier);
                         cursor.continue();
                     }
                     else {
@@ -135,7 +136,7 @@ export class IndexeddbDatastore implements Datastore {
             this.db.then(db => {
                 var terms = IndexeddbDatastore.extractTerms(object);
                 var request = db.transaction(['fulltext'], 'readwrite')
-                    .objectStore('fulltext').put({ _id: object._id, terms: terms});
+                    .objectStore('fulltext').put({ identifier: object.identifier, terms: terms});
                 request.onerror = event => reject(event);
                 request.onsuccess = event => resolve(request.result);
             });

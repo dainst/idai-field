@@ -8,7 +8,7 @@ export class MockDatastore implements Datastore {
     private db: { [key:string]:IdaiFieldObject } = {};
 
     save(object: IdaiFieldObject):Promise<any> {
-        this.db[object._id] = object;
+        this.db[object.identifier] = object;
         return Promise.resolve();
     }
 

@@ -5,10 +5,10 @@
 
         <ul *ngIf="objects" class="list-group" id="objectList">
             <li *ngFor="#object of objects"
-                [class.selected]="selectedObject && (selectedObject._id === object._id)"
+                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)"
                 (click)="onSelect(object)" class="list-group-item">
                 <div class="title">{{object.title}}</div>
-                <div class="identifier">{{object._id}}</div>
+                <div class="identifier">{{object.identifier}}</div>
                 <div class="status"
                      [class.synced]="object.synced"
                      [class.unsynced]="!object.synced"
@@ -26,7 +26,7 @@
             <div class="selectedObject">
 
                 <input [(ngModel)]="selectedObject.title">
-                <div class="identifier">{{selectedObject._id}}</div>
+                <div class="identifier">{{selectedObject.identifier}}</div>
                <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
             </div>
         </div>

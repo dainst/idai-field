@@ -60,6 +60,8 @@ export class IndexeddbDatastore implements Datastore {
 
         // TODO implement query options
 
+        query = query.toLowerCase();
+
         return new Promise<string[]>((resolve, reject) => {
 
             this.db.then(db => {
@@ -149,7 +151,7 @@ export class IndexeddbDatastore implements Datastore {
                 }
             }
         }
-        return terms;
+        return terms.map( term => term.toLowerCase());
     }
 
     private static tokenize(string:string):string[] {

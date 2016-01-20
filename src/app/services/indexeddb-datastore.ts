@@ -67,7 +67,7 @@ export class IndexeddbDatastore implements Datastore {
 
             this.db.then(db => {
 
-                var ids:Set<string> = new Set<string>();
+                var ids:string[] = [];
 
                 var range = IDBKeyRange.bound(query, query+'\uffff', false, true);
                 var cursor = db.transaction(['fulltext'])
@@ -75,17 +75,17 @@ export class IndexeddbDatastore implements Datastore {
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
-                        ids.add(cursor.value.identifier);
+                        ids.push(cursor.value.identifier);
                         cursor.continue();
-                    }
-                    else {
+                    } else {
+                        // make ids unique
+                        ids = ids.filter( (value, index, self) => (self.indexOf(value) === index) );
                         resolve(ids);
                     }
                 };
                 cursor.onerror = err => reject(err);
             });
         }).then( ids => {
-            console.log(ids);
             var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map( id => this.get(id) );
             return Promise.all(promises);
         });

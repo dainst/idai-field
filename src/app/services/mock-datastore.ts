@@ -18,7 +18,7 @@ export class MockDatastore implements Datastore {
 
     delete(id:string):Promise<any> {
         delete this.db[id];
-        return Promise.resolve
+        return Promise.resolve();
     }
 
     find(query:string, options:any):Promise<IdaiFieldObject[]> {

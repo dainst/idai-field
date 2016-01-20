@@ -21,11 +21,9 @@ export class IndexeddbDatastore implements Datastore {
                 reject(event);
             };
             request.onsuccess = (event) => {
-                console.log("onsuccess");
                 resolve(request.result);
             };
             request.onupgradeneeded = (event) => {
-                console.log("onupgradeneeded");
                 var db = request.result;
                 db.createObjectStore("idai-field-object", { keyPath: "_id" });
             };
@@ -58,6 +56,18 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
+    delete(id:string):Promise<any> {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+                var request = db.transaction(['idai-field-object'], 'readwrite')
+                    .objectStore('idai-field-object').delete(id);
+                request.onerror = event => reject(event);
+                request.onsuccess = event => resolve(request.result);
+            });
+        });
+    }
+
     find(query:string, options:any):Promise<IdaiFieldObject[]> {
 
         // TODO implement based on indexes
@@ -65,8 +75,6 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     all(options:any):Promise<IdaiFieldObject[]> {
-
-        console.log("all");
 
         // TODO implement query options
 

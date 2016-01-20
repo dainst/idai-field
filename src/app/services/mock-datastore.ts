@@ -13,11 +13,16 @@ export class MockDatastore implements Datastore {
 
     save(object: IdaiFieldObject):Promise<any> {
         this.db[object._id] = object;
-        return Promise.resolve({success: true});
+        return Promise.resolve();
     }
 
     get(id:string):Promise<IdaiFieldObject> {
         return Promise.resolve(this.db[id]);
+    }
+
+    delete(id:string):Promise<any> {
+        delete this.db[id];
+        return Promise.resolve
     }
 
     find(query:string, options:any):Promise<IdaiFieldObject[]> {

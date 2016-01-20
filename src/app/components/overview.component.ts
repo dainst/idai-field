@@ -54,15 +54,13 @@ export class OverviewComponent implements OnInit {
 
                 this.objects[this.getObjectIndex(object._id)].synced = false;
             },
-            err => { console.log(err) }
+            err => { console.error(err) }
         )
     }
 
     ngOnInit() {
         this.datastore.all({}).then(objects => {
-
             this.objects = objects;
-            console.log(this.objects)
         }).catch(err => console.error(err));
     }
 }

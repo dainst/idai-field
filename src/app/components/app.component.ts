@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.datastore.initialize().then(() => {
-            console.log("initialized")
             this.loadSampleData()
         }).catch(err => console.error(err));
     }

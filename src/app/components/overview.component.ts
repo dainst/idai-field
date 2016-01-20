@@ -61,6 +61,18 @@ export class OverviewComponent implements OnInit {
 
     }
 
+    onKey(event:any) {
+        if (event.target.value == "") {
+            this.datastore.all({}).then(objects => {
+                this.objects = objects;
+            }).catch(err => console.error(err));
+        } else {
+            this.datastore.find(event.target.value, {}).then(objects => {
+                this.objects = objects;
+            }).catch(err => console.error(err));
+        }
+    }
+
     ngOnInit() {
         this.datastore.all({}).then(objects => {
             this.objects = objects;

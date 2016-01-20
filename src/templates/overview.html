@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-md-3">
 
+        <input (keyup)="onKey($event)" class="form-control">
+
         <ul *ngIf="objects" class="list-group" id="objectList">
             <li *ngFor="#object of objects"
                 [class.selected]="selectedObject && (selectedObject._id === object._id)"

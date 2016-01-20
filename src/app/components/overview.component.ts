@@ -1,5 +1,4 @@
 import {Component, OnInit} from 'angular2/core';
-import {PouchdbDatastore} from '../services/pouchdb-datastore';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";

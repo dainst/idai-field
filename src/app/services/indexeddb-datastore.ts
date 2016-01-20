@@ -9,11 +9,6 @@ export class IndexeddbDatastore implements Datastore {
 
     constructor() {
 
-
-    }
-
-    initialize():Promise<any> {
-
         this.db = new Promise((resolve, reject) => {
             var request = indexedDB.open("IdaiFieldClient", 1);
             request.onerror = (event) => {
@@ -28,12 +23,9 @@ export class IndexeddbDatastore implements Datastore {
                 db.createObjectStore("idai-field-object", { keyPath: "_id" });
             };
         });
-        return this.db;
     }
 
     save(object:IdaiFieldObject):Promise<any> {
-
-        console.log("save");
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {

@@ -8,10 +8,15 @@ import {Datastore} from "./services/datastore";
 import {IndexeddbDatastore} from "./services/indexeddb-datastore";
 import {Elasticsearch} from "./services/elasticsearch";
 
+const config = {
+	serverUri: 'http://127.0.0.1:9200'
+}
+
 bootstrap(AppComponent, [
 	ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
 	provide(LocationStrategy, { useClass: HashLocationStrategy }),
 	provide(Datastore, { useClass: IndexeddbDatastore }),
-	provide(Elasticsearch, { useClass: Elasticsearch })
+	provide(Elasticsearch, { useClass: Elasticsearch }),
+	provide('app.config', { useValue: config })
 ]);

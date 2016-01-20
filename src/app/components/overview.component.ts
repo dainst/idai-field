@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Inject} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
@@ -18,7 +18,7 @@ export class OverviewComponent implements OnInit {
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
 
-    constructor(private datastore: Datastore, private elasticsearch: Elasticsearch) {
+    constructor(private datastore: Datastore, private elasticsearch: Elasticsearch, @Inject('app.config') private config) {
     }
 
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
@@ -90,7 +90,7 @@ export class OverviewComponent implements OnInit {
             this.objects = objects;
         }).catch(err => console.error(err));
 
-        this.elasticsearch.setHost('http://127.0.0.1:9200');
+        this.elasticsearch.setHost(this.config.serverUri);
 
     }
 }

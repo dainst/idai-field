@@ -1,13 +1,17 @@
 import {bootstrap}    from 'angular2/platform/browser'
 import {AppComponent} from './components/app.component'
 import {ROUTER_PROVIDERS} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 import {provide} from 'angular2/core';
 import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {Datastore} from "./services/datastore";
 import {IndexeddbDatastore} from "./services/indexeddb-datastore";
+import {Elasticsearch} from "./services/elasticsearch";
 
 bootstrap(AppComponent, [
-	ROUTER_PROVIDERS, 
+	ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
 	provide(LocationStrategy, { useClass: HashLocationStrategy }),
-	provide(Datastore, {useClass: IndexeddbDatastore})
+	provide(Datastore, { useClass: IndexeddbDatastore }),
+	provide(Elasticsearch, { useClass: Elasticsearch })
 ]);

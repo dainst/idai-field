@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
+import {Elasticsearch} from '../services/elasticsearch';
 
 @Component({
     templateUrl: 'templates/overview.html'
@@ -10,13 +11,14 @@ import {provide} from "angular2/core";
 /**
  * @author Sebastian Cuy
  * @author Daniel M. de Oliveira
+ * @author Jan G. Wieners
  */
 export class OverviewComponent implements OnInit {
 
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
 
-    constructor(private datastore: Datastore) {
+    constructor(private datastore: Datastore, private elasticsearch: Elasticsearch) {
     }
 
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
@@ -41,6 +43,10 @@ export class OverviewComponent implements OnInit {
         for (var o of this.objects) o.synced=true;
     }
 
+    sync() {
+        this.elasticsearch.isOnline();
+    }
+
     save(object: IdaiFieldObject) {
 
         this.datastore.save(object).then(
@@ -61,5 +67,8 @@ export class OverviewComponent implements OnInit {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));
+
+        this.elasticsearch.setHost('http://127.0.0.1:9200');
+
     }
 }

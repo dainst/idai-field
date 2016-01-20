@@ -12,7 +12,12 @@ export class PouchdbDatastore implements Datastore {
 
     constructor() {
 
+    }
+
+    initialize():Promise<any> {
+
         this.db = new PouchDB('objects');
+        return Promise.resolve();
     }
 
     save(object:IdaiFieldObject):Promise<any> {

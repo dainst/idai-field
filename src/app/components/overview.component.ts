@@ -23,12 +23,11 @@ export class OverviewComponent implements OnInit {
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
         to._id = from._id;
         to.title = from.title;
-        to._rev = from._rev;
         to.synced = from.synced;
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject = { _id: "", title: "", _rev: "", synced: true};
+        this.selectedObject = { _id: "", title: "", synced: true};
         this.deepCopyObject(object,this.selectedObject);
     }
 
@@ -46,9 +45,8 @@ export class OverviewComponent implements OnInit {
     save(object: IdaiFieldObject) {
 
         this.datastore.save(object).then(
-            data=>{
+            data => {
 
-                object._rev = data.rev;
                 this.deepCopyObject(
                     object,
                     this.objects[this.getObjectIndex(object._id)]
@@ -56,7 +54,7 @@ export class OverviewComponent implements OnInit {
 
                 this.objects[this.getObjectIndex(object._id)].synced = false;
             },
-            err=>{console.log(err)}
+            err => { console.log(err) }
         )
     }
 
@@ -65,6 +63,6 @@ export class OverviewComponent implements OnInit {
 
             this.objects = objects;
             console.log(this.objects)
-        });
+        }).catch(err => console.error(err));
     }
 }

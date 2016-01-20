@@ -18,12 +18,16 @@ import {OBJECTS} from "../services/sample-objects";
 ])
 export class AppComponent implements OnInit {
 
+
     constructor(private datastore: Datastore) {
 
     }
 
     ngOnInit() {
-        this.loadSampleData();
+        this.datastore.initialize().then(() => {
+            console.log("initialized")
+            this.loadSampleData()
+        }).catch(err => console.error(err));
     }
 
     loadSampleData(): void {
@@ -31,8 +35,8 @@ export class AppComponent implements OnInit {
         var promises = [];
         for (var ob of OBJECTS) promises.push(this.datastore.save(ob));
         Promise.all(promises).then(
-            () => console.log("Successfully stored sample objects in PouchDB"),
-            err => console.error("Problem when storing sample data in PouchDB", err)
+            () => console.log("Successfully stored sample objects"),
+            err => console.error("Problem when storing sample data", err)
         );
     }
 

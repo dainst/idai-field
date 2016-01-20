@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Inject} from 'angular2/core';
 import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
 import {View} from "angular2/core";
 import {OverviewComponent} from './overview.component';
@@ -19,12 +19,12 @@ import {OBJECTS} from "../services/sample-objects";
 export class AppComponent implements OnInit {
 
 
-    constructor(private datastore: Datastore) {
+    constructor(private datastore: Datastore, @Inject('app.config') private config) {
 
     }
 
     ngOnInit() {
-        this.loadSampleData();
+        if (this.config.environment == 'test') this.loadSampleData();
     }
 
     loadSampleData(): void {

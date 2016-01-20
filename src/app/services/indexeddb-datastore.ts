@@ -10,7 +10,7 @@ export class IndexeddbDatastore implements Datastore {
     constructor() {
 
         this.db = new Promise((resolve, reject) => {
-            var request = indexedDB.open("IdaiFieldClient", 1);
+            var request = indexedDB.open("IdaiFieldClient", 2);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB!", event);
                 reject(event);
@@ -20,21 +20,17 @@ export class IndexeddbDatastore implements Datastore {
             };
             request.onupgradeneeded = (event) => {
                 var db = request.result;
+                db.deleteObjectStore("idai-field-object");
                 db.createObjectStore("idai-field-object", { keyPath: "_id" });
+                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "_id" });
+                fulltextStore.createIndex("terms", "terms", { multiEntry: true} );
             };
         });
     }
 
     save(object:IdaiFieldObject):Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            this.db.then(db => {
-                var objectStore = db.transaction(['idai-field-object'], 'readwrite').objectStore('idai-field-object');
-                var request = objectStore.put(object);
-                request.onerror = event => reject(event);
-                request.onsuccess = event => resolve(request.result);
-            });
-        });
+        return Promise.all([this.saveObject(object), this.saveFulltext(object)]);
     }
 
     get(id:string):Promise<IdaiFieldObject> {
@@ -62,8 +58,34 @@ export class IndexeddbDatastore implements Datastore {
 
     find(query:string, options:any):Promise<IdaiFieldObject[]> {
 
-        // TODO implement based on indexes
-        return new Promise(resolve => resolve([]));
+        // TODO implement query options
+
+        return new Promise<string[]>((resolve, reject) => {
+
+            this.db.then(db => {
+
+                var ids:Set<string> = new Set<string>();
+
+                var range = IDBKeyRange.bound(query, query+'\uffff', false, true);
+                var cursor = db.transaction(['fulltext'])
+                    .objectStore('fulltext').index("terms").openCursor(range);
+                cursor.onsuccess = (event) => {
+                    var cursor = event.target.result;
+                    if (cursor) {
+                        ids.add(cursor.value._id);
+                        cursor.continue();
+                    }
+                    else {
+                        resolve(ids);
+                    }
+                };
+                cursor.onerror = err => reject(err);
+            });
+        }).then( ids => {
+            console.log(ids);
+            var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map( id => this.get(id) );
+            return Promise.all(promises);
+        });
     }
 
     all(options:any):Promise<IdaiFieldObject[]> {
@@ -91,6 +113,47 @@ export class IndexeddbDatastore implements Datastore {
                 cursor.onerror = err => reject(err);
             });
         });
+    }
+
+    private saveObject(object:IdaiFieldObject):Promise<any> {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+                var request = db.transaction(['idai-field-object'], 'readwrite')
+                    .objectStore('idai-field-object').put(object);
+                request.onerror = event => reject(event);
+                request.onsuccess = event => resolve(request.result);
+            });
+        });
+    }
+
+    private saveFulltext(object:IdaiFieldObject):Promise<any> {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+                var terms = IndexeddbDatastore.extractTerms(object);
+                var request = db.transaction(['fulltext'], 'readwrite')
+                    .objectStore('fulltext').put({ _id: object._id, terms: terms});
+                request.onerror = event => reject(event);
+                request.onsuccess = event => resolve(request.result);
+            });
+        })
+    }
+
+    private static extractTerms(object:IdaiFieldObject):string[] {
+        var terms = [];
+        for (var property in object) {
+            if (object.hasOwnProperty(property)) {
+                if (typeof object[property] == "string") {
+                    terms = terms.concat(this.tokenize(object[property]));
+                }
+            }
+        }
+        return terms;
+    }
+
+    private static tokenize(string:string):string[] {
+        return string.match(/\w+/g);
     }
 
 }

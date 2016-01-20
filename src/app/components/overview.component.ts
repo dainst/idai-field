@@ -49,18 +49,16 @@ export class OverviewComponent implements OnInit {
 
     save(object: IdaiFieldObject) {
 
-        this.datastore.save(object).then(
-            data => {
+        this.datastore.save(object).then( () => {
 
-                this.deepCopyObject(
-                    object,
-                    this.objects[this.getObjectIndex(object._id)]
-                );
+            this.deepCopyObject(
+                object,
+                this.objects[this.getObjectIndex(object._id)]
+            );
 
-                this.objects[this.getObjectIndex(object._id)].synced = false;
-            },
-            err => { console.error(err) }
-        )
+            this.objects[this.getObjectIndex(object._id)].synced = false;
+        }).catch( err => { console.error(err) });
+
     }
 
     ngOnInit() {

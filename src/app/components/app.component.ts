@@ -13,8 +13,7 @@ import {OBJECTS} from "../services/sample-objects";
     directives: [RouterOutlet,RouterLink]
 })
 @RouteConfig([
-    { path: "/", name: "Home", component: HomeComponent, useAsDefault: true},
-    { path: "/overview", name: "Overview", component: OverviewComponent}
+    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
 ])
 export class AppComponent implements OnInit {
 

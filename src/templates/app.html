@@ -8,12 +8,7 @@
                 <span id="connection-icon"
                     [class.connected] = "idaiFieldBackend.isConnected()"
                     [class.unconnected] = "!idaiFieldBackend.isConnected()"></span>
-                <div id="connection-info">
-                    <span *ngIf="idaiFieldBackend.isConnected()">Online</span>
-                    <span *ngIf="!idaiFieldBackend.isConnected()">Offline</span>
-                </div>
             </span>
-            <!-- Show Notifications -->
         </div>
     </div>
 </nav>

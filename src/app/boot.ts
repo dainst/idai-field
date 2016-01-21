@@ -15,7 +15,8 @@ const config = {
     connectionCheckInterval: {
     	online: 60000,
     	offline: 1000
-    }
+    },
+    syncCheckInterval: 500
 }
 
 if (config.environment == 'production') enableProdMode();

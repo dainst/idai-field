@@ -14,6 +14,7 @@ import {MyObserver} from "../my-observer";
  * @author Sebastian Cuy
  * @author Daniel M. de Oliveira
  * @author Jan G. Wieners
+ * @author Thomas Kleinke
  */
 export class OverviewComponent implements OnInit, MyObserver {
 
@@ -26,7 +27,8 @@ export class OverviewComponent implements OnInit, MyObserver {
 
     constructor(
         private datastore: Datastore,
-        private idaiFieldBackend: IdaiFieldBackend
+        private idaiFieldBackend: IdaiFieldBackend,
+        @Inject('app.config') private config
     ) {
 
         datastore.subscribe(this);
@@ -45,18 +47,22 @@ export class OverviewComponent implements OnInit, MyObserver {
 
     sync() {
 
-        for (var o of this.objects) {
+        if (this.objects) {
+            for (var o of this.objects) {
 
-            this.idaiFieldBackend.save(o)
-                .then(
-                    object => {
+                if (!o.synced) {
+                    this.idaiFieldBackend.save(o)
+                        .then(
+                            object => {
 
-                        object.synced = true;
-                        this.datastore.update(object);
-                    },
-                    err => {
-                    }
-                );
+                                object.synced = true;
+                                this.datastore.update(object);
+                            },
+                            err => {
+                            }
+                        );
+                }
+            }
         }
     }
 
@@ -89,12 +95,20 @@ export class OverviewComponent implements OnInit, MyObserver {
 
     ngOnInit() {
         this.fetchObjects();
+        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
     }
-
 
     private fetchObjects() {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));
+    }
+
+    checkForSync(): void {
+
+        if (this.idaiFieldBackend.isConnected())
+            this.sync();
+
+        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
     }
 }

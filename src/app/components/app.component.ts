@@ -3,9 +3,9 @@ import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
 import {View} from "angular2/core";
 import {OverviewComponent} from './overview.component';
 import {Datastore} from "../services/datastore";
-
 import {OBJECTS} from "../services/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
+import {MyObserver} from "../my-observer";
 
 @Component({
     selector: 'idai-field-app',
@@ -15,13 +15,14 @@ import {IdaiFieldBackend} from "../services/idai-field-backend";
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
 ])
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, MyObserver {
 
-    constructor(
-        private datastore: Datastore,
-        private idaiFieldBackend: IdaiFieldBackend,
-        @Inject('app.config') private config) {
+    private connectionCheckTimer: number;
 
+    constructor(private datastore: Datastore,
+            private idaiFieldBackend: IdaiFieldBackend,
+            @Inject('app.config') private config) {
+        this.idaiFieldBackend.subscribe(this);
     }
 
     ngOnInit() {
@@ -48,6 +49,12 @@ export class AppComponent implements OnInit {
         });
     }
 
+    notify(): any {
+
+        clearTimeout(this.connectionCheckTimer);
+        this.checkBackendConnection();
+    }
+
     checkBackendConnection(): void {
 
         this.idaiFieldBackend.checkConnection()
@@ -56,7 +63,7 @@ export class AppComponent implements OnInit {
                     var interval: number = this.idaiFieldBackend.isConnected() ?
                         this.config.connectionCheckInterval.online : this.config.connectionCheckInterval.offline;
 
-                    setTimeout(this.checkBackendConnection.bind(this), interval);
+                    this.connectionCheckTimer = setTimeout(this.checkBackendConnection.bind(this), interval);
                 }
         );
     }

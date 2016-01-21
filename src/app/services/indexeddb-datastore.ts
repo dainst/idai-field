@@ -14,7 +14,7 @@ export class IndexeddbDatastore implements Datastore {
             var request = indexedDB.open("IdaiFieldClient", 5);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB!", event);
-                reject(event);
+                reject(request.error);
             };
             request.onsuccess = (event) => {
                 resolve(request.result);
@@ -47,7 +47,8 @@ export class IndexeddbDatastore implements Datastore {
         return new Promise((resolve, reject) => {
            if (object._id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
-           return Promise.all([this.saveObject(object), this.saveFulltext(object)]);
+           return Promise.all([this.saveObject(object), this.saveFulltext(object)])
+               .then(() => resolve(), err => reject(err));;
         });
     }
 
@@ -56,7 +57,7 @@ export class IndexeddbDatastore implements Datastore {
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
-                request.onerror = event => reject(event);
+                request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
         });
@@ -68,7 +69,7 @@ export class IndexeddbDatastore implements Datastore {
             this.db.then(db => {
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').delete(id);
-                request.onerror = event => reject(event);
+                request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
         });
@@ -100,7 +101,7 @@ export class IndexeddbDatastore implements Datastore {
                         resolve(ids);
                     }
                 };
-                cursor.onerror = err => reject(err);
+                cursor.onerror = err => reject(cursor.error);
             });
         }).then( ids => {
             var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map( id => this.get(id) );
@@ -130,7 +131,7 @@ export class IndexeddbDatastore implements Datastore {
                         resolve(objects);
                     }
                 };
-                cursor.onerror = err => reject(err);
+                cursor.onerror = err => reject(cursor.error);
             });
         });
     }
@@ -141,7 +142,8 @@ export class IndexeddbDatastore implements Datastore {
             this.db.then(db => {
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').put(object);
-                request.onerror = event => reject(event);
+                console.log(object);
+                request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
         });
@@ -154,7 +156,7 @@ export class IndexeddbDatastore implements Datastore {
                 var terms = IndexeddbDatastore.extractTerms(object);
                 var request = db.transaction(['fulltext'], 'readwrite')
                     .objectStore('fulltext').put({ _id: object._id, terms: terms});
-                request.onerror = event => reject(event);
+                request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
         })

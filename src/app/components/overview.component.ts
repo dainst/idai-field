@@ -27,8 +27,6 @@ export class OverviewComponent implements OnInit {
 
     }
 
-
-
     onSelect(object: IdaiFieldObject) {
         this.selectedObject = { identifier: "", title: "", synced: true};
         Utils.deepCopyObject(object,this.selectedObject);

@@ -26,7 +26,11 @@
             <form>
                 <div class="form-group">
                     <label>ID</label>
-                    <input [(ngModel)]="selectedObject.identifier" class="form-control" readonly>
+                    <input [(ngModel)]="selectedObject._id" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Identifier</label>
+                    <input [(ngModel)]="selectedObject.identifier" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Title</label>

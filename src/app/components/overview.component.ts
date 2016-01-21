@@ -3,6 +3,7 @@ import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
+import {Utils} from '../utils';
 
 @Component({
     templateUrl: 'templates/overview.html'
@@ -26,15 +27,11 @@ export class OverviewComponent implements OnInit {
 
     }
 
-    deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
-        to.identifier = from.identifier;
-        to.title = from.title;
-        to.synced = from.synced;
-    }
+
 
     onSelect(object: IdaiFieldObject) {
         this.selectedObject = { identifier: "", title: "", synced: true};
-        this.deepCopyObject(object,this.selectedObject);
+        Utils.deepCopyObject(object,this.selectedObject);
     }
 
     getObjectIndex( id: String ) {
@@ -68,7 +65,7 @@ export class OverviewComponent implements OnInit {
 
         this.datastore.update(object).then( () => {
 
-            this.deepCopyObject(
+            Utils.deepCopyObject(
                 object,
                 this.objects[this.getObjectIndex(object.identifier)]
             );

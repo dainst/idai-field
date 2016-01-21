@@ -65,10 +65,10 @@ export class OverviewComponent implements OnInit {
 
             Utils.deepCopyObject(
                 object,
-                this.objects[this.getObjectIndex(object.identifier)]
+                this.objects[this.getObjectIndex(object._id)]
             );
 
-            this.objects[this.getObjectIndex(object.identifier)].synced = false;
+            this.objects[this.getObjectIndex(object._id)].synced = false;
         }).catch( err => { console.error(err) });
 
     }

@@ -6,11 +6,12 @@ import {provide, enableProdMode} from 'angular2/core';
 import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {Datastore} from "./services/datastore";
 import {IndexeddbDatastore} from "./services/indexeddb-datastore";
-import {Elasticsearch} from "./services/elasticsearch";
+import {IdaiFieldBackend} from "./services/idai-field-backend";
 
 const config = {
 	environment: 'test', // choose 'test, 'development' or 'production'
-	serverUri: 'http://127.0.0.1:9200'
+    hostName: 'http://127.0.0.1:9200',
+    indexName: 'idaifield'
 }
 
 if (config.environment == 'production') enableProdMode();
@@ -20,6 +21,6 @@ bootstrap(AppComponent, [
     HTTP_PROVIDERS,
 	provide(LocationStrategy, { useClass: HashLocationStrategy }),
 	provide(Datastore, { useClass: IndexeddbDatastore }),
-	provide(Elasticsearch, { useClass: Elasticsearch }),
+	provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
 	provide('app.config', { useValue: config })
 ]);

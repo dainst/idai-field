@@ -2,7 +2,7 @@ import {Component, OnInit, Inject} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
-import {Elasticsearch} from '../services/elasticsearch';
+import {IdaiFieldBackend} from '../services/idai-field-backend';
 
 @Component({
     templateUrl: 'templates/overview.html'
@@ -20,7 +20,7 @@ export class OverviewComponent implements OnInit {
 
     constructor(
         private datastore: Datastore,
-        private elasticsearch: Elasticsearch,
+        private elasticsearch: IdaiFieldBackend,
         @Inject('app.config') private config
     ) {
 
@@ -94,8 +94,5 @@ export class OverviewComponent implements OnInit {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));
-
-        this.elasticsearch.setHost(this.config.serverUri);
-
     }
 }

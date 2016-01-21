@@ -170,3 +170,37 @@
     display: none;
   }
 }
+
+#connection-icon {
+  
+  margin-top: 5px;
+  position: absolute;
+}
+
+#connection-icon.connected {
+
+  width: 12px;
+  height: 12px;
+  background: #33cc33;
+  border: 2px solid #ffffff;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+#connection-icon.unconnected {
+
+  width: 12px;
+  height: 12px;
+  background: #cc0000;
+  border: 2px solid #ffffff;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+#connection-info {
+  
+  margin-top: 2px;
+  margin-left: 16px;
+}

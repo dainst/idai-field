@@ -4,6 +4,15 @@
             <a class="navbar-brand">iDAI.field 2.0</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
+            <span class="navbar-text navbar-right">
+                <span id="connection-icon"
+                    [class.connected] = "idaiFieldBackend.isConnected()"
+                    [class.unconnected] = "!idaiFieldBackend.isConnected()"></span>
+                <div id="connection-info">
+                    <span *ngIf="idaiFieldBackend.isConnected()">Online</span>
+                    <span *ngIf="!idaiFieldBackend.isConnected()">Offline</span>
+                </div>
+            </span>
             <!-- Show Notifications -->
         </div>
     </div>

@@ -17,7 +17,6 @@ import {IdaiFieldBackend} from "../services/idai-field-backend";
 ])
 export class AppComponent implements OnInit {
 
-
     constructor(
         private datastore: Datastore,
         private idaiFieldBackend: IdaiFieldBackend,
@@ -28,6 +27,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.idaiFieldBackend.setHostName(this.config.hostName);
         this.idaiFieldBackend.setIndexName(this.config.indexName);
+        this.checkBackendConnection();
         if (this.config.environment == 'test') this.loadSampleData();
     }
 
@@ -46,6 +46,19 @@ export class AppComponent implements OnInit {
                 err => console.error("Problem when storing sample data", err)
             );
         });
+    }
+
+    checkBackendConnection(): void {
+
+        this.idaiFieldBackend.checkConnection()
+            .then(
+                result => {
+                    var interval: number = this.idaiFieldBackend.isConnected() ?
+                        this.config.connectionCheckInterval.online : this.config.connectionCheckInterval.offline;
+
+                    setTimeout(this.checkBackendConnection.bind(this), interval);
+                }
+        );
     }
 
 }

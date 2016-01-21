@@ -15,6 +15,7 @@ export class IdaiFieldBackend {
     private typeName  : string = "objects";
     private hostUrl   : string;
     private indexName : string;
+    private connected : boolean;
 
     public constructor(private http: Http) {
     }
@@ -25,6 +26,28 @@ export class IdaiFieldBackend {
 
     public setIndexName(indexName:string):void {
         this.indexName= indexName;
+    }
+
+    public isConnected(): boolean {
+        return this.connected;
+    }
+
+    public checkConnection(): Promise<boolean> {
+
+        return new Promise((resolve, reject) => {
+
+            this.http.get(this.hostUrl + '/idaifield')             
+                .subscribe(
+                    data => {
+                        this.connected = true;
+                        resolve(true);
+                    },
+                     err => {
+                        this.connected = false;
+                        resolve(false);
+                    }
+                )
+        });
     }
 
     /**

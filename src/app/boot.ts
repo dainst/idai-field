@@ -11,7 +11,11 @@ import {IdaiFieldBackend} from "./services/idai-field-backend";
 const config = {
 	environment: 'test', // choose 'test, 'development' or 'production'
     hostName: 'http://127.0.0.1:9200',
-    indexName: 'idaifield'
+    indexName: 'idaifield',
+    connectionCheckInterval: {
+    	online: 60000,
+    	offline: 1000
+    }
 }
 
 if (config.environment == 'production') enableProdMode();

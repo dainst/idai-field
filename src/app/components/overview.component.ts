@@ -18,7 +18,12 @@ export class OverviewComponent implements OnInit {
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
 
-    constructor(private datastore: Datastore, private elasticsearch: Elasticsearch, @Inject('app.config') private config) {
+    constructor(
+        private datastore: Datastore,
+        private elasticsearch: Elasticsearch,
+        @Inject('app.config') private config
+    ) {
+
     }
 
     deepCopyObject(from: IdaiFieldObject,to: IdaiFieldObject) {
@@ -91,6 +96,6 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
 
         this.elasticsearch.setHost(this.config.serverUri);
-
+        
     }
 }

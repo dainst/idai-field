@@ -89,6 +89,7 @@ gulp.task('compile-ts', function () {
 gulp.task('concat-deps', function() {
 
 	return gulp.src([
+			paths.lib + '/node-uuid/uuid.js',
 			paths.lib + '/angular2/bundles/angular2-polyfills.js',
 			paths.lib + '/systemjs/dist/system.src.js',
 			paths.lib + '/rxjs/bundles/Rx.js',

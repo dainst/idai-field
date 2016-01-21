@@ -38,10 +38,6 @@ export class OverviewComponent implements OnInit {
         return null;
     }
 
-    fakeSync() {
-        for (var o of this.objects) o.synced=true;
-    }
-
     sync() {
 
         for (var o of this.objects) {

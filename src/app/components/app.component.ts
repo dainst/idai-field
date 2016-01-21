@@ -29,12 +29,19 @@ export class AppComponent implements OnInit {
 
     loadSampleData(): void {
 
-        var promises = [];
-        for (var ob of OBJECTS) promises.push(this.datastore.save(ob));
-        Promise.all(promises).then(
-            () => console.log("Successfully stored sample objects"),
-            err => console.error("Problem when storing sample data", err)
-        );
+        this.datastore.all({}).then(objects => {
+            var promises = [];
+            for (var ob of objects) promises.push(this.datastore.delete(ob._id));
+            return Promise.all(promises);
+        }).then(() => {
+            var promises = [];
+            for (var ob of OBJECTS) promises.push(this.datastore.create(ob));
+            Promise.all(promises).then(
+                () => console.log("Successfully stored sample objects"))
+            .catch(
+                err => console.error("Problem when storing sample data", err)
+            );
+        });
     }
 
 }

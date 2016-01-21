@@ -66,7 +66,7 @@ export class OverviewComponent implements OnInit {
 
     save(object: IdaiFieldObject) {
 
-        this.datastore.save(object).then( () => {
+        this.datastore.update(object).then( () => {
 
             this.deepCopyObject(
                 object,
@@ -96,6 +96,6 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
 
         this.elasticsearch.setHost(this.config.serverUri);
-        
+
     }
 }

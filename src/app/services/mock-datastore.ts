@@ -1,14 +1,21 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
+import {IdGenerator} from "./id-generator";
 
 @Injectable()
 export class MockDatastore implements Datastore {
 
     private db: { [key:string]:IdaiFieldObject } = {};
 
-    save(object: IdaiFieldObject):Promise<any> {
-        this.db[object.identifier] = object;
+    create(object: IdaiFieldObject):Promise<any> {
+        object._id = IdGenerator.generateId();
+        this.db[object._id] = object;
+        return Promise.resolve(object._id);
+    }
+
+    update(object: IdaiFieldObject):Promise<any> {
+        this.db[object._id] = object;
         return Promise.resolve();
     }
 

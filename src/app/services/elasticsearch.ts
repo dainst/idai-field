@@ -21,7 +21,7 @@ export class Elasticsearch {
 
         return new Promise((resolve, reject) => {
 
-            this.http.post(this.hostUrl + '/idaifield/objects/' + object.identifier, JSON.stringify(object))
+            this.http.post(this.hostUrl + '/idaifield/objects/' + object._id, JSON.stringify(object))
                 .subscribe(
                     data => {
                         resolve(object);

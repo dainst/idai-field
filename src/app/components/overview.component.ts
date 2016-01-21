@@ -4,7 +4,7 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
 import {Utils} from '../utils';
-import {MyObserver} from "../my-observer";
+import {IdaiObserver} from "../idai-observer";
 
 @Component({
     templateUrl: 'templates/overview.html'
@@ -16,7 +16,7 @@ import {MyObserver} from "../my-observer";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class OverviewComponent implements OnInit, MyObserver {
+export class OverviewComponent implements OnInit, IdaiObserver {
 
     notify():any {
         this.fetchObjects();
@@ -66,19 +66,16 @@ export class OverviewComponent implements OnInit, MyObserver {
         }
     }
 
+    /**
+     * Saves the object to the local datastore.
+     * @param object
+     */
     save(object: IdaiFieldObject) {
-
         object.synced = false;
-
-        this.datastore.update(object).then( () => {
-
-            Utils.deepCopy(
-                object,
-                this.objects[this.getObjectIndex(object._id)]
-            );
-
-        }).catch( err => { console.error(err) });
-
+        this.datastore.update(object).then(
+            () => {},
+            err => console.error(err)
+        );
     }
 
     onKey(event:any) {

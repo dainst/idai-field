@@ -1,5 +1,5 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {MyObserver} from "../my-observer";
+import {IdaiObserver} from "../idai-observer";
 
 export abstract class Datastore {
 
@@ -15,5 +15,5 @@ export abstract class Datastore {
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;
 
-    abstract subscribe(observer: MyObserver);
+    abstract subscribe(observer: IdaiObserver);
 }

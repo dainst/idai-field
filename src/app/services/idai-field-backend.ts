@@ -4,7 +4,7 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Utils} from '../utils';
 import {Observable} from "rxjs/Observable";
 import {Response} from "angular2/http";
-import {MyObserver} from "../my-observer";
+import {IdaiObserver} from "../my-observer";
 
 /**
  * @author Jan G. Wieners
@@ -18,12 +18,12 @@ export class IdaiFieldBackend {
     private hostUrl   : string;
     private indexName : string;
     private connected : boolean;
-    private observers : MyObserver[] = [];
+    private observers : IdaiObserver[] = [];
 
     public constructor(private http: Http) {
     }
 
-    public subscribe(observer: MyObserver) {
+    public subscribe(observer: IdaiObserver) {
         this.observers.push(observer);
     }
 

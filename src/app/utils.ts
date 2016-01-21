@@ -11,7 +11,7 @@ export class Utils {
      * @param from
      * @param to
      */
-    public static deepCopy(from: IdaiFieldObject, to: IdaiFieldObject) {
+    private static deepCopy(from: IdaiFieldObject, to: IdaiFieldObject) {
         to._id = from._id;
         to.identifier = from.identifier;
         to.title = from.title;

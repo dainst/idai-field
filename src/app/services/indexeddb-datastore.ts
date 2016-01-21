@@ -2,13 +2,13 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
-import {MyObserver} from "../my-observer";
+import {IdaiObserver} from "../idai-observer";
 
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
 
     private db: Promise<any>;
-    private observers : MyObserver[] = [];
+    private observers : IdaiObserver[] = [];
 
     constructor() {
 
@@ -33,7 +33,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    subscribe(observer: MyObserver) {
+    subscribe(observer: IdaiObserver) {
         this.observers.push(observer);
     }
 

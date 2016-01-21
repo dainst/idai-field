@@ -21,15 +21,14 @@ export class OverviewComponent implements OnInit {
 
     constructor(
         private datastore: Datastore,
-        private elasticsearch: IdaiFieldBackend,
+        private idaiFieldBackend: IdaiFieldBackend,
         @Inject('app.config') private config
     ) {
 
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject = { identifier: "", title: "", synced: true};
-        Utils.deepCopyObject(object,this.selectedObject);
+        this.selectedObject= Utils.clone(object);
     }
 
     getObjectIndex( id: String ) {
@@ -47,7 +46,7 @@ export class OverviewComponent implements OnInit {
 
         for (var o of this.objects) {
 
-            this.elasticsearch.save(o)
+            this.idaiFieldBackend.save(o)
                 .then(
                     object => {
 
@@ -63,7 +62,7 @@ export class OverviewComponent implements OnInit {
 
         this.datastore.update(object).then( () => {
 
-            Utils.deepCopyObject(
+            Utils.deepCopy(
                 object,
                 this.objects[this.getObjectIndex(object._id)]
             );

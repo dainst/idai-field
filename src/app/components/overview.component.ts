@@ -21,8 +21,7 @@ export class OverviewComponent implements OnInit {
 
     constructor(
         private datastore: Datastore,
-        private idaiFieldBackend: IdaiFieldBackend,
-        @Inject('app.config') private config
+        private idaiFieldBackend: IdaiFieldBackend
     ) {
 
     }

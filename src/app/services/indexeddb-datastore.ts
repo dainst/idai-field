@@ -2,11 +2,13 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
+import {MyObserver} from "../my-observer";
 
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
 
     private db: Promise<any>;
+    private observers : MyObserver[] = [];
 
     constructor() {
 
@@ -29,6 +31,10 @@ export class IndexeddbDatastore implements Datastore {
                 fulltextStore.createIndex("terms", "terms", { multiEntry: true } );
             };
         });
+    }
+
+    subscribe(observer: MyObserver) {
+        this.observers.push(observer);
     }
 
     create(object:IdaiFieldObject):Promise<string> {
@@ -140,9 +146,14 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
+                console.log(object);
+                for (var observer of this.observers) {
+                    observer.notify();
+                }
+
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').put(object);
-                console.log(object);
+
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });

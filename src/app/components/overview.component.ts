@@ -4,6 +4,7 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
 import {Utils} from '../utils';
+import {MyObserver} from "../my-observer";
 
 @Component({
     templateUrl: 'templates/overview.html'
@@ -14,7 +15,11 @@ import {Utils} from '../utils';
  * @author Daniel M. de Oliveira
  * @author Jan G. Wieners
  */
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, MyObserver {
+
+    notify():any {
+        this.fetchObjects();
+    }
 
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
@@ -24,6 +29,7 @@ export class OverviewComponent implements OnInit {
         private idaiFieldBackend: IdaiFieldBackend
     ) {
 
+        datastore.subscribe(this);
     }
 
     onSelect(object: IdaiFieldObject) {
@@ -32,7 +38,7 @@ export class OverviewComponent implements OnInit {
 
     getObjectIndex( id: String ) {
         for (var i in this.objects) {
-            if (this.objects[i].identifier==id) return i;
+            if (this.objects[i]._id==id) return i;
         }
         return null;
     }
@@ -46,6 +52,7 @@ export class OverviewComponent implements OnInit {
                     object => {
 
                         object.synced = true;
+                        this.datastore.update(object);
                     },
                     err => {
                     }
@@ -55,6 +62,8 @@ export class OverviewComponent implements OnInit {
 
     save(object: IdaiFieldObject) {
 
+        object.synced = false;
+
         this.datastore.update(object).then( () => {
 
             Utils.deepCopy(
@@ -62,7 +71,6 @@ export class OverviewComponent implements OnInit {
                 this.objects[this.getObjectIndex(object._id)]
             );
 
-            this.objects[this.getObjectIndex(object._id)].synced = false;
         }).catch( err => { console.error(err) });
 
     }
@@ -80,6 +88,11 @@ export class OverviewComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.fetchObjects();
+    }
+
+
+    private fetchObjects() {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));

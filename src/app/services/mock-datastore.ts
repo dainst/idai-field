@@ -2,9 +2,12 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
+import {MyObserver} from "../my-observer";
 
 @Injectable()
 export class MockDatastore implements Datastore {
+    subscribe(observer:MyObserver) {
+    }
 
     private db: { [key:string]:IdaiFieldObject } = {};
 

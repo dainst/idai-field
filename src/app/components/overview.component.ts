@@ -3,7 +3,7 @@ import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
-import {Utils} from '../utils';
+import {ModelUtils} from '../model/model-utils';
 import {IdaiObserver} from "../idai-observer";
 
 @Component({
@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit, IdaiObserver {
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject= Utils.clone(object);
+        this.selectedObject= ModelUtils.clone(object);
     }
 
     getObjectIndex( id: String ) {

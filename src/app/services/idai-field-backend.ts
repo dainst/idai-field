@@ -1,10 +1,10 @@
 import {Injectable} from "angular2/core";
 import {Http} from "angular2/http";
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Utils} from '../utils';
+import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Response} from "angular2/http";
-import {IdaiObserver} from "../my-observer";
+import {IdaiObserver} from "../idai-observer";
 
 /**
  * @author Jan G. Wieners
@@ -64,7 +64,7 @@ export class IdaiFieldBackend {
      *   to send to the backend.
      */
     private filterUnwantedProps(object:IdaiFieldObject) : IdaiFieldObject {
-        var o = Utils.clone(object);
+        var o = ModelUtils.clone(object);
         delete o.synced;
         return o;
     }

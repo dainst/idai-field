@@ -14,7 +14,7 @@ import {IdaiFieldBackend} from "../services/idai-field-backend";
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
 ])
-export class AppComponent implements OnInit, IdaiObserver {
+export class AppComponent implements OnInit {
 
     private connectionCheckTimer: number;
 

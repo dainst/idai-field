@@ -1,13 +1,17 @@
 #brand-img {
-
   height: 38px;
   margin-top: -16px;
   margin-bottom: -14px;
 }
 
 .navbar {
-
   border: 0;
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 17px;
+  cursor: pointer;
 }
 
 // display arrow on top of dropdown menu for idai.world menu

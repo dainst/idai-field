@@ -3,6 +3,7 @@ import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
 import {IdaiObserver} from "../idai-observer";
+import {IdaiObservable} from "../idai-observable";
 
 @Injectable()
 export class IndexeddbDatastore implements Datastore {

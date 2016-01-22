@@ -1,7 +1,8 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {IdaiObserver} from "../idai-observer";
+import {IdaiObservable} from "../idai-observable";
 
-export abstract class Datastore {
+export abstract class Datastore extends IdaiObservable {
 
     abstract create(object: IdaiFieldObject): Promise<string>;
 
@@ -14,6 +15,4 @@ export abstract class Datastore {
     abstract find(query: string, options: any): Promise<IdaiFieldObject[]>;
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;
-
-    abstract subscribe(observer: IdaiObserver);
 }

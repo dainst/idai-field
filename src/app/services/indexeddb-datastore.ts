@@ -37,6 +37,13 @@ export class IndexeddbDatastore implements Datastore {
         this.observers.push(observer);
     }
 
+    notifyObservers() {
+        for (var observer of this.observers) {
+            observer.notify();
+        }
+    }
+
+
     create(object:IdaiFieldObject):Promise<string> {
 
         return new Promise((resolve, reject) => {
@@ -76,7 +83,10 @@ export class IndexeddbDatastore implements Datastore {
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').delete(id);
                 request.onerror = event => reject(request.error);
-                request.onsuccess = event => resolve(request.result);
+                request.onsuccess = event => {
+                    this.notifyObservers();
+                    resolve(request.result);
+                }
             });
         });
     }
@@ -146,16 +156,15 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                console.log(object);
-                for (var observer of this.observers) {
-                    observer.notify();
-                }
 
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').put(object);
 
                 request.onerror = event => reject(request.error);
-                request.onsuccess = event => resolve(request.result);
+                request.onsuccess = event => {
+                    this.notifyObservers();
+                    resolve(request.result);
+                }
             });
         });
     }

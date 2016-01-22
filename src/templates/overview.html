@@ -12,27 +12,13 @@
                 <div class="status"
                      [class.synced]="object.synced"
                      [class.unsynced]="!object.synced"
-                >&#10003;</div>
+                ></div>
             </li>
         </ul>
     </div>
 
     <div class="col-md-9">
-        <div *ngIf="selectedObject">
-            <form>
-                <div class="form-group">
-                    <label>Identifier</label>
-                    <input [(ngModel)]="selectedObject.identifier" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Title</label>
-                    <input [(ngModel)]="selectedObject.title" class="form-control">
-                </div>
-                <div class="form-group">
-                    <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
-                </div>
-            </form>
-        </div>
+        <object-edit [selectedObject]="selectedObject"></object-edit>
     </div>
 </div>
 

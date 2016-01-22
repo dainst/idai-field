@@ -5,9 +5,11 @@ import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
 import {ModelUtils} from '../model/model-utils';
 import {IdaiObserver} from "../idai-observer";
+import {ObjectEditComponent} from "./object-edit.component";
 
 @Component({
-    templateUrl: 'templates/overview.html'
+    templateUrl: 'templates/overview.html',
+    directives: [ObjectEditComponent]
 })
 
 /**
@@ -28,8 +30,7 @@ export class OverviewComponent implements OnInit, IdaiObserver {
     constructor(
         private datastore: Datastore,
         private idaiFieldBackend: IdaiFieldBackend,
-        @Inject('app.config') private config
-    ) {
+        @Inject('app.config') private config) {
 
         datastore.subscribe(this);
     }
@@ -64,18 +65,6 @@ export class OverviewComponent implements OnInit, IdaiObserver {
                 }
             }
         }
-    }
-
-    /**
-     * Saves the object to the local datastore.
-     * @param object
-     */
-    save(object: IdaiFieldObject) {
-        object.synced = false;
-        this.datastore.update(object).then(
-            () => {},
-            err => console.error(err)
-        );
     }
 
     onKey(event:any) {

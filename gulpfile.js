@@ -125,8 +125,8 @@ gulp.task('prepare-package', function() {
 });
 
 gulp.task('package-node-dependencies', function() {
-    gulp.src('node_modules/express/**/*' )
-        .pipe(gulp.dest('dist/node_modules/express'));
+    gulp.src('node_modules/node-uuid/**/*' )
+        .pipe(gulp.dest('dist/node_modules/node-uuid'));
 });
 
 

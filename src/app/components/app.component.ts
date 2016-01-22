@@ -5,7 +5,6 @@ import {OverviewComponent} from './overview.component';
 import {Datastore} from "../services/datastore";
 import {OBJECTS} from "../services/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
-import {IdaiObserver} from "../my-observer";
 
 @Component({
     selector: 'idai-field-app',

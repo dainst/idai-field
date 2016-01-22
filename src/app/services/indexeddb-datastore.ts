@@ -14,9 +14,10 @@ export class IndexeddbDatastore implements Datastore {
     constructor() {
 
         this.db = new Promise((resolve, reject) => {
+
             var request = indexedDB.open("IdaiFieldClient", 5);
             request.onerror = (event) => {
-                console.error("Could not create IndexedDB!", event);
+                console.error("Could not create IndexedDB! Error: ", event.target.error.message);
                 reject(request.error);
             };
             request.onsuccess = (event) => {
@@ -24,8 +25,12 @@ export class IndexeddbDatastore implements Datastore {
             };
             request.onupgradeneeded = (event) => {
                 var db = request.result;
-                db.deleteObjectStore("idai-field-object");
-                db.deleteObjectStore("fulltext");
+
+                if (db.objectStoreNames.length > 0) {
+                    db.deleteObjectStore("idai-field-object");
+                    db.deleteObjectStore("fulltext");
+                }
+
                 var objectStore = db.createObjectStore("idai-field-object", { keyPath: "_id" });
                 objectStore.createIndex("identifier", "identifier", { unique: true } );
                 var fulltextStore = db.createObjectStore("fulltext", { keyPath: "_id" });
@@ -43,7 +48,6 @@ export class IndexeddbDatastore implements Datastore {
             observer.notify();
         }
     }
-
 
     create(object:IdaiFieldObject):Promise<string> {
 

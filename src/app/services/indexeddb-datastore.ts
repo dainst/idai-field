@@ -15,7 +15,7 @@ export class IndexeddbDatastore implements Datastore {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 6);
+            var request = indexedDB.open("IdaiFieldClient", 7);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
@@ -85,13 +85,27 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                var request = db.transaction(['idai-field-object'], 'readwrite')
+                
+                var objectRequest = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').delete(id);
-                request.onerror = event => reject(request.error);
-                request.onsuccess = event => {
-                    this.notifyObservers();
-                    resolve(request.result);
-                }
+                objectRequest.onerror = event => reject(objectRequest.error);
+
+                var fulltextRequest = db.transaction(['fulltext'], 'readwrite')
+                    .objectStore('fulltext').delete(id);
+                fulltextRequest.onerror = event => reject(fulltextRequest.error);
+
+                var promises = [];
+                promises.push(objectRequest);
+                promises.push(fulltextRequest);
+
+                Promise.all(promises).then(
+                    () => {
+                        this.notifyObservers();
+                        resolve();
+                    })
+                .catch(
+                    err => reject(err)
+                );
             });
         });
     }
@@ -114,7 +128,7 @@ export class IndexeddbDatastore implements Datastore {
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
-                        ids.push(cursor.value.identifier);
+                        ids.push(cursor.value.id);
                         cursor.continue();
                     } else {
                         // make ids unique

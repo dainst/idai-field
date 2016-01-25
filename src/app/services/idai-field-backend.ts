@@ -90,6 +90,34 @@ export class IdaiFieldBackend {
         });
     }
 
+    public resetIndex(): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.deleteIndex()
+            .subscribe(
+                () => {
+                    this.createIndex()
+                    .subscribe(
+                        () => resolve(),
+                        err => reject()
+                    )
+                },
+                err => reject()
+            );
+        });
+    }
+
+    private deleteIndex() : Observable<Response> {
+
+        return this.http.delete(this.hostUrl + '/' + this.indexName);
+    }
+
+    private createIndex() : Observable<Response> {
+
+        return this.http.put(this.hostUrl + '/' + this.indexName, "");
+    }
+
     private notifyObservers(): void {
 
         for (var observer of this.observers) {

@@ -46,6 +46,11 @@ export class AppComponent implements OnInit {
                 err => console.error("Problem when storing sample data", err)
             );
         });
+        this.idaiFieldBackend.resetIndex().then(
+            () => console.log("Successfully cleared backend repository"))
+        .catch(
+            err => console.error("Could not clear backend repository")
+        );
     }
 
     notify(): any {

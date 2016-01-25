@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
         this.datastore.all({}).then(objects => {
             var promises = [];
-            for (var ob of objects) promises.push(this.datastore.delete(ob._id));
+            for (var ob of objects) promises.push(this.datastore.delete(ob.id));
             return Promise.all(promises);
         }).then(() => {
             var promises = [];

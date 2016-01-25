@@ -72,7 +72,7 @@ export class IdaiFieldBackend {
     private performPost(object:IdaiFieldObject) : Observable<Response> {
 
         return this.http.post(this.hostUrl + '/' + this.indexName + '/'
-            + this.typeName + '/' + object._id,
+            + this.typeName + '/' + object.id,
             JSON.stringify(object))
     }
 

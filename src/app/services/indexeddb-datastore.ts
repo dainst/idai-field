@@ -15,9 +15,9 @@ export class IndexeddbDatastore implements Datastore {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 5);
+            var request = indexedDB.open("IdaiFieldClient", 6);
             request.onerror = (event) => {
-                console.error("Could not create IndexedDB! Error: ", event.target.error.message);
+                console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
             };
             request.onsuccess = (event) => {
@@ -31,9 +31,9 @@ export class IndexeddbDatastore implements Datastore {
                     db.deleteObjectStore("fulltext");
                 }
 
-                var objectStore = db.createObjectStore("idai-field-object", { keyPath: "_id" });
+                var objectStore = db.createObjectStore("idai-field-object", { keyPath: "id" });
                 objectStore.createIndex("identifier", "identifier", { unique: true } );
-                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "_id" });
+                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "id" });
                 fulltextStore.createIndex("terms", "terms", { multiEntry: true } );
             };
         });
@@ -52,18 +52,18 @@ export class IndexeddbDatastore implements Datastore {
     create(object:IdaiFieldObject):Promise<string> {
 
         return new Promise((resolve, reject) => {
-            if (object._id != null) reject("Aborting creation: Object already has an ID. " +
+            if (object.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
-            object._id = IdGenerator.generateId();
+            object.id = IdGenerator.generateId();
             return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-                .then(() => resolve(object._id), err => reject(err));
+                .then(() => resolve(object.id), err => reject(err));
         });
     }
 
     update(object:IdaiFieldObject):Promise<any> {
 
         return new Promise((resolve, reject) => {
-           if (object._id == null) reject("Aborting update: No ID given. " +
+           if (object.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
            return Promise.all([this.saveObject(object), this.saveFulltext(object)])
                .then(() => resolve(), err => reject(err));;
@@ -180,7 +180,7 @@ export class IndexeddbDatastore implements Datastore {
             this.db.then(db => {
                 var terms = IndexeddbDatastore.extractTerms(object);
                 var request = db.transaction(['fulltext'], 'readwrite')
-                    .objectStore('fulltext').put({ _id: object._id, terms: terms});
+                    .objectStore('fulltext').put({ id: object.id, terms: terms});
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });

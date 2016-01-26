@@ -48,7 +48,6 @@ gulp.task('copy-fonts', function() {
 gulp.task('copy-html', function() {
 
 	return gulp.src('src/index.html')
-        .pipe(useref())
 		.pipe(gulp.dest(paths.build));
 });
 
@@ -118,12 +117,16 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 	gulp.watch('src/index.html', ['copy-html']);
 	gulp.watch('src/img/**/*', ['copy-img']);
 
-	// TODO: get electron.reload working
 	gulp.watch('dist/**/*', electronServer.reload);
 });
 
 // copy necessary files to dist in order for them to be included in package
+// and remove dev dependencies from index.html
 gulp.task('prepare-package', function() {
+
+	gulp.src('src/index.html')
+        .pipe(useref())
+		.pipe(gulp.dest(paths.build));
 	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
 });
 

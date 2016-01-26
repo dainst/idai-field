@@ -43,18 +43,24 @@ export class IdaiFieldBackend {
 
         return new Promise((resolve, reject) => {
 
-            this.http.get(this.hostUrl + '/idaifield')             
-                .subscribe(
+            try {
+                this.http.get(this.hostUrl + '/idaifield')
+                    .subscribe(
                     data => {
                         this.connected = true;
                         resolve(true);
                     },
-                     err => {
+                    err => {
                         this.connected = false;
                         this.notifyObservers();
+                        console.log(err);
                         resolve(false);
                     }
-                )
+                    );
+            } catch (e) {
+                console.log(e);
+            }
+
         });
     }
 

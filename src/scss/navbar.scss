@@ -1,13 +1,17 @@
 #brand-img {
-
   height: 38px;
   margin-top: -16px;
   margin-bottom: -14px;
 }
 
 .navbar {
-
   border: 0;
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 17px;
+  cursor: pointer;
 }
 
 // display arrow on top of dropdown menu for idai.world menu
@@ -172,35 +176,17 @@
 }
 
 #connection-icon {
-  
-  margin-top: 5px;
   position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 50px;
 }
 
 #connection-icon.connected {
-
-  width: 12px;
-  height: 12px;
-  background: #33cc33;
-  border: 2px solid #ffffff;
-  -moz-border-radius: 50px;
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
+  background-color: #5dae8d;
 }
 
 #connection-icon.unconnected {
-
-  width: 12px;
-  height: 12px;
-  background: #cc0000;
-  border: 2px solid #ffffff;
-  -moz-border-radius: 50px;
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
-}
-
-#connection-info {
-  
-  margin-top: 2px;
-  margin-left: 16px;
+  background-color: #ccc;
 }

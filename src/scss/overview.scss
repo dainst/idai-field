@@ -19,21 +19,12 @@
   color: #999;
 }
 
-#objectList .status {
-  position: absolute;
-  right: 0;
-  padding: 9px 5px 5px 5px;
-  top: 0;
-  font-size: 1em;
-  font-weight: bold;
-}
-
 #objectList .synced {
-  color: #00d637;
+  border-right: 3px solid #657faa;
 }
 
 #objectList .unsynced {
-  color: #ffc600;
+  border-right: 3px solid #ccc;
 }
 
 .selected {

@@ -41,7 +41,7 @@ export class OverviewComponent implements OnInit, IdaiObserver {
 
     getObjectIndex( id: String ) {
         for (var i in this.objects) {
-            if (this.objects[i]._id==id) return i;
+            if (this.objects[i].id==id) return i;
         }
         return null;
     }

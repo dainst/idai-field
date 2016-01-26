@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
         this.datastore.all({}).then(objects => {
             var promises = [];
-            for (var ob of objects) promises.push(this.datastore.delete(ob._id));
+            for (var ob of objects) promises.push(this.datastore.delete(ob.id));
             return Promise.all(promises);
         }).then(() => {
             var promises = [];
@@ -46,6 +46,11 @@ export class AppComponent implements OnInit {
                 err => console.error("Problem when storing sample data", err)
             );
         });
+        this.idaiFieldBackend.resetIndex().then(
+            () => console.log("Successfully cleared backend repository"))
+        .catch(
+            err => console.error("Could not clear backend repository")
+        );
     }
 
     notify(): any {

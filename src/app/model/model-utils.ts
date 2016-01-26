@@ -13,7 +13,7 @@ export class ModelUtils {
     public static clone(from: IdaiFieldObject) : IdaiFieldObject {
 
         var cloned = {
-            _id: from._id,
+            id: from.id,
             identifier: from.identifier,
             title: from.title,
             synced: from.synced};

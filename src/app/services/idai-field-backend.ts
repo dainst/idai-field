@@ -72,7 +72,7 @@ export class IdaiFieldBackend {
     private performPost(object:IdaiFieldObject) : Observable<Response> {
 
         return this.http.post(this.hostUrl + '/' + this.indexName + '/'
-            + this.typeName + '/' + object._id,
+            + this.typeName + '/' + object.id,
             JSON.stringify(object))
     }
 
@@ -88,6 +88,34 @@ export class IdaiFieldBackend {
                 }
             );
         });
+    }
+
+    public resetIndex(): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.deleteIndex()
+            .subscribe(
+                () => {
+                    this.createIndex()
+                    .subscribe(
+                        () => resolve(),
+                        err => reject()
+                    )
+                },
+                err => reject()
+            );
+        });
+    }
+
+    private deleteIndex() : Observable<Response> {
+
+        return this.http.delete(this.hostUrl + '/' + this.indexName);
+    }
+
+    private createIndex() : Observable<Response> {
+
+        return this.http.put(this.hostUrl + '/' + this.indexName, "");
     }
 
     private notifyObservers(): void {

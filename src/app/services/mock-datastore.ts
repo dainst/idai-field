@@ -15,13 +15,13 @@ export class MockDatastore implements Datastore {
     private db: { [key:string]:IdaiFieldObject } = {};
 
     create(object: IdaiFieldObject):Promise<any> {
-        object._id = IdGenerator.generateId();
-        this.db[object._id] = object;
-        return Promise.resolve(object._id);
+        object.id = IdGenerator.generateId();
+        this.db[object.id] = object;
+        return Promise.resolve(object.id);
     }
 
     update(object: IdaiFieldObject):Promise<any> {
-        this.db[object._id] = object;
+        this.db[object.id] = object;
         return Promise.resolve();
     }
 

@@ -1,18 +1,16 @@
 <div class="row">
     <div class="col-md-3">
 
-        <input (keyup)="onKey($event)" class="form-control">
+        <input (keyup)="onKey($event)" class="form-control" placeholder="Search...">
 
         <ul *ngIf="objects" class="list-group" id="objectList">
             <li *ngFor="#object of objects"
-                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)"
-                (click)="onSelect(object)" class="list-group-item">
+                (click)="onSelect(object)" class="list-group-item"
+                [class.synced]="object.synced"
+                [class.unsynced]="!object.synced"
+                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)">
                 <div class="title">{{object.title}}</div>
                 <div class="identifier">{{object.identifier}}</div>
-                <div class="status"
-                     [class.synced]="object.synced"
-                     [class.unsynced]="!object.synced"
-                ></div>
             </li>
         </ul>
     </div>

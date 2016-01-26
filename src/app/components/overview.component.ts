@@ -1,10 +1,8 @@
-import {Component, OnInit, Inject} from 'angular2/core';
+import {Component, OnInit, Inject, provide} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {provide} from "angular2/core";
 import {IdaiFieldBackend} from '../services/idai-field-backend';
 import {ModelUtils} from '../model/model-utils';
-import {IdaiObserver} from "../idai-observer";
 import {ObjectEditComponent} from "./object-edit.component";
 
 @Component({
@@ -18,11 +16,7 @@ import {ObjectEditComponent} from "./object-edit.component";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class OverviewComponent implements OnInit, IdaiObserver {
-
-    notify():any {
-        this.fetchObjects();
-    }
+export class OverviewComponent implements OnInit {
 
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
@@ -31,12 +25,10 @@ export class OverviewComponent implements OnInit, IdaiObserver {
         private datastore: Datastore,
         private idaiFieldBackend: IdaiFieldBackend,
         @Inject('app.config') private config) {
-
-        datastore.subscribe(this);
     }
 
     onSelect(object: IdaiFieldObject) {
-        this.selectedObject= ModelUtils.clone(object);
+        this.selectedObject = object;
     }
 
     getObjectIndex( id: String ) {

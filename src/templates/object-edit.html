@@ -2,14 +2,11 @@
     <form>
         <div class="form-group">
             <label>Identifier</label>
-            <input [(ngModel)]="selectedObject.identifier" class="form-control">
+            <input [(ngModel)]="selectedObject.identifier" (keyup)="onKey($event)" class="form-control">
         </div>
         <div class="form-group">
             <label>Title</label>
-            <input [(ngModel)]="selectedObject.title" class="form-control">
-        </div>
-        <div class="form-group">
-            <div><button (click)="save(selectedObject)" class="btn btn-small btn-default">Save</button></div>
+            <input [(ngModel)]="selectedObject.title" (keyup)="onKey($event)" class="form-control">
         </div>
     </form>
 </div>

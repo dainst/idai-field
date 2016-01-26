@@ -14,6 +14,7 @@ var packager = require('electron-packager');
 var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
+var useref = require('gulp-useref');
 
 var pkg = require('./package.json');
 
@@ -39,13 +40,15 @@ gulp.task('sass', function() {
 });
 
 gulp.task('copy-fonts', function() {
+
 	return gulp.src(paths.bootstrap + '/fonts/**/*', { base: paths.bootstrap + '/fonts' })
-  	.pipe(gulp.dest(paths.build + '/fonts'));
+  		.pipe(gulp.dest(paths.build + '/fonts'));
 });
 
 gulp.task('copy-html', function() {
 
 	return gulp.src('src/index.html')
+        .pipe(useref())
 		.pipe(gulp.dest(paths.build));
 });
 

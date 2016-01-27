@@ -30,15 +30,17 @@ export class MockDatastore implements Datastore {
         return Promise.resolve();
     }
 
+    getUnsyncedObjects( ):Observable<IdaiFieldObject> {
+        return Observable.create( observer => {
+            Object.keys(this.db).forEach( k => observer.onNext(this.db[k]));
+        });
+    }
+
     find(query:string, options:any):Promise<IdaiFieldObject[]> {
         return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
     }
 
     all(options:any):Promise<IdaiFieldObject[]> {
-        return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
-    }
-
-    getUnsyncedObjects():Promise<IdaiFieldObject[]> {
         return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
     }
 

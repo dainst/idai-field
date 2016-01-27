@@ -1,4 +1,5 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
+import {Observable} from "rxjs/Observable";
 
 export abstract class Datastore {
 
@@ -14,5 +15,5 @@ export abstract class Datastore {
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;
 
-    abstract getUnsyncedObjects(): Promise<IdaiFieldObject[]>;
+    abstract getUnsyncedObjects(): Observable<IdaiFieldObject>;
 }

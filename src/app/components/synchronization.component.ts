@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from 'angular2/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {Subscription} from 'rxjs/Subscription';
 
 /**
  * @author Thomas Kleinke
@@ -17,7 +16,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class SynchronizationComponent implements OnInit {
 
     private connected: boolean;
-    private subscription: Subscription<boolean>;
+    private objectsToSyncIds: string[] = [];
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,
         private datastore: Datastore) {}
@@ -25,6 +24,7 @@ export class SynchronizationComponent implements OnInit {
     ngOnInit() {
 
         this.setupConnectionCheck();
+        this.setupSync();
     }
 
     private setupConnectionCheck() {
@@ -32,16 +32,18 @@ export class SynchronizationComponent implements OnInit {
         this.idaiFieldBackend.isConnected().subscribe(
             connected => {
                 this.connected = connected;
-                if (connected) this.setupSync();
-                else if (this.subscription) this.subscription.unsubscribe();
+                if (connected) this.syncAll();
             }
         );
     }
 
     private setupSync() {
 
-        this.subscription = this.datastore.getUnsyncedObjects().subscribe(
-            object => this.sync(object),
+        this.datastore.getUnsyncedObjects().subscribe(
+            object => {
+                if (this.connected) this.sync(object);
+                else this.storeObjectId(object.id);
+            },
             err => console.error("Could not fetch unsynced objects", err)
         );
     }
@@ -52,10 +54,33 @@ export class SynchronizationComponent implements OnInit {
             object => {
                 object.synced = 1;
                 this.datastore.update(object);
+                this.removeObjectId(object.id);
                 console.log("Successfully synced object", object);
             },
             err => console.error("Synchronization failed", err, object)
         );
+    }
+
+    private syncAll() {
+
+        this.objectsToSyncIds.forEach(id => {
+            this.datastore.get(id).then(
+                object => this.sync(object)
+            );
+        });
+    }
+
+    private storeObjectId(objectId: string) {
+
+        if (this.objectsToSyncIds.indexOf(objectId) == -1)
+            this.objectsToSyncIds.push(objectId);
+    }
+
+    private removeObjectId(objectId: string) {
+
+        var index: number = this.objectsToSyncIds.indexOf(objectId);
+        if (index != -1)
+            this.objectsToSyncIds.splice(index, 1);
     }
 
 }

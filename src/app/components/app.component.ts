@@ -2,6 +2,7 @@ import {Component, OnInit, Inject} from 'angular2/core';
 import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
 import {View} from "angular2/core";
 import {OverviewComponent} from './overview.component';
+import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../services/datastore";
 import {OBJECTS} from "../services/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
@@ -9,25 +10,21 @@ import {IdaiFieldBackend} from "../services/idai-field-backend";
 @Component({
     selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
-    directives: [RouterOutlet,RouterLink]
+    directives: [RouterOutlet, RouterLink, SynchronizationComponent]
 })
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
 ])
 export class AppComponent implements OnInit {
 
-    private connectionCheckTimer: number;
-
     constructor(private datastore: Datastore,
             private idaiFieldBackend: IdaiFieldBackend,
             @Inject('app.config') private config) {
-        this.idaiFieldBackend.subscribe(this);
     }
 
     ngOnInit() {
         this.idaiFieldBackend.setHostName(this.config.hostName);
         this.idaiFieldBackend.setIndexName(this.config.indexName);
-        this.checkBackendConnection();
         if (this.config.environment == 'test') this.loadSampleData();
     }
 
@@ -52,24 +49,4 @@ export class AppComponent implements OnInit {
             err => console.error("Could not clear backend repository")
         );
     }
-
-    notify(): any {
-
-        clearTimeout(this.connectionCheckTimer);
-        this.checkBackendConnection();
-    }
-
-    checkBackendConnection(): void {
-
-        this.idaiFieldBackend.checkConnection()
-            .then(
-                result => {
-                    var interval: number = this.idaiFieldBackend.isConnected() ?
-                        this.config.connectionCheckInterval.online : this.config.connectionCheckInterval.offline;
-
-                    this.connectionCheckTimer = setTimeout(this.checkBackendConnection.bind(this), interval);
-                }
-        );
-    }
-
 }

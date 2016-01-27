@@ -15,7 +15,7 @@ export class IndexeddbDatastore implements Datastore {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 9);
+            var request = indexedDB.open("IdaiFieldClient", 8);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
@@ -33,7 +33,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 var objectStore = db.createObjectStore("idai-field-object", { keyPath: "id" });
                 objectStore.createIndex("identifier", "identifier", { unique: true } );
-                objectStore.createIndex("synced", "synced");
+                objectStore.createIndex("synced", "synced", { unique: false });
                 var fulltextStore = db.createObjectStore("fulltext", { keyPath: "id" });
                 fulltextStore.createIndex("terms", "terms", { multiEntry: true } );
             };
@@ -90,9 +90,8 @@ export class IndexeddbDatastore implements Datastore {
                 promises.push(fulltextRequest);
 
                 Promise.all(promises).then(
-                    () => {
-                        resolve();
-                    })
+                    () => resolve()
+                )
                 .catch(
                     err => reject(err)
                 );
@@ -176,6 +175,30 @@ export class IndexeddbDatastore implements Datastore {
                     else {
                         resolve(objects);
                     }
+                };
+                cursor.onerror = err => reject(cursor.error);
+            });
+        });
+    }
+
+    getUnsyncedObjects():Promise<IdaiFieldObject[]> {
+
+        return new Promise<IdaiFieldObject[]>((resolve, reject) => {
+
+            this.db.then(db => {
+
+                var objects = [];
+
+                var objectStore = db.transaction(['idai-field-object']).objectStore('idai-field-object');
+                var cursor = objectStore.index("synced").openCursor(IDBKeyRange.only(0));
+                cursor.onsuccess = (event) => {
+                    var cursor = event.target.result;
+                    if (cursor) {
+                        objects.push(cursor.value);
+                        cursor.continue();
+                    }
+                    else
+                        resolve(objects);
                 };
                 cursor.onerror = err => reject(cursor.error);
             });

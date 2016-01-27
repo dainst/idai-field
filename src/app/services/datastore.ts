@@ -16,4 +16,6 @@ export abstract class Datastore {
     abstract find(query: string, options: any): Promise<IdaiFieldObject[]>;
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;
+
+    abstract getUnsyncedObjects(): Promise<IdaiFieldObject[]>;
 }

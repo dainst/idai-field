@@ -4,7 +4,6 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Response} from "angular2/http";
-import {IdaiObserver} from "../idai-observer";
 
 /**
  * @author Jan G. Wieners
@@ -18,13 +17,8 @@ export class IdaiFieldBackend {
     private hostUrl   : string;
     private indexName : string;
     private connected : boolean;
-    private observers : IdaiObserver[] = [];
 
     public constructor(private http: Http) {
-    }
-
-    public subscribe(observer: IdaiObserver) {
-        this.observers.push(observer);
     }
 
     public setHostName(hostName: string) {
@@ -51,7 +45,6 @@ export class IdaiFieldBackend {
                     },
                      err => {
                         this.connected = false;
-                        this.notifyObservers();
                         resolve(false);
                     }
                 )
@@ -116,13 +109,6 @@ export class IdaiFieldBackend {
     private createIndex() : Observable<Response> {
 
         return this.http.put(this.hostUrl + '/' + this.indexName, "");
-    }
-
-    private notifyObservers(): void {
-
-        for (var observer of this.observers) {
-            observer.notify();
-        }
     }
 
 }

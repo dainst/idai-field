@@ -2,20 +2,17 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
-import {IdaiObserver} from "../idai-observer";
-import {IdaiObservable} from "../idai-observable";
 
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
 
     private db: Promise<any>;
-    private observers : IdaiObserver[] = [];
 
     constructor() {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 7);
+            var request = indexedDB.open("IdaiFieldClient", 8);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
@@ -33,20 +30,11 @@ export class IndexeddbDatastore implements Datastore {
 
                 var objectStore = db.createObjectStore("idai-field-object", { keyPath: "id" });
                 objectStore.createIndex("identifier", "identifier", { unique: true } );
+                objectStore.createIndex("synced", "synced", { unique: false });
                 var fulltextStore = db.createObjectStore("fulltext", { keyPath: "id" });
                 fulltextStore.createIndex("terms", "terms", { multiEntry: true } );
             };
         });
-    }
-
-    subscribe(observer: IdaiObserver) {
-        this.observers.push(observer);
-    }
-
-    notifyObservers() {
-        for (var observer of this.observers) {
-            observer.notify();
-        }
     }
 
     create(object:IdaiFieldObject):Promise<string> {
@@ -99,10 +87,8 @@ export class IndexeddbDatastore implements Datastore {
                 promises.push(fulltextRequest);
 
                 Promise.all(promises).then(
-                    () => {
-                        this.notifyObservers();
-                        resolve();
-                    })
+                    () => resolve()
+                )
                 .catch(
                     err => reject(err)
                 );
@@ -171,6 +157,30 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
+    getUnsyncedObjects():Promise<IdaiFieldObject[]> {
+
+        return new Promise<IdaiFieldObject[]>((resolve, reject) => {
+
+            this.db.then(db => {
+
+                var objects = [];
+
+                var objectStore = db.transaction(['idai-field-object']).objectStore('idai-field-object');
+                var cursor = objectStore.index("synced").openCursor(IDBKeyRange.only(0));
+                cursor.onsuccess = (event) => {
+                    var cursor = event.target.result;
+                    if (cursor) {
+                        objects.push(cursor.value);
+                        cursor.continue();
+                    }
+                    else
+                        resolve(objects);
+                };
+                cursor.onerror = err => reject(cursor.error);
+            });
+        });
+    }
+
     private saveObject(object:IdaiFieldObject):Promise<any> {
 
         return new Promise((resolve, reject) => {
@@ -181,7 +191,6 @@ export class IndexeddbDatastore implements Datastore {
 
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
-                    this.notifyObservers();
                     resolve(request.result);
                 }
             });

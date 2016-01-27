@@ -1,8 +1,6 @@
-import {Component, OnInit, Inject, provide} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {IdaiFieldBackend} from '../services/idai-field-backend';
-import {ModelUtils} from '../model/model-utils';
 import {ObjectEditComponent} from "./object-edit.component";
 
 @Component({
@@ -22,41 +20,11 @@ export class OverviewComponent implements OnInit {
     public objects: IdaiFieldObject[];
 
     constructor(
-        private datastore: Datastore,
-        private idaiFieldBackend: IdaiFieldBackend,
-        @Inject('app.config') private config) {
+        private datastore: Datastore) {
     }
 
     onSelect(object: IdaiFieldObject) {
         this.selectedObject = object;
-    }
-
-    getObjectIndex( id: String ) {
-        for (var i in this.objects) {
-            if (this.objects[i].id==id) return i;
-        }
-        return null;
-    }
-
-    sync() {
-
-        if (this.objects) {
-            for (var o of this.objects) {
-
-                if (!o.synced) {
-                    this.idaiFieldBackend.save(o)
-                        .then(
-                            object => {
-
-                                object.synced = true;
-                                this.datastore.update(object);
-                            },
-                            err => {
-                            }
-                        );
-                }
-            }
-        }
     }
 
     onKey(event:any) {
@@ -73,7 +41,6 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
         this.fetchObjects();
-        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
     }
 
     private fetchObjects() {
@@ -82,11 +49,4 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
     }
 
-    checkForSync(): void {
-
-        if (this.idaiFieldBackend.isConnected())
-            this.sync();
-
-        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
-    }
 }

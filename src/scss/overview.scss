@@ -8,6 +8,7 @@
 
 #objectList .list-group-item:hover {
   background-color: #d9e1ed;
+  transition: background-color .65s ease;
 }
 
 #objectList .title {
@@ -21,10 +22,12 @@
 
 #objectList .synced {
   border-right: 3px solid #657faa;
+  transition: border-right 1s ease;
 }
 
 #objectList .unsynced {
   border-right: 3px solid #ccc;
+  transition: border-right 1s ease;
 }
 
 .selected {
@@ -48,4 +51,5 @@
 
 #objectOverview #createObject:hover {
   background-color: #b4ecb3 !important;
+  transition: background-color .65s ease;
 }

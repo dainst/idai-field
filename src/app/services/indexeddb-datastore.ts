@@ -15,7 +15,7 @@ export class IndexeddbDatastore implements Datastore {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 8);
+            var request = indexedDB.open("IdaiFieldClient", 10);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
@@ -109,7 +109,7 @@ export class IndexeddbDatastore implements Datastore {
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
-                        observer.onNext(cursor.value);
+                        observer.next(cursor.value);
                         cursor.continue();
                     } else {
                         this.observers.push(observer);

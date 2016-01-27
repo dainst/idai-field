@@ -1,8 +1,6 @@
 import {Component, Input, SimpleChange, OnChanges} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {ModelUtils} from '../model/model-utils';
 import {Datastore} from "../services/datastore";
-import {IdaiFieldBackend} from "../services/idai-field-backend";
 
 /**
  * @author Jan G. Wieners
@@ -37,7 +35,7 @@ export class ObjectEditComponent implements OnChanges {
     save(object: IdaiFieldObject) {
 
         this.changed = false;
-        object.synced = false;
+        object.synced = 0;
         this.datastore.update(object).then(
             () => {},
             err => console.error(err)

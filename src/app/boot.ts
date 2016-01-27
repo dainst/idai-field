@@ -9,13 +9,9 @@ import {IndexeddbDatastore} from "./services/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 
 const config = {
-	environment: 'test', // choose 'test, 'development' or 'production'
+	environment: 'test', // choose 'test', 'development' or 'production'
     hostName: 'http://127.0.0.1:9200',
     indexName: 'idaifield',
-    connectionCheckInterval: {
-    	online: 60000,
-    	offline: 1000
-    },
     syncCheckInterval: 500
 }
 

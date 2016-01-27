@@ -8,10 +8,6 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class MockDatastore implements Datastore {
 
-    subscribe(observer: IdaiObserver) { }
-
-    notifyObservers() { }
-
     private db: { [key:string]:IdaiFieldObject } = {};
 
     create(object: IdaiFieldObject):Promise<any> {
@@ -39,6 +35,10 @@ export class MockDatastore implements Datastore {
     }
 
     all(options:any):Promise<IdaiFieldObject[]> {
+        return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
+    }
+
+    getUnsyncedObjects():Promise<IdaiFieldObject[]> {
         return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
     }
 

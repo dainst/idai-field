@@ -41,22 +41,12 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
         this.fetchObjects();
-        this.setupSync();
     }
 
     private fetchObjects() {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));
-    }
-
-    private setupSync(): void {
-
-        this.datastore.getObjectsToSync().subscribe(
-            object => console.log("sync", object),
-            err => console.error("sync failed", err),
-            () => console.log("sync finished")
-        );
     }
 
 }

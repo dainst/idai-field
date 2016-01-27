@@ -99,13 +99,13 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    getObjectsToSync(): Observable<IdaiFieldObject> {
+    getUnsyncedObjects(): Observable<IdaiFieldObject> {
 
         return Observable.create( observer => {
             this.db.then(db => {
 
                 var cursor = db.transaction(['idai-field-object']).objectStore('idai-field-object')
-                    .index("synced").openCursor();
+                    .index("synced").openCursor(IDBKeyRange.only(0));
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -172,33 +172,7 @@ export class IndexeddbDatastore implements Datastore {
                         objects.push(cursor.value);
                         cursor.continue();
                     }
-                    else {
-                        resolve(objects);
-                    }
-                };
-                cursor.onerror = err => reject(cursor.error);
-            });
-        });
-    }
-
-    getUnsyncedObjects():Promise<IdaiFieldObject[]> {
-
-        return new Promise<IdaiFieldObject[]>((resolve, reject) => {
-
-            this.db.then(db => {
-
-                var objects = [];
-
-                var objectStore = db.transaction(['idai-field-object']).objectStore('idai-field-object');
-                var cursor = objectStore.index("synced").openCursor(IDBKeyRange.only(0));
-                cursor.onsuccess = (event) => {
-                    var cursor = event.target.result;
-                    if (cursor) {
-                        objects.push(cursor.value);
-                        cursor.continue();
-                    }
-                    else
-                        resolve(objects);
+                    else resolve(objects);
                 };
                 cursor.onerror = err => reject(cursor.error);
             });
@@ -236,6 +210,7 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private static extractTerms(object:IdaiFieldObject):string[] {
+
         var terms = [];
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
@@ -248,10 +223,12 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private static tokenize(string:string):string[] {
+
         return string.match(/\w+/g);
     }
 
     private notifyObserversOfObjectToSync(object:IdaiFieldObject):void {
+        
         this.observers.forEach( observer => observer.next(object) );
     }
 

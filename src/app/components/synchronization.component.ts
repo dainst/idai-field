@@ -2,9 +2,11 @@ import {Component, Inject, OnInit} from 'angular2/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
+import {Subscription} from 'rxjs/Subscription';
 
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 @Component({
 
@@ -14,59 +16,46 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 
 export class SynchronizationComponent implements OnInit {
 
-    private connectionCheckTimer: number;
+    private connected: boolean;
+    private subscription: Subscription<boolean>;
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,
-        private datastore: Datastore,
-        @Inject('app.config') private config) {}
+        private datastore: Datastore) {}
 
     ngOnInit() {
 
-        this.checkForSync();
+        this.setupConnectionCheck();
     }
 
-    checkForSync(): void {
+    private setupConnectionCheck() {
 
-        if (this.idaiFieldBackend.isConnected()) {
-
-            this.datastore.getUnsyncedObjects()
-                .then(objects => this.sync(objects))
-                .catch(err => {
-                    console.error(err);
-                    this.resetTimeout();
-                });
-        } else {
-            this.idaiFieldBackend.checkConnection()
-                .then(result => this.resetTimeout());
-        }
-    }
-
-    private resetTimeout() {
-        
-        this.connectionCheckTimer = setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
-    }
-
-    private sync(objects: IdaiFieldObject[]) {
-
-        if (objects && objects.length > 0) {
-
-            var promises = [];
-
-            for (var obj of objects) {
-
-                promises.push(this.idaiFieldBackend.save(obj)
-                    .then(
-                        object => {
-                            object.synced = 1;
-                            this.datastore.update(object);
-                        },
-                        err => { }
-                    ));
+        this.idaiFieldBackend.isConnected().subscribe(
+            connected => {
+                this.connected = connected;
+                if (connected) this.setupSync();
+                else if (this.subscription) this.subscription.unsubscribe();
             }
-
-            Promise.all(promises).then(
-                () => this.resetTimeout());
-        } else
-            this.resetTimeout();
+        );
     }
+
+    private setupSync() {
+
+        this.subscription = this.datastore.getUnsyncedObjects().subscribe(
+            object => this.sync(object),
+            err => console.error("Could not fetch unsynced objects", err)
+        );
+    }
+
+    private sync(object: IdaiFieldObject) {
+
+        this.idaiFieldBackend.save(object).then(
+            object => {
+                object.synced = 1;
+                this.datastore.update(object);
+                console.log("Successfully synced object", object);
+            },
+            err => console.error("Synchronization failed", err, object)
+        );
+    }
+
 }

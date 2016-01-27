@@ -1,8 +1,9 @@
-import {Injectable} from "angular2/core";
+import {Injectable, Inject} from "angular2/core";
 import {Http} from "angular2/http";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
 import {Response} from "angular2/http";
 
 /**
@@ -17,8 +18,12 @@ export class IdaiFieldBackend {
     private hostUrl   : string;
     private indexName : string;
     private connected : boolean;
+    private connectionCheckTimer: number;
+    private observers: Observer<boolean>[] = [];
 
-    public constructor(private http: Http) {
+    public constructor(private http: Http,
+        @Inject('app.config') private config) {
+        this.checkConnection();
     }
 
     public setHostName(hostName: string) {
@@ -29,26 +34,34 @@ export class IdaiFieldBackend {
         this.indexName= indexName;
     }
 
-    public isConnected(): boolean {
-        return this.connected;
+    public isConnected(): Observable<boolean> {
+        return Observable.create( observer => {
+            this.observers.push(observer);
+            observer.next(false);
+        });
     }
 
-    public checkConnection(): Promise<boolean> {
+    public checkConnection(): void {
 
-        return new Promise((resolve, reject) => {
+        this.http.get(this.hostUrl + '/idaifield')
+        .subscribe(
+            data => this.setConnectionStatus(true),
+            err => this.setConnectionStatus(false)
+        );
+    }
 
-            this.http.get(this.hostUrl + '/idaifield')             
-                .subscribe(
-                    data => {
-                        this.connected = true;
-                        resolve(true);
-                    },
-                     err => {
-                        this.connected = false;
-                        resolve(false);
-                    }
-                )
-        });
+    private setConnectionStatus(connected: boolean) {
+
+        if (connected != this.connected) {
+            this.observers.forEach(observer => observer.next(connected));
+        }
+
+        this.connected = connected;
+
+        this.connectionCheckTimer = setTimeout(
+            this.checkConnection.bind(this),
+            this.config.backendConnectionCheckInterval
+        );
     }
 
     /**

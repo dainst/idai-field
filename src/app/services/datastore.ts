@@ -11,11 +11,9 @@ export abstract class Datastore {
 
     abstract delete(id: string): Promise<any>;
 
-    abstract getObjectsToSync(): Observable<IdaiFieldObject>;
-
     abstract find(query: string, options: any): Promise<IdaiFieldObject[]>;
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;
 
-    abstract getUnsyncedObjects(): Promise<IdaiFieldObject[]>;
+    abstract getUnsyncedObjects(): Observable<IdaiFieldObject>;
 }

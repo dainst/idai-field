@@ -12,7 +12,7 @@ const config = {
 	environment: 'test', // choose 'test', 'development' or 'production'
     hostName: 'http://127.0.0.1:9200',
     indexName: 'idaifield',
-    syncCheckInterval: 500
+    backendConnectionCheckInterval: 1000
 }
 
 if (config.environment == 'production') enableProdMode();

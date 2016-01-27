@@ -3,6 +3,7 @@ import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 
+
 @Component({
     templateUrl: 'templates/overview.html',
     directives: [ObjectEditComponent]
@@ -27,6 +28,20 @@ export class OverviewComponent implements OnInit {
         this.selectedObject = object;
     }
 
+    public onCreate() {
+
+        var object: any = {};
+
+        this.datastore.create(object).then(
+            () => {
+                console.log('NEW OBJECT', object);
+                this.objects.push(object);
+                this.selectedObject = object;
+            },
+            err => console.error(err)
+        );
+    }
+
     onKey(event:any) {
         if (event.target.value == "") {
             this.datastore.all({}).then(objects => {
@@ -44,6 +59,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private fetchObjects() {
+
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));

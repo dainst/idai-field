@@ -37,3 +37,15 @@
 .selectedObject .glyphicon {
   cursor: pointer;
 }
+
+#objectOverview #createObject {
+  text-align: center;
+  border-right: 3px solid #1b9519;
+  font-size: 1.2em;
+  color: #1b9519;
+  background-color: #daf6d9 !important;
+}
+
+#objectOverview #createObject:hover {
+  background-color: #b4ecb3 !important;
+}

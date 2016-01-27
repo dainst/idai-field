@@ -71,8 +71,12 @@
                 class="list-group-item"
                 [class.synced]="object.synced"
                 [class.unsynced]="!object.synced"
-                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)">
+                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)"
+                onclick="window.scrollTo(0, 0)">
                 <div class="title">{{object.title}}</div>
+                <!-- Enable when finally implemented in Chromium
+                onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+                -->
                 <div class="identifier">{{object.identifier}}</div>
             </li>
             <li id="createObject"

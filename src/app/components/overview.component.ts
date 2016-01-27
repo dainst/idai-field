@@ -38,27 +38,6 @@ export class OverviewComponent implements OnInit {
         return null;
     }
 
-    sync() {
-
-        if (this.objects) {
-            for (var o of this.objects) {
-
-                if (!o.synced) {
-                    this.idaiFieldBackend.save(o)
-                        .then(
-                            object => {
-
-                                object.synced = true;
-                                this.datastore.update(object);
-                            },
-                            err => {
-                            }
-                        );
-                }
-            }
-        }
-    }
-
     onKey(event:any) {
         if (event.target.value == "") {
             this.datastore.all({}).then(objects => {
@@ -73,7 +52,7 @@ export class OverviewComponent implements OnInit {
 
     ngOnInit() {
         this.fetchObjects();
-        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
+        this.setupSync();
     }
 
     private fetchObjects() {
@@ -82,11 +61,12 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
     }
 
-    checkForSync(): void {
+    private setupSync(): void {
 
-        if (this.idaiFieldBackend.isConnected())
-            this.sync();
-
-        setTimeout(this.checkForSync.bind(this), this.config.syncCheckInterval);
+        this.datastore.getObjectsToSync().subscribe(
+            object => console.log("sync", object),
+            err => console.error("sync failed", err),
+            () => console.log("sync finished")
+        );
     }
 }

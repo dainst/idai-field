@@ -14,6 +14,7 @@ var packager = require('electron-packager');
 var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
+var useref = require('gulp-useref');
 
 var pkg = require('./package.json');
 
@@ -39,8 +40,9 @@ gulp.task('sass', function() {
 });
 
 gulp.task('copy-fonts', function() {
+
 	return gulp.src(paths.bootstrap + '/fonts/**/*', { base: paths.bootstrap + '/fonts' })
-  	.pipe(gulp.dest(paths.build + '/fonts'));
+  		.pipe(gulp.dest(paths.build + '/fonts'));
 });
 
 gulp.task('copy-html', function() {
@@ -115,12 +117,16 @@ gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templa
 	gulp.watch('src/index.html', ['copy-html']);
 	gulp.watch('src/img/**/*', ['copy-img']);
 
-	// TODO: get electron.reload working
 	gulp.watch('dist/**/*', electronServer.reload);
 });
 
 // copy necessary files to dist in order for them to be included in package
+// and remove dev dependencies from index.html
 gulp.task('prepare-package', function() {
+
+	gulp.src('src/index.html')
+        .pipe(useref())
+		.pipe(gulp.dest(paths.build));
 	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
 });
 

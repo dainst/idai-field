@@ -23,7 +23,8 @@ var paths = {
 	'release': 'release/',
 	'cache': 'cache/',
 	'lib': 'node_modules/',
-	'bootstrap': 'node_modules/bootstrap-sass/assets/'
+	'bootstrap': 'node_modules/bootstrap-sass/assets/',
+	'mdi': 'node_modules/mdi/'
 };
 
 const tscConfig = require('./tsconfig.json');
@@ -34,15 +35,21 @@ var electronServer = electronConnect.server.create({path: paths.build});
 gulp.task('sass', function() {
 
 	return gulp.src('src/scss/app.scss')
-	  	.pipe(sass({includePaths: [paths.bootstrap + 'stylesheets/'], precision: 8}))
+	  	.pipe(sass({includePaths: [
+			paths.bootstrap + 'stylesheets/',
+			paths.mdi + 'scss/'
+		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
 	    .pipe(gulp.dest(paths.build + '/css'));
 });
 
 gulp.task('copy-fonts', function() {
 
-	return gulp.src(paths.bootstrap + '/fonts/**/*', { base: paths.bootstrap + '/fonts' })
-  		.pipe(gulp.dest(paths.build + '/fonts'));
+	return gulp.src([
+			paths.mdi + '/fonts/**/*',
+			paths.bootstrap + '/fonts/**/*'
+		])
+		.pipe(gulp.dest(paths.build + '/fonts'));
 });
 
 gulp.task('copy-html', function() {

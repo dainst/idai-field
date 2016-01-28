@@ -179,7 +179,8 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 10px;
+  z-index: 0;
+  width: 20px;
   height: 50px;
 }
 
@@ -189,4 +190,26 @@
 
 #connection-icon.unconnected {
   background-color: #ccc;
+}
+
+#objectsToSyncCount {
+  position: absolute;
+  top: 0;
+  height: 50px;
+  right: 20px;
+  z-index: 1;
+  padding: 0 10px 0 10px;
+  border-bottom: 1px solid #aaa;
+  text-align: center;
+}
+
+#syncCounter {
+  padding: 5px 5px 5px 0;
+  font-size: 0.8em;
+}
+
+#syncSymbol {
+  display: block;
+  color: #fff;
+  font-size: 2.1em;
 }

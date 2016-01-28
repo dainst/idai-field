@@ -50,7 +50,7 @@ export class IndexeddbDatastore implements Datastore {
             if (object.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
             object.id = IdGenerator.generateId();
-            object.created = Date.now();
+            object.created = new Date();
             object.modified = object.created;
             this.objectCache[object.id] = object;
             return Promise.all([this.saveObject(object), this.saveFulltext(object)])
@@ -63,7 +63,7 @@ export class IndexeddbDatastore implements Datastore {
         return new Promise((resolve, reject) => {
            if (object.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
-           object.modified = Date.now();
+           object.modified = new Date();
            return Promise.all([this.saveObject(object), this.saveFulltext(object)])
                .then(() => resolve(), err => reject(err));;
         });

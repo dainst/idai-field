@@ -214,7 +214,7 @@ export class IndexeddbDatastore implements Datastore {
         var terms = [];
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
-                if (typeof object[property] == "string") {
+                if (typeof object[property] == "string" && object[property].length > 0) {
                     terms = terms.concat(this.tokenize(object[property]));
                 }
             }

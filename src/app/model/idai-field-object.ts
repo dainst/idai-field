@@ -3,4 +3,6 @@ export interface IdaiFieldObject {
     identifier: string;
     title: string;
     synced: number;
+    modified: Date;
+    created: Date;
 }

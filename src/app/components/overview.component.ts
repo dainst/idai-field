@@ -18,6 +18,7 @@ import {ObjectEditComponent} from "./object-edit.component";
 export class OverviewComponent implements OnInit {
 
     public selectedObject: IdaiFieldObject;
+    public newObject: any;
     public objects: IdaiFieldObject[];
 
     constructor(private datastore: Datastore,
@@ -25,24 +26,26 @@ export class OverviewComponent implements OnInit {
     }
 
     onSelect(object: IdaiFieldObject) {
+
+        if (this.newObject && object != this.newObject) this.checkNewObject(); 
+
         this.selectedObject = object;
     }
 
     public onCreate() {
 
-        var object: any = {};
+        if (this.newObject) this.checkNewObject();
 
-        this.datastore.create(object).then(
-            () => {
-                console.log('NEW OBJECT', object);
-                this.objects.push(object);
-                this.selectedObject = object;
-            },
-            err => console.error(err)
-        );
+        if (!this.newObject) {
+            this.newObject = {};
+            this.objects.unshift(this.newObject);
+        }
+
+        this.selectedObject = this.newObject;
     }
 
     onKey(event:any) {
+
         if (event.target.value == "") {
             this.datastore.all({}).then(objects => {
                 this.objects = objects;
@@ -55,6 +58,7 @@ export class OverviewComponent implements OnInit {
     }
 
     ngOnInit() {
+
         if (this.config.environment == "test") {
             setTimeout(() => this.fetchObjects(), 500);
         } else {
@@ -67,6 +71,15 @@ export class OverviewComponent implements OnInit {
         this.datastore.all({}).then(objects => {
             this.objects = objects;
         }).catch(err => console.error(err));
+    }
+
+    private checkNewObject() {
+
+        if (!this.newObject.id) {    // Replace with proper validation
+            var index = this.objects.indexOf(this.newObject);
+            this.objects.splice(index, 1);
+        }
+        this.newObject = undefined;
     }
 
 }

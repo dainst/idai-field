@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Inject} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
@@ -20,8 +20,8 @@ export class OverviewComponent implements OnInit {
     public selectedObject: IdaiFieldObject;
     public objects: IdaiFieldObject[];
 
-    constructor(
-        private datastore: Datastore) {
+    constructor(private datastore: Datastore,
+        @Inject('app.config') private config) {
     }
 
     onSelect(object: IdaiFieldObject) {
@@ -55,7 +55,11 @@ export class OverviewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchObjects();
+        if (this.config.environment == "test") {
+            setTimeout(() => this.fetchObjects(), 500);
+        } else {
+            this.fetchObjects();
+        }
     }
 
     private fetchObjects() {

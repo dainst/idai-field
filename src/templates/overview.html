@@ -71,13 +71,16 @@
                 class="list-group-item"
                 [class.synced]="object.synced"
                 [class.unsynced]="!object.synced"
-                [class.selected]="selectedObject && (selectedObject.identifier === object.identifier)"
+                [class.selected]="selectedObject && (selectedObject.id === object.id)"
                 onclick="window.scrollTo(0, 0)">
-                <div class="title">{{object.title}}</div>
-                <!-- Enable when finally implemented in Chromium
-                onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-                -->
-                <div class="identifier">{{object.identifier}}</div>
+                <div *ngIf="object.identifier || object.title">
+                    <div class="title">{{object.title}}</div>
+                    <!-- Enable when finally implemented in Chromium
+                    onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+                    -->
+                    <div class="identifier">{{object.identifier}}</div>
+                </div>
+                <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
             </li>
             <li id="createObject"
                 class="list-group-item list-group-item-success"

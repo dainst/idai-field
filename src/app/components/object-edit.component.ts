@@ -34,9 +34,36 @@ export class ObjectEditComponent implements OnChanges {
      */
     save(object: IdaiFieldObject) {
 
+        // Replace with proper validation
+        if (!object.identifier || object.identifier.length == 0)
+            return;
+
         this.changed = false;
         object.synced = 0;
+
+        if (object.id) this.update(object);
+        else this.create(object);
+    }
+
+    /**
+     * Updates an existing object in the local datastore.
+     * @param object
+     */
+    private update(object: IdaiFieldObject) {
+
         this.datastore.update(object).then(
+            () => {},
+            err => console.error(err)
+        );
+    }
+
+    /**
+     * Saves the given object as a new object in the local datastore.
+     * @param object
+     */
+    private create(object: IdaiFieldObject) {
+
+        this.datastore.create(object).then(
             () => {},
             err => console.error(err)
         );

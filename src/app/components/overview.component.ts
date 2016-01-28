@@ -38,7 +38,7 @@ export class OverviewComponent implements OnInit {
 
         if (!this.newObject) {
             this.newObject = {};
-            this.objects.push(this.newObject);
+            this.objects.unshift(this.newObject);
         }
 
         this.selectedObject = this.newObject;

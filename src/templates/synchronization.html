@@ -1,5 +1,11 @@
-<span>Nicht synchronisierte Objekte: {{objectsToSyncIds.length}}</span>
-<span id="connection-icon"
+<div id="objectsToSyncCount">
+    <div id="syncCounter"
+         *ngIf="objectsToSyncIds.length > 0">
+        <span id="syncSymbol" class="mdi mdi-cloud-upload"></span>
+        {{objectsToSyncIds.length}}
+    </div>
+</div>
+<div id="connection-icon"
 	[class.connected] = "connected"
 	[class.unconnected] = "!connected">
-</span>
+</div>

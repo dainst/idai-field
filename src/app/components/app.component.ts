@@ -23,8 +23,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.idaiFieldBackend.setHostName(this.config.hostName);
-        this.idaiFieldBackend.setIndexName(this.config.indexName);
         if (this.config.environment == 'test') this.loadSampleData();
     }
 

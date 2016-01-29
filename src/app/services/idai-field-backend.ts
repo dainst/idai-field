@@ -14,9 +14,8 @@ import {Response} from "angular2/http";
 @Injectable()
 export class IdaiFieldBackend {
 
-    private typeName  : string = "objects";
-    private hostUrl   : string;
-    private indexName : string;
+    private typeName   : string = "objects";
+    private backendUri : string;
     private connected : boolean;
     private connectionCheckTimer: number;
     private observers: Observer<boolean>[] = [];
@@ -24,14 +23,6 @@ export class IdaiFieldBackend {
     public constructor(private http: Http,
         @Inject('app.config') private config) {
         this.checkConnection();
-    }
-
-    public setHostName(hostName: string) {
-        this.hostUrl = hostName;
-    }
-
-    public setIndexName(indexName:string):void {
-        this.indexName= indexName;
     }
 
     public isConnected(): Observable<boolean> {
@@ -43,7 +34,15 @@ export class IdaiFieldBackend {
 
     public checkConnection(): void {
 
-        this.http.get(this.hostUrl + '/idaifield')
+        //
+        // TODO remove as soon
+        // as necessary changes are implemented in chronontology-connected.
+        //
+        var backendUri = this.config.backendUri;
+        if (this.config.environment=='production')
+            backendUri = backendUri + '/' + this.typeName + '/';
+
+        this.http.get( backendUri )
         .subscribe(
             data => this.setConnectionStatus(true),
             err => this.setConnectionStatus(false)
@@ -77,7 +76,7 @@ export class IdaiFieldBackend {
 
     private performPost(object:IdaiFieldObject) : Observable<Response> {
 
-        return this.http.post(this.hostUrl + '/' + this.indexName + '/'
+        return this.http.put(this.config.backendUri + '/'
             + this.typeName + '/' + object.id,
             JSON.stringify(object))
     }
@@ -116,12 +115,12 @@ export class IdaiFieldBackend {
 
     private deleteIndex() : Observable<Response> {
 
-        return this.http.delete(this.hostUrl + '/' + this.indexName);
+        return this.http.delete(this.config.backendUri);
     }
 
     private createIndex() : Observable<Response> {
 
-        return this.http.put(this.hostUrl + '/' + this.indexName, "");
+        return this.http.put(this.config.backendUri, "");
     }
 
 }

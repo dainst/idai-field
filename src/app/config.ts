@@ -1,6 +1,5 @@
 export const CONFIG = {
-	environment: 'development', // choose 'test', 'development' or 'production'
-    hostName: 'http://127.0.0.1:9200',
-    indexName: 'idaifield',
+	environment: 'test', // choose 'test', 'development' or 'production'
+    backendUri: 'http://localhost:9200/idaifield', // should be specified without ending /
     backendConnectionCheckInterval: 1000
 };

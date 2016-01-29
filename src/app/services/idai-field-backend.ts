@@ -16,8 +16,7 @@ export class IdaiFieldBackend {
 
     private typeName   : string = "objects";
     private connected : boolean;
-    private connectionCheckTimer: number;
-    private observers: Observer<boolean>[] = [];
+    private connectionStateObservers: Observer<boolean>[] = [];
 
     public constructor(private http: Http,
         @Inject('app.config') private config) {
@@ -26,40 +25,54 @@ export class IdaiFieldBackend {
 
     public isConnected(): Observable<boolean> {
         return Observable.create( observer => {
-            this.observers.push(observer);
+            this.connectionStateObservers.push(observer);
             observer.next(false);
         });
     }
 
+
+    /**
+     * @see also this#setConnectionStatus
+     */
     public checkConnection(): void {
 
-        //
-        // TODO remove as soon
-        // as necessary changes are implemented in chronontology-connected.
-        //
-        var uri = this.config.backend.uri;
-        if (this.config.environment=='production')
-            uri = uri + '/' + this.typeName + '/';
-
-        this.http.get( uri )
+        this.http.get( this.aliveUri() )
         .subscribe(
             data => this.setConnectionStatus(true),
             err => this.setConnectionStatus(false)
         );
     }
 
+    /**
+     * Stands in a relationship of mutual calls with
+     * this#checkConnection. Both methods together form a loop.
+     *
+     * @param connected
+     */
     private setConnectionStatus(connected: boolean) {
 
         if (connected != this.connected) {
-            this.observers.forEach(observer => observer.next(connected));
+            this.connectionStateObservers.forEach(observer => observer.next(connected));
         }
 
         this.connected = connected;
 
-        this.connectionCheckTimer = setTimeout(
+       setTimeout(
             this.checkConnection.bind(this),
             this.config.backend.connectionCheckInterval
         );
+    }
+
+    /**
+     * TODO remove as soon as chronontology-backend endpoint is implemented
+     * @returns {string}
+     */
+    private aliveUri() : string {
+
+        var uri = this.config.backend.uri;
+        if (this.config.environment=='production')
+            uri = uri + '/' + this.typeName + '/';
+        return uri;
     }
 
     /**

@@ -15,7 +15,6 @@ import {Response} from "angular2/http";
 export class IdaiFieldBackend {
 
     private typeName   : string = "objects";
-    private backendUri : string;
     private connected : boolean;
     private connectionCheckTimer: number;
     private observers: Observer<boolean>[] = [];
@@ -38,11 +37,11 @@ export class IdaiFieldBackend {
         // TODO remove as soon
         // as necessary changes are implemented in chronontology-connected.
         //
-        var backendUri = this.config.backendUri;
+        var uri = this.config.backend.uri;
         if (this.config.environment=='production')
-            backendUri = backendUri + '/' + this.typeName + '/';
+            uri = uri + '/' + this.typeName + '/';
 
-        this.http.get( backendUri )
+        this.http.get( uri )
         .subscribe(
             data => this.setConnectionStatus(true),
             err => this.setConnectionStatus(false)
@@ -59,7 +58,7 @@ export class IdaiFieldBackend {
 
         this.connectionCheckTimer = setTimeout(
             this.checkConnection.bind(this),
-            this.config.backendConnectionCheckInterval
+            this.config.backend.connectionCheckInterval
         );
     }
 
@@ -77,14 +76,14 @@ export class IdaiFieldBackend {
     private createAuthorizationHeader() {
         var headers = new Headers();
         headers.append('Authorization', 'Basic ' +
-            btoa(this.config.credentials));
+            btoa(this.config.backend.credentials));
         return headers;
     }
 
 
     private performPut(object:IdaiFieldObject) : Observable<Response> {
 
-        return this.http.put(this.config.backendUri + '/'
+        return this.http.put(this.config.backend.uri + '/'
             + this.typeName + '/' + object.id,
             JSON.stringify(object), { headers: this.createAuthorizationHeader()})
     }
@@ -129,12 +128,12 @@ export class IdaiFieldBackend {
 
     private deleteIndex() : Observable<Response> {
 
-        return this.http.delete(this.config.backendUri);
+        return this.http.delete(this.config.backend.uri);
     }
 
     private createIndex() : Observable<Response> {
 
-        return this.http.put(this.config.backendUri, "");
+        return this.http.put(this.config.backend.uri, "");
     }
 
 }

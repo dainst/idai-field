@@ -1,5 +1,5 @@
 import {Injectable, Inject} from "angular2/core";
-import {Http} from "angular2/http";
+import {Http, Headers} from "angular2/http";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
@@ -74,17 +74,31 @@ export class IdaiFieldBackend {
         return o;
     }
 
-    private performPost(object:IdaiFieldObject) : Observable<Response> {
+    private createAuthorizationHeader() {
+        var headers = new Headers();
+        headers.append('Authorization', 'Basic ' +
+            btoa(this.config.credentials));
+        return headers;
+    }
+
+
+    private performPut(object:IdaiFieldObject) : Observable<Response> {
 
         return this.http.put(this.config.backendUri + '/'
             + this.typeName + '/' + object.id,
-            JSON.stringify(object))
+            JSON.stringify(object), { headers: this.createAuthorizationHeader()})
     }
 
+    /**
+     * Saves or updates an object to the backend.
+     *
+     * @param object, uniquely identified by object.id.
+     * @returns {Promise<T>}
+     */
     public save(object:IdaiFieldObject):Promise<IdaiFieldObject> {
 
         return new Promise((resolve, reject) => {
-            this.performPost(this.filterUnwantedProps(object))
+            this.performPut(this.filterUnwantedProps(object))
             .subscribe(
                 () => resolve(object),
                 err => {

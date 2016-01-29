@@ -175,41 +175,50 @@
   }
 }
 
-#connection-icon {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 0;
-  width: 20px;
-  height: 50px;
-}
-
-#connection-icon.connected {
-  background-color: #5dae8d;
-}
-
-#connection-icon.unconnected {
-  background-color: #ccc;
-}
-
 #objectsToSyncCount {
   position: absolute;
-  top: 0;
-  height: 50px;
-  right: 20px;
+  top: 7px;
+  right: 7px;
+
+  padding: 3px 0 0 0;
+
+  border-radius: 50%;
+  margin: auto;
+  min-width: 35px;
+  -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  line-height: normal;
+
+  background-color: #aaa;
+  height: 35px;
+  width: 35px;
   z-index: 1;
-  padding: 0 10px 0 10px;
-  border-bottom: 1px solid #aaa;
   text-align: center;
 }
 
+#objectsToSyncCount.connected {
+  background-color: #f57b10 !important;
+  -webkit-box-shadow: 0 1px 1.5px 0 rgba(207, 97, 0, 0.7), 0 1px 1px 0 rgba(207, 97, 0, 0.7);
+  box-shadow: 0 1px 1.5px 0 rgba(207, 97, 0, 0.7), 0 1px 1px 0 rgba(207, 97, 0, 0.7);
+  transition: background-color .5s ease;
+}
+
+#objectsToSyncCount.unconnected {
+}
+
 #syncCounter {
-  padding: 5px 5px 5px 0;
-  font-size: 0.8em;
+
+  font-size: 0.7em;
 }
 
 #syncSymbol {
   display: block;
   color: #fff;
-  font-size: 2.1em;
+  font-size: 1.7em;
+}
+
+#objectsToSyncCount #success {
+  padding: 5px 0 0 0;
+  font-size: 1.5em;
+  transition: background-color .5s ease;
 }

@@ -16,7 +16,8 @@ export class ObjectEditComponent implements OnChanges {
 
     @Input() selectedObject: IdaiFieldObject;
     private saveTimer: number;
-    private changed: boolean;
+    private changed: boolean; // indicates that the currently edited object differs from the one
+                              // saved on the local datastore.
 
     constructor(private datastore: Datastore) { }
 

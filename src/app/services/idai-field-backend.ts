@@ -36,7 +36,7 @@ export class IdaiFieldBackend {
      */
     public checkConnection(): void {
 
-        this.http.get( this.aliveUri() )
+        this.http.get( this.config.backend.uri )
         .subscribe(
             data => this.setConnectionStatus(true),
             err => this.setConnectionStatus(false)
@@ -63,17 +63,6 @@ export class IdaiFieldBackend {
         );
     }
 
-    /**
-     * TODO remove as soon as chronontology-backend endpoint is implemented
-     * @returns {string}
-     */
-    private aliveUri() : string {
-
-        var uri = this.config.backend.uri;
-        if (this.config.environment=='production')
-            uri = uri + '/' + this.typeName + '/';
-        return uri;
-    }
 
     /**
      * @param object

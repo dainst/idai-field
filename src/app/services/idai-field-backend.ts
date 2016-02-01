@@ -17,11 +17,25 @@ export class IdaiFieldBackend {
     private typeName   : string = "objects";
     private connected : boolean;
     private connectionStateObservers: Observer<boolean>[] = [];
+    private configuration: any;
 
     public constructor(private http: Http,
         @Inject('app.config') private config) {
+
+        this.validateAndUse(config.backend);
         this.checkConnection();
     }
+
+    /**
+     * @param backendConfig backend Configuration object.
+     */
+    private validateAndUse(backendConfig) {
+        if (! backendConfig.uri.endsWith('/'))
+            backendConfig.uri=backendConfig.uri+='/';
+
+        this.configuration = backendConfig;
+    }
+
 
     public isConnected(): Observable<boolean> {
         return Observable.create( observer => {
@@ -36,7 +50,7 @@ export class IdaiFieldBackend {
      */
     public checkConnection(): void {
 
-        this.http.get( this.config.backend.uri )
+        this.http.get( this.configuration.uri )
         .subscribe(
             data => this.setConnectionStatus(true),
             err => this.setConnectionStatus(false)
@@ -59,7 +73,7 @@ export class IdaiFieldBackend {
 
        setTimeout(
             this.checkConnection.bind(this),
-            this.config.backend.connectionCheckInterval
+            this.configuration.connectionCheckInterval
         );
     }
 
@@ -78,14 +92,14 @@ export class IdaiFieldBackend {
     private createAuthorizationHeader() {
         var headers = new Headers();
         headers.append('Authorization', 'Basic ' +
-            btoa(this.config.backend.credentials));
+            btoa(this.configuration.credentials));
         return headers;
     }
 
 
     private performPut(object:IdaiFieldObject) : Observable<Response> {
 
-        return this.http.put(this.config.backend.uri + '/'
+        return this.http.put(this.configuration.uri
             + this.typeName + '/' + object.id,
             JSON.stringify(object), { headers: this.createAuthorizationHeader()})
     }
@@ -130,12 +144,12 @@ export class IdaiFieldBackend {
 
     private deleteIndex() : Observable<Response> {
 
-        return this.http.delete(this.config.backend.uri);
+        return this.http.delete(this.configuration.uri);
     }
 
     private createIndex() : Observable<Response> {
 
-        return this.http.put(this.config.backend.uri, "");
+        return this.http.put(this.configuration.uri, "");
     }
 
 }

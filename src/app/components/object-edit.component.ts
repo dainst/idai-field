@@ -23,8 +23,7 @@ export class ObjectEditComponent implements OnChanges {
     /**
      * Saves the currently selected object to the local datastore.
      */
-    saveSelected() {
-
+    private saveSelected() {
         this.save(this.selectedObject);
     }
 
@@ -32,7 +31,7 @@ export class ObjectEditComponent implements OnChanges {
      * Saves the object to the local datastore.
      * @param object
      */
-    save(object: IdaiFieldObject) {
+    private save(object: IdaiFieldObject) {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0)

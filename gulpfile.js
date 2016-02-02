@@ -104,7 +104,6 @@ gulp.task('concat-deps', function() {
 			paths.lib + '/rxjs/bundles/Rx.js',
 			paths.lib + '/angular2/bundles/angular2.dev.js',
 			paths.lib + '/angular2/bundles/http.dev.js',
-			paths.lib + '/progressbar.js/dist/progressbar.min.js',
 			paths.lib + '/angular2/bundles/router.dev.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))

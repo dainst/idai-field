@@ -21,11 +21,6 @@ export class ObjectEditComponent implements OnChanges {
 
     constructor(private datastore: Datastore) { }
 
-    // TODO remove as soon as the first real unit test is there
-    public testAccessDatastore() : string {
-        return this.datastore.returnHello();
-    }
-
     /**
      * Saves the currently selected object to the local datastore.
      */
@@ -93,7 +88,8 @@ export class ObjectEditComponent implements OnChanges {
             this.saveTimer = undefined;
         }
 
-        if (this.changed && previousObject)
+        if (this.changed && previousObject) {
             this.save(previousObject);
+        }
     }
 }

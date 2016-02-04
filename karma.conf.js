@@ -20,8 +20,8 @@ module.exports = function(config) {
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
-            { pattern: 'components/**/*.js', included: false, watched: true },
-            { pattern: 'src/test/compiled/**/*.js', included: false, watched: true },
+            { pattern: 'dist/app/**/*.js', included: false, watched: true },
+            { pattern: 'dist/test/**/*.spec.js', included: false, watched: true },
 
             'test-main.js'
         ],

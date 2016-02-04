@@ -101,7 +101,7 @@ gulp.task('test-compile-ts', function () {
     return gulp
         .src('src/test/**/*.ts')
         .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('src/test/compiled'));
+        .pipe(gulp.dest('dist/test'));
 });
 
 

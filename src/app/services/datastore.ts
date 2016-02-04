@@ -16,4 +16,7 @@ export abstract class Datastore {
     abstract all(options: any): Promise<IdaiFieldObject[]>;
 
     abstract getUnsyncedObjects(): Observable<IdaiFieldObject>;
+
+    // TODO remove as soon as the first real unit test is there
+    abstract returnHello(): string;
 }

@@ -8,6 +8,11 @@ import {Observer} from "rxjs/Observer";
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
 
+    // TODO remove as soon as the first real unit test is there
+    returnHello():string {
+        return undefined;
+    }
+
     private db: Promise<any>;
     private observers = [];
     private objectCache: { [id: string]: IdaiFieldObject } = {};

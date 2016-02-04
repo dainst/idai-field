@@ -77,7 +77,8 @@ gulp.task('build', [
 	'copy-templates',
 	'copy-img',
 	'copy-fonts',
-	'concat-deps'
+	'concat-deps',
+    'test-compile-ts'
 ]);
 
 // clean
@@ -95,6 +96,15 @@ gulp.task('compile-ts', function () {
 		.pipe(gulp.dest('dist/app'));
 });
 
+gulp.task('test-compile-ts', function () {
+
+    return gulp
+        .src('src/test/**/*.ts')
+        .pipe(typescript(tscConfig.compilerOptions))
+        .pipe(gulp.dest('src/test/compiled'));
+});
+
+
 gulp.task('concat-deps', function() {
 
 	return gulp.src([
@@ -111,19 +121,26 @@ gulp.task('concat-deps', function() {
 		.pipe(gulp.dest(paths.build + '/lib'));
 });
 
+function watch() {
+
+    gulp.watch('src/scss/**/*.scss', ['sass']);
+    gulp.watch('src/app/**/*.ts', ['compile-ts']);
+    gulp.watch('src/templates/**/*.html', ['copy-templates']);
+    gulp.watch('src/index.html', ['copy-html']);
+    gulp.watch('src/img/**/*', ['copy-img']);
+    gulp.watch('src/test/**/*ts', ['test-compile-ts']);
+}
+
+gulp.task('watch', ['build', 'prepare-package'], function() {
+    watch();
+});
+
 // runs the development server and sets up browser reloading
-gulp.task('server', ['sass', 'copy-fonts', 'copy-html', 'copy-img', 'copy-templates', 'concat-deps', 'compile-ts', 'prepare-package'], function() {
+gulp.task('server', ['build', 'prepare-package'], function() {
 
 	electronServer.start();
-
 	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
-
-	gulp.watch('src/scss/**/*.scss', ['sass']);
-	gulp.watch('src/app/**/*.ts', ['compile-ts']);
-	gulp.watch('src/templates/**/*.html', ['copy-templates']);
-	gulp.watch('src/index.html', ['copy-html']);
-	gulp.watch('src/img/**/*', ['copy-img']);
-
+	watch();
 	gulp.watch('dist/**/*', electronServer.reload);
 });
 

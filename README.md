@@ -41,3 +41,19 @@ gulp
 
 After building you find packages of the application for different operating systems
 in the "release"-directory. 
+
+## Unit-Testing
+
+To run the unit tests, you have to open one terminal and run 
+
+```
+ulimit -n 10000
+gulp watch
+```
+
+Then open another terminal and run
+
+```
+karma start karma.conf.js
+```
+

@@ -1,6 +1,8 @@
 import {Component, Input, SimpleChange, OnChanges} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
+import {Message} from "../services/message";
+import {MessageComponent} from "./message.component";
 
 /**
  * @author Jan G. Wieners
@@ -9,7 +11,8 @@ import {Datastore} from "../services/datastore";
 @Component({
 
     selector: 'object-edit',
-    templateUrl: 'templates/object-edit.html'
+    templateUrl: 'templates/object-edit.html',
+    directives: [MessageComponent]
 })
 
 export class ObjectEditComponent implements OnChanges {
@@ -19,7 +22,8 @@ export class ObjectEditComponent implements OnChanges {
     private changed: boolean; // indicates that the currently edited object differs from the one
                               // saved on the local datastore.
 
-    constructor(private datastore: Datastore) { }
+    constructor(private datastore: Datastore,
+                private message: Message) { }
 
     /**
      * Saves the currently selected object to the local datastore.
@@ -41,8 +45,11 @@ export class ObjectEditComponent implements OnChanges {
         this.changed = false;
         object.synced = 0;
 
-        if (object.id) this.update(object);
-        else this.create(object);
+        if (object.id) {
+            this.update(object);
+        } else {
+            this.create(object);
+        }
     }
 
     /**
@@ -52,8 +59,8 @@ export class ObjectEditComponent implements OnChanges {
     private update(object: IdaiFieldObject) {
 
         this.datastore.update(object).then(
-            () => {},
-            err => console.error(err)
+            () => this.message.deleteMessage('OBEDIT'),
+            err => this.message.addMessage('OBEDIT', 'update failed')
         );
     }
 
@@ -64,8 +71,8 @@ export class ObjectEditComponent implements OnChanges {
     private create(object: IdaiFieldObject) {
 
         this.datastore.create(object).then(
-            () => {},
-            err => console.error(err)
+            () => this.message.deleteMessage('OBEDIT'),
+            err => this.message.addMessage('OBEDIT', 'create failed')
         );
     }
 

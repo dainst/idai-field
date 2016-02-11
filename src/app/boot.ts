@@ -7,6 +7,7 @@ import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {Datastore} from "./services/datastore";
 import {IndexeddbDatastore} from "./services/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
+import {Message} from "./services/message";
 import {CONFIG} from "./config";
 
 if (CONFIG.environment == 'production') enableProdMode();
@@ -17,5 +18,6 @@ bootstrap(AppComponent, [
 	provide(LocationStrategy, { useClass: HashLocationStrategy }),
 	provide(Datastore, { useClass: IndexeddbDatastore }),
 	provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
+	provide(Message, { useClass: Message }),
 	provide('app.config', { useValue: CONFIG })
 ]);

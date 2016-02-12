@@ -15,8 +15,10 @@ var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
 var useref = require('gulp-useref');
-
+var shell = require('gulp-shell')
 var pkg = require('./package.json');
+var exec = require('child_process').exec;
+var argv = require('yargs').argv;
 
 var paths = {
 	'build': 'dist/',
@@ -26,6 +28,19 @@ var paths = {
 	'bootstrap': 'node_modules/bootstrap-sass/assets/',
 	'mdi': 'node_modules/mdi/'
 };
+
+gulp.task('test', function (cb) {
+    var cmd = 'karma start karma.conf.js';
+    if (argv.ci!=undefined&&argv.ci=='true')
+        var cmd = 'xvfb-run -e /dev/stdout karma start karma.conf.js';
+
+    exec(cmd, function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+})
+
 
 const tscConfig = require('./tsconfig.json');
 
@@ -131,7 +146,7 @@ function watch() {
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);
 }
 
-gulp.task('watch', ['build', 'prepare-package'], function() {
+gulp.task('test-watch', ['build', 'prepare-package'], function() {
     watch();
 });
 
@@ -161,7 +176,7 @@ gulp.task('package-node-dependencies', function() {
 
 
 // builds an electron app package for different platforms
-gulp.task('package', ['build', 'prepare-package','package-node-dependencies'], function() {
+gulp.task('package', ['build', 'test', 'prepare-package','package-node-dependencies'], function() {
  
 	packager({
 		dir: paths.build,

@@ -6,11 +6,13 @@ import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../services/datastore";
 import {OBJECTS} from "../services/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
+import {Message} from "../services/message";
+import {MessageComponent} from "./message.component";
 
 @Component({
     selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
-    directives: [RouterOutlet, RouterLink, SynchronizationComponent]
+    directives: [RouterOutlet, RouterLink, SynchronizationComponent, MessageComponent]
 })
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}

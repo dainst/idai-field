@@ -2,7 +2,6 @@ import {Component, Input, SimpleChange, OnChanges} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
 import {Message} from "../services/message";
-import {MessageComponent} from "./message.component";
 
 /**
  * @author Jan G. Wieners
@@ -11,8 +10,7 @@ import {MessageComponent} from "./message.component";
 @Component({
 
     selector: 'object-edit',
-    templateUrl: 'templates/object-edit.html',
-    directives: [MessageComponent]
+    templateUrl: 'templates/object-edit.html'
 })
 
 export class ObjectEditComponent implements OnChanges {

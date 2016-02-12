@@ -38,6 +38,7 @@
     "run-sequence": "^1.1.5",
     "typescript": "^1.7.3",
     "process": "~0.11.2",
+    "gulp-shell": "~0.5.2",
     "yargs": "~3.32.0"
   }
 }

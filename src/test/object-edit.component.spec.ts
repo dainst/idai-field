@@ -6,6 +6,7 @@ import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {Observable} from "rxjs/Observable";
 import {Message} from "../app/services/message";
+import {SimpleChange} from "angular2/core";
 
 class MockTestDatastore {
 
@@ -43,16 +44,13 @@ export function main() {
         it('should create a non existing object on changing object', inject([ObjectEditComponent, Datastore],
             (objectEditComponent: ObjectEditComponent, mockDatastore: Datastore) => {
 
-            objectEditComponent.selectedObject =
-                    {
-                        "identifier": "ob1", "title": "Obi One Kenobi", "synced": 0,
-                        "previousValue" :
-                            { "identifier": "ob2", "title": "Boba Fett", "synced": 0 }
-                    };
+            var change = new SimpleChange(
+                { "identifier": "ob2", "title": "Boba Fett", "synced": 0 },
+                {"identifier": "ob1", "title": "Obi One Kenobi", "synced": 0,});
 
             objectEditComponent.onKey({});
             objectEditComponent.ngOnChanges({
-                    selectedObject: objectEditComponent.selectedObject
+                    selectedObject: change
             });
 
             expect((<MockTestDatastore> mockDatastore).getTestObject().identifier).toBe("ob2");

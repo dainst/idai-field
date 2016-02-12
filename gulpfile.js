@@ -32,7 +32,7 @@ var paths = {
 gulp.task('test', function (cb) {
     var cmd = 'karma start karma.conf.js';
     if (argv.ci!=undefined&&argv.ci=='true')
-        var cmd = 'xvfb-run -e /dev/stdout karma start karma.conf.js';
+        var cmd = 'xport CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js';
 
     exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);

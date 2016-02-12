@@ -5,6 +5,7 @@ import {IndexeddbDatastore} from '../app/services/indexeddb-datastore'
 import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {Observable} from "rxjs/Observable";
+import {Message} from "../app/services/message";
 
 class MockTestDatastore {
 
@@ -22,6 +23,10 @@ class MockTestDatastore {
     }
 }
 
+class MockMessageService {
+    deleteMessage() {}
+}
+
 /**
  * @author Daniel M. de Oliveira
  */
@@ -30,7 +35,9 @@ export function main() {
 
         beforeEachProviders(() => [
             ObjectEditComponent,
-            provide(Datastore, {useClass: MockTestDatastore})
+            provide(Datastore, {useClass: MockTestDatastore}),
+            provide(Message, {useClass: MockMessageService})
+
         ]);
 
         it('should create a non existing object on changing object', inject([ObjectEditComponent, Datastore],

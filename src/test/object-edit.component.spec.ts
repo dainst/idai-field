@@ -55,7 +55,7 @@ export function main() {
                     selectedObject: objectEditComponent.selectedObject
             });
 
-            expect((<MockTestDatastore> mockDatastore).getTestObject().identifier).toBe("ob1");
+            expect((<MockTestDatastore> mockDatastore).getTestObject().identifier).toBe("ob2");
         }));
     });
 }

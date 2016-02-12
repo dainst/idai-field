@@ -176,7 +176,8 @@ gulp.task('package-node-dependencies', function() {
 
 
 // builds an electron app package for different platforms
-gulp.task('package', ['build', 'test', 'prepare-package','package-node-dependencies'], function() {
+gulp.task('package', [], function() {
+    runSequence('prepare-package','package-node-dependencies','build','test')
  
 	packager({
 		dir: paths.build,

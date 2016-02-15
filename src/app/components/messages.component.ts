@@ -1,5 +1,5 @@
 import {Component, Input} from 'angular2/core';
-import {Message} from "../services/message";
+import {Messages} from "../services/messages";
 
 /**
  * @author Jan G. Wieners
@@ -9,10 +9,10 @@ import {Message} from "../services/message";
     templateUrl: 'templates/message.html'
 })
 
-export class MessageComponent {
+export class MessagesComponent {
 
-    @Input() identifier: string;
+    //@Input() identifier: string;
 
-    constructor(private message: Message) {
+    constructor(private messages: Messages) {
     }
 }

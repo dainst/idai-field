@@ -5,7 +5,7 @@ import {IndexeddbDatastore} from '../app/services/indexeddb-datastore'
 import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {Observable} from "rxjs/Observable";
-import {Message} from "../app/services/message";
+import {Messages} from "../app/services/messages";
 import {SimpleChange} from "angular2/core";
 
 class MockTestDatastore {
@@ -24,7 +24,7 @@ class MockTestDatastore {
     }
 }
 
-class MockMessageService {
+class MockMessagesService {
     deleteMessage() {}
 }
 
@@ -37,7 +37,7 @@ export function main() {
         beforeEachProviders(() => [
             ObjectEditComponent,
             provide(Datastore, {useClass: MockTestDatastore}),
-            provide(Message, {useClass: MockMessageService})
+            provide(Messages, {useClass: MockMessagesService})
 
         ]);
 

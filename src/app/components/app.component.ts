@@ -6,13 +6,12 @@ import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../services/datastore";
 import {OBJECTS} from "../services/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
-import {Message} from "../services/message";
-import {MessageComponent} from "./message.component";
+import {MessagesComponent} from "./messages.component";
 
 @Component({
     selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
-    directives: [RouterOutlet, RouterLink, SynchronizationComponent, MessageComponent]
+    directives: [RouterOutlet, RouterLink, SynchronizationComponent, MessagesComponent]
 })
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
@@ -20,7 +19,7 @@ import {MessageComponent} from "./message.component";
 export class AppComponent implements OnInit {
 
     constructor(private datastore: Datastore,
-            private idaiFieldBackend: IdaiFieldBackend,
+                private idaiFieldBackend: IdaiFieldBackend,
             @Inject('app.config') private config) {
     }
 

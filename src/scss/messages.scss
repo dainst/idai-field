@@ -1,6 +1,9 @@
 /**
  * @author: Jan G. Wieners
  */
+.alert {
+  text-align: center;
+}
 
 @-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
@@ -8,15 +11,15 @@
 
 .fade-in {
   opacity:0;
-  -webkit-animation: fadeIn ease-in .3s;
-  -moz-animation: fadeIn ease-in .3s;
-  animation: fadeIn ease-in .3s;
+  -webkit-animation: fadeIn ease-in .5s;
+  -moz-animation: fadeIn ease-in .5s;
+  animation: fadeIn ease-in .5s;
 
   -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 
-  -webkit-animation-duration: .3s;
-  -moz-animation-duration: .3s;
-  animation-duration: .3s;
+  -webkit-animation-duration: .5s;
+  -moz-animation-duration: .5s;
+  animation-duration: .5s;
 }

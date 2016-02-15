@@ -1,0 +1,5 @@
+<div *ngFor="#message of messages.getMessages()"
+     class="alert alert-{{message.type}} fade-in"
+     role="alert">
+    {{message.content}}
+</div>

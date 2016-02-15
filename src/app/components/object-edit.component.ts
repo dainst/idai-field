@@ -1,7 +1,7 @@
 import {Component, Input, SimpleChange, OnChanges} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
-import {Message} from "../services/message";
+import {Messages} from "../services/messages";
 
 /**
  * @author Jan G. Wieners
@@ -21,7 +21,7 @@ export class ObjectEditComponent implements OnChanges {
                               // saved on the local datastore.
 
     constructor(private datastore: Datastore,
-                private message: Message) { }
+                private messages: Messages) { }
 
     /**
      * Saves the currently selected object to the local datastore.
@@ -57,8 +57,8 @@ export class ObjectEditComponent implements OnChanges {
     private update(object: IdaiFieldObject) {
 
         this.datastore.update(object).then(
-            () => this.message.deleteMessage('OBEDIT'),
-            err => this.message.addMessage('OBEDIT', 'update failed')
+            () => this.messages.deleteMessages(),
+            err => this.messages.addMessage('danger', 'Object Identifier already exists.')
         );
     }
 
@@ -69,8 +69,8 @@ export class ObjectEditComponent implements OnChanges {
     private create(object: IdaiFieldObject) {
 
         this.datastore.create(object).then(
-            () => this.message.deleteMessage('OBEDIT'),
-            err => this.message.addMessage('OBEDIT', 'create failed')
+            () => this.messages.deleteMessages(),
+            err => this.messages.addMessage('danger', 'Object Identifier already exists.')
         );
     }
 

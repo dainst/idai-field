@@ -56,7 +56,7 @@ To run the unit tests, you have to open one terminal and run
 
 ```
 ulimit -n 10000
-gulp watch
+gulp test-watch
 ```
 
 Then open another terminal and run

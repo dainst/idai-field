@@ -25,7 +25,7 @@ class MockTestDatastore {
 }
 
 class MockMessagesService {
-    deleteMessage() {}
+    deleteMessages() {}
 }
 
 /**

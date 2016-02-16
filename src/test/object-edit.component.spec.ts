@@ -10,7 +10,7 @@ import {SimpleChange} from "angular2/core";
 
 class MockTestDatastore {
 
-    private testObject : IdaiFieldObject;
+    private testObject : IdaiFieldObject = undefined;
 
     public getTestObject() : IdaiFieldObject {
         return this.testObject;
@@ -45,8 +45,8 @@ export function main() {
             (objectEditComponent: ObjectEditComponent, mockDatastore: Datastore) => {
 
             var change = new SimpleChange(
-                { "identifier": "ob2", "title": "Boba Fett", "synced": 0 },
-                {"identifier": "ob1", "title": "Obi One Kenobi", "synced": 0,});
+                { "identifier": "ob2", "title": "Boba Fett", "synced": 0, "valid" : true  },
+                {"identifier": "ob1", "title": "Obi One Kenobi", "synced": 0, "valid" : true });
 
             objectEditComponent.onKey({});
             objectEditComponent.ngOnChanges({
@@ -55,5 +55,21 @@ export function main() {
 
             expect((<MockTestDatastore> mockDatastore).getTestObject().identifier).toBe("ob2");
         }));
+
+        it('should not create an object when not valid', inject([ObjectEditComponent, Datastore],
+            (objectEditComponent: ObjectEditComponent, mockDatastore: Datastore) => {
+
+                var change = new SimpleChange(
+                    { "identifier": "ob2", "title": "Boba Fett", "synced": 0, "valid" : false },
+                    {"identifier": "ob1", "title": "Obi One Kenobi", "synced": 0, "valid" : true });
+
+                objectEditComponent.onKey({});
+                objectEditComponent.ngOnChanges({
+                    selectedObject: change
+                });
+
+                expect((<MockTestDatastore> mockDatastore).getTestObject()).toBe(undefined);
+            }));
+
     });
 }

@@ -86,6 +86,7 @@ export class IdaiFieldBackend {
     private filterUnwantedProps(object:IdaiFieldObject) : IdaiFieldObject {
         var o = ModelUtils.clone(object);
         delete o.synced;
+        delete o.valid;
         return o;
     }
 

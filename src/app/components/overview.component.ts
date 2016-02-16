@@ -75,7 +75,8 @@ export class OverviewComponent implements OnInit {
 
     private checkNewObject() {
 
-        if (!this.newObject.id) {    // Replace with proper validation
+        if (!this.newObject.id || !this.newObject.valid) {
+
             var index = this.objects.indexOf(this.newObject);
             this.objects.splice(index, 1);
         }

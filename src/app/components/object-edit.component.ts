@@ -56,9 +56,14 @@ export class ObjectEditComponent implements OnChanges {
      */
     private update(object: IdaiFieldObject) {
 
+        object.valid=true;
+
         this.datastore.update(object).then(
             () => this.messages.deleteMessages(),
-            err => this.messages.addMessage('danger', 'Object Identifier already exists.')
+            err => {
+                this.messages.addMessage('danger', 'Object Identifier already exists.');
+                object.valid=false;
+            }
         );
     }
 
@@ -68,9 +73,14 @@ export class ObjectEditComponent implements OnChanges {
      */
     private create(object: IdaiFieldObject) {
 
+        object.valid=true;
+
         this.datastore.create(object).then(
             () => this.messages.deleteMessages(),
-            err => this.messages.addMessage('danger', 'Object Identifier already exists.')
+            err => {
+                this.messages.addMessage('danger', 'Object Identifier already exists.');
+                object.valid=false;
+            }
         );
     }
 
@@ -86,12 +96,13 @@ export class ObjectEditComponent implements OnChanges {
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
 
-        var previousObject: IdaiFieldObject = changes["selectedObject"].previousValue;
-
         if (this.saveTimer) {
             clearTimeout(this.saveTimer);
             this.saveTimer = undefined;
         }
+
+        var previousObject: IdaiFieldObject = changes["selectedObject"].previousValue;
+        if (!previousObject || !previousObject.valid) return;
 
         if (this.changed && previousObject) {
             this.save(previousObject);

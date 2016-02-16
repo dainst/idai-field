@@ -1,12 +1,12 @@
-<div *ngIf="selectedObject">
+<div *ngIf="objectList.getSelectedObject()">
     <form>
         <div class="form-group">
             <label>Identifier</label>
-            <input [(ngModel)]="selectedObject.identifier" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="objectList.getSelectedObject().identifier" (keyup)="onKey($event)" class="form-control">
         </div>
         <div class="form-group">
             <label>Title</label>
-            <input [(ngModel)]="selectedObject.title" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="objectList.getSelectedObject().title" (keyup)="onKey($event)" class="form-control">
         </div>
     </form>
 </div>

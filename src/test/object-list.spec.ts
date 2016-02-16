@@ -5,25 +5,6 @@ import {ObjectList} from "../app/services/object-list";
 import {Datastore} from "../app/services/datastore";
 import {Messages} from "../app/services/messages";
 
-class MockTestDatastore {
-
-    private testObject : IdaiFieldObject = undefined;
-
-    public getTestObject() : IdaiFieldObject {
-        return this.testObject;
-    }
-
-    create(object:IdaiFieldObject) : Promise<string> {
-        this.testObject = object;
-        return new Promise<string>((resolve, reject) => {
-            resolve("ok");
-        });
-    }
-}
-
-class MockMessagesService {
-    deleteMessages() {}
-}
 
 /**
  * @author Daniel M. de Oliveira
@@ -32,14 +13,21 @@ export function main() {
     describe('ObjectList', () => {
 
         beforeEachProviders(() => [
-            ObjectList,
-            provide(Datastore, {useClass: MockTestDatastore}),
-            provide(Messages, {useClass: MockMessagesService})
+            //ObjectList,
+            provide(Messages, {useClass: Messages})
 
         ]);
 
-        it('should create a non existing object on changing object', inject([ObjectList, Datastore],
-            (objectList:ObjectList, mockDatastore:Datastore) => {
+        it('should create a non existing object on changing object',
+            inject([ Messages],
+            ( mockMessageService:Messages) => {
+
+                var mockDatastore   = jasmine.createSpyObj('someObject', [ 'create' ]);
+                mockDatastore.create.and.callFake(function() {
+                    return new Promise((resolve, reject) => { resolve('ok')});;
+                });
+
+                var objectList = new ObjectList(mockDatastore,mockMessageService);
 
                 var selectFirst : IdaiFieldObject =
                     { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true };
@@ -50,25 +38,18 @@ export function main() {
                 objectList.setChanged();
                 objectList.setSelectedObject(selectThen); // it will try to save selectFirst now.
 
-                expect((<MockTestDatastore> mockDatastore).getTestObject()).toBe(selectFirst);
+                expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
             })
         );
 
         // TODO
-        it('should update an existing object on changing object', inject([ObjectList, Datastore],
-            (objectList:ObjectList, mockDatastore:Datastore) => {
-                // expect(actual).getTestObject()).toBe(expected);
-            })
-        );
+        //it('should update an existing object on changing object',
 
         // TODO
-        it('should restore a non existing object on changing object if not valid', inject([ObjectList, Datastore],
-            (objectList:ObjectList, mockDatastore:Datastore) => {
-                // expect(actual)).toBe(expected);
-            })
-        );
+        //it('should restore a non existing object on changing object if not valid',
 
-
+        // TODO
+        //it('should mark an object invalid when storing not successful',
 
     });
 }

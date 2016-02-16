@@ -3,8 +3,8 @@
 
         <input (keyup)="onKey($event)" class="form-control" placeholder="Search...">
 
-        <ul *ngIf="objects" class="list-group" id="objectList">
-            <li *ngFor="#object of objects"
+        <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
+            <li *ngFor="#object of objectList.getObjects()"
                 (click)="onSelect(object)"
                 class="list-group-item"
                 [class.synced]="object.synced"
@@ -33,7 +33,7 @@
     </div>
 
     <div class="col-md-9">
-        <object-edit [selectedObject]="selectedObject"></object-edit>
+        <object-edit [selectedObject]="objectList.getSelectedObject()"></object-edit>
     </div>
 </div>
 

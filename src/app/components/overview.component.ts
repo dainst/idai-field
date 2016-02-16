@@ -2,11 +2,12 @@ import {Component, OnInit, Inject} from 'angular2/core';
 import {Datastore} from '../services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
-
+import {ObjectList} from "../services/object-list";
 
 @Component({
     templateUrl: 'templates/overview.html',
-    directives: [ObjectEditComponent]
+    directives: [ObjectEditComponent],
+    providers: [ObjectList]
 })
 
 /**
@@ -17,42 +18,39 @@ import {ObjectEditComponent} from "./object-edit.component";
  */
 export class OverviewComponent implements OnInit {
 
-    public selectedObject: IdaiFieldObject;
-    public newObject: any;
-    public objects: IdaiFieldObject[];
-
     constructor(private datastore: Datastore,
-        @Inject('app.config') private config) {
+        @Inject('app.config') private config,
+                private objectList: ObjectList) {
     }
 
-    onSelect(object: IdaiFieldObject) {
+    public onSelect(object: IdaiFieldObject) {
 
-        if (this.newObject && object != this.newObject) this.checkNewObject(); 
+        if (this.objectList.getNewObject() && object != this.objectList.getNewObject()) this.removeObjectFromListIfNotValid();
 
-        this.selectedObject = object;
+        this.objectList.setSelectedObject(object);
     }
 
     public onCreate() {
 
-        if (this.newObject) this.checkNewObject();
+        if (this.objectList.getNewObject()) this.removeObjectFromListIfNotValid();
 
-        if (!this.newObject) {
-            this.newObject = {};
-            this.objects.unshift(this.newObject);
+        if (!this.objectList.getNewObject()) {
+            this.objectList.setNewObject({});
+            this.objectList.getObjects().unshift(this.objectList.getNewObject());
         }
 
-        this.selectedObject = this.newObject;
+        this.objectList.setSelectedObject(this.objectList.getNewObject());
     }
 
     onKey(event:any) {
 
         if (event.target.value == "") {
             this.datastore.all({}).then(objects => {
-                this.objects = objects;
+                this.objectList.setObjects(objects);
             }).catch(err => console.error(err));
         } else {
             this.datastore.find(event.target.value, {}).then(objects => {
-                this.objects = objects;
+                this.objectList.setObjects(objects);
             }).catch(err => console.error(err));
         }
     }
@@ -69,18 +67,19 @@ export class OverviewComponent implements OnInit {
     private fetchObjects() {
 
         this.datastore.all({}).then(objects => {
-            this.objects = objects;
+            this.objectList.setObjects(objects);
         }).catch(err => console.error(err));
     }
 
-    private checkNewObject() {
+    private removeObjectFromListIfNotValid() {
 
-        if (!this.newObject.id || !this.newObject.valid) {
+        if (!this.objectList.getNewObject().id || !this.objectList.getNewObject().valid) {
 
-            var index = this.objects.indexOf(this.newObject);
-            this.objects.splice(index, 1);
+            var index = this.objectList.getObjects().indexOf(this.objectList.getNewObject());
+            this.objectList.getObjects().splice(index, 1);
         }
-        this.newObject = undefined;
+        this.objectList.setNewObject(undefined);
     }
+
 
 }

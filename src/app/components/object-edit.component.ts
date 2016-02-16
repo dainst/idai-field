@@ -3,6 +3,7 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
 import {Messages} from "../services/messages";
 
+
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke

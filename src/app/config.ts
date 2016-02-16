@@ -1,5 +1,5 @@
 export const CONFIG = {
-	environment: 'development', // choose 'test', 'development' or 'production'
+	environment: 'test', // choose 'test', 'development' or 'production'
 
     backend : {
         //uri: 'http://virginiaplain01.klassarchaeologie.uni-koeln.de:80',

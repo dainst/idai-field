@@ -43,4 +43,7 @@ export class MockDatastore implements Datastore {
         return Promise.resolve(Object.keys(this.db).map((k) => this.db[k]));
     }
 
+    refresh(id:string):Promise<IdaiFieldObject>  {
+        return null;
+    }
 }

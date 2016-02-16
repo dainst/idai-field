@@ -69,6 +69,21 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
+    refresh(id:string):Promise<IdaiFieldObject>  {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+                var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
+                request.onerror = event => reject(request.error);
+                request.onsuccess = event => {
+                    var object:IdaiFieldObject = request.result;
+                    this.objectCache[object.id] = object;
+                    resolve(object);
+                }
+            });
+        });
+    }
+
     get(id:string):Promise<IdaiFieldObject> {
 
         return new Promise((resolve, reject) => {

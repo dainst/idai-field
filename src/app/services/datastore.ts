@@ -16,4 +16,6 @@ export abstract class Datastore {
     abstract all(options: any): Promise<IdaiFieldObject[]>;
 
     abstract getUnsyncedObjects(): Observable<IdaiFieldObject>;
+
+    abstract refresh(id:string):Promise<IdaiFieldObject>;
 }

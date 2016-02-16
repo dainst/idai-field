@@ -4,7 +4,6 @@ import {Datastore} from "../services/datastore";
 import {Messages} from "../services/messages";
 import {ObjectList} from "../services/object-list";
 
-
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
@@ -25,7 +24,7 @@ export class ObjectEditComponent implements OnChanges {
      * Saves the currently selected object to the local datastore.
      */
     private saveSelected() {
-        this.objectList.save(this.objectList.getSelectedObject());
+        this.objectList.validateAndSave(this.objectList.getSelectedObject(), false);
     }
 
     onKey(event: any) {

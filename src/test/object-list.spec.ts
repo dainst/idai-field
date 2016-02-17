@@ -20,14 +20,14 @@ export function main() {
 
         it('should create a non existing object on changing object',
             inject([ Messages],
-            ( mockMessageService:Messages) => {
+            ( messages:Messages) => {
 
                 var mockDatastore   = jasmine.createSpyObj('someObject', [ 'create' ]);
                 mockDatastore.create.and.callFake(function() {
-                    return new Promise((resolve, reject) => { resolve('ok')});;
+                    return new Promise((resolve, reject) => { resolve('ok')});
                 });
 
-                var objectList = new ObjectList(mockDatastore,mockMessageService);
+                var objectList = new ObjectList(mockDatastore,messages);
 
                 var selectFirst : IdaiFieldObject =
                     { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true };

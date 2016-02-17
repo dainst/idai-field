@@ -34,41 +34,34 @@ export class ObjectList {
 
     private objects: IdaiFieldObject[];
 
-    public getObjects() {
-        return this.objects;
-    }
+    public validateAndSave(object: IdaiFieldObject, restoreIfInvalid: boolean) {
 
-    public setObjects(objects: IdaiFieldObject[]) {
-        this.objects = objects;
-    }
+        if (!object) return;
 
-    public getNewObject() {
-        return this.newObject;
-    }
-
-    public setNewObject(object: any) {
-        this.newObject = object;
-    }
-
-    public getSelectedObject() {
-        return this.selectedObject;
-    }
-
-    public setSelectedObject(object: IdaiFieldObject) {
-
-        this.validateAndSave(this.selectedObject, true);
-        this.selectedObject = object;
-    }
-
-    public setChanged() {
-        this.changed = true;
+        if (this.changed) {
+            this.save(object).then(
+                () => {
+                    this.messages.deleteMessages();
+                },
+                err => {
+                    this.messages.addMessage('danger', 'Object Identifier already exists.');
+                    object.valid = false;
+                    // TODO restore old object
+                    if (restoreIfInvalid) {
+                        this.restoreObject(object);
+                    }
+                }
+            )
+        } else if (!object.valid && restoreIfInvalid) {
+            this.restoreObject(object);
+        }
     }
 
     /**
      * Saves the object to the local datastore.
      * @param object
      */
-    public save(object: IdaiFieldObject): any {
+    private save(object: IdaiFieldObject): any {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0)
@@ -101,29 +94,6 @@ export class ObjectList {
         return this.datastore.create(object);
     }
 
-    public validateAndSave(object: IdaiFieldObject, restoreIfInvalid: boolean) {
-
-        if (!object) return;
-
-        if (this.changed) {
-            this.save(object).then(
-                () => {
-                    this.messages.deleteMessages();
-                },
-                err => {
-                    this.messages.addMessage('danger', 'Object Identifier already exists.');
-                    object.valid = false;
-                    // TODO restore old object
-                    if (restoreIfInvalid) {
-                        this.restoreObject(object);
-                    }
-                }
-            )
-        } else if (!object.valid && restoreIfInvalid) {
-            this.restoreObject(object);
-        }
-    }
-
     private restoreObject(object:IdaiFieldObject) {
 
         this.datastore.refresh(object.id).then(
@@ -135,5 +105,35 @@ export class ObjectList {
                 // TODO
             }
         );
+    }
+
+    public getObjects() {
+        return this.objects;
+    }
+
+    public setObjects(objects: IdaiFieldObject[]) {
+        this.objects = objects;
+    }
+
+    public getNewObject() {
+        return this.newObject;
+    }
+
+    public setNewObject(object: any) {
+        this.newObject = object;
+    }
+
+    public getSelectedObject() {
+        return this.selectedObject;
+    }
+
+    public setSelectedObject(object: IdaiFieldObject) {
+
+        this.validateAndSave(this.selectedObject, true);
+        this.selectedObject = object;
+    }
+
+    public setChanged() {
+        this.changed = true;
     }
 }

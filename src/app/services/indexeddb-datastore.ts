@@ -71,36 +71,16 @@ export class IndexeddbDatastore implements Datastore {
 
     refresh(id:string):Promise<IdaiFieldObject>  {
 
-        return new Promise((resolve, reject) => {
-            this.db.then(db => {
-                var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
-                request.onerror = event => reject(request.error);
-                request.onsuccess = event => {
-                    var object:IdaiFieldObject = request.result;
-                    this.objectCache[object.id] = object;
-                    resolve(object);
-                }
-            });
-        });
+        return this.fetchObject(id);
     }
 
     get(id:string):Promise<IdaiFieldObject> {
 
-        return new Promise((resolve, reject) => {
-            if (this.objectCache[id]) {
-                resolve(this.objectCache[id]);
-            } else {
-                this.db.then(db => {
-                    var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
-                    request.onerror = event => reject(request.error);
-                    request.onsuccess = event => {
-                        var object: IdaiFieldObject = request.result;
-                        this.objectCache[object.id] = object;
-                        resolve(object);
-                    }
-                });
-            }
-        });
+        if (this.objectCache[id]) {
+            return new Promise((resolve, reject) => resolve(this.objectCache[id]));
+        } else {
+            return this.fetchObject(id);
+        };
     }
 
     delete(id:string):Promise<any> {
@@ -209,6 +189,21 @@ export class IndexeddbDatastore implements Datastore {
                     else resolve(objects);
                 };
                 cursor.onerror = err => reject(cursor.error);
+            });
+        });
+    }
+
+    private fetchObject(id:string): Promise<IdaiFieldObject> {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+                var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
+                request.onerror = event => reject(request.error);
+                request.onsuccess = event => {
+                    var object:IdaiFieldObject = request.result;
+                    this.objectCache[object.id] = object;
+                    resolve(object);
+                }
             });
         });
     }

@@ -9,7 +9,7 @@
                 class="list-group-item"
                 [class.synced]="object.synced"
                 [class.unsynced]="!object.synced"
-                [class.selected]="selectedObject && (selectedObject.id === object.id)"
+                [class.selected]="objectList.getSelectedObject() && (objectList.getSelectedObject().id === object.id)"
                 onclick="window.scrollTo(0, 0)">
                 <div *ngIf="object.identifier || object.title">
                     <div class="title">{{object.title}}</div>

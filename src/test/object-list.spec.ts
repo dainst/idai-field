@@ -18,9 +18,11 @@ export function main() {
 
         var mockDatastore;
         var objectList;
+        var id = "abc";
 
         var selectFirst : IdaiFieldObject;
         var selectThen : IdaiFieldObject;
+        var oldVersion : IdaiFieldObject;
 
         var successFunction = function() {
             return {
@@ -43,13 +45,22 @@ export function main() {
             ( messages:Messages) => {
 
             mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-            mockDatastore.create.and.callFake(successFunction);
-            mockDatastore.update.and.callFake(successFunction);
-
             objectList = new ObjectList(mockDatastore,messages);
 
-            selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : "abc"};
+            selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
             selectThen  = { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
+            oldVersion  = {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
+            objectList.setObjects([selectFirst]);
+
+            mockDatastore.create.and.callFake(successFunction);
+            mockDatastore.update.and.callFake(successFunction);
+            mockDatastore.refresh.and.callFake(function() {
+                return {
+                    then: function(suc,err) {
+                        suc(oldVersion);
+                    }
+                };
+            });
         }));
 
 
@@ -84,27 +95,50 @@ export function main() {
             inject([ Messages],
             ( messages:Messages) => {
 
-                var oldVersion : IdaiFieldObject =
-                    { "identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
-
                 mockDatastore.update.and.callFake(errorFunction);
-                mockDatastore.refresh.and.callFake(function() {
-                    return {
-                        then: function(suc,err) {
-                            suc(oldVersion);
-                        }
-                    };
-                });
 
-                objectList.setObjects([selectFirst]);
                 objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
                 objectList.setSelectedObject(selectThen); // restore the oldVersion now.
 
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
-                expect((<Datastore> mockDatastore).update).toHaveBeenCalled();
-                expect((<Datastore> mockDatastore).refresh).toHaveBeenCalled();
+                expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
+                expect((<Datastore> mockDatastore).refresh).toHaveBeenCalledWith(id);
             }
         ));
+
+        it('should restore an invalid object on demand',
+            inject([ Messages],
+            ( messages:Messages) => {
+
+                selectFirst.valid = false;
+
+                objectList.setSelectedObject(selectFirst);
+                objectList.setSelectedObject(selectThen); // restore the oldVersion now.
+
+                expect(objectList.getObjects()[0]).toBe(oldVersion);
+                expect((<Datastore> mockDatastore).refresh).toHaveBeenCalledWith(id);
+            }
+        ));
+
+        it('mark an object invalid',
+            inject([ Messages],
+            ( messages:Messages) => {
+
+                mockDatastore.update.and.callFake(errorFunction);
+
+                objectList.setSelectedObject(selectFirst);
+                expect(selectFirst.valid).toBe(true);
+                objectList.setChanged();
+                objectList.validateAndSave(selectFirst,false);
+                expect(selectFirst.valid).toBe(false);
+
+                expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
+            }
+        ));
+
+        // TODO test creates message
+
+        // TODO test deletes message
     });
 }

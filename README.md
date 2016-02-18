@@ -62,6 +62,6 @@ gulp test-watch
 Then open another terminal and run
 
 ```
-karma start karma.conf.js
+gulp test
 ```
 

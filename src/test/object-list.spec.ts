@@ -82,20 +82,20 @@ export function main() {
                 var oldVersion : IdaiFieldObject =
                 { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true, "id" : id };
 
-                mockDatastore.update=function() {
+                mockDatastore.update.and.callFake(function() {
                     return {
                         then: function(suc,err) {
                             err("fail");
                         }
                     };
-                };
-                mockDatastore.refresh=function() {
+                });
+                mockDatastore.refresh.and.callFake(function() {
                     return {
                         then: function(suc,err) {
                             suc(oldVersion);
                         }
                     };
-                };
+                });
 
                 var selectFirst : IdaiFieldObject =
                 { "identifier": "ob4", "title": "Luke Skywalker 222", "synced": 0, "valid": true, "id" : id };
@@ -111,6 +111,8 @@ export function main() {
                 objectList.setSelectedObject(selectThen); // it will try to save selectFirst now.
 
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
+                expect((<Datastore> mockDatastore).update).toHaveBeenCalled();
+                expect((<Datastore> mockDatastore).refresh).toHaveBeenCalled();
             }
         ));
     });

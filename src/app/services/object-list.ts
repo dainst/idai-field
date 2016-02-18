@@ -46,7 +46,7 @@ export class ObjectList {
                 err => {
                     this.messages.addMessage('danger', 'Object Identifier already exists.');
                     object.valid = false;
-                    // TODO restore old object
+
                     if (restoreIfInvalid) {
                         this.restoreObject(object);
                     }
@@ -67,7 +67,7 @@ export class ObjectList {
         if (!object.identifier || object.identifier.length == 0)
             return;
 
-        this.changed = false;
+        this.changed = false; // TODO CODE REVIEW - SHOULDNT IT GET SET TO FALSE ONLY IF SAVE WAS SUCCESSFUL?
         object.synced = 0;
 
         object.valid=true;
@@ -102,7 +102,7 @@ export class ObjectList {
                 this.objects[index] = restoredObject;
             },
             err => {
-                // TODO
+                // TODO handle error
             }
         );
     }

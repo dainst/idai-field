@@ -65,8 +65,20 @@ export function main() {
             objectList.setSelectedObject(selectFirst);
         }));
 
+        it('should create a non existing object on autosave',
+            inject([ Messages],
+                ( messages:Messages) => {
 
-        it('should create a non existing object on changing object',
+                    delete selectFirst.id;
+
+                    objectList.setChanged();
+                    objectList.validateAndSave(selectFirst,false);
+
+                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
+                })
+        );
+
+        it('should create a non existing object on select change',
             inject([ Messages],
             ( messages:Messages) => {
 
@@ -79,8 +91,18 @@ export function main() {
             })
         );
 
+        it('should update an existing object on autosave',
+            inject([ Messages],
+                ( messages:Messages) => {
 
-        it('should update an existing object on changing object',
+                    objectList.setChanged();
+                    objectList.validateAndSave(selectFirst,false);
+
+                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
+                })
+        );
+
+        it('should update an existing object on select change',
             inject([ Messages],
             ( messages:Messages) => {
 
@@ -91,7 +113,7 @@ export function main() {
             })
         );
 
-        it('should not update an existing not valid object on changing object',
+        it('should restore a non valid object on select change with unsaved changes',
             inject([ Messages],
             ( messages:Messages) => {
 
@@ -106,7 +128,7 @@ export function main() {
             }
         ));
 
-        it('should restore an invalid object',
+        it('should restore an invalid object on select change with invalid object',
             inject([ Messages],
             ( messages:Messages) => {
 

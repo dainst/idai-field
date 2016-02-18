@@ -61,6 +61,8 @@ export function main() {
                     }
                 };
             });
+
+            objectList.setSelectedObject(selectFirst);
         }));
 
 
@@ -70,7 +72,6 @@ export function main() {
 
                 delete selectFirst.id;
 
-                objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
                 objectList.setSelectedObject(selectThen); // create selectFirst now.
 
@@ -83,7 +84,6 @@ export function main() {
             inject([ Messages],
             ( messages:Messages) => {
 
-                objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
                 objectList.setSelectedObject(selectThen); // update selectFirst now.
 
@@ -97,7 +97,6 @@ export function main() {
 
                 mockDatastore.update.and.callFake(errorFunction);
 
-                objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
                 objectList.setSelectedObject(selectThen); // restore the oldVersion now.
 
@@ -107,13 +106,12 @@ export function main() {
             }
         ));
 
-        it('should restore an invalid object on demand',
+        it('should restore an invalid object',
             inject([ Messages],
             ( messages:Messages) => {
 
                 selectFirst.valid = false;
 
-                objectList.setSelectedObject(selectFirst);
                 objectList.setSelectedObject(selectThen); // restore the oldVersion now.
 
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
@@ -127,7 +125,6 @@ export function main() {
 
                 mockDatastore.update.and.callFake(errorFunction);
 
-                objectList.setSelectedObject(selectFirst);
                 expect(selectFirst.valid).toBe(true);
                 objectList.setChanged();
                 objectList.validateAndSave(selectFirst,false);

@@ -1,4 +1,4 @@
-import {describe,expect,fit,it,xit, inject, beforeEachProviders} from 'angular2/testing';
+import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
@@ -13,41 +13,55 @@ export function main() {
     describe('ObjectList', () => {
 
         beforeEachProviders(() => [
-            //ObjectList,
             provide(Messages, {useClass: Messages})
-
         ]);
 
         var mockDatastore;
+        var objectList;
 
-        beforeEach(function(){
+        var selectFirst : IdaiFieldObject;
+        var selectThen : IdaiFieldObject;
+
+        var successFunction = function() {
+            return {
+                then: function(suc,err) {
+                    suc("ok");
+                }
+            };
+        };
+
+        var errorFunction =function() {
+            return {
+                then: function(suc,err) {
+                    err("fail");
+                }
+            };
+        };
+
+        beforeEach(
+            inject([ Messages],
+            ( messages:Messages) => {
+
             mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-            mockDatastore.create.and.callFake(function() {
-                return new Promise((resolve, reject) => { resolve('ok')});
-            });
-            mockDatastore.update.and.callFake(function() {
-                return new Promise((resolve, reject) => { resolve('ok')});
-            });
-            mockDatastore.refresh.and.callFake(function() {
-                return new Promise((resolve, reject) => { resolve('ok')});
-            });
-        });
+            mockDatastore.create.and.callFake(successFunction);
+            mockDatastore.update.and.callFake(successFunction);
+
+            objectList = new ObjectList(mockDatastore,messages);
+
+            selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : "abc"};
+            selectThen  = { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
+        }));
 
 
         it('should create a non existing object on changing object',
             inject([ Messages],
             ( messages:Messages) => {
 
-                var objectList = new ObjectList(mockDatastore,messages);
-
-                var selectFirst : IdaiFieldObject =
-                    { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true };
-                var selectThen : IdaiFieldObject =
-                    { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
+                delete selectFirst.id;
 
                 objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
-                objectList.setSelectedObject(selectThen); // it will try to save selectFirst now.
+                objectList.setSelectedObject(selectThen); // create selectFirst now.
 
                 expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
             })
@@ -58,16 +72,9 @@ export function main() {
             inject([ Messages],
             ( messages:Messages) => {
 
-                var objectList = new ObjectList(mockDatastore,messages);
-
-                var selectFirst : IdaiFieldObject =
-                { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true, "id" : "abc" };
-                var selectThen : IdaiFieldObject =
-                { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
-
                 objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
-                objectList.setSelectedObject(selectThen); // it will try to save selectFirst now.
+                objectList.setSelectedObject(selectThen); // update selectFirst now.
 
                 expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
             })
@@ -77,18 +84,10 @@ export function main() {
             inject([ Messages],
             ( messages:Messages) => {
 
-                var id="abc";
-
                 var oldVersion : IdaiFieldObject =
-                { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true, "id" : id };
+                    { "identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
 
-                mockDatastore.update.and.callFake(function() {
-                    return {
-                        then: function(suc,err) {
-                            err("fail");
-                        }
-                    };
-                });
+                mockDatastore.update.and.callFake(errorFunction);
                 mockDatastore.refresh.and.callFake(function() {
                     return {
                         then: function(suc,err) {
@@ -97,18 +96,10 @@ export function main() {
                     };
                 });
 
-                var selectFirst : IdaiFieldObject =
-                { "identifier": "ob4", "title": "Luke Skywalker 222", "synced": 0, "valid": true, "id" : id };
-                var selectThen : IdaiFieldObject =
-                { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
-
-                var objects : IdaiFieldObject[] = [selectFirst];
-                var objectList = new ObjectList(mockDatastore,messages);
-                objectList.setObjects(objects);
-
+                objectList.setObjects([selectFirst]);
                 objectList.setSelectedObject(selectFirst);
                 objectList.setChanged();
-                objectList.setSelectedObject(selectThen); // it will try to save selectFirst now.
+                objectList.setSelectedObject(selectThen); // restore the oldVersion now.
 
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
                 expect((<Datastore> mockDatastore).update).toHaveBeenCalled();

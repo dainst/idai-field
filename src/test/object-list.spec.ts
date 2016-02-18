@@ -66,54 +66,49 @@ export function main() {
         }));
 
         it('should create a non existing object on autosave',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     delete selectFirst.id;
                     objectList.setChanged();
 
                     objectList.validateAndSave(selectFirst,false);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
-                })
+                }
         );
 
         it('should create a non existing object on select change',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     delete selectFirst.id;
                     objectList.setChanged();
 
                     objectList.setSelectedObject(selectThen); // create selectFirst now.
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
-                })
+                }
         );
 
         it('should update an existing object on autosave',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     objectList.setChanged();
 
                     objectList.validateAndSave(selectFirst,false);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
-                })
+                }
         );
 
         it('should update an existing object on select change',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     objectList.setChanged();
 
                     objectList.setSelectedObject(selectThen); // update selectFirst now.
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
-                })
+                }
         );
 
         it('should restore a non valid object on select change with unsaved changes',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     mockDatastore.update.and.callFake(errorFunction);
                     objectList.setChanged();
@@ -122,11 +117,10 @@ export function main() {
                     objectList.setSelectedObject(selectThen); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
-        ));
+        );
 
         it('should restore an invalid object on select change with invalid object',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     selectFirst.valid = false;
 
@@ -134,11 +128,10 @@ export function main() {
                     objectList.setSelectedObject(selectThen); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
-        ));
+        );
 
         it('mark an object invalid',
-            inject([ Messages],
-                ( messages:Messages) => {
+            function() {
 
                     mockDatastore.update.and.callFake(errorFunction);
                     objectList.setChanged();
@@ -147,7 +140,7 @@ export function main() {
                     objectList.validateAndSave(selectFirst,false);
                     expect(selectFirst.valid).toBe(false);
                 }
-        ));
+        );
 
         // TODO test creates message
 

@@ -66,8 +66,11 @@ export class Messages {
      * Removes all messages.
      */
     public clear() {
-        for (var p in this.messageMap)
-            delete this.messageMap[p];
+        for (var p in this.messageMap) {
+            if (this.messageMap.hasOwnProperty(p)) {
+                delete this.messageMap[p];
+            }
+        }
     }
 
     /**

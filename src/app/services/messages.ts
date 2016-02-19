@@ -62,9 +62,12 @@ export class Messages {
         delete this.messageMap[id];
     }
 
-    public deleteMessages() {
-        this.messageMap.length = 0;
-        this.messageList.length = 0;
+    /**
+     * Removes all messages.
+     */
+    public clear() {
+        for (var p in this.messageMap)
+            delete this.messageMap[p];
     }
 
     /**

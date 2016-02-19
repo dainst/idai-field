@@ -73,5 +73,12 @@ export function main() {
                 expect(messages.getMessages()==messages.getMessages()).toBeTruthy();
             }
         );
+
+        it('will clear all messages',
+            function(){
+                messages.clear();
+                expect(messages.getMessages().length).toBe(0);
+            }
+        );
     })
 }

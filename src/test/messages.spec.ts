@@ -53,10 +53,8 @@ export function main() {
         it('will not add a non existing message',
             function(){
 
-                try {
-                    messages.add("notexisting", "warn");
-                    fail();
-                } catch (expected) {}
+                expect(function(){messages.add("notexisting", "warn");})
+                    .toThrowErrorWith(Messages.MSG_NO_BODY.replace("id","notexisting"));
             }
         );
 
@@ -64,11 +62,8 @@ export function main() {
             function(){
 
                 messages.delete(id);
-                try {
-                    messages.delete(id);
-                } catch (notexpected) {
-                    fail(notexpected);
-                }
+                expect(function(){messages.delete(id);})
+                    .not.toThrow();
             }
         );
 

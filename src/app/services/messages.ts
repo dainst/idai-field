@@ -12,6 +12,8 @@ import {Message} from "../model/message";
 @Injectable()
 export class Messages {
 
+    public static MSG_NO_BODY = "No message body found for key 'id'.";
+
     // This map contains the message bodies
     // messages identified by their key.
     // It can be replaced later by another data source
@@ -47,7 +49,7 @@ export class Messages {
 
         var content : string = Messages.MESSAGES[id];
         if (!content)
-            throw "No message body found for key '"+id+"'";
+            throw Messages.MSG_NO_BODY.replace('id',id);
 
         this.messageMap[id] = {
             'level' : level,

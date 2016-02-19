@@ -9,7 +9,14 @@ import {Message} from "../model/message";
 export class Messages {
 
     private messages: Message[] = [];
-    public messageStack = [];
+
+    /**
+     * Property "messageStack" and method "flattenMessages()" are used because Angular2 expects a non-changing
+     * object / array to generate the view.
+     * If getMessages() would convert the map "messages" every time to an array when it gets executed,
+     * Angular2 would fail with "Expression has changed after it was checked" exception.
+     */
+    private messageStack = [];
 
     private flattenMessages(): void {
 
@@ -41,7 +48,7 @@ export class Messages {
         this.messageStack.length = 0;
     }
 
-    public getMessages(): Array {
+    public getMessages() {
         return this.messageStack;
     }
 }

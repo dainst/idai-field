@@ -1,4 +1,4 @@
-<div *ngFor="#message of messages.messageStack"
+<div *ngFor="#message of messages.getMessages()"
      class="alert alert-{{message.level}}"
      role="alert">
     {{message.content}}

@@ -41,7 +41,7 @@ export class ObjectList {
         if (this.changed) {
             this.save(object).then(
                 () => {
-                    this.messages.delete('objectlist/idexists');
+                    this.messages.delete('objectlist/idexists'); // TODO make constant
                 },
                 err => {
                     // Neue Methode

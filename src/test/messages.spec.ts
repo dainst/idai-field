@@ -13,13 +13,15 @@ import {Messages} from "../app/services/messages";
 export function main() {
     describe('Messages ', () => {
 
+        var id = "objectlist/idexists";
+
         it('should store, retrieve and delete a message',
             function(){
 
                 var messages = new Messages();
-                messages.add("myId","hallo","warn");
-                expect(messages.getMessages()[0].content).toBe("hallo");
-                messages.delete("myId");
+                messages.add(id,"warn");
+                expect(messages.getMessages()[0].content).toBe(Messages.MESSAGES[id]);
+                messages.delete(id);
                 expect(messages.getMessages()[0]).toBe(undefined);
             }
         );
@@ -28,9 +30,9 @@ export function main() {
             function(){
 
                 var messages = new Messages();
-                messages.add("myId","hallo","warn");
-                messages.add("myId","hallo","warn");
-                expect(messages.getMessages()[0].content).toBe("hallo");
+                messages.add(id,"warn");
+                messages.add(id,"warn");
+                expect(messages.getMessages()[0].content).toBe(Messages.MESSAGES[id]);
                 expect(messages.getMessages().length).toBe(1);
             }
         );
@@ -39,10 +41,10 @@ export function main() {
             function(){
 
                 var messages = new Messages();
-                messages.add("myId","hallo","warn");
-                messages.add("myId2","hallo2","warn");
-                expect(messages.getMessages()[0].content).toBe("hallo");
-                expect(messages.getMessages()[1].content).toBe("hallo2");
+                messages.add(id,"warn");
+                messages.add("temp","warn");
+                expect(messages.getMessages()[0].content).toBe(Messages.MESSAGES[id]);
+                expect(messages.getMessages()[1].content).toBe(Messages.MESSAGES["temp"]);
                 expect(messages.getMessages().length).toBe(2);
             }
         );

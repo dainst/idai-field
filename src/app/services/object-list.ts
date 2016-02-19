@@ -45,7 +45,7 @@ export class ObjectList {
                 },
                 err => {
                     // Neue Methode
-                    this.messages.add('objectlist/idexists', 'Object Identifier already exists.', 'danger');
+                    this.messages.add('objectlist/idexists', 'danger');
                     object.valid = false;
 
                     if (restoreIfInvalid) {

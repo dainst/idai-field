@@ -8,6 +8,15 @@ import {Message} from "../model/message";
 
 export class Messages {
 
+    // This map contains the message bodies
+    // messages identified by their key.
+    // It can be replaced later by another data source
+    // like an external service.
+    public static MESSAGES = {
+        "objectlist/idexists" : "Object Identifier already exists.",
+        "temp" : "temp" // TODO used just for test, should be removed soon
+    };
+
     private messages: Message[] = [];
 
     /**
@@ -29,11 +38,11 @@ export class Messages {
         }
     }
 
-    public add(id,content,level): void {
+    public add(id,level): void {
 
         this.messages[id] = {
             'level' : level,
-            content: content
+            content: Messages.MESSAGES[id]
         };
         this.flattenMessages();
     }

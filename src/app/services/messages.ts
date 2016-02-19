@@ -23,11 +23,7 @@ export class Messages {
         "temp" : "temp" // TODO used just for test, should be removed soon
     };
 
-    /**
-     * key = message id
-     * value = message object
-     */
-    private messageMap: Message[] = [];
+    private messageMap: { [id: string]: Message } = {};
 
     /**
      * Holds the collection to be delivered when calling {@link Messages#getMessages()}.
@@ -67,9 +63,7 @@ export class Messages {
      */
     public clear() {
         for (var p in this.messageMap) {
-            if (this.messageMap.hasOwnProperty(p)) {
-                delete this.messageMap[p];
-            }
+            delete this.messageMap[p];
         }
     }
 
@@ -94,9 +88,7 @@ export class Messages {
         this.messageList.length = 0;
 
         for (var p in this.messageMap) {
-            if(this.messageMap.hasOwnProperty(p)) {
-                this.messageList.push(this.messageMap[p]);
-            }
+            this.messageList.push(this.messageMap[p]);
         }
     }
 }

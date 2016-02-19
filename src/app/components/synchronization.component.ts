@@ -15,7 +15,7 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 
 export class SynchronizationComponent implements OnInit {
 
-    private connected: boolean;
+    private connected: boolean = false;
     private objectsToSyncIds: string[] = [];
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,

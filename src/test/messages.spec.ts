@@ -71,5 +71,12 @@ export function main() {
                 }
             }
         );
+
+        it('will return always the same instance',
+            function(){
+
+                expect(messages.getMessages()==messages.getMessages()).toBeTruthy();
+            }
+        );
     })
 }

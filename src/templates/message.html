@@ -1,5 +1,5 @@
-<div *ngFor="#message of messages.getMessages()"
-     class="alert alert-{{message.type}} fade-in"
+<div *ngFor="#message of messages.messageStack"
+     class="alert alert-{{message.level}}"
      role="alert">
     {{message.content}}
 </div>

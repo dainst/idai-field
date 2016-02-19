@@ -41,10 +41,11 @@ export class ObjectList {
         if (this.changed) {
             this.save(object).then(
                 () => {
-                    this.messages.deleteMessages();
+                    this.messages.delete('objectlist/idexists');
                 },
                 err => {
-                    this.messages.addMessage('danger', 'Object Identifier already exists.');
+                    // Neue Methode
+                    this.messages.add('objectlist/idexists', 'Object Identifier already exists.', 'danger');
                     object.valid = false;
 
                     if (restoreIfInvalid) {
@@ -100,6 +101,7 @@ export class ObjectList {
             restoredObject => {
                 var index = this.objects.indexOf(object);
                 this.objects[index] = restoredObject;
+                this.messages.delete('objectlist/idexists');
             },
             err => {
                 // TODO handle error

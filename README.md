@@ -55,6 +55,7 @@ npm install -g karma-chrome-launcher
 To run the unit tests, you have to open one terminal and run 
 
 ```
+gulp clean
 ulimit -n 10000
 gulp test-watch
 ```

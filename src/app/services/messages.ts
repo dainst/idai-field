@@ -40,9 +40,13 @@ export class Messages {
 
     public add(id,level): void {
 
+        var content = Messages.MESSAGES[id];
+        if (!content)
+            throw "No message body found for key '"+id+"'";
+
         this.messages[id] = {
             'level' : level,
-            content: Messages.MESSAGES[id]
+            content: content
         };
         this.flattenMessages();
     }

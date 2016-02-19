@@ -35,12 +35,17 @@ export class Messages {
      * If getMessages() would convert the map "messages" every time to an array when it gets executed,
      * Angular2 would fail with "Expression has changed after it was checked" exception.
      */
-    private messageList : string[] = [];
+    private messageList : Message[] = [];
 
 
-    public add(id,level): void {
+    /**
+     * @param id used to identify the message. Must be an existing key.
+     * @param level should be one of "success", "info", "warning", "danger".
+     * @throws Error if message for key id not found.
+     */
+    public add(id:string,level:string): void {
 
-        var content = Messages.MESSAGES[id];
+        var content : string = Messages.MESSAGES[id];
         if (!content)
             throw "No message body found for key '"+id+"'";
 
@@ -51,7 +56,7 @@ export class Messages {
 
     }
 
-    public delete(id) {
+    public delete(id:string) {
         delete this.messageMap[id];
     }
 
@@ -68,7 +73,7 @@ export class Messages {
      *
      * @returns {Array} reference to the list of current messages.
      */
-    public getMessages() : string[] {
+    public getMessages() : Message[] {
         this.refreshMessageList();
         return this.messageList;
     }

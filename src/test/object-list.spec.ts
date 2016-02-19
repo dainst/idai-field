@@ -20,9 +20,11 @@ export function main() {
         var objectList;
         var id = "abc";
 
+        var oldVersion : IdaiFieldObject =
+            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };;
+        var selectThen : IdaiFieldObject =
+            { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
         var selectFirst : IdaiFieldObject;
-        var selectThen : IdaiFieldObject;
-        var oldVersion : IdaiFieldObject;
 
         var successFunction = function() {
             return {
@@ -48,9 +50,7 @@ export function main() {
             objectList = new ObjectList(mockDatastore,messages);
 
             selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
-            selectThen  = { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
-            oldVersion  = {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
-            objectList.setObjects([selectFirst]);
+            objectList.setObjects([selectFirst,selectThen]);
 
             mockDatastore.create.and.callFake(successFunction);
             mockDatastore.update.and.callFake(successFunction);

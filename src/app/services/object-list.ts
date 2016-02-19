@@ -52,7 +52,7 @@ export class ObjectList {
                     }
                 }
             )
-        } else if (!object.valid && restoreIfInvalid) {
+        } else if (!object.valid && restoreIfInvalid) { // TODO WHY CAN I REMOVE RESTOREIFINVALID HERE WITHOUT BREAKING ANY TESTS?
             this.restoreObject(object);
         }
     }

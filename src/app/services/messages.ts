@@ -21,7 +21,11 @@ export class Messages {
         "temp" : "temp" // TODO used just for test, should be removed soon
     };
 
-    private messages: Message[] = [];
+    /**
+     * key = message id
+     * value = message object
+     */
+    private messageMap: Message[] = [];
 
     /**
      * Holds the collection to be delivered when calling {@link Messages#getMessages()}.
@@ -31,8 +35,7 @@ export class Messages {
      * If getMessages() would convert the map "messages" every time to an array when it gets executed,
      * Angular2 would fail with "Expression has changed after it was checked" exception.
      */
-    private messageStack = [];
-
+    private messageList : string[] = [];
 
 
     public add(id,level): void {
@@ -41,7 +44,7 @@ export class Messages {
         if (!content)
             throw "No message body found for key '"+id+"'";
 
-        this.messages[id] = {
+        this.messageMap[id] = {
             'level' : level,
             content: content
         };
@@ -49,12 +52,12 @@ export class Messages {
     }
 
     public delete(id) {
-        delete this.messages[id];
+        delete this.messageMap[id];
     }
 
     public deleteMessages() {
-        this.messages.length = 0;
-        this.messageStack.length = 0;
+        this.messageMap.length = 0;
+        this.messageList.length = 0;
     }
 
     /**
@@ -63,23 +66,23 @@ export class Messages {
      * it is guaranteed that getMessages() returns always the
      * same object.
      *
-     * @returns {Array} reference to the collection of current messages.
+     * @returns {Array} reference to the list of current messages.
      */
-    public getMessages() {
-        this.refreshMessageStack();
-        return this.messageStack;
+    public getMessages() : string[] {
+        this.refreshMessageList();
+        return this.messageList;
     }
 
     /**
-     * Updates messageStack on the basis of the current state of messages.
+     * Updates messageList on the basis of the current state of messages.
      */
-    private refreshMessageStack(): void {
+    private refreshMessageList(): void {
 
-        this.messageStack.length = 0;
+        this.messageList.length = 0;
 
-        for (var p in this.messages) {
-            if(this.messages.hasOwnProperty(p)) {
-                this.messageStack.push(this.messages[p]);
+        for (var p in this.messageMap) {
+            if(this.messageMap.hasOwnProperty(p)) {
+                this.messageList.push(this.messageMap[p]);
             }
         }
     }

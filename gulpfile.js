@@ -146,7 +146,7 @@ function watch() {
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);
 }
 
-gulp.task('test-watch', ['build', 'prepare-package'], function() {
+gulp.task('test-watch', ['clean', 'build', 'prepare-package'], function() {
     watch();
 });
 

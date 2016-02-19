@@ -57,7 +57,7 @@ To run the unit tests, you have to open one terminal and run
 ```
 gulp clean
 ulimit -n 10000
-gulp test-watch
+gulp test-watch (if you want to also have the the app running, use gulp server instead) 
 ```
 
 Then open another terminal and run

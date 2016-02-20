@@ -177,8 +177,7 @@ gulp.task('package-node-dependencies', function() {
 
 // builds an electron app package for different platforms
 gulp.task('package', [], function() {
-    runSequence('prepare-package','package-node-dependencies','build','test')
- 
+
 	packager({
 		dir: paths.build,
 		name: pkg.name,
@@ -213,5 +212,5 @@ gulp.task('package', [], function() {
 });
 
 gulp.task('default', function() {
-	runSequence('clean', 'package');
+	runSequence('clean', 'build', 'prepare-package','package-node-dependencies','test', 'package');
 });

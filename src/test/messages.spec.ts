@@ -11,7 +11,7 @@ import {Messages} from "../app/services/messages";
  * @author Jan G. Wieners
  */
 export function main() {
-    fdescribe('Messages', () => {
+    describe('Messages', () => {
 
         var id = "objectlist/idexists";
         var messages : Messages;
@@ -22,7 +22,7 @@ export function main() {
                 messages.add(id,"warn");
         });
 
-        fit('should store, retrieve and delete a message',
+        it('should store, retrieve and delete a message',
             function(){
 
                 expect(messages.getMessages()[0].content).toBe(Messages.MESSAGES[id]);

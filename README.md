@@ -63,6 +63,6 @@ gulp test-watch (if you want to also have the the app running, use "gulp server"
 Then open another terminal and run
 
 ```
-gulp test
+karma start karma.conf.js
 ```
 

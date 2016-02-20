@@ -30,9 +30,9 @@ var paths = {
 };
 
 gulp.task('test', function (cb) {
-    var cmd = 'karma start karma.conf.js';
+    var cmd = 'karma start karma.conf.js --single-run';
     if (argv.ci!=undefined&&argv.ci=='true')
-        var cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js';
+        var cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js --single-run';
 
     exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);

@@ -79,5 +79,14 @@ export function main() {
                 expect(messages.getMessages().length).toBe(0);
             }
         );
+
+        it('will throw an error message if message level is invalid',
+            function(){
+
+                expect(function(){
+                    messages.add(MessagesDictionary.MSGKEY_MESSAGES_NOBODY, "invalidlevel");
+                }).toThrowErrorWith(MessagesDictionary.MSG_WRONG_LEVEL.replace("msglevel", "invalidlevel"));
+            }
+        );
     })
 }

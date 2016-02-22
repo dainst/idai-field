@@ -85,6 +85,12 @@ gulp.task('copy-img', function() {
 		.pipe(gulp.dest(paths.build + '/img'));
 });
 
+gulp.task('copy-json', function() {
+
+	return gulp.src('src/app/**/*.json')
+		.pipe(gulp.dest(paths.build + '/app'));
+});
+
 gulp.task('build', [
 	'sass',
 	'compile-ts',
@@ -92,6 +98,7 @@ gulp.task('build', [
 	'copy-templates',
 	'copy-img',
 	'copy-fonts',
+	'copy-json',
 	'concat-deps',
     'test-compile-ts'
 ]);
@@ -108,7 +115,7 @@ gulp.task('compile-ts', function () {
 		//.pipe(sourcemaps.init())
 		.pipe(typescript(tscConfig.compilerOptions))
 		//.pipe(sourcemaps.write('dist/app/maps'))
-		.pipe(gulp.dest('dist/app'));
+		.pipe(gulp.dest(paths.build + 'app'));
 });
 
 gulp.task('test-compile-ts', function () {
@@ -116,7 +123,7 @@ gulp.task('test-compile-ts', function () {
     return gulp
         .src('src/test/**/*.ts')
         .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('dist/test'));
+        .pipe(gulp.dest(paths.build + 'test'));
 });
 
 
@@ -140,6 +147,7 @@ function watch() {
 
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/app/**/*.ts', ['compile-ts']);
+    gulp.watch('src/app/**/*.json', ['copy-json']);
     gulp.watch('src/templates/**/*.html', ['copy-templates']);
     gulp.watch('src/index.html', ['copy-html']);
     gulp.watch('src/img/**/*', ['copy-img']);

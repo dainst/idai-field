@@ -19,6 +19,7 @@ var shell = require('gulp-shell')
 var pkg = require('./package.json');
 var exec = require('child_process').exec;
 var argv = require('yargs').argv;
+var embedTemplates = require('gulp-angular-embed-templates');
 
 var paths = {
 	'build': 'dist/',
@@ -112,6 +113,7 @@ gulp.task('compile-ts', function () {
 
 	return gulp
 		.src('src/app/**/*.ts')
+		.pipe(embedTemplates({basePath: "src", sourceType:'ts'}))
 		//.pipe(sourcemaps.init())
 		.pipe(typescript(tscConfig.compilerOptions))
 		//.pipe(sourcemaps.write('dist/app/maps'))

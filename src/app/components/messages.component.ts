@@ -11,8 +11,5 @@ import {Messages} from "../services/messages";
 
 export class MessagesComponent {
 
-    //@Input() identifier: string;
-
-    constructor(private messages: Messages) {
-    }
+    constructor(private messages: Messages) {}
 }

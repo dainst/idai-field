@@ -19,7 +19,8 @@ export class ModelUtils {
             synced: from.synced,
             modified: from.modified,
             created: from.created,
-            valid: from.valid
+            valid: from.valid,
+            type: from.type
         };
 
         return cloned;

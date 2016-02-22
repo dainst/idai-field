@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChange, OnChanges} from 'angular2/core';
+import {Component, Input, SimpleChange, Inject} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
 import {Messages} from "../services/messages";
@@ -14,11 +14,12 @@ import {ObjectList} from "../services/object-list";
     templateUrl: 'templates/object-edit.html'
 })
 
-export class ObjectEditComponent implements OnChanges {
+export class ObjectEditComponent {
 
     private saveTimer: number;
 
-    constructor(private objectList: ObjectList) { }
+    constructor(private objectList: ObjectList,
+        @Inject('app.dataModelConfig') private dataModelConfig) { }
 
     /**
      * Saves the currently selected object to the local datastore.
@@ -37,13 +38,8 @@ export class ObjectEditComponent implements OnChanges {
         this.saveTimer = setTimeout(this.saveSelected.bind(this), 500);
     }
 
-    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-
-        /*
-        if (this.saveTimer) {
-            clearTimeout(this.saveTimer);
-            this.saveTimer = undefined;
-        }
-        */
+    public test(): IdaiFieldObject {
+        console.log("TEST DATA MODEL CONFIG: ", this.dataModelConfig);
+        return this.objectList.getSelectedObject();       
     }
 }

@@ -20,8 +20,7 @@ export class AppComponent implements OnInit {
 
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
-            @Inject('app.config') private config,
-            @Inject('app.dataModelConfig') private dataModelConfig) {
+                @Inject('app.config') private config) {
     }
 
     ngOnInit() {

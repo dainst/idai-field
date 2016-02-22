@@ -6,4 +6,5 @@ export interface IdaiFieldObject {
     modified?: Date;
     created?: Date;
     valid: boolean;
+    type: string;
 }

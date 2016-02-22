@@ -21,9 +21,9 @@ export function main() {
         var id = "abc";
 
         var oldVersion : IdaiFieldObject =
-            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
+            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true, "type": "Object" };
         var selectThen : IdaiFieldObject =
-            { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
+            { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true, "type": "Object" };
         var selectFirst : IdaiFieldObject;
 
         var successFunction = function() {
@@ -51,7 +51,7 @@ export function main() {
                 mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
                 objectList = new ObjectList(mockDatastore, messages);
 
-                selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
+                selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id, "type": "Object" };
                 objectList.setObjects([selectFirst,selectThen]);
 
                 mockDatastore.create.and.callFake(successFunction);

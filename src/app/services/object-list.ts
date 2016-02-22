@@ -2,6 +2,7 @@ import {Injectable} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Messages} from "./messages";
+import {MessagesDictionary} from "./messages-dictionary";
 
 /**
  * @author Thomas Kleinke
@@ -11,6 +12,7 @@ import {Messages} from "./messages";
 @Injectable()
 
 export class ObjectList {
+
 
     constructor(private datastore: Datastore,
                 private messages: Messages) {}
@@ -41,10 +43,10 @@ export class ObjectList {
         if (this.changed) {
             this.save(object).then(
                 () => {
-                    this.messages.delete('objectlist/idexists'); // TODO make constant
+                    this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
                 },
                 err => {
-                    this.messages.add('objectlist/idexists', 'danger');
+                    this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
                     object.valid = false;
 
                     if (restoreIfInvalid) {
@@ -100,7 +102,7 @@ export class ObjectList {
             restoredObject => {
                 var index = this.objects.indexOf(object);
                 this.objects[index] = restoredObject;
-                this.messages.delete('objectlist/idexists');
+                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
             },
             err => {
                 // TODO handle error

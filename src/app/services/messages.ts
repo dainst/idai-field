@@ -1,5 +1,6 @@
 import {Injectable} from "angular2/core";
 import {Message} from "../model/message";
+import {MessagesDictionary} from "./messages-dictionary";
 
 /**
  * Maintains a collection of currently active messages the
@@ -11,17 +12,6 @@ import {Message} from "../model/message";
  */
 @Injectable()
 export class Messages {
-
-    public static MSG_NO_BODY = "No message body found for key 'id'.";
-
-    // This map contains the message bodies
-    // messages identified by their key.
-    // It can be replaced later by another data source
-    // like an external service.
-    public static MESSAGES = {
-        "objectlist/idexists" : "Object Identifier already exists.",
-        "temp" : "temp" // TODO used just for test, should be removed soon
-    };
 
     private messageMap: { [id: string]: Message } = {};
 
@@ -43,9 +33,9 @@ export class Messages {
      */
     public add(id:string,level:string): void {
 
-        var content : string = Messages.MESSAGES[id];
+        var content : string = MessagesDictionary.MESSAGES[id];
         if (!content)
-            throw Messages.MSG_NO_BODY.replace('id',id);
+            throw MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_MESSAGES_NOBODY].replace('id',id);
 
         this.messageMap[id] = {
             'level' : level,

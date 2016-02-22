@@ -231,7 +231,6 @@ export class IndexeddbDatastore implements Datastore {
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
                     var object:IdaiFieldObject = request.result;
-                    console.log("Fetched object is: ", object);
                     this.objectCache[object.id] = object;
                     resolve(object);
                 }

@@ -51,7 +51,6 @@ export class Messages {
             'level' : level,
             content: content
         };
-
     }
 
     public delete(id:string) {

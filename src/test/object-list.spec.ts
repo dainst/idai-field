@@ -5,7 +5,6 @@ import {ObjectList} from "../app/services/object-list";
 import {Datastore} from "../app/services/datastore";
 import {Messages} from "../app/services/messages";
 
-
 /**
  * @author Daniel M. de Oliveira
  */
@@ -21,7 +20,7 @@ export function main() {
         var id = "abc";
 
         var oldVersion : IdaiFieldObject =
-            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };;
+            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true };
         var selectThen : IdaiFieldObject =
             { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true };
         var selectFirst : IdaiFieldObject;
@@ -43,11 +42,11 @@ export function main() {
         };
 
         beforeEach(
-            inject([ Messages],
-            ( messages:Messages) => {
+            inject([Messages],
+            (messages:Messages) => {
 
             mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-            objectList = new ObjectList(mockDatastore,messages);
+            objectList = new ObjectList(mockDatastore, messages);
 
             selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
             objectList.setObjects([selectFirst,selectThen]);
@@ -142,8 +141,35 @@ export function main() {
                 }
         );
 
-        // TODO test creates message
+        it('should add a message to the current messages if object has been marked invalid',
+            function() {
 
-        // TODO test deletes message
+                expect(objectList.messages.getMessages().length).toBe(0);
+
+                mockDatastore.update.and.callFake(errorFunction);
+                objectList.setChanged();
+                objectList.validateAndSave(selectFirst, false);
+
+                expect(objectList.messages.getMessages().length).toBe(1);
+            }
+        );
+
+        it('should delete a message from the current messages if invalid marked object gets marked valid again',
+            function() {
+
+                expect(objectList.messages.getMessages().length).toBe(0);
+
+                mockDatastore.update.and.callFake(errorFunction);
+                objectList.setChanged();
+                objectList.validateAndSave(selectFirst, false);
+
+                expect(objectList.messages.getMessages().length).toBe(1);
+
+                objectList.setChanged();
+                objectList.validateAndSave(selectFirst, true);
+
+                expect(objectList.messages.getMessages().length).toBe(0);
+            }
+        );
     });
 }

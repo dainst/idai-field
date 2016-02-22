@@ -44,7 +44,6 @@ export class ObjectList {
                     this.messages.delete('objectlist/idexists'); // TODO make constant
                 },
                 err => {
-                    // Neue Methode
                     this.messages.add('objectlist/idexists', 'danger');
                     object.valid = false;
 

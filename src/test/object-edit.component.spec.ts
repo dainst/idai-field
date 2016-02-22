@@ -15,7 +15,7 @@ import {DATA_MODEL_CONFIG} from "../app/Configuration";
 
 var selectedObject = {
     "identifier": "ob1",
-    "title": "Test",
+    "title": "Title",
     "synced": 0,
     "valid": true,
     "type": "Object"
@@ -24,7 +24,7 @@ var selectedObject = {
 class MockObjectList {
 
     public getSelectedObject(): IdaiFieldObject {
-
+        console.log("getSelectedObject");
         return selectedObject;
     }
 }
@@ -39,10 +39,11 @@ export function main() {
             provide(ObjectEditComponent, {useClass: ObjectEditComponent})
         ]);
 
-        fit('should do stuff',
+        it('should do stuff',
             injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
+                        //componentFixture.detectChanges();
                         const element = componentFixture.nativeElement;
                         console.log("Element", element);
                     });

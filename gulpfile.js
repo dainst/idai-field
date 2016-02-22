@@ -150,7 +150,7 @@ function watch() {
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/app/**/*.ts', ['compile-ts']);
     gulp.watch('src/app/**/*.json', ['copy-json']);
-    gulp.watch('src/templates/**/*.html', ['copy-templates']);
+    gulp.watch('src/templates/**/*.html', ['copy-templates','compile-ts']);
     gulp.watch('src/index.html', ['copy-html']);
     gulp.watch('src/img/**/*', ['copy-img']);
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);

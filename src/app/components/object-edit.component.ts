@@ -3,13 +3,14 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
 import {Messages} from "../services/messages";
 import {ObjectList} from "../services/object-list";
+import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
 @Component({
-
+    directives: [FORM_DIRECTIVES,CORE_DIRECTIVES,COMMON_DIRECTIVES],
     selector: 'object-edit',
     templateUrl: 'templates/object-edit.html'
 })

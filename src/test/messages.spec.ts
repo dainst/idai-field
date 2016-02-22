@@ -6,7 +6,6 @@ import {Datastore} from "../app/services/datastore";
 import {Messages} from "../app/services/messages";
 import {MessagesDictionary} from "../app/services/messages-dictionary";
 
-
 /**
  * @author Daniel M. de Oliveira
  * @author Jan G. Wieners
@@ -19,8 +18,8 @@ export function main() {
         beforeEach(
             function(){
                 messages = new Messages();
-                messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS,"warn");
-        });
+                messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, "warning");
+            });
 
         it('should store, retrieve and delete a message',
             function(){
@@ -34,7 +33,7 @@ export function main() {
         it('add two messages with the same identifier',
             function(){
 
-                messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS,"warn");
+                messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS,"warning");
                 expect(messages.getMessages()[0].content).toBe(MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS]);
                 expect(messages.getMessages().length).toBe(1);
             }
@@ -43,7 +42,7 @@ export function main() {
         it('add two messages with different identifiers',
             function(){
 
-                messages.add(MessagesDictionary.MSGKEY_MESSAGES_NOBODY,"warn");
+                messages.add(MessagesDictionary.MSGKEY_MESSAGES_NOBODY,"warning");
                 expect(messages.getMessages()[0].content).toBe(MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS]);
                 expect(messages.getMessages()[1].content).toBe(MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_MESSAGES_NOBODY]);
                 expect(messages.getMessages().length).toBe(2);
@@ -53,7 +52,7 @@ export function main() {
         it('will not add a non existing message',
             function(){
 
-                expect(function(){messages.add("notexisting", "warn");})
+                expect(function(){messages.add("notexisting", "warning");})
                     .toThrowErrorWith(MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_MESSAGES_NOBODY].replace("id","notexisting"));
             }
         );

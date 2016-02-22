@@ -15,15 +15,6 @@ export class Messages {
 
     private messageMap: { [id: string]: Message } = {};
 
-    public static MSG_WRONG_LEVEL = "Message level 'msglevel' is not available.";
-
-    public static LEVELS = [
-        "success",
-        "info",
-        "warning",
-        "danger"
-    ];
-
     /**
      * Holds the collection to be delivered when calling {@link Messages#getMessages()}.
      *
@@ -46,8 +37,8 @@ export class Messages {
         if (!content)
             throw MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_MESSAGES_NOBODY].replace('id',id);
 
-        if (Messages.LEVELS.indexOf(level) === -1)
-            throw Messages.MSG_WRONG_LEVEL.replace('msglevel', level);
+        if (MessagesDictionary.LEVELS.indexOf(level) === -1)
+            throw MessagesDictionary.MSG_WRONG_LEVEL.replace('msglevel', level);
 
         this.messageMap[id] = {
             'level' : level,

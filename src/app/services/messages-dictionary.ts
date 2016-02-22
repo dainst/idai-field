@@ -8,6 +8,7 @@ import {Message} from "../model/message";
  * like an external service.
  *
  * @author Daniel M. de Oliveira
+ * @author Jan G. Wieners
  */
 @Injectable()
 export class MessagesDictionary {
@@ -20,4 +21,13 @@ export class MessagesDictionary {
         "objectlist/idexists" : "Object Identifier already exists.",
         "messages/nobody" : "No message body found for key 'id'."
     };
+
+    public static MSG_WRONG_LEVEL = "Message level 'msglevel' is not available.";
+
+    public static LEVELS = [
+        "success",
+        "info",
+        "warning",
+        "danger"
+    ];
 }

@@ -29,11 +29,8 @@ export class AppComponent implements OnInit {
 
     loadSampleData(): void {
 
-        this.datastore.all({}).then(objects => {
-            var promises = [];
-            for (var ob of objects) promises.push(this.datastore.delete(ob.id));
-            return Promise.all(promises);
-        }).then(() => {
+        this.datastore.clear()
+        .then(() => {
             var promises = [];
             for (var ob of OBJECTS) promises.push(this.datastore.create(ob));
             Promise.all(promises).then(

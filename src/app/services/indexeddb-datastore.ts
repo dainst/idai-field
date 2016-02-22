@@ -113,6 +113,36 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
+    clear():Promise<any> {
+
+        return new Promise((resolve, reject) => {
+            this.db.then(db => {
+
+                var objectRequest = db.transaction(['idai-field-object'], 'readwrite')
+                    .objectStore('idai-field-object').clear();
+                objectRequest.onerror = event => reject(objectRequest.error);
+
+                var fulltextRequest = db.transaction(['fulltext'], 'readwrite')
+                    .objectStore('fulltext').clear();
+                fulltextRequest.onerror = event => reject(fulltextRequest.error);
+
+                var promises = [];
+                promises.push(objectRequest);
+                promises.push(fulltextRequest);
+
+                Promise.all(promises).then(
+                    () => {
+                        this.objectCache = {};
+                        resolve();
+                     }
+                  )
+                .catch(
+                    err => reject(err)
+                );
+            });
+        });
+    }
+
     getUnsyncedObjects(): Observable<IdaiFieldObject> {
 
         return Observable.create( observer => {
@@ -201,6 +231,7 @@ export class IndexeddbDatastore implements Datastore {
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
                     var object:IdaiFieldObject = request.result;
+                    console.log("Fetched object is: ", object);
                     this.objectCache[object.id] = object;
                     resolve(object);
                 }

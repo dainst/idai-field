@@ -11,6 +11,8 @@ export abstract class Datastore {
 
     abstract delete(id: string): Promise<any>;
 
+    abstract clear(): Promise<any>;
+
     abstract find(query: string, options: any): Promise<IdaiFieldObject[]>;
 
     abstract all(options: any): Promise<IdaiFieldObject[]>;

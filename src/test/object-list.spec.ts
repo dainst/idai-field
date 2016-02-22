@@ -16,6 +16,7 @@ export function main() {
         ]);
 
         var mockDatastore;
+        var messagesService;
         var objectList;
         var id = "abc";
 
@@ -45,23 +46,25 @@ export function main() {
             inject([Messages],
             (messages:Messages) => {
 
-            mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-            objectList = new ObjectList(mockDatastore, messages);
+                messagesService = messages;
 
-            selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
-            objectList.setObjects([selectFirst,selectThen]);
+                mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
+                objectList = new ObjectList(mockDatastore, messages);
 
-            mockDatastore.create.and.callFake(successFunction);
-            mockDatastore.update.and.callFake(successFunction);
-            mockDatastore.refresh.and.callFake(function() {
-                return {
-                    then: function(suc,err) {
-                        suc(oldVersion);
-                    }
-                };
-            });
+                selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id };
+                objectList.setObjects([selectFirst,selectThen]);
 
-            objectList.setSelectedObject(selectFirst);
+                mockDatastore.create.and.callFake(successFunction);
+                mockDatastore.update.and.callFake(successFunction);
+                mockDatastore.refresh.and.callFake(function() {
+                    return {
+                        then: function(suc,err) {
+                            suc(oldVersion);
+                        }
+                    };
+                });
+
+                objectList.setSelectedObject(selectFirst);
         }));
 
         it('should create a non existing object on autosave',
@@ -144,31 +147,31 @@ export function main() {
         it('should add a message to the current messages if object has been marked invalid',
             function() {
 
-                expect(objectList.messages.getMessages().length).toBe(0);
+                expect(messagesService.getMessages().length).toBe(0);
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged();
                 objectList.validateAndSave(selectFirst, false);
 
-                expect(objectList.messages.getMessages().length).toBe(1);
+                expect(messagesService.getMessages().length).toBe(1);
             }
         );
 
         it('should delete a message from the current messages if invalid marked object gets marked valid again',
             function() {
 
-                expect(objectList.messages.getMessages().length).toBe(0);
+                expect(messagesService.getMessages().length).toBe(0);
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged();
                 objectList.validateAndSave(selectFirst, false);
 
-                expect(objectList.messages.getMessages().length).toBe(1);
+                expect(messagesService.getMessages().length).toBe(1);
 
                 objectList.setChanged();
                 objectList.validateAndSave(selectFirst, true);
 
-                expect(objectList.messages.getMessages().length).toBe(0);
+                expect(messagesService.getMessages().length).toBe(0);
             }
         );
     });

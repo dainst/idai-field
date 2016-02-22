@@ -1,7 +1,7 @@
 <div class="row" id="objectOverview">
     <div class="col-md-3">
 
-        <input (keyup)="onKey($event)" class="form-control" placeholder="Search...">
+        <input #searchInput (keyup)="onKey($event)" class="form-control" placeholder="Search...">
 
         <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
             <li *ngFor="#object of objectList.getObjects()"
@@ -21,6 +21,7 @@
                 <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
             </li>
             <li id="createObject"
+                *ngIf="searchInput.value.length == 0"
                 class="list-group-item list-group-item-success"
                 (click)="onCreate()"
                 onclick="window.scrollTo(0, 0)">

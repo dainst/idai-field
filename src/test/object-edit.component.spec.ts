@@ -21,12 +21,19 @@ var selectedObject = {
     "type": "Object"
 };
 
+var currentSchema = {
+    "fields" : [ { "field" : "Material" } ]
+};
+
 class MockObjectList {
 
     public getSelectedObject(): IdaiFieldObject {
-        console.log("getSelectedObject");
         return selectedObject;
     }
+
+    public getCurrentSchema() {
+        return currentSchema;
+    };
 }
 
 
@@ -43,9 +50,9 @@ export function main() {
             injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
-                        //componentFixture.detectChanges();
-                        const element = componentFixture.nativeElement;
-                        console.log("Element", element);
+                        componentFixture.detectChanges();
+                        const compiled = componentFixture.debugElement.nativeElement;
+                        console.log("Element", compiled);
                     });
                 }
             )

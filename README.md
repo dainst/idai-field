@@ -44,14 +44,6 @@ in the "release"-directory.
 
 ## Unit-Testing
 
-The following dependencies are required for unit testing:
-
-```
-npm install -g karma
-npm install -g karma-jasmine
-npm install -g karma-chrome-launcher
-```
-
 To run the unit tests, you have to open one terminal and run 
 
 ```
@@ -63,6 +55,6 @@ gulp test-watch (if you want to also have the the app running, use "gulp server"
 Then open another terminal and run
 
 ```
-karma start karma.conf.js
+npm test
 ```
 

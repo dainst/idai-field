@@ -16,6 +16,9 @@ export const DATA_MODEL_CONFIG = {
       "type": "Object",
       "fields": [
         {
+          "field": "Inventory Number"
+        },
+        {
           "field": "Material",
           "valuelist": [
             "Alabaster",

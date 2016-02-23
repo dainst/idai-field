@@ -1,4 +1,4 @@
-import {Injectable} from "angular2/core";
+import {Injectable,Inject} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
 import {Messages} from "./messages";
@@ -15,7 +15,8 @@ export class ObjectList {
 
 
     constructor(private datastore: Datastore,
-                private messages: Messages) {}
+                private messages: Messages,
+                @Inject('app.dataModelConfig') private dataModelConfig) {}
 
     /**
      * The Object currently selected in the list and shown in the edit component.
@@ -125,17 +126,7 @@ export class ObjectList {
     }
 
     private objectTypeSchema = {
-        "fields" : [
-            { "field" : "Material" ,
-                "valueList" : [
-                    "Alabaster",
-                    "Amber",
-                    "Antler"]
-            },
-            {
-                "field" : "oneLiner"
-            }
-        ]
+        "types": []
     };
 
     public getObjectTypeSchema() {
@@ -153,7 +144,13 @@ export class ObjectList {
     public setSelectedObject(object: IdaiFieldObject) {
 
         // TODO check for object type here and set type schema accordingly
-        // NOTE that the reference of currentSchema must stay the same.
+        if (this.dataModelConfig&&this.dataModelConfig["types"]) {
+
+            // NOTE that the reference of currentSchema must stay the same.
+            this.objectTypeSchema["fields"] = this.dataModelConfig["types"][4]["fields"];
+
+            console.log("",this.objectTypeSchema)
+        }
 
 
         this.validateAndSave(this.selectedObject, true);

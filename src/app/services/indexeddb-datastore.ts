@@ -54,7 +54,7 @@ export class IndexeddbDatastore implements Datastore {
             object.modified = object.created;
             this.objectCache[object.id] = object;
             return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-                .then(() => resolve(object.id), err => reject(err));
+                .then(() => resolve(object.id), err => reject("databaseError"));
         });
     }
 
@@ -65,7 +65,7 @@ export class IndexeddbDatastore implements Datastore {
                "Maybe you wanted to create the object with create()?");
            object.modified = new Date();
            return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-               .then(() => resolve(), err => reject(err));;
+               .then(() => resolve(), err => reject("databaseError"));
         });
     }
 
@@ -246,7 +246,7 @@ export class IndexeddbDatastore implements Datastore {
                 var request = db.transaction(['idai-field-object'], 'readwrite')
                     .objectStore('idai-field-object').put(object);
 
-                request.onerror = event => reject(request.error);
+                request.onerror = event => reject("databaseError");
                 request.onsuccess = event => {
                     if (!object.synced) this.notifyObserversOfObjectToSync(object);
                     resolve(request.result);

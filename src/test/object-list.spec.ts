@@ -38,7 +38,7 @@ export function main() {
         var errorFunction =function() {
             return {
                 then: function(suc,err) {
-                    err("fail");
+                    err("databaseError");
                 }
             };
         };

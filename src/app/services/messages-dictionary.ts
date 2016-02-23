@@ -14,12 +14,14 @@ import {Message} from "../model/message";
 export class MessagesDictionary {
 
     public static MSGKEY_OBJLIST_IDEXISTS : string = 'objectlist/idexists';
+    public static MSGKEY_OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static MSGKEY_MESSAGES_NOBODY : string = 'messages/nobody';
 
     // Can we access the above defined keys for the left hand side of the map here?
     public static MESSAGES = {
         "objectlist/idexists" : "Object Identifier already exists.",
-        "messages/nobody" : "No message body found for key 'id'."
+        "objectlist/idmissing" : "Object Identifier is missing.",
+        "messages/nobody" : "No message body found for key 'id'.",
     };
 
     public static MSG_WRONG_LEVEL = "Message level 'msglevel' is not available.";

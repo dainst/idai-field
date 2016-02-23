@@ -34,11 +34,13 @@ export class ObjectList {
             console.log("changed: ",object);
 
             this.save(object).then(
-                () => {
-                    this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
-                },
+                () => { },
                 err => {
-                    this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
+                    if (err == "databaseError") {
+                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
+                    } else if (err == "missingIdentifierError") {
+                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
+                    }
                     object.valid = false;
 
                     if (restoreIfInvalid) {
@@ -57,9 +59,13 @@ export class ObjectList {
      */
     private save(object: IdaiFieldObject): any {
 
+        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
+        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
+
         // Replace with proper validation
-        if (!object.identifier || object.identifier.length == 0)
-            return;
+        if (!object.identifier || object.identifier.length == 0) {
+            return new Promise((resolve, reject) => { reject("missingIdentifierError"); });
+        }
 
         this.changed = false; // TODO CODE REVIEW - SHOULDNT IT GET SET TO FALSE ONLY IF SAVE WAS SUCCESSFUL?
         object.synced = 0;
@@ -95,6 +101,7 @@ export class ObjectList {
                 var index = this.objects.indexOf(object);
                 this.objects[index] = restoredObject;
                 this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
+                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
             },
             err => {
                 // TODO handle error

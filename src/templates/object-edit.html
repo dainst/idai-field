@@ -10,10 +10,18 @@
             <input [(ngModel)]="objectList.getSelectedObject().title" (keyup)="onKey($event)" class="form-control">
         </div>
 
-        <!-- TODO insert ngFor over dynamic fields here -->
-        <div *ngIf="objectList.getCurrentSchema().fields[0]" class="form-group">
-            <label>{{objectList.getCurrentSchema().fields[0].field}}</label>
-            <input [(ngModel)]="objectList.getSelectedObject()[objectList.getCurrentSchema().fields[0].field]" (keyup)="onKey($event)" class="form-control">
+        <div *ngFor="#field of objectList.getObjectTypeSchema().fields">
+            <div *ngIf="field" class="form-group">
+                <label>{{field.field}}</label>
+                <div *ngIf="!field.valueList">
+                    <input [(ngModel)]="objectList.getSelectedObject()[field.field]" (keyup)="onKey($event)" class="form-control">
+                </div>
+                <div *ngIf="field.valueList">
+                    <select [(ngModel)]="objectList.getSelectedObject()[field.field]">
+                        <option *ngFor="#item of field.valueList; #i = index" value="{{item}}">{{item}}</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </form>
 </div>

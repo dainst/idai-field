@@ -124,12 +124,22 @@ export class ObjectList {
         return this.newObject;
     }
 
-    private currentSchema = {
-        "fields" : [ { "field" : "Material" } ]
+    private objectTypeSchema = {
+        "fields" : [
+            { "field" : "Material" ,
+                "valueList" : [
+                    "Alabaster",
+                    "Amber",
+                    "Antler"]
+            },
+            {
+                "field" : "oneLiner"
+            }
+        ]
     };
 
-    public getCurrentSchema() {
-        return this.currentSchema;
+    public getObjectTypeSchema() {
+        return this.objectTypeSchema;
     };
 
     public setNewObject(object: any) {
@@ -142,7 +152,7 @@ export class ObjectList {
 
     public setSelectedObject(object: IdaiFieldObject) {
 
-        // TODO check for object type here and set schema accordingly
+        // TODO check for object type here and set type schema accordingly
         // NOTE that the reference of currentSchema must stay the same.
 
 

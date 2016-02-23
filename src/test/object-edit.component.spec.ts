@@ -21,8 +21,15 @@ var selectedObject = {
     "type": "Object"
 };
 
-var currentSchema = {
-    "fields" : [ { "field" : "Material" } ]
+var objectTypeSchema = {
+    "fields" : [
+        { "field" : "Material" ,
+            "valueList" : ["aaa","bbb","ccc"]
+        },
+        {
+            "field" : "oneLiner"
+        }
+    ]
 };
 
 class MockObjectList {
@@ -31,8 +38,8 @@ class MockObjectList {
         return selectedObject;
     }
 
-    public getCurrentSchema() {
-        return currentSchema;
+    public getObjectTypeSchema() {
+        return objectTypeSchema;
     };
 }
 
@@ -56,7 +63,7 @@ export function main() {
                     });
                 }
             )
-        );
+        ,1000);
 
     });
 }

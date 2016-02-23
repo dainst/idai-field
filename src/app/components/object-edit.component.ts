@@ -17,15 +17,17 @@ import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common
 
 export class ObjectEditComponent {
 
+    @Input() object: IdaiFieldObject;
+
     private saveTimer: number;
 
-    constructor(private objectList: ObjectList) { }
+    constructor(private objectList: ObjectList) {}
 
     /**
-     * Saves the currently selected object to the local datastore.
+     * Saves the object to the local datastore.
      */
-    private saveSelected() {
-        this.objectList.validateAndSave(this.objectList.getSelectedObject(), false);
+    private save() {
+        this.objectList.validateAndSave(this.object, false);
     }
 
     onKey(event: any) {
@@ -35,6 +37,6 @@ export class ObjectEditComponent {
         if (this.saveTimer)
             clearTimeout(this.saveTimer);
 
-        this.saveTimer = setTimeout(this.saveSelected.bind(this), 500);
+        this.saveTimer = setTimeout(this.save.bind(this), 500);
     }
 }

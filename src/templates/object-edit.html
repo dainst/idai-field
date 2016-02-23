@@ -1,23 +1,23 @@
-<div *ngIf="objectList.getSelectedObject()">
+<div *ngIf="object">
     <form>
 
         <div class="form-group">
             <label>Identifier</label>
-            <input [(ngModel)]="objectList.getSelectedObject().identifier" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="object.identifier" (keyup)="onKey($event)" class="form-control">
         </div>
         <div class="form-group">
             <label>Title</label>
-            <input [(ngModel)]="objectList.getSelectedObject().title" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="object.title" (keyup)="onKey($event)" class="form-control">
         </div>
 
         <div *ngFor="#field of objectList.getObjectTypeSchema().fields">
             <div *ngIf="field" class="form-group">
                 <label>{{field.field}}</label>
                 <div *ngIf="!field.valuelist">
-                    <input [(ngModel)]="objectList.getSelectedObject()[field.field]" (keyup)="onKey($event)" class="form-control">
+                    <input [(ngModel)]="object[field.field]" (keyup)="onKey($event)" class="form-control">
                 </div>
                 <div *ngIf="field.valuelist">
-                    <select [(ngModel)]="objectList.getSelectedObject()[field.field]">
+                    <select [(ngModel)]="object[field.field]">
                         <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>
                     </select>
                 </div>

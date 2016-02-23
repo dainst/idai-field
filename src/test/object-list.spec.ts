@@ -7,6 +7,7 @@ import {Messages} from "../app/services/messages";
 
 /**
  * @author Daniel M. de Oliveira
+ * @author Thomas Kleinke
  */
 export function main() {
     describe('ObjectList', () => {
@@ -63,8 +64,6 @@ export function main() {
                         }
                     };
                 });
-
-                objectList.setSelectedObject(selectFirst);
         }));
 
         it('should create a non existing object on autosave',
@@ -73,7 +72,7 @@ export function main() {
                     delete selectFirst.id;
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst,false);
+                    objectList.validateAndSave(selectFirst, false);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
                 }
         );
@@ -84,7 +83,7 @@ export function main() {
                     delete selectFirst.id;
                     objectList.setChanged();
 
-                    objectList.setSelectedObject(selectThen); // create selectFirst now.
+                    objectList.validateAndSave(selectFirst, true);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
                 }
         );
@@ -94,7 +93,7 @@ export function main() {
 
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst,false);
+                    objectList.validateAndSave(selectFirst, false);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
                 }
         );
@@ -104,7 +103,7 @@ export function main() {
 
                     objectList.setChanged();
 
-                    objectList.setSelectedObject(selectThen); // update selectFirst now.
+                    objectList.validateAndSave(selectFirst, true);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
                 }
         );
@@ -116,23 +115,46 @@ export function main() {
                     objectList.setChanged();
 
                     expect(objectList.getObjects()[0]).toBe(selectFirst);
-                    objectList.setSelectedObject(selectThen); // restore the oldVersion now.
+                    objectList.validateAndSave(selectFirst, true); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
+        );
+
+        it('should not restore a non valid object on autosave with unsaved changes',
+            function() {
+
+                mockDatastore.update.and.callFake(errorFunction);
+                objectList.setChanged();
+
+                expect(objectList.getObjects()[0]).toBe(selectFirst);
+                objectList.validateAndSave(selectFirst, false); // do not restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectFirst);
+            }
         );
 
         it('should restore an invalid object on select change with invalid object',
             function() {
 
-                    selectFirst.valid = false;
+                selectFirst.valid = false;
 
-                    expect(objectList.getObjects()[0]).toBe(selectFirst);
-                    objectList.setSelectedObject(selectThen); // restore the oldVersion now.
-                    expect(objectList.getObjects()[0]).toBe(oldVersion);
-                }
+                expect(objectList.getObjects()[0]).toBe(selectFirst);
+                objectList.validateAndSave(selectFirst, true); // restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(oldVersion);
+            }
         );
 
-        it('mark an object invalid',
+        it('should not restore an invalid object on autosave with invalid object',
+            function() {
+
+                selectFirst.valid = false;
+
+                expect(objectList.getObjects()[0]).toBe(selectFirst);
+                objectList.validateAndSave(selectFirst, false); // restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectFirst);
+            }
+        );
+
+        it('should mark an object invalid if it cannot be stored in the database',
             function() {
 
                     mockDatastore.update.and.callFake(errorFunction);

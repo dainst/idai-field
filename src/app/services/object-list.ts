@@ -19,21 +19,10 @@ export class ObjectList {
                 @Inject('app.dataModelConfig') private dataModelConfig) {}
 
     /**
-     * The Object currently selected in the list and shown in the edit component.
-     */
-    private selectedObject: IdaiFieldObject;
-
-    /**
      * Indicates that the current instance of the selectedObject differs from the one
      * saved in the local datastore.
      */
     private changed: boolean;
-
-    /**
-     * The object under creation which has not been yet put to the list permanently.
-     * As soon as it is validated successfully newObject is set to "undefined" again.
-     */
-    private newObject: any;
 
     private objects: IdaiFieldObject[];
 
@@ -121,10 +110,6 @@ export class ObjectList {
         this.objects = objects;
     }
 
-    public getNewObject() {
-        return this.newObject;
-    }
-
     private objectTypeSchema = {
         "types": []
     };
@@ -132,30 +117,6 @@ export class ObjectList {
     public getObjectTypeSchema() {
         return this.objectTypeSchema;
     };
-
-    public setNewObject(object: any) {
-        this.newObject = object;
-    }
-
-    public getSelectedObject() {
-        return this.selectedObject;
-    }
-
-    public setSelectedObject(object: IdaiFieldObject) {
-
-        // TODO check for object type here and set type schema accordingly
-        if (this.dataModelConfig&&this.dataModelConfig["types"]) {
-
-            // NOTE that the reference of currentSchema must stay the same.
-            this.objectTypeSchema["fields"] = this.dataModelConfig["types"][4]["fields"];
-
-            console.log("",this.objectTypeSchema)
-        }
-
-
-        this.validateAndSave(this.selectedObject, true);
-        this.selectedObject = object;
-    }
 
     public setChanged() {
         this.changed = true;

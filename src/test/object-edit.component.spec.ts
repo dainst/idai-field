@@ -70,8 +70,7 @@ export function main() {
             injectAsync([TestComponentBuilder,ObjectList], (tcb: TestComponentBuilder,ol:ObjectList) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
-                        ol.setSelectedObject(selectedObject);
-
+                        componentFixture.componentInstance.object = selectedObject;
                         componentFixture.detectChanges();
                         const compiled = componentFixture.debugElement.nativeElement;
                         console.log("Element", compiled);

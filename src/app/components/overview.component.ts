@@ -18,28 +18,40 @@ import {ObjectList} from "../services/object-list";
  */
 export class OverviewComponent implements OnInit {
 
+    /**
+     * The Object currently selected in the list and shown in the edit component.
+     */
+    private selectedObject: IdaiFieldObject;
+
+    /**
+     * The object under creation which has not been yet put to the list permanently.
+     * As soon as it is validated successfully newObject is set to "undefined" again.
+     */
+    private newObject: any;
+
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
-                private objectList: ObjectList) {
+        @Inject('app.dataModelConfig') private dataModelConfig,
+        private objectList: ObjectList) {
     }
 
     public onSelect(object: IdaiFieldObject) {
 
-        if (this.objectList.getNewObject() && object != this.objectList.getNewObject()) this.removeObjectFromListIfNotValid();
+        if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotValid();
 
-        this.objectList.setSelectedObject(object);
+        this.setSelectedObject(object);
     }
 
     public onCreate() {
 
-        if (this.objectList.getNewObject()) this.removeObjectFromListIfNotValid();
+        if (this.newObject) this.removeObjectFromListIfNotValid();
 
-        if (!this.objectList.getNewObject()) {
-            this.objectList.setNewObject({});
-            this.objectList.getObjects().unshift(this.objectList.getNewObject());
+        if (!this.newObject) {
+            this.newObject = {};
+            this.objectList.getObjects().unshift(this.newObject);
         }
 
-        this.objectList.setSelectedObject(this.objectList.getNewObject());
+        this.setSelectedObject(this.newObject);
     }
 
     onKey(event:any) {
@@ -73,13 +85,27 @@ export class OverviewComponent implements OnInit {
 
     private removeObjectFromListIfNotValid() {
 
-        if (!this.objectList.getNewObject().id || !this.objectList.getNewObject().valid) {
+        if (!this.newObject.id || !this.newObject.valid) {
 
-            var index = this.objectList.getObjects().indexOf(this.objectList.getNewObject());
+            var index = this.objectList.getObjects().indexOf(this.newObject);
             this.objectList.getObjects().splice(index, 1);
         }
-        this.objectList.setNewObject(undefined);
+        this.newObject = undefined;
     }
 
+    private setSelectedObject(object: IdaiFieldObject) {
+
+        // TODO check for object type here and set type schema accordingly
+        if (this.dataModelConfig && this.dataModelConfig["types"]) {
+
+            // NOTE that the reference of currentSchema must stay the same.
+            this.objectList.getObjectTypeSchema()["fields"] = this.dataModelConfig["types"][4]["fields"];
+
+            console.log("", this.objectList.getObjectTypeSchema)
+        }
+
+        this.objectList.validateAndSave(this.selectedObject, true);
+        this.selectedObject = object;
+    }
 
 }

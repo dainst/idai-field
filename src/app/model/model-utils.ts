@@ -11,18 +11,6 @@ export class ModelUtils {
      *   IdaiFieldObject.
      */
     public static clone(from: IdaiFieldObject) : IdaiFieldObject {
-
-        var cloned = {
-            id: from.id,
-            identifier: from.identifier,
-            title: from.title,
-            synced: from.synced,
-            modified: from.modified,
-            created: from.created,
-            valid: from.valid,
-            type: from.type
-        };
-
-        return cloned;
+        return JSON.parse(JSON.stringify(from));
     }
 }

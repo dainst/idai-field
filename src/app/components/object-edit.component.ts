@@ -20,7 +20,7 @@ export class ObjectEditComponent {
     private saveTimer: number;
 
     constructor(private objectList: ObjectList,
-        @Inject('app.dataModelConfig') private dataModelConfig) { }
+        @Inject('app.dataModelConfig') private dataModelConfig) { } // TODO remove this here and add this to object-list
 
     /**
      * Saves the currently selected object to the local datastore.

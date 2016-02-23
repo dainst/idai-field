@@ -41,6 +41,8 @@ export class ObjectList {
         if (!object) return;
 
         if (this.changed) {
+            console.log("changed: ",object);
+
             this.save(object).then(
                 () => {
                     this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
@@ -122,6 +124,14 @@ export class ObjectList {
         return this.newObject;
     }
 
+    private currentSchema = {
+        "fields" : [ { "field" : "Material" } ]
+    };
+
+    public getCurrentSchema() {
+        return this.currentSchema;
+    };
+
     public setNewObject(object: any) {
         this.newObject = object;
     }
@@ -131,6 +141,10 @@ export class ObjectList {
     }
 
     public setSelectedObject(object: IdaiFieldObject) {
+
+        // TODO check for object type here and set schema accordingly
+        // NOTE that the reference of currentSchema must stay the same.
+
 
         this.validateAndSave(this.selectedObject, true);
         this.selectedObject = object;

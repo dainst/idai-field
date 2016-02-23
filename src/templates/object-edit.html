@@ -1,5 +1,6 @@
 <div *ngIf="objectList.getSelectedObject()">
     <form>
+
         <div class="form-group">
             <label>Identifier</label>
             <input [(ngModel)]="objectList.getSelectedObject().identifier" (keyup)="onKey($event)" class="form-control">
@@ -7,6 +8,12 @@
         <div class="form-group">
             <label>Title</label>
             <input [(ngModel)]="objectList.getSelectedObject().title" (keyup)="onKey($event)" class="form-control">
+        </div>
+
+        <!-- TODO insert ngFor over dynamic fields here -->
+        <div *ngIf="objectList.getCurrentSchema().fields[0]" class="form-group">
+            <label>{{objectList.getCurrentSchema().fields[0].field}}</label>
+            <input [(ngModel)]="objectList.getSelectedObject()[objectList.getCurrentSchema().fields[0].field]" (keyup)="onKey($event)" class="form-control">
         </div>
     </form>
 </div>

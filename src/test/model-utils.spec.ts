@@ -9,7 +9,7 @@ import {ModelUtils} from "../app/model/model-utils";
 export function main() {
     describe('ModelUtils', () => {
 
-        fit('should clone an IdaiFieldObject with all of its properties',
+        it('should clone an IdaiFieldObject with all of its properties',
             function(){
 
                 var initialObject = {

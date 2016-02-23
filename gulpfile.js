@@ -30,7 +30,7 @@ var paths = {
 };
 
 gulp.task('test', function (cb) {
-    var cmd = 'karma start karma.conf.js --single-run';
+    var cmd = 'node_modules/.bin/karma start karma.conf.js --single-run';
     if (argv.ci!=undefined&&argv.ci=='true')
         var cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js --single-run';
 

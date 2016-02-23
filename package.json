@@ -38,7 +38,6 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.10.0",
     "gulp-uglify": "^1.5.1",
-    "gulp-useref": "^3.0.5",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",

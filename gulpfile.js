@@ -14,7 +14,6 @@ var packager = require('electron-packager');
 var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
-var useref = require('gulp-useref');
 var shell = require('gulp-shell')
 var pkg = require('./package.json');
 var exec = require('child_process').exec;
@@ -174,7 +173,6 @@ gulp.task('server', ['build', 'prepare-package'], function() {
 gulp.task('prepare-package', function() {
 
 	gulp.src('src/index.html')
-        .pipe(useref())
 		.pipe(gulp.dest(paths.build));
 	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
 });

@@ -19,8 +19,7 @@ export class ObjectEditComponent {
 
     private saveTimer: number;
 
-    constructor(private objectList: ObjectList,
-        @Inject('app.dataModelConfig') private dataModelConfig) { } // TODO remove this here and add this to object-list
+    constructor(private objectList: ObjectList) { }
 
     /**
      * Saves the currently selected object to the local datastore.
@@ -37,10 +36,5 @@ export class ObjectEditComponent {
             clearTimeout(this.saveTimer);
 
         this.saveTimer = setTimeout(this.saveSelected.bind(this), 500);
-    }
-
-    public test(): IdaiFieldObject {
-        console.log("TEST DATA MODEL CONFIG: ", this.dataModelConfig);
-        return this.objectList.getSelectedObject();       
     }
 }

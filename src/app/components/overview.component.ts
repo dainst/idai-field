@@ -31,7 +31,6 @@ export class OverviewComponent implements OnInit {
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
-        @Inject('app.dataModelConfig') private dataModelConfig,
         private objectList: ObjectList) {
     }
 
@@ -94,15 +93,6 @@ export class OverviewComponent implements OnInit {
     }
 
     private setSelectedObject(object: IdaiFieldObject) {
-
-        // TODO check for object type here and set type schema accordingly
-        if (this.dataModelConfig && this.dataModelConfig["types"]) {
-
-            // NOTE that the reference of currentSchema must stay the same.
-            this.objectList.getObjectTypeSchema()["fields"] = this.dataModelConfig["types"][4]["fields"];
-
-            console.log("", this.objectList.getObjectTypeSchema)
-        }
 
         this.objectList.validateAndSave(this.selectedObject, true);
         this.selectedObject = object;

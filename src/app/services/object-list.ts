@@ -110,14 +110,6 @@ export class ObjectList {
         this.objects = objects;
     }
 
-    private objectTypeSchema = {
-        "types": []
-    };
-
-    public getObjectTypeSchema() {
-        return this.objectTypeSchema;
-    };
-
     public setChanged() {
         this.changed = true;
     }

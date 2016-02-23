@@ -1,0 +1,8 @@
+{
+	"environment": "test",
+    "backend" : {
+        "uri": "http://localhost:9200/idaifield/",
+        "credentials": "admin:s3cr3t",
+        "connectionCheckInterval": 1000
+    }
+}

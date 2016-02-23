@@ -8,9 +8,10 @@ import {Datastore} from "./services/datastore";
 import {IndexeddbDatastore} from "./services/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
-import {CONFIG} from "./config";
-import {DATA_MODEL_CONFIG} from "./Configuration";
 import {DataModelConfiguration} from "./services/data-model-configuration";
+
+import CONFIG = require("config/config.json");
+import DATA_MODEL_CONFIG from "config/Configuration.json";
 
 if (CONFIG.environment == 'production') enableProdMode();
 

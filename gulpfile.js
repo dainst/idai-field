@@ -86,10 +86,10 @@ gulp.task('copy-img', function() {
 		.pipe(gulp.dest(paths.build + '/img'));
 });
 
-gulp.task('copy-json', function() {
+gulp.task('copy-config', function() {
 
-	return gulp.src('src/app/**/*.json')
-		.pipe(gulp.dest(paths.build + '/app'));
+	return gulp.src('src/config/**/*.json')
+		.pipe(gulp.dest(paths.build + '/config'));
 });
 
 gulp.task('build', [
@@ -99,7 +99,7 @@ gulp.task('build', [
 	'copy-templates',
 	'copy-img',
 	'copy-fonts',
-	'copy-json',
+	'copy-config',
 	'concat-deps',
     'test-compile-ts'
 ]);

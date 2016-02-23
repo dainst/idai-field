@@ -1,4 +1,4 @@
-export const DATA_MODEL_CONFIG = {
+{
   "types": [
     {
       "type": "Section"
@@ -77,4 +77,4 @@ export const DATA_MODEL_CONFIG = {
       "type": "Other"
     }
   ]
-};
+}

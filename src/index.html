@@ -19,10 +19,21 @@
 
     <script>
         System.config({
+            map: {
+                json: 'app/services/systemjs-json-plugin'
+            },
             packages: {
                 app: {
                     format: 'register',
-                    defaultExtension: 'js'
+                    defaultExtension: 'js',
+                },
+                config: {
+                    defaultExtension: false,
+                    meta: {
+                        '*.json': {
+                            loader: 'json'
+                        }
+                    }
                 }
             }
         });

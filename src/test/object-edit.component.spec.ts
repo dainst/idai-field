@@ -6,6 +6,7 @@ import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {Datastore} from "../app/services/datastore";
 import {Messages} from "../app/services/messages";
+import {DataModelConfiguration} from "../app/services/data-model-configuration";
 
 /**
  * @author Daniel M. de Oliveira
@@ -63,11 +64,12 @@ export function main() {
             provide(Datastore, { useClass: MockDatastore }),
             provide(ObjectList, { useClass: ObjectList }),
             provide(Messages, { useClass: MockMessages }),
+            provide(DataModelConfiguration, { useClass: DataModelConfiguration}),
             provide(ObjectEditComponent, {useClass: ObjectEditComponent})
         ]);
 
         it('should do stuff',
-            injectAsync([TestComponentBuilder,ObjectList], (tcb: TestComponentBuilder,ol:ObjectList) => {
+            injectAsync([TestComponentBuilder,ObjectList], (tcb: TestComponentBuilder) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
                         componentFixture.componentInstance.object = selectedObject;

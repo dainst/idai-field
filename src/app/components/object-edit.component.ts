@@ -1,9 +1,10 @@
-import {Component, Input, OnChanges, Inject} from 'angular2/core';
+import {Component, Input, Inject} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "../services/datastore";
 import {Messages} from "../services/messages";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
+import {DataModelConfiguration} from "../services/data-model-configuration";
 
 /**
  * @author Jan G. Wieners
@@ -15,18 +16,14 @@ import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common
     templateUrl: 'templates/object-edit.html'
 })
 
-export class ObjectEditComponent implements OnChanges {
+export class ObjectEditComponent {
 
     @Input() object: IdaiFieldObject;
-
-    private objectTypeSchema = {
-        "types": []
-    };
 
     private saveTimer: number;
 
     constructor(private objectList: ObjectList,
-                @Inject('app.dataModelConfig') private dataModelConfig) {}
+                private dataModelConfiguration: DataModelConfiguration) {}
 
     /**
      * Saves the object to the local datastore.
@@ -43,18 +40,6 @@ export class ObjectEditComponent implements OnChanges {
             clearTimeout(this.saveTimer);
 
         this.saveTimer = setTimeout(this.save.bind(this), 500);
-    }
-
-    ngOnChanges() {
-
-        // TODO check for object type here and set type schema accordingly
-        if (this.dataModelConfig && this.dataModelConfig["types"]) {
-
-            // NOTE that the reference of currentSchema must stay the same.
-            this.objectTypeSchema["fields"] = this.dataModelConfig["types"][4]["fields"];
-
-            console.log("", this.objectTypeSchema)
-        }
     }
 
 }

@@ -1,6 +1,5 @@
 <div *ngIf="object">
     <form>
-
         <div class="form-group">
             <label>Identifier</label>
             <input [(ngModel)]="object.identifier" (keyup)="onKey($event)" class="form-control">
@@ -10,7 +9,7 @@
             <input [(ngModel)]="object.title" (keyup)="onKey($event)" class="form-control">
         </div>
 
-        <div *ngFor="#field of objectTypeSchema.fields">
+        <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
             <div *ngIf="field" class="form-group">
                 <label>{{field.field}}</label>
                 <div *ngIf="!field.valuelist">

@@ -10,6 +10,7 @@ import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
 import {CONFIG} from "./config";
 import {DATA_MODEL_CONFIG} from "./Configuration";
+import {DataModelConfiguration} from "./services/data-model-configuration";
 
 if (CONFIG.environment == 'production') enableProdMode();
 
@@ -21,5 +22,6 @@ bootstrap(AppComponent, [
     provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
-    provide('app.dataModelConfig', { useValue: DATA_MODEL_CONFIG })
+    provide('app.dataModelConfig', { useValue: DATA_MODEL_CONFIG }),
+    provide(DataModelConfiguration, {useClass: DataModelConfiguration})
 ]);

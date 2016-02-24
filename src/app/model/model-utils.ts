@@ -2,15 +2,26 @@ import {IdaiFieldObject} from "./idai-field-object";
 
 /**
  * @author Daniel M. de Oliveira
+ * @author Jan G. Wieners
  */
 export class ModelUtils {
 
     /**
-     * @param from
-     * @returns a new object which has all of the properties of from
-     *   IdaiFieldObject.
+     *
+     * @param object
+     * @param properties
+     * @returns new IdaiFieldObject without the properties which we don't want
+     *   to be sent to the backend.
      */
-    public static clone(from: IdaiFieldObject) : IdaiFieldObject {
-        return JSON.parse(JSON.stringify(from));
+    public static filterUnwantedProps(object: IdaiFieldObject, properties?: string[]) : IdaiFieldObject {
+
+        var o = JSON.parse(JSON.stringify(object));
+
+        if (properties) {
+            for (var i = properties.length; i--;) {
+                delete o[properties[i]];
+            }
+        }
+        return o;
     }
 }

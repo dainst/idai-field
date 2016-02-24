@@ -83,26 +83,12 @@ export class IdaiFieldBackend {
         );
     }
 
-
-    /**
-     * @param object
-     * @return new IdaiFieldObject without the properties which we don't want
-     *   to send to the backend.
-     */
-    private filterUnwantedProps(object:IdaiFieldObject) : IdaiFieldObject {
-        var o = ModelUtils.clone(object);
-        delete o.synced;
-        delete o.valid;
-        return o;
-    }
-
     private createAuthorizationHeader() {
         var headers = new Headers();
         headers.append('Authorization', 'Basic ' +
             btoa(this.configuration.credentials));
         return headers;
     }
-
 
     private performPut(object:IdaiFieldObject) : Observable<Response> {
 
@@ -120,7 +106,7 @@ export class IdaiFieldBackend {
     public save(object:IdaiFieldObject):Promise<IdaiFieldObject> {
 
         return new Promise((resolve, reject) => {
-            this.performPut(this.filterUnwantedProps(object))
+            this.performPut(ModelUtils.filterUnwantedProps(object))
             .subscribe(
                 () => resolve(object),
                 err => {

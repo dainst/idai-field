@@ -28,6 +28,22 @@ export function main() {
             "type": "Object"
         };
 
+        var getElementContent = function(componentFixture, selector: string): string[] {
+
+            componentFixture.componentInstance.object = selectedObject;
+            componentFixture.detectChanges();
+
+            var compiled = componentFixture.debugElement.nativeElement;
+            var labels = [];
+            var nodeList = compiled.querySelectorAll(selector);
+
+            for(var i = nodeList.length; i--;) {
+                labels.push(nodeList[i].innerHTML);
+            }
+
+            return labels;
+        };
+
         var objectTypeSchema = {
             "types": [
                 {
@@ -72,25 +88,12 @@ export function main() {
             injectAsync([TestComponentBuilder,ObjectList], (tcb: TestComponentBuilder) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
-                        componentFixture.componentInstance.object = selectedObject;
-                        componentFixture.detectChanges();
-                        const compiled = componentFixture.debugElement.nativeElement;
 
-                        var labels = [];
-                        var nodeList = compiled.querySelectorAll('label');
-
-                        for(var i = nodeList.length; i--;) {
-                            labels.push(nodeList[i].innerHTML);
-                        }
-
+                        var labels;
+                        labels = getElementContent(componentFixture, 'label');
                         expect(labels).toContain('Material');
 
-                        labels.length = 0;
-                        nodeList = compiled.querySelectorAll('.form-group option');
-
-                        for(var i = nodeList.length; i--;) {
-                            labels.push(nodeList[i].innerHTML);
-                        }
+                        labels = getElementContent(componentFixture, 'option');
 
                         expect(labels).toContain('Alabaster');
                         expect(labels).toContain('Amber');

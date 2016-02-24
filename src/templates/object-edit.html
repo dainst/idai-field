@@ -2,21 +2,21 @@
     <form>
         <div class="form-group">
             <label>Identifier</label>
-            <input [(ngModel)]="object.identifier" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="object.identifier" (keyup)="triggerAutosave()" class="form-control">
         </div>
         <div class="form-group">
             <label>Title</label>
-            <input [(ngModel)]="object.title" (keyup)="onKey($event)" class="form-control">
+            <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
         </div>
 
         <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
             <div *ngIf="field" class="form-group">
                 <label>{{field.field}}</label>
                 <div *ngIf="!field.valuelist">
-                    <input [(ngModel)]="object[field.field]" (keyup)="onKey($event)" class="form-control">
+                    <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
                 </div>
                 <div *ngIf="field.valuelist">
-                    <select [(ngModel)]="object[field.field]">
+                    <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()">
                         <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>
                     </select>
                 </div>

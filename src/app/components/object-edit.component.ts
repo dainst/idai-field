@@ -32,7 +32,7 @@ export class ObjectEditComponent {
         this.objectList.validateAndSave(this.object, false);
     }
 
-    onKey(event: any) {
+    public triggerAutosave() {
 
         this.objectList.setChanged();
 

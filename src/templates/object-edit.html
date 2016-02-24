@@ -22,9 +22,13 @@
             <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
                 <div *ngIf="field" class="form-group">
                     <label>{{field.field}}</label>
-                    <div *ngIf="!field.valuelist">
+                    <div *ngIf="!field.valuelist && !field.multiline">
                         <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
                     </div>
+                    <div *ngIf="field.multiline">
+                        <textarea [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()"
+                                  class="form-control" rows="5"></textarea>
+                    </div >
                     <div *ngIf="field.valuelist">
                         <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()">
                             <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>

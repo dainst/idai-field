@@ -15,7 +15,9 @@ export function main() {
                 var initialObject = {
                     "identifier": "ob1",
                     "title": "Title",
-                    "type": "Object"
+                    "type": "Object",
+                    "synced": 0,
+                    "valid": true
                 };
                 var clonedObject = ModelUtils.filterUnwantedProps(initialObject);
                 expect(clonedObject).not.toBe(initialObject);

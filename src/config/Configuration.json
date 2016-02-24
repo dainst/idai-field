@@ -64,6 +64,53 @@
             "Unknown",
             "Wood"
           ]
+        },
+        {
+          "field": "Category",
+          "valuelist": [
+            "Architecture Terracotta",
+            "Architecture Poros",
+            "Architecture Misc.",
+            "Architecture Marble",
+            "Bronze",
+            "Bone & Ivory",
+            "Coin",
+            "Glass",
+            "Inscriptions",
+            "Iron & Lead",
+            "Jewelry & Gems",
+            "Lamps",
+            "Misc. Clay Objects",
+            "Misc. Moulds",
+            "Plastic Vases",
+            "Pottery",
+            "Pottery Moulds",
+            "Sculpture",
+            "SS Misc.",
+            "SS Thasian",
+            "SS Rhodian",
+            "ST Marble",
+            "ST Stone",
+            "Terracotta",
+            "Terracotta Moulds",
+            "Wood"
+          ]
+        },
+        {
+          "field": "Dimensions"
+        },
+        {
+          "field": "Storage"
+        },
+        {
+          "field": "Description",
+          "multiline": true
+        },
+        {
+          "field": "Range Start"
+        },
+        {
+          "field": "Range End"
         }
       ]
     },

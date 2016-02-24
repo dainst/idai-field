@@ -23,9 +23,7 @@ export function main() {
 
         var oldVersion : IdaiFieldObject =
             {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true, "type": "Object" };
-        var selectThen : IdaiFieldObject =
-            { "identifier": "ob5", "title": "Boba Fett", "synced": 0, "valid": true, "type": "Object" };
-        var selectFirst : IdaiFieldObject;
+        var selectedObject : IdaiFieldObject;
 
         var successFunction = function() {
             return {
@@ -52,8 +50,8 @@ export function main() {
                 mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
                 objectList = new ObjectList(mockDatastore, messages, undefined);
 
-                selectFirst = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id, "type": "Object" };
-                objectList.setObjects([selectFirst,selectThen]);
+                selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id, "type": "Object" };
+                objectList.setObjects([selectedObject]);
 
                 mockDatastore.create.and.callFake(successFunction);
                 mockDatastore.update.and.callFake(successFunction);
@@ -69,22 +67,22 @@ export function main() {
         it('should create a non existing object on autosave',
             function() {
 
-                    delete selectFirst.id;
+                    delete selectedObject.id;
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst, false);
-                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
+                    objectList.validateAndSave(selectedObject, false);
+                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                 }
         );
 
         it('should create a non existing object on select change',
             function() {
 
-                    delete selectFirst.id;
+                    delete selectedObject.id;
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst, true);
-                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectFirst);
+                    objectList.validateAndSave(selectedObject, true);
+                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                 }
         );
 
@@ -93,8 +91,8 @@ export function main() {
 
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst, false);
-                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
+                    objectList.validateAndSave(selectedObject, false);
+                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
 
@@ -103,8 +101,8 @@ export function main() {
 
                     objectList.setChanged();
 
-                    objectList.validateAndSave(selectFirst, true);
-                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectFirst);
+                    objectList.validateAndSave(selectedObject, true);
+                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
 
@@ -114,8 +112,8 @@ export function main() {
                     mockDatastore.update.and.callFake(errorFunction);
                     objectList.setChanged();
 
-                    expect(objectList.getObjects()[0]).toBe(selectFirst);
-                    objectList.validateAndSave(selectFirst, true); // restore the oldVersion now.
+                    expect(objectList.getObjects()[0]).toBe(selectedObject);
+                    objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
         );
@@ -126,19 +124,19 @@ export function main() {
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged();
 
-                expect(objectList.getObjects()[0]).toBe(selectFirst);
-                objectList.validateAndSave(selectFirst, false); // do not restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(selectFirst);
+                expect(objectList.getObjects()[0]).toBe(selectedObject);
+                objectList.validateAndSave(selectedObject, false); // do not restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectedObject);
             }
         );
 
         it('should restore an invalid object on select change with invalid object',
             function() {
 
-                selectFirst.valid = false;
+                selectedObject.valid = false;
 
-                expect(objectList.getObjects()[0]).toBe(selectFirst);
-                objectList.validateAndSave(selectFirst, true); // restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectedObject);
+                objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
             }
         );
@@ -146,11 +144,11 @@ export function main() {
         it('should not restore an invalid object on autosave with invalid object',
             function() {
 
-                selectFirst.valid = false;
+                selectedObject.valid = false;
 
-                expect(objectList.getObjects()[0]).toBe(selectFirst);
-                objectList.validateAndSave(selectFirst, false); // restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(selectFirst);
+                expect(objectList.getObjects()[0]).toBe(selectedObject);
+                objectList.validateAndSave(selectedObject, false); // restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectedObject);
             }
         );
 
@@ -160,9 +158,9 @@ export function main() {
                     mockDatastore.update.and.callFake(errorFunction);
                     objectList.setChanged();
 
-                    expect(selectFirst.valid).toBe(true);
-                    objectList.validateAndSave(selectFirst,false);
-                    expect(selectFirst.valid).toBe(false);
+                    expect(selectedObject.valid).toBe(true);
+                    objectList.validateAndSave(selectedObject,false);
+                    expect(selectedObject.valid).toBe(false);
                 }
         );
 
@@ -173,7 +171,7 @@ export function main() {
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged();
-                objectList.validateAndSave(selectFirst, false);
+                objectList.validateAndSave(selectedObject, false);
 
                 expect(messagesService.getMessages().length).toBe(1);
             }
@@ -186,12 +184,12 @@ export function main() {
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged();
-                objectList.validateAndSave(selectFirst, false);
+                objectList.validateAndSave(selectedObject, false);
 
                 expect(messagesService.getMessages().length).toBe(1);
 
                 objectList.setChanged();
-                objectList.validateAndSave(selectFirst, true);
+                objectList.validateAndSave(selectedObject, true);
 
                 expect(messagesService.getMessages().length).toBe(0);
             }

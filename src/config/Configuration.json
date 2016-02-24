@@ -1,18 +1,6 @@
 {
   "types": [
     {
-      "type": "Section"
-    },
-    {
-      "type": "Feature"
-    },
-    {
-      "type": "Lot"
-    },
-    {
-      "type": "Context"
-    },
-    {
       "type": "Object",
       "fields": [
         {
@@ -115,13 +103,129 @@
       ]
     },
     {
-      "type": "Image"
+      "type": "Section",
+      "fields": [
+        {
+          "field": "Chronology"
+        },
+        {
+          "field": "Elevations"
+        },
+        {
+          "field": "Start"
+        },
+        {
+          "field": "End"
+        },
+        {
+          "field": "Looking"
+        },
+        {
+          "field": "Description",
+          "multiline": true
+        }
+      ]
     },
     {
-      "type": "Plan"
+      "type": "Lot",
+      "fields": [
+        {
+          "field": "Lot Storage",
+          "valuelist": [
+            "Sack",
+            "Tin",
+            "Box",
+            "Envelope"
+          ]
+        },
+        {
+          "field": "Lot Grid"
+        },
+        {
+          "field": "Lot Levels"
+        },
+        {
+          "field": "Lot Dates"
+        },
+        {
+          "field": "Lot Contexts"
+        },
+        {
+          "field": "Contents",
+          "multiline": true
+        },
+        {
+          "field": "Range Start"
+        },
+        {
+          "field": "Range End"
+        }
+      ]
     },
     {
-      "type": "Other"
+      "type": "Context",
+      "fields": [
+        {
+          "field": "Buckets"
+        },
+        {
+          "field": "Category",
+          "valuelist": [
+            "Burial",
+            "Cistern",
+            "Coin Hoard",
+            "Cremation",
+            "Drain",
+            "Dump",
+            "Fill",
+            "Inhumation",
+            "Pit",
+            "Pithos",
+            "Pyre",
+            "Road",
+            "Wall",
+            "Well",
+            "Mudbrick",
+            "Deposit",
+            "Surface"
+          ]
+        },
+        {
+          "field": "Below Other"
+        },
+        {
+          "field": "Description",
+          "multiline": true
+        },
+        {
+          "field": "Contents",
+          "multiline": true
+        },
+        {
+          "field": "Range Start"
+        },
+        {
+          "field": "Range End"
+        }
+      ]
+    },
+    {
+      "type": "Other",
+      "fields": [
+        {
+          "field": "Category"
+        },
+        {
+          "field": "Description",
+          "multiline": true
+        },
+        {
+          "field": "Range Start"
+        },
+        {
+          "field": "Range End"
+        }
+      ]
     }
   ]
 }

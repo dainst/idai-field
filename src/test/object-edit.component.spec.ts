@@ -68,22 +68,36 @@ export function main() {
             provide(ObjectEditComponent, {useClass: ObjectEditComponent})
         ]);
 
-        it('should do stuff',
+        it('should contain the specified elements',
             injectAsync([TestComponentBuilder,ObjectList], (tcb: TestComponentBuilder) => {
                 return tcb.createAsync(ObjectEditComponent)
                     .then((componentFixture: ComponentFixture) => {
                         componentFixture.componentInstance.object = selectedObject;
                         componentFixture.detectChanges();
                         const compiled = componentFixture.debugElement.nativeElement;
-                        console.log("Element", compiled);
 
+                        var labels = [];
+                        var nodeList = compiled.querySelectorAll('label');
 
-                        // TODO test that label material exists
-                        // TODO test that drop down list with Alabster,Amber,Antler exists
+                        for(var i = nodeList.length; i--;) {
+                            labels.push(nodeList[i].innerHTML);
+                        }
+
+                        expect(labels).toContain('Material');
+
+                        labels.length = 0;
+                        nodeList = compiled.querySelectorAll('.form-group option');
+
+                        for(var i = nodeList.length; i--;) {
+                            labels.push(nodeList[i].innerHTML);
+                        }
+
+                        expect(labels).toContain('Alabaster');
+                        expect(labels).toContain('Amber');
+                        expect(labels).toContain('Antler');
                     });
                 }
             )
         ,5000);
-
     });
 }

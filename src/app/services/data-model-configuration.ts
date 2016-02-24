@@ -8,6 +8,11 @@ import {Injectable} from "angular2/core";
 export class DataModelConfiguration {
 
     /**
+     * Contains the possible object types
+     */
+    private types: string[];
+
+    /**
      * Contains an array of fields for every object type defined in the configurationData
      */
     private fieldMap: { [type: string]: any[] };
@@ -18,6 +23,15 @@ export class DataModelConfiguration {
             map[object.type] = object.fields;
             return map;
         }, {});
+        this.types = Object.keys(this.fieldMap);
+    }
+
+    /**
+     * Returns an array containing the possible object types
+     */
+    public getTypes(): string[] {
+
+        return this.types;
     }
 
     /**

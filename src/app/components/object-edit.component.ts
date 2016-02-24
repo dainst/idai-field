@@ -42,4 +42,9 @@ export class ObjectEditComponent {
         this.saveTimer = setTimeout(this.save.bind(this), 500);
     }
 
+    public setType(type: string) {
+
+        this.object.type = type;
+    }
+
 }

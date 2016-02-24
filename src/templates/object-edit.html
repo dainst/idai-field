@@ -1,26 +1,38 @@
 <div *ngIf="object">
-    <form>
-        <div class="form-group">
-            <label>Identifier</label>
-            <input [(ngModel)]="object.identifier" (keyup)="triggerAutosave()" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Title</label>
-            <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
-        </div>
 
-        <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
-            <div *ngIf="field" class="form-group">
-                <label>{{field.field}}</label>
-                <div *ngIf="!field.valuelist">
-                    <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
-                </div>
-                <div *ngIf="field.valuelist">
-                    <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()">
-                        <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>
-                    </select>
+    <div *ngIf="!object.type" class="panel panel-default">
+        <div class="panel-heading">Please choose the object type.</div>
+         <div class="list-group">
+             <button *ngFor="#type of dataModelConfiguration.getTypes()" (mousedown)="setType(type)"
+                     type="button" class="list-group-item">{{type}}</button>
+        </div>
+    </div>
+
+    <div *ngIf="object.type">
+        <form>
+            <div class="form-group">
+                <label>Identifier</label>
+                <input [(ngModel)]="object.identifier" (keyup)="triggerAutosave()" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
+            </div>
+
+            <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
+                <div *ngIf="field" class="form-group">
+                    <label>{{field.field}}</label>
+                    <div *ngIf="!field.valuelist">
+                        <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
+                    </div>
+                    <div *ngIf="field.valuelist">
+                        <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()">
+                            <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 </div>

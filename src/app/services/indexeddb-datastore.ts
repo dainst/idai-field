@@ -16,7 +16,7 @@ export class IndexeddbDatastore implements Datastore {
 
         this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 12);
+            var request = indexedDB.open("IdaiFieldClient", 13);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);

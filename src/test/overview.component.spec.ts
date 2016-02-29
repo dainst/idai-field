@@ -2,6 +2,7 @@ import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {OverviewComponent} from "../app/components/overview.component";
+import {Datastore} from "../app/services/datastore";
 
 /**
  * @author Thomas Kleinke
@@ -15,16 +16,45 @@ export function main() {
 
         var overviewComponent: OverviewComponent;
         var mockObjectList: any;
+        var mockDatastore: any;
 
-        var validateAndSaveFunction = function() { };
-        var getObjectsFunction = function() { return objects; };
+        var validateAndSave = function() { };
+        var getObjects = function() { return objects; };
+        var setObjects = function(newObjects: IdaiFieldObject[]) { objects = newObjects; };
+
+        var all = function() {
+            return {
+                then: function(suc) {
+                    suc([object1, object2]);
+                    return {
+                        catch: function() {}
+                    }
+                }
+            };
+        };
+
+        var find = function() {
+            return {
+                then: function(suc) {
+                    suc([object1]);
+                    return {
+                        catch: function() {}
+                    }
+                }
+            };
+        };
 
         beforeEach(() => {
-            mockObjectList = jasmine.createSpyObj('mockObjectList', [ 'validateAndSave', 'getObjects' ]);
-            mockObjectList.validateAndSave.and.callFake(validateAndSaveFunction);
-            mockObjectList.getObjects.and.callFake(getObjectsFunction);
+            mockObjectList = jasmine.createSpyObj('mockObjectList', [ 'validateAndSave', 'getObjects', 'setObjects' ]);
+            mockObjectList.validateAndSave.and.callFake(validateAndSave);
+            mockObjectList.getObjects.and.callFake(getObjects);
+            mockObjectList.setObjects.and.callFake(setObjects);
 
-            overviewComponent = new OverviewComponent(null, {}, mockObjectList);
+            mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'all', 'find' ]);
+            mockDatastore.all.and.callFake(all);
+            mockDatastore.find.and.callFake(find);
+
+            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList);
 
             objects = [object1, object2];
         });
@@ -109,6 +139,29 @@ export function main() {
                 expect(objects[1]).toEqual({ id: "id" });
                 expect(objects[2]).toBe(object1);
                 expect(objects[3]).toBe(object2);
+            }
+        );
+
+        it('should show all objects if the search field is empty',
+            function() {
+                objects = [];
+                overviewComponent.onKey({ target: { value: "" } });
+
+                expect((<Datastore> mockDatastore).all).toHaveBeenCalledWith({});
+                expect(objects.length).toBe(2);
+                expect(objects[0]).toBe(object1);
+                expect(objects[1]).toBe(object2);
+            }
+        );
+
+        it('should search for objects if the search field is not empty',
+            function() {
+                var searchString = "Search string";
+                overviewComponent.onKey({ target: { value: searchString } });
+
+                expect((<Datastore> mockDatastore).find).toHaveBeenCalledWith(searchString, {});
+                expect(objects.length).toBe(1);
+                expect(objects[0]).toBe(object1);
             }
         );
 

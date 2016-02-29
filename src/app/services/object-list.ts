@@ -30,19 +30,26 @@ export class ObjectList {
 
         if (!object) return;
 
+        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
+        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
+
         if (this.changed) {
             this.save(object).then(
                 () => { },
                 err => {
-                    if (err == "databaseError") {
-                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
-                    } else if (err == "missingIdentifierError") {
-                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
-                    }
                     object.valid = false;
 
                     if (restoreIfInvalid) {
                         this.restoreObject(object);
+                    } else {
+                        switch (err) {
+                            case "databaseError":
+                                this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
+                                break;
+                            case "missingIdentifierError":
+                                this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
+                                break;
+                        }
                     }
                 }
             )
@@ -56,9 +63,6 @@ export class ObjectList {
      * @param object
      */
     private save(object: IdaiFieldObject): any {
-
-        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
-        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
@@ -94,17 +98,17 @@ export class ObjectList {
 
     private restoreObject(object:IdaiFieldObject) {
 
-        this.datastore.refresh(object.id).then(
-            restoredObject => {
-                var index = this.objects.indexOf(object);
-                this.objects[index] = restoredObject;
-                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
-                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
-            },
-            err => {
-                // TODO handle error
-            }
-        );
+        if (object.id) {
+            this.datastore.refresh(object.id).then(
+                restoredObject => {
+                    var index = this.objects.indexOf(object);
+                    this.objects[index] = restoredObject;
+                },
+                err => {
+                    // TODO handle error
+                }
+            );
+        }
     }
 
     public getObjects() {

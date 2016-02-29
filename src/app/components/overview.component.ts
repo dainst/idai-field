@@ -36,21 +36,23 @@ export class OverviewComponent implements OnInit {
 
     public onSelect(object: IdaiFieldObject) {
 
-        if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotValid();
+        this.objectList.validateAndSave(this.selectedObject, true);
 
-        this.setSelectedObject(object);
+        if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotSaved();
+
+        this.selectedObject = object;
     }
 
     public onCreate() {
 
-        if (this.newObject) this.removeObjectFromListIfNotValid();
+        this.objectList.validateAndSave(this.selectedObject, true);
 
-        if (!this.newObject) {
-            this.newObject = {};
-            this.objectList.getObjects().unshift(this.newObject);
-        }
+        if (this.newObject) this.removeObjectFromListIfNotSaved();
 
-        this.setSelectedObject(this.newObject);
+        this.newObject = {};
+        this.objectList.getObjects().unshift(this.newObject);
+
+        this.selectedObject = this.newObject;
     }
 
     onKey(event:any) {
@@ -82,20 +84,13 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
     }
 
-    private removeObjectFromListIfNotValid() {
+    private removeObjectFromListIfNotSaved() {
 
-        if (!this.newObject.id || !this.newObject.valid) {
-
+        if (!this.newObject.id) {
             var index = this.objectList.getObjects().indexOf(this.newObject);
             this.objectList.getObjects().splice(index, 1);
         }
         this.newObject = undefined;
-    }
-
-    private setSelectedObject(object: IdaiFieldObject) {
-
-        this.objectList.validateAndSave(this.selectedObject, true);
-        this.selectedObject = object;
     }
 
 }

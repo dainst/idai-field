@@ -1,7 +1,6 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
 import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
-import {DB} from "../app/datastore/db";
 import {Indexeddb} from "../app/datastore/indexeddb";
 
 /**
@@ -38,7 +37,7 @@ export function main() {
             }
         );
 
-        it('should do basic stuff',
+        it('should revert id on failed creation',
             function (done) {
 
                 var p= datastore.create(object);
@@ -47,9 +46,11 @@ export function main() {
                 request2.onerror("req2error");
 
                 p.then(
-                    () => {},
+                    () => {
+                        fail(); done();
+                    },
                     err => {
-                        expect(object["id"]).toBe(undefined);done()
+                        expect(object["id"]).toBe(undefined); done()
                     }
                 );
             }

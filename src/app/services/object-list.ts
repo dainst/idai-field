@@ -31,8 +31,6 @@ export class ObjectList {
         if (!object) return;
 
         if (this.changed) {
-            console.log("changed: ",object);
-
             this.save(object).then(
                 () => { },
                 err => {

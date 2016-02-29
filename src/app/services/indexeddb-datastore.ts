@@ -54,7 +54,12 @@ export class IndexeddbDatastore implements Datastore {
             object.modified = object.created;
             this.objectCache[object.id] = object;
             return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-                .then(() => resolve(object.id), err => reject("databaseError"));
+                .then(() => resolve(object.id), err => {
+                    object.id = undefined;
+                    object.created = undefined;
+                    object.modified = undefined;
+                    reject("databaseError");
+                });
         });
     }
 

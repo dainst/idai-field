@@ -2,7 +2,7 @@ import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from
 import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
-import {Datastore} from "../app/services/datastore";
+import {Datastore} from "../app/datastore/datastore";
 import {Messages} from "../app/services/messages";
 
 /**

@@ -4,51 +4,29 @@ import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
+import {Indexeddb} from "./indexeddb";
 
+/**
+ * @author Sebastian Cuy
+ * @author Daniel M. de Oliveira
+ */
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
+
+    private static IDAIFIELDOBJECT = 'idai-field-object';
+    private static FULLTEXT = 'fulltext';
 
     private db: Promise<any>;
     private observers = [];
     private objectCache: { [id: string]: IdaiFieldObject } = {};
 
-    public setDb(db) { // TODO this is for test usage only but can get removed as soon as low level db access is factored into another class.
-        this.db=db;
-    }
 
-    constructor() {
+    constructor(private idb:Indexeddb){
+        this.db=idb.db()
+    };
 
-        this.db = new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 13);
-            request.onerror = (event) => {
-                console.error("Could not create IndexedDB! Error: ", request.error.name);
-                reject(request.error);
-            };
-            request.onsuccess = (event) => {
-                resolve(request.result);
-            };
-            request.onupgradeneeded = (event) => {
-                var db = request.result;
-
-                if (db.objectStoreNames.length > 0) {
-                    db.deleteObjectStore("idai-field-object");
-                    db.deleteObjectStore("fulltext");
-                }
-
-                var objectStore = db.createObjectStore("idai-field-object", { keyPath: "id" });
-                objectStore.createIndex("identifier", "identifier", { unique: true } );
-                objectStore.createIndex("synced", "synced", { unique: false });
-                objectStore.createIndex("modified", "modified");
-                objectStore.createIndex("created", "created");
-                objectStore.createIndex("title", "title");
-                var fulltextStore = db.createObjectStore("fulltext", { keyPath: "id" });
-                fulltextStore.createIndex("terms", "terms", { multiEntry: true } );
-            };
-        });
-    }
-
-    create(object:IdaiFieldObject):Promise<string> {
+    public create(object:IdaiFieldObject):Promise<string> {
 
         return new Promise((resolve, reject) => {
             if (object.id != null) reject("Aborting creation: Object already has an ID. " +
@@ -67,7 +45,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    update(object:IdaiFieldObject):Promise<any> {
+    public update(object:IdaiFieldObject):Promise<any> {
 
         return new Promise((resolve, reject) => {
            if (object.id == null) reject("Aborting update: No ID given. " +
@@ -78,12 +56,12 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    refresh(id:string):Promise<IdaiFieldObject>  {
+    public refresh(id:string):Promise<IdaiFieldObject>  {
 
         return this.fetchObject(id);
     }
 
-    get(id:string):Promise<IdaiFieldObject> {
+    public get(id:string):Promise<IdaiFieldObject> {
 
         if (this.objectCache[id]) {
             return new Promise((resolve, reject) => resolve(this.objectCache[id]));
@@ -92,17 +70,15 @@ export class IndexeddbDatastore implements Datastore {
         };
     }
 
-    delete(id:string):Promise<any> {
+    public delete(id:string):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var objectRequest = db.transaction(['idai-field-object'], 'readwrite')
-                    .objectStore('idai-field-object').delete(id);
+                var objectRequest = db.delete(IndexeddbDatastore.IDAIFIELDOBJECT,id);
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.transaction(['fulltext'], 'readwrite')
-                    .objectStore('fulltext').delete(id);
+                var fulltextRequest = db.delete(IndexeddbDatastore.FULLTEXT,id);
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];
@@ -122,17 +98,15 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    clear():Promise<any> {
+    public clear():Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var objectRequest = db.transaction(['idai-field-object'], 'readwrite')
-                    .objectStore('idai-field-object').clear();
+                var objectRequest = db.clear(IndexeddbDatastore.IDAIFIELDOBJECT);
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.transaction(['fulltext'], 'readwrite')
-                    .objectStore('fulltext').clear();
+                var fulltextRequest = db.clear(IndexeddbDatastore.FULLTEXT);
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];
@@ -152,13 +126,12 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    getUnsyncedObjects(): Observable<IdaiFieldObject> {
+    public getUnsyncedObjects(): Observable<IdaiFieldObject> {
 
         return Observable.create( observer => {
             this.db.then(db => {
 
-                var cursor = db.transaction(['idai-field-object']).objectStore('idai-field-object')
-                    .index("synced").openCursor(IDBKeyRange.only(0));
+                var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT,"synced",IDBKeyRange.only(0));
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -173,7 +146,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    find(query:string, options:any):Promise<IdaiFieldObject[]> {
+    public find(query:string, options:any):Promise<IdaiFieldObject[]> {
 
         // TODO implement query options
 
@@ -186,8 +159,7 @@ export class IndexeddbDatastore implements Datastore {
                 var ids:string[] = [];
 
                 var range = IDBKeyRange.bound(query, query+'\uffff', false, true);
-                var cursor = db.transaction(['fulltext'])
-                    .objectStore('fulltext').index("terms").openCursor(range);
+                var cursor = db.openCursor(IndexeddbDatastore.FULLTEXT,"terms",range);
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -207,7 +179,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    all(options:any):Promise<IdaiFieldObject[]> {
+    public all(options:any):Promise<IdaiFieldObject[]> {
 
         // TODO implement query options
 
@@ -217,8 +189,9 @@ export class IndexeddbDatastore implements Datastore {
 
                 var objects = [];
 
-                var objectStore = db.transaction(['idai-field-object']).objectStore('idai-field-object');
-                var cursor = objectStore.index("modified").openCursor(null, "prev");
+
+
+                var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT,"modified",null, "prev");
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -236,7 +209,7 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                var request = db.transaction(['idai-field-object']).objectStore('idai-field-object').get(id);
+                var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,id);
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
                     var object:IdaiFieldObject = request.result;
@@ -251,9 +224,7 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-
-                var request = db.transaction(['idai-field-object'], 'readwrite')
-                    .objectStore('idai-field-object').put(object);
+                var request = db.put(IndexeddbDatastore.IDAIFIELDOBJECT,object);
 
                 request.onerror = event => reject("databaseError");
                 request.onsuccess = event => {
@@ -269,8 +240,7 @@ export class IndexeddbDatastore implements Datastore {
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var terms = IndexeddbDatastore.extractTerms(object);
-                var request = db.transaction(['fulltext'], 'readwrite')
-                    .objectStore('fulltext').put({ id: object.id, terms: terms});
+                var request = db.put(IndexeddbDatastore.FULLTEXT,{ id: object.id, terms: terms});
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });

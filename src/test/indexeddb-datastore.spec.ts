@@ -1,6 +1,8 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
-import {IndexeddbDatastore} from "../app/services/indexeddb-datastore";
+import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
+import {DB} from "../app/datastore/db";
+import {Indexeddb} from "../app/datastore/indexeddb";
 
 /**
  * @author Daniel M. de Oliveira
@@ -23,21 +25,16 @@ export function main() {
 
         beforeEach(
             function () {
-                var indexeddb   = jasmine.createSpyObj('indexed', [ 'transaction' ]);
-                var transaction   = jasmine.createSpyObj('index', [ 'objectStore' ]);
-                var objectStore   = jasmine.createSpyObj('ostore', [ 'put' ]);
+                var indexeddb   = jasmine.createSpyObj('indexeddb', [ 'put' ]);
                 request   = jasmine.createSpyObj('request', [ 'a' ]);
                 request2   = jasmine.createSpyObj('request', [ 'a' ]);
 
-                indexeddb.transaction.and.callFake(function(){return transaction;});
-                transaction.objectStore.and.callFake(function(){return objectStore;});
-
                 i=0;
-                objectStore.put.and.callFake(function(){if (i==0) {
+                indexeddb.put.and.callFake(function(){if (i==0) {
                     i++; return request;} else return request2; });
 
-                datastore = new IndexeddbDatastore();
-                datastore.setDb({ then: function (db) { db(indexeddb); }});
+                datastore = new IndexeddbDatastore(
+                    <Indexeddb> { db: function(){return { then: function (db) { db(indexeddb); }}}});
             }
         );
 
@@ -51,7 +48,9 @@ export function main() {
 
                 p.then(
                     () => {},
-                    err => {expect(object["id"]).toBe(undefined);done()}
+                    err => {
+                        expect(object["id"]).toBe(undefined);done()
+                    }
                 );
             }
         );

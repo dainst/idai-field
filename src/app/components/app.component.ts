@@ -3,8 +3,8 @@ import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
 import {View} from "angular2/core";
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
-import {Datastore} from "../services/datastore";
-import {OBJECTS} from "../services/sample-objects";
+import {Datastore} from "../datastore/datastore";
+import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "./messages.component";
 

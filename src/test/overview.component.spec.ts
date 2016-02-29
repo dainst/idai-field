@@ -2,7 +2,7 @@ import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {OverviewComponent} from "../app/components/overview.component";
-import {Datastore} from "../app/services/datastore";
+import {Datastore} from "../app/datastore/datastore";
 
 /**
  * @author Thomas Kleinke

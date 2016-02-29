@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from 'angular2/core';
-import {Datastore} from '../services/datastore';
+import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";

@@ -4,14 +4,15 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {provide, enableProdMode} from 'angular2/core';
 import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
-import {Datastore} from "./services/datastore";
-import {IndexeddbDatastore} from "./services/indexeddb-datastore";
+import {Datastore} from "./datastore/datastore";
+import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
 import {DataModelConfiguration} from "./services/data-model-configuration";
 
 import CONFIG = require("config/config.json");
 import DATA_MODEL_CONFIG from "config/Configuration.json";
+import {Indexeddb} from "./datastore/indexeddb";
 
 if (CONFIG.environment == 'production') enableProdMode();
 
@@ -24,5 +25,6 @@ bootstrap(AppComponent, [
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
     provide('app.dataModelConfig', { useValue: DATA_MODEL_CONFIG }),
-    provide(DataModelConfiguration, {useClass: DataModelConfiguration})
+    provide(DataModelConfiguration, {useClass: DataModelConfiguration}),
+    provide(Indexeddb, {useClass: Indexeddb})
 ]);

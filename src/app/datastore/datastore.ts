@@ -1,5 +1,5 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "../../../node_modules/rxjs/Observable.d";
 
 export abstract class Datastore {
 

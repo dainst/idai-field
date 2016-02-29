@@ -12,6 +12,10 @@ export class IndexeddbDatastore implements Datastore {
     private observers = [];
     private objectCache: { [id: string]: IdaiFieldObject } = {};
 
+    public setDb(db) { // TODO this is for test usage only but can get removed as soon as low level db access is factored into another class.
+        this.db=db;
+    }
+
     constructor() {
 
         this.db = new Promise((resolve, reject) => {

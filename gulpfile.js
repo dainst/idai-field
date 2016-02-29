@@ -155,12 +155,12 @@ function watch() {
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);
 }
 
-gulp.task('test-watch', ['build', 'prepare-package'], function() {
+gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'], function() {
     watch();
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['build', 'prepare-package'], function() {
+gulp.task('server', ['build', 'prepare-package', 'package-node-dependencies'], function() {
 
 	electronServer.start();
 	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
@@ -178,8 +178,8 @@ gulp.task('prepare-package', function() {
 });
 
 gulp.task('package-node-dependencies', function() {
-    gulp.src('node_modules/node-uuid/**/*' )
-        .pipe(gulp.dest('dist/node_modules/node-uuid'));
+    gulp.src('node_modules/angular2-uuid/*' )
+        .pipe(gulp.dest('dist/lib/angular2-uuid/'));
 });
 
 

@@ -1,10 +1,8 @@
 import {Injectable} from "angular2/core";
-var uuid = require('node-uuid');
+import {UUID} from "angular2-uuid/index";
 
 export class IdGenerator {
-
     static generateId():string {
-        return uuid.v4();
+        return UUID.UUID();
     }
-
 }

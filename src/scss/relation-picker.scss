@@ -1,0 +1,23 @@
+/**
+ * @author Jan G. Wieners
+ * @author Thomas Kleinke
+ */
+
+.relation-picker {
+  margin-bottom: 15px;
+}
+
+.suggestion-container {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 3px 3px 3px #ccc;
+}
+
+.suggestion {
+  padding: 7px 25px 7px 25px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #ccc;
+}

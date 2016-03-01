@@ -1,8 +1,20 @@
-<div>
-    <select [(ngModel)]="object.relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
-        <option *ngFor="#relationType of types" value="{{relationType}}">{{relationType}}</option>
-    </select>
-    <input [(ngModel)]="idSearchString" (keyup)="search()" class="form-control">
-
-    <div *ngFor="#suggestion of suggestions" (click)="chooseId(suggestion.id)" style="cursor: pointer;">{{suggestion.title}}</div>
+<div class="relation-picker row">
+    <div class="col-md-3">
+        <select [(ngModel)]="object.relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
+            <option *ngFor="#relationType of types" value="{{relationType}}">{{relationType}}</option>
+        </select>
+    </div>
+    <div *ngIf="!selectedTarget" class="col-md-9">
+        <input [(ngModel)]="idSearchString" (keyup)="search()" (focus)="showSuggestions()" (blur)="hideSuggestions()"
+               class="form-control">
+        <div *ngIf="suggestionsVisible" class="suggestion-container">
+            <div *ngFor="#suggestion of suggestions" class="suggestion" (mousedown)="detectSuggestionClick()"
+                 (click)="chooseTarget(suggestion)">{{suggestion.title}}</div>
+        </div>
+    </div>
+    <div *ngIf="selectedTarget" class="col-md-9">
+        <button class="btn btn-default" type="button" (click)="editTarget()">
+            {{selectedTarget.title}} <span class="badge">{{selectedTarget.identifier}}</span
+        ></button>
+    </div>
 </div>

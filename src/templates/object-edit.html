@@ -19,7 +19,11 @@
                 <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
             </div>
 
-            <!--<relation-picker [(object)]="object" [parent]="getThis()"></relation-picker>-->
+            <div class="form-group">
+                <label>Relation</label>
+                <relation-picker [(object)]="object" [parent]="getThis()"></relation-picker>
+            </div>
+
             <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
                 <div *ngIf="field" class="form-group">
                     <label>{{field.field}}</label>

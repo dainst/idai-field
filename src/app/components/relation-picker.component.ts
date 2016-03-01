@@ -1,4 +1,5 @@
 import {Component, Inject, Input, OnChanges} from 'angular2/core';
+import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
@@ -12,7 +13,8 @@ import {Relation} from "../model/relation";
 @Component({
 
     selector: 'relation-picker',
-    templateUrl: 'templates/relation-picker.html'
+    templateUrl: 'templates/relation-picker.html',
+    directives: [CORE_DIRECTIVES, COMMON_DIRECTIVES, FORM_DIRECTIVES]
 })
 
 export class RelationPickerComponent implements OnChanges {
@@ -29,7 +31,10 @@ export class RelationPickerComponent implements OnChanges {
     @Input() parent: any;
 
     suggestions: IdaiFieldObject[];
+    selectedTarget: IdaiFieldObject;
     idSearchString: string;
+    suggestionsVisible: boolean;
+    suggestionClick: boolean;
 
     constructor(private datastore: Datastore) {}
 
@@ -41,27 +46,74 @@ export class RelationPickerComponent implements OnChanges {
 
         this.suggestions = [];
         this.idSearchString = "";
+        this.selectedTarget = undefined;
+
+        if (this.object.relation.id) {
+            this.datastore.get(this.object.relation.id).then(
+                (object) => {
+                    this.selectedTarget = object;
+                },
+                err => {
+                    // TODO
+                    // Error handling
+                }
+            );
+        }
     }
 
     public search() {
 
-        this.datastore.find(this.idSearchString, {})
-            .then(objects => {
-                this.suggestions = [];
-                for (var i in objects) {
-                    if (this.suggestions.length == 5)
-                        break;
-                    if (this.object != objects[i])
-                        this.suggestions.push(objects[i]);
-                }
-                this.suggestions = objects;
-            }).catch(err =>
-            console.error(err));
+        if (this.idSearchString.length > 0) {
+            this.datastore.find(this.idSearchString, {})
+                .then(objects => {
+                    this.suggestions = [];
+                    for (var i in objects) {
+                        if (this.suggestions.length == 5)
+                            break;
+                        if (this.object != objects[i])
+                            this.suggestions.push(objects[i]);
+                    }
+                    this.suggestions = objects;
+                }).catch(err =>
+                console.error(err));
+        } else
+            this.suggestions = [];
+
     }
 
-    public chooseId(id: string) {
+    public chooseTarget(target: IdaiFieldObject) {
 
-        this.object.relation.id = id;
+        this.object.relation.id = target.id;
+        this.selectedTarget = target;
+        this.idSearchString = "";
+        this.suggestions = [];
+        this.suggestionClick = false;
         this.parent.triggerAutosave();
+    }
+
+    public editTarget() {
+
+        this.idSearchString = this.selectedTarget.identifier;
+        this.suggestions = [ this.selectedTarget ];
+        this.selectedTarget = undefined;
+        this.suggestionClick = false;
+    }
+
+    public showSuggestions() {
+
+        this.suggestionsVisible = true;
+    }
+
+    public hideSuggestions() {
+
+        if (!this.suggestionClick)
+            this.suggestionsVisible = false;
+
+        this.suggestionClick = false;
+    }
+
+    public detectSuggestionClick() {
+
+        this.suggestionClick = true;
     }
 }

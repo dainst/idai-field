@@ -5,13 +5,14 @@ import {Messages} from "../services/messages";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {DataModelConfiguration} from "../services/data-model-configuration";
+import {RelationPickerComponent} from "./relation-picker.component";
 
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
- */
+  */
 @Component({
-    directives: [FORM_DIRECTIVES,CORE_DIRECTIVES,COMMON_DIRECTIVES],
+    directives: [FORM_DIRECTIVES,CORE_DIRECTIVES,COMMON_DIRECTIVES,RelationPickerComponent],
     selector: 'object-edit',
     templateUrl: 'templates/object-edit.html'
 })
@@ -34,6 +35,8 @@ export class ObjectEditComponent {
 
     public triggerAutosave() {
 
+        console.log("save", this.object);
+
         this.objectList.setChanged();
 
         if (this.saveTimer)
@@ -45,6 +48,11 @@ export class ObjectEditComponent {
     public setType(type: string) {
 
         this.object.type = type;
+    }
+
+    public getThis() {
+
+        return this;
     }
 
 }

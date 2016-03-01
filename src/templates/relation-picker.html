@@ -1,0 +1,6 @@
+<div>
+    <select [(ngModel)]="object.relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
+        <option *ngFor="#relationType of types" value="{{relationType}}">{{relationType}}</option>
+    </select>
+    <input [(ngModel)]="object.relation.targetId" (keyup)="validateId()" class="form-control">
+</div>

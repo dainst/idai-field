@@ -1,12 +1,11 @@
 import {Injectable} from "angular2/core";
-import {DB} from "./db";
 
 /**
  * @author Sebastian Cuy
  * @author Daniel M. de Oliveira
  */
 @Injectable()
-export class Indexeddb implements DB {
+export class Indexeddb {
 
     public db() : Promise<any> {
 

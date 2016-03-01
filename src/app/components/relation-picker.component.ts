@@ -28,27 +28,40 @@ export class RelationPickerComponent implements OnChanges {
     @Input() object: any;
     @Input() parent: any;
 
+    suggestions: IdaiFieldObject[];
+    idSearchString: string;
 
-    constructor() {
-
-    }
+    constructor(private datastore: Datastore) {}
 
 
     public ngOnChanges() {
 
-        console.log("changes");
-
         if (!this.object.relation)
             this.object.relation = new Relation();
+
+        this.suggestions = [];
+        this.idSearchString = "";
     }
 
-    public validateId() {
+    public search() {
 
-        /** TODO:
-         * Validation
-         */
+        this.datastore.find(this.idSearchString, {})
+            .then(objects => {
+                this.suggestions = [];
+                for (var i in objects) {
+                    if (this.suggestions.length == 5)
+                        break;
+                    if (this.object != objects[i])
+                        this.suggestions.push(objects[i]);
+                }
+                this.suggestions = objects;
+            }).catch(err =>
+            console.error(err));
+    }
 
+    public chooseId(id: string) {
 
+        this.object.relation.id = id;
         this.parent.triggerAutosave();
     }
 }

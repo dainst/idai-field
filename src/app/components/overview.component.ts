@@ -49,7 +49,7 @@ export class OverviewComponent implements OnInit {
 
         if (this.newObject) this.removeObjectFromListIfNotSaved();
 
-        this.newObject = {};
+        this.newObject = { relations: [] };
         this.objectList.getObjects().unshift(this.newObject);
 
         this.selectedObject = this.newObject;

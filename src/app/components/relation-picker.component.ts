@@ -1,6 +1,5 @@
-import {Component, Inject, Input, OnChanges, ElementRef} from 'angular2/core';
+import {Component, Input, OnChanges, ElementRef} from 'angular2/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
-import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {Relation} from "../model/relation";
@@ -28,7 +27,8 @@ export class RelationPickerComponent implements OnChanges {
         "Next to"
     ];
 
-    @Input() object: any;
+    @Input() relation: Relation;
+    @Input() objectId: string;
     @Input() parent: any;
 
     suggestions: IdaiFieldObject[];
@@ -41,15 +41,12 @@ export class RelationPickerComponent implements OnChanges {
 
     public ngOnChanges() {
 
-        if (!this.object.relation)
-            this.object.relation = new Relation();
-
         this.suggestions = [];
         this.idSearchString = "";
         this.selectedTarget = undefined;
 
-        if (this.object.relation.id) {
-            this.datastore.get(this.object.relation.id).then(
+        if (this.relation.id) {
+            this.datastore.get(this.relation.id).then(
                 (object) => {
                     this.selectedTarget = object;
                 },
@@ -63,6 +60,8 @@ export class RelationPickerComponent implements OnChanges {
 
     public search() {
 
+        this.relation.id = undefined;
+
         if (this.idSearchString.length > 0) {
             this.datastore.find(this.idSearchString, {})
                 .then(objects => {
@@ -70,7 +69,7 @@ export class RelationPickerComponent implements OnChanges {
                     for (var i in objects) {
                         if (this.suggestions.length == 5)
                             break;
-                        if (this.object.id != objects[i].id)
+                        if (this.objectId != objects[i].id)
                             this.suggestions.push(objects[i]);
                     }
                 }).catch(err =>
@@ -81,7 +80,7 @@ export class RelationPickerComponent implements OnChanges {
 
     public chooseTarget(target: IdaiFieldObject) {
 
-        this.object.relation.id = target.id;
+        this.relation.id = target.id;
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];

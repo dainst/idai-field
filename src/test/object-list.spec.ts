@@ -21,8 +21,8 @@ export function main() {
         var objectList;
         var id = "abc";
 
-        var oldVersion : IdaiFieldObject =
-            {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0, "valid": true, "type": "Object" };
+        var oldVersion : IdaiFieldObject = {"identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0,
+            "valid": true, "type": "Object","relations": [] };
         var selectedObject : IdaiFieldObject;
 
         var successFunction = function() {
@@ -50,7 +50,8 @@ export function main() {
                 mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
                 objectList = new ObjectList(mockDatastore, messages, undefined);
 
-                selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true , "id" : id, "type": "Object" };
+                selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true ,
+                    "id" : id, "type": "Object", "relations": [] };
                 objectList.setObjects([selectedObject]);
 
                 mockDatastore.create.and.callFake(successFunction);

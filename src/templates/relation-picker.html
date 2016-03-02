@@ -1,6 +1,6 @@
 <div class="relation-picker row">
     <div class="col-md-3">
-        <select [(ngModel)]="object.relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
+        <select [(ngModel)]="relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
             <option *ngFor="#relationType of types" value="{{relationType}}">{{relationType}}</option>
         </select>
     </div>

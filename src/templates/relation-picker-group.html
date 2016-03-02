@@ -1,0 +1,8 @@
+<div>
+    <div *ngFor="#relation of object.relations">
+        <relation-picker [relation]="relation" [(objectId)]="object.id" [parent]="parent"></relation-picker>
+    </div>
+    <button *ngIf="!newRelation || validate(newRelation)" type="button" class="btn btn-default" (click)="createRelation()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>

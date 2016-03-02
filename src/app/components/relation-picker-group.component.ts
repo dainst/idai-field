@@ -31,10 +31,6 @@ export class RelationPickerGroupComponent implements OnChanges {
 
     public createRelation() {
 
-        if (!this.validate(this.newRelation)) {
-            this.deleteRelation(this.newRelation);
-        }
-
         this.newRelation = new Relation();
         this.object.relations.push(this.newRelation);
     }

@@ -1,9 +1,10 @@
-import {Component, Inject, Input, OnChanges} from 'angular2/core';
+import {Component, Inject, Input, OnChanges, ElementRef} from 'angular2/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {Relation} from "../model/relation";
+
 
 /**
  * @author Jan G. Wieners
@@ -34,9 +35,8 @@ export class RelationPickerComponent implements OnChanges {
     selectedTarget: IdaiFieldObject;
     idSearchString: string;
     suggestionsVisible: boolean;
-    suggestionClick: boolean;
 
-    constructor(private datastore: Datastore) {}
+    constructor(private element: ElementRef, private datastore: Datastore) {}
 
 
     public ngOnChanges() {
@@ -70,15 +70,13 @@ export class RelationPickerComponent implements OnChanges {
                     for (var i in objects) {
                         if (this.suggestions.length == 5)
                             break;
-                        if (this.object != objects[i])
+                        if (this.object.id != objects[i].id)
                             this.suggestions.push(objects[i]);
                     }
-                    this.suggestions = objects;
                 }).catch(err =>
                 console.error(err));
         } else
             this.suggestions = [];
-
     }
 
     public chooseTarget(target: IdaiFieldObject) {
@@ -87,7 +85,6 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];
-        this.suggestionClick = false;
         this.parent.triggerAutosave();
     }
 
@@ -96,7 +93,8 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = this.selectedTarget.identifier;
         this.suggestions = [ this.selectedTarget ];
         this.selectedTarget = undefined;
-        this.suggestionClick = false;
+
+        setTimeout(this.focusInputField.bind(this), 100);
     }
 
     public showSuggestions() {
@@ -106,14 +104,12 @@ export class RelationPickerComponent implements OnChanges {
 
     public hideSuggestions() {
 
-        if (!this.suggestionClick)
-            this.suggestionsVisible = false;
-
-        this.suggestionClick = false;
+        this.suggestionsVisible = false;
     }
 
-    public detectSuggestionClick() {
+    public focusInputField() {
 
-        this.suggestionClick = true;
+        this.element.nativeElement.getElementsByTagName("input").item(0).focus();
     }
+
 }

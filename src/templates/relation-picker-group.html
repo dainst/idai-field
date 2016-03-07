@@ -10,4 +10,7 @@
     <button *ngIf="!newRelation || validate(newRelation)" type="button" class="btn btn-default" (click)="createRelation()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
+    <button *ngIf="newRelation && !validate(newRelation)" type="button" class="btn btn-default disabled">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
 </div>

@@ -51,7 +51,8 @@
             "Unidentified Stone",
             "Unknown",
             "Wood"
-          ]
+          ],
+          "multivalue": true
         },
         {
           "field": "Category",

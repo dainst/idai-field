@@ -6,13 +6,14 @@ import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {DataModelConfiguration} from "../services/data-model-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
+import {ValuelistComponent} from "./valuelist.component";
 
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
   */
 @Component({
-    directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, COMMON_DIRECTIVES, RelationPickerGroupComponent],
+    directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, COMMON_DIRECTIVES, RelationPickerGroupComponent, ValuelistComponent],
     selector: 'object-edit',
     templateUrl: 'templates/object-edit.html'
 })

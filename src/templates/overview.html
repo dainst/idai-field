@@ -20,17 +20,15 @@
                 </div>
                 <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
             </li>
-            <li id="createObject"
-                *ngIf="searchInput.value.length == 0"
-                class="list-group-item list-group-item-success"
-                (click)="onCreate()"
-                onclick="window.scrollTo(0, 0)">
-                <!-- Enable when finally implemented in Chromium
+        </ul>
+        <div id="createObject"
+             *ngIf="searchInput.value.length == 0"
+             id="createButton"
+                  (click)="onCreate()"
+                  onclick="window.scrollTo(0, 0)">+</div>
+            <!-- Enable when finally implemented in Chromium
                 onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                 -->
-                <span class="glyphicon glyphicon-plus-sign"></span>
-            </li>
-        </ul>
     </div>
 
     <div class="col-md-9">

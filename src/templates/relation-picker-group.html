@@ -1,16 +1,23 @@
-<div>
-    <div *ngFor="#relation of object.relations" class="row">
+<div *ngFor="#relation of object.relations" class="row">
+    <div class="col-md-12">
+        <span class="delete-relation small-circular-button red-button mdi mdi-delete"
+              (click)="deleteRelation(relation)"></span>
         <relation-picker [relation]="relation" [(objectId)]="object.id" [parent]="parent"></relation-picker>
-        <div>
-            <button type="button" class="btn btn-default" (click)="deleteRelation(relation)">
-                <span class="glyphicon glyphicon-remove"></span>
-            </button>
-        </div>
     </div>
-    <button *ngIf="!newRelation || validate(newRelation)" type="button" class="btn btn-default" (click)="createRelation()">
-        <span class="glyphicon glyphicon-plus"></span>
-    </button>
-    <button *ngIf="newRelation && !validate(newRelation)" type="button" class="btn btn-default disabled">
-        <span class="glyphicon glyphicon-plus"></span>
-    </button>
+</div>
+<div class="row">
+
+    <div class="col-md-12">
+       <div id="add-relation" class="circular-button lightgray-button"
+             *ngIf="!newRelation || validate(newRelation)"
+             type="button"
+             class="btn btn-default"
+             (click)="createRelation()">+</div>
+
+        <!-- Button disabled when waiting for input -->
+        <div id="add-relation-disabled" class="circular-button"
+             *ngIf="newRelation && !validate(newRelation)"
+             type="button"
+             class="btn btn-default">+</div>
+    </div>
 </div>

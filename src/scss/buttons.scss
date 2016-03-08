@@ -3,6 +3,8 @@
  */
 
 $greenbgr: #1b9519;
+$redbgr: #e00000;
+$lightgraybgr: #eeeeee;
 
 .circular-button {
   cursor: pointer;
@@ -13,6 +15,7 @@ $greenbgr: #1b9519;
   height: 39px;
   width: 39px;
   z-index: 1;
+  font-size: 23px;
   transition: background-color .5s ease;
   position: absolute;
   box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
@@ -22,13 +25,39 @@ $greenbgr: #1b9519;
   transition: background-color .5s ease;
 }
 
+.small-circular-button {
+  font-size: 17px;
+  cursor: pointer;
+  text-align: center;
+  padding: 8px 0 0 0;
+  border-radius: 50%;
+  min-width: 33px;
+  height: 33px;
+  width: 33px;
+  z-index: 1;
+  transition: background-color .5s ease;
+  position: absolute;
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.24), 1px 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+
+.small-circular-button:hover {
+  transition: background-color .5s ease;
+}
+
+.lightgray-button:hover {
+  background-color: $lightgraybgr;
+}
+
 .green-button {
   background-color: $greenbgr;
   color: #fff;
-  font-size: 23px;
   font-weight: normal;
 }
 
 .green-button:hover {
   background-color: lighten($greenbgr, 5%);
+}
+
+.red-button:hover {
+  background-color: lighten($redbgr, 35%);
 }

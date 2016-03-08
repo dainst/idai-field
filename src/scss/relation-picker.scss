@@ -3,10 +3,6 @@
  * @author Thomas Kleinke
  */
 
-.relation-picker {
-  margin-bottom: 15px;
-}
-
 .suggestion-container {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
@@ -21,4 +17,30 @@
 
 .suggestion:hover {
   background-color: #ccc;
+}
+
+#relation-picker {
+  margin-left: 35px;
+}
+
+#add-relation, #add-relation-disabled {
+  margin-left: -4px;
+  padding-left: 1px;
+  padding-top: 4px;
+  margin-top: 15px;
+  position: relative;
+  display: block;
+}
+
+#add-relation-disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+#relation-picker .badge {
+  background-color: #ccc;
+  color: #333;
+  font-weight: normal;
+  border-radius: 1px;
+  margin-right: 10px;
 }

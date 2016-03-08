@@ -8,16 +8,14 @@
 <div class="row">
 
     <div class="col-md-12">
-       <div id="add-relation" class="circular-button lightgray-button"
+       <div id="add-relation" class="circular-button"
              *ngIf="!newRelation || validate(newRelation)"
              type="button"
-             class="btn btn-default"
              (click)="createRelation()">+</div>
 
         <!-- Button disabled when waiting for input -->
         <div id="add-relation-disabled" class="circular-button"
              *ngIf="newRelation && !validate(newRelation)"
-             type="button"
-             class="btn btn-default">+</div>
+             type="button">+</div>
     </div>
 </div>

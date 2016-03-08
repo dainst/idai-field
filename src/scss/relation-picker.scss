@@ -32,6 +32,10 @@
   display: block;
 }
 
+#add-relation:hover {
+  background-color: lighten(#1b9519, 25%);
+}
+
 #add-relation-disabled {
   color: #ccc;
   cursor: default;

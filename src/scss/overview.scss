@@ -39,34 +39,7 @@
   background-color: #d9e1ed;
 }
 
-.selectedObject {
-}
-
-.selectedObject .glyphicon {
-  cursor: pointer;
-}
-
 #objectOverview #createObject {
-  cursor: pointer;
-  text-align: center;
-  background-color: #1b9519;
-  color: #fff;
-  font-size: 23px;
-  font-weight: normal;
-  padding: 3px 0 0 0;
-  border-radius: 50%;
-  margin: -41px auto auto auto;
-  min-width: 35px;
-  height: 39px;
-  width: 39px;
-  z-index: 1;
-  transition: background-color .5s ease;
-  position: absolute;
   left: 45%;
-  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-}
-
-#objectOverview #createObject:hover {
-  background-color: lighten(#1b9519, 3%);
-  transition: background-color .5s ease;
+  margin: -41px auto auto auto;
 }

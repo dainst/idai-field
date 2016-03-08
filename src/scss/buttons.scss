@@ -1,0 +1,34 @@
+/**
+ * @author: Jan G. Wieners
+ */
+
+$greenbgr: #1b9519;
+
+.circular-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 3px 0 0 0;
+  border-radius: 50%;
+  min-width: 35px;
+  height: 39px;
+  width: 39px;
+  z-index: 1;
+  transition: background-color .5s ease;
+  position: absolute;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+
+.circular-button:hover {
+  transition: background-color .5s ease;
+}
+
+.green-button {
+  background-color: $greenbgr;
+  color: #fff;
+  font-size: 23px;
+  font-weight: normal;
+}
+
+.green-button:hover {
+  background-color: lighten($greenbgr, 5%);
+}

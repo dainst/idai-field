@@ -205,7 +205,6 @@
 }
 
 #syncCounter {
-
   font-size: 0.7em;
 }
 
@@ -216,6 +215,7 @@
 }
 
 #objectsToSyncCount #success {
+  color: #fff;
   padding: 5px 0 0 0;
   font-size: 1.5em;
   transition: background-color .5s ease;

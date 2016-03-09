@@ -24,7 +24,7 @@ export function main() {
             "type": "Object", "relations": [] };
 
         var filteredObject = { "resource" : { "id": "id1", "identifier": "ob1", "title": "Object 1", "type": "Object",
-            "relations": [] }}
+            "relations": [] }, "dataset" : "dataset1" };
 
         var successFunction = function() {
             return {
@@ -51,6 +51,8 @@ export function main() {
         };
 
         var mockHttp;
+
+        var mockDataModelConfiguration;
         var idaiFieldBackend : IdaiFieldBackend;
         var j;
 
@@ -62,8 +64,10 @@ export function main() {
             mockHttp = jasmine.createSpyObj('mockHttp', [ 'get', 'put' ]);
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);
+            mockDataModelConfiguration = jasmine.createSpyObj('mockDataModelConfiguration', ['getField']);
+            mockDataModelConfiguration.getField.and.callFake(function(){return "dataset1";});
 
-            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config);
+            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config, mockDataModelConfiguration);
             j=0;
         });
 

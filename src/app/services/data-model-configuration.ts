@@ -30,7 +30,6 @@ export class DataModelConfiguration {
      * Returns an array containing the possible object types
      */
     public getTypes(): string[] {
-
         return this.types;
     }
 
@@ -39,8 +38,11 @@ export class DataModelConfiguration {
      * @param type
      */
     public getFields(type: string): any[] {
-
         return this.fieldMap[type];
+    }
+
+    public getField(name: string) {
+        return this.configurationData[name];
     }
 
 }

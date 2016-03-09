@@ -1,5 +1,5 @@
 {
-	"environment": "production",
+	"environment": "test",
     "backend" : {
         "uri": "http://virginiaplain01.klassarchaeologie.uni-koeln.de:80/",
         "credentials": "admin:s3cr3t",

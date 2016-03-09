@@ -5,6 +5,7 @@ import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "angular2/http";
+import {DataModelConfiguration} from "./data-model-configuration";
 
 /**
  * @author Jan G. Wieners
@@ -20,7 +21,8 @@ export class IdaiFieldBackend {
     private configuration: any;
 
     public constructor(private http: Http,
-        @Inject('app.config') private config) {
+        @Inject('app.config') private config,
+        private dataModelConfiguration: DataModelConfiguration) {
 
         this.validateAndUse(config.backend);
         this.checkConnection();
@@ -109,6 +111,10 @@ export class IdaiFieldBackend {
 
             var document= {"resource":{}};
             document["resource"]= ModelUtils.filterUnwantedProps(object);
+
+            if ((this.dataModelConfiguration!=undefined)
+                &&(this.dataModelConfiguration.getField("excavation")!=undefined))
+                    document["dataset"]=this.dataModelConfiguration.getField("excavation");
 
             this.performPut(document)
             .subscribe(

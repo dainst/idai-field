@@ -33,12 +33,13 @@
                     <div *ngIf="field.multiline">
                         <textarea [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()"
                                   class="form-control" rows="5"></textarea>
-                    </div >
-                    <div *ngIf="field.valuelist">
+                    </div>
+                    <div *ngIf="field.valuelist && !field.multivalue">
                         <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()" class="form-control">
-                            <option *ngFor="#item of field.valuelist; #i = index" value="{{item}}">{{item}}</option>
+                            <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
                         </select>
                     </div>
+                    <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field" [parent]="getThis()"></valuelist>
                 </div>
             </div>
         </form>

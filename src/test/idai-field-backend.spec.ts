@@ -23,8 +23,8 @@ export function main() {
         var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
             "type": "Object", "relations": [] };
 
-        var filteredObject = { "id": "id1", "identifier": "ob1", "title": "Object 1", "type": "Object",
-            "relations": [] };
+        var filteredObject = { "resource" : { "id": "id1", "identifier": "ob1", "title": "Object 1", "type": "Object",
+            "relations": [] }}
 
         var successFunction = function() {
             return {

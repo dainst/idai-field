@@ -90,11 +90,11 @@ export class IdaiFieldBackend {
         return headers;
     }
 
-    private performPut(object:IdaiFieldObject) : Observable<Response> {
+    private performPut(document:any) : Observable<Response> {
 
         return this.http.put(this.configuration.uri
-            + this.typeName + '/' + object.id,
-            JSON.stringify(object), { headers: this.createAuthorizationHeader()})
+            + this.typeName + '/' + document.resource.id,
+            JSON.stringify(document), { headers: this.createAuthorizationHeader()})
     }
 
     /**
@@ -106,7 +106,11 @@ export class IdaiFieldBackend {
     public save(object:IdaiFieldObject):Promise<IdaiFieldObject> {
 
         return new Promise((resolve, reject) => {
-            this.performPut(ModelUtils.filterUnwantedProps(object))
+
+            var document= {"resource":{}};
+            document["resource"]= ModelUtils.filterUnwantedProps(object);
+
+            this.performPut(document)
             .subscribe(
                 () => resolve(object),
                 err => {

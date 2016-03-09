@@ -1,7 +1,7 @@
 <div id="relation-picker">
     <div *ngIf="!selectedTarget">
-        <input [(ngModel)]="idSearchString" (keyup)="search()" (focus)="showSuggestions()" (blur)="hideSuggestions()"
-               class="form-control">
+        <input [(ngModel)]="idSearchString" (keyup)="search()" (focus)="enterSuggestionMode()"
+               (blur)="leaveSuggestionMode()" class="form-control">
         <div *ngIf="suggestionsVisible" class="suggestion-container">
             <div *ngFor="#suggestion of suggestions" class="suggestion" (mousedown)="chooseTarget(suggestion)">
                 <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}

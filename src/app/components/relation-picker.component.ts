@@ -40,20 +40,13 @@ export class RelationPickerComponent implements OnChanges {
 
         if (relationId && relationId != "") {
             this.datastore.get(relationId).then(
-                (object) => {
-                    this.selectedTarget = object;
-                },
-                err => {
-                    // TODO
-                    // Error handling
-                }
+                object => { this.selectedTarget = object; },
+                err => { console.error(err); }
             );
         }
     }
 
     public search() {
-
-        this.object[this.field.field][this.relationIndex] = "";
 
         if (this.idSearchString.length > 0) {
             this.datastore.find(this.idSearchString, {})
@@ -89,14 +82,23 @@ export class RelationPickerComponent implements OnChanges {
         setTimeout(this.focusInputField.bind(this), 100);
     }
 
-    public showSuggestions() {
+    public enterSuggestionMode() {
 
         this.suggestionsVisible = true;
     }
 
-    public hideSuggestions() {
+    public leaveSuggestionMode() {
 
         this.suggestionsVisible = false;
+
+        if (!this.selectedTarget && this.object[this.field.field][this.relationIndex]
+                                 && this.object[this.field.field][this.relationIndex] != "") {
+            this.datastore.get(this.object[this.field.field][this.relationIndex])
+                .then(
+                    object => { this.selectedTarget = object },
+                    err => { console.error(err) }
+                );
+        }
     }
 
     public focusInputField() {

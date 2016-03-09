@@ -11,8 +11,8 @@ export function main() {
     describe('OverviewComponent', () => {
 
         var objects: IdaiFieldObject[];
-        var object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true, "type": "Object", "relations": [] };
-        var object2 = { "id": "id2", "identifier": "ob2", "title": "Object 2", "synced": 0, "valid": true, "type": "Object", "relations": [] };
+        var object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true, "type": "Object" };
+        var object2 = { "id": "id2", "identifier": "ob2", "title": "Object 2", "synced": 0, "valid": true, "type": "Object" };
 
         var overviewComponent: OverviewComponent;
         var mockObjectList: any;
@@ -83,7 +83,7 @@ export function main() {
                 overviewComponent.onCreate();
 
                 expect(objects.length).toBe(3);
-                expect(objects[0]).toEqual({ relations: [] });
+                expect(objects[0]).toEqual({});
                 expect(objects[1]).toBe(object1);
                 expect(objects[2]).toBe(object2);
             }
@@ -109,7 +109,7 @@ export function main() {
                 overviewComponent.onSelect(object1);
 
                 expect(objects.length).toBe(3);
-                expect(objects[0]).toEqual({ relations: [], id: "id" });
+                expect(objects[0]).toEqual({ id: "id" });
                 expect(objects[1]).toBe(object1);
                 expect(objects[2]).toBe(object2);
             }
@@ -122,7 +122,7 @@ export function main() {
                 overviewComponent.onCreate();
 
                 expect(objects.length).toBe(3);
-                expect(objects[0]).toEqual({ relations: [] });
+                expect(objects[0]).toEqual({});
                 expect(objects[1]).toBe(object1);
                 expect(objects[2]).toBe(object2);
             }
@@ -135,8 +135,8 @@ export function main() {
                 overviewComponent.onCreate();
 
                 expect(objects.length).toBe(4);
-                expect(objects[0]).toEqual({ relations: [] });
-                expect(objects[1]).toEqual({ relations: [], id: "id" });
+                expect(objects[0]).toEqual({});
+                expect(objects[1]).toEqual({ id: "id" });
                 expect(objects[2]).toBe(object1);
                 expect(objects[3]).toBe(object2);
             }

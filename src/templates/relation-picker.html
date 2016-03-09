@@ -1,10 +1,5 @@
-<div class="row" id="relation-picker">
-    <div class="col-md-3">
-        <select [(ngModel)]="relation.relationType" (change)="parent.triggerAutosave()" class="form-control">
-            <option *ngFor="#relationType of types" value="{{relationType}}">{{relationType}}</option>
-        </select>
-    </div>
-    <div class="col-md-8" *ngIf="!selectedTarget">
+<div id="relation-picker">
+    <div *ngIf="!selectedTarget">
         <input [(ngModel)]="idSearchString" (keyup)="search()" (focus)="showSuggestions()" (blur)="hideSuggestions()"
                class="form-control">
         <div *ngIf="suggestionsVisible" class="suggestion-container">
@@ -13,7 +8,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8" *ngIf="selectedTarget">
+    <div *ngIf="selectedTarget">
         <button class="btn btn-default" type="button" (click)="editTarget()">
             <span class="badge">{{selectedTarget.identifier}}</span> {{selectedTarget.title}}
         </button>

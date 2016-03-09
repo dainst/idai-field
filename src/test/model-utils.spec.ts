@@ -16,7 +16,6 @@ export function main() {
                     "identifier": "ob1",
                     "title": "Title",
                     "type": "Object",
-                    "relations": [],
                     "synced": 0,
                     "valid": true
                 };
@@ -33,16 +32,14 @@ export function main() {
                     "title": "Title",
                     "synced": 0,
                     "valid": true,
-                    "type": "Object",
-                    "relations": []
+                    "type": "Object"
                 };
                 var clonedObject = ModelUtils.filterUnwantedProps(initialObject);
 
                 var filteredObject = {
                     "identifier": "ob1",
                     "title": "Title",
-                    "type": "Object",
-                    "relations": []
+                    "type": "Object"
                 };
                 expect(clonedObject).toEqual(filteredObject);
             }

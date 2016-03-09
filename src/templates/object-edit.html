@@ -19,9 +19,9 @@
                 <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
             </div>
 
-            <div class="form-group">
-                <label>Relations</label>
-                <relation-picker-group [(object)]="object" [parent]="getThis()"></relation-picker-group>
+            <div *ngFor="#relationField of relationFields" class="form-group">
+                <label>{{relationField.field}}</label>
+                <relation-picker-group [(object)]="object" [field]="relationField" [parent]="getThis()"></relation-picker-group>
             </div>
 
             <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
@@ -39,7 +39,8 @@
                             <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
                         </select>
                     </div>
-                    <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field" [parent]="getThis()"></valuelist>
+                    <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field"
+                               [parent]="getThis()"></valuelist>
                 </div>
             </div>
         </form>

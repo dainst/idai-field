@@ -18,7 +18,6 @@ export function main() {
             "identifier": "ob1",
             "title": "Title",
             "type": "Object",
-            "relations": [],
             "synced": 0,
             "valid": true,
         };

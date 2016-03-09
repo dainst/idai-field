@@ -24,6 +24,12 @@ export class ObjectEditComponent {
 
     private saveTimer: number;
 
+    private relationFields: any[] = [
+        { "field": "Part of" },
+        { "field": "Above" },
+        { "field": "Below" }
+    ];
+
     constructor(private objectList: ObjectList,
                 private dataModelConfiguration: DataModelConfiguration) {}
 

@@ -2,7 +2,6 @@ import {Component, Input, OnChanges, ElementRef} from 'angular2/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {Relation} from "../model/relation";
 
 
 /**
@@ -19,16 +18,9 @@ import {Relation} from "../model/relation";
 
 export class RelationPickerComponent implements OnChanges {
 
-    private types: string[] = [
-        "Part of",
-        "Similar to",
-        "Below",
-        "Above",
-        "Next to"
-    ];
-
-    @Input() relation: Relation;
-    @Input() objectId: string;
+    @Input() object: IdaiFieldObject;
+    @Input() field: any;
+    @Input() relationIndex: number;
     @Input() parent: any;
 
     suggestions: IdaiFieldObject[];
@@ -38,15 +30,16 @@ export class RelationPickerComponent implements OnChanges {
 
     constructor(private element: ElementRef, private datastore: Datastore) {}
 
-
     public ngOnChanges() {
 
         this.suggestions = [];
         this.idSearchString = "";
         this.selectedTarget = undefined;
 
-        if (this.relation.id) {
-            this.datastore.get(this.relation.id).then(
+        var relationId: string = this.object[this.field.field][this.relationIndex];
+
+        if (relationId && relationId != "") {
+            this.datastore.get(relationId).then(
                 (object) => {
                     this.selectedTarget = object;
                 },
@@ -60,7 +53,7 @@ export class RelationPickerComponent implements OnChanges {
 
     public search() {
 
-        this.relation.id = undefined;
+        this.object[this.field.field][this.relationIndex] = "";
 
         if (this.idSearchString.length > 0) {
             this.datastore.find(this.idSearchString, {})
@@ -69,7 +62,7 @@ export class RelationPickerComponent implements OnChanges {
                     for (var i in objects) {
                         if (this.suggestions.length == 5)
                             break;
-                        if (this.objectId != objects[i].id)
+                        if (this.object.id != objects[i].id)
                             this.suggestions.push(objects[i]);
                     }
                 }).catch(err =>
@@ -80,7 +73,7 @@ export class RelationPickerComponent implements OnChanges {
 
     public chooseTarget(target: IdaiFieldObject) {
 
-        this.relation.id = target.id;
+        this.object[this.field.field][this.relationIndex] = target.id;
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];

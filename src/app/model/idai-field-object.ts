@@ -1,5 +1,3 @@
-import {Relation} from "./relation";
-
 export interface IdaiFieldObject {
     id?: string;
     identifier: string;
@@ -9,5 +7,4 @@ export interface IdaiFieldObject {
     created?: Date;
     valid: boolean;
     type: string;
-    relations: Relation[];
 }

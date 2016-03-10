@@ -127,7 +127,6 @@ gulp.task('test-compile-ts', function () {
         .pipe(gulp.dest(paths.build + 'test'));
 });
 
-
 gulp.task('concat-deps', function() {
 
 	return gulp.src([

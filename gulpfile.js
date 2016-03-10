@@ -182,7 +182,6 @@ gulp.task('package-node-dependencies', function() {
         .pipe(gulp.dest('dist/lib/angular2-uuid/'));
 });
 
-
 // builds an electron app package for different platforms
 gulp.task('package', [], function() {
 

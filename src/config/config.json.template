@@ -1,0 +1,8 @@
+{
+	"environment": "production",
+    "backend" : {
+        "uri": "server url",
+        "credentials": "username:password",
+        "connectionCheckInterval": 1000
+    }
+}

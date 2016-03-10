@@ -188,7 +188,7 @@ gulp.task('package', [], function() {
 		name: pkg.name,
 		platform: ['win32', 'darwin', 'linux'],
 		arch: 'all',
-		version: '0.36.7',
+		version: '0.36.10',
 		appBundleId: pkg.name,
 		appVersion: pkg.version,
 		buildVersion: pkg.version,

@@ -39,8 +39,7 @@ gulp.task('test', function (cb) {
         console.log(stderr);
         cb(err);
     });
-})
-
+});
 
 const tscConfig = require('./tsconfig.json');
 

@@ -24,6 +24,7 @@ export class RelationPickerComponent implements OnChanges {
     @Input() parent: any;
 
     suggestions: IdaiFieldObject[];
+    selectedSuggestionIndex: number = -1;
     selectedTarget: IdaiFieldObject;
     idSearchString: string;
     suggestionsVisible: boolean;
@@ -46,7 +47,7 @@ export class RelationPickerComponent implements OnChanges {
         }
     }
 
-    public search() {
+    private search() {
 
         if (this.idSearchString.length > 0) {
             this.datastore.find(this.idSearchString, {})
@@ -77,6 +78,7 @@ export class RelationPickerComponent implements OnChanges {
 
         this.idSearchString = this.selectedTarget.identifier;
         this.suggestions = [ this.selectedTarget ];
+        this.selectedSuggestionIndex = 0;
         this.selectedTarget = undefined;
 
         setTimeout(this.focusInputField.bind(this), 100);
@@ -104,6 +106,49 @@ export class RelationPickerComponent implements OnChanges {
     public focusInputField() {
 
         this.element.nativeElement.getElementsByTagName("input").item(0).focus();
+    }
+
+    public keyDown(event: any) {
+
+        switch(event.keyIdentifier) {
+            case "Up":
+                if (this.selectedSuggestionIndex > 0)
+                    this.selectedSuggestionIndex--;
+                else
+                    this.selectedSuggestionIndex = this.suggestions.length - 1;
+                event.preventDefault();
+                break;
+            case "Down":
+                if (this.selectedSuggestionIndex < this.suggestions.length - 1)
+                    this.selectedSuggestionIndex++;
+                else
+                    this.selectedSuggestionIndex = 0;
+                event.preventDefault();
+                break;
+            case "Left":
+            case "Right":
+                break;
+            case "Enter":
+                if (this.selectedSuggestionIndex > -1 && this.suggestions.length > 0)
+                    this.chooseTarget(this.suggestions[this.selectedSuggestionIndex]);
+                break;
+        }
+    }
+
+    public keyUp(event: any) {
+
+        switch(event.keyIdentifier) {
+            case "Up":
+            case "Down":
+            case "Left":
+            case "Right":
+            case "Enter":
+                break;
+            default:
+                this.selectedSuggestionIndex = 0;
+                this.search();
+                break;
+        }
     }
 
 }

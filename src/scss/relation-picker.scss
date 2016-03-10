@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 
-.suggestion:hover {
+.suggestion.selected-suggestion {
   background-color: #ccc;
 }
 

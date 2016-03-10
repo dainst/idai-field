@@ -1,10 +1,17 @@
 <div id="relation-picker">
     <div *ngIf="!selectedTarget">
-        <input [(ngModel)]="idSearchString" (keyup)="search()" (focus)="enterSuggestionMode()"
-               (blur)="leaveSuggestionMode()" class="form-control">
-        <div *ngIf="suggestionsVisible" class="suggestion-container">
-            <div *ngFor="#suggestion of suggestions" class="suggestion" (mousedown)="chooseTarget(suggestion)">
-                <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}
+        <input [(ngModel)]="idSearchString" (keydown)="keyDown($event)" (keyup)="keyUp($event)"
+               (focus)="enterSuggestionMode()" (blur)="leaveSuggestionMode()" class="form-control">
+        <div *ngIf="suggestionsVisible" class="suggestion-container" (mouseout)="selectedSuggestionIndex = -1">
+            <div *ngFor="#suggestion of suggestions; #i = index">
+                <div *ngIf="selectedSuggestionIndex != i" class="suggestion" (mousedown)="chooseTarget(suggestion)"
+                        (mouseover)="selectedSuggestionIndex = i">
+                    <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}
+                </div>
+                <div *ngIf="selectedSuggestionIndex == i" class="suggestion selected-suggestion"
+                        (mousedown)="chooseTarget(suggestion)">
+                    <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}
+                </div>
             </div>
         </div>
     </div>

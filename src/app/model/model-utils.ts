@@ -18,6 +18,7 @@ export class ModelUtils {
 
         delete o.synced;
         delete o.valid;
+        delete o.id;
 
         return o;
     }

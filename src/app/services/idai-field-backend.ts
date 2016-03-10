@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "angular2/http";
 import {DataModelConfiguration} from "./data-model-configuration";
+import {IdaiFieldObject} from "../model/idai-field-object";
 
 /**
  * @author Jan G. Wieners
@@ -92,10 +93,10 @@ export class IdaiFieldBackend {
         return headers;
     }
 
-    private performPut(document:any) : Observable<Response> {
+    private performPut(id:string,document:any) : Observable<Response> {
 
         return this.http.put(this.configuration.uri
-            + this.typeName + '/' + document.resource.id,
+            + this.typeName + '/' + id,
             JSON.stringify(document), { headers: this.createAuthorizationHeader()})
     }
 
@@ -109,14 +110,7 @@ export class IdaiFieldBackend {
 
         return new Promise((resolve, reject) => {
 
-            var document= {"resource":{}};
-            document["resource"]= ModelUtils.filterUnwantedProps(object);
-
-            if ((this.dataModelConfiguration!=undefined)
-                &&(this.dataModelConfiguration.getField("excavation")!=undefined))
-                    document["dataset"]=this.dataModelConfiguration.getField("excavation");
-
-            this.performPut(document)
+            this.performPut(object.id,this.createDocument(object))
             .subscribe(
                 () => resolve(object),
                 err => {
@@ -125,6 +119,22 @@ export class IdaiFieldBackend {
                 }
             );
         });
+    }
+
+    /**
+     * Creates a document by taking the object as a resource,
+     * filtering out unnecessary properties and adding dataset information.
+     *
+     * @param object the resource of the document to be created.
+     * @returns a document as expected by the backend.
+     */
+    private createDocument(object:IdaiFieldObject) : any {
+        var document= {"resource":{}};
+        document["resource"]= ModelUtils.filterUnwantedProps(object);
+        if ((this.dataModelConfiguration!=undefined)
+            &&(this.dataModelConfiguration.getField("excavation")!=undefined))
+            document["dataset"]=this.dataModelConfiguration.getField("excavation");
+        return document;
     }
 
     public resetIndex(): Promise<any> {

@@ -23,7 +23,7 @@ export function main() {
         var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
             "type": "Object" };
 
-        var filteredObject = { "resource" : { "id": "id1", "identifier": "ob1", "title": "Object 1", "type": "Object"},
+        var filteredObject = { "resource" : { "identifier": "ob1", "title": "Object 1", "type": "Object"},
             "dataset" : "dataset1" };
 
         var successFunction = function() {

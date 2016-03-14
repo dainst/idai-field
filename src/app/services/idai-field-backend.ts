@@ -6,7 +6,6 @@ import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "angular2/http";
 import {DataModelConfiguration} from "./data-model-configuration";
-import {IdaiFieldObject} from "../model/idai-field-object";
 
 /**
  * @author Jan G. Wieners
@@ -16,8 +15,8 @@ import {IdaiFieldObject} from "../model/idai-field-object";
 @Injectable()
 export class IdaiFieldBackend {
 
-    private typeName   : string = "objects";
-    private connected : boolean;
+    private typeName: string = "objects";
+    private connected: boolean;
     private connectionStateObservers: Observer<boolean>[] = [];
     private configuration: any;
 

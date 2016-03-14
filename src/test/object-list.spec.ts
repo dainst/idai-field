@@ -69,9 +69,9 @@ export function main() {
             function() {
 
                     delete selectedObject.id;
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, false);
+                    objectList.validateAndSave(selectedObject, false, true);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -80,9 +80,9 @@ export function main() {
             function() {
 
                     delete selectedObject.id;
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, true);
+                    objectList.validateAndSave(selectedObject, true, true);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -90,9 +90,9 @@ export function main() {
         it('should update an existing object on autosave',
             function() {
 
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, false);
+                    objectList.validateAndSave(selectedObject, false, true);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -100,9 +100,9 @@ export function main() {
         it('should update an existing object on select change',
             function() {
 
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, true);
+                    objectList.validateAndSave(selectedObject, true, true);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -111,10 +111,10 @@ export function main() {
             function() {
 
                     mockDatastore.update.and.callFake(errorFunction);
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
                     expect(objectList.getObjects()[0]).toBe(selectedObject);
-                    objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
+                    objectList.validateAndSave(selectedObject, true, true); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
         );
@@ -123,10 +123,10 @@ export function main() {
             function() {
 
                 mockDatastore.update.and.callFake(errorFunction);
-                objectList.setChanged();
+                selectedObject.changed = true;
 
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.validateAndSave(selectedObject, false); // do not restore the oldVersion now.
+                objectList.validateAndSave(selectedObject, false, true); // do not restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
             }
         );
@@ -137,7 +137,7 @@ export function main() {
                 selectedObject.valid = false;
 
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
+                objectList.validateAndSave(selectedObject, true, true); // restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(oldVersion);
             }
         );
@@ -148,7 +148,7 @@ export function main() {
                 selectedObject.valid = false;
 
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.validateAndSave(selectedObject, false); // restore the oldVersion now.
+                objectList.validateAndSave(selectedObject, false, true); // restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
             }
         );
@@ -157,10 +157,10 @@ export function main() {
             function() {
 
                     mockDatastore.update.and.callFake(errorFunction);
-                    objectList.setChanged();
+                    selectedObject.changed = true;
 
                     expect(selectedObject.valid).toBe(true);
-                    objectList.validateAndSave(selectedObject,false);
+                    objectList.validateAndSave(selectedObject, false, true);
                     expect(selectedObject.valid).toBe(false);
                 }
         );
@@ -171,8 +171,8 @@ export function main() {
                 expect(messagesService.getMessages().length).toBe(0);
 
                 mockDatastore.update.and.callFake(errorFunction);
-                objectList.setChanged();
-                objectList.validateAndSave(selectedObject, false);
+                selectedObject.changed = true;
+                objectList.validateAndSave(selectedObject, false, true);
 
                 expect(messagesService.getMessages().length).toBe(1);
             }
@@ -184,13 +184,13 @@ export function main() {
                 expect(messagesService.getMessages().length).toBe(0);
 
                 mockDatastore.update.and.callFake(errorFunction);
-                objectList.setChanged();
-                objectList.validateAndSave(selectedObject, false);
+                selectedObject.changed = true;
+                objectList.validateAndSave(selectedObject, false, true);
 
                 expect(messagesService.getMessages().length).toBe(1);
 
-                objectList.setChanged();
-                objectList.validateAndSave(selectedObject, true);
+                selectedObject.changed = true;
+                objectList.validateAndSave(selectedObject, true, true);
 
                 expect(messagesService.getMessages().length).toBe(0);
             }

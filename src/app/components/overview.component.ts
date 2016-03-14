@@ -19,7 +19,7 @@ import {ObjectList} from "../services/object-list";
 export class OverviewComponent implements OnInit {
 
     /**
-     * The Object currently selected in the list and shown in the edit component.
+     * The object currently selected in the list and shown in the edit component.
      */
     private selectedObject: IdaiFieldObject;
 
@@ -36,7 +36,7 @@ export class OverviewComponent implements OnInit {
 
     public onSelect(object: IdaiFieldObject) {
 
-        this.objectList.validateAndSave(this.selectedObject, true);
+        this.objectList.validateAndSave(this.selectedObject, true, true);
 
         if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotSaved();
 
@@ -45,7 +45,7 @@ export class OverviewComponent implements OnInit {
 
     public onCreate() {
 
-        this.objectList.validateAndSave(this.selectedObject, true);
+        this.objectList.validateAndSave(this.selectedObject, true, true);
 
         if (this.newObject) this.removeObjectFromListIfNotSaved();
 

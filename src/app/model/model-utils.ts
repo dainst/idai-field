@@ -17,6 +17,7 @@ export class ModelUtils {
         var o = JSON.parse(JSON.stringify(object));
 
         delete o.synced;
+        delete o.changed;
         delete o.valid;
         delete o.id;
 

@@ -67,11 +67,13 @@ export class RelationPickerComponent implements OnChanges {
 
     public chooseTarget(target: IdaiFieldObject) {
 
+        this.createInverseRelation(target);
         this.object[this.field.field][this.relationIndex] = target.id;
         this.selectedTarget = target;
         this.idSearchString = "";
-        this.suggestions = [];
-        this.parent.triggerAutosave();
+        this.suggestions = []
+        this.object.changed = true;
+        this.parent.save();
     }
 
     public editTarget() {
@@ -149,6 +151,16 @@ export class RelationPickerComponent implements OnChanges {
                 this.search();
                 break;
         }
+    }
+
+    private createInverseRelation(target: IdaiFieldObject) {
+
+        if (!target[this.field.inverse]) {
+            target[this.field.inverse] = [];
+        }
+
+        target[this.field.inverse].push(this.object.id);
+        target.changed = true;
     }
 
 }

@@ -64,8 +64,8 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onSelect(object2);
 
-                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true);
-                expect((<ObjectList> mockObjectList).validateAndSave).not.toHaveBeenCalledWith(object2, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).not.toHaveBeenCalledWith(object2, true, true);
             }
         );
 
@@ -74,7 +74,7 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onCreate();
 
-                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true, true);
             }
         );
 

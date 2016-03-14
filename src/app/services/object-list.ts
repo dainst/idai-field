@@ -18,44 +18,90 @@ export class ObjectList {
                 private messages: Messages,
                 @Inject('app.dataModelConfig') private dataModelConfig) {}
 
-    /**
-     * Indicates that the current instance of the selectedObject differs from the one
-     * saved in the local datastore.
-     */
-    private changed: boolean;
-
     private objects: IdaiFieldObject[];
 
-    public validateAndSave(object: IdaiFieldObject, restoreIfInvalid: boolean) {
+    /**
+     * Saves an object to the local database if it is valid.
+     * Creates a new object if the given object is not present in the datastore (which means the object doesn't
+     * need to already have a technical id).
+     * @param object The object to save
+     * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
+     * is invalid
+     * @param showMessages Defines if error messages should be shown for the results of this operation
+     */
+    public validateAndSave(object: IdaiFieldObject, restoreIfInvalid: boolean, showMessages: boolean): Promise<any> {
 
-        if (!object) return;
+        return new Promise<any>((resolve, reject) => {
 
-        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
-        this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
+            if (!object) reject("No object given");
 
-        if (this.changed) {
-            this.save(object).then(
-                () => { },
-                err => {
-                    object.valid = false;
+            if (showMessages) {
+                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
+                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
+            }
 
-                    if (restoreIfInvalid) {
-                        this.restoreObject(object);
-                    } else {
-                        switch (err) {
-                            case "databaseError":
-                                this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
-                                break;
-                            case "missingIdentifierError":
-                                this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
-                                break;
+            if (object.changed) {
+                this.save(object).then(
+                    () => { resolve(); },
+                    err => {
+                        object.valid = false;
+
+                        if (restoreIfInvalid) {
+                            this.restoreObject(object).then(
+                                () => { resolve(); },
+                                err => { reject(err); }
+                            );
+                        } else {
+                            switch (err) {
+                                case "databaseError":
+                                    if (showMessages) {
+                                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
+                                    }
+                                    break;
+                                case "missingIdentifierError":
+                                    if (showMessages) {
+                                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
+                                    }
+                                    break;
+                            }
+                            resolve();
                         }
                     }
+                )
+            } else if (!object.valid && restoreIfInvalid) { // TODO WHY CAN I REMOVE RESTOREIFINVALID HERE WITHOUT BREAKING ANY TESTS?
+                this.restoreObject(object).then(
+                    () => { resolve(); },
+                    err => { reject(err); }
+                );
+            } else resolve();
+        });
+    }
+
+    /**
+     * Saves the object corresponding to the given id to the local database if an object for this id exists and
+     * the object is valid.
+     * Cannot be used to create new objects.
+     * @param objectId The technical id of the object to save
+     * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
+     * is invalid
+     * @param showMessages Defines if error messages should be shown for the results of this operation
+     */
+    public validateAndSaveById(objectId: string, restoreIfInvalid: boolean, showMessages: boolean): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            this.datastore.get(objectId).then(
+                object => {
+                    this.validateAndSave(object, restoreIfInvalid, showMessages).then(
+                        () => { resolve(); },
+                        err => { reject(err); }
+                    )
+                },
+                err => {
+                    reject("Object not found");
                 }
-            )
-        } else if (!object.valid && restoreIfInvalid) { // TODO WHY CAN I REMOVE RESTOREIFINVALID HERE WITHOUT BREAKING ANY TESTS?
-            this.restoreObject(object);
-        }
+            );
+        });
     }
 
     /**
@@ -69,7 +115,7 @@ export class ObjectList {
             return new Promise((resolve, reject) => { reject("missingIdentifierError"); });
         }
 
-        this.changed = false; // TODO CODE REVIEW - SHOULDNT IT GET SET TO FALSE ONLY IF SAVE WAS SUCCESSFUL?
+        object.changed = false; // TODO CODE REVIEW - SHOULDNT IT GET SET TO FALSE ONLY IF SAVE WAS SUCCESSFUL?
         object.synced = 0;
 
         object.valid=true;
@@ -96,19 +142,20 @@ export class ObjectList {
         return this.datastore.create(object);
     }
 
-    private restoreObject(object:IdaiFieldObject) {
+    private restoreObject(object:IdaiFieldObject): Promise<any> {
 
-        if (object.id) {
-            this.datastore.refresh(object.id).then(
-                restoredObject => {
-                    var index = this.objects.indexOf(object);
-                    this.objects[index] = restoredObject;
-                },
-                err => {
-                    // TODO handle error
-                }
-            );
-        }
+        return new Promise<any>((resolve, reject) => {
+            if (object.id) {
+                this.datastore.refresh(object.id).then(
+                    restoredObject => {
+                        var index = this.objects.indexOf(object);
+                        this.objects[index] = restoredObject;
+                        resolve();
+                    },
+                    err => { reject(err); }
+                );
+            }
+        });
     }
 
     public getObjects() {
@@ -119,7 +166,4 @@ export class ObjectList {
         this.objects = objects;
     }
 
-    public setChanged() {
-        this.changed = true;
-    }
 }

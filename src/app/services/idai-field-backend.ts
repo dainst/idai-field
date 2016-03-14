@@ -114,7 +114,7 @@ export class IdaiFieldBackend {
                 () => resolve(object),
                 err => {
                     this.checkConnection();
-                    reject();
+                    reject(err);
                 }
             );
         });
@@ -146,20 +146,20 @@ export class IdaiFieldBackend {
                     this.createIndex()
                     .subscribe(
                         () => resolve(),
-                        err => reject()
+                        err => reject(err)
                     )
                 },
-                err => reject()
+                err => reject(err)
             );
         });
     }
 
-    private deleteIndex() : Observable<Response> {
+    private deleteIndex(): Observable<Response> {
 
         return this.http.delete(this.configuration.uri);
     }
 
-    private createIndex() : Observable<Response> {
+    private createIndex(): Observable<Response> {
 
         return this.http.put(this.configuration.uri, "");
     }

@@ -49,16 +49,19 @@ export class RelationPickerComponent implements OnChanges {
         }
     }
 
-    private search() {
+    private updateSuggestions() {
 
         if (this.idSearchString.length > 0) {
             this.datastore.find(this.idSearchString, {})
                 .then(objects => {
                     this.suggestions = [];
                     for (var i in objects) {
+
+                        // Show only the first five suggestions
                         if (this.suggestions.length == 5)
                             break;
-                        if (this.object.id != objects[i].id && this.object[this.field.field].indexOf(objects[i].id) == -1)
+
+                        if (this.checkSuggestion(objects[i]))
                             this.suggestions.push(objects[i]);
                     }
                 }).catch(err =>
@@ -67,6 +70,32 @@ export class RelationPickerComponent implements OnChanges {
             this.suggestions = [];
     }
 
+    /**
+     * Checks if the given object should be shown as a suggestion
+     * @param object
+     */
+    private checkSuggestion(object: IdaiFieldObject) {
+
+        // Don't suggest the object itself
+        if (this.object.id == object.id)
+            return false;
+
+        // Don't suggest an object that is already included as a target in the relation list
+        if (this.object[this.field.field].indexOf(object.id) > -1)
+            return false;
+
+        // Don't suggest an object that is already included as a target in the inverse relation list
+        if (this.object[this.field.inverse]
+                && this.object[this.field.inverse].indexOf(object.id) > -1)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Creates a relation to the target object.
+     * @param target
+     */
     public chooseTarget(target: IdaiFieldObject) {
 
         this.createInverseRelation(target);
@@ -106,15 +135,19 @@ export class RelationPickerComponent implements OnChanges {
                                  && this.object[this.field.field][this.relationIndex] != "") {
             this.datastore.get(this.object[this.field.field][this.relationIndex])
                 .then(
-                    object => { this.selectedTarget = object },
-                    err => { console.error(err) }
+                    object => { this.selectedTarget = object; },
+                    err => { console.error(err); }
                 );
         }
     }
 
     public focusInputField() {
 
-        this.element.nativeElement.getElementsByTagName("input").item(0).focus();
+        var elements = this.element.nativeElement.getElementsByTagName("input");
+
+        if (elements.length == 1) {
+            elements.item(0).focus();
+        }
     }
 
     public keyDown(event: any) {
@@ -155,7 +188,7 @@ export class RelationPickerComponent implements OnChanges {
                 break;
             default:
                 this.selectedSuggestionIndex = 0;
-                this.search();
+                this.updateSuggestions();
                 break;
         }
     }

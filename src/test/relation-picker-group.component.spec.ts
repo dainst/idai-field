@@ -29,10 +29,10 @@ export function main() {
 
         beforeEach(() => {
             object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
-                "type": "Object" };
+                "changed": false, "type": "Object" };
 
             object2 = { "id": "id2", "identifier": "ob2", "title": "Object 2", "synced": 0, "valid": true,
-                "type": "Object" };
+                "changed": false, "type": "Object" };
 
             mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'get' ]);
             mockDatastore.get.and.callFake(get);
@@ -68,6 +68,27 @@ export function main() {
                         expect(object2.changed).toBe(true);
 
                         expect(mockParent.save).toHaveBeenCalled();
+
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+            }
+        );
+
+        it('should delete an empty relation without saving',
+            function(done) {
+                object1["Above"] = [ "" ];
+
+                relationPickerGroupComponent.deleteRelation(0).then(
+                    () => {
+                        expect(object1["Above"].length).toBe(0);
+                        expect(object1.changed).toBe(false);
+
+                        expect(mockParent.save).not.toHaveBeenCalled();
 
                         done();
                     },

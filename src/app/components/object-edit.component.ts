@@ -1,7 +1,5 @@
-import {Component, Input, Inject} from 'angular2/core';
+import {Component, Input} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Datastore} from "../datastore/datastore";
-import {Messages} from "../services/messages";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {DataModelConfiguration} from "../services/data-model-configuration";

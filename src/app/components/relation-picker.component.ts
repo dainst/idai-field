@@ -23,11 +23,11 @@ export class RelationPickerComponent implements OnChanges {
     @Input() relationIndex: number;
     @Input() parent: any;
 
-    suggestions: IdaiFieldObject[];
-    selectedSuggestionIndex: number = -1;
-    selectedTarget: IdaiFieldObject;
-    idSearchString: string;
-    suggestionsVisible: boolean;
+    private suggestions: IdaiFieldObject[];
+    private selectedSuggestionIndex: number = -1;
+    private selectedTarget: IdaiFieldObject;
+    private idSearchString: string;
+    private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef, private datastore: Datastore) {}
 
@@ -44,6 +44,8 @@ export class RelationPickerComponent implements OnChanges {
                 object => { this.selectedTarget = object; },
                 err => { console.error(err); }
             );
+        } else {
+            setTimeout(this.focusInputField.bind(this), 100);
         }
     }
 

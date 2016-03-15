@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <span class="delete-relation small-circular-button red-button mdi mdi-delete"
               (click)="deleteRelation(i)"></span>
-        <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="parent"></relation-picker>
+        <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="getThis()"></relation-picker>
     </div>
 </div>
 <div class="row">

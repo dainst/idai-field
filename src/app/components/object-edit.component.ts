@@ -121,7 +121,7 @@ export class ObjectEditComponent implements OnChanges {
         this.object.type = type;
     }
 
-    public getThis() {
+    public getThis(): ObjectEditComponent {
 
         return this;
     }

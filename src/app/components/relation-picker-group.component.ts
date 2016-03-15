@@ -85,4 +85,9 @@ export class RelationPickerGroupComponent {
         }
     }
 
+    public getThis(): RelationPickerGroupComponent {
+
+        return this;
+    }
+
 }

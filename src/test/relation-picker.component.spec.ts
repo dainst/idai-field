@@ -62,7 +62,7 @@ export function main() {
             relationPickerComponent.object = object1;
             relationPickerComponent.field = { "field": "Above", "inverse": "Below" };
             relationPickerComponent.relationIndex = 0;
-            relationPickerComponent.parent = mockParent;
+            relationPickerComponent.parent = { parent: mockParent };
         });
 
         it('should create a relation and the corresponding inverse relation if a target object is chosen',

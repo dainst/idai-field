@@ -58,7 +58,7 @@ export class RelationPickerComponent implements OnChanges {
                     for (var i in objects) {
                         if (this.suggestions.length == 5)
                             break;
-                        if (this.object.id != objects[i].id)
+                        if (this.object.id != objects[i].id && this.object[this.field.field].indexOf(objects[i].id) == -1)
                             this.suggestions.push(objects[i]);
                     }
                 }).catch(err =>
@@ -75,7 +75,7 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = "";
         this.suggestions = []
         this.object.changed = true;
-        this.parent.save();
+        this.parent.parent.save();
     }
 
     public editTarget() {
@@ -94,6 +94,11 @@ export class RelationPickerComponent implements OnChanges {
     }
 
     public leaveSuggestionMode() {
+
+        if (!this.object[this.field.field][this.relationIndex]
+                || this.object[this.field.field][this.relationIndex] == "") {
+            this.parent.deleteRelation(this.relationIndex);
+        }
 
         this.suggestionsVisible = false;
 

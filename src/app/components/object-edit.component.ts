@@ -31,19 +31,19 @@ export class ObjectEditComponent implements OnChanges {
     private saveTimer: number;
 
     private relationFields: any[] = [
-        { "field": "Belongs to", "inverse": "Includes" },
-        { "field": "Includes", "inverse": "Belongs to" },
+        { "field": "Belongs to", "inverse": "Includes", "label": "Enthalten in" },
+        { "field": "Includes", "inverse": "Belongs to", "label": "Enthält" },
 
-        { "field": "Above", "inverse": "Below" },
-        { "field": "Below", "inverse": "Above" },
-        { "field": "Next to", "inverse": "Next to" },
+        { "field": "Above", "inverse": "Below", "label": "Oberhalb von" },
+        { "field": "Below", "inverse": "Above", "label": "Unterhalb von" },
+        { "field": "Next to", "inverse": "Next to", "label": "Benachbart zu" },
 
-        { "field": "Is before", "inverse": "Is after" },
-        { "field": "Is after", "inverse": "Is before" },
-        { "field": "Is coeval with", "inverse": "Is coeval with" },
+        { "field": "Is before", "inverse": "Is after", "label": "Zeitlich vor" },
+        { "field": "Is after", "inverse": "Is before", "label": "Zeitlich nach" },
+        { "field": "Is coeval with", "inverse": "Is coeval with", "label": "Zeitgleich mit" },
 
-        { "field": "Cuts", "inverse": "Is cut by" },
-        { "field": "Is cut by", "inverse": "Cuts" }
+        { "field": "Cuts", "inverse": "Is cut by", "label": "Schneidet" },
+        { "field": "Is cut by", "inverse": "Cuts", "label": "Wird geschnitten von" }
     ];
 
     constructor(private objectList: ObjectList,

@@ -1,5 +1,4 @@
 import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
-import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {Datastore} from "../app/datastore/datastore";
 import {RelationPickerComponent} from "../app/components/relation-picker.component";
 
@@ -9,8 +8,8 @@ import {RelationPickerComponent} from "../app/components/relation-picker.compone
 export function main() {
     describe('RelationPickerComponent', () => {
 
-        var object1: IdaiFieldObject;
-        var object2: IdaiFieldObject;
+        var object1: any;
+        var object2: any;
 
         var relationPickerComponent: RelationPickerComponent;
         var mockDatastore: any;

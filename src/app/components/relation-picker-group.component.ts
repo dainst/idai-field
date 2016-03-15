@@ -30,24 +30,29 @@ export class RelationPickerGroupComponent {
         this.object[this.field.field].push("");
     }
 
-    public deleteRelation(index: number) {
+    public deleteRelation(index: number): Promise<any> {
 
         var targetId = this.object[this.field.field][index];
 
-        if (targetId.length == 0) {
-            this.object[this.field.field].splice(index, 1);
-        } else {
-            this.deleteInverseRelation(targetId).then(
-                () => {
-                    this.object[this.field.field].splice(index, 1);
-                    this.object.changed = true;
-                    this.parent.save();
-                },
-                err => {
-                    console.error(err);
-                }
-            );
-        }
+        return new Promise<any>((resolve, reject) => {
+            if (targetId.length == 0) {
+                this.object[this.field.field].splice(index, 1)
+                resolve();
+            } else {
+                this.deleteInverseRelation(targetId).then(
+                    () => {
+                        this.object[this.field.field].splice(index, 1);
+                        this.object.changed = true;
+                        this.parent.save();
+                        resolve();
+                    },
+                    err => {
+                        console.error(err);
+                        reject(err);
+                    }
+                );
+            }
+        });
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {

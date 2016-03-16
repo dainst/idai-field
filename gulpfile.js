@@ -3,11 +3,9 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
-var modRewrite = require('connect-modrewrite');
 var electronConnect = require('electron-connect');
 var process = require('process');
 var packager = require('electron-packager');
@@ -19,6 +17,7 @@ var pkg = require('./package.json');
 var exec = require('child_process').exec;
 var argv = require('yargs').argv;
 var embedTemplates = require('gulp-angular-embed-templates');
+var webserver = require('gulp-webserver');
 
 var paths = {
 	'build': 'dist/',
@@ -101,7 +100,8 @@ gulp.task('build', [
 	'copy-fonts',
 	'copy-config',
 	'concat-deps',
-    'test-compile-ts'
+    'test-compile-ts',
+	'e2e-move-js'
 ]);
 
 // clean
@@ -126,6 +126,13 @@ gulp.task('test-compile-ts', function () {
         .src('src/test/**/*.ts')
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(gulp.dest(paths.build + 'test'));
+});
+
+gulp.task('e2e-move-js', function () {
+
+    return gulp
+			.src('src/e2e/**/*.js')
+			.pipe(gulp.dest(paths.build + 'e2e'));
 });
 
 gulp.task('concat-deps', function() {
@@ -153,6 +160,7 @@ function watch() {
     gulp.watch('src/index.html', ['copy-html']);
     gulp.watch('src/img/**/*', ['copy-img']);
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);
+    gulp.watch('src/e2e/**/*js', ['e2e-move-js']);
 }
 
 gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'], function() {
@@ -160,12 +168,21 @@ gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['build', 'prepare-package', 'package-node-dependencies'], function() {
+gulp.task('run', ['build', 'prepare-package', 'package-node-dependencies'], function() {
 
 	electronServer.start();
 	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
 	watch();
 	gulp.watch('dist/**/*', electronServer.reload);
+});
+
+
+gulp.task('webserver', ['build', 'prepare-package', 'package-node-dependencies'], function() {
+	gulp.src('dist')
+		.pipe(webserver({
+			fallback: 'index.html'
+		}));
+	watch();
 });
 
 // copy necessary files to dist in order for them to be included in package

@@ -24,7 +24,7 @@ npm install
 
 In order to run the frontend in the development server use the following command:
 ```
-gulp server
+gulp run
 ```
 
 This should open the app in a separate window.
@@ -56,5 +56,19 @@ Then open another terminal and run
 
 ```
 npm test
+```
+
+## E2E Testing
+
+In one terminal, run
+
+```
+gulp clean; gulp webserver
+```
+
+In another terminal, run
+
+```
+npm run e2e
 ```
 

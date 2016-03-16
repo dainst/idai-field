@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "karma start karma.conf",
-    "e2e": "./node_modules/protractor/bin/webdriver-manager update && protractor protractor.conf.js"
+    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor protractor.conf.js"
   },
   "repository": {
     "type": "git",

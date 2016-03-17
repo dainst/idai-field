@@ -152,7 +152,6 @@ gulp.task('concat-deps', function() {
 });
 
 function watch() {
-
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/app/**/*.ts', ['compile-ts']);
     gulp.watch('src/config/**/*.json', ['copy-config']);
@@ -167,6 +166,21 @@ gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'
     watch();
 });
 
+gulp.task('webserver', function() {
+	gulp.src('dist')
+			.pipe(webserver({
+				fallback: 'index.html'
+			}));
+});
+
+gulp.task('webserver-watch',['build', 'prepare-package', 'package-node-dependencies'],  function() {
+	gulp.src('dist')
+			.pipe(webserver({
+				fallback: 'index.html'
+			}));
+	watch();
+});
+
 // runs the development server and sets up browser reloading
 gulp.task('run', ['build', 'prepare-package', 'package-node-dependencies'], function() {
 
@@ -176,14 +190,6 @@ gulp.task('run', ['build', 'prepare-package', 'package-node-dependencies'], func
 	gulp.watch('dist/**/*', electronServer.reload);
 });
 
-
-gulp.task('webserver', ['build', 'prepare-package', 'package-node-dependencies'], function() {
-	gulp.src('dist')
-		.pipe(webserver({
-			fallback: 'index.html'
-		}));
-	watch();
-});
 
 // copy necessary files to dist in order for them to be included in package
 // and remove dev dependencies from index.html

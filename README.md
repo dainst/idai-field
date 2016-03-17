@@ -63,7 +63,7 @@ npm test
 In one terminal, run
 
 ```
-gulp clean; gulp webserver
+gulp clean; gulp webserver-watch
 ```
 
 In another terminal, run

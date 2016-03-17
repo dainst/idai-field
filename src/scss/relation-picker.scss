@@ -24,20 +24,26 @@
   margin-bottom: 10px;
 }
 
-#add-relation, #add-relation-disabled {
+.add-relation, .add-relation-disabled {
   margin-left: -4px;
-  padding-left: 1px;
-  padding-top: 4px;
+  padding-left: 2px !important;
+  padding-top: 4px !important;
   margin-top: 5px;
-  position: relative;
+  position: relative !important;
   display: block;
+  color: #555 !important;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
 }
 
-#add-relation:hover {
+.small-circular-button {
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.14) !important;
+}
+
+.add-relation:hover {
   background-color: lighten(#1b9519, 25%);
 }
 
-#add-relation-disabled {
+.add-relation-disabled {
   color: #ccc;
   cursor: default;
 }

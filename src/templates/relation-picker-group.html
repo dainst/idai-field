@@ -3,12 +3,12 @@
               (click)="deleteRelation(i)"></span>
     <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="getThis()"></relation-picker>
 </div>
-<div id="add-relation" class="circular-button"
+<div class="circular-button add-relation"
      *ngIf="!object[field.field] || object[field.field].length == 0 || validateNewest()"
      type="button"
      (click)="createRelation()">+</div>
 
 <!-- Button disabled when waiting for input -->
-<div id="add-relation-disabled" class="circular-button"
+<div class="circular-button add-relation-disabled"
      *ngIf="object[field.field] && object[field.field].length > 0 && !validateNewest()"
      type="button">+</div>

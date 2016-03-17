@@ -16,13 +16,12 @@ $lightgraybgr: #eeeeee;
   width: 39px;
   z-index: 1;
   font-size: 23px;
-  transition: background-color .5s ease;
   position: absolute;
   box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
 }
 
 .circular-button:hover {
-  transition: background-color .5s ease;
+  transition: background-color .3s ease;
 }
 
 .small-circular-button {
@@ -35,13 +34,12 @@ $lightgraybgr: #eeeeee;
   height: 33px;
   width: 33px;
   z-index: 1;
-  transition: background-color .5s ease;
   position: absolute;
-  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.24), 1px 1px 1px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
 }
 
 .small-circular-button:hover {
-  transition: background-color .5s ease;
+  transition: background-color .3s ease;
 }
 
 .lightgray-button:hover {

@@ -14,18 +14,18 @@
   },
   "dependencies": {
     "angular2": "2.0.0-beta.0",
-    "angular2-uuid": "^1.0.7",
+    "angular2-uuid": "^1.0.6",
     "es6-promise": "^3.0.2",
     "es6-shim": "0.33.3",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.24",
+    "systemjs": "0.19.17",
     "zone.js": "0.5.10"
   },
   "devDependencies": {
     "archiver": "^0.21.0",
     "bootstrap-sass": "^3.3.6",
-    "connect-modrewrite": "^0.9.0",
+    "connect-modrewrite": "^0.8.5",
     "del": "^2.2.0",
     "electron-connect": "^0.3.4",
     "electron-packager": "^5.2.0",
@@ -37,18 +37,18 @@
     "gulp-sass": "^2.1.1",
     "gulp-shell": "~0.5.2",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.12.1",
+    "gulp-typescript": "^2.10.0",
     "gulp-uglify": "^1.5.1",
     "gulp-webserver": "^0.9.1",
     "jasmine-core": "^2.4.1",
-    "karma": "^0.13.22",
+    "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "^0.3.7",
     "mdi": "^1.5.54",
     "process": "~0.11.2",
     "protractor": "^3.1.1",
     "run-sequence": "^1.1.5",
-    "typescript": "^1.8.7",
-    "yargs": "~4.3.1"
+    "typescript": "^1.8.2",
+    "yargs": "~3.32.0"
   }
 }

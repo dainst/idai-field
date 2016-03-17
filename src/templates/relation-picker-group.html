@@ -1,21 +1,14 @@
-<div *ngFor="#relation of object[field.field]; #i = index" class="row">
-    <div class="col-md-12">
+<div *ngFor="#relation of object[field.field]; #i = index">
         <span class="delete-relation small-circular-button red-button mdi mdi-delete"
               (click)="deleteRelation(i)"></span>
-        <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="getThis()"></relation-picker>
-    </div>
+    <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="getThis()"></relation-picker>
 </div>
-<div class="row">
+<div id="add-relation" class="circular-button"
+     *ngIf="!object[field.field] || object[field.field].length == 0 || validateNewest()"
+     type="button"
+     (click)="createRelation()">+</div>
 
-    <div class="col-md-12">
-       <div id="add-relation" class="circular-button"
-             *ngIf="!object[field.field] || object[field.field].length == 0 || validateNewest()"
-             type="button"
-             (click)="createRelation()">+</div>
-
-        <!-- Button disabled when waiting for input -->
-        <div id="add-relation-disabled" class="circular-button"
-             *ngIf="object[field.field] && object[field.field].length > 0 && !validateNewest()"
-             type="button">+</div>
-    </div>
-</div>
+<!-- Button disabled when waiting for input -->
+<div id="add-relation-disabled" class="circular-button"
+     *ngIf="object[field.field] && object[field.field].length > 0 && !validateNewest()"
+     type="button">+</div>

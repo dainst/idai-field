@@ -6,3 +6,34 @@ textarea {
   width: 100%;
   resize: vertical;
 }
+
+#object-edit, #object-create  {
+  background-color: #eee;
+}
+
+#object-edit header, #object-create header {
+  background-color: #eee;
+  padding: 7px;
+  color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+#object-edit header .mdi, #object-create header .mdi {
+  display: inline-block;
+  font-size: 1.1em;
+  color: #fff;
+  background-color: #007883;
+  padding: 10px 10px 10px 11px;
+  margin-right: 5px;
+}
+
+#object-edit header h1, #object-create header h1 {
+  font-size: 1.5em;
+  padding: 0;
+  margin: 0;
+  background-color: #67b2b9;
+}
+
+#object-edit main, #object-create main {
+  padding: 25px;
+}

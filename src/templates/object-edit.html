@@ -1,58 +1,87 @@
 <div *ngIf="object">
 
-    <div *ngIf="!object.type" class="panel panel-default">
-        <div class="panel-heading">Please choose the object type.</div>
-         <div class="list-group">
-             <button *ngFor="#type of dataModelConfiguration.getTypes()" (mousedown)="setType(type)"
-                     type="button" class="list-group-item">{{type}}</button>
-        </div>
-    </div>
-
-    <div *ngIf="object.type">
-        <form>
-            <div class="form-group">
-                <label>Identifier</label>
-                <input [(ngModel)]="object.identifier" (keyup)="triggerAutosave()" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Title</label>
-                <input [(ngModel)]="object.title" (keyup)="triggerAutosave()" class="form-control">
-            </div>
-
+    <div *ngIf="!object.type" id="object-create">
+        <header>
+            <h1>
+                <span class="mdi mdi-blur"></span>
+                New Object
+            </h1>
+        </header>
+        <main>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Relationen</h3>
+                    Please choose the object type.
                 </div>
-                <ul class="list-group">
-                    <li *ngFor="#relationField of relationFields" class="list-group-item">
-                        <label *ngIf="relationField.label">{{relationField.label}}</label>
-                        <label *ngIf="!relationField.label">{{relationField.field}}</label>
-                        <relation-picker-group [(object)]="object" [field]="relationField" [parent]="getThis()"></relation-picker-group>
-                    </li>
-                </ul>
+                <button *ngFor="#type of dataModelConfiguration.getTypes()" (mousedown)="setType(type)"
+                        type="button" class="list-group-item">{{type}}</button>
             </div>
+        </main>
+    </div>
 
-            <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
-                <div *ngIf="field" class="form-group">
-                    <label *ngIf="field.label">{{field.label}}</label>
-                    <label *ngIf="!field.label">{{field.field}}</label>
-                    <div *ngIf="!field.valuelist && !field.multiline">
-                        <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
-                    </div>
-                    <div *ngIf="field.multiline">
-                        <textarea [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()"
-                                  class="form-control" rows="5"></textarea>
-                    </div>
-                    <div *ngIf="field.valuelist && !field.multivalue">
-                        <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()" class="form-control">
-                            <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
-                        </select>
-                    </div>
-                    <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field"
-                               [parent]="getThis()"></valuelist>
+    <div *ngIf="object.type"
+         id="object-edit">
+        <header>
+            <h1>
+                <span class="mdi mdi-blur"></span>
+                {{object.type}}
+            </h1>
+        </header>
+        <main>
+            <form>
+
+                <!-- Basic Object Information -->
+                <div class="form-group">
+                    <label id="identifier">{{object.type}} Identifier</label>
+                    <input [(ngModel)]="object.identifier" (keyup)="triggerAutosave()"
+                           class="form-control"
+                           aria-describedby="identifier">
                 </div>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label id="title">{{object.type}} Title</label>
+                    <input [(ngModel)]="object.title" (keyup)="triggerAutosave()"
+                           class="form-control"
+                           aria-describedby="title">
+                </div>
+
+                <!-- Diverse Object Informations -->
+                <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
+                    <div *ngIf="field" class="form-group">
+                        <label *ngIf="field.label">{{field.label}}</label>
+                        <label *ngIf="!field.label">{{field.field}}</label>
+                        <div *ngIf="!field.valuelist && !field.multiline">
+                            <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
+                        </div>
+                        <div *ngIf="field.multiline">
+                            <textarea [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()"
+                                      class="form-control" rows="5"></textarea>
+                        </div>
+                        <div *ngIf="field.valuelist && !field.multivalue">
+                            <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()" class="form-control">
+                                <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
+                            </select>
+                        </div>
+                        <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field"
+                                   [parent]="getThis()"></valuelist>
+                    </div>
+                </div>
+
+                <!-- Relations -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Relationen</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li *ngFor="#relationField of relationFields" class="list-group-item">
+                            <label *ngIf="relationField.label">{{relationField.label}}</label>
+                            <label *ngIf="!relationField.label">{{relationField.field}}</label>
+                            <relation-picker-group [(object)]="object" [field]="relationField" [parent]="getThis()"></relation-picker-group>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+
+        </main>
+
     </div>
 
 </div>

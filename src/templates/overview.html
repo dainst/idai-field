@@ -1,35 +1,54 @@
-<div class="row" id="objectOverview">
-    <div class="col-lg-3 col-md-3 col-sm-3">
+<div class="row">
 
-        <input #searchInput (keyup)="onKey($event)" class="form-control" placeholder="Search...">
+    <div class="col-lg-3 col-md-3 col-sm-3"
+         id="objectOverview">
+        <aside>
+            <header>
+                <h1>
+                    <span class="mdi mdi-view-list"></span>
+                    Objects
+                </h1>
+            </header>
 
-        <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
-            <li *ngFor="#object of objectList.getObjects()"
-                (click)="onSelect(object)"
-                class="list-group-item"
-                [class.synced]="object.synced"
-                [class.unsynced]="!object.synced"
-                [class.selected]="selectedObject && selectedObject.id === object.id"
-                onclick="window.scrollTo(0, 0)">
+            <main>
+
+                <div class="search">
+                    <input #searchInput (keyup)="onKey($event)"
+                           class="form-control"
+                           id="object-search"
+                           placeholder="Search...">
+                    <span class="glyphicon glyphicon-search"></span>
+                </div>
+                <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
+                    <li *ngFor="#object of objectList.getObjects()"
+                        (click)="onSelect(object)"
+                        class="list-group-item"
+                        [class.synced]="object.synced"
+                        [class.unsynced]="!object.synced"
+                        [class.selected]="selectedObject && selectedObject.id === object.id"
+                        onclick="window.scrollTo(0, 0)">
+                        <!-- Enable when finally implemented in Chromium
+                            onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+                            -->
+                        <div *ngIf="object.identifier || object.title">
+                            <div class="title">{{object.title}}</div>
+
+                            <div class="identifier">{{object.identifier}}</div>
+                        </div>
+                        <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
+                    </li>
+                </ul>
+                <div id="createObject"
+                     *ngIf="searchInput.value.length == 0"
+                     class="circular-button green-button"
+                     (click)="onCreate()"
+                     onclick="window.scrollTo(0, 0)">+</div>
                 <!-- Enable when finally implemented in Chromium
                     onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                     -->
-                <div *ngIf="object.identifier || object.title">
-                    <div class="title">{{object.title}}</div>
 
-                    <div class="identifier">{{object.identifier}}</div>
-                </div>
-                <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
-            </li>
-        </ul>
-        <div id="createObject"
-             *ngIf="searchInput.value.length == 0"
-             class="circular-button green-button"
-                  (click)="onCreate()"
-                  onclick="window.scrollTo(0, 0)">+</div>
-            <!-- Enable when finally implemented in Chromium
-                onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-                -->
+            </main>
+        </aside>
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-9">

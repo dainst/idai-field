@@ -3,15 +3,20 @@
 
 <div id="objectsToSyncCount"
      [class.connected] = "connected && objectsToSyncIds.length === 0"
-     [class.unconnected] = "!connected || objectsToSyncIds.length > 0">
+     [class.unconnected] = "!connected || objectsToSyncIds.length > 0"
+     data-toggle="tooltip" title="{{objectsToSyncIds.length}} unsynced objects">
     <div id="syncCounter"
          *ngIf="objectsToSyncIds.length > 0">
-        <span id="syncSymbol" class="mdi mdi-cloud-upload"></span>
+        <span id="syncSymbol"
+              class="mdi mdi-cloud-upload"></span>
         {{objectsToSyncIds.length}}
     </div>
 
     <div
         *ngIf="connected && objectsToSyncIds.length === 0">
-        <span id="success" class="mdi mdi-check"></span>
+        <span data-toggle="tooltip"
+              title="All objects are synced"
+              id="success"
+              class="mdi mdi-check"></span>
     </div>
 </div>

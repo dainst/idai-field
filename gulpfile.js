@@ -101,8 +101,24 @@ gulp.task('build', [
 	'copy-config',
 	'concat-deps',
     'test-compile-ts',
-	'e2e-move-js'
+	'e2e-move-js',
+	'prepare-package',
+	'package-node-dependencies'
 ]);
+
+// copy necessary files to dist in order for them to be included in package
+// and remove dev dependencies from index.html
+gulp.task('prepare-package', function() {
+
+	gulp.src('src/index.html')
+			.pipe(gulp.dest(paths.build));
+	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
+});
+
+gulp.task('package-node-dependencies', function() {
+	gulp.src('node_modules/angular2-uuid/*' )
+			.pipe(gulp.dest('dist/lib/angular2-uuid/'));
+});
 
 // clean
 gulp.task('clean', function() {
@@ -162,11 +178,11 @@ function watch() {
     gulp.watch('src/e2e/**/*js', ['e2e-move-js']);
 }
 
-gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'], function() {
+gulp.task('test-watch', ['build'], function() {
     watch();
 });
 
-gulp.task('webserver-watch',['build', 'prepare-package', 'package-node-dependencies'],  function() {
+gulp.task('webserver-watch',['build'],  function() {
 	gulp.src('dist')
 			.pipe(webserver({
 				fallback: 'index.html',
@@ -176,7 +192,7 @@ gulp.task('webserver-watch',['build', 'prepare-package', 'package-node-dependenc
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('run', ['build', 'prepare-package', 'package-node-dependencies'], function() {
+gulp.task('run', ['build'], function() {
 
 	electronServer.start();
 	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
@@ -185,27 +201,13 @@ gulp.task('run', ['build', 'prepare-package', 'package-node-dependencies'], func
 });
 
 
-// copy necessary files to dist in order for them to be included in package
-// and remove dev dependencies from index.html
-gulp.task('prepare-package', function() {
-
-	gulp.src('src/index.html')
-		.pipe(gulp.dest(paths.build));
-	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
-});
-
-gulp.task('package-node-dependencies', function() {
-    gulp.src('node_modules/angular2-uuid/*' )
-        .pipe(gulp.dest('dist/lib/angular2-uuid/'));
-});
-
 // builds an electron app package for different platforms
 gulp.task('package', [], function() {
 
 	packager({
 		dir: paths.build,
 		name: pkg.name,
-		platform: ['win32', 'darwin', 'linux'],
+		platform: ['win32', 'darwin'],
 		arch: 'all',
 		version: '0.36.10',
 		appBundleId: pkg.name,
@@ -236,5 +238,5 @@ gulp.task('package', [], function() {
 });
 
 gulp.task('default', function() {
-	runSequence('clean', 'build', 'prepare-package','package-node-dependencies','test', 'package');
+	runSequence('clean', 'build', 'test' );
 });

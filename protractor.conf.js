@@ -1,5 +1,5 @@
 exports.config = {
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'http://localhost:8081',
     specs: ['dist/e2e/**/*.spec.js'],
     directConnect: true,
     exclude: [],

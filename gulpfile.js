@@ -166,17 +166,11 @@ gulp.task('test-watch', ['build', 'prepare-package', 'package-node-dependencies'
     watch();
 });
 
-gulp.task('webserver', function() {
-	gulp.src('dist')
-			.pipe(webserver({
-				fallback: 'index.html'
-			}));
-});
-
 gulp.task('webserver-watch',['build', 'prepare-package', 'package-node-dependencies'],  function() {
 	gulp.src('dist')
 			.pipe(webserver({
-				fallback: 'index.html'
+				fallback: 'index.html',
+				port: 8081
 			}));
 	watch();
 });

@@ -1,6 +1,4 @@
 <div *ngFor="#relation of object[field.field]; #i = index">
-        <span class="delete-relation small-circular-button red-button mdi mdi-delete"
-              (click)="deleteRelation(i)"></span>
     <relation-picker [(object)]="object" [field]="field" [relationIndex]="i" [parent]="getThis()"></relation-picker>
 </div>
 <div class="circular-button add-relation"

@@ -47,10 +47,10 @@ export function main() {
 
         beforeEach(() => {
             object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
-                "type": "Object", "Above": [] };
+                "changed": false, "type": "Object", "Above": [] };
 
             object2 = { "id": "id2", "identifier": "ob2", "title": "Object 2", "synced": 0, "valid": true,
-                "type": "Object", "Below": [] };
+                "changed": false, "type": "Object", "Below": [] };
 
             mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'get', 'find' ]);
             mockDatastore.get.and.callFake(get);
@@ -81,6 +81,51 @@ export function main() {
             }
         );
 
+        it('should delete a relation and its corresponding inverse relation',
+            function(done) {
+                object1["Above"] = [ "id2" ];
+                object2["Below"] = [ "id1" ];
+
+                relationPickerComponent.deleteRelation().then(
+                    () => {
+                        expect(object1["Above"].length).toBe(0);
+                        expect(object1.changed).toBe(true);
+
+                        expect(object2["Below"].length).toBe(0);
+                        expect(object2.changed).toBe(true);
+
+                        expect(mockParent.save).toHaveBeenCalled();
+
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+            }
+        );
+
+        it('should delete an empty relation without saving',
+            function(done) {
+                object1["Above"] = [ "" ];
+
+                relationPickerComponent.deleteRelation().then(
+                    () => {
+                        expect(object1["Above"].length).toBe(0);
+                        expect(object1.changed).toBe(false);
+
+                        expect(mockParent.save).not.toHaveBeenCalled();
+
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+            }
+        );
 
     });
 }

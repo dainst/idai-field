@@ -126,7 +126,7 @@ export class RelationPickerComponent implements OnChanges {
 
         if (!this.object[this.field.field][this.relationIndex]
                 || this.object[this.field.field][this.relationIndex] == "") {
-            this.parent.deleteRelation(this.relationIndex);
+            this.deleteRelation();
         }
 
         this.suggestionsVisible = false;
@@ -148,6 +148,60 @@ export class RelationPickerComponent implements OnChanges {
         if (elements.length == 1) {
             elements.item(0).focus();
         }
+    }
+
+    public deleteRelation(): Promise<any> {
+
+        var targetId = this.object[this.field.field][this.relationIndex];
+
+        return new Promise<any>((resolve, reject) => {
+            if (targetId.length == 0) {
+                this.object[this.field.field].splice(this.relationIndex, 1)
+                resolve();
+            } else {
+                this.deleteInverseRelation(targetId).then(
+                    () => {
+                        this.object[this.field.field].splice(this.relationIndex, 1);
+                        this.object.changed = true;
+                        this.parent.parent.save();
+                        resolve();
+                    },
+                    err => {
+                        console.error(err);
+                        reject(err);
+                    }
+                );
+            }
+        });
+    }
+
+    private createInverseRelation(targetObject: IdaiFieldObject) {
+
+        if (!targetObject[this.field.inverse]) {
+            targetObject[this.field.inverse] = [];
+        }
+
+        targetObject[this.field.inverse].push(this.object.id);
+        targetObject.changed = true;
+    }
+
+    private deleteInverseRelation(targetId: string): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+            this.datastore.get(targetId).then(
+                targetObject => {
+                    var index = targetObject[this.field.inverse].indexOf(this.object.id);
+                    if (index != -1) {
+                        targetObject[this.field.inverse].splice(index, 1);
+                        targetObject.changed = true;
+                    }
+                    resolve();
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
     }
 
     public keyDown(event: any) {
@@ -191,16 +245,6 @@ export class RelationPickerComponent implements OnChanges {
                 this.updateSuggestions();
                 break;
         }
-    }
-
-    private createInverseRelation(target: IdaiFieldObject) {
-
-        if (!target[this.field.inverse]) {
-            target[this.field.inverse] = [];
-        }
-
-        target[this.field.inverse].push(this.object.id);
-        target.changed = true;
     }
 
 }

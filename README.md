@@ -43,31 +43,38 @@ gulp package
 After building you find packages of the application for different operating systems
 in the "release"-directory. 
 
-## Unit-Testing
+## Testing
 
-To run the unit tests, you have to open one terminal and run 
+### Unit - Testing
+
+To run the unit tests, you need two open two terminals. 
+
+#### 1:
 
 ```
-gulp clean
 ulimit -n 10000
-gulp test-watch (if you want to also have the the app running, use "gulp server" instead) 
+gulp clean
+gulp run (this starts the app but we only use it because the watch task is triggered with it) 
 ```
 
-Then open another terminal and run
+#### 2:
 
 ```
 npm test
 ```
 
-## E2E Testing
+### E2E - Testing
 
-In one terminal, run
+Again, you need two terminals. 
+
+#### 1:
 
 ```
-gulp clean; gulp webserver-watch
+gulp clean
+gulp webserver-watch
 ```
 
-In another terminal, run
+#### 2:
 
 ```
 npm run e2e

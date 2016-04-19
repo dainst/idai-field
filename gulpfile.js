@@ -172,10 +172,6 @@ function watch() {
     gulp.watch('src/e2e/**/*js', ['e2e-move-js']);
 }
 
-gulp.task('test-watch', ['build'], function() {
-    watch();
-});
-
 gulp.task('webserver-watch',['build'],  function() {
 	gulp.src('dist')
 			.pipe(webserver({

@@ -24,26 +24,13 @@ var paths = {
 	'release': 'release/'
 };
 
-gulp.task('test', function (cb) {
-
-    var cmd = 'node_modules/.bin/karma start karma.conf.js --single-run';
-
-    if (argv.ci!=undefined&&argv.ci=='true')
-        cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js --single-run';
-
-    exec(cmd, function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
+gulp.task('clean', function() {
+	return del([paths.build + '/**/*', paths.release + '/**/*']);
 });
 
-const tscConfig = require('./tsconfig.json');
-
-var electronServer = electronConnect.server.create({path: paths.build});
 
 // compile sass and concatenate to single css file in build dir
-gulp.task('sass', function() {
+gulp.task('convert-sass', function() {
 
 	return gulp.src('src/scss/app.scss')
 	  	.pipe(sass({includePaths: [
@@ -54,54 +41,21 @@ gulp.task('sass', function() {
 	    .pipe(gulp.dest(paths.build + '/css'));
 });
 
-gulp.task('copy-fonts', function() {
-
-	return gulp.src([
-		   'node_modules/mdi/fonts/**/*',
-		   'node_modules/bootstrap-sass/assets/fonts/**/*'
-		])
-		.pipe(gulp.dest(paths.build + '/fonts'));
-});
-
-gulp.task('copy-img', function() {
+gulp.task('provide-resources', function() {
+	gulp.src([
+				'node_modules/mdi/fonts/**/*',
+				'node_modules/bootstrap-sass/assets/fonts/**/*'
+			])
+			.pipe(gulp.dest(paths.build + '/fonts'));
 
 	return gulp.src('src/img/**/*')
 		.pipe(gulp.dest(paths.build + '/img'));
 });
 
-gulp.task('copy-config', function() {
+gulp.task('provide-configs', function() {
 
 	return gulp.src('src/config/**/*.json')
 		.pipe(gulp.dest(paths.build + '/config'));
-});
-
-gulp.task('build', [
-	'sass',
-	'compile-ts',
-	'copy-html',
-	'copy-img',
-	'copy-fonts',
-	'copy-config',
-	'concat-deps',
-    'test-compile-ts',
-	'e2e-move-js',
-	'prepare-package',
-	'package-node-dependencies'
-]);
-
-gulp.task('copy-html', function() {
-
-	return gulp.src('src/index.html')
-			.pipe(gulp.dest(paths.build));
-});
-
-// copy necessary files to dist in order for them to be included in package
-// and remove dev dependencies from index.html
-gulp.task('prepare-package', function() {
-
-	gulp.src('src/index.html')
-			.pipe(gulp.dest(paths.build));
-	return gulp.src(['main.js','package.json']).pipe(gulp.dest('dist'));
 });
 
 gulp.task('package-node-dependencies', function() {
@@ -109,16 +63,16 @@ gulp.task('package-node-dependencies', function() {
 			.pipe(gulp.dest('dist/lib/angular2-uuid/'));
 });
 
-// clean
-gulp.task('clean', function() {
-	return del([paths.build + '/**/*', paths.release + '/**/*']);
-});
+const tscConfig = require('./tsconfig.json');
 
 /**
- * Compiles typescript sources to javascript
+ * Copies the indext to the dist folder, compiles typescript sources to javascript
  * AND renders the html templates into the component javascript files.
  */
-gulp.task('compile-ts', function () {
+gulp.task('provide-sources', function () {
+	gulp.src('src/index.html')
+			.pipe(gulp.dest(paths.build));
+
 	return gulp
 		.src('src/app/**/*.ts')
 		.pipe(embedTemplates({basePath: "src", sourceType:'ts'}))
@@ -126,17 +80,25 @@ gulp.task('compile-ts', function () {
 		.pipe(gulp.dest(paths.build + 'app'));
 });
 
-gulp.task('test-compile-ts', function () {
+/**
+ *
+ */
+gulp.task('copy-electron-files', function () {
+	gulp.src(['package.json']).pipe(gulp.dest('dist')); // also needed for an electron app
+	return gulp.src(['main.js']).pipe(gulp.dest('dist'));
+});
 
-    return gulp
+/**
+ * Compiles the typescript written unit tests and copies the
+ * javascript written end to end test files.
+ */
+gulp.task('provide-test-sources', function () {
+
+    gulp
         .src('src/test/**/*.ts')
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(gulp.dest(paths.build + 'test'));
-});
-
-gulp.task('e2e-move-js', function () {
-
-    return gulp
+	return gulp
 			.src('src/e2e/**/*.js')
 			.pipe(gulp.dest(paths.build + 'e2e'));
 });
@@ -158,14 +120,14 @@ gulp.task('concat-deps', function() {
 });
 
 function watch() {
-    gulp.watch('src/scss/**/*.scss', ['sass']);
-    gulp.watch('src/app/**/*.ts', ['compile-ts']);
-    gulp.watch('src/config/**/*.json', ['copy-config']);
-    gulp.watch('src/templates/**/*.html', ['compile-ts']);
-    gulp.watch('src/index.html', ['copy-html']);
-    gulp.watch('src/img/**/*', ['copy-img']);
-    gulp.watch('src/test/**/*ts', ['test-compile-ts']);
-    gulp.watch('src/e2e/**/*js', ['e2e-move-js']);
+    gulp.watch('src/scss/**/*.scss',      ['convert-sass']);
+    gulp.watch('src/app/**/*.ts',         ['provide-sources']);
+    gulp.watch('src/templates/**/*.html', ['provide-sources']);
+    gulp.watch('src/index.html',          ['provide-sources']);
+    gulp.watch('src/config/**/*.json',    ['provide-configs']);
+    gulp.watch('src/img/**/*',            ['provide-resources']);
+    gulp.watch('src/test/**/*ts',         ['provide-test-sources']);
+    gulp.watch('src/e2e/**/*js',          ['provide-test-sources']);
 }
 
 gulp.task('webserver-watch',['build'],  function() {
@@ -177,11 +139,27 @@ gulp.task('webserver-watch',['build'],  function() {
 	watch();
 });
 
+gulp.task('test', function (cb) {
+
+	var cmd = 'node_modules/.bin/karma start karma.conf.js --single-run';
+
+	if (argv.ci!=undefined&&argv.ci=='true')
+		cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js --single-run';
+
+	exec(cmd, function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+});
+
+var electronServer = electronConnect.server.create({path: paths.build});
+
 // runs the development server and sets up browser reloading
 gulp.task('run', ['build'], function() {
 
 	electronServer.start();
-	gulp.watch('main.js', ['prepare-package'], electronServer.restart);
+	gulp.watch('main.js', ['copy-electron-files'], electronServer.restart);
 	watch();
 	gulp.watch('dist/**/*', electronServer.reload);
 });
@@ -222,6 +200,17 @@ gulp.task('package', [], function() {
 		}
     });
 });
+
+gulp.task('build', [
+	'convert-sass',
+	'copy-electron-files',
+	'concat-deps',
+	'provide-sources',
+	'provide-test-sources',
+	'provide-resources',
+	'provide-configs',
+	'package-node-dependencies'
+]);
 
 gulp.task('default', function() {
 	runSequence('clean', 'build', 'test' );

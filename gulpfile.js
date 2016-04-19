@@ -21,11 +21,7 @@ var webserver = require('gulp-webserver');
 
 var paths = {
 	'build': 'dist/',
-	'release': 'release/',
-	'cache': 'cache/',
-	'lib': 'node_modules/',
-	'bootstrap': 'node_modules/bootstrap-sass/assets/',
-	'mdi': 'node_modules/mdi/'
+	'release': 'release/'
 };
 
 gulp.task('test', function (cb) {
@@ -51,8 +47,8 @@ gulp.task('sass', function() {
 
 	return gulp.src('src/scss/app.scss')
 	  	.pipe(sass({includePaths: [
-			paths.bootstrap + 'stylesheets/',
-			paths.mdi + 'scss/'
+			'node_modules/bootstrap-sass/assets/stylesheets/',
+			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
 	    .pipe(gulp.dest(paths.build + '/css'));
@@ -61,16 +57,10 @@ gulp.task('sass', function() {
 gulp.task('copy-fonts', function() {
 
 	return gulp.src([
-			paths.mdi + '/fonts/**/*',
-			paths.bootstrap + '/fonts/**/*'
+		   'node_modules/mdi/fonts/**/*',
+		   'node_modules/bootstrap-sass/assets/fonts/**/*'
 		])
 		.pipe(gulp.dest(paths.build + '/fonts'));
-});
-
-gulp.task('copy-html', function() {
-
-	return gulp.src('src/index.html')
-		.pipe(gulp.dest(paths.build));
 });
 
 gulp.task('copy-img', function() {
@@ -98,6 +88,12 @@ gulp.task('build', [
 	'prepare-package',
 	'package-node-dependencies'
 ]);
+
+gulp.task('copy-html', function() {
+
+	return gulp.src('src/index.html')
+			.pipe(gulp.dest(paths.build));
+});
 
 // copy necessary files to dist in order for them to be included in package
 // and remove dev dependencies from index.html
@@ -148,13 +144,13 @@ gulp.task('e2e-move-js', function () {
 gulp.task('concat-deps', function() {
 
 	return gulp.src([
-			paths.lib + '/node-uuid/uuid.js',
-			paths.lib + '/angular2/bundles/angular2-polyfills.js',
-			paths.lib + '/systemjs/dist/system.src.js',
-			paths.lib + '/rxjs/bundles/Rx.js',
-			paths.lib + '/angular2/bundles/angular2.dev.js',
-			paths.lib + '/angular2/bundles/http.dev.js',
-			paths.lib + '/angular2/bundles/router.dev.js'
+			'node_modules/node-uuid/uuid.js',
+			'node_modules/angular2/bundles/angular2-polyfills.js',
+			'node_modules/systemjs/dist/system.src.js',
+			'node_modules/rxjs/bundles/Rx.js',
+			'node_modules/angular2/bundles/angular2.dev.js',
+			'node_modules/angular2/bundles/http.dev.js',
+			'node_modules/angular2/bundles/router.dev.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		.pipe(uglify())
@@ -203,7 +199,7 @@ gulp.task('package', [], function() {
 		appBundleId: pkg.name,
 		appVersion: pkg.version,
 		buildVersion: pkg.version,
-		cache: paths.cache,
+		cache: 'cache/',
 		helperBundleId: pkg.name,
 		icon: 'dist/img/logo',
 		out: paths.release

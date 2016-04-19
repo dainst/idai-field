@@ -33,7 +33,7 @@ Any changes made to HTML, SCSS or JS files should automatically trigger a reload
 
 ## Deployment
 
-Build,test and package the iDAI.field 2 Client application by running
+Build and package the iDAI.field 2 Client application by running
 
 ```
 gulp

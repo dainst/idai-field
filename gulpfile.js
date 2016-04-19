@@ -139,20 +139,6 @@ gulp.task('webserver-watch',['build'],  function() {
 	watch();
 });
 
-gulp.task('test', function (cb) {
-
-	var cmd = 'node_modules/.bin/karma start karma.conf.js --single-run';
-
-	if (argv.ci!=undefined&&argv.ci=='true')
-		cmd = 'export CHROME_BIN=/usr/bin/chromium-browser; xvfb-run karma start karma.conf.js --single-run';
-
-	exec(cmd, function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-		cb(err);
-	});
-});
-
 var electronServer = electronConnect.server.create({path: paths.build});
 
 // runs the development server and sets up browser reloading

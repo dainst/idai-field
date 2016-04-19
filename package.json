@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "scripts": {
+    "app" : "gulp clean; gulp build; gulp run",
     "test": "karma start karma.conf",
     "test-single-run": "karma start karma.conf.js --single-run",
     "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor protractor.conf.js"
@@ -45,7 +46,6 @@
     "karma-jasmine": "^0.3.7",
     "mdi": "^1.5.54",
     "protractor": "^3.1.1",
-    "run-sequence": "^1.1.5",
     "typescript": "^1.8.2"
   }
 }

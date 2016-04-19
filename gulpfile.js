@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var del = require('del');
-var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -192,7 +191,3 @@ gulp.task('build', [
 	'provide-configs',
 	'package-node-dependencies'
 ]);
-
-gulp.task('default', function() {
-	runSequence('clean', 'build', 'run' );
-});

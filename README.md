@@ -24,7 +24,7 @@ npm install
 
 In order to run the frontend in the development server use the following command:
 ```
-gulp
+npm run app
 ```
 
 This should open the app in a separate window.
@@ -54,8 +54,7 @@ To run the unit tests, you need two open two terminals.
 
 ```
 ulimit -n 10000
-gulp clean
-gulp (this starts the app but we only use it because the watch task is triggered with it) 
+npm run app (this starts the app but we only use it because the watch task is triggered with it) 
 ```
 
 #### 2:

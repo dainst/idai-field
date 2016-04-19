@@ -73,12 +73,6 @@ gulp.task('copy-html', function() {
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('copy-templates', function() {
-
-	return gulp.src('src/templates/**/*.html')
-		.pipe(gulp.dest(paths.build + '/templates'));
-});
-
 gulp.task('copy-img', function() {
 
 	return gulp.src('src/img/**/*')
@@ -95,7 +89,6 @@ gulp.task('build', [
 	'sass',
 	'compile-ts',
 	'copy-html',
-	'copy-templates',
 	'copy-img',
 	'copy-fonts',
 	'copy-config',
@@ -125,14 +118,15 @@ gulp.task('clean', function() {
 	return del([paths.build + '/**/*', paths.release + '/**/*']);
 });
 
+/**
+ * Compiles typescript sources to javascript
+ * AND renders the html templates into the component javascript files.
+ */
 gulp.task('compile-ts', function () {
-
 	return gulp
 		.src('src/app/**/*.ts')
 		.pipe(embedTemplates({basePath: "src", sourceType:'ts'}))
-		//.pipe(sourcemaps.init())
 		.pipe(typescript(tscConfig.compilerOptions))
-		//.pipe(sourcemaps.write('dist/app/maps'))
 		.pipe(gulp.dest(paths.build + 'app'));
 });
 
@@ -171,7 +165,7 @@ function watch() {
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/app/**/*.ts', ['compile-ts']);
     gulp.watch('src/config/**/*.json', ['copy-config']);
-    gulp.watch('src/templates/**/*.html', ['copy-templates','compile-ts']);
+    gulp.watch('src/templates/**/*.html', ['compile-ts']);
     gulp.watch('src/index.html', ['copy-html']);
     gulp.watch('src/img/**/*', ['copy-img']);
     gulp.watch('src/test/**/*ts', ['test-compile-ts']);

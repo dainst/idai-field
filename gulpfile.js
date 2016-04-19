@@ -199,5 +199,5 @@ gulp.task('build', [
 ]);
 
 gulp.task('default', function() {
-	runSequence('clean', 'build', 'test' );
+	runSequence('clean', 'build' );
 });

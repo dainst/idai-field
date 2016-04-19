@@ -4,7 +4,7 @@
          id="objectOverview">
         <aside>
             <header>
-                <h1>
+                <h1 >
                     <span class="mdi mdi-view-list"></span>
                     Objects
                 </h1>
@@ -20,7 +20,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </div>
                 <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
-                    <li *ngFor="#object of objectList.getObjects()"
+                    <li *ngFor="#object of objectList.getObjects(); #index=index"
                         (click)="onSelect(object)"
                         class="list-group-item"
                         [class.synced]="object.synced"
@@ -31,14 +31,14 @@
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                             -->
                         <div *ngIf="object.identifier || object.title">
-                            <div class="title">{{object.title}}</div>
+                            <div id="object-overview-title-{{index}}" class="title">{{object.title}}</div>
 
-                            <div class="identifier">{{object.identifier}}</div>
+                            <div id="object-overview-identifier-{{index}}" class="identifier">{{object.identifier}}</div>
                         </div>
                         <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
                     </li>
                 </ul>
-                <div id="createObject"
+                <div id="object-overview-button-create-object"
                      *ngIf="searchInput.value.length == 0"
                      class="circular-button green-button"
                      (click)="onCreate()"

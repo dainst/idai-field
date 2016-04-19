@@ -24,7 +24,7 @@ npm install
 
 In order to run the frontend in the development server use the following command:
 ```
-gulp run
+gulp
 ```
 
 This should open the app in a separate window.
@@ -36,7 +36,8 @@ Any changes made to HTML, SCSS or JS files should automatically trigger a reload
 Build and package the iDAI.field 2 Client application by running
 
 ```
-gulp
+gulp clean
+gulp build
 gulp package
 ```
 
@@ -54,7 +55,7 @@ To run the unit tests, you need two open two terminals.
 ```
 ulimit -n 10000
 gulp clean
-gulp run (this starts the app but we only use it because the watch task is triggered with it) 
+gulp (this starts the app but we only use it because the watch task is triggered with it) 
 ```
 
 #### 2:

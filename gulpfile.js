@@ -5,17 +5,12 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
-var sourcemaps = require('gulp-sourcemaps');
 var electronConnect = require('electron-connect');
-var process = require('process');
 var packager = require('electron-packager');
 var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
-var shell = require('gulp-shell');
 var pkg = require('./package.json');
-var exec = require('child_process').exec;
-var argv = require('yargs').argv;
 var embedTemplates = require('gulp-angular-embed-templates');
 var webserver = require('gulp-webserver');
 
@@ -142,7 +137,7 @@ gulp.task('webserver-watch',['build'],  function() {
 var electronServer = electronConnect.server.create({path: paths.build});
 
 // runs the development server and sets up browser reloading
-gulp.task('run', ['build'], function() {
+gulp.task('run', function() {
 
 	electronServer.start();
 	gulp.watch('main.js', ['copy-electron-files'], electronServer.restart);
@@ -199,5 +194,5 @@ gulp.task('build', [
 ]);
 
 gulp.task('default', function() {
-	runSequence('clean', 'build' );
+	runSequence('clean', 'build', 'run' );
 });

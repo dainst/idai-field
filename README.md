@@ -24,7 +24,7 @@ npm install
 
 In order to run the frontend in the development server use the following command:
 ```
-npm run app
+npm start
 ```
 
 This should open the app in a separate window.
@@ -33,13 +33,17 @@ Any changes made to HTML, SCSS or JS files should automatically trigger a reload
 
 ## Deployment
 
-Build and package the iDAI.field 2 Client application by running
+The recommended way for building and testing 
+the iDAI.field 2 Client application is as follows
 
 ```
-gulp clean
-gulp build
-gulp package
+npm run build-and-test
+npm run e2e-and-package
 ```
+
+Note that in order the e2e tests to work, the dist dir has to be served
+on localhost:8081. If you have now webserver serving this directory, you also
+can use 'npm run e2e-server' from another terminal.
 
 After building you find packages of the application for different operating systems
 in the "release"-directory. 
@@ -54,24 +58,25 @@ To run the unit tests, you need two open two terminals.
 
 ```
 ulimit -n 10000
-npm run app (this starts the app but we only use it because the watch task is triggered with it) 
+npm start (this starts the app but we only use it because the watch task is triggered with it) 
 ```
 
 #### 2:
 
 ```
-npm test
+npm test 
 ```
 
 ### E2E - Testing
 
 Again, you need two terminals. 
+Note that a proper build is necessary for this to work. 
+Do a 'npm run build-and-test' prior to e2e testing.
 
 #### 1:
 
 ```
-gulp clean
-gulp webserver-watch
+npm run e2e-server
 ```
 
 #### 2:

@@ -5,10 +5,17 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "scripts": {
-    "app" : "gulp clean; gulp build; gulp run",
+    "prebuild" : "rimraf dist/*",
+    "build": "gulp build",
+    "start": "npm run build && gulp run",
+    "prebuild-and-test": "npm run build",
     "test": "karma start karma.conf",
-    "test-single-run": "karma start karma.conf.js --single-run",
-    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor protractor.conf.js"
+    "build-and-test": "karma start karma.conf.js --single-run",
+
+    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor protractor.conf.js",
+    "e2e-server": "gulp webserver-watch",
+    "pree2e-and-package": "rimraf release/* && npm run e2e",
+    "e2e-and-package": "gulp package"
   },
   "repository": {
     "type": "git",
@@ -28,7 +35,6 @@
     "archiver": "^0.21.0",
     "bootstrap-sass": "^3.3.6",
     "connect-modrewrite": "^0.8.5",
-    "del": "^2.2.0",
     "electron-connect": "^0.3.4",
     "electron-packager": "^5.2.0",
     "electron-prebuilt": "^0.37.2",
@@ -46,6 +52,7 @@
     "karma-jasmine": "^0.3.7",
     "mdi": "^1.5.54",
     "protractor": "^3.1.1",
+    "rimraf": "^2.5.2",
     "typescript": "^1.8.2"
   }
 }

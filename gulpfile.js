@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var del = require('del');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -17,11 +16,6 @@ var paths = {
 	'build': 'dist/',
 	'release': 'release/'
 };
-
-gulp.task('clean', function() {
-	return del([paths.build + '/**/*', paths.release + '/**/*']);
-});
-
 
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function() {
@@ -124,7 +118,7 @@ function watch() {
     gulp.watch('src/e2e/**/*js',          ['provide-test-sources']);
 }
 
-gulp.task('webserver-watch',['build'],  function() {
+gulp.task('webserver-watch', function() {
 	gulp.src('dist')
 			.pipe(webserver({
 				fallback: 'index.html',

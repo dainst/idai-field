@@ -1,7 +1,7 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
-import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
-import {Indexeddb} from "../app/datastore/indexeddb";
+import {IndexeddbDatastore} from "../../main/app/datastore/indexeddb-datastore";
+import {Indexeddb} from "../../main/app/datastore/indexeddb";
 
 /**
  * @author Daniel M. de Oliveira

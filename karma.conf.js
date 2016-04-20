@@ -21,8 +21,8 @@ module.exports = function(config) {
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
-            { pattern: 'dist/app/**/*.js', included: false, watched: true },
-            { pattern: 'dist/test/**/*.spec.js', included: false, watched: true },
+            { pattern: 'dist/main/app/**/*.js', included: false, watched: true },
+            { pattern: 'dist/test/unit/**/*.spec.js', included: false, watched: true },
 
             'test-main.js'
         ],

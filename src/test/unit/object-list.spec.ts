@@ -1,9 +1,9 @@
 import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
-import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {ObjectList} from "../app/services/object-list";
-import {Datastore} from "../app/datastore/datastore";
-import {Messages} from "../app/services/messages";
+import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
+import {ObjectList} from "../../main/app/services/object-list";
+import {Datastore} from "../../main/app/datastore/datastore";
+import {Messages} from "../../main/app/services/messages";
 
 /**
  * @author Daniel M. de Oliveira

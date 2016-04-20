@@ -1,7 +1,7 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
-import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {ModelUtils} from "../app/model/model-utils";
+import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
+import {ModelUtils} from "../../main/app/model/model-utils";
 
 /**
  * @author Jan G. Wieners

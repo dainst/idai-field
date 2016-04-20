@@ -1,6 +1,6 @@
 import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
-import {Datastore} from "../app/datastore/datastore";
-import {RelationPickerComponent} from "../app/components/relation-picker.component";
+import {Datastore} from "../../main/app/datastore/datastore";
+import {RelationPickerComponent} from "../../main/app/components/relation-picker.component";
 
 /**
  * @author Thomas Kleinke

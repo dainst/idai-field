@@ -1,6 +1,6 @@
 import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
-import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {RelationPickerGroupComponent} from "../app/components/relation-picker-group.component";
+import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
+import {RelationPickerGroupComponent} from "../../main/app/components/relation-picker-group.component";
 
 /**
  * @author Thomas Kleinke

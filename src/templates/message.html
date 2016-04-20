@@ -1,5 +1,6 @@
-<div *ngFor="#message of messages.getMessages()"
+<div *ngFor="#message of messages.getMessages(); #index=index"
      class="alert alert-{{message.level}}"
-     role="alert">
+     role="alert"
+     id="message-{{index}}">
     {{message.content}}
 </div>

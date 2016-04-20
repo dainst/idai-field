@@ -10,9 +10,9 @@
     "start": "npm run build && gulp run",
     "prebuild-and-test": "npm run build",
     "test": "karma start karma.conf",
-    "build-and-test": "karma start karma.conf.js --single-run",
+    "build-and-test": "karma start dist/test/karma.conf.js --single-run",
 
-    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor protractor.conf.js",
+    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor dist/test/protractor.conf.js",
     "e2e-server": "gulp webserver-watch",
     "pree2e-and-package": "rimraf release/* && npm run e2e",
     "e2e-and-package": "gulp package"

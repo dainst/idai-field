@@ -73,7 +73,7 @@ gulp.task('provide-sources', function () {
  */
 gulp.task('copy-electron-files', function () {
 	gulp.src(['package.json']).pipe(gulp.dest(paths.build)); // also needed for an electron app
-	return gulp.src(['main.js']).pipe(gulp.dest(paths.build));
+	return gulp.src(['src/main/main.js']).pipe(gulp.dest(paths.build));
 });
 
 /**
@@ -87,8 +87,8 @@ gulp.task('provide-test-sources', function () {
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(gulp.dest('dist/test/unit'));
 	return gulp
-			.src('src/test/e2e/**/*.js')
-			.pipe(gulp.dest('dist/test/e2e/'));
+			.src('src/test/**/*.js')
+			.pipe(gulp.dest('dist/test/'));
 });
 
 gulp.task('concat-deps', function() {
@@ -133,7 +133,7 @@ var electronServer = electronConnect.server.create({path: paths.build});
 gulp.task('run', function() {
 
 	electronServer.start();
-	gulp.watch('main.js', ['copy-electron-files'], electronServer.restart);
+	gulp.watch('src/main/main.js', ['copy-electron-files'], electronServer.restart);
 	watch();
 	gulp.watch('dist/main/	**/*', electronServer.reload);
 });

@@ -1,5 +1,5 @@
 {
-	"environment": "production",
+	"environment": "test",
     "backend" : {
         "uri": "server url",
         "credentials": "username:password",

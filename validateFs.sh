@@ -9,8 +9,8 @@
 # author: Daniel M. de Oliveira
 
 
-FDESCRIBE_RES=`grep "fdescribe" src/test/* | grep -v "import" > /dev/null; echo $?`
-FIT_RES=`grep "fit" src/test/* | grep -v "import" > /dev/null; echo $?`
+FDESCRIBE_RES=`grep "fdescribe" src/test/**/* | grep -v "import" > /dev/null; echo $?`
+FIT_RES=`grep "fit" src/test/**/* | grep -v "import" > /dev/null; echo $?`
 
 
 ERRS=0

@@ -1,9 +1,5 @@
 # iDAI.field 2 Client
 
-```
-npm -g install typings
-```
-
 ## Development
 
 ### Prerequisites
@@ -13,6 +9,18 @@ You need the following components in order for the local server to work:
 * [NodeJS](https://nodejs.org/download/)
 * [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 * Under OS X you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows packages.
+
+Install the following npm packages globally:
+
+```
+npm install -g gulp
+npm install -g typings
+npm install -g karma
+npm install -g karma-jasmine 
+npm install -g phantomjs 
+npm install -g karma-phantomjs-launcher
+npm install -g karma@canary
+```
 
 ### Installation
 

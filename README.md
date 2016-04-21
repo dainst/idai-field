@@ -1,5 +1,9 @@
 # iDAI.field 2 Client
 
+```
+npm -g install typings
+```
+
 ## Development
 
 ### Prerequisites

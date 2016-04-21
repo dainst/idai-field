@@ -29,6 +29,7 @@ node_modules
 dist
 release
 cache
+typings
 
 /.idea
 *iml

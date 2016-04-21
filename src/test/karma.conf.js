@@ -8,7 +8,8 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
 
         files: [
-            'node_modules/zone.js/dist/zone-microtask.js',
+            //'node_modules/traceur/bin/traceur-runtime.js',
+            'node_modules/zone.js/dist/zone.js',
             'node_modules/zone.js/dist/long-stack-trace-zone.js',
             'node_modules/zone.js/dist/jasmine-patch.js',
             'node_modules/systemjs/dist/system.src.js',

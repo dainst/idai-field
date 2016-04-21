@@ -98,7 +98,7 @@ gulp.task('concat-deps', function() {
 			'node_modules/angular2/bundles/router.dev.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
-		.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(gulp.dest('dist/main//lib'));
 });
 

@@ -15,21 +15,22 @@
     "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor dist/test/protractor.conf.js",
     "e2e-server": "gulp webserver-watch",
     "pree2e-and-package": "rimraf release/* && npm run e2e",
-    "e2e-and-package": "gulp package"
+    "e2e-and-package": "gulp package",
+    "postinstall": "typings install"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/codarchlab/idai-field-client.git"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.0",
+    "angular2": "2.0.0-beta.15",
     "angular2-uuid": "^1.0.6",
     "es6-promise": "^3.0.2",
-    "es6-shim": "0.33.3",
+    "es6-shim": "^0.35.0",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.17",
-    "zone.js": "0.5.10"
+    "rxjs": "5.0.0-beta.2",
+    "systemjs": "0.19.26",
+    "zone.js": "0.6.12"
   },
   "devDependencies": {
     "archiver": "^0.21.0",

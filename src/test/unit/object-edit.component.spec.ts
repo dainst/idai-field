@@ -8,6 +8,9 @@ import {Datastore} from "../../main/app/datastore/datastore";
 import {Messages} from "../../main/app/services/messages";
 import {DataModelConfiguration} from "../../main/app/services/data-model-configuration";
 
+//import 'zone.js/dist/zone';
+
+
 /**
  * @author Daniel M. de Oliveira
  * @author Jan G. Wieners
@@ -81,7 +84,8 @@ export function main() {
             provide(ObjectList, { useClass: ObjectList }),
             provide(Messages, { useClass: MockMessages }),
             provide(DataModelConfiguration, { useClass: DataModelConfiguration}),
-            provide(ObjectEditComponent, {useClass: ObjectEditComponent})
+            provide(ObjectEditComponent, {useClass: ObjectEditComponent}),
+            provide(TestComponentBuilder, {useClass: TestComponentBuilder}),
         ]);
 
         it('should contain the specified elements',

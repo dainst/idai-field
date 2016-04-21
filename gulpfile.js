@@ -46,7 +46,7 @@ gulp.task('package-node-dependencies', function() {
 			.pipe(gulp.dest('dist/main/lib/angular2-uuid/'));
 });
 
-const tscConfig = require('./tsconfig.json');
+const tscConfig = require('./src/tsconfig.json');
 
 /**
  * Copies the indext to the dist folder, compiles typescript sources to javascript
@@ -98,7 +98,7 @@ gulp.task('concat-deps', function() {
 			'node_modules/angular2/bundles/router.dev.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
-		//.pipe(uglify())
+		//.pipe(uglify()) // this produces an error with the angular beta 15
 		.pipe(gulp.dest('dist/main//lib'));
 });
 
@@ -146,7 +146,7 @@ gulp.task('package', [], function() {
 		appBundleId: pkg.name,
 		appVersion: pkg.version,
 		buildVersion: pkg.version,
-		cache: 'cache/',
+		'download.cache': 'cache/',
 		helperBundleId: pkg.name,
 		icon: 'dist/img/logo',
 		out: 'release/'

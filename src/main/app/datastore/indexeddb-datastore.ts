@@ -152,14 +152,13 @@ export class IndexeddbDatastore implements Datastore {
 
         query = query.toLowerCase();
 
-        return new Promise<string[]>((resolve, reject) => {
-
+        return new Promise((resolve, reject) => {
             this.db.then(db => {
 
                 var ids:string[] = [];
 
-                var range = IDBKeyRange.bound(query, query+'\uffff', false, true);
-                var cursor = db.openCursor(IndexeddbDatastore.FULLTEXT,"terms",range);
+                var range = IDBKeyRange.bound(query, query + '\uffff', false, true);
+                var cursor = db.openCursor(IndexeddbDatastore.FULLTEXT, "terms", range);
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -167,16 +166,15 @@ export class IndexeddbDatastore implements Datastore {
                         cursor.continue();
                     } else {
                         // make ids unique
-                        ids = ids.filter( (value, index, self) => (self.indexOf(value) === index) );
-                        resolve(ids);
+                        ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
+                        console.log(Array.from(ids).map(id => this.get(id)));
+                        var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map(id => this.get(id));
+                        resolve(Promise.all(promises));
                     }
                 };
                 cursor.onerror = err => reject(cursor.error);
-            });
-        }).then( ids => {
-            var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map( id => this.get(id) );
-            return Promise.all(promises);
-        });
+            })
+        })
     }
 
     public all(options:any):Promise<IdaiFieldObject[]> {

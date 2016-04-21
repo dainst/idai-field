@@ -12,11 +12,6 @@ var pkg = require('./package.json');
 var embedTemplates = require('gulp-angular-embed-templates');
 var webserver = require('gulp-webserver');
 
-var paths = {
-	'build': 'dist/main/',
-	'release': 'release/'
-};
-
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function() {
 
@@ -26,7 +21,7 @@ gulp.task('convert-sass', function() {
 			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
-	    .pipe(gulp.dest(paths.build + '/css'));
+	    .pipe(gulp.dest('dist/main/css'));
 });
 
 gulp.task('provide-resources', function() {
@@ -34,16 +29,16 @@ gulp.task('provide-resources', function() {
 				'node_modules/mdi/fonts/**/*',
 				'node_modules/bootstrap-sass/assets/fonts/**/*'
 			])
-			.pipe(gulp.dest(paths.build + '/fonts'));
+			.pipe(gulp.dest('dist/main/fonts'));
 
 	return gulp.src('src/main/img/**/*')
-		.pipe(gulp.dest(paths.build + '/img'));
+		.pipe(gulp.dest('dist/main/img'));
 });
 
 gulp.task('provide-configs', function() {
 
 	return gulp.src('src/main/config/**/*.json')
-		.pipe(gulp.dest(paths.build + '/config/'));
+		.pipe(gulp.dest('dist/main/config/'));
 });
 
 gulp.task('package-node-dependencies', function() {
@@ -59,21 +54,21 @@ const tscConfig = require('./tsconfig.json');
  */
 gulp.task('provide-sources', function () {
 	gulp.src('src/main/index.html')
-			.pipe(gulp.dest(paths.build));
+			.pipe(gulp.dest('dist/main/'));
 
 	return gulp
 		.src('src/main/app/**/*.ts')
 		.pipe(embedTemplates({basePath: "src/main", sourceType:'ts'}))
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest(paths.build + 'app'));
+		.pipe(gulp.dest('dist/main/app'));
 });
 
 /**
  *
  */
 gulp.task('copy-electron-files', function () {
-	gulp.src(['package.json']).pipe(gulp.dest(paths.build)); // also needed for an electron app
-	return gulp.src(['src/main/main.js']).pipe(gulp.dest(paths.build));
+	gulp.src(['package.json']).pipe(gulp.dest('dist/main/')); // also needed for an electron app
+	return gulp.src(['src/main/main.js']).pipe(gulp.dest('dist/main/'));
 });
 
 /**
@@ -104,7 +99,7 @@ gulp.task('concat-deps', function() {
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest(paths.build + '/lib'));
+		.pipe(gulp.dest('dist/main//lib'));
 });
 
 function watch() {
@@ -127,7 +122,7 @@ gulp.task('webserver-watch', function() {
 	watch();
 });
 
-var electronServer = electronConnect.server.create({path: paths.build});
+var electronServer = electronConnect.server.create({path: 'dist/main/'});
 
 // runs the development server and sets up browser reloading
 gulp.task('run', function() {
@@ -143,7 +138,7 @@ gulp.task('run', function() {
 gulp.task('package', [], function() {
 
 	packager({
-		dir: paths.build,
+		dir: 'dist/main/',
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',
@@ -154,7 +149,7 @@ gulp.task('package', [], function() {
 		cache: 'cache/',
 		helperBundleId: pkg.name,
 		icon: 'dist/img/logo',
-		out: paths.release
+		out: 'release/'
 	}, function(err, appPath) {
 		if (err)
 			throw err;
@@ -162,7 +157,7 @@ gulp.task('package', [], function() {
 		var folderPaths = appPath.toString().split(',');
 		for (var i in folderPaths) {
 			var fileName = folderPaths[i].substring(folderPaths[i].lastIndexOf(path.sep) + 1);
-    		var output = fs.createWriteStream(paths.release + '/' + fileName + '.zip');
+    		var output = fs.createWriteStream('release/' + fileName + '.zip');
     		
     		var archive = archiver('zip');
     		archive.on('error', function(err) {

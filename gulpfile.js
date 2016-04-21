@@ -46,7 +46,7 @@ gulp.task('package-node-dependencies', function() {
 			.pipe(gulp.dest('dist/main/lib/angular2-uuid/'));
 });
 
-const tscConfig = require('./src/tsconfig.json');
+const tscConfig = require('./tsconfig.json');
 
 /**
  * Copies the indext to the dist folder, compiles typescript sources to javascript

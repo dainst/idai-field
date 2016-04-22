@@ -1,6 +1,5 @@
 import {Component, OnInit, Inject} from 'angular2/core';
 import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
-import {View} from "angular2/core";
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../datastore/datastore";

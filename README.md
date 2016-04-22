@@ -2,7 +2,7 @@
 
 ## Development
 
-### Prerequisites
+### Installation
 
 You need the following components in order for the local server to work:
 
@@ -22,9 +22,8 @@ npm install -g karma-phantomjs-launcher
 npm install -g karma@canary
 ```
 
-### Installation
-
-To install the necessary dependencies for the app run the following command in the working directory:
+If that is done, install the necessary dependencies 
+for the app run the following command in the working directory:
 
 ```
 git clone https://github.com/codarchlab/idai-field-client.git
@@ -32,16 +31,74 @@ cd idai-field-client
 npm install
 ```
 
-### Running the development server
+### Starting the app
 
 In order to run the frontend in the development server use the following command:
+
 ```
 npm start
 ```
 
 This should open the app in a separate window.
 
-Any changes made to HTML, SCSS or JS files should automatically trigger a reload.
+Any changes made to any source files trigger automatic recompilation
+of processes and a final reload of the application.
+
+
+## Testing
+
+### Unit - Testing
+
+To run the unit tests in a continuous manner, 
+you need two open two terminals (marked as '1$' and '2$'). 
+
+```
+1$ ulimit -n 10000
+1$ npm start 
+```
+
+The *npm start* starts the app, but whats more important for us here is,
+that it watches the sources, and everytime anything changes, the sources
+are recompiled.
+
+```
+2$ npm run test-loop
+```
+
+This causes karma to run continuously. And since the sources are also watched
+continuously, you can edit and test at the same time.
+
+### E2E - Testing
+
+Note that a proper build is necessary for this to work. So make sure
+you build the source using one of the following two commands.
+While the first one builds and tests, the second one can be used to
+skip testing.
+
+```
+npm test
+npm run build
+```
+
+For starting end to end testing, 
+you need two terminals (again marked as '1$' and '2$'). 
+
+```
+1$ npm run server
+```
+
+This starts a webserver which serves the dist/main directory on port 8081
+which is from where it is loaded into the browser against which the tests are run.
+Furthermore, a 'watch' process runs. It causes to recompile the sources anytime changes
+are made, similar to the behaviour of 'npm start'.
+
+```
+2$ npm run e2e
+```
+
+This command runs the end to end tests once. While changes of sources are recompiled
+automatically, tests have to be triggered on demand, unlike the behaviour of 
+'npm run test-loop', which runs continuously.
 
 ## Deployment
 
@@ -49,51 +106,17 @@ The recommended way for building and testing
 the iDAI.field 2 Client application is as follows
 
 ```
-npm run build-and-test
-npm run e2e-and-package
+1$ npm test
+(2$ npm run server)
+1$ npm run e2e
+1$ npm run package
 ```
 
-Note that in order the e2e tests to work, the dist dir has to be served
-on localhost:8081. If you have now webserver serving this directory, you also
-can use 'npm run e2e-server' from another terminal.
+As described above, in order for the e2e tests to work, the dist dir has to be served
+on localhost:8081. This is what the command in parentheses is for. If you are on a ci machine
+ and have another webserver, like for example apache2, serving this directory on 8081, you
+can omit this command.
 
 After building you find packages of the application for different operating systems
 in the "release"-directory. 
-
-## Testing
-
-### Unit - Testing
-
-To run the unit tests, you need two open two terminals. 
-
-#### 1:
-
-```
-ulimit -n 10000
-npm start (this starts the app but we only use it because the watch task is triggered with it) 
-```
-
-#### 2:
-
-```
-npm test 
-```
-
-### E2E - Testing
-
-Again, you need two terminals. 
-Note that a proper build is necessary for this to work. 
-Do a 'npm run build-and-test' prior to e2e testing.
-
-#### 1:
-
-```
-npm run e2e-server
-```
-
-#### 2:
-
-```
-npm run e2e
-```
 

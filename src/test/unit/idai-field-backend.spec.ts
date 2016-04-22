@@ -3,7 +3,6 @@ import {IdaiFieldBackend} from "../../main/app/services/idai-field-backend";
 import {ModelUtils} from "../../main/app/model/model-utils";
 import {provide} from "angular2/core";
 import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
-import filter = webdriver.promise.filter;
 import {Headers} from "angular2/http";
 
 /**

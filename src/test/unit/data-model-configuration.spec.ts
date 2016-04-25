@@ -38,5 +38,35 @@ export function main() {
                 expect(dmc.getFields('SecondLevelType')[1].field).toBe('fieldB');
             }
         );
+
+
+        it('should fail if parent type is referenced but not defined before',
+            function() {
+
+                var data = {
+                    "types" : [
+                        {
+                            "type": "SecondLevelType",
+                            "parent" : "FirstLevelType",
+                            "fields": [
+                                {
+                                    "field": "fieldB"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "FirstLevelType",
+                            "fields": [
+                                {
+                                    "field": "fieldA"
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                expect(function(){new DataModelConfiguration(data);}).toThrow();
+            }
+        );
     });
 }

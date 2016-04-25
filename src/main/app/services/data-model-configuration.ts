@@ -21,19 +21,20 @@ export class DataModelConfiguration {
     constructor(@Inject('app.dataModelConfig') private configurationData) {
 
         for (var i in configurationData.types) {
-            var type = configurationData.types[i];
-
-            this.fieldMap[type.type]=[];
-            
-            // add fields from parent type
-            if (type.parent!=undefined) {
-                this.fieldMap[type.type]=this.fieldMap[type.parent];
-            }
-
-            this.fieldMap[type.type]=this.fieldMap[type.type].concat(type.fields);
+            this.fieldMap[configurationData.types[i].type]
+                =this.createFields(configurationData.types[i]);
         }
 
         this.types = Object.keys(this.fieldMap);
+    }
+
+    private createFields(type) {
+        var fields=[];
+        if (type.parent!=undefined) {
+            if (this.fieldMap[type.parent]==undefined) throw "Type not defined.";
+            fields=this.fieldMap[type.parent];
+        }
+        return fields.concat(type.fields);
     }
 
     /**

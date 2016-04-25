@@ -3,6 +3,7 @@ import {Injectable} from "angular2/core";
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 @Injectable()
 export class DataModelConfiguration {
@@ -15,14 +16,23 @@ export class DataModelConfiguration {
     /**
      * Contains an array of fields for every object type defined in the configurationData
      */
-    private fieldMap: { [type: string]: any[] };
+    private fieldMap: { [type: string]: any[] } = {};
 
     constructor(@Inject('app.dataModelConfig') private configurationData) {
 
-        this.fieldMap = configurationData["types"].reduce(function(map, object) {
-            map[object.type] = object.fields;
-            return map;
-        }, {});
+        for (var i in configurationData.types) {
+            var type = configurationData.types[i];
+
+            this.fieldMap[type.type]=[];
+            
+            // add fields from parent type
+            if (type.parent!=undefined) {
+                this.fieldMap[type.type]=this.fieldMap[type.parent];
+            }
+
+            this.fieldMap[type.type]=this.fieldMap[type.type].concat(type.fields);
+        }
+
         this.types = Object.keys(this.fieldMap);
     }
 

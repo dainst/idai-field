@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, OnInit} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
@@ -17,7 +17,8 @@ import {OnChanges} from "angular2/core";
     templateUrl: 'templates/object-edit.html'
 })
 
-export class ObjectEditComponent implements OnChanges {
+export class ObjectEditComponent implements OnChanges,OnInit {
+
 
     @Input() object: IdaiFieldObject;
 
@@ -25,6 +26,8 @@ export class ObjectEditComponent implements OnChanges {
      * The object as it is currently stored in the database (without recent changes)
      */
     private lastSavedVersion: IdaiFieldObject;
+
+
 
     private saveTimer: number;
 
@@ -44,8 +47,20 @@ export class ObjectEditComponent implements OnChanges {
         { "field": "Is cut by", "inverse": "Cuts", "label": "Wird geschnitten von" }
     ];
 
+    public types : string[];
+    public fieldsForObjectType : any;
+
     constructor(private objectList: ObjectList,
-                private dataModelConfiguration: DataModelConfiguration) {}
+                private dataModelConfiguration: DataModelConfiguration) {
+    }
+
+    ngOnInit():any {
+        var this_=this;
+        this.dataModelConfiguration.getTypes().then(function(types){
+            this_.types=types;
+        });
+        this.setFieldsForObjectType(this); // bad, this is necessary for testing
+    }
 
     /**
      * Saves the object to the local datastore.
@@ -109,9 +124,16 @@ export class ObjectEditComponent implements OnChanges {
         this.saveTimer = setTimeout(this.save.bind(this), 500);
     }
 
-    public ngOnChanges() {
+    private setFieldsForObjectType(this_) {
+        if (this_.object==undefined) return;
+        this.dataModelConfiguration.getFields(this.object.type).then(function(fields){
+            this_.fieldsForObjectType=fields;
+        });
+    }
 
+    public ngOnChanges() {
         if (this.object) {
+            this.setFieldsForObjectType(this);
             this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
         }
     }
@@ -119,6 +141,7 @@ export class ObjectEditComponent implements OnChanges {
     public setType(type: string) {
 
         this.object.type = type;
+        this.setFieldsForObjectType(this);
     }
 
     public getThis(): ObjectEditComponent {

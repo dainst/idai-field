@@ -6,7 +6,7 @@ import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
 import {Headers} from "angular2/http";
 
 /**
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export function main() {
@@ -63,8 +63,9 @@ export function main() {
             mockHttp = jasmine.createSpyObj('mockHttp', [ 'get', 'put' ]);
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);
-            mockDataModelConfiguration = jasmine.createSpyObj('mockDataModelConfiguration', ['getField']);
-            mockDataModelConfiguration.getField.and.callFake(function(){return "dataset1";});
+            mockDataModelConfiguration = jasmine.createSpyObj('mockDataModelConfiguration', ['getExcavationName']);
+            mockDataModelConfiguration.getExcavationName.and.callFake(
+                function() { return {then: function(cb) { cb("dataset1");} }});
 
             idaiFieldBackend = new IdaiFieldBackend(mockHttp, config, mockDataModelConfiguration);
             j=0;

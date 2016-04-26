@@ -48,7 +48,7 @@ export function main() {
                 messagesService = messages;
 
                 mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-                objectList = new ObjectList(mockDatastore, messages, undefined);
+                objectList = new ObjectList(mockDatastore, messages);
 
                 selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true ,
                     "id" : id, "type": "Object" };

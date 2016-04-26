@@ -15,8 +15,7 @@ export class ObjectList {
 
 
     constructor(private datastore: Datastore,
-                private messages: Messages,
-                @Inject('app.dataModelConfig') private dataModelConfig) {}
+                private messages: Messages) {}
 
     private objects: IdaiFieldObject[];
 

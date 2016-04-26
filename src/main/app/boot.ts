@@ -13,7 +13,6 @@ import {Messages} from "./services/messages";
 import {DataModelConfiguration} from "./services/data-model-configuration";
 
 import CONFIG = require("../config/config.json");
-import DATA_MODEL_CONFIG from "../config/Configuration.json";
 import {Indexeddb} from "./datastore/indexeddb";
 
 if (CONFIG.environment == 'production') enableProdMode();
@@ -26,7 +25,6 @@ bootstrap(AppComponent, [
     provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
-    provide('app.dataModelConfig', { useValue: DATA_MODEL_CONFIG }),
     provide(DataModelConfiguration, {useClass: DataModelConfiguration}),
     provide(Indexeddb, {useClass: Indexeddb})
 ]);

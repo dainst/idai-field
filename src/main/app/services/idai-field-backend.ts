@@ -92,11 +92,16 @@ export class IdaiFieldBackend {
         return headers;
     }
 
-    private performPut(id:string,document:any) : Observable<Response> {
+    private performPut(id:string,document:Promise<any>) : Promise<Observable<Response>> {
 
-        return this.http.put(this.configuration.uri
-            + this.typeName + '/' + id,
-            JSON.stringify(document), { headers: this.createAuthorizationHeader()})
+        return new Promise<Observable<Response>>((resolve)=> {
+            document.then(doc=> {
+
+                resolve(this.http.put(this.configuration.uri
+                    + this.typeName + '/' + id,
+                    JSON.stringify(doc), {headers: this.createAuthorizationHeader()}));
+            })
+        });
     }
 
     /**
@@ -106,17 +111,17 @@ export class IdaiFieldBackend {
      * @returns {Promise<T>}
      */
     public save(object:IdaiFieldObject):Promise<IdaiFieldObject> {
-
         return new Promise((resolve, reject) => {
 
-            this.performPut(object.id,this.createDocument(object))
-            .subscribe(
-                () => resolve(object),
-                err => {
-                    this.checkConnection();
-                    reject(err);
-                }
-            );
+            this.performPut(object.id,this.createDocument(object)).then(observable=>{
+              observable.subscribe(
+                  () => resolve(object),
+                  err => {
+                      this.checkConnection();
+                      reject(err);
+                  }
+              );
+            });
         });
     }
 
@@ -127,13 +132,20 @@ export class IdaiFieldBackend {
      * @param object the resource of the document to be created.
      * @returns a document as expected by the backend.
      */
-    private createDocument(object:IdaiFieldObject) : any {
-        var document= {"resource":{}};
-        document["resource"]= ModelUtils.filterUnwantedProps(object);
-        if ((this.dataModelConfiguration!=undefined)
-            &&(this.dataModelConfiguration.getField("excavation")!=undefined))
-            document["dataset"]=this.dataModelConfiguration.getField("excavation");
-        return document;
+    private createDocument(object:IdaiFieldObject) : Promise<any> {
+
+        return new Promise<any>((resolve)=>{
+            this.dataModelConfiguration.getExcavationName().then(name=>
+            {
+                var document= {"resource":{}};
+                document["resource"]= ModelUtils.filterUnwantedProps(object);
+                if ((this.dataModelConfiguration!=undefined)
+                    &&(name!=undefined)) {
+                    document["dataset"]=name;
+                }
+                resolve(document);
+            });
+        });
     }
 
     public resetIndex(): Promise<any> {

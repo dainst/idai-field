@@ -1,5 +1,6 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from 'angular2/testing';
 import {DataModelConfiguration} from "../../main/app/services/data-model-configuration";
+import {Messages} from "../../main/app/services/messages";
 
 /**
  * @author Daniel de Oliveira
@@ -7,11 +8,30 @@ import {DataModelConfiguration} from "../../main/app/services/data-model-configu
 export function main() {
     describe('DataModelConfiguration', () => {
 
+        var http;
+        var mockmsg;
+
+        var prepareHttp = function(typesArray) {
+            http.get.and.callFake(function(data) {
+                return {
+                    subscribe: function(suc) {
+                        suc({"_body":
+                            JSON.stringify({"types":typesArray})
+                        });
+                    }
+                };
+            });
+        };
+
+        beforeEach(()=>{
+            mockmsg = jasmine.createSpyObj('messages', [ 'add' ]);
+            http = jasmine.createSpyObj('http', [ 'get' ]);
+        });
+
         it('should let types inherit fields from parent types',
-            function() {
-                
-                var data = {
-                    "types" : [
+            function(done) {
+
+                prepareHttp([
                         {
                             "type": "FirstLevelType",
                             "fields": [
@@ -29,43 +49,44 @@ export function main() {
                                 }
                             ]
                         }
-                    ]
-                };
-                
-                var dmc = new DataModelConfiguration(data);
-                expect(dmc.getFields('FirstLevelType')[0].field).toBe('fieldA');
-                expect(dmc.getFields('SecondLevelType')[0].field).toBe('fieldA');
-                expect(dmc.getFields('SecondLevelType')[1].field).toBe('fieldB');
+                ]);
+
+                var dmc = new DataModelConfiguration(http,new Messages());
+                dmc.getFields('SecondLevelType').then(fields=>{
+                    expect(fields[0].field).toBe('fieldA');
+                    expect(fields[1].field).toBe('fieldB');
+                    done();
+                });
             }
         );
 
 
         it('should fail if parent type is referenced but not defined before',
-            function() {
+            function(done) {
 
-                var data = {
-                    "types" : [
-                        {
-                            "type": "SecondLevelType",
-                            "parent" : "FirstLevelType",
-                            "fields": [
-                                {
-                                    "field": "fieldB"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "FirstLevelType",
-                            "fields": [
-                                {
-                                    "field": "fieldA"
-                                }
-                            ]
-                        }
-                    ]
-                };
+                prepareHttp([
+                    {
+                        "type": "SecondLevelType",
+                        "parent" : "FirstLevelType",
+                        "fields": [
+                            {
+                                "field": "fieldB"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "FirstLevelType",
+                        "fields": [
+                            {
+                                "field": "fieldA"
+                            }
+                        ]
+                    }
+                ]);
 
-                expect(function(){new DataModelConfiguration(data);}).toThrow();
+                new DataModelConfiguration(http,mockmsg);
+                expect(mockmsg.add).toHaveBeenCalled();
+                done();
             }
         );
     });

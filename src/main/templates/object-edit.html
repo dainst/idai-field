@@ -13,7 +13,7 @@
                     <div class="panel-heading">
                         Please choose the object type.
                     </div>
-                    <button *ngFor="#type of dataModelConfiguration.getTypes(); #index=index" (mousedown)="setType(type)"
+                    <button *ngFor="#type of types; #index=index" (mousedown)="setType(type)"
                             type="button" id="create-object-option-{{index}}" class="list-group-item">{{type}}</button>
                 </div>
             </main>
@@ -48,7 +48,7 @@
                     </div>
 
                     <!-- Diverse Object Informations -->
-                    <div *ngFor="#field of dataModelConfiguration.getFields(object.type)">
+                    <div *ngFor="#field of fieldsForObjectType">
                         <div *ngIf="field" class="form-group">
                             <label *ngIf="field.label">{{field.label}}</label>
                             <label *ngIf="!field.label">{{field.field}}</label>

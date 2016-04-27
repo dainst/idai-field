@@ -1,10 +1,11 @@
 <div class="row">
 
+
     <div class="col-lg-3 col-md-3 col-sm-3"
-         id="objectOverview">
+         id="objectOverview" *ngIf="dataModelConfiguration">
         <aside>
             <header>
-                <h1 >
+                <h1>
                     <span class="mdi mdi-view-list"></span>
                     Objects
                 </h1>
@@ -52,7 +53,7 @@
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-9">
-        <object-edit [(object)]="selectedObject"></object-edit>
+        <object-edit [(object)]="selectedObject" [(dataModelConfiguration)]="dataModelConfiguration"></object-edit>
     </div>
 </div>
 

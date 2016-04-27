@@ -21,6 +21,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
 
     @Input() object: IdaiFieldObject;
+    @Input() dataModelConfiguration: DataModelConfiguration;
+    
 
     /**
      * The object as it is currently stored in the database (without recent changes)
@@ -50,15 +52,11 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public types : string[];
     public fieldsForObjectType : any;
 
-    constructor(private objectList: ObjectList,
-                private dataModelConfiguration: DataModelConfiguration) {
+    constructor(private objectList: ObjectList) {
+        
     }
 
     ngOnInit():any {
-        var this_=this;
-        this.dataModelConfiguration.getTypes().then(function(types){
-            this_.types=types;
-        });
         this.setFieldsForObjectType(this); // bad, this is necessary for testing
     }
 
@@ -66,7 +64,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
      * Saves the object to the local datastore.
      */
     public save() {
-
         this.saveRelatedObjects().then(
             () => {
                 this.objectList.validateAndSave(this.object, false, true).then(
@@ -126,15 +123,16 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
     private setFieldsForObjectType(this_) {
         if (this_.object==undefined) return;
-        this.dataModelConfiguration.getFields(this.object.type).then(function(fields){
-            this_.fieldsForObjectType=fields;
-        });
+        if (!this.dataModelConfiguration) return;
+        this.fieldsForObjectType=this.dataModelConfiguration.getFields(this.object.type);
     }
 
     public ngOnChanges() {
         if (this.object) {
             this.setFieldsForObjectType(this);
             this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
+
+            this.types=this.dataModelConfiguration.getTypes();
         }
     }
 

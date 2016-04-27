@@ -25,6 +25,5 @@ bootstrap(AppComponent, [
     provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
-    provide(DataModelConfiguration, {useClass: DataModelConfiguration}),
     provide(Indexeddb, {useClass: Indexeddb})
 ]);

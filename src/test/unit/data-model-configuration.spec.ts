@@ -51,12 +51,14 @@ export function main() {
                         }
                 ]);
 
-                var dmc = new DataModelConfiguration(http,new Messages());
-                dmc.getFields('SecondLevelType').then(fields=>{
+                DataModelConfiguration.createInstance(http,new Messages()).then((dmc)=> {
+                    var fields=dmc.getFields('SecondLevelType');
                     expect(fields[0].field).toBe('fieldA');
                     expect(fields[1].field).toBe('fieldB');
                     done();
                 });
+
+
             }
         );
 
@@ -84,9 +86,10 @@ export function main() {
                     }
                 ]);
 
-                new DataModelConfiguration(http,mockmsg);
-                expect(mockmsg.add).toHaveBeenCalled();
-                done();
+                DataModelConfiguration.createInstance(http,mockmsg).then((dmc)=>{
+                    expect(mockmsg.add).toHaveBeenCalled();
+                    done();
+                });
             }
         );
     });

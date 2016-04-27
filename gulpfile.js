@@ -109,8 +109,8 @@ function watch() {
     gulp.watch('src/main/index.html',          ['provide-sources']);
     gulp.watch('src/main/config/**/*.json',    ['provide-configs']);
     gulp.watch('src/main/img/**/*',            ['provide-resources']);
-    gulp.watch('src/test/**/*ts',         ['provide-test-sources']);
-    gulp.watch('src/e2e/**/*js',          ['provide-test-sources']);
+    gulp.watch('src/test/unit/**/*ts',          ['provide-test-sources']);
+    gulp.watch('src/test/e2e/**/*js',          ['provide-test-sources']);
 }
 
 gulp.task('webserver-watch', function() {

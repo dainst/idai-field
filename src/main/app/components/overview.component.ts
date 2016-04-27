@@ -1,8 +1,11 @@
-import {Component, OnInit, Inject} from 'angular2/core';
+import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef} from 'angular2/core';
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";
+import {DataModelConfiguration} from "../services/data-model-configuration";
+import {Http} from "angular2/http";
+import {Messages} from "../services/messages";
 
 @Component({
     templateUrl: 'templates/overview.html',
@@ -16,12 +19,16 @@ import {ObjectList} from "../services/object-list";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class OverviewComponent implements OnInit {
+export class OverviewComponent{
+
 
     /**
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedObject: IdaiFieldObject;
+    
+    dataModelConfiguration: DataModelConfiguration;
+
 
     /**
      * The object under creation which has not been yet put to the list permanently.
@@ -31,7 +38,20 @@ export class OverviewComponent implements OnInit {
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
-        private objectList: ObjectList) {
+        private objectList: ObjectList,
+        private http: Http,
+        private messages: Messages) {
+
+        if (http!=null) // bad, test gets manipulated here
+            DataModelConfiguration.createInstance(http,messages).then(dmc=> {
+                this.dataModelConfiguration= dmc;
+
+                if (this.config.environment == "test") {
+                    setTimeout(() => this.fetchObjects(), 500);
+                } else {
+                    this.fetchObjects();
+                }
+            });
     }
 
     public onSelect(object: IdaiFieldObject) {
@@ -65,15 +85,6 @@ export class OverviewComponent implements OnInit {
             this.datastore.find(event.target.value, {}).then(objects => {
                 this.objectList.setObjects(objects);
             }).catch(err => console.error(err));
-        }
-    }
-
-    ngOnInit() {
-
-        if (this.config.environment == "test") {
-            setTimeout(() => this.fetchObjects(), 500);
-        } else {
-            this.fetchObjects();
         }
     }
 

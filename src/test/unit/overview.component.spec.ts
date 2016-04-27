@@ -54,7 +54,7 @@ export function main() {
             mockDatastore.all.and.callFake(all);
             mockDatastore.find.and.callFake(find);
 
-            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList);
+            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList,null,null);
 
             objects = [object1, object2];
         });

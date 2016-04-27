@@ -9,7 +9,7 @@ describe('idai field app', function() {
     }
 
     function createId() {
-        element(by.id('object-edit-input-identifier')).sendKeys('12345');
+        element(by.id('object-edit-input-identifier')).clear().sendKeys('1').sendKeys('2').sendKeys('3').sendKeys('4').sendKeys('5');
     }
 
     it('should create a new object of first listed type ', function() {

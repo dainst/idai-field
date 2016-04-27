@@ -13,49 +13,36 @@ export class DataModelConfiguration {
 
     public static PATH='config/Configuration.json';
 
-    /**
-     * Contains the possible object types
-     */
-    private types: Promise<string[]>;
+    public static createInstance(http,messages) : Promise<DataModelConfiguration>{
 
-    /**
-     * Contains an array of fields for every object type defined in the configurationData
-     */
-    private fieldMap: Promise<{ [type: string]: any[] }>;
-    private excavation: Promise<any>;
-
-    constructor(
-        http:Http,
-        private messages: Messages
-    ) {
-        this.fieldMap = new Promise<{ [type: string]: any[] }>((resolve)=> {
+        return new Promise<DataModelConfiguration>((resolve,reject) => {
             http.get(DataModelConfiguration.PATH).
             subscribe(data_=>{
 
-                var data=JSON.parse(data_['_body']);
-                var fieldMap:{ [type: string]: any[] }={}
+                try {
+                    var data=JSON.parse(data_['_body']);
+                } catch (e) {
+                    messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
+                    console.log(":",e.toString());
+                    reject(e.message);
+                }
+
+                var fieldMap:{ [type: string]: any[] }={};
                 for (var i in data['types']) {
                     fieldMap[data['types'][i].type]
-                        =this.createFields(fieldMap,data['types'][i]);
+                        =DataModelConfiguration.createFields(fieldMap,data['types'][i],messages);
                 }
-                resolve(fieldMap);
-            });
-        });
 
-        this.excavation = new Promise<{}>((resolve)=> {
-            http.get(DataModelConfiguration.PATH).
-            subscribe(data_=>{
-                var data=JSON.parse(data_['_body']);
-                resolve(data['excavation']);
+                resolve(new DataModelConfiguration(messages,fieldMap,data['excavation']))
             });
         });
     }
 
-    private createFields(fieldMap,type) {
+    private static createFields(fieldMap,type,messages) {
         var fields=[];
         if (type.parent!=undefined) {
             if (fieldMap[type.parent]==undefined) {
-                this.messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
+                messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
             } else
                 fields=fieldMap[type.parent];
         }
@@ -63,32 +50,34 @@ export class DataModelConfiguration {
     }
 
     /**
+     * @param messages
+     * @param excavation
+     * @param fieldMap Contains an array of fields for every object type defined in the configurationData
+     */
+    constructor(
+        private messages: Messages,
+        private fieldMap: { [type: string]: any[] },
+        private excavation: string
+    ) {}
+
+
+    /**
      * Returns an array containing the possible object types
      */
-    public getTypes(): Promise<string[]> {
-        return new Promise<string[]>((resolve,reject)=>{
-            this.fieldMap.then(function(fm){
-                resolve(Object.keys(fm))
-            });
-        });
+    public getTypes(): string[] {
+        return Object.keys(this.fieldMap);
     }
 
     /**
      * Returns an array containing the fields of the specified object type
      * @param type
      */
-    public getFields(type: string): Promise<any[]> {
-        return new Promise<any[]>((resolve,reject)=>{
-            this.fieldMap.then(function(fm){
-                resolve(fm[type]);
-            });
-        });
+    public getFields(type: string): any[] {
+        return this.fieldMap[type];
     }
 
-    public getExcavationName() : Promise<any> {
-        return new Promise<any>((resolve)=>{
-            this.excavation.then(name=>resolve(name))
-        });
+    public getExcavationName() : any {
+        return this.excavation;
     }
 
 }

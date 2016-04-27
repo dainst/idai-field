@@ -22,8 +22,12 @@ export function main() {
         var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
             "type": "Object" };
 
+        // var filteredObject = { "resource" : { "identifier": "ob1", "title": "Object 1", "type": "Object"},
+        //     "dataset" : "dataset1" };
+
         var filteredObject = { "resource" : { "identifier": "ob1", "title": "Object 1", "type": "Object"},
-            "dataset" : "dataset1" };
+             };
+
 
         var successFunction = function() {
             return {
@@ -63,11 +67,11 @@ export function main() {
             mockHttp = jasmine.createSpyObj('mockHttp', [ 'get', 'put' ]);
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);
-            mockDataModelConfiguration = jasmine.createSpyObj('mockDataModelConfiguration', ['getExcavationName']);
-            mockDataModelConfiguration.getExcavationName.and.callFake(
-                function() { return {then: function(cb) { cb("dataset1");} }});
+            // mockDataModelConfiguration = jasmine.createSpyObj('mockDataModelConfiguration', ['getExcavationName']);
+            // mockDataModelConfiguration.getExcavationName.and.callFake(
+            //     function() { return {then: function(cb) { cb("dataset1");} }});
 
-            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config, mockDataModelConfiguration);
+            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config);
             j=0;
         });
 

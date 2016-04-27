@@ -25,25 +25,17 @@ export function main() {
 
         class MockDataModelConfiguration {
             public getTypes = function() {
-                return {
-                    then: function(cb) {
-                        cb(["Section", "Feature", "Lot", "Context", "Object" ]);
-                    },
-                }
+                return ["Section", "Feature", "Lot", "Context", "Object" ];
             };
             public getFields = function() {
-                return {
-                    then: function(cb) {
-                        cb([{
-                            "field": "Material",
-                            "valuelist": [
-                                "Alabaster",
-                                "Amber",
-                                "Antler"
-                            ]
-                        }]);
-                    }
-                }
+                return [{
+                    "field": "Material",
+                    "valuelist": [
+                        "Alabaster",
+                        "Amber",
+                        "Antler"
+                    ]
+                }];
             }
         }
 
@@ -58,6 +50,7 @@ export function main() {
         var getElementContent = function(componentFixture, selector: string): string[] {
 
             componentFixture.componentInstance.object = selectedObject;
+            componentFixture.componentInstance.dataModelConfiguration = new MockDataModelConfiguration();
             componentFixture.detectChanges();
 
             var compiled = componentFixture.debugElement.nativeElement;

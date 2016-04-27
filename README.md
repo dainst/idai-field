@@ -14,7 +14,7 @@ Install the following npm packages globally:
 
 ```
 npm install -g typings
-npm install -g karma  # only necessary if you need to run karma directly from the command prompt.
+npm install -g karma  # only necessary if you need to run karma directly from the command prompt
 npm install -g gulp   # only necessary if you need to debug gulp commands
 ```
 

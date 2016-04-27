@@ -56,7 +56,6 @@
         },
         {
           "field": "Category",
-          "parent" : "Object"
           "valuelist": [
             "Architecture Terracotta",
             "Architecture Poros",

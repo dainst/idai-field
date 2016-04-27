@@ -105,10 +105,10 @@ export class IdaiFieldBackend {
      * @param object, uniquely identified by object.id.
      * @returns {Promise<T>}
      */
-    public save(object:IdaiFieldObject):Promise<IdaiFieldObject> {
+    public save(object:IdaiFieldObject,dataset:string):Promise<IdaiFieldObject> {
         return new Promise((resolve, reject) => {
 
-            this.performPut(object.id,this.createDocument(object)).subscribe(
+            this.performPut(object.id,this.createDocument(object,dataset)).subscribe(
                   () => resolve(object),
                   err => {
                       this.checkConnection();
@@ -125,10 +125,11 @@ export class IdaiFieldBackend {
      * @param object the resource of the document to be created.
      * @returns a document as expected by the backend.
      */
-    private createDocument(object:IdaiFieldObject) : any {
+    private createDocument(object:IdaiFieldObject,dataset:string) : any {
 
         var document= {"resource":{}};
         document["resource"]= ModelUtils.filterUnwantedProps(object);
+        if (dataset!=undefined) document['dataset']=dataset;
         return document;
     }
 

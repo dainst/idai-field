@@ -23,7 +23,6 @@ export class DataModelConfiguration {
                     var data=JSON.parse(data_['_body']);
                 } catch (e) {
                     messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
-                    console.log(":",e.toString());
                     reject(e.message);
                 }
 
@@ -33,7 +32,7 @@ export class DataModelConfiguration {
                         =DataModelConfiguration.createFields(fieldMap,data['types'][i],messages);
                 }
 
-                resolve(new DataModelConfiguration(messages,fieldMap,data['excavation']))
+                resolve(new DataModelConfiguration(fieldMap,data['excavation']))
             });
         });
     }
@@ -55,7 +54,6 @@ export class DataModelConfiguration {
      * @param fieldMap Contains an array of fields for every object type defined in the configurationData
      */
     constructor(
-        private messages: Messages,
         private fieldMap: { [type: string]: any[] },
         private excavation: string
     ) {}

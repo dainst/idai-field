@@ -1,7 +1,8 @@
-import {Component, Inject, OnInit} from 'angular2/core';
+import {Component, Inject, OnInit, Input, OnChanges} from 'angular2/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
+import {DataModelConfiguration} from "../services/data-model-configuration";
 
 /**
  * @author Thomas Kleinke
@@ -13,7 +14,10 @@ import {IdaiFieldObject} from '../model/idai-field-object';
     templateUrl: 'templates/synchronization.html'
 })
 
-export class SynchronizationComponent implements OnInit {
+export class SynchronizationComponent implements OnChanges {
+
+
+    @Input() dataModelConfiguration: DataModelConfiguration;
 
     private connected: boolean = false;
     private objectsToSyncIds: string[] = [];
@@ -21,7 +25,9 @@ export class SynchronizationComponent implements OnInit {
     constructor(private idaiFieldBackend: IdaiFieldBackend,
         private datastore: Datastore) {}
 
-    ngOnInit() {
+
+    ngOnChanges(changes:{}):any {
+        if (this.dataModelConfiguration==undefined) return;
 
         this.setupConnectionCheck();
         this.setupSync();
@@ -41,8 +47,11 @@ export class SynchronizationComponent implements OnInit {
 
         this.datastore.getUnsyncedObjects().subscribe(
             object => {
-                if (this.connected) this.sync(object);
-                else this.storeObjectId(object.id);
+
+                if (this.connected)
+                    this.sync(object);
+                else
+                    this.storeObjectId(object.id);
             },
             err => console.error("Could not fetch unsynced objects", err)
         );
@@ -50,7 +59,7 @@ export class SynchronizationComponent implements OnInit {
 
     private sync(object: IdaiFieldObject) {
 
-        this.idaiFieldBackend.save(object).then(
+        this.idaiFieldBackend.save(object,this.dataModelConfiguration.getExcavationName()).then(
             object => {
                 object.synced = 1;
                 this.datastore.update(object);

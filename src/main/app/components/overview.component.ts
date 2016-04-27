@@ -6,6 +6,7 @@ import {ObjectList} from "../services/object-list";
 import {DataModelConfiguration} from "../services/data-model-configuration";
 import {Http} from "angular2/http";
 import {Messages} from "../services/messages";
+import {ConfigLoader} from "../services/config-loader";
 
 @Component({
     templateUrl: 'templates/overview.html',
@@ -19,8 +20,7 @@ import {Messages} from "../services/messages";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class OverviewComponent{
-
+export class OverviewComponent implements OnInit {
 
     /**
      * The object currently selected in the list and shown in the edit component.
@@ -39,19 +39,7 @@ export class OverviewComponent{
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
         private objectList: ObjectList,
-        private http: Http,
-        private messages: Messages) {
-
-        if (http!=null) // bad, test gets manipulated here
-            DataModelConfiguration.createInstance(http,messages).then(dmc=> {
-                this.dataModelConfiguration= dmc;
-
-                if (this.config.environment == "test") {
-                    setTimeout(() => this.fetchObjects(), 500);
-                } else {
-                    this.fetchObjects();
-                }
-            });
+        private configLoader: ConfigLoader) {
     }
 
     public onSelect(object: IdaiFieldObject) {
@@ -73,6 +61,17 @@ export class OverviewComponent{
         this.objectList.getObjects().unshift(this.newObject);
 
         this.selectedObject = this.newObject;
+    }
+
+    public ngOnInit() {
+        this.configLoader.getDataModelConfiguration().then((dmc)=>{
+            this.dataModelConfiguration=dmc;
+            if (this.config.environment == "test") {
+                setTimeout(() => this.fetchObjects(), 500);
+            } else {
+                this.fetchObjects();
+            }
+        });
     }
 
     onKey(event:any) {

@@ -120,10 +120,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
     public triggerAutosave() {
 
-        console.log("save", this.object);
-
-        this.object.changed = true;
-
         if (this.saveTimer)
             clearTimeout(this.saveTimer);
 

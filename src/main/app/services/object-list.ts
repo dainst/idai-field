@@ -43,7 +43,6 @@ export class ObjectList {
 
             this.save(object).then(
                 () => {
-                    delete object.changed
                     resolve();
                 },
                 err => {

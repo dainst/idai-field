@@ -3,7 +3,7 @@ import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";
-import {DataModelConfiguration} from "../services/data-model-configuration";
+import {ProjectConfiguration} from "../services/project-configuration";
 import {Http} from "angular2/http";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";
@@ -27,7 +27,7 @@ export class OverviewComponent implements OnInit {
      */
     private selectedObject: IdaiFieldObject;
     
-    dataModelConfiguration: DataModelConfiguration;
+    private projectConfiguration: ProjectConfiguration;
 
 
     /**
@@ -64,8 +64,8 @@ export class OverviewComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.configLoader.getDataModelConfiguration().then((dmc)=>{
-            this.dataModelConfiguration=dmc;
+        this.configLoader.getProjectConfiguration().then((dmc)=>{
+            this.projectConfiguration=dmc;
             if (this.config.environment == "test") {
                 setTimeout(() => this.fetchObjects(), 500);
             } else {

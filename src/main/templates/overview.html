@@ -2,7 +2,7 @@
 
 
     <div class="col-lg-3 col-md-3 col-sm-3"
-         id="objectOverview" *ngIf="dataModelConfiguration">
+         id="objectOverview" *ngIf="projectConfiguration">
         <aside>
             <header>
                 <h1>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-9">
-        <object-edit [(object)]="selectedObject" [(dataModelConfiguration)]="dataModelConfiguration"></object-edit>
+        <object-edit [(object)]="selectedObject" [(projectConfiguration)]="projectConfiguration"></object-edit>
     </div>
 </div>
 

@@ -5,7 +5,7 @@ import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "angular2/http";
-import {DataModelConfiguration} from "./data-model-configuration";
+import {ProjectConfiguration} from "./project-configuration";
 
 /**
  * @author Jan G. Wieners

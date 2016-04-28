@@ -1,5 +1,5 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from 'angular2/testing';
-import {DataModelConfiguration} from "../../main/app/services/data-model-configuration";
+import {ProjectConfiguration} from "../../main/app/services/project-configuration";
 import {Messages} from "../../main/app/services/messages";
 import {MessagesDictionary} from "../../main/app/services/messages-dictionary";
 
@@ -7,7 +7,7 @@ import {MessagesDictionary} from "../../main/app/services/messages-dictionary";
  * @author Daniel de Oliveira
  */
 export function main() {
-    describe('DataModelConfiguration', () => {
+    describe('ProjectConfiguration', () => {
 
         it('should let types inherit fields from parent types',
             function() {
@@ -32,7 +32,7 @@ export function main() {
                         }
                 ]};
 
-                var dmc = new DataModelConfiguration(data);
+                var dmc = new ProjectConfiguration(data);
 
                 var fields=dmc.getFields('SecondLevelType');
                 expect(fields[0].field).toBe('fieldA');
@@ -64,7 +64,7 @@ export function main() {
                     }
                 ]};
 
-                expect(function(){new DataModelConfiguration(data)}).toThrow(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR)
+                expect(function(){new ProjectConfiguration(data)}).toThrow(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR)
             }
         );
     });

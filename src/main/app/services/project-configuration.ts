@@ -9,7 +9,7 @@ import {MessagesDictionary} from "./messages-dictionary";
  * @author Daniel de Oliveira
  */
 @Injectable()
-export class DataModelConfiguration {
+export class ProjectConfiguration {
 
     private fieldMap: { [type: string]: any[] }
 

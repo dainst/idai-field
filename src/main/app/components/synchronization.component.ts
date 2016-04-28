@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Input, OnChanges} from 'angular2/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {DataModelConfiguration} from "../services/data-model-configuration";
+import {ProjectConfiguration} from "../services/project-configuration";
 
 /**
  * @author Thomas Kleinke
@@ -17,7 +17,7 @@ import {DataModelConfiguration} from "../services/data-model-configuration";
 export class SynchronizationComponent implements OnChanges {
 
 
-    @Input() dataModelConfiguration: DataModelConfiguration;
+    @Input() projectConfiguration: ProjectConfiguration;
 
     private connected: boolean = false;
     private objectsToSyncIds: string[] = [];
@@ -27,7 +27,7 @@ export class SynchronizationComponent implements OnChanges {
 
 
     ngOnChanges(changes:{}):any {
-        if (this.dataModelConfiguration==undefined) return;
+        if (this.projectConfiguration==undefined) return;
 
         this.setupConnectionCheck();
         this.setupSync();
@@ -59,7 +59,7 @@ export class SynchronizationComponent implements OnChanges {
 
     private sync(object: IdaiFieldObject) {
 
-        this.idaiFieldBackend.save(object,this.dataModelConfiguration.getExcavationName()).then(
+        this.idaiFieldBackend.save(object,this.projectConfiguration.getExcavationName()).then(
             object => {
                 object.synced = 1;
                 this.datastore.update(object);

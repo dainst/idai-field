@@ -1,5 +1,5 @@
 import {Injectable} from "angular2/core";
-import {DataModelConfiguration} from "./data-model-configuration";
+import {ProjectConfiguration} from "./project-configuration";
 import {Messages} from "./messages";
 import {Http} from "angular2/http";
 import {MessagesDictionary} from "./messages-dictionary";
@@ -11,17 +11,17 @@ import {MessagesDictionary} from "./messages-dictionary";
 @Injectable()
 export class ConfigLoader {
 
-    private static DATA_MODEL_CONFIGURATION_PATH='config/Configuration.json';
+    private static PROJECT_CONFIGURATION_PATH='config/Configuration.json';
     
     constructor(
         private http: Http,
         private messages: Messages){
     }
 
-    public getDataModelConfiguration() : Promise<DataModelConfiguration> {
+    public getProjectConfiguration() : Promise<ProjectConfiguration> {
 
-        return new Promise<DataModelConfiguration>((resolve,reject) => {
-            this.http.get(ConfigLoader.DATA_MODEL_CONFIGURATION_PATH).
+        return new Promise<ProjectConfiguration>((resolve, reject) => {
+            this.http.get(ConfigLoader.PROJECT_CONFIGURATION_PATH).
             subscribe(data_=>{
 
                 var data;
@@ -33,7 +33,7 @@ export class ConfigLoader {
                 }
 
                 try {
-                    resolve(new DataModelConfiguration(data))
+                    resolve(new ProjectConfiguration(data))
                 } catch (e) {
                     this.messages.add(e, 'danger')
                     reject(e)

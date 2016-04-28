@@ -6,7 +6,7 @@ import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
 import {ObjectList} from "../../main/app/services/object-list";
 import {Datastore} from "../../main/app/datastore/datastore";
 import {Messages} from "../../main/app/services/messages";
-import {DataModelConfiguration} from "../../main/app/services/data-model-configuration";
+import {ProjectConfiguration} from "../../main/app/services/project-configuration";
 
 //import 'zone.js/dist/zone';
 
@@ -23,7 +23,7 @@ export function main() {
         class MockDatastore {}
         class MockMessages  {}
 
-        class MockDataModelConfiguration {
+        class MockProjectConfiguration {
             public getTypes = function() {
                 return ["Section", "Feature", "Lot", "Context", "Object" ];
             };
@@ -50,7 +50,7 @@ export function main() {
         var getElementContent = function(componentFixture, selector: string): string[] {
 
             componentFixture.componentInstance.object = selectedObject;
-            componentFixture.componentInstance.dataModelConfiguration = new MockDataModelConfiguration();
+            componentFixture.componentInstance.projectConfiguration = new MockProjectConfiguration();
             componentFixture.detectChanges();
 
             var compiled = componentFixture.debugElement.nativeElement;
@@ -70,7 +70,7 @@ export function main() {
             provide(Datastore, { useClass: MockDatastore }),
             provide(ObjectList, { useClass: ObjectList }),
             provide(Messages, { useClass: MockMessages }),
-            provide(DataModelConfiguration, { useClass: MockDataModelConfiguration}),
+            provide(ProjectConfiguration, { useClass: MockProjectConfiguration}),
             provide(ObjectEditComponent, {useClass: ObjectEditComponent}),
             provide(TestComponentBuilder, {useClass: TestComponentBuilder}),
         ]);

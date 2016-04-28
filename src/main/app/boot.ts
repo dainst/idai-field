@@ -10,7 +10,7 @@ import {Datastore} from "./datastore/datastore";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
-import {DataModelConfiguration} from "./services/data-model-configuration";
+import {ProjectConfiguration} from "./services/project-configuration";
 
 import CONFIG = require("../config/config.json");
 import {Indexeddb} from "./datastore/indexeddb";

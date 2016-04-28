@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
-import {DataModelConfiguration} from "../services/data-model-configuration";
+import {ProjectConfiguration} from "../services/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "angular2/core";
@@ -21,7 +21,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
 
     @Input() object: IdaiFieldObject;
-    @Input() dataModelConfiguration: DataModelConfiguration;
+    @Input() projectConfiguration: ProjectConfiguration;
     
 
     /**
@@ -123,8 +123,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
     private setFieldsForObjectType(this_) {
         if (this_.object==undefined) return;
-        if (!this.dataModelConfiguration) return;
-        this.fieldsForObjectType=this.dataModelConfiguration.getFields(this.object.type);
+        if (!this.projectConfiguration) return;
+        this.fieldsForObjectType=this.projectConfiguration.getFields(this.object.type);
     }
 
     public ngOnChanges() {
@@ -132,7 +132,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
             this.setFieldsForObjectType(this);
             this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
 
-            this.types=this.dataModelConfiguration.getTypes();
+            this.types=this.projectConfiguration.getTypes();
         }
     }
 

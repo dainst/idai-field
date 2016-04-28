@@ -6,7 +6,7 @@ import {Datastore} from "../datastore/datastore";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "./messages.component";
-import {DataModelConfiguration} from "../services/data-model-configuration";
+import {ProjectConfiguration} from "../services/project-configuration";
 import {ConfigLoader} from "../services/config-loader";
 
 @Component({
@@ -20,7 +20,7 @@ import {ConfigLoader} from "../services/config-loader";
 export class AppComponent implements OnInit {
 
 
-    public dataModelConfiguration: DataModelConfiguration;
+    public projectConfiguration: ProjectConfiguration;
 
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (this.config.environment == 'test') this.loadSampleData();
 
-        this.configLoader.getDataModelConfiguration().then(dmc=>{
-           this.dataModelConfiguration=dmc;
+        this.configLoader.getProjectConfiguration().then(pc=>{
+           this.projectConfiguration=pc;
         });
     }
 

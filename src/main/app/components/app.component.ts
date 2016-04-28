@@ -6,7 +6,7 @@ import {Datastore} from "../datastore/datastore";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "./messages.component";
-import {ProjectConfiguration} from "../services/project-configuration";
+import {ProjectConfiguration} from "../model/project-configuration";
 import {ConfigLoader} from "../services/config-loader";
 
 @Component({

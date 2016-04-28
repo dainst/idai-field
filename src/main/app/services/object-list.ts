@@ -2,7 +2,7 @@ import {Injectable,Inject} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
 import {Messages} from "./messages";
-import {M} from "./m";
+import {M} from "./../m";
 
 /**
  * @author Thomas Kleinke

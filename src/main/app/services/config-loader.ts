@@ -1,8 +1,8 @@
 import {Injectable} from "angular2/core";
-import {ProjectConfiguration} from "./project-configuration";
+import {ProjectConfiguration} from "./../model/project-configuration";
 import {Messages} from "./messages";
 import {Http} from "angular2/http";
-import {M} from "./m";
+import {M} from "./../m";
 
 
 /**

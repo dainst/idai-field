@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from 'angular2/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ObjectList} from "../services/object-list";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
-import {ProjectConfiguration} from "../services/project-configuration";
+import {ProjectConfiguration} from "../model/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "angular2/core";

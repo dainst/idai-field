@@ -3,7 +3,7 @@ import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";
-import {ProjectConfiguration} from "../services/project-configuration";
+import {ProjectConfiguration} from "../model/project-configuration";
 import {Http} from "angular2/http";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";

@@ -1,7 +1,7 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from 'angular2/testing';
-import {ProjectConfiguration} from "../../main/app/services/project-configuration";
+import {ProjectConfiguration} from "../../main/app/model/project-configuration";
 import {Messages} from "../../main/app/services/messages";
-import {M} from "../../main/app/services/m";
+import {M} from "../../main/app/m";
 
 /**
  * @author Daniel de Oliveira

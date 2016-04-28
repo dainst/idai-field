@@ -1,6 +1,6 @@
 import {Injectable} from "angular2/core";
 import {Message} from "../model/message";
-import {M} from "./m";
+import {M} from "./../m";
 
 /**
  * Maintains a collection of currently active messages the

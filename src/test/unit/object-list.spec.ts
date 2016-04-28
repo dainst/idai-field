@@ -19,7 +19,6 @@ export function main() {
         ]);
 
         var mockDatastore;
-        var messagesService;
         var objectList;
         var id = "abc";
 
@@ -43,14 +42,10 @@ export function main() {
             };
         };
 
-        beforeEach(
-            inject([Messages],
-            (messages:Messages) => {
-
-                messagesService = messages;
+        beforeEach(function() {
 
                 mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-                objectList = new ObjectList(mockDatastore, messages);
+                objectList = new ObjectList(mockDatastore);
 
                 selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true ,
                     "id" : id, "type": "Object" };
@@ -65,7 +60,7 @@ export function main() {
                         }
                     };
                 });
-        }));
+        });
 
         it('should create a non existing object on autosave',
             function() {

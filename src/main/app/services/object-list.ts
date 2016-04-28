@@ -12,10 +12,8 @@ import {M} from "./../m";
 @Injectable()
 
 export class ObjectList {
-
-
-    constructor(private datastore: Datastore,
-                private messages: Messages) {}
+    
+    constructor(private datastore: Datastore) {}
 
     private objects: IdaiFieldObject[];
 

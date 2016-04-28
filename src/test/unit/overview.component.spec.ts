@@ -24,7 +24,7 @@ export function main() {
         var validateAndSave = function() {
             return {
                 then: function(suc) {
-                    suc();
+                    suc("err");
                 }
             };
         };
@@ -104,7 +104,6 @@ export function main() {
             function() {
                 overviewComponent.onCreate();
                 overviewComponent.onSelect(object1);
-
                 expect(objects.length).toBe(2);
                 expect(objects[0]).toBe(object1);
                 expect(objects[1]).toBe(object2);

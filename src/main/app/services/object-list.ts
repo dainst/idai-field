@@ -37,26 +37,23 @@ export class ObjectList {
         object: IdaiFieldObject, 
         restoreIfInvalid: boolean): Promise<any> {
 
-        if (!object) "object must not be undefined";
+        if (!object) throw "object must not be undefined";
 
         return new Promise<any>((resolve, reject) => {
 
-            if (!object.changed)
-                resolve(undefined)
-            else
-                this.save(object).then(
-                    () => {
-                        delete object.changed
-                        resolve();
-                    },
-                    err => {
-                        if (restoreIfInvalid)
+            this.save(object).then(
+                () => {
+                    delete object.changed
+                    resolve();
+                },
+                err => {
+                    if (object.id&&restoreIfInvalid)
                             this.restoreObject(object).then(
                                 () => resolve(), err => reject(err));
-                        else
-                            this.mapErr(err,resolve,reject)
-                    }
-                )
+                    else
+                        this.mapErr(err,resolve,reject)
+                }
+            )
         });
     }
 

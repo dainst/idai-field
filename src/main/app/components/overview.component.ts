@@ -44,24 +44,30 @@ export class OverviewComponent implements OnInit {
         private messages: Messages) {
     }
 
-    private validateAndSave() { 
+    private validateAndSave(object) {
         if (this.selectedObject)
             this.objectList.validateAndSave(this.selectedObject, true).then((result)=>{
                 this.messages.delete(M.OBJLIST_IDEXISTS);
                 this.messages.delete(M.OBJLIST_IDMISSING);
-                if (result) this.messages.add(result,'danger')
+                if (result) {
+                    this.messages.add(result,'danger')
+                    if (this.newObject && object != this.newObject) {
+                        this.removeObjectFromListIfNotSaved();
+                    }
+
+                }
             })
     }
     
     public onSelect(object: IdaiFieldObject) {
-        this.validateAndSave();
-        if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotSaved();
+        this.validateAndSave(object);
+
         this.selectedObject = object;
     }
 
     public onCreate() {
 
-        this.validateAndSave();
+        this.validateAndSave(undefined);
         if (this.newObject) this.removeObjectFromListIfNotSaved();
 
         this.newObject = {};

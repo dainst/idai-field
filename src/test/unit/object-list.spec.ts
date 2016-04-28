@@ -167,34 +167,27 @@ export function main() {
                 }
         );
 
-        it('should add a message to the current messages if object has been marked invalid',
-            function() {
-
-                expect(messagesService.getMessages().length).toBe(0);
+        it('should return a message key in case object cannot get stored',
+            function(done) {
 
                 mockDatastore.update.and.callFake(errorFunction);
                 selectedObject.changed = true;
-                objectList.validateAndSave(selectedObject, false, true);
-
-                expect(messagesService.getMessages().length).toBe(1);
+                objectList.validateAndSave(selectedObject, false).then(result=>{
+                    expect(result).not.toBe(undefined)
+                    done()
+                });
             }
         );
 
-        it('should delete a message from the current messages if invalid marked object gets marked valid again',
-            function() {
+        it('should not return a message key in case object can get stored',
+            function(done) {
 
-                expect(messagesService.getMessages().length).toBe(0);
-
-                mockDatastore.update.and.callFake(errorFunction);
+                mockDatastore.update.and.callFake(successFunction);
                 selectedObject.changed = true;
-                objectList.validateAndSave(selectedObject, false, true);
-
-                expect(messagesService.getMessages().length).toBe(1);
-
-                selectedObject.changed = true;
-                objectList.validateAndSave(selectedObject, true, true);
-
-                expect(messagesService.getMessages().length).toBe(0);
+                objectList.validateAndSave(selectedObject, true).then(result=>{
+                    expect(result).toBe(undefined)
+                    done()
+                });
             }
         );
     });

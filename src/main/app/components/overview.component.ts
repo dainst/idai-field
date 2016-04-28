@@ -7,6 +7,7 @@ import {ProjectConfiguration} from "../model/project-configuration";
 import {Http} from "angular2/http";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";
+import {M} from "../m";
 
 @Component({
     templateUrl: 'templates/overview.html',
@@ -39,21 +40,28 @@ export class OverviewComponent implements OnInit {
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
         private objectList: ObjectList,
-        private configLoader: ConfigLoader) {
+        private configLoader: ConfigLoader,
+        private messages: Messages) {
     }
 
-    public onSelect(object: IdaiFieldObject) {
-
+    private validateAndSave() { 
         if (this.selectedObject)
-            this.objectList.validateAndSave(this.selectedObject, true, true);
+            this.objectList.validateAndSave(this.selectedObject, true).then((result)=>{
+                this.messages.delete(M.OBJLIST_IDEXISTS);
+                this.messages.delete(M.OBJLIST_IDMISSING);
+                if (result) this.messages.add(result,'danger')
+            })
+    }
+    
+    public onSelect(object: IdaiFieldObject) {
+        this.validateAndSave();
         if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotSaved();
         this.selectedObject = object;
     }
 
     public onCreate() {
 
-        this.objectList.validateAndSave(this.selectedObject, true, true);
-
+        this.validateAndSave();
         if (this.newObject) this.removeObjectFromListIfNotSaved();
 
         this.newObject = {};

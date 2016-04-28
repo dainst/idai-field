@@ -6,6 +6,8 @@ import {ProjectConfiguration} from "../model/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "angular2/core";
+import {Messages} from "../services/messages";
+import {M} from "../m";
 
 /**
  * @author Jan G. Wieners
@@ -52,7 +54,9 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public types : string[];
     public fieldsForObjectType : any;
 
-    constructor(private objectList: ObjectList) {
+    constructor(
+        private objectList: ObjectList,
+        private messages: Messages) {
         
     }
 
@@ -66,8 +70,13 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public save() {
         this.saveRelatedObjects().then(
             () => {
-                this.objectList.validateAndSave(this.object, false, true).then(
-                    () => { this.lastSavedVersion = JSON.parse(JSON.stringify(this.object)); },
+                this.objectList.validateAndSave(this.object, false).then(
+                    (result) => {
+                        this.messages.delete(M.OBJLIST_IDEXISTS);
+                        this.messages.delete(M.OBJLIST_IDMISSING);
+                        if (result) this.messages.add(result,'danger')
+                        this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
+                    },
                     err => { console.error(err); }
                 )
             },
@@ -99,7 +108,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
             if (relations && relations.length > 0) {
                 var promises: Promise<any>[] = [];
                 for (var k in relations) {
-                    promises.push(this.objectList.validateAndSaveById(relations[k], true, false));
+                    promises.push(this.objectList.validateAndSaveById(relations[k]));
                 }
                 Promise.all(promises).then(
                     () => { resolve(); },

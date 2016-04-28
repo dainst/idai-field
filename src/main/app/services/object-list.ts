@@ -27,21 +27,19 @@ export class ObjectList {
      * @param object The object to save. Must not be undefined.
      * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
      * is invalid
-     * @param showMessages Defines if error messages should be shown for the results of this operation
+     * @return promise. Gets rejectected in case of unrecoverable or unknown errors.
+     *   In other cases, the argument of resolve
+     *   is either <code>undefined</code>, which means the save operation was successful,
+     *   or it a key of M to identify the error.
+     * @throws if object is not defined.
      */
     public validateAndSave(
         object: IdaiFieldObject, 
-        restoreIfInvalid: boolean, 
-        showMessages: boolean): Promise<any> {
+        restoreIfInvalid: boolean): Promise<any> {
+
+        if (!object) "object must not be undefined";
 
         return new Promise<any>((resolve, reject) => {
-
-            if (!object) reject("No object given");
-
-            if (showMessages) {
-                this.messages.delete(M.OBJLIST_IDEXISTS);
-                this.messages.delete(M.OBJLIST_IDMISSING);
-            }
 
             if (object.changed) {
                 this.save(object).then(
@@ -49,53 +47,50 @@ export class ObjectList {
                     err => {
                         object.valid = false;
 
-                        if (restoreIfInvalid) {
+                        if (restoreIfInvalid) 
                             this.restoreObject(object).then(
-                                () => { resolve(); },
-                                err => { reject(err); }
-                            );
-                        } else {
-                            switch (err) {
-                                case "databaseError":
-                                    if (showMessages) {
-                                        this.messages.add(M.OBJLIST_IDEXISTS, 'danger');
-                                    }
-                                    break;
-                                case "missingIdentifierError":
-                                    if (showMessages) {
-                                        this.messages.add(M.OBJLIST_IDMISSING, 'danger');
-                                    }
-                                    break;
-                            }
-                            resolve();
-                        }
+                                () => resolve(), err => reject(err));
+                        else 
+                            this.mapErr(err,resolve,reject)
+                        
                     }
                 )
             } else if (!object.valid && restoreIfInvalid) { // TODO WHY CAN I REMOVE RESTOREIFINVALID HERE WITHOUT BREAKING ANY TESTS?
                 this.restoreObject(object).then(
-                    () => { resolve(); },
+                    () => { resolve(undefined); },
                     err => { reject(err); }
                 );
-            } else resolve();
+            } else resolve(undefined);
         });
     }
+
+    private mapErr(err,resolve,reject) {
+        switch (err) {
+            case "databaseError":
+                resolve(M.OBJLIST_IDEXISTS)
+                break
+            case "missingIdentifierError":
+                resolve(M.OBJLIST_IDMISSING)
+                break
+            default:
+                reject(err)
+        }
+    }
+
 
     /**
      * Saves the object corresponding to the given id to the local database if an object for this id exists and
      * the object is valid.
      * Cannot be used to create new objects.
      * @param objectId The technical id of the object to save
-     * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
-     * is invalid
-     * @param showMessages Defines if error messages should be shown for the results of this operation
      */
-    public validateAndSaveById(objectId: string, restoreIfInvalid: boolean, showMessages: boolean): Promise<any> {
+    public validateAndSaveById(objectId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             this.datastore.get(objectId).then(
                 object => {
-                    this.validateAndSave(object, restoreIfInvalid, showMessages).then(
+                    this.validateAndSave(object, true).then(
                         () => { resolve(); },
                         err => { reject(err); }
                     )

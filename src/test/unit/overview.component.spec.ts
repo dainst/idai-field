@@ -18,9 +18,16 @@ export function main() {
         var mockObjectList: any;
         var mockDatastore: any;
 
-        var validateAndSave = function() { };
         var getObjects = function() { return objects; };
         var setObjects = function(newObjects: IdaiFieldObject[]) { objects = newObjects; };
+
+        var validateAndSave = function() {
+            return {
+                then: function(suc) {
+                    suc();
+                }
+            };
+        };
 
         var all = function() {
             return {
@@ -44,6 +51,7 @@ export function main() {
             };
         };
 
+
         beforeEach(() => {
             mockObjectList = jasmine.createSpyObj('mockObjectList', [ 'validateAndSave', 'getObjects', 'setObjects' ]);
             mockObjectList.validateAndSave.and.callFake(validateAndSave);
@@ -54,7 +62,9 @@ export function main() {
             mockDatastore.all.and.callFake(all);
             mockDatastore.find.and.callFake(find);
 
-            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList,null);
+            var mockMessages = jasmine.createSpyObj('messages', [ 'add', 'delete' ]);
+
+            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList,undefined, mockMessages);
 
             objects = [object1, object2];
         });
@@ -64,8 +74,8 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onSelect(object2);
 
-                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true, true);
-                expect((<ObjectList> mockObjectList).validateAndSave).not.toHaveBeenCalledWith(object2, true, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).not.toHaveBeenCalledWith(object2, true);
             }
         );
 
@@ -74,7 +84,7 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onCreate();
 
-                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true, true);
+                expect((<ObjectList> mockObjectList).validateAndSave).toHaveBeenCalledWith(object1, true);
             }
         );
 

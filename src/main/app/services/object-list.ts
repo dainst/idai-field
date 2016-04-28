@@ -23,12 +23,16 @@ export class ObjectList {
      * Saves an object to the local database if it is valid.
      * Creates a new object if the given object is not present in the datastore (which means the object doesn't
      * need to already have a technical id).
-     * @param object The object to save
+     * 
+     * @param object The object to save. Must not be undefined.
      * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
      * is invalid
      * @param showMessages Defines if error messages should be shown for the results of this operation
      */
-    public validateAndSave(object: IdaiFieldObject, restoreIfInvalid: boolean, showMessages: boolean): Promise<any> {
+    public validateAndSave(
+        object: IdaiFieldObject, 
+        restoreIfInvalid: boolean, 
+        showMessages: boolean): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 

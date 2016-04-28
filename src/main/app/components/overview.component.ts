@@ -44,10 +44,9 @@ export class OverviewComponent implements OnInit {
 
     public onSelect(object: IdaiFieldObject) {
 
-        this.objectList.validateAndSave(this.selectedObject, true, true);
-
+        if (this.selectedObject)
+            this.objectList.validateAndSave(this.selectedObject, true, true);
         if (this.newObject && object != this.newObject) this.removeObjectFromListIfNotSaved();
-
         this.selectedObject = object;
     }
 

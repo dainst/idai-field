@@ -1,4 +1,5 @@
 /// <reference path="../../../typings/browser/ambient/es6-shim/index.d.ts" />
+/// <reference path="../config/config.d.ts" />
 
 import {bootstrap}    from 'angular2/platform/browser'
 import {AppComponent} from './components/app.component'
@@ -11,12 +12,12 @@ import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
 
-import CONFIG = require("../config/config.json");
+import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./services/config-loader";
 import {M} from "./m";
 
-if (CONFIG.environment == 'production') enableProdMode();
+if (CONFIG['environment'] == 'production') enableProdMode();
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,

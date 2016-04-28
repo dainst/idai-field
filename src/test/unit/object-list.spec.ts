@@ -4,6 +4,7 @@ import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
 import {ObjectList} from "../../main/app/services/object-list";
 import {Datastore} from "../../main/app/datastore/datastore";
 import {Messages} from "../../main/app/services/messages";
+import {M} from "../../main/app/services/m";
 
 /**
  * @author Daniel M. de Oliveira
@@ -13,7 +14,8 @@ export function main() {
     describe('ObjectList', () => {
 
         beforeEachProviders(() => [
-            provide(Messages, {useClass: Messages})
+            provide(Messages, {useClass: Messages}),
+            provide(M, {useClass: M})
         ]);
 
         var mockDatastore;

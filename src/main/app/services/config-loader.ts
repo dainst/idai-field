@@ -2,7 +2,7 @@ import {Injectable} from "angular2/core";
 import {ProjectConfiguration} from "./project-configuration";
 import {Messages} from "./messages";
 import {Http} from "angular2/http";
-import {MessagesDictionary} from "./messages-dictionary";
+import {M} from "./m";
 
 
 /**
@@ -28,7 +28,7 @@ export class ConfigLoader {
                 try {
                     data=JSON.parse(data_['_body'])
                 } catch (e) {
-                    this.messages.add(MessagesDictionary.MSGKEY_PARSE_GENERIC_ERROR, 'danger')
+                    this.messages.add(M.PARSE_GENERIC_ERROR, 'danger')
                     reject(e.message);
                 }
 

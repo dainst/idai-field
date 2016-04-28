@@ -1,6 +1,6 @@
 import {Injectable} from "angular2/core";
 import {Message} from "../model/message";
-import {MessagesDictionary} from "./messages-dictionary";
+import {M} from "./m";
 
 /**
  * Maintains a collection of currently active messages the
@@ -12,6 +12,10 @@ import {MessagesDictionary} from "./messages-dictionary";
  */
 @Injectable()
 export class Messages {
+
+    constructor(private messagesDictionary:M){
+
+    }
 
     private messageMap: { [id: string]: Message } = {};
 
@@ -33,12 +37,12 @@ export class Messages {
      */
     public add(id:string,level:string): void {
 
-        var content : string = MessagesDictionary.MESSAGES[id];
+        var content : string = this.messagesDictionary.msgs[id];
         if (!content)
-            throw MessagesDictionary.MESSAGES[MessagesDictionary.MSGKEY_MESSAGES_NOBODY].replace('id',id);
+            throw this.messagesDictionary.msgs[M.MESSAGES_NOBODY].replace('id',id);
 
-        if (MessagesDictionary.LEVELS.indexOf(level) === -1)
-            throw MessagesDictionary.MSG_WRONG_LEVEL.replace('msglevel', level);
+        if (M.LEVELS.indexOf(level) === -1)
+            throw M.MSG_WRONG_LEVEL.replace('msglevel', level);
 
         this.messageMap[id] = {
             'level' : level,

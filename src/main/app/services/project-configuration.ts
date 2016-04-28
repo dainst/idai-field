@@ -2,7 +2,7 @@ import {Inject} from "angular2/core";
 import {Injectable} from "angular2/core";
 import {Http} from "angular2/http";
 import {Messages} from "./messages";
-import {MessagesDictionary} from "./messages-dictionary";
+import {M} from "./m";
 
 /**
  * @author Thomas Kleinke
@@ -33,7 +33,7 @@ export class ProjectConfiguration {
         var fields=[];
         if (type.parent!=undefined) {
             if (fieldMap[type.parent]==undefined) {
-                throw MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR
+                throw M.PC_GENERIC_ERROR
             } else
                 fields=fieldMap[type.parent]
         }

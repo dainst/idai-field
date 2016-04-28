@@ -15,6 +15,7 @@ import {ProjectConfiguration} from "./services/project-configuration";
 import CONFIG = require("../config/config.json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./services/config-loader";
+import {M} from "./services/m";
 
 if (CONFIG.environment == 'production') enableProdMode();
 
@@ -27,5 +28,6 @@ bootstrap(AppComponent, [
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
     provide(Indexeddb, {useClass: Indexeddb}),
-    provide(ConfigLoader, {useClass: ConfigLoader})
+    provide(ConfigLoader, {useClass: ConfigLoader}),
+    provide(M, {useClass: M})
 ]);

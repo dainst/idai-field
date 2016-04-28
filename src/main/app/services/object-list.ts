@@ -2,7 +2,7 @@ import {Injectable,Inject} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
 import {Messages} from "./messages";
-import {MessagesDictionary} from "./messages-dictionary";
+import {M} from "./m";
 
 /**
  * @author Thomas Kleinke
@@ -35,8 +35,8 @@ export class ObjectList {
             if (!object) reject("No object given");
 
             if (showMessages) {
-                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS);
-                this.messages.delete(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING);
+                this.messages.delete(M.OBJLIST_IDEXISTS);
+                this.messages.delete(M.OBJLIST_IDMISSING);
             }
 
             if (object.changed) {
@@ -54,12 +54,12 @@ export class ObjectList {
                             switch (err) {
                                 case "databaseError":
                                     if (showMessages) {
-                                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDEXISTS, 'danger');
+                                        this.messages.add(M.OBJLIST_IDEXISTS, 'danger');
                                     }
                                     break;
                                 case "missingIdentifierError":
                                     if (showMessages) {
-                                        this.messages.add(MessagesDictionary.MSGKEY_OBJLIST_IDMISSING, 'danger');
+                                        this.messages.add(M.OBJLIST_IDMISSING, 'danger');
                                     }
                                     break;
                             }

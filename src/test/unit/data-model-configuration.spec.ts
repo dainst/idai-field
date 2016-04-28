@@ -1,6 +1,7 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from 'angular2/testing';
 import {DataModelConfiguration} from "../../main/app/services/data-model-configuration";
 import {Messages} from "../../main/app/services/messages";
+import {MessagesDictionary} from "../../main/app/services/messages-dictionary";
 
 /**
  * @author Daniel de Oliveira
@@ -8,30 +9,10 @@ import {Messages} from "../../main/app/services/messages";
 export function main() {
     describe('DataModelConfiguration', () => {
 
-        var http;
-        var mockmsg;
-
-        var prepareHttp = function(typesArray) {
-            http.get.and.callFake(function(data) {
-                return {
-                    subscribe: function(suc) {
-                        suc({"_body":
-                            JSON.stringify({"types":typesArray})
-                        });
-                    }
-                };
-            });
-        };
-
-        beforeEach(()=>{
-            mockmsg = jasmine.createSpyObj('messages', [ 'add' ]);
-            http = jasmine.createSpyObj('http', [ 'get' ]);
-        });
-
         it('should let types inherit fields from parent types',
-            function(done) {
+            function() {
 
-                prepareHttp([
+                var data={"types":[
                         {
                             "type": "FirstLevelType",
                             "fields": [
@@ -49,24 +30,21 @@ export function main() {
                                 }
                             ]
                         }
-                ]);
+                ]};
 
-                DataModelConfiguration.createInstance(http,new Messages()).then((dmc)=> {
-                    var fields=dmc.getFields('SecondLevelType');
-                    expect(fields[0].field).toBe('fieldA');
-                    expect(fields[1].field).toBe('fieldB');
-                    done();
-                });
+                var dmc = new DataModelConfiguration(data);
 
-
+                var fields=dmc.getFields('SecondLevelType');
+                expect(fields[0].field).toBe('fieldA');
+                expect(fields[1].field).toBe('fieldB');
             }
         );
 
 
         it('should fail if parent type is referenced but not defined before',
-            function(done) {
+            function() {
 
-                prepareHttp([
+                var data={"types":[
                     {
                         "type": "SecondLevelType",
                         "parent" : "FirstLevelType",
@@ -84,12 +62,9 @@ export function main() {
                             }
                         ]
                     }
-                ]);
+                ]};
 
-                DataModelConfiguration.createInstance(http,mockmsg).then((dmc)=>{
-                    expect(mockmsg.add).toHaveBeenCalled();
-                    done();
-                });
+                expect(function(){new DataModelConfiguration(data)}).toThrow(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR)
             }
         );
     });

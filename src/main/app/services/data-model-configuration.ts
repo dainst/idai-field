@@ -11,59 +11,41 @@ import {MessagesDictionary} from "./messages-dictionary";
 @Injectable()
 export class DataModelConfiguration {
 
-    public static PATH='config/Configuration.json';
+    private fieldMap: { [type: string]: any[] }
 
-    public static createInstance(http,messages) : Promise<DataModelConfiguration>{
-
-        return new Promise<DataModelConfiguration>((resolve,reject) => {
-            http.get(DataModelConfiguration.PATH).
-            subscribe(data_=>{
-
-                try {
-                    var data=JSON.parse(data_['_body']);
-                } catch (e) {
-                    messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
-                    reject(e.message);
-                }
-
-                var fieldMap:{ [type: string]: any[] }={};
-                for (var i in data['types']) {
-                    fieldMap[data['types'][i].type]
-                        =DataModelConfiguration.createFields(fieldMap,data['types'][i],messages);
-                }
-
-                resolve(new DataModelConfiguration(fieldMap,data['excavation']))
-            });
-        });
-    }
-
-    private static createFields(fieldMap,type,messages) {
-        var fields=[];
-        if (type.parent!=undefined) {
-            if (fieldMap[type.parent]==undefined) {
-                messages.add(MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR, 'danger');
-            } else
-                fields=fieldMap[type.parent];
-        }
-        return fields.concat(type.fields);
-    }
-
+    private excavation: string
     /**
      * @param messages
      * @param excavation
      * @param fieldMap Contains an array of fields for every object type defined in the configurationData
      */
-    constructor(
-        private fieldMap: { [type: string]: any[] },
-        private excavation: string
-    ) {}
+    constructor(data) {
+
+        this.fieldMap={};
+        for (var i in data['types']) {
+            this.fieldMap[data['types'][i].type]
+                = this.createFields(this.fieldMap,data['types'][i])
+        }
+        this.excavation=data['excavation']
+    }
+
+    private createFields(fieldMap,type) {
+        var fields=[];
+        if (type.parent!=undefined) {
+            if (fieldMap[type.parent]==undefined) {
+                throw MessagesDictionary.MSGKEY_DMC_GENERIC_ERROR
+            } else
+                fields=fieldMap[type.parent]
+        }
+        return fields.concat(type.fields)
+    }
 
 
     /**
      * Returns an array containing the possible object types
      */
     public getTypes(): string[] {
-        return Object.keys(this.fieldMap);
+        return Object.keys(this.fieldMap)
     }
 
     /**

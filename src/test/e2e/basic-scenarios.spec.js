@@ -30,7 +30,7 @@ describe('idai field app', function() {
             createObject(function() {
                 createId();
                 expect(element(by.id('message-0')).getText()).
-                    toEqual("Object Identifier already exists.");
+                    toEqual("Objekt Identifier existiert bereits.");
             });
         });
     });

@@ -41,26 +41,21 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
 
-            if (object.changed) {
-                this.save(object).then(
-                    () => { resolve(); },
-                    err => {
-                        object.valid = false;
+            if (!object.changed) resolve(undefined)
 
-                        if (restoreIfInvalid) 
-                            this.restoreObject(object).then(
-                                () => resolve(), err => reject(err));
-                        else 
-                            this.mapErr(err,resolve,reject)
-                        
-                    }
-                )
-            } else if (!object.valid && restoreIfInvalid) { // TODO WHY CAN I REMOVE RESTOREIFINVALID HERE WITHOUT BREAKING ANY TESTS?
-                this.restoreObject(object).then(
-                    () => { resolve(undefined); },
-                    err => { reject(err); }
-                );
-            } else resolve(undefined);
+            this.save(object).then(
+                () => {
+                    delete object.changed
+                    resolve();
+                },
+                err => {
+                    if (restoreIfInvalid)
+                        this.restoreObject(object).then(
+                            () => resolve(), err => reject(err));
+                    else
+                        this.mapErr(err,resolve,reject)
+                }
+            )
         });
     }
 
@@ -113,10 +108,8 @@ export class ObjectList {
             return new Promise((resolve, reject) => { reject("missingIdentifierError"); });
         }
 
-        object.changed = false; // TODO CODE REVIEW - SHOULDNT IT GET SET TO FALSE ONLY IF SAVE WAS SUCCESSFUL?
         object.synced = 0;
 
-        object.valid=true;
         if (object.id) {
             return this.update(object);
         } else {

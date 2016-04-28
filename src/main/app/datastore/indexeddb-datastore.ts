@@ -167,7 +167,7 @@ export class IndexeddbDatastore implements Datastore {
                     } else {
                         // make ids unique
                         ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
-                        console.log(Array.from(ids).map(id => this.get(id)));
+                        // console.log(Array.from(ids).map(id => this.get(id)));
                         var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map(id => this.get(id));
                         resolve(Promise.all(promises));
                     }

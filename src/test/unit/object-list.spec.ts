@@ -94,7 +94,7 @@ export function main() {
 
                     selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, false, true);
+                    objectList.validateAndSave(selectedObject, false);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -104,7 +104,7 @@ export function main() {
 
                     selectedObject.changed = true;
 
-                    objectList.validateAndSave(selectedObject, true, true);
+                    objectList.validateAndSave(selectedObject, true);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                 }
         );
@@ -116,7 +116,7 @@ export function main() {
                     selectedObject.changed = true;
 
                     expect(objectList.getObjects()[0]).toBe(selectedObject);
-                    objectList.validateAndSave(selectedObject, true, true); // restore the oldVersion now.
+                    objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
         );
@@ -127,20 +127,21 @@ export function main() {
                 mockDatastore.update.and.callFake(errorFunction);
                 selectedObject.changed = true;
 
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.validateAndSave(selectedObject, false, true); // do not restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
+                expect(objectList.getObjects()[0]).toBe(selectedObject)
+                objectList.validateAndSave(selectedObject, false) // do not restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(selectedObject)
             }
         );
 
         it('should restore an invalid object on select change with invalid object',
             function() {
 
-                selectedObject.valid = false;
+                mockDatastore.update.and.callFake(errorFunction);
+                selectedObject.changed = true
 
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.validateAndSave(selectedObject, true, true); // restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(oldVersion);
+                expect(objectList.getObjects()[0]).toBe(selectedObject)
+                objectList.validateAndSave(selectedObject, true) // restore the oldVersion now.
+                expect(objectList.getObjects()[0]).toBe(oldVersion)
             }
         );
 
@@ -161,9 +162,9 @@ export function main() {
                     mockDatastore.update.and.callFake(errorFunction);
                     selectedObject.changed = true;
 
-                    expect(selectedObject.valid).toBe(true);
+                    expect(selectedObject.changed).toBe(true);
                     objectList.validateAndSave(selectedObject, false, true);
-                    expect(selectedObject.valid).toBe(false);
+                    expect(selectedObject.changed).toBe(true);
                 }
         );
 

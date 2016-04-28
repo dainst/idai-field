@@ -107,6 +107,7 @@ export class OverviewComponent implements OnInit {
         }).catch(err => console.error(err));
     }
 
+    // TODO this seems it should be moved to ObjectList since it operates on this.objectList.getObjects()
     private removeObjectFromListIfNotSaved() {
 
         if (!this.newObject.id) {

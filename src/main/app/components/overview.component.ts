@@ -36,17 +36,17 @@ export class OverviewComponent implements OnInit {
         private messages: Messages) {
     }
 
-    private validateAndSave(selectedObject,cb) {
-        if (!selectedObject) return cb(this)
+    private validateAndSave(object,cb) {
+        if (!object) return cb()
 
         this.messages.delete(M.OBJLIST_IDEXISTS);
         this.messages.delete(M.OBJLIST_IDMISSING);
 
-        this.objectList.validateAndSave(selectedObject, true).then((result)=>{
-            cb(this)
+        this.objectList.validateAndSave(object, true).then((result)=>{
+            cb()
         },(err)=>{
             this.messages.add(err,'danger')
-            cb(this)
+            cb()
         })
 
     }

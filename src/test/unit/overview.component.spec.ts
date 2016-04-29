@@ -24,7 +24,7 @@ export function main() {
         var validateAndSave = function() {
             return {
                 then: function(suc,err) {
-                    err();
+                    err("err");
                 }
             };
         };
@@ -99,17 +99,6 @@ export function main() {
             }
         );
 
-        it('should remove a newly created object from the object list if it does not have an id and another object is' +
-            'selected',
-            function() {
-                overviewComponent.onCreate();
-                overviewComponent.onSelect(object1);
-                expect(objects.length).toBe(2);
-                expect(objects[0]).toBe(object1);
-                expect(objects[1]).toBe(object2);
-            }
-        );
-
         it('should not remove a newly created object from the object list if it has an id and another object is' +
             'selected',
             function() {
@@ -119,19 +108,6 @@ export function main() {
 
                 expect(objects.length).toBe(3);
                 expect(objects[0]).toEqual({ id: "id" });
-                expect(objects[1]).toBe(object1);
-                expect(objects[2]).toBe(object2);
-            }
-        );
-
-        it('should remove a newly created object from the object list if it does not have an id and a new object is' +
-            'created',
-            function() {
-                overviewComponent.onCreate();
-                overviewComponent.onCreate();
-
-                expect(objects.length).toBe(3);
-                expect(objects[0]).toEqual({});
                 expect(objects[1]).toBe(object1);
                 expect(objects[2]).toBe(object2);
             }

@@ -49,8 +49,8 @@ To run the unit tests in a continuous manner,
 you need two open two terminals (marked as '1$' and '2$'). 
 
 ```
-1$ ulimit -n 10000
-1$ npm start 
+ulimit -n 10000
+npm start
 ```
 
 The *npm start* starts the app, but whats more important for us here is,
@@ -58,7 +58,7 @@ that it watches the sources, and everytime anything changes, the sources
 are recompiled.
 
 ```
-2$ npm run test-loop
+npm run test-loop
 ```
 
 This causes karma to run continuously. And since the sources are also watched
@@ -80,7 +80,7 @@ For starting end to end testing,
 you need two terminals (again marked as '1$' and '2$'). 
 
 ```
-1$ npm run server
+npm run server
 ```
 
 This starts a webserver which serves the dist/main directory on port 8081
@@ -89,7 +89,7 @@ Furthermore, a 'watch' process runs. It causes to recompile the sources anytime 
 are made, similar to the behaviour of 'npm start'.
 
 ```
-2$ npm run e2e
+npm run e2e
 ```
 
 This command runs the end to end tests once. While changes of sources are recompiled
@@ -102,10 +102,10 @@ The recommended way for building and testing
 the iDAI.field 2 Client application is as follows
 
 ```
-1$ npm test
-(2$ npm run server)
-1$ npm run e2e
-1$ npm run package
+npm test
+(npm run server)
+npm run e2e
+npm run package
 ```
 
 As described above, in order for the e2e tests to work, the dist dir has to be served

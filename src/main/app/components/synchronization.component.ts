@@ -48,10 +48,11 @@ export class SynchronizationComponent implements OnChanges {
         this.datastore.getUnsyncedObjects().subscribe(
             object => {
 
-                if (this.connected)
-                    this.sync(object);
-                else
-                    this.storeObjectId(object.id);
+                this.storeObjectId(object.id);
+
+
+                if (!this.connected) return;
+                this.sync(object);
             },
             err => console.error("Could not fetch unsynced objects", err)
         );
@@ -66,7 +67,9 @@ export class SynchronizationComponent implements OnChanges {
                 this.removeObjectId(object.id);
                 console.log("Successfully synced object", object);
             },
-            err => console.error("Synchronization failed", err, object)
+            err => {
+                this.connected=false;
+            }
         );
     }
 

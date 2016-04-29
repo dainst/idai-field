@@ -111,7 +111,7 @@ export function main() {
                     selectedObject.changed = true;
 
                     expect(objectList.getObjects()[0]).toBe(selectedObject);
-                    objectList.validateAndSave(selectedObject, true); // restore the oldVersion now.
+                    objectList.validateAndSave(selectedObject, true).then(suc=>{},err=>{}) // restore the oldVersion now.
                     expect(objectList.getObjects()[0]).toBe(oldVersion);
                 }
         );
@@ -123,7 +123,7 @@ export function main() {
                 selectedObject.changed = true;
 
                 expect(objectList.getObjects()[0]).toBe(selectedObject)
-                objectList.validateAndSave(selectedObject, false) // do not restore the oldVersion now.
+                objectList.validateAndSave(selectedObject, false).then(suc=>{},err=>{}) // do not restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(selectedObject)
             }
         );
@@ -135,7 +135,7 @@ export function main() {
                 selectedObject.changed = true
 
                 expect(objectList.getObjects()[0]).toBe(selectedObject)
-                objectList.validateAndSave(selectedObject, true) // restore the oldVersion now.
+                objectList.validateAndSave(selectedObject, true).then(suc=>{},err=>{}) // restore the oldVersion now.
                 expect(objectList.getObjects()[0]).toBe(oldVersion)
             }
         );
@@ -158,7 +158,7 @@ export function main() {
                     selectedObject.changed = true;
 
                     expect(selectedObject.changed).toBe(true);
-                    objectList.validateAndSave(selectedObject, false, true);
+                    objectList.validateAndSave(selectedObject, false, true).then(suc=>{},err=>{});
                     expect(selectedObject.changed).toBe(true);
                 }
         );
@@ -186,6 +186,9 @@ export function main() {
                 selectedObject.changed = true;
                 objectList.validateAndSave(selectedObject, true).then(result=>{
                     expect(result).toBe(undefined)
+                    done()
+                },err=>{
+                    fail()
                     done()
                 });
             }

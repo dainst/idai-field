@@ -69,7 +69,7 @@ export function main() {
             j=0;
         });
 
-        it('report it is connected',
+        it('should report it is connected',
             function(){
 
                 idaiFieldBackend.isConnected().subscribe(connected => {
@@ -77,12 +77,9 @@ export function main() {
                     j++;
                 });
 
-                mockHttp.get.and.callFake(failFunction);
-                idaiFieldBackend.checkConnection();
                 mockHttp.get.and.callFake(successFunction);
                 idaiFieldBackend.checkConnection();
-
-                expect(j).toBe(2);
+                expect(j).toBe(1);
             }
         );
 
@@ -90,14 +87,16 @@ export function main() {
             function(){
 
                 idaiFieldBackend.isConnected().subscribe(connected => {
-                    if (j==0) expect(connected).toBeFalsy();
+                    if (j==1) expect(connected).toBeFalsy();
                     j++;
                 });
 
+                mockHttp.get.and.callFake(successFunction);
+                idaiFieldBackend.checkConnection();
                 mockHttp.get.and.callFake(failFunction);
                 idaiFieldBackend.checkConnection();
 
-                expect(j).toBe(1);
+                expect(j).toBe(2);
             }
         );
 

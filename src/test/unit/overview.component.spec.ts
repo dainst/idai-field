@@ -23,8 +23,8 @@ export function main() {
 
         var validateAndSave = function() {
             return {
-                then: function(suc) {
-                    suc("err");
+                then: function(suc,err) {
+                    err();
                 }
             };
         };

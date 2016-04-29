@@ -169,9 +169,13 @@ export function main() {
                 mockDatastore.update.and.callFake(errorFunction);
                 selectedObject.changed = true;
                 objectList.validateAndSave(selectedObject, false).then(result=>{
-                    expect(result).not.toBe(undefined)
+                    fail()
                     done()
-                });
+                },err=>{
+                    expect(err).not.toBe(undefined)
+                    done()
+                }
+                );
             }
         );
 

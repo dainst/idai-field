@@ -25,10 +25,10 @@ export class ObjectList {
      * @param object The object to save. Must not be undefined.
      * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
      * is invalid
-     * @return promise. Gets rejectected in case of unrecoverable or unknown errors.
-     *   In other cases, the argument of resolve
-     *   is either <code>undefined</code>, which means the save operation was successful,
-     *   or it a key of M to identify the error.
+     * @return promise. Gets resolved in case the object was stored or
+     *   at least recovered when restoreIfInvalid is set to true.
+     *   Gets rejectected in case of errors, which are keys of M to identify the error
+     *   if possible.
      * @throws if object is not defined.
      */
     public validateAndSave(
@@ -48,23 +48,16 @@ export class ObjectList {
                             this.restoreObject(object).then(
                                 () => resolve(), err => reject(err));
                     else
-                        this.mapErr(err,resolve,reject)
+                        this.mapErr(err,reject)
                 }
             )
         });
     }
 
-    private mapErr(err,resolve,reject) {
-        switch (err) {
-            case "databaseError":
-                resolve(M.OBJLIST_IDEXISTS)
-                break
-            case "missingIdentifierError":
-                resolve(M.OBJLIST_IDMISSING)
-                break
-            default:
-                reject(err)
-        }
+    // TODO remove by returning the right msg id from the datastore directly
+    private mapErr(err,reject) {
+        if (err== "databaseError") reject(M.OBJLIST_IDEXISTS)
+        else reject(err)
     }
 
 
@@ -100,7 +93,7 @@ export class ObjectList {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
-            return new Promise((resolve, reject) => { reject("missingIdentifierError"); });
+            return new Promise((resolve, reject) => { reject(M.OBJLIST_IDMISSING); });
         }
 
         object.synced = 0;

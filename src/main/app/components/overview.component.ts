@@ -44,36 +44,34 @@ export class OverviewComponent implements OnInit {
         private messages: Messages) {
     }
 
-    private validateAndSave(object) {
-        if (this.selectedObject)
-            this.objectList.validateAndSave(this.selectedObject, true).then((result)=>{
-                this.messages.delete(M.OBJLIST_IDEXISTS);
-                this.messages.delete(M.OBJLIST_IDMISSING);
-                if (result) {
-                    this.messages.add(result,'danger')
-                    if (this.newObject && object != this.newObject) {
-                        this.removeObjectFromListIfNotSaved();
-                    }
+    private validateAndSave(object,cb) {
+        if (!this.selectedObject) return cb(this)
 
+        this.objectList.validateAndSave(this.selectedObject, true).then((result)=>{
+            this.messages.delete(M.OBJLIST_IDEXISTS);
+            this.messages.delete(M.OBJLIST_IDMISSING);
+            if (result) {
+                this.messages.add(result,'danger')
+                if (this.newObject && object != this.newObject) {
+                    this.removeObjectFromListIfNotSaved();
                 }
-            })
+            }
+            cb(this)
+        })
     }
     
     public onSelect(object: IdaiFieldObject) {
-        this.validateAndSave(object);
-
-        this.selectedObject = object;
+        this.validateAndSave(object,function(this_){
+            this_.selectedObject = object;
+        });
     }
 
     public onCreate() {
-
-        this.validateAndSave(undefined);
-        if (this.newObject) this.removeObjectFromListIfNotSaved();
-
-        this.newObject = {};
-        this.objectList.getObjects().unshift(this.newObject);
-
-        this.selectedObject = this.newObject;
+        this.validateAndSave(undefined,function(this_){
+            this_.newObject = {};
+            this_.objectList.getObjects().unshift(this_.newObject);
+            this_.selectedObject = this_.newObject;
+        });
     }
 
     public ngOnInit() {

@@ -40,24 +40,17 @@ export class ObjectList {
         return new Promise<any>((resolve, reject) => {
 
             this.save(object).then(
-                () => {
-                    resolve();
-                },
+
+                () => resolve() ,
                 err => {
                     if (object.id&&restoreIfInvalid)
                             this.restoreObject(object).then(
                                 () => resolve(), err => reject(err));
                     else
-                        this.mapErr(err,reject)
+                        reject(err)
                 }
             )
         });
-    }
-
-    // TODO remove by returning the right msg id from the datastore directly
-    private mapErr(err,reject) {
-        if (err== "databaseError") reject(M.OBJLIST_IDEXISTS)
-        else reject(err)
     }
 
 

@@ -3,8 +3,8 @@ import {Datastore} from "./datastore";
 import {Injectable} from "angular2/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
-import {Observer} from "rxjs/Observer";
 import {Indexeddb} from "./indexeddb";
+import {M} from "../m";
 
 /**
  * @author Sebastian Cuy
@@ -40,7 +40,7 @@ export class IndexeddbDatastore implements Datastore {
                     object.id = undefined;
                     object.created = undefined;
                     object.modified = undefined;
-                    reject("databaseError");
+                    reject(M.OBJLIST_IDEXISTS);
                 });
         });
     }
@@ -52,7 +52,7 @@ export class IndexeddbDatastore implements Datastore {
                "Maybe you wanted to create the object with create()?");
            object.modified = new Date();
            return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-               .then(() => resolve(), err => reject("databaseError"));
+               .then(() => resolve(), err => reject(M.OBJLIST_IDEXISTS));
         });
     }
 

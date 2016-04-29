@@ -43,14 +43,29 @@ export class ObjectList {
 
                 () => resolve() ,
                 err => {
-                    if (object.id&&restoreIfInvalid)
+                    if (restoreIfInvalid){
+                        if (object.id)
                             this.restoreObject(object).then(
-                                () => resolve(), err => reject(err));
+                                () => resolve(),
+                                err => reject(err)
+                            );
+                        else {
+                            this.removeObjectFromListIfNotSaved(object)
+                            resolve()
+                        }
+                    }
+
+
                     else
                         reject(err)
                 }
             )
         });
+    }
+
+    private removeObjectFromListIfNotSaved(object) {
+        var index = this.getObjects().indexOf(object);
+        this.getObjects().splice(index, 1);
     }
 
 

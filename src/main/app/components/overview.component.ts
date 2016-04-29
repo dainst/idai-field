@@ -62,7 +62,6 @@ export class OverviewComponent implements OnInit {
             var newObject = {};
             this_.objectList.getObjects().unshift(newObject);
             this_.selectedObject = newObject;
-            console.log("objectlength",this_.objectList.getObjects().length)
         });
     }
 

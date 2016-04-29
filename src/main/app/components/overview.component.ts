@@ -52,17 +52,17 @@ export class OverviewComponent implements OnInit {
     }
     
     public onSelect(object: IdaiFieldObject) {
-        this.validateAndSave(this.selectedObject,function(this_){
-            this_.selectedObject = object;
-        });
+        this.validateAndSave(this.selectedObject,function(){
+            this.selectedObject = object;
+        }.bind(this));
     }
 
     public onCreate() {
-        this.validateAndSave(this.selectedObject,function(this_){
+        this.validateAndSave(this.selectedObject,function(){
             var newObject = {};
-            this_.objectList.getObjects().unshift(newObject);
-            this_.selectedObject = newObject;
-        });
+            this.objectList.getObjects().unshift(newObject);
+            this.selectedObject = newObject;
+        }.bind(this));
     }
 
     public ngOnInit() {

@@ -45,6 +45,7 @@ export class IdaiFieldBackend {
      */
     public isConnected(): Observable<boolean> {
         return Observable.create( observer => {
+            this.connected=false;
             this.connectionStateObservers.push(observer);
         });
     }

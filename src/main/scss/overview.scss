@@ -2,6 +2,10 @@
  * @author: Jan G. Wieners
  */
 
+#objectList {
+  margin-bottom: -5px;
+}
+
 #objectList .list-group-item {
   cursor: pointer;
   border: 0;
@@ -45,7 +49,7 @@
 
 #objectOverview #object-overview-button-create-object {
   left: 45%;
-  margin: -41px auto auto auto;
+  margin: -23px auto auto auto;
 }
 
 #objectOverview {

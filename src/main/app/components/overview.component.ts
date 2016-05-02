@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef} from 'angular2/core';
+import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from 'angular2/core';
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
@@ -8,10 +8,11 @@ import {Http} from "angular2/http";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";
 import {M} from "../m";
+import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     templateUrl: 'templates/overview.html',
-    directives: [ObjectEditComponent],
+    directives: [ObjectEditComponent, MODAL_DIRECTIVES],
     providers: [ObjectList]
 })
 
@@ -23,46 +24,65 @@ import {M} from "../m";
  */
 export class OverviewComponent implements OnInit {
 
+    @ViewChild('modal')
+    modal: ModalComponent;
+
     /**
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedObject: IdaiFieldObject;
     private projectConfiguration: ProjectConfiguration;
+    private callback;
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
         private objectList: ObjectList,
         private configLoader: ConfigLoader,
-        private messages: Messages) {
-    }
+        private messages: Messages) {}
 
-    private validateAndSave(object,cb) {
-        if (!object) return cb()
-
+    private askForPermissionForChange(object) {
         this.messages.delete(M.OBJLIST_IDEXISTS);
         this.messages.delete(M.OBJLIST_IDMISSING);
+        this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
-        this.objectList.validateAndSave(object, true).then((result)=>{
-            cb()
-        },(err)=>{
-            this.messages.add(err,'danger')
-            cb()
-        })
+        if (!object || !object.changed) return this.callback();
 
+        this.modal.open();
+    }
+
+    public save() {
+        delete this.selectedObject.changed;
+
+        this.objectList.trySave(this.selectedObject).then((result)=> {
+            this.callback();
+        }, (err) => {
+            this.messages.add(err, 'danger');
+            this.selectedObject.changed = true;
+        });
+    }
+
+    public discardChanges() {
+        this.objectList.restoreObject(this.selectedObject).then((result) => {
+            this.callback();
+        }, (err) => {
+            this.messages.add(err, 'danger');
+        });
     }
     
     public onSelect(object: IdaiFieldObject) {
-        this.validateAndSave(this.selectedObject,function(){
+        this.callback = function() {
             this.selectedObject = object;
-        }.bind(this));
+        }.bind(this);
+        this.askForPermissionForChange(this.selectedObject);
     }
 
     public onCreate() {
-        this.validateAndSave(this.selectedObject,function(){
+        this.callback = function() {
             var newObject = {};
             this.objectList.getObjects().unshift(newObject);
             this.selectedObject = newObject;
-        }.bind(this));
+        }.bind(this);
+        this.askForPermissionForChange(this.selectedObject);
     }
 
     public ngOnInit() {

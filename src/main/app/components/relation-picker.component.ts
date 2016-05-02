@@ -104,7 +104,6 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = "";
         this.suggestions = []
         this.object.changed = true;
-        this.parent.parent.save();
     }
 
     public editTarget() {
@@ -163,7 +162,6 @@ export class RelationPickerComponent implements OnChanges {
                     () => {
                         this.object[this.field.field].splice(this.relationIndex, 1);
                         this.object.changed = true;
-                        this.parent.parent.save();
                         resolve();
                     },
                     err => {

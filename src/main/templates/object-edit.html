@@ -28,6 +28,7 @@
                 <h1 id="object-type-heading">
                     <span class="mdi mdi-blur"></span>
                     {{object.type}}
+                    <button class="btn btn-default pull-right" style="margin-right: 5px; margin-top: 5px;" (click)="save()">Speichern</button>
                 </h1>
             </header>
             <main>
@@ -36,13 +37,13 @@
                     <!-- Basic Object Information -->
                     <div class="form-group">
                         <label id="identifier">{{object.type}} Identifier</label>
-                        <input id="object-edit-input-identifier" [(ngModel)]="object.identifier" (keyup)="triggerAutosave()"
+                        <input id="object-edit-input-identifier" [(ngModel)]="object.identifier" (keyup)="object.changed = true;"
                                class="form-control"
                                aria-describedby="identifier">
                     </div>
                     <div class="form-group">
                         <label id="title">{{object.type}} Title</label>
-                        <input id="object-edit-input-title" [(ngModel)]="object.title" (keyup)="triggerAutosave()"
+                        <input id="object-edit-input-title" [(ngModel)]="object.title" (keyup)="object.changed = true;"
                                class="form-control"
                                aria-describedby="title">
                     </div>
@@ -53,14 +54,14 @@
                             <label *ngIf="field.label">{{field.label}}</label>
                             <label *ngIf="!field.label">{{field.field}}</label>
                             <div *ngIf="!field.valuelist && !field.multiline">
-                                <input [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()" class="form-control">
+                                <input [(ngModel)]="object[field.field]" (keyup)="object.changed = true;" class="form-control">
                             </div>
                             <div *ngIf="field.multiline">
-                                <textarea [(ngModel)]="object[field.field]" (keyup)="triggerAutosave()"
+                                <textarea [(ngModel)]="object[field.field]" (keyup)="object.changed = true;"
                                           class="form-control" rows="5"></textarea>
                             </div>
                             <div *ngIf="field.valuelist && !field.multivalue">
-                                <select [(ngModel)]="object[field.field]" (change)="triggerAutosave()" class="form-control">
+                                <select [(ngModel)]="object[field.field]" (change)="object.changed = true;" class="form-control">
                                     <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
                                 </select>
                             </div>

@@ -31,9 +31,8 @@ export class ObjectList {
      *   if possible.
      * @throws if object is not defined.
      */
-    public validateAndSave(
-        object: IdaiFieldObject, 
-        restoreIfInvalid: boolean): Promise<any> {
+    public trySave(
+        object: IdaiFieldObject): Promise<any> {
 
         if (!object) throw "object must not be undefined";
 
@@ -41,33 +40,11 @@ export class ObjectList {
 
             this.save(object).then(
 
-                () => resolve() ,
-                err => {
-                    if (restoreIfInvalid){
-                        if (object.id)
-                            this.restoreObject(object).then(
-                                () => resolve(),
-                                err => reject(err)
-                            );
-                        else {
-                            this.removeObjectFromListIfNotSaved(object)
-                            resolve()
-                        }
-                    }
-
-
-                    else
-                        reject(err)
-                }
+                () => resolve(),
+                err => { reject(err) }
             )
         });
     }
-
-    private removeObjectFromListIfNotSaved(object) {
-        var index = this.getObjects().indexOf(object);
-        this.getObjects().splice(index, 1);
-    }
-
 
     /**
      * Saves the object corresponding to the given id to the local database if an object for this id exists and
@@ -75,13 +52,13 @@ export class ObjectList {
      * Cannot be used to create new objects.
      * @param objectId The technical id of the object to save
      */
-    public validateAndSaveById(objectId: string): Promise<any> {
+    public trySaveById(objectId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             this.datastore.get(objectId).then(
                 object => {
-                    this.validateAndSave(object, true).then(
+                    this.trySave(object).then(
                         () => { resolve(); },
                         err => { reject(err); }
                     )
@@ -129,20 +106,29 @@ export class ObjectList {
         return this.datastore.create(object);
     }
 
-    private restoreObject(object:IdaiFieldObject): Promise<any> {
+    public restoreObject(object: IdaiFieldObject): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            if (object.id) {
-                this.datastore.refresh(object.id).then(
-                    restoredObject => {
-                        var index = this.objects.indexOf(object);
-                        this.objects[index] = restoredObject;
-                        resolve();
-                    },
-                    err => { reject(err); }
-                );
+            if (!object.id) {
+                this.removeObjectFromList(object);
+                resolve();
+                return;
             }
+
+            this.datastore.refresh(object.id).then(
+                restoredObject => {
+                    var index = this.objects.indexOf(object);
+                    this.objects[index] = restoredObject;
+                    resolve();
+                },
+                err => { reject(err); }
+            );
         });
+    }
+
+    private removeObjectFromList(object: IdaiFieldObject) {
+        var index = this.getObjects().indexOf(object);
+        this.getObjects().splice(index, 1);
     }
 
     public getObjects() {

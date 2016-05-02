@@ -95,7 +95,10 @@ gulp.task('concat-deps', function() {
 			'node_modules/rxjs/bundles/Rx.js',
 			'node_modules/angular2/bundles/angular2.dev.js',
 			'node_modules/angular2/bundles/http.dev.js',
-			'node_modules/angular2/bundles/router.dev.js'
+			'node_modules/angular2/bundles/router.dev.js',
+			'node_modules/jquery/dist/jquery.js',
+			'node_modules/bootstrap/dist/js/bootstrap.js',
+			'node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		//.pipe(uglify()) // this produces an error with the angular beta 15

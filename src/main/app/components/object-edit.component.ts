@@ -31,10 +31,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
      */
     private lastSavedVersion: IdaiFieldObject;
 
-
-
-    private saveTimer: number;
-
     private relationFields: any[] = [
         { "field": "Belongs to", "inverse": "Includes", "label": "Enthalten in" },
         { "field": "Includes", "inverse": "Belongs to", "label": "Enthält" },
@@ -70,16 +66,20 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public save() {
         this.messages.delete(M.OBJLIST_IDEXISTS);
         this.messages.delete(M.OBJLIST_IDMISSING);
+        this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
+
+        delete this.object.changed;
 
         this.saveRelatedObjects().then(
             () => {
-                this.objectList.validateAndSave(this.object, false).then(
-                    (result) => {
-                        if (result) this.messages.add(result,'danger')
-                        this.lastSavedVersion = JSON.parse(JSON.stringify(this.object))
+                this.objectList.trySave(this.object).then(
+                    () => {
+                        this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
+                        this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
                     },
                     err => {
-                        if (err) this.messages.add(err,'danger')
+                        if (err) this.messages.add(err,'danger');
+                        this.object.changed = true;
                     }
                 )
             },
@@ -111,7 +111,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
             if (relations && relations.length > 0) {
                 var promises: Promise<any>[] = [];
                 for (var k in relations) {
-                    promises.push(this.objectList.validateAndSaveById(relations[k]));
+                    promises.push(this.objectList.trySaveById(relations[k]));
                 }
                 Promise.all(promises).then(
                     () => { resolve(); },
@@ -119,14 +119,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
                 );
             } else resolve();
         });
-    }
-
-    public triggerAutosave() {
-
-        if (this.saveTimer)
-            clearTimeout(this.saveTimer);
-
-        this.saveTimer = setTimeout(this.save.bind(this), 500);
     }
 
     private setFieldsForObjectType(this_) {

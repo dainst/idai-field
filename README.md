@@ -52,8 +52,7 @@ The reason for this is that developers can experiment with different configurati
 without risking of committing actual real configurations to the repo. This is achieved by gitignoring 
 the files ending on .json. 
 
-This is important
-of course for security reasons, but here it is also necessary because the .template
+Asides from beeing considered a good practice, here it is also necessary because the .template
 configurations are the ones proven to work for the e2e tests.
 
 **Note** that if the e2e tests do pass, provide the .template configuratons and test again.

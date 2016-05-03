@@ -1,21 +1,29 @@
 describe('idai field app', function() {
 
     function createObject(fun) {
-        element(by.id('object-overview-button-create-object')).click().then(function(){
-            element(by.id('create-object-option-0')).click().then(function(){
-                element(by.id('object-edit-input-identifier')).clear().sendKeys('1').sendKeys('2').then(function() {
-                    element(by.id('object-edit-button-save-object')).click().then(function() {
-                        fun();
-                    })
-                });
-            });
-        });
+
+        clickCreateObject()
+                .then(selectTypeObject)
+                .then(typeInIdentifier)
+                .then(saveObject)
+                .then(function(){fun();});
     }
 
-    function createId() {
-        element(by.id('object-edit-input-identifier')).clear().sendKeys('1').sendKeys('2').then(function() {
-            element(by.id('object-edit-button-save-object')).click();
-        });
+
+    function clickCreateObject() {
+        return element(by.id('object-overview-button-create-object')).click()
+    }
+
+    function selectTypeObject() {
+        return element(by.id('create-object-option-0')).click();
+    }
+
+    function typeInIdentifier() {
+        return element(by.id('object-edit-input-identifier')).clear().sendKeys('1').sendKeys('2');
+    }
+
+    function saveObject() {
+        return element(by.id('object-edit-button-save-object')).click();
     }
 
     beforeEach(function(){

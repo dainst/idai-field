@@ -100,7 +100,7 @@ continuously, you can edit and test at the same time.
 If the test should run only once, you can run
 
 ```
-2$ npm test
+$ npm test
 ```
 
 which will build the application from the sources and then unit test the so created dist.

@@ -123,8 +123,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
                 relationIds = relationIds.concat(object[this.relationFields[i].field]);
             }
 
-            if (this.lastSavedVersion[this.relationFields[i].field]) {
-                for (var j in this.lastSavedVersion[this.relationFields[i].field]) {
+            if (lastSavedVersion[this.relationFields[i].field]) {
+                for (var j in lastSavedVersion[this.relationFields[i].field]) {
                     if (relationIds.indexOf(lastSavedVersion[this.relationFields[i].field][j]) == -1) {
                         relationIds.push(lastSavedVersion[this.relationFields[i].field][j]);
                     }

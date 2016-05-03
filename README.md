@@ -108,15 +108,18 @@ continuously, you can edit and test at the same time.
 
 ### E2E - Testing
 
-Note that, asides from the existence of config files (see [here](#configuration)),
-a prior build is necessary for the e2e tests to work. So make sure
-you build the source using one of the following two commands.
+Note that provision of config files (see [here](#configuration)) is a precodition for beeing able to run and e2e tes the application successfully .
+Also other configurations may work too, the .template suffixed
+files below src/main/config are the ones proven to work.
+
+Asides from that, a prior build is necessary for the e2e tests to work.
+Make sure you build the source using one of the following two commands.
 While the first one builds and tests, the second one can be used to
 skip testing.
 
 ```
 npm test
-npm run build
+npm run build (used only when skipping the tests is necessary)
 ```
 
 For starting end to end testing,

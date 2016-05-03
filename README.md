@@ -13,18 +13,18 @@ You need the following components in order for the local server to work:
 Install the following npm packages globally:
 
 ```
-npm install -g typings
-npm install -g karma  # only necessary if you need to run karma directly from the command prompt
-npm install -g gulp   # only necessary if you need to debug gulp commands from the command prompt
+$ npm install -g typings
+$ npm install -g karma  # only necessary if you need to run karma directly from the command prompt
+$ npm install -g gulp   # only necessary if you need to debug gulp commands from the command prompt
 ```
 
 If that is done, install the necessary dependencies 
 for the app run the following command in the working directory:
 
 ```
-git clone https://github.com/codarchlab/idai-field-client.git
-cd idai-field-client
-npm install
+$ git clone https://github.com/codarchlab/idai-field-client.git
+$ cd idai-field-client
+$ npm install
 ```
 
 ### Configuration
@@ -73,7 +73,7 @@ provided by the build system for packaging and deployment.
 In order to run the frontend in the development server use the following command:
 
 ```
-npm start
+$ npm start
 ```
 
 This should open the app in a separate window.
@@ -117,8 +117,8 @@ While the first one builds and tests, the second one can be used to
 skip testing.
 
 ```
-npm test
-npm run build (used only when skipping the tests is necessary)
+$ npm test
+$ npm run build (used only when skipping the tests is necessary)
 ```
 
 For starting end to end testing,
@@ -148,13 +148,13 @@ the iDAI.field 2 Client application is as follows
 
 ```
 1$ npm test
-(2$ npm run server)
+2$ npm run server
 1$ npm run e2e
 1$ npm run package
 ```
 
 As described above, in order for the e2e tests to work, the dist dir has to be served
-on localhost:8081. This is what the command in parentheses is for. If you are on a ci machine
+on localhost:8081. This is what the second command is for. If you are on a ci machine
  and have another webserver, like for example apache2, serving this directory on 8081, you
 can omit this command.
 

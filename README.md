@@ -46,18 +46,9 @@ src/main/config/Configuration.json.template
 
 and create copies of them cutting the .template suffix.
 
-#### Background
-
 The reason for this is that developers can experiment with different configurations locally
 without risking of committing actual real configurations to the repo. This is achieved by gitignoring 
-the files ending on .json. 
-
-Asides from beeing considered a good practice, here it is also necessary because the .template
-configurations are the ones proven to work for the e2e tests.
-
-**Note** that if the e2e tests do pass, provide the .template configuratons and test again.
-
-Maybe you have noted that the file names 
+the files ending on .json. Maybe you have noted that the file names 
 
 ```
 src/main/config/config.json.deploy
@@ -110,6 +101,8 @@ continuously, you can edit and test at the same time.
 Note that provision of config files (see [here](#configuration)) is a precodition for beeing able to run and e2e tes the application successfully .
 Also other configurations may work too, the .template suffixed
 files below src/main/config are the ones proven to work.
+
+**Note** that if the e2e tests do pass, provide the .template configuratons and test again.
 
 Asides from that, a prior build is necessary for the e2e tests to work.
 Make sure you build the source using one of the following two commands.

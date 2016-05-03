@@ -15,7 +15,7 @@ Install the following npm packages globally:
 ```
 npm install -g typings
 npm install -g karma  # only necessary if you need to run karma directly from the command prompt
-npm install -g gulp   # only necessary if you need to debug gulp commands
+npm install -g gulp   # only necessary if you need to debug gulp commands from the command prompt
 ```
 
 If that is done, install the necessary dependencies 
@@ -26,6 +26,48 @@ git clone https://github.com/codarchlab/idai-field-client.git
 cd idai-field-client
 npm install
 ```
+
+### Configuration
+
+Prior to starting or e2e testing the app, it is necessary that config files are provided.
+It is expected that the files
+
+```
+src/main/config/config.json
+src/main/config/Configuration.json
+```
+
+exist. For that purpose you can simply take the files
+
+```
+src/main/config/config.json.template
+src/main/config/Configuration.json.template
+```
+
+and create copies of them cutting the .template suffix.
+
+#### Background
+
+The reason for this is that developers can experiment with different configurations locally
+without risking of committing actual real configurations to the repo. This is achieved by gitignoring 
+the files ending on .json. 
+
+This is important
+of course for security reasons, but here it is also necessary because the .template
+configurations are the ones proven to work for the e2e tests.
+
+**Note** that if the e2e tests do pass, provide the .template configuratons and test again.
+
+Maybe you have noted that the file names 
+
+```
+src/main/config/config.json.deploy
+src/main/config/Configuration.json.deploy
+```
+
+are also gitignored. This is because these are files which are 
+provided by the build system for packaging and deployment.
+
 
 ### Starting the app
 
@@ -66,7 +108,8 @@ continuously, you can edit and test at the same time.
 
 ### E2E - Testing
 
-Note that a proper build is necessary for this to work. So make sure
+Note that, asides from the existence of config files (see [here](#Configuration),
+a prior build is necessary for the e2e tests to work. So make sure
 you build the source using one of the following two commands.
 While the first one builds and tests, the second one can be used to
 skip testing.

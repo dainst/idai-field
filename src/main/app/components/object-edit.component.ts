@@ -12,6 +12,7 @@ import {M} from "../m";
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
   */
 @Component({
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, COMMON_DIRECTIVES, RelationPickerGroupComponent, ValuelistComponent],
@@ -57,8 +58,28 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     }
 
     ngOnInit():any {
-        this.setFieldsForObjectType(this); // bad, this is necessary for testing
+        this.setFieldsForObjectType(); // bad, this is necessary for testing
     }
+
+    private setFieldsForObjectType() {
+        if (this.object==undefined) return;
+        if (!this.projectConfiguration) return;
+        this.fieldsForObjectType=this.projectConfiguration.getFields(this.object.type);
+    }
+
+    public ngOnChanges() {
+        if (this.object) {
+            this.setFieldsForObjectType();
+            this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
+
+            this.types=this.projectConfiguration.getTypes();
+        }
+    }
+
+    public getThis(): ObjectEditComponent {
+        return this;
+    }
+
 
     /**
      * Saves the object to the local datastore.
@@ -70,81 +91,66 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
         delete this.object.changed;
 
-        this.saveRelatedObjects().then(
+        this.objectList.trySave(this.object).then(
             () => {
-                this.objectList.trySave(this.object).then(
+                this.saveRelatedObjects().then(
                     () => {
                         this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
                         this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
                     },
-                    err => {
-                        if (err) this.messages.add(err,'danger');
-                        this.object.changed = true;
-                    }
-                )
+                    err => { console.error(err); }
+                );
             },
-            err => { console.error(err); }
+            err => {
+                if (err) this.messages.add(err,'danger');
+                this.object.changed = true;
+            }
         );
+    }
+
+
+    /**
+     * @param object
+     * @param lastSavedVersion
+     * @returns {string[]} technical ids of all the objects targeted by the objects relations.
+     */
+    private gatherRelationIds(object,lastSavedVersion) {
+
+        var relationIds: string[] = [];
+        for (var i in this.relationFields) {
+
+            if (object[this.relationFields[i].field]) {
+                relationIds = relationIds.concat(object[this.relationFields[i].field]);
+            }
+
+            if (this.lastSavedVersion[this.relationFields[i].field]) {
+                for (var j in this.lastSavedVersion[this.relationFields[i].field]) {
+                    if (relationIds.indexOf(lastSavedVersion[this.relationFields[i].field][j]) == -1) {
+                        relationIds.push(lastSavedVersion[this.relationFields[i].field][j]);
+                    }
+                }
+            }
+        }
+        return relationIds;
     }
 
     private saveRelatedObjects(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            var relations: string[] = [];
+            var relationIds: string[] = this.gatherRelationIds(this.object,this.lastSavedVersion);
+            if (!relationIds || relationIds.length <= 0)
+                resolve();
 
-            for (var i in this.relationFields) {
+            var promises: Promise<any>[] = [];
+            for (var i in relationIds)
+                promises.push(this.objectList.trySaveById(relationIds[i]));
 
-                if (this.object[this.relationFields[i].field]) {
-                    relations = relations.concat(this.object[this.relationFields[i].field]);
-                }
-
-                if (this.lastSavedVersion[this.relationFields[i].field]) {
-                    for (var j in this.lastSavedVersion[this.relationFields[i].field]) {
-                        if (relations.indexOf(this.lastSavedVersion[this.relationFields[i].field][j]) == -1) {
-                            relations.push(this.lastSavedVersion[this.relationFields[i].field][j]);
-                        }
-                    }
-                }
-            }
-
-            if (relations && relations.length > 0) {
-                var promises: Promise<any>[] = [];
-                for (var k in relations) {
-                    promises.push(this.objectList.trySaveById(relations[k]));
-                }
-                Promise.all(promises).then(
-                    () => { resolve(); },
-                    err => { reject(err); }
-                );
-            } else resolve();
+            Promise.all(promises).then(
+                () => resolve(),
+                err => reject(err)
+            );
         });
-    }
-
-    private setFieldsForObjectType(this_) {
-        if (this_.object==undefined) return;
-        if (!this.projectConfiguration) return;
-        this.fieldsForObjectType=this.projectConfiguration.getFields(this.object.type);
-    }
-
-    public ngOnChanges() {
-        if (this.object) {
-            this.setFieldsForObjectType(this);
-            this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
-
-            this.types=this.projectConfiguration.getTypes();
-        }
-    }
-
-    public setType(type: string) {
-
-        this.object.type = type;
-        this.setFieldsForObjectType(this);
-    }
-
-    public getThis(): ObjectEditComponent {
-
-        return this;
     }
 
 }

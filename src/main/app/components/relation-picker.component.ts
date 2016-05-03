@@ -180,7 +180,6 @@ export class RelationPickerComponent implements OnChanges {
         }
 
         targetObject[this.field.inverse].push(this.object.id);
-        targetObject.changed = true;
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {
@@ -191,7 +190,6 @@ export class RelationPickerComponent implements OnChanges {
                     var index = targetObject[this.field.inverse].indexOf(this.object.id);
                     if (index != -1) {
                         targetObject[this.field.inverse].splice(index, 1);
-                        targetObject.changed = true;
                     }
                     resolve();
                 },

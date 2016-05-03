@@ -123,18 +123,6 @@ export function main() {
             }
         );
 
-        it('should restore an invalid object on select change with invalid object',
-            function() {
-
-                mockDatastore.update.and.callFake(errorFunction);
-                selectedObject.changed = true;
-
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.trySave(selectedObject).then(suc=>{},err=>{}); // restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(oldVersion)
-            }
-        );
-
         it('should not restore an invalid object on autosave with invalid object',
             function() {
 

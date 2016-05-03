@@ -97,7 +97,7 @@ are recompiled.
 This causes karma to run continuously. And since the sources are also watched
 continuously, you can edit and test at the same time.
 
-If the test should run only once, you can run
+If the tests should run only once, you can run
 
 ```
 $ npm test

@@ -75,9 +75,6 @@ export function main() {
 
                 expect(object2["Below"].length).toBe(1);
                 expect(object2["Below"][0]).toBe(object1.id);
-                expect(object2.changed).toBe(true);
-
-                expect(mockParent.save).toHaveBeenCalled();
             }
         );
 

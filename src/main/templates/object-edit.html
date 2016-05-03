@@ -79,7 +79,7 @@
                             <li *ngFor="#relationField of relationFields" class="list-group-item">
                                 <label *ngIf="relationField.label">{{relationField.label}}</label>
                                 <label *ngIf="!relationField.label">{{relationField.field}}</label>
-                                <relation-picker-group [(object)]="object" [field]="relationField" [parent]="getThis()"></relation-picker-group>
+                                <relation-picker-group [(object)]="object" [field]="relationField"></relation-picker-group>
                             </li>
                         </ul>
                     </div>

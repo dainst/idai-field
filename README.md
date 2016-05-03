@@ -108,7 +108,7 @@ continuously, you can edit and test at the same time.
 
 ### E2E - Testing
 
-Note that, asides from the existence of config files (see [here](#Configuration)),
+Note that, asides from the existence of config files (see [here](#configuration)),
 a prior build is necessary for the e2e tests to work. So make sure
 you build the source using one of the following two commands.
 While the first one builds and tests, the second one can be used to

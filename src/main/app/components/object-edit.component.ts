@@ -61,6 +61,17 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.setFieldsForObjectType(); // bad, this is necessary for testing
     }
 
+
+    public setType(type: string) {
+
+        this.object.type = type;
+        this.setFieldsForObjectType();
+    }
+
+    public getThis(): ObjectEditComponent {
+        return this;
+    }
+
     private setFieldsForObjectType() {
         if (this.object==undefined) return;
         if (!this.projectConfiguration) return;
@@ -71,13 +82,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         if (this.object) {
             this.setFieldsForObjectType();
             this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
-
             this.types=this.projectConfiguration.getTypes();
         }
-    }
-
-    public getThis(): ObjectEditComponent {
-        return this;
     }
 
 

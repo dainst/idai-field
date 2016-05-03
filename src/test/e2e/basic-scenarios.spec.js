@@ -3,7 +3,9 @@ describe('idai field app', function() {
     function createObject(fun) {
         element(by.id('object-overview-button-create-object')).click().then(function(){
             element(by.id('create-object-option-0')).click().then(function(){
-                fun();
+                element(by.id('object-edit-button-save-object')).click().then(function() {
+                    fun();
+                })
             });
         });
     }

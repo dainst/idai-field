@@ -97,6 +97,14 @@ are recompiled.
 This causes karma to run continuously. And since the sources are also watched
 continuously, you can edit and test at the same time.
 
+If the test should run only once, you can run
+
+```
+2$ npm test
+```
+
+which will build the application from the sources and then unit test the so created dist.
+
 ### E2E - Testing
 
 Note that provision of config files (see [here](#configuration)) is a precodition for beeing able to run and e2e tes the application successfully .

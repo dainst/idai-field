@@ -56,13 +56,10 @@ export function main() {
             mockDatastore.get.and.callFake(get);
             mockDatastore.find.and.callFake(find);
 
-            mockParent = jasmine.createSpyObj('mockParent', [ 'save' ]);
-
             relationPickerComponent = new RelationPickerComponent(element, mockDatastore);
             relationPickerComponent.object = object1;
             relationPickerComponent.field = { "field": "Above", "inverse": "Below" };
             relationPickerComponent.relationIndex = 0;
-            relationPickerComponent.parent = { parent: mockParent };
         });
 
         it('should create a relation and the corresponding inverse relation if a target object is chosen',
@@ -89,9 +86,6 @@ export function main() {
                         expect(object1.changed).toBe(true);
 
                         expect(object2["Below"].length).toBe(0);
-                        expect(object2.changed).toBe(true);
-
-                        expect(mockParent.save).toHaveBeenCalled();
 
                         done();
                     },
@@ -111,8 +105,6 @@ export function main() {
                     () => {
                         expect(object1["Above"].length).toBe(0);
                         expect(object1.changed).toBe(false);
-
-                        expect(mockParent.save).not.toHaveBeenCalled();
 
                         done();
                     },

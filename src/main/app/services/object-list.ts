@@ -39,7 +39,7 @@ export class ObjectList {
         return new Promise<any>((resolve, reject) => {
 
             this.save(object).then(
-
+                
                 () => resolve(),
                 err => { reject(err) }
             )

@@ -18,7 +18,6 @@ export class RelationPickerGroupComponent {
 
     @Input() object: IdaiFieldObject;
     @Input() field: any;
-    @Input() parent: any;
 
     public createRelation() {
 
@@ -36,11 +35,6 @@ export class RelationPickerGroupComponent {
         } else {
             return true;
         }
-    }
-
-    public getThis(): RelationPickerGroupComponent {
-
-        return this;
     }
 
 }

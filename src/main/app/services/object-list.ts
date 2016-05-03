@@ -18,6 +18,11 @@ export class ObjectList {
     private objects: IdaiFieldObject[];
 
     /**
+     * Contains the technical ids of every object with unsaved changes.
+     */
+    private changedObjects: string[] = [];
+
+    /**
      * Saves an object to the local database if it is valid.
      * Creates a new object if the given object is not present in the datastore (which means the object doesn't
      * need to already have a technical id).
@@ -40,8 +45,11 @@ export class ObjectList {
 
             this.save(object).then(
                 
-                () => resolve(),
-                err => { reject(err) }
+                () => {
+                    this.setChanged(object, false);
+                    resolve();
+                },
+                err => { reject(err); }
             )
         });
     }
@@ -119,6 +127,7 @@ export class ObjectList {
                 restoredObject => {
                     var index = this.objects.indexOf(object);
                     this.objects[index] = restoredObject;
+                    this.setChanged(restoredObject, false);
                     resolve();
                 },
                 err => { reject(err); }
@@ -137,6 +146,18 @@ export class ObjectList {
 
     public setObjects(objects: IdaiFieldObject[]) {
         this.objects = objects;
+    }
+
+    public setChanged(object: IdaiFieldObject, changed: boolean) {
+        if (changed && !this.isChanged(object)) this.changedObjects.push(object.id);
+        if (!changed) {
+            var index = this.changedObjects.indexOf(object.id);
+            if (index > -1) this.changedObjects.splice(index, 1);
+        }
+    }
+
+    public isChanged(object: IdaiFieldObject): boolean {
+        return this.changedObjects.indexOf(object.id) > -1;
     }
 
 }

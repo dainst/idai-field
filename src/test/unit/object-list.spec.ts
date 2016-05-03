@@ -68,7 +68,7 @@ export function main() {
             function() {
 
                     delete selectedObject.id;
-                    selectedObject.changed = true;
+                    objectList.setChanged(selectedObject, true);
 
                     objectList.trySave(selectedObject);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
@@ -79,7 +79,7 @@ export function main() {
             function() {
 
                     delete selectedObject.id;
-                    selectedObject.changed = true;
+                    objectList.setChanged(selectedObject, true);
 
                     objectList.trySave(selectedObject);
                     expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
@@ -89,7 +89,7 @@ export function main() {
         it('should update an existing object on autosave',
             function() {
 
-                    selectedObject.changed = true;
+                    objectList.setChanged(selectedObject, true);
 
                     objectList.trySave(selectedObject);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
@@ -99,7 +99,7 @@ export function main() {
         it('should update an existing object on select change',
             function() {
 
-                    selectedObject.changed = true;
+                    objectList.setChanged(selectedObject, true);
 
                     objectList.trySave(selectedObject);
                     expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
@@ -134,23 +134,22 @@ export function main() {
             }
         );
 
-        it('should mark an object invalid if it cannot be stored in the database',
+        it('should keep an object marked as changed if it cannot be stored in the database',
             function() {
 
-                    mockDatastore.update.and.callFake(errorFunction);
-                    selectedObject.changed = true;
+                mockDatastore.update.and.callFake(errorFunction);
+                objectList.setChanged(selectedObject, true);
 
-                    expect(selectedObject.changed).toBe(true);
-                    objectList.trySave(selectedObject).then(suc=>{},err=>{});
-                    expect(selectedObject.changed).toBe(true);
-                }
+                objectList.trySave(selectedObject).then(suc=>{},err=>{});
+                expect(objectList.isChanged(selectedObject)).toBe(true);
+            }
         );
 
         it('should return a message key in case object cannot get stored',
             function(done) {
 
                 mockDatastore.update.and.callFake(errorFunction);
-                selectedObject.changed = true;
+                objectList.setChanged(selectedObject, true);
                 objectList.trySave(selectedObject).then(result=>{
                     fail();
                     done();
@@ -166,7 +165,7 @@ export function main() {
             function(done) {
 
                 mockDatastore.update.and.callFake(successFunction);
-                selectedObject.changed = true;
+                objectList.setChanged(selectedObject, true);
                 objectList.trySave(selectedObject).then(result=>{
                     expect(result).toBe(undefined);
                     done();

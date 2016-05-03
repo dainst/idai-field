@@ -22,10 +22,8 @@ import {M} from "../m";
 
 export class ObjectEditComponent implements OnChanges,OnInit {
 
-
     @Input() object: IdaiFieldObject;
     @Input() projectConfiguration: ProjectConfiguration;
-    
 
     /**
      * The object as it is currently stored in the database (without recent changes)
@@ -89,8 +87,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.messages.delete(M.OBJLIST_IDMISSING);
         this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
-        delete this.object.changed;
-
         this.objectList.trySave(this.object).then(
             () => {
                 this.saveRelatedObjects().then(
@@ -101,13 +97,9 @@ export class ObjectEditComponent implements OnChanges,OnInit {
                     err => { console.error(err); }
                 );
             },
-            err => {
-                if (err) this.messages.add(err,'danger');
-                this.object.changed = true;
-            }
+            err => { if (err) this.messages.add(err,'danger'); }
         );
     }
-
 
     /**
      * @param object
@@ -151,6 +143,10 @@ export class ObjectEditComponent implements OnChanges,OnInit {
                 err => reject(err)
             );
         });
+    }
+
+    public markAsChanged() {
+        this.objectList.setChanged(this.object, true);
     }
 
 }

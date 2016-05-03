@@ -11,9 +11,11 @@ export function main() {
         var object1: any;
         var object2: any;
 
+        var changedObjects;
+
         var relationPickerComponent: RelationPickerComponent;
         var mockDatastore: any;
-        var mockParent: any;
+        var mockObjectList: any;
 
         var element: any = {
             nativeElement: {
@@ -45,18 +47,36 @@ export function main() {
             };
         };
 
+        var setChanged = function(object, changed: boolean) {
+            if (changed && !isChanged(object)) changedObjects.push(object.id);
+            if (!changed) {
+                var index = changedObjects.indexOf(object.id);
+                if (index > -1) changedObjects.splice(index, 1);
+            }
+        }
+
+        var isChanged = function(object) {
+            return changedObjects.indexOf(object.id) > -1;
+        }
+
         beforeEach(() => {
             object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
-                "changed": false, "type": "Object", "Above": [] };
+                "type": "Object", "Above": [] };
 
             object2 = { "id": "id2", "identifier": "ob2", "title": "Object 2", "synced": 0, "valid": true,
-                "changed": false, "type": "Object", "Below": [] };
+                "type": "Object", "Below": [] };
+
+            changedObjects = [];
 
             mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'get', 'find' ]);
             mockDatastore.get.and.callFake(get);
             mockDatastore.find.and.callFake(find);
 
-            relationPickerComponent = new RelationPickerComponent(element, mockDatastore);
+            mockObjectList = jasmine.createSpyObj('mockObjectList', ['setChanged', 'isChanged']);
+            mockObjectList.setChanged.and.callFake(setChanged);
+            mockObjectList.isChanged.and.callFake(isChanged);
+
+            relationPickerComponent = new RelationPickerComponent(element, mockDatastore, mockObjectList);
             relationPickerComponent.object = object1;
             relationPickerComponent.field = { "field": "Above", "inverse": "Below" };
             relationPickerComponent.relationIndex = 0;
@@ -64,11 +84,11 @@ export function main() {
 
         it('should create a relation and the corresponding inverse relation if a target object is chosen',
             function() {
-                relationPickerComponent.chooseTarget(object2);
+                relationPickerComponent.createRelation(object2);
 
                 expect(object1["Above"].length).toBe(1);
                 expect(object1["Above"][0]).toBe(object2.id);
-                expect(object1.changed).toBe(true);
+                expect(isChanged(object1)).toBe(true);
 
                 expect(object2["Below"].length).toBe(1);
                 expect(object2["Below"][0]).toBe(object1.id);
@@ -83,7 +103,7 @@ export function main() {
                 relationPickerComponent.deleteRelation().then(
                     () => {
                         expect(object1["Above"].length).toBe(0);
-                        expect(object1.changed).toBe(true);
+                        expect(isChanged(object1)).toBe(true);
 
                         expect(object2["Below"].length).toBe(0);
 
@@ -104,7 +124,7 @@ export function main() {
                 relationPickerComponent.deleteRelation().then(
                     () => {
                         expect(object1["Above"].length).toBe(0);
-                        expect(object1.changed).toBe(false);
+                        expect(isChanged(object1)).toBe(false);
 
                         done();
                     },

@@ -13,7 +13,7 @@ export function main() {
 
         beforeEach(() => {
             object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
-                "changed": false, "type": "Object" };
+                "type": "Object" };
 
             relationPickerGroupComponent = new RelationPickerGroupComponent();
             relationPickerGroupComponent.object = object;

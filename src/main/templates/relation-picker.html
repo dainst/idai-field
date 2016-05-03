@@ -11,7 +11,7 @@
                         <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}
                     </div>
                     <div *ngIf="selectedSuggestionIndex == i" class="suggestion selected-suggestion"
-                            (mousedown)="chooseTarget(suggestion)">
+                            (mousedown)="createRelation(suggestion)">
                         <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}
                     </div>
                 </div>

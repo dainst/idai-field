@@ -45,19 +45,16 @@ export class OverviewComponent implements OnInit {
         this.messages.delete(M.OBJLIST_IDMISSING);
         this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
-        if (!object || !object.changed) return this.callback();
+        if (!object || !this.objectList.isChanged(this.selectedObject)) return this.callback();
 
         this.modal.open();
     }
 
     public save() {
-        delete this.selectedObject.changed;
-
         this.objectList.trySave(this.selectedObject).then((result)=> {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');
-            this.selectedObject.changed = true;
         });
     }
 

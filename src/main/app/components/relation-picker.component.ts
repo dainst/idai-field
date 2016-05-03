@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, ElementRef} from 'angular2/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
+import {ObjectList} from "../services/object-list";
 
 
 /**
@@ -13,7 +14,8 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 
     selector: 'relation-picker',
     templateUrl: 'templates/relation-picker.html',
-    directives: [CORE_DIRECTIVES, COMMON_DIRECTIVES, FORM_DIRECTIVES]
+    directives: [CORE_DIRECTIVES, COMMON_DIRECTIVES, FORM_DIRECTIVES],
+    providers: [ObjectList]
 })
 
 export class RelationPickerComponent implements OnChanges {
@@ -28,7 +30,7 @@ export class RelationPickerComponent implements OnChanges {
     private idSearchString: string;
     private suggestionsVisible: boolean;
 
-    constructor(private element: ElementRef, private datastore: Datastore) {}
+    constructor(private element: ElementRef, private datastore: Datastore, private objectList: ObjectList) {}
 
     public ngOnChanges() {
 
@@ -95,14 +97,14 @@ export class RelationPickerComponent implements OnChanges {
      * Creates a relation to the target object.
      * @param target
      */
-    public chooseTarget(target: IdaiFieldObject) {
+    public createRelation(target: IdaiFieldObject) {
 
         this.createInverseRelation(target);
         this.object[this.field.field][this.relationIndex] = target.id;
         this.selectedTarget = target;
         this.idSearchString = "";
-        this.suggestions = []
-        this.object.changed = true;
+        this.suggestions = [];
+        this.objectList.setChanged(this.object, true);
     }
 
     public editTarget() {
@@ -160,7 +162,7 @@ export class RelationPickerComponent implements OnChanges {
                 this.deleteInverseRelation(targetId).then(
                     () => {
                         this.object[this.field.field].splice(this.relationIndex, 1);
-                        this.object.changed = true;
+                        this.objectList.setChanged(this.object, true);
                         resolve();
                     },
                     err => {
@@ -179,6 +181,7 @@ export class RelationPickerComponent implements OnChanges {
         }
 
         targetObject[this.field.inverse].push(this.object.id);
+        this.objectList.setChanged(targetObject, true);
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {
@@ -189,6 +192,7 @@ export class RelationPickerComponent implements OnChanges {
                     var index = targetObject[this.field.inverse].indexOf(this.object.id);
                     if (index != -1) {
                         targetObject[this.field.inverse].splice(index, 1);
+                        this.objectList.setChanged(targetObject, true);
                     }
                     resolve();
                 },
@@ -221,7 +225,7 @@ export class RelationPickerComponent implements OnChanges {
                 break;
             case "Enter":
                 if (this.selectedSuggestionIndex > -1 && this.suggestions.length > 0)
-                    this.chooseTarget(this.suggestions[this.selectedSuggestionIndex]);
+                    this.createRelation(this.suggestions[this.selectedSuggestionIndex]);
                 break;
         }
     }

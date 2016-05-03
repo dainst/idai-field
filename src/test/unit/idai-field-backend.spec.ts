@@ -10,7 +10,7 @@ import {Headers} from "angular2/http";
  * @author Thomas Kleinke
  */
 export function main() {
-    fdescribe('IdaiFieldBackend', () => {
+    describe('IdaiFieldBackend', () => {
 
         var config = {
             backend : {

@@ -36,7 +36,7 @@ describe('idai field app', function() {
             });
     });
 
-    fit('should warn if an existing id is used ', function() {
+    it('should warn if an existing id is used ', function() {
         createObject()
             .then(createObject)
             .then(function(){

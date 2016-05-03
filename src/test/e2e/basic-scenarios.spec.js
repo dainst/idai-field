@@ -1,12 +1,11 @@
 describe('idai field app', function() {
 
-    function createObject(fun) {
+    function createObject() {
 
-        clickCreateObject()
+        return clickCreateObject()
                 .then(selectTypeObject)
                 .then(typeInIdentifier)
-                .then(saveObject)
-                .then(function(){fun();});
+                .then(saveObject);
     }
 
 
@@ -31,18 +30,18 @@ describe('idai field app', function() {
     });
 
     it('should create a new object of first listed type ', function() {
-        createObject(function(){
-            expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
-        });
+        createObject()
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
+            });
     });
 
-    it('should warn if an existing id is used ', function() {
-        createObject(function(){
-
-            createObject(function() {
+    fit('should warn if an existing id is used ', function() {
+        createObject()
+            .then(createObject)
+            .then(function(){
                 expect(element(by.id('message-0')).getText()).
                     toEqual("Objekt Identifier existiert bereits. Bei Klick auf ein anderes Objekt wird der ursprüngliche Zustand wiederhergestellt.");
             });
-        });
     });
 });

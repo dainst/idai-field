@@ -25,11 +25,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     @Input() object: IdaiFieldObject;
     @Input() projectConfiguration: ProjectConfiguration;
 
-    /**
-     * The object as it is currently stored in the database (without recent changes)
-     */
-    private lastSavedVersion: IdaiFieldObject;
-
     private relationFields: any[] = [
         { "field": "Belongs to", "inverse": "Includes", "label": "Enthalten in" },
         { "field": "Includes", "inverse": "Belongs to", "label": "Enthält" },
@@ -52,13 +47,11 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     constructor(
         private objectList: ObjectList,
         private messages: Messages) {
-        
     }
 
     ngOnInit():any {
         this.setFieldsForObjectType(); // bad, this is necessary for testing
     }
-
 
     public setType(type: string) {
 
@@ -79,11 +72,9 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public ngOnChanges() {
         if (this.object) {
             this.setFieldsForObjectType();
-            this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
             this.types=this.projectConfiguration.getTypes();
         }
     }
-
 
     /**
      * Saves the object to the local datastore.
@@ -93,62 +84,18 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.messages.delete(M.OBJLIST_IDMISSING);
         this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
-        this.objectList.trySave(this.object).then(
+        this.objectList.trySave().then(
             () => {
-                this.saveRelatedObjects().then(
-                    () => {
-                        this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
-                        this.lastSavedVersion = JSON.parse(JSON.stringify(this.object));
-                    },
-                    err => { console.error(err); }
-                );
+                this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
             },
-            err => { if (err) this.messages.add(err,'danger'); }
-        );
-    }
-
-    /**
-     * @param object
-     * @param lastSavedVersion
-     * @returns {string[]} technical ids of all the objects targeted by the objects relations.
-     */
-    private gatherRelationIds(object,lastSavedVersion) {
-
-        var relationIds: string[] = [];
-        for (var i in this.relationFields) {
-
-            if (object[this.relationFields[i].field]) {
-                relationIds = relationIds.concat(object[this.relationFields[i].field]);
-            }
-
-            if (lastSavedVersion[this.relationFields[i].field]) {
-                for (var j in lastSavedVersion[this.relationFields[i].field]) {
-                    if (relationIds.indexOf(lastSavedVersion[this.relationFields[i].field][j]) == -1) {
-                        relationIds.push(lastSavedVersion[this.relationFields[i].field][j]);
+            errors => {
+                if (errors) {
+                    for (var i in errors) {
+                        this.messages.add(errors[i], 'danger');
                     }
                 }
             }
-        }
-        return relationIds;
-    }
-
-    private saveRelatedObjects(): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            var relationIds: string[] = this.gatherRelationIds(this.object,this.lastSavedVersion);
-            if (!relationIds || relationIds.length <= 0)
-                resolve();
-
-            var promises: Promise<any>[] = [];
-            for (var i in relationIds)
-                promises.push(this.objectList.trySaveById(relationIds[i]));
-
-            Promise.all(promises).then(
-                () => resolve(),
-                err => reject(err)
-            );
-        });
+        );
     }
 
     public markAsChanged() {

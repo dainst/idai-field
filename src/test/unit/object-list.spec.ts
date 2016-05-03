@@ -26,25 +26,34 @@ export function main() {
             "valid": true, "type": "Object" };
         var selectedObject : IdaiFieldObject;
 
+        var getFunction = function(id) {
+            return {
+                then: function(suc, err) {
+                    if (id == selectedObject.id)
+                        suc(selectedObject);
+                    else
+                        err("wrong id");
+                }
+            };
+        };
+
         var successFunction = function() {
             return {
-                then: function(suc,err) {
+                then: function(suc, err) {
                     suc("ok");
                 }
             };
         };
 
         var errorFunction = function() {
-            return {
-                then: function(suc,err) {
-                    err("databaseError");
-                }
-            };
+            return new Promise<any>((resolve, reject) => {
+                reject("objectlist/idexists");
+            });
         };
 
         var restoreFunction = function() {
             return {
-                then: function(suc,err) {
+                then: function(suc, err) {
                     suc(oldVersion);
                 }
             };
@@ -52,70 +61,31 @@ export function main() {
 
         beforeEach(function() {
 
-                mockDatastore   = jasmine.createSpyObj('mockDatastore', [ 'create','update','refresh' ]);
-                objectList = new ObjectList(mockDatastore);
+            mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'get', 'create','update','refresh' ]);
+            objectList = new ObjectList(mockDatastore);
 
-                selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true ,
-                    "id" : id, "type": "Object" };
-                objectList.setObjects([selectedObject]);
+            selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true,
+                "id" : id, "type": "Object" };
+            objectList.setObjects([selectedObject]);
 
-                mockDatastore.create.and.callFake(successFunction);
-                mockDatastore.update.and.callFake(successFunction);
-                mockDatastore.refresh.and.callFake(restoreFunction);
+            mockDatastore.get.and.callFake(getFunction);
+            mockDatastore.create.and.callFake(successFunction);
+            mockDatastore.update.and.callFake(successFunction);
+            mockDatastore.refresh.and.callFake(restoreFunction);
         });
 
-        it('should create a non existing object on autosave',
-            function() {
-
-                    delete selectedObject.id;
-                    objectList.setChanged(selectedObject, true);
-
-                    objectList.trySave(selectedObject);
-                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
-                }
-        );
-
-        it('should create a non existing object on select change',
-            function() {
-
-                    delete selectedObject.id;
-                    objectList.setChanged(selectedObject, true);
-
-                    objectList.trySave(selectedObject);
-                    expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
-                }
-        );
-
-        it('should update an existing object on autosave',
-            function() {
-
-                    objectList.setChanged(selectedObject, true);
-
-                    objectList.trySave(selectedObject);
-                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
-                }
-        );
-
-        it('should update an existing object on select change',
-            function() {
-
-                    objectList.setChanged(selectedObject, true);
-
-                    objectList.trySave(selectedObject);
-                    expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
-                }
-        );
-
-        it('should restore an object',
+        it('should create a non existing object on save',
             function(done) {
 
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.restoreObject(selectedObject).then(
-                    suc => {
-                        expect(objectList.getObjects()[0]).toBe(oldVersion);
+                delete selectedObject.id;
+                objectList.setChanged(selectedObject, true);
+
+                objectList.trySave().then(
+                    () => {
+                        expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                         done();
                     },
-                    err =>{
+                    err => {
                         fail();
                         done();
                     }
@@ -123,25 +93,59 @@ export function main() {
             }
         );
 
-        it('should not restore an invalid object on autosave with invalid object',
-            function() {
+        it('should update an existing object on save',
+            function(done) {
 
-                selectedObject.valid = false;
+                objectList.setChanged(selectedObject, true);
 
+                objectList.trySave().then(
+                    () => {
+                        expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
+                        done();
+                    },
+                    err => {
+                        fail();
+                        done();
+                    }
+                );
+            }
+        );
+
+        it('should restore an object',
+            function(done) {
+
+                objectList.setChanged(selectedObject, true);
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
-                objectList.trySave(selectedObject); // restore the oldVersion now.
-                expect(objectList.getObjects()[0]).toBe(selectedObject);
+
+                objectList.restoreAll().then(
+                    () => {
+                        expect(objectList.getObjects()[0]).toBe(oldVersion);
+                        done();
+                    },
+                    err => {
+                        fail();
+                        done();
+                    }
+                );
             }
         );
 
         it('should keep an object marked as changed if it cannot be stored in the database',
-            function() {
+            function(done) {
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave(selectedObject).then(suc=>{},err=>{});
-                expect(objectList.isChanged(selectedObject)).toBe(true);
+                objectList.trySave().then(
+                    () => {
+                        fail();
+                        done();
+                    },
+                    err => {
+                        expect(objectList.isChanged(selectedObject)).toBe(true);
+                        done();
+                    }
+                );
             }
         );
 
@@ -150,13 +154,16 @@ export function main() {
 
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged(selectedObject, true);
-                objectList.trySave(selectedObject).then(result=>{
-                    fail();
-                    done();
-                },err=>{
-                    expect(err).not.toBe(undefined);
-                    done();
-                }
+
+                objectList.trySave().then(
+                    () => {
+                        fail();
+                        done();
+                    },
+                    errors => {
+                        expect(errors).not.toBe(undefined);
+                        done();
+                    }
                 );
             }
         );
@@ -164,15 +171,18 @@ export function main() {
         it('should not return a message key in case object can get stored',
             function(done) {
 
-                mockDatastore.update.and.callFake(successFunction);
                 objectList.setChanged(selectedObject, true);
-                objectList.trySave(selectedObject).then(result=>{
-                    expect(result).toBe(undefined);
-                    done();
-                },err=>{
-                    fail();
-                    done();
-                });
+
+                objectList.trySave().then(
+                    result => {
+                        expect(result).toBe(undefined);
+                        done();
+                    },
+                    err => {
+                        fail();
+                        done();
+                    }
+                );
             }
         );
     });

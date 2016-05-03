@@ -51,7 +51,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public save() {
-        this.objectList.trySave(this.selectedObject).then((result)=> {
+        this.objectList.trySave().then((result)=> {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');
@@ -59,7 +59,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.objectList.restoreObject(this.selectedObject).then((result) => {
+        this.objectList.restoreAll().then((result) => {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');

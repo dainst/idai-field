@@ -14,8 +14,7 @@ import {ObjectList} from "../services/object-list";
 
     selector: 'relation-picker',
     templateUrl: 'templates/relation-picker.html',
-    directives: [CORE_DIRECTIVES, COMMON_DIRECTIVES, FORM_DIRECTIVES],
-    providers: [ObjectList]
+    directives: [CORE_DIRECTIVES, COMMON_DIRECTIVES, FORM_DIRECTIVES]
 })
 
 export class RelationPickerComponent implements OnChanges {
@@ -30,7 +29,12 @@ export class RelationPickerComponent implements OnChanges {
     private idSearchString: string;
     private suggestionsVisible: boolean;
 
-    constructor(private element: ElementRef, private datastore: Datastore, private objectList: ObjectList) {}
+    constructor(private element: ElementRef,
+                /**
+                 * In this component the datastore should be used only for read access.
+                 */
+                private datastore: Datastore,
+                private objectList: ObjectList) {}
 
     public ngOnChanges() {
 

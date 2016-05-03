@@ -23,56 +23,42 @@ export class ObjectList {
     private changedObjects: string[] = [];
 
     /**
-     * Saves an object to the local database if it is valid.
-     * Creates a new object if the given object is not present in the datastore (which means the object doesn't
+     * Saves all changed objects to the local database if they are valid.
+     * Creates a new object if an object is not present in the datastore (which means the objects don't
      * need to already have a technical id).
      * 
-     * @param object The object to save. Must not be undefined.
-     * @param restoreIfInvalid Defines if the object state saved in the datastore should be restored if the object
-     * is invalid
-     * @return promise. Gets resolved in case the object was stored or
-     *   at least recovered when restoreIfInvalid is set to true.
-     *   Gets rejectected in case of errors, which are keys of M to identify the error
-     *   if possible.
-     * @throws if object is not defined.
+     * @return promise. Gets resolved in case the objects were stored successfully.
+     * Gets rejected in case of errors, which are keys of M to identify the error if possible.
      */
-    public trySave(
-        object: IdaiFieldObject): Promise<any> {
-
-        if (!object) throw "object must not be undefined";
+    public trySave(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.save(object).then(
-                
-                () => {
-                    this.setChanged(object, false);
-                    resolve();
-                },
-                err => { reject(err); }
-            )
-        });
-    }
+            if (this.changedObjects.length == 0) resolve();
 
-    /**
-     * Saves the object corresponding to the given id to the local database if an object for this id exists and
-     * the object is valid.
-     * Cannot be used to create new objects.
-     * @param objectId The technical id of the object to save
-     */
-    public trySaveById(objectId: string): Promise<any> {
+            var getObjectPromises: Promise<IdaiFieldObject>[] = [];
+            var saveObjectPromises: Promise<any>[] = [];
 
-        return new Promise<any>((resolve, reject) => {
+            for (var i in this.changedObjects) {
+                getObjectPromises.push(this.datastore.get(this.changedObjects[i]));
+            }
 
-            this.datastore.get(objectId).then(
-                object => {
-                    this.trySave(object).then(
-                        () => { resolve(); },
-                        err => { reject(err); }
-                    )
+            Promise.all(getObjectPromises).then(
+                objects => {
+                    for (var i in objects) {
+                        saveObjectPromises.push(this.save(objects[i]));
+                    }
+
+                    Promise.all(saveObjectPromises).then(
+                        () => {
+                            this.changedObjects = [];
+                            resolve();
+                        },
+                        errors => reject(errors)
+                    );
                 },
                 err => {
-                    reject("Object not found");
+                    reject(err);
                 }
             );
         });
@@ -82,7 +68,7 @@ export class ObjectList {
      * Saves the object to the local datastore.
      * @param object
      */
-    private save(object: IdaiFieldObject): any {
+    private save(object: any): any {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
@@ -114,7 +100,42 @@ export class ObjectList {
         return this.datastore.create(object);
     }
 
-    public restoreObject(object: IdaiFieldObject): Promise<any> {
+    /**
+     * Restores all changed objects.
+     */
+    public restoreAll(): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            var getObjectPromises:Promise<any>[] = [];
+            var restoreObjectPromises:Promise<any>[] = [];
+
+            for (var i in this.changedObjects) {
+                getObjectPromises.push(this.datastore.get(this.changedObjects[i]));
+            }
+
+            Promise.all(getObjectPromises).then(
+                objects => {
+                    for (var i in objects) {
+                        restoreObjectPromises.push(this.restore(objects[i]));
+                    }
+
+                    Promise.all(restoreObjectPromises).then(
+                        () => {
+                            this.changedObjects = [];
+                            resolve();
+                        },
+                        errors => reject(errors)
+                    );
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
+    }
+
+    private restore(object: any): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
             if (!object.id) {

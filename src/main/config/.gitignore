@@ -1,2 +1,7 @@
 config.json
 Configuration.json
+
+
+# reserved filenames for build-process
+config.json.deploy 
+Configuration.json.deploy 

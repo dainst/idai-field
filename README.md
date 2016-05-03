@@ -67,11 +67,12 @@ In order to run the frontend in the development server use the following command
 $ npm start
 ```
 
-This should open the app in a separate window.
+This should open the app in a separate window. 
 
-Any changes made to any source files trigger automatic recompilation
+The command builds (cleaning any rests from any prior builds)
+and starts the application. From then on, any changes made to 
+any source files trigger automatic recompilation
 of processes and a final reload of the application.
-
 
 ## Testing
 

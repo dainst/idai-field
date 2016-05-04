@@ -45,13 +45,19 @@ export class OverviewComponent implements OnInit {
         this.messages.delete(M.OBJLIST_IDMISSING);
         this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
+        // Remove object from list if it is new and no data has been entered
+        if (object && (!object.type || (!this.selectedObject.id && !this.objectList.isChanged(this.selectedObject)))) {
+            this.objectList.setChanged(object, true);
+            return this.discardChanges();
+        }
+
         if (!object || !this.objectList.isChanged(this.selectedObject)) return this.callback();
 
         this.modal.open();
     }
 
     public save() {
-        this.objectList.persistChangedObjects().then((result)=> {
+        this.objectList.persistChangedObjects().then(()=> {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');
@@ -59,7 +65,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.objectList.restoreChangedObjects().then((result) => {
+        this.objectList.restoreChangedObjects().then(() => {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');
@@ -75,9 +81,8 @@ export class OverviewComponent implements OnInit {
 
     public onCreate() {
         this.callback = function() {
-            var newObject = { changed: true };
+            var newObject = {};
             this.objectList.getObjects().unshift(newObject);
-            this.objectList.setChanged(<IdaiFieldObject> newObject, true);
             this.selectedObject = <IdaiFieldObject> newObject;
         }.bind(this);
         this.askForPermissionForChange(this.selectedObject);

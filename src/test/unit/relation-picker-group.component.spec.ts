@@ -12,7 +12,7 @@ export function main() {
         var relationPickerGroupComponent: RelationPickerGroupComponent;
 
         beforeEach(() => {
-            object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
+            object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, 
                 "type": "Object" };
 
             relationPickerGroupComponent = new RelationPickerGroupComponent();

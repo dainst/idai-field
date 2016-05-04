@@ -23,7 +23,7 @@ export function main() {
         var id = "abc";
 
         var oldVersion : IdaiFieldObject = { "identifier": "ob4", "title": "Luke Skywalker (old)", "synced": 0,
-            "valid": true, "type": "Object" };
+            "type": "Object" };
         var selectedObject : IdaiFieldObject;
 
         var getFunction = function(id) {
@@ -64,7 +64,7 @@ export function main() {
             mockDatastore = jasmine.createSpyObj('mockDatastore', [ 'get', 'create','update','refresh' ]);
             objectList = new ObjectList(mockDatastore);
 
-            selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0, "valid": true,
+            selectedObject = { "identifier": "ob4", "title": "Luke Skywalker", "synced": 0,
                 "id" : id, "type": "Object" };
             objectList.setObjects([selectedObject]);
 

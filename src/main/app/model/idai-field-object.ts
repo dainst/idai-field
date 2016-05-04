@@ -5,6 +5,5 @@ export interface IdaiFieldObject {
     synced: number;
     modified?: Date;
     created?: Date;
-    valid: boolean;
     type: string;
 }

@@ -66,6 +66,37 @@ export class ObjectList {
     }
 
 
+    public getObjects() {
+        return this.objects;
+    }
+
+    public setObjects(objects: IdaiFieldObject[]) {
+        this.objects = objects;
+    }
+
+    public setChanged(object: IdaiFieldObject, changed: boolean) {
+        if (changed) {
+            if (object && (!object.id)) {
+                this.containsNew=true;
+            }
+            else if (changed && !this.isChanged(object)) {
+                if (object.id) this.changedObjects.push(object.id);
+            }
+        }
+        else {
+            var index = this.changedObjects.indexOf(object.id);
+            if (index > -1) this.changedObjects.splice(index, 1);
+        }
+    }
+
+    public isChanged(object: IdaiFieldObject): boolean {
+        if (this.containsNew) return true;
+        return this.changedObjects.indexOf(object.id) > -1;
+    }
+
+
+
+
     private allChangedObjects() : Promise<IdaiFieldObject>[] {
 
         var objectPromises: Promise<IdaiFieldObject>[] = [];
@@ -78,9 +109,6 @@ export class ObjectList {
         }
         return objectPromises;
     }
-
-
-
 
     /**
      * Saves the object to the local datastore.
@@ -172,33 +200,4 @@ export class ObjectList {
         var index = this.getObjects().indexOf(object);
         this.getObjects().splice(index, 1);
     }
-
-    public getObjects() {
-        return this.objects;
-    }
-
-    public setObjects(objects: IdaiFieldObject[]) {
-        this.objects = objects;
-    }
-
-    public setChanged(object: IdaiFieldObject, changed: boolean) {
-        if (changed) {
-            if (object && (!object.id)) {
-                this.containsNew=true;
-            }
-            else if (changed && !this.isChanged(object)) {
-                if (object.id) this.changedObjects.push(object.id);
-            }
-        }
-        else {
-            var index = this.changedObjects.indexOf(object.id);
-            if (index > -1) this.changedObjects.splice(index, 1);
-        }
-    }
-
-    public isChanged(object: IdaiFieldObject): boolean {
-        if (this.containsNew) return true;
-        return this.changedObjects.indexOf(object.id) > -1;
-    }
-
 }

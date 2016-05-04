@@ -94,8 +94,36 @@ export class ObjectList {
         return this.changedObjects.indexOf(object.id) > -1;
     }
 
+    
+    /**
+     * Restores all changed objects.
+     */
+    public restoreAll(): Promise<any> {
 
+        return new Promise<any>((resolve, reject) => {
 
+            Promise.all(this.allChangedObjects()).then(
+                objects => {
+
+                    var restoreObjectPromises:Promise<any>[] = [];
+                    for (var i in objects)
+                        restoreObjectPromises.push(this.restore(objects[i]));
+
+                    Promise.all(restoreObjectPromises).then(
+                        () => {
+                            this.changedObjects = [];
+                            this.containsNew = false;
+                            resolve();
+                        },
+                        errors => reject(errors)
+                    );
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
+    }
 
     private allChangedObjects() : Promise<IdaiFieldObject>[] {
 
@@ -144,36 +172,6 @@ export class ObjectList {
      */
     private create(object: IdaiFieldObject) : any {
         return this.datastore.create(object);
-    }
-
-    /**
-     * Restores all changed objects.
-     */
-    public restoreAll(): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            Promise.all(this.allChangedObjects()).then(
-                objects => {
-
-                    var restoreObjectPromises:Promise<any>[] = [];
-                    for (var i in objects)
-                        restoreObjectPromises.push(this.restore(objects[i]));
-
-                    Promise.all(restoreObjectPromises).then(
-                        () => {
-                            this.changedObjects = [];
-                            this.containsNew = false;
-                            resolve();
-                        },
-                        errors => reject(errors)
-                    );
-                },
-                err => {
-                    reject(err);
-                }
-            );
-        });
     }
 
     private restore(object: any): Promise<any> {

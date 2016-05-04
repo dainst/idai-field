@@ -66,8 +66,8 @@
                                     <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
                                 </select>
                             </div>
-                            <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object" [field]="field"
-                                       [parent]="getThis()"></valuelist>
+                            <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object"
+                                       [field]="field"></valuelist>
                         </div>
                     </div>
 

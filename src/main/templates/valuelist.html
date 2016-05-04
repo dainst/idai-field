@@ -1,5 +1,5 @@
 <div>
-    <select (change)="save($event.target.selectedOptions)" class="form-control" multiple>
+    <select (change)="setValues($event.target.selectedOptions)" class="form-control" multiple>
         <option *ngFor="#item of field.valuelist" value="{{item}}" [selected]="isSelected(item)">{{item}}</option>
     </select>
 </div>

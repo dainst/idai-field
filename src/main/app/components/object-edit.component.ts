@@ -59,10 +59,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.setFieldsForObjectType();
     }
 
-    public getThis(): ObjectEditComponent {
-        return this;
-    }
-
     private setFieldsForObjectType() {
         if (this.object==undefined) return;
         if (!this.projectConfiguration) return;

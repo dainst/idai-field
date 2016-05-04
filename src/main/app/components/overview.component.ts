@@ -75,9 +75,10 @@ export class OverviewComponent implements OnInit {
 
     public onCreate() {
         this.callback = function() {
-            var newObject = {};
+            var newObject = { changed: true };
             this.objectList.getObjects().unshift(newObject);
-            this.selectedObject = newObject;
+            this.objectList.setChanged(<IdaiFieldObject> newObject, true);
+            this.selectedObject = <IdaiFieldObject> newObject;
         }.bind(this);
         this.askForPermissionForChange(this.selectedObject);
     }

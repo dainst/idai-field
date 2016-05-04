@@ -22,6 +22,9 @@ export class ObjectList {
      */
     private changedObjects: string[] = [];
 
+    private containsNew = false;
+
+
     /**
      * Saves all changed objects to the local database if they are valid.
      * Creates a new object if an object is not present in the datastore (which means the objects don't
@@ -34,16 +37,11 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
 
-            if (this.changedObjects.length == 0) resolve();
+            if (this.containsNew==false && this.changedObjects.length == 0) resolve();
 
-            var getObjectPromises: Promise<IdaiFieldObject>[] = [];
+
             var saveObjectPromises: Promise<any>[] = [];
-
-            for (var i in this.changedObjects) {
-                getObjectPromises.push(this.datastore.get(this.changedObjects[i]));
-            }
-
-            Promise.all(getObjectPromises).then(
+            Promise.all(this.allChangedObjects()).then(
                 objects => {
                     for (var i in objects) {
                         saveObjectPromises.push(this.save(objects[i]));
@@ -52,9 +50,12 @@ export class ObjectList {
                     Promise.all(saveObjectPromises).then(
                         () => {
                             this.changedObjects = [];
+                            this.containsNew = false;
                             resolve();
                         },
-                        errors => reject(errors)
+                        errors => {
+                            if ((typeof errors)=="string") return reject([errors]); else return reject(errors);
+                        }
                     );
                 },
                 err => {
@@ -63,6 +64,23 @@ export class ObjectList {
             );
         });
     }
+
+
+    private allChangedObjects() : Promise<IdaiFieldObject>[] {
+
+        var objectPromises: Promise<IdaiFieldObject>[] = [];
+        for (var i in this.changedObjects) {
+            objectPromises.push(this.datastore.get(this.changedObjects[i]));
+        }
+        if (this.containsNew) {
+            var newOPromise = new Promise<IdaiFieldObject>((resolve)=> resolve(this.objects[0]));
+            objectPromises.push(newOPromise);
+        }
+        return objectPromises;
+    }
+
+
+
 
     /**
      * Saves the object to the local datastore.
@@ -107,22 +125,17 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
 
-            var getObjectPromises:Promise<any>[] = [];
-            var restoreObjectPromises:Promise<any>[] = [];
-
-            for (var i in this.changedObjects) {
-                getObjectPromises.push(this.datastore.get(this.changedObjects[i]));
-            }
-
-            Promise.all(getObjectPromises).then(
+            Promise.all(this.allChangedObjects()).then(
                 objects => {
-                    for (var i in objects) {
+
+                    var restoreObjectPromises:Promise<any>[] = [];
+                    for (var i in objects)
                         restoreObjectPromises.push(this.restore(objects[i]));
-                    }
 
                     Promise.all(restoreObjectPromises).then(
                         () => {
                             this.changedObjects = [];
+                            this.containsNew = false;
                             resolve();
                         },
                         errors => reject(errors)
@@ -139,9 +152,8 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
             if (!object.id) {
-                this.removeObjectFromList(object);
-                resolve();
-                return;
+                this.removeNewObjectFromList(object);
+                return resolve();
             }
 
             this.datastore.refresh(object.id).then(
@@ -156,7 +168,7 @@ export class ObjectList {
         });
     }
 
-    private removeObjectFromList(object: IdaiFieldObject) {
+    private removeNewObjectFromList(object: IdaiFieldObject) {
         var index = this.getObjects().indexOf(object);
         this.getObjects().splice(index, 1);
     }
@@ -170,14 +182,22 @@ export class ObjectList {
     }
 
     public setChanged(object: IdaiFieldObject, changed: boolean) {
-        if (changed && !this.isChanged(object)) this.changedObjects.push(object.id);
-        if (!changed) {
+        if (changed) {
+            if (object && (!object.id)) {
+                this.containsNew=true;
+            }
+            else if (changed && !this.isChanged(object)) {
+                if (object.id) this.changedObjects.push(object.id);
+            }
+        }
+        else {
             var index = this.changedObjects.indexOf(object.id);
             if (index > -1) this.changedObjects.splice(index, 1);
         }
     }
 
     public isChanged(object: IdaiFieldObject): boolean {
+        if (this.containsNew) return true;
         return this.changedObjects.indexOf(object.id) > -1;
     }
 

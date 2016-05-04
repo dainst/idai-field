@@ -113,7 +113,7 @@ export class ObjectList {
      * Saves the object to the local datastore.
      * @param object
      */
-    private persist(object: any): any {
+    private persist(object: IdaiFieldObject): Promise<any> {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
@@ -129,7 +129,7 @@ export class ObjectList {
         }
     }
 
-    private restore(object: any): Promise<any> {
+    private restore(object: IdaiFieldObject): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
             if (!object.id) {

@@ -73,8 +73,12 @@ export class OverviewComponent implements OnInit {
     }
     
     public onSelect(object: IdaiFieldObject) {
+        if (object == this.selectedObject) return;
         this.callback = function() {
-            this.selectedObject = object;
+            this.datastore.get(object.id).then(
+                (obj) => this.selectedObject = obj,
+                (err) => console.error(err)
+            );
         }.bind(this);
         this.askForPermissionForChange(this.selectedObject);
     }

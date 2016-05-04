@@ -84,7 +84,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.messages.delete(M.OBJLIST_IDMISSING);
         this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
 
-        this.objectList.trySave().then(
+        this.objectList.persistChangedObjects().then(
             () => {
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
             },

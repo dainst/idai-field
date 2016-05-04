@@ -51,7 +51,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public save() {
-        this.objectList.trySave().then((result)=> {
+        this.objectList.persistChangedObjects().then((result)=> {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');
@@ -59,7 +59,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.objectList.restoreAll().then((result) => {
+        this.objectList.restoreChangedObjects().then((result) => {
             this.callback();
         }, (err) => {
             this.messages.add(err, 'danger');

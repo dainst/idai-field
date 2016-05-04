@@ -80,7 +80,7 @@ export function main() {
                 delete selectedObject.id;
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave().then(
+                objectList.persistChangedObjects().then(
                     () => {
                         expect((<Datastore> mockDatastore).create).toHaveBeenCalledWith(selectedObject);
                         done();
@@ -98,7 +98,7 @@ export function main() {
 
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave().then(
+                objectList.persistChangedObjects().then(
                     () => {
                         expect((<Datastore> mockDatastore).update).toHaveBeenCalledWith(selectedObject);
                         done();
@@ -117,7 +117,7 @@ export function main() {
                 objectList.setChanged(selectedObject, true);
                 expect(objectList.getObjects()[0]).toBe(selectedObject);
 
-                objectList.restoreAll().then(
+                objectList.restoreChangedObjects().then(
                     () => {
                         expect(objectList.getObjects()[0]).toBe(oldVersion);
                         done();
@@ -136,7 +136,7 @@ export function main() {
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave().then(
+                objectList.persistChangedObjects().then(
                     () => {
                         fail();
                         done();
@@ -155,7 +155,7 @@ export function main() {
                 mockDatastore.update.and.callFake(errorFunction);
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave().then(
+                objectList.persistChangedObjects().then(
                     () => {
                         fail();
                         done();
@@ -173,7 +173,7 @@ export function main() {
 
                 objectList.setChanged(selectedObject, true);
 
-                objectList.trySave().then(
+                objectList.persistChangedObjects().then(
                     result => {
                         expect(result).toBe(undefined);
                         done();

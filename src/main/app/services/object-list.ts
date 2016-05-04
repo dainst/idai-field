@@ -6,7 +6,7 @@ import {M} from "./../m";
 
 /**
  * @author Thomas Kleinke
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Jan G. Wieners
  */
 @Injectable()
@@ -24,7 +24,6 @@ export class ObjectList {
 
     private containsNew = false;
 
-
     /**
      * Saves all changed objects to the local database if they are valid.
      * Creates a new object if an object is not present in the datastore (which means the objects don't
@@ -33,24 +32,18 @@ export class ObjectList {
      * @return promise. Gets resolved in case the objects were stored successfully.
      * Gets rejected in case of errors, which are keys of M to identify the error if possible.
      */
-    public trySave(): Promise<any> {
+    public persistChangedObjects(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             if (this.containsNew==false && this.changedObjects.length == 0) resolve();
 
-
-            var saveObjectPromises: Promise<any>[] = [];
             Promise.all(this.allChangedObjects()).then(
                 objects => {
-                    for (var i in objects) {
-                        saveObjectPromises.push(this.save(objects[i]));
-                    }
 
-                    Promise.all(saveObjectPromises).then(
+                    Promise.all(this.persistPromiseArray(objects)).then(
                         () => {
-                            this.changedObjects = [];
-                            this.containsNew = false;
+                            this.reset();
                             resolve();
                         },
                         errors => {
@@ -65,13 +58,29 @@ export class ObjectList {
         });
     }
 
+    /**
+     * Restores all changed objects.
+     */
+    public restoreChangedObjects(): Promise<any> {
 
-    public getObjects() {
-        return this.objects;
-    }
+        return new Promise<any>((resolve, reject) => {
 
-    public setObjects(objects: IdaiFieldObject[]) {
-        this.objects = objects;
+            Promise.all(this.allChangedObjects()).then(
+                objects => {
+
+                    Promise.all(this.restorePromiseArray(objects)).then(
+                        () => {
+                            this.reset();
+                            resolve();
+                        },
+                        errors => reject(errors)
+                    );
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
     }
 
     public setChanged(object: IdaiFieldObject, changed: boolean) {
@@ -90,40 +99,37 @@ export class ObjectList {
     }
 
     public isChanged(object: IdaiFieldObject): boolean {
-        if (this.containsNew) return true;
+        if (this.containsNew) return true; // ???
         return this.changedObjects.indexOf(object.id) > -1;
     }
 
-    
-    /**
-     * Restores all changed objects.
-     */
-    public restoreAll(): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            Promise.all(this.allChangedObjects()).then(
-                objects => {
-
-                    var restoreObjectPromises:Promise<any>[] = [];
-                    for (var i in objects)
-                        restoreObjectPromises.push(this.restore(objects[i]));
-
-                    Promise.all(restoreObjectPromises).then(
-                        () => {
-                            this.changedObjects = [];
-                            this.containsNew = false;
-                            resolve();
-                        },
-                        errors => reject(errors)
-                    );
-                },
-                err => {
-                    reject(err);
-                }
-            );
-        });
+    public getObjects() {
+        return this.objects;
     }
+
+    public setObjects(objects: IdaiFieldObject[]) {
+        this.objects = objects;
+    }
+
+    private reset() {
+        this.changedObjects = [];
+        this.containsNew = false;
+    }
+
+    private persistPromiseArray(objects) : Promise<any>[] {
+        var objectPromises:Promise<any>[] = [];
+        for (var i in objects)
+            objectPromises.push(this.persist(objects[i]));
+        return objectPromises;
+    }
+
+    private restorePromiseArray(objects) : Promise<any>[] {
+        var objectPromises:Promise<any>[] = [];
+        for (var i in objects)
+            objectPromises.push(this.restore(objects[i]));
+        return objectPromises;
+    }
+
 
     private allChangedObjects() : Promise<IdaiFieldObject>[] {
 
@@ -142,7 +148,7 @@ export class ObjectList {
      * Saves the object to the local datastore.
      * @param object
      */
-    private save(object: any): any {
+    private persist(object: any): any {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
@@ -152,26 +158,10 @@ export class ObjectList {
         object.synced = 0;
 
         if (object.id) {
-            return this.update(object);
+            return this.datastore.update(object);
         } else {
-            return this.create(object);
+            return this.datastore.create(object);
         }
-    }
-
-    /**
-     * Updates an existing object in the local datastore.
-     * @param object
-     */
-    private update(object: IdaiFieldObject) : any {
-        return this.datastore.update(object);
-    }
-
-    /**
-     * Saves the given object as a new object in the local datastore.
-     * @param object
-     */
-    private create(object: IdaiFieldObject) : any {
-        return this.datastore.create(object);
     }
 
     private restore(object: any): Promise<any> {

@@ -39,7 +39,6 @@
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "^0.37.2",
     "gulp": "^3.9.0",
-    "gulp-angular-embed-templates": "^2.2.0",
     "gulp-concat": "^2.6.0",
     "gulp-minify-css": "^1.2.3",
     "gulp-sass": "^2.1.1",

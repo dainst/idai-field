@@ -9,7 +9,6 @@ var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
 var pkg = require('./package.json');
-var embedTemplates = require('gulp-angular-embed-templates');
 var webserver = require('gulp-webserver');
 
 // compile sass and concatenate to single css file in build dir
@@ -30,55 +29,6 @@ gulp.task('provide-resources', function() {
 				'node_modules/bootstrap-sass/assets/fonts/**/*'
 			])
 			.pipe(gulp.dest('src/main/fonts'));
-
-	// return gulp.src('src/main/img/**/*')
-	// 	.pipe(gulp.dest('dist/main/img'));
-});
-
-gulp.task('provide-configs', function() {
-
-	return gulp.src('src/main/config/**/*.json')
-		.pipe(gulp.dest('dist/main/config/'));
-});
-
-const tscConfig = require('./tsconfig.json');
-
-/**
- * Copies the indext to the dist folder, compiles typescript sources to javascript
- * AND renders the html templates into the component javascript files.
- */
-gulp.task('provide-sources', function () {
-	gulp.src('src/main/index.html')
-			.pipe(gulp.dest('dist/main/'));
-
-	return gulp
-		.src('src/main/app/**/*.ts')
-		.pipe(embedTemplates({basePath: "src/main", sourceType:'ts'}))
-		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('dist/main/app'));
-});
-
-/**
- *
- */
-gulp.task('copy-electron-files', function () {
-	gulp.src(['package.json']).pipe(gulp.dest('dist/main/')); // also needed for an electron app
-	return gulp.src(['src/main/main.js']).pipe(gulp.dest('dist/main/'));
-});
-
-/**
- * Compiles the typescript written unit tests and copies the
- * javascript written end to end test files.
- */
-gulp.task('provide-test-sources', function () {
-
-    gulp
-        .src('src/test/unit/**/*.ts')
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('dist/test/unit'));
-	return gulp
-			.src('src/test/**/*.js')
-			.pipe(gulp.dest('dist/test/'));
 });
 
 gulp.task('concat-deps', function() {
@@ -103,8 +53,6 @@ gulp.task('concat-deps', function() {
 function watch() {
     gulp.watch('src/main/scss/**/*.scss',      ['convert-sass']);
     gulp.watch('src/main/app/**/*.ts',         ['provide-sources']);
-    gulp.watch('src/main/templates/**/*.html', ['provide-sources']);
-    gulp.watch('src/main/index.html',          ['provide-sources']);
     gulp.watch('src/main/img/**/*',            ['provide-resources']);
 }
 

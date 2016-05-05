@@ -8,9 +8,9 @@
     "prebuild": "rimraf src/main/css/* && rimraf src/main/lib/* && rimraf src/main/package.json && rimraf src/main/fonts",
     "build": "gulp build",
     "start": "npm run build && gulp run",
-    "test-loop": "karma start dist/test/karma.conf",
+    "test:loop": "karma start src/test/karma.conf",
     "test": "karma start src/test/karma.conf.js --single-run",
-    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor dist/test/protractor.conf.js",
+    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor src/test/protractor.conf.js",
     "server": "gulp webserver-watch",
     "package": "rimraf release/* && gulp package",
     "postinstall": "typings install"

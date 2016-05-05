@@ -55,7 +55,7 @@ function watch() {
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('dist/main/')
+	gulp.src('src/main/')
 			.pipe(webserver({
 				fallback: 'index.html',
 				port: 8081

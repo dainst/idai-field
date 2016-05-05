@@ -52,8 +52,6 @@ gulp.task('concat-deps', function() {
 
 function watch() {
     gulp.watch('src/main/scss/**/*.scss',      ['convert-sass']);
-    gulp.watch('src/main/app/**/*.ts',         ['provide-sources']);
-    gulp.watch('src/main/img/**/*',            ['provide-resources']);
 }
 
 gulp.task('webserver-watch', function() {
@@ -85,7 +83,6 @@ gulp.task('run', function() {
 
 	electronServer.start();
 	watch();
-	gulp.watch('src/main/app/**/*.js', electronServer.reload);
 });
 
 

@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf src/main/css/* && rimraf /src/main/lib/* && rimraf src/main/package.json && rimraf src/main/fonts",
+    "prebuild": "rimraf src/main/css/* && rimraf src/main/lib/* && rimraf src/main/package.json && rimraf src/main/fonts",
     "build": "gulp build",
     "start": "npm run build && gulp run",
     "test-loop": "karma start dist/test/karma.conf",

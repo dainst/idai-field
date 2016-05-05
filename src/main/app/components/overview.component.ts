@@ -38,7 +38,10 @@ export class OverviewComponent implements OnInit {
         @Inject('app.config') private config,
         private objectList: ObjectList,
         private configLoader: ConfigLoader,
-        private messages: Messages) {}
+        private messages: Messages) {
+
+        // console.log("h")
+    }
 
     private askForPermissionForChange(object) {
         this.messages.delete(M.OBJLIST_IDEXISTS);

@@ -21,7 +21,7 @@ gulp.task('convert-sass', function() {
 			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
-	    .pipe(gulp.dest('dist/main/css'));
+	    .pipe(gulp.dest('src/main/css'));
 });
 
 gulp.task('provide-resources', function() {
@@ -29,21 +29,16 @@ gulp.task('provide-resources', function() {
 				'node_modules/mdi/fonts/**/*',
 				'node_modules/bootstrap-sass/assets/fonts/**/*'
 			])
-			.pipe(gulp.dest('dist/main/fonts'));
+			.pipe(gulp.dest('src/main/fonts'));
 
-	return gulp.src('src/main/img/**/*')
-		.pipe(gulp.dest('dist/main/img'));
+	// return gulp.src('src/main/img/**/*')
+	// 	.pipe(gulp.dest('dist/main/img'));
 });
 
 gulp.task('provide-configs', function() {
 
 	return gulp.src('src/main/config/**/*.json')
 		.pipe(gulp.dest('dist/main/config/'));
-});
-
-gulp.task('package-node-dependencies', function() {
-	gulp.src('node_modules/angular2-uuid/*' )
-			.pipe(gulp.dest('dist/main/lib/angular2-uuid/'));
 });
 
 const tscConfig = require('./tsconfig.json');
@@ -102,7 +97,7 @@ gulp.task('concat-deps', function() {
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		//.pipe(uglify()) // this produces an error with the angular beta 15
-		.pipe(gulp.dest('dist/main//lib'));
+		.pipe(gulp.dest('src/main/lib'));
 });
 
 function watch() {
@@ -125,15 +120,24 @@ gulp.task('webserver-watch', function() {
 	watch();
 });
 
-var electronServer = electronConnect.server.create({path: 'dist/main/'});
+
+gulp.task('provide-extra-deps', function() {
+	gulp.src('package.json' )
+		.pipe(gulp.dest('src/main/'));
+	gulp.src('node_modules/ng2-bs3-modal/*' )
+		.pipe(gulp.dest('src/main/lib/ng2-bs3-modal/'));
+	gulp.src('node_modules/angular2-uuid/*' )
+		.pipe(gulp.dest('src/main/lib/angular2-uuid/'));
+});
 
 // runs the development server and sets up browser reloading
-gulp.task('run', function() {
+var electronServer = electronConnect.server.create({path: 'src/main/'});
+gulp.task('run', ['provide-extra-deps','concat-deps', 'convert-sass','provide-resources'] , function() {
 
 	electronServer.start();
-	gulp.watch('src/main/main.js', ['copy-electron-files'], electronServer.restart);
-	watch();
-	gulp.watch('dist/main/	**/*', electronServer.reload);
+	// gulp.watch('src/main/main.js', ['copy-electron-files'], electronServer.restart);
+	// watch();
+	// gulp.watch('dist/main/	**/*', electronServer.reload);
 });
 
 

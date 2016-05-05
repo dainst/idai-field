@@ -35,3 +35,14 @@ typings
 *iml
 
 .DS_Store
+
+
+########
+src/main/app/**/*.js
+src/main/app/**/*.js.map
+src/main/css
+src/main/fonts
+src/main/lib
+src/main/package.json
+src/test/unit/**/*.js
+src/test/unit/**/*.js.map

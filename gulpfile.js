@@ -105,10 +105,7 @@ function watch() {
     gulp.watch('src/main/app/**/*.ts',         ['provide-sources']);
     gulp.watch('src/main/templates/**/*.html', ['provide-sources']);
     gulp.watch('src/main/index.html',          ['provide-sources']);
-    gulp.watch('src/main/config/**/*.json',    ['provide-configs']);
     gulp.watch('src/main/img/**/*',            ['provide-resources']);
-    gulp.watch('src/test/unit/**/*ts',          ['provide-test-sources']);
-    gulp.watch('src/test/e2e/**/*js',          ['provide-test-sources']);
 }
 
 gulp.task('webserver-watch', function() {
@@ -130,14 +127,17 @@ gulp.task('provide-extra-deps', function() {
 		.pipe(gulp.dest('src/main/lib/angular2-uuid/'));
 });
 
+gulp.task('build', [
+	'provide-extra-deps','concat-deps', 'convert-sass','provide-resources'
+]);
+
 // runs the development server and sets up browser reloading
 var electronServer = electronConnect.server.create({path: 'src/main/'});
-gulp.task('run', ['provide-extra-deps','concat-deps', 'convert-sass','provide-resources'] , function() {
+gulp.task('run', function() {
 
 	electronServer.start();
-	// gulp.watch('src/main/main.js', ['copy-electron-files'], electronServer.restart);
-	// watch();
-	// gulp.watch('dist/main/	**/*', electronServer.reload);
+	watch();
+	gulp.watch('src/main/app/**/*.js', electronServer.reload);
 });
 
 
@@ -177,13 +177,3 @@ gulp.task('package', [], function() {
     });
 });
 
-gulp.task('build', [
-	'convert-sass',
-	'copy-electron-files',
-	'concat-deps',
-	'provide-sources',
-	'provide-test-sources',
-	'provide-resources',
-	'provide-configs',
-	'package-node-dependencies'
-]);

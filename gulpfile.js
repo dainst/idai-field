@@ -23,15 +23,20 @@ gulp.task('convert-sass', function() {
 	    .pipe(gulp.dest('src/main/css'));
 });
 
-gulp.task('provide-resources', function() {
-	gulp.src([
-				'node_modules/mdi/fonts/**/*',
-				'node_modules/bootstrap-sass/assets/fonts/**/*'
-			])
-			.pipe(gulp.dest('src/main/fonts'));
-});
+gulp.task('provide-deps', function() {
 
-gulp.task('concat-deps', function() {
+	gulp.src([
+			'node_modules/mdi/fonts/**/*',
+			'node_modules/bootstrap-sass/assets/fonts/**/*'
+		])
+		.pipe(gulp.dest('src/main/fonts'));
+
+	gulp.src('package.json' )
+		.pipe(gulp.dest('src/main/'));
+	gulp.src('node_modules/ng2-bs3-modal/*' )
+		.pipe(gulp.dest('src/main/lib/ng2-bs3-modal/'));
+	gulp.src('node_modules/angular2-uuid/*' )
+		.pipe(gulp.dest('src/main/lib/angular2-uuid/'));
 
 	return gulp.src([
 			'node_modules/node-uuid/uuid.js',
@@ -66,23 +71,18 @@ gulp.task('webserver-watch', function() {
 
 const tscConfig = require('./tsconfig.json');
 gulp.task('compile', function () {
-	return gulp
-		.src('src/main/app/**/*.ts')
+	gulp
+		.src('src/main/app/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
 		.pipe(gulp.dest('src/main/app'));
+	return gulp
+		.src('src/test/unit/**/*.ts')
+		.pipe(typescript(tscConfig.compilerOptions))
+		.pipe(gulp.dest('src/test/unit/'));
 });
 
-gulp.task('provide-extra-deps', function() {
-	gulp.src('package.json' )
-		.pipe(gulp.dest('src/main/'));
-	gulp.src('node_modules/ng2-bs3-modal/*' )
-		.pipe(gulp.dest('src/main/lib/ng2-bs3-modal/'));
-	gulp.src('node_modules/angular2-uuid/*' )
-		.pipe(gulp.dest('src/main/lib/angular2-uuid/'));
-});
-
-gulp.task('build', [
-	'provide-extra-deps','concat-deps', 'convert-sass','provide-resources'
+gulp.task('prepare-run', [
+	'provide-deps', 'convert-sass'
 ]);
 
 // runs the development server and sets up browser reloading

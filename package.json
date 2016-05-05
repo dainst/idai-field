@@ -6,8 +6,9 @@
   "license": "Apache-2.0",
   "scripts": {
     "prebuild": "rimraf src/main/css/* && rimraf src/main/lib/* && rimraf src/main/package.json && rimraf src/main/fonts",
-    "build": "gulp build",
-    "start": "npm run build && gulp run",
+    "build": "gulp compile && gulp prepare-run",
+    "prestart" : "gulp prepare-run",
+    "start": "gulp run",
     "test:loop": "karma start src/test/karma.conf",
     "test": "karma start src/test/karma.conf.js --single-run",
     "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor src/test/protractor.conf.js",

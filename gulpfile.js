@@ -64,6 +64,14 @@ gulp.task('webserver-watch', function() {
 });
 
 
+const tscConfig = require('./tsconfig.json');
+gulp.task('compile', function () {
+	return gulp
+		.src('src/main/app/**/*.ts')
+		.pipe(typescript(tscConfig.compilerOptions))
+		.pipe(gulp.dest('src/main/app'));
+});
+
 gulp.task('provide-extra-deps', function() {
 	gulp.src('package.json' )
 		.pipe(gulp.dest('src/main/'));

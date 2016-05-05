@@ -72,9 +72,9 @@ gulp.task('webserver-watch', function() {
 const tscConfig = require('./tsconfig.json');
 gulp.task('compile', function () {
 	gulp
-		.src('src/main/app/*.ts')
+		.src('src/main/app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('src/main/app'));
+		.pipe(gulp.dest('src/main/app/'));
 	return gulp
 		.src('src/test/unit/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))

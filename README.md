@@ -68,7 +68,6 @@ Make sure your IDE is configured accordingly or run
 npm run build
 ```
 
-
 In order to run the application:
 
 ```

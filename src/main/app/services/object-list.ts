@@ -5,6 +5,12 @@ import {Messages} from "./messages";
 import {M} from "./../m";
 
 /**
+ * Keeps track of all the objects associated to the current object
+ * and which one of them have changes that are not yet persisted.
+ * Can be asked to either persist all of the changed objects or
+ * restore them to their previous state, so that the actual objects
+ * reflect the objects persisted state.
+ *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Jan G. Wieners

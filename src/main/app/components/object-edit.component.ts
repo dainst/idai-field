@@ -95,7 +95,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     }
 
     public markAsChanged() {
-        this.objectList.setChanged(this.object, true);
+        this.objectList.setChanged(this.object);
     }
 
 }

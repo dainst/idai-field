@@ -75,17 +75,11 @@ export class ObjectList {
         });
     }
 
-    public setChanged(object: IdaiFieldObject, changed: boolean) {
-
-        if (changed) {
-            if (!this.isChanged(object)) {
-                this.changedObjects.push(object);
-            }
-        } else {
-            var index = this.changedObjects.indexOf(object);
-            if (index > -1) this.changedObjects.splice(index, 1);
-        }
+    public setChanged(object: IdaiFieldObject) {
+        if (!this.isChanged(object))
+            this.changedObjects.push(object);
     }
+
 
     public isChanged(object: IdaiFieldObject): boolean {
         return this.changedObjects.indexOf(object) > -1;
@@ -97,29 +91,6 @@ export class ObjectList {
 
     public setObjects(objects: IdaiFieldObject[]) {
         this.objects = objects;
-    }
-
-    private reset() {
-        this.changedObjects = [];
-    }
-
-    private toStringArray(str) {
-        if ((typeof str)=="string") return [str]; else return str;
-    }
-
-    /**
-     * Iterates over objects and collects the returned promises.
-     *
-     * @param objects
-     * @param fun a function returning Promise<any>
-     * @returns {Promise<any>[]} the collected promises.
-     */
-    private applyOn(objects,fun) : Promise<any>[] {
-
-        var objectPromises:Promise<any>[] = [];
-        for (var i in objects)
-            objectPromises.push(fun.apply(this,[objects[i]]));
-        return objectPromises;
     }
 
     /**
@@ -154,7 +125,7 @@ export class ObjectList {
                 restoredObject => {
                     var index = this.objects.indexOf(object);
                     this.objects[index] = restoredObject;
-                    this.setChanged(restoredObject, false);
+                    this.setUnchanged(restoredObject);
                     resolve();
                 },
                 err => { reject(err); }
@@ -162,9 +133,37 @@ export class ObjectList {
         });
     }
 
+    /**
+     * Iterates over objects and collects the returned promises.
+     *
+     * @param objects
+     * @param fun a function returning Promise<any>
+     * @returns {Promise<any>[]} the collected promises.
+     */
+    private applyOn(objects,fun) : Promise<any>[] {
+
+        var objectPromises:Promise<any>[] = [];
+        for (var i in objects)
+            objectPromises.push(fun.apply(this,[objects[i]]));
+        return objectPromises;
+    }
+
+    private reset() {
+        this.changedObjects = [];
+    }
+
+    private toStringArray(str) {
+        if ((typeof str)=="string") return [str]; else return str;
+    }
+
     private removeNewObjectFromList(object: IdaiFieldObject) {
 
         var index = this.getObjects().indexOf(object);
         this.getObjects().splice(index, 1);
+    }
+
+    private setUnchanged(object: IdaiFieldObject) {
+        var index = this.changedObjects.indexOf(object);
+        if (index > -1) this.changedObjects.splice(index, 1);
     }
 }

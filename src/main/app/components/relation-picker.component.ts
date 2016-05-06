@@ -108,7 +108,7 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];
-        this.objectList.setChanged(this.object, true);
+        this.objectList.setChanged(this.object);
     }
 
     public editTarget() {
@@ -166,7 +166,7 @@ export class RelationPickerComponent implements OnChanges {
                 this.deleteInverseRelation(targetId).then(
                     () => {
                         this.object[this.field.field].splice(this.relationIndex, 1);
-                        this.objectList.setChanged(this.object, true);
+                        this.objectList.setChanged(this.object);
                         resolve();
                     },
                     err => {
@@ -185,7 +185,7 @@ export class RelationPickerComponent implements OnChanges {
         }
 
         targetObject[this.field.inverse].push(this.object.id);
-        this.objectList.setChanged(targetObject, true);
+        this.objectList.setChanged(targetObject);
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {
@@ -196,7 +196,7 @@ export class RelationPickerComponent implements OnChanges {
                     var index = targetObject[this.field.inverse].indexOf(this.object.id);
                     if (index != -1) {
                         targetObject[this.field.inverse].splice(index, 1);
-                        this.objectList.setChanged(targetObject, true);
+                        this.objectList.setChanged(targetObject);
                     }
                     resolve();
                 },

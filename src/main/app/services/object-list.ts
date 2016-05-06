@@ -38,9 +38,6 @@ export class ObjectList {
     public persistChangedObjects(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-
-            if (this.changedObjects.length == 0) resolve();
-
             Promise.all(this.applyOn(this.changedObjects,this.persist)).then(
                 () => {
                     this.reset();
@@ -59,7 +56,6 @@ export class ObjectList {
     public restoreChangedObjects(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-
             Promise.all(this.applyOn(this.changedObjects,this.restore)).then(
                 () => {
                     this.reset();

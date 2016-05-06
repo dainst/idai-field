@@ -1,7 +1,6 @@
-import {Injectable,Inject} from "angular2/core";
+import {Injectable} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
-import {Messages} from "./messages";
 import {M} from "./../m";
 
 /**
@@ -42,7 +41,7 @@ export class ObjectList {
 
             if (this.changedObjects.length == 0) resolve();
 
-            Promise.all(this.persistPromiseArray(this.changedObjects)).then(
+            Promise.all(this.applyOn(this.changedObjects,this.persist)).then(
                 () => {
                     this.reset();
                     resolve();
@@ -61,7 +60,7 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
 
-            Promise.all(this.restorePromiseArray(this.changedObjects)).then(
+            Promise.all(this.applyOn(this.changedObjects,this.restore)).then(
                 () => {
                     this.reset();
                     resolve();
@@ -99,19 +98,18 @@ export class ObjectList {
         this.changedObjects = [];
     }
 
-    private persistPromiseArray(objects) : Promise<any>[] {
+    /**
+     * Iterates over objects and collects the returned promises.
+     *
+     * @param objects
+     * @param fun a function returning Promise<any>
+     * @returns {Promise<any>[]} the collected promises.
+     */
+    private applyOn(objects,fun) : Promise<any>[] {
 
         var objectPromises:Promise<any>[] = [];
         for (var i in objects)
-            objectPromises.push(this.persist(objects[i]));
-        return objectPromises;
-    }
-
-    private restorePromiseArray(objects) : Promise<any>[] {
-
-        var objectPromises:Promise<any>[] = [];
-        for (var i in objects)
-            objectPromises.push(this.restore(objects[i]));
+            objectPromises.push(fun.apply(this,[objects[i]]));
         return objectPromises;
     }
 

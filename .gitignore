@@ -24,20 +24,21 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
 
+
+
+######
+
+/.idea
+.DS_Store
+
+########
+*iml
+node_modules
 dist
 release
 cache
 typings
-
-/.idea
-*iml
-
-.DS_Store
-
-
-########
 src/main/app/**/*.js
 src/main/app/**/*.js.map
 src/main/css

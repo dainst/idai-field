@@ -98,7 +98,7 @@ gulp.task('run', function() {
 gulp.task('package', [], function() {
 
 	packager({
-		dir: 'dist/main/',
+		dir: 'src/main/',
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',

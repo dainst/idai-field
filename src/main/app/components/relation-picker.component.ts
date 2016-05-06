@@ -3,12 +3,12 @@ import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectList} from "../services/object-list";
+import {ReadDatastore} from "../datastore/read-datastore";
 
 
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
- * @author Daniel M. de Oliveira
  */
 @Component({
 
@@ -30,10 +30,7 @@ export class RelationPickerComponent implements OnChanges {
     private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef,
-                /**
-                 * In this component the datastore should be used only for read access.
-                 */
-                private datastore: Datastore,
+                private datastore: ReadDatastore,
                 private objectList: ObjectList) {}
 
     public ngOnChanges() {

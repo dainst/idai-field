@@ -109,6 +109,9 @@ export class ObjectList {
         if (object.id) {
             return this.datastore.update(object);
         } else {
+            // TODO isn't it a problem that create resolves to object id?
+            // wouldn't persistChangedObjects() interpret it as an error?
+            // why does this not happen?
             return this.datastore.create(object);
         }
     }

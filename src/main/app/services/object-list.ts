@@ -28,12 +28,15 @@ export class ObjectList {
     private changedObjects: IdaiFieldObject[] = [];
 
     /**
-     * Saves all changed objects to the local database if they are valid.
-     * Creates a new object if an object is not present in the datastore (which means the objects don't
-     * need to already have a technical id).
-     * 
-     * @return promise. Gets resolved in case the objects were stored successfully.
-     * Gets rejected in case of errors, which are keys of M to identify the error if possible.
+     * Persists all objects marked as changed to the database.
+     * In case there are objects not yet present in the datastore
+     * they get created.
+     *
+     * @returns {Promise<any>} If all objects could get stored,
+     *   the promise will resolve to <code>undefined</code>. If one or more
+     *   objects could not get stored properly, the promise will resolve to
+     *   <code>Promise<string[]></code>, containing ids of M where possible,
+     *   and error messages where not.
      */
     public persistChangedObjects(): Promise<any> {
 
@@ -49,7 +52,15 @@ export class ObjectList {
     }
 
     /**
-     * Restores all changed objects.
+     * Restores all objects marked as changed by resetting them to
+     * back to the persisted state. In case there are any objects marked
+     * as changed which were not yet persisted, they get deleted from the list.
+     *
+     * @returns {Promise<any>} If all objects could get restored,
+     *   the promise will resolve to <code>undefined</code>. If one or more
+     *   objects could not get restored properly, the promise will resolve to
+     *   <code>Promise<string[]></code>, containing ids of M where possible,
+     *   and error messages where not.
      */
     public restoreChangedObjects(): Promise<any> {
 

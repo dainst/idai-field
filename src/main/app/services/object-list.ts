@@ -32,13 +32,13 @@ export class ObjectList {
      * In case there are objects not yet present in the datastore
      * they get created.
      *
-     * @returns {Promise<any>} If all objects could get stored,
-     *   the promise will resolve to <code>undefined</code>. If one or more
+     * @returns {Promise<string[]>} If all objects could get stored,
+     *   the promise will just resolve to <code>undefined</code>. If one or more
      *   objects could not get stored properly, the promise will resolve to
-     *   <code>Promise<string[]></code>, containing ids of M where possible,
+     *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
-    public persistChangedObjects(): Promise<any> {
+    public persistChangedObjects(): Promise<string[]> {
 
         return new Promise<any>((resolve, reject) => {
             Promise.all(this.applyOn(this.changedObjects,this.persist)).then(
@@ -56,13 +56,13 @@ export class ObjectList {
      * back to the persisted state. In case there are any objects marked
      * as changed which were not yet persisted, they get deleted from the list.
      *
-     * @returns {Promise<any>} If all objects could get restored,
-     *   the promise will resolve to <code>undefined</code>. If one or more
+     * @returns {Promise<string[]>} If all objects could get restored,
+     *   the promise will just resolve to <code>undefined</code>. If one or more
      *   objects could not get restored properly, the promise will resolve to
-     *   <code>Promise<string[]></code>, containing ids of M where possible,
+     *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
-    public restoreChangedObjects(): Promise<any> {
+    public restoreChangedObjects(): Promise<string[]> {
 
         return new Promise<any>((resolve, reject) => {
             Promise.all(this.applyOn(this.changedObjects,this.restore)).then(
@@ -85,7 +85,7 @@ export class ObjectList {
         return this.changedObjects.indexOf(object) > -1;
     }
 
-    public getObjects() {
+    public getObjects() : IdaiFieldObject[] {
         return this.objects;
     }
 
@@ -152,7 +152,7 @@ export class ObjectList {
         this.changedObjects = [];
     }
 
-    private toStringArray(str) {
+    private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;
     }
 

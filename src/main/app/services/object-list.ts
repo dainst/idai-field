@@ -43,9 +43,7 @@ export class ObjectList {
                     this.reset();
                     resolve();
                 },
-                errors => {
-                    if ((typeof errors)=="string") return reject([errors]); else return reject(errors);
-                }
+                errors => reject(this.toStringArray(errors))
             );
         });
     }
@@ -61,7 +59,7 @@ export class ObjectList {
                     this.reset();
                     resolve();
                 },
-                errors => reject(errors)
+                errors => reject(this.toStringArray(errors))
             );
         });
     }
@@ -92,6 +90,10 @@ export class ObjectList {
 
     private reset() {
         this.changedObjects = [];
+    }
+
+    private toStringArray(str) {
+        if ((typeof str)=="string") return [str]; else return str;
     }
 
     /**

@@ -117,8 +117,8 @@ as for example IntelliJ does.
 
 ### E2E - Testing
 
-Note that provision of config files (see [here](#configuration)) is a precodition for beeing able to run and e2e tes the application successfully .
-Also other configurations may work too, the .template suffixed
+Note that provision of config files (see [here](#configuration)) is a precondition for being able to run and e2e test the application successfully.
+Although other configurations may work too, the .template suffixed
 files below src/main/config are the ones proven to work.
 
 **Note** that if the e2e tests do pass, provide the .template configuratons and test again.

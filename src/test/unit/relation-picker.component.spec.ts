@@ -47,12 +47,8 @@ export function main() {
             };
         };
 
-        var setChanged = function(object, changed: boolean) {
-            if (changed && !isChanged(object)) changedObjects.push(object.id);
-            if (!changed) {
-                var index = changedObjects.indexOf(object.id);
-                if (index > -1) changedObjects.splice(index, 1);
-            }
+        var setChanged = function(object) {
+            if (!isChanged(object)) changedObjects.push(object.id);
         }
 
         var isChanged = function(object) {

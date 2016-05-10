@@ -11,11 +11,11 @@ import {Datastore} from "./datastore/datastore";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "./services/messages";
-
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./services/config-loader";
 import {M} from "./m";
+import {ReadDatastore} from "./datastore/read-datastore";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 
@@ -24,6 +24,7 @@ bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     provide(Datastore, { useClass: IndexeddbDatastore }),
+    provide(ReadDatastore, { useClass: IndexeddbDatastore }),
     provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),

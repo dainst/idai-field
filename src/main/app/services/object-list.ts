@@ -1,10 +1,15 @@
-import {Injectable,Inject} from "angular2/core";
+import {Injectable} from "angular2/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
-import {Messages} from "./messages";
 import {M} from "./../m";
 
 /**
+ * Keeps track of all the objects associated to the current object
+ * and which one of them have changes that are not yet persisted.
+ * Can be asked to either persist all of the changed objects or
+ * restore them to their previous state, so that the actual objects
+ * reflect the objects persisted state.
+ *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
@@ -23,90 +28,69 @@ export class ObjectList {
     private changedObjects: IdaiFieldObject[] = [];
 
     /**
-     * Saves all changed objects to the local database if they are valid.
-     * Creates a new object if an object is not present in the datastore (which means the objects don't
-     * need to already have a technical id).
-     * 
-     * @return promise. Gets resolved in case the objects were stored successfully.
-     * Gets rejected in case of errors, which are keys of M to identify the error if possible.
+     * Persists all objects marked as changed to the database.
+     * In case there are objects not yet present in the datastore
+     * they get created.
+     *
+     * @returns {Promise<string[]>} If all objects could get stored,
+     *   the promise will just resolve to <code>undefined</code>. If one or more
+     *   objects could not get stored properly, the promise will resolve to
+     *   <code>string[]</code>, containing ids of M where possible,
+     *   and error messages where not.
      */
-    public persistChangedObjects(): Promise<any> {
+    public persistChangedObjects(): Promise<string[]> {
 
         return new Promise<any>((resolve, reject) => {
-
-            if (this.changedObjects.length == 0) resolve();
-
-            Promise.all(this.persistPromiseArray(this.changedObjects)).then(
+            Promise.all(this.applyOn(this.changedObjects,this.persist)).then(
                 () => {
                     this.reset();
                     resolve();
                 },
-                errors => {
-                    if ((typeof errors)=="string") return reject([errors]); else return reject(errors);
-                }
+                errors => reject(this.toStringArray(errors))
             );
         });
     }
 
     /**
-     * Restores all changed objects.
+     * Restores all objects marked as changed by resetting them to
+     * back to the persisted state. In case there are any objects marked
+     * as changed which were not yet persisted, they get deleted from the list.
+     *
+     * @returns {Promise<string[]>} If all objects could get restored,
+     *   the promise will just resolve to <code>undefined</code>. If one or more
+     *   objects could not get restored properly, the promise will resolve to
+     *   <code>string[]</code>, containing ids of M where possible,
+     *   and error messages where not.
      */
-    public restoreChangedObjects(): Promise<any> {
+    public restoreChangedObjects(): Promise<string[]> {
 
         return new Promise<any>((resolve, reject) => {
-
-            Promise.all(this.restorePromiseArray(this.changedObjects)).then(
+            Promise.all(this.applyOn(this.changedObjects,this.restore)).then(
                 () => {
                     this.reset();
                     resolve();
                 },
-                errors => reject(errors)
+                errors => reject(this.toStringArray(errors))
             );
         });
     }
 
-    public setChanged(object: IdaiFieldObject, changed: boolean) {
-
-        if (changed) {
-            if (!this.isChanged(object)) {
-                this.changedObjects.push(object);
-            }
-        } else {
-            var index = this.changedObjects.indexOf(object);
-            if (index > -1) this.changedObjects.splice(index, 1);
-        }
+    public setChanged(object: IdaiFieldObject) {
+        if (!this.isChanged(object))
+            this.changedObjects.push(object);
     }
+
 
     public isChanged(object: IdaiFieldObject): boolean {
         return this.changedObjects.indexOf(object) > -1;
     }
 
-    public getObjects() {
+    public getObjects() : IdaiFieldObject[] {
         return this.objects;
     }
 
     public setObjects(objects: IdaiFieldObject[]) {
         this.objects = objects;
-    }
-
-    private reset() {
-        this.changedObjects = [];
-    }
-
-    private persistPromiseArray(objects) : Promise<any>[] {
-
-        var objectPromises:Promise<any>[] = [];
-        for (var i in objects)
-            objectPromises.push(this.persist(objects[i]));
-        return objectPromises;
-    }
-
-    private restorePromiseArray(objects) : Promise<any>[] {
-
-        var objectPromises:Promise<any>[] = [];
-        for (var i in objects)
-            objectPromises.push(this.restore(objects[i]));
-        return objectPromises;
     }
 
     /**
@@ -125,6 +109,9 @@ export class ObjectList {
         if (object.id) {
             return this.datastore.update(object);
         } else {
+            // TODO isn't it a problem that create resolves to object id?
+            // wouldn't persistChangedObjects() interpret it as an error?
+            // why does this not happen?
             return this.datastore.create(object);
         }
     }
@@ -141,7 +128,7 @@ export class ObjectList {
                 restoredObject => {
                     var index = this.objects.indexOf(object);
                     this.objects[index] = restoredObject;
-                    this.setChanged(restoredObject, false);
+                    this.setUnchanged(restoredObject);
                     resolve();
                 },
                 err => { reject(err); }
@@ -149,9 +136,37 @@ export class ObjectList {
         });
     }
 
+    /**
+     * Iterates over objects and collects the returned promises.
+     *
+     * @param objects
+     * @param fun a function returning Promise<any>
+     * @returns {Promise<any>[]} the collected promises.
+     */
+    private applyOn(objects,fun) : Promise<any>[] {
+
+        var objectPromises:Promise<any>[] = [];
+        for (var i in objects)
+            objectPromises.push(fun.apply(this,[objects[i]]));
+        return objectPromises;
+    }
+
+    private reset() {
+        this.changedObjects = [];
+    }
+
+    private toStringArray(str : any) : string[] {
+        if ((typeof str)=="string") return [str]; else return str;
+    }
+
     private removeNewObjectFromList(object: IdaiFieldObject) {
 
         var index = this.getObjects().indexOf(object);
         this.getObjects().splice(index, 1);
+    }
+
+    private setUnchanged(object: IdaiFieldObject) {
+        var index = this.changedObjects.indexOf(object);
+        if (index > -1) this.changedObjects.splice(index, 1);
     }
 }

@@ -3,12 +3,12 @@ import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectList} from "../services/object-list";
+import {ReadDatastore} from "../datastore/read-datastore";
 
 
 /**
  * @author Jan G. Wieners
  * @author Thomas Kleinke
- * @author Daniel M. de Oliveira
  */
 @Component({
 
@@ -30,10 +30,7 @@ export class RelationPickerComponent implements OnChanges {
     private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef,
-                /**
-                 * In this component the datastore should be used only for read access.
-                 */
-                private datastore: Datastore,
+                private datastore: ReadDatastore,
                 private objectList: ObjectList) {}
 
     public ngOnChanges() {
@@ -108,7 +105,7 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];
-        this.objectList.setChanged(this.object, true);
+        this.objectList.setChanged(this.object);
     }
 
     public editTarget() {
@@ -166,7 +163,7 @@ export class RelationPickerComponent implements OnChanges {
                 this.deleteInverseRelation(targetId).then(
                     () => {
                         this.object[this.field.field].splice(this.relationIndex, 1);
-                        this.objectList.setChanged(this.object, true);
+                        this.objectList.setChanged(this.object);
                         resolve();
                     },
                     err => {
@@ -185,7 +182,7 @@ export class RelationPickerComponent implements OnChanges {
         }
 
         targetObject[this.field.inverse].push(this.object.id);
-        this.objectList.setChanged(targetObject, true);
+        this.objectList.setChanged(targetObject);
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {
@@ -196,7 +193,7 @@ export class RelationPickerComponent implements OnChanges {
                     var index = targetObject[this.field.inverse].indexOf(this.object.id);
                     if (index != -1) {
                         targetObject[this.field.inverse].splice(index, 1);
-                        this.objectList.setChanged(targetObject, true);
+                        this.objectList.setChanged(targetObject);
                     }
                     resolve();
                 },

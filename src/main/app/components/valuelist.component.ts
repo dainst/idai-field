@@ -26,7 +26,7 @@ export class ValuelistComponent {
         for (var i = 0; i < selectedOptions.length; i++) {
             this.object[this.field.field].push(selectedOptions.item(i).childNodes[0].nodeValue);
         }
-        this.objectList.setChanged(this.object, true);
+        this.objectList.setChanged(this.object);
     }
 
     public isSelected(item: string) {

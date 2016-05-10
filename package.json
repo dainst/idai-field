@@ -10,7 +10,7 @@
     "start": "gulp run",
     "test:loop": "karma start src/test/karma.conf",
     "test": "karma start src/test/karma.conf.js --single-run",
-    "e2e": "./node_modules/protractor/bin/webdriver-manager update && ./node_modules/protractor/bin/protractor src/test/protractor.conf.js",
+    "e2e": "webdriver-manager update && protractor src/test/protractor.conf.js",
     "server": "gulp webserver-watch",
     "package": "rimraf release/* && gulp package",
     "postinstall": "typings install"

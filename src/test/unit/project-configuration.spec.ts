@@ -9,30 +9,29 @@ import {M} from "../../main/app/m";
 export function main() {
     describe('ProjectConfiguration', () => {
 
+        var firstLevelType = {
+            "type": "FirstLevelType",
+            "fields": [
+                {
+                    "field": "fieldA"
+                }
+            ]
+        };
+
+        var secondLevelType = {
+            "type": "SecondLevelType",
+            "parent" : "FirstLevelType",
+            "fields": [
+                {
+                    "field": "fieldB"
+                }
+            ]
+        }
+
         it('should let types inherit fields from parent types',
             function() {
 
-                var data={"types":[
-                        {
-                            "type": "FirstLevelType",
-                            "fields": [
-                                {
-                                    "field": "fieldA"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "SecondLevelType",
-                            "parent" : "FirstLevelType",
-                            "fields": [
-                                {
-                                    "field": "fieldB"
-                                }
-                            ]
-                        }
-                ]};
-
-                var dmc = new ProjectConfiguration(data);
+                var dmc = new ProjectConfiguration({"types":[ firstLevelType, secondLevelType ]});
 
                 var fields=dmc.getFields('SecondLevelType');
                 expect(fields[0].field).toBe('fieldA');
@@ -41,30 +40,20 @@ export function main() {
         );
 
 
-        it('should fail if parent type is referenced but not defined before',
+        it('list parent type fields first',
             function() {
 
-                var data={"types":[
-                    {
-                        "type": "SecondLevelType",
-                        "parent" : "FirstLevelType",
-                        "fields": [
-                            {
-                                "field": "fieldB"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "FirstLevelType",
-                        "fields": [
-                            {
-                                "field": "fieldA"
-                            }
-                        ]
-                    }
-                ]};
+                var dmc = new ProjectConfiguration({"types":[ secondLevelType, firstLevelType ]});
 
-                expect(function(){new ProjectConfiguration(data)}).toThrow(M.PC_GENERIC_ERROR)
+                var fields=dmc.getFields('SecondLevelType');
+                expect(fields[0].field).toBe('fieldA');
+                expect(fields[1].field).toBe('fieldB');
+            }
+        );
+
+        it('should fail if parent type is not defined',
+            function() {
+                expect(function(){new ProjectConfiguration({"types":[ secondLevelType ]})}).toThrow(M.PC_GENERIC_ERROR)
             }
         );
     });

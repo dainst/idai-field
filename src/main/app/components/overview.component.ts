@@ -50,7 +50,7 @@ export class OverviewComponent implements OnInit {
 
         // Remove object from list if it is new and no data has been entered
         if (object && (!object.type || (!this.selectedObject.id && !this.objectList.isChanged(this.selectedObject)))) {
-            this.objectList.setChanged(object, true);
+            this.objectList.setChanged(object);
             return this.discardChanges();
         }
 

@@ -156,8 +156,7 @@ you use
 $ npm run prepare-package
 ```
 
-there and server the dist dir (instead of ./) on 8081, so that the target application is the 
-one you run your e2e tests against.
+there prior to the *run e2e* and serve the resulting *dist* dir (instead of ./) on 8081, so that the target application is the one you run your e2e tests against.
 
 ## Deployment
 

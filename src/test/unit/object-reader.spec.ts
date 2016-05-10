@@ -20,7 +20,7 @@ export function main() {
             ], 'test.json', { type: "application/json" });
         });
 
-        fit('should create objects from file', (done) => {
+        it('should create objects from file', (done) => {
             reader.fromFile(file).subscribe( object => {
                 console.log('read object', object);
                 expect(object).not.toBe(undefined);

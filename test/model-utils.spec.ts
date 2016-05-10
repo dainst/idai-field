@@ -9,7 +9,7 @@ import {ModelUtils} from "../app/model/model-utils";
 export function main() {
     describe('ModelUtils', () => {
 
-        it('should create a full copy of an IdaiFieldObject, not just a reference to the object',
+        fit('should create a full copy of an IdaiFieldObject, not just a reference to the object',
             function(){
 
                 var initialObject = {

@@ -65,7 +65,7 @@ Before you can start your app, the typescript files have to be compiled.
 Make sure your IDE is configured accordingly or run
 
 ```
-npm run build
+$ npm run build
 ```
 
 In order to run the application:

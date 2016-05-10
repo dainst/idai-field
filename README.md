@@ -143,9 +143,7 @@ which is from where it is loaded into the browser against which the tests are ru
 2$ npm run e2e
 ```
 
-This command runs the end to end tests once. While changes of sources are recompiled
-automatically, tests have to be triggered on demand, unlike the behaviour of
-'npm run test-loop', which runs continuously.
+This command runs the end to end tests once.
 
 **Important**
 

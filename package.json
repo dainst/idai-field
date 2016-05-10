@@ -12,7 +12,7 @@
     "test": "karma start karma.conf.js --single-run",
     "e2e": "webdriver-manager update && protractor protractor.conf.js",
     "server": "gulp webserver-watch",
-    "prepare-package" : "rimraf dist/* && gulp make-dist",
+    "make-dist" : "rimraf dist/* && gulp make-dist",
     "package": "rimraf release/* && gulp package",
     "postinstall": "typings install"
   },

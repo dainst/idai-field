@@ -58,7 +58,7 @@ function watch() {
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('./')
+	gulp.src('./dist')
 			.pipe(webserver({
 				fallback: 'index.html',
 				port: 8081
@@ -92,9 +92,7 @@ gulp.task('run', function() {
 });
 
 
-// builds an electron app package for different platforms
-gulp.task('package', [], function() {
-
+gulp.task('prepare-package',function() {
     gulp.src('index.html').pipe(gulp.dest('dist/'));
     gulp.src('package.json').pipe(gulp.dest('dist/'));
     gulp.src('main.js').pipe(gulp.dest('dist/'));
@@ -108,8 +106,11 @@ gulp.task('package', [], function() {
     gulp.src('node_modules/jquery/**/*').pipe(gulp.dest('dist/node_modules/jquery'));
     gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('dist/node_modules/bootstrap'));
     gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
-    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
+    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/')); 
+});
 
+// builds an electron app package for different platforms
+gulp.task('package', [], function() {
 
 	packager({
 		dir: 'dist/',

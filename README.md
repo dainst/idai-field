@@ -153,7 +153,7 @@ however, what you want is that the application, as it is packaged, is tested. So
 you use
 
 ```
-$ npm run prepare-package
+$ npm run make-dist
 ```
 
 there prior to the *run e2e* and serve the resulting *dist* dir (instead of ./) on 8081, so that the target application is the one you run your e2e tests against.
@@ -168,7 +168,7 @@ the iDAI.field 2 Client application on a developer machine is as follows
 1$ npm test
 2$ npm run server
 1$ npm run e2e
-1$ npm run prepare-package
+1$ npm run make-dist
 1$ npm run package
 ```
 
@@ -179,7 +179,7 @@ is as follows
 ```
 $ npm run build
 $ npm test
-$ npm run prepare-package
+$ npm run make-dist
 $ npm run e2e
 $ npm run package
 ```

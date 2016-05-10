@@ -92,7 +92,7 @@ gulp.task('run', function() {
 });
 
 
-gulp.task('prepare-package',function() {
+gulp.task('make-dist',function() {
     gulp.src('index.html').pipe(gulp.dest('dist/'));
     gulp.src('package.json').pipe(gulp.dest('dist/'));
     gulp.src('main.js').pipe(gulp.dest('dist/'));

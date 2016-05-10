@@ -21,16 +21,19 @@
         System.config({
 
             paths: {
-                'angular2-uuid/*': 'node_modules/angular2-uuid/*.js',
-                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
+                'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
             },
             map: {
-                json: 'app/util/systemjs-json-plugin'
+                json: 'app/util/systemjs-json-plugin',
+                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
             },
             packages: {
                 app: {
                     format: 'register',
                     defaultExtension: 'js',
+                },
+                node_modules: {
+                    defaultExtension: 'js'
                 },
                 config: {
                     defaultExtension: false,
@@ -42,6 +45,8 @@
                 }
             }
         });
+        System.import('node_modules/jquery/dist/jquery.js')
+                .then(function() { System.import('node_modules/bootstrap/dist/js/bootstrap.js'); }, null);
         System.import('app/boot')
                 .then(null, console.error.bind(console));
     </script>

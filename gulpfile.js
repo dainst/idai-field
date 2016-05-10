@@ -76,9 +76,9 @@ gulp.task('compile', function () {
 		.pipe(typescript(tscConfig.compilerOptions))
 		.pipe(gulp.dest('app/'));
 	return gulp
-		.src('unit/**/*.ts')
+		.src('test/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('unit/'));
+		.pipe(gulp.dest('test/'));
 });
 
 gulp.task('prepare-run', [

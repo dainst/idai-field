@@ -1,12 +1,12 @@
 import {describe, expect, it, fit, xit, inject, injectAsync, beforeEachProviders,
         TestComponentBuilder, ComponentFixture} from 'angular2/testing';
-import {ObjectEditComponent} from '../../main/app/components/object-edit.component'
+import {ObjectEditComponent} from '../app/components/object-edit.component'
 import {provide, Injectable} from "angular2/core";
-import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
-import {ObjectList} from "../../main/app/services/object-list";
-import {Datastore} from "../../main/app/datastore/datastore";
-import {Messages} from "../../main/app/services/messages";
-import {ProjectConfiguration} from "../../main/app/model/project-configuration";
+import {IdaiFieldObject} from "../app/model/idai-field-object";
+import {ObjectList} from "../app/services/object-list";
+import {Datastore} from "../app/datastore/datastore";
+import {Messages} from "../app/services/messages";
+import {ProjectConfiguration} from "../app/model/project-configuration";
 
 //import 'zone.js/dist/zone';
 

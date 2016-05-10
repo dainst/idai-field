@@ -14,13 +14,13 @@ var webserver = require('gulp-webserver');
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function() {
 
-	return gulp.src('src/main/scss/app.scss')
+	return gulp.src('scss/app.scss')
 	  	.pipe(sass({includePaths: [
 			'node_modules/bootstrap-sass/assets/stylesheets/',
 			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
-	    .pipe(gulp.dest('src/main/css'));
+	    .pipe(gulp.dest('css'));
 });
 
 gulp.task('provide-deps', function() {
@@ -29,14 +29,14 @@ gulp.task('provide-deps', function() {
 			'node_modules/mdi/fonts/**/*',
 			'node_modules/bootstrap-sass/assets/fonts/**/*'
 		])
-		.pipe(gulp.dest('src/main/fonts'));
+		.pipe(gulp.dest('fonts'));
 
-	gulp.src('package.json' )
-		.pipe(gulp.dest('src/main/'));
-	gulp.src('node_modules/ng2-bs3-modal/*' )
-		.pipe(gulp.dest('src/main/lib/ng2-bs3-modal/'));
-	gulp.src('node_modules/angular2-uuid/*' )
-		.pipe(gulp.dest('src/main/lib/angular2-uuid/'));
+	// gulp.src('package.json' )
+	// 	.pipe(gulp.dest(''));
+	// gulp.src('node_modules/ng2-bs3-modal/*' )
+	// 	.pipe(gulp.dest('lib/ng2-bs3-modal/'));
+	// gulp.src('node_modules/angular2-uuid/*' )
+	// 	.pipe(gulp.dest('lib/angular2-uuid/'));
 
 	return gulp.src([
 			'node_modules/node-uuid/uuid.js',
@@ -52,15 +52,15 @@ gulp.task('provide-deps', function() {
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		//.pipe(uglify()) // this produces an error with the angular beta 15
-		.pipe(gulp.dest('src/main/lib'));
+		.pipe(gulp.dest('lib'));
 });
 
 function watch() {
-    gulp.watch('src/main/scss/**/*.scss',      ['convert-sass']);
+    gulp.watch('scss/**/*.scss',      ['convert-sass']);
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('src/main/')
+	gulp.src('./')
 			.pipe(webserver({
 				fallback: 'index.html',
 				port: 8081
@@ -72,13 +72,13 @@ gulp.task('webserver-watch', function() {
 const tscConfig = require('./tsconfig.json');
 gulp.task('compile', function () {
 	gulp
-		.src('src/main/app/**/*.ts')
+		.src('app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('src/main/app/'));
+		.pipe(gulp.dest('app/'));
 	return gulp
-		.src('src/test/unit/**/*.ts')
+		.src('unit/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('src/test/unit/'));
+		.pipe(gulp.dest('unit/'));
 });
 
 gulp.task('prepare-run', [
@@ -86,7 +86,7 @@ gulp.task('prepare-run', [
 ]);
 
 // runs the development server and sets up browser reloading
-var electronServer = electronConnect.server.create({path: 'src/main/'});
+var electronServer = electronConnect.server.create({path: './'});
 gulp.task('run', function() {
 
 	electronServer.start();
@@ -98,7 +98,7 @@ gulp.task('run', function() {
 gulp.task('package', [], function() {
 
 	packager({
-		dir: 'src/main/',
+		dir: '',
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',

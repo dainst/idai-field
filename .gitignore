@@ -44,5 +44,5 @@ fonts
 lib
 app/**/*.js
 app/**/*.js.map
-unit/**/*.js
-unit/**/*.js.map
+test/**/*.js
+test/**/*.js.map

@@ -3,7 +3,7 @@
 module.exports = function(config) {
     config.set({
 
-        basePath: '../../',
+        basePath: './',
 
         frameworks: ['jasmine'],
 
@@ -20,10 +20,10 @@ module.exports = function(config) {
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
-            { pattern: 'src/main/app/**/*.js', included: false, watched: true },
-            { pattern: 'src/test/unit/**/*.spec.js', included: false, watched: true },
+            { pattern: 'app/**/*.js', included: false, watched: true },
+            { pattern: 'test/**/*.spec.js', included: false, watched: true },
 
-            'src/test/test-main.js'
+            'test-main.js'
         ],
 
         exclude: [

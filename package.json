@@ -8,9 +8,9 @@
     "prebuild": "rimraf css/* && rimraf lib/* && rimraf fonts/*",
     "build": "gulp compile && gulp prepare-run",
     "start": "gulp run",
-    "test:loop": "karma start src/test/karma.conf",
-    "test": "karma start src/test/karma.conf.js --single-run",
-    "e2e": "webdriver-manager update && protractor src/test/protractor.conf.js",
+    "test:loop": "karma start karma.conf",
+    "test": "karma start karma.conf.js --single-run",
+    "e2e": "webdriver-manager update && protractor protractor.conf.js",
     "server": "gulp webserver-watch",
     "package": "rimraf release/* && gulp package",
     "postinstall": "typings install"

@@ -133,16 +133,14 @@ $ npm run build (used only when skipping the tests is necessary)
 ```
 
 For starting end to end testing,
-you need two terminals (again marked as '1$' and '2$').
+you need two terminals (marked as '1$' and '2$').
 
 ```
 1$ npm run server
 ```
 
-This starts a webserver which serves the dist/main directory on port 8081
+This starts a webserver which serves the ./ directory on port 8081
 which is from where it is loaded into the browser against which the tests are run.
-Furthermore, a 'watch' process runs. It causes to recompile the sources anytime changes
-are made, similar to the behaviour of 'npm start'.
 
 ```
 2$ npm run e2e
@@ -152,23 +150,47 @@ This command runs the end to end tests once. While changes of sources are recomp
 automatically, tests have to be triggered on demand, unlike the behaviour of
 'npm run test-loop', which runs continuously.
 
+**Important**
+
+For reasons of a convenient development workflow, the *run server* task makes the tests
+test against the application development files under "./". On a continuous integration machine,
+however, what you want is that the application, as it is packaged, is tested. So make sure
+you use
+
+```
+$ npm run prepare-package
+```
+
+there and server the dist dir (instead of ./) on 8081, so that the target application is the 
+one you run your e2e tests against.
+
 ## Deployment
 
 The recommended way for building and testing
-the iDAI.field 2 Client application is as follows
+the iDAI.field 2 Client application on a developer machine is as follows
 
 ```
 1$ npm run build
 1$ npm test
 2$ npm run server
 1$ npm run e2e
+1$ npm run prepare-package
 1$ npm run package
 ```
 
-As described above, in order for the e2e tests to work, the dist dir has to be served
-on localhost:8081. This is what the second command is for. If you are on a ci machine
- and have another webserver, like for example apache2, serving this directory on 8081, you
-can omit this command.
+For reasons mentioned at the end of the previous section, the recommended way for building and testing
+the iDAI.field 2 Client application on a continuous integration machine differs a little bit and 
+is as follows
+
+```
+$ npm run build
+$ npm test
+$ npm run prepare-package
+$ npm run e2e
+$ npm run package
+```
+
+In this case it is assumed the dist dir is served at localhost:8081 by a webserver like apache.
 
 After building you find packages of the application for different operating systems
 in the "release"-directory.

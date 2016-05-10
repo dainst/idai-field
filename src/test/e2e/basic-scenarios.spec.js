@@ -21,6 +21,10 @@ describe('idai field app', function() {
         return element(by.id('object-edit-input-identifier')).clear().sendKeys('1').sendKeys('2');
     }
 
+    function typeInIdentifierInSearchField() {
+        return element(by.id('object-search')).clear().sendKeys('1').sendKeys('2');
+    }
+
     function saveObject() {
         return element(by.id('object-edit-button-save-object')).click();
     }
@@ -42,6 +46,14 @@ describe('idai field app', function() {
             .then(function(){
                 expect(element(by.id('message-0')).getText()).
                     toEqual("Objekt Identifier existiert bereits. Bei Klick auf ein anderes Objekt wird der ursprüngliche Zustand wiederhergestellt.");
+            });
+    });
+
+    it('should find it by its identifier', function() {
+        createObject()
+            .then(typeInIdentifierInSearchField)
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
             });
     });
 });

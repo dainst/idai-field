@@ -1,6 +1,6 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
 import {provide} from "angular2/core";
-import {ObjectReader} from "../../main/app/services/object-reader";
+import {ObjectReader} from "../app/services/object-reader";
 
 /**
  * @author Sebastian Cuy
@@ -22,12 +22,12 @@ export function main() {
 
         it('should create objects from file', (done) => {
             reader.fromFile(file).subscribe( object => {
-                console.log('read object', object);
+                // console.log('read object', object);
                 expect(object).not.toBe(undefined);
             }, () => {
                 fail();
             }, () => {
-                console.log('done reading objects');
+                // console.log('done reading objects');
                 done();
             });
         });

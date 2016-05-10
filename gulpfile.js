@@ -95,8 +95,24 @@ gulp.task('run', function() {
 // builds an electron app package for different platforms
 gulp.task('package', [], function() {
 
+    gulp.src('index.html').pipe(gulp.dest('dist/'));
+    gulp.src('package.json').pipe(gulp.dest('dist/'));
+    gulp.src('main.js').pipe(gulp.dest('dist/'));
+    gulp.src('app/**/*').pipe(gulp.dest('dist/app/'));
+    gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
+    gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
+    gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
+    gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
+    gulp.src('lib/**/*').pipe(gulp.dest('dist/lib/'));
+    gulp.src('node_modules/jquery/**/*').pipe(gulp.dest('dist/node_modules/jquery'));
+    gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('dist/node_modules/bootstrap'));
+    gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
+    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
+
+
 	packager({
-		dir: '',
+		dir: 'dist/',
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',

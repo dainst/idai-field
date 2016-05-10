@@ -33,31 +33,22 @@ Prior to starting or e2e testing the app, it is necessary that config files are 
 It is expected that the files
 
 ```
-src/main/config/config.json
-src/main/config/Configuration.json
+config/config.json
+config/Configuration.json
 ```
 
 exist. For that purpose you can simply take the files
 
 ```
-src/main/config/config.json.template
-src/main/config/Configuration.json.template
+config/config.json.template
+config/Configuration.json.template
 ```
 
-and create copies of them cutting the .template suffix.
+and create copies of them cutting the .template suffix. 
 
 The reason for this is that developers can experiment with different configurations locally
-without risking of committing actual real configurations to the repo. This is achieved by gitignoring 
-the files ending on .json. Maybe you have noted that the file names 
-
-```
-src/main/config/config.json.deploy
-src/main/config/Configuration.json.deploy
-```
-
-are also gitignored. This is because these are files which are 
-provided by the build system for packaging and deployment.
-
+without risking of committing actual real configurations to the repo (see the [.gitignore](config/.gitignore) of 
+the config directory).
 
 ### Starting the app
 
@@ -119,7 +110,7 @@ as for example IntelliJ does.
 
 Note that provision of config files (see [here](#configuration)) is a precondition for being able to run and e2e test the application successfully.
 Although other configurations may work too, the .template suffixed
-files below src/main/config are the ones proven to work.
+files below config are the ones proven to work.
 
 **Note** that if the e2e tests do not pass, provide the .template configuratons and test again.
 
@@ -156,7 +147,9 @@ you use
 $ npm run make-dist
 ```
 
-there prior to the *run e2e* and serve the resulting *dist* dir (instead of ./) on 8081, so that the target application is the one you run your e2e tests against.
+there prior to the *run e2e* and serve the resulting *dist* dir (instead of ./) on 8081, 
+so that the target application is the one you run your e2e tests against. Note that the command
+requires that config files are provided under config. These will be put to the *dist* dir, too.
 
 ## Deployment
 

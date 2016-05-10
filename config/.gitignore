@@ -1,7 +1,10 @@
-config.json
-Configuration.json
+*
+
+# Explicitely mention files which should be part of the repo.
+
+!config.d.ts
+!config.json.template
+!Configuration.json.template
 
 
-# reserved filenames for build-process
-config.json.deploy 
-Configuration.json.deploy 
+

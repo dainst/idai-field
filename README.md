@@ -123,13 +123,10 @@ files below src/main/config are the ones proven to work.
 
 **Note** that if the e2e tests do not pass, provide the .template configuratons and test again.
 
-Asides from that, a prior build is necessary for the e2e tests to work.
-Make sure you build the source using one of the following two commands.
-While the first one builds and tests, the second one can be used to
-skip testing.
+Asides from that, a prior build is necessary for the e2e tests to work. For that, run
 
 ```
-$ npm run build (used only when skipping the tests is necessary)
+$ npm run build
 ```
 
 For starting end to end testing,

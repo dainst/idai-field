@@ -1,8 +1,8 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from 'angular2/testing';
-import {IdaiFieldBackend} from "../../main/app/services/idai-field-backend";
-import {ModelUtils} from "../../main/app/model/model-utils";
+import {IdaiFieldBackend} from "../app/services/idai-field-backend";
+import {ModelUtils} from "../app/model/model-utils";
 import {provide} from "angular2/core";
-import {IdaiFieldObject} from "../../main/app/model/idai-field-object";
+import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {Headers} from "angular2/http";
 
 /**

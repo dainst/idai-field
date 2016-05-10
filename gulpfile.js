@@ -9,84 +9,34 @@ var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
 var pkg = require('./package.json');
-var embedTemplates = require('gulp-angular-embed-templates');
 var webserver = require('gulp-webserver');
 
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function() {
 
-	return gulp.src('src/main/scss/app.scss')
+	return gulp.src('scss/app.scss')
 	  	.pipe(sass({includePaths: [
 			'node_modules/bootstrap-sass/assets/stylesheets/',
 			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
-	    .pipe(gulp.dest('dist/main/css'));
+	    .pipe(gulp.dest('css'));
 });
 
-gulp.task('provide-resources', function() {
+gulp.task('provide-deps', function() {
+
 	gulp.src([
-				'node_modules/mdi/fonts/**/*',
-				'node_modules/bootstrap-sass/assets/fonts/**/*'
-			])
-			.pipe(gulp.dest('dist/main/fonts'));
+			'node_modules/mdi/fonts/**/*',
+			'node_modules/bootstrap-sass/assets/fonts/**/*'
+		])
+		.pipe(gulp.dest('fonts'));
 
-	return gulp.src('src/main/img/**/*')
-		.pipe(gulp.dest('dist/main/img'));
-});
-
-gulp.task('provide-configs', function() {
-
-	return gulp.src('src/main/config/**/*.json')
-		.pipe(gulp.dest('dist/main/config/'));
-});
-
-gulp.task('package-node-dependencies', function() {
-	gulp.src('node_modules/angular2-uuid/*' )
-			.pipe(gulp.dest('dist/main/lib/angular2-uuid/'));
-});
-
-const tscConfig = require('./tsconfig.json');
-
-/**
- * Copies the indext to the dist folder, compiles typescript sources to javascript
- * AND renders the html templates into the component javascript files.
- */
-gulp.task('provide-sources', function () {
-	gulp.src('src/main/index.html')
-			.pipe(gulp.dest('dist/main/'));
-
-	return gulp
-		.src('src/main/app/**/*.ts')
-		.pipe(embedTemplates({basePath: "src/main", sourceType:'ts'}))
-		.pipe(typescript(tscConfig.compilerOptions))
-		.pipe(gulp.dest('dist/main/app'));
-});
-
-/**
- *
- */
-gulp.task('copy-electron-files', function () {
-	gulp.src(['package.json']).pipe(gulp.dest('dist/main/')); // also needed for an electron app
-	return gulp.src(['src/main/main.js']).pipe(gulp.dest('dist/main/'));
-});
-
-/**
- * Compiles the typescript written unit tests and copies the
- * javascript written end to end test files.
- */
-gulp.task('provide-test-sources', function () {
-
-    gulp
-        .src('src/test/unit/**/*.ts')
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('dist/test/unit'));
-	return gulp
-			.src('src/test/**/*.js')
-			.pipe(gulp.dest('dist/test/'));
-});
-
-gulp.task('concat-deps', function() {
+	// gulp.src('package.json' )
+	// 	.pipe(gulp.dest(''));
+	// gulp.src('node_modules/ng2-bs3-modal/*' )
+	// 	.pipe(gulp.dest('lib/ng2-bs3-modal/'));
+	// gulp.src('node_modules/angular2-uuid/*' )
+	// 	.pipe(gulp.dest('lib/angular2-uuid/'));
 
 	return gulp.src([
 			'node_modules/node-uuid/uuid.js',
@@ -96,28 +46,19 @@ gulp.task('concat-deps', function() {
 			'node_modules/angular2/bundles/angular2.dev.js',
 			'node_modules/angular2/bundles/http.dev.js',
 			'node_modules/angular2/bundles/router.dev.js',
-			'node_modules/jquery/dist/jquery.js',
-			'node_modules/bootstrap/dist/js/bootstrap.js',
-			'node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js'
+			'node_modules/jquery/dist/jquery.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))
 		//.pipe(uglify()) // this produces an error with the angular beta 15
-		.pipe(gulp.dest('dist/main//lib'));
+		.pipe(gulp.dest('lib'));
 });
 
 function watch() {
-    gulp.watch('src/main/scss/**/*.scss',      ['convert-sass']);
-    gulp.watch('src/main/app/**/*.ts',         ['provide-sources']);
-    gulp.watch('src/main/templates/**/*.html', ['provide-sources']);
-    gulp.watch('src/main/index.html',          ['provide-sources']);
-    gulp.watch('src/main/config/**/*.json',    ['provide-configs']);
-    gulp.watch('src/main/img/**/*',            ['provide-resources']);
-    gulp.watch('src/test/unit/**/*ts',          ['provide-test-sources']);
-    gulp.watch('src/test/e2e/**/*js',          ['provide-test-sources']);
+    gulp.watch('scss/**/*.scss',      ['convert-sass']);
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('dist/main/')
+	gulp.src('./')
 			.pipe(webserver({
 				fallback: 'index.html',
 				port: 8081
@@ -125,15 +66,29 @@ gulp.task('webserver-watch', function() {
 	watch();
 });
 
-var electronServer = electronConnect.server.create({path: 'dist/main/'});
+
+const tscConfig = require('./tsconfig.json');
+gulp.task('compile', function () {
+	gulp
+		.src('app/**/*.ts')
+		.pipe(typescript(tscConfig.compilerOptions))
+		.pipe(gulp.dest('app/'));
+	return gulp
+		.src('test/**/*.ts')
+		.pipe(typescript(tscConfig.compilerOptions))
+		.pipe(gulp.dest('test/'));
+});
+
+gulp.task('prepare-run', [
+	'provide-deps', 'convert-sass'
+]);
 
 // runs the development server and sets up browser reloading
+var electronServer = electronConnect.server.create({path: './'});
 gulp.task('run', function() {
 
 	electronServer.start();
-	gulp.watch('src/main/main.js', ['copy-electron-files'], electronServer.restart);
 	watch();
-	gulp.watch('dist/main/	**/*', electronServer.reload);
 });
 
 
@@ -141,7 +96,7 @@ gulp.task('run', function() {
 gulp.task('package', [], function() {
 
 	packager({
-		dir: 'dist/main/',
+		dir: '',
 		name: pkg.name,
 		platform: ['win32', 'darwin'],
 		arch: 'all',
@@ -173,13 +128,3 @@ gulp.task('package', [], function() {
     });
 });
 
-gulp.task('build', [
-	'convert-sass',
-	'copy-electron-files',
-	'concat-deps',
-	'provide-sources',
-	'provide-test-sources',
-	'provide-resources',
-	'provide-configs',
-	'package-node-dependencies'
-]);

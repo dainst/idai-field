@@ -61,7 +61,14 @@ provided by the build system for packaging and deployment.
 
 ### Starting the app
 
-In order to run the frontend in the development server use the following command:
+Before you can start your app, the typescript files have to be compiled.
+Make sure your IDE is configured accordingly or run
+
+```
+npm run build
+```
+
+In order to run the application:
 
 ```
 $ npm start
@@ -70,9 +77,8 @@ $ npm start
 This should open the app in a separate window. 
 
 The command builds (cleaning any rests from any prior builds)
-and starts the application. From then on, any changes made to 
-any source files trigger automatic recompilation
-of processes and a final reload of the application.
+and starts the application. From then on, changes made to scss files
+result in automatic conversion to css.
 
 ## Testing
 
@@ -81,29 +87,33 @@ of processes and a final reload of the application.
 To run the unit tests in a continuous manner, 
 you need two open two terminals (marked as '1$' and '2$'). 
 
-```
-1$ ulimit -n 10000
-1$ npm start
-```
-
-The *npm start* starts the app, but whats more important for us here is,
-that it watches the sources, and everytime anything changes, the sources
-are recompiled.
+Before running the tests, you need to make sure the
+app is build:
 
 ```
-2$ npm run test-loop
+$ npm run build
 ```
 
-This causes karma to run continuously. And since the sources are also watched
-continuously, you can edit and test at the same time.
+Also karma may require that a higher ulimit is set.
 
-If the tests should run only once, you can run
+```
+$ ulimit -n 10000
+```
+
+To run the tests once, execute
 
 ```
 $ npm test
 ```
 
-which will build the application from the sources and then unit test the so created dist.
+To run them in a loop, execute
+
+```
+$ npm test:loop
+```
+
+This is useful, when the sources are automatically recompiled on every change,
+as for example IntelliJ does.
 
 ### E2E - Testing
 
@@ -119,7 +129,6 @@ While the first one builds and tests, the second one can be used to
 skip testing.
 
 ```
-$ npm test
 $ npm run build (used only when skipping the tests is necessary)
 ```
 
@@ -149,6 +158,7 @@ The recommended way for building and testing
 the iDAI.field 2 Client application is as follows
 
 ```
+1$ npm run build
 1$ npm test
 2$ npm run server
 1$ npm run e2e

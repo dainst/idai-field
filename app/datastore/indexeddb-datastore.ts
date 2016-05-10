@@ -5,6 +5,7 @@ import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {Indexeddb} from "./indexeddb";
 import {M} from "../m";
+import {SearchTermExtractor} from "./search-term-extractor";
 
 /**
  * @author Sebastian Cuy
@@ -237,31 +238,19 @@ export class IndexeddbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                var terms = IndexeddbDatastore.extractTerms(object);
-                var request = db.put(IndexeddbDatastore.FULLTEXT,{ id: object.id, terms: terms});
+                var request = db.put(IndexeddbDatastore.FULLTEXT,
+                    {
+                        id: object.id,
+                        terms: (new SearchTermExtractor).extractTerms(object)
+                    }
+                );
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
         })
     }
 
-    private static extractTerms(object:IdaiFieldObject):string[] {
-
-        var terms = [];
-        for (var property in object) {
-            if (object.hasOwnProperty(property)) {
-                if (typeof object[property] == "string" && object[property].length > 0) {
-                    terms = terms.concat(this.tokenize(object[property]));
-                }
-            }
-        }
-        return terms.map( term => term.toLowerCase());
-    }
-
-    private static tokenize(string:string):string[] {
-
-        return string.match(/\w+/g);
-    }
+    
 
     private notifyObserversOfObjectToSync(object:IdaiFieldObject):void {
         

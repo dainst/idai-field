@@ -111,7 +111,7 @@ Note that provision of config files (see [here](#configuration)) is a preconditi
 Although other configurations may work too, the .template suffixed
 files below src/main/config are the ones proven to work.
 
-**Note** that if the e2e tests do pass, provide the .template configuratons and test again.
+**Note** that if the e2e tests do not pass, provide the .template configuratons and test again.
 
 Asides from that, a prior build is necessary for the e2e tests to work.
 Make sure you build the source using one of the following two commands.

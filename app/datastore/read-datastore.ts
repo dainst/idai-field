@@ -1,5 +1,5 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Observable} from "rxjs/Observable.d";
+import {Observable} from "rxjs/Observable";
 
 /**
  * This interface provides read access methods to a datastore

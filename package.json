@@ -41,7 +41,6 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "@angular/testing": "0.0.0-0",
     "archiver": "^1.0.0",
     "bootstrap-sass": "^3.3.6",
     "electron-connect": "^0.3.4",

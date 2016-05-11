@@ -24,7 +24,7 @@ export class Indexeddb {
                         .objectStore(name).put(what);
                 };
 
-                request.result.delete = function (name, what) {
+                request.result.remove = function (name, what) {
                     return request.result.transaction([name], 'readwrite')
                         .objectStore(name).delete(what)
                 };

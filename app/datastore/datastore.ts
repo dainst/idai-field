@@ -7,7 +7,7 @@ export abstract class Datastore extends ReadDatastore {
 
     abstract update(object: IdaiFieldObject): Promise<any>;
 
-    abstract delete(id: string): Promise<any>;
+    abstract remove(id: string): Promise<any>;
 
     abstract clear(): Promise<any>;
 

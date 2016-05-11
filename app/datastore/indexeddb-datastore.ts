@@ -68,18 +68,18 @@ export class IndexeddbDatastore implements Datastore {
             return new Promise((resolve, reject) => resolve(this.objectCache[id]));
         } else {
             return this.fetchObject(id);
-        };
+        }
     }
 
-    public delete(id:string):Promise<any> {
+    public remove(id:string):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var objectRequest = db.delete(IndexeddbDatastore.IDAIFIELDOBJECT,id);
+                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT,id);
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.delete(IndexeddbDatastore.FULLTEXT,id);
+                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT,id);
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];

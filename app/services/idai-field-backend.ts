@@ -1,10 +1,10 @@
-import {Injectable, Inject} from "angular2/core";
-import {Http, Headers} from "angular2/http";
+import {Injectable, Inject} from "@angular/core";
+import {Http, Headers} from "@angular/http";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
-import {Response} from "angular2/http";
+import {Response} from "@angular/http";
 import {ProjectConfiguration} from "./../model/project-configuration";
 
 /**

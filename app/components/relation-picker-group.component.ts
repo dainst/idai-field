@@ -1,5 +1,5 @@
-import {Component, Input} from 'angular2/core';
-import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
+import {Component, Input} from '@angular/core';
+import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {RelationPickerComponent} from "./relation-picker.component";
 

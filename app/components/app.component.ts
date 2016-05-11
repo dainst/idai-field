@@ -1,5 +1,4 @@
-import {Component, OnInit, Inject} from 'angular2/core';
-import {RouteConfig,RouterLink,RouterOutlet} from 'angular2/router';
+import {Component, OnInit, Inject} from '@angular/core';
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../datastore/datastore";
@@ -8,11 +7,12 @@ import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "./messages.component";
 import {ProjectConfiguration} from "../model/project-configuration";
 import {ConfigLoader} from "../services/config-loader";
+import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
     selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
-    directives: [RouterOutlet, RouterLink, SynchronizationComponent, MessagesComponent]
+    directives: [ ROUTER_DIRECTIVES, SynchronizationComponent, MessagesComponent]
 })
 @RouteConfig([
     { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}

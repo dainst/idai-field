@@ -1,12 +1,10 @@
 /// <reference path="../typings/browser/ambient/es6-shim/index.d.ts" />
 /// <reference path="../config/config.d.ts" />
 
-import {bootstrap}    from 'angular2/platform/browser'
+import {bootstrap}    from '@angular/platform-browser-dynamic'
 import {AppComponent} from './components/app.component'
-import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {provide, enableProdMode} from 'angular2/core';
-import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {HTTP_PROVIDERS} from '@angular/http';
+import {provide, enableProdMode} from '@angular/core';
 import {Datastore} from "./datastore/datastore";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
@@ -16,6 +14,8 @@ import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./services/config-loader";
 import {M} from "./m";
 import {ReadDatastore} from "./datastore/read-datastore";
+import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 

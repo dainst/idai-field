@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Input, OnChanges} from 'angular2/core';
+import {Component, Inject, OnInit, Input, OnChanges} from '@angular/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';

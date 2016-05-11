@@ -23,36 +23,6 @@ gulp.task('convert-sass', function() {
 	    .pipe(gulp.dest('css'));
 });
 
-gulp.task('provide-deps', function() {
-
-	gulp.src([
-			'node_modules/mdi/fonts/**/*',
-			'node_modules/bootstrap-sass/assets/fonts/**/*'
-		])
-		.pipe(gulp.dest('fonts'));
-
-	// gulp.src('package.json' )
-	// 	.pipe(gulp.dest(''));
-	// gulp.src('node_modules/ng2-bs3-modal/*' )
-	// 	.pipe(gulp.dest('lib/ng2-bs3-modal/'));
-	// gulp.src('node_modules/angular2-uuid/*' )
-	// 	.pipe(gulp.dest('lib/angular2-uuid/'));
-
-	return gulp.src([
-			'node_modules/node-uuid/uuid.js',
-			'node_modules/angular2/bundles/angular2-polyfills.js',
-			'node_modules/systemjs/dist/system.src.js',
-			'node_modules/rxjs/bundles/Rx.js',
-			'node_modules/angular2/bundles/angular2.dev.js',
-			'node_modules/angular2/bundles/http.dev.js',
-			'node_modules/angular2/bundles/router.dev.js',
-			'node_modules/jquery/dist/jquery.js'
-		])
-		.pipe(concat(pkg.name + '-deps.js'))
-		//.pipe(uglify()) // this produces an error with the angular beta 15
-		.pipe(gulp.dest('lib'));
-});
-
 function watch() {
     gulp.watch('scss/**/*.scss',      ['convert-sass']);
 }
@@ -68,7 +38,7 @@ gulp.task('webserver-watch', function() {
 
 
 const tscConfig = require('./tsconfig.json');
-gulp.task('compile', function () {
+gulp.task('compile',['convert-sass'], function () {
 	gulp
 		.src('app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
@@ -79,14 +49,9 @@ gulp.task('compile', function () {
 		.pipe(gulp.dest('test/'));
 });
 
-gulp.task('prepare-run', [
-	'provide-deps', 'convert-sass'
-]);
-
 // runs the development server and sets up browser reloading
 var electronServer = electronConnect.server.create({path: './'});
 gulp.task('run', function() {
-
 	electronServer.start();
 	watch();
 });
@@ -102,11 +67,17 @@ gulp.task('make-dist',function() {
     gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
     gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
-    gulp.src('lib/**/*').pipe(gulp.dest('dist/lib/'));
+    gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
     gulp.src('node_modules/jquery/**/*').pipe(gulp.dest('dist/node_modules/jquery'));
+    gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('dist/node_modules/systemjs/'));
+    gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('dist/node_modules/zone.js/'));
+    gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));
     gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('dist/node_modules/bootstrap'));
     gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
     gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/')); 
+    gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
+    gulp.src('node_modules/bootstrap-sass/assets/fonts/**/*').pipe(gulp.dest('dist/node_modules/bootstrap-sass/assets/fonts/'));
+    gulp.src('node_modules/mdi/fonts/**/*').pipe(gulp.dest('dist/node_modules/mdi/fonts/**/*'));
 });
 
 // builds an electron app package for different platforms

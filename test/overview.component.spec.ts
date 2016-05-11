@@ -1,4 +1,4 @@
-import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
+import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {OverviewComponent} from "../app/components/overview.component";

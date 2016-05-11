@@ -40,8 +40,6 @@ release
 cache
 typings
 css
-fonts
-lib
 app/**/*.js
 app/**/*.js.map
 test/**/*.js

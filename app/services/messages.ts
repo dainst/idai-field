@@ -13,9 +13,7 @@ import {M} from "./../m";
 @Injectable()
 export class Messages {
 
-    constructor(private messagesDictionary:M){
-
-    }
+    constructor(private messagesDictionary:M){ }
 
     private messageMap: { [id: string]: Message } = {};
 
@@ -32,35 +30,28 @@ export class Messages {
 
     /**
      * @param id used to identify the message. Must be an existing key.
-     * @param level should be one of "success", "info", "warning", "danger".
-     * @throws Error if message for key id not found.
+     *   If it is not, the the id param gets interpreted as a message content of an unkown
+     *   error condition with level 'danger'.
      */
-    public add(id:string,level:string): void {
+    public add(id:string): void {
 
-        var content : string = this.messagesDictionary.msgs[id];
-        if (!content)
-            throw this.messagesDictionary.msgs[M.MESSAGES_NOBODY].replace('id',id);
+        var msg = this.messagesDictionary.msgs[id];
 
-        if (M.LEVELS.indexOf(level) === -1)
-            throw M.MSG_WRONG_LEVEL.replace('msglevel', level);
-
-        this.messageMap[id] = {
-            'level' : level,
-            content: content
-        };
-    }
-
-    public delete(id:string) {
-        delete this.messageMap[id];
+        if (msg)
+            this.messageMap[id] = msg;
+        else {
+            this.messageMap[id] = {
+                content: id,
+                level: 'danger'
+            }
+        }
     }
 
     /**
      * Removes all messages.
      */
     public clear() {
-        for (var p in this.messageMap) {
-            delete this.messageMap[p];
-        }
+        for (var p in this.messageMap) delete this.messageMap[p]; 
     }
 
     /**

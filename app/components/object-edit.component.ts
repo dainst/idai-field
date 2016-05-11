@@ -76,18 +76,16 @@ export class ObjectEditComponent implements OnChanges,OnInit {
      * Saves the object to the local datastore.
      */
     public save() {
-        this.messages.delete(M.OBJLIST_IDEXISTS);
-        this.messages.delete(M.OBJLIST_IDMISSING);
-        this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
+        this.messages.clear();
 
         this.objectList.persistChangedObjects().then(
             () => {
-                this.messages.add(M.OBJLIST_SAVE_SUCCESS, 'success');
+                this.messages.add(M.OBJLIST_SAVE_SUCCESS);
             },
             errors => {
                 if (errors) {
                     for (var i in errors) {
-                        this.messages.add(errors[i], 'danger');
+                        this.messages.add(errors[i]);
                     }
                 }
             }

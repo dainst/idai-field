@@ -39,14 +39,10 @@ export class OverviewComponent implements OnInit {
         private objectList: ObjectList,
         private configLoader: ConfigLoader,
         private messages: Messages) {
-
-        // console.log("h")
     }
 
     private askForPermissionForChange(object) {
-        this.messages.delete(M.OBJLIST_IDEXISTS);
-        this.messages.delete(M.OBJLIST_IDMISSING);
-        this.messages.delete(M.OBJLIST_SAVE_SUCCESS);
+        this.messages.clear();
 
         // Remove object from list if it is new and no data has been entered
         if (object && (!object.type || (!this.selectedObject.id && !this.objectList.isChanged(this.selectedObject)))) {
@@ -63,7 +59,7 @@ export class OverviewComponent implements OnInit {
         this.objectList.persistChangedObjects().then(()=> {
             this.callback();
         }, (err) => {
-            this.messages.add(err, 'danger');
+            this.messages.add(err);
         });
     }
 
@@ -71,7 +67,7 @@ export class OverviewComponent implements OnInit {
         this.objectList.restoreChangedObjects().then(() => {
             this.callback();
         }, (err) => {
-            this.messages.add(err, 'danger');
+            this.messages.add(err);
         });
     }
     

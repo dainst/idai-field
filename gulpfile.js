@@ -23,15 +23,6 @@ gulp.task('convert-sass', function() {
 	    .pipe(gulp.dest('css'));
 });
 
-gulp.task('provide-deps', function() {
-
-	return gulp.src([
-			'node_modules/mdi/fonts/**/*',
-			'node_modules/bootstrap-sass/assets/fonts/**/*'
-		])
-		.pipe(gulp.dest('fonts'));
-});
-
 function watch() {
     gulp.watch('scss/**/*.scss',      ['convert-sass']);
 }
@@ -47,7 +38,7 @@ gulp.task('webserver-watch', function() {
 
 
 const tscConfig = require('./tsconfig.json');
-gulp.task('compile', function () {
+gulp.task('compile',['convert-sass'], function () {
 	gulp
 		.src('app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
@@ -58,14 +49,9 @@ gulp.task('compile', function () {
 		.pipe(gulp.dest('test/'));
 });
 
-gulp.task('prepare-run', [
-	'provide-deps', 'convert-sass'
-]);
-
 // runs the development server and sets up browser reloading
 var electronServer = electronConnect.server.create({path: './'});
 gulp.task('run', function() {
-
 	electronServer.start();
 	watch();
 });
@@ -90,7 +76,8 @@ gulp.task('make-dist',function() {
     gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
     gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/')); 
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
-    gulp.src('typings/**/*').pipe(gulp.dest('dist/typings/'));
+    gulp.src('node_modules/bootstrap-sass/assets/fonts/**/*').pipe(gulp.dest('dist/node_modules/bootstrap-sass/assets/fonts/'));
+    gulp.src('node_modules/mdi/fonts/**/*').pipe(gulp.dest('dist/node_modules/mdi/fonts/**/*'));
 });
 
 // builds an electron app package for different platforms

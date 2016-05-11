@@ -129,6 +129,7 @@ you need two terminals (marked as '1$' and '2$').
 
 This starts a webserver which serves the ./ directory on port 8081
 which is from where it is loaded into the browser against which the tests are run.
+As the *start* command, it automatically converts scss files to css when they are changed.
 
 ```
 2$ npm run e2e

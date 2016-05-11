@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf lib/* && rimraf fonts/*",
-    "build": "gulp compile && gulp prepare-run",
+    "build": "gulp compile",
     "start": "gulp run",
     "test:loop": "karma start karma.conf",
     "test": "karma start karma.conf.js --single-run",

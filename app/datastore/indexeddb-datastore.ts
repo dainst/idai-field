@@ -147,9 +147,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public find(query:string, options:any):Promise<IdaiFieldObject[]> {
-
-        // TODO implement query options
+    public find(query:string):Promise<IdaiFieldObject[]> {
 
         query = query.toLowerCase();
 
@@ -178,9 +176,7 @@ export class IndexeddbDatastore implements Datastore {
         })
     }
 
-    public all(options:any):Promise<IdaiFieldObject[]> {
-
-        // TODO implement query options
+    public all():Promise<IdaiFieldObject[]> {
 
         return new Promise<IdaiFieldObject[]>((resolve, reject) => {
 

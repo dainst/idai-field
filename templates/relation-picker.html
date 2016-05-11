@@ -5,7 +5,7 @@
             <input [(ngModel)]="idSearchString" (keydown)="keyDown($event)" (keyup)="keyUp($event)"
                    (focus)="enterSuggestionMode()" (blur)="leaveSuggestionMode()" class="form-control">
             <div *ngIf="suggestionsVisible" class="suggestion-container" (mouseout)="selectedSuggestionIndex = -1">
-                <div *ngFor="#suggestion of suggestions; #i = index">
+                <div *ngFor="let suggestion of suggestions; let i = index">
                     <div *ngIf="selectedSuggestionIndex != i" class="suggestion" (mousedown)="chooseTarget(suggestion)"
                             (mouseover)="selectedSuggestionIndex = i">
                         <span class="badge">{{suggestion.identifier}}</span> {{suggestion.title}}

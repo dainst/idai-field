@@ -13,7 +13,7 @@
                     <div class="panel-heading">
                         Please choose the object type.
                     </div>
-                    <button *ngFor="#type of types; #index=index" (mousedown)="setType(type)"
+                    <button *ngFor="let type of types; let index = index" (mousedown)="setType(type)"
                             type="button" id="create-object-option-{{index}}" class="list-group-item">{{type}}</button>
                 </div>
             </main>
@@ -50,7 +50,7 @@
                     </div>
 
                     <!-- Diverse Object Informations -->
-                    <div *ngFor="#field of fieldsForObjectType">
+                    <div *ngFor="let field of fieldsForObjectType">
                         <div *ngIf="field" class="form-group">
                             <label *ngIf="field.label">{{field.label}}</label>
                             <label *ngIf="!field.label">{{field.field}}</label>
@@ -63,7 +63,7 @@
                             </div>
                             <div *ngIf="field.valuelist && !field.multivalue">
                                 <select [(ngModel)]="object[field.field]" (change)="markAsChanged()" class="form-control">
-                                    <option *ngFor="#item of field.valuelist" value="{{item}}">{{item}}</option>
+                                    <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
                                 </select>
                             </div>
                             <valuelist *ngIf="field.valuelist && field.multivalue" [(object)]="object"
@@ -77,7 +77,7 @@
                             <h3 class="panel-title">Relationen</h3>
                         </div>
                         <ul class="list-group">
-                            <li *ngFor="#relationField of relationFields" class="list-group-item">
+                            <li *ngFor="let relationField of relationFields" class="list-group-item">
                                 <label *ngIf="relationField.label">{{relationField.label}}</label>
                                 <label *ngIf="!relationField.label">{{relationField.field}}</label>
                                 <relation-picker-group [(object)]="object" [field]="relationField"></relation-picker-group>

@@ -1,15 +1,38 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
+import {IdaiFieldObject} from "../model/idai-field-object";
+
+export interface ObjectReaderError extends SyntaxError {
+    lineNumber: number;
+    fileName: String;
+}
 
 /**
+ * Reads objects from a file.
+ * Expects a UTF-8 encoded text file with one JSON-Object per line.
+ *
  * @author Sebastian Cuy
  */
 @Injectable()
 export class ObjectReader {
 
+    /**
+     * Create ObjectReader
+     *
+     * @param chunkSize sets the number of characters that are read in
+     *   one chunk (default: 1000)
+     */
     constructor(private chunkSize: number = 1000) {}
 
-    public fromFile(file: File): Observable<any> {
+    /**
+     * Read objects from file
+     *
+     * @param file the file to be read
+     * @returns {Observable<IdaiFieldObject>} An observable that emits
+     *   objects for every parsed line or an error of type ObjectReaderError
+     *   if an error is encountered while parsing.
+     */
+    public fromFile(file: File): Observable<IdaiFieldObject> {
 
         return Observable.create( observer => {
 
@@ -20,17 +43,20 @@ export class ObjectReader {
             var line = 1;
 
             while (start <= file.size) {
-                var chunk = file.slice(start, end);
-                var reader = new FileReader();
+                let chunk = file.slice(start, end);
+                let reader = new FileReader();
                 reader.onload = (event: any) => {
                     buf += event.target.result;
-                    var nlPos = buf.indexOf('\n');
+                    let nlPos = buf.indexOf('\n');
                     while (nlPos != -1) {
                         try {
-                            var object = JSON.parse(buf.substr(0, nlPos));
+                            let object = JSON.parse(buf.substr(0, nlPos));
                             observer.next(object);
                         } catch(e) {
-                            observer.error({ line: line, cause: e});
+                            let error: ObjectReaderError = e;
+                            error.lineNumber = line;
+                            error.fileName = file.name;
+                            observer.error(error);
                         }
                         buf = buf.substr(nlPos+1);
                         nlPos = buf.indexOf('\n');
@@ -39,8 +65,15 @@ export class ObjectReader {
                     loaded += event.target.result.length;
                     if (loaded >= file.size) {
                         if (buf.length > 0) {
-                            var object = JSON.parse(buf);
-                            observer.next(object);
+                            try {
+                                let object = JSON.parse(buf);
+                                observer.next(object);
+                            } catch(e) {
+                                let error: ObjectReaderError = e;
+                                error.lineNumber = line;
+                                error.fileName = file.name;
+                                observer.error(error);
+                            }
                         }
                         observer.complete();
                     }

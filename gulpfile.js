@@ -39,11 +39,19 @@ gulp.task('webserver-watch', function() {
 
 const tscConfig = require('./tsconfig.json');
 gulp.task('compile',['convert-sass'], function () {
-	gulp
+    // fonts
+    gulp.src([
+            'node_modules/mdi/fonts/**/*',
+            'node_modules/bootstrap-sass/assets/fonts/**/*'
+        ])
+        .pipe(gulp.dest('fonts'));
+	// sources
+    gulp
 		.src('app/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
 		.pipe(gulp.dest('app/'));
-	return gulp
+	// test sources
+    return gulp
 		.src('test/**/*.ts')
 		.pipe(typescript(tscConfig.compilerOptions))
 		.pipe(gulp.dest('test/'));
@@ -65,6 +73,7 @@ gulp.task('make-dist',function() {
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
     gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
+    gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
@@ -76,8 +85,6 @@ gulp.task('make-dist',function() {
     gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
     gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/')); 
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
-    gulp.src('node_modules/bootstrap-sass/assets/fonts/**/*').pipe(gulp.dest('dist/node_modules/bootstrap-sass/assets/fonts/'));
-    gulp.src('node_modules/mdi/fonts/**/*').pipe(gulp.dest('dist/node_modules/mdi/fonts/**/*'));
 });
 
 // builds an electron app package for different platforms

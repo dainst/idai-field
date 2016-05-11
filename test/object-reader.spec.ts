@@ -50,7 +50,7 @@ export function main() {
                 expect(objects.length).toEqual(1);
                 expect(objects[0].id).toEqual("ob1");
                 expect(error).toEqual(jasmine.any(SyntaxError));
-                expect(errort .message).toContain('Unexpected end of');
+                expect(error.message).toContain('Unexpected end of');
                 expect(error.lineNumber).toEqual(2);
                 expect(error.fileName).toEqual('test.json');
                 done();

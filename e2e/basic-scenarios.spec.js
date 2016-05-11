@@ -45,7 +45,7 @@ describe('idai field app', function() {
             .then(createObject)
             .then(function(){
                 expect(element(by.id('message-0')).getText()).
-                    toEqual("Objekt Identifier existiert bereits. Bei Klick auf ein anderes Objekt wird der ursprüngliche Zustand wiederhergestellt.");
+                    toEqual("Objekt Identifier existiert bereits.");
             });
     });
 

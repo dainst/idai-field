@@ -1,5 +1,5 @@
-import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from 'angular2/testing';
-import {provide} from "angular2/core";
+import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
+import {provide} from "@angular/core";
 import {ObjectReader} from "../app/services/object-reader";
 
 /**

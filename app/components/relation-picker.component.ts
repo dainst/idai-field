@@ -1,6 +1,5 @@
-import {Component, Input, OnChanges, ElementRef} from 'angular2/core';
-import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
-import {Datastore} from '../datastore/datastore';
+import {Component, Input, OnChanges, ElementRef} from '@angular/core';
+import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectList} from "../services/object-list";
 import {ReadDatastore} from "../datastore/read-datastore";

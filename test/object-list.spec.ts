@@ -1,5 +1,5 @@
-import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from 'angular2/testing';
-import {provide} from "angular2/core";
+import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from '@angular/core/testing';
+import {provide} from "@angular/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {Datastore} from "../app/datastore/datastore";

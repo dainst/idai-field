@@ -1,4 +1,4 @@
-import {describe, expect, fit, it, xit, beforeEach} from 'angular2/testing';
+import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
 import {Datastore} from "../app/datastore/datastore";
 import {RelationPickerComponent} from "../app/components/relation-picker.component";
 

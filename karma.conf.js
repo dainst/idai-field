@@ -15,7 +15,7 @@ module.exports = function(config) {
             'node_modules/systemjs/dist/system.src.js',
             'node_modules/reflect-metadata/Reflect.js',
 
-            { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
+            { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
@@ -27,7 +27,7 @@ module.exports = function(config) {
         ],
 
         exclude: [
-            'node_modules/angular2/**/*_spec.js'
+            'node_modules/@angular/**/*_spec.js'
         ],
 
         reporters: ['dots'],

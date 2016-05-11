@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from 'angular2/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {ObjectList} from "../services/object-list";
-import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "angular2/common";
+import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {ProjectConfiguration} from "../model/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
-import {OnChanges} from "angular2/core";
+import {OnChanges} from "@angular/core";
 import {Messages} from "../services/messages";
 import {M} from "../m";
 

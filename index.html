@@ -15,6 +15,9 @@
     <link rel="icon" href="img/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/idai-field-client.css">
 
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+
     <script src="lib/idai-field-client-deps.js"></script>
 
     <script>
@@ -25,7 +28,16 @@
             },
             map: {
                 json: 'app/util/systemjs-json-plugin',
-                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
+                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal',
+                '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic',
+                '@angular/platform-browser': 'node_modules/@angular/platform-browser',
+                '@angular/http': 'node_modules/@angular/http',
+                '@angular/common': 'node_modules/@angular/common',
+                '@angular/core': 'node_modules/@angular/core',
+                '@angular/router-deprecated': 'node_modules/@angular/router-deprecated',
+                '@angular/router': 'node_modules/@angular/router',
+                '@angular/compiler': 'node_modules/@angular/compiler',
+                'rxjs': 'node_modules/rxjs'
             },
             packages: {
                 app: {
@@ -42,7 +54,16 @@
                             loader: 'json'
                         }
                     }
-                }
+                },
+                '@angular/core'                    : {main: 'index.js'},
+                '@angular/common'                  : {main: 'index.js'},
+                '@angular/compiler'                : {main: 'index.js'},
+                '@angular/router'                  : {main: 'index.js'},
+                '@angular/platform-browser'        : {main: 'index.js'},
+                '@angular/platform-browser-dynamic': {main: 'index.js'},
+                '@angular/router-deprecated': {main: 'index.js'},
+                '@angular/http': {main: 'index.js'},
+                'rxjs'                             : {main: 'index.js'}
             }
         });
         System.import('node_modules/jquery/dist/jquery.js')

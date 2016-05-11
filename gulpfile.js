@@ -31,21 +31,9 @@ gulp.task('provide-deps', function() {
 		])
 		.pipe(gulp.dest('fonts'));
 
-	// gulp.src('package.json' )
-	// 	.pipe(gulp.dest(''));
-	// gulp.src('node_modules/ng2-bs3-modal/*' )
-	// 	.pipe(gulp.dest('lib/ng2-bs3-modal/'));
-	// gulp.src('node_modules/angular2-uuid/*' )
-	// 	.pipe(gulp.dest('lib/angular2-uuid/'));
-
 	return gulp.src([
 			'node_modules/node-uuid/uuid.js',
-			'node_modules/angular2/bundles/angular2-polyfills.js',
 			'node_modules/systemjs/dist/system.src.js',
-			'node_modules/rxjs/bundles/Rx.js',
-			'node_modules/angular2/bundles/angular2.dev.js',
-			'node_modules/angular2/bundles/http.dev.js',
-			'node_modules/angular2/bundles/router.dev.js',
 			'node_modules/jquery/dist/jquery.js'
 		])
 		.pipe(concat(pkg.name + '-deps.js'))

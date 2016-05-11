@@ -1,7 +1,7 @@
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 import {ProjectConfiguration} from "./../model/project-configuration";
 import {Messages} from "./messages";
-import {Http} from "angular2/http";
+import {Http} from "@angular/http";
 import {M} from "./../m";
 
 
@@ -28,14 +28,14 @@ export class ConfigLoader {
                 try {
                     data=JSON.parse(data_['_body'])
                 } catch (e) {
-                    this.messages.add(M.PARSE_GENERIC_ERROR, 'danger')
+                    this.messages.add(M.PARSE_GENERIC_ERROR)
                     reject(e.message);
                 }
 
                 try {
                     resolve(new ProjectConfiguration(data))
                 } catch (e) {
-                    this.messages.add(e, 'danger')
+                    this.messages.add(e)
                     reject(e)
                 }
             });

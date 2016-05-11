@@ -1,7 +1,8 @@
 import {describe, expect, it, fit, xit, inject, injectAsync, beforeEachProviders,
-        TestComponentBuilder, ComponentFixture} from 'angular2/testing';
+        } from '@angular/core/testing';
+import {TestComponentBuilder, ComponentFixture} from '@angular/compiler/testing';
 import {ObjectEditComponent} from '../app/components/object-edit.component'
-import {provide, Injectable} from "angular2/core";
+import {provide, Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {ObjectList} from "../app/services/object-list";
 import {Datastore} from "../app/datastore/datastore";

@@ -1,13 +1,12 @@
-import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from 'angular2/core';
+import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";
 import {ProjectConfiguration} from "../model/project-configuration";
-import {Http} from "angular2/http";
+import {Http} from "@angular/http";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";
-import {M} from "../m";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({

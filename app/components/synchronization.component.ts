@@ -35,7 +35,7 @@ export class SynchronizationComponent implements OnChanges {
 
     private setupConnectionCheck() {
 
-        this.idaiFieldBackend.isConnected().subscribe(
+        this.idaiFieldBackend.connectionStatus().subscribe(
             connected => {
                 this.connected = connected;
                 if (connected) this.syncAll();

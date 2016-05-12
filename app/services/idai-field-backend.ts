@@ -39,11 +39,9 @@ export class IdaiFieldBackend {
 
 
     /**
-     * TODO rename to getConnectionStatus
-     *
      * @returns {any}
      */
-    public isConnected(): Observable<boolean> {
+    public connectionStatus(): Observable<boolean> {
         return Observable.create( observer => {
             this.connected=false;
             this.connectionStateObservers.push(observer);
@@ -52,8 +50,6 @@ export class IdaiFieldBackend {
 
 
     /**
-     * // TODO rename to triggerSomething
-     *
      * @see also this#setConnectionStatus
      */
     public checkConnection(): void {

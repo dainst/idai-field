@@ -72,7 +72,7 @@ export function main() {
         it('should report it is connected',
             function(){
 
-                idaiFieldBackend.isConnected().subscribe(connected => {
+                idaiFieldBackend.connectionStatus().subscribe(connected => {
                     if (j==1) expect(connected).toBeTruthy();
                     j++;
                 });
@@ -86,7 +86,7 @@ export function main() {
         it('should report is not connected',
             function(){
 
-                idaiFieldBackend.isConnected().subscribe(connected => {
+                idaiFieldBackend.connectionStatus().subscribe(connected => {
                     if (j==1) expect(connected).toBeFalsy();
                     j++;
                 });

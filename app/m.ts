@@ -24,11 +24,11 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
 
     constructor() {
         this.msgs[M.OBJLIST_IDEXISTS]={
-            content: 'Objekt Identifier existiert bereits.',
+            content: 'Objekt-Identifier existiert bereits.',
             level: 'danger',
         };
         this.msgs[M.OBJLIST_IDMISSING]={
-            content: 'Objekt Identifier fehlt.',
+            content: 'Objekt-Identifier fehlt.',
             level: 'danger'
         };
         this.msgs[M.OBJLIST_SAVE_SUCCESS]={
@@ -36,11 +36,11 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             level: 'success'
         };
         this.msgs[M.MESSAGES_NOBODY]={
-            content: "Kein Message gefunden für Schlüssel 'id'.",
+            content: "Keine Message gefunden für Schlüssel 'id'.",
             level: 'danger'
         };
         this.msgs[M.PC_GENERIC_ERROR]={
-            content: "Fehler beim Auswertenwerten eines Konfigurationsobjektes.",
+            content: "Fehler beim Auswerten eines Konfigurationsobjektes.",
             level: 'danger'
         };
         this.msgs[M.PARSE_GENERIC_ERROR]={

@@ -22,7 +22,7 @@ describe('idai field app', function() {
             .then(common.createObject("12"))
             .then(function(){
                 expect(element(by.id('message-0')).getText()).
-                    toEqual("Objekt Identifier existiert bereits.");
+                    toEqual("Objekt-Identifier existiert bereits.");
             });
     });
 

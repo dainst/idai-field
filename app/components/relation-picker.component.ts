@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, ElementRef} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectList} from "../services/object-list";
-import {ReadDatastore} from "../datastore/read-datastore";
+import {Datastore} from "../datastore/datastore";
 
 
 /**
@@ -29,7 +29,7 @@ export class RelationPickerComponent implements OnChanges {
     private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef,
-                private datastore: ReadDatastore,
+                private datastore: Datastore,
                 private objectList: ObjectList) {}
 
     public ngOnChanges() {

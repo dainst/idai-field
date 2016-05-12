@@ -8,6 +8,7 @@ import {MessagesComponent} from "./messages.component";
 import {ProjectConfiguration} from "../model/project-configuration";
 import {ConfigLoader} from "../services/config-loader";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import {ElectronMenu} from '../services/electron-menu';
 
 @Component({
     selector: 'idai-field-app',
@@ -15,7 +16,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
     directives: [ ROUTER_DIRECTIVES, SynchronizationComponent, MessagesComponent]
 })
 @RouteConfig([
-    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true}
+    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true }
 ])
 export class AppComponent implements OnInit {
 
@@ -25,7 +26,11 @@ export class AppComponent implements OnInit {
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
                 @Inject('app.config') private config,
-                private configLoader:ConfigLoader) {
+                private configLoader:ConfigLoader,
+                private menu:ElectronMenu) {
+        if (this.config.targetPlatform == "desktop") {
+            menu.build();
+        }
     }
 
     ngOnInit() {

@@ -1,5 +1,6 @@
 {
 	"environment": "test",
+    "targetPlatform": "desktop",
     "backend" : {
         "uri": "server url",
         "credentials": "username:password",

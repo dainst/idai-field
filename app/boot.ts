@@ -12,6 +12,7 @@ import {Messages} from "./services/messages";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./services/config-loader";
+import {ElectronMenu} from "./services/electron-menu";
 import {M} from "./m";
 import {ReadDatastore} from "./datastore/read-datastore";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
@@ -30,5 +31,6 @@ bootstrap(AppComponent, [
     provide('app.config', { useValue: CONFIG }),
     provide(Indexeddb, {useClass: Indexeddb}),
     provide(ConfigLoader, {useClass: ConfigLoader}),
+    provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(M, {useClass: M})
 ]);

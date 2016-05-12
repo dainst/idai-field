@@ -29,6 +29,9 @@ export class RelationPickerComponent implements OnChanges {
     private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef,
+                /**
+                 * In this component the datastore should be used only for read access.
+                 */
                 private datastore: Datastore,
                 private objectList: ObjectList) {}
 

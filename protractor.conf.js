@@ -15,7 +15,9 @@ exports.config = {
         includeStackTrace: false,
         defaultTimeoutInterval: 400000
     },
-
+    onPrepare: function() {
+        browser.manage().window().setSize(1600, 1000);
+    },
     /**
      * ng2 related configuration
      *

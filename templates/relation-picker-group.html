@@ -1,5 +1,5 @@
 <div *ngFor="let relation of object[field.field]; let i = index">
-    <relation-picker id="relation-picker-{{i}}" [(object)]="object" [field]="field" [relationIndex]="i"></relation-picker>
+    <relation-picker [(object)]="object" [field]="field" [relationIndex]="i"></relation-picker>
 </div>
 <div class="circular-button add-relation"
      *ngIf="!object[field.field] || object[field.field].length == 0 || validateNewest()"

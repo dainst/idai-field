@@ -30,25 +30,7 @@ $ npm install
 ### Configuration
 
 Prior to starting or e2e testing the app, it is necessary that config files are provided.
-It is expected that the files
-
-```
-config/config.json
-config/Configuration.json
-```
-
-exist. For that purpose you can simply take the files
-
-```
-config/config.json.template
-config/Configuration.json.template
-```
-
-and create copies of them cutting the .template suffix. 
-
-The reason for this is that developers can experiment with different configurations locally
-without risking of committing actual real configurations to the repo (see the [.gitignore](config/.gitignore) of 
-the config directory).
+Follow the docs [here](config) to see how that is done.
 
 ### Starting the app
 
@@ -108,11 +90,7 @@ as for example IntelliJ does.
 
 ### E2E - Testing
 
-Note that provision of config files (see [here](#configuration)) is a precondition for being able to run and e2e test the application successfully.
-Although other configurations may work too, the .template suffixed
-files below config are the ones proven to work.
-
-**Note** that if the e2e tests do not pass, provide the .template configuratons and test again.
+**Note** that provision of config files (see [here](config)) is a precondition for being able to run and e2e test the application successfully.
 
 Asides from that, a prior build is necessary for the e2e tests to work. For that, run
 

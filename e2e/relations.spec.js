@@ -16,6 +16,14 @@ describe('relations', function() {
         return relation.all(by.css('.suggestion')).get(index);
     }
 
+    function scrollDown() {
+        return browser.executeScript('window.scrollTo(0,100);');
+    }
+
+    function scrollUp() {
+        return browser.executeScript('window.scrollTo(0,0);');
+    }
+
     function getRelationButton(relation, index) {
         return relation.all(by.tagName('button')).get(index);
     }
@@ -29,7 +37,9 @@ describe('relations', function() {
 
         common.createObject("o1")
             .then(common.createObject("o2"))
+            .then(scrollDown)
             .then(addRelation)
+
             .then(function() {
                 expect(getFirstRelationOfGroup(0).isPresent()).toBe(true);
                 expect(getSuggestion(getFirstRelationOfGroup(0), 0).isPresent()).toBe(false);
@@ -43,9 +53,10 @@ describe('relations', function() {
                 expect(getRelationButton(getFirstRelationOfGroup(0), 0).isPresent()).toBe(true);
                 expect(getRelationButton(getFirstRelationOfGroup(0), 0).element(by.tagName("span")).getText())
                     .toEqual("o1");
-                return common.saveObject();
+                return scrollUp().then(common.saveObject);
             })
             .then(common.selectObject(1))
+            .then(scrollDown)
             .then(function() {
                 expect(getFirstRelationOfGroup(1).isPresent()).toBe(true);
                 expect(getRelationButton(getFirstRelationOfGroup(1), 0).isPresent()).toBe(true);

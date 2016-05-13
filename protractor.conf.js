@@ -16,7 +16,7 @@ exports.config = {
         defaultTimeoutInterval: 400000
     },
     onPrepare: function() {
-        browser.manage().window().setSize(1600, 1000);
+        browser.manage().window().setSize(800, 600);
     },
     /**
      * ng2 related configuration

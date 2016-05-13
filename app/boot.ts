@@ -1,4 +1,6 @@
 /// <reference path="../typings/browser/ambient/es6-shim/index.d.ts" />
+/// <reference path="../typings/browser/ambient/node/index.d.ts" />
+/// <reference path="../typings/browser/ambient/github-electron/index.d.ts" />
 /// <reference path="../config/config.d.ts" />
 
 import {bootstrap}    from '@angular/platform-browser-dynamic'

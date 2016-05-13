@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
-import {BrowserWindow} from "electron"
 
 /**
  * @author Sebastian Cuy

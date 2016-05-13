@@ -17,7 +17,7 @@ describe('relations', function() {
     }
 
     function scrollDown() {
-        return browser.executeScript('window.scrollTo(0,100);');
+        return browser.executeScript('window.scrollTo(0,200);');
     }
 
     function scrollUp() {

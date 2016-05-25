@@ -3,7 +3,7 @@ import {fdescribe, describe, xdescribe,expect, it, fit, xit,inject, async, befor
 import {TestComponentBuilder} from '@angular/compiler/testing';
 import {ObjectEditComponent} from '../app/components/object-edit.component'
 import {provide, Component} from "@angular/core";
-import {ObjectList} from "../app/services/object-list";
+import {PersistenceManager} from "../app/services/persistence-manager";
 import {Datastore} from "../app/datastore/datastore";
 import {Project} from "../app/model/project";
 import {Messages} from "../app/services/messages";
@@ -62,7 +62,7 @@ export function main() {
 
         beforeEachProviders(() => [
             provide(Datastore, { useClass: MockDatastore }),
-            provide(ObjectList, { useClass: ObjectList }),
+            provide(PersistenceManager, { useClass: PersistenceManager }),
             provide(Messages, { useClass: MockMessages }),
             provide(Project, { useClass: Project }),
             provide(ObjectEditComponent, {useClass: ObjectEditComponent}),

@@ -17,7 +17,7 @@ import {M} from "./../m";
  */
 @Injectable()
 
-export class ObjectList {
+export class PersistenceManager {
     
     constructor(
         private datastore: Datastore,

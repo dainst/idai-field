@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {ObjectList} from "../services/object-list";
+import {PersistenceManager} from "../services/persistence-manager";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {ProjectConfiguration} from "../model/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
@@ -45,7 +45,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public fieldsForObjectType : any;
 
     constructor(
-        private objectList: ObjectList,
+        private persistenceManager: PersistenceManager,
         private messages: Messages) {
     }
 
@@ -78,7 +78,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public save() {
         this.messages.clear();
 
-        this.objectList.persistChangedObjects().then(
+        this.persistenceManager.persistChangedObjects().then(
             () => {
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
             },
@@ -93,7 +93,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     }
 
     public markAsChanged() {
-        this.objectList.setChanged(this.object);
+        this.persistenceManager.setChanged(this.object);
     }
 
 }

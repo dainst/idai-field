@@ -1,7 +1,7 @@
 import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from '@angular/core/testing';
 import {provide} from "@angular/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {ObjectList} from "../app/services/object-list";
+import {PersistenceManager} from "../app/services/persistence-manager";
 import {Datastore} from "../app/datastore/datastore";
 import {Messages} from "../app/services/messages";
 import {M} from "../app/m";
@@ -19,7 +19,7 @@ export function main() {
         ]);
 
         var mockDatastore;
-        var objectList;
+        var persistenceManager;
         var id = "abc";
 
         var oldVersion:IdaiFieldObject = {
@@ -63,8 +63,8 @@ export function main() {
 
         beforeEach(function () {
 
-            mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'create', 'update', 'refresh']);
-            objectList = new ObjectList(mockDatastore);
+            // mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'create', 'update', 'refresh']);
+            // persistenceManager = new PersistenceManager(mockDatastore);
 
             // selectedObject = {
             //     "identifier": "ob4", "title": "Luke Skywalker", "synced": 0,

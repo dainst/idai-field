@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, Chang
 import {Datastore} from '../datastore/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
-import {ObjectList} from "../services/object-list";
+import {PersistenceManager} from "../services/persistence-manager";
 import {ProjectConfiguration} from "../model/project-configuration";
 import {Project} from "../model/project";
 import {Messages} from "../services/messages";
@@ -12,7 +12,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 @Component({
     templateUrl: 'templates/overview.html',
     directives: [ObjectEditComponent, MODAL_DIRECTIVES],
-    providers: [ObjectList]
+    providers: [PersistenceManager]
 })
 
 /**
@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit {
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
-        private objectList: ObjectList,
+        private persistenceManager: PersistenceManager,
         private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages) {
@@ -45,18 +45,18 @@ export class OverviewComponent implements OnInit {
         this.messages.clear();
 
         // Remove object from list if it is new and no data has been entered
-        if (object && (!object.type || (!this.selectedObject.id && !this.objectList.isChanged(this.selectedObject)))) {
-            this.objectList.setChanged(object);
+        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isChanged(this.selectedObject)))) {
+            this.persistenceManager.setChanged(object);
             return this.discardChanges();
         }
 
-        if (!object || !this.objectList.isChanged(this.selectedObject)) return this.callback();
+        if (!object || !this.persistenceManager.isChanged(this.selectedObject)) return this.callback();
 
         this.modal.open();
     }
 
     public save() {
-        this.objectList.persistChangedObjects().then(()=> {
+        this.persistenceManager.persistChangedObjects().then(()=> {
             this.callback();
         }, (err) => {
             this.messages.add(err);
@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.objectList.restoreChangedObjects().then(() => {
+        this.persistenceManager.restoreChangedObjects().then(() => {
             this.callback();
         }, (err) => {
             this.messages.add(err);

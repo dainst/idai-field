@@ -15,7 +15,7 @@ export function main() {
 
         var relationPickerComponent: RelationPickerComponent;
         var mockDatastore: any;
-        var mockObjectList: any;
+        var mockPersistenceManager: any;
 
         var element: any = {
             nativeElement: {
@@ -68,11 +68,11 @@ export function main() {
             mockDatastore.get.and.callFake(get);
             mockDatastore.find.and.callFake(find);
 
-            mockObjectList = jasmine.createSpyObj('mockObjectList', ['setChanged', 'isChanged']);
-            mockObjectList.setChanged.and.callFake(setChanged);
-            mockObjectList.isChanged.and.callFake(isChanged);
+            mockPersistenceManager = jasmine.createSpyObj('mockPersistenceManager', ['setChanged', 'isChanged']);
+            mockPersistenceManager.setChanged.and.callFake(setChanged);
+            mockPersistenceManager.isChanged.and.callFake(isChanged);
 
-            relationPickerComponent = new RelationPickerComponent(element, mockDatastore, mockObjectList);
+            relationPickerComponent = new RelationPickerComponent(element, mockDatastore, mockPersistenceManager);
             relationPickerComponent.object = object1;
             relationPickerComponent.field = { "field": "Above", "inverse": "Below" };
             relationPickerComponent.relationIndex = 0;

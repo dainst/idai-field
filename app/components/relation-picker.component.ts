@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, ElementRef} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ObjectList} from "../services/object-list";
+import {PersistenceManager} from "../services/persistence-manager";
 import {Datastore} from "../datastore/datastore";
 
 
@@ -33,7 +33,7 @@ export class RelationPickerComponent implements OnChanges {
                  * In this component the datastore should be used only for read access.
                  */
                 private datastore: Datastore,
-                private objectList: ObjectList) {}
+                private persistenceManager: PersistenceManager) {}
 
     public ngOnChanges() {
 
@@ -107,7 +107,7 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];
-        this.objectList.setChanged(this.object);
+        this.persistenceManager.setChanged(this.object);
     }
 
     public editTarget() {
@@ -165,7 +165,7 @@ export class RelationPickerComponent implements OnChanges {
                 this.deleteInverseRelation(targetId).then(
                     () => {
                         this.object[this.field.field].splice(this.relationIndex, 1);
-                        this.objectList.setChanged(this.object);
+                        this.persistenceManager.setChanged(this.object);
                         resolve();
                     },
                     err => {
@@ -184,7 +184,7 @@ export class RelationPickerComponent implements OnChanges {
         }
 
         targetObject[this.field.inverse].push(this.object.id);
-        this.objectList.setChanged(targetObject);
+        this.persistenceManager.setChanged(targetObject);
     }
 
     private deleteInverseRelation(targetId: string): Promise<any> {
@@ -195,7 +195,7 @@ export class RelationPickerComponent implements OnChanges {
                     var index = targetObject[this.field.inverse].indexOf(this.object.id);
                     if (index != -1) {
                         targetObject[this.field.inverse].splice(index, 1);
-                        this.objectList.setChanged(targetObject);
+                        this.persistenceManager.setChanged(targetObject);
                     }
                     resolve();
                 },

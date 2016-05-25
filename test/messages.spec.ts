@@ -1,8 +1,4 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {provide} from "@angular/core";
-import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {ObjectList} from "../app/services/object-list";
-import {Datastore} from "../app/datastore/datastore";
 import {Messages} from "../app/services/messages";
 import {M} from "../app/m";
 

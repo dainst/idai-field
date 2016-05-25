@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ObjectList} from "../services/object-list";
+import {PersistenceManager} from "../services/persistence-manager";
 
 /**
  * @author Thomas Kleinke
@@ -18,7 +18,7 @@ export class ValuelistComponent {
     @Input() object: IdaiFieldObject;
     @Input() field: any;
 
-    constructor(private objectList: ObjectList) {}
+    constructor(private persistenceManager: PersistenceManager) {}
 
     public setValues(selectedOptions: HTMLCollection) {
 
@@ -26,7 +26,7 @@ export class ValuelistComponent {
         for (var i = 0; i < selectedOptions.length; i++) {
             this.object[this.field.field].push(selectedOptions.item(i).childNodes[0].nodeValue);
         }
-        this.objectList.setChanged(this.object);
+        this.persistenceManager.setChanged(this.object);
     }
 
     public isSelected(item: string) {

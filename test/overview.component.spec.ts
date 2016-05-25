@@ -1,6 +1,6 @@
 import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
 import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {ObjectList} from "../app/services/object-list";
+import {PersistenceManager} from "../app/services/persistence-manager";
 import {OverviewComponent} from "../app/components/overview.component";
 import {Datastore} from "../app/datastore/datastore";
 
@@ -64,7 +64,7 @@ export function main() {
 
             var mockMessages = jasmine.createSpyObj('messages', [ 'add', 'delete' ]);
 
-            overviewComponent = new OverviewComponent(mockDatastore, {}, mockObjectList,undefined, mockMessages);
+            overviewComponent = new OverviewComponent(mockDatastore, {}, undefined, mockObjectList,undefined, mockMessages);
 
             objects = [object1, object2];
         });
@@ -74,8 +74,8 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onSelect(object2);
 
-                expect((<ObjectList> mockObjectList).persistChangedObjects).toHaveBeenCalledWith(object1, true);
-                expect((<ObjectList> mockObjectList).persistChangedObjects).not.toHaveBeenCalledWith(object2, true);
+                expect((<PersistenceManager> mockObjectList).persistChangedObjects).toHaveBeenCalledWith(object1, true);
+                expect((<PersistenceManager> mockObjectList).persistChangedObjects).not.toHaveBeenCalledWith(object2, true);
             }
         );
 
@@ -84,7 +84,7 @@ export function main() {
                 overviewComponent.onSelect(object1);
                 overviewComponent.onCreate();
 
-                expect((<ObjectList> mockObjectList).persistChangedObjects).toHaveBeenCalledWith(object1, true);
+                expect((<PersistenceManager> mockObjectList).persistChangedObjects).toHaveBeenCalledWith(object1, true);
             }
         );
 

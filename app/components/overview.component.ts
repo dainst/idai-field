@@ -58,7 +58,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public save() {
-        this.persistenceManager.persistO().then(()=> {
+        this.persistenceManager.persist().then(()=> {
             this.callback();
         }, (err) => {
             this.messages.add(err);
@@ -66,7 +66,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.persistenceManager.restoreChangedObjects().then(() => {
+        this.persistenceManager.restore().then(() => {
             this.callback();
         }, (err) => {
             this.messages.add(err);

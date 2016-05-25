@@ -80,7 +80,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.messages.clear();
 
         this.persistenceManager.setChanged(this.object);
-        this.persistenceManager.persistO().then(
+        this.persistenceManager.persist().then(
             () => {
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
             },

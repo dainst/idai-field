@@ -67,14 +67,14 @@ export class PersistenceManager {
      *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
-    public persistO() {
+    public persist() {
 
         return new Promise<any>((resolve, reject) => {
 
             if (this.object==undefined) resolve();
             var object=this.object;
 
-            this.persist(object).then(()=> {
+            this.persistIt(object).then(()=> {
                 console.log("PERSIST:", object);
 
                 var promisesToGetObjects = new Array();
@@ -97,7 +97,7 @@ export class PersistenceManager {
 
 
                 }, (err)=>reject(err))
-            }, (err)=> { reject(new Array(err)); });
+            }, (err)=> { reject(this.toStringArray(err)); });
         });
 
     }
@@ -152,35 +152,12 @@ export class PersistenceManager {
         return false;
     }
 
-    /**
-     * Restores all objects marked as changed by resetting them to
-     * back to the persisted state. In case there are any objects marked
-     * as changed which were not yet persisted, they get deleted from the list.
-     *
-     * @returns {Promise<string[]>} If all objects could get restored,
-     *   the promise will just resolve to <code>undefined</code>. If one or more
-     *   objects could not get restored properly, the promise will resolve to
-     *   <code>string[]</code>, containing ids of M where possible,
-     *   and error messages where not.
-     */
-    public restoreChangedObjects(): Promise<string[]> {
-
-        return new Promise<any>((resolve, reject) => {
-            // Promise.all(this.applyOn(this.changedObjects,this.restore)).then(
-            //     () => {
-            //         this.reset();
-                    resolve();
-                // },
-                // errors => reject(this.toStringArray(errors))
-            // );
-        });
-    }
 
     /**
      * Saves the object to the local datastore.
      * @param object
      */
-    private persist(object: IdaiFieldObject): Promise<any> {
+    private persistIt(object: IdaiFieldObject): Promise<any> {
 
         // Replace with proper validation
         if (!object.identifier || object.identifier.length == 0) {
@@ -199,22 +176,38 @@ export class PersistenceManager {
         }
     }
 
-    private restore(object: IdaiFieldObject): Promise<any> {
+    /**
+     * Restores all objects marked as changed by resetting them to
+     * back to the persisted state. In case there are any objects marked
+     * as changed which were not yet persisted, they get deleted from the list.
+     *
+     * @returns {Promise<string[]>} If all objects could get restored,
+     *   the promise will just resolve to <code>undefined</code>. If one or more
+     *   objects could not get restored properly, the promise will resolve to
+     *   <code>string[]</code>, containing ids of M where possible,
+     *   and error messages where not.
+     */
+    public restore(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
+            if (this.object==undefined) resolve();
+            var object=this.object;
+
             if (!object.id) {
                 this.project.remove(object);
                 return resolve();
             }
 
+            console.log("will restore ",object)
             this.datastore.refresh(object.id).then(
                 restoredObject => {
+                    console.log("restored ",object)
 
                     this.project.replace(object,restoredObject);
                     this.setUnchanged();
                     resolve();
                 },
-                err => { reject(err); }
+                err => { reject(this.toStringArray(err)); }
             );
         });
     }

@@ -7,6 +7,7 @@ import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "@angular/core";
 import {Messages} from "../services/messages";
+import {Project} from "../model/project";
 import {M} from "../m";
 
 /**
@@ -78,7 +79,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public save() {
         this.messages.clear();
 
-        this.persistenceManager.persistChangedObjects().then(
+        this.persistenceManager.setChanged(this.object);
+        this.persistenceManager.persistO().then(
             () => {
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
             },
@@ -95,5 +97,4 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public markAsChanged() {
         this.persistenceManager.setChanged(this.object);
     }
-
 }

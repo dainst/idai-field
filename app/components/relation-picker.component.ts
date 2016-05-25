@@ -29,11 +29,13 @@ export class RelationPickerComponent implements OnChanges {
     private suggestionsVisible: boolean;
 
     constructor(private element: ElementRef,
-                /**
-                 * In this component the datastore should be used only for read access.
-                 */
-                private datastore: Datastore,
-                private persistenceManager: PersistenceManager) {}
+        /**
+         * In this component the datastore should be used only for read access.
+         */
+        private datastore: Datastore,
+        private persistenceManager: PersistenceManager // TODO instead of this the parent object edit component should get addressed for marking an object as changed
+    )
+    {}
 
     public ngOnChanges() {
 
@@ -102,11 +104,12 @@ export class RelationPickerComponent implements OnChanges {
      */
     public createRelation(target: IdaiFieldObject) {
 
-        this.createInverseRelation(target);
+        // this.createInverseRelation(target);
         this.object[this.field.field][this.relationIndex] = target.id;
         this.selectedTarget = target;
         this.idSearchString = "";
         this.suggestions = [];
+
         this.persistenceManager.setChanged(this.object);
     }
 
@@ -154,55 +157,13 @@ export class RelationPickerComponent implements OnChanges {
     }
 
     public deleteRelation(): Promise<any> {
-
         var targetId = this.object[this.field.field][this.relationIndex];
-
-        return new Promise<any>((resolve, reject) => {
+        return new Promise<any>((resolve) => {
             if (targetId.length == 0) {
-                this.object[this.field.field].splice(this.relationIndex, 1)
-                resolve();
-            } else {
-                this.deleteInverseRelation(targetId).then(
-                    () => {
-                        this.object[this.field.field].splice(this.relationIndex, 1);
-                        this.persistenceManager.setChanged(this.object);
-                        resolve();
-                    },
-                    err => {
-                        console.error(err);
-                        reject(err);
-                    }
-                );
+                this.object[this.field.field].splice(this.relationIndex, 1);
             }
-        });
-    }
-
-    private createInverseRelation(targetObject: IdaiFieldObject) {
-
-        if (!targetObject[this.field.inverse]) {
-            targetObject[this.field.inverse] = [];
-        }
-
-        targetObject[this.field.inverse].push(this.object.id);
-        this.persistenceManager.setChanged(targetObject);
-    }
-
-    private deleteInverseRelation(targetId: string): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-            this.datastore.get(targetId).then(
-                targetObject => {
-                    var index = targetObject[this.field.inverse].indexOf(this.object.id);
-                    if (index != -1) {
-                        targetObject[this.field.inverse].splice(index, 1);
-                        this.persistenceManager.setChanged(targetObject);
-                    }
-                    resolve();
-                },
-                err => {
-                    reject(err);
-                }
-            );
+            this.persistenceManager.setChanged(this.object);
+            resolve();
         });
     }
 

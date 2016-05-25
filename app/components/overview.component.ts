@@ -44,19 +44,21 @@ export class OverviewComponent implements OnInit {
     private askForPermissionForChange(object) {
         this.messages.clear();
 
+        console.log("askForPermissionForChange",object)
+
         // Remove object from list if it is new and no data has been entered
-        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isChanged(this.selectedObject)))) {
+        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isChanged()))) {
             this.persistenceManager.setChanged(object);
             return this.discardChanges();
         }
 
-        if (!object || !this.persistenceManager.isChanged(this.selectedObject)) return this.callback();
+        if (!object || !this.persistenceManager.isChanged()) return this.callback();
 
         this.modal.open();
     }
 
     public save() {
-        this.persistenceManager.persistChangedObjects().then(()=> {
+        this.persistenceManager.persistO().then(()=> {
             this.callback();
         }, (err) => {
             this.messages.add(err);

@@ -20,8 +20,8 @@
                            placeholder="Search...">
                     <span class="glyphicon glyphicon-search"></span>
                 </div>
-                <ul *ngIf="objectList.getObjects()" class="list-group" id="objectList">
-                    <li *ngFor="let object of objectList.getObjects(); let index=index"
+                <ul *ngIf="project.getObjects()" class="list-group" id="objectList">
+                    <li *ngFor="let object of project.getObjects(); let index=index"
                         (click)="onSelect(object)"
                         class="list-group-item"
                         [class.synced]="object.synced"

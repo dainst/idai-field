@@ -19,6 +19,7 @@ import {M} from "./m";
 import {ReadDatastore} from "./datastore/read-datastore";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {Project} from './model/project';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 
@@ -34,5 +35,6 @@ bootstrap(AppComponent, [
     provide(Indexeddb, {useClass: Indexeddb}),
     provide(ConfigLoader, {useClass: ConfigLoader}),
     provide(ElectronMenu, {useClass: ElectronMenu}),
+    provide(Project, {useClass: Project}),
     provide(M, {useClass: M})
 ]);

@@ -4,7 +4,7 @@ import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "./object-edit.component";
 import {ObjectList} from "../services/object-list";
 import {ProjectConfiguration} from "../model/project-configuration";
-import {Http} from "@angular/http";
+import {Project} from "../model/project";
 import {Messages} from "../services/messages";
 import {ConfigLoader} from "../services/config-loader";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -36,6 +36,7 @@ export class OverviewComponent implements OnInit {
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
         private objectList: ObjectList,
+        private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages) {
     }
@@ -84,7 +85,7 @@ export class OverviewComponent implements OnInit {
     public onCreate() {
         this.callback = function() {
             var newObject = {};
-            this.objectList.getObjects().unshift(newObject);
+            this.project.getObjects().unshift(newObject);
             this.selectedObject = <IdaiFieldObject> newObject;
         }.bind(this);
         this.askForPermissionForChange(this.selectedObject);
@@ -105,11 +106,11 @@ export class OverviewComponent implements OnInit {
 
         if (event.target.value == "") {
             this.datastore.all({}).then(objects => {
-                this.objectList.setObjects(objects);
+                this.project.setObjects(objects);
             }).catch(err => console.error(err));
         } else {
             this.datastore.find(event.target.value, {}).then(objects => {
-                this.objectList.setObjects(objects);
+                this.project.setObjects(objects);
             }).catch(err => console.error(err));
         }
     }
@@ -117,7 +118,7 @@ export class OverviewComponent implements OnInit {
     private fetchObjects() {
 
         this.datastore.all({}).then(objects => {
-            this.objectList.setObjects(objects);
+            this.project.setObjects(objects);
         }).catch(err => console.error(err));
     }
 }

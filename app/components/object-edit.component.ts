@@ -13,7 +13,7 @@ import {M} from "../m";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
-  */
+ */
 @Component({
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, COMMON_DIRECTIVES, RelationPickerGroupComponent, ValuelistComponent],
     selector: 'object-edit',

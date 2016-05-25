@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
+import {Project} from "./../model/project";
 import {M} from "./../m";
 
 /**
@@ -18,9 +19,12 @@ import {M} from "./../m";
 
 export class ObjectList {
     
-    constructor(private datastore: Datastore) {}
+    constructor(
+        private datastore: Datastore,
+        private project: Project
+    ) {}
 
-    private objects: IdaiFieldObject[];
+
 
     /**
      * Contains references to all objects with unsaved changes.
@@ -85,14 +89,6 @@ export class ObjectList {
         return this.changedObjects.indexOf(object) > -1;
     }
 
-    public getObjects() : IdaiFieldObject[] {
-        return this.objects;
-    }
-
-    public setObjects(objects: IdaiFieldObject[]) {
-        this.objects = objects;
-    }
-
     /**
      * Saves the object to the local datastore.
      * @param object
@@ -120,14 +116,14 @@ export class ObjectList {
 
         return new Promise<any>((resolve, reject) => {
             if (!object.id) {
-                this.removeNewObjectFromList(object);
+                this.project.remove(object);
                 return resolve();
             }
 
             this.datastore.refresh(object.id).then(
                 restoredObject => {
-                    var index = this.objects.indexOf(object);
-                    this.objects[index] = restoredObject;
+
+                    this.project.replace(object,restoredObject);
                     this.setUnchanged(restoredObject);
                     resolve();
                 },
@@ -157,12 +153,6 @@ export class ObjectList {
 
     private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;
-    }
-
-    private removeNewObjectFromList(object: IdaiFieldObject) {
-
-        var index = this.getObjects().indexOf(object);
-        this.getObjects().splice(index, 1);
     }
 
     private setUnchanged(object: IdaiFieldObject) {

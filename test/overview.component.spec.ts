@@ -2,7 +2,7 @@ import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing'
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {PersistenceManager} from "../app/services/persistence-manager";
 import {OverviewComponent} from "../app/components/overview.component";
-import {Datastore} from "../app/datastore/datastore";
+import {Datastore} from "datastore.ts";
 
 /**
  * @author Thomas Kleinke

@@ -1,6 +1,6 @@
 import {fdescribe, describe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {ProjectConfiguration} from "../app/model/project-configuration";
-import {Messages} from "../app/services/messages";
+import {ProjectConfiguration} from "../app/core-services/project-configuration";
+import {Messages} from "../app/core-services/messages";
 import {M} from "../app/m";
 
 /**

@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Datastore} from "./../datastore/datastore";
-import {Project} from "./../model/project";
-import {RelationsProvider} from "./../model/relations-provider";
-import {M} from "./../m";
+import {Datastore} from "./datastore";
+import {Project} from "../model/project";
+import {RelationsProvider} from "../object-edit/relations-provider";
+import {M} from "../m";
 
 /**
  * Keeps track of all the objects associated to the current object
@@ -180,25 +180,6 @@ export class PersistenceManager {
                 err => { reject(this.toStringArray(err)); }
             );
         });
-    }
-
-    /**
-     * Iterates over objects and collects the returned promises.
-     *
-     * @param objects
-     * @param fun a function returning Promise<any>
-     * @returns {Promise<any>[]} the collected promises.
-     */
-    private applyOn(objects,fun) : Promise<any>[] {
-
-        var objectPromises:Promise<any>[] = [];
-        for (var i in objects)
-            objectPromises.push(fun.apply(this,[objects[i]]));
-        return objectPromises;
-    }
-
-    private reset() {
-        this.object = undefined;
     }
 
     private toStringArray(str : any) : string[] {

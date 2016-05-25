@@ -1,12 +1,12 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
-import {Datastore} from "../datastore/datastore";
+import {Datastore} from "../core-services/datastore";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
-import {MessagesComponent} from "./messages.component";
-import {ProjectConfiguration} from "../model/project-configuration";
-import {ConfigLoader} from "../services/config-loader";
+import {MessagesComponent} from "../core-services/messages.component";
+import {ProjectConfiguration} from "../core-services/project-configuration";
+import {ConfigLoader} from "../core-services/config-loader";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from '../services/electron-menu';
 

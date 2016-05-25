@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Messages} from "../services/messages";
+import {Messages} from "./messages";
 
 /**
  * @author Jan G. Wieners

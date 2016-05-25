@@ -2,8 +2,8 @@ import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from
 import {provide} from "@angular/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
 import {PersistenceManager} from "../app/services/persistence-manager";
-import {Datastore} from "../app/datastore/datastore";
-import {Messages} from "../app/services/messages";
+import {Datastore} from "datastore.ts";
+import {Messages} from "../app/core-services/messages";
 import {M} from "../app/m";
 
 /**

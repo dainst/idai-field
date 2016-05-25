@@ -1,12 +1,12 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {Datastore} from '../datastore/datastore';
+import {Datastore} from '../core-services/datastore';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ObjectEditComponent} from "./object-edit.component";
-import {PersistenceManager} from "../services/persistence-manager";
-import {ProjectConfiguration} from "../model/project-configuration";
+import {ObjectEditComponent} from "../object-edit/object-edit.component";
+import {PersistenceManager} from "../core-services/persistence-manager";
+import {ProjectConfiguration} from "../core-services/project-configuration";
 import {Project} from "../model/project";
-import {Messages} from "../services/messages";
-import {ConfigLoader} from "../services/config-loader";
+import {Messages} from "../core-services/messages";
+import {ConfigLoader} from "../core-services/config-loader";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({

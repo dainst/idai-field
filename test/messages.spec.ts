@@ -1,5 +1,5 @@
 import {fdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {Messages} from "../app/services/messages";
+import {Messages} from "../app/core-services/messages";
 import {M} from "../app/m";
 
 /**

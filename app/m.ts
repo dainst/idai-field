@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Message} from "./model/Message"
+import {Message} from "./core-services/message"
 
 /**
  * This map contains the message bodies

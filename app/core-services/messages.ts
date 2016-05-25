@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Message} from "../model/message";
-import {M} from "./../m";
+import {Message} from "./message";
+import {M} from "../m";
 
 /**
  * Maintains a collection of currently active messages the

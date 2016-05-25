@@ -4,9 +4,9 @@ import {TestComponentBuilder} from '@angular/compiler/testing';
 import {ObjectEditComponent} from '../app/components/object-edit.component'
 import {provide, Component} from "@angular/core";
 import {PersistenceManager} from "../app/services/persistence-manager";
-import {Datastore} from "../app/datastore/datastore";
+import {Datastore} from "datastore.ts";
 import {Project} from "../app/model/project";
-import {Messages} from "../app/services/messages";
+import {Messages} from "../app/core-services/messages";
 
 
 /**

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {PersistenceManager} from "../services/persistence-manager";
+import {PersistenceManager} from "../core-services/persistence-manager";
 
 /**
  * @author Thomas Kleinke

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IdaiFieldObject} from "../model/idai-field-object";
+import {Entity} from "../core-services/entity";
 import {PersistenceManager} from "../core-services/persistence-manager";
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
 import {ProjectConfiguration} from "../core-services/project-configuration";
@@ -23,7 +23,7 @@ import {M} from "../m";
 
 export class ObjectEditComponent implements OnChanges,OnInit {
 
-    @Input() object: IdaiFieldObject;
+    @Input() object: Entity;
     @Input() projectConfiguration: ProjectConfiguration;
 
     public types : string[];

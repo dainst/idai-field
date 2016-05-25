@@ -1,9 +1,7 @@
-export interface IdaiFieldObject {
-    id?: string;
-    identifier: string;
-    title: string;
+import {Entity} from "../core-services/entity";
+
+export interface IdaiFieldObject extends Entity {
     synced: number;
     modified?: Date;
     created?: Date;
-    type: string;
 }

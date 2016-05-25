@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
+import {Entity} from "../core-services/entity";
 
 /**
  * @author Thomas Kleinke
@@ -12,8 +13,8 @@ export class Project {
         return this.objects;
     }
 
-    public setObjects(objects: IdaiFieldObject[]) {
-        this.objects = objects;
+    public setObjects(objects: Entity[]) {
+        this.objects = <IdaiFieldObject[]> objects;
     }
 
     public replace(object:IdaiFieldObject,restoredObject: IdaiFieldObject) {

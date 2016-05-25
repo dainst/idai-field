@@ -52,7 +52,7 @@ export class SynchronizationComponent implements OnChanges {
 
 
                 if (!this.connected) return;
-                this.sync(object);
+                this.sync(<IdaiFieldObject>object);
             },
             err => console.error("Could not fetch unsynced objects", err)
         );
@@ -77,7 +77,7 @@ export class SynchronizationComponent implements OnChanges {
 
         this.objectsToSyncIds.forEach(id => {
             this.datastore.get(id).then(
-                object => this.sync(object)
+                object => this.sync(<IdaiFieldObject>object)
             );
         });
     }

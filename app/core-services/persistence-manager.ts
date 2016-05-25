@@ -173,7 +173,7 @@ export class PersistenceManager {
             this.datastore.refresh(object.id).then(
                 restoredObject => {
 
-                    this.project.replace(object,restoredObject);
+                    this.project.replace(object,<IdaiFieldObject>restoredObject);
                     this.setUnchanged();
                     resolve();
                 },

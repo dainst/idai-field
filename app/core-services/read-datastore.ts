@@ -1,4 +1,4 @@
-import {IdaiFieldObject} from "../model/idai-field-object";
+import {Entity} from "../core-services/entity";
 import {Observable} from "rxjs/Observable";
 
 /**
@@ -10,11 +10,11 @@ import {Observable} from "rxjs/Observable";
  */
 export abstract class ReadDatastore  {
 
-    abstract get(id: string): Promise<IdaiFieldObject>;
+    abstract get(id: string): Promise<Entity>;
 
-    abstract find(query: string, options: any): Promise<IdaiFieldObject[]>;
+    abstract find(query: string, options: any): Promise<Entity[]>;
 
-    abstract all(options: any): Promise<IdaiFieldObject[]>;
+    abstract all(options: any): Promise<Entity[]>;
 
-    abstract getUnsyncedObjects(): Observable<IdaiFieldObject>;
+    abstract getUnsyncedObjects(): Observable<Entity>;
 }

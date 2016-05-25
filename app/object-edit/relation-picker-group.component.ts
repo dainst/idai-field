@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
-import {IdaiFieldObject} from '../model/idai-field-object';
+import {Entity} from "../core-services/entity";
 import {RelationPickerComponent} from "./relation-picker.component";
 
 
@@ -16,7 +16,7 @@ import {RelationPickerComponent} from "./relation-picker.component";
 
 export class RelationPickerGroupComponent {
 
-    @Input() object: IdaiFieldObject;
+    @Input() object: Entity;
     @Input() field: any;
 
     public createRelation() {

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, ElementRef} from '@angular/core';
 import {CORE_DIRECTIVES,COMMON_DIRECTIVES,FORM_DIRECTIVES} from "@angular/common";
-import {IdaiFieldObject} from '../model/idai-field-object';
+import {Entity} from "../core-services/entity";
 import {PersistenceManager} from "../core-services/persistence-manager";
 import {Datastore} from "../core-services/datastore";
 
@@ -18,13 +18,13 @@ import {Datastore} from "../core-services/datastore";
 
 export class RelationPickerComponent implements OnChanges {
 
-    @Input() object: IdaiFieldObject;
+    @Input() object: Entity;
     @Input() field: any;
     @Input() relationIndex: number;
 
-    private suggestions: IdaiFieldObject[];
+    private suggestions: Entity[];
     private selectedSuggestionIndex: number = -1;
-    private selectedTarget: IdaiFieldObject;
+    private selectedTarget: Entity;
     private idSearchString: string;
     private suggestionsVisible: boolean;
 
@@ -80,7 +80,7 @@ export class RelationPickerComponent implements OnChanges {
      * Checks if the given object should be shown as a suggestion
      * @param object
      */
-    private checkSuggestion(object: IdaiFieldObject) {
+    private checkSuggestion(object: Entity) {
 
         // Don't suggest the object itself
         if (this.object.id == object.id)
@@ -102,7 +102,7 @@ export class RelationPickerComponent implements OnChanges {
      * Creates a relation to the target object.
      * @param target
      */
-    public createRelation(target: IdaiFieldObject) {
+    public createRelation(target: Entity) {
 
         // this.createInverseRelation(target);
         this.object[this.field.field][this.relationIndex] = target.id;

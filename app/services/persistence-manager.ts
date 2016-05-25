@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./../datastore/datastore";
 import {Project} from "./../model/project";
+import {RelationsProvider} from "./../model/relations-provider";
 import {M} from "./../m";
 
 /**
@@ -21,39 +22,19 @@ export class PersistenceManager {
     
     constructor(
         private datastore: Datastore,
-        private project: Project
+        private project: Project,
+        private relationsProvider: RelationsProvider
     ) {}
-
-
-    private relationFields: any[] = [
-        { "field": "Belongs to", "inverse": "Includes", "label": "Enthalten in" },
-        { "field": "Includes", "inverse": "Belongs to", "label": "Enthält" },
-
-        { "field": "Above", "inverse": "Below", "label": "Oberhalb von" },
-        { "field": "Below", "inverse": "Above", "label": "Unterhalb von" },
-        { "field": "Next to", "inverse": "Next to", "label": "Benachbart zu" },
-
-        { "field": "Is before", "inverse": "Is after", "label": "Zeitlich vor" },
-        { "field": "Is after", "inverse": "Is before", "label": "Zeitlich nach" },
-        { "field": "Is coeval with", "inverse": "Is coeval with", "label": "Zeitgleich mit" },
-
-        { "field": "Cuts", "inverse": "Is cut by", "label": "Schneidet" },
-        { "field": "Is cut by", "inverse": "Cuts", "label": "Wird geschnitten von" }
-    ];
-
 
     private object: IdaiFieldObject = undefined;
 
-    
     public setChanged(object) {
-        console.log("marked as changed",object)
         this.object=object;
     }
 
     public isChanged(): boolean {
         return (this.object!=undefined)
     }
-
     
     
     /**
@@ -70,28 +51,13 @@ export class PersistenceManager {
     public persist() {
 
         return new Promise<any>((resolve, reject) => {
+            if (this.object==undefined) return resolve();
 
-            if (this.object==undefined) resolve();
-            var object=this.object;
+            this.persistIt(this.object).then(()=> {
+                Promise.all(this.makeGetPromises(this.object)).then((targetObjects)=> {
 
-            this.persistIt(object).then(()=> {
-                console.log("PERSIST:", object);
-
-                var promisesToGetObjects = new Array();
-                for (var id of this.extractRelatedObjectIDs(object))
-                    promisesToGetObjects.push(this.datastore.get(id))
-
-                var promisesToSaveObjects = new Array();
-                Promise.all(promisesToGetObjects).then((targetObjects)=> {
-                    for (var targetObject of targetObjects) {
-                        this.setInverseRelations(object, targetObject);
-                        promisesToSaveObjects.push(this.datastore.update(targetObject));
-                    }
-
-                    Promise.all(promisesToSaveObjects).then((targetObjects)=> {
-                        console.log("saved target objects ", targetObjects);
-
-                        this.object=undefined;
+                    Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
+                        this.setUnchanged();
                         resolve();
                     }, (err)=>reject(err));
 
@@ -99,36 +65,46 @@ export class PersistenceManager {
                 }, (err)=>reject(err))
             }, (err)=> { reject(this.toStringArray(err)); });
         });
-
     }
+
+    private makeGetPromises(object) {
+        var promisesToGetObjects = new Array();
+        for (var id of this.extractRelatedObjectIDs(this.object))
+            promisesToGetObjects.push(this.datastore.get(id))
+        return promisesToGetObjects;
+    }
+
+    private makeSavePromises(object,targetObjects) {
+        var promisesToSaveObjects = new Array();
+        for (var targetObject of targetObjects) {
+            this.setInverseRelations(this.object, targetObject);
+            promisesToSaveObjects.push(this.datastore.update(targetObject));
+        }
+        return promisesToSaveObjects;
+    }
+
 
     private setInverseRelations(object, targetObject) {
         for (var prop in object) {
             if (!object.hasOwnProperty(prop)) continue;
-            if (!this.isRelationProperty(prop)) continue;
+            if (!this.relationsProvider.isRelationProperty(prop)) continue;
 
             for (var id of object[prop]) {
                 if (id!=targetObject.id) continue;
 
-                if (targetObject[this.getInverse(prop)]==undefined)
-                    targetObject[this.getInverse(prop)]=[];
+                var inverse = this.relationsProvider.getInverse(prop);
 
-                var index = targetObject[this.getInverse(prop)].indexOf(object.id);
+                if (targetObject[inverse]==undefined)
+                    targetObject[inverse]=[];
+
+                var index = targetObject[inverse].indexOf(object.id);
                 if (index != -1) {
-                    targetObject[this.getInverse(prop)].splice(index, 1);
+                    targetObject[inverse].splice(index, 1);
                 }
 
-                targetObject[this.getInverse(prop)].push(object.id);
-                console.log("target:",targetObject)
+                targetObject[inverse].push(object.id);
             }
         }
-    }
-
-    private getInverse(prop) {
-        for (var p of this.relationFields) {
-            if (p["field"]==prop) return p["inverse"];
-        }
-        return undefined;
     }
 
 
@@ -137,7 +113,7 @@ export class PersistenceManager {
 
         for (var prop in object) {
             if (!object.hasOwnProperty(prop)) continue;
-            if (!this.isRelationProperty(prop)) continue;
+            if (!this.relationsProvider.isRelationProperty(prop)) continue;
 
             // TODO iterate over target ids
             relatedObjectIDs.push(object[prop].toString());
@@ -145,12 +121,7 @@ export class PersistenceManager {
         return relatedObjectIDs;
     }
 
-    private isRelationProperty(propertyName:string):boolean {
-        for (var p of this.relationFields) {
-            if (p["field"]==propertyName) return true;
-        }
-        return false;
-    }
+
 
 
     /**
@@ -195,13 +166,12 @@ export class PersistenceManager {
 
             if (!object.id) {
                 this.project.remove(object);
+                this.setUnchanged();
                 return resolve();
             }
 
-            console.log("will restore ",object)
             this.datastore.refresh(object.id).then(
                 restoredObject => {
-                    console.log("restored ",object)
 
                     this.project.replace(object,restoredObject);
                     this.setUnchanged();

@@ -44,8 +44,6 @@ export class OverviewComponent implements OnInit {
     private askForPermissionForChange(object) {
         this.messages.clear();
 
-        console.log("askForPermissionForChange",object)
-
         // Remove object from list if it is new and no data has been entered
         if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isChanged()))) {
             this.persistenceManager.setChanged(object);

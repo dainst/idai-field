@@ -7,7 +7,7 @@ import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "@angular/core";
 import {Messages} from "../services/messages";
-import {Project} from "../model/project";
+import {RelationsProvider} from "../model/relations-provider";
 import {M} from "../m";
 
 /**
@@ -26,28 +26,13 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     @Input() object: IdaiFieldObject;
     @Input() projectConfiguration: ProjectConfiguration;
 
-    private relationFields: any[] = [
-        { "field": "Belongs to", "inverse": "Includes", "label": "Enthalten in" },
-        { "field": "Includes", "inverse": "Belongs to", "label": "Enthält" },
-
-        { "field": "Above", "inverse": "Below", "label": "Oberhalb von" },
-        { "field": "Below", "inverse": "Above", "label": "Unterhalb von" },
-        { "field": "Next to", "inverse": "Next to", "label": "Benachbart zu" },
-
-        { "field": "Is before", "inverse": "Is after", "label": "Zeitlich vor" },
-        { "field": "Is after", "inverse": "Is before", "label": "Zeitlich nach" },
-        { "field": "Is coeval with", "inverse": "Is coeval with", "label": "Zeitgleich mit" },
-
-        { "field": "Cuts", "inverse": "Is cut by", "label": "Schneidet" },
-        { "field": "Is cut by", "inverse": "Cuts", "label": "Wird geschnitten von" }
-    ];
-
     public types : string[];
     public fieldsForObjectType : any;
 
     constructor(
         private persistenceManager: PersistenceManager,
-        private messages: Messages) {
+        private messages: Messages,
+        private relationsProvider: RelationsProvider) {
     }
 
     ngOnInit():any {

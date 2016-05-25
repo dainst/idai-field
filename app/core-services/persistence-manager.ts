@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
 import {Datastore} from "./datastore";
-import {Project} from "../model/project";
 import {RelationsProvider} from "../object-edit/relations-provider";
 import {M} from "../m";
 
@@ -22,20 +21,22 @@ export class PersistenceManager {
     
     constructor(
         private datastore: Datastore,
-        private project: Project,
         private relationsProvider: RelationsProvider
     ) {}
 
     private object: IdaiFieldObject = undefined;
 
-    public setChanged(object) {
+    public load(object) {
         this.object=object;
     }
 
-    public isChanged(): boolean {
+    public unload() {
+        this.object=undefined;
+    }
+
+    public isLoaded(): boolean {
         return (this.object!=undefined)
     }
-    
     
     /**
      * Persists all objects marked as changed to the database.
@@ -57,7 +58,7 @@ export class PersistenceManager {
                 Promise.all(this.makeGetPromises(this.object)).then((targetObjects)=> {
 
                     Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
-                        this.setUnchanged();
+                        this.unload();
                         resolve();
                     }, (err)=>reject(err));
 
@@ -120,9 +121,7 @@ export class PersistenceManager {
         }
         return relatedObjectIDs;
     }
-
-
-
+    
 
     /**
      * Saves the object to the local datastore.
@@ -146,47 +145,11 @@ export class PersistenceManager {
             return this.datastore.create(object);
         }
     }
-
-    /**
-     * Restores all objects marked as changed by resetting them to
-     * back to the persisted state. In case there are any objects marked
-     * as changed which were not yet persisted, they get deleted from the list.
-     *
-     * @returns {Promise<string[]>} If all objects could get restored,
-     *   the promise will just resolve to <code>undefined</code>. If one or more
-     *   objects could not get restored properly, the promise will resolve to
-     *   <code>string[]</code>, containing ids of M where possible,
-     *   and error messages where not.
-     */
-    public restore(): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-            if (this.object==undefined) resolve();
-            var object=this.object;
-
-            if (!object.id) {
-                this.project.remove(object);
-                this.setUnchanged();
-                return resolve();
-            }
-
-            this.datastore.refresh(object.id).then(
-                restoredObject => {
-
-                    this.project.replace(object,<IdaiFieldObject>restoredObject);
-                    this.setUnchanged();
-                    resolve();
-                },
-                err => { reject(this.toStringArray(err)); }
-            );
-        });
-    }
+    
 
     private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;
     }
 
-    private setUnchanged() {
-        this.object=undefined;
-    }
+
 }

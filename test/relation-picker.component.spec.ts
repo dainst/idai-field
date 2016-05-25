@@ -68,9 +68,9 @@ export function main() {
             mockDatastore.get.and.callFake(get);
             mockDatastore.find.and.callFake(find);
 
-            // mockPersistenceManager = jasmine.createSpyObj('mockPersistenceManager', ['setChanged', 'isChanged']);
-            // mockPersistenceManager.setChanged.and.callFake(setChanged);
-            // mockPersistenceManager.isChanged.and.callFake(isChanged);
+            // mockPersistenceManager = jasmine.createSpyObj('mockPersistenceManager', ['load', 'isLoaded']);
+            // mockPersistenceManager.load.and.callFake(load);
+            // mockPersistenceManager.isLoaded.and.callFake(isLoaded);
 
             relationPickerComponent = new RelationPickerComponent(element, mockDatastore);
             relationPickerComponent.object = object1;

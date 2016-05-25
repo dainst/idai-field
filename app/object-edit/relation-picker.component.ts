@@ -110,7 +110,7 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = "";
         this.suggestions = [];
 
-        this.persistenceManager.setChanged(this.object);
+        this.persistenceManager.load(this.object);
     }
 
     public editTarget() {
@@ -162,7 +162,7 @@ export class RelationPickerComponent implements OnChanges {
             if (targetId.length == 0) {
                 this.object[this.field.field].splice(this.relationIndex, 1);
             }
-            this.persistenceManager.setChanged(this.object);
+            this.persistenceManager.load(this.object);
             resolve();
         });
     }

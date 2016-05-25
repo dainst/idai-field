@@ -44,13 +44,15 @@ export class OverviewComponent implements OnInit {
     private askForPermissionForChange(object) {
         this.messages.clear();
 
+        console.log("ask permission for ",object)
+
         // Remove object from list if it is new and no data has been entered
-        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isChanged()))) {
-            this.persistenceManager.setChanged(object);
+        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isLoaded()))) {
+            this.persistenceManager.load(object);
             return this.discardChanges();
         }
 
-        if (!object || !this.persistenceManager.isChanged()) return this.callback();
+        if (!object || !this.persistenceManager.isLoaded()) return this.callback();
 
         this.modal.open();
     }
@@ -64,7 +66,9 @@ export class OverviewComponent implements OnInit {
     }
 
     public discardChanges() {
-        this.persistenceManager.restore().then(() => {
+
+        this.project.restore(this.selectedObject).then(() => {
+            this.persistenceManager.unload();
             this.callback();
         }, (err) => {
             this.messages.add(err);

@@ -32,7 +32,8 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     constructor(
         private persistenceManager: PersistenceManager,
         private messages: Messages,
-        private relationsProvider: RelationsProvider) {
+        private relationsProvider: RelationsProvider // used from within template
+    ) {
     }
 
     ngOnInit():any {
@@ -64,7 +65,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     public save() {
         this.messages.clear();
 
-        this.persistenceManager.setChanged(this.object);
+        this.persistenceManager.load(this.object);
         this.persistenceManager.persist().then(
             () => {
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
@@ -80,6 +81,6 @@ export class ObjectEditComponent implements OnChanges,OnInit {
     }
 
     public markAsChanged() {
-        this.persistenceManager.setChanged(this.object);
+        this.persistenceManager.load(this.object);
     }
 }

@@ -1,6 +1,6 @@
-import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
-import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {RelationPickerGroupComponent} from "../app/components/relation-picker-group.component";
+import {describe,xdescribe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
+import {Entity} from "../app/core-services/entity";
+import {RelationPickerGroupComponent} from "../app/object-edit/relation-picker-group.component";
 
 /**
  * @author Thomas Kleinke
@@ -8,12 +8,11 @@ import {RelationPickerGroupComponent} from "../app/components/relation-picker-gr
 export function main() {
     describe('RelationPickerGroupComponent', () => {
 
-        var object: IdaiFieldObject;
+        var object: Entity;
         var relationPickerGroupComponent: RelationPickerGroupComponent;
 
         beforeEach(() => {
-            object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, 
-                "type": "Object" };
+            object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "type": "Object" };
 
             relationPickerGroupComponent = new RelationPickerGroupComponent();
             relationPickerGroupComponent.object = object;

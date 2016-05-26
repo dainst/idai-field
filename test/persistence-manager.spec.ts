@@ -1,8 +1,8 @@
 import {describe,expect,fit,it,xit, inject, beforeEach,beforeEachProviders} from '@angular/core/testing';
 import {provide} from "@angular/core";
 import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {PersistenceManager} from "../app/services/persistence-manager";
-import {Datastore} from "datastore.ts";
+import {PersistenceManager} from "../app/core-services/persistence-manager";
+import {Datastore} from "../app/core-services/datastore";
 import {Messages} from "../app/core-services/messages";
 import {M} from "../app/m";
 
@@ -11,7 +11,7 @@ import {M} from "../app/m";
  * @author Thomas Kleinke
  */
 export function main() {
-    describe('ObjectList', () => {
+    fdescribe('PersistenceManager', () => {
 
         beforeEachProviders(() => [
             provide(Messages, {useClass: Messages}),
@@ -19,6 +19,7 @@ export function main() {
         ]);
 
         var mockDatastore;
+        var mockRelationsProvider;
         var persistenceManager;
         var id = "abc";
 
@@ -63,9 +64,14 @@ export function main() {
 
         beforeEach(function () {
 
-            // mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'create', 'update', 'refresh']);
-            // persistenceManager = new PersistenceManager(mockDatastore);
+            mockRelationsProvider = jasmine.createSpyObj('mockRelationsProvider',['get'])
+            mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'create', 'update', 'refresh']);
+            persistenceManager = new PersistenceManager(mockDatastore,mockRelationsProvider);
 
+            persistenceManager.load(oldVersion);
+            // persistenceManager.persist();
+            
+            
             // selectedObject = {
             //     "identifier": "ob4", "title": "Luke Skywalker", "synced": 0,
             //     "id": id, "type": "Object"
@@ -80,7 +86,8 @@ export function main() {
 
         it('should do nothing for now',
             function (done) {
-                done();
+                console.log("halllo")
+                done();;;;
             }
         );
     })

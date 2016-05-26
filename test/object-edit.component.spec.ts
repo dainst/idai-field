@@ -1,10 +1,10 @@
 import {fdescribe, describe, xdescribe,expect, it, fit, xit,inject, async, beforeEachProviders,
         } from '@angular/core/testing';
 import {TestComponentBuilder} from '@angular/compiler/testing';
-import {ObjectEditComponent} from '../app/components/object-edit.component'
+import {ObjectEditComponent} from '../app/object-edit/object-edit.component'
 import {provide, Component} from "@angular/core";
-import {PersistenceManager} from "../app/services/persistence-manager";
-import {Datastore} from "datastore.ts";
+import {PersistenceManager} from "../app/core-services/persistence-manager";
+import {Datastore} from "../app/core-services/datastore";
 import {Project} from "../app/model/project";
 import {Messages} from "../app/core-services/messages";
 
@@ -17,7 +17,7 @@ import {Messages} from "../app/core-services/messages";
  */
 export function main() {
 
-    describe('ObjectEditComponent', () => {
+    xdescribe('ObjectEditComponent', () => {
 
         class MockDatastore {}
         class MockMessages  {}

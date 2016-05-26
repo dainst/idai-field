@@ -1,8 +1,8 @@
-import {describe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
+import {describe, xdescribe, fdescribe, expect, fit, it, xit, beforeEach} from '@angular/core/testing';
 import {IdaiFieldObject} from "../app/model/idai-field-object";
-import {PersistenceManager} from "../app/services/persistence-manager";
+import {PersistenceManager} from "../app/core-services/persistence-manager";
 import {OverviewComponent} from "../app/components/overview.component";
-import {Datastore} from "datastore.ts";
+import {Datastore} from "../app/core-services/datastore";
 
 /**
  * @author Thomas Kleinke

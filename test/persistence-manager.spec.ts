@@ -24,16 +24,21 @@ export function main() {
         var id = "abc";
 
         var object;
-
         var relatedObject : Entity;
+        var anotherRelatedObject : Entity;
 
         var getFunction = function (id) {
+            console.log("getf",id)
             return {
                 then: function (suc, err) {
-                    if (id == relatedObject.id)
+                    if (id == relatedObject.id) {
+                        console.log("return related ")
                         suc(relatedObject);
-                    else
-                        err("wrong id");
+                    }
+                    else {
+                        console.log("return other related")
+                        suc(anotherRelatedObject);
+                    }
                 }
             };
         };
@@ -80,6 +85,11 @@ export function main() {
                 "type": "Object"
             }
 
+            anotherRelatedObject = {
+                "id": "3" , "identifier": "ob3", "title": "Title3",
+                "type": "Object"
+            }
+
         });
 
         it('save the base object',
@@ -108,6 +118,25 @@ export function main() {
                 },(err)=>{fail(err);done();});
             }
         );
+
+        it('add two relations of the same type',
+            function (done) {
+
+                object["BelongsTo"]=["2","3"];
+
+                persistenceManager.load(object);
+                persistenceManager.persist().then(()=>{
+
+                    // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject); // right now it is not possible to test both objects due to problems with the return val of promise.all
+                    expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedObject);
+                    // expect(relatedObject['Contains'][0]).toBe("1");
+                    expect(anotherRelatedObject['Contains'][0]).toBe("1");
+                    done();
+
+                },(err)=>{fail(err);done();});
+            }
+        );
+
 
         it('delete a relation',
             function (done) {

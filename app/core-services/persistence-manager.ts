@@ -5,9 +5,7 @@ import {RelationsProvider} from "../object-edit/relations-provider";
 import {M} from "../m";
 
 /**
- * @author Thomas Kleinke
  * @author Daniel de Oliveira
- * @author Jan G. Wieners
  */
 @Injectable() export class PersistenceManager {
     
@@ -21,7 +19,6 @@ import {M} from "../m";
 
     public setOldVersion(oldVersion) {
         this.oldVersion=JSON.parse(JSON.stringify(oldVersion));
-        console.log("setOldVerison",this.oldVersion)
     }
     
     public load(object) {
@@ -53,6 +50,7 @@ import {M} from "../m";
 
             this.persistIt(this.object).then(()=> {
                 Promise.all(this.makeGetPromises(this.object,this.oldVersion)).then((targetObjects)=> {
+
                     Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
 
                         this.unload();
@@ -67,10 +65,12 @@ import {M} from "../m";
 
     private makeGetPromises(object,oldVersion) {
         var promisesToGetObjects = new Array();
-        for (var id of this.extractRelatedObjectIDs(object))
+        for (var id of this.extractRelatedObjectIDs(object)) {
             promisesToGetObjects.push(this.datastore.get(id))
-        for (var id of this.extractRelatedObjectIDs(oldVersion))
+        }
+        for (var id of this.extractRelatedObjectIDs(oldVersion)) {
             promisesToGetObjects.push(this.datastore.get(id))
+        }
         return promisesToGetObjects;
     }
 
@@ -130,8 +130,9 @@ import {M} from "../m";
             if (!object.hasOwnProperty(prop)) continue;
             if (!this.relationsProvider.isRelationProperty(prop)) continue;
 
-            // TODO iterate over target ids
-            relatedObjectIDs.push(object[prop].toString());
+            for (var id of object[prop]) {
+                relatedObjectIDs.push(id);
+            }
         }
         return relatedObjectIDs;
     }

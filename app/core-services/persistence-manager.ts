@@ -5,19 +5,11 @@ import {RelationsProvider} from "../object-edit/relations-provider";
 import {M} from "../m";
 
 /**
- * Keeps track of all the objects associated to the current object
- * and which one of them have changes that are not yet persisted.
- * Can be asked to either persist all of the changed objects or
- * restore them to their previous state, so that the actual objects
- * reflect the objects persisted state.
- *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
  */
-@Injectable()
-
-export class PersistenceManager {
+@Injectable() export class PersistenceManager {
     
     constructor(
         private datastore: Datastore,
@@ -29,6 +21,7 @@ export class PersistenceManager {
 
     public setOldVersion(oldVersion) {
         this.oldVersion=JSON.parse(JSON.stringify(oldVersion));
+        console.log("setOldVerison",this.oldVersion)
     }
     
     public load(object) {
@@ -60,7 +53,6 @@ export class PersistenceManager {
 
             this.persistIt(this.object).then(()=> {
                 Promise.all(this.makeGetPromises(this.object,this.oldVersion)).then((targetObjects)=> {
-                    console.log("targetObjects",targetObjects)
                     Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
 
                         this.unload();
@@ -85,14 +77,27 @@ export class PersistenceManager {
     private makeSavePromises(object,targetObjects) {
         var promisesToSaveObjects = new Array();
         for (var targetObject of targetObjects) {
+
+            this.pruneInverseRelations(this.object,targetObject);
             this.setInverseRelations(this.object, targetObject);
-            console.log("update",targetObject)
-            var p=this.datastore.update(targetObject)
-            promisesToSaveObjects.push(p);
+            promisesToSaveObjects.push(this.datastore.update(targetObject));
         }
         return promisesToSaveObjects;
     }
 
+    private pruneInverseRelations(object,targetObject) {
+        for (var prop in targetObject) {
+            if (!targetObject.hasOwnProperty(prop)) continue;
+            if (!this.relationsProvider.isRelationProperty(prop)) continue;
+
+            var index=targetObject[prop].indexOf(object.id);
+            if (index!=-1) {
+                targetObject[prop].splice(index,1)
+            }
+
+            if (targetObject[prop].length==0) delete targetObject[prop];
+        }
+    }
 
     private setInverseRelations(object, targetObject) {
         for (var prop in object) {

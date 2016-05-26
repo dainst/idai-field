@@ -172,6 +172,10 @@ export class RelationPickerComponent implements OnChanges {
                 // todo
                 this.persistenceManager.load(this.object);
             }
+
+            if (this.object[this.field.field].length==0) delete this.object[this.field.field]
+            console.log("deleted relation within: ",this.object)
+
             resolve();
         });
     }

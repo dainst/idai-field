@@ -54,6 +54,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
 
     public ngOnChanges() {
         if (this.object) {
+            this.persistenceManager.setOldVersion(this.object);
             this.setFieldsForObjectType();
             this.types=this.projectConfiguration.getTypes();
         }
@@ -68,6 +69,7 @@ export class ObjectEditComponent implements OnChanges,OnInit {
         this.persistenceManager.load(this.object);
         this.persistenceManager.persist().then(
             () => {
+                this.persistenceManager.setOldVersion(this.object);
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
             },
             errors => {

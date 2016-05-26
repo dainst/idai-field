@@ -23,10 +23,9 @@ export function main() {
         var persistenceManager;
         var id = "abc";
 
-        var relatedObject : Entity = {
-            "id": "2" , "identifier": "ob2", "title": "Title2",
-            "type": "Object"
-        }
+        var object;
+
+        var relatedObject : Entity;
 
         var getFunction = function (id) {
             return {
@@ -55,6 +54,7 @@ export function main() {
 
         var relF = function(n) {
             if (n=="BelongsTo") return true;
+            if (n=="Contains") return true;
             return false;
         }
 
@@ -70,15 +70,20 @@ export function main() {
             mockDatastore.update.and.callFake(successFunction);
             mockDatastore.create.and.callFake(successFunction);
 
+            object = {
+                "id" :"1", "identifier": "ob1", "title": "Title1",
+                "type": "Object", "synced" : 0
+            };
+
+            relatedObject = {
+                "id": "2" , "identifier": "ob2", "title": "Title2",
+                "type": "Object"
+            }
+
         });
 
         it('save the base object',
             function (done) {
-
-                var object :Entity = {
-                    "id": "1" , "identifier": "ob1", "title": "Title",
-                    "type": "Object"
-                }
 
                 persistenceManager.load(object);
                 persistenceManager.persist().then(()=>{
@@ -91,10 +96,7 @@ export function main() {
         it('save the related object',
             function (done) {
 
-                var object = {
-                    "id" :"1", "identifier": "ob1", "title": "Title1", "BelongsTo" : [ "2" ],
-                    "type": "Object", "synced" : 0
-                }
+                object["BelongsTo"]=["2"];
 
                 persistenceManager.load(object);
                 persistenceManager.persist().then(()=>{
@@ -107,7 +109,7 @@ export function main() {
             }
         );
 
-        fit('delete a relation',
+        it('delete a relation',
             function (done) {
 
                 var oldVersion = {
@@ -115,10 +117,7 @@ export function main() {
                     "type": "Object", "synced" : 0
                 }
 
-                var object = {
-                    "id" :"1", "identifier": "ob1", "title": "Title1",
-                    "type": "Object", "synced" : 0
-                }
+                relatedObject['Contains']=["1"];
 
                 persistenceManager.setOldVersion(oldVersion);
                 persistenceManager.load(object);

@@ -8,7 +8,7 @@ import {Datastore} from "../app/core-services/datastore";
  * @author Thomas Kleinke
  */
 export function main() {
-    describe('OverviewComponent', () => {
+    xdescribe('OverviewComponent', () => {
 
         var objects: IdaiFieldObject[];
         var object1 = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true, "type": "Object" };

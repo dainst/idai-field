@@ -11,7 +11,7 @@ import {M} from "../app/m";
  * @author Thomas Kleinke
  */
 export function main() {
-    fdescribe('PersistenceManager', () => {
+    describe('PersistenceManager', () => {
 
         beforeEachProviders(() => [
             provide(Messages, {useClass: Messages}),
@@ -28,15 +28,12 @@ export function main() {
         var anotherRelatedObject : Entity;
 
         var getFunction = function (id) {
-            console.log("getf",id)
             return {
                 then: function (suc, err) {
                     if (id == relatedObject.id) {
-                        console.log("return related ")
                         suc(relatedObject);
                     }
                     else {
-                        console.log("return other related")
                         suc(anotherRelatedObject);
                     }
                 }

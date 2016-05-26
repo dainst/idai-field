@@ -58,6 +58,7 @@ export class PersistenceManager {
                 Promise.all(this.makeGetPromises(this.object)).then((targetObjects)=> {
 
                     Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
+
                         this.unload();
                         resolve();
                     }, (err)=>reject(err));
@@ -79,7 +80,8 @@ export class PersistenceManager {
         var promisesToSaveObjects = new Array();
         for (var targetObject of targetObjects) {
             this.setInverseRelations(this.object, targetObject);
-            promisesToSaveObjects.push(this.datastore.update(targetObject));
+            var p=this.datastore.update(targetObject)
+            promisesToSaveObjects.push(p);
         }
         return promisesToSaveObjects;
     }

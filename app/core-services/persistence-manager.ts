@@ -25,7 +25,12 @@ export class PersistenceManager {
     ) {}
 
     private object: IdaiFieldObject = undefined;
+    private oldVersion : IdaiFieldObject = undefined;
 
+    public setOldVersion(oldVersion) {
+        this.oldVersion=JSON.parse(JSON.stringify(oldVersion));
+    }
+    
     public load(object) {
         this.object=object;
     }
@@ -39,9 +44,8 @@ export class PersistenceManager {
     }
     
     /**
-     * Persists all objects marked as changed to the database.
-     * In case there are objects not yet present in the datastore
-     * they get created.
+     * Persists the loaded object and all the objects that are or have been in relation
+     * with the object before the method call.
      *
      * @returns {Promise<string[]>} If all objects could get stored,
      *   the promise will just resolve to <code>undefined</code>. If one or more
@@ -55,8 +59,8 @@ export class PersistenceManager {
             if (this.object==undefined) return resolve();
 
             this.persistIt(this.object).then(()=> {
-                Promise.all(this.makeGetPromises(this.object)).then((targetObjects)=> {
-
+                Promise.all(this.makeGetPromises(this.object,this.oldVersion)).then((targetObjects)=> {
+                    console.log("targetObjects",targetObjects)
                     Promise.all(this.makeSavePromises(this.object,targetObjects)).then((targetObjects)=> {
 
                         this.unload();
@@ -69,9 +73,11 @@ export class PersistenceManager {
         });
     }
 
-    private makeGetPromises(object) {
+    private makeGetPromises(object,oldVersion) {
         var promisesToGetObjects = new Array();
-        for (var id of this.extractRelatedObjectIDs(this.object))
+        for (var id of this.extractRelatedObjectIDs(object))
+            promisesToGetObjects.push(this.datastore.get(id))
+        for (var id of this.extractRelatedObjectIDs(oldVersion))
             promisesToGetObjects.push(this.datastore.get(id))
         return promisesToGetObjects;
     }
@@ -80,6 +86,7 @@ export class PersistenceManager {
         var promisesToSaveObjects = new Array();
         for (var targetObject of targetObjects) {
             this.setInverseRelations(this.object, targetObject);
+            console.log("update",targetObject)
             var p=this.datastore.update(targetObject)
             promisesToSaveObjects.push(p);
         }

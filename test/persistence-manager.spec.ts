@@ -23,7 +23,7 @@ export function main() {
         var persistenceManager;
         var id = "abc";
 
-        var relatedObject :Entity = {
+        var relatedObject : Entity = {
             "id": "2" , "identifier": "ob2", "title": "Title2",
             "type": "Object"
         }
@@ -88,7 +88,7 @@ export function main() {
             }
         );
 
-        fit('save the related object',
+        it('save the related object',
             function (done) {
 
                 var object = {
@@ -99,8 +99,38 @@ export function main() {
                 persistenceManager.load(object);
                 persistenceManager.persist().then(()=>{
 
+                    expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
+                    expect(relatedObject['Contains'][0]).toBe("1");
+                    done();
+
+                },(err)=>{fail(err);done();});
+            }
+        );
+
+        fit('delete a relation',
+            function (done) {
+
+                var oldVersion = {
+                    "id" :"1", "identifier": "ob1", "title": "Title1", "BelongsTo" : [ "2" ],
+                    "type": "Object", "synced" : 0
+                }
+
+                var object = {
+                    "id" :"1", "identifier": "ob1", "title": "Title1",
+                    "type": "Object", "synced" : 0
+                }
+
+                persistenceManager.setOldVersion(oldVersion);
+                persistenceManager.load(object);
+                persistenceManager.persist().then(()=>{
+
                     expect(mockDatastore.update).toHaveBeenCalledWith(object);
                     expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
+
+                    expect(object['BelongsTo']).toBe(undefined);
+                    expect(relatedObject['Contains']).toBe(undefined);
+
+
                     done();
 
                 },(err)=>{fail(err);done();});

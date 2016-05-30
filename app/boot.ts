@@ -10,13 +10,14 @@ import {provide, enableProdMode} from '@angular/core';
 import {Datastore} from "./core-services/datastore";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
-import {Messages} from "./core-services/messages";
+import {Messages} from "idai-components-2/idai-components-2";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./core-services/config-loader";
 import {ElectronMenu} from "./services/electron-menu";
 import {RelationsProvider} from "./object-edit/relations-provider";
 import {M} from "./m";
+import {MD} from "idai-components-2/idai-components-2";
 import {ReadDatastore} from "./core-services/read-datastore";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
@@ -38,5 +39,5 @@ bootstrap(AppComponent, [
     provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(Project, {useClass: Project}),
     provide(RelationsProvider, {useClass: RelationsProvider}),
-    provide(M, {useClass: M})
+    provide(MD, {useClass: M})
 ]);

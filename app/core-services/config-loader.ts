@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ProjectConfiguration} from "./project-configuration";
-import {Messages} from "./messages";
+import {Messages} from "idai-components-2/idai-components-2";
 import {Http} from "@angular/http";
 import {M} from "../m";
 

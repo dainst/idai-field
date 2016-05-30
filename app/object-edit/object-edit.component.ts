@@ -6,7 +6,7 @@ import {ProjectConfiguration} from "../core-services/project-configuration";
 import {RelationPickerGroupComponent} from "./relation-picker-group.component";
 import {ValuelistComponent} from "./valuelist.component";
 import {OnChanges} from "@angular/core";
-import {Messages} from "../core-services/messages";
+import {Messages} from "idai-components-2/idai-components-2";
 import {RelationsProvider} from "./relations-provider";
 import {M} from "../m";
 

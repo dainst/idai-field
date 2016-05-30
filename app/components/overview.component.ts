@@ -5,7 +5,7 @@ import {ObjectEditComponent} from "../object-edit/object-edit.component";
 import {PersistenceManager} from "../core-services/persistence-manager";
 import {ProjectConfiguration} from "../core-services/project-configuration";
 import {Project} from "../model/project";
-import {Messages} from "../core-services/messages";
+import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "../core-services/config-loader";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 

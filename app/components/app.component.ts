@@ -4,7 +4,7 @@ import {SynchronizationComponent} from "./synchronization.component";
 import {Datastore} from "../core-services/datastore";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
-import {MessagesComponent} from "../core-services/messages.component";
+import {MessagesComponent} from "idai-components-2/idai-components-2";
 import {ProjectConfiguration} from "../core-services/project-configuration";
 import {ConfigLoader} from "../core-services/config-loader";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';

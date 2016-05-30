@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 
 /**
  * @author Sebastian Cuy
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  */
 @Injectable()
 export class Indexeddb {

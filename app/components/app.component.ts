@@ -5,8 +5,8 @@ import {Datastore} from "idai-components-2/idai-components-2";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
-import {ProjectConfiguration} from "../core-services/project-configuration";
-import {ConfigLoader} from "../core-services/config-loader";
+import {ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from '../services/electron-menu';
 

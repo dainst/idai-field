@@ -3,10 +3,10 @@ import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {ProjectConfiguration} from "../core-services/project-configuration";
+import {ProjectConfiguration} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
-import {ConfigLoader} from "../core-services/config-loader";
+import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({

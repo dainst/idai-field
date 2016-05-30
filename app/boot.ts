@@ -14,7 +14,7 @@ import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "idai-components-2/idai-components-2";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
-import {ConfigLoader} from "./core-services/config-loader";
+import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {ElectronMenu} from "./services/electron-menu";
 import {RelationsProvider} from "idai-components-2/idai-components-2";
 import {M} from "./m";

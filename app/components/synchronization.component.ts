@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Input, OnChanges} from '@angular/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ProjectConfiguration} from "../core-services/project-configuration";
+import {ProjectConfiguration} from "idai-components-2/idai-components-2";
 
 /**
  * @author Thomas Kleinke

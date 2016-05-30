@@ -7,7 +7,8 @@ import {bootstrap}    from '@angular/platform-browser-dynamic'
 import {AppComponent} from './components/app.component'
 import {HTTP_PROVIDERS} from '@angular/http';
 import {provide, enableProdMode} from '@angular/core';
-import {Datastore} from "./core-services/datastore";
+import {Datastore} from "idai-components-2/idai-components-2";
+import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "idai-components-2/idai-components-2";
@@ -15,10 +16,9 @@ import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "./core-services/config-loader";
 import {ElectronMenu} from "./services/electron-menu";
-import {RelationsProvider} from "./object-edit/relations-provider";
+import {RelationsProvider} from "idai-components-2/idai-components-2";
 import {M} from "./m";
 import {MD} from "idai-components-2/idai-components-2";
-import {ReadDatastore} from "./core-services/read-datastore";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {Project} from './model/project';

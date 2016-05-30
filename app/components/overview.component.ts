@@ -1,8 +1,8 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {Datastore} from '../core-services/datastore';
+import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ObjectEditComponent} from "../object-edit/object-edit.component";
-import {PersistenceManager} from "../core-services/persistence-manager";
+import {ObjectEditComponent} from "idai-components-2/idai-components-2";
+import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {ProjectConfiguration} from "../core-services/project-configuration";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";

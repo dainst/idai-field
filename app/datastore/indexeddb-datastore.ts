@@ -1,5 +1,5 @@
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Datastore} from "../core-services/datastore";
+import {Datastore} from "idai-components-2/idai-components-2";
 import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";

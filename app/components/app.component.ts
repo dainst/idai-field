@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
-import {Datastore} from "../core-services/datastore";
+import {Datastore} from "idai-components-2/idai-components-2";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";

@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Message} from "./core-services/message"
+import {Message} from "idai-components-2/idai-components-2"
 
 /**
  * This map contains the message bodies

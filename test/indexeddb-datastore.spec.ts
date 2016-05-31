@@ -3,7 +3,7 @@ import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
 import {Indexeddb} from "../app/datastore/indexeddb";
 
 /**
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  */
 export function main() {
     describe('IndexeddbDatastore', () => {

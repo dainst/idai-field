@@ -19,6 +19,7 @@ module.exports = function(config) {
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
+            { pattern: 'node_modules/idai-components-2/**/*.js', included: false, watched: false },
 
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'templates/*.html', included: false, watched: true },
@@ -32,7 +33,8 @@ module.exports = function(config) {
         },
 
         exclude: [
-            'node_modules/@angular/**/*_spec.js'
+            'node_modules/@angular/**/*_spec.js',
+            'node_modules/idai-components-2/test/**/*.js'
         ],
 
         reporters: ['dots'],

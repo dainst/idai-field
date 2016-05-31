@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Entity} from "../core-services/entity";
+import {Entity} from "idai-components-2/idai-components-2";
 import {Datastore} from "idai-components-2/idai-components-2";
 
 /**

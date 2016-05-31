@@ -28,11 +28,12 @@ System.config({
     baseURL: '/base/',
     defaultJSExtensions: true,
     paths: {
-        'angular2-uuid/*': 'node_modules/angular2-uuid/*.js',
+        'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
     },
     map: {
         'rxjs': 'node_modules/rxjs',
-        '@angular': 'node_modules/@angular'
+        '@angular': 'node_modules/@angular',
+        'idai-components-2' : 'node_modules/idai-components-2'
     },
     packages: {
         '@angular/core': {

@@ -19,7 +19,7 @@ export function main() {
             }
         };
 
-        var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0, "valid": true,
+        var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0,
             "type": "Object" };
 
         var filteredObject = { "resource" : { "identifier": "ob1", "title": "Object 1", "type": "Object"},
@@ -61,6 +61,7 @@ export function main() {
         ]);
 
         beforeEach(function(){
+
             mockHttp = jasmine.createSpyObj('mockHttp', [ 'get', 'put' ]);
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);

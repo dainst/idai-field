@@ -24,7 +24,7 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
 
     constructor() {
         this.msgs[M.OBJLIST_IDEXISTS]={
-            content: 'Objekt-Identifier existiert bereits.....',
+            content: 'Objekt-Identifier existiert bereits.',
             level: 'danger',
         };
         this.msgs[M.OBJLIST_IDMISSING]={

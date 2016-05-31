@@ -35,6 +35,7 @@ build/Release
 ########
 *iml
 node_modules
+lib
 dist
 release
 cache

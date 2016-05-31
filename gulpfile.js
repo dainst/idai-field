@@ -85,8 +85,9 @@ gulp.task('make-dist',function() {
     gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));
     gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('dist/node_modules/bootstrap'));
     gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
-    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/')); 
+    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
+    gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));
 });
 
 // builds an electron app package for different platforms

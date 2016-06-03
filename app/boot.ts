@@ -16,7 +16,6 @@ import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {ElectronMenu} from "./services/electron-menu";
-import {RelationsProvider} from "idai-components-2/idai-components-2";
 import {M} from "./m";
 import {MD} from "idai-components-2/idai-components-2";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
@@ -38,6 +37,5 @@ bootstrap(AppComponent, [
     provide(ConfigLoader, {useClass: ConfigLoader}),
     provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(Project, {useClass: Project}),
-    provide(RelationsProvider, {useClass: RelationsProvider}),
     provide(MD, {useClass: M})
 ]);

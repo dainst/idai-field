@@ -6,6 +6,7 @@ import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
 import {ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {RelationsConfiguration} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from '../services/electron-menu';
@@ -20,8 +21,11 @@ import {ElectronMenu} from '../services/electron-menu';
 ])
 export class AppComponent implements OnInit {
 
+    public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
+    public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
     public projectConfiguration: ProjectConfiguration;
+    public relationsConfiguration: RelationsConfiguration;
 
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
@@ -36,9 +40,15 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (this.config.environment == 'test') this.loadSampleData();
 
-        this.configLoader.getProjectConfiguration().then(pc=>{
-           this.projectConfiguration=pc;
-        });
+        var promises = [];
+        promises.push(this.configLoader.getProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH));
+        promises.push(this.configLoader.getRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH));
+
+        Promise.all(promises).then(configs=>{
+
+            this.projectConfiguration=configs[0];
+            this.relationsConfiguration=configs[1];
+        }, (errs)=>{console.error('errs: ',errs)});
     }
 
     loadSampleData(): void {

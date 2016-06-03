@@ -2,6 +2,7 @@ import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, Chang
 import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
 import {ObjectEditComponent} from "idai-components-2/idai-components-2";
+import {AppComponent} from "../components/app.component";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {ProjectConfiguration} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
@@ -26,11 +27,13 @@ export class OverviewComponent implements OnInit {
     @ViewChild('modal')
     modal: ModalComponent;
 
+    private projectConfiguration: ProjectConfiguration;
+    private relationsConfiguration: RelationsConfiguration;
+
     /**
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedObject: IdaiFieldObject;
-    private projectConfiguration: ProjectConfiguration;
     private callback;
 
     constructor(private datastore: Datastore,
@@ -96,14 +99,25 @@ export class OverviewComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.configLoader.getProjectConfiguration().then((dmc)=>{
-            this.projectConfiguration=dmc;
+        
+        var promises = [];
+        promises.push(this.configLoader.getProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH));
+        promises.push(this.configLoader.getRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH));
+
+        Promise.all(promises).then(configs=>{
+
+            this.projectConfiguration=configs[0];
+            this.relationsConfiguration=configs[1];
+
             if (this.config.environment == "test") {
                 setTimeout(() => this.fetchObjects(), 500);
             } else {
                 this.fetchObjects();
             }
-        });
+            
+        }, (errs)=>{console.error('errs: ',errs)});
+        
+
     }
 
     onKey(event:any) {

@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
     public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
     public projectConfiguration: ProjectConfiguration;
-    public relationsConfiguration: RelationsConfiguration;
 
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
@@ -39,15 +38,8 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if (this.config.environment == 'test') this.loadSampleData();
-
-        var promises = [];
-        promises.push(this.configLoader.getProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH));
-        promises.push(this.configLoader.getRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH));
-
-        Promise.all(promises).then(configs=>{
-
+        this.configLoader.getProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH).then(configs=>{
             this.projectConfiguration=configs[0];
-            this.relationsConfiguration=configs[1];
         }, (errs)=>{console.error('errs: ',errs)});
     }
 

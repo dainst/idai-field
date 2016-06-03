@@ -5,6 +5,7 @@ import {ObjectEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {RelationsConfiguration} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
@@ -114,7 +115,7 @@ export class OverviewComponent implements OnInit {
             } else {
                 this.fetchObjects();
             }
-            
+
         }, (errs)=>{console.error('errs: ',errs)});
         
 

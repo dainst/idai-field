@@ -5,8 +5,6 @@ import {Datastore} from "idai-components-2/idai-components-2";
 import {OBJECTS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
-import {ProjectConfiguration} from "idai-components-2/idai-components-2";
-import {RelationsConfiguration} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from '../services/electron-menu';
@@ -24,8 +22,6 @@ export class AppComponent implements OnInit {
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
     public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
-    public projectConfiguration: ProjectConfiguration;
-
     constructor(private datastore: Datastore,
                 private idaiFieldBackend: IdaiFieldBackend,
                 @Inject('app.config') private config,
@@ -38,9 +34,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if (this.config.environment == 'test') this.loadSampleData();
-        this.configLoader.getProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH).then(configs=>{
-            this.projectConfiguration=configs[0];
-        }, (errs)=>{console.error('errs: ',errs)});
     }
 
     loadSampleData(): void {

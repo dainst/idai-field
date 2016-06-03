@@ -3,6 +3,6 @@
     "backend" : {
         "uri": "server url",
         "credentials": "username:password",
-        "connectionCheckInterval": 1000
+        "connectionCheckInterval": 5000
     }
 }

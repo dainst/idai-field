@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Input, OnChanges} from '@angular/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {ProjectConfiguration,ConfigLoader} from "idai-components-2/idai-components-2";
 
 /**
  * @author Thomas Kleinke
@@ -14,23 +14,23 @@ import {ProjectConfiguration} from "idai-components-2/idai-components-2";
     templateUrl: 'templates/synchronization.html'
 })
 
-export class SynchronizationComponent implements OnChanges {
-
-
-    @Input() projectConfiguration: ProjectConfiguration;
+export class SynchronizationComponent {
+    
+    private projectConfiguration : ProjectConfiguration;
 
     private connected: boolean = false;
     private objectsToSyncIds: string[] = [];
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,
-        private datastore: Datastore) {}
+        private datastore: Datastore,
+        private configLoader: ConfigLoader) {
 
+        this.configLoader.projectConfiguration().subscribe((projectConfiguration)=>{
+            this.projectConfiguration = projectConfiguration;
 
-    ngOnChanges(changes:{}):any {
-        if (this.projectConfiguration==undefined) return;
-
-        this.setupConnectionCheck();
-        this.setupSync();
+            this.setupConnectionCheck();
+            this.setupSync();
+        });
     }
 
     private setupConnectionCheck() {

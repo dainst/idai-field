@@ -3,6 +3,9 @@
     {
       "type": "Object",
       "fields": [
+      	{
+      		"field" : "Title"
+      	},
         {
           "field": "Inventory Number"
         },

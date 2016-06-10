@@ -20,6 +20,10 @@ import {M} from "./m";
 import {MD} from "idai-components-2/idai-components-2";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {PersistenceManager} from 'idai-components-2/idai-components-2';
+import {LoadAndSaveService} from 'idai-components-2/idai-components-2';
+import {LoadAndSaveInterceptor} from 'idai-components-2/idai-components-2';
+import {AppLoadAndSaveInterceptor} from './components/app-load-and-save-interceptor';
 import {Project} from './model/project';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
@@ -37,5 +41,8 @@ bootstrap(AppComponent, [
     provide(ConfigLoader, {useClass: ConfigLoader}),
     provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(Project, {useClass: Project}),
+    provide(PersistenceManager, {useClass: PersistenceManager}),
+    provide(LoadAndSaveService, {useClass: LoadAndSaveService}),
+    provide(LoadAndSaveInterceptor, {useClass: AppLoadAndSaveInterceptor}),
     provide(MD, {useClass: M})
 ]);

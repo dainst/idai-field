@@ -7,12 +7,12 @@ import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {LoadAndSaveService} from "idai-components-2/idai-components-2";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     templateUrl: 'templates/overview.html',
     directives: [ObjectEditComponent, MODAL_DIRECTIVES],
-    providers: [PersistenceManager]
 })
 
 /**
@@ -37,7 +37,8 @@ export class OverviewComponent implements OnInit {
         private persistenceManager: PersistenceManager,
         private project: Project,
         private configLoader: ConfigLoader,
-        private messages: Messages) {
+        private messages: Messages,
+        private loadAndSaveService:LoadAndSaveService) {
     }
 
     private askForPermissionForChange(object) {
@@ -56,12 +57,8 @@ export class OverviewComponent implements OnInit {
         this.modal.open();
     }
 
-    public save() {
-        this.persistenceManager.persist().then(()=> {
-            this.callback();
-        }, (err) => {
-            this.messages.add(err);
-        });
+    public save(object) {
+        this.loadAndSaveService.save(object).then(()=>true);
     }
 
     public discardChanges() {

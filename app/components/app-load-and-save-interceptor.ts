@@ -9,19 +9,19 @@ import {Entity} from "idai-components-2/idai-components-2";
 @Injectable()
 export class AppLoadAndSaveInterceptor extends LoadAndSaveInterceptor {
 
-    interceptLoad(object:Entity) : string {
-        return undefined;
+    interceptLoad(object:Entity) : Entity {
+        return object;
     }
 
-    interceptSave(object:Entity) : string {
+    interceptSave(object:Entity) : Entity {
+        var newO = <Entity>JSON.parse(JSON.stringify(object));
 
         // Replace with proper validation
-        if (!object.identifier || object.identifier.length == 0) {
-            return M.OBJLIST_IDMISSING;
+        if (!newO.identifier || newO.identifier.length == 0) {
+            throw M.OBJLIST_IDMISSING;
         }
 
-        object['synced'] = 0;
-
-        return undefined;
+        newO['synced'] = 0;
+        return newO;
     }
 }

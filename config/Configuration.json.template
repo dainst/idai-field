@@ -3,9 +3,12 @@
     {
       "type": "Object",
       "fields": [
-      	{
-      		"field" : "Title"
-      	},
+        {
+          "field" : "identifier"
+        },
+        {
+          "field" : "title"
+        },
         {
           "field": "Inventory Number"
         },
@@ -95,6 +98,9 @@
       "parent" : "Object",
       "fields": [
         {
+          "field" : "identifier"
+        },
+        {
           "field": "Dimensions"
         },
         {
@@ -116,6 +122,12 @@
       "type": "Section",
       "fields": [
         {
+          "field" : "identifier"
+        },
+        {
+          "field" : "title"
+        },
+        {
           "field": "Chronology"
         },
         {
@@ -133,107 +145,6 @@
         {
           "field": "Description",
           "multiline": true
-        }
-      ]
-    },
-    {
-      "type": "Lot",
-      "fields": [
-        {
-          "field": "Lot Storage",
-          "valuelist": [
-            "Sack",
-            "Tin",
-            "Box",
-            "Envelope"
-          ]
-        },
-        {
-          "field": "Lot Grid"
-        },
-        {
-          "field": "Lot Levels"
-        },
-        {
-          "field": "Lot Dates"
-        },
-        {
-          "field": "Lot Contexts"
-        },
-        {
-          "field": "Contents",
-          "multiline": true
-        },
-        {
-          "field": "Range Start"
-        },
-        {
-          "field": "Range End"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "fields": [
-        {
-          "field": "Buckets"
-        },
-        {
-          "field": "Category",
-          "valuelist": [
-            "Burial",
-            "Cistern",
-            "Coin Hoard",
-            "Cremation",
-            "Drain",
-            "Dump",
-            "Fill",
-            "Inhumation",
-            "Pit",
-            "Pithos",
-            "Pyre",
-            "Road",
-            "Wall",
-            "Well",
-            "Mudbrick",
-            "Deposit",
-            "Surface"
-          ]
-        },
-        {
-          "field": "Below Other"
-        },
-        {
-          "field": "Description",
-          "multiline": true
-        },
-        {
-          "field": "Contents",
-          "multiline": true
-        },
-        {
-          "field": "Range Start"
-        },
-        {
-          "field": "Range End"
-        }
-      ]
-    },
-    {
-      "type": "Other",
-      "fields": [
-        {
-          "field": "Category"
-        },
-        {
-          "field": "Description",
-          "multiline": true
-        },
-        {
-          "field": "Range Start"
-        },
-        {
-          "field": "Range End"
         }
       ]
     }

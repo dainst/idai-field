@@ -22,8 +22,8 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {LoadAndSaveService} from 'idai-components-2/idai-components-2';
-import {LoadAndSaveInterceptor} from 'idai-components-2/idai-components-2';
-import {AppLoadAndSaveInterceptor} from './components/app-load-and-save-interceptor';
+import {ValidationInterceptor} from 'idai-components-2/idai-components-2';
+import {AppValidationInterceptor} from './components/app-validation-interceptor';
 import {Project} from './model/project';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
@@ -43,6 +43,6 @@ bootstrap(AppComponent, [
     provide(Project, {useClass: Project}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
     provide(LoadAndSaveService, {useClass: LoadAndSaveService}),
-    provide(LoadAndSaveInterceptor, {useClass: AppLoadAndSaveInterceptor}),
+    provide(ValidationInterceptor, {useClass: AppValidationInterceptor}),
     provide(MD, {useClass: M})
 ]);

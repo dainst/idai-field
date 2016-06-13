@@ -42,4 +42,17 @@ describe('idai field app', function() {
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("34");
             });
     });
+
+    /**
+     * There has been a bug where this was not possible. 
+     * The attempt to do so got rejected with the duplicate identifier message.
+     */
+    it ('should save a new object and then save it again', function() {
+        common.createObject("1")
+            .then(common.saveObject)
+            .then(function(){
+                expect(element(by.id('message-0')).getText()).
+                toEqual("Das Objekt wurde erfolgreich gespeichert.");
+            });
+    });
 });

@@ -38,10 +38,20 @@ function typeIn(inputField, text) {
     return inputField;
 }
 
+function scrollDown() {
+    return browser.executeScript('window.scrollTo(0,200);');
+}
+
+function scrollUp() {
+    return browser.executeScript('window.scrollTo(0,0);');
+}
+
 module.exports = {
     createObject: createObject,
     saveObject: saveObject,
     selectObject: selectObject,
     typeInIdentifier: typeInIdentifier,
-    typeIn: typeIn
+    typeIn: typeIn,
+    scrollUp: scrollUp,
+    scrollDown: scrollDown
 };

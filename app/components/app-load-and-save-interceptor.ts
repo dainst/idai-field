@@ -14,14 +14,14 @@ export class AppLoadAndSaveInterceptor extends LoadAndSaveInterceptor {
     }
 
     interceptSave(object:Entity) : Entity {
-        var newO = <Entity>JSON.parse(JSON.stringify(object));
+        // var newO = <Entity>JSON.parse(JSON.stringify(object));
 
         // Replace with proper validation
-        if (!newO.identifier || newO.identifier.length == 0) {
+        if (!object.identifier || object.identifier.length == 0) {
             throw M.OBJLIST_IDMISSING;
         }
 
-        newO['synced'] = 0;
-        return newO;
+        object['synced'] = 0; // TODO this is not part of the validation and should go somewhere else
+        return object;
     }
 }

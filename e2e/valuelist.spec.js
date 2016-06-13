@@ -14,8 +14,9 @@ describe('valuelist', function() {
 
         var optionsToSelect = [0, 2, 7, 12];
 
-        common.createObject("o1")
-            .then(common.createObject("o2"))
+        common.createObject("1")
+            .then(common.createObject("2"))
+            .then(common.scrollDown)
             .then(getOptions)
             .then(function(options) {
                 for (var i in options) {
@@ -24,9 +25,11 @@ describe('valuelist', function() {
                     }
                 }
             })
+            .then(common.scrollUp)
             .then(common.saveObject)
             .then(common.selectObject(1))
             .then(common.selectObject(0))
+            .then(common.scrollDown)
             .then(getOptions)
             .then(function(options) {
                 for (var i in options) {

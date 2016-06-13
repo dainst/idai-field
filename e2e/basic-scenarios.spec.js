@@ -33,4 +33,13 @@ describe('idai field app', function() {
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
             });
     });
+    
+    it ('should reflect changes in overview in realtime while editing object identifier', function() {
+        common.createObject("12")
+            .then(common.selectObject(0))
+            .then(common.typeInIdentifier("34"))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("34");
+            });
+    });
 });

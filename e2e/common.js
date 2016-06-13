@@ -18,7 +18,7 @@ function selectObjectType() {
 }
 
 function typeInIdentifier(identifier) {
-    var inputField = element(by.id('object-edit-input-identifier'));
+    var inputField = element(by.id('edit-form-input-0'));
     return typeIn(inputField, identifier);
 }
 
@@ -42,5 +42,6 @@ module.exports = {
     createObject: createObject,
     saveObject: saveObject,
     selectObject: selectObject,
+    typeInIdentifier: typeInIdentifier,
     typeIn: typeIn
 };

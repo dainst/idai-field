@@ -22,7 +22,7 @@
                 </div>
                 <ul *ngIf="project.getObjects()" class="list-group" id="objectList">
                     <li *ngFor="let object of project.getObjects(); let index=index"
-                        (click)="onSelect(object)"
+                        (click)="select(object)"
                         class="list-group-item"
                         [class.synced]="object.synced"
                         [class.unsynced]="!object.synced"
@@ -42,7 +42,7 @@
                 <div id="object-overview-button-create-object"
                      *ngIf="searchInput.value.length == 0"
                      class="circular-button green-button"
-                     (click)="onCreate()"
+                     (click)="select()"
                      onclick="window.scrollTo(0, 0)">+</div>
                 <!-- Enable when finally implemented in Chromium
                     onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">

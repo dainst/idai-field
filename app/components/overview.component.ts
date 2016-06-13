@@ -17,7 +17,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 /**
  * @author Sebastian Cuy
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
@@ -30,7 +30,6 @@ export class OverviewComponent implements OnInit {
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedObject: IdaiFieldObject;
-    private callback;
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
@@ -41,18 +40,29 @@ export class OverviewComponent implements OnInit {
         private loadAndSaveService:LoadAndSaveService) {
     }
 
-    private askForPermissionForChange(object) {
-        this.messages.clear();
+    /**
+     * Function to call if preconditions to change are met.
+     */
+    private changeSelectionAllowedCallback;
 
-        console.log("ask permission for ",object)
+    /**
+     * Checks if the preconditions are given to change the focus from
+     * <code>currentlySelectedObject</code> to another object.
+     *
+     * @param currentlySelectedObject
+     * @returns {any}
+     */
+    private checkChangeSelectionAllowed(currentlySelectedObject) {
+        this.messages.clear();
+        if (!currentlySelectedObject
+            || !this.persistenceManager.isLoaded() // why this line?
+        ) return this.changeSelectionAllowedCallback();
 
         // Remove object from list if it is new and no data has been entered
-        if (object && (!object.type || (!this.selectedObject.id && !this.persistenceManager.isLoaded()))) {
-            this.persistenceManager.load(object);
+        if (currentlySelectedObject && (!currentlySelectedObject.type || (!this.selectedObject.id && !this.persistenceManager.isLoaded()))) {
+            this.persistenceManager.load(currentlySelectedObject);
             return this.discardChanges();
         }
-
-        if (!object || !this.persistenceManager.isLoaded()) return this.callback();
 
         this.modal.open();
     }
@@ -65,7 +75,7 @@ export class OverviewComponent implements OnInit {
 
         this.project.restore(this.selectedObject).then(() => {
             this.persistenceManager.unload();
-            this.callback();
+            this.changeSelectionAllowedCallback();
         }, (err) => {
             this.messages.add(err);
         });
@@ -76,31 +86,39 @@ export class OverviewComponent implements OnInit {
         this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
-    public onSelect(object: IdaiFieldObject) {
-        this.setConfigs();
-
-        if (object == this.selectedObject) return;
-        this.callback = function() {
-            this.datastore.refresh(object.id).then(
-                (obj) => this.selectedObject = obj,
-                (err) => console.error(err)
-            );
+    private createSelectExistingCallback(objectToSelect) {
+        return function() {
+            this.selectedObject=objectToSelect;
         }.bind(this);
-        this.askForPermissionForChange(this.selectedObject);
     }
 
-    public onCreate() {
-        this.setConfigs();
-
-        this.callback = function() {
+    private createNewObjectCallback() {
+        return function() {
             var newObject = {};
             this.project.getObjects().unshift(newObject);
             this.selectedObject = <IdaiFieldObject> newObject;
         }.bind(this);
-        this.askForPermissionForChange(this.selectedObject);
+    }
+
+    /**
+     * @param objectToSelect the object that should get selected if the precondtions
+     *   to change the selection are met.
+     *   undefined if a new object is to be created if the preconditions
+     *   to change the selection are met.
+     */
+    public select(objectToSelect: IdaiFieldObject) {
+
+        if (objectToSelect) {
+            if (objectToSelect == this.selectedObject) return;
+            this.changeSelectionAllowedCallback=this.createSelectExistingCallback(objectToSelect);
+        }
+        else this.changeSelectionAllowedCallback=this.createNewObjectCallback();
+
+        this.checkChangeSelectionAllowed(this.selectedObject);
     }
 
     public ngOnInit() {
+        this.setConfigs();
         if (this.config.environment == "test") {
             setTimeout(() => this.fetchObjects(), 500);
         } else {

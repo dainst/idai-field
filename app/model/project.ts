@@ -19,7 +19,7 @@ export class Project {
     public setObjects(objects: Entity[]) {
         this.objects = <IdaiFieldObject[]> objects;
     }
-
+    
     public replace(object:IdaiFieldObject,restoredObject: IdaiFieldObject) {
         var index = this.objects.indexOf(object);
         this.objects[index] = restoredObject;

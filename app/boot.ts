@@ -33,7 +33,7 @@ bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     provide(Datastore, { useClass: IndexeddbDatastore }),
-    provide(ReadDatastore, { useClass: IndexeddbDatastore }),
+    provide(ReadDatastore, { useExisting: Datastore }),
     provide(IdaiFieldBackend, { useClass: IdaiFieldBackend }),
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),

@@ -19,7 +19,7 @@ export class IndexeddbDatastore implements Datastore {
 
     private db: Promise<any>;
     private observers = [];
-    private documentCache: { [id: string]: Document } = {};
+    private documentCache: { [resourceId: string]: Document } = {};
 
 
     constructor(private idb:Indexeddb){
@@ -33,13 +33,16 @@ export class IndexeddbDatastore implements Datastore {
             if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
             document.id = IdGenerator.generateId();
-            document['resource']['uri']="/"+document['resource'].type+"/"+document.id;
+            document['resource']['@id']="/"+document['resource'].type+"/"+document.id;
             document.created = new Date();
             document.modified = document.created;
-            this.documentCache[document.id] = document;
+            this.documentCache[document['resource']['@id']] = document;
+
             return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
-                .then(() => resolve(document.id), err => {
+                .then(() => resolve(document['resource']['@id']), err => {
+                    
                     document.id = undefined;
+                    document['resource']['@id'] = undefined;
                     document.created = undefined;
                     document.modified = undefined;
                     reject(M.OBJLIST_IDEXISTS);
@@ -48,6 +51,8 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     public update(document:Document):Promise<any> {
+
+        console.log("update document",document)
 
         return new Promise((resolve, reject) => {
            if (document.id == null) reject("Aborting update: No ID given. " +
@@ -63,24 +68,29 @@ export class IndexeddbDatastore implements Datastore {
         return this.fetchObject(id);
     }
 
-    public get(id:string):Promise<Document> {
+    public get(resourceId:string):Promise<Document> {
 
-        if (this.documentCache[id]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[id]));
+        if (this.documentCache[this.documentIdFrom(resourceId)]) {
+            return new Promise((resolve, reject) => resolve(this.documentCache[this.documentIdFrom(resourceId)]));
         } else {
-            return this.fetchObject(id);
+            return this.fetchObject(this.documentIdFrom(resourceId));
         }
     }
 
-    public remove(id:string):Promise<any> {
+    private documentIdFrom(resourceId){
+        var result=resourceId.replace(/\/.*\//,"")
+        return result;
+    }
+
+    public remove(resourceId:string):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT,id);
+                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT,this.documentIdFrom(resourceId));
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT,id);
+                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT,this.documentIdFrom(resourceId));
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];
@@ -89,7 +99,8 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        if (this.documentCache[id]) delete this.documentCache[id];
+                        if (this.documentCache[this.documentIdFrom(resourceId)])
+                            delete this.documentCache[this.documentIdFrom(resourceId)];
                         resolve();
                     }
                 )
@@ -201,22 +212,24 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    private fetchObject(id:string): Promise<Document> {
+    private fetchObject(documentId:string): Promise<Document> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,id);
+                var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,documentId);
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
-                    var object:Document = request.result;
-                    this.documentCache[object.id] = object;
-                    resolve(object);
+                    var document:Document = request.result;
+                    this.documentCache[document['resource']['@id']] = document;
+                    resolve(document);
                 }
             });
         });
     }
 
     private saveDocument(document:Document):Promise<any> {
+
+        console.log("save document",document)
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {

@@ -11,7 +11,7 @@ export class Indexeddb {
 
         return new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 16);
+            var request = indexedDB.open("IdaiFieldClient", 22);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);

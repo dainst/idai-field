@@ -14,11 +14,13 @@ export function main() {
         var i;
 
         var object = {
-            "identifier": "ob1",
-            "title": "Title",
-            "type": "Object",
-            "synced": 0,
-            "valid": true,
+            "resource" : {
+                "identifier": "ob1",
+                "title": "Title",
+                "type": "Object",
+                "synced": 0,
+                "valid": true
+            }
         };
 
         beforeEach(

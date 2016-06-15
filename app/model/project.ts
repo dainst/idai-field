@@ -12,7 +12,7 @@ export class Project {
 
     public constructor(private datastore: Datastore) {}
     
-    public getDocuments() : IdaiFieldObject[] {
+    public getDocuments() : Document[] {
         return this.documents;
     }
 
@@ -25,8 +25,8 @@ export class Project {
         this.documents[index] = restoredObject;
     }
 
-    public remove(object: Document) {
-        var index = this.getDocuments().indexOf(object);
+    public remove(document: Document) {
+        var index = this.getDocuments().indexOf(document);
         this.getDocuments().splice(index, 1);
     }
     

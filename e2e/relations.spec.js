@@ -1,6 +1,6 @@
 var common = require("./common.js");
 
-describe('relations', function() {
+fdescribe('relations', function() {
 
     function addRelation() {
         return element.all(by.tagName('relation-picker-group')).first()
@@ -47,6 +47,7 @@ describe('relations', function() {
                 expect(getRelationButton(getFirstRelationOfGroup(0), 0).isPresent()).toBe(true);
                 expect(getRelationButton(getFirstRelationOfGroup(0), 0).element(by.tagName("span")).getText())
                     .toEqual("o1");
+                
                 return common.scrollUp().then(common.saveObject);
             })
             .then(common.selectObject(1))

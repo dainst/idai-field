@@ -64,14 +64,13 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     public refresh(id:string):Promise<Document>  {
-
         return this.fetchObject(id);
     }
 
     public get(resourceId:string):Promise<Document> {
 
-        if (this.documentCache[this.documentIdFrom(resourceId)]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[this.documentIdFrom(resourceId)]));
+        if (this.documentCache[resourceId]) {
+            return new Promise((resolve, reject) => resolve(this.documentCache[resourceId]));
         } else {
             return this.fetchObject(this.documentIdFrom(resourceId));
         }
@@ -99,8 +98,8 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        if (this.documentCache[this.documentIdFrom(resourceId)])
-                            delete this.documentCache[this.documentIdFrom(resourceId)];
+                        if (this.documentCache[resourceId])
+                            delete this.documentCache[resourceId];
                         resolve();
                     }
                 )
@@ -213,13 +212,13 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private fetchObject(documentId:string): Promise<Document> {
-
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,documentId);
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
                     var document:Document = request.result;
+
                     this.documentCache[document['resource']['@id']] = document;
                     resolve(document);
                 }
@@ -228,8 +227,6 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private saveDocument(document:Document):Promise<any> {
-
-        console.log("save document",document)
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
@@ -269,11 +266,11 @@ export class IndexeddbDatastore implements Datastore {
 
     private getCachedInstance(document: any): Document {
 
-        if (!this.documentCache[document.id]) {
-            this.documentCache[document.id] = document;
+        if (!this.documentCache[document['resource']['@id']]) {
+            this.documentCache[document['resource']['@id']] = document;
         }
 
-        return this.documentCache[document.id];
+        return this.documentCache[document['resource']['@id']];
     }
 
 }

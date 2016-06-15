@@ -1,6 +1,6 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Datastore} from 'idai-components-2/idai-components-2';
-import {IdaiFieldObject} from '../model/idai-field-object';
+import {Document} from 'idai-components-2/idai-components-2';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit {
     /**
      * The object currently selected in the list and shown in the edit component.
      */
-    private selectedDocument: IdaiFieldObject;
+    private selectedDocument: Document;
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
@@ -49,18 +49,19 @@ export class OverviewComponent implements OnInit {
      * Checks if the preconditions are given to change the focus from
      * <code>currentlySelectedObject</code> to another object.
      *
-     * @param currentlySelectedObject
+     * @param currentlySelectedDocument
      * @returns {any}
      */
-    private checkChangeSelectionAllowed(currentlySelectedObject) {
+    private checkChangeSelectionAllowed(currentlySelectedDocument) {
         this.messages.clear();
-        if (!currentlySelectedObject
+        if (!currentlySelectedDocument
             || !this.persistenceManager.isLoaded() // why this line?
         ) return this.changeSelectionAllowedCallback();
 
         // Remove object from list if it is new and no data has been entered
-        if (currentlySelectedObject && (!currentlySelectedObject['resource'].type || (!this.selectedDocument.id && !this.persistenceManager.isLoaded()))) {
-            this.persistenceManager.load(currentlySelectedObject['resource']);
+        if (currentlySelectedDocument && (!currentlySelectedDocument['resource'].type 
+                || (!this.selectedDocument['resource']['@id'] && !this.persistenceManager.isLoaded()))) {
+            this.persistenceManager.load(currentlySelectedDocument);
             return this.discardChanges();
         }
 
@@ -96,21 +97,21 @@ export class OverviewComponent implements OnInit {
         return function() {
             var newDocument = {"resource":{}};
             this.project.getDocuments().unshift(newDocument);
-            this.selectedDocument = <IdaiFieldObject> newDocument;
+            this.selectedDocument = <Document> newDocument;
         }.bind(this);
     }
 
     /**
-     * @param objectToSelect the object that should get selected if the precondtions
+     * @param documentToSelect the object that should get selected if the precondtions
      *   to change the selection are met.
      *   undefined if a new object is to be created if the preconditions
      *   to change the selection are met.
      */
-    public select(objectToSelect: IdaiFieldObject) {
+    public select(documentToSelect: Document) {
 
-        if (objectToSelect) {
-            if (objectToSelect == this.selectedDocument) return;
-            this.changeSelectionAllowedCallback=this.createSelectExistingCallback(objectToSelect);
+        if (documentToSelect) {
+            if (documentToSelect == this.selectedDocument) return;
+            this.changeSelectionAllowedCallback=this.createSelectExistingCallback(documentToSelect);
         }
         else this.changeSelectionAllowedCallback=this.createNewObjectCallback();
 

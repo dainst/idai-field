@@ -33,6 +33,7 @@ export class IndexeddbDatastore implements Datastore {
             if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
             document.id = IdGenerator.generateId();
+            document['resource']['uri']="/"+document['resource'].type+"/"+document.id;
             document.created = new Date();
             document.modified = document.created;
             this.documentCache[document.id] = document;
@@ -88,7 +89,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        if (this.objectCache[id]) delete this.objectCache[id];
+                        if (this.documentCache[id]) delete this.documentCache[id];
                         resolve();
                     }
                 )
@@ -116,7 +117,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        this.objectCache = {};
+                        this.documentCache = {};
                         resolve();
                      }
                   )

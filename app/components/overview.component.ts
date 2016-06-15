@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldObject} from '../model/idai-field-object';
-import {ObjectEditComponent} from "idai-components-2/idai-components-2";
+import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
@@ -12,7 +12,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     templateUrl: 'templates/overview.html',
-    directives: [ObjectEditComponent, MODAL_DIRECTIVES],
+    directives: [DocumentEditComponent, MODAL_DIRECTIVES],
 })
 
 /**
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit {
     /**
      * The object currently selected in the list and shown in the edit component.
      */
-    private selectedObject: IdaiFieldObject;
+    private selectedDocument: IdaiFieldObject;
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
@@ -59,8 +59,8 @@ export class OverviewComponent implements OnInit {
         ) return this.changeSelectionAllowedCallback();
 
         // Remove object from list if it is new and no data has been entered
-        if (currentlySelectedObject && (!currentlySelectedObject.type || (!this.selectedObject.id && !this.persistenceManager.isLoaded()))) {
-            this.persistenceManager.load(currentlySelectedObject);
+        if (currentlySelectedObject && (!currentlySelectedObject['resource'].type || (!this.selectedDocument.id && !this.persistenceManager.isLoaded()))) {
+            this.persistenceManager.load(currentlySelectedObject['resource']);
             return this.discardChanges();
         }
 
@@ -73,7 +73,7 @@ export class OverviewComponent implements OnInit {
 
     public discardChanges() {
 
-        this.project.restore(this.selectedObject).then(() => {
+        this.project.restore(this.selectedDocument).then(() => {
             this.persistenceManager.unload();
             this.changeSelectionAllowedCallback();
         }, (err) => {
@@ -86,17 +86,17 @@ export class OverviewComponent implements OnInit {
         this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
-    private createSelectExistingCallback(objectToSelect) {
+    private createSelectExistingCallback(documentToSelect) {
         return function() {
-            this.selectedObject=objectToSelect;
+            this.selectedDocument=documentToSelect;
         }.bind(this);
     }
 
     private createNewObjectCallback() {
         return function() {
-            var newObject = {};
-            this.project.getObjects().unshift(newObject);
-            this.selectedObject = <IdaiFieldObject> newObject;
+            var newDocument = {"resource":{}};
+            this.project.getDocuments().unshift(newDocument);
+            this.selectedDocument = <IdaiFieldObject> newDocument;
         }.bind(this);
     }
 
@@ -109,40 +109,40 @@ export class OverviewComponent implements OnInit {
     public select(objectToSelect: IdaiFieldObject) {
 
         if (objectToSelect) {
-            if (objectToSelect == this.selectedObject) return;
+            if (objectToSelect == this.selectedDocument) return;
             this.changeSelectionAllowedCallback=this.createSelectExistingCallback(objectToSelect);
         }
         else this.changeSelectionAllowedCallback=this.createNewObjectCallback();
 
-        this.checkChangeSelectionAllowed(this.selectedObject);
+        this.checkChangeSelectionAllowed(this.selectedDocument);
     }
 
     public ngOnInit() {
         this.setConfigs();
         if (this.config.environment == "test") {
-            setTimeout(() => this.fetchObjects(), 500);
+            setTimeout(() => this.fetchDocuments(), 500);
         } else {
-            this.fetchObjects();
+            this.fetchDocuments();
         }
     }
 
     onKey(event:any) {
 
         if (event.target.value == "") {
-            this.datastore.all({}).then(objects => {
-                this.project.setObjects(objects);
+            this.datastore.all({}).then(documents => {
+                this.project.setDocuments(documents);
             }).catch(err => console.error(err));
         } else {
-            this.datastore.find(event.target.value, {}).then(objects => {
-                this.project.setObjects(objects);
+            this.datastore.find(event.target.value, {}).then(documents => {
+                this.project.setDocuments(documents);
             }).catch(err => console.error(err));
         }
     }
 
-    private fetchObjects() {
+    private fetchDocuments() {
 
-        this.datastore.all({}).then(objects => {
-            this.project.setObjects(objects);
+        this.datastore.all({}).then(documents => {
+            this.project.setDocuments(documents);
         }).catch(err => console.error(err));
     }
 }

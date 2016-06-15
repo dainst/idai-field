@@ -1,4 +1,4 @@
-import {IdaiFieldObject} from "../model/idai-field-object";
+import {Document} from "idai-components-2/idai-components-2";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
@@ -19,7 +19,7 @@ export class IndexeddbDatastore implements Datastore {
 
     private db: Promise<any>;
     private observers = [];
-    private objectCache: { [id: string]: IdaiFieldObject } = {};
+    private documentCache: { [id: string]: Document } = {};
 
 
     constructor(private idb:Indexeddb){
@@ -27,45 +27,45 @@ export class IndexeddbDatastore implements Datastore {
     };
 
 
-    public create(object:IdaiFieldObject):Promise<string> {
+    public create(document:any):Promise<string> {
 
         return new Promise((resolve, reject) => {
-            if (object.id != null) reject("Aborting creation: Object already has an ID. " +
+            if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
-            object.id = IdGenerator.generateId();
-            object.created = new Date();
-            object.modified = object.created;
-            this.objectCache[object.id] = object;
-            return Promise.all([this.saveObject(object), this.saveFulltext(object)])
-                .then(() => resolve(object.id), err => {
-                    object.id = undefined;
-                    object.created = undefined;
-                    object.modified = undefined;
+            document.id = IdGenerator.generateId();
+            document.created = new Date();
+            document.modified = document.created;
+            this.documentCache[document.id] = document;
+            return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
+                .then(() => resolve(document.id), err => {
+                    document.id = undefined;
+                    document.created = undefined;
+                    document.modified = undefined;
                     reject(M.OBJLIST_IDEXISTS);
                 });
         });
     }
 
-    public update(object:IdaiFieldObject):Promise<any> {
+    public update(document:Document):Promise<any> {
 
         return new Promise((resolve, reject) => {
-           if (object.id == null) reject("Aborting update: No ID given. " +
+           if (document.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
-           object.modified = new Date();
-           return Promise.all([this.saveObject(object), this.saveFulltext(object)])
+           document.modified = new Date();
+           return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
                .then(() => resolve(), err => reject(M.OBJLIST_IDEXISTS));
         });
     }
 
-    public refresh(id:string):Promise<IdaiFieldObject>  {
+    public refresh(id:string):Promise<Document>  {
 
         return this.fetchObject(id);
     }
 
-    public get(id:string):Promise<IdaiFieldObject> {
+    public get(id:string):Promise<Document> {
 
-        if (this.objectCache[id]) {
-            return new Promise((resolve, reject) => resolve(this.objectCache[id]));
+        if (this.documentCache[id]) {
+            return new Promise((resolve, reject) => resolve(this.documentCache[id]));
         } else {
             return this.fetchObject(id);
         }
@@ -127,7 +127,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public getUnsyncedObjects(): Observable<IdaiFieldObject> {
+    public getUnsyncedObjects(): Observable<Document> {
 
         return Observable.create( observer => {
             this.db.then(db => {
@@ -147,7 +147,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public find(query:string):Promise<IdaiFieldObject[]> {
+    public find(query:string):Promise<Document[]> {
 
         query = query.toLowerCase();
 
@@ -167,7 +167,7 @@ export class IndexeddbDatastore implements Datastore {
                         // make ids unique
                         ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
                         // console.log(Array.from(ids).map(id => this.get(id)));
-                        var promises:Promise<IdaiFieldObject>[] = Array.from(ids).map(id => this.get(id));
+                        var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
                         resolve(Promise.all(promises));
                     }
                 };
@@ -176,9 +176,9 @@ export class IndexeddbDatastore implements Datastore {
         })
     }
 
-    public all():Promise<IdaiFieldObject[]> {
+    public all():Promise<Document[]> {
 
-        return new Promise<IdaiFieldObject[]>((resolve, reject) => {
+        return new Promise<Document[]>((resolve, reject) => {
 
             this.db.then(db => {
 
@@ -200,44 +200,44 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    private fetchObject(id:string): Promise<IdaiFieldObject> {
+    private fetchObject(id:string): Promise<Document> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,id);
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => {
-                    var object:IdaiFieldObject = request.result;
-                    this.objectCache[object.id] = object;
+                    var object:Document = request.result;
+                    this.documentCache[object.id] = object;
                     resolve(object);
                 }
             });
         });
     }
 
-    private saveObject(object:IdaiFieldObject):Promise<any> {
+    private saveDocument(document:Document):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
-                var request = db.put(IndexeddbDatastore.IDAIFIELDOBJECT,object);
+                var request = db.put(IndexeddbDatastore.IDAIFIELDOBJECT,document);
 
                 request.onerror = event => reject("databaseError");
                 request.onsuccess = event => {
-                    if (!object.synced) this.notifyObserversOfObjectToSync(object);
+                    if (!document['synced']) this.notifyObserversOfObjectToSync(document);
                     resolve(request.result);
                 }
             });
         });
     }
 
-    private saveFulltext(object:IdaiFieldObject):Promise<any> {
+    private saveFulltext(document:Document):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var request = db.put(IndexeddbDatastore.FULLTEXT,
                     {
-                        id: object.id,
-                        terms: (new SearchTermExtractor).extractTerms(object)
+                        id: document['id'],
+                        terms: (new SearchTermExtractor).extractTerms(document['resource'])
                     }
                 );
                 request.onerror = event => reject(request.error);
@@ -248,18 +248,18 @@ export class IndexeddbDatastore implements Datastore {
 
     
 
-    private notifyObserversOfObjectToSync(object:IdaiFieldObject):void {
+    private notifyObserversOfObjectToSync(document:Document):void {
         
-        this.observers.forEach( observer => observer.next(object) );
+        this.observers.forEach( observer => observer.next(document) );
     }
 
-    private getCachedInstance(object: IdaiFieldObject): IdaiFieldObject {
+    private getCachedInstance(document: any): Document {
 
-        if (!this.objectCache[object.id]) {
-            this.objectCache[object.id] = object;
+        if (!this.documentCache[document.id]) {
+            this.documentCache[document.id] = document;
         }
 
-        return this.objectCache[object.id];
+        return this.documentCache[document.id];
     }
 
 }

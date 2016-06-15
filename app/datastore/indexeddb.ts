@@ -11,7 +11,7 @@ export class Indexeddb {
 
         return new Promise((resolve, reject) => {
 
-            var request = indexedDB.open("IdaiFieldClient", 13);
+            var request = indexedDB.open("IdaiFieldClient", 16);
             request.onerror = (event) => {
                 console.error("Could not create IndexedDB! Error: ", request.error.name);
                 reject(request.error);
@@ -59,11 +59,11 @@ export class Indexeddb {
                 }
 
                 var objectStore = db.createObjectStore("idai-field-object", {keyPath: "id"});
-                objectStore.createIndex("identifier", "identifier", {unique: true});
+                objectStore.createIndex("identifier", "resource.identifier", {unique: true});
                 objectStore.createIndex("synced", "synced", {unique: false});
                 objectStore.createIndex("modified", "modified");
                 objectStore.createIndex("created", "created");
-                objectStore.createIndex("title", "title");
+                objectStore.createIndex("title", "resource.title");
                 var fulltextStore = db.createObjectStore("fulltext", {keyPath: "id"});
                 fulltextStore.createIndex("terms", "terms", {multiEntry: true});
             };

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldObject} from "../model/idai-field-object";
-import {Entity} from "idai-components-2/idai-components-2";
+import {Document} from "idai-components-2/idai-components-2";
 import {Datastore} from "idai-components-2/idai-components-2";
 
 /**
@@ -12,25 +12,25 @@ export class Project {
 
     public constructor(private datastore: Datastore) {}
     
-    public getObjects() : IdaiFieldObject[] {
-        return this.objects;
+    public getDocuments() : IdaiFieldObject[] {
+        return this.documents;
     }
 
-    public setObjects(objects: Entity[]) {
-        this.objects = <IdaiFieldObject[]> objects;
+    public setDocuments(objects: Document[]) {
+        this.documents = <Document[]> objects;
     }
     
-    public replace(object:IdaiFieldObject,restoredObject: IdaiFieldObject) {
-        var index = this.objects.indexOf(object);
-        this.objects[index] = restoredObject;
+    public replace(document:Document,restoredObject: Document) {
+        var index = this.documents.indexOf(document);
+        this.documents[index] = restoredObject;
     }
 
-    public remove(object: IdaiFieldObject) {
-        var index = this.getObjects().indexOf(object);
-        this.getObjects().splice(index, 1);
+    public remove(object: Document) {
+        var index = this.getDocuments().indexOf(object);
+        this.getDocuments().splice(index, 1);
     }
     
-    private objects: IdaiFieldObject[];
+    private documents: Document[];
 
     /**
      * Restores all objects marked as changed by resetting them to
@@ -43,22 +43,22 @@ export class Project {
      *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
-    public restore(object:IdaiFieldObject): Promise<any> {
+    public restore(document:Document): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            if (object==undefined) resolve();
+            if (document==undefined) resolve();
 
-            console.log("will try to restore object ",object)
+            console.log("will try to restore object ",document)
 
-            if (!object.id) {
-                this.remove(object);
+            if (!document['id']) {
+                this.remove(document);
                 return resolve();
             }
 
-            this.datastore.refresh(object.id).then(
+            this.datastore.refresh(document['id']).then(
                 restoredObject => {
 
-                    this.replace(object,<IdaiFieldObject>restoredObject);
+                    this.replace(document,<Document>restoredObject);
                     resolve();
                 },
                 err => { reject(this.toStringArray(err)); }

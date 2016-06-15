@@ -20,23 +20,23 @@
                            placeholder="Search...">
                     <span class="glyphicon glyphicon-search"></span>
                 </div>
-                <ul *ngIf="project.getObjects()" class="list-group" id="objectList">
-                    <li *ngFor="let object of project.getObjects(); let index=index"
-                        (click)="select(object)"
+                <ul *ngIf="project.getDocuments()" class="list-group" id="objectList">
+                    <li *ngFor="let document of project.getDocuments(); let index=index"
+                        (click)="select(document)"
                         class="list-group-item"
-                        [class.synced]="object.synced"
-                        [class.unsynced]="!object.synced"
-                        [class.selected]="selectedObject && selectedObject.id === object.id"
+                        [class.synced]="document.synced"
+                        [class.unsynced]="!document.synced"
+                        [class.selected]="selectedDocument && selectedDocument.id === document.id"
                         onclick="window.scrollTo(0, 0)">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                             -->
-                        <div *ngIf="object.identifier || object.title">
-                            <div id="object-overview-title-{{index}}" class="title">{{object.title}}</div>
+                        <div *ngIf="document['resource'].identifier || document['resource'].title">
+                            <div id="object-overview-title-{{index}}" class="title">{{document['resource'].title}}</div>
 
-                            <div id="object-overview-identifier-{{index}}" class="identifier">{{object.identifier}}</div>
+                            <div id="object-overview-identifier-{{index}}" class="identifier">{{document['resource'].identifier}}</div>
                         </div>
-                        <div *ngIf="!(object.identifier || object.title)" class="new">Neues Objekt</div>
+                        <div *ngIf="!(document['resource'].identifier || document['resource'].title)" class="new">Neues Objekt</div>
                     </li>
                 </ul>
                 <div id="object-overview-button-create-object"
@@ -53,7 +53,7 @@
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-9">
-        <object-edit [(object)]="selectedObject" [primary]="'identifier'"></object-edit>
+        <document-edit [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
     </div>
 
     <modal #modal>

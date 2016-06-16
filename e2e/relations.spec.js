@@ -1,6 +1,6 @@
 var common = require("./common.js");
 
-fdescribe('relations', function() {
+describe('relations', function() {
 
     function addRelation() {
         return element.all(by.tagName('relation-picker-group')).first()

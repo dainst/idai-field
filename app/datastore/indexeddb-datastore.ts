@@ -36,7 +36,7 @@ export class IndexeddbDatastore implements Datastore {
             document['resource']['@id']="/"+document['resource'].type+"/"+document.id;
             document.created = new Date();
             document.modified = document.created;
-            this.documentCache[document['resource']['@id']] = document;
+            this.documentCache[document['id']] = document;
 
             return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
                 .then(() => resolve(document['resource']['@id']), err => {
@@ -69,10 +69,12 @@ export class IndexeddbDatastore implements Datastore {
 
     public get(resourceId:string):Promise<Document> {
 
-        if (this.documentCache[resourceId]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[resourceId]));
+        let docId = this.documentIdFrom(resourceId);
+
+        if (this.documentCache[docId]) {
+            return new Promise((resolve, reject) => resolve(this.documentCache[docId]));
         } else {
-            return this.fetchObject(this.documentIdFrom(resourceId));
+            return this.fetchObject(docId);
         }
     }
 
@@ -86,10 +88,12 @@ export class IndexeddbDatastore implements Datastore {
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT,this.documentIdFrom(resourceId));
+                var docId = this.documentIdFrom(resourceId);
+
+                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT, docId);
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT,this.documentIdFrom(resourceId));
+                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT, docId);
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];
@@ -98,8 +102,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        if (this.documentCache[resourceId])
-                            delete this.documentCache[resourceId];
+                        if (docId) delete this.documentCache[docId];
                         resolve();
                     }
                 )
@@ -219,7 +222,7 @@ export class IndexeddbDatastore implements Datastore {
                 request.onsuccess = event => {
                     var document:Document = request.result;
 
-                    this.documentCache[document['resource']['@id']] = document;
+                    this.documentCache[documentId] = document;
                     resolve(document);
                 }
             });
@@ -266,11 +269,11 @@ export class IndexeddbDatastore implements Datastore {
 
     private getCachedInstance(document: any): Document {
 
-        if (!this.documentCache[document['resource']['@id']]) {
-            this.documentCache[document['resource']['@id']] = document;
+        if (!this.documentCache[document['id']]) {
+            this.documentCache[document['id']] = document;
         }
 
-        return this.documentCache[document['resource']['@id']];
+        return this.documentCache[document['id']];
     }
 
 }

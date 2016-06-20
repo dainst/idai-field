@@ -3,7 +3,6 @@ import {Datastore} from 'idai-components-2/idai-components-2';
 import {Document} from 'idai-components-2/idai-components-2';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
-import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
@@ -33,7 +32,6 @@ export class OverviewComponent implements OnInit {
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
-        private persistenceManager: PersistenceManager,
         private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages,
@@ -47,7 +45,7 @@ export class OverviewComponent implements OnInit {
 
     /**
      * Checks if the preconditions are given to change the focus from
-     * <code>currentlySelectedObject</code> to another object.
+     * <code>currentlySelectedDocument</code> to another object.
      *
      * @param currentlySelectedDocument
      * @returns {any}
@@ -55,13 +53,13 @@ export class OverviewComponent implements OnInit {
     private checkChangeSelectionAllowed(currentlySelectedDocument) {
         this.messages.clear();
         if (!currentlySelectedDocument
-            || !this.persistenceManager.isLoaded() // why this line?
+            || !this.loadAndSaveService.isChanged() // why this line?
         ) return this.changeSelectionAllowedCallback();
 
         // Remove object from list if it is new and no data has been entered
         if (currentlySelectedDocument && (!currentlySelectedDocument['resource'].type 
-                || (!this.selectedDocument['resource']['@id'] && !this.persistenceManager.isLoaded()))) {
-            this.persistenceManager.load(currentlySelectedDocument);
+                || (!this.selectedDocument['resource']['@id'] && !this.loadAndSaveService.isChanged()))) {
+            this.loadAndSaveService.setChanged();
             return this.discardChanges();
         }
 
@@ -75,7 +73,7 @@ export class OverviewComponent implements OnInit {
     public discardChanges() {
 
         this.project.restore(this.selectedDocument).then(() => {
-            this.persistenceManager.unload();
+            this.loadAndSaveService.changed=false; // TODO this should be done with a setter.
             this.changeSelectionAllowedCallback();
         }, (err) => {
             this.messages.add(err);

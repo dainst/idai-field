@@ -47,6 +47,7 @@ function scrollUp() {
 }
 
 module.exports = {
+    clickCreateObjectButton: clickCreateObjectButton,
     createObject: createObject,
     saveObject: saveObject,
     selectObject: selectObject,

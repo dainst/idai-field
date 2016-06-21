@@ -36,7 +36,7 @@
 
                             <div id="object-overview-identifier-{{index}}" class="identifier">{{document['resource'].identifier}}</div>
                         </div>
-                        <div *ngIf="!(document['resource'].identifier || document['resource'].title)" class="new">Neues Objekt</div>
+                        <div id="object-overview-note-{{index}}" *ngIf="!(document['resource'].identifier || document['resource'].title)" class="new">Neues Objekt</div>
                     </li>
                 </ul>
                 <div id="object-overview-button-create-object"
@@ -67,7 +67,7 @@
             <button type="button" class="btn btn-primary" data-dismiss="modal"
                     (click)="save(selectedDocument); modal.dismiss();">Speichern</button>
             <button type="button" class="btn btn-default"
-                    (click)="discardChanges(); modal.dismiss();">Änderungen verwerfen</button>
+                    (click)="discardChanges(selectedDocument); modal.dismiss();">Änderungen verwerfen</button>
             <button type="button" class="btn btn-default"
                     (click)="modal.dismiss();">Abbrechen</button>
         </modal-footer>

@@ -55,4 +55,21 @@ describe('idai field app', function() {
                 toEqual("Das Objekt wurde erfolgreich gespeichert.");
             });
     });
+
+    /**
+     * There has been a bug where clicking the new button without doing anything
+     * led to leftovers of "Neues Objekt" for every time the button was pressed.
+     */
+    it("should remove a new object from the list if it hasn't been saved", function() {
+        common.createObject("1")
+            .then(common.clickCreateObjectButton)
+            .then(common.clickCreateObjectButton)
+            .then(function(){
+                expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
+            })
+            .then(common.selectObject(1))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
+            })
+    });
 });

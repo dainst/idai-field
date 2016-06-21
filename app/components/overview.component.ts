@@ -47,22 +47,15 @@ export class OverviewComponent implements OnInit {
      * Checks if the preconditions are given to change the focus from
      * <code>currentlySelectedDocument</code> to another object.
      *
-     * @param currentlySelectedDocument
+     * @param currentlySelectedDocument the document which is still selected,
+     *   but will be unselected if a change of selection is allowed
      * @returns {any}
      */
     private checkChangeSelectionAllowed(currentlySelectedDocument) {
+
         this.messages.clear();
-        if (!currentlySelectedDocument
-            || !this.loadAndSaveService.isChanged() // why this line?
-        ) return this.changeSelectionAllowedCallback();
-
-        // Remove object from list if it is new and no data has been entered
-        if (currentlySelectedDocument && (!currentlySelectedDocument['resource'].type 
-                || (!this.selectedDocument['resource']['@id'] && !this.loadAndSaveService.isChanged()))) {
-            this.loadAndSaveService.setChanged();
-            return this.discardChanges();
-        }
-
+        if (!this.loadAndSaveService.isChanged()) 
+            return this.discardChanges(currentlySelectedDocument);
         this.modal.open();
     }
 
@@ -70,9 +63,16 @@ export class OverviewComponent implements OnInit {
         this.loadAndSaveService.save(object).then(()=>true);
     }
 
-    public discardChanges() {
 
-        this.project.restore(this.selectedDocument).then(() => {
+    /**
+     * Discards changes of the document. Depending on whether it is a new or existing
+     * object, it will either restore it or remove it from the list.
+     *
+     * @param document
+     */
+    public discardChanges(document) {
+
+        this.project.restore(document).then(() => {
             this.loadAndSaveService.changed=false; // TODO this should be done with a setter.
             this.changeSelectionAllowedCallback();
         }, (err) => {

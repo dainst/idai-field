@@ -2,7 +2,7 @@ import {fdescribe, describe, xdescribe, expect, fit, it, xit, inject, beforeEach
 import {IdaiFieldBackend} from "../app/services/idai-field-backend";
 import {ModelUtils} from "../app/model/model-utils";
 import {provide} from "@angular/core";
-import {IdaiFieldObject} from "../app/model/idai-field-object";
+import {IdaiFieldDocument} from "../app/model/idai-field-document";
 import {Headers} from "@angular/http";
 
 /**
@@ -19,11 +19,21 @@ export function main() {
             }
         };
 
-        var object = { "id": "id1", "identifier": "ob1", "title": "Object 1", "synced": 0,
-            "type": "Object" };
+        var document = { "resource" : { 
+            "@id": "/object/id1", 
+            "identifier": "ob1", 
+            "title": "object1",
+            "type": "object" },
+            "synced" : 0 };
 
-        var filteredObject = { "resource" : { "identifier": "ob1", "title": "Object 1", "type": "Object"},
-            "dataset" : "dataset1" };
+        var documentWithDatasetIncorporated = { "resource" : {
+            "@id" : "/object/id1", 
+            "identifier": "ob1", 
+            "title": "object1", 
+            "type": "object"},
+            "synced" : 0,
+            "dataset" : "dataset1"
+        };
 
 
         var successFunction = function() {
@@ -42,7 +52,7 @@ export function main() {
             };
         };
 
-        var put = function(obj: IdaiFieldObject) {
+        var put = function(obj: IdaiFieldDocument) {
             return {
                 subscribe: function(suc, err) {
                     suc(obj);
@@ -101,15 +111,15 @@ export function main() {
             }
         );
 
-        it('should save an object to the backend',
+        it('should save a document to the backend',
             function(done) {
 
                 var headers: Headers = new Headers();
                 headers.append('Authorization', 'Basic ' + btoa(config.backend.credentials));
 
-                idaiFieldBackend.save(object,"dataset1").then(obj => {
-                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + 'objects/' + object.id,
-                        JSON.stringify(filteredObject), { headers: headers });
+                idaiFieldBackend.save(document,"dataset1").then(obj => {
+                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + document['resource']['@id'],
+                        JSON.stringify(documentWithDatasetIncorporated), { headers: headers });
                     done();
                 }).catch(err => {
                     fail(err);

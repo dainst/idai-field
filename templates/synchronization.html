@@ -1,19 +1,19 @@
 <div id="syncprogress"
-    [class.active] = "connected && objectsToSyncIds.length > 0"></div>
+    [class.active] = "connected && resourceIdsOfDocsToSync.length > 0"></div>
 
 <div id="objectsToSyncCount"
-     [class.connected] = "connected && objectsToSyncIds.length === 0"
-     [class.unconnected] = "!connected || objectsToSyncIds.length > 0"
-     data-toggle="tooltip" title="{{objectsToSyncIds.length}} unsynced objects">
+     [class.connected] = "connected && resourceIdsOfDocsToSync.length === 0"
+     [class.unconnected] = "!connected || resourceIdsOfDocsToSync.length > 0"
+     data-toggle="tooltip" title="{{resourceIdsOfDocsToSync.length}} unsynced objects">
     <div id="syncCounter"
-         *ngIf="objectsToSyncIds.length > 0">
+         *ngIf="resourceIdsOfDocsToSync.length > 0">
         <span id="syncSymbol"
               class="mdi mdi-cloud-upload"></span>
-        {{objectsToSyncIds.length}}
+        {{resourceIdsOfDocsToSync.length}}
     </div>
 
     <div
-        *ngIf="connected && objectsToSyncIds.length === 0">
+        *ngIf="connected && resourceIdsOfDocsToSync.length === 0">
         <span data-toggle="tooltip"
               title="All objects are synced"
               id="success"

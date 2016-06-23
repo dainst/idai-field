@@ -12,6 +12,7 @@ import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "idai-components-2/idai-components-2";
+import {SyncMediator} from "./services/sync-mediator";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
@@ -44,5 +45,6 @@ bootstrap(AppComponent, [
     provide(PersistenceManager, {useClass: PersistenceManager}),
     provide(LoadAndSaveService, {useClass: LoadAndSaveService}),
     provide(ValidationInterceptor, {useClass: AppValidationInterceptor}),
+    provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M})
 ]);

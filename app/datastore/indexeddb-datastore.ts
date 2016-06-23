@@ -52,8 +52,6 @@ export class IndexeddbDatastore implements Datastore {
 
     public update(document:Document):Promise<any> {
 
-        console.log("update document",document)
-
         return new Promise((resolve, reject) => {
            if (document.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
@@ -141,23 +139,11 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public getUnsyncedObjects(): Observable<Document> {
 
+    // TODO find a better name
+    public documentChanges(): Observable<Document> {
         return Observable.create( observer => {
-            this.db.then(db => {
-
-                var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT,"synced",IDBKeyRange.only(0));
-                cursor.onsuccess = (event) => {
-                    var cursor = event.target.result;
-                    if (cursor) {
-                        observer.next(this.getCachedInstance(cursor.value));
-                        cursor.continue();
-                    } else {
-                        this.observers.push(observer);
-                    }
-                };
-                cursor.onerror = err => observer.onError(cursor.error);
-            });
+            this.observers.push(observer);
         });
     }
 
@@ -180,7 +166,6 @@ export class IndexeddbDatastore implements Datastore {
                     } else {
                         // make ids unique
                         ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
-                        // console.log(Array.from(ids).map(id => this.get(id)));
                         var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
                         resolve(Promise.all(promises));
                     }
@@ -237,7 +222,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 request.onerror = event => reject("databaseError");
                 request.onsuccess = event => {
-                    if (!document['synced']) this.notifyObserversOfObjectToSync(document);
+                    this.notifyObserversOfObjectToSync(document);
                     resolve(request.result);
                 }
             });
@@ -260,11 +245,12 @@ export class IndexeddbDatastore implements Datastore {
         })
     }
 
-    
 
     private notifyObserversOfObjectToSync(document:Document):void {
         
-        this.observers.forEach( observer => observer.next(document) );
+        this.observers.forEach( observer => {
+            observer.next(document)
+        } );
     }
 
     private getCachedInstance(document: any): Document {

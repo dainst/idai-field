@@ -14,7 +14,6 @@ import {Response} from "@angular/http";
 @Injectable()
 export class IdaiFieldBackend {
 
-    private typeName: string = "objects";
     private connected: boolean;
     private connectionStateObservers: Observer<boolean>[] = [];
     private configuration: any;
@@ -30,8 +29,9 @@ export class IdaiFieldBackend {
      * @param backendConfig backend Configuration object.
      */
     private validateAndUse(backendConfig) {
-        if (! backendConfig.uri.endsWith('/'))
-            backendConfig.uri=backendConfig.uri+='/';
+        // if (! backendConfig.uri.endsWith('/'))
+        //     backendConfig.uri=backendConfig.uri+='/';
+        // TODO remove / if exists
 
         this.configuration = backendConfig;
     }
@@ -52,7 +52,6 @@ export class IdaiFieldBackend {
      * @see also this#setConnectionStatus
      */
     public checkConnection(): void {
-
         this.http.get( this.configuration.uri )
         .subscribe(
             data => this.setConnectionStatus(true),
@@ -67,14 +66,11 @@ export class IdaiFieldBackend {
      * @param connected
      */
     private setConnectionStatus(connected: boolean) {
-
         if (connected != this.connected) {
             this.connectionStateObservers.forEach(observer => observer.next(connected));
         }
-
         this.connected = connected;
-
-       setTimeout(
+        setTimeout(
             this.checkConnection.bind(this),
             this.configuration.connectionCheckInterval
         );
@@ -87,11 +83,12 @@ export class IdaiFieldBackend {
         return headers;
     }
 
-    private performPut(id:string,document:any) : Observable<Response> {
+    private performPut(resourceId:string,document:any) : Observable<Response> {
 
         return this.http.put(this.configuration.uri
-                    + this.typeName + '/' + id,
-                    JSON.stringify(document), {headers: this.createAuthorizationHeader()});
+            + resourceId,
+            JSON.stringify(document), 
+            {headers: this.createAuthorizationHeader()});
 
     }
 
@@ -101,32 +98,18 @@ export class IdaiFieldBackend {
      * @param object, uniquely identified by object.id.
      * @returns {Promise<T>}
      */
-    public save(object:IdaiFieldObject,dataset:string):Promise<IdaiFieldObject> {
+    public save(document:any,dataset:string):Promise<IdaiFieldObject> {
+        if (dataset) document['dataset']=dataset;
+        
         return new Promise((resolve, reject) => {
-
-            this.performPut(object.id,this.createDocument(object,dataset)).subscribe(
-                  () => resolve(object),
+            this.performPut(document['resource']['@id'],document).subscribe(
+                  () => resolve(document),
                   err => {
                       this.checkConnection();
                       reject(err);
                   }
               );
         });
-    }
-
-    /**
-     * Creates a document by taking the object as a resource,
-     * filtering out unnecessary properties and adding dataset information.
-     *
-     * @param object the resource of the document to be created.
-     * @returns a document as expected by the backend.
-     */
-    private createDocument(object:IdaiFieldObject,dataset:string) : any {
-
-        var document= {"resource":{}};
-        document["resource"]= ModelUtils.filterUnwantedProps(object);
-        if (dataset!=undefined) document['dataset']=dataset;
-        return document;
     }
 
     public resetIndex(): Promise<any> {

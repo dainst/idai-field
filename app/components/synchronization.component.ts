@@ -1,12 +1,13 @@
-import {Component, Inject, OnInit, Input, OnChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from 'idai-components-2/idai-components-2';
-import {IdaiFieldObject} from '../model/idai-field-object';
+import {SyncMediator} from '../services/sync-mediator';
 import {ProjectConfiguration,ConfigLoader} from "idai-components-2/idai-components-2";
 
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 @Component({
 
@@ -19,53 +20,52 @@ export class SynchronizationComponent {
     private projectConfiguration : ProjectConfiguration;
 
     private connected: boolean = false;
-    private objectsToSyncIds: string[] = [];
+    private resourceIdsOfDocsToSync: string[] = [];
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,
         private datastore: Datastore,
-        private configLoader: ConfigLoader) {
+        private configLoader: ConfigLoader,
+        private syncMediator: SyncMediator) {
+
 
         this.configLoader.projectConfiguration().subscribe((projectConfiguration)=>{
             this.projectConfiguration = projectConfiguration;
-
             this.setupConnectionCheck();
-            this.setupSync();
+            this.subscribeForUnsyncedDocuments();
         });
     }
 
-    private setupConnectionCheck() {
+    private subscribeForUnsyncedDocuments() {
 
+        this.syncMediator.getUnsyncedDocuments().subscribe(
+            doc => {
+                if (this.connected)
+                    this.sync(doc);
+                else
+                    this.resourceIdsOfDocsToSync.push(doc['resource']['@id']);
+            },
+            err => console.error("Error in subscribeForUnsyncedDocuments(). ", err)
+        );
+    }
+
+    private setupConnectionCheck() {
         this.idaiFieldBackend.connectionStatus().subscribe(
             connected => {
                 this.connected = connected;
-                if (connected) this.syncAll();
+                if (connected) {
+                    this.syncAll();
+                }
             }
         );
     }
 
-    private setupSync() {
+    private sync(doc: any) {
 
-        this.datastore.getUnsyncedObjects().subscribe(
-            object => {
-
-                this.storeObjectId(object.id);
-
-
-                if (!this.connected) return;
-                this.sync(<IdaiFieldObject>object);
-            },
-            err => console.error("Could not fetch unsynced objects", err)
-        );
-    }
-
-    private sync(object: IdaiFieldObject) {
-
-        this.idaiFieldBackend.save(object,this.projectConfiguration.getExcavationName()).then(
-            object => {
-                object.synced = 1;
-                this.datastore.update(object);
-                this.removeObjectId(object.id);
-                console.log("Successfully synced object", object);
+        this.idaiFieldBackend.save(doc,this.projectConfiguration.getExcavationName()).then(
+            document => {
+                document['synced'] = 1;
+                this.datastore.update(document);
+                this.removeObjectId(document['resource']['@id']);
             },
             err => {
                 this.connected=false;
@@ -75,24 +75,22 @@ export class SynchronizationComponent {
 
     private syncAll() {
 
-        this.objectsToSyncIds.forEach(id => {
+        this.resourceIdsOfDocsToSync.forEach(id => {
             this.datastore.get(id).then(
-                object => this.sync(<IdaiFieldObject>object)
+                object => this.sync(object)
             );
         });
     }
 
-    private storeObjectId(objectId: string) {
-
-        if (this.objectsToSyncIds.indexOf(objectId) == -1)
-            this.objectsToSyncIds.push(objectId);
+    private storeObjectId(resourceId: string) {
+        if (this.resourceIdsOfDocsToSync.indexOf(resourceId) == -1)
+            this.resourceIdsOfDocsToSync.push(resourceId);
     }
 
-    private removeObjectId(objectId: string) {
-
-        var index: number = this.objectsToSyncIds.indexOf(objectId);
+    private removeObjectId(resourceId: string) {
+        var index: number = this.resourceIdsOfDocsToSync.indexOf(resourceId);
         if (index != -1)
-            this.objectsToSyncIds.splice(index, 1);
+            this.resourceIdsOfDocsToSync.splice(index, 1);
     }
 
 }

@@ -5,8 +5,9 @@ import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
+import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {LoadAndSaveService} from "idai-components-2/idai-components-2";
+import {SaveService} from "idai-components-2/idai-components-2";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
@@ -35,7 +36,7 @@ export class OverviewComponent implements OnInit {
         private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages,
-        private loadAndSaveService:LoadAndSaveService) {
+        private saveService:SaveService) {
     }
 
     /**
@@ -54,16 +55,23 @@ export class OverviewComponent implements OnInit {
     private checkChangeSelectionAllowed(currentlySelectedDocument) {
 
         this.messages.clear();
-        if (!this.loadAndSaveService.isChanged()) 
+        if (!this.saveService.isChanged())
             return this.discardChanges(currentlySelectedDocument);
         this.modal.open();
     }
 
-    public save(object) {
-        this.loadAndSaveService.save(object).then(()=>true);
-        this.changeSelectionAllowedCallback();
+    public save(doc:Document,withCallback:boolean=true) {
+        this.saveService.save(doc).then(
+            ()=>{
+                this.messages.add(M.OBJLIST_SAVE_SUCCESS)
+            },
+            errors=>{
+                for (var err of errors) {
+                    this.messages.add(err);
+                }
+            });
+        if (withCallback) this.changeSelectionAllowedCallback();
     }
-
 
     /**
      * Discards changes of the document. Depending on whether it is a new or existing
@@ -74,7 +82,7 @@ export class OverviewComponent implements OnInit {
     public discardChanges(document) {
 
         this.project.restore(document).then(() => {
-            this.loadAndSaveService.changed=false; // TODO this should be done with a setter.
+            this.saveService.setChanged(false);
             this.changeSelectionAllowedCallback();
         }, (err) => {
             this.messages.add(err);
@@ -147,9 +155,5 @@ export class OverviewComponent implements OnInit {
         this.datastore.all({}).then(documents => {
             this.project.setDocuments(documents);
         }).catch(err => console.error(err));
-    }
-
-    public saveWithButton() {
-        this.loadAndSaveService.save(this.selectedDocument).then(()=>{},err=>{});
     }
 }

@@ -22,7 +22,7 @@ import {MD} from "idai-components-2/idai-components-2";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
-import {LoadAndSaveService} from 'idai-components-2/idai-components-2';
+import {SaveService} from 'idai-components-2/idai-components-2';
 import {ValidationInterceptor} from 'idai-components-2/idai-components-2';
 import {AppValidationInterceptor} from './components/app-validation-interceptor';
 import {Project} from './model/project';
@@ -44,7 +44,7 @@ bootstrap(AppComponent, [
     provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(Project, {useClass: Project}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
-    provide(LoadAndSaveService, {useClass: LoadAndSaveService}),
+    provide(SaveService, {useClass: SaveService}),
     provide(ValidationInterceptor, {useClass: AppValidationInterceptor}),
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M})

@@ -60,7 +60,7 @@
                     <div *ngIf="selectedDocument['resource']['type']">
                         [{{selectedDocument['resource'].type}}] {{selectedDocument['resource']['@id']}}
                         <button class="btn btn-default pull-right" id="object-edit-button-save-object"
-                            style="margin-right: 5px; margin-top: 5px;" (click)="saveWithButton()">Speichern</button>
+                            style="margin-right: 5px; margin-top: 5px;" (click)="save(selectedDocument,false)">Speichern</button>
                     </div>
                     <div *ngIf="!selectedDocument['resource']['type']">
                         Neues Objekt

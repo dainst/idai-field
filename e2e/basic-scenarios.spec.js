@@ -92,7 +92,7 @@ describe('idai field app', function() {
     /**
      * There was a bug where the change after confirming "save" did not happen.
      */
-    fit ("should change the selection when saving via modal", function() {
+    it ("should change the selection when saving via modal", function() {
         common.createObject("1")
             .then(common.createObject("2"))
             .then(common.selectObject(0))

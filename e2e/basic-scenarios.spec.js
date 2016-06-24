@@ -102,8 +102,8 @@ describe('idai field app', function() {
             .then(clickSaveInModal)
             .then(common.scrollUp)
             .then(function(){
-                expect(element.all(by.css('.list-group-item')).get(1)
-                    .getAttribute('class')).toMatch('list-group-item unsynced selected')
+                expect(element.all(by.css('#objectList .list-group-item')).get(1)
+                    .getAttribute('class')).toContain('selected')
             })
     });
 

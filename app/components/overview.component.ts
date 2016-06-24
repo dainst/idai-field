@@ -63,14 +63,14 @@ export class OverviewComponent implements OnInit {
     public save(doc:Document,withCallback:boolean=true) {
         this.saveService.save(doc).then(
             ()=>{
-                this.messages.add(M.OBJLIST_SAVE_SUCCESS)
+                this.messages.add(M.OBJLIST_SAVE_SUCCESS);
+                if (withCallback) this.changeSelectionAllowedCallback();
             },
             errors=>{
                 for (var err of errors) {
                     this.messages.add(err);
                 }
             });
-        if (withCallback) this.changeSelectionAllowedCallback();
     }
 
     /**

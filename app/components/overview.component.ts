@@ -94,13 +94,13 @@ export class OverviewComponent implements OnInit {
         this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
-    private createSelectExistingCallback(documentToSelect) {
+    private registerSelectionCallbackForExisting(documentToSelect) {
         return function() {
             this.selectedDocument=documentToSelect;
         }.bind(this);
     }
 
-    private createNewObjectCallback() {
+    private registerSelectionCallbackForNew() {
         return function() {
             var newDocument = {"resource":{}};
             this.project.getDocuments().unshift(newDocument);
@@ -118,9 +118,9 @@ export class OverviewComponent implements OnInit {
 
         if (documentToSelect) {
             if (documentToSelect == this.selectedDocument) return;
-            this.changeSelectionAllowedCallback=this.createSelectExistingCallback(documentToSelect);
+            this.changeSelectionAllowedCallback=this.registerSelectionCallbackForExisting(documentToSelect);
         }
-        else this.changeSelectionAllowedCallback=this.createNewObjectCallback();
+        else this.changeSelectionAllowedCallback=this.registerSelectionCallbackForNew();
 
         this.checkChangeSelectionAllowed(this.selectedDocument);
     }

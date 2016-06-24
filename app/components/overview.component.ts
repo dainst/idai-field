@@ -101,10 +101,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private createNewObjectCallback() {
-        console.log("create createNewObjectCallback")
         return function() {
-            console.log("insideCreateNewObjectCallback")
-
             var newDocument = {"resource":{}};
             this.project.getDocuments().unshift(newDocument);
             this.selectedDocument = <Document> newDocument;

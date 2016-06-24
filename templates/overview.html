@@ -64,7 +64,7 @@
             Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
         </modal-body>
         <modal-footer>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"
+            <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary" data-dismiss="modal"
                     (click)="save(selectedDocument); modal.dismiss();">Speichern</button>
             <button type="button" class="btn btn-default"
                     (click)="discardChanges(selectedDocument); modal.dismiss();">Änderungen verwerfen</button>

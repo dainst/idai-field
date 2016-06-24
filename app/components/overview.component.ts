@@ -61,6 +61,7 @@ export class OverviewComponent implements OnInit {
 
     public save(object) {
         this.loadAndSaveService.save(object).then(()=>true);
+        this.changeSelectionAllowedCallback();
     }
 
 
@@ -92,7 +93,10 @@ export class OverviewComponent implements OnInit {
     }
 
     private createNewObjectCallback() {
+        console.log("create createNewObjectCallback")
         return function() {
+            console.log("insideCreateNewObjectCallback")
+
             var newDocument = {"resource":{}};
             this.project.getDocuments().unshift(newDocument);
             this.selectedDocument = <Document> newDocument;

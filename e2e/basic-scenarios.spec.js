@@ -72,4 +72,42 @@ describe('idai field app', function() {
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
             })
     });
+
+    /**
+     * There was a bug where the change after confirming "save" did not happen.
+     */
+    it ("should change the selection when saving via modal", function() {
+        common.createObject("1")
+            .then(common.selectObject(0))
+            .then(common.typeInIdentifier("2"))
+            .then(common.clickCreateObjectButton())
+            .then(common.scrollUp)
+            .then(clickSaveInModal)
+            .then(common.scrollUp)
+            .then(function(){
+                expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
+            })
+    });
+
+    /**
+     * There was a bug where the change after confirming "save" did not happen.
+     */
+    fit ("should change the selection when saving via modal", function() {
+        common.createObject("1")
+            .then(common.createObject("2"))
+            .then(common.selectObject(0))
+            .then(common.typeInIdentifier("2a"))
+            .then(common.selectObject(1))
+            .then(common.scrollUp)
+            .then(clickSaveInModal)
+            .then(common.scrollUp)
+            .then(function(){
+                expect(element.all(by.css('.list-group-item')).get(1)
+                    .getAttribute('class')).toMatch('list-group-item unsynced selected')
+            })
+    });
+
+    function clickSaveInModal() {
+        return element(by.id('overview-save-confirmation-modal-save-button')).click();
+    }
 });

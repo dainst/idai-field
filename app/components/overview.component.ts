@@ -141,7 +141,7 @@ export class OverviewComponent implements OnInit {
                 this.project.setDocuments(documents);
             }).catch(err => console.error(err));
         } else {
-            this.datastore.find(event.target.value, {}).then(documents => {
+            this.datastore.find(event.target.value).then(documents => {
                 this.project.setDocuments(documents);
             }).catch(err => console.error(err));
         }

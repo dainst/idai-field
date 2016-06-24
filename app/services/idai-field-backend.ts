@@ -33,8 +33,7 @@ export class IdaiFieldBackend {
             backendConfig.uri=backendConfig.uri.replace(/\/$/, "");
         this.configuration = backendConfig;
     }
-
-
+    
     /**
      * @returns {any}
      */
@@ -44,7 +43,6 @@ export class IdaiFieldBackend {
             this.connectionStateObservers.push(observer);
         });
     }
-
 
     /**
      * @see also this#setConnectionStatus
@@ -136,5 +134,4 @@ export class IdaiFieldBackend {
     private createIndex(): Observable<Response> {
         return this.http.put(this.configuration.uri, "");
     }
-
 }

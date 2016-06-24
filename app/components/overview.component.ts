@@ -148,4 +148,8 @@ export class OverviewComponent implements OnInit {
             this.project.setDocuments(documents);
         }).catch(err => console.error(err));
     }
+
+    public saveWithButton() {
+        this.loadAndSaveService.save(this.selectedDocument).then(()=>{},err=>{});
+    }
 }

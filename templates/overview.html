@@ -52,8 +52,25 @@
         </aside>
     </div>
 
-    <div class="col-lg-9 col-md-9 col-sm-9">
-        <document-edit [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
+    <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
+        <section>
+            <header *ngIf="selectedDocument">
+                <h1 id="object-type-heading">
+                    <span class="mdi mdi-blur"></span>
+                    <div *ngIf="selectedDocument['resource']['type']">
+                        [{{selectedDocument['resource'].type}}] {{selectedDocument['resource']['@id']}}
+                        <button class="btn btn-default pull-right" id="object-edit-button-save-object"
+                            style="margin-right: 5px; margin-top: 5px;" (click)="saveWithButton()">Speichern</button>
+                    </div>
+                    <div *ngIf="!selectedDocument['resource']['type']">
+                        Neues Objekt
+                    </div>
+                </h1>
+            </header>
+            <main>
+                <document-edit [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
+            </main>
+        </section>
     </div>
 
     <modal #modal>

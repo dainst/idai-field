@@ -1,10 +1,9 @@
 import {Injectable, Inject} from "@angular/core";
 import {Http, Headers} from "@angular/http";
-import {IdaiFieldObject} from "../model/idai-field-object";
-import {ModelUtils} from '../model/model-utils';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "@angular/http";
+import {IdaiFieldDocument} from '../model/idai-field-document'
 
 /**
  * @author Jan G. Wieners
@@ -29,10 +28,9 @@ export class IdaiFieldBackend {
      * @param backendConfig backend Configuration object.
      */
     private validateAndUse(backendConfig) {
-        // if (! backendConfig.uri.endsWith('/'))
-        //     backendConfig.uri=backendConfig.uri+='/';
-        // TODO remove / if exists
 
+        if ( backendConfig.uri.endsWith('/'))
+            backendConfig.uri=backendConfig.uri.replace(/\/$/, "");
         this.configuration = backendConfig;
     }
 
@@ -96,9 +94,10 @@ export class IdaiFieldBackend {
      * Saves or updates an object to the backend.
      *
      * @param object, uniquely identified by object.id.
-     * @returns {Promise<T>}
+     * @returns {Promise<T>} success -> an idai field document
+     *   error -> an error message or message key
      */
-    public save(document:any,dataset:string):Promise<IdaiFieldObject> {
+    public save(document:any,dataset:string):Promise<IdaiFieldDocument> {
         if (dataset) document['dataset']=dataset;
         
         return new Promise((resolve, reject) => {
@@ -131,12 +130,10 @@ export class IdaiFieldBackend {
     }
 
     private deleteIndex(): Observable<Response> {
-
         return this.http.delete(this.configuration.uri);
     }
 
     private createIndex(): Observable<Response> {
-
         return this.http.put(this.configuration.uri, "");
     }
 

@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from '../model/idai-field-document';
 
-export var OBJECTS: IdaiFieldDocument[] = [
+export var DOCS: IdaiFieldDocument[] = [
     { "resource" : { "@id": "/object/ob1", "identifier": "ob1", "title": "Obi One Kenobi", "type": "object" }, "synced": 0},
     { "resource" : { "@id": "/object/ob2", "identifier": "ob2", "title": "Qui Gon Jinn", "type": "object" }, "synced": 0},
     { "resource" : { "@id": "/object/ob3", "identifier": "ob3", "title": "Luke Skywalker", "type": "object" }, "synced": 0},

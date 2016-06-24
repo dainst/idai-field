@@ -18,10 +18,10 @@ export class SyncMediator {
     ){
         this.db=idb.db();
 
-        this.datastore.documentChanges().subscribe(
+        this.datastore.documentChangesNotifications().subscribe(
             document=>{
                 for (var obs of this.observers) {
-                    if (document.synced!==1)
+                    if (document['synced']!==1)
                         obs.next(document);
                 }
             },

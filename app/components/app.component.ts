@@ -1,11 +1,10 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {OverviewComponent} from './overview.component';
 import {SynchronizationComponent} from "./synchronization.component";
-import {Datastore} from "idai-components-2/idai-components-2";
-import {OBJECTS} from "../datastore/sample-objects";
+import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {DOCS} from "../datastore/sample-objects";
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from '../services/electron-menu';
 
@@ -22,11 +21,11 @@ export class AppComponent implements OnInit {
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
     public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
-    constructor(private datastore: Datastore,
+    constructor(private datastore: IndexeddbDatastore,
                 private idaiFieldBackend: IdaiFieldBackend,
                 @Inject('app.config') private config,
-                private configLoader:ConfigLoader,
                 private menu:ElectronMenu) {
+        
         if (this.config.targetPlatform == "desktop") {
             menu.build();
         }
@@ -41,7 +40,7 @@ export class AppComponent implements OnInit {
         this.datastore.clear()
         .then(() => {
             var promises = [];
-            for (var ob of OBJECTS) promises.push(this.datastore.create(ob));
+            for (var ob of DOCS) promises.push(this.datastore.create(ob));
             Promise.all(promises).then(
                 () => console.log("Successfully stored sample objects"))
             .catch(

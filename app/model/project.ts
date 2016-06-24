@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {IdaiFieldObject} from "../model/idai-field-object";
 import {Document} from "idai-components-2/idai-components-2";
-import {Datastore} from "idai-components-2/idai-components-2";
+import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -10,7 +9,7 @@ import {Datastore} from "idai-components-2/idai-components-2";
 @Injectable()
 export class Project {
 
-    public constructor(private datastore: Datastore) {}
+    public constructor(private datastore: IndexeddbDatastore) {}
     
     public getDocuments() : Document[] {
         return this.documents;

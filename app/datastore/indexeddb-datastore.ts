@@ -140,8 +140,7 @@ export class IndexeddbDatastore implements Datastore {
     }
 
 
-    // TODO find a better name
-    public documentChanges(): Observable<Document> {
+    public documentChangesNotifications(): Observable<Document> {
         return Observable.create( observer => {
             this.observers.push(observer);
         });

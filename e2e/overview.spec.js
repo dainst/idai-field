@@ -2,7 +2,7 @@ var common = require("./common.js");
 
 describe('overview component', function() {
     
-    it ("should change the selection when saving via modal", function() {
+    it ("should change the selection to new when saving via modal", function() {
         common.createObject("1")
             .then(common.selectObject(0))
             .then(common.typeInIdentifier("2"))
@@ -15,7 +15,7 @@ describe('overview component', function() {
             })
     });
 
-    it ("should change the selection when saving via modal", function() {
+    it ("should change the selection to existing when saving via modal", function() {
         common.createObject("1")
             .then(common.createObject("2"))
             .then(common.selectObject(0))

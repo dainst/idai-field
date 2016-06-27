@@ -23,7 +23,7 @@ function typeInIdentifier(identifier) {
 }
 
 function saveObject() {
-    return element(by.id('object-edit-button-save-object')).click();
+    return element(by.id('document-edit-button-save-document')).click();
 }
 
 function selectObject(listIndex) {

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {ValidationInterceptor} from "idai-components-2/idai-components-2";
-import {Document} from "idai-components-2/idai-components-2";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 
 /**
  * @author Daniel de Oliveira
@@ -9,15 +9,15 @@ import {Document} from "idai-components-2/idai-components-2";
 @Injectable()
 export class AppValidationInterceptor extends ValidationInterceptor {
     
-    validate(document:Document) : string {
+    validate(doc:IdaiFieldDocument) : string {
 
-        var resource=document['resource']
+        var resource=doc['resource'];
 
         if (!resource.identifier || resource.identifier.length == 0) {
             throw M.OBJLIST_IDMISSING;
         }
 
-        document['synced'] = 0; // TODO this is not part of the validation and should go somewhere else
+        doc['synced'] = 0; // TODO this is not part of the validation and should go somewhere else
         return undefined;
     }
 }

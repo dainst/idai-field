@@ -115,14 +115,14 @@ textarea {
   resize: vertical;
 }
 
-#document-edit-wrapper header, #object-create header {
+#document-edit-wrapper header {
   background-color: #eee;
   padding: 7px;
   color: #fff;
   border-bottom: 1px solid #ccc;
 }
 
-#document-edit-wrapper header .mdi, #object-create header .mdi {
+#document-edit-wrapper header .mdi {
   display: inline-block;
   font-size: 1.1em;
   color: #fff;
@@ -131,14 +131,14 @@ textarea {
   margin-right: 5px;
 }
 
-#document-edit-wrapper header h1, #object-create header h1 {
+#document-edit-wrapper header h1 {
   font-size: 1.5em;
   padding: 0;
   margin: 0;
   background-color: #67b2b9;
 }
 
-#document-edit-wrapper main, #object-create main {
+#document-edit-wrapper main {
   padding: 25px;
   background-color: #eee;
 }

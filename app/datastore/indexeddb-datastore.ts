@@ -1,3 +1,4 @@
+import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Document} from "idai-components-2/idai-components-2";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {Injectable} from "@angular/core";
@@ -20,12 +21,10 @@ export class IndexeddbDatastore implements Datastore {
     private db: Promise<any>;
     private observers = [];
     private documentCache: { [resourceId: string]: Document } = {};
-
-
+    
     constructor(private idb:Indexeddb){
         this.db=idb.db()
     };
-
 
     public create(document:any):Promise<string> {
 
@@ -50,7 +49,7 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public update(document:Document):Promise<any> {
+    public update(document:IdaiFieldDocument):Promise<any> {
 
         return new Promise((resolve, reject) => {
            if (document.id == null) reject("Aborting update: No ID given. " +

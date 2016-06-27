@@ -1,7 +1,5 @@
 import {fdescribe, describe, xdescribe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
 import {IdaiFieldBackend} from "../app/services/idai-field-backend";
-import {ModelUtils} from "../app/model/model-utils";
-import {provide} from "@angular/core";
 import {IdaiFieldDocument} from "../app/model/idai-field-document";
 import {Headers} from "@angular/http";
 
@@ -66,9 +64,7 @@ export function main() {
         var idaiFieldBackend : IdaiFieldBackend;
         var j;
 
-        beforeEachProviders(() => [
-            provide(ModelUtils, {useClass: ModelUtils})
-        ]);
+        beforeEachProviders(() => []);
 
         beforeEach(function(){
 

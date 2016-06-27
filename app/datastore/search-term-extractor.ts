@@ -1,4 +1,4 @@
-import {IdaiFieldObject} from "../model/idai-field-object";
+import {Resource} from 'idai-components-2/idai-components-2';
 
 /**
  * @author Sebastian Cuy
@@ -6,12 +6,12 @@ import {IdaiFieldObject} from "../model/idai-field-object";
  */
 export class SearchTermExtractor {
 
-    public extractTerms(object:IdaiFieldObject):string[] {
+    public extractTerms(resource:Resource):string[] {
 
         var terms = [];
-        for (var property in object) {
-            if (!object.hasOwnProperty(property)) continue;
-            terms = terms.concat(this.extractProperty(object[property]));
+        for (var property in resource) {
+            if (!resource.hasOwnProperty(property)) continue;
+            terms = terms.concat(this.extractProperty(resource[property]));
         }
         return terms.map( term => term.toLowerCase());
     }

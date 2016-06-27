@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {IdaiFieldObject} from "../model/idai-field-object";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 
 export interface ObjectReaderError extends SyntaxError {
     lineNumber: number;
@@ -28,11 +28,11 @@ export class ObjectReader {
      * Read objects from file
      *
      * @param file the file to be read
-     * @returns {Observable<IdaiFieldObject>} An observable that emits
+     * @returns {Observable<IdaiFieldDocument>} An observable that emits
      *   objects for every parsed line or an error of type ObjectReaderError
      *   if an error is encountered while parsing.
      */
-    public fromFile(file: File): Observable<IdaiFieldObject> {
+    public fromFile(file: File): Observable<IdaiFieldDocument> {
 
         return Observable.create( observer => {
 
@@ -77,14 +77,11 @@ export class ObjectReader {
                         }
                         observer.complete();
                     }
-                }
+                };
                 reader.readAsText(chunk);
                 start += this.chunkSize;
                 end += this.chunkSize;
             }
-            
         });
-
     }
-
 }

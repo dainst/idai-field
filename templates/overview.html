@@ -60,7 +60,7 @@
                             (click)="save(selectedDocument,false)">Speichern</button>
                     <span class="mdi mdi-blur"></span>
                     <div *ngIf="selectedDocument['resource']['type']">
-                        [{{selectedDocument['resource'].type}}] {{selectedDocument['resource']['@id']}}
+                        {{selectedDocument['resource'].type}}
                     </div>
                     <div *ngIf="!selectedDocument['resource']['type']">
                         Neues Objekt

@@ -1,13 +1,12 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
-import {ValidationInterceptor} from "idai-components-2/idai-components-2";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
 /**
  * @author Daniel de Oliveira
  */
 @Injectable()
-export class AppValidationInterceptor extends ValidationInterceptor {
+export class ValidationInterceptor {
     
     validate(doc:IdaiFieldDocument) : string {
 

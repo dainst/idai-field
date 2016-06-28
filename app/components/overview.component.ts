@@ -1,13 +1,15 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Datastore} from 'idai-components-2/idai-components-2';
-import {Document} from 'idai-components-2/idai-components-2';
+import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
 import {Project} from "../model/project";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {SaveService} from "idai-components-2/idai-components-2";
+import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {PersistenceManager} from "idai-components-2/idai-components-2";
+import {ValidationInterceptor} from "./validation-interceptor";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
@@ -36,7 +38,9 @@ export class OverviewComponent implements OnInit {
         private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages,
-        private saveService:SaveService) {
+        private documentEditChangeMonitor:DocumentEditChangeMonitor,
+        private validationInterceptor:ValidationInterceptor,
+        private persistenceManager:PersistenceManager) {
     }
 
     /**
@@ -55,14 +59,21 @@ export class OverviewComponent implements OnInit {
     private checkChangeSelectionAllowed(currentlySelectedDocument) {
 
         this.messages.clear();
-        if (!this.saveService.isChanged())
+        if (!this.documentEditChangeMonitor.isChanged())
             return this.discardChanges(currentlySelectedDocument);
         this.modal.open();
     }
 
-    public save(doc:Document,withCallback:boolean=true) {
-        this.saveService.save(doc).then(
+    public save(doc:IdaiFieldDocument,withCallback:boolean=true) {
+
+        var errors=this.validationInterceptor.validate(doc);
+        if (errors!=undefined) {
+            return this.messages.add(errors);
+        }
+
+        this.persistenceManager.persist(doc).then(
             ()=>{
+                this.documentEditChangeMonitor.reset();
                 this.messages.add(M.OBJLIST_SAVE_SUCCESS);
                 if (withCallback) this.changeSelectionAllowedCallback();
             },
@@ -82,7 +93,7 @@ export class OverviewComponent implements OnInit {
     public discardChanges(document) {
 
         this.project.restore(document).then(() => {
-            this.saveService.setChanged(false);
+            this.documentEditChangeMonitor.reset();
             this.changeSelectionAllowedCallback();
         }, (err) => {
             this.messages.add(err);

@@ -34,7 +34,7 @@ describe('overview component', function() {
             })
     });
 
-    fit ("should not change the selection to existing when cancelling in modal", function() {
+    it ("should not change the selection to existing when cancelling in modal", function() {
         common.createObject("1")
             .then(common.createObject("2"))
             .then(common.selectObject(0))

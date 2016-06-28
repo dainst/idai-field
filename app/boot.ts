@@ -23,7 +23,7 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
-import {ValidationInterceptor} from './components/app-validation-interceptor';
+import {ValidationInterceptor} from './components/validation-interceptor';
 import {Project} from './model/project';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
@@ -43,7 +43,7 @@ bootstrap(AppComponent, [
     provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(Project, {useClass: Project}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
-    provide(SaveService, {useClass: SaveService}),
+    provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(ValidationInterceptor, {useClass: ValidationInterceptor}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),

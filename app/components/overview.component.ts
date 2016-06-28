@@ -28,7 +28,7 @@ export class OverviewComponent implements OnInit {
     @ViewChild('modal')
     modal: ModalComponent;
 
-    /**
+    /**     
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedDocument: Document;

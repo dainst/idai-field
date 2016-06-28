@@ -34,15 +34,26 @@ describe('overview component', function() {
             })
     });
 
-    
-    
-    
-    // TODO write test that prevents change of selection if the save was confirmed
-    // via modal but there was an error. 
-    
-    
+    fit ("should not change the selection to existing when cancelling in modal", function() {
+        common.createObject("1")
+            .then(common.createObject("2"))
+            .then(common.selectObject(0))
+            .then(common.typeInIdentifier("2a"))
+            .then(common.selectObject(1))
+            .then(common.scrollUp)
+            .then(clickCancelInModal)
+            .then(common.scrollUp)
+            .then(function(){
+                expect(element.all(by.css('#objectList .list-group-item')).get(0)
+                    .getAttribute('class')).toContain('selected')
+            })
+    });
     
     function clickSaveInModal() {
         return element(by.id('overview-save-confirmation-modal-save-button')).click();
+    }
+
+    function clickCancelInModal() {
+        return element(by.id('overview-save-confirmation-modal-cancel-button')).click();
     }
 });

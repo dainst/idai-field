@@ -3,8 +3,8 @@
 /// <reference path="../typings/browser/ambient/github-electron/index.d.ts" />
 /// <reference path="../config/config.d.ts" />
 
-import {bootstrap}    from '@angular/platform-browser-dynamic'
-import {AppComponent} from './components/app.component'
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {AppComponent} from './components/app.component';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {provide, enableProdMode} from '@angular/core';
 import {Datastore} from "idai-components-2/idai-components-2";
@@ -25,6 +25,7 @@ import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {ValidationInterceptor} from './components/validation-interceptor';
 import {Project} from './model/project';
+import {ObjectReader} from './services/object-reader';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 
@@ -47,5 +48,6 @@ bootstrap(AppComponent, [
     provide(ValidationInterceptor, {useClass: ValidationInterceptor}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),
-    provide(MD, {useClass: M})
+    provide(MD, {useClass: M}),
+    provide(ObjectReader, {useClass: ObjectReader})
 ]);

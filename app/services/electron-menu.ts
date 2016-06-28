@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
+import {ObjectReader} from "../services/object-reader";
 
 /**
  * @author Sebastian Cuy
@@ -7,7 +8,7 @@ import {Router} from "@angular/router-deprecated";
 @Injectable()
 export class ElectronMenu {
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private objectReader: ObjectReader) {}
 
     public build(): void {
 
@@ -33,9 +34,9 @@ export class ElectronMenu {
                 accelerator: 'CmdOrCtrl+I',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
-                        // TODO add link to import component
+                        this.importFile();
                     }
-                }
+                }.bind(this)
             }]
         }, {
             label: 'Edit',
@@ -182,6 +183,26 @@ export class ElectronMenu {
         const menu = Menu.buildFromTemplate(template);
         Menu.setApplicationMenu(menu);
 
+    }
+
+    private importFile(): void {
+
+        const {dialog} = require('electron').remote;
+        var fs = require('fs');
+
+        var filepaths = dialog.showOpenDialog({
+            properties: [ 'openFile' ],
+            title: "Import",
+            filters: [ { name: 'JSON-Lines-Datei', extensions: ['jsonl'] } ]
+        });
+
+        fs.readFile(filepaths[0], 'utf8', function (err, data) {
+            if (err) return console.log(err);
+            var file = new File([ data ], '', { type: "application/json" });
+            this.objectReader.fromFile(file).subscribe( object => {
+                console.log("obj: ", object);
+            });
+        }.bind(this));
     }
 
 }

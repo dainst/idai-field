@@ -22,7 +22,11 @@ export class ObjectReader {
      * @param chunkSize sets the number of characters that are read in
      *   one chunk (default: 1000)
      */
-    constructor(private chunkSize: number = 1000) {}
+    constructor() {
+        // TODO: injection of chunkSize doesn't work
+    }
+
+    private chunkSize: number = 1000
 
     /**
      * Read objects from file

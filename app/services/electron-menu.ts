@@ -23,9 +23,9 @@ export class ElectronMenu {
         const app = remote.app;
 
         let template = [{
-            label: 'File',
+            label: 'Datei',
             submenu: [{
-                label: 'New Item',
+                label: 'Neues Dokument',
                 accelerator: 'CmdOrCtrl+N',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -36,7 +36,7 @@ export class ElectronMenu {
             }, {
                 type: 'separator'
             }, {
-                label: 'Import',
+                label: 'Importieren',
                 accelerator: 'CmdOrCtrl+I',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -45,13 +45,13 @@ export class ElectronMenu {
                 }.bind(this)
             }]
         }, {
-            label: 'Edit',
+            label: 'Bearbeiten',
             submenu: [{
-                label: 'Undo',
+                label: 'Rückgängig',
                 accelerator: 'CmdOrCtrl+Z',
                 role: 'undo'
             }, {
-                label: 'Redo',
+                label: 'Wiederholen',
                 accelerator: 'Shift+CmdOrCtrl+Z',
                 role: 'redo'
             }, {
@@ -61,22 +61,22 @@ export class ElectronMenu {
                 accelerator: 'CmdOrCtrl+X',
                 role: 'cut'
             }, {
-                label: 'Copy',
+                label: 'Kopieren',
                 accelerator: 'CmdOrCtrl+C',
                 role: 'copy'
             }, {
-                label: 'Paste',
+                label: 'Einfügen',
                 accelerator: 'CmdOrCtrl+V',
                 role: 'paste'
             }, {
-                label: 'Select All',
+                label: 'Alle auswählen',
                 accelerator: 'CmdOrCtrl+A',
                 role: 'selectall'
             }]
         }, {
-            label: 'View',
+            label: 'Anzeige',
             submenu: [{
-                label: 'Reload',
+                label: 'Neu laden',
                 accelerator: 'CmdOrCtrl+R',
                 click: function (item, focusedWindow) {
                     if (focusedWindow) {
@@ -93,7 +93,7 @@ export class ElectronMenu {
                     }
                 }
             }, {
-                label: 'Toggle Full Screen',
+                label: 'Vollbild An/Aus',
                 accelerator: (function () {
                     if (process.platform === 'darwin') {
                         return 'Ctrl+Command+F'
@@ -107,7 +107,7 @@ export class ElectronMenu {
                     }
                 }
             }, {
-                label: 'Toggle Developer Tools',
+                label: 'Developer Tools an-/ausschalten',
                 accelerator: (function () {
                     if (process.platform === 'darwin') {
                         return 'Alt+Command+I'
@@ -122,19 +122,19 @@ export class ElectronMenu {
                 }
             }]
         }, {
-            label: 'Window',
+            label: 'Fenter',
             role: 'window',
             submenu: [{
-                label: 'Minimize',
+                label: 'Minimieren',
                 accelerator: 'CmdOrCtrl+M',
                 role: 'minimize'
             }, {
-                label: 'Close',
+                label: 'Schließen',
                 accelerator: 'CmdOrCtrl+W',
                 role: 'close'
             }]
         }, {
-            label: 'Help',
+            label: 'Hilfe',
             role: 'help',
             submenu: []
         }]
@@ -144,31 +144,31 @@ export class ElectronMenu {
             template.unshift({
                 label: name,
                 submenu: [{
-                    label: `About ${name}`,
+                    label: `Über ${name}`,
                     role: 'about'
                 }, {
                     type: 'separator'
                 }, {
-                    label: 'Services',
+                    label: 'Dienste',
                     role: 'services',
                     submenu: []
                 }, {
                     type: 'separator'
                 }, {
-                    label: `Hide ${name}`,
+                    label: `Verstecke ${name}`,
                     accelerator: 'Command+H',
                     role: 'hide'
                 }, {
-                    label: 'Hide Others',
+                    label: 'Andere verstecken',
                     accelerator: 'Command+Alt+H',
                     role: 'hideothers'
                 }, {
-                    label: 'Show All',
+                    label: 'Alle anzeigen',
                     role: 'unhide'
                 }, {
                     type: 'separator'
                 }, {
-                    label: 'Quit',
+                    label: 'Beenden',
                     accelerator: 'Command+Q',
                     click: function () {
                         app.quit()
@@ -198,7 +198,7 @@ export class ElectronMenu {
 
         var filepaths = dialog.showOpenDialog({
             properties: [ 'openFile' ],
-            title: "Import",
+            title: "Importieren",
             filters: [ { name: 'JSON-Lines-Datei', extensions: ['jsonl'] } ]
         });
 

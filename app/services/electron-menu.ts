@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Router} from "@angular/router-deprecated";
+import {Router} from "@angular/router-deprecated"; // TODO use component router
 import {ObjectReader} from "../services/object-reader";
 import {Datastore} from 'idai-components-2/idai-components-2'
 import {Project} from '../model/project'
@@ -29,7 +29,7 @@ export class ElectronMenu {
                 accelerator: 'CmdOrCtrl+N',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
-                        // TODO router is not injected (see https://stackoverflow.com/questions/36570747/angular2-router-undefined)
+                        // TODO bind this to use router
                         // this.router.navigate(['Overview']);
                     }
                 }
@@ -214,5 +214,8 @@ export class ElectronMenu {
             });
         }.bind(this));
     }
+    
+    
+    
 
 }

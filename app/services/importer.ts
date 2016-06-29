@@ -13,7 +13,9 @@ import {M} from "../m";
 export class Importer {
 
     private freeForAnotherRun=true;
-
+    private nrErrorsCurrentImport:number=0;
+    private nrSuccessesCurrentImport:number=0;
+    
     constructor(
         private objectReader:ObjectReader,
         private messages:Messages,
@@ -22,7 +24,8 @@ export class Importer {
     ) {}
 
     public importResourcesFromFile(filepath): void {
-
+        this.nrErrorsCurrentImport=0;
+        
         var fs = require('fs');
         fs.readFile(filepath, 'utf8', function (err, data) {
             if (err) return console.log(err);
@@ -31,35 +34,40 @@ export class Importer {
 
                 this.datastore.update(doc).then(
                     ()=>{
+                        this.nrSuccessesCurrentImport=this.nrSuccessesCurrentImport+1;
                         this.prepareNotification();
                     },
-                    err=>{
-                        console.error(err)
+                    ()=>{
+                        this.nrErrorsCurrentImport=this.nrErrorsCurrentImport+1;
+                        this.prepareNotification();
                     }
                 );
+            },()=>{
+                this.nrErrorsCurrentImport=this.nrErrorsCurrentImport+1;
+                this.prepareNotification();
             });
         }.bind(this));
     }
 
     private prepareNotification() {
+        
         if (this.freeForAnotherRun) {
             setTimeout(this.notifyUser.bind(this), 800);
             this.freeForAnotherRun=false;
         }
     }
 
-    /**
-     * Informs the user about the state of the import.
-     */
     private notifyUser() {
 
         this.freeForAnotherRun=true;
-
-
-        this.project.fetchAllDocuments();
-        this.messages.add(M.IMPORTER_SUCCESS);
-        console.log("finish");
-
-
+        
+        if (this.nrSuccessesCurrentImport>0) {
+            this.project.fetchAllDocuments();
+            this.messages.add(M.IMPORTER_SUCCESS);
+        }
+        if (this.nrErrorsCurrentImport>0) {
+            this.project.fetchAllDocuments();
+            this.messages.add(M.IMPORTER_FAILURE);
+        }
     }
 }

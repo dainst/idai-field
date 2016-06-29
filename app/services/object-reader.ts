@@ -44,10 +44,7 @@ export class ObjectReader {
                     let nlPos = buf.indexOf('\n');
                     while (nlPos != -1) {
                         try {
-                            let object = JSON.parse(buf.substr(0, nlPos));
-                            object['@id']=object['id'];
-                            delete object['id'];
-                            observer.next(object);
+                            observer.next(this.makeDoc(JSON.parse(buf.substr(0, nlPos))));
                         } catch(e) {
                             let error: ObjectReaderError = e;
                             error.lineNumber = line;
@@ -62,10 +59,7 @@ export class ObjectReader {
                     if (loaded >= file.size) {
                         if (buf.length > 0) {
                             try {
-                                let object = JSON.parse(buf);
-                                object['@id']=object['id'];
-                                delete object['id'];
-                                observer.next(object);
+                                observer.next(this.makeDoc(JSON.parse(buf)));
                             } catch(e) {
                                 let error: ObjectReaderError = e;
                                 error.lineNumber = line;
@@ -83,6 +77,16 @@ export class ObjectReader {
         });
     }
 
+    private makeDoc(resource){
+        resource['@id']=resource['id'];
+        delete resource['id'];
+        resource['type']=resource['@id'].replace(/\/[^/]*$/,"").replace(/\//,"");
+        return {
+            "resource":resource,
+            "id": resource['@id'].replace(/\/.*\//,"")
+        };
+    }
+    
     /**
      * @param chunkSize sets the number of characters that are read in
      *   one chunk (default: 1000)

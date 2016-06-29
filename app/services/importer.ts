@@ -12,7 +12,7 @@ import {M} from "../m";
 @Injectable()
 export class Importer {
 
-    private freeForAnotherRun=true;
+    private userNotificationInPreparation=false;
     private nrErrorsCurrentImport:number=0;
     private nrSuccessesCurrentImport:number=0;
     
@@ -51,15 +51,15 @@ export class Importer {
 
     private prepareNotification() {
         
-        if (this.freeForAnotherRun) {
+        if (!this.userNotificationInPreparation) {
             setTimeout(this.notifyUser.bind(this), 800);
-            this.freeForAnotherRun=false;
+            this.userNotificationInPreparation=true;
         }
     }
 
     private notifyUser() {
 
-        this.freeForAnotherRun=true;
+        this.userNotificationInPreparation=false;
         
         if (this.nrSuccessesCurrentImport>0) {
             this.project.fetchAllDocuments();

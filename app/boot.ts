@@ -26,6 +26,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {ValidationInterceptor} from './components/validation-interceptor';
 import {Project} from './model/project';
 import {ObjectReader} from './services/object-reader';
+import {Importer} from "./services/importer";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 
@@ -49,5 +50,6 @@ bootstrap(AppComponent, [
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
-    provide(ObjectReader, {useClass: ObjectReader})
+    provide(ObjectReader, {useClass: ObjectReader}),
+    provide(Importer, {useClass: Importer})
 ]);

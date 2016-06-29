@@ -1,8 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Router} from "@angular/router-deprecated"; // TODO use component router
-import {ObjectReader} from "../services/object-reader";
-import {Datastore} from 'idai-components-2/idai-components-2'
-import {Project} from '../model/project'
+import {Importer} from "../services/importer";
 
 /**
  * @author Sebastian Cuy
@@ -11,10 +8,7 @@ import {Project} from '../model/project'
 export class ElectronMenu {
 
     constructor(
-        private router: Router, 
-        private objectReader: ObjectReader,
-        private datastore: Datastore,
-        private project: Project) {}
+        private importer: Importer) {}
 
     public build(): void {
 
@@ -30,6 +24,7 @@ export class ElectronMenu {
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
                         // TODO bind this to use router
+                        // TODO use component router instead of router deprecated
                         // this.router.navigate(['Overview']);
                     }
                 }
@@ -40,7 +35,7 @@ export class ElectronMenu {
                 accelerator: 'CmdOrCtrl+I',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
-                        this.importFile();
+                        this.importResources();
                     }
                 }.bind(this)
             }]
@@ -190,32 +185,19 @@ export class ElectronMenu {
         Menu.setApplicationMenu(menu);
 
     }
-
-    private importFile(): void {
-
+    
+    private importResources() {
         const {dialog} = require('electron').remote;
-        var fs = require('fs');
 
         var filepaths = dialog.showOpenDialog({
             properties: [ 'openFile' ],
             title: "Importieren",
             filters: [ { name: 'JSON-Lines-Datei', extensions: ['jsonl'] } ]
         });
-
-        fs.readFile(filepaths[0], 'utf8', function (err, data) {
-            if (err) return console.log(err);
-            var file = new File([ data ], '', { type: "application/json" });
-            this.objectReader.fromFile(file).subscribe( doc => {
-                console.log("obj: ", doc);
-                this.datastore.update(doc).then(
-                    ()=>{this.project.fetchAllDocuments();},
-                    err=>console.error(err)
-                );
-            });
-        }.bind(this));
+        
+        this.importer.importResourcesFromFile(filepaths[0]);
     }
-    
-    
+
     
 
 }

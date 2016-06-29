@@ -1,5 +1,4 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {Datastore} from 'idai-components-2/idai-components-2';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";

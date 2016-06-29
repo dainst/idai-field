@@ -7,9 +7,12 @@ import {M} from "../m";
 
 
 /**
+ * @author Dnaiel de Oliveira
  */
 @Injectable()
 export class Importer {
+
+    private freeForAnotherRun=true;
 
     constructor(
         private objectReader:ObjectReader,
@@ -25,39 +28,38 @@ export class Importer {
             if (err) return console.log(err);
             var file = new File([ data ], '', { type: "application/json" });
             this.objectReader.fromFile(file).subscribe( doc => {
-                console.log("obj: ", doc);
+
                 this.datastore.update(doc).then(
                     ()=>{
-                        this.project.fetchAllDocuments();
-                        this.messages.add("hallo");
+                        this.prepareNotification();
                     },
-                    err=>console.error(err)
+                    err=>{
+                        console.error(err)
+                    }
                 );
             });
         }.bind(this));
     }
 
-    // setTimeout(this.notifyUser.bind(this), 100);
-    //
-    // private notifyUser() {
-    //
-    //     if (this.updateSuggestionsMode) return;
-    //     this.updateSuggestionsMode=true;
-    //
-    //     if (this.idSearchString.length < 1) return;
-    //
-    //     this.clearSuggestions();
-    //     this.datastore.find(this.idSearchString)
-    //         .then(documents => {
-    //
-    //             this.makeSuggestionsFrom(documents);
-    //             this.updateSuggestionsMode=false;
-    //
-    //         }).catch(err => {
-    //             console.debug(err);
-    //             this.updateSuggestionsMode=false;
-    //         }
-    //     );
-    // }
-    //
+    private prepareNotification() {
+        if (this.freeForAnotherRun) {
+            setTimeout(this.notifyUser.bind(this), 800);
+            this.freeForAnotherRun=false;
+        }
+    }
+
+    /**
+     * Informs the user about the state of the import.
+     */
+    private notifyUser() {
+
+        this.freeForAnotherRun=true;
+
+
+        this.project.fetchAllDocuments();
+        this.messages.add(M.IMPORTER_SUCCESS);
+        console.log("finish");
+
+
+    }
 }

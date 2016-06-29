@@ -13,6 +13,7 @@ import {Message} from "idai-components-2/idai-components-2"
 @Injectable()
 export class M { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
+    public static IMPORTER_SUCCESS : string = 'importer/success';
     public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
     public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
@@ -23,6 +24,10 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public msgs : { [id: string]: Message } = {};
 
     constructor() {
+        this.msgs[M.IMPORTER_SUCCESS]={
+            content: 'Ressourcen wurden erfolgreich importiert.',
+            level: 'success',
+        };
         this.msgs[M.OBJLIST_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',
             level: 'danger',

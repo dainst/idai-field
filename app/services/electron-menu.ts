@@ -25,7 +25,7 @@ export class ElectronMenu {
         let template = [{
             label: 'Datei',
             submenu: [{
-                label: 'Neues Dokument',
+                label: 'Neue Resource',
                 accelerator: 'CmdOrCtrl+N',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -36,7 +36,7 @@ export class ElectronMenu {
             }, {
                 type: 'separator'
             }, {
-                label: 'Importieren',
+                label: 'Resourcen importieren',
                 accelerator: 'CmdOrCtrl+I',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -180,7 +180,7 @@ export class ElectronMenu {
             template[3].submenu.push({
                 type: 'separator'
             }, {
-                label: 'Bring All to Front',
+                label: 'Alle nach vorne bringen',
                 role: 'front'
             });
 

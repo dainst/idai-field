@@ -33,8 +33,7 @@ export class OverviewComponent implements OnInit {
      */
     private selectedDocument: IdaiFieldDocument;
 
-    constructor(private datastore: Datastore,
-        @Inject('app.config') private config,
+    constructor(@Inject('app.config') private config,
         private project: Project,
         private configLoader: ConfigLoader,
         private messages: Messages,
@@ -113,11 +112,7 @@ export class OverviewComponent implements OnInit {
 
     private registerSelectionCallbackForNew() {
         return function() {
-            var newDocument : IdaiFieldDocument =
-                { "synced" : 1, "resource" :
-                { "type" : undefined, "identifier":undefined,"title":undefined}};
-            this.project.getDocuments().unshift(newDocument);
-            this.selectedDocument = <IdaiFieldDocument> newDocument;
+            this.selectedDocument = this.project.createNewDocument();
         }.bind(this);
     }
 
@@ -141,29 +136,13 @@ export class OverviewComponent implements OnInit {
     public ngOnInit() {
         this.setConfigs();
         if (this.config.environment == "test") {
-            setTimeout(() => this.fetchDocuments(), 500);
+            setTimeout(() => this.project.fetchAllDocuments(), 500);
         } else {
-            this.fetchDocuments();
+            this.project.fetchAllDocuments();
         }
     }
 
     onKey(event:any) {
-
-        if (event.target.value == "") {
-            this.datastore.all({}).then(documents => {
-                this.project.setDocuments(documents);
-            }).catch(err => console.error(err));
-        } else {
-            this.datastore.find(event.target.value).then(documents => {
-                this.project.setDocuments(documents);
-            }).catch(err => console.error(err));
-        }
-    }
-
-    private fetchDocuments() {
-
-        this.datastore.all({}).then(documents => {
-            this.project.setDocuments(documents);
-        }).catch(err => console.error(err));
+        this.project.fetchSomeDocuments(event.target.value);
     }
 }

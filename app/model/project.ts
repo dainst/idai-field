@@ -31,6 +31,31 @@ export class Project {
     
     private documents: Document[];
 
+    public createNewDocument() {
+        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
+        //     { "synced" : 1, "resource" :
+        //     { "type" : undefined, "identifier":"hallo","title":undefined}};
+        var newDocument = {"resource":{}};
+        this.getDocuments().unshift(<Document>newDocument);
+        return newDocument;
+    }
+
+    public fetchAllDocuments() {
+        this.datastore.all().then(documents => {
+            this.setDocuments(documents);
+        }).catch(err => console.error(err));
+    }
+
+    public fetchSomeDocuments(searchString) {
+        if (searchString == "") {
+            this.fetchAllDocuments()
+        } else {
+            this.datastore.find(searchString).then(documents => {
+                this.setDocuments(documents);
+            }).catch(err => console.error(err));
+        }
+    }
+    
     /**
      * Restores all objects marked as changed by resetting them to
      * back to the persisted state. In case there are any objects marked

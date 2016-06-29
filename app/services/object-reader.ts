@@ -16,17 +16,7 @@ export interface ObjectReaderError extends SyntaxError {
 @Injectable()
 export class ObjectReader {
 
-    /**
-     * Create ObjectReader
-     *
-     * @param chunkSize sets the number of characters that are read in
-     *   one chunk (default: 1000)
-     */
-    constructor() {
-        // TODO: injection of chunkSize doesn't work
-    }
-
-    private chunkSize: number = 1000
+    private chunkSize: number = 1000;
 
     /**
      * Read objects from file
@@ -55,6 +45,8 @@ export class ObjectReader {
                     while (nlPos != -1) {
                         try {
                             let object = JSON.parse(buf.substr(0, nlPos));
+                            object['@id']=object['id'];
+                            delete object['id'];
                             observer.next(object);
                         } catch(e) {
                             let error: ObjectReaderError = e;
@@ -71,6 +63,8 @@ export class ObjectReader {
                         if (buf.length > 0) {
                             try {
                                 let object = JSON.parse(buf);
+                                object['@id']=object['id'];
+                                delete object['id'];
                                 observer.next(object);
                             } catch(e) {
                                 let error: ObjectReaderError = e;
@@ -87,5 +81,13 @@ export class ObjectReader {
                 end += this.chunkSize;
             }
         });
+    }
+
+    /**
+     * @param chunkSize sets the number of characters that are read in
+     *   one chunk (default: 1000)
+     */
+    public setChunkSize(chunkSize:number) {
+        this.chunkSize=chunkSize;
     }
 }

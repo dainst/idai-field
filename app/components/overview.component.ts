@@ -31,7 +31,7 @@ export class OverviewComponent implements OnInit {
     /**     
      * The object currently selected in the list and shown in the edit component.
      */
-    private selectedDocument: Document;
+    private selectedDocument: IdaiFieldDocument;
 
     constructor(private datastore: Datastore,
         @Inject('app.config') private config,
@@ -113,9 +113,11 @@ export class OverviewComponent implements OnInit {
 
     private registerSelectionCallbackForNew() {
         return function() {
-            var newDocument = {"resource":{}};
+            var newDocument : IdaiFieldDocument =
+                { "synced" : 1, "resource" :
+                { "type" : undefined, "identifier":undefined,"title":undefined}};
             this.project.getDocuments().unshift(newDocument);
-            this.selectedDocument = <Document> newDocument;
+            this.selectedDocument = <IdaiFieldDocument> newDocument;
         }.bind(this);
     }
 
@@ -125,7 +127,7 @@ export class OverviewComponent implements OnInit {
      *   undefined if a new object is to be created if the preconditions
      *   to change the selection are met.
      */
-    public select(documentToSelect: Document) {
+    public select(documentToSelect: IdaiFieldDocument) {
 
         if (documentToSelect) {
             if (documentToSelect == this.selectedDocument) return;

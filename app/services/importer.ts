@@ -7,7 +7,7 @@ import {M} from "../m";
 
 
 /**
- * @author Dnaiel de Oliveira
+ * @author Daniel de Oliveira
  */
 @Injectable()
 export class Importer {

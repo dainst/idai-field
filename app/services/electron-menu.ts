@@ -19,7 +19,7 @@ export class ElectronMenu {
         let template = [{
             label: 'Datei',
             submenu: [{
-                label: 'Neue Resource',
+                label: 'Neue Ressource',
                 accelerator: 'CmdOrCtrl+N',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -31,7 +31,7 @@ export class ElectronMenu {
             }, {
                 type: 'separator'
             }, {
-                label: 'Resourcen importieren',
+                label: 'Ressourcen importieren',
                 accelerator: 'CmdOrCtrl+I',
                 click: function(item, focusedWindow) {
                     if (focusedWindow) {
@@ -52,7 +52,7 @@ export class ElectronMenu {
             }, {
                 type: 'separator'
             }, {
-                label: 'Cut',
+                label: 'Ausschneiden',
                 accelerator: 'CmdOrCtrl+X',
                 role: 'cut'
             }, {
@@ -117,7 +117,7 @@ export class ElectronMenu {
                 }
             }]
         }, {
-            label: 'Fenter',
+            label: 'Fenster',
             role: 'window',
             submenu: [{
                 label: 'Minimieren',

@@ -61,13 +61,21 @@ export class Importer {
 
         this.userNotificationInPreparation=false;
         
-        if (this.nrSuccessesCurrentImport>0) {
+        if (this.nrSuccessesCurrentImport > 0) {
             this.project.fetchAllDocuments();
-            this.messages.add(M.IMPORTER_SUCCESS);
+            if (this.nrSuccessesCurrentImport == 1) {
+                this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
+            } else {
+                this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [this.nrSuccessesCurrentImport.toString()]);
+            }
         }
-        if (this.nrErrorsCurrentImport>0) {
+        if (this.nrErrorsCurrentImport > 0) {
             this.project.fetchAllDocuments();
-            this.messages.add(M.IMPORTER_FAILURE);
+            if (this.nrErrorsCurrentImport == 1) {
+                this.messages.add(M.IMPORTER_FAILURE_SINGLE);
+            } else {
+                this.messages.add(M.IMPORTER_FAILURE_MULTIPLE, [this.nrErrorsCurrentImport.toString()]);   
+            }
         }
     }
 }

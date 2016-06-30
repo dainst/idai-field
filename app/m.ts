@@ -13,8 +13,10 @@ import {Message} from "idai-components-2/idai-components-2"
 @Injectable()
 export class M { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
-    public static IMPORTER_SUCCESS : string = 'importer/success';
-    public static IMPORTER_FAILURE : string = 'importer/failure';
+    public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
+    public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
+    public static IMPORTER_FAILURE_SINGLE : string = 'importer/failure/single';
+    public static IMPORTER_FAILURE_MULTIPLE : string = 'importer/failure/multiple';
     public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
     public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
@@ -25,37 +27,55 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public msgs : { [id: string]: Message } = {};
 
     constructor() {
-        this.msgs[M.IMPORTER_SUCCESS]={
-            content: 'Ressourcen wurden erfolgreich importiert.',
+        this.msgs[M.IMPORTER_SUCCESS_SINGLE]={
+            content: 'Eine Ressource wurde erfolgreich importiert.',
             level: 'success',
+            params: []
         };
-        this.msgs[M.IMPORTER_FAILURE]={
-            content: 'Beim importieren von Ressourcen ist ein Fehler aufgetreten.',
+        this.msgs[M.IMPORTER_SUCCESS_MULTIPLE]={
+            content: '{0} Ressourcen wurden erfolgreich importiert.',
+            level: 'success',
+            params: [ "Mehrere"]
+        };
+        this.msgs[M.IMPORTER_FAILURE_SINGLE]={
+            content: 'Beim Importieren einer Ressource ist ein Fehler aufgetreten.',
             level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMPORTER_FAILURE_MULTIPLE]={
+            content: 'Beim Importieren von {0} Ressourcen ist ein Fehler aufgetreten.',
+            level: 'danger',
+            params: [ "mehreren"]
         };
         this.msgs[M.OBJLIST_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',
             level: 'danger',
+            params: []
         };
         this.msgs[M.OBJLIST_IDMISSING]={
             content: 'Objekt-Identifier fehlt.',
-            level: 'danger'
+            level: 'danger',
+            params: []
         };
         this.msgs[M.OBJLIST_SAVE_SUCCESS]={
             content: 'Das Objekt wurde erfolgreich gespeichert.',
-            level: 'success'
+            level: 'success',
+            params: []
         };
         this.msgs[M.MESSAGES_NOBODY]={
             content: "Keine Message gefunden für Schlüssel 'id'.",
-            level: 'danger'
+            level: 'danger',
+            params: []
         };
         this.msgs[M.PC_GENERIC_ERROR]={
             content: "Fehler beim Auswerten eines Konfigurationsobjektes.",
-            level: 'danger'
+            level: 'danger',
+            params: []
         };
         this.msgs[M.PARSE_GENERIC_ERROR]={
             content: "Fehler beim Parsen einer Konfigurationsdatei.",
-            level: 'danger'
+            level: 'danger',
+            params: []
         };
     }
 }

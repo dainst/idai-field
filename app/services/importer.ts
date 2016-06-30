@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, NgZone} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
 import {Messages} from "idai-components-2/idai-components-2";
 import {Project} from "../model/project";
@@ -21,13 +21,15 @@ export class Importer {
         private objectReader: ObjectReader,
         private messages: Messages,
         private project: Project,
-        private datastore: Datastore
+        private datastore: Datastore,
+        private zone: NgZone
     ) {}
 
     public importResourcesFromFile(filepath): void {
 
         this.messages.clear();
         this.messages.add(M.IMPORTER_START);
+        this.zone.run(() => {});
 
         var fs = require('fs');
         fs.readFile(filepath, 'utf8', function (err, data) {
@@ -36,16 +38,16 @@ export class Importer {
             this.objectReader.fromFile(file).subscribe( doc => {
 
                 this.datastore.update(doc).then(
-                    ()=>{
+                    () => {
                         this.nrSuccessesCurrentImport++;
                         this.prepareNotification();
                     },
-                    ()=>{
+                    () => {
                         this.nrErrorsCurrentImport++;
                         this.prepareNotification();
                     }
                 );
-            },()=>{
+            }, ()=>{
                 this.nrErrorsCurrentImport++;
                 this.prepareNotification();
             });
@@ -83,5 +85,7 @@ export class Importer {
             }
             this.nrErrorsCurrentImport = 0;
         }
+
+        this.zone.run(() => {});
     }
 }

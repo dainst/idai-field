@@ -13,6 +13,7 @@ import {Message} from "idai-components-2/idai-components-2"
 @Injectable()
 export class M { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
+    public static IMPORTER_START : string = 'importer/start';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
     public static IMPORTER_FAILURE_SINGLE : string = 'importer/failure/single';
@@ -27,6 +28,12 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public msgs : { [id: string]: Message } = {};
 
     constructor() {
+        this.msgs[M.IMPORTER_START]={
+            content: 'Starte Import...',
+            level: 'info',
+            params: []
+        };
+        
         this.msgs[M.IMPORTER_SUCCESS_SINGLE]={
             content: 'Eine Ressource wurde erfolgreich importiert.',
             level: 'success',

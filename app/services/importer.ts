@@ -25,8 +25,10 @@ export class Importer {
     ) {}
 
     public importResourcesFromFile(filepath): void {
-        this.nrErrorsCurrentImport=0;
-        
+
+        this.messages.clear();
+        this.messages.add(M.IMPORTER_START);
+
         var fs = require('fs');
         fs.readFile(filepath, 'utf8', function (err, data) {
             if (err) return console.log(err);

@@ -39,8 +39,8 @@ export class SyncMediator {
                         this.datastore.get(cursor.value['resource']['@id']).then(
                             possiblyCachedDocFromDS=>{
                                 observer.next(possiblyCachedDocFromDS);
-                                cursor.continue();
                         });
+                        cursor.continue();
                     } else {
                         this.observers.push(observer);
                     }

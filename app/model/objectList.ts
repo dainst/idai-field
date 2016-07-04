@@ -7,7 +7,7 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
  * @author Daniel de Oliveira
  */
 @Injectable()
-export class Project {
+export class ObjectList {
 
     public constructor(private datastore: IndexeddbDatastore) {}
     

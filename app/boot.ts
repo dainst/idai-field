@@ -22,7 +22,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {ValidationInterceptor} from './components/validation-interceptor';
-import {Project} from './model/project';
+import {ObjectList} from './model/objectList';
 import {ObjectReader} from './services/object-reader';
 import {Importer} from "./services/importer";
 
@@ -41,7 +41,7 @@ bootstrap(AppComponent, [
     provide('app.config', { useValue: CONFIG }),
     provide(ConfigLoader, {useClass: ConfigLoader}),
     provide(ElectronMenu, {useClass: ElectronMenu}),
-    provide(Project, {useClass: Project}),
+    provide(ObjectList, {useClass: ObjectList}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(ValidationInterceptor, {useClass: ValidationInterceptor}),

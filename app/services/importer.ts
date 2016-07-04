@@ -1,7 +1,7 @@
 import {Injectable, NgZone} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
 import {Messages} from "idai-components-2/idai-components-2";
-import {Project} from "../model/project";
+import {ObjectList} from "../model/objectList";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 
@@ -20,7 +20,7 @@ export class Importer {
     constructor(
         private objectReader: ObjectReader,
         private messages: Messages,
-        private project: Project,
+        private objectList: ObjectList,
         private datastore: Datastore,
         private zone: NgZone
     ) {}
@@ -47,7 +47,7 @@ export class Importer {
                         this.prepareNotification();
                     }
                 );
-            }, ()=>{
+            }, () => {
                 this.nrErrorsCurrentImport++;
                 this.prepareNotification();
             });
@@ -67,7 +67,7 @@ export class Importer {
         this.userNotificationInPreparation = false;
         
         if (this.nrSuccessesCurrentImport > 0) {
-            this.project.fetchAllDocuments();
+            this.objectList.fetchAllDocuments();
             if (this.nrSuccessesCurrentImport == 1) {
                 this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
             } else {
@@ -77,7 +77,7 @@ export class Importer {
         }
 
         if (this.nrErrorsCurrentImport > 0) {
-            this.project.fetchAllDocuments();
+            this.objectList.fetchAllDocuments();
             if (this.nrErrorsCurrentImport == 1) {
                 this.messages.add(M.IMPORTER_FAILURE_SINGLE);
             } else {

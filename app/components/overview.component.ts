@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, Chang
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../components/app.component";
-import {Project} from "../model/project";
+import {ObjectList} from "../model/objectList";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
@@ -33,7 +33,7 @@ export class OverviewComponent implements OnInit {
     private selectedDocument: IdaiFieldDocument;
 
     constructor(@Inject('app.config') private config,
-        private project: Project,
+        private objectList: ObjectList,
         private configLoader: ConfigLoader,
         private messages: Messages,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
@@ -90,7 +90,7 @@ export class OverviewComponent implements OnInit {
      */
     public discardChanges(document) {
 
-        this.project.restore(document).then(() => {
+        this.objectList.restore(document).then(() => {
             this.documentEditChangeMonitor.reset();
             this.changeSelectionAllowedCallback();
         }, (err) => {
@@ -111,7 +111,7 @@ export class OverviewComponent implements OnInit {
 
     private registerSelectionCallbackForNew() {
         return function() {
-            this.selectedDocument = this.project.createNewDocument();
+            this.selectedDocument = this.objectList.createNewDocument();
         }.bind(this);
     }
 
@@ -135,13 +135,13 @@ export class OverviewComponent implements OnInit {
     public ngOnInit() {
         this.setConfigs();
         if (this.config.environment == "test") {
-            setTimeout(() => this.project.fetchAllDocuments(), 500);
+            setTimeout(() => this.objectList.fetchAllDocuments(), 500);
         } else {
-            this.project.fetchAllDocuments();
+            this.objectList.fetchAllDocuments();
         }
     }
 
     onKey(event:any) {
-        this.project.fetchSomeDocuments(event.target.value);
+        this.objectList.fetchSomeDocuments(event.target.value);
     }
 }

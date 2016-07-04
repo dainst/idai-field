@@ -1,5 +1,5 @@
 {
-  "ambientDependencies": {
+  "globalDependencies": {
     "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
     "github-electron": "github:DefinitelyTyped/DefinitelyTyped/github-electron/github-electron.d.ts#f16c4922a7dd6d359a197e4cc5103463ba68cf9e",
     "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#5c182b9af717f73146399c2485f70f1e2ac0ff2b",

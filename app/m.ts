@@ -16,8 +16,8 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public static IMPORTER_START : string = 'importer/start';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
-    public static IMPORTER_FAILURE_SINGLE : string = 'importer/failure/single';
-    public static IMPORTER_FAILURE_MULTIPLE : string = 'importer/failure/multiple';
+    public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
+    public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
     public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
@@ -33,7 +33,6 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             level: 'info',
             params: []
         };
-        
         this.msgs[M.IMPORTER_SUCCESS_SINGLE]={
             content: 'Eine Ressource wurde erfolgreich importiert.',
             level: 'success',
@@ -44,15 +43,15 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             level: 'success',
             params: [ "Mehrere"]
         };
-        this.msgs[M.IMPORTER_FAILURE_SINGLE]={
-            content: 'Beim Importieren einer Ressource ist ein Fehler aufgetreten.',
+        this.msgs[M.IMPORTER_FAILURE_FILEUNREADABLE]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Die Datei {0} konnte nicht gelesen werden.',
             level: 'danger',
-            params: []
+            params: [ "" ]
         };
-        this.msgs[M.IMPORTER_FAILURE_MULTIPLE]={
-            content: 'Beim Importieren von {0} Ressourcen ist ein Fehler aufgetreten.',
+        this.msgs[M.IMPORTER_FAILURE_INVALIDJSON]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
             level: 'danger',
-            params: [ "mehreren"]
+            params: [ "?" ]
         };
         this.msgs[M.OBJLIST_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',

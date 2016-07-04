@@ -13,9 +13,7 @@ import {M} from "../m";
 @Injectable()
 export class Importer {
 
-    private userNotificationInPreparation = false;
-    private nrErrorsCurrentImport: number = 0;
-    private nrSuccessesCurrentImport: number = 0;
+    private updatePromises: Array<Promise<any>> = [];
     
     constructor(
         private objectReader: ObjectReader,
@@ -27,63 +25,46 @@ export class Importer {
 
     public importResourcesFromFile(filepath): void {
 
+        this.updatePromises = [];
+
         this.messages.clear();
         this.messages.add(M.IMPORTER_START);
         this.zone.run(() => {});
 
         var fs = require('fs');
         fs.readFile(filepath, 'utf8', function (err, data) {
-            if (err) return console.log(err);
+            if (err) {
+                this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [ filepath ]);
+                return;
+            }
+
             var file = new File([ data ], '', { type: "application/json" });
             this.objectReader.fromFile(file).subscribe( doc => {
-
-                this.datastore.update(doc).then(
-                    () => {
-                        this.nrSuccessesCurrentImport++;
-                        this.prepareNotification();
-                    },
-                    () => {
-                        this.nrErrorsCurrentImport++;
-                        this.prepareNotification();
-                    }
-                );
+                this.updatePromises.push(this.datastore.update(doc));
+            }, error => {
+                this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [ error.lineNumber ]);
+                this.waitForPromiseResults();
             }, () => {
-                this.nrErrorsCurrentImport++;
-                this.prepareNotification();
+                this.waitForPromiseResults();
             });
         }.bind(this));
     }
 
-    private prepareNotification() {
-        
-        if (!this.userNotificationInPreparation) {
-            setTimeout(this.notifyUser.bind(this), 800);
-            this.userNotificationInPreparation = true;
-        }
+    private waitForPromiseResults() {
+        Promise.all(this.updatePromises).then(
+            () => {
+                this.objectList.fetchAllDocuments();
+                this.showSuccessMessage();
+            }, error => {
+                console.log("Datastore error");
+            });
     }
 
-    private notifyUser() {
-
-        this.userNotificationInPreparation = false;
-        
-        if (this.nrSuccessesCurrentImport > 0) {
-            this.objectList.fetchAllDocuments();
-            if (this.nrSuccessesCurrentImport == 1) {
-                this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
-            } else {
-                this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [this.nrSuccessesCurrentImport.toString()]);
-            }
-            this.nrSuccessesCurrentImport = 0;
-        }
-
-        if (this.nrErrorsCurrentImport > 0) {
-            this.objectList.fetchAllDocuments();
-            if (this.nrErrorsCurrentImport == 1) {
-                this.messages.add(M.IMPORTER_FAILURE_SINGLE);
-            } else {
-                this.messages.add(M.IMPORTER_FAILURE_MULTIPLE, [this.nrErrorsCurrentImport.toString()]);   
-            }
-            this.nrErrorsCurrentImport = 0;
+    private showSuccessMessage() {
+        if (this.updatePromises.length == 1) {
+            this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
+        } else {
+            this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [this.updatePromises.length.toString()]);
         }
 
         this.zone.run(() => {});

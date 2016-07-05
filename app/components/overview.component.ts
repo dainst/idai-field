@@ -8,7 +8,7 @@ import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {ValidationInterceptor} from "./validation-interceptor";
+import {ValidationInterceptor} from "../services/validation-interceptor";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
@@ -68,6 +68,8 @@ export class OverviewComponent implements OnInit {
         if (errors!=undefined) {
             return this.messages.add(errors);
         }
+
+        doc['synced'] = 0;
 
         this.persistenceManager.persist(doc).then(
             ()=>{

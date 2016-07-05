@@ -21,7 +21,7 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
-import {ValidationInterceptor} from './components/validation-interceptor';
+import {ValidationInterceptor} from './services/validation-interceptor';
 import {ObjectList} from './model/objectList';
 import {ObjectReader} from './services/object-reader';
 import {Importer} from "./services/importer";

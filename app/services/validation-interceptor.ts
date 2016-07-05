@@ -19,8 +19,7 @@ export class ValidationInterceptor {
         if (!resource.identifier || resource.identifier.length == 0) {
             return M.OBJLIST_IDMISSING;
         }
-
-        doc['synced'] = 0; // TODO this is not part of the validation and should go somewhere else
+        
         return undefined;
     }
 }

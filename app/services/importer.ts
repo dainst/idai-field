@@ -2,6 +2,8 @@ import {Injectable, NgZone} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ObjectList} from "../model/objectList";
+import {IdaiFieldDocument} from "../model/idai-field-document";
+import {ValidationInterceptor} from "../services/validation-interceptor";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 
@@ -13,7 +15,7 @@ import {M} from "../m";
 @Injectable()
 export class Importer {
 
-    private docsToImport: Array<Document>;
+    private docsToImport: Array<IdaiFieldDocument>;
     private currentUpdatePromise: Promise<any>;
     private importSuccessCounter: number;
     private objectReaderFinished: boolean;
@@ -24,10 +26,11 @@ export class Importer {
         private messages: Messages,
         private objectList: ObjectList,
         private datastore: Datastore,
+        private validationInterceptor: ValidationInterceptor,
         private zone: NgZone
     ) {}
 
-    public importResourcesFromFile(filepath): void {
+    public importResourcesFromFile(filepath: string): void {
 
         this.docsToImport = [];
         this.currentUpdatePromise = undefined;
@@ -62,9 +65,17 @@ export class Importer {
         }.bind(this));
     }
 
-    private updateDocument(doc) {
+    private updateDocument(doc: IdaiFieldDocument) {
         var index = this.docsToImport.indexOf(doc);
         if (index > -1) this.docsToImport.splice(index, 1);
+
+        var error = this.validationInterceptor.validate(doc)
+        if (error) {
+            this.showValidationErrorMessage(doc, error);
+            this.errorState = true;
+            this.finishImport();
+            return;
+        }
 
         this.currentUpdatePromise = this.datastore.update(doc);
         this.currentUpdatePromise.then(() => {
@@ -102,15 +113,23 @@ export class Importer {
         } else {
             this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [this.importSuccessCounter.toString()]);
         }
-
+        
         this.zone.run(() => {});
     }
 
-    private showDatabaseErrorMessage(doc, error) {
+    private showDatabaseErrorMessage(doc: IdaiFieldDocument, error: any) {
         if (error == M.OBJLIST_IDEXISTS) {
             this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
         } else {
             this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);
+        }
+
+        this.zone.run(() => {});
+    }
+
+    private showValidationErrorMessage(doc: IdaiFieldDocument, error: any) {
+        if (error == M.OBJLIST_IDMISSING) {
+            this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
         }
 
         this.zone.run(() => {});

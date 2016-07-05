@@ -19,7 +19,8 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static IMPORTER_FAILURE_IDEXISTS: string = 'importer/failure/idexists';
-    public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror'
+    public static IMPORTER_FAILURE_IDMISSING: string = 'importer/failure/idmissing';
+    public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
     public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
     public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
@@ -66,6 +67,11 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
                      'gespeichert werden.',
             level: 'danger',
             params: [ "?" ]
+        };
+        this.msgs[M.IMPORTER_FAILURE_IDMISSING]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Ein Objekt-Identifier fehlt.',
+            level: 'danger',
+            params: []
         };
         this.msgs[M.OBJLIST_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',

@@ -44,7 +44,6 @@ export function main() {
                 var p= datastore.create(object);
 
                 request.onerror("reqerror");
-                request2.onerror("req2error");
 
                 p.then(
                     () => {

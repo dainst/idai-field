@@ -34,6 +34,10 @@ export class ValidationInterceptor {
             return M.VALIDATION_ERROR_INVALIDTYPE;
         }
         
+        if (!this.validateFields(resource)) {
+            return M.VALIDATION_ERROR_INVALIDFIELD;
+        }
+        
         return undefined;
     }
 
@@ -57,5 +61,33 @@ export class ValidationInterceptor {
         var type = Utils.getTypeFromId(resource["@id"]);
 
         return this.projectConfiguration.getTypes().indexOf(type) > -1;
+    }
+
+    /**
+     * 
+     * @param resource
+     * @returns {boolean} true if all fields of the resource are valid, otherwise false
+     */
+    private validateFields(resource: any): boolean {
+
+        var fields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource["@id"]));
+        var defaultFields = [ "@id", "type" ];
+
+        for (var resourceField in resource) {
+            if (resource.hasOwnProperty(resourceField)) {
+                var fieldFound = false;
+                for (var i in fields) {
+                    if (fields[i].field == resourceField) {
+                        fieldFound = true;
+                        break;
+                    }
+                }
+                if (!fieldFound && defaultFields.indexOf(resourceField) == -1) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
     }
 }

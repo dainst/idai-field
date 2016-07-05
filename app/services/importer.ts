@@ -138,6 +138,8 @@ export class Importer {
         } else if (error == M.VALIDATION_ERROR_INVALIDTYPE) {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE,
                 [Utils.getTypeFromId(doc.resource["@id"]), doc.resource.identifier]);
+        } else if (error == M.VALIDATION_ERROR_INVALIDFIELD) {
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [doc.resource.identifier]);
         }
 
         this.zone.run(() => {});

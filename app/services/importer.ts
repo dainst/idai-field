@@ -1,10 +1,9 @@
 import {Injectable, NgZone} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
-import {Messages} from "idai-components-2/idai-components-2";
+import {Messages, Datastore, Utils} from "idai-components-2/idai-components-2";
 import {ObjectList} from "../model/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {ValidationInterceptor} from "../services/validation-interceptor";
-import {Datastore} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 
 
@@ -66,6 +65,7 @@ export class Importer {
     }
 
     private updateDocument(doc: IdaiFieldDocument) {
+        
         var index = this.docsToImport.indexOf(doc);
         if (index > -1) this.docsToImport.splice(index, 1);
 
@@ -94,6 +94,7 @@ export class Importer {
     }
 
     private finishImport() {
+        
         if (this.importSuccessCounter > 0 ) {
             this.objectList.fetchAllDocuments();
             this.showSuccessMessage();
@@ -101,6 +102,7 @@ export class Importer {
     }
     
     private showStartMessage() {
+        
         this.messages.clear();
         this.messages.add(M.IMPORTER_START);
 
@@ -108,6 +110,7 @@ export class Importer {
     }
 
     private showSuccessMessage() {
+        
         if (this.importSuccessCounter == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
         } else {
@@ -118,6 +121,7 @@ export class Importer {
     }
 
     private showDatabaseErrorMessage(doc: IdaiFieldDocument, error: any) {
+        
         if (error == M.OBJLIST_IDEXISTS) {
             this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
         } else {
@@ -128,8 +132,12 @@ export class Importer {
     }
 
     private showValidationErrorMessage(doc: IdaiFieldDocument, error: any) {
+        
         if (error == M.OBJLIST_IDMISSING) {
             this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
+        } else if (error == M.VALIDATION_ERROR_INVALIDTYPE) {
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE,
+                [Utils.getTypeFromId(doc.resource["@id"]), doc.resource.identifier]);
         }
 
         this.zone.run(() => {});

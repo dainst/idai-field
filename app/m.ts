@@ -18,6 +18,8 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
+    public static IMPORTER_FAILURE_IDEXISTS: string = 'importer/failure/idexists';
+    public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror'
     public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
     public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
     public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
@@ -50,6 +52,17 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDJSON]={
             content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
+            level: 'danger',
+            params: [ "?" ]
+        };
+        this.msgs[M.IMPORTER_FAILURE_IDEXISTS]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Objekt-Identifier {0} existiert bereits.',
+            level: 'danger',
+            params: [ "" ]
+        };
+        this.msgs[M.IMPORTER_FAILURE_GENERICDATASTOREERROR]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Das Objekt {0} konnte nicht ' +
+                     'gespeichert werden.',
             level: 'danger',
             params: [ "?" ]
         };

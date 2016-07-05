@@ -37,16 +37,18 @@ export class IndexeddbDatastore implements Datastore {
             document.modified = document.created;
             this.documentCache[document['id']] = document;
 
-            return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
-                .then(() => resolve(document['resource']['@id']), err => {
-                    
+            return this.saveDocument(document).then(() => {
+                return this.saveFulltext(document);
+            }, err => {
                     document.id = undefined;
                     document['resource']['@id'] = undefined;
                     document.created = undefined;
                     document.modified = undefined;
                     reject(M.OBJLIST_IDEXISTS);
-                });
-        });
+                }
+            ).then(() => resolve(),
+                err => reject(M.DATASTORE_GENERIC_SAVE_ERROR));
+            });
     }
 
     public update(document:IdaiFieldDocument):Promise<any> {
@@ -55,9 +57,12 @@ export class IndexeddbDatastore implements Datastore {
            if (document.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
            document.modified = new Date();
-           return Promise.all([this.saveDocument(document), this.saveFulltext(document)])
-               .then(() => resolve(), err => reject(M.OBJLIST_IDEXISTS));
-        });
+           return this.saveDocument(document).then(() => {
+               return this.saveFulltext(document);
+           }, err => reject(M.OBJLIST_IDEXISTS)
+           ).then(() => resolve(),
+               err => reject(M.DATASTORE_GENERIC_SAVE_ERROR));
+           });
     }
 
     public refresh(id:string):Promise<Document>  {

@@ -29,13 +29,15 @@ export class ValidationInterceptor {
         if (!this.validateIdentifier(resource)) {
             return M.OBJLIST_IDMISSING;
         }
-        
-        if (!this.validateType(resource)) {
-            return M.VALIDATION_ERROR_INVALIDTYPE;
-        }
-        
-        if (!this.validateFields(resource)) {
-            return M.VALIDATION_ERROR_INVALIDFIELD;
+
+        if (resource['@id']) {
+            if (!this.validateType(resource)) {
+                return M.VALIDATION_ERROR_INVALIDTYPE;
+            }
+
+            if (!this.validateFields(resource)) {
+                return M.VALIDATION_ERROR_INVALIDFIELD;
+            }
         }
         
         return undefined;
@@ -57,8 +59,8 @@ export class ValidationInterceptor {
      * @returns {boolean} true if the type of the resource is valid, otherwise false
      */
     private validateType(resource: any): boolean {
-        
-        var type = Utils.getTypeFromId(resource["@id"]);
+
+        var type = Utils.getTypeFromId(resource['@id']);
 
         return this.projectConfiguration.getTypes().indexOf(type) > -1;
     }
@@ -70,7 +72,7 @@ export class ValidationInterceptor {
      */
     private validateFields(resource: any): boolean {
 
-        var fields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource["@id"]));
+        var fields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
         var defaultFields = [ "@id", "type" ];
 
         for (var resourceField in resource) {

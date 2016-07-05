@@ -78,12 +78,13 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             params: []
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDTYPE]={
-            content: "Beim Import ist ein Fehler aufgetreten: Der Typ {0} der Ressource {1} wird nicht unterstützt.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Typendefinition für den Typ \"{0}\" der " +
+                     "Ressource {1}.",
             level: 'danger',
             params: ["", ""]
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELD]={
-            content: "Beim Import ist ein Fehler aufgetreten: Ein Feld der Ressource {0} wird nicht unterstützt.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für ein Feld der Ressource {0}.",
             level: 'danger',
             params: [""]
         };

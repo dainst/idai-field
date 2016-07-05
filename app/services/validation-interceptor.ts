@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Utils, ProjectConfiguration, ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
+import {Utils, ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
+import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
 
 /**
  * @author Daniel de Oliveira
@@ -11,10 +12,15 @@ import {Utils, ProjectConfiguration, ConfigLoader} from "../../node_modules/idai
 export class ValidationInterceptor {
 
     private projectConfiguration: ProjectConfiguration;
+    private relationsConfiguration: RelationsConfiguration;
 
     constructor(private configLoader: ConfigLoader) {
         this.configLoader.projectConfiguration().subscribe((projectConfiguration) => {
             this.projectConfiguration = projectConfiguration;
+        });
+
+        this.configLoader.relationsConfiguration().subscribe((relationsConfiguration) => {
+            this.relationsConfiguration = relationsConfiguration;
         });
     }
 
@@ -72,8 +78,11 @@ export class ValidationInterceptor {
      */
     private validateFields(resource: any): boolean {
 
-        var fields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
-        var defaultFields = [ "@id", "type" ];
+        var projectFields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
+        var relationFields = this.relationsConfiguration.getRelationFields();
+        var defaultFields = [ { field: "@id" }, { field: "type" } ];
+
+        var fields = projectFields.concat(relationFields).concat(defaultFields);
 
         for (var resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
@@ -84,7 +93,7 @@ export class ValidationInterceptor {
                         break;
                     }
                 }
-                if (!fieldFound && defaultFields.indexOf(resourceField) == -1) {
+                if (!fieldFound) {
                     return false;
                 }
             }

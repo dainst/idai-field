@@ -22,6 +22,7 @@ import {M} from "../m";
 @Injectable()
 export class Importer {
 
+    private inUpdateDocumentLoop: boolean = false;
     private docsToImport: Array<IdaiFieldDocument>;
     private currentUpdatePromise: Promise<any>;
     private importSuccessCounter: number;
@@ -57,11 +58,13 @@ export class Importer {
             var file = new File([ data ], '', { type: "application/json" });
             this.objectReader.fromFile(file).subscribe( doc => {
                 if (this.errorState) return;
-                if (!this.currentUpdatePromise) {
-                    this.updateDocument(doc);
+
+                if (!this.inUpdateDocumentLoop) {
+                    this.update(doc);
                 } else {
                     this.docsToImport.push(doc);
                 }
+
             }, error => {
                 this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [ error.lineNumber ]);
                 this.objectReaderFinished = true;
@@ -72,7 +75,15 @@ export class Importer {
         }.bind(this));
     }
 
-    private updateDocument(doc: IdaiFieldDocument) {
+    /**
+     * Calls itself recursively as long as <code>docsToImport</code>
+     * is not empty.
+     *
+     * Triggers a datastore update of <code>doc</code> on every call.
+     *
+     * @param doc
+     */
+    private update(doc: IdaiFieldDocument) {
         
         var index = this.docsToImport.indexOf(doc);
         if (index > -1) this.docsToImport.splice(index, 1);
@@ -85,12 +96,12 @@ export class Importer {
             return;
         }
 
-        this.currentUpdatePromise = this.datastore.update(doc);
-        this.currentUpdatePromise.then(() => {
+        this.inUpdateDocumentLoop=true;
+        this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
             if (this.errorState) return;
             if (this.docsToImport.length > 0) {
-                this.updateDocument(this.docsToImport[0]);
+                this.update(this.docsToImport[0]);
             } else if (this.objectReaderFinished) {
                 this.finishImport();
             }

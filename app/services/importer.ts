@@ -28,6 +28,14 @@ export class Importer {
     private objectReaderFinished: boolean;
     private currentImportWithError: boolean;
     
+    private initState() {
+        this.docsToImport = [];
+        this.inUpdateDocumentLoop = false;
+        this.importSuccessCounter = 0;
+        this.objectReaderFinished = false;
+        this.currentImportWithError = false;
+    }
+    
     constructor(
         private objectReader: ObjectReader,
         private messages: Messages,
@@ -39,12 +47,7 @@ export class Importer {
 
     public importResourcesFromFile(filepath: string): void {
 
-        this.docsToImport = [];
-        this.inUpdateDocumentLoop = false;
-        this.importSuccessCounter = 0;
-        this.objectReaderFinished = false;
-        this.currentImportWithError = false;
-
+        this.initState();
         this.showStartMessage();
 
         var fs = require('fs');
@@ -87,7 +90,7 @@ export class Importer {
         var index = this.docsToImport.indexOf(doc);
         if (index > -1) this.docsToImport.splice(index, 1);
 
-        var error = this.validationInterceptor.validate(doc)
+        var error = this.validationInterceptor.validate(doc);
         if (error) {
             this.showValidationErrorMessage(doc, error);
             this.currentImportWithError = true;
@@ -105,7 +108,7 @@ export class Importer {
                 this.finishImport();
             } else this.inUpdateDocumentLoop=false;
         }, error => {
-            this.showDatabaseErrorMessage(doc, error);
+            this.showDatastoreErrorMessage(doc, error);
             this.currentImportWithError = true;
             this.finishImport();
         });
@@ -138,7 +141,7 @@ export class Importer {
         this.zone.run(() => {});
     }
 
-    private showDatabaseErrorMessage(doc: IdaiFieldDocument, error: any) {
+    private showDatastoreErrorMessage(doc: IdaiFieldDocument, error: any) {
         
         if (error == M.OBJLIST_IDEXISTS) {
             this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);

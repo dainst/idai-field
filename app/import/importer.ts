@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
 import {ObjectReader} from "./object-reader";
 import {Datastore} from "idai-components-2/idai-components-2";
-import {Observable} from "rxjs/Observable";
 import {ObjectList} from "../overview/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "../model/validator";
-
 
 
 /**
@@ -24,8 +22,8 @@ export class Importer {
     private importSuccessCounter: number;
     private objectReaderFinished: boolean;
     private currentImportWithError: boolean;
-    private observers = [];
-    private importReport;
+    private importReport: any;
+    private resolvePromise: (any) => any;
     
     private initState() {
         this.docsToUpdate = [];
@@ -50,10 +48,9 @@ export class Importer {
     ) {}
 
     /**
-     * A subscriber will recieve an event exactly once, when the
-     * import is finished. The subscriber will recieve an importReport object
-     * with detailed information about the import, containing the number of resources
-     * imported successfully as well as information on errors that occurred, if any.
+     * Returns a promise which resolves to an importReport object with detailed information about the import,
+     * containing the number of resources imported successfully as well as information on errors that occurred,
+     * if any.
      *
      * There are four common errors which can occur:
      *
@@ -63,13 +60,13 @@ export class Importer {
      * 4. The file is unreadable.
      *
      * @param filepath
-     * @returns {Observable<any>} an observable containing the <code>importReport</code>.
+     * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResourcesFromFile(filepath: string): Observable<any> {
+    public importResourcesFromFile(filepath: string): Promise<any> {
 
-        return Observable.create( observer => {
-            this.observers.push(observer);
-
+        return new Promise<any>(resolve => {
+            
+            this.resolvePromise = resolve;
             this.initState();
 
             var fs = require('fs');
@@ -90,7 +87,6 @@ export class Importer {
                     }
 
                 }, error => {
-
                     this.importReport["invalid_json"].push(error.lineNumber);
 
                     this.objectReaderFinished = true;
@@ -134,11 +130,11 @@ export class Importer {
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
 
-            if (this.docsToUpdate.length>0) {
+            if (this.docsToUpdate.length > 0) {
                 this.update(this.docsToUpdate[0]);
             } else {
                 this.finishImport();
-                this.inUpdateDocumentLoop=false;
+                this.inUpdateDocumentLoop = false;
                 return;
             }
 
@@ -151,7 +147,7 @@ export class Importer {
 
             this.currentImportWithError = true;
             this.finishImport();
-            this.inUpdateDocumentLoop=false;
+            this.inUpdateDocumentLoop = false;
         });
     }
 
@@ -161,10 +157,8 @@ export class Importer {
             this.objectList.fetchAllDocuments();
         }
 
-        this.importReport["successful_imports"]=this.importSuccessCounter;
-        for (var obs of this.observers) {
-            obs.next(this.importReport);
-        }
-
+        this.importReport["successful_imports"] = this.importSuccessCounter;
+        
+        this.resolvePromise(this.importReport);
     }
 }

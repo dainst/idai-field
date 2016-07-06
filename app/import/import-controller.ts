@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from "@angular/core";
-import {Messages, Datastore, Utils} from "idai-components-2/idai-components-2";
+import {Messages, Utils} from "idai-components-2/idai-components-2";
 import {Importer} from "./importer";
 import {M} from "../m";
 
@@ -16,7 +16,6 @@ import {M} from "../m";
 @Injectable()
 export class ImportController {
 
-    
     constructor(
         private messages: Messages,
         private zone: NgZone,
@@ -28,16 +27,16 @@ export class ImportController {
         this.showStartMessage();
         this.zone.run(() => {});
 
-        this.importer.importResourcesFromFile(filepath).subscribe(
-            (importReport)=>{
-                console.debug("importReport: ",importReport);
-                this.evaluate(importReport,filepath);
+        this.importer.importResourcesFromFile(filepath).then(
+            importReport => {
+                this.evaluate(importReport, filepath);
                 this.zone.run(() => {});
             }
         );
     }
 
-    private evaluate(importReport,filepath) {
+    private evaluate(importReport, filepath) {
+        
         if (importReport['io_error'])
             this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filepath]);
         
@@ -45,21 +44,19 @@ export class ImportController {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [lineNumber]);
 
         for (var err of importReport['validation_errors'])
-            this.showValidationErrorMessage(err.doc,err.msg)
+            this.showValidationErrorMessage(err.doc, err.msg)
 
         for (var err of importReport['datastore_errors'])
-            this.showDatastoreErrorMessage(err.doc,err.msg)
+            this.showDatastoreErrorMessage(err.doc, err.msg)
         
-        if (importReport['successful_imports']>0)
+        if (importReport['successful_imports'] > 0)
             this.showSuccessMessage(importReport['successful_imports']);
     }
-
 
     private showStartMessage() {
 
         this.messages.clear();
         this.messages.add(M.IMPORTER_START);
-
     }
     
     private showSuccessMessage(count) {

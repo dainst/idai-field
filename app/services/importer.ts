@@ -23,13 +23,13 @@ import {M} from "../m";
 export class Importer {
 
     private inUpdateDocumentLoop: boolean;
-    private docsToImport: Array<IdaiFieldDocument>;
+    private docsToUpdate: Array<IdaiFieldDocument>;
     private importSuccessCounter: number;
     private objectReaderFinished: boolean;
     private currentImportWithError: boolean;
     
     private initState() {
-        this.docsToImport = [];
+        this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
         this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
@@ -64,7 +64,7 @@ export class Importer {
                 if (!this.inUpdateDocumentLoop) {
                     this.update(doc);
                 } else {
-                    this.docsToImport.push(doc);
+                    this.docsToUpdate.push(doc);
                 }
 
             }, error => {
@@ -78,7 +78,7 @@ export class Importer {
     }
 
     /**
-     * Calls itself recursively as long as <code>docsToImport</code>
+     * Calls itself recursively as long as <code>docsToUpdate</code>
      * is not empty.
      *
      * Triggers a datastore update of <code>doc</code> on every call.
@@ -87,8 +87,8 @@ export class Importer {
      */
     private update(doc: IdaiFieldDocument) {
         
-        var index = this.docsToImport.indexOf(doc);
-        if (index > -1) this.docsToImport.splice(index, 1);
+        var index = this.docsToUpdate.indexOf(doc);
+        if (index > -1) this.docsToUpdate.splice(index, 1);
 
         var error = this.validationInterceptor.validate(doc);
         if (error) {
@@ -102,8 +102,8 @@ export class Importer {
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
             if (this.currentImportWithError) return;
-            if (this.docsToImport.length > 0) {
-                this.update(this.docsToImport[0]);
+            if (this.docsToUpdate.length > 0) {
+                this.update(this.docsToUpdate[0]);
             } else if (this.objectReaderFinished) {
                 this.finishImport();
             } else this.inUpdateDocumentLoop=false;
@@ -115,7 +115,8 @@ export class Importer {
     }
 
     private finishImport() {
-        
+        console.log("finishImport")
+
         if (this.importSuccessCounter > 0 ) {
             this.objectList.fetchAllDocuments();
             this.showSuccessMessage();

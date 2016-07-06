@@ -1,17 +1,19 @@
-import {Injectable, NgZone} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
 import {Messages, Datastore, Utils} from "idai-components-2/idai-components-2";
+import {Observable} from "rxjs/Observable";
 import {ObjectList} from "../model/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {ValidationInterceptor} from "../services/validation-interceptor";
 import {M} from "../m";
 
 
+
 /**
  * The Importer's main responsibility is to read resources from jsonl files
  * residing on the local file system and to convert them to documents, which
  * are created or updated in the datastore in case of success.
- * 
+ *
  * The importer also feeds Messages with messages about the outcome of the operation.
  * This is normally done in a component, but since the Importer is only reachable
  * via the menu it is done here instead.
@@ -27,6 +29,8 @@ export class Importer {
     private importSuccessCounter: number;
     private objectReaderFinished: boolean;
     private currentImportWithError: boolean;
+    private observers = [];
+    private importReport;
     
     private initState() {
         this.docsToUpdate = [];
@@ -34,15 +38,18 @@ export class Importer {
         this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
+        this.importReport = { "invalid_json" : [], "successful_imports" : 0 };
     }
     
     constructor(
         private objectReader: ObjectReader,
-        private messages: Messages,
         private objectList: ObjectList,
         private datastore: Datastore,
         private validationInterceptor: ValidationInterceptor,
-        private zone: NgZone
+
+
+        // TODO remove dependency
+        private messages: Messages
     ) {}
 
     /**
@@ -53,38 +60,43 @@ export class Importer {
      *
      * @param filepath
      */
-    public importResourcesFromFile(filepath: string): void {
+    public importResourcesFromFile(filepath: string): Observable<any> {
 
-        this.initState();
-        this.showStartMessage();
+        return Observable.create( observer => {
+            this.observers.push(observer);
 
-        var fs = require('fs');
-        fs.readFile(filepath, 'utf8', function (err, data) {
-            if (err) {
-                this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [ filepath ]);
-                return;
-            }
+            this.initState();
 
-            var file = new File([ data ], '', { type: "application/json" });
-            this.objectReader.fromFile(file).subscribe( doc => {
-                if (this.currentImportWithError) return;
-
-                if (!this.inUpdateDocumentLoop) {
-                    this.update(doc);
-                } else {
-                    this.docsToUpdate.push(doc);
+            var fs = require('fs');
+            fs.readFile(filepath, 'utf8', function (err, data) {
+                if (err) {
+                    this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filepath]);
+                    return;
                 }
 
-            }, error => {
-                this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [ error.lineNumber ]);
-                this.objectReaderFinished = true;
-                this.currentImportWithError = true;
-                if (!this.inUpdateDocumentLoop) this.finishImport();
-            }, () => {
-                this.objectReaderFinished = true;
-                if (!this.inUpdateDocumentLoop) this.finishImport();
-            });
-        }.bind(this));
+                var file = new File([data], '', {type: "application/json"});
+                this.objectReader.fromFile(file).subscribe(doc => {
+                    if (this.currentImportWithError) return;
+
+                    if (!this.inUpdateDocumentLoop) {
+                        this.update(doc);
+                    } else {
+                        this.docsToUpdate.push(doc);
+                    }
+
+                }, error => {
+
+                    this.importReport["invalid_json"].push(error.lineNumber);
+
+                    this.objectReaderFinished = true;
+                    this.currentImportWithError = true;
+                    if (!this.inUpdateDocumentLoop) this.finishImport();
+                }, () => {
+                    this.objectReaderFinished = true;
+                    if (!this.inUpdateDocumentLoop) this.finishImport();
+                });
+            }.bind(this));
+        });
     }
 
     /**
@@ -132,27 +144,13 @@ export class Importer {
 
         if (this.importSuccessCounter > 0 ) {
             this.objectList.fetchAllDocuments();
-            this.showSuccessMessage();
         }
-    }
-    
-    private showStartMessage() {
-        
-        this.messages.clear();
-        this.messages.add(M.IMPORTER_START);
 
-        this.zone.run(() => {});
-    }
-
-    private showSuccessMessage() {
-        
-        if (this.importSuccessCounter == 1) {
-            this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
-        } else {
-            this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [this.importSuccessCounter.toString()]);
+        this.importReport["successful_imports"]=this.importSuccessCounter;
+        for (var obs of this.observers) {
+            obs.next(this.importReport);
         }
-        
-        this.zone.run(() => {});
+
     }
 
     private showDatastoreErrorMessage(doc: IdaiFieldDocument, error: any) {
@@ -162,8 +160,6 @@ export class Importer {
         } else {
             this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);
         }
-
-        this.zone.run(() => {});
     }
 
     private showValidationErrorMessage(doc: IdaiFieldDocument, error: any) {
@@ -176,7 +172,5 @@ export class Importer {
         } else if (error == M.VALIDATION_ERROR_INVALIDFIELD) {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [doc.resource.identifier]);
         }
-
-        this.zone.run(() => {});
     }
 }

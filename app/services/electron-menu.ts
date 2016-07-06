@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Importer} from "../services/importer";
+import {ImportController} from "../services/import-controller";
 
 /**
  * @author Sebastian Cuy
@@ -8,7 +8,7 @@ import {Importer} from "../services/importer";
 export class ElectronMenu {
 
     constructor(
-        private importer: Importer) {}
+        private importController: ImportController) {}
 
     public build(): void {
 
@@ -195,7 +195,7 @@ export class ElectronMenu {
             filters: [ { name: 'JSON-Lines-Datei', extensions: ['jsonl'] } ]
         });
         
-        this.importer.importResourcesFromFile(filepaths[0]);
+        this.importController.importResourcesFromFile(filepaths[0]);
     }
 
     

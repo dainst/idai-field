@@ -25,6 +25,7 @@ import {ValidationInterceptor} from './services/validation-interceptor';
 import {ObjectList} from './model/objectList';
 import {ObjectReader} from './services/object-reader';
 import {Importer} from "./services/importer";
+import {ImportController} from "./services/import-controller";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 
@@ -49,5 +50,6 @@ bootstrap(AppComponent, [
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
     provide(ObjectReader, {useClass: ObjectReader}),
-    provide(Importer, {useClass: Importer})
+    provide(Importer, {useClass: Importer}),
+    provide(ImportController, {useClass: ImportController})
 ]);

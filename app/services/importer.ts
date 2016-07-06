@@ -71,8 +71,10 @@ export class Importer {
                 this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [ error.lineNumber ]);
                 this.objectReaderFinished = true;
                 this.currentImportWithError = true;
+                if (!this.inUpdateDocumentLoop) this.finishImport();
             }, () => {
                 this.objectReaderFinished = true;
+                if (!this.inUpdateDocumentLoop) this.finishImport();
             });
         }.bind(this));
     }
@@ -101,21 +103,24 @@ export class Importer {
         this.inUpdateDocumentLoop=true;
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
-            if (this.currentImportWithError) return;
-            if (this.docsToUpdate.length > 0) {
-                this.update(this.docsToUpdate[0]);
-            } else if (this.objectReaderFinished) {
+
+            if ((this.currentImportWithError&&this.objectReaderFinished)
+                ||((this.docsToUpdate.length < 1))) {
                 this.finishImport();
-            } else this.inUpdateDocumentLoop=false;
+                this.inUpdateDocumentLoop=false;
+                return;
+            } else
+                this.update(this.docsToUpdate[0]);
+
         }, error => {
             this.showDatastoreErrorMessage(doc, error);
             this.currentImportWithError = true;
             this.finishImport();
+            this.inUpdateDocumentLoop=false;
         });
     }
 
     private finishImport() {
-        console.log("finishImport")
 
         if (this.importSuccessCounter > 0 ) {
             this.objectList.fetchAllDocuments();
@@ -154,7 +159,7 @@ export class Importer {
     }
 
     private showValidationErrorMessage(doc: IdaiFieldDocument, error: any) {
-        
+
         if (error == M.OBJLIST_IDMISSING) {
             this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
         } else if (error == M.VALIDATION_ERROR_INVALIDTYPE) {

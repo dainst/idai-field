@@ -1,11 +1,10 @@
 import {Injectable} from "@angular/core";
 import {ObjectReader} from "../services/object-reader";
-import {Messages, Datastore, Utils} from "idai-components-2/idai-components-2";
+import {Datastore} from "idai-components-2/idai-components-2";
 import {Observable} from "rxjs/Observable";
 import {ObjectList} from "../model/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {ValidationInterceptor} from "../services/validation-interceptor";
-import {M} from "../m";
 
 
 
@@ -18,8 +17,8 @@ import {M} from "../m";
  * This is normally done in a component, but since the Importer is only reachable
  * via the menu it is done here instead.
  * 
- * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 @Injectable()
 export class Importer {
@@ -38,18 +37,20 @@ export class Importer {
         this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
-        this.importReport = { "invalid_json" : [], "successful_imports" : 0 };
+        this.importReport = {
+            "io_error" : false,
+            "invalid_json" : [], 
+            "successful_imports" : 0,
+            "validation_errors" : [],
+            "datastore_errors" : []
+        };
     }
     
     constructor(
         private objectReader: ObjectReader,
         private objectList: ObjectList,
         private datastore: Datastore,
-        private validationInterceptor: ValidationInterceptor,
-
-
-        // TODO remove dependency
-        private messages: Messages
+        private validationInterceptor: ValidationInterceptor
     ) {}
 
     /**
@@ -70,7 +71,7 @@ export class Importer {
             var fs = require('fs');
             fs.readFile(filepath, 'utf8', function (err, data) {
                 if (err) {
-                    this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filepath]);
+                    this.importReport['io_error']=true;
                     return;
                 }
 
@@ -114,7 +115,12 @@ export class Importer {
 
         var error = this.validationInterceptor.validate(doc);
         if (error) {
-            this.showValidationErrorMessage(doc, error);
+            
+            this.importReport['validation_errors'].push({
+                doc: doc,
+                msg: error
+            });
+            
             this.currentImportWithError = true;
             this.finishImport();
             return;
@@ -133,7 +139,12 @@ export class Importer {
             }
 
         }, error => {
-            this.showDatastoreErrorMessage(doc, error);
+
+            this.importReport['datastore_errors'].push({
+                doc: doc,
+                msg: error
+            });
+
             this.currentImportWithError = true;
             this.finishImport();
             this.inUpdateDocumentLoop=false;
@@ -151,26 +162,5 @@ export class Importer {
             obs.next(this.importReport);
         }
 
-    }
-
-    private showDatastoreErrorMessage(doc: IdaiFieldDocument, error: any) {
-        
-        if (error == M.OBJLIST_IDEXISTS) {
-            this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
-        } else {
-            this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);
-        }
-    }
-
-    private showValidationErrorMessage(doc: IdaiFieldDocument, error: any) {
-
-        if (error == M.OBJLIST_IDMISSING) {
-            this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
-        } else if (error == M.VALIDATION_ERROR_INVALIDTYPE) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE,
-                [Utils.getTypeFromId(doc.resource['@id']), doc.resource.identifier]);
-        } else if (error == M.VALIDATION_ERROR_INVALIDFIELD) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [doc.resource.identifier]);
-        }
     }
 }

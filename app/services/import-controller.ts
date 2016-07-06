@@ -26,16 +26,25 @@ export class ImportController {
         this.importer.importResourcesFromFile(filepath).subscribe(
             (importReport)=>{
                 console.debug("importReport: ",importReport);
-                this.evaluate(importReport);
+                this.evaluate(importReport,filepath);
                 this.zone.run(() => {});
             }
         );
     }
 
-    private evaluate(importReport) {
+    private evaluate(importReport,filepath) {
+        if (importReport['io_error'])
+            this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filepath]);
+        
         for (var lineNumber of importReport["invalid_json"])
             this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [lineNumber]);
 
+        for (var err of importReport['validation_errors'])
+            this.showValidationErrorMessage(err.doc,err.msg)
+
+        for (var err of importReport['datastore_errors'])
+            this.showDatastoreErrorMessage(err.doc,err.msg)
+        
         if (importReport['successful_imports']>0)
             this.showSuccessMessage(importReport['successful_imports']);
     }
@@ -54,6 +63,27 @@ export class ImportController {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
         } else {
             this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [count.toString()]);
+        }
+    }
+
+    private showValidationErrorMessage(doc: any, msg: any) {
+
+        if (msg == M.OBJLIST_IDMISSING) {
+            this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
+        } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE,
+                [Utils.getTypeFromId(doc.resource['@id']), doc.resource.identifier]);
+        } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [doc.resource.identifier]);
+        }
+    }
+
+    private showDatastoreErrorMessage(doc: any, msg: any) {
+
+        if (msg == M.OBJLIST_IDEXISTS) {
+            this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
+        } else {
+            this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);
         }
     }
 }

@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {ObjectReader} from "../services/object-reader";
+import {ObjectReader} from "./object-reader";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {Observable} from "rxjs/Observable";
-import {ObjectList} from "../model/objectList";
+import {ObjectList} from "../overview/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {ValidationInterceptor} from "../services/validation-interceptor";
+import {ValidationInterceptor} from "../model/validation-interceptor";
 
 
 

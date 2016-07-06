@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {ImportController} from "../services/import-controller";
+import {ImportController} from "../import/import-controller";
 
 /**
  * @author Sebastian Cuy

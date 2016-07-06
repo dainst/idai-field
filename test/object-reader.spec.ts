@@ -1,5 +1,5 @@
 import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {ObjectReader} from "../app/services/object-reader";
+import {ObjectReader} from "../app/import/object-reader";
 
 /**
  * @author Sebastian Cuy

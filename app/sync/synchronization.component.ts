@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IdaiFieldBackend} from "../services/idai-field-backend";
 import {Datastore} from 'idai-components-2/idai-components-2';
-import {SyncMediator} from '../services/sync-mediator';
+import {SyncMediator} from './sync-mediator';
 import {ProjectConfiguration,ConfigLoader} from "idai-components-2/idai-components-2";
 
 /**

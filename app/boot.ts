@@ -2,7 +2,7 @@
 /// <reference path="../config/config.d.ts" />
 
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {AppComponent} from './components/app.component';
+import {AppComponent} from './app.component';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {provide, enableProdMode} from '@angular/core';
 import {Datastore} from "idai-components-2/idai-components-2";
@@ -10,7 +10,7 @@ import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./services/idai-field-backend";
 import {Messages} from "idai-components-2/idai-components-2";
-import {SyncMediator} from "./services/sync-mediator";
+import {SyncMediator} from "./sync/sync-mediator";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
@@ -21,11 +21,11 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
-import {ValidationInterceptor} from './services/validation-interceptor';
-import {ObjectList} from './model/objectList';
-import {ObjectReader} from './services/object-reader';
-import {Importer} from "./services/importer";
-import {ImportController} from "./services/import-controller";
+import {ValidationInterceptor} from './model/validation-interceptor';
+import {ObjectList} from './overview/objectList';
+import {ObjectReader} from './import/object-reader';
+import {Importer} from "./import/importer";
+import {ImportController} from "./import/import-controller";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 

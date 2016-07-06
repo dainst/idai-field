@@ -1,14 +1,14 @@
 import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
-import {AppComponent} from "../components/app.component";
-import {ObjectList} from "../model/objectList";
+import {AppComponent} from "../app.component";
+import {ObjectList} from "./objectList";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {ValidationInterceptor} from "../services/validation-interceptor";
+import {ValidationInterceptor} from "../model/validation-interceptor";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({

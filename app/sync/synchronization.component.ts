@@ -41,8 +41,7 @@ export class SynchronizationComponent {
             doc => {
                 if (this.connected)
                     this.sync(doc);
-                else
-                    this.resourceIdsOfDocsToSync.push(doc['resource']['@id']);
+                else this.storeObjectId(doc['resource']['@id']);
             },
             err => console.error("Error in subscribeForUnsyncedDocuments(). ", err)
         );

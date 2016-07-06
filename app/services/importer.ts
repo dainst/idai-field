@@ -8,6 +8,14 @@ import {M} from "../m";
 
 
 /**
+ * The Importer's main responsibility is to read resources from jsonl files
+ * residing on the local file system and to convert them to documents, which
+ * are created or updated in the datastore in case of success.
+ * 
+ * The importer also feeds Messages with messages about the outcome of the operation.
+ * This is normally done in a component, but since the Importer is only reachable
+ * via the menu it is done here instead.
+ * 
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

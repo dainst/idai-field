@@ -3,10 +3,10 @@ import {OverviewComponent} from './overview/overview.component';
 import {SynchronizationComponent} from "./sync/synchronization.component";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
-import {IdaiFieldBackend} from "./services/idai-field-backend";
+import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {ElectronMenu} from './services/electron-menu';
+import {ElectronMenu} from './electron-menu';
 
 @Component({
     selector: 'idai-field-app',

@@ -98,9 +98,6 @@
       "parent" : "object",
       "fields": [
         {
-          "field" : "identifier"
-        },
-        {
           "field": "Dimensions"
         },
         {

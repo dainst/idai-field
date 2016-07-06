@@ -9,13 +9,9 @@ import {ValidationInterceptor} from "../services/validation-interceptor";
 
 
 /**
- * The Importer's main responsibility is to read resources from jsonl files
+ * The Importer's responsibility is to read resources from jsonl files
  * residing on the local file system and to convert them to documents, which
  * are created or updated in the datastore in case of success.
- *
- * The importer also feeds Messages with messages about the outcome of the operation.
- * This is normally done in a component, but since the Importer is only reachable
- * via the menu it is done here instead.
  * 
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -54,12 +50,20 @@ export class Importer {
     ) {}
 
     /**
-     * There are three common errors which can occur:
+     * A subscriber will recieve an event exactly once, when the
+     * import is finished. The subscriber will recieve an importReport object
+     * with detailed information about the import, containing the number of resources
+     * imported successfully as well as information on errors that occurred, if any.
+     *
+     * There are four common errors which can occur:
+     *
      * 1. Error during updating the datastore which can also happen due to constraint violations detected there.
-     * 2. Error reading the json line.
-     * 3. Error validating the document.
+     * 2. Error reading a json line.
+     * 3. Error validating a resource.
+     * 4. The file is unreadable.
      *
      * @param filepath
+     * @returns {Observable<any>} an observable containing the <code>importReport</code>.
      */
     public importResourcesFromFile(filepath: string): Observable<any> {
 

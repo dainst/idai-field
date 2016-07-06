@@ -5,6 +5,11 @@ import {M} from "../m";
 
 
 /**
+ * Delegates calls to the Importer, waits for 
+ * the import to finish and extracts the importReport
+ * in order to generate appropriate messages to display
+ * to the user.
+ * 
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

@@ -22,12 +22,11 @@ import {M} from "../m";
 @Injectable()
 export class Importer {
 
-    private inUpdateDocumentLoop: boolean = false;
+    private inUpdateDocumentLoop: boolean;
     private docsToImport: Array<IdaiFieldDocument>;
-    private currentUpdatePromise: Promise<any>;
     private importSuccessCounter: number;
     private objectReaderFinished: boolean;
-    private errorState: boolean;
+    private currentImportWithError: boolean;
     
     constructor(
         private objectReader: ObjectReader,
@@ -41,10 +40,10 @@ export class Importer {
     public importResourcesFromFile(filepath: string): void {
 
         this.docsToImport = [];
-        this.currentUpdatePromise = undefined;
+        this.inUpdateDocumentLoop = false;
         this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
-        this.errorState = false;
+        this.currentImportWithError = false;
 
         this.showStartMessage();
 
@@ -57,7 +56,7 @@ export class Importer {
 
             var file = new File([ data ], '', { type: "application/json" });
             this.objectReader.fromFile(file).subscribe( doc => {
-                if (this.errorState) return;
+                if (this.currentImportWithError) return;
 
                 if (!this.inUpdateDocumentLoop) {
                     this.update(doc);
@@ -68,7 +67,7 @@ export class Importer {
             }, error => {
                 this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [ error.lineNumber ]);
                 this.objectReaderFinished = true;
-                this.errorState = true;
+                this.currentImportWithError = true;
             }, () => {
                 this.objectReaderFinished = true;
             });
@@ -91,7 +90,7 @@ export class Importer {
         var error = this.validationInterceptor.validate(doc)
         if (error) {
             this.showValidationErrorMessage(doc, error);
-            this.errorState = true;
+            this.currentImportWithError = true;
             this.finishImport();
             return;
         }
@@ -99,7 +98,7 @@ export class Importer {
         this.inUpdateDocumentLoop=true;
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
-            if (this.errorState) return;
+            if (this.currentImportWithError) return;
             if (this.docsToImport.length > 0) {
                 this.update(this.docsToImport[0]);
             } else if (this.objectReaderFinished) {
@@ -107,7 +106,7 @@ export class Importer {
             }
         }, error => {
             this.showDatabaseErrorMessage(doc, error);
-            this.errorState = true;
+            this.currentImportWithError = true;
             this.finishImport();
         });
     }

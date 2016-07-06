@@ -103,7 +103,7 @@ export class Importer {
                 this.update(this.docsToImport[0]);
             } else if (this.objectReaderFinished) {
                 this.finishImport();
-            }
+            } else this.inUpdateDocumentLoop=false;
         }, error => {
             this.showDatabaseErrorMessage(doc, error);
             this.currentImportWithError = true;

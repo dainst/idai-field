@@ -45,6 +45,14 @@ export class Importer {
         private zone: NgZone
     ) {}
 
+    /**
+     * There are three common errors which can occur:
+     * 1. Error during updating the datastore.
+     * 2. Error reading the json line.
+     * 3. Error validating the document.
+     *
+     * @param filepath
+     */
     public importResourcesFromFile(filepath: string): void {
 
         this.initState();
@@ -104,13 +112,13 @@ export class Importer {
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
 
-            if ((this.currentImportWithError&&this.objectReaderFinished)
-                ||((this.docsToUpdate.length < 1))) {
+            if (this.docsToUpdate.length>0) {
+                this.update(this.docsToUpdate[0]);
+            } else {
                 this.finishImport();
                 this.inUpdateDocumentLoop=false;
                 return;
-            } else
-                this.update(this.docsToUpdate[0]);
+            }
 
         }, error => {
             this.showDatastoreErrorMessage(doc, error);

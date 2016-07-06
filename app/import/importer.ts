@@ -4,7 +4,7 @@ import {Datastore} from "idai-components-2/idai-components-2";
 import {Observable} from "rxjs/Observable";
 import {ObjectList} from "../overview/objectList";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {ValidationInterceptor} from "../model/validation-interceptor";
+import {Validator} from "../model/validator";
 
 
 
@@ -46,7 +46,7 @@ export class Importer {
         private objectReader: ObjectReader,
         private objectList: ObjectList,
         private datastore: Datastore,
-        private validationInterceptor: ValidationInterceptor
+        private validator: Validator
     ) {}
 
     /**
@@ -117,7 +117,7 @@ export class Importer {
         var index = this.docsToUpdate.indexOf(doc);
         if (index > -1) this.docsToUpdate.splice(index, 1);
 
-        var error = this.validationInterceptor.validate(doc);
+        var error = this.validator.validate(doc);
         if (error) {
             
             this.importReport['validation_errors'].push({

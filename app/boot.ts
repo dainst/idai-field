@@ -21,7 +21,7 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
-import {ValidationInterceptor} from './model/validation-interceptor';
+import {Validator} from './model/validator';
 import {ObjectList} from './overview/objectList';
 import {ObjectReader} from './import/object-reader';
 import {Importer} from "./import/importer";
@@ -45,7 +45,7 @@ bootstrap(AppComponent, [
     provide(ObjectList, {useClass: ObjectList}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
-    provide(ValidationInterceptor, {useClass: ValidationInterceptor}),
+    provide(Validator, {useClass: Validator}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),

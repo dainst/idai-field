@@ -8,7 +8,7 @@ import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {ValidationInterceptor} from "../model/validation-interceptor";
+import {Validator} from "../model/validator";
 import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit {
         private configLoader: ConfigLoader,
         private messages: Messages,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
-        private validationInterceptor:ValidationInterceptor,
+        private validator:Validator,
         private persistenceManager:PersistenceManager) {
     }
 
@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit {
 
     public save(doc:IdaiFieldDocument,withCallback:boolean=true) {
 
-        var errors=this.validationInterceptor.validate(doc);
+        var errors=this.validator.validate(doc);
         if (errors!=undefined) {
             return this.messages.add(errors);
         }

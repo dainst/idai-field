@@ -9,7 +9,7 @@ import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/i
  * @author Thomas Kleinke
  */
 @Injectable()
-export class ValidationInterceptor {
+export class Validator {
 
     private projectConfiguration: ProjectConfiguration;
     private relationsConfiguration: RelationsConfiguration;

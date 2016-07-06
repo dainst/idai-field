@@ -47,7 +47,7 @@ export class Importer {
 
     /**
      * There are three common errors which can occur:
-     * 1. Error during updating the datastore.
+     * 1. Error during updating the datastore which can also happen due to constraint violations detected there.
      * 2. Error reading the json line.
      * 3. Error validating the document.
      *

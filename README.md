@@ -90,6 +90,10 @@ as for example IntelliJ does.
 
 ### E2E - Testing
 
+The e2e tests are configured to work with the *chrome/chromium* browsers only, 
+so make sure there is a local installation of one of these. The *chrome/chromium* only policy
+is sufficient since the final app is supposed to run under chrome only, packaged as an electron app.
+
 **Note** that provision of config files (see [here](config)) is a precondition for being able to run and e2e test the application successfully.
 
 Asides from that, a prior build is necessary for the e2e tests to work. For that, run

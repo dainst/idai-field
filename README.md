@@ -90,7 +90,7 @@ as for example IntelliJ does.
 
 ### E2E - Testing
 
-The e2e tests are configured to work with the *chrome/chromium* browsers only, 
+The e2e tests are configured to work with the **chrome/chromium** browsers only, 
 so make sure there is a local installation of one of these. The *chrome/chromium* only policy
 is sufficient since the final app is supposed to run under chrome only, packaged as an electron app.
 

@@ -3,7 +3,6 @@ import {OverviewComponent} from './overview/overview.component';
 import {SynchronizationComponent} from "./sync/synchronization.component";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
-import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {ElectronMenu} from './electron-menu';
@@ -22,7 +21,6 @@ export class AppComponent implements OnInit {
     public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
     constructor(private datastore: IndexeddbDatastore,
-                private idaiFieldBackend: IdaiFieldBackend,
                 @Inject('app.config') private config,
                 private menu:ElectronMenu) {
         

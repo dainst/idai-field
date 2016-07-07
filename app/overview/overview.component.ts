@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, Chang
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {AppComponent} from "../app.component";
-import {ObjectList} from "./objectList";
+import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {ConfigLoader} from "idai-components-2/idai-components-2";

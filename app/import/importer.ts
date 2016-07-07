@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ObjectReader} from "./object-reader";
 import {Datastore} from "idai-components-2/idai-components-2";
-import {ObjectList} from "../overview/objectList";
+import {ObjectList} from "../overview/object-list";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "../model/validator";
 

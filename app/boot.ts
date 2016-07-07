@@ -28,6 +28,9 @@ import {Importer} from "./import/importer";
 import {ImportController} from "./import/import-controller";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
+if (CONFIG['targetPlatform'] == 'desktop') {
+    require('electron-connect').client.create();
+}
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,

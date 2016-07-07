@@ -76,6 +76,8 @@ export class ImportController {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE, [msgData, doc.resource.identifier]);
         } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [msgData, doc.resource.identifier]);
+        } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELDS, [msgData, doc.resource.identifier]);
         }
     }
 

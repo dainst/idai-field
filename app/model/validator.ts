@@ -49,15 +49,16 @@ export class Validator {
             if (!this.validateType(resource)) {
                 validationReport.valid = false;
                 validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDTYPE;
-                validationReport.errorData.push(Utils.getTypeFromId(resource['@id']));
+                validationReport.errorData.push("\"" + Utils.getTypeFromId(resource['@id']) + "\"");
                 return validationReport;
             }
             
-            var invalidField;
-            if (invalidField = this.validateFields(resource)) {
+            var invalidFields;
+            if (invalidFields = this.validateFields(resource)) {
                 validationReport.valid = false;
-                validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDFIELD;
-                validationReport.errorData.push(invalidField);
+                validationReport.errorMessage = 
+                    invalidFields.length == 1 ? M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS;
+                validationReport.errorData.push(invalidFields.join(", "));
                 return validationReport;
             }
         }
@@ -90,15 +91,18 @@ export class Validator {
     /**
      * 
      * @param resource
-     * @returns {string} the name of the invalid field if one of the fields is invalid, otherwise <code>undefined</code>
+     * @returns {string[]} the names of invalid fields if one ore more of the fields are invalid, otherwise
+     * <code>undefined</code>
      */
-    private validateFields(resource: any): string {
+    private validateFields(resource: any): string[] {
 
         var projectFields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
         var relationFields = this.relationsConfiguration.getRelationFields();
         var defaultFields = [ { field: "@id" }, { field: "type" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);
+        
+        var invalidFields = [];
 
         for (var resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
@@ -110,11 +114,14 @@ export class Validator {
                     }
                 }
                 if (!fieldFound) {
-                    return resourceField;
+                    invalidFields.push("\"" + resourceField + "\"");
                 }
             }
         }
         
-        return undefined;
+        if (invalidFields.length > 0)
+            return invalidFields;
+        else
+            return undefined;
     }
 }

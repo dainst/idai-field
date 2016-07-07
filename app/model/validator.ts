@@ -26,27 +26,43 @@ export class Validator {
 
     /**
      * @param doc
-     * @returns {string} the error as key of m, <code>undefined</code> if no errors.
+     * @returns {any} the validation report containing the error message as key of m and possibly additional data
+     * (e. g. the name of an invalid field)
      */
-    public validate(doc: IdaiFieldDocument): string {
+    public validate(doc: IdaiFieldDocument): any {
 
+        var validationReport = {
+            valid: true,
+            errorMessage: undefined,
+            errorData: []
+        };
+        
         var resource = doc['resource'];
 
         if (!this.validateIdentifier(resource)) {
-            return M.OBJLIST_IDMISSING;
+            validationReport.valid = false;
+            validationReport.errorMessage = M.OBJLIST_IDMISSING;
+            return validationReport;
         }
 
         if (resource['@id']) {
             if (!this.validateType(resource)) {
-                return M.VALIDATION_ERROR_INVALIDTYPE;
+                validationReport.valid = false;
+                validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDTYPE;
+                validationReport.errorData.push(Utils.getTypeFromId(resource['@id']));
+                return validationReport;
             }
-
-            if (!this.validateFields(resource)) {
-                return M.VALIDATION_ERROR_INVALIDFIELD;
+            
+            var invalidField;
+            if (invalidField = this.validateFields(resource)) {
+                validationReport.valid = false;
+                validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDFIELD;
+                validationReport.errorData.push(invalidField);
+                return validationReport;
             }
         }
         
-        return undefined;
+        return validationReport;
     }
 
     /**
@@ -74,9 +90,9 @@ export class Validator {
     /**
      * 
      * @param resource
-     * @returns {boolean} true if all fields of the resource are valid, otherwise false
+     * @returns {string} the name of the invalid field if one of the fields is invalid, otherwise <code>undefined</code>
      */
-    private validateFields(resource: any): boolean {
+    private validateFields(resource: any): string {
 
         var projectFields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
         var relationFields = this.relationsConfiguration.getRelationFields();
@@ -94,11 +110,11 @@ export class Validator {
                     }
                 }
                 if (!fieldFound) {
-                    return false;
+                    return resourceField;
                 }
             }
         }
         
-        return true;
+        return undefined;
     }
 }

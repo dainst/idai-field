@@ -84,9 +84,10 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             params: ["", ""]
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELD]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für ein Feld der Ressource {0}.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für das Feld \"{0}\" der " +
+                     "Ressource {1}.",
             level: 'danger',
-            params: [""]
+            params: ["?", ""]
         };
         this.msgs[M.OBJLIST_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',

@@ -72,8 +72,6 @@ export class ObjectList {
         return new Promise<any>((resolve, reject) => {
             if (document==undefined) resolve();
 
-            console.log("will try to restore object ",document)
-
             if (!document['id']) {
                 this.remove(document);
                 return resolve();

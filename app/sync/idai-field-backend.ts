@@ -7,7 +7,7 @@ import {IdaiFieldDocument} from '../model/idai-field-document'
 
 /**
  * @author Jan G. Wieners
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 @Injectable()

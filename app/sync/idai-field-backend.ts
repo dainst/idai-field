@@ -110,30 +110,4 @@ export class IdaiFieldBackend {
               );
         });
     }
-
-    public resetIndex(): Promise<any> {
-
-        return new Promise((resolve, reject) => {
-
-            this.deleteIndex()
-            .subscribe(
-                () => {
-                    this.createIndex()
-                    .subscribe(
-                        () => resolve(),
-                        err => reject(err)
-                    )
-                },
-                err => reject(err)
-            );
-        });
-    }
-
-    private deleteIndex(): Observable<Response> {
-        return this.http.delete(this.configuration.uri);
-    }
-
-    private createIndex(): Observable<Response> {
-        return this.http.put(this.configuration.uri, "");
-    }
 }

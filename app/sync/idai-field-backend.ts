@@ -20,7 +20,9 @@ export class IdaiFieldBackend {
     public constructor(private http: Http,
         @Inject('app.config') private config) {
 
-        this.validateAndUse(config.backend);
+        if (config['backend']==undefined) return;
+        
+        this.validateAndUse(config['backend']);
         this.checkConnection();
     }
 

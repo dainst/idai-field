@@ -36,16 +36,25 @@ without risking of committing actual real configurations to the repo.
 * desktop -> for running as electron packaged app, includes menus to access certain features not available when option is not active
 * (OMIT PARAM) -> suitable for viewing in browser, also suitable for e2e testing
 
-### backend.uri
+### backend
 
-* server address
+If the backend property is set, syncing unsynced 
+project resources automatically to a remote server is enabled.
 
-### backend.credentials
+Example:
 
+```
+"backend" : {
+    "uri": "server url",
+    "credentials": "username:password",
+    "connectionCheckInterval": 5000
+}
+```
+
+* server address -> url
 * username:password
+* backend.connectionCheckInterval -> value in ms. 
 
-### backend.connectionCheckInterval
-    
-* value in ms. 
+If ommitted, syncing is disabled.
 
 ## Configuration.json

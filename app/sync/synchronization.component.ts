@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {IdaiFieldBackend} from "./idai-field-backend";
+import {Inject} from '@angular/core';
 import {Datastore} from 'idai-components-2/idai-components-2';
 import {SyncMediator} from './sync-mediator';
 import {ProjectConfiguration,ConfigLoader} from "idai-components-2/idai-components-2";
@@ -25,8 +26,10 @@ export class SynchronizationComponent {
     constructor(private idaiFieldBackend: IdaiFieldBackend,
         private datastore: Datastore,
         private configLoader: ConfigLoader,
-        private syncMediator: SyncMediator) {
+        private syncMediator: SyncMediator,
+        @Inject('app.config') private config) {
 
+        if (config['backend']==undefined) return;
 
         this.configLoader.projectConfiguration().subscribe((projectConfiguration)=>{
             this.projectConfiguration = projectConfiguration;

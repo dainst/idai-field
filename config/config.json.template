@@ -1,8 +1,3 @@
 {
-    "environment": "test",
-    "backend" : {
-        "uri": "server url",
-        "credentials": "username:password",
-        "connectionCheckInterval": 5000
-    }
+    "environment": "test"
 }

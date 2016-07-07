@@ -36,7 +36,7 @@ describe('idai field app', function() {
             .then(common.saveObject)
             .then(function(){
                 expect(element(by.id('message-0')).getText())
-                    .toContain("erfolgreich");
+                    .toContain("erfolgreic_");
             });
     });
 

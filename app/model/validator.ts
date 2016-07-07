@@ -41,7 +41,7 @@ export class Validator {
 
         if (!this.validateIdentifier(resource)) {
             validationReport.valid = false;
-            validationReport.errorMessage = M.OBJLIST_IDMISSING;
+            validationReport.errorMessage = M.VALIDATION_ERROR_IDMISSING;
             return validationReport;
         }
 

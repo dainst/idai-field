@@ -70,7 +70,7 @@ export class ImportController {
 
     private showValidationErrorMessage(msg: string, msgParams: any[]) {
 
-        if (msg == M.OBJLIST_IDMISSING) {
+        if (msg == M.VALIDATION_ERROR_IDMISSING) {
             this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
         } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE, msgParams);
@@ -83,7 +83,7 @@ export class ImportController {
 
     private showDatastoreErrorMessage(doc: any, msg: any) {
 
-        if (msg == M.OBJLIST_IDEXISTS) {
+        if (msg == M.DATASTORE_IDEXISTS) {
             this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
         } else {
             this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);

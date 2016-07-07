@@ -74,7 +74,7 @@ export class OverviewComponent implements OnInit {
         this.persistenceManager.persist(doc).then(
             ()=>{
                 this.documentEditChangeMonitor.reset();
-                this.messages.add(M.OBJLIST_SAVE_SUCCESS);
+                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
                 if (withCallback) this.changeSelectionAllowedCallback();
             },
             errors=>{

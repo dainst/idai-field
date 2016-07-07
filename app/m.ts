@@ -24,16 +24,16 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public static IMPORTER_FAILURE_INVALIDTYPE: string = 'importer/failure/invalidtype';
     public static IMPORTER_FAILURE_INVALIDFIELD: string = 'importer/failure/invalidfield';
     public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
-    public static OBJLIST_IDEXISTS : string = 'objectlist/idexists';
-    public static OBJLIST_IDMISSING : string = 'objectlist/idmissing';
-    public static OBJLIST_SAVE_SUCCESS : string = 'objectlist/savesuccess';
+    public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
+    public static DATASTORE_IDEXISTS : string = 'datastore/idexists';
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
     public static MESSAGES_NOBODY : string = 'messages/nobody';
     public static PC_GENERIC_ERROR : string = 'pmc/generic';
     public static PARSE_GENERIC_ERROR : string = 'parse/generic';
-    public static VALIDATION_ERROR_INVALIDTYPE: string = '/validation/error/invalidtype';
-    public static VALIDATION_ERROR_INVALIDFIELD: string = '/validation/error/invalidfield';
-    public static VALIDATION_ERROR_INVALIDFIELDS: string = '/validation/error/invalidfields';
+    public static VALIDATION_ERROR_IDMISSING : string = 'validation/error/idmissing';
+    public static VALIDATION_ERROR_INVALIDTYPE: string = 'validation/error/invalidtype';
+    public static VALIDATION_ERROR_INVALIDFIELD: string = 'validation/error/invalidfield';
+    public static VALIDATION_ERROR_INVALIDFIELDS: string = 'validation/error/invalidfields';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -97,19 +97,19 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             level: 'danger',
             params: ["?", ""]
         };
-        this.msgs[M.OBJLIST_IDEXISTS]={
-            content: 'Objekt-Identifier existiert bereits.',
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.OBJLIST_IDMISSING]={
+        this.msgs[M.VALIDATION_ERROR_IDMISSING]={
             content: 'Objekt-Identifier fehlt.',
             level: 'danger',
             params: []
         };
-        this.msgs[M.OBJLIST_SAVE_SUCCESS]={
+        this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
             content: 'Das Objekt wurde erfolgreich gespeichert.',
             level: 'success',
+            params: []
+        };
+        this.msgs[M.DATASTORE_IDEXISTS]={
+            content: 'Objekt-Identifier existiert bereits.',
+            level: 'danger',
             params: []
         };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={

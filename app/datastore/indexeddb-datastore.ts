@@ -44,7 +44,7 @@ export class IndexeddbDatastore implements Datastore {
                     document['resource']['@id'] = undefined;
                     document.created = undefined;
                     document.modified = undefined;
-                    reject(M.OBJLIST_IDEXISTS);
+                    reject(M.DATASTORE_IDEXISTS);
                 }
             ).then(() => resolve(),
                 err => reject(M.DATASTORE_GENERIC_SAVE_ERROR));
@@ -59,7 +59,7 @@ export class IndexeddbDatastore implements Datastore {
            document.modified = new Date();
            return this.saveDocument(document).then(() => {
                return this.saveFulltext(document);
-           }, err => reject(M.OBJLIST_IDEXISTS)
+           }, err => reject(M.DATASTORE_IDEXISTS)
            ).then(() => resolve(),
                err => reject(M.DATASTORE_GENERIC_SAVE_ERROR));
            });

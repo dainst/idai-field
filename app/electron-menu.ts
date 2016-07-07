@@ -15,8 +15,27 @@ export class ElectronMenu {
         const remote = require('electron').remote;
         const Menu = remote.Menu;
         const app = remote.app;
+        if (process.platform === 'darwin') {
+            var name = app.getName();
+        } else {
+            var name = "to_get_deleted";
+        }
 
         let template = [{
+            label: name,
+            submenu: [{
+                label: `Über ${name}`,
+                role: 'about'
+            }, {
+                type: 'separator'
+            },{
+                label: 'Beenden',
+                accelerator: 'Command+Q',
+                click: function () {
+                    app.quit()
+                }
+            }]
+        },{
             label: 'Datei',
             submenu: [{
                 label: 'Neue Ressource',
@@ -121,54 +140,11 @@ export class ElectronMenu {
             label: 'Hilfe',
             role: 'help',
             submenu: []
-        }]
+        }];
 
-        if (process.platform === 'darwin') {
-            const name = app.getName()
-            template.unshift({
-                label: name,
-                submenu: [{
-                    label: `Über ${name}`,
-                    role: 'about'
-                }, {
-                    type: 'separator'
-                }, {
-                    label: 'Dienste',
-                    role: 'services',
-                    submenu: []
-                }, {
-                    type: 'separator'
-                }, {
-                    label: `Verstecke ${name}`,
-                    accelerator: 'Command+H',
-                    role: 'hide'
-                }, {
-                    label: 'Andere verstecken',
-                    accelerator: 'Command+Alt+H',
-                    role: 'hideothers'
-                }, {
-                    label: 'Alle anzeigen',
-                    role: 'unhide'
-                }, {
-                    type: 'separator'
-                }, {
-                    label: 'Beenden',
-                    accelerator: 'Command+Q',
-                    click: function () {
-                        app.quit()
-                    }
-                }]
-            });
-
-            // Window menu.
-            template[3].submenu.push({
-                type: 'separator'
-            }, {
-                label: 'Alle nach vorne bringen',
-                role: 'front'
-            });
-
-        };
+        if (process.platform !== 'darwin') {
+            template.splice(0,1);
+        }
 
         const menu = Menu.buildFromTemplate(template);
         Menu.setApplicationMenu(menu);

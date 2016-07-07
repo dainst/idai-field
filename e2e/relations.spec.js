@@ -48,10 +48,10 @@ describe('relations', function() {
                 expect(getRelationButton(getFirstRelationOfGroup(0), 0).element(by.tagName("span")).getText())
                     .toEqual("o1");
                 
+                
                 return common.scrollUp().then(common.saveObject);
             })
             .then(common.selectObject(1))
-            .then(common.scrollDown)
             .then(function() {
                 expect(getFirstRelationOfGroup(1).isPresent()).toBe(true);
                 expect(getRelationButton(getFirstRelationOfGroup(1), 0).isPresent()).toBe(true);

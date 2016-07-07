@@ -80,20 +80,20 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             params: []
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDTYPE]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Typendefinition für den Typ {0} der " +
-                     "Ressource {1}.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Typendefinition für den Typ {1} der " +
+                     "Ressource {0}.",
             level: 'danger',
             params: ["", ""]
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELD]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für das Feld {0} der " +
-                     "Ressource {1}.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für das Feld {1} der " +
+                     "Ressource {0}.",
             level: 'danger',
             params: ["?", ""]
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELDS]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für die Felder {0} der " +
-            "Ressource {1}.",
+            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinitionen für die Felder {1} der " +
+            "Ressource {0}.",
             level: 'danger',
             params: ["?", ""]
         };
@@ -143,7 +143,7 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             params: []
         };
         this.msgs[M.VALIDATION_ERROR_INVALIDFIELDS]={
-            content: "Fehlende Felddefinition für mehrere Felder der Ressource.",
+            content: "Fehlende Felddefinitionen für mehrere Felder der Ressource.",
             level: 'danger',
             params: []
         };

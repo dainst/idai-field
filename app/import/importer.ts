@@ -118,7 +118,7 @@ export class Importer {
             this.importReport['validation_errors'].push({
                 doc: doc,
                 msg: validationReport.errorMessage,
-                msgData: validationReport.errorData
+                msgParams: validationReport.errorData
             });
             
             this.currentImportWithError = true;

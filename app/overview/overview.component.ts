@@ -64,9 +64,9 @@ export class OverviewComponent implements OnInit {
 
     public save(doc:IdaiFieldDocument,withCallback:boolean=true) {
 
-        var errors=this.validator.validate(doc);
-        if (errors!=undefined) {
-            return this.messages.add(errors);
+        var validationReport = this.validator.validate(doc);
+        if (!validationReport.valid) {
+            return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
 
         doc['synced'] = 0;

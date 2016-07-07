@@ -49,6 +49,7 @@ export class Validator {
             if (!this.validateType(resource)) {
                 validationReport.valid = false;
                 validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDTYPE;
+                validationReport.errorData.push(resource.identifier);
                 validationReport.errorData.push("\"" + Utils.getTypeFromId(resource['@id']) + "\"");
                 return validationReport;
             }
@@ -58,6 +59,7 @@ export class Validator {
                 validationReport.valid = false;
                 validationReport.errorMessage = 
                     invalidFields.length == 1 ? M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS;
+                validationReport.errorData.push(resource.identifier);
                 validationReport.errorData.push(invalidFields.join(", "));
                 return validationReport;
             }

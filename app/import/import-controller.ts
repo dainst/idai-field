@@ -44,7 +44,7 @@ export class ImportController {
             this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [lineNumber]);
 
         for (var err of importReport['validation_errors'])
-            this.showValidationErrorMessage(err.doc, err.msg, err.msgData);
+            this.showValidationErrorMessage(err.msg, err.msgParams);
 
         for (var err of importReport['datastore_errors'])
             this.showDatastoreErrorMessage(err.doc, err.msg);
@@ -68,16 +68,16 @@ export class ImportController {
         }
     }
 
-    private showValidationErrorMessage(doc: any, msg: string, msgData: any) {
+    private showValidationErrorMessage(msg: string, msgParams: any[]) {
 
         if (msg == M.OBJLIST_IDMISSING) {
             this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
         } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE, [msgData, doc.resource.identifier]);
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE, msgParams);
         } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, [msgData, doc.resource.identifier]);
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, msgParams);
         } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELDS, [msgData, doc.resource.identifier]);
+            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELDS, msgParams);
         }
     }
 

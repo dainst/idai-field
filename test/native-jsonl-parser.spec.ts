@@ -1,24 +1,23 @@
 import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {FileSystemReader} from "../app/import/file-system-reader";
+import {NativeJsonlParser} from "../app/import/native-jsonl-parser";
 
 /**
  * @author Sebastian Cuy
+ * @author Jan G. Wieners
  */
 export function main() {
 
-    describe('FileSystemReader', () => {
+    describe('NativeJsonlParser', () => {
 
-       it('should create objects from file', (done) => {
+       it('should create objects from file content', (done) => {
 
-            var file  = new File([
-                '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+            var fileContent  = '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
                 + '{ "id": "/object/id2", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
-                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}'
-            ], 'test.json', { type: "application/json" });
+                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-            var reader = new FileSystemReader();
+            var parser = new NativeJsonlParser();
             var objects = [];
-            reader.read(file).subscribe(object => {
+            parser.parse(fileContent).subscribe(object => {
                 expect(object).not.toBe(undefined);
                 objects.push(object);
             }, () => {
@@ -34,17 +33,15 @@ export function main() {
 
         });
 
-        it('should abort on syntax errors in file', (done) => {
+        it('should abort on syntax errors in file content', (done) => {
 
-            var file  = new File([
-                '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+            var fileContent = '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
                 + '{ "id": "/object/id2", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
-                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}'
-            ], 'test.json', { type: "application/json" });
+                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-            var reader = new FileSystemReader();
+            var parser = new NativeJsonlParser();
             var objects = [];
-            reader.read(file).subscribe(object => {
+            parser.parse(fileContent).subscribe(object => {
                 expect(object).not.toBe(undefined);
                 objects.push(object);
             }, (error) => {
@@ -53,7 +50,6 @@ export function main() {
                 expect(error).toEqual(jasmine.any(SyntaxError));
                 expect(error.message).toContain('Unexpected end of');
                 expect(error.lineNumber).toEqual(2);
-                expect(error.fileName).toEqual('test.json');
                 done();
             });
 

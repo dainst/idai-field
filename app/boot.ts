@@ -26,6 +26,7 @@ import {ObjectList} from './overview/object-list';
 import {FileSystemReader} from './import/file-system-reader';
 import {Importer} from "./import/importer";
 import {ImportController} from "./import/import-controller";
+import {NativeJsonlParser} from "./import/native-jsonl-parser";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 if (CONFIG['targetPlatform'] == 'desktop') {
@@ -53,6 +54,7 @@ bootstrap(AppComponent, [
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
     provide(FileSystemReader, {useClass: FileSystemReader}),
+    provide(NativeJsonlParser, {useClass: NativeJsonlParser}),
     provide(Importer, {useClass: Importer}),
     provide(ImportController, {useClass: ImportController})
 ]);

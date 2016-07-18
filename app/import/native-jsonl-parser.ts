@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {Parser} from "./parser";
 
 export interface ParserError extends SyntaxError {
     lineNumber:number;
@@ -11,7 +12,7 @@ export interface ParserError extends SyntaxError {
  * @author Jan G. Wieners
  */
 @Injectable()
-export class NativeJsonlParser {
+export class NativeJsonlParser implements Parser {
 
     public parse(content:String):Observable<IdaiFieldDocument> {
 

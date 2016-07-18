@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {ObjectReader} from "./object-reader";
+import {FileSystemReader} from "./object-reader";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {ObjectList} from "../overview/object-list";
 import {IdaiFieldDocument} from "../model/idai-field-document";
@@ -41,7 +41,7 @@ export class Importer {
     }
     
     constructor(
-        private objectReader: ObjectReader,
+        private objectReader: FileSystemReader,
         private objectList: ObjectList,
         private datastore: Datastore,
         private validator: Validator

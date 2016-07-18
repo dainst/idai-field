@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
-export interface ObjectReaderError extends SyntaxError {
+export interface FileSystemReaderError extends SyntaxError {
     lineNumber: number;
     fileName: String;
 }
@@ -15,14 +15,14 @@ export interface ObjectReaderError extends SyntaxError {
  * @author Jan G. Wieners
  */
 @Injectable()
-export class ObjectReader {
+export class FileSystemReader {
 
     /**
      * Read objects from file
      *
      * @param file the file to be read
      * @returns {Observable<IdaiFieldDocument>} An observable that emits
-     *   objects for every parsed line or an error of type ObjectReaderError
+     *   objects for every parsed line or an error of type FileSystemReaderError
      *   if an error is encountered while parsing.
      */
     public read(file: File): Observable<IdaiFieldDocument> {
@@ -41,7 +41,7 @@ export class ObjectReader {
                     try {
                         observer.next(this.makeDoc(JSON.parse(lines[i])));
                     } catch(e) {
-                        let error: ObjectReaderError = e;
+                        let error: FileSystemReaderError = e;
                         error.lineNumber = i + 1;
                         error.fileName = file.name;
                         observer.error(error);

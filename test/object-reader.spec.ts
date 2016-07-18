@@ -1,5 +1,5 @@
 import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {ObjectReader} from "../app/import/object-reader";
+import {FileSystemReader} from "../app/import/object-reader";
 
 /**
  * @author Sebastian Cuy
@@ -16,7 +16,7 @@ export function main() {
                 + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}'
             ], 'test.json', { type: "application/json" });
 
-            var reader = new ObjectReader();
+            var reader = new FileSystemReader();
             var objects = [];
             reader.read(file).subscribe(object => {
                 expect(object).not.toBe(undefined);
@@ -42,7 +42,7 @@ export function main() {
                 + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}'
             ], 'test.json', { type: "application/json" });
 
-            var reader = new ObjectReader();
+            var reader = new FileSystemReader();
             var objects = [];
             reader.read(file).subscribe(object => {
                 expect(object).not.toBe(undefined);

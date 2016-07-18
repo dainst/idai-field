@@ -23,7 +23,7 @@ import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {Validator} from './model/validator';
 import {ObjectList} from './overview/object-list';
-import {ObjectReader} from './import/object-reader';
+import {FileSystemReader} from './import/object-reader';
 import {Importer} from "./import/importer";
 import {ImportController} from "./import/import-controller";
 
@@ -52,7 +52,7 @@ bootstrap(AppComponent, [
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
-    provide(ObjectReader, {useClass: ObjectReader}),
+    provide(FileSystemReader, {useClass: FileSystemReader}),
     provide(Importer, {useClass: Importer}),
     provide(ImportController, {useClass: ImportController})
 ]);

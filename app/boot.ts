@@ -23,7 +23,7 @@ import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {Validator} from './model/validator';
 import {ObjectList} from './overview/object-list';
-import {FileSystemReader} from './import/object-reader';
+import {FileSystemReader} from './import/file-system-reader';
 import {Importer} from "./import/importer";
 import {ImportController} from "./import/import-controller";
 

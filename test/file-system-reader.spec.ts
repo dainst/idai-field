@@ -1,12 +1,12 @@
 import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {FileSystemReader} from "../app/import/object-reader";
+import {FileSystemReader} from "../app/import/file-system-reader";
 
 /**
  * @author Sebastian Cuy
  */
 export function main() {
 
-    describe('Importer', () => {
+    describe('FileSystemReader', () => {
 
        it('should create objects from file', (done) => {
 

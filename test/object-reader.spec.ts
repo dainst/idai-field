@@ -8,7 +8,7 @@ export function main() {
 
     describe('Importer', () => {
 
-        it('should create objects from file', (done) => {
+       it('should create objects from file', (done) => {
 
             var file  = new File([
                 '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
@@ -17,9 +17,8 @@ export function main() {
             ], 'test.json', { type: "application/json" });
 
             var reader = new ObjectReader();
-            reader.setChunkSize(1);
             var objects = [];
-            reader.fromFile(file).subscribe( object => {
+            reader.read(file).subscribe(object => {
                 expect(object).not.toBe(undefined);
                 objects.push(object);
             }, () => {
@@ -45,7 +44,7 @@ export function main() {
 
             var reader = new ObjectReader();
             var objects = [];
-            reader.fromFile(file).subscribe( object => {
+            reader.read(file).subscribe(object => {
                 expect(object).not.toBe(undefined);
                 objects.push(object);
             }, (error) => {

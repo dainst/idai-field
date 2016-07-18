@@ -12,11 +12,10 @@ export interface ObjectReaderError extends SyntaxError {
  * Expects a UTF-8 encoded text file with one JSON-Object per line.
  *
  * @author Sebastian Cuy
+ * @author Jan G. Wieners
  */
 @Injectable()
 export class ObjectReader {
-
-    private chunkSize: number = 1000;
 
     /**
      * Read objects from file
@@ -26,54 +25,36 @@ export class ObjectReader {
      *   objects for every parsed line or an error of type ObjectReaderError
      *   if an error is encountered while parsing.
      */
-    public fromFile(file: File): Observable<IdaiFieldDocument> {
+    public read(file: File): Observable<IdaiFieldDocument> {
 
-        return Observable.create( observer => {
+        return Observable.create(observer => {
 
-            var start = 0;
-            var end = this.chunkSize;
-            var buf = "";
-            var loaded = 0;
-            var line = 1;
+            let reader = new FileReader();
 
-            while (start <= file.size) {
-                let chunk = file.slice(start, end);
-                let reader = new FileReader();
-                reader.onload = (event: any) => {
-                    buf += event.target.result;
-                    let nlPos = buf.indexOf('\n');
-                    while (nlPos != -1) {
-                        try {
-                            observer.next(this.makeDoc(JSON.parse(buf.substr(0, nlPos))));
-                        } catch(e) {
-                            let error: ObjectReaderError = e;
-                            error.lineNumber = line;
-                            error.fileName = file.name;
-                            observer.error(error);
-                        }
-                        buf = buf.substr(nlPos+1);
-                        nlPos = buf.indexOf('\n');
-                        line++;
+            reader.onload = (event: any) => {
+
+                var lines = event.target.result.split('\n');
+                var len = lines.length;
+
+                for (var i = 0; i < len; i++) {
+
+                    try {
+                        observer.next(this.makeDoc(JSON.parse(lines[i])));
+                    } catch(e) {
+                        let error: ObjectReaderError = e;
+                        error.lineNumber = i + 1;
+                        error.fileName = file.name;
+                        observer.error(error);
                     }
-                    loaded += event.target.result.length;
-                    if (loaded >= file.size) {
-                        if (buf.length > 0) {
-                            try {
-                                observer.next(this.makeDoc(JSON.parse(buf)));
-                            } catch(e) {
-                                let error: ObjectReaderError = e;
-                                error.lineNumber = line;
-                                error.fileName = file.name;
-                                observer.error(error);
-                            }
-                        }
-                        observer.complete();
-                    }
-                };
-                reader.readAsText(chunk);
-                start += this.chunkSize;
-                end += this.chunkSize;
-            }
+                }
+                observer.complete();
+            };
+
+            reader.onerror = (event: any) => {
+                observer.error(event.target.error);
+            };
+
+            reader.readAsText(file);
         });
     }
 
@@ -85,13 +66,5 @@ export class ObjectReader {
             "resource":resource,
             "id": resource['@id'].replace(/\/.*\//,"")
         };
-    }
-    
-    /**
-     * @param chunkSize sets the number of characters that are read in
-     *   one chunk (default: 1000)
-     */
-    public setChunkSize(chunkSize:number) {
-        this.chunkSize=chunkSize;
     }
 }

@@ -77,7 +77,7 @@ export class Importer {
                 }
 
                 var file = new File([data], '', {type: "application/json"});
-                this.objectReader.fromFile(file).subscribe(doc => {
+                this.objectReader.read(file).subscribe(doc => {
                     if (this.currentImportWithError) return;
 
                     if (!this.inUpdateDocumentLoop) {

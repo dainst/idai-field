@@ -4,7 +4,7 @@ import {Datastore} from "idai-components-2/idai-components-2";
 import {ObjectList} from "../overview/object-list";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "../model/validator";
-import {Parser} from "./parser";
+import {NativeJsonlParser} from "./native-jsonl-parser";
 
 /**
  * The Importer's responsibility is to read resources from jsonl files
@@ -43,7 +43,7 @@ export class Importer {
     }
 
     constructor(private reader:FileSystemReader,
-                private parser:Parser,
+                private parser:NativeJsonlParser,
                 private objectList:ObjectList,
                 private datastore:Datastore,
                 private validator:Validator) {

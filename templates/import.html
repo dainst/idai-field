@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">Quelle:</label>
                         <div class="col-sm-10">
-                            <select class="form-control" [(ngModel)]="sourceType">
+                            <select class="form-control" [(ngModel)]="sourceType" (ngModelChange)="reset()">
                                 <option value="file">Datei</option>
                                 <option value="http">HTTP</option>
                             </select>
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2">URL:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" [(ngModel)]="url">
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,8 @@
 
                 </div>
 
-                <button class="btn btn-default pull-right" (click)="startImport()">Import starten</button>
+                <button *ngIf="isReady()" class="btn btn-default pull-right" (click)="startImport()">Import starten</button>
+                <button *ngIf="!isReady()" class="btn btn-default pull-right disabled">Import starten</button>
             </div>
         </div>
     </main>

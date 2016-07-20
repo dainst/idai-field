@@ -22,6 +22,7 @@ export class ImportComponent {
     private sourceType: string = "file";
     private format: string = "native";
     private file: File;
+    private url: string;
 
     constructor(
         private messages: Messages,
@@ -48,6 +49,24 @@ export class ImportComponent {
                 this.evaluate(importReport);
             }
         );
+    }
+
+    public isReady(): boolean {
+
+        switch (this.sourceType) {
+            case "file":
+                return (this.file != undefined);
+            case "http":
+                return (this.url != undefined);
+        }
+    }
+
+    public reset(): void {
+
+        this.messages.clear();
+
+        this.file = undefined;
+        this.url = undefined;
     }
 
     private createReader(): Reader {

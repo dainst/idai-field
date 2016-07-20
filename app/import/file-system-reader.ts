@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {Reader} from "./reader";
 
 /**
  * Reads contents of a file.
@@ -8,15 +9,16 @@ import {Injectable} from "@angular/core";
  * @author Jan G. Wieners
  */
 @Injectable()
-export class FileSystemReader {
+export class FileSystemReader implements Reader{
+
+    constructor(private file: File) {}
 
     /**
      * Read content of file
      *
-     * @param file the file to be read
      * @returns {Promise<String>} A promise which resolves to the file content when the file is loaded.
      */
-    public read(file: File): Promise<String> {
+    public read(): Promise<string> {
 
         return new Promise((resolve, reject) => {
 
@@ -30,7 +32,7 @@ export class FileSystemReader {
                 reject(event.target.error);
             };
 
-            reader.readAsText(file);
+            reader.readAsText(this.file);
         });
     }
 }

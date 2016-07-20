@@ -14,6 +14,7 @@ import {Message} from "idai-components-2/idai-components-2"
 export class M { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
     public static IMPORTER_START : string = 'importer/start';
+    public static IMPORTER_GENERIC_START_ERROR: string = 'importer/genericstarterror';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
@@ -41,6 +42,11 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
         this.msgs[M.IMPORTER_START]={
             content: 'Starte Import...',
             level: 'info',
+            params: []
+        };
+        this.msgs[M.IMPORTER_GENERIC_START_ERROR]={
+            content: 'Import kann nicht gestartet werden.',
+            level: 'danger',
             params: []
         };
         this.msgs[M.IMPORTER_SUCCESS_SINGLE]={

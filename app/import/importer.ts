@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
-import {FileSystemReader} from "./file-system-reader";
 import {Datastore} from "idai-components-2/idai-components-2";
 import {ObjectList} from "../overview/object-list";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "../model/validator";
-import {NativeJsonlParser} from "./native-jsonl-parser";
+import {Reader} from "./reader";
+import {Parser} from "./parser";
+
 
 /**
  * The Importer's responsibility is to read resources from jsonl files
@@ -20,7 +21,7 @@ import {NativeJsonlParser} from "./native-jsonl-parser";
 export class Importer {
 
     private inUpdateDocumentLoop:boolean;
-    private docsToUpdate:Array<IdaiFieldDocument>;
+    private docsToUpdate: Array<IdaiFieldDocument>;
     private importSuccessCounter:number;
     private objectReaderFinished:boolean;
     private currentImportWithError:boolean;
@@ -42,11 +43,9 @@ export class Importer {
         };
     }
 
-    constructor(private reader:FileSystemReader,
-                private parser:NativeJsonlParser,
-                private objectList:ObjectList,
-                private datastore:Datastore,
-                private validator:Validator) {
+    constructor(private objectList: ObjectList,
+                private datastore: Datastore,
+                private validator: Validator) {
     }
 
     /**
@@ -61,50 +60,42 @@ export class Importer {
      * 3. Error validating a resource.
      * 4. The file is unreadable.
      *
-     * @param filepath
+     * @param reader
+     * @param parser
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResourcesFromFile(filepath:string):Promise<any> {
+    public importResources(reader: Reader, parser: Parser): Promise<any> {
 
         return new Promise<any>(resolve => {
 
             this.resolvePromise = resolve;
             this.initState();
 
-            var fs = require('fs');
-            fs.readFile(filepath, 'utf8', function (err, data) {
-                if (err) {
-                    this.importReport['io_error'] = true;
-                    return;
-                }
+            reader.read().then(fileContent => {
 
-                var file = new File([data], '', {type: "application/json"});
+                parser.parse(fileContent).subscribe(doc => {
 
-                this.reader.read(file).then(fileContent => {
+                    if (this.currentImportWithError) return;
 
-                    this.parser.parse(fileContent).subscribe(doc => {
-                        if (this.currentImportWithError) return;
+                    if (!this.inUpdateDocumentLoop) {
+                        this.update(doc);
+                    } else {
+                        this.docsToUpdate.push(doc);
+                    }
 
-                        if (!this.inUpdateDocumentLoop) {
-                            this.update(doc);
-                        } else {
-                            this.docsToUpdate.push(doc);
-                        }
+                }, error => {
+                    this.importReport["invalid_json"].push(error.lineNumber);
 
-                    }, error => {
-                        this.importReport["invalid_json"].push(error.lineNumber);
-
-                        this.objectReaderFinished = true;
-                        this.currentImportWithError = true;
-                        if (!this.inUpdateDocumentLoop) this.finishImport();
-                    }, () => {
-                        this.objectReaderFinished = true;
-                        if (!this.inUpdateDocumentLoop) this.finishImport();
-                    });
-                }).catch(error => {
-                    this.importReport['io_error'] = true;
+                    this.objectReaderFinished = true;
+                    this.currentImportWithError = true;
+                    if (!this.inUpdateDocumentLoop) this.finishImport();
+                }, () => {
+                    this.objectReaderFinished = true;
+                    if (!this.inUpdateDocumentLoop) this.finishImport();
                 });
-            }.bind(this));
+            }).catch(error => {
+                this.importReport['io_error'] = true;
+            });
         });
     }
 
@@ -116,7 +107,7 @@ export class Importer {
      *
      * @param doc
      */
-    private update(doc:IdaiFieldDocument) {
+    private update(doc: IdaiFieldDocument) {
 
         var index = this.docsToUpdate.indexOf(doc);
         if (index > -1) this.docsToUpdate.splice(index, 1);
@@ -133,7 +124,7 @@ export class Importer {
             this.finishImport();
             return;
         }
-
+        
         this.inUpdateDocumentLoop = true;
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;

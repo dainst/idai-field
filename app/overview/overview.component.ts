@@ -1,11 +1,9 @@
-import {Component, OnInit, Inject, Input, OnChanges, Output, EventEmitter, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
-import {AppComponent} from "../app.component";
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
@@ -34,7 +32,6 @@ export class OverviewComponent implements OnInit {
 
     constructor(@Inject('app.config') private config,
         private objectList: ObjectList,
-        private configLoader: ConfigLoader,
         private messages: Messages,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private validator:Validator,
@@ -72,12 +69,12 @@ export class OverviewComponent implements OnInit {
         doc['synced'] = 0;
 
         this.persistenceManager.persist(doc).then(
-            ()=>{
+            () => {
                 this.documentEditChangeMonitor.reset();
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
                 if (withCallback) this.changeSelectionAllowedCallback();
             },
-            errors=>{
+            errors => {
                 for (var err of errors) {
                     this.messages.add(err);
                 }
@@ -98,11 +95,6 @@ export class OverviewComponent implements OnInit {
         }, (err) => {
             this.messages.add(err);
         });
-    }
-
-    private setConfigs() {
-        this.configLoader.setProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH);
-        this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
     private registerSelectionCallbackForExisting(documentToSelect) {
@@ -135,7 +127,7 @@ export class OverviewComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.setConfigs();
+
         if (this.config.environment == "test") {
             setTimeout(() => this.objectList.fetchAllDocuments(), 500);
         } else {

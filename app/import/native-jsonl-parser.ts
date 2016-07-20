@@ -14,7 +14,7 @@ export interface ParserError extends SyntaxError {
 @Injectable()
 export class NativeJsonlParser implements Parser {
 
-    public parse(content:String):Observable<IdaiFieldDocument> {
+    public parse(content: string):Observable<IdaiFieldDocument> {
 
         return Observable.create(observer => {
 

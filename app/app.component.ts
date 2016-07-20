@@ -1,10 +1,12 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {OverviewComponent} from './overview/overview.component';
 import {SynchronizationComponent} from "./sync/synchronization.component";
+import {ImportComponent} from "./import/import.component";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
 import {MessagesComponent} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import {ConfigLoader} from "idai-components-2/idai-components-2";
 import {ElectronMenu} from './electron-menu';
 
 @Component({
@@ -13,7 +15,8 @@ import {ElectronMenu} from './electron-menu';
     directives: [ ROUTER_DIRECTIVES, SynchronizationComponent, MessagesComponent]
 })
 @RouteConfig([
-    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true }
+    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true },
+    { path: "/import", name: "Import", component: ImportComponent }
 ])
 export class AppComponent implements OnInit {
 
@@ -22,6 +25,7 @@ export class AppComponent implements OnInit {
 
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
+                private configLoader: ConfigLoader,
                 private menu:ElectronMenu) {
         
         if (this.config.targetPlatform == "desktop") {
@@ -30,7 +34,16 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.setConfigs();
+
         if (this.config.environment == 'test') this.loadSampleData();
+    }
+
+    private setConfigs() {
+
+        this.configLoader.setProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH);
+        this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
     loadSampleData(): void {

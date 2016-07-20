@@ -2,5 +2,5 @@ import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
 export interface Parser {
-    parse(String): Observable<IdaiFieldDocument>;
+    parse(string): Observable<IdaiFieldDocument>;
 }

@@ -46,6 +46,7 @@ export class Validator {
         }
 
         if (resource['@id']) {
+
             if (!this.validateType(resource)) {
                 validationReport.valid = false;
                 validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDTYPE;
@@ -53,7 +54,7 @@ export class Validator {
                 validationReport.errorData.push("\"" + Utils.getTypeFromId(resource['@id']) + "\"");
                 return validationReport;
             }
-            
+
             var invalidFields;
             if (invalidFields = this.validateFields(resource)) {
                 validationReport.valid = false;
@@ -64,7 +65,7 @@ export class Validator {
                 return validationReport;
             }
         }
-        
+
         return validationReport;
     }
 

@@ -25,7 +25,6 @@ import {Validator} from './model/validator';
 import {ObjectList} from './overview/object-list';
 import {FileSystemReader} from './import/file-system-reader';
 import {Importer} from "./import/importer";
-import {ImportController} from "./import/import-controller";
 import {NativeJsonlParser} from "./import/native-jsonl-parser";
 
 if (CONFIG['environment'] == 'production') enableProdMode();
@@ -55,6 +54,5 @@ bootstrap(AppComponent, [
     provide(MD, {useClass: M}),
     provide(FileSystemReader, {useClass: FileSystemReader}),
     provide(NativeJsonlParser, {useClass: NativeJsonlParser}),
-    provide(Importer, {useClass: Importer}),
-    provide(ImportController, {useClass: ImportController})
+    provide(Importer, {useClass: Importer})
 ]);

@@ -1,14 +1,10 @@
 import {Injectable} from "@angular/core";
-import {ImportController} from "./import/import-controller";
 
 /**
  * @author Sebastian Cuy
  */
 @Injectable()
 export class ElectronMenu {
-
-    constructor(
-        private importController: ImportController) {}
 
     public build(): void {
 
@@ -37,27 +33,7 @@ export class ElectronMenu {
             }]
         },{
             label: 'Datei',
-            submenu: [{
-                label: 'Neue Ressource',
-                accelerator: 'CmdOrCtrl+N',
-                click: function(item, focusedWindow) {
-                    if (focusedWindow) {
-                        // TODO bind this to use router
-                        // TODO use component router instead of router deprecated
-                        // this.router.navigate(['Overview']);
-                    }
-                }
-            }, {
-                type: 'separator'
-            }, {
-                label: 'Ressourcen importieren',
-                accelerator: 'CmdOrCtrl+I',
-                click: function(item, focusedWindow) {
-                    if (focusedWindow) {
-                        this.importResources();
-                    }
-                }.bind(this)
-            }]
+            submenu: []
         }, {
             label: 'Bearbeiten',
             submenu: [{
@@ -150,19 +126,5 @@ export class ElectronMenu {
         Menu.setApplicationMenu(menu);
 
     }
-    
-    private importResources() {
-        const {dialog} = require('electron').remote;
-
-        var filepaths = dialog.showOpenDialog({
-            properties: [ 'openFile' ],
-            title: "Importieren",
-            filters: [ { name: 'JSON-Lines-Datei', extensions: ['jsonl'] } ]
-        });
-        
-        this.importController.importResourcesFromFile(filepaths[0]);
-    }
-
-    
 
 }

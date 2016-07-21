@@ -16,9 +16,15 @@
 
 .navbar-button {
   position: absolute;
-  left: 150px;
-  top: 8px;
+  left: 135px;
+  top: 12px;
+  color: #fff;
   cursor: pointer;
+}
+
+.navbar-button:hover {
+  transition: color .3s ease;
+  color: #ddd;
 }
 
 // display arrow on top of dropdown menu for idai.world menu

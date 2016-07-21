@@ -15,7 +15,7 @@ describe('import', function() {
     });
 
     it('should import a valid iDAI.field JSONL file via HTTP', function() {
-        var url = "./test/importer-test-ok.jsonl";
+        var url = "../test/importer-test-ok.jsonl";
 
         element(by.id('importButton')).click()
             .then(getSourceOptions)

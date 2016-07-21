@@ -3,9 +3,11 @@ import {Messages} from "idai-components-2/idai-components-2";
 import {Importer} from "./importer";
 import {Reader} from "./reader";
 import {FileSystemReader} from "./file-system-reader";
+import {HttpReader} from "./http-reader";
 import {Parser} from "./parser";
 import {NativeJsonlParser} from "./native-jsonl-parser";
 import {M} from "../m";
+import {Http} from "@angular/http";
 
 
 @Component({
@@ -13,6 +15,11 @@ import {M} from "../m";
 })
 
 /**
+ * Delegates calls to the Importer, waits for
+ * the import to finish and extracts the importReport
+ * in order to generate appropriate messages to display
+ * to the user.
+ * 
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
@@ -27,7 +34,8 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private nativeJsonlParser: NativeJsonlParser
+        private nativeJsonlParser: NativeJsonlParser,
+        private http: Http
     ) {}
 
     public startImport() {
@@ -75,8 +83,7 @@ export class ImportComponent {
             case "file":
                 return new FileSystemReader(this.file);
             case "http":
-                // TODO Create & return http reader
-                return null;
+                return new HttpReader(this.url,this.http);
         }
     }
 

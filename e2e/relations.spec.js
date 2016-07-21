@@ -14,15 +14,13 @@ describe('relations', function() {
 
     function getSuggestion(relation, index) {
         return relation.all(by.css('.suggestion')).get(index);
-    }
-
-    
+    }    
 
     function getRelationButton(relation, index) {
         return relation.all(by.tagName('button')).get(index);
     }
 
-    beforeEach(function(){
+    beforeEach(function() {
         browser.get('/');
     });
 

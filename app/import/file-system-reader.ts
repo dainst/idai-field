@@ -8,7 +8,6 @@ import {Reader} from "./reader";
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-@Injectable() // TODO this is not necessary anymore, isn't it?
 export class FileSystemReader implements Reader{
 
     constructor(private file: File) {}

@@ -52,7 +52,6 @@ bootstrap(AppComponent, [
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
-    provide(FileSystemReader, {useClass: FileSystemReader}),
     provide(NativeJsonlParser, {useClass: NativeJsonlParser}),
     provide(Importer, {useClass: Importer})
 ]);

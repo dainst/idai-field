@@ -14,7 +14,7 @@ export class ElectronMenu {
         if (process.platform === 'darwin') {
             var name = app.getName();
         } else {
-            var name = "to_get_deleted";
+            var name:any = "to_get_deleted";
         }
 
         let template = [{

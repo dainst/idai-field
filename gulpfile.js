@@ -58,7 +58,7 @@ gulp.task('compile',['convert-sass'], function () {
 		.pipe(gulp.dest('app/'));
 	// test sources
     return gulp
-		.src('test/**/*.ts')
+		.src(['test/**/*.ts','typings/index.d.ts'])
 		.pipe(typescript(tscConfig.compilerOptions))
 		.pipe(gulp.dest('test/'));
 });
@@ -92,6 +92,7 @@ gulp.task('make-dist',function() {
     gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
     gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));
+	gulp.src('node_modules/papaparse/**/*').pipe(gulp.dest('dist/node_modules/papaparse/'));
     gulp.src('src/templates/**/*').pipe(gulp.dest('dist/src/templates/'));
 });
 

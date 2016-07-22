@@ -25,9 +25,12 @@ export class IdigCsvParser implements Parser {
 
     public parse(content:string):Observable<IdaiFieldDocument> {
 
+        console.debug("starting parsing file content");
+
         return Observable.create(observer => {
 
             var errorCallback = e => {
+                console.debug("error while parsing", e);
                 let error:ParserError = new ParserError();
                 error.lineNumber = e.row;
                 error.message = e.message;
@@ -36,6 +39,8 @@ export class IdigCsvParser implements Parser {
             };
 
             var completeCallback = result => {
+                console.debug("finished parsing file content");
+                result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
                     var valid:any = this.validate(object);
                     if (valid === true) {
@@ -47,9 +52,13 @@ export class IdigCsvParser implements Parser {
                         observer.error(error);
                     }
                 });
-                console.log("finished parsing file content");
+                console.debug("finished mapping file content");
                 observer.complete();
             }
+
+            console.debug("set up callbacks");
+
+            console.log("Papa", Papa);
 
             Papa.parse(content, {
                 header: true,
@@ -60,7 +69,7 @@ export class IdigCsvParser implements Parser {
                 complete: completeCallback
             });
 
-            console.log("started parsing file content");
+            console.debug("started parsing file content");
 
         });
 

@@ -68,12 +68,18 @@ export class Importer {
 
         return new Promise<any>(resolve => {
 
+            console.log("importing resources");
+
             this.resolvePromise = resolve;
             this.initState();
 
             reader.read().then(fileContent => {
 
+                console.log("read file content");
+
                 parser.parse(fileContent).subscribe(doc => {
+
+                    console.debug("read document", doc);
 
                     if (this.currentImportWithError) return;
 
@@ -128,6 +134,7 @@ export class Importer {
         this.inUpdateDocumentLoop = true;
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
+            console.log("successfully imported document", doc);
 
             if (this.docsToUpdate.length > 0) {
                 this.update(this.docsToUpdate[0]);
@@ -151,6 +158,8 @@ export class Importer {
     }
 
     private finishImport() {
+
+        console.log("finished import");
 
         if (this.importSuccessCounter > 0) {
             this.objectList.fetchAllDocuments();

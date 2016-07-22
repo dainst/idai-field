@@ -6,6 +6,7 @@ import {FileSystemReader} from "./file-system-reader";
 import {HttpReader} from "./http-reader";
 import {Parser} from "./parser";
 import {NativeJsonlParser} from "./native-jsonl-parser";
+import {IdigCsvParser} from "./idig-csv-parser";
 import {M} from "../m";
 import {Http} from "@angular/http";
 
@@ -35,6 +36,7 @@ export class ImportComponent {
         private messages: Messages,
         private importer: Importer,
         private nativeJsonlParser: NativeJsonlParser,
+        private idigCsvParser: IdigCsvParser,
         private http: Http
     ) {}
 
@@ -93,8 +95,7 @@ export class ImportComponent {
             case "native":
                 return this.nativeJsonlParser;
             case "idig":
-                // TODO return idig parser
-                return null;
+                return this.idigCsvParser;
         }
     }
 

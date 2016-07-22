@@ -23,9 +23,9 @@ import {PersistenceManager} from 'idai-components-2/idai-components-2';
 import {DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {Validator} from './model/validator';
 import {ObjectList} from './overview/object-list';
-import {FileSystemReader} from './import/file-system-reader';
 import {Importer} from "./import/importer";
 import {NativeJsonlParser} from "./import/native-jsonl-parser";
+import {IdigCsvParser} from './import/idig-csv-parser';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 if (CONFIG['targetPlatform'] == 'desktop') {
@@ -53,5 +53,6 @@ bootstrap(AppComponent, [
     provide(SyncMediator, {useClass: SyncMediator}),
     provide(MD, {useClass: M}),
     provide(NativeJsonlParser, {useClass: NativeJsonlParser}),
+    provide(IdigCsvParser, {useClass: IdigCsvParser}),
     provide(Importer, {useClass: Importer})
 ]);

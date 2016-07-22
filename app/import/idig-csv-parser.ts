@@ -26,19 +26,42 @@ export class IdigCsvParser implements Parser {
     public parse(content:string):Observable<IdaiFieldDocument> {
 
         return Observable.create(observer => {
-            var result = Papa.parse(content, { header: true, dynamicTyping: true, skipEmptyLines: true });
-            result.data.forEach( (object, i) => {
-                var valid:any = this.validate(object);
-                if (valid === true) {
-                    observer.next(this.map(object));
-                } else {
-                    let error:ParserError = new ParserError();
-                    error.lineNumber = i + 1;
-                    error.message = valid;
-                    observer.error(error);
-                }                
+
+            var errorCallback = e => {
+                let error:ParserError = new ParserError();
+                error.lineNumber = e.row;
+                error.message = e.message;
+                error.code = e.code;
+                observer.error(error);
+            };
+
+            var completeCallback = result => {
+                result.data.forEach( (object, i) => {
+                    var valid:any = this.validate(object);
+                    if (valid === true) {
+                        observer.next(this.map(object));
+                    } else {
+                        let error:ParserError = new ParserError();
+                        error.lineNumber = i + 1;
+                        error.message = valid;
+                        observer.error(error);
+                    }
+                });
+                console.log("finished parsing file content");
+                observer.complete();
+            }
+
+            Papa.parse(content, {
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+                worker: true,
+                error: errorCallback,
+                complete: completeCallback
             });
-            observer.complete();
+
+            console.log("started parsing file content");
+
         });
 
     }

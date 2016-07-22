@@ -6,7 +6,7 @@ import {IdigCsvParser} from "../app/import/idig-csv-parser";
  */
 export function main() {
 
-    fdescribe('IdigCsvParser', () => {
+    describe('IdigCsvParser', () => {
 
         it('should create objects from file content', (done) => {
 

@@ -14,7 +14,6 @@ import {SyncMediator} from "./sync/sync-mediator";
 import CONFIG = require("config/config.json!json");
 import {Indexeddb} from "./datastore/indexeddb";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {ElectronMenu} from "./electron-menu";
 import {M} from "./m";
 import {MD} from "idai-components-2/idai-components-2";
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
@@ -28,9 +27,6 @@ import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
 
 if (CONFIG['environment'] == 'production') enableProdMode();
-if (CONFIG['targetPlatform'] == 'desktop') {
-    require('electron-connect').client.create();
-}
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
@@ -44,7 +40,6 @@ bootstrap(AppComponent, [
     provide(Messages, { useClass: Messages }),
     provide('app.config', { useValue: CONFIG }),
     provide(ConfigLoader, {useClass: ConfigLoader}),
-    provide(ElectronMenu, {useClass: ElectronMenu}),
     provide(ObjectList, {useClass: ObjectList}),
     provide(PersistenceManager, {useClass: PersistenceManager}),
     provide(DocumentEditChangeMonitor, {useClass: DocumentEditChangeMonitor}),

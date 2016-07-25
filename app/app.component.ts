@@ -7,7 +7,6 @@ import {DOCS} from "./datastore/sample-objects";
 import {MessagesComponent, Messages} from "idai-components-2/idai-components-2";
 import {RouteConfig, ROUTER_DIRECTIVES, Router} from '@angular/router-deprecated';
 import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {ElectronMenu} from './electron-menu';
 
 @Component({
     selector: 'idai-field-app',
@@ -26,15 +25,10 @@ export class AppComponent implements OnInit {
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
                 private configLoader: ConfigLoader,
-                private menu:ElectronMenu,
                 private router: Router,
                 private messages: Messages) {
 
         router.subscribe(() => this.messages.clear());
-        
-        if (this.config.targetPlatform == "desktop") {
-            menu.build();
-        }
     }
 
     ngOnInit() {

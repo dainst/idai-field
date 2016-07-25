@@ -54,20 +54,23 @@ export class IdigCsvParser implements Parser {
                 });
                 console.debug("finished mapping file content");
                 observer.complete();
-            }
+            };
 
             console.debug("set up callbacks");
 
-            console.log("Papa", Papa);
-
-            Papa.parse(content, {
-                header: true,
-                dynamicTyping: true,
-                skipEmptyLines: true,
-                worker: true,
-                error: errorCallback,
-                complete: completeCallback
-            });
+            try {
+                Papa.parse(content, {
+                    header: true,
+                    dynamicTyping: true,
+                    skipEmptyLines: true,
+                    worker: true,
+                    error: errorCallback,
+                    complete: completeCallback
+                });
+            } catch (e) {
+                console.log(e);
+                observer.error(e);
+            }
 
             console.debug("started parsing file content");
 

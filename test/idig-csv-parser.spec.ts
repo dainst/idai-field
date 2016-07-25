@@ -1,4 +1,4 @@
-import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
+import {describe, expect, it} from '@angular/core/testing';
 import {IdigCsvParser} from "../app/import/idig-csv-parser";
 
 /**

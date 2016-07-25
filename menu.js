@@ -1,5 +1,5 @@
-const remote = require('electron').remote;
-const app = remote.app;
+const electron = require('electron');
+const app = electron.app;
 
 var name;
 if (process.platform === 'darwin')

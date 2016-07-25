@@ -1,7 +1,7 @@
 'use strict';
 
 const electron = require('electron');
-const menuTemplate = require('menu.js');
+const menuTemplate = require('./menu.js');
 const Menu = electron.Menu;
 
 // Module to control application life.

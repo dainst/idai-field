@@ -31,11 +31,6 @@ without risking of committing actual real configurations to the repo.
 * test -> the db gets cleared on every reload
 * production -> for production use
 
-### targetPlatform
-
-* desktop -> for running as electron packaged app, includes menus to access certain features not available when option is not active
-* (OMIT PARAM) -> suitable for viewing in browser, also suitable for e2e testing
-
 ### backend
 
 If the backend property is set, syncing unsynced 

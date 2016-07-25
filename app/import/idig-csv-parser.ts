@@ -61,7 +61,6 @@ export class IdigCsvParser implements Parser {
             try {
                 Papa.parse(content, {
                     header: true,
-                    dynamicTyping: true,
                     skipEmptyLines: true,
                     worker: true,
                     error: errorCallback,

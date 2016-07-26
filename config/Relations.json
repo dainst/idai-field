@@ -1,17 +1,21 @@
-{ "relations" : [
+{ "relations" :
 
-		{"field": "Belongs to", "inverse": "Includes", "label": "Enthalten in"},
-        {"field": "Includes", "inverse": "Belongs to", "label": "Enthält"},
+  [
 
-        {"field": "Above", "inverse": "Below", "label": "Oberhalb von"},
-        {"field": "Below", "inverse": "Above", "label": "Unterhalb von"},
-        {"field": "Next to", "inverse": "Next to", "label": "Benachbart zu"},
+    {"field": "belongsTo", "inverse": "includes", "label": "Enthalten in"},
+    {"field": "includes", "inverse": "belongsTo", "label": "Enthält"},
 
-        {"field": "Is before", "inverse": "Is after", "label": "Zeitlich vor"},
-        {"field": "Is after", "inverse": "Is before", "label": "Zeitlich nach"},
-        {"field": "Is coeval with", "inverse": "Is coeval with", "label": "Zeitgleich mit"},
+    {"field": "isAbove", "inverse": "isBelow", "label": "Oberhalb von"},
+    {"field": "isBelow", "inverse": "isAbove", "label": "Unterhalb von"},
+    {"field": "isNextTo", "inverse": "isNextTo", "label": "Benachbart zu"},
 
-        {"field": "Cuts", "inverse": "Is cut by", "label": "Schneidet"},
-        {"field": "Is cut by", "inverse": "Cuts", "label": "Wird geschnitten von"}
-    ]
+    {"field": "isBefore", "inverse": "isAfter", "label": "Zeitlich vor"},
+    {"field": "isAfter", "inverse": "isBefore", "label": "Zeitlich nach"},
+    {"field": "isCoevalWith", "inverse": "isCoevalWith", "label": "Zeitgleich mit"},
+
+    {"field": "cuts", "inverse": "isCutBy", "label": "Schneidet"},
+    {"field": "isCutBy", "inverse": "cuts", "label": "Wird geschnitten von"}
+
+  ]
+
 }

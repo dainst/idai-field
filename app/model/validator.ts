@@ -45,7 +45,9 @@ export class Validator {
             return validationReport;
         }
 
-        if (resource['@id']) {
+        if (resource['@id']
+            // TODO Remove check for type as soon as the type isn't expected as part of the id anymore
+            && Utils.getTypeFromId(resource['@id'])) {
 
             if (!this.validateType(resource)) {
                 validationReport.valid = false;

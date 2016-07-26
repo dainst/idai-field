@@ -36,7 +36,7 @@ export class Importer {
         this.currentImportWithError = false;
         this.importReport = {
             "io_error": false,
-            "invalid_json": [],
+            "parser_errors": [],
             "successful_imports": 0,
             "validation_errors": [],
             "datastore_errors": []
@@ -90,7 +90,7 @@ export class Importer {
                     }
 
                 }, error => {
-                    this.importReport["invalid_json"].push(error.lineNumber);
+                    this.importReport["parser_errors"].push(error);
 
                     this.objectReaderFinished = true;
                     this.currentImportWithError = true;

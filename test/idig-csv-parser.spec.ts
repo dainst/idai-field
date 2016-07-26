@@ -1,5 +1,6 @@
 import {describe, expect, it} from '@angular/core/testing';
 import {IdigCsvParser} from "../app/import/idig-csv-parser";
+import {M} from "../app/m";
 
 /**
  * @author Sebastian Cuy
@@ -47,7 +48,7 @@ export function main() {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['@id']).toEqual("Agora:Basket:daly:2010:b:16");
                 expect(error).toEqual(jasmine.any(SyntaxError));
-                expect(error.message).toContain('Missing mandatory field');
+                expect(error.message).toEqual(M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING);
                 expect(error.lineNumber).toEqual(2);
                 done();
             });

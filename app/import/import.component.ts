@@ -117,8 +117,8 @@ export class ImportComponent {
             this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filename]);
         }
 
-        for (var lineNumber of importReport["invalid_json"])
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDJSON, [lineNumber]);
+        for (var parserError of importReport["parser_errors"])
+            this.messages.add(parserError.message, [parserError.lineNumber, parserError.errorData]);
 
         for (var err of importReport['validation_errors'])
             this.showValidationErrorMessage(err.msg, err.msgParams);

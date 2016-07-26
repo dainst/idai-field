@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Parser,ParserError} from "./parser";
+import {M} from "../m";
 
 /**
  * @author Sebastian Cuy
@@ -22,7 +23,8 @@ export class NativeJsonlParser implements Parser {
                 try {
                     observer.next(this.makeDoc(JSON.parse(lines[i])));
                 } catch (e) {
-                    let error:ParserError = e;
+                    let error: ParserError = e;
+                    error.message = M.IMPORTER_FAILURE_INVALIDJSON;
                     error.lineNumber = i + 1;
                     observer.error(error);
                 }

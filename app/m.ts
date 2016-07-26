@@ -19,6 +19,9 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
+    public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
+    public static IMPORTER_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
+    public static IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
     public static IMPORTER_FAILURE_IDEXISTS: string = 'importer/failure/idexists';
     public static IMPORTER_FAILURE_IDMISSING: string = 'importer/failure/idmissing';
     public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
@@ -68,6 +71,21 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
             content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
             level: 'danger',
             params: [ "?" ]
+        };
+        this.msgs[M.IMPORTER_FAILURE_INVALIDCSV]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile {0} konnte nicht gelesen werden.',
+            level: 'danger',
+            params: [ "?" ]
+        };
+        this.msgs[M.IMPORTER_FAILURE_GENERICCSVERROR]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.',
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING]={
+            content: 'Beim Import ist ein Fehler aufgetreten: In Zeile {0} fehlt das Pflichtfeld \"{1}\".',
+            level: 'danger',
+            params: [ "?", "?" ]
         };
         this.msgs[M.IMPORTER_FAILURE_IDEXISTS]={
             content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen-Identifier {0} existiert bereits.',

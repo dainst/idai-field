@@ -1,5 +1,6 @@
-import {fdescribe,xdescribe,describe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
+import {fdescribe,xdescribe,describe,expect,fit,it} from '@angular/core/testing';
 import {NativeJsonlParser} from "../app/import/native-jsonl-parser";
+import {M} from "../app/m"
 
 /**
  * @author Sebastian Cuy
@@ -48,7 +49,7 @@ export function main() {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['@id']).toEqual("/object/id1");
                 expect(error).toEqual(jasmine.any(SyntaxError));
-                expect(error.message).toContain('Unexpected end of');
+                expect(error.message).toEqual(M.IMPORTER_FAILURE_INVALIDJSON);
                 expect(error.lineNumber).toEqual(2);
                 done();
             });

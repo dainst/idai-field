@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Parser,ParserError} from "./parser";
+import {M} from "../m";
 
 /**
  * @author Sebastian Cuy
@@ -31,10 +32,9 @@ export class IdigCsvParser implements Parser {
 
             var errorCallback = e => {
                 console.debug("error while parsing", e);
-                let error:ParserError = new ParserError();
+                let error: ParserError = new ParserError();
                 error.lineNumber = e.row;
-                error.message = e.message;
-                error.code = e.code;
+                error.message = M.IMPORTER_FAILURE_INVALIDCSV;
                 observer.error(error);
             };
 
@@ -42,14 +42,12 @@ export class IdigCsvParser implements Parser {
                 console.debug("finished parsing file content");
                 result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
-                    var valid:any = this.validate(object);
-                    if (valid === true) {
+                    var validationResult: any = this.validate(object);
+                    if (validationResult === true) {
                         observer.next(this.map(object));
                     } else {
-                        let error:ParserError = new ParserError();
-                        error.lineNumber = i + 1;
-                        error.message = valid;
-                        observer.error(error);
+                        validationResult.lineNumber = i + 1;
+                        observer.error(validationResult);
                     }
                 });
                 console.debug("finished mapping file content");
@@ -67,8 +65,9 @@ export class IdigCsvParser implements Parser {
                     complete: completeCallback
                 });
             } catch (e) {
-                console.log(e);
-                observer.error(e);
+                let error: ParserError = new ParserError();
+                error.message = M.IMPORTER_FAILURE_GENERICCSVERROR;
+                observer.error(error);
             }
 
             console.debug("started parsing file content");
@@ -78,16 +77,20 @@ export class IdigCsvParser implements Parser {
     }
     
     private validate(object:any):any {
-        var result:any = true;
+
+        var result: any = true;
         IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
-                result = "Missing mandatory field '" + mandatoryField + "'";
+                result = new ParserError();
+                result.message = M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING;
+                result.errorData = mandatoryField;
             }
         });
         return result;
     }
 
     private map(object) {
+
         var doc:IdaiFieldDocument = {
             resource: {
                 '@id': object['Identifier_uuid'],
@@ -103,6 +106,7 @@ export class IdigCsvParser implements Parser {
     }
 
     private copyFields(object,resource) {
+
         Object.keys(object).forEach( field => {
             if (IdigCsvParser.IGNORED_FIELDS.indexOf(field) == -1
                     && IdigCsvParser.MANDATORY_FIELDS.indexOf(field) == -1) {

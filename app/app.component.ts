@@ -49,9 +49,11 @@ export class AppComponent implements OnInit {
         this.datastore.clear()
         .then(() => {
             var promises = [];
-            for (var ob of DOCS) promises.push(this.datastore.create(ob));
+            for (var ob of DOCS) promises.push(this.datastore.update(ob));
             Promise.all(promises).then(
-                () => console.log("Successfully stored sample objects"))
+                () => {
+                    console.log("Successfully stored sample objects")
+                })
             .catch(
                 err => console.error("Problem when storing sample data", err)
             );

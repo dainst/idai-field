@@ -75,6 +75,7 @@ gulp.task('make-dist',function() {
     gulp.src('index.html').pipe(gulp.dest('dist/'));
     gulp.src('package.json').pipe(gulp.dest('dist/'));
     gulp.src('main.js').pipe(gulp.dest('dist/'));
+    gulp.src('menu.js').pipe(gulp.dest('dist/'));
     gulp.src('app/**/*').pipe(gulp.dest('dist/app/'));
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));

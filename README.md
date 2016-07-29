@@ -119,21 +119,6 @@ As the *start* command, it automatically converts scss files to css when they ar
 
 This command runs the end to end tests once.
 
-**Important**
-
-For reasons of a convenient development workflow, the *run server* task makes the tests
-test against the application development files under "./". On a continuous integration machine,
-however, what you want is that the application, as it is packaged, is tested. So make sure
-you use
-
-```
-$ npm run make-dist
-```
-
-there prior to the *run e2e* and serve the resulting *dist* dir (instead of ./) on 8081, 
-so that the target application is the one you run your e2e tests against. Note that the command
-requires that config files are provided under config. These will be put to the *dist* dir, too.
-
 ## Deployment
 
 The recommended way for building and testing
@@ -147,20 +132,6 @@ the iDAI.field 2 Client application on a developer machine is as follows
 1$ npm run make-dist
 1$ npm run package
 ```
-
-For reasons mentioned at the end of the previous section, the recommended way for building and testing
-the iDAI.field 2 Client application on a continuous integration machine differs a little bit and 
-is as follows
-
-```
-$ npm run build
-$ npm test
-$ npm run make-dist
-$ npm run e2e
-$ npm run package
-```
-
-In this case it is assumed the dist dir is served at localhost:8081 by a webserver like apache.
 
 After building you find packages of the application for different operating systems
 in the "release"-directory.

@@ -18,7 +18,7 @@ function selectObjectType() {
 }
 
 function typeInIdentifier(identifier) {
-    var inputField = element(by.id('edit-form-input-0'));
+    var inputField = element(by.css('#edit-form-element-0 input'));
     return typeIn(inputField, identifier);
 }
 

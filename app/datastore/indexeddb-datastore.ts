@@ -32,7 +32,7 @@ export class IndexeddbDatastore implements Datastore {
             if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
             document.id = IdGenerator.generateId();
-            document['resource']['@id']="/"+document['resource'].type+"/"+document.id;
+            document['resource']['id'] = document.id;
             document.created = new Date();
             document.modified = document.created;
             this.documentCache[document['id']] = document;
@@ -41,7 +41,7 @@ export class IndexeddbDatastore implements Datastore {
                 return this.saveFulltext(document);
             }, err => {
                     document.id = undefined;
-                    document['resource']['@id'] = undefined;
+                    document['resource']['id'] = undefined;
                     document.created = undefined;
                     document.modified = undefined;
                     reject(M.DATASTORE_IDEXISTS);
@@ -71,7 +71,7 @@ export class IndexeddbDatastore implements Datastore {
 
     public get(resourceId:string):Promise<Document> {
 
-        let docId = this.documentIdFrom(resourceId);
+        let docId = resourceId;
 
         if (this.documentCache[docId]) {
             return new Promise((resolve, reject) => resolve(this.documentCache[docId]));
@@ -80,17 +80,12 @@ export class IndexeddbDatastore implements Datastore {
         }
     }
 
-    private documentIdFrom(resourceId){
-        var result=resourceId.replace(/\/.*\//,"")
-        return result;
-    }
-
     public remove(resourceId:string):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var docId = this.documentIdFrom(resourceId);
+                var docId = resourceId;
 
                 var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT, docId);
                 objectRequest.onerror = event => reject(objectRequest.error);

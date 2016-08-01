@@ -101,7 +101,7 @@ export class IdaiFieldBackend {
         if (dataset) document['dataset']=dataset;
         
         return new Promise((resolve, reject) => {
-            this.performPut(document['resource']['@id'],document).subscribe(
+            this.performPut(document['resource']['id'],document).subscribe(
                   () => resolve(document),
                   err => {
                       this.checkConnection();

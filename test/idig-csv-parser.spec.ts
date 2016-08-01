@@ -23,7 +23,7 @@ export function main() {
             }, () => {
                 fail();
             }, () => {
-                expect(objects[0]['resource']['@id']).toEqual("Agora:Basket:daly:2010:b:16");
+                expect(objects[0]['resource']['id']).toEqual("Agora:Basket:daly:2010:b:16");
                 expect(objects[0]['resource']['type']).toEqual("Context");
                 expect(objects[0]['id']).toEqual("Agora:Basket:daly:2010:b:16");
                 expect(objects[1]['resource'].title).toEqual("Room 5 and Room 6 Classical Building; South of Cistern (Daly 2010)");
@@ -46,7 +46,7 @@ export function main() {
                 objects.push(object);
             }, (error) => {
                 expect(objects.length).toEqual(1);
-                expect(objects[0]['resource']['@id']).toEqual("Agora:Basket:daly:2010:b:16");
+                expect(objects[0]['resource']['id']).toEqual("Agora:Basket:daly:2010:b:16");
                 expect(error).toEqual(jasmine.any(SyntaxError));
                 expect(error.message).toEqual(M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING);
                 expect(error.lineNumber).toEqual(2);

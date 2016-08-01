@@ -34,12 +34,10 @@ export class NativeJsonlParser implements Parser {
     }
 
     private makeDoc(resource) {
-        resource['@id'] = resource['id'];
-        delete resource['id'];
-        resource['type'] = resource['@id'].replace(/\/[^/]*$/, "").replace(/\//, "");
+        
         return {
             "resource": resource,
-            "id": resource['@id'].replace(/\/.*\//, "")
+            "id": resource['id']
         };
     }
 

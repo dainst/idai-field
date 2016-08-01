@@ -93,7 +93,7 @@ export class IdigCsvParser implements Parser {
 
         var doc:IdaiFieldDocument = {
             resource: {
-                '@id': object['Identifier_uuid'],
+                id: object['Identifier_uuid'],
                 identifier: object['Identifier'],
                 title: object['Title'],
                 type: object['Type']

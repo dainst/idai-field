@@ -44,7 +44,7 @@ export class SynchronizationComponent {
             doc => {
                 if (this.connected)
                     this.sync(doc);
-                else this.storeObjectId(doc['resource']['@id']);
+                else this.storeObjectId(doc['resource']['id']);
             },
             err => console.error("Error in subscribeForUnsyncedDocuments(). ", err)
         );
@@ -67,7 +67,7 @@ export class SynchronizationComponent {
             document => {
                 document['synced'] = 1;
                 this.datastore.update(document);
-                this.removeObjectId(document['resource']['@id']);
+                this.removeObjectId(document['resource']['id']);
             },
             err => {
                 this.connected=false;

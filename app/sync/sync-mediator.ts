@@ -36,7 +36,7 @@ export class SyncMediator {
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
-                        this.datastore.get(cursor.value['resource']['@id']).then(
+                        this.datastore.get(cursor.value['resource']['id']).then(
                             possiblyCachedDocFromDS=>{
                                 observer.next(possiblyCachedDocFromDS);
                         });

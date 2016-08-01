@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {IdaiFieldDocument} from "./idai-field-document";
-import {Utils, ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
+import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
 import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
 
 /**
@@ -45,15 +45,13 @@ export class Validator {
             return validationReport;
         }
 
-        if (resource['@id']
-            // TODO Remove check for type as soon as the type isn't expected as part of the id anymore
-            && Utils.getTypeFromId(resource['@id'])) {
+        if (resource.id) {
 
             if (!this.validateType(resource)) {
                 validationReport.valid = false;
                 validationReport.errorMessage = M.VALIDATION_ERROR_INVALIDTYPE;
                 validationReport.errorData.push(resource.identifier);
-                validationReport.errorData.push("\"" + Utils.getTypeFromId(resource['@id']) + "\"");
+                validationReport.errorData.push("\"" + resource.type + "\"");
                 return validationReport;
             }
 
@@ -77,7 +75,7 @@ export class Validator {
      * @returns {boolean} true if the identifier of the resource is valid, otherwise false
      */
     private validateIdentifier(resource: any): boolean {
-        
+
         return resource.identifier && resource.identifier.length > 0;
     }
 
@@ -88,9 +86,9 @@ export class Validator {
      */
     private validateType(resource: any): boolean {
 
-        var type = Utils.getTypeFromId(resource['@id']);
+        if (!resource.type) return false;
 
-        return this.projectConfiguration.getTypes().indexOf(type) > -1;
+        return this.projectConfiguration.getTypes().indexOf(resource.type) > -1;
     }
 
     /**
@@ -101,9 +99,9 @@ export class Validator {
      */
     private validateFields(resource: any): string[] {
 
-        var projectFields = this.projectConfiguration.getFields(Utils.getTypeFromId(resource['@id']));
+        var projectFields = this.projectConfiguration.getFields(resource.type);
         var relationFields = this.relationsConfiguration.getRelationFields();
-        var defaultFields = [ { field: "@id" }, { field: "type" } ];
+        var defaultFields = [ { field: "id" }, { field: "type" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);
         
@@ -113,7 +111,8 @@ export class Validator {
             if (resource.hasOwnProperty(resourceField)) {
                 var fieldFound = false;
                 for (var i in fields) {
-                    if (fields[i].field == resourceField) {
+                    // TODO Only check for name as soon as field.field has been renamed to field.name
+                    if (fields[i].field == resourceField || fields[i].name == resourceField) {
                         fieldFound = true;
                         break;
                     }
@@ -123,7 +122,7 @@ export class Validator {
                 }
             }
         }
-        
+
         if (invalidFields.length > 0)
             return invalidFields;
         else

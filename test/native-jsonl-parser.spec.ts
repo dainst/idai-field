@@ -12,9 +12,9 @@ export function main() {
 
        it('should create objects from file content', (done) => {
 
-            var fileContent  = '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "/object/id2", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
-                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            var fileContent  = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
+                + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             var parser = new NativeJsonlParser();
             var objects = [];
@@ -24,7 +24,7 @@ export function main() {
             }, () => {
                 fail();
             }, () => {
-                expect(objects[0]['resource']['@id']).toEqual("/object/id1");
+                expect(objects[0]['resource']['id']).toEqual("id1");
                 expect(objects[0]['resource']['type']).toEqual("object");
                 expect(objects[0]['id']).toEqual("id1");
                 expect(objects[2]['resource'].title).toEqual("Obi-Three Kenobi");
@@ -36,9 +36,9 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            var fileContent = '{ "id": "/object/id1", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "/object/id2", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
-                + '{ "id": "/object/id3", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            var fileContent = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
+                + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             var parser = new NativeJsonlParser();
             var objects = [];
@@ -47,7 +47,7 @@ export function main() {
                 objects.push(object);
             }, (error) => {
                 expect(objects.length).toEqual(1);
-                expect(objects[0]['resource']['@id']).toEqual("/object/id1");
+                expect(objects[0]['resource']['id']).toEqual("id1");
                 expect(error).toEqual(jasmine.any(SyntaxError));
                 expect(error.message).toEqual(M.IMPORTER_FAILURE_INVALIDJSON);
                 expect(error.lineNumber).toEqual(2);

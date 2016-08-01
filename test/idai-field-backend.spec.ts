@@ -18,14 +18,14 @@ export function main() {
         };
 
         var document = { "resource" : { 
-            "@id": "/object/id1", 
+            "id": "/object/id1", 
             "identifier": "ob1", 
             "title": "object1",
             "type": "object" },
             "synced" : 0 };
 
         var documentWithDatasetIncorporated = { "resource" : {
-            "@id" : "/object/id1", 
+            "id" : "/object/id1", 
             "identifier": "ob1", 
             "title": "object1", 
             "type": "object"},
@@ -114,7 +114,7 @@ export function main() {
                 headers.append('Authorization', 'Basic ' + btoa(config.backend.credentials));
 
                 idaiFieldBackend.save(document,"dataset1").then(obj => {
-                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + document['resource']['@id'],
+                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + document['resource']['id'],
                         JSON.stringify(documentWithDatasetIncorporated), { headers: headers });
                     done();
                 }).catch(err => {

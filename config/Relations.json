@@ -2,19 +2,19 @@
 
   [
 
-    {"field": "belongsTo", "inverse": "includes", "label": "Enthalten in"},
-    {"field": "includes", "inverse": "belongsTo", "label": "Enthält"},
+    {"name": "belongsTo", "inverse": "includes", "label": "Enthalten in"},
+    {"name": "includes", "inverse": "belongsTo", "label": "Enthält"},
 
-    {"field": "isAbove", "inverse": "isBelow", "label": "Oberhalb von"},
-    {"field": "isBelow", "inverse": "isAbove", "label": "Unterhalb von"},
-    {"field": "isNextTo", "inverse": "isNextTo", "label": "Benachbart zu"},
+    {"name": "isAbove", "inverse": "isBelow", "label": "Oberhalb von"},
+    {"name": "isBelow", "inverse": "isAbove", "label": "Unterhalb von"},
+    {"name": "isNextTo", "inverse": "isNextTo", "label": "Benachbart zu"},
 
-    {"field": "isBefore", "inverse": "isAfter", "label": "Zeitlich vor"},
-    {"field": "isAfter", "inverse": "isBefore", "label": "Zeitlich nach"},
-    {"field": "isCoevalWith", "inverse": "isCoevalWith", "label": "Zeitgleich mit"},
+    {"name": "isBefore", "inverse": "isAfter", "label": "Zeitlich vor"},
+    {"name": "isAfter", "inverse": "isBefore", "label": "Zeitlich nach"},
+    {"name": "isCoevalWith", "inverse": "isCoevalWith", "label": "Zeitgleich mit"},
 
-    {"field": "cuts", "inverse": "isCutBy", "label": "Schneidet"},
-    {"field": "isCutBy", "inverse": "cuts", "label": "Wird geschnitten von"}
+    {"name": "cuts", "inverse": "isCutBy", "label": "Schneidet"},
+    {"name": "isCutBy", "inverse": "cuts", "label": "Wird geschnitten von"}
 
   ]
 

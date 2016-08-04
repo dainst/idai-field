@@ -59,9 +59,7 @@
                     <button class="btn btn-default pull-right" id="document-edit-button-save-document"
                             (click)="save(selectedDocument,false)">Speichern</button>
                     <span class="mdi mdi-blur"></span>
-                    <div *ngIf="selectedDocument['resource']['type']">
-                        {{selectedDocument['resource'].type}}
-                    </div>
+                    Ressource bearbeiten
                     <div *ngIf="!selectedDocument['resource']['type']">
                         Neues Objekt
                     </div>

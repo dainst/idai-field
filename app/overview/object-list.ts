@@ -35,7 +35,7 @@ export class ObjectList {
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
-        var newDocument = {"resource":{}};
+        var newDocument = { "resource": { "relations": {} } };
         this.getDocuments().unshift(<Document>newDocument);
         return newDocument;
     }

@@ -4,16 +4,16 @@
       "type": "object",
       "fields": [
         {
-          "field" : "identifier"
+          "name" : "identifier"
         },
         {
-          "field" : "title"
+          "name" : "title"
         },
         {
-          "field": "Inventory Number"
+          "name": "Inventory Number"
         },
         {
-          "field": "Material",
+          "name": "Material",
           "valuelist": [
             "Alabaster",
             "Amber",
@@ -58,10 +58,10 @@
             "Unknown",
             "Wood"
           ],
-          "multivalue": true
+          "inputType": "select/multi/multiselect"
         },
         {
-          "field": "Category",
+          "name": "Category",
           "valuelist": [
             "Architecture Terracotta",
             "Architecture Poros",
@@ -89,7 +89,8 @@
             "Terracotta",
             "Terracotta Moulds",
             "Wood"
-          ]
+          ],
+          "inputType": "select/multi/multiselect"
         }
       ]
     },
@@ -98,20 +99,23 @@
       "parent" : "object",
       "fields": [
         {
-          "field": "Dimensions"
+          "name" : "identifier"
         },
         {
-          "field": "Storage"
+          "name": "Dimensions"
         },
         {
-          "field": "Description",
-          "multiline": true
+          "name": "Storage"
         },
         {
-          "field": "Range Start"
+          "name": "Description",
+          "inputType": "input/single/text"
         },
         {
-          "field": "Range End"
+          "name": "Range Start"
+        },
+        {
+          "name": "Range End"
         }
       ]
     },
@@ -119,29 +123,29 @@
       "type": "section",
       "fields": [
         {
-          "field" : "identifier"
+          "name" : "identifier"
         },
         {
-          "field" : "title"
+          "name" : "title"
         },
         {
-          "field": "Chronology"
+          "name": "Chronology"
         },
         {
-          "field": "Elevations"
+          "name": "Elevations"
         },
         {
-          "field": "Start"
+          "name": "Start"
         },
         {
-          "field": "End"
+          "name": "End"
         },
         {
-          "field": "Looking"
+          "name": "Looking"
         },
         {
-          "field": "Description",
-          "multiline": true
+          "name": "Description",
+          "inputType": "input/single/text"
         }
       ]
     }

@@ -107,18 +107,17 @@ export class Validator {
 
         var projectFields = this.projectConfiguration.getFields(resource.type);
         var relationFields = this.relationsConfiguration.getRelationFields();
-        var defaultFields = [ { field: "id" }, { field: "type" } ];
+        var defaultFields = [ { name: "id" }, { name: "type" }, { name: "relations" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);
-        
+
         var invalidFields = [];
 
         for (var resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
                 var fieldFound = false;
                 for (var i in fields) {
-                    // TODO Only check for name as soon as field.field has been renamed to field.name
-                    if (fields[i].field == resourceField || fields[i].name == resourceField) {
+                    if (fields[i].name == resourceField) {
                         fieldFound = true;
                         break;
                     }

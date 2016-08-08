@@ -88,7 +88,13 @@ export class Validator {
 
         if (!resource.type) return false;
 
-        return this.projectConfiguration.getTypes().indexOf(resource.type) > -1;
+        var types = this.projectConfiguration.getTypes();
+
+        for (var i in types) {
+            if (types[i].name == resource.type) return true;
+        }
+
+        return false;
     }
 
     /**

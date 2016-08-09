@@ -2,19 +2,79 @@
 
   [
 
-    {"name": "belongsTo", "inverse": "includes", "label": "Enthalten in"},
-    {"name": "includes", "inverse": "belongsTo", "label": "Enthält"},
+    {
+      "name": "belongsTo",
+      "inverse": "includes",
+      "label": "Enthalten in",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "includes",
+      "inverse": "belongsTo",
+      "label": "Enthält",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
 
-    {"name": "isAbove", "inverse": "isBelow", "label": "Oberhalb von"},
-    {"name": "isBelow", "inverse": "isAbove", "label": "Unterhalb von"},
-    {"name": "isNextTo", "inverse": "isNextTo", "label": "Benachbart zu"},
+    {
+      "name": "isAbove",
+      "inverse": "isBelow",
+      "label": "Oberhalb von",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "isBelow",
+      "inverse": "isAbove",
+      "label": "Unterhalb von",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "isNextTo",
+      "inverse": "isNextTo",
+      "label": "Benachbart zu",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
 
-    {"name": "isBefore", "inverse": "isAfter", "label": "Zeitlich vor"},
-    {"name": "isAfter", "inverse": "isBefore", "label": "Zeitlich nach"},
-    {"name": "isCoevalWith", "inverse": "isCoevalWith", "label": "Zeitgleich mit"},
+    {
+      "name": "isBefore",
+      "inverse": "isAfter",
+      "label": "Zeitlich vor",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "isAfter",
+      "inverse": "isBefore",
+      "label": "Zeitlich nach",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "isCoevalWith",
+      "inverse": "isCoevalWith",
+      "label": "Zeitgleich mit",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
 
-    {"name": "cuts", "inverse": "isCutBy", "label": "Schneidet"},
-    {"name": "isCutBy", "inverse": "cuts", "label": "Wird geschnitten von"}
+    {
+      "name": "cuts",
+      "inverse": "isCutBy",
+      "label": "Schneidet",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    },
+    {
+      "name": "isCutBy",
+      "inverse": "cuts",
+      "label": "Wird geschnitten von",
+      "domain": ["object", "objectenhanced", "section"],
+      "range": ["object", "objectenhanced", "section"]
+    }
 
   ]
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, Output, OnChanges, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
@@ -16,6 +16,7 @@ import {ReadDatastore} from "../../node_modules/idai-components-2/idai-component
 export class DocumentViewComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
+    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     private type: string;
     private fields: Array<any>;
@@ -47,6 +48,11 @@ export class DocumentViewComponent implements OnChanges {
         this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
         this.initializeFields(resource);
         this.initializeRelations(resource);
+    }
+    
+    public selectDocument(document) {
+        
+        this.documentSelection.emit(document);
     }
 
     private initializeFields(resource: IdaiFieldResource) {
@@ -87,11 +93,7 @@ export class DocumentViewComponent implements OnChanges {
             var targetId = targets[i];
             this.datastore.get(targetId).then(
                 targetDocument => {
-                    relation.targets.push({
-                        id: targetId,
-                        identifier: targetDocument.resource['identifier'],
-                        title: targetDocument.resource['title']
-                    });
+                    relation.targets.push(targetDocument);
                 },
                 err => { console.error(err); }
             )

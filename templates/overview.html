@@ -75,7 +75,8 @@
                 </h1>
             </header>
             <main>
-                <document-view *ngIf="!editMode" [(document)]="selectedDocument"></document-view>
+                <document-view *ngIf="!editMode" [document]="selectedDocument"
+                               (documentSelection)="select($event)"></document-view>
                 <document-edit *ngIf="editMode" [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
             </main>
         </section>

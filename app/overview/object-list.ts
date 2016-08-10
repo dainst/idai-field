@@ -81,7 +81,7 @@ export class ObjectList {
                 restoredObject => {
 
                     this.replace(document,<Document>restoredObject);
-                    resolve();
+                    resolve(restoredObject);
                 },
                 err => { reject(this.toStringArray(err)); }
             );

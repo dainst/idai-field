@@ -9,6 +9,7 @@ describe('overview component', function() {
     it ("should change the selection to new when saving via modal", function() {
         common.createObject("1")
             .then(common.selectObject(0))
+            .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2"))
             .then(common.clickCreateObjectButton())
             .then(common.scrollUp)
@@ -23,6 +24,7 @@ describe('overview component', function() {
         common.createObject("1")
             .then(common.createObject("2"))
             .then(common.selectObject(0))
+            .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2a"))
             .then(common.selectObject(1))
             .then(common.scrollUp)
@@ -38,6 +40,7 @@ describe('overview component', function() {
         common.createObject("1")
             .then(common.createObject("2"))
             .then(common.selectObject(0))
+            .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2a"))
             .then(common.selectObject(1))
             .then(common.scrollUp)

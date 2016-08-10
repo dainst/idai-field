@@ -22,6 +22,10 @@ function typeInIdentifier(identifier) {
     return typeIn(inputField, identifier);
 }
 
+function switchToEditMode() {
+    return element(by.id('document-view-button-edit-document')).click();
+}
+
 function saveObject() {
     return element(by.id('document-edit-button-save-document')).click();
 }
@@ -49,6 +53,7 @@ function scrollUp() {
 module.exports = {
     clickCreateObjectButton: clickCreateObjectButton,
     createObject: createObject,
+    switchToEditMode: switchToEditMode,
     saveObject: saveObject,
     selectObject: selectObject,
     typeInIdentifier: typeInIdentifier,

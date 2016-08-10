@@ -1,5 +1,6 @@
 import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
+import {DocumentViewComponent} from './document-view.component';
 import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
@@ -11,7 +12,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     templateUrl: 'templates/overview.html',
-    directives: [DocumentEditComponent, MODAL_DIRECTIVES],
+    directives: [DocumentViewComponent, DocumentEditComponent, MODAL_DIRECTIVES],
 })
 
 /**
@@ -29,6 +30,8 @@ export class OverviewComponent implements OnInit {
      * The object currently selected in the list and shown in the edit component.
      */
     private selectedDocument: IdaiFieldDocument;
+    
+    private editMode: boolean;
 
     constructor(@Inject('app.config') private config,
         private objectList: ObjectList,
@@ -72,6 +75,7 @@ export class OverviewComponent implements OnInit {
             () => {
                 this.documentEditChangeMonitor.reset();
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+                this.editMode = false;
                 if (withCallback) this.changeSelectionAllowedCallback();
             },
             errors => {
@@ -87,30 +91,38 @@ export class OverviewComponent implements OnInit {
      *
      * @param document
      */
-    public discardChanges(document) {
+    public discardChanges(document, withCallback: boolean = true) {
 
-        this.objectList.restore(document).then(() => {
-            this.documentEditChangeMonitor.reset();
-            this.changeSelectionAllowedCallback();
-        }, (err) => {
-            this.messages.add(err);
+        this.objectList.restore(document).then(
+            restoredDocument => {
+                this.documentEditChangeMonitor.reset();
+                if (withCallback) {
+                    this.changeSelectionAllowedCallback();
+                } else {
+                    this.selectedDocument = restoredDocument;
+                    this.editMode = false;
+                }
+            }, (err) => {
+                this.messages.add(err);
         });
     }
 
     private registerSelectionCallbackForExisting(documentToSelect) {
         return function() {
             this.selectedDocument=documentToSelect;
+            this.editMode = false;
         }.bind(this);
     }
 
     private registerSelectionCallbackForNew() {
         return function() {
             this.selectedDocument = this.objectList.createNewDocument();
+            this.editMode = true;
         }.bind(this);
     }
 
     /**
-     * @param documentToSelect the object that should get selected if the precondtions
+     * @param documentToSelect the object that should get selected if the preconditions
      *   to change the selection are met.
      *   undefined if a new object is to be created if the preconditions
      *   to change the selection are met.

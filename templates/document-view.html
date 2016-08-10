@@ -1,0 +1,28 @@
+<div *ngIf="document">
+    <div *ngIf="document.resource.title" class="document-view-title">{{document.resource.title}}</div>
+    <div *ngIf="!document.resource.title" class="document-view-no-title">Ohne Titel</div>
+    <div class="document-view-identifier">{{document.resource.identifier}}</div>
+
+    <div class="document-view-field">
+        <div class="fieldname">Typ</div>
+        <div class="fieldvalue">{{type}}</div>
+    </div>
+
+    <div *ngFor="let field of fields">
+        <div *ngIf="field.isArray" class="document-view-field">
+            <div class="fieldname">{{field.name}}</div>
+            <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+        </div>
+        <div *ngIf="!field.isArray" class="document-view-field">
+            <div class="fieldname">{{field.name}}</div>
+            <div class="fieldvalue">{{field.value}}</div>
+        </div>
+    </div>
+
+    <div *ngFor="let relation of relations">
+        <div class="document-view-field">
+            <div class="fieldname">{{relation.name}}</div>
+            <div *ngFor="let target of relation.targets" class="fieldvalue">{{target.title}} ({{target.identifier}})</div>
+        </div>
+    </div>
+</div>

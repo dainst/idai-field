@@ -1,0 +1,31 @@
+/**
+ * @author: Thomas Kleinke
+ */
+
+.document-view-title {
+  font-size: 20px;
+}
+
+.document-view-no-title {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.document-view-identifier {
+  font-size: 15px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.document-view-field {
+  margin-bottom: 10px;
+}
+
+.document-view-field .fieldname {
+  font-weight: bold;
+}
+
+.document-view-field .fieldvalue {
+  margin-left: 10px;
+  overflow-wrap: break-word;
+}

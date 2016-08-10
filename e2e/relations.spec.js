@@ -29,6 +29,7 @@ describe('relations', function() {
 
         common.createObject("o1")
             .then(common.createObject("o2"))
+            .then(common.switchToEditMode())
             .then(common.scrollDown)
             .then(addRelation)
 
@@ -50,6 +51,7 @@ describe('relations', function() {
                 return common.scrollUp().then(common.saveObject);
             })
             .then(common.selectObject(1))
+            .then(common.switchToEditMode())
             .then(function() {
                 expect(getFirstRelationOfGroup(1).isPresent()).toBe(true);
                 expect(getRelationButton(getFirstRelationOfGroup(1), 0).isPresent()).toBe(true);

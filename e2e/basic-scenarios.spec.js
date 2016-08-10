@@ -29,7 +29,7 @@ describe('idai field app', function() {
     
     it ('should reflect changes in overview in realtime while editing object identifier', function() {
         common.createObject("12")
-            .then(common.selectObject(0))
+            .then(common.switchToEditMode())
             .then(common.typeInIdentifier("34"))
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("34");
@@ -42,6 +42,7 @@ describe('idai field app', function() {
      */
     it ('should save a new object and then save it again', function() {
         common.createObject("1")
+            .then(common.switchToEditMode())
             .then(common.saveObject)
             .then(function(){
                 expect(element(by.id('message-0')).getText())

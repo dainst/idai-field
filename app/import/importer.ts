@@ -79,7 +79,7 @@ export class Importer {
 
                 parser.parse(fileContent).subscribe(doc => {
 
-                    console.debug("read document", doc);
+                    // console.debug("read document", doc);
 
                     if (this.currentImportWithError) return;
 
@@ -134,7 +134,7 @@ export class Importer {
         this.inUpdateDocumentLoop = true;
         this.datastore.update(doc).then(() => {
             this.importSuccessCounter++;
-            console.log("successfully imported document", doc);
+            // console.log("successfully imported document", doc);
 
             if (this.docsToUpdate.length > 0) {
                 this.update(this.docsToUpdate[0]);

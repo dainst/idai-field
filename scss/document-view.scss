@@ -2,16 +2,11 @@
  * @author: Thomas Kleinke
  */
 
-.document-view-title {
+#document-view h1 {
   font-size: 20px;
 }
 
-.document-view-no-title {
-  font-size: 20px;
-  font-style: italic;
-}
-
-.document-view-identifier {
+#document-view h2{
   font-size: 15px;
   color: #999;
   margin-bottom: 20px;

@@ -1,7 +1,13 @@
-<div *ngIf="document">
-    <div *ngIf="document.resource.title" class="document-view-title">{{document.resource.title}}</div>
-    <div *ngIf="!document.resource.title" class="document-view-no-title">Ohne Titel</div>
-    <div class="document-view-identifier">{{document.resource.identifier}}</div>
+<div id="document-view" *ngIf="document">
+
+    <div *ngIf="document.resource.title">
+        <h1 class="document-view-title">{{document.resource.title}}</h1>
+        <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
+    </div>
+    <div *ngIf="!document.resource.title">
+        <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
+    </div>
+
 
     <div class="document-view-field">
         <div class="fieldname">Typ</div>

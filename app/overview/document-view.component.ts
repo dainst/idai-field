@@ -26,13 +26,14 @@ export class DocumentViewComponent implements OnChanges {
     private relationsConfiguration: RelationsConfiguration;
 
     constructor(private configLoader: ConfigLoader, private datastore: ReadDatastore) {
-
-        this.configLoader.projectConfiguration().subscribe((projectConfiguration) => {
-            this.projectConfiguration = projectConfiguration;
-        });
-
-        this.configLoader.relationsConfiguration().subscribe((relationsConfiguration) => {
-            this.relationsConfiguration = relationsConfiguration;
+        this.configLoader.configuration().subscribe((result)=>{
+            if(result.error == undefined) {
+                this.projectConfiguration = result.projectConfiguration;
+                this.relationsConfiguration = result.relationsConfiguration;
+            } else {
+                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configration gibt
+                //this.messages.add(result.error.msgkey);
+            }
         });
     }
 

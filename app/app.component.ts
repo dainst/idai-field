@@ -39,9 +39,7 @@ export class AppComponent implements OnInit {
     }
 
     private setConfigs() {
-
-        this.configLoader.setProjectConfiguration(AppComponent.PROJECT_CONFIGURATION_PATH);
-        this.configLoader.setRelationsConfiguration(AppComponent.RELATIONS_CONFIGURATION_PATH);
+        this.configLoader.setConfigurationPaths(AppComponent.PROJECT_CONFIGURATION_PATH, AppComponent.RELATIONS_CONFIGURATION_PATH);
     }
 
     loadSampleData(): void {

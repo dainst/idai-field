@@ -29,7 +29,7 @@
     "@angular/platform-browser-dynamic": "2.0.0-rc.3",
     "@angular/router": "2.0.0-rc.2",
     "@angular/router-deprecated": "2.0.0-rc.2",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/123/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/132/.git",
     "angular2-uuid": "^1.0.6",
     "bootstrap": "3.3.6",
     "es6-promise": "^3.1.2",

@@ -1,17 +1,12 @@
 import {Injectable} from "@angular/core";
-import {Message} from "idai-components-2/idai-components-2"
+import {MD} from "idai-components-2/idai-components-2"
 
 /**
- * This map contains the message bodies
- * messages identified by their key.
- * It can be replaced later by another data source
- * like an external service.
- *
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Jan G. Wieners
  */
 @Injectable()
-export class M { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
+export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
     public static IMPORTER_START : string = 'importer/start';
     public static IMPORTER_GENERIC_START_ERROR: string = 'importer/genericstarterror';
@@ -42,6 +37,7 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
     public msgs : { [id: string]: Message } = {};
 
     constructor() {
+        super();
         this.msgs[M.IMPORTER_START]={
             content: 'Starte Import...',
             level: 'info',
@@ -138,21 +134,6 @@ export class M { // = Messages Dictionary. For reasons of brevity of calls to it
         };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern des Objekts ist ein Fehler aufgetreten.',
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.MESSAGES_NOBODY]={
-            content: "Keine Message gefunden für Schlüssel 'id'.",
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.PC_GENERIC_ERROR]={
-            content: "Fehler beim Auswerten eines Konfigurationsobjektes.",
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.PARSE_GENERIC_ERROR]={
-            content: "Fehler beim Parsen einer Konfigurationsdatei.",
             level: 'danger',
             params: []
         };

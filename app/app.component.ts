@@ -40,6 +40,12 @@ export class AppComponent implements OnInit {
 
     private setConfigs() {
         this.configLoader.setConfigurationPaths(AppComponent.PROJECT_CONFIGURATION_PATH, AppComponent.RELATIONS_CONFIGURATION_PATH);
+        this.configLoader.configuration().subscribe(
+            result=>{
+                if (result.error)
+                    this.messages.add(result.error.msgkey,[result.error.msgparams]);
+            }
+        )
     }
 
     loadSampleData(): void {

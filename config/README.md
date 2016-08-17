@@ -5,17 +5,13 @@ For starting the app or running the e2e tests, it is expected that the files
 ```
 idai-field-client/config/config.json
 idai-field-client/config/Configuration.json
+idai-field-client/config/Relations.json
 ```
 
-exist. For that purpose you can simply take the files
+exist. These files are provided as template files. To use them, simply 
+make copies of each of them. 
 
-```
-idai-field-client/config/config.json.template
-idai-field-client/config/Configuration.json.template
-```
-
-and create copies of them cutting the .template suffix. 
-The template files show general usage. See below for more in depth discussion of configuration options.
+The template files are meant to show general usage. See below for more in depth discussion of configuration options.
 
 **Important note regarding e2e testing:** Although other configurations may work, too, the .template suffixed
 files are the ones proven to work for the e2e tests. 

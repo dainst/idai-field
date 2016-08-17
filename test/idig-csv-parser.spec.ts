@@ -12,7 +12,7 @@ export function main() {
 
         it('should create objects from file content', (done) => {
 
-            var fileContent  = 'Identifier_uuid,Identifier,Title,Type\n'
+            var fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
                 + '1,one,One,context\n'
                 + '2,two,Two,context\n';
 
@@ -36,7 +36,7 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            var fileContent  = 'Identifier_uuid,Identifier,Title,Type\n'
+            var fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
                 + '1,one,One,context\n'
                 + ',two,Two,context\n';
             

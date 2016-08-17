@@ -64,7 +64,7 @@ export class Validator {
                 validationReport.valid = false;
                 validationReport.errorMessage = 
                     invalidFields.length == 1 ? M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS;
-                validationReport.errorData.push(resource.identifier);
+                validationReport.errorData.push(resource.type);
                 validationReport.errorData.push(invalidFields.join(", "));
                 return validationReport;
             }

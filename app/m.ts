@@ -113,7 +113,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELDS]={
             content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinitionen für die Felder {1} der " +
-            "Ressource {0}.",
+            "Ressource des Typs \"{0}\".",
             level: 'danger',
             params: ["?", ""]
         };

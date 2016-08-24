@@ -1,22 +1,16 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {OverviewComponent} from './overview/overview.component';
+import {Router, Event, NavigationStart} from '@angular/router';
 import {SynchronizationComponent} from "./sync/synchronization.component";
-import {ImportComponent} from "./import/import.component";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
 import {MessagesComponent, Messages} from "idai-components-2/idai-components-2";
-import {RouteConfig, ROUTER_DIRECTIVES, Router} from '@angular/router-deprecated';
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 
 @Component({
     selector: 'idai-field-app',
     templateUrl: 'templates/app.html',
-    directives: [ ROUTER_DIRECTIVES, SynchronizationComponent, MessagesComponent]
+    directives: [SynchronizationComponent, MessagesComponent]
 })
-@RouteConfig([
-    { path: "/", name: "Overview", component: OverviewComponent, useAsDefault: true },
-    { path: "/import", name: "Import", component: ImportComponent }
-])
 export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
@@ -28,7 +22,11 @@ export class AppComponent implements OnInit {
                 private router: Router,
                 private messages: Messages) {
 
-        router.subscribe(() => this.messages.clear());
+        router.events.subscribe( (event:Event) => {
+            if(event instanceof NavigationStart) {
+                this.messages.clear();
+            }
+        });
     }
 
     ngOnInit() {

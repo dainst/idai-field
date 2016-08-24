@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>iDAI.field 2</title>
+    <base href="/">
 
     <meta name="description" content="iDAI.field 2 - Ein modulares Dokumentationssystem für Feldforschungsprojekte.">
     <meta name="keywords" content="iDAI.field 2, Grabung, Grabungssystem, Dokumentation">
@@ -23,60 +24,9 @@
     <script src="node_modules/papaparse/papaparse.js"></script>
     <script src="node_modules/jquery/dist/jquery.js"></script>
 
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-
-            paths: {
-                'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
-            },
-            map: {
-                json: 'app/util/systemjs-json-plugin',
-                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal',
-                '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic',
-                '@angular/platform-browser': 'node_modules/@angular/platform-browser',
-                '@angular/http': 'node_modules/@angular/http',
-                '@angular/common': 'node_modules/@angular/common',
-                '@angular/core': 'node_modules/@angular/core',
-                '@angular/router-deprecated': 'node_modules/@angular/router-deprecated',
-                '@angular/router': 'node_modules/@angular/router',
-                '@angular/compiler': 'node_modules/@angular/compiler',
-                'rxjs': 'node_modules/rxjs',
-                'idai-components-2' : 'node_modules/idai-components-2'
-            },
-            packages: {
-                app: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                },
-                node_modules: {
-                    defaultExtension: 'js'
-                },
-                config: {
-                    defaultExtension: false,
-                    meta: {
-                        '*.json': {
-                            loader: 'json'
-                        }
-                    }
-                },
-                '@angular/core'                    : {main: 'index.js'},
-                '@angular/common'                  : {main: 'index.js'},
-                '@angular/compiler'                : {main: 'index.js'},
-                '@angular/router'                  : {main: 'index.js'},
-                '@angular/platform-browser'        : {main: 'index.js'},
-                '@angular/platform-browser-dynamic': {main: 'index.js'},
-                '@angular/router-deprecated': {main: 'index.js'},
-                '@angular/http': {main: 'index.js'},
-                'rxjs'                             : {main: 'index.js'}
-            },
-            meta: {
-                'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
-            }
-        });
-        System.import('node_modules/jquery/dist/jquery.js')
-                .then(function() { System.import('node_modules/bootstrap/dist/js/bootstrap.js'); }, null);
-        System.import('app/boot')
-                .then(null, console.error.bind(console));
+        System.import('app').catch(function(err){ console.error(err); });
     </script>
 
 </head>

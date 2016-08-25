@@ -4,8 +4,8 @@ import {OverviewComponent} from './overview/overview.component';
 import {ImportComponent} from './import/import.component';
 
 const appRoutes: Routes = [
-    { path: '', name: 'Overview', component: OverviewComponent },
-    { path: 'import', name: 'Import', component: ImportComponent }
+    { path: '', component: OverviewComponent },
+    { path: 'import', component: ImportComponent }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

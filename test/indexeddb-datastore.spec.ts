@@ -1,4 +1,4 @@
-import {fdescribe,describe,xdescribe,expect,fit,it,xit, inject,beforeEach, beforeEachProviders} from '@angular/core/testing';
+/// <reference path="../typings/globals/jasmine/index.d.ts" />
 import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
 import {Indexeddb} from "../app/datastore/indexeddb";
 

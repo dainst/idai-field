@@ -1,4 +1,4 @@
-import {fdescribe, describe, xdescribe, expect, fit, it, xit, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
+/// <reference path="../typings/globals/jasmine/index.d.ts" />
 import {IdaiFieldBackend} from "../app/sync/idai-field-backend";
 import {IdaiFieldDocument} from "../app/model/idai-field-document";
 import {Headers} from "@angular/http";
@@ -63,8 +63,6 @@ export function main() {
         var mockDataModelConfiguration;
         var idaiFieldBackend : IdaiFieldBackend;
         var j;
-
-        beforeEachProviders(() => []);
 
         beforeEach(function(){
 

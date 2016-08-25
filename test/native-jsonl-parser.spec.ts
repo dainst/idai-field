@@ -1,4 +1,4 @@
-import {fdescribe,xdescribe,describe,expect,fit,it} from '@angular/core/testing';
+/// <reference path="../typings/globals/jasmine/index.d.ts" />
 import {NativeJsonlParser} from "../app/import/native-jsonl-parser";
 import {M} from "../app/m"
 

@@ -1,48 +1,54 @@
-<div id="document-view" *ngIf="document">
+<div id="document-view" *ngIf="document" class="row">
+    <div class="col-md-7">
 
-    <!--
-      In one project we have this assumption that there is always a title,
-      while in another there is only the identifier.
-    -->
-    <div *ngIf="document.resource.title">
-        <h1 class="document-view-title">{{document.resource.title}}</h1>
-        <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
-    </div>
-    <div *ngIf="!document.resource.title">
-        <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
-    </div>
-
-
-    <div class="document-view-field">
-        <div class="fieldname">Typ</div>
-        <div class="fieldvalue">{{type}}</div>
-    </div>
-
-    <div *ngFor="let field of fields">
-        <div *ngIf="field.isArray" class="document-view-field">
-            <div class="fieldname">{{field.name}}</div>
-            <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+        <!--
+          In one project we have this assumption that there is always a title,
+          while in another there is only the identifier.
+        -->
+        <div *ngIf="document.resource.title">
+            <h1 class="document-view-title">{{document.resource.title}}</h1>
+            <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
         </div>
-        <div *ngIf="!field.isArray" class="document-view-field">
-            <div class="fieldname">{{field.name}}</div>
-            <div class="fieldvalue">{{field.value}}</div>
+        <div *ngIf="!document.resource.title">
+            <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
         </div>
-    </div>
 
-    <div *ngFor="let relation of relations">
+
         <div class="document-view-field">
-            <div class="fieldname">{{relation.name}}</div>
-            <div *ngFor="let target of relation.targets" class="fieldvalue">
-                <!--
-                  See corresponding comment no top of the page.
-                -->
-                <div *ngIf="document.resource.title">
-                    <a class="relation-link" (click)="selectDocument(target)">{{target.resource.title}} ({{target.resource.identifier}})</a>
-                </div>
-                <div *ngIf="!document.resource.title">
-                    <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
+            <div class="fieldname">Typ</div>
+            <div class="fieldvalue">{{type}}</div>
+        </div>
+
+        <div *ngFor="let field of fields">
+            <div *ngIf="field.isArray" class="document-view-field">
+                <div class="fieldname">{{field.name}}</div>
+                <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+            </div>
+            <div *ngIf="!field.isArray" class="document-view-field">
+                <div class="fieldname">{{field.name}}</div>
+                <div class="fieldvalue">{{field.value}}</div>
+            </div>
+        </div>
+
+        <div *ngFor="let relation of relations">
+            <div class="document-view-field">
+                <div class="fieldname">{{relation.name}}</div>
+                <div *ngFor="let target of relation.targets" class="fieldvalue">
+                    <!--
+                      See corresponding comment on top of the page.
+                    -->
+                    <div *ngIf="document.resource.title">
+                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.title}} ({{target.resource.identifier}})</a>
+                    </div>
+                    <div *ngIf="!document.resource.title">
+                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div *ngIf="document.resource.geometries" class="col-md-5 geoContainer well">
+        <geo [resource]="document.resource"></geo>
     </div>
 </div>

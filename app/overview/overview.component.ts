@@ -12,7 +12,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     templateUrl: 'templates/overview.html',
-    directives: [DocumentViewComponent, DocumentEditComponent, MODAL_DIRECTIVES],
+    directives: [DocumentViewComponent, DocumentEditComponent, MODAL_DIRECTIVES]
 })
 
 /**

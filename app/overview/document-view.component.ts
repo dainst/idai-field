@@ -4,10 +4,12 @@ import {IdaiFieldResource} from '../model/idai-field-resource';
 import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
 import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
 import {ReadDatastore} from "../../node_modules/idai-components-2/idai-components-2";
+import {GeoComponent} from "./geo.component";
 
 @Component({
     selector: 'document-view',
-    templateUrl: 'templates/document-view.html'
+    templateUrl: 'templates/document-view.html',
+    directives: [GeoComponent]
 })
 
 /**
@@ -58,7 +60,7 @@ export class DocumentViewComponent implements OnChanges {
 
     private initializeFields(resource: IdaiFieldResource) {
         
-        const ignoredFields: Array<string> = [ "id", "identifier", "title", "type", "relations" ];
+        const ignoredFields: Array<string> = [ "id", "identifier", "title", "type", "relations", "geometries" ];
 
         for (var fieldName in resource) {
             if (resource.hasOwnProperty(fieldName) && ignoredFields.indexOf(fieldName) == -1) {

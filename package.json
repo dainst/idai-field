@@ -33,7 +33,7 @@
     "bootstrap": "3.3.6",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/137/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/139/.git",
     "jquery": "^2.2.3",
     "leaflet": "^0.7.7",
     "ng2-bs3-modal": "0.7.0",

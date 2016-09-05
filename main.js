@@ -16,7 +16,7 @@ var mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800, webPreferences: {nodeIntegration: false}});
+  mainWindow = new BrowserWindow({width: 1200, height: 800, webPreferences: {nodeIntegration: true}});
 
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);

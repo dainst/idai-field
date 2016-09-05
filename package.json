@@ -37,7 +37,8 @@
     "jquery": "^2.2.3",
     "leaflet": "^0.7.7",
     "ng2-bs3-modal": "0.7.0",
-    "reflect-metadata": "0.1.2",
+    "papaparse": "CAVEAT: explicitly use dainst PapaParse fork where loading as global is enforced to circumvent loading as node module",
+    "papaparse": "github:dainst/PapaParse",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.31",
     "zone.js": "0.6.13"
@@ -60,7 +61,6 @@
     "karma-chrome-launcher": "1.0.1",
     "karma-jasmine": "1.0.2",
     "mdi": "^1.5.54",
-    "papaparse": "^4.1.0",
     "protractor": "^3.1.1",
     "rimraf": "^2.5.2",
     "typescript": "^1.8.10"

@@ -1,12 +1,12 @@
 var common = require("./common.js");
 
-fdescribe('overview component', function() {
+describe('overview component', function() {
 
     beforeEach(function(){
         browser.get('/');
     });
     
-    fit ("should change the selection to new when saving via modal", function() {
+    it ("should change the selection to new when saving via modal", function() {
         common.createObject("1")
             .then(common.selectObject(0))
             .then(common.switchToEditMode())

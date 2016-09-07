@@ -8,7 +8,7 @@ import {Headers} from "@angular/http";
  * @author Thomas Kleinke
  */
 export function main() {
-    describe('IdaiFieldBackend', () => {
+    fdescribe('IdaiFieldBackend', () => {
 
         var config = {
             backend : {
@@ -74,7 +74,7 @@ export function main() {
             j=0;
         });
 
-        it('should report it is connected',
+        fit('should report it is connected',
             function(){
 
                 idaiFieldBackend.connectionStatus().subscribe(connected => {

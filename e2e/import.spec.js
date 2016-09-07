@@ -1,6 +1,6 @@
 var common = require("./common.js");
 
-fdescribe('import', function() {
+describe('import', function() {
 
     function getSourceOptions() {
         return element(by.id('importSourceSelect')).all(by.css('select option'));
@@ -14,7 +14,7 @@ fdescribe('import', function() {
         browser.get('/');
     });
 
-    fit('should import a valid iDAI.field JSONL file via HTTP', function() {
+    it('should import a valid iDAI.field JSONL file via HTTP', function() {
         var url = "./test/importer-test-ok.jsonl";
 
         element(by.id('importButton')).click()

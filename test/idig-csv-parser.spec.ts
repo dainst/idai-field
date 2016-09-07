@@ -8,9 +8,9 @@ import {M} from "../app/m";
  */
 export function main() {
 
-    fdescribe('IdigCsvParser', () => {
+    describe('IdigCsvParser', () => {
 
-        fit('should create objects from file content', (done) => {
+        it('should create objects from file content', (done) => {
 
             var fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
                 + '1,one,One,context\n'

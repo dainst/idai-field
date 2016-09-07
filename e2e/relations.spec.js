@@ -1,6 +1,6 @@
 var common = require("./common.js");
 
-fdescribe('relations', function() {
+describe('relations', function() {
 
     function addRelation() {
         return element.all(by.tagName('relation-picker-group')).first()
@@ -24,7 +24,7 @@ fdescribe('relations', function() {
         browser.get('/');
     });
 
-    fit('should create a new relation and the corresponding inverse relation', function() {
+    it('should create a new relation and the corresponding inverse relation', function() {
         // expect(getFirstRelationOfGroup(0).isPresent()).toBe(false); known not to work on ci
 
         common.createObject("o1")

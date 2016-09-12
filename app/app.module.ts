@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager, DocumentEditChangeMonitor}
-    from 'idai-components-2/idai-components-2';
+import {HttpModule} from '@angular/http';
+import {FormsModule} from '@angular/forms';
+import {IdaiComponents2Module, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
+    DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {routing} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
@@ -18,21 +19,31 @@ import {M} from './m';
 import {AppComponent} from './app.component';
 import {OverviewComponent} from './overview/overview.component';
 import {ImportComponent} from './import/import.component';
+import {SynchronizationComponent} from './sync/synchronization.component';
+import {GeoComponent} from './overview/geo.component';
+import {DocumentViewComponent} from './overview/document-view.component';
+import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import CONFIG = require("config/config.json!json");
 
 @NgModule({
     imports: [
         BrowserModule,
+        FormsModule,
+        HttpModule,
+        IdaiComponents2Module,
+        Ng2Bs3ModalModule,
         routing
     ],
     declarations: [
         AppComponent,
         OverviewComponent,
-        ImportComponent
+        ImportComponent,
+        SynchronizationComponent,
+        GeoComponent,
+        DocumentViewComponent
     ],
     providers: [
-        HTTP_PROVIDERS,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },

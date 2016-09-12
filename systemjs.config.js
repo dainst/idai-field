@@ -17,6 +17,7 @@
         packages: {
             app: {
                 main: 'main.js',
+                format: 'cjs',
                 defaultExtension: 'js'
             },
             node_modules: {
@@ -30,7 +31,7 @@
                     }
                 }
             },
-            'rxjs'                             : {main: 'index.js'}
+            'rxjs': {main: 'index.js'}
         },
         meta: {
             'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
@@ -45,21 +46,14 @@
         'platform-browser',
         'platform-browser-dynamic',
         'router',
-        'router-deprecated',
-        'http'
+        'forms'
     ];
-    // Individual files (~300 requests):
-    function packIndex(pkgName) {
-        config.packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
-    }
-    // Bundled (~40 requests):
+
     function packUmd(pkgName) {
         config.packages['@angular/'+pkgName] = { main: 'bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
     }
-    // Most environments should use UMD; some (Karma) need the individual index files
-    var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
-    // Add package entries for angular packages
-    ngPackageNames.forEach(setPackageConfig);
+  
+    ngPackageNames.forEach(packUmd);
 
     System.config(config);
 

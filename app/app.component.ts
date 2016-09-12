@@ -1,15 +1,13 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {Router, Event, NavigationStart} from '@angular/router';
-import {SynchronizationComponent} from "./sync/synchronization.component";
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
-import {MessagesComponent, Messages} from "idai-components-2/idai-components-2";
+import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 
 @Component({
     selector: 'idai-field-app',
-    templateUrl: 'templates/app.html',
-    directives: [SynchronizationComponent, MessagesComponent]
+    templateUrl: 'templates/app.html'
 })
 export class AppComponent implements OnInit {
 

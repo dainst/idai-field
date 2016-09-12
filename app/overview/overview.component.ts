@@ -1,18 +1,15 @@
 import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
-import {DocumentViewComponent} from './document-view.component';
-import {DocumentEditComponent} from "idai-components-2/idai-components-2";
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
-import {MODAL_DIRECTIVES, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
-    templateUrl: 'templates/overview.html',
-    directives: [DocumentViewComponent, DocumentEditComponent, MODAL_DIRECTIVES]
+    templateUrl: 'templates/overview.html'
 })
 
 /**

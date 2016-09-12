@@ -37,35 +37,67 @@ System.config({
     },
     packages: {
         '@angular/core': {
-            main: 'index.js',
+            main: 'bundles/core.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/compiler': {
-            main: 'index.js',
+            main: 'bundles/compiler.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/common': {
-            main: 'index.js',
+            main: 'bundles/common.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/http': {
-            main: 'index.js',
+            main: 'bundles/http.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/platform-browser': {
-            main: 'index.js',
+            main: 'bundles/platform-browser.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/platform-browser-dynamic': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        '@angular/router-deprecated': {
-            main: 'index.js',
+            main: 'bundles/platform-browser-dynamic.umd.min.js',
             defaultExtension: 'js'
         },
         '@angular/router': {
-            main: 'index.js',
+            main: 'bundles/router.umd.min.js',
+            defaultExtension: 'js'
+        },
+        '@angular/forms': {
+            main: 'bundles/forms.umd.min.js',
+            defaultExtension: 'js'
+        },
+        '@angular/core/testing': {
+            main: '../bundles/core-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/compiler/testing': {
+            main: '../bundles/compiler-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/common/testing': {
+            main: '../bundles/common-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/http/testing': {
+            main: '../bundles/http-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/platform-browser/testing': {
+            main: '../bundles/platform-browser-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/platform-browser-dynamic/testing': {
+            main: '../bundles/platform-browser-dynamic-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/router/testing': {
+            main: '../bundles/router-testing.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/forms/testing': {
+            main: 'bundles/forms-testing.umd.js',
             defaultExtension: 'js'
         },
         'rxjs': {
@@ -82,8 +114,8 @@ Promise.all([
     var testing = providers[0];
     var testingBrowser = providers[1];
 
-    testing.setBaseTestProviders(testingBrowser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-        testingBrowser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+    testing.TestBed.initTestEnvironment(testingBrowser.BrowserDynamicTestingModule,
+        testingBrowser.platformBrowserDynamicTesting());
 
 }).then(function() {
         return Promise.all(

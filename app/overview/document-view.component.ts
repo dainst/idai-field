@@ -6,8 +6,9 @@ import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/i
 import {ReadDatastore} from "../../node_modules/idai-components-2/idai-components-2";
 
 @Component({
+    moduleId: module.id,
     selector: 'document-view',
-    templateUrl: 'templates/document-view.html'
+    templateUrl: '../../templates/document-view.html'
 })
 
 /**

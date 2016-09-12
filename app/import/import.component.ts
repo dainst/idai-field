@@ -12,7 +12,8 @@ import {Http} from "@angular/http";
 
 
 @Component({
-    templateUrl: 'templates/import.html'
+    moduleId: module.id,
+    templateUrl: '../../templates/import.html'
 })
 
 /**

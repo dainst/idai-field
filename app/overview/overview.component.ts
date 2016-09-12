@@ -9,7 +9,8 @@ import {Validator} from "../model/validator";
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
-    templateUrl: 'templates/overview.html'
+    moduleId: module.id,
+    templateUrl: '../../templates/overview.html'
 })
 
 /**

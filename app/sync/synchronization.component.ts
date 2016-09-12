@@ -11,9 +11,9 @@ import {ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-compone
  * @author Daniel de Oliveira
  */
 @Component({
-
+    moduleId: module.id,
     selector: 'synchronization',
-    templateUrl: 'templates/synchronization.html'
+    templateUrl: '../../templates/synchronization.html'
 })
 
 export class SynchronizationComponent {

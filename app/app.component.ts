@@ -6,8 +6,9 @@ import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
 
 @Component({
+    moduleId: module.id,
     selector: 'idai-field-app',
-    templateUrl: 'templates/app.html'
+    templateUrl: '../templates/app.html'
 })
 export class AppComponent implements OnInit {
 

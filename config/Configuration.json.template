@@ -58,7 +58,7 @@
             "Unknown",
             "Wood"
           ],
-          "inputType": "select/multi/multiselect"
+          "inputType": "multiselect"
         },
         {
           "name": "Category",
@@ -90,7 +90,7 @@
             "Terracotta Moulds",
             "Wood"
           ],
-          "inputType": "select/multi/multiselect"
+          "inputType": "multiselect"
         }
       ]
     },
@@ -109,7 +109,7 @@
         },
         {
           "name": "Description",
-          "inputType": "input/single/text"
+          "inputType": "text"
         },
         {
           "name": "Range Start"
@@ -145,7 +145,7 @@
         },
         {
           "name": "Description",
-          "inputType": "input/single/text"
+          "inputType": "text"
         }
       ]
     }

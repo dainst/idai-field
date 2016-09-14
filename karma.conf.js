@@ -38,7 +38,8 @@ module.exports = function(config) {
         exclude: [
             'node_modules/@angular/**/*_spec.js',
             'node_modules/idai-components-2/lib/test/**/*.js',
-            'node_modules/idai-components-2/test/**/*.js'
+            'node_modules/idai-components-2/test/**/*.js',
+            'node_modules/idai-components-2/e2e/**/*.js'
         ],
 
         reporters: ['dots'],

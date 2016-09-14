@@ -2,7 +2,7 @@
 
 ## Development
 
-### Installation
+### Prerequisites
 
 You need the following components in order for the local server to work:
 
@@ -18,40 +18,30 @@ $ npm install -g karma  # only necessary if you need to run karma directly from 
 $ npm install -g gulp   # only necessary if you need to debug gulp commands from the command prompt
 ```
 
-If that is done, install the necessary dependencies 
-for the app run the following command in the working directory:
+### Quickstart
+
+Clone this repository locally and run
 
 ```
-$ git clone https://github.com/codarchlab/idai-field-client.git
-$ cd idai-field-client
 $ npm install
+$ npm run build
+$ npm start
 ```
+
+`npm run build` compiles the typescript files and creates configuration files.
+The typescript files are compiled once, so it is recommended to configure your IDE to 
+do that continuously in the background for you.
+
+`npm start` open the app in a new browser window. 
+
+The command  starts the application and takes care that changes made to scss files
+result in automatic conversion to css.
 
 ### Configuration
 
 Prior to starting or e2e testing the app, it is necessary that config files are provided.
-Follow the docs [here](config) to see how that is done.
-
-### Starting the app
-
-Before you can start your app, the typescript files have to be compiled.
-Make sure your IDE is configured accordingly or run
-
-```
-$ npm run build
-```
-
-In order to run the application:
-
-```
-$ npm start
-```
-
-This should open the app in a separate window. 
-
-The command builds (cleaning any rests from any prior builds)
-and starts the application. From then on, changes made to scss files
-result in automatic conversion to css.
+`npm run build` does this automatically for you. Detailed information on how the app can be 
+configurated can be found [here](config).
 
 ## Testing
 

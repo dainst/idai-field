@@ -8,8 +8,8 @@ idai-field-client/config/Configuration.json
 idai-field-client/config/Relations.json
 ```
 
-exist. These files are provided as template files. To use them, simply 
-make copies of each of them. 
+exist. These files are provided as template files. These get automatically created
+by `npm run build` from their template suffixed counterparts in case they do not exist.
 
 The template files are meant to show general usage. See below for more in depth discussion of configuration options.
 

@@ -1,8 +1,6 @@
 # iDAI.field 2 Client
 
-## Development
-
-### Prerequisites
+## Prerequisites
 
 You need the following components in order for the local server to work:
 
@@ -18,7 +16,7 @@ $ npm install -g karma  # only necessary if you need to run karma directly from 
 $ npm install -g gulp   # only necessary if you need to debug gulp commands from the command prompt
 ```
 
-### Quickstart
+## Quickstart
 
 Clone this repository locally and run
 
@@ -34,7 +32,7 @@ do that continuously in the background for you.
 
 `npm start` open the app in a new browser window. The command  starts the application and takes care that changes made to scss files result in automatic conversion to css.
 
-### Configuration
+## Configuration
 
 Prior to starting or e2e testing the app, it is necessary that config files are provided.
 `npm run build` does this automatically for you. Detailed information on how the app can be 

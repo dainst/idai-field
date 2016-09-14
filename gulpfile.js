@@ -88,7 +88,8 @@ gulp.task('make-dist',function() {
     gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
-	gulp.src('node_modules/@ng-bootstrap.ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap.ng-bootstrap/'));
+	gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));
+	gulp.src('node_modules/leaflet/**/*').pipe(gulp.dest('dist/node_modules/leaflet/'));
     gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('dist/node_modules/systemjs/'));
     gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('dist/node_modules/zone.js/'));
     gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));

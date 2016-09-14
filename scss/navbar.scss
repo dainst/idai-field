@@ -2,6 +2,10 @@
   background-color: $navbar-default-bg !important;
 }
 
+.navbar.navbar-fixed-top .navbar-brand {
+  font-weight: 700;
+}
+
 #objectsToSyncCount {
   position: absolute;
   top: 7px;

@@ -1,5 +1,6 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldResource} from '../model/idai-field-resource';
 
 @Component({
     selector: 'map',
@@ -12,6 +13,7 @@ import {IdaiFieldDocument} from '../model/idai-field-document';
 export class MapComponent implements OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
+    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     private map: L.Map;
     private mapElements: Array<L.ILayer> = [];
@@ -27,8 +29,9 @@ export class MapComponent implements OnChanges {
         }
 
         for (var i in this.documents) {
-            for (var j in this.documents[i].resource.geometries) {
-                this.show(this.documents[i].resource.geometries[j]);
+            var resource = this.documents[i].resource;
+            for (var j in resource.geometries) {
+                this.addToMap(resource.geometries[j], this.documents[i]);
             }
         }
     }
@@ -48,28 +51,81 @@ export class MapComponent implements OnChanges {
         this.mapElements = [];
     }
     
-    private show(geometry: any) {
+    private addToMap(geometry: any, document: IdaiFieldDocument) {
 
         switch(geometry.type) {
             case "Point":
-                this.showPoint(geometry);
+                this.addMarkerToMap(geometry, document);
                 break;
             case "Polygon":
-                this.showPolygon(geometry);
+                this.addPolygonToMap(geometry, document);
                 break;
         }
     }
 
-    private showPoint(geometry: any) {
+    private addMarkerToMap(geometry: any, document: IdaiFieldDocument) {
 
         var latLng = L.latLng(geometry.coordinates);
-        var marker = L.marker(latLng).addTo(this.map);
+        var marker = new IdaiFieldMarker(latLng, { title: this.getTitle(document.resource) });
+        marker.setDocument(document);
+
+        var mapComponent = this;
+        marker.on('click', function() {
+           mapComponent.documentSelection.emit(this.getDocument());
+        });
+
+        marker.addTo(this.map);
         this.mapElements.push(marker);
     }
 
-    private showPolygon(geometry: any) {
+    private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {
 
-        var polygon = L.polygon(geometry.coordinates).addTo(this.map);
+        var polygon = new IdaiFieldPolygon(geometry.coordinates);
+        polygon.setDocument(document);
+
+        var mapComponent = this;
+        polygon.on('click', function() {
+            mapComponent.documentSelection.emit(this.getDocument());
+        });
+
+        polygon.addTo(this.map);
         this.mapElements.push(polygon);
+    }
+
+    private getTitle(resource: IdaiFieldResource) {
+
+        var title = resource.id;
+        if (resource.title && resource.title.length > 0) {
+            title += " | " + resource.title;
+        }
+
+        return title;
+    }
+
+}
+
+class IdaiFieldMarker extends L.Marker {
+
+    private document: IdaiFieldDocument;
+
+    public setDocument(document: IdaiFieldDocument) {
+        this.document = document;
+    }
+
+    public getDocument(): IdaiFieldDocument {
+        return this.document;
+    }
+}
+
+class IdaiFieldPolygon extends L.Polygon {
+
+    private document: IdaiFieldDocument;
+
+    public setDocument(document: IdaiFieldDocument) {
+        this.document = document;
+    }
+
+    public getDocument(): IdaiFieldDocument {
+        return this.document;
     }
 }

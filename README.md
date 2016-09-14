@@ -44,36 +44,23 @@ configurated can be found [here](config).
 
 ### Unit - Testing
 
-To run the unit tests in a continuous manner, 
-you need two open two terminals (marked as '1$' and '2$'). 
-
-Before running the tests, you need to make sure the
-app is build:
+Before running the tests, the app must have been build and an appropriate 
+`ulimit` has to set for karma to run properly.
 
 ```
 $ npm run build
-```
-
-Also karma may require that a higher ulimit is set.
-
-```
 $ ulimit -n 10000
 ```
 
-To run the tests once, execute
+To run the tests, execute one of the following commands
 
 ```
-$ npm test
+$ npm test      # runs tests once
+$ npm test:loop # runs tests continuously
 ```
 
-To run them in a loop, execute
-
-```
-$ npm test:loop
-```
-
-This is useful, when the sources are automatically recompiled on every change,
-as for example IntelliJ does.
+This second command runs the tests in a loop and is useful,
+when the sources are automatically recompiled on every change, as for example IntelliJ does.
 
 ### E2E - Testing
 

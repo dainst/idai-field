@@ -52,10 +52,14 @@
         </aside>
     </div>
 
-    <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
+    <map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"></map>
+
+    <div *ngIf="selectedDocument" class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
         <section>
-            <header *ngIf="selectedDocument">
+            <header>
                 <h1 *ngIf="!editMode" class="overview-document-heading">
+                    <button class="btn btn-default pull-right" id="document-view-button-back-to-map"
+                            (click)="selectedDocument = undefined;">Zurück zur Karte</button>
                     <button class="btn btn-default pull-right" id="document-view-button-edit-document"
                             (click)="editMode = true;">Bearbeiten</button>
                     <span class="mdi mdi-blur"></span>
@@ -75,8 +79,7 @@
                 </h1>
             </header>
             <main>
-                <document-view *ngIf="!editMode" [document]="selectedDocument"
-                               (documentSelection)="select($event)"></document-view>
+                <document-view *ngIf="!editMode" [document]="selectedDocument" (documentSelection)="select($event)"></document-view>
                 <document-edit *ngIf="editMode" [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
             </main>
         </section>

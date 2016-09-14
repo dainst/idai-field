@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {IdaiFieldResource} from '../model/idai-field-resource';
+import {IdaiFieldDocument} from '../model/idai-field-document';
 
 @Component({
     selector: 'map',
@@ -11,7 +11,7 @@ import {IdaiFieldResource} from '../model/idai-field-resource';
  */
 export class MapComponent implements OnChanges {
 
-    @Input() resource: IdaiFieldResource;
+    @Input() documents: Array<IdaiFieldDocument>;
 
     private map: L.Map;
     private mapElements: Array<L.ILayer> = [];
@@ -26,8 +26,10 @@ export class MapComponent implements OnChanges {
             this.map.setView([0, 0], 5);
         }
 
-        for (var i in this.resource.geometries) {
-            this.show(this.resource.geometries[i]);
+        for (var i in this.documents) {
+            for (var j in this.documents[i].resource.geometries) {
+                this.show(this.documents[i].resource.geometries[j]);
+            }
         }
     }
 

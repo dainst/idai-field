@@ -3,5 +3,6 @@
  */
 
 #mapContainer {
-  height: 250px;
+  width: 100%;
+  height: calc(100vh - 75px);
 }

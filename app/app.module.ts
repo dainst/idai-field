@@ -22,7 +22,7 @@ import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {MapComponent} from './overview/map.component';
 import {DocumentViewComponent} from './overview/document-view.component';
-import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import CONFIG = require("config/config.json!json");
 
@@ -31,8 +31,8 @@ import CONFIG = require("config/config.json!json");
         BrowserModule,
         FormsModule,
         HttpModule,
+        NgbModule,
         IdaiComponents2Module,
-        Ng2Bs3ModalModule,
         routing
     ],
     declarations: [

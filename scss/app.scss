@@ -29,3 +29,21 @@ html {
 #idaifieldlogo {
   height: 35px;
 }
+
+/* override needed for buttons to look good in chrome with bootstrap 4 */
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: none;
+}
+
+/* override ugly styling of list-group-items inside cards in bootstrap 4 */
+.card > .list-group {
+  > .list-group-item {
+    border-width: 1px 0 0;
+  }
+  > .list-group-item:first-child {
+    border-width: 0;
+  }
+}

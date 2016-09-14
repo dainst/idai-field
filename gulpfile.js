@@ -19,7 +19,7 @@ gulp.task('convert-sass', function() {
 			'node_modules/leaflet/dist/leaflet.css'
 		])
 	  	.pipe(sass({includePaths: [
-			'node_modules/bootstrap-sass/assets/stylesheets/',
+			'node_modules/bootstrap/scss/',
 			'node_modules/mdi/scss/'
 		], precision: 8}))
 	  	.pipe(concat(pkg.name + '.css'))
@@ -88,12 +88,11 @@ gulp.task('make-dist',function() {
     gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
-    gulp.src('node_modules/jquery/**/*').pipe(gulp.dest('dist/node_modules/jquery'));
+	gulp.src('node_modules/@ng-bootstrap.ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap.ng-bootstrap/'));
     gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('dist/node_modules/systemjs/'));
     gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('dist/node_modules/zone.js/'));
     gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));
     gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('dist/node_modules/bootstrap'));
-    gulp.src('node_modules/ng2-bs3-modal/**/*').pipe(gulp.dest('dist/node_modules/ng2-bs3-modal/'));
     gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
     gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));

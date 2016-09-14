@@ -58,17 +58,17 @@
         <section>
             <header>
                 <h1 *ngIf="!editMode" class="overview-document-heading">
-                    <button class="btn btn-default pull-right" id="document-view-button-back-to-map"
+                    <button class="btn btn-secondary pull-xs-right" id="document-view-button-back-to-map"
                             (click)="selectedDocument = undefined;">Zurück zur Karte</button>
-                    <button class="btn btn-default pull-right" id="document-view-button-edit-document"
+                    <button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"
                             (click)="editMode = true;">Bearbeiten</button>
                     <span class="mdi mdi-blur"></span>
                     <span *ngIf="!editMode">Ressource anzeigen</span>
                 </h1>
                 <h1 *ngIf="editMode && selectedDocument['resource']['type']" class="overview-document-heading">
-                    <button class="btn btn-default pull-right" id="document-edit-button-abort"
+                    <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
                             (click)="discardChanges(selectedDocument, false)">Abbrechen</button>
-                    <button class="btn btn-default pull-right" id="document-edit-button-save-document"
+                    <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
                             (click)="save(selectedDocument,false)">Speichern</button>
                     <span class="mdi mdi-blur"></span>
                     Ressource bearbeiten
@@ -85,22 +85,22 @@
         </section>
     </div>
 
-    <modal #modal>
-        <modal-header>
+    <template #modalTemplate>
+        <div class="modal-header">
             <h4 class="modal-title">Speichern?</h4>
-        </modal-header>
-        <modal-body>
+        </div>
+        <div class="modal-body">
             Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
-        </modal-body>
-        <modal-footer>
-            <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary" data-dismiss="modal"
-                    (click)="save(selectedDocument); modal.dismiss();">Speichern</button>
-            <button type="button" class="btn btn-default"
-                    (click)="discardChanges(selectedDocument); modal.dismiss();">Änderungen verwerfen</button>
-            <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-default"
-                    (click)="modal.dismiss();">Abbrechen</button>
-        </modal-footer>
-    </modal>
+        </div>
+        <div class="modal-footer">
+            <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
+                    (click)="save(selectedDocument); modal.close();">Speichern</button>
+            <button type="button" class="btn btn-secondary"
+                    (click)="discardChanges(selectedDocument); modal.close();">Änderungen verwerfen</button>
+            <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
+                    (click)="modal.close();">Abbrechen</button>
+        </div>
+    </template>
 
 </div>
 

@@ -1,14 +1,13 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header" routerLink="/">
-            <a class="navbar-brand">iDAI.field 2.0</a>
-        </div>
-        <div id="importButton" class="mdi mdi-24px mdi-file-import navbar-button" routerLink="/import"></div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <span class="navbar-text navbar-right">
-                <synchronization></synchronization>
-            </span>
-        </div>
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+    <a class="navbar-brand" routerLink="/">iDAI.field 2.0</a>
+
+    <div class="nav navbar-nav">
+        <a class="nav-item nav-link" href="#" routerLink="/">Übersicht</a>
+        <a class="nav-item nav-link" href="#" routerLink="/import" id="importButton">Import</a>
+    </div>
+
+    <div class="navbar-text navbar-right">
+        <synchronization></synchronization>
     </div>
 </nav>
 
@@ -21,3 +20,5 @@
         </div>
     </div>
 </div>
+
+<template ngbModalContainer></template>

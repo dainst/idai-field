@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, ViewChild} from '@angular/core';
+import {Component, OnInit, Inject, ViewChild, TemplateRef} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
@@ -6,7 +6,7 @@ import {M} from "../m";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
-import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     moduleId: module.id,
@@ -21,9 +21,6 @@ import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
  */
 export class OverviewComponent implements OnInit {
 
-    @ViewChild('modal')
-    modal: ModalComponent;
-
     /**     
      * The object currently selected in the list and shown in the edit component.
      */
@@ -31,12 +28,18 @@ export class OverviewComponent implements OnInit {
     
     private editMode: boolean;
 
+    @ViewChild('modalTemplate')
+    private modalTemplate: TemplateRef<any>;
+
+    private modal: NgbModalRef;
+
     constructor(@Inject('app.config') private config,
         private objectList: ObjectList,
         private messages: Messages,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private validator:Validator,
-        private persistenceManager:PersistenceManager) {
+        private persistenceManager:PersistenceManager,
+        private modalService:NgbModal) {
     }
 
     /**
@@ -57,7 +60,7 @@ export class OverviewComponent implements OnInit {
         this.messages.clear();
         if (!this.documentEditChangeMonitor.isChanged())
             return this.discardChanges(currentlySelectedDocument);
-        this.modal.open();
+        this.modal = this.modalService.open(this.modalTemplate);
     }
 
     public save(doc:IdaiFieldDocument,withCallback:boolean=true) {

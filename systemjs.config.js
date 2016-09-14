@@ -9,8 +9,8 @@
             'app': 'app',
 
             '@angular': 'node_modules/@angular',
+            '@ng-bootstrap': 'node_modules/@ng-bootstrap',
             'json': 'app/util/systemjs-json-plugin',
-            'ng2-bs3-modal': 'node_modules/ng2-bs3-modal',
             'rxjs': 'node_modules/rxjs',
             'idai-components-2' : 'node_modules/idai-components-2'
         },
@@ -31,7 +31,8 @@
                     }
                 }
             },
-            'rxjs': {main: 'index.js'}
+            'rxjs': {main: 'index.js'},
+            '@ng-bootstrap/ng-bootstrap': { main: 'index.js' }
         },
         meta: {
             'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
@@ -56,8 +57,5 @@
     ngPackageNames.forEach(packUmd);
 
     System.config(config);
-
-    System.import('node_modules/jquery/dist/jquery.js')
-        .then(function() { System.import('node_modules/bootstrap/dist/js/bootstrap.js'); }, null);
 
 })(this);

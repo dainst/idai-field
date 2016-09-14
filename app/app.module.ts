@@ -20,7 +20,7 @@ import {AppComponent} from './app.component';
 import {OverviewComponent} from './overview/overview.component';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
-import {GeoComponent} from './overview/geo.component';
+import {MapComponent} from './overview/map.component';
 import {DocumentViewComponent} from './overview/document-view.component';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 
@@ -40,7 +40,7 @@ import CONFIG = require("config/config.json!json");
         OverviewComponent,
         ImportComponent,
         SynchronizationComponent,
-        GeoComponent,
+        MapComponent,
         DocumentViewComponent
     ],
     providers: [

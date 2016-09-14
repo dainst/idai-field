@@ -2,14 +2,14 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 
 @Component({
-    selector: 'geo',
-    template: `<div id="geoMap"></div>`
+    selector: 'map',
+    template: `<div id="mapContainer"></div>`
 })
 
 /**
  * @author Thomas Kleinke
  */
-export class GeoComponent implements OnChanges {
+export class MapComponent implements OnChanges {
 
     @Input() resource: IdaiFieldResource;
 
@@ -33,7 +33,7 @@ export class GeoComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("geoMap", { crs: L.CRS.Simple }).setView([0, 0], 5);
+        this.map = L.map("mapContainer", { crs: L.CRS.Simple }).setView([0, 0], 5);
         L.tileLayer("").addTo(this.map);
     }
 

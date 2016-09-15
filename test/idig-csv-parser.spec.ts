@@ -27,7 +27,7 @@ export function main() {
                 expect(objects[0]['resource']['id']).toEqual("1");
                 expect(objects[0]['resource']['type']).toEqual("context");
                 expect(objects[0]['id']).toEqual("1");
-                expect(objects[1]['resource'].title).toEqual("Two");
+                expect(objects[1]['resource'].shortDescription).toEqual("Two");
                 expect(objects.length).toEqual(2);
                 done();
             });

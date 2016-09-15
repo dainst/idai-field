@@ -31,12 +31,12 @@
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                             -->
-                        <div *ngIf="document['resource'].identifier || document['resource'].title">
-                            <div id="object-overview-title-{{index}}" class="title">{{document['resource'].title}}</div>
+                        <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
+                            <div id="object-overview-title-{{index}}" class="title">{{document['resource'].shortDescription}}</div>
 
                             <div id="object-overview-identifier-{{index}}" class="identifier">{{document['resource'].identifier}}</div>
                         </div>
-                        <div id="object-overview-note-{{index}}" *ngIf="!(document['resource'].identifier || document['resource'].title)" class="new">Neues Objekt</div>
+                        <div id="object-overview-note-{{index}}" *ngIf="!(document['resource'].identifier || document['resource'].shortDescription)" class="new">Neues Objekt</div>
                     </li>
                 </ul>
                 <div id="object-overview-button-create-object"

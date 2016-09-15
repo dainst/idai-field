@@ -59,7 +59,7 @@ export class DocumentViewComponent implements OnChanges {
 
     private initializeFields(resource: IdaiFieldResource) {
         
-        const ignoredFields: Array<string> = [ "id", "identifier", "title", "type", "relations", "geometries" ];
+        const ignoredFields: Array<string> = [ "id", "identifier", "shortDescription", "type", "relations", "geometries" ];
 
         for (var fieldName in resource) {
             if (resource.hasOwnProperty(fieldName) && ignoredFields.indexOf(fieldName) == -1) {

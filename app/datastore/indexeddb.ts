@@ -63,7 +63,7 @@ export class Indexeddb {
                 objectStore.createIndex("synced", "synced", {unique: false});
                 objectStore.createIndex("modified", "modified");
                 objectStore.createIndex("created", "created");
-                objectStore.createIndex("title", "resource.title");
+                objectStore.createIndex("shortDescription", "resource.shortDescription");
                 var fulltextStore = db.createObjectStore("fulltext", {keyPath: "id"});
                 fulltextStore.createIndex("terms", "terms", {multiEntry: true});
             };

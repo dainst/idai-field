@@ -2,14 +2,14 @@
     <div class="col-md-7">
 
         <!--
-          In one project we have this assumption that there is always a title,
+          In one project we have this assumption that there is always a shortDescription,
           while in another there is only the identifier.
         -->
-        <div *ngIf="document.resource.title">
-            <h1 class="document-view-title">{{document.resource.title}}</h1>
+        <div *ngIf="document.resource.shortDescription">
+            <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
             <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
         </div>
-        <div *ngIf="!document.resource.title">
+        <div *ngIf="!document.resource.shortDescription">
             <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
         </div>
 
@@ -37,10 +37,10 @@
                     <!--
                       See corresponding comment on top of the page.
                     -->
-                    <div *ngIf="document.resource.title">
-                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.title}} ({{target.resource.identifier}})</a>
+                    <div *ngIf="document.resource.shortDescription">
+                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.shortDescription}} ({{target.resource.identifier}})</a>
                     </div>
-                    <div *ngIf="!document.resource.title">
+                    <div *ngIf="!document.resource.shortDescription">
                         <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
                     </div>
                 </div>

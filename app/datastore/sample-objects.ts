@@ -6,7 +6,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o1",
             "identifier": "ob1",
-            "title": "Obi One Kenobi",
+            "shortDescription": "Obi One Kenobi",
             "relations": {
                 "cuts": ["o2"]
             },
@@ -35,7 +35,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o2",
             "identifier": "ob2",
-            "title": "Qui Gon Jinn",
+            "shortDescription": "Qui Gon Jinn",
             "relations": {
                 "isCutBy": ["o1"]
             },
@@ -64,7 +64,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o3",
             "identifier": "ob3",
-            "title": "Luke Skywalker",
+            "shortDescription": "Luke Skywalker",
             "type": "object",
             "relations": {},
             "geometries": [{
@@ -91,7 +91,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o4",
             "identifier": "ob4",
-            "title": "Han Solo",
+            "shortDescription": "Han Solo",
             "type": "object",
             "relations": {},
             "geometries": [{
@@ -118,7 +118,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o5",
             "identifier": "ob5",
-            "title": "Boba Fett",
+            "shortDescription": "Boba Fett",
             "type": "object",
             "relations": {}
         },

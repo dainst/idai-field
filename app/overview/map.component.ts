@@ -66,7 +66,7 @@ export class MapComponent implements OnChanges {
     private addMarkerToMap(geometry: any, document: IdaiFieldDocument) {
 
         var latLng = L.latLng(geometry.coordinates);
-        var marker = new IdaiFieldMarker(latLng, { title: this.getTitle(document.resource) });
+        var marker = new IdaiFieldMarker(latLng, { title: this.getShortDescription(document.resource) });
         marker.setDocument(document);
 
         var mapComponent = this;
@@ -92,14 +92,14 @@ export class MapComponent implements OnChanges {
         this.mapElements.push(polygon);
     }
 
-    private getTitle(resource: IdaiFieldResource) {
+    private getShortDescription(resource: IdaiFieldResource) {
 
-        var title = resource.id;
-        if (resource.title && resource.title.length > 0) {
-            title += " | " + resource.title;
+        var shortDescription = resource.id;
+        if (resource.shortDescription && resource.shortDescription.length > 0) {
+            shortDescription += " | " + resource.shortDescription;
         }
 
-        return title;
+        return shortDescription;
     }
 
 }

@@ -9,6 +9,7 @@ import {Validator} from "../model/validator";
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+
     moduleId: module.id,
     templateUrl: '../../templates/overview.html'
 })
@@ -41,6 +42,8 @@ export class OverviewComponent implements OnInit {
         private persistenceManager:PersistenceManager,
         private modalService:NgbModal) {
     }
+
+    private filterOverviewIsCollapsed = true;
 
     /**
      * Function to call if preconditions to change are met.

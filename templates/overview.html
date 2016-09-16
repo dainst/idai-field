@@ -22,11 +22,24 @@
                     <span class="input-group-btn">
                         <button class="btn btn-secondary"
                                 id="searchfilter"
-                                type="button">
+                                type="button"
+                                (click)="filterOverviewIsCollapsed = !filterOverviewIsCollapsed">
                             <span class="mdi mdi-filter"></span>
                         </button>
                     </span>
                 </div>
+
+                <div id="filteroptions"
+                     [ngbCollapse]="filterOverviewIsCollapsed">
+                    <div class="card card-block">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked> Alle Ressourcen anzeigen
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <ul *ngIf="objectList.getDocuments()" class="list-group" id="objectList">
                     <li *ngFor="let document of objectList.getDocuments(); let index=index"
                         (click)="select(document)"

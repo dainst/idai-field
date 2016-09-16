@@ -52,21 +52,25 @@
         </aside>
     </div>
 
-    <map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"
-            (documentSelection)="select($event)"></map>
+    <!--<div id="mapContainer"></div>-->
 
-    <div *ngIf="selectedDocument" class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
+
+    <!--<map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"-->
+            <!--(documentSelection)="select($event)"></map>-->
+
+    <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
         <section>
             <header>
                 <h1 *ngIf="!editMode" class="overview-document-heading">
                     <button class="btn btn-secondary pull-xs-right" id="document-view-button-back-to-map"
                             (click)="selectedDocument = undefined;">Zurück zur Karte</button>
                     <button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"
-                            (click)="editMode = true;">Bearbeiten</button>
+                            (click)="editMode = true; router.navigate(['resources',selectedDocument['resource']['id'],'edit'])">Bearbeiten</button>
                     <span class="mdi mdi-blur"></span>
                     <span *ngIf="!editMode">Ressource anzeigen</span>
                 </h1>
-                <h1 *ngIf="editMode && selectedDocument['resource']['type']" class="overview-document-heading">
+                <!--<h1 *ngIf="editMode && selectedDocument['resource']['type']" class="overview-document-heading">-->
+                <h1 *ngIf="editMode" class="overview-document-heading">
                     <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
                             (click)="discardChanges(selectedDocument, false)">Abbrechen</button>
                     <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
@@ -74,14 +78,15 @@
                     <span class="mdi mdi-blur"></span>
                     Ressource bearbeiten
                 </h1>
-                <h1 *ngIf="editMode && !selectedDocument['resource']['type']" class="overview-document-heading">
+                <!--<h1 *ngIf="editMode && !selectedDocument['resource']['type']" class="overview-document-heading">-->
+                <h1 *ngIf="editMode" class="overview-document-heading">
                     <span class="mdi mdi-blur"></span>
                     Neue Ressource
                 </h1>
             </header>
             <main>
-                <document-view *ngIf="!editMode" [document]="selectedDocument" (documentSelection)="select($event)"></document-view>
-                <document-edit *ngIf="editMode" [(document)]="selectedDocument" [primary]="'identifier'"></document-edit>
+                <router-outlet></router-outlet>
+                <!--<document-view *ngIf="!editMode" [document]="selectedDocument" (documentSelection)="select($event)"></document-view>-->
             </main>
         </section>
     </div>

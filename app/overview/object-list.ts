@@ -46,6 +46,32 @@ export class ObjectList {
         }).catch(err => console.error(err));
     }
 
+    
+    // TODO clean up duplicate code
+    public fetchAllDocumentsAsync() {
+        return new Promise<any>((resolve,reject)=>{
+           
+            if (!this.documents) {
+                
+                this.datastore.all().then(documents => {
+
+                    console.debug("Fetched docs from datastore",documents)
+
+                    this.setDocuments(documents);
+                    resolve(this.documents);
+                        
+                }).catch(err => console.error(err));
+                
+            } else {
+                resolve(this.documents)
+            }
+            
+            
+        
+        });
+        
+    }
+
     public fetchSomeDocuments(searchString) {
         if (searchString == "") {
             this.fetchAllDocuments()

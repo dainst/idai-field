@@ -1,4 +1,5 @@
 import {Component, OnInit, Inject, ViewChild, TemplateRef} from '@angular/core';
+import {Router} from '@angular/router';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
@@ -39,7 +40,8 @@ export class OverviewComponent implements OnInit {
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private validator:Validator,
         private persistenceManager:PersistenceManager,
-        private modalService:NgbModal) {
+        private modalService:NgbModal,
+        private router: Router) {
     }
 
     /**
@@ -112,6 +114,9 @@ export class OverviewComponent implements OnInit {
         return function() {
             this.selectedDocument=documentToSelect;
             this.editMode = false;
+
+            this.router.navigate(['resources',documentToSelect['resource']['id']]);
+
         }.bind(this);
     }
 

@@ -61,6 +61,10 @@ export class Validator {
 
             var invalidFields;
             if (invalidFields = this.validateFields(resource)) {
+
+                // TODO remove
+                console.log("hallo",invalidFields)
+
                 validationReport.valid = false;
                 validationReport.errorMessage = 
                     invalidFields.length == 1 ? M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS;

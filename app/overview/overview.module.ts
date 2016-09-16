@@ -6,6 +6,7 @@ import { MapComponent } from './map.component';
 import { OverviewComponent } from './overview.component';
 import { DocumentViewComponent } from './document-view.component';
 import { DocumentEditWrapperComponent } from './document-edit-wrapper.component';
+import { PersistenceService } from './persistence-service';
 import { IdaiComponents2Module } from 'idai-components-2/idai-components-2';
 
 
@@ -21,7 +22,9 @@ import { IdaiComponents2Module } from 'idai-components-2/idai-components-2';
         DocumentViewComponent,
         DocumentEditWrapperComponent
     ],
-    providers: []
+    providers: [
+        PersistenceService
+    ]
 })
 
 export class OverviewModule {}

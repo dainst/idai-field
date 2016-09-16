@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 import {ActivatedRoute,Params,Router,ActivatedRouteSnapshot} from '@angular/router';
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {PersistenceService} from "./persistence-service";
 
 @Component({
     moduleId: module.id,
@@ -31,6 +32,8 @@ export class DocumentEditWrapperComponent implements  OnInit{
 
     constructor(
         private datastore: IndexeddbDatastore,
-        private route: ActivatedRoute)
+        private route: ActivatedRoute,
+        private persistenceService:PersistenceService
+    )
     {}
 }

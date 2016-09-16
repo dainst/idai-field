@@ -1,10 +1,11 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
-import {ActivatedRoute,Params} from '@angular/router';
+import {Component, Output, OnInit, EventEmitter} from '@angular/core';
+import {ActivatedRoute,Params,Router} from '@angular/router';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
 import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+
 
 @Component({
     moduleId: module.id,
@@ -30,7 +31,8 @@ export class DocumentViewComponent implements OnInit {
     constructor(
         private configLoader: ConfigLoader,
         private datastore: IndexeddbDatastore,
-        private route: ActivatedRoute)
+        private route: ActivatedRoute,
+        private router: Router)
     {
 
 

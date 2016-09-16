@@ -2,9 +2,9 @@ import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {ObjectList} from "./object-list";
 
 @Component({
+    selector: 'map',
     template: `aaaaaaaa`
 })
 
@@ -20,7 +20,6 @@ export class MapComponent implements OnChanges {
     private mapElements: Array<L.ILayer> = [];
 
     constructor(
-        private objectList:ObjectList,
         private datastore: IndexeddbDatastore
     ) {
 

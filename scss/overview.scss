@@ -98,7 +98,26 @@
 }
 
 .search input {
-  text-indent: 20px;
+  text-indent: 10px;
+}
+
+.search.input-group-btn {
+  height: 45px;
+  border: 0;
+  background-color: #b9c9e3;
+}
+
+.search .btn {
+  border-radius: 0;
+  border: none !important;
+}
+
+.search .btn-secondary {
+  background-color: #ddd;
+}
+
+#searchfilter {
+  height: 45px !important;
 }
 
 .search .glyphicon-search {

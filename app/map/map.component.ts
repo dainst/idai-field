@@ -1,11 +1,12 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, OnInit} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 
+
 @Component({
     selector: 'map',
-    template: `aaaaaaaa`
+    template: `<div id="mapContainer"></div>`
 })
 
 /**
@@ -13,7 +14,7 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
  */
 export class MapComponent implements OnChanges {
 
-    private documents: any;
+    @Input() documents: any;
     @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     private map: L.Map;
@@ -22,8 +23,21 @@ export class MapComponent implements OnChanges {
     constructor(
         private datastore: IndexeddbDatastore
     ) {
+        // TODO clean up
+        // objectList.fetchAllDocumentsAsync().then(documents=>{
+        //     console.debug("set documents",documents)
+        //     this.documents=documents;
+        //     for (var i in this.documents) {
+        //         var resource = this.documents[i].resource;
+        //         for (var j in resource.geometries) {
+        //             this.addToMap(resource.geometries[j], this.documents[i]);
+        //         }
+        //     }
+        // });
+    }
 
-
+    public ngOnInit() {
+        console.log("hier")
 
         if (!this.map)
             this.initializeMap();
@@ -38,29 +52,20 @@ export class MapComponent implements OnChanges {
             this.map.setView([0, 0], 5);
         }
 
-
-        this.datastore.documentChangesNotifications().subscribe(document=>{
-            console.log("add doc ",document )
-            var resource = document.resource;
+        for (var i in this.documents) {
+            var resource = this.documents[i].resource;
             for (var j in resource.geometries) {
-                this.addToMap(resource.geometries[j], document);
+                this.addToMap(resource.geometries[j], this.documents[i]);
             }
-        });
+        }
 
-
-        // TODO clean up
-        // objectList.fetchAllDocumentsAsync().then(documents=>{
-        //     console.debug("set documents",documents)
-        //     this.documents=documents;
-        //     for (var i in this.documents) {
-        //         var resource = this.documents[i].resource;
-        //         for (var j in resource.geometries) {
-        //             this.addToMap(resource.geometries[j], this.documents[i]);
-        //         }
+        // this.datastore.documentChangesNotifications().subscribe(document=>{
+        //     console.log("add doc ",document )
+        //     var resource = document.resource;
+        //     for (var j in resource.geometries) {
+        //         this.addToMap(resource.geometries[j], document);
         //     }
         // });
-
-
 
     }
     

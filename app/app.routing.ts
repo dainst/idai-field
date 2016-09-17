@@ -1,12 +1,12 @@
 import {Routes,RouterModule} from '@angular/router';
 
 import {ImportComponent} from './import/import.component';
-import {MapComponent} from './map/map.component';
+import {MapWrapperComponent} from './map/map-wrapper.component';
 
 const appRoutes: Routes = [
     { path: 'import', component: ImportComponent },
-    { path: 'map', component: MapComponent },
-    { path: '', component: MapComponent }
+    { path: 'map', component: MapWrapperComponent },
+    { path: '', component: MapWrapperComponent }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

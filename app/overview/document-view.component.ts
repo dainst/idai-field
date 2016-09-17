@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Component, OnChanges, Input} from "@angular/core";
+import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {
     ConfigLoader,
@@ -10,6 +10,7 @@ import {
 
 
 @Component({
+    selector: 'document-view',
     moduleId: module.id,
     templateUrl: '../../templates/document-view.html'
 })
@@ -17,9 +18,9 @@ import {
 /**
  * @author Thomas Kleinke
  */
-export class DocumentViewComponent implements OnInit {
+export class DocumentViewComponent implements OnChanges {
 
-    private document: any;
+    @Input() document: any;
 
     private type: string;
     private fields: Array<any>;
@@ -31,7 +32,6 @@ export class DocumentViewComponent implements OnInit {
     constructor(
         private configLoader: ConfigLoader,
         private datastore: ReadDatastore,
-        private route: ActivatedRoute,
         private router: Router)
     {
         this.configLoader.configuration().subscribe((result)=>{
@@ -45,30 +45,21 @@ export class DocumentViewComponent implements OnInit {
         });
     }
 
+    ngOnChanges() {
 
-    ngOnInit() {
+        if (!this.document) return;
 
-        this.route.params.forEach((params: Params) => {
+        this.fields = [];
+        this.relations = [];
 
+        var resource:IdaiFieldResource = this.document.resource;
 
-            this.datastore.get(params['id']).then(document=> {
+        this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
+        this.initializeFields(resource);
+        this.initializeRelations(resource);
 
-                this.document = document;
-
-                this.fields = [];
-                this.relations = [];
-
-                if (!this.document) return;
-
-                var resource:IdaiFieldResource = this.document.resource;
-
-                this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
-                this.initializeFields(resource);
-                this.initializeRelations(resource);
-
-            })
-        });
     }
+
 
     public selectDocument(documentToJumpTo) {
         this.router.navigate(['resources',documentToJumpTo.resource.id])

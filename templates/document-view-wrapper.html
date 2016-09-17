@@ -1,0 +1,11 @@
+<header>
+    <h1 class="overview-document-heading">
+        <button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"
+                (click)="editMode = true; router.navigate(['resources',document['resource']['id'],'edit'])">Bearbeiten</button>
+        <span class="mdi mdi-blur"></span>
+        <span *ngIf="!editMode">Ressource anzeigen</span>
+    </h1>
+</header>
+<main>
+    <document-view [(document)]="document"></document-view>
+</main>

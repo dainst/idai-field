@@ -9,14 +9,14 @@ var utils = require("./utils.js");
  *
  */
 
-describe('idai field app', function() {
+fdescribe('idai field app', function() {
 
     function typeInIdentifierInSearchField() {
         return common.typeIn(element(by.id('object-search')), "12");
     }
 
     beforeEach(function(){
-        browser.get('/');
+        browser.get('/#/resources/');
     });
     
     it('should find it by its identifier', function() {

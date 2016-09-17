@@ -47,36 +47,32 @@ export class DocumentViewComponent implements OnInit {
         });
 
 
-        this.datastore.documentChangesNotifications().subscribe(document=>{
-
-            console.log("fetched a doc from datastore",document)
-
-            this.route.params.forEach((params: Params) => {
-
-                if (params['id'] == document.resource['id'])
-                {
-                    console.log("id:", params['id']);
-
-                    this.datastore.get(params['id']).then(document=> {
-
-                        console.log("fetched the doc from datastore",document)
-
-                        this.document = document;
-
-                        this.fields = [];
-                        this.relations = [];
-
-                        if (!this.document) return;
-
-                        var resource:IdaiFieldResource = this.document.resource;
-
-                        this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
-                        this.initializeFields(resource);
-                        this.initializeRelations(resource);
-                    })
-                }
-            });
-        });
+        // this.datastore.documentChangesNotifications().subscribe(document=>{
+        //
+        //     console.log("fetched a doc from datastore",document)
+        //
+        //     this.route.params.forEach((params: Params) => {
+        //
+        //         if (params['id'] == document.resource['id'])
+        //         {
+        //             this.datastore.get(params['id']).then(document=> {
+        //
+        //                 this.document = document;
+        //
+        //                 this.fields = [];
+        //                 this.relations = [];
+        //
+        //                 if (!this.document) return;
+        //
+        //                 var resource:IdaiFieldResource = this.document.resource;
+        //
+        //                 this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
+        //                 this.initializeFields(resource);
+        //                 this.initializeRelations(resource);
+        //             })
+        //         }
+        //     });
+        // });
         // TODO make it happen on every route change and clean up
 
         console.log("constructor document view")
@@ -86,6 +82,7 @@ export class DocumentViewComponent implements OnInit {
 
 
     ngOnInit() {
+        console.debug("ngoninit document view")
 
         this.route.params.forEach((params: Params) => {
 

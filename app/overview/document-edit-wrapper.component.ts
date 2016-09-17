@@ -3,6 +3,9 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {PersistenceService} from "./persistence-service";
 import {ObjectList} from "./object-list";
+import {M} from "../m";
+import {Messages} from "idai-components-2/idai-components-2";
+
 
 @Component({
     moduleId: module.id,
@@ -16,12 +19,19 @@ export class DocumentEditWrapperComponent implements  OnInit{
 
     ngOnInit() {
         this.route.params.forEach((params: Params) => {
+
+
             if (params['id'].indexOf('new')!=-1) {
                 this.mode='new';
                 this.persistenceService.setChangeSelectionAllowedCallback(function(){
-                    this.router.navigate(['resources'])
+
+                    this.router.navigate(['resources',this.objectList.getSelected().resource.id])
+
                 }.bind(this));
+
                 this.document=this.objectList.createNewDocument();
+
+
             } else {
                 this.mode='edit';
                 this.persistenceService.setChangeSelectionAllowedCallback(function(){
@@ -40,7 +50,8 @@ export class DocumentEditWrapperComponent implements  OnInit{
         private route: ActivatedRoute,
         private persistenceService:PersistenceService,
         private router: Router,
-        private objectList: ObjectList
+        private objectList: ObjectList,
+        private messages: Messages
     )
     {}
 }

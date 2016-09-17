@@ -115,6 +115,8 @@ export class ObjectList {
 
             if (!document['id']) {
                 this.remove(document);
+                console.debug("cannot restore new object");
+                this.selectedDocument=undefined;
                 return resolve();
             }
 
@@ -122,6 +124,7 @@ export class ObjectList {
                 restoredObject => {
 
                     this.replace(document,<Document>restoredObject);
+                    this.selectedDocument=restoredObject;
                     resolve(restoredObject);
                 },
                 err => { reject(this.toStringArray(err)); }

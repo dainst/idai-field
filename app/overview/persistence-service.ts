@@ -6,6 +6,7 @@ import {M} from "../m";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ObjectList} from "./object-list";
 import {Validator} from "../model/validator";
+import {Router} from '@angular/router';
 
 /**
  */
@@ -23,10 +24,11 @@ export class PersistenceService {
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private messages: Messages,
         private objectList:ObjectList,
-        private validator:Validator) {
+        private validator:Validator,
+        private router:Router) {
     }
     
-    public save(withCallback:boolean=true) {
+    public save() {
 
         var doc=this.objectList.getSelected();
         
@@ -40,8 +42,8 @@ export class PersistenceService {
         this.persistenceManager.persist(doc).then(
             () => {
                 this.documentEditChangeMonitor.reset();
+                this.changeSelectionAllowedCallback();
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
-                if (withCallback) this.changeSelectionAllowedCallback();
             },
             errors => {
                 for (var err of errors) {
@@ -56,19 +58,15 @@ export class PersistenceService {
      *
      * @param document
      */
-    public discardChanges(withCallback: boolean = true) {
+    public discardChanges() {
 
         this.objectList.restore().then(
             restoredDocument => {
+                console.debug("persistence-service.discard-changes")
                 this.documentEditChangeMonitor.reset();
-                if (withCallback) {
-                    this.changeSelectionAllowedCallback();
-                } else {
+                console.debug("restored",restoredDocument);
+                this.changeSelectionAllowedCallback();
 
-                    console.log("restored",restoredDocument)
-                    // TODO reenable this
-                    // this.selectedDocument = restoredDocument;
-                }
             }, (err) => {
                 this.messages.add(err);
             });

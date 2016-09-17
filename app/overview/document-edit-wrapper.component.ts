@@ -3,8 +3,6 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {PersistenceService} from "./persistence-service";
 import {ObjectList} from "./object-list";
-import {M} from "../m";
-import {Messages} from "idai-components-2/idai-components-2";
 
 
 @Component({
@@ -12,6 +10,9 @@ import {Messages} from "idai-components-2/idai-components-2";
     templateUrl: '../../templates/document-edit-wrapper.html'
 })
 
+/**
+ * @author Daniel de Oliveira
+ */
 export class DocumentEditWrapperComponent implements  OnInit{
 
     private document: any;
@@ -51,7 +52,6 @@ export class DocumentEditWrapperComponent implements  OnInit{
         private persistenceService:PersistenceService,
         private router: Router,
         private objectList: ObjectList,
-        private messages: Messages
     )
     {}
 }

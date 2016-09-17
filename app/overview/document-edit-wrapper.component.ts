@@ -23,7 +23,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
 
             if (params['id'].indexOf('new')!=-1) {
                 this.mode='new';
-                this.persistenceService.setChangeSelectionAllowedCallback(function(){
+                this.persistenceService.setCallback(function(){
 
                     this.router.navigate(['resources',this.objectList.getSelected().resource.id])
 
@@ -34,7 +34,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
 
             } else {
                 this.mode='edit';
-                this.persistenceService.setChangeSelectionAllowedCallback(function(){
+                this.persistenceService.setCallback(function(){
                     this.router.navigate(['resources',params['id']])
                 }.bind(this));
                 this.datastore.get(params['id']).then(document=> {

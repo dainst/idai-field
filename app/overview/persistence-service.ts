@@ -13,10 +13,10 @@ import {Router} from '@angular/router';
 @Injectable()
 export class PersistenceService {
     
-    private changeSelectionAllowedCallback;
+    private callback;
     
-    public setChangeSelectionAllowedCallback(cb) {
-        this.changeSelectionAllowedCallback=cb;
+    public setCallback(cb) {
+        this.callback=cb;
     }
     
     constructor(
@@ -27,7 +27,7 @@ export class PersistenceService {
         private validator:Validator) {
     }
     
-    public save() {
+    public saveAndCallback() {
 
         var doc=this.objectList.getSelected();
 
@@ -41,7 +41,7 @@ export class PersistenceService {
         this.persistenceManager.persist(doc).then(
             () => {
                 this.documentEditChangeMonitor.reset();
-                this.changeSelectionAllowedCallback();
+                this.callback();
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },
             errors => {
@@ -57,12 +57,12 @@ export class PersistenceService {
      *
      * @param document
      */
-    public discardChanges() {
+    public discardChangesAndCallback() {
 
         this.objectList.restore().then(
             restoredDocument => {
                 this.documentEditChangeMonitor.reset();
-                this.changeSelectionAllowedCallback();
+                this.callback();
 
             }, (err) => {
                 this.messages.add(err);

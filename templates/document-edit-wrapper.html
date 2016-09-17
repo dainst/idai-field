@@ -4,9 +4,9 @@
 
 
             <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
-                    (click)="persistenceService.discardChanges();">Abbrechen</button>
+                    (click)="persistenceService.discardChangesAndCallback();">Abbrechen</button>
             <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
-                    (click)="persistenceService.save(false)">Speichern</button>
+                    (click)="persistenceService.saveAndCallback()">Speichern</button>
             <span class="mdi mdi-blur"></span>
 
             <span *ngIf="mode=='edit'">Ressource bearbeiten</span>

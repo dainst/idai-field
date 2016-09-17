@@ -65,21 +65,21 @@ export class OverviewComponent implements OnInit {
         this.messages.clear();
         if (!this.documentEditChangeMonitor.isChanged()) {
 
-            return this.persistenceService.discardChanges();
+            return this.persistenceService.discardChangesAndCallback();
         }
         this.modal = this.modalService.open(this.modalTemplate);
     }
 
     
 
-    private registerSelectionCallbackForExisting(documentToSelect) {
+    private selectionCallbackForExisting(documentToSelect) {
         return function() {
             this.objectList.setSelected(documentToSelect);
             this.router.navigate(['resources',documentToSelect['resource']['id']]);
         }.bind(this);
     }
 
-    private registerSelectionCallbackForNew() {
+    private selectionCallbackForNew() {
         return function() {
             this.router.navigate(['resources','new','edit'])
         }.bind(this);
@@ -95,11 +95,11 @@ export class OverviewComponent implements OnInit {
 
         if (documentToSelect) {
             if (documentToSelect == this.objectList.getSelected()) return;
-            this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForExisting(documentToSelect));
+            this.persistenceService.setCallback(this.selectionCallbackForExisting(documentToSelect));
         }
         else {
             this.router.navigate(['resources']); // to make sure onInit runs again in documentView
-            this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForNew());
+            this.persistenceService.setCallback(this.selectionCallbackForNew());
         }
 
         this.checkChangeSelectionAllowed(this.selectedDocument);

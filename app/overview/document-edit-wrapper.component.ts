@@ -51,7 +51,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
         private route: ActivatedRoute,
         private persistenceService:PersistenceService,
         private router: Router,
-        private objectList: ObjectList,
+        private objectList: ObjectList
     )
     {}
 }

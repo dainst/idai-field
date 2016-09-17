@@ -10,6 +10,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceService} from "./persistence-service";
 
 @Component({
+
     moduleId: module.id,
     templateUrl: '../../templates/overview.html'
 })
@@ -43,6 +44,8 @@ export class OverviewComponent implements OnInit {
         private modalService:NgbModal,
         private router: Router) {
     }
+
+    private filterOverviewIsCollapsed = true;
 
     /**
      * Function to call if preconditions to change are met.

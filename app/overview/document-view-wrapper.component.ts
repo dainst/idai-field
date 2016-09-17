@@ -24,7 +24,7 @@ export class DocumentViewWrapperComponent implements  OnInit{
 
     constructor(
         private route:ActivatedRoute,
-        private datastore:ReadDatastore
+        private datastore:ReadDatastore,
         private router: Router
     )
     {}

@@ -34,8 +34,6 @@ export class DocumentViewComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router)
     {
-
-
         this.configLoader.configuration().subscribe((result)=>{
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;
@@ -45,38 +43,6 @@ export class DocumentViewComponent implements OnInit {
                 //this.messages.add(result.error.msgkey);
             }
         });
-
-
-        // this.datastore.documentChangesNotifications().subscribe(document=>{
-        //
-        //     console.log("fetched a doc from datastore",document)
-        //
-        //     this.route.params.forEach((params: Params) => {
-        //
-        //         if (params['id'] == document.resource['id'])
-        //         {
-        //             this.datastore.get(params['id']).then(document=> {
-        //
-        //                 this.document = document;
-        //
-        //                 this.fields = [];
-        //                 this.relations = [];
-        //
-        //                 if (!this.document) return;
-        //
-        //                 var resource:IdaiFieldResource = this.document.resource;
-        //
-        //                 this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
-        //                 this.initializeFields(resource);
-        //                 this.initializeRelations(resource);
-        //             })
-        //         }
-        //     });
-        // });
-        // TODO make it happen on every route change and clean up
-
-
-
     }
 
 

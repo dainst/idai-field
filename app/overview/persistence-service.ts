@@ -24,15 +24,14 @@ export class PersistenceService {
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private messages: Messages,
         private objectList:ObjectList,
-        private validator:Validator,
-        private router:Router) {
+        private validator:Validator) {
     }
     
     public save() {
 
         var doc=this.objectList.getSelected();
-        
-        var validationReport = this.validator.validate(doc);
+
+        var validationReport = this.validator.validate(<IdaiFieldDocument>doc);
         if (!validationReport.valid) {
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
@@ -62,9 +61,7 @@ export class PersistenceService {
 
         this.objectList.restore().then(
             restoredDocument => {
-                console.debug("persistence-service.discard-changes")
                 this.documentEditChangeMonitor.reset();
-                console.debug("restored",restoredDocument);
                 this.changeSelectionAllowedCallback();
 
             }, (err) => {

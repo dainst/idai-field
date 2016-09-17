@@ -9,7 +9,7 @@ var utils = require("./utils.js");
  *
  */
 
-fdescribe('idai field app', function() {
+describe('idai field app', function() {
 
     function typeInIdentifierInSearchField() {
         return common.typeIn(element(by.id('object-search')), "12");

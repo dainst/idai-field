@@ -11,7 +11,7 @@ describe('import', function() {
     }
 
     beforeEach(function() {
-        browser.get('/');
+        browser.get('/#/resources/');
     });
 
     it('should import a valid iDAI.field JSONL file via HTTP', function() {

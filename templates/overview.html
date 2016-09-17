@@ -26,7 +26,7 @@
                         class="list-group-item"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"
-                        [class.selected]="selectedDocument && selectedDocument.id === document.id"
+                        [class.selected]="objectList.getSelected() && objectList.getSelected().resource.id === document.id"
                         onclick="window.scrollTo(0, 0)">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">

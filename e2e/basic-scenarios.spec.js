@@ -20,6 +20,7 @@ describe('idai field app', function() {
     });
     
     it('should find it by its identifier', function() {
+        utils.delayPromises(50);
         common.createObject("12")
             .then(typeInIdentifierInSearchField)
             .then(function(){

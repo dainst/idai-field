@@ -21,7 +21,7 @@ describe('relations', function() {
     }
 
     beforeEach(function() {
-        browser.get('/');
+        browser.get('/#/resources/');
     });
 
     it('should create a new relation and the corresponding inverse relation', function() {

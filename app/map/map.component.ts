@@ -1,10 +1,11 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
+import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 
 @Component({
     selector: 'map',
-    template: `<div id="mapContainer"></div>`
+    template: `aaaaaaaa`
 })
 
 /**
@@ -12,12 +13,56 @@ import {IdaiFieldResource} from '../model/idai-field-resource';
  */
 export class MapComponent implements OnChanges {
 
-    @Input() documents: Array<IdaiFieldDocument>;
+    private documents: any;
     @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     private map: L.Map;
     private mapElements: Array<L.ILayer> = [];
 
+    constructor(
+        private datastore: IndexeddbDatastore
+    ) {
+
+
+
+        if (!this.map)
+            this.initializeMap();
+
+
+        // TODO remove duplicate code
+
+        if (!this.map) {
+            this.initializeMap();
+        } else {
+            this.clearMap();
+            this.map.setView([0, 0], 5);
+        }
+
+
+        this.datastore.documentChangesNotifications().subscribe(document=>{
+            console.log("add doc ",document )
+            var resource = document.resource;
+            for (var j in resource.geometries) {
+                this.addToMap(resource.geometries[j], document);
+            }
+        });
+
+
+        // TODO clean up
+        // objectList.fetchAllDocumentsAsync().then(documents=>{
+        //     console.debug("set documents",documents)
+        //     this.documents=documents;
+        //     for (var i in this.documents) {
+        //         var resource = this.documents[i].resource;
+        //         for (var j in resource.geometries) {
+        //             this.addToMap(resource.geometries[j], this.documents[i]);
+        //         }
+        //     }
+        // });
+
+
+
+    }
     
     public ngOnChanges() {
 

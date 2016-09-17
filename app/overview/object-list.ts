@@ -9,6 +9,8 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 @Injectable()
 export class ObjectList {
 
+    private selectedDocument;
+
     public constructor(private datastore: IndexeddbDatastore) {}
     
     public getDocuments() : Document[] {
@@ -17,6 +19,14 @@ export class ObjectList {
 
     public setDocuments(objects: Document[]) {
         this.documents = <Document[]> objects;
+    }
+
+    public setSelected(documentToSelect:Document) {
+        this.selectedDocument=documentToSelect;
+    }
+
+    public getSelected() : Document {
+        return this.selectedDocument;
     }
     
     public replace(document:Document,restoredObject: Document) {
@@ -37,6 +47,9 @@ export class ObjectList {
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
         var newDocument = { "resource": { "relations": {} } };
         this.getDocuments().unshift(<Document>newDocument);
+
+        this.selectedDocument=newDocument;
+
         return newDocument;
     }
 
@@ -44,6 +57,32 @@ export class ObjectList {
         this.datastore.all().then(documents => {
             this.setDocuments(documents);
         }).catch(err => console.error(err));
+    }
+
+    
+    // TODO clean up duplicate code
+    public fetchAllDocumentsAsync() {
+        return new Promise<any>((resolve,reject)=>{
+           
+            if (!this.documents) {
+                
+                this.datastore.all().then(documents => {
+
+                    console.debug("Fetched docs from datastore",documents)
+
+                    this.setDocuments(documents);
+                    resolve(this.documents);
+                        
+                }).catch(err => console.error(err));
+                
+            } else {
+                resolve(this.documents)
+            }
+            
+            
+        
+        });
+        
     }
 
     public fetchSomeDocuments(searchString) {
@@ -67,13 +106,17 @@ export class ObjectList {
      *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
-    public restore(document:Document): Promise<any> {
+    public restore(): Promise<any> {
+
+        var document=this.selectedDocument;
 
         return new Promise<any>((resolve, reject) => {
             if (document==undefined) resolve();
 
             if (!document['id']) {
                 this.remove(document);
+                console.debug("cannot restore new object");
+                this.selectedDocument=undefined;
                 return resolve();
             }
 
@@ -81,6 +124,7 @@ export class ObjectList {
                 restoredObject => {
 
                     this.replace(document,<Document>restoredObject);
+                    this.selectedDocument=restoredObject;
                     resolve(restoredObject);
                 },
                 err => { reject(this.toStringArray(err)); }

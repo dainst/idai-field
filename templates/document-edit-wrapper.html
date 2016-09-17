@@ -1,0 +1,20 @@
+<section>
+    <header>
+        <h1 class="overview-document-heading">
+
+
+            <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
+                    (click)="persistenceService.discardChanges();">Abbrechen</button>
+            <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
+                    (click)="persistenceService.save(false)">Speichern</button>
+            <span class="mdi mdi-blur"></span>
+
+            <span *ngIf="mode=='edit'">Ressource bearbeiten</span>
+            <span *ngIf="mode=='new'">Neue Ressource</span>
+        </h1>
+    </header>
+    <main>
+        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
+    </main>
+</section>
+

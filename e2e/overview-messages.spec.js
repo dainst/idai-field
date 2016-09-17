@@ -3,7 +3,7 @@ var common = require("./common.js");
 describe('idai field app', function() {
 
     beforeEach(function(){
-        browser.get('/');
+        browser.get('/#/resources');
     });
 
     it('should create a new object of first listed type ', function() {

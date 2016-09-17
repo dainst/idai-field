@@ -3,7 +3,7 @@ var common = require("./common.js");
 describe('overview component', function() {
 
     beforeEach(function(){
-        browser.get('/');
+        browser.get('/#/resources');
     });
     
     it ("should change the selection to new when saving via modal", function() {

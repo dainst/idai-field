@@ -1,51 +1,98 @@
-<div id="document-view" *ngIf="document" class="row">
-    <div class="col-md-7">
-
-        <!--
-          In one project we have this assumption that there is always a shortDescription,
-          while in another there is only the identifier.
-        -->
-        <div *ngIf="document.resource.shortDescription">
-            <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
-            <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
-        </div>
-        <div *ngIf="!document.resource.shortDescription">
-            <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
-        </div>
+<header>
+    <h1 class="overview-document-heading">
+        <button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"
+                (click)="editMode = true; router.navigate(['resources',document['resource']['id'],'edit'])">Bearbeiten</button>
+        <span class="mdi mdi-blur"></span>
+        <span *ngIf="!editMode">Ressource anzeigen</span>
+    </h1>
+</header>
+<main>
 
 
-        <div class="document-view-field">
-            <div class="fieldname">Typ</div>
-            <div class="fieldvalue">{{type}}</div>
-        </div>
-
-        <div *ngFor="let field of fields">
-            <div *ngIf="field.isArray" class="document-view-field">
-                <div class="fieldname">{{field.name}}</div>
-                <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+    <div id="document-view" *ngIf="document" class="row">
+        <div class="col-md-7">
+            <!--
+              In one project we have this assumption that there is always a shortDescription,
+              while in another there is only the identifier.
+            -->
+            <div *ngIf="document.resource.shortDescription">
+                <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
+                <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
             </div>
-            <div *ngIf="!field.isArray" class="document-view-field">
-                <div class="fieldname">{{field.name}}</div>
-                <div class="fieldvalue">{{field.value}}</div>
+            <div *ngIf="!document.resource.shortDescription">
+                <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
             </div>
-        </div>
 
-        <div *ngFor="let relation of relations">
+
             <div class="document-view-field">
-                <div class="fieldname">{{relation.name}}</div>
-                <div *ngFor="let target of relation.targets" class="fieldvalue">
-                    <!--
-                      See corresponding comment on top of the page.
-                    -->
-                    <div *ngIf="document.resource.shortDescription">
-                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.shortDescription}} ({{target.resource.identifier}})</a>
-                    </div>
-                    <div *ngIf="!document.resource.shortDescription">
-                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
+                <div class="fieldname">Typ</div>
+                <div class="fieldvalue">{{type}}</div>
+            </div>
+
+            <div *ngFor="let field of fields">
+                <div *ngIf="field.isArray" class="document-view-field">
+                    <div class="fieldname">{{field.name}}</div>
+                    <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+                </div>
+                <div *ngIf="!field.isArray" class="document-view-field">
+                    <div class="fieldname">{{field.name}}</div>
+                    <div class="fieldvalue">{{field.value}}</div>
+                </div>
+            </div>
+
+            <div *ngFor="let relation of relations">
+                <div class="document-view-field">
+                    <div class="fieldname">{{relation.name}}</div>
+                    <div *ngFor="let target of relation.targets" class="fieldvalue">
+                        <!--
+                          See corresponding comment on top of the page.
+                        -->
+                        <div *ngIf="document.resource.shortDescription">
+                            <a class="relation-link" (click)="selectDocument(target)">{{target.resource.shortDescription}} ({{target.resource.identifier}})</a>
+                        </div>
+                        <div *ngIf="!document.resource.shortDescription">
+                            <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
+
+
+    <!--=======-->
+    <!--<header>-->
+    <!--<h1 *ngIf="!editMode" class="overview-document-heading">-->
+    <!--<button class="btn btn-secondary pull-xs-right" id="document-view-button-back-to-map"-->
+    <!--(click)="selectedDocument = undefined;">Zurück zur Karte-->
+    <!--</button>-->
+    <!--<button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"-->
+    <!--(click)="editMode = true;">Bearbeiten-->
+    <!--</button>-->
+    <!--<span class="mdi mdi-blur"></span>-->
+    <!--<span *ngIf="!editMode">Ressource anzeigen</span>-->
+    <!--</h1>-->
+    <!--<h1 *ngIf="editMode && selectedDocument['resource']['type']" class="overview-document-heading">-->
+    <!--<button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"-->
+    <!--(click)="discardChanges(selectedDocument, false)">Abbrechen-->
+    <!--</button>-->
+    <!--<button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"-->
+    <!--(click)="save(selectedDocument,false)">Speichern-->
+    <!--</button>-->
+    <!--<span class="mdi mdi-blur"></span>-->
+    <!--Ressource bearbeiten-->
+    <!--</h1>-->
+    <!--<h1 *ngIf="editMode && !selectedDocument['resource']['type']" class="overview-document-heading">-->
+    <!--<span class="mdi mdi-blur"></span>-->
+    <!--Neue Ressource-->
+    <!--</h1>-->
+    <!--</header>-->
+    <!--<main>-->
+    <!--<document-view *ngIf="!editMode" [document]="selectedDocument"-->
+    <!--(documentSelection)="select($event)"></document-view>-->
+    <!--<document-edit *ngIf="editMode" [(document)]="selectedDocument"-->
+    <!--[primary]="'identifier'"></document-edit>-->
+    <!--</main>-->
+    <!--&gt;>>>>>> origin/master-->
+
+</main>

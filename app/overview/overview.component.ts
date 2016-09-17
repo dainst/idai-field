@@ -1,12 +1,13 @@
 import {Component, OnInit, Inject, ViewChild, TemplateRef} from '@angular/core';
+import {Router} from '@angular/router';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {ObjectList} from "./object-list";
 import {Messages} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import {PersistenceManager} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {PersistenceService} from "./persistence-service";
 
 @Component({
 
@@ -39,8 +40,9 @@ export class OverviewComponent implements OnInit {
         private messages: Messages,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private validator:Validator,
-        private persistenceManager:PersistenceManager,
-        private modalService:NgbModal) {
+        private persistenceService:PersistenceService,
+        private modalService:NgbModal,
+        private router: Router) {
     }
 
     private filterOverviewIsCollapsed = true;
@@ -61,67 +63,25 @@ export class OverviewComponent implements OnInit {
     private checkChangeSelectionAllowed(currentlySelectedDocument) {
 
         this.messages.clear();
-        if (!this.documentEditChangeMonitor.isChanged())
-            return this.discardChanges(currentlySelectedDocument);
+        if (!this.documentEditChangeMonitor.isChanged()) {
+
+            return this.persistenceService.discardChanges();
+        }
         this.modal = this.modalService.open(this.modalTemplate);
     }
 
-    public save(doc:IdaiFieldDocument,withCallback:boolean=true) {
-
-        var validationReport = this.validator.validate(doc);
-        if (!validationReport.valid) {
-            return this.messages.add(validationReport.errorMessage, validationReport.errorData);
-        }
-
-        doc['synced'] = 0;
-
-        this.persistenceManager.persist(doc).then(
-            () => {
-                this.documentEditChangeMonitor.reset();
-                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
-                this.editMode = false;
-                if (withCallback) this.changeSelectionAllowedCallback();
-            },
-            errors => {
-                for (var err of errors) {
-                    this.messages.add(err);
-                }
-            });
-    }
-
-    /**
-     * Discards changes of the document. Depending on whether it is a new or existing
-     * object, it will either restore it or remove it from the list.
-     *
-     * @param document
-     */
-    public discardChanges(document, withCallback: boolean = true) {
-
-        this.objectList.restore(document).then(
-            restoredDocument => {
-                this.documentEditChangeMonitor.reset();
-                if (withCallback) {
-                    this.changeSelectionAllowedCallback();
-                } else {
-                    this.selectedDocument = restoredDocument;
-                    this.editMode = false;
-                }
-            }, (err) => {
-                this.messages.add(err);
-        });
-    }
+    
 
     private registerSelectionCallbackForExisting(documentToSelect) {
         return function() {
-            this.selectedDocument=documentToSelect;
-            this.editMode = false;
+            this.objectList.setSelected(documentToSelect);
+            this.router.navigate(['resources',documentToSelect['resource']['id']]);
         }.bind(this);
     }
 
     private registerSelectionCallbackForNew() {
         return function() {
-            this.selectedDocument = this.objectList.createNewDocument();
-            this.editMode = true;
+            this.router.navigate(['resources','new','edit'])
         }.bind(this);
     }
 
@@ -134,10 +94,13 @@ export class OverviewComponent implements OnInit {
     public select(documentToSelect: IdaiFieldDocument) {
 
         if (documentToSelect) {
-            if (documentToSelect == this.selectedDocument) return;
-            this.changeSelectionAllowedCallback=this.registerSelectionCallbackForExisting(documentToSelect);
+            if (documentToSelect == this.objectList.getSelected()) return;
+            this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForExisting(documentToSelect));
         }
-        else this.changeSelectionAllowedCallback=this.registerSelectionCallbackForNew();
+        else {
+            this.router.navigate(['resources']); // to make sure onInit runs again in documentView
+            this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForNew());
+        }
 
         this.checkChangeSelectionAllowed(this.selectedDocument);
     }

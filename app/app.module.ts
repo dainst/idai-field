@@ -17,17 +17,17 @@ import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
 import {M} from './m';
 import {AppComponent} from './app.component';
-import {OverviewComponent} from './overview/overview.component';
+import {OverviewModule} from './overview/overview.module';
 import {ImportComponent} from './import/import.component';
+import {MapComponent} from './map/map.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
-import {MapComponent} from './overview/map.component';
-import {DocumentViewComponent} from './overview/document-view.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import CONFIG = require("config/config.json!json");
 
 @NgModule({
     imports: [
+        OverviewModule,
         BrowserModule,
         FormsModule,
         HttpModule,
@@ -37,11 +37,9 @@ import CONFIG = require("config/config.json!json");
     ],
     declarations: [
         AppComponent,
-        OverviewComponent,
         ImportComponent,
-        SynchronizationComponent,
         MapComponent,
-        DocumentViewComponent
+        SynchronizationComponent
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

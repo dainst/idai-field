@@ -46,7 +46,7 @@
                         class="list-group-item"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"
-                        [class.selected]="selectedDocument && selectedDocument.id === document.id"
+                        [class.selected]="objectList.getSelected() && objectList.getSelected().resource.id === document.id"
                         onclick="window.scrollTo(0, 0)">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
@@ -80,43 +80,12 @@
         </aside>
     </div>
 
-    <map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"
-         (documentSelection)="select($event)"></map>
+    <!--<map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"-->
+            <!--(documentSelection)="select($event)"></map>-->
 
-    <div *ngIf="selectedDocument" class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
+    <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
         <section>
-            <header>
-                <h1 *ngIf="!editMode" class="overview-document-heading">
-                    <button class="btn btn-secondary pull-xs-right" id="document-view-button-back-to-map"
-                            (click)="selectedDocument = undefined;">Zurück zur Karte
-                    </button>
-                    <button class="btn btn-secondary pull-xs-right" id="document-view-button-edit-document"
-                            (click)="editMode = true;">Bearbeiten
-                    </button>
-                    <span class="mdi mdi-blur"></span>
-                    <span *ngIf="!editMode">Ressource anzeigen</span>
-                </h1>
-                <h1 *ngIf="editMode && selectedDocument['resource']['type']" class="overview-document-heading">
-                    <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
-                            (click)="discardChanges(selectedDocument, false)">Abbrechen
-                    </button>
-                    <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
-                            (click)="save(selectedDocument,false)">Speichern
-                    </button>
-                    <span class="mdi mdi-blur"></span>
-                    Ressource bearbeiten
-                </h1>
-                <h1 *ngIf="editMode && !selectedDocument['resource']['type']" class="overview-document-heading">
-                    <span class="mdi mdi-blur"></span>
-                    Neue Ressource
-                </h1>
-            </header>
-            <main>
-                <document-view *ngIf="!editMode" [document]="selectedDocument"
-                               (documentSelection)="select($event)"></document-view>
-                <document-edit *ngIf="editMode" [(document)]="selectedDocument"
-                               [primary]="'identifier'"></document-edit>
-            </main>
+            <router-outlet></router-outlet>
         </section>
     </div>
 
@@ -129,11 +98,9 @@
         </div>
         <div class="modal-footer">
             <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-                    (click)="save(selectedDocument); modal.close();">Speichern
-            </button>
+                    (click)="this.persistenceService.save(); modal.close();">Speichern</button>
             <button type="button" class="btn btn-secondary"
-                    (click)="discardChanges(selectedDocument); modal.close();">Änderungen verwerfen
-            </button>
+                    (click)="this.persistenceService.discardChanges(); modal.close();">Änderungen verwerfen</button>
             <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
                     (click)="modal.close();">Abbrechen
             </button>

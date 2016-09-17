@@ -16,7 +16,7 @@ describe('idai field app', function() {
     }
 
     beforeEach(function(){
-        browser.get('/');
+        browser.get('/#/resources/');
     });
     
     it('should find it by its identifier', function() {

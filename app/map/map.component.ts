@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
 import {IdaiFieldResource} from '../model/idai-field-resource';
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
@@ -22,47 +22,8 @@ export class MapComponent implements OnChanges {
 
     constructor(
         private datastore: IndexeddbDatastore
-    ) {
-        // TODO clean up
-        // objectList.fetchAllDocumentsAsync().then(documents=>{
-        //     console.debug("set documents",documents)
-        //     this.documents=documents;
-        //     for (var i in this.documents) {
-        //         var resource = this.documents[i].resource;
-        //         for (var j in resource.geometries) {
-        //             this.addToMap(resource.geometries[j], this.documents[i]);
-        //         }
-        //     }
-        // });
-    }
+    ) {}
 
-    public ngOnInit() {
-        console.log("hier")
-
-        if (!this.map)
-            this.initializeMap();
-
-
-        // TODO remove duplicate code
-
-        if (!this.map) {
-            this.initializeMap();
-        } else {
-            this.clearMap();
-            this.map.setView([0, 0], 5);
-        }
-
-        for (var i in this.documents) {
-            var resource = this.documents[i].resource;
-            for (var j in resource.geometries) {
-                this.addToMap(resource.geometries[j], this.documents[i]);
-            }
-        }
-
-
-
-    }
-    
     public ngOnChanges() {
 
         if (!this.map) {

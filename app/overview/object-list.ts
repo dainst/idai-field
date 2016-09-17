@@ -53,38 +53,21 @@ export class ObjectList {
         return newDocument;
     }
 
+    /**
+     * Populates the document list with all documents
+     * available in the datastore.
+     */
     public fetchAllDocuments() {
         this.datastore.all().then(documents => {
             this.setDocuments(documents);
         }).catch(err => console.error(err));
     }
 
-    
-    // TODO clean up duplicate code
-    public fetchAllDocumentsAsync() {
-        return new Promise<any>((resolve,reject)=>{
-           
-            if (!this.documents) {
-                
-                this.datastore.all().then(documents => {
-
-                    console.debug("Fetched docs from datastore",documents)
-
-                    this.setDocuments(documents);
-                    resolve(this.documents);
-                        
-                }).catch(err => console.error(err));
-                
-            } else {
-                resolve(this.documents)
-            }
-            
-            
-        
-        });
-        
-    }
-
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match the given <code>searchString</code>
+     * @param searchString
+     */
     public fetchSomeDocuments(searchString) {
         if (searchString == "") {
             this.fetchAllDocuments()
@@ -96,13 +79,15 @@ export class ObjectList {
     }
     
     /**
-     * Restores all objects marked as changed by resetting them to
-     * back to the persisted state. In case there are any objects marked
-     * as changed which were not yet persisted, they get deleted from the list.
+     * Restores the selected document by resetting it
+     * back to the persisted state. In case there are
+     * any objects marked as changed which were not yet persisted,
+     * they get deleted from the list.
      *
-     * @returns {Promise<string[]>} If all objects could get restored,
-     *   the promise will just resolve to <code>undefined</code>. If one or more
-     *   objects could not get restored properly, the promise will resolve to
+     * @returns {Promise<Document> | Promise<string[]>} If the document was restored,
+     *   it resolves to <code>document</code>, if it was not restored
+     *   because it was an unsaved object, it resolves to <code>undefined</code>.
+     *   If it could not get restored due to errors, it will resolve to
      *   <code>string[]</code>, containing ids of M where possible,
      *   and error messages where not.
      */
@@ -115,7 +100,6 @@ export class ObjectList {
 
             if (!document['id']) {
                 this.remove(document);
-                console.debug("cannot restore new object");
                 this.selectedDocument=undefined;
                 return resolve();
             }

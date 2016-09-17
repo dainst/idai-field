@@ -95,7 +95,7 @@ export class OverviewComponent implements OnInit {
             this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForExisting(documentToSelect));
         }
         else {
-            this.router.navigate(['resources']); // necessary hack
+            this.router.navigate(['resources']); // to make sure onInit runs again in documentView
             this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForNew());
         }
 

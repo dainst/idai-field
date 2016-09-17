@@ -87,15 +87,10 @@ export class DocumentViewComponent implements OnInit {
 
     ngOnInit() {
 
-        console.log("..........--fetched a doc from datastore",this.route);
-
         this.route.params.forEach((params: Params) => {
 
-            console.log("....i---d:", params['id']);
 
             this.datastore.get(params['id']).then(document=> {
-
-                console.log("........fetched the doc from datastore",document)
 
                 this.document = document;
 

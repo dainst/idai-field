@@ -15,13 +15,18 @@ export class DocumentEditWrapperComponent implements  OnInit{
     private mode: string; // new | edit
 
     ngOnInit() {
-∞
         this.route.params.forEach((params: Params) => {
             if (params['id'].indexOf('new')!=-1) {
                 this.mode='new';
+                this.persistenceService.setChangeSelectionAllowedCallback(function(){
+                    this.router.navigate(['resources'])
+                }.bind(this));
                 this.document=this.objectList.createNewDocument();
             } else {
                 this.mode='edit';
+                this.persistenceService.setChangeSelectionAllowedCallback(function(){
+                    this.router.navigate(['resources',params['id']])
+                }.bind(this));
                 this.datastore.get(params['id']).then(document=> {
                     this.document = document;
                     this.objectList.setSelected(document);

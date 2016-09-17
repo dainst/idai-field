@@ -58,9 +58,7 @@ export class PersistenceService {
      */
     public discardChanges(withCallback: boolean = true) {
 
-        var document=this.objectList.getSelected();
-        
-        this.objectList.restore(document).then(
+        this.objectList.restore().then(
             restoredDocument => {
                 this.documentEditChangeMonitor.reset();
                 if (withCallback) {

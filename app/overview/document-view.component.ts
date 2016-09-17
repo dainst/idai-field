@@ -75,14 +75,12 @@ export class DocumentViewComponent implements OnInit {
         // });
         // TODO make it happen on every route change and clean up
 
-        console.log("constructor document view")
 
 
     }
 
 
     ngOnInit() {
-        console.debug("ngoninit document view")
 
         this.route.params.forEach((params: Params) => {
 

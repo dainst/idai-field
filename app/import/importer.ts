@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Datastore} from "idai-components-2/idai-components-2";
-import {ObjectList} from "../overview/object-list";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "../model/validator";
 import {Reader} from "./reader";
@@ -43,8 +42,7 @@ export class Importer {
         };
     }
 
-    constructor(private objectList: ObjectList,
-                private datastore: Datastore,
+    constructor(private datastore: Datastore,
                 private validator: Validator) {
     }
 
@@ -158,15 +156,8 @@ export class Importer {
     }
 
     private finishImport() {
-
-        console.log("finished import");
-
-        if (this.importSuccessCounter > 0) {
-            this.objectList.fetchAllDocuments();
-        }
-
+        console.debug("finished import");
         this.importReport["successful_imports"] = this.importSuccessCounter;
-
         this.resolvePromise(this.importReport);
     }
 }

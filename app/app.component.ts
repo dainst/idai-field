@@ -12,8 +12,6 @@ import {ConfigLoader} from "idai-components-2/idai-components-2";
 })
 export class AppComponent implements OnInit {
 
-    private hideMap=false;
-
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
     public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
@@ -24,15 +22,6 @@ export class AppComponent implements OnInit {
                 private messages: Messages) {
 
         router.events.subscribe( (event:Event) => {
-
-            if (String(this.router.url)=="/map")
-                this.hideMap=false;
-            else
-                this.hideMap=true;
-            console.log(this.hideMap)
-
-
-
             if(event instanceof NavigationStart) {
                 this.messages.clear();
             }

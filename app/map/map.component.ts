@@ -59,13 +59,7 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        // this.datastore.documentChangesNotifications().subscribe(document=>{
-        //     console.log("add doc ",document )
-        //     var resource = document.resource;
-        //     for (var j in resource.geometries) {
-        //         this.addToMap(resource.geometries[j], document);
-        //     }
-        // });
+
 
     }
     

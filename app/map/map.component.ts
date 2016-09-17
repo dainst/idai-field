@@ -1,7 +1,7 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {IdaiFieldDocument} from '../model/idai-field-document';
-import {IdaiFieldResource} from '../model/idai-field-resource';
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Component, Input, OnChanges} from "@angular/core";
+import {Router} from "@angular/router";
+import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldResource} from "../model/idai-field-resource";
 
 
 @Component({
@@ -15,14 +15,11 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 export class MapComponent implements OnChanges {
 
     @Input() documents: any;
-    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     private map: L.Map;
     private mapElements: Array<L.ILayer> = [];
 
-    constructor(
-        private datastore: IndexeddbDatastore
-    ) {}
+    constructor(private router: Router) {}
 
     public ngOnChanges() {
 
@@ -76,7 +73,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         marker.on('click', function() {
-           mapComponent.documentSelection.emit(this.getDocument());
+            mapComponent.router.navigate(['resources',this.getDocument().resource.id]);
         });
 
         marker.addTo(this.map);
@@ -90,7 +87,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         polygon.on('click', function() {
-            mapComponent.documentSelection.emit(this.getDocument());
+            mapComponent.router.navigate(['resources',this.getDocument().resource.id]);
         });
 
         polygon.addTo(this.map);

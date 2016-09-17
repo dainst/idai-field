@@ -1,10 +1,12 @@
-import {Component, Output, OnInit, EventEmitter} from '@angular/core';
-import {ActivatedRoute,Params,Router} from '@angular/router';
-import {IdaiFieldDocument} from '../model/idai-field-document';
-import {IdaiFieldResource} from '../model/idai-field-resource';
-import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
-import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {IdaiFieldResource} from "../model/idai-field-resource";
+import {
+    ConfigLoader,
+    ProjectConfiguration,
+    RelationsConfiguration,
+    ReadDatastore
+} from "idai-components-2/idai-components-2";
 
 
 @Component({
@@ -18,8 +20,6 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 export class DocumentViewComponent implements OnInit {
 
     private document: any;
-    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-
 
     private type: string;
     private fields: Array<any>;
@@ -30,7 +30,7 @@ export class DocumentViewComponent implements OnInit {
 
     constructor(
         private configLoader: ConfigLoader,
-        private datastore: IndexeddbDatastore,
+        private datastore: ReadDatastore,
         private route: ActivatedRoute,
         private router: Router)
     {
@@ -70,12 +70,8 @@ export class DocumentViewComponent implements OnInit {
         });
     }
 
-
-
-
-    public selectDocument(document) {
-        
-        this.documentSelection.emit(document);
+    public selectDocument(documentToJumpTo) {
+        this.router.navigate(['resources',documentToJumpTo.resource.id])
     }
 
     private initializeFields(resource: IdaiFieldResource) {
@@ -126,14 +122,12 @@ export class DocumentViewComponent implements OnInit {
     private getFieldLabel(type: string, fieldName: string) {
 
         var fields = this.projectConfiguration.getFields(type);
-
         return this.getLabel(fieldName, fields);
     }
 
     private getRelationLabel(relationName: string) {
 
         var relationFields = this.relationsConfiguration.getRelationFields();
-
         return this.getLabel(relationName, relationFields);
     }
 

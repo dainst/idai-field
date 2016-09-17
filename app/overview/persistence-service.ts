@@ -26,8 +26,10 @@ export class PersistenceService {
         private validator:Validator) {
     }
     
-    public save(doc:IdaiFieldDocument,withCallback:boolean=true) {
+    public save(withCallback:boolean=true) {
 
+        var doc=this.objectList.getSelected();
+        
         var validationReport = this.validator.validate(doc);
         if (!validationReport.valid) {
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
@@ -54,14 +56,18 @@ export class PersistenceService {
      *
      * @param document
      */
-    public discardChanges(document, withCallback: boolean = true) {
+    public discardChanges(withCallback: boolean = true) {
 
+        var document=this.objectList.getSelected();
+        
         this.objectList.restore(document).then(
             restoredDocument => {
                 this.documentEditChangeMonitor.reset();
                 if (withCallback) {
                     this.changeSelectionAllowedCallback();
                 } else {
+
+                    console.log("restored",restoredDocument)
                     // TODO reenable this
                     // this.selectedDocument = restoredDocument;
                 }

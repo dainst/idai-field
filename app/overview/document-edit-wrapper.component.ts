@@ -1,7 +1,8 @@
-import {Component,OnInit} from '@angular/core';
-import {ActivatedRoute,Params,Router,ActivatedRouteSnapshot} from '@angular/router';
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ReadDatastore} from "idai-components-2/idai-components-2";
 import {PersistenceService} from "./persistence-service";
+import {ObjectList} from "./object-list";
 
 @Component({
     moduleId: module.id,
@@ -11,29 +12,30 @@ import {PersistenceService} from "./persistence-service";
 export class DocumentEditWrapperComponent implements  OnInit{
 
     private document: any;
+    private mode: string; // new | edit
 
     ngOnInit() {
-
-        console.log("--fetched a doc from datastore",this.route);
-
+∞
         this.route.params.forEach((params: Params) => {
-
-                console.log("i---d:", params['id']);
-
+            if (params['id'].indexOf('new')!=-1) {
+                this.mode='new';
+                this.document=this.objectList.createNewDocument();
+            } else {
+                this.mode='edit';
                 this.datastore.get(params['id']).then(document=> {
-
-                    console.log("----fe-tched the doc from datastore",document);
-
                     this.document = document;
-
+                    this.objectList.setSelected(document);
                 })
+            }
         });
     }
 
     constructor(
-        private datastore: IndexeddbDatastore,
+        private datastore: ReadDatastore,
         private route: ActivatedRoute,
-        private persistenceService:PersistenceService
+        private persistenceService:PersistenceService,
+        private router: Router,
+        private objectList: ObjectList
     )
     {}
 }

@@ -69,18 +69,14 @@ export class OverviewComponent implements OnInit {
 
     private registerSelectionCallbackForExisting(documentToSelect) {
         return function() {
-            this.selectedDocument=documentToSelect;
-            this.editMode = false;
-
+            this.objectList.setSelected(documentToSelect)
             this.router.navigate(['resources',documentToSelect['resource']['id']]);
-
         }.bind(this);
     }
 
     private registerSelectionCallbackForNew() {
         return function() {
-            this.selectedDocument = this.objectList.createNewDocument();
-            this.editMode = true;
+            this.router.navigate(['resources','new','edit'])
         }.bind(this);
     }
 
@@ -93,7 +89,7 @@ export class OverviewComponent implements OnInit {
     public select(documentToSelect: IdaiFieldDocument) {
 
         if (documentToSelect) {
-            if (documentToSelect == this.selectedDocument) return;
+            if (documentToSelect == this.objectList.getSelected()) return;
             this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForExisting(documentToSelect));
         }
         else this.persistenceService.setChangeSelectionAllowedCallback(this.registerSelectionCallbackForNew());

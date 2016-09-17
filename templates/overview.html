@@ -74,9 +74,9 @@
         </div>
         <div class="modal-footer">
             <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-                    (click)="this.persistenceService.save(selectedDocument); modal.close();">Speichern</button>
+                    (click)="this.persistenceService.save(); modal.close();">Speichern</button>
             <button type="button" class="btn btn-secondary"
-                    (click)="this.persistenceService.discardChanges(selectedDocument); modal.close();">Änderungen verwerfen</button>
+                    (click)="this.persistenceService.discardChanges(); modal.close();">Änderungen verwerfen</button>
             <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
                     (click)="modal.close();">Abbrechen</button>
         </div>

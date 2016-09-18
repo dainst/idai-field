@@ -9,6 +9,7 @@ import { OverviewHomeComponent } from './overview-home.component';
 import { DocumentEditWrapperComponent } from './document-edit-wrapper.component';
 import { IdaiComponents2Module } from 'idai-components-2/idai-components-2';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ObjectList} from './object-list';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         DocumentViewWrapperComponent
     ],
     providers: [
+        ObjectList
     ]
 })
 

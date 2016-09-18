@@ -12,7 +12,6 @@ import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
 import {Indexeddb} from "./datastore/indexeddb";
 import {Validator} from './model/validator';
-import {ObjectList} from './overview/object-list';
 import {Importer} from "./import/importer";
 import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
@@ -54,7 +53,6 @@ import CONFIG = require("config/config.json!json");
         Messages,
         { provide: 'app.config', useValue: CONFIG },
         ConfigLoader,
-        ObjectList,
         PersistenceManager,
         DocumentEditChangeMonitor,
         Validator,

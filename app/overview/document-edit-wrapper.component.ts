@@ -60,8 +60,6 @@ export class DocumentEditWrapperComponent implements  OnInit{
 
     public loadDoc(id) {
         this.datastore.get(id).then(document=> {
-
-            console.log("load doc in edit mode",document);
             this.document = document;
             this.objectList.setSelected(document);
         })

@@ -1,13 +1,16 @@
-import {Component, Output, OnInit, EventEmitter} from '@angular/core';
-import {ActivatedRoute,Params,Router} from '@angular/router';
-import {IdaiFieldDocument} from '../model/idai-field-document';
-import {IdaiFieldResource} from '../model/idai-field-resource';
-import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
-import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Component, OnChanges, Input} from "@angular/core";
+import {Router} from "@angular/router";
+import {IdaiFieldResource} from "../model/idai-field-resource";
+import {
+    ConfigLoader,
+    ProjectConfiguration,
+    RelationsConfiguration,
+    ReadDatastore
+} from "idai-components-2/idai-components-2";
 
 
 @Component({
+    selector: 'document-view',
     moduleId: module.id,
     templateUrl: '../../templates/document-view.html'
 })
@@ -15,11 +18,9 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 /**
  * @author Thomas Kleinke
  */
-export class DocumentViewComponent implements OnInit {
+export class DocumentViewComponent implements OnChanges {
 
-    private document: any;
-    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-
+    @Input() document: any;
 
     private type: string;
     private fields: Array<any>;
@@ -30,12 +31,9 @@ export class DocumentViewComponent implements OnInit {
 
     constructor(
         private configLoader: ConfigLoader,
-        private datastore: IndexeddbDatastore,
-        private route: ActivatedRoute,
+        private datastore: ReadDatastore,
         private router: Router)
     {
-
-
         this.configLoader.configuration().subscribe((result)=>{
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;
@@ -45,73 +43,26 @@ export class DocumentViewComponent implements OnInit {
                 //this.messages.add(result.error.msgkey);
             }
         });
+    }
 
+    ngOnChanges() {
 
-        // this.datastore.documentChangesNotifications().subscribe(document=>{
-        //
-        //     console.log("fetched a doc from datastore",document)
-        //
-        //     this.route.params.forEach((params: Params) => {
-        //
-        //         if (params['id'] == document.resource['id'])
-        //         {
-        //             this.datastore.get(params['id']).then(document=> {
-        //
-        //                 this.document = document;
-        //
-        //                 this.fields = [];
-        //                 this.relations = [];
-        //
-        //                 if (!this.document) return;
-        //
-        //                 var resource:IdaiFieldResource = this.document.resource;
-        //
-        //                 this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
-        //                 this.initializeFields(resource);
-        //                 this.initializeRelations(resource);
-        //             })
-        //         }
-        //     });
-        // });
-        // TODO make it happen on every route change and clean up
+        if (!this.document) return;
 
-        console.log("constructor document view")
+        this.fields = [];
+        this.relations = [];
 
+        var resource:IdaiFieldResource = this.document.resource;
+
+        this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
+        this.initializeFields(resource);
+        this.initializeRelations(resource);
 
     }
 
 
-    ngOnInit() {
-        console.debug("ngoninit document view")
-
-        this.route.params.forEach((params: Params) => {
-
-
-            this.datastore.get(params['id']).then(document=> {
-
-                this.document = document;
-
-                this.fields = [];
-                this.relations = [];
-
-                if (!this.document) return;
-
-                var resource:IdaiFieldResource = this.document.resource;
-
-                this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
-                this.initializeFields(resource);
-                this.initializeRelations(resource);
-
-            })
-        });
-    }
-
-
-
-
-    public selectDocument(document) {
-        
-        this.documentSelection.emit(document);
+    public selectDocument(documentToJumpTo) {
+        this.router.navigate(['resources',documentToJumpTo.resource.id])
     }
 
     private initializeFields(resource: IdaiFieldResource) {
@@ -162,14 +113,12 @@ export class DocumentViewComponent implements OnInit {
     private getFieldLabel(type: string, fieldName: string) {
 
         var fields = this.projectConfiguration.getFields(type);
-
         return this.getLabel(fieldName, fields);
     }
 
     private getRelationLabel(relationName: string) {
 
         var relationFields = this.relationsConfiguration.getRelationFields();
-
         return this.getLabel(relationName, relationFields);
     }
 

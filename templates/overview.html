@@ -80,32 +80,13 @@
         </aside>
     </div>
 
-    <!--<map *ngIf="!selectedDocument" class="col-lg-9 col-md-9 col-sm-9" [documents]="objectList.getDocuments()"-->
-            <!--(documentSelection)="select($event)"></map>-->
-
     <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
         <section>
             <router-outlet></router-outlet>
         </section>
     </div>
 
-    <template #modalTemplate>
-        <div class="modal-header">
-            <h4 class="modal-title">Speichern?</h4>
-        </div>
-        <div class="modal-body">
-            Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
-        </div>
-        <div class="modal-footer">
-            <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-                    (click)="this.persistenceService.save(); modal.close();">Speichern</button>
-            <button type="button" class="btn btn-secondary"
-                    (click)="this.persistenceService.discardChanges(); modal.close();">Änderungen verwerfen</button>
-            <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-                    (click)="modal.close();">Abbrechen
-            </button>
-        </div>
-    </template>
+
 
 </div>
 

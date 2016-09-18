@@ -1,11 +1,12 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {IdaiFieldDocument} from '../model/idai-field-document';
-import {IdaiFieldResource} from '../model/idai-field-resource';
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Component, Input, OnChanges} from "@angular/core";
+import {Router} from "@angular/router";
+import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldResource} from "../model/idai-field-resource";
+
 
 @Component({
     selector: 'map',
-    template: `aaaaaaaa`
+    template: `<div id="mapContainer"></div>`
 })
 
 /**
@@ -13,57 +14,13 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
  */
 export class MapComponent implements OnChanges {
 
-    private documents: any;
-    @Output() documentSelection: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Input() documents: any;
 
     private map: L.Map;
     private mapElements: Array<L.ILayer> = [];
 
-    constructor(
-        private datastore: IndexeddbDatastore
-    ) {
+    constructor(private router: Router) {}
 
-
-
-        if (!this.map)
-            this.initializeMap();
-
-
-        // TODO remove duplicate code
-
-        if (!this.map) {
-            this.initializeMap();
-        } else {
-            this.clearMap();
-            this.map.setView([0, 0], 5);
-        }
-
-
-        this.datastore.documentChangesNotifications().subscribe(document=>{
-            console.log("add doc ",document )
-            var resource = document.resource;
-            for (var j in resource.geometries) {
-                this.addToMap(resource.geometries[j], document);
-            }
-        });
-
-
-        // TODO clean up
-        // objectList.fetchAllDocumentsAsync().then(documents=>{
-        //     console.debug("set documents",documents)
-        //     this.documents=documents;
-        //     for (var i in this.documents) {
-        //         var resource = this.documents[i].resource;
-        //         for (var j in resource.geometries) {
-        //             this.addToMap(resource.geometries[j], this.documents[i]);
-        //         }
-        //     }
-        // });
-
-
-
-    }
-    
     public ngOnChanges() {
 
         if (!this.map) {
@@ -116,7 +73,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         marker.on('click', function() {
-           mapComponent.documentSelection.emit(this.getDocument());
+            mapComponent.router.navigate(['resources',this.getDocument().resource.id]);
         });
 
         marker.addTo(this.map);
@@ -130,7 +87,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         polygon.on('click', function() {
-            mapComponent.documentSelection.emit(this.getDocument());
+            mapComponent.router.navigate(['resources',this.getDocument().resource.id]);
         });
 
         polygon.addTo(this.map);

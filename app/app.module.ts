@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {IdaiComponents2Module, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
     DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {routing} from './app.routing';
+import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
@@ -19,6 +20,7 @@ import {M} from './m';
 import {AppComponent} from './app.component';
 import {OverviewModule} from './overview/overview.module';
 import {ImportComponent} from './import/import.component';
+import {MapWrapperComponent} from './map/map-wrapper.component';
 import {MapComponent} from './map/map.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -38,6 +40,7 @@ import CONFIG = require("config/config.json!json");
     declarations: [
         AppComponent,
         ImportComponent,
+        MapWrapperComponent,
         MapComponent,
         SynchronizationComponent
     ],
@@ -59,7 +62,8 @@ import CONFIG = require("config/config.json!json");
         { provide: MD, useClass: M},
         NativeJsonlParser,
         IdigCsvParser,
-        Importer
+        Importer,
+        appRoutingProviders
     ],
     bootstrap: [ AppComponent ]
 })

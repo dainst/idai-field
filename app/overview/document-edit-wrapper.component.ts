@@ -65,13 +65,9 @@ export class DocumentEditWrapperComponent implements  OnInit{
         })
     }
 
-    public cancel(proceed:boolean=false) {
-        if (proceed)
-            this.canDeactivateGuard.cancel();
-        else
-            this.router.navigate(['resources',this.document.resource.id])
-    }
-
+    /**
+     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
+     */
     public save(proceed:boolean=false) {
 
         var doc=this.objectList.getSelected();
@@ -106,7 +102,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
      *
-     * @param document
+     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
     public discard(proceed:boolean=false) {
 
@@ -118,6 +114,4 @@ export class DocumentEditWrapperComponent implements  OnInit{
                 this.messages.add(err);
             });
     }
-
-
 }

@@ -2,9 +2,8 @@
     <header>
         <h1 class="overview-document-heading">
 
-
             <button *ngIf="mode=='edit'" class="btn btn-secondary pull-xs-right" id="document-edit-button-goto-view"
-                    (click)="cancel();">Zur Ansicht</button>
+                    (click)="router.navigate(['resources',document.resource.id]);">Zur Ansicht</button>
             <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
                     (click)="save();">Speichern</button>
             <span class="mdi mdi-blur"></span>
@@ -32,7 +31,7 @@
         <button type="button" class="btn btn-secondary"
                 (click)="discard(true); modal.close();">Änderungen verwerfen</button>
         <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-                (click)="cancel(true); modal.close();">Abbrechen
+                (click)="canDeactivateGuard.cancel(); modal.close();">Abbrechen
         </button>
     </div>
 </template>

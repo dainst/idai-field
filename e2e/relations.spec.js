@@ -1,5 +1,13 @@
 var common = require("./common.js");
+var utils = require("./utils.js");
 
+/*
+ * In order to prevent errors caused by e2e tests running too fast you can slow them down by calling the following
+ * function. Use higher values for slower tests.
+ *
+ * utils.delayPromises(50);
+ *
+ */
 describe('relations', function() {
 
     function addRelation() {
@@ -29,7 +37,6 @@ describe('relations', function() {
 
         common.createObject("o1")
             .then(common.createObject("o2"))
-            .then(common.switchToEditMode())
             .then(common.scrollDown)
             .then(addRelation)
 

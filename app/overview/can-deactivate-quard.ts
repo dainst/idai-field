@@ -28,9 +28,9 @@ export class CanDeactivateGuard implements CanDeactivate<DocumentEditWrapperComp
     ): Promise<boolean> | boolean {
 
         return new Promise<boolean>((resolve_)=>{
+
             if (!this.documentEditChangeMonitor.isChanged()) {
                 if (component.mode=='new') {
-                    console.log("will call component.discard()");
                     component.discard();
                 }
                 return resolve_(true);

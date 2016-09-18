@@ -6,7 +6,7 @@ function createObject(identifier) {
     return clickCreateObjectButton()
         .then(selectObjectType)
         .then(typeInIdentifier(identifier))
-        .then(saveObject);
+        .then(saveObject)
 }
 
 function clickCreateObjectButton() {
@@ -28,6 +28,10 @@ function switchToEditMode() {
 
 function saveObject() {
     return element(by.id('document-edit-button-save-document')).click();
+}
+
+function gotoView() {
+    return element(by.id('document-edit-button-goto-view')).click();
 }
 
 function selectObject(listIndex) {

@@ -47,20 +47,24 @@ export class DocumentEditWrapperComponent implements  OnInit{
     public mode: string; // new | edit
 
     ngOnInit() {
-        console.log("on init")
-
         this.route.params.forEach((params: Params) => {
             if (params['id'].indexOf('new')!=-1) {
                 this.mode='new';
                 this.document=this.objectList.createNewDocument();
             } else {
                 this.mode='edit';
-                this.datastore.get(params['id']).then(document=> {
-                    this.document = document;
-                    this.objectList.setSelected(document);
-                })
+                this.loadDoc(params['id']);
             }
         });
+    }
+
+    public loadDoc(id) {
+        this.datastore.get(id).then(document=> {
+
+            console.log("load doc in edit mode",document);
+            this.document = document;
+            this.objectList.setSelected(document);
+        })
     }
 
     public cancel(proceed:boolean=false) {
@@ -86,8 +90,11 @@ export class DocumentEditWrapperComponent implements  OnInit{
                 this.documentEditChangeMonitor.reset();
                 if (proceed)
                     this.canDeactivateGuard.proceed();
-                else if (this.mode='new')
-                    this.router.navigate(['resources',doc.resource.id]);
+                else if (this.mode=='new') {
+                    this.router.navigate(['resources',doc.resource.id,'edit']);
+                    this.mode='edit';
+                    this.loadDoc(doc.resource.id);
+                }
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },
             errors => {
@@ -106,7 +113,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
     public discard(proceed:boolean=false) {
 
         this.objectList.restore().then(
-            restoredDocument => {
+            () => {
                 this.documentEditChangeMonitor.reset();
                 if (proceed) this.canDeactivateGuard.proceed();
             }, (err) => {

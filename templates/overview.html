@@ -86,23 +86,7 @@
         </section>
     </div>
 
-    <template #modalTemplate>
-        <div class="modal-header">
-            <h4 class="modal-title">Speichern?</h4>
-        </div>
-        <div class="modal-body">
-            Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
-        </div>
-        <div class="modal-footer">
-            <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-                    (click)="this.persistenceService.saveAndCallback(); modal.close();">Speichern</button>
-            <button type="button" class="btn btn-secondary"
-                    (click)="this.persistenceService.discardChangesAndCallback(); modal.close();">Änderungen verwerfen</button>
-            <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-                    (click)="modal.close();">Abbrechen
-            </button>
-        </div>
-    </template>
+
 
 </div>
 

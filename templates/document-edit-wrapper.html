@@ -4,9 +4,9 @@
 
 
             <button class="btn btn-secondary pull-xs-right" id="document-edit-button-abort"
-                    (click)="persistenceService.discardChangesAndCallback();">Abbrechen</button>
+                    (click)="cancel();">Abbrechen</button>
             <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
-                    (click)="persistenceService.saveAndCallback()">Speichern</button>
+                    (click)="save();">Speichern</button>
             <span class="mdi mdi-blur"></span>
 
             <span *ngIf="mode=='edit'">Ressource bearbeiten</span>
@@ -17,4 +17,23 @@
         <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
     </main>
 </section>
+
+
+<template #modalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title">Speichern?</h4>
+    </div>
+    <div class="modal-body">
+        Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
+    </div>
+    <div class="modal-footer">
+        <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
+                (click)="save(true); modal.close();">Speichern</button>
+        <button type="button" class="btn btn-secondary"
+                (click)="discard(true); modal.close();">Änderungen verwerfen</button>
+        <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
+                (click)="cancel(true); modal.close();">Abbrechen
+        </button>
+    </div>
+</template>
 

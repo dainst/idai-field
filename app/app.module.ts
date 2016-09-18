@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {IdaiComponents2Module, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
     DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {routing} from './app.routing';
+import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
@@ -61,7 +62,8 @@ import CONFIG = require("config/config.json!json");
         { provide: MD, useClass: M},
         NativeJsonlParser,
         IdigCsvParser,
-        Importer
+        Importer,
+        appRoutingProviders
     ],
     bootstrap: [ AppComponent ]
 })

@@ -40,13 +40,13 @@
                     </div>
                 </div>
 
-                <ul *ngIf="objectList.getDocuments()" class="list-group" id="objectList">
-                    <li *ngFor="let document of objectList.getDocuments(); let index=index"
+                <ul *ngIf="documents" class="list-group" id="objectList">
+                    <li *ngFor="let document of documents; let index=index"
                         (click)="select(document)"
                         class="list-group-item"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"
-                        [class.selected]="objectList.getSelected() && objectList.getSelected().resource.id === document.id"
+                        [class.selected]="getSelected() && getSelected().resource.id === document.id"
                         onclick="window.scrollTo(0, 0)">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">

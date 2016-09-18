@@ -1,15 +1,16 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params,Router} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/idai-components-2";
-import {ObjectList} from "./object-list";
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {CanDeactivateGuard} from './can-deactivate-quard';
 import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {Document} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {Messages} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {OverviewComponent} from './overview.component';
+import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({
     moduleId: module.id,
@@ -19,18 +20,18 @@ import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 /**
  * @author Daniel de Oliveira
  */
-export class DocumentEditWrapperComponent implements  OnInit{
+export class DocumentEditWrapperComponent implements  OnInit {
 
     @ViewChild('modalTemplate')
     private modalTemplate: TemplateRef<any>;
     private modal: NgbModalRef;
 
     constructor(
+        private overviewComponent: OverviewComponent,
         private datastore: ReadDatastore,
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
-        private objectList: ObjectList,
         private modalService:NgbModal,
         private canDeactivateGuard:CanDeactivateGuard,
         private persistenceManager:PersistenceManager,
@@ -50,7 +51,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
         this.route.params.forEach((params: Params) => {
             if (params['id'].indexOf('new')!=-1) {
                 this.mode='new';
-                this.document=this.objectList.createNewDocument();
+                this.document=this.overviewComponent.createNewDocument();
             } else {
                 this.mode='edit';
                 this.loadDoc(params['id']);
@@ -61,7 +62,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
     public loadDoc(id) {
         this.datastore.get(id).then(document=> {
             this.document = document;
-            this.objectList.setSelected(document);
+            this.overviewComponent.setSelected(<Document>document);
         })
     }
 
@@ -70,7 +71,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
      */
     public save(proceed:boolean=false) {
 
-        var doc=this.objectList.getSelected();
+        var doc=this.overviewComponent.getSelected();
 
         var validationReport = this.validator.validate(<IdaiFieldDocument>doc);
         if (!validationReport.valid) {
@@ -106,7 +107,7 @@ export class DocumentEditWrapperComponent implements  OnInit{
      */
     public discard(proceed:boolean=false) {
 
-        this.objectList.restore().then(
+        this.overviewComponent.restore().then(
             () => {
                 this.documentEditChangeMonitor.reset();
                 if (proceed) this.canDeactivateGuard.proceed();

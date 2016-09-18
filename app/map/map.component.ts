@@ -2,7 +2,8 @@ import {Component, Input, OnChanges} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-
+import {IdaiFieldPolygon} from "./idai-field-polygon";
+import {IdaiFieldMarker} from "./idai-field-marker";
 
 @Component({
     selector: 'map',
@@ -106,28 +107,5 @@ export class MapComponent implements OnChanges {
 
 }
 
-class IdaiFieldMarker extends L.Marker {
 
-    private document: IdaiFieldDocument;
 
-    public setDocument(document: IdaiFieldDocument) {
-        this.document = document;
-    }
-
-    public getDocument(): IdaiFieldDocument {
-        return this.document;
-    }
-}
-
-class IdaiFieldPolygon extends L.Polygon {
-
-    private document: IdaiFieldDocument;
-
-    public setDocument(document: IdaiFieldDocument) {
-        this.document = document;
-    }
-
-    public getDocument(): IdaiFieldDocument {
-        return this.document;
-    }
-}

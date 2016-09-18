@@ -120,6 +120,26 @@ export class OverviewComponent implements OnInit {
         }
     }
 
+
+    /**
+     * Gets a document from the datastore and makes
+     * it the current selection.
+     *
+     * @param resourceId
+     * @returns {Promise<Document>}
+     */
+    public loadDoc(resourceId) : Promise<Document> {
+        return new Promise<Document>((resolve,reject)=>{
+
+            this.datastore.get(resourceId).then(document=> {
+                resolve(document);
+                this.setSelected(<Document>document);
+            })
+        });
+
+    }
+
+
     /**
      * Restores the selected document by resetting it
      * back to the persisted state. In case there are

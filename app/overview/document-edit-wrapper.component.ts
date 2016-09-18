@@ -1,15 +1,11 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
-import {ActivatedRoute, Params,Router} from "@angular/router";
-import {ReadDatastore} from "idai-components-2/idai-components-2";
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {CanDeactivateGuard} from './can-deactivate-quard';
-import {PersistenceManager} from "idai-components-2/idai-components-2";
-import {Document} from "idai-components-2/idai-components-2";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {CanDeactivateGuard} from "./can-deactivate-quard";
 import {M} from "../m";
-import {Messages} from "idai-components-2/idai-components-2";
 import {Validator} from "../model/validator";
-import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import {OverviewComponent} from './overview.component';
+import {OverviewComponent} from "./overview.component";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({
@@ -28,7 +24,6 @@ export class DocumentEditWrapperComponent implements  OnInit {
 
     constructor(
         private overviewComponent: OverviewComponent,
-        private datastore: ReadDatastore,
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
@@ -54,17 +49,13 @@ export class DocumentEditWrapperComponent implements  OnInit {
                 this.document=this.overviewComponent.createNewDocument();
             } else {
                 this.mode='edit';
-                this.loadDoc(params['id']);
+                this.overviewComponent.loadDoc(params['id']).then(
+                    document=>this.document=document);
             }
         });
     }
 
-    public loadDoc(id) {
-        this.datastore.get(id).then(document=> {
-            this.document = document;
-            this.overviewComponent.setSelected(<Document>document);
-        })
-    }
+
 
     /**
      * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
@@ -88,7 +79,8 @@ export class DocumentEditWrapperComponent implements  OnInit {
                 else if (this.mode=='new') {
                     this.router.navigate(['resources',doc.resource.id,'edit']);
                     this.mode='edit';
-                    this.loadDoc(doc.resource.id);
+                    this.overviewComponent.loadDoc(doc.resource.id).then(
+                        document=>this.document=document);
                 }
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },

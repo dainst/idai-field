@@ -1,14 +1,9 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
-export class IdaiFieldMarker extends L.Marker {
+export interface IdaiFieldMarker extends L.Marker {
 
-    private document: IdaiFieldDocument;
+    document?: IdaiFieldDocument;
 
-    public setDocument(document: IdaiFieldDocument) {
-        this.document = document;
-    }
-
-    public getDocument(): IdaiFieldDocument {
-        return this.document;
-    }
+    // TODO Remove this as soon as the typings file for Leaflet 1.0.0-rc.3 has been completed
+    on?(type: string, fn: any, context?: any): any;
 }

@@ -1,14 +1,9 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
-export class IdaiFieldPolygon extends L.Polygon {
+export interface IdaiFieldPolygon extends L.Polygon {
 
-    private document: IdaiFieldDocument;
+    document?: IdaiFieldDocument;
 
-    public setDocument(document: IdaiFieldDocument) {
-        this.document = document;
-    }
-
-    public getDocument(): IdaiFieldDocument {
-        return this.document;
-    }
+    // TODO Remove this as soon as the typings file for Leaflet 1.0.0-rc.3 has been completed
+    on?(type: string, fn: any, context?: any): any;
 }

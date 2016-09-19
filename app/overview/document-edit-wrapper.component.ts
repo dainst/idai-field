@@ -82,6 +82,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
                     this.overviewComponent.loadDoc(doc.resource.id).then(
                         document=>this.document=document);
                 }
+                // show message after route change
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },
             errors => {

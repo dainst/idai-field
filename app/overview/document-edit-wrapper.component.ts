@@ -115,7 +115,11 @@ export class DocumentEditWrapperComponent implements  OnInit {
 
         if (this.mode=='new') {
             this.router.navigate(['resources',doc.resource.id,'edit']);
+
+            // since ngOnInit will not get triggered
             this.mode='edit';
+            // doc must be reloaded so instance of this.document is
+            // the same as the one in overviewComponent
             this.overviewComponent.loadDoc(doc.resource.id).then(
                 document=>this.document=document);
         }

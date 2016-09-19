@@ -22,7 +22,25 @@ describe('overview component', function() {
             });
     });
 
-    it ('should reflect changes in overview in realtime while editing object identifier', function() {
+    it ('should reflect changes in overview in realtime', function() {
+        common.createObject("1a")
+            .then(common.createObject("2"))
+            .then(common.selectObject(1))
+            .then(common.switchToEditMode)
+            .then(common.typeInIdentifier("1b"))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("1b");
+            });
+    });
+
+    /**
+     * There was a bug which caused that a freshly created object
+     * was not the same instance in the document edit and the overview component anymore
+     * so that changes made to one would not be reflected in the other.
+     *
+     * This however did not happen with an object already saved.
+     */
+    it ('should reflect changes in overview after creating object', function() {
         common.createObject("12")
             .then(common.typeInIdentifier("34"))
             .then(function(){

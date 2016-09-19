@@ -54,7 +54,22 @@ function scrollUp() {
     return browser.executeScript('window.scrollTo(0,0);');
 }
 
+function clickSaveInModal() {
+    return element(by.id('overview-save-confirmation-modal-save-button')).click();
+}
+
+function clickCancelInModal() {
+    return element(by.id('overview-save-confirmation-modal-cancel-button')).click();
+}
+
+function removeMessage() {
+    return element(by.css('#message-0 button')).click();
+}
+
 module.exports = {
+    removeMessage: removeMessage,
+    clickCancelInModal: clickCancelInModal,
+    clickSaveInModal: clickSaveInModal,
     clickCreateObjectButton: clickCreateObjectButton,
     createObject: createObject,
     switchToEditMode: switchToEditMode,

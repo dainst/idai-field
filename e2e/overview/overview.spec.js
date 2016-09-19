@@ -98,7 +98,7 @@ describe('overview component', function() {
             .then(common.typeInIdentifier("2a"))
             .then(common.selectObject(1))
             .then(common.scrollUp)
-            .then(clickCancelInModal)
+            .then(common.clickCancelInModal)
             .then(common.scrollUp)
             .then(function(){
                 expect(element.all(by.css('#objectList .list-group-item')).get(0)
@@ -110,11 +110,5 @@ describe('overview component', function() {
         return common.typeIn(element(by.id('object-search')), "12");
     }
 
-    function clickSaveInModal() {
-        return element(by.id('overview-save-confirmation-modal-save-button')).click();
-    }
 
-    function clickCancelInModal() {
-        return element(by.id('overview-save-confirmation-modal-cancel-button')).click();
-    }
 });

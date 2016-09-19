@@ -10,6 +10,8 @@ var utils = require("../utils.js");
  */
 describe('overview component', function() {
 
+    utils.delayPromises(50);
+
     beforeEach(function(){
         browser.get('/#/resources');
     });

@@ -32,6 +32,32 @@ describe('relations', function() {
         browser.get('/#/resources/');
     });
 
+    it ('should create links for relations', function() {
+        common.createObject("o1")
+            .then(common.createObject("o2"))
+            .then(common.scrollDown)
+            .then(addRelation)
+            .then(function(){
+                return common.typeIn(getFirstRelationOfGroup(0).element(by.tagName("input")), "o1");
+            })
+            .then(function() {
+                return getSuggestion(getFirstRelationOfGroup(0), 0).click();
+            })
+            .then(common.scrollUp)
+            .then(common.saveObject)
+            .then(common.selectObject(1))
+            .then(function(){
+                expect(element(by.css('#document-view a')).getText())
+                    .toContain("o2");
+                return element(by.css('#document-view a')).click();
+            })
+            .then(function(){
+                expect(element(by.css('#document-view a')).getText())
+                    .toContain("o1");
+            })
+    });
+
+
     it('should create a new relation and the corresponding inverse relation', function() {
         // expect(getFirstRelationOfGroup(0).isPresent()).toBe(false); known not to work on ci
 

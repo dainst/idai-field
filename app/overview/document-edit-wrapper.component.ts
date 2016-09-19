@@ -80,10 +80,9 @@ export class DocumentEditWrapperComponent implements  OnInit {
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
 
-        this.overviewComponent.getSelected()['synced'] = 0;
-
         this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
             () => {
+                this.overviewComponent.getSelected()['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
 
                 this.navigate(this.overviewComponent.getSelected(),proceed);

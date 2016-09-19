@@ -14,7 +14,7 @@
           "name": "Inventory Number"
         },
         {
-          "name": "M	aterial",
+          "name": "Material",
           "valuelist": [
             "Alabaster",
             "Amber",

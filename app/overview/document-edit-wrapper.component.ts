@@ -14,6 +14,19 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 })
 
 /**
+ * Handles
+ * <ul>
+ *   <li>loading or creating of the document to edit
+ *   <li>showing the document edit form and provision it with the document to edit
+ *   <li>validation and persistence of the document edited
+ *   <li>the navigation away from document edit
+ * </ul>
+ *
+ * Regarding the navigation: If the documents state is marked as edited
+ * but not saved, on trying to navigate to other routes, the user
+ * gets presented a modal which offers choices to save or abandon the
+ * changes or to cancel the navigation.
+ *
  * @author Daniel de Oliveira
  */
 export class DocumentEditWrapperComponent implements  OnInit {
@@ -62,34 +75,35 @@ export class DocumentEditWrapperComponent implements  OnInit {
      */
     public save(proceed:boolean=false) {
 
-        var doc=this.overviewComponent.getSelected();
-
-        var validationReport = this.validator.validate(<IdaiFieldDocument>doc);
+        var validationReport = this.validator.validate(<IdaiFieldDocument>this.overviewComponent.getSelected());
         if (!validationReport.valid) {
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
 
-        doc['synced'] = 0;
+        this.overviewComponent.getSelected()['synced'] = 0;
 
-        this.persistenceManager.persist(doc).then(
-            () => {
-                this.documentEditChangeMonitor.reset();
-                if (proceed)
-                    this.canDeactivateGuard.proceed();
-                else if (this.mode=='new') {
-                    this.router.navigate(['resources',doc.resource.id,'edit']);
-                    this.mode='edit';
-                    this.overviewComponent.loadDoc(doc.resource.id).then(
-                        document=>this.document=document);
-                }
-                // show message after route change
-                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
-            },
+        this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
+            () => this.handlePersistSuccess(this.overviewComponent.getSelected(),proceed),
             errors => {
                 for (var err of errors) {
                     this.messages.add(err);
                 }
             });
+    }
+
+    private handlePersistSuccess(doc, proceed) {
+
+        this.documentEditChangeMonitor.reset();
+        if (proceed)
+            this.canDeactivateGuard.proceed();
+        else if (this.mode=='new') {
+            this.router.navigate(['resources',doc.resource.id,'edit']);
+            this.mode='edit';
+            this.overviewComponent.loadDoc(doc.resource.id).then(
+                document=>this.document=document);
+        }
+        // show message after route change
+        this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
     }
 
     /**

@@ -13,7 +13,7 @@ import {Http} from "@angular/http";
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/import.html'
+    templateUrl: './import.html'
 })
 
 /**

@@ -3,7 +3,7 @@ import {OverviewComponent} from "../overview/overview.component";
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/map-wrapper.html'
+    templateUrl: './map-wrapper.html'
 })
 
 /**

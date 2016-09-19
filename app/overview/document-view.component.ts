@@ -11,7 +11,7 @@ import {
 @Component({
     selector: 'document-view',
     moduleId: module.id,
-    templateUrl: '../../templates/document-view.html'
+    templateUrl: './document-view.html'
 })
 
 /**

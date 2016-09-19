@@ -86,7 +86,6 @@ gulp.task('make-dist',function() {
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
     gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
-    gulp.src('templates/**/*').pipe(gulp.dest('dist/templates/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
 	gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));

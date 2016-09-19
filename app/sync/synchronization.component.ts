@@ -13,7 +13,7 @@ import {ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-compone
 @Component({
     moduleId: module.id,
     selector: 'synchronization',
-    templateUrl: '../../templates/synchronization.html'
+    templateUrl: './synchronization.html'
 })
 
 export class SynchronizationComponent {

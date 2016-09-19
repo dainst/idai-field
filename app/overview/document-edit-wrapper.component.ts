@@ -10,7 +10,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/document-edit-wrapper.html'
+    templateUrl: './document-edit-wrapper.html'
 })
 
 /**

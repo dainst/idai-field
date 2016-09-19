@@ -8,7 +8,7 @@ import {Observable} from "rxjs/Observable";
 @Component({
 
     moduleId: module.id,
-    templateUrl: '../../templates/overview.html'
+    templateUrl: './overview.html'
 })
 
 /**

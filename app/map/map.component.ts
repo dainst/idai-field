@@ -8,7 +8,7 @@ import {IdaiFieldMarker} from "./idai-field-marker";
 @Component({
     moduleId: module.id,
     selector: 'map',
-    templateUrl: '../../templates/map.html'
+    templateUrl: './map.html'
 })
 
 /**

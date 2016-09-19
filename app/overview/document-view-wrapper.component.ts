@@ -7,7 +7,7 @@ import {ConfigLoader} from "idai-components-2/idai-components-2";
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/document-view-wrapper.html'
+    templateUrl: './document-view-wrapper.html'
 })
 /**
  * @author Daniel de Oliveira

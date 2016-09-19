@@ -75,7 +75,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
      */
     public save(proceed:boolean=false) {
 
-        var validationReport = this.validator.validate(<IdaiFieldDocument>this.overviewComponent.getSelected());
+        var validationReport = this.validate(this.overviewComponent.getSelected());
         if (!validationReport.valid) {
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
@@ -83,7 +83,13 @@ export class DocumentEditWrapperComponent implements  OnInit {
         this.overviewComponent.getSelected()['synced'] = 0;
 
         this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
-            () => this.handlePersistSuccess(this.overviewComponent.getSelected(),proceed),
+            () => {
+                this.documentEditChangeMonitor.reset();
+
+                this.navigate(this.overviewComponent.getSelected(),proceed);
+                // show message after route change
+                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+            },
             errors => {
                 for (var err of errors) {
                     this.messages.add(err);
@@ -91,19 +97,29 @@ export class DocumentEditWrapperComponent implements  OnInit {
             });
     }
 
-    private handlePersistSuccess(doc, proceed) {
+    private validate(doc) {
+        return this.validator.validate(<IdaiFieldDocument>doc);
+    }
 
-        this.documentEditChangeMonitor.reset();
-        if (proceed)
-            this.canDeactivateGuard.proceed();
-        else if (this.mode=='new') {
+
+    /**
+     * According to the current mode or the value of proceed,
+     * initiates an appropriate route change.
+     *
+     * @param doc
+     * @param proceed
+     */
+    private navigate(doc, proceed) {
+
+        if (proceed) return this.canDeactivateGuard.proceed();
+
+        if (this.mode=='new') {
             this.router.navigate(['resources',doc.resource.id,'edit']);
             this.mode='edit';
             this.overviewComponent.loadDoc(doc.resource.id).then(
                 document=>this.document=document);
         }
-        // show message after route change
-        this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+
     }
 
     /**

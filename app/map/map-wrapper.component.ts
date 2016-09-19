@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {OverviewComponent} from "../overview/overview.component";
 
 @Component({
     moduleId: module.id,
@@ -8,26 +8,18 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class MapWrapperComponent implements OnInit {
 
     private docs;
 
-    constructor(
-        // TODO should be ReadDatastore but is not due to hack below.
-        private datastore: IndexeddbDatastore
-    ) {
-        // TODO hack for test mode with loading objects when application starts on /map. Objects are too late in datastore.
-        this.datastore.documentChangesNotifications().subscribe(()=>{
-            this.datastore.all().then(documents=>{
-                this.docs = documents;
-            });
-        });
-    }
+    constructor(private overviewComponent: OverviewComponent) {}
 
     ngOnInit(): void {
-        this.datastore.all().then(documents=>{
-           this.docs = documents;
+
+        this.overviewComponent.getDocuments().subscribe((result) => {
+           this.docs = result;
         });
     }
 }

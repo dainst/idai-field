@@ -1,10 +1,10 @@
-import { ModuleWithProviders }   from '@angular/core';
-import {Routes,RouterModule} from '@angular/router';
+import {ModuleWithProviders}   from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {OverviewComponent} from './overview.component';
 import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
-import {OverviewHomeComponent} from './overview-home.component';
+import {MapWrapperComponent} from '../map/map-wrapper.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
-import { CanDeactivateGuard }    from './can-deactivate-quard';
+import {CanDeactivateGuard}    from './can-deactivate-guard';
 
 const overviewRoutes: Routes = [
     {
@@ -13,7 +13,7 @@ const overviewRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: OverviewHomeComponent
+                component: MapWrapperComponent
             },
             {
                 path: ':id',

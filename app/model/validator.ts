@@ -22,7 +22,7 @@ export class Validator {
                 this.projectConfiguration = result.projectConfiguration;
                 this.relationsConfiguration = result.relationsConfiguration;
             } else {
-                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configration gibt
+                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configuration gibt
                 //this.messages.add(result.error.msgkey);
             }
         });

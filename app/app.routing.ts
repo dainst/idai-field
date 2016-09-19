@@ -1,14 +1,12 @@
 import {Routes,RouterModule} from '@angular/router';
 
 import {ImportComponent} from './import/import.component';
-import {MapWrapperComponent} from './map/map-wrapper.component';
-import { CanDeactivateGuard } from './overview/can-deactivate-quard';
+import {CanDeactivateGuard} from './overview/can-deactivate-guard';
 
 
 const appRoutes: Routes = [
-    { path: 'import', component: ImportComponent },
-    { path: 'map', component: MapWrapperComponent },
-    { path: '', component: MapWrapperComponent }
+    { path: '', redirectTo: 'resources', pathMatch: 'full' },
+    { path: 'import', component: ImportComponent }
 ];
 
 export const appRoutingProviders: any[] = [

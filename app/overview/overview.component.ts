@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document} from "idai-components-2/idai-components-2"
+import {Observable} from "rxjs/Observable";
 
 @Component({
 
@@ -19,6 +20,7 @@ import {Document} from "idai-components-2/idai-components-2"
 export class OverviewComponent implements OnInit {
 
     private selectedDocument;
+    private observers: Array<any> = [];
     private filterOverviewIsCollapsed = true;
 
     constructor(@Inject('app.config') private config,
@@ -74,11 +76,13 @@ export class OverviewComponent implements OnInit {
     public replace(document:Document,restoredObject: Document) {
         var index = this.documents.indexOf(document);
         this.documents[index] = restoredObject;
+        this.notify();
     }
 
     public remove(document: Document) {
         var index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
+        this.notify();
     }
 
     private documents: Document[];
@@ -89,8 +93,9 @@ export class OverviewComponent implements OnInit {
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
         var newDocument = { "resource": { "relations": {} } };
         this.documents.unshift(<Document>newDocument);
+        this.notify();
 
-        this.selectedDocument=newDocument;
+        this.selectedDocument = newDocument;
 
         return newDocument;
     }
@@ -101,7 +106,8 @@ export class OverviewComponent implements OnInit {
      */
     public fetchAllDocuments() {
         this.datastore.all().then(documents => {
-            this.documents=documents;
+            this.documents = documents;
+            this.notify();
         }).catch(err => console.error(err));
     }
 
@@ -115,7 +121,8 @@ export class OverviewComponent implements OnInit {
             this.fetchAllDocuments()
         } else {
             this.datastore.find(searchString).then(documents => {
-                this.documents=documents;
+                this.documents = documents;
+                this.notify();
             }).catch(err => console.error(err));
         }
     }
@@ -139,7 +146,21 @@ export class OverviewComponent implements OnInit {
 
     }
 
+    public getDocuments() : Observable<Array<Document>> {
 
+        return Observable.create( observer => {
+            this.observers.push(observer);
+            this.notify();
+        });
+    }
+
+    private notify() {
+
+        this.observers.forEach(observer => {
+            observer.next(this.documents);
+        });
+    }
+    
     /**
      * Restores the selected document by resetting it
      * back to the persisted state. In case there are

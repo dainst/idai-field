@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {CanDeactivateGuard} from "./can-deactivate-quard";
+import {CanDeactivateGuard} from "./can-deactivate-guard";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {OverviewComponent} from "./overview.component";

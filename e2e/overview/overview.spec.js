@@ -67,7 +67,7 @@ describe('overview component', function() {
             .then(common.typeInIdentifier("2"))
             .then(common.clickCreateObjectButton())
             .then(common.scrollUp)
-            .then(clickSaveInModal)
+            .then(common.clickSaveInModal)
             .then(common.scrollUp)
             .then(function(){
                 expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
@@ -82,7 +82,7 @@ describe('overview component', function() {
             .then(common.typeInIdentifier("2a"))
             .then(common.selectObject(1))
             .then(common.scrollUp)
-            .then(clickSaveInModal)
+            .then(common.clickSaveInModal)
             .then(common.scrollUp)
             .then(function(){
                 expect(element.all(by.css('#objectList .list-group-item')).get(1)

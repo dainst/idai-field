@@ -2,7 +2,6 @@ import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {
-    ConfigLoader,
     ProjectConfiguration,
     RelationsConfiguration,
     ReadDatastore
@@ -22,28 +21,16 @@ export class DocumentViewComponent implements OnChanges {
 
     @Input() document: any;
 
-    private type: string;
     private fields: Array<any>;
     private relations: Array<any>;
 
-    private projectConfiguration: ProjectConfiguration;
-    private relationsConfiguration: RelationsConfiguration;
+    @Input() private projectConfiguration: ProjectConfiguration;
+    @Input() private relationsConfiguration: RelationsConfiguration;
 
     constructor(
-        private configLoader: ConfigLoader,
         private datastore: ReadDatastore,
         private router: Router)
-    {
-        this.configLoader.configuration().subscribe((result)=>{
-            if(result.error == undefined) {
-                this.projectConfiguration = result.projectConfiguration;
-                this.relationsConfiguration = result.relationsConfiguration;
-            } else {
-                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configration gibt
-                //this.messages.add(result.error.msgkey);
-            }
-        });
-    }
+    {}
 
     ngOnChanges() {
 
@@ -54,7 +41,6 @@ export class DocumentViewComponent implements OnChanges {
 
         var resource:IdaiFieldResource = this.document.resource;
 
-        this.type = this.projectConfiguration.getLabelForType(this.document.resource.type);
         this.initializeFields(resource);
         this.initializeRelations(resource);
 

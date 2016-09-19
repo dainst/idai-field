@@ -2,6 +2,7 @@
   "types": [
     {
       "type": "object",
+      "label" : "Objekt",
       "fields": [
         {
           "name" : "identifier"
@@ -13,7 +14,7 @@
           "name": "Inventory Number"
         },
         {
-          "name": "Material",
+          "name": "M	aterial",
           "valuelist": [
             "Alabaster",
             "Amber",

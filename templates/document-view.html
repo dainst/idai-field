@@ -12,12 +12,6 @@
             <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
         </div>
 
-
-        <div class="document-view-field">
-            <div class="fieldname">Typ</div>
-            <div class="fieldvalue">{{type}}</div>
-        </div>
-
         <div *ngFor="let field of fields">
             <div *ngIf="field.isArray" class="document-view-field">
                 <div class="fieldname">{{field.name}}</div>

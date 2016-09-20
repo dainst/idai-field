@@ -10,6 +10,11 @@ import {ConfigLoader} from "idai-components-2/idai-components-2";
     selector: 'idai-field-app',
     templateUrl: './app.html'
 })
+/**
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
 export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
@@ -21,6 +26,12 @@ export class AppComponent implements OnInit {
                 private router: Router,
                 private messages: Messages) {
 
+        // To get rid of stale messages when changing routes.
+        // Note that if you want show a message to the user
+        // on changing route, you have to write something
+        // like
+        // { router.navigate(['target']); messages.add('some'); }
+        //
         router.events.subscribe( (event:Event) => {
             if(event instanceof NavigationStart) {
                 this.messages.clear();

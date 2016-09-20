@@ -5,12 +5,12 @@
 @import "bootstrap";
 @import "navbar";
 @import "footer";
-@import "overview";
-@import "import";
+@import "./overview/overview";
+@import "./import/import";
 @import "materialdesignicons";
 @import "buttons";
-@import "document-view";
-@import "map";
+@import "./overview/document-view";
+@import "./map/map";
 
 html {
   position: relative;

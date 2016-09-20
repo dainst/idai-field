@@ -15,7 +15,7 @@ var webserver = require('gulp-webserver');
 gulp.task('convert-sass', function() {
 
 	return gulp.src([
-			'scss/app.scss',
+			'app/app.scss',
 			'node_modules/idai-components-2/src/scss/app.scss',
 			'node_modules/leaflet/dist/leaflet.css'
 		])

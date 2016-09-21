@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from "@angular/core";
 import {Router} from "@angular/router";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IdaiFieldResource} from "../model/idai-field-resource";
+import {IdaiFieldDocument} from "../../model/idai-field-document";
+import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 

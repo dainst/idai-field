@@ -19,17 +19,17 @@
                            class="form-control"
                            id="object-search"
                            placeholder="Suchen...">
-                    <span class="input-group-btn">
+                    <!--<span class="input-group-btn">
                         <button class="btn btn-secondary"
                                 id="searchfilter"
                                 type="button"
                                 (click)="filterOverviewIsCollapsed = !filterOverviewIsCollapsed">
                             <span class="mdi mdi-filter"></span>
                         </button>
-                    </span>
+                    </span>-->
                 </div>
 
-                <div id="filteroptions"
+                <!--<div id="filteroptions"
                      [ngbCollapse]="filterOverviewIsCollapsed">
                     <div class="card card-block">
                         <div class="checkbox">
@@ -38,7 +38,7 @@
                             </label>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <ul *ngIf="documents" class="list-group" id="objectList">
                     <li *ngFor="let document of documents; let index=index"

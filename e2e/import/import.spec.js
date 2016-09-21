@@ -1,8 +1,6 @@
 var common = require("../common.js");
 var utils = require("../utils.js");
 
-utils.delayPromises(10);
-
 describe('import', function() {
 
     function getSourceOptions() {

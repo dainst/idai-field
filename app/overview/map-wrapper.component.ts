@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import {OverviewComponent} from "../overview/overview.component";
+import {OverviewComponent} from "./overview.component.ts";
 
 @Component({
     moduleId: module.id,

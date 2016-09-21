@@ -19,7 +19,7 @@ import {M} from './m';
 import {AppComponent} from './app.component';
 import {OverviewModule} from './overview/overview.module';
 import {ImportComponent} from './import/import.component';
-import {MapWrapperComponent} from './map/map-wrapper.component';
+import {MapWrapperComponent} from './overview/map-wrapper.component.ts';
 import {MapComponent} from './map/map.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -39,7 +39,6 @@ import CONFIG = require("config/config.json!json");
     declarations: [
         AppComponent,
         ImportComponent,
-        MapWrapperComponent,
         MapComponent,
         SynchronizationComponent
     ],

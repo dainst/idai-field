@@ -8,6 +8,7 @@ import { DocumentViewWrapperComponent } from './document-view-wrapper.component'
 import { OverviewHomeComponent } from './overview-home.component';
 import { DocumentEditWrapperComponent } from './document-edit-wrapper.component';
 import { IdaiComponents2Module } from 'idai-components-2/idai-components-2';
+import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -22,7 +23,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         DocumentViewComponent,
         OverviewHomeComponent,
         DocumentEditWrapperComponent,
-        DocumentViewWrapperComponent
+        DocumentViewWrapperComponent,
+        MapWrapperComponent
     ],
     providers: [
     ]

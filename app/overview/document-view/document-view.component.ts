@@ -1,6 +1,6 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
-import {IdaiFieldResource} from "../model/idai-field-resource";
+import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {
     ProjectConfiguration,
     RelationsConfiguration,

@@ -28,7 +28,7 @@ gulp.task('convert-sass', function() {
 });
 
 function watch() {
-    gulp.watch('scss/**/*.scss',      ['convert-sass']);
+    gulp.watch('app/**/*.scss',      ['convert-sass']);
 }
 
 gulp.task('webserver-watch', function() {

@@ -8,6 +8,7 @@ import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MapComponent} from "./map/map.component";
+import {PlusButtonComponent} from "./plus-button.component";
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import {MapComponent} from "./map/map.component";
         DocumentViewComponent,
         DocumentEditWrapperComponent,
         MapWrapperComponent,
-        MapComponent
+        MapComponent,
+        PlusButtonComponent
     ],
     providers: [
     ]

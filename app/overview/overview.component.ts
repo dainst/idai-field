@@ -2,7 +2,7 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {ProjectConfiguration, ConfigLoader, Document} from "idai-components-2/idai-components-2"
+import {Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -21,22 +21,12 @@ export class OverviewComponent implements OnInit {
 
     private selectedDocument;
     private observers: Array<any> = [];
-    private projectConfiguration: ProjectConfiguration;
     private filterOverviewIsCollapsed = true;
 
     constructor(@Inject('app.config') private config,
         private router: Router,
-        private datastore: IndexeddbDatastore,
-        private configLoader: ConfigLoader
-    ) {
-        this.configLoader.configuration().subscribe((result)=>{
-            if(result.error == undefined) {
-                this.projectConfiguration = result.projectConfiguration;
-            } else {
-                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configuration gibt
-            }
-        });
-    }
+        private datastore: IndexeddbDatastore
+    ) {}
 
     /**
      * @param documentToSelect the object that should get selected if the preconditions

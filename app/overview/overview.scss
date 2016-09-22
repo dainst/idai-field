@@ -130,6 +130,17 @@
   color: #ddd;
 }
 
+.popover-item {
+  margin-left: -16px;
+  margin-right: -16px;
+  cursor: pointer;
+}
+
+.popover-item:hover {
+  background-color: #c7dee0;
+  transition: background-color .65s ease;
+}
+
 textarea {
   width: 100%;
   resize: vertical;

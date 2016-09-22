@@ -66,15 +66,27 @@
                         </div>
                     </li>
                 </ul>
+
                 <div id="object-overview-button-create-object"
                      *ngIf="searchInput.value.length == 0"
                      class="circular-button green-button"
-                     (click)="select()"
+                     [ngbPopover]="newObjectMenu" title="Wählen Sie einen Typ aus." #p="ngbPopover"
+                     triggers="manual" (click)="p.toggle()"
                      onclick="window.scrollTo(0, 0)">+
+                    <!-- Enable when finally implemented in Chromium
+                   onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+                   -->
+
+                    <template #newObjectMenu>
+                        <ul class="list-group">
+                            <li *ngFor="let type of projectConfiguration.getTypes(); let index = index"
+                                id="create-object-option-{{index}}" class="list-group-item popover-item"
+                                (click)="p.close(); startDocumentCreation(type.name)">
+                                {{type.name}}
+                            </li>
+                        </ul>
+                    </template>
                 </div>
-                <!-- Enable when finally implemented in Chromium
-                    onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-                    -->
 
             </main>
         </aside>

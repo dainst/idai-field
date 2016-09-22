@@ -71,6 +71,7 @@ module.exports = {
     clickCancelInModal: clickCancelInModal,
     clickSaveInModal: clickSaveInModal,
     clickCreateObjectButton: clickCreateObjectButton,
+    selectObjectType: selectObjectType,
     createObject: createObject,
     switchToEditMode: switchToEditMode,
     saveObject: saveObject,

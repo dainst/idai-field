@@ -2,7 +2,7 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Document} from "idai-components-2/idai-components-2"
+import {ProjectConfiguration, ConfigLoader, Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -21,29 +21,30 @@ export class OverviewComponent implements OnInit {
 
     private selectedDocument;
     private observers: Array<any> = [];
+    private projectConfiguration: ProjectConfiguration;
     private filterOverviewIsCollapsed = true;
 
     constructor(@Inject('app.config') private config,
         private router: Router,
-        private datastore: IndexeddbDatastore
+        private datastore: IndexeddbDatastore,
+        private configLoader: ConfigLoader
     ) {
+        this.configLoader.configuration().subscribe((result)=>{
+            if(result.error == undefined) {
+                this.projectConfiguration = result.projectConfiguration;
+            } else {
+                // TODO Meldung geben/zeigen wenn es ein Problem mit der Configuration gibt
+            }
+        });
     }
-
 
     /**
      * @param documentToSelect the object that should get selected if the preconditions
      *   to change the selection are met.
-     *   undefined if a new object is to be created if the preconditions
-     *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
 
-        if (documentToSelect)
-            this.router.navigate(['resources',documentToSelect.resource.id]);
-        else {
-            this.router.navigate(['resources']); // to trigger onInit in DocumentEditWrapper
-            this.router.navigate(['resources','new','edit']);
-        }
+        this.router.navigate(['resources',documentToSelect.resource.id]);
     }
 
     public ngOnInit() {
@@ -55,25 +56,25 @@ export class OverviewComponent implements OnInit {
         }
     }
 
-    onKey(event:any) {
+    onKey(event: any) {
         this.fetchSomeDocuments(event.target.value);
     }
 
     /**
      * @param documentToSelect
      */
-    public setSelected(documentToSelect:Document) {
+    public setSelected(documentToSelect: Document) {
         this.selectedDocument=documentToSelect;
     }
 
     /**
      * @returns {Document}
      */
-    public getSelected() : Document {
+    public getSelected(): Document {
         return this.selectedDocument;
     }
 
-    public replace(document:Document,restoredObject: Document) {
+    public replace(document: Document,restoredObject: Document) {
         var index = this.documents.indexOf(document);
         this.documents[index] = restoredObject;
         this.notify();
@@ -87,12 +88,19 @@ export class OverviewComponent implements OnInit {
 
     private documents: Document[];
 
-    public createNewDocument() {
+    public startDocumentCreation(type: string) {
+
+        this.router.navigate(['resources', 'new:' + type, 'edit']);
+    }
+
+    public createNewDocument(type: string) {
+
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
-        var newDocument = { "resource": { "relations": {} } };
-        this.documents.unshift(<Document>newDocument);
+
+        var newDocument = { "resource": { "relations": {}, "type": type } };
+        this.documents.unshift(<Document> newDocument);
         this.notify();
 
         this.selectedDocument = newDocument;

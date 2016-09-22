@@ -4,6 +4,7 @@ import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {
     ProjectConfiguration,
     RelationsConfiguration,
+    ConfigLoader,
     ReadDatastore
 } from "idai-components-2/idai-components-2";
 
@@ -16,6 +17,7 @@ import {
 
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export class DocumentViewComponent implements OnChanges {
 
@@ -24,13 +26,21 @@ export class DocumentViewComponent implements OnChanges {
     private fields: Array<any>;
     private relations: Array<any>;
 
-    @Input() private projectConfiguration: ProjectConfiguration;
-    @Input() private relationsConfiguration: RelationsConfiguration;
+    private projectConfiguration: ProjectConfiguration;
+    private relationsConfiguration: RelationsConfiguration;
 
     constructor(
         private datastore: ReadDatastore,
-        private router: Router)
-    {}
+        private router: Router,
+        private configLoader: ConfigLoader
+    ) {
+        this.configLoader.configuration().subscribe((result) => {
+            if(result.error == undefined) {
+                this.projectConfiguration = result.projectConfiguration;
+                this.relationsConfiguration = result.relationsConfiguration;
+            }
+        });
+    }
 
     ngOnChanges() {
 

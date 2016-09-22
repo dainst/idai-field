@@ -1,1 +1,25 @@
-<map [documents]="docs"></map>
+<div class="row">
+    <div [class.col-sm-12]="!activeDoc" [class.col-sm-9]="activeDoc">
+        <map [documents]="docs"></map>
+    </div>
+    <div *ngIf="activeDoc" class="col-sm-3">
+        <div class="card" style="height: calc(100vh - 75px);">
+            <div class="card-header">
+                <h4>
+                    {{activeType}}
+                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-back-to-map"
+                            [routerLink]="['/resources']">
+                        <span class="mdi mdi-close"></span>
+                    </button>
+                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-edit-document"
+                            [routerLink]="['/resources/', activeDoc['resource']['id'], 'edit']">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
+                </h4>
+            </div>
+            <div class="card-block">
+                <document-view [document]="activeDoc"></document-view>
+            </div>
+        </div>
+    </div>
+</div>

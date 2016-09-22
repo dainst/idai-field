@@ -48,12 +48,11 @@ export class AppComponent implements OnInit {
 
     private setConfigs() {
         this.configLoader.setConfigurationPaths(AppComponent.PROJECT_CONFIGURATION_PATH, AppComponent.RELATIONS_CONFIGURATION_PATH);
-        this.configLoader.configuration().subscribe(
-            result=>{
-                if (result.error)
-                    this.messages.add(result.error.msgkey,[result.error.msgparams]);
+        this.configLoader.configuration().subscribe(result => {
+            if (result.error) {
+                this.messages.add(result.error.msgkey, [result.error.msgparams]);
             }
-        )
+        });
     }
 
     loadSampleData(): void {
@@ -62,13 +61,9 @@ export class AppComponent implements OnInit {
         .then(() => {
             var promises = [];
             for (var ob of DOCS) promises.push(this.datastore.update(ob));
-            Promise.all(promises).then(
-                () => {
-                    console.log("Successfully stored sample objects")
-                })
-            .catch(
-                err => console.error("Problem when storing sample data", err)
-            );
+            Promise.all(promises)
+                .then(() => console.log("Successfully stored sample objects"))
+                .catch(err => console.error("Problem when storing sample data", err));
         });
     }
 }

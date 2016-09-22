@@ -88,7 +88,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         marker.on('click', function() {
-            mapComponent.router.navigate(['resources',this.document.resource.id]);
+            mapComponent.router.navigate(['resources',{ id: this.document.resource.id }]);
         });
 
         marker.addTo(this.map);
@@ -102,7 +102,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         polygon.on('click', function() {
-            mapComponent.router.navigate(['resources',this.document.resource.id]);
+            mapComponent.router.navigate(['resources',{ id: this.document.resource.id }]);
         });
 
         polygon.addTo(this.map);

@@ -43,8 +43,7 @@ export class OverviewComponent implements OnInit {
      *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
-
-        this.router.navigate(['resources',documentToSelect.resource.id]);
+        this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
     public ngOnInit() {

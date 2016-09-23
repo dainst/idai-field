@@ -5,7 +5,8 @@
       "label" : "Objekt",
       "fields": [
         {
-          "name" : "identifier"
+          "name" : "identifier",
+          "description" : "use this to uniquely identify your object"
         },
         {
           "name" : "shortDescription"

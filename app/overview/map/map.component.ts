@@ -57,6 +57,11 @@ export class MapComponent implements OnChanges {
 
         this.activeLayers.push(this.layers[0]);
         this.addLayerToMap(this.layers[0]);
+
+        var mapComponent = this;
+        this.map.on('click', function() {
+            mapComponent.router.navigate(['resources']);
+        });
     }
 
     private clearMap() {
@@ -101,7 +106,9 @@ export class MapComponent implements OnChanges {
         polygon.document = document;
 
         var mapComponent = this;
-        polygon.on('click', function() {
+        polygon.on('click', function(event: L.Event) {
+            // TODO Wait for updated typings file to get rid of error message...
+            L.DomEvent.stop(event);
             mapComponent.router.navigate(['resources',{ id: this.document.resource.id }]);
         });
 

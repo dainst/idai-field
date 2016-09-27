@@ -93,7 +93,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         marker.on('click', function() {
-            mapComponent.router.navigate(['resources',{ id: this.document.resource.id }]);
+            mapComponent.router.navigate(['resources', { id: this.document.resource.id }]);
         });
 
         marker.addTo(this.map);

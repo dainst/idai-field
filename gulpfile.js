@@ -10,6 +10,8 @@ var fs = require('fs');
 var path = require('path');
 var pkg = require('./package.json');
 var webserver = require('gulp-webserver');
+var argv = require('yargs').argv;
+var replace = require('gulp-replace');
 
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function() {
@@ -112,7 +114,6 @@ gulp.task('package', [], function() {
 		version: '0.36.10',
 		appBundleId: pkg.name,
 		appVersion: pkg.version,
-		buildVersion: pkg.version,
 		'download.cache': 'cache/',
 		helperBundleId: pkg.name,
 		icon: 'dist/img/logo',
@@ -158,3 +159,18 @@ gulp.task('create-configs', function (callback) {
 
 });
 
+gulp.task('versioning', function (){
+	var buildNo = "SNAPSHOT";
+
+	if (argv.build !== true && argv.build !== false && argv.build != undefined) {
+		buildNo = argv.build;
+	} else console.log("No build number given, falling back to \"SNAPSHOT\"");
+
+	var versionString = "v" + pkg.version + " (build #" + buildNo + ")";
+
+	console.log("current version String: " + versionString);
+
+	return gulp.src(['app/info-window.html'])
+		.pipe(replace(/"VERSION-STRING"/g, versionString))
+		.pipe(gulp.dest('dist/app/'));
+});

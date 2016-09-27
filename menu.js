@@ -1,16 +1,13 @@
 const electron = require('electron');
 const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
 
-var name;
-if (process.platform === 'darwin')
-    name = app.getName();
-else
-    name = "to_get_deleted";
+var name = app.getName();
 
 const template = [{
     label: name,
     submenu: [{
-        label: 'Über' + name,
+        label: 'Über ' + name,
         role: 'about'
     }, {
         type: 'separator'
@@ -23,7 +20,14 @@ const template = [{
     }]
 },{
     label: 'Datei',
-    submenu: []
+    submenu: [
+        {
+            label: 'Beenden',
+            accelerator: 'CmdOrCtrl+Q',
+            click: function () {
+                app.quit()
+            }
+        }]
 }, {
     label: 'Bearbeiten',
     submenu: [{
@@ -105,7 +109,28 @@ const template = [{
 }, {
     label: 'Hilfe',
     role: 'help',
-    submenu: []
+    submenu: [{
+        label: 'Über ' + name,
+        click: function createInfoWindow() {
+            // new frameless window
+            var infoWindow = new BrowserWindow({
+                width: 300,
+                height: 300,
+                frame: false,
+                webPreferences: {nodeIntegration: true}
+            });
+
+            // Open Browser Dev Tool for debugging
+            // infoWindow.webContents.openDevTools();
+
+            infoWindow.on('closed', () => {
+                infoWindow = null;
+            });
+            // load new panel with version info
+            infoWindow.loadURL('file://' + __dirname + '/app/info-window.html');
+            //console.log(app.getVersion());
+        }
+    }]
 }];
 
 if (process.platform !== 'darwin') {

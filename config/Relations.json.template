@@ -5,75 +5,103 @@
     {
       "name": "belongsTo",
       "inverse": "includes",
-      "label": "Enthalten in",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "label": "gehört zu",
+      "domain": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"],
+      "range": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"]
     },
     {
       "name": "includes",
       "inverse": "belongsTo",
-      "label": "Enthält",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "label": "gehört",
+      "domain": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"],
+      "range": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"]
     },
 
     {
-      "name": "isAbove",
-      "inverse": "isBelow",
-      "label": "Oberhalb von",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "name": "isAboveTo",
+      "inverse": "isBelowTo",
+      "label": "liegt über",
+      "domain": ["layer", "context"],
+      "range": ["layer", "context"]
     },
     {
-      "name": "isBelow",
-      "inverse": "isAbove",
-      "label": "Unterhalb von",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "name": "isBelowTo",
+      "inverse": "isAboveTo",
+      "label": "liegt unter",
+      "domain": ["layer", "context"],
+      "range": ["layer", "context"]
     },
     {
-      "name": "isNextTo",
-      "inverse": "isNextTo",
-      "label": "Benachbart zu",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "name": "adjoinTo",
+      "inverse": "adjoinTo",
+      "label": "grenzt an",
+      "domain": ["context"],
+      "range": ["context"]
     },
 
     {
       "name": "isBefore",
       "inverse": "isAfter",
       "label": "Zeitlich vor",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "domain": ["context", "feature"],
+      "range": ["context", "feature"]
     },
     {
       "name": "isAfter",
       "inverse": "isBefore",
       "label": "Zeitlich nach",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "domain": ["context", "feature"],
+      "range": ["context", "feature"]
     },
     {
       "name": "isCoevalWith",
       "inverse": "isCoevalWith",
       "label": "Zeitgleich mit",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "domain": ["context", "feature"],
+      "range": ["context", "feature"]
     },
 
     {
       "name": "cuts",
       "inverse": "isCutBy",
-      "label": "Schneidet",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "label": "schneidet",
+      "domain": ["context"],
+      "range": ["context"]
     },
     {
       "name": "isCutBy",
       "inverse": "cuts",
-      "label": "Wird geschnitten von",
-      "domain": ["object", "objectenhanced", "section"],
-      "range": ["object", "objectenhanced", "section"]
+      "label": "wird geschnitten von",
+      "domain": ["context"],
+      "range": ["context"]
+    },
+    {
+      "name": "isPartOf",
+      "inverse": "isPartOf",
+      "label": "ist Teil von",
+      "domain": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"],
+      "range": ["object", "layer", "section", "context", "feature", "object_group", "photo", "sample", "event", "planum", "other", "survey"]
+    },
+    {
+      "name": "isLocatedIn",
+      "inverse": "isLocatedIn",
+      "label": "liegt in",
+      "domain": ["object"],
+      "range": ["object"]
+    },
+    {
+      "name": "isEqualTo",
+      "inverse": "isEqualTo",
+      "label": "ist gleich",
+      "domain": ["layer", "context"],
+      "range": ["layer", "context"]
+    },
+    {
+      "name": "isNotClearTo",
+      "inverse": "isNotClearTo",
+      "label": "ist unklar zu",
+      "domain": ["layer", "context"],
+      "range": ["layer", "context"]
     }
 
   ]

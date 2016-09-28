@@ -24,7 +24,8 @@ export class MapComponent implements OnChanges {
     @Output() quitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
     private map: L.Map;
-    private mapElements: Array<L.Layer> = [];
+    private polygons: Array<IdaiFieldPolygon> = [];
+    private markers: Array<IdaiFieldMarker> = [];
 
     private editablePolygon: L.Polygon;
 
@@ -53,10 +54,12 @@ export class MapComponent implements OnChanges {
 
         switch (this.editMode) {
             case "polygon":
+                this.fadeOutMapElements();
                 this.startPolygonEditing();
                 break;
             case "point":
                 // TODO Start point editing
+                this.fadeOutMapElements();
                 break;
         }
     }
@@ -83,11 +86,16 @@ export class MapComponent implements OnChanges {
 
     private clearMap() {
 
-        for (var i in this.mapElements) {
-            this.map.removeLayer(this.mapElements[i]);
+        for (var i in this.polygons) {
+            this.map.removeLayer(this.polygons[i]);
         }
 
-        this.mapElements = [];
+        for (var i in this.markers) {
+            this.map.removeLayer(this.markers[i]);
+        }
+
+        this.polygons = [];
+        this.markers = [];
     }
     
     private addToMap(geometry: any, document: IdaiFieldDocument) {
@@ -114,7 +122,7 @@ export class MapComponent implements OnChanges {
         });
 
         marker.addTo(this.map);
-        this.mapElements.push(marker);
+        this.markers.push(marker);
     }
 
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {
@@ -129,7 +137,7 @@ export class MapComponent implements OnChanges {
         });
 
         polygon.addTo(this.map);
-        this.mapElements.push(polygon);
+        this.polygons.push(polygon);
     }
 
     private addLayerToMap(layer: any) {
@@ -192,7 +200,31 @@ export class MapComponent implements OnChanges {
         });
     }
 
+    private fadeOutMapElements() {
+
+        for (var i in this.polygons) {
+            this.polygons[i].setStyle({ opacity: 0.25, fillOpacity: 0.1 });
+        }
+
+        for (var i in this.markers) {
+            this.markers[i].setOpacity(0.5);
+        }
+    }
+
+    private fadeInMapElements() {
+
+        for (var i in this.polygons) {
+            this.polygons[i].setStyle({ opacity: 0.5, fillOpacity: 0.2 });
+        }
+
+        for (var i in this.markers) {
+            this.markers[i].setOpacity(1);
+        }
+    }
+
     public finishEditing() {
+
+        this.fadeInMapElements();
         
         var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
         
@@ -213,6 +245,7 @@ export class MapComponent implements OnChanges {
 
     public abortEditing() {
 
+        this.fadeInMapElements();
         this.quitEditing.emit(null);
     }
 
@@ -224,7 +257,7 @@ export class MapComponent implements OnChanges {
         for (var i in latLngs) {
             coordinates.push([]);
             for (var j in latLngs[i]) {
-                coordinates[i].push([ latLngs[i][j].lng, latLngs[i][j].lat ]);
+                coordinates[i].push([ latLngs[i][j].lat, latLngs[i][j].lng ]);
             }
         }
         

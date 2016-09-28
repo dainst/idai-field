@@ -84,6 +84,8 @@ export class MapWrapperComponent implements OnInit {
 
         if (geometry) {
             this.overviewComponent.setEditedGeometry(geometry);
+        } else {
+            this.overviewComponent.setEditedGeometry(undefined);
         }
 
         this.router.navigate(['resources', 'new:' + this.newDocumentType, 'edit']);

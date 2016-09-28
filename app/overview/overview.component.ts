@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
@@ -23,6 +24,7 @@ export class OverviewComponent implements OnInit {
     private selectedDocument;
     private observers: Array<any> = [];
     private filterOverviewIsCollapsed = true;
+    private editedGeometry: IdaiFieldGeometry;
 
     constructor(@Inject('app.config') private config,
         private router: Router,
@@ -83,6 +85,12 @@ export class OverviewComponent implements OnInit {
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
 
         var newDocument = { "resource": { "relations": {}, "type": type } };
+
+        if (this.editedGeometry) {
+            newDocument.resource["geometries"] = [ this.editedGeometry ];
+            this.editedGeometry = undefined;
+        }
+
         this.documents.unshift(<Document> newDocument);
         this.notify();
 
@@ -190,6 +198,13 @@ export class OverviewComponent implements OnInit {
         });
     }
 
+    public getEditedGeometry(): IdaiFieldGeometry {
+        return this.editedGeometry;
+    }
+
+    public setEditedGeometry(editedGeometry: IdaiFieldGeometry) {
+        this.editedGeometry = editedGeometry;
+    }
 
     private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;

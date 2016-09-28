@@ -59,7 +59,8 @@ export class DocumentEditWrapperComponent implements  OnInit {
         this.route.params.forEach((params: Params) => {
             if (params['id'].indexOf('new') != -1) {
                 this.mode = 'new';
-                this.document = this.overviewComponent.getSelected();
+                var type = params['id'].substring(params['id'].indexOf(":") + 1);
+                this.document = this.overviewComponent.createNewDocument(type);
             } else {
                 this.mode = 'edit';
                 this.overviewComponent.loadDoc(params['id']).then(

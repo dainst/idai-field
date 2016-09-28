@@ -30,12 +30,10 @@ export class PlusButtonComponent {
 
     public startDocumentCreation(geometryType: string) {
 
-        this.overviewComponent.createNewDocument(this.type);
-
         if (geometryType == "none") {
-            this.router.navigate(['resources', 'new', 'edit']);
+            this.router.navigate(['resources', 'new:' + this.type, 'edit']);
         } else {
-            this.router.navigate(['resources/editGeometry', geometryType, 'new']);
+            this.router.navigate(['resources/editGeometry', geometryType, 'new:' + this.type]);
         }
     }
     

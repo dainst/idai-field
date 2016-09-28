@@ -22,6 +22,7 @@ export class MapWrapperComponent implements OnInit {
     private docs;
     private projectConfiguration: ProjectConfiguration;
     private editMode: string; // polygon | point | none
+    private newDocumentType: string;
 
     constructor(
         private router: Router,
@@ -51,13 +52,18 @@ export class MapWrapperComponent implements OnInit {
                 this.editMode = "none";
             }
 
-            if (params['id'] && params['id'] != "new") {
-                this.datastore.get(params['id']).then(document => {
-                    this.activeDoc = document;
-                    this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
-                    this.overviewComponent.setSelected(<Document>document);
-                });
-            } else if (!params['id']) {
+            if (params['id']) {
+                if (params['id'].indexOf('new') > -1) {
+                    this.overviewComponent.setSelected(undefined);
+                    this.newDocumentType = params['id'].substring(params['id'].indexOf(":") + 1);
+                } else {
+                    this.datastore.get(params['id']).then(document => {
+                        this.activeDoc = document;
+                        this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
+                        this.overviewComponent.setSelected(<Document>document);
+                    });
+                }
+            } else {
                 this.activeDoc = null;
                 this.overviewComponent.setSelected(null);
             }
@@ -77,9 +83,9 @@ export class MapWrapperComponent implements OnInit {
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
-            this.overviewComponent.getSelected().resource.geometries = [ geometry ];
+            this.overviewComponent.setEditedGeometry(geometry);
         }
 
-        this.router.navigate(['resources', 'new', 'edit']);
+        this.router.navigate(['resources', 'new:' + this.newDocumentType, 'edit']);
     }
 }

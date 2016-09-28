@@ -1,9 +1,10 @@
-import {Component, Input, OnChanges} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
+import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 
 @Component({
     moduleId: module.id,
@@ -17,9 +18,15 @@ import {IdaiFieldMarker} from "./idai-field-marker";
 export class MapComponent implements OnChanges {
 
     @Input() documents: any;
+    @Input() editMode: string; // polygon | point | none
+    
+    @Output() selectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() quitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
     private map: L.Map;
     private mapElements: Array<L.Layer> = [];
+
+    private editablePolygon: L.Polygon;
 
     private layers: Array<any> = [
         { name: "Karte 1", filePath: "img/mapLayerTest1.png", bounds: L.latLngBounds([-25, -25], [25, 25]), zIndex: 0 },
@@ -35,7 +42,6 @@ export class MapComponent implements OnChanges {
             this.initializeMap();
         } else {
             this.clearMap();
-            this.map.setView([0, 0], 5);
         }
 
         for (var i in this.documents) {
@@ -44,11 +50,20 @@ export class MapComponent implements OnChanges {
                 this.addToMap(resource.geometries[j], this.documents[i]);
             }
         }
+
+        switch (this.editMode) {
+            case "polygon":
+                this.startPolygonEditing();
+                break;
+            case "point":
+                // TODO Start point editing
+                break;
+        }
     }
 
     private initializeMap() {
 
-        this.map = L.map("mapContainer", { crs: L.CRS.Simple }).setView([0, 0], 5);
+        this.map = L.map("map-container", { crs: L.CRS.Simple }).setView([0, 0], 5);
 
         for (var i in this.layers) {
             var pane = this.map.createPane(this.layers[i].name);
@@ -60,8 +75,10 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         this.map.on('click', function() {
-            mapComponent.router.navigate(['resources']);
+            mapComponent.deselect();
         });
+
+        this.map.pm.addControls({drawPolygon: false, editPolygon: false, deleteLayer: false});
     }
 
     private clearMap() {
@@ -93,7 +110,7 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         marker.on('click', function() {
-            mapComponent.router.navigate(['resources', { id: this.document.resource.id }]);
+            mapComponent.select(this.document);
         });
 
         marker.addTo(this.map);
@@ -108,8 +125,7 @@ export class MapComponent implements OnChanges {
         var mapComponent = this;
         polygon.on('click', function(event: L.Event) {
             // TODO Wait for updated typings file to get rid of error message...
-            L.DomEvent.stop(event);
-            mapComponent.router.navigate(['resources',{ id: this.document.resource.id }]);
+            if (mapComponent.select(this.document)) L.DomEvent.stop(event);
         });
 
         polygon.addTo(this.map);
@@ -146,6 +162,73 @@ export class MapComponent implements OnChanges {
     public isActiveLayer(layer: any) {
         
         return this.activeLayers.indexOf(layer) > -1;
+    }
+
+    private select(document: IdaiFieldDocument): boolean {
+
+        if (this.editMode == "none") {
+            this.selectDocument.emit(document);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private deselect() {
+
+        if (this.editMode == "none") {
+            this.selectDocument.emit(null);
+        }
+    }
+
+    private startPolygonEditing() {
+
+        this.map.pm.enableDraw('Poly');
+        
+        var mapComponent = this;
+        this.map.on('pm:create', function(event: L.LayerEvent) {
+            mapComponent.editablePolygon = <L.Polygon> event.layer;
+            mapComponent.editablePolygon.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
+        });
+    }
+
+    public finishEditing() {
+        
+        var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
+        
+        switch (this.editMode) {
+            case "polygon":
+                geometry.type = "Polygon";
+                geometry.coordinates = this.getPolygonCoordinates(this.editablePolygon);
+                break;
+            case "point":
+                // TODO Implement point editing
+                break;
+            default:
+                geometry = null;
+        }
+
+        this.quitEditing.emit(geometry);
+    }
+
+    public abortEditing() {
+
+        this.quitEditing.emit(null);
+    }
+
+    private getPolygonCoordinates(polygon: L.Polygon): Array<any> {
+
+        var coordinates = [];
+        var latLngs = polygon.getLatLngs();
+
+        for (var i in latLngs) {
+            coordinates.push([]);
+            for (var j in latLngs[i]) {
+                coordinates[i].push([ latLngs[i][j].lng, latLngs[i][j].lat ]);
+            }
+        }
+        
+        return coordinates;
     }
 }
 

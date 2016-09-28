@@ -2,30 +2,44 @@
  * @author: Thomas Kleinke
  */
 
-#mapContainer {
+#map-container {
   width: 100%;
   height: calc(100vh - 75px);
 }
 
-#layerButton {
+#layer-button {
   position: absolute;
+  z-index: 1000;
   top: 10px;
   right: 25px;
-  z-index: 1000;
 }
 
-#layerMenu {
+#layer-menu {
   position: absolute;
+  z-index: 1000;
   top: 10px;
   right: 25px;
   padding-bottom: 10px;
-  z-index: 1000;
 }
 
-#layerMenu label {
+#layer-menu label {
   margin-left: -5px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+#map-editor-button-ok {
+  position: absolute;
+  z-index: 1000;
+  bottom: 20px;
+  right: 150px;
+}
+
+#map-editor-button-abort {
+  position: absolute;
+  z-index: 1000;
+  bottom: 20px;
+  right: 25px;
 }

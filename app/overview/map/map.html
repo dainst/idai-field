@@ -1,12 +1,17 @@
-<div id="mapContainer"></div>
+<div id="map-container"></div>
 
-<div *ngIf="!layerMenuVisible" id="layerButton" class="btn btn-secondary"
+<div *ngIf="!layerMenuVisible" id="layer-button" class="btn btn-secondary"
         (mouseenter)="layerMenuVisible = true;">Karten</div>
-<div *ngIf="layerMenuVisible" id="layerMenu" class="card card-block form-group"
+<div *ngIf="layerMenuVisible" id="layer-menu" class="card card-block form-group"
         (mouseleave)="layerMenuVisible = false;">
     <div *ngFor="let layer of layers">
         <label>
             <input type="checkbox" [checked]="isActiveLayer(layer)" (click)="toggleLayer(layer)" /> {{layer.name}}
         </label>
     </div>
+</div>
+
+<div *ngIf="editMode != 'none'">
+    <div id="map-editor-button-ok" class="btn btn-secondary" (click)="finishEditing()">OK</div>
+    <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">Abbrechen</div>
 </div>

@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {OverviewComponent} from "./overview.component";
 
 @Component({
     selector: 'plus-button',
@@ -19,7 +20,8 @@ export class PlusButtonComponent {
 
     constructor(
         private router: Router,
-        private configLoader: ConfigLoader)
+        private configLoader: ConfigLoader,
+        private overviewComponent: OverviewComponent)
     {
         this.configLoader.configuration().subscribe(result => {
             this.projectConfiguration = result.projectConfiguration;
@@ -27,10 +29,18 @@ export class PlusButtonComponent {
     }
 
     public startDocumentCreation(geometryType: string) {
-        this.router.navigate(['resources', 'new:' + this.type + ':' + geometryType, 'edit']);
+
+        this.overviewComponent.createNewDocument(this.type);
+
+        if (geometryType == "none") {
+            this.router.navigate(['resources', 'new', 'edit']);
+        } else {
+            this.router.navigate(['resources/editGeometry', geometryType, 'new']);
+        }
     }
     
     public reset() {
+
         this.type = undefined;
     }
 }

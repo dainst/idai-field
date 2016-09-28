@@ -19,6 +19,7 @@ import {Observable} from "rxjs/Observable";
  */
 export class OverviewComponent implements OnInit {
 
+    private documents: Document[];
     private selectedDocument;
     private observers: Array<any> = [];
     private filterOverviewIsCollapsed = true;
@@ -59,7 +60,7 @@ export class OverviewComponent implements OnInit {
     /**
      * @returns {Document}
      */
-    public getSelected(): Document {
+    public getSelected(): IdaiFieldDocument {
         return this.selectedDocument;
     }
 
@@ -73,13 +74,6 @@ export class OverviewComponent implements OnInit {
         var index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
         this.notify();
-    }
-
-    private documents: Document[];
-
-    public startDocumentCreation(type: string) {
-
-        this.router.navigate(['resources', 'new:' + type, 'edit']);
     }
 
     public createNewDocument(type: string) {

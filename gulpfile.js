@@ -17,7 +17,8 @@ gulp.task('convert-sass', function() {
 	return gulp.src([
 			'app/app.scss',
 			'node_modules/idai-components-2/src/scss/app.scss',
-			'node_modules/leaflet/dist/leaflet.css'
+			'node_modules/leaflet/dist/leaflet.css',
+			'node_modules/leaflet.pm/dist/leaflet.pm.css'
 		])
 	  	.pipe(sass({includePaths: [
 			'node_modules/bootstrap/scss/',

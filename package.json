@@ -50,6 +50,7 @@
     "electron-prebuilt": "1.2.5",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.1.1",
     "gulp-typescript": "^2.10.0",
     "gulp-uglify": "^1.5.1",
@@ -60,9 +61,9 @@
     "karma-jasmine": "1.0.2",
     "mdi": "^1.5.54",
     "protractor": "^3.1.1",
+    "protractor-console-plugin": "^0.1.1",
     "rimraf": "^2.5.2",
     "typescript": "^2.0.2",
-    "yargs": "^5.0.0",
-    "gulp-replace": "^0.5.4"
+    "yargs": "^5.0.0"
   }
 }

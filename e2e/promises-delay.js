@@ -6,6 +6,6 @@ var utils = require("./utils.js");
  * utils.delayPromises(50);
  *
  */
-var delay=10;
-console.log("Set promises delay to "+delay+" ms.")
+var delay = 100;
+console.log("Set promises delay to " + delay + " ms.")
 utils.delayPromises(delay);

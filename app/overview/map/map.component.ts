@@ -28,6 +28,7 @@ export class MapComponent implements OnChanges {
     private markers: Array<IdaiFieldMarker> = [];
 
     private editablePolygon: L.Polygon;
+    private editableMarker: L.Marker;
 
     private layers: Array<any> = [
         { name: "Karte 1", filePath: "img/mapLayerTest1.png", bounds: L.latLngBounds([-25, -25], [25, 25]), zIndex: 0 },
@@ -77,8 +78,8 @@ export class MapComponent implements OnChanges {
         this.addLayerToMap(this.layers[0]);
 
         var mapComponent = this;
-        this.map.on('click', function() {
-            mapComponent.deselect();
+        this.map.on('click', function(event: L.MouseEvent) {
+            mapComponent.clickOnMap(event.latlng);
         });
 
         this.map.pm.addControls({drawPolygon: false, editPolygon: false, deleteLayer: false});
@@ -172,6 +173,18 @@ export class MapComponent implements OnChanges {
         return this.activeLayers.indexOf(layer) > -1;
     }
 
+    private clickOnMap(clickPosition: L.LatLng) {
+
+        switch (this.editMode) {
+            case "point":
+                this.setEditableMarkerPosition(clickPosition);
+                break;
+            case "none":
+                this.deselect();
+                break;
+        }
+    }
+
     private select(document: IdaiFieldDocument): boolean {
 
         if (this.editMode == "none") {
@@ -222,6 +235,21 @@ export class MapComponent implements OnChanges {
         }
     }
 
+    private createEditableMarker(position: L.LatLng) {
+
+        this.editableMarker = L.marker(position, { draggable: true });
+        this.editableMarker.addTo(this.map);
+    }
+
+    private setEditableMarkerPosition(position: L.LatLng) {
+
+        if (!this.editableMarker) {
+            this.createEditableMarker(position);
+        } else {
+            this.editableMarker.setLatLng(position);
+        }
+    }
+
     public finishEditing() {
 
         this.fadeInMapElements();
@@ -234,7 +262,8 @@ export class MapComponent implements OnChanges {
                 geometry.coordinates = this.getPolygonCoordinates(this.editablePolygon);
                 break;
             case "point":
-                // TODO Implement point editing
+                geometry.type = "Point";
+                geometry.coordinates = [ this.editableMarker.getLatLng().lat, this.editableMarker.getLatLng().lng ];
                 break;
             default:
                 geometry = null;

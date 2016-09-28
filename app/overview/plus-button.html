@@ -23,15 +23,15 @@
         <div *ngIf="type">
             <div class="popover-custom-title">Wählen Sie einen Geometrietyp aus.</div>
             <ul class="list-group">
-                <li id="choose-geometry-option-0" class="list-group-item popover-item"
+                <li id="choose-geometry-option-point" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('point');">
                     Punkt
                 </li>
-                <li id="choose-geometry-option-1" class="list-group-item popover-item"
+                <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('polygon');">
                     Polygon
                 </li>
-                <li id="choose-geometry-option-2" class="list-group-item popover-item"
+                <li id="choose-geometry-option-none" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('none');">
                     Keine Geometriedaten
                 </li>

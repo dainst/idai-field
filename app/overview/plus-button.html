@@ -10,7 +10,7 @@
     <template #newObjectMenu>
 
         <div *ngIf="!type">
-            <div class="popover-custom-title">Wählen Sie einen Typ aus.</div>
+            <div class="popover-custom-title">Bitte wählen Sie einen Typ aus</div>
             <ul class="list-group">
                 <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
                     id="choose-type-option-{{index}}" class="list-group-item popover-item"

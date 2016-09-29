@@ -30,7 +30,7 @@ $ npm start
 The typescript files are compiled once, so it is recommended to configure your IDE to 
 do that continuously in the background for you.
 
-`npm start` open the app in a new browser window. The command  starts the application and takes care that changes made to scss files result in automatic conversion to css.
+`npm start` opens the app in a new browser window. The command  starts the application and takes care that changes made to scss files result in automatic conversion to css.
 
 ## Configuration
 

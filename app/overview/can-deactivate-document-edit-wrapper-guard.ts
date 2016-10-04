@@ -6,7 +6,7 @@ import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import { DocumentEditWrapperComponent } from './document-edit-wrapper.component';
 
 @Injectable()
-export class CanDeactivateGuard implements CanDeactivate<DocumentEditWrapperComponent> {
+export class CanDeactivateDocumentEditWrapperGuard implements CanDeactivate<DocumentEditWrapperComponent> {
 
     private _resolve;
 

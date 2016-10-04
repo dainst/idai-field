@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {OverviewComponent} from "./overview.component";
 import {Document} from "idai-components-2/idai-components-2";
@@ -15,14 +15,14 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class MapWrapperComponent implements OnInit {
+export class MapWrapperComponent implements OnInit, OnDestroy {
 
     private activeDoc;
     private activeType;
     private docs;
     private projectConfiguration: ProjectConfiguration;
     private editMode: string; // polygon | point | none
-    private newDocumentType: string;
+    private emptyDocumentDestruction: boolean = true;
 
     constructor(
         private router: Router,
@@ -48,14 +48,15 @@ export class MapWrapperComponent implements OnInit {
 
             if (params['editMode']) {
                 this.editMode = params['editMode'];
+                this.removeEmptyDocument();
             } else {
                 this.editMode = "none";
             }
 
             if (params['id']) {
                 if (params['id'].indexOf('new') > -1) {
-                    this.overviewComponent.setSelected(undefined);
-                    this.newDocumentType = params['id'].substring(params['id'].indexOf(":") + 1);
+                    var type = params['id'].substring(params['id'].indexOf(":") + 1);
+                    this.overviewComponent.createNewDocument(type);
                 } else {
                     this.datastore.get(params['id']).then(document => {
                         this.activeDoc = document;
@@ -81,13 +82,28 @@ export class MapWrapperComponent implements OnInit {
     }
     
     public quitEditing(geometry: IdaiFieldGeometry) {
-
+        
         if (geometry) {
-            this.overviewComponent.setEditedGeometry(geometry);
-        } else {
-            this.overviewComponent.setEditedGeometry(undefined);
+            this.overviewComponent.getSelected().resource.geometries = [ geometry ];
         }
 
-        this.router.navigate(['resources', 'new:' + this.newDocumentType, 'edit']);
+        this.emptyDocumentDestruction = false;
+
+        this.router.navigate(['resources', 'selected', 'edit']);
+    }
+    
+    ngOnDestroy(): void {
+
+        if (this.emptyDocumentDestruction) {
+            this.removeEmptyDocument();
+        }
+    }
+
+    private removeEmptyDocument() {
+        
+        var selectedDocument = this.overviewComponent.getSelected();
+        if (selectedDocument && !selectedDocument.id) {
+            this.overviewComponent.remove(selectedDocument);
+        }
     }
 }

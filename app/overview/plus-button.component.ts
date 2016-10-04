@@ -20,8 +20,7 @@ export class PlusButtonComponent {
 
     constructor(
         private router: Router,
-        private configLoader: ConfigLoader,
-        private overviewComponent: OverviewComponent)
+        private configLoader: ConfigLoader)
     {
         this.configLoader.configuration().subscribe(result => {
             this.projectConfiguration = result.projectConfiguration;

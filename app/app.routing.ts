@@ -1,7 +1,7 @@
 import {Routes,RouterModule} from '@angular/router';
 
 import {ImportComponent} from './import/import.component';
-import {CanDeactivateGuard} from './overview/can-deactivate-guard';
+import {CanDeactivateDocumentEditWrapperGuard} from './overview/can-deactivate-document-edit-wrapper-guard';
 
 
 const appRoutes: Routes = [
@@ -10,7 +10,7 @@ const appRoutes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-    CanDeactivateGuard
+    CanDeactivateDocumentEditWrapperGuard
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

@@ -24,7 +24,6 @@ export class OverviewComponent implements OnInit {
     private selectedDocument;
     private observers: Array<any> = [];
     private filterOverviewIsCollapsed = true;
-    private editedGeometry: IdaiFieldGeometry;
 
     constructor(@Inject('app.config') private config,
         private router: Router,
@@ -85,11 +84,6 @@ export class OverviewComponent implements OnInit {
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
 
         var newDocument = { "resource": { "relations": {}, "type": type } };
-
-        if (this.editedGeometry) {
-            newDocument.resource["geometries"] = [ this.editedGeometry ];
-            this.editedGeometry = undefined;
-        }
 
         this.documents.unshift(<Document> newDocument);
         this.notify();

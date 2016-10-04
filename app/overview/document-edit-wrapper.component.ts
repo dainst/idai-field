@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {CanDeactivateGuard} from "./can-deactivate-guard";
+import {CanDeactivateDocumentEditWrapperGuard} from "./can-deactivate-document-edit-wrapper-guard";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {OverviewComponent} from "./overview.component";
@@ -41,7 +41,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
         private router: Router,
         private messages: Messages,
         private modalService:NgbModal,
-        private canDeactivateGuard:CanDeactivateGuard,
+        private canDeactivateGuard:CanDeactivateDocumentEditWrapperGuard,
         private persistenceManager:PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor
@@ -61,6 +61,9 @@ export class DocumentEditWrapperComponent implements  OnInit {
                 this.mode = 'new';
                 var type = params['id'].substring(params['id'].indexOf(":") + 1);
                 this.document = this.overviewComponent.createNewDocument(type);
+            } else if (params['id'] == 'selected') {
+                this.mode = 'new';
+                this.document = this.overviewComponent.getSelected();
             } else {
                 this.mode = 'edit';
                 this.overviewComponent.loadDoc(params['id']).then(

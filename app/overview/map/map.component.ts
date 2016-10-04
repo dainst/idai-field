@@ -61,7 +61,6 @@ export class MapComponent implements OnChanges {
                 this.startPolygonEditing();
                 break;
             case "point":
-                // TODO Start point editing
                 this.fadeOutMapElements();
                 break;
         }

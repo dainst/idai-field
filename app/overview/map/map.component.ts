@@ -53,6 +53,8 @@ export class MapComponent implements OnChanges {
             }
         }
 
+        this.removeEditableMapElements();
+
         switch (this.editMode) {
             case "polygon":
                 this.fadeOutMapElements();
@@ -251,8 +253,6 @@ export class MapComponent implements OnChanges {
     }
 
     public finishEditing() {
-
-        this.fadeInMapElements();
         
         var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
         
@@ -269,13 +269,31 @@ export class MapComponent implements OnChanges {
                 geometry = null;
         }
 
+        this.fadeInMapElements();
+        this.removeEditableMapElements();
+
         this.quitEditing.emit(geometry);
     }
 
     public abortEditing() {
 
         this.fadeInMapElements();
+        this.removeEditableMapElements();
+
         this.quitEditing.emit(null);
+    }
+
+    private removeEditableMapElements() {
+
+        if (this.editablePolygon) {
+            this.map.removeLayer(this.editablePolygon);
+            this.editablePolygon = undefined;
+        }
+
+        if (this.editableMarker) {
+            this.map.removeLayer(this.editableMarker);
+            this.editableMarker = undefined;
+        }
     }
 
     private getPolygonCoordinates(polygon: L.Polygon): Array<any> {

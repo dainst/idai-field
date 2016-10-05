@@ -19,7 +19,7 @@ export class MapComponent implements OnChanges {
 
     @Input() documents: any;
     @Input() editMode: string; // polygon | point | none
-    
+
     @Output() selectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() quitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
@@ -35,6 +35,25 @@ export class MapComponent implements OnChanges {
         { name: "Karte 2", filePath: "img/mapLayerTest2.png", bounds: L.latLngBounds([-25, -75], [25, -25]), zIndex: 1 }
     ];
     private activeLayers: Array<any> = [];
+
+    private markerIcons = {
+        'blue': L.icon({
+            iconUrl: 'img/marker-icons/marker-icon-blue.png',
+            shadowUrl: 'img/marker-icons/marker-shadow.png',
+            iconSize:     [25, 41],
+            shadowSize:   [41, 41],
+            iconAnchor:   [12, 39],
+            shadowAnchor: [13, 39]
+        }),
+        'red': L.icon({
+            iconUrl: 'img/marker-icons/marker-icon-red.png',
+            shadowUrl: 'img/marker-icons/marker-shadow.png',
+            iconSize:     [25, 41],
+            shadowSize:   [41, 41],
+            iconAnchor:   [12, 39],
+            shadowAnchor: [13, 39]
+        })
+    };
 
     constructor(private router: Router) {}
 
@@ -99,7 +118,7 @@ export class MapComponent implements OnChanges {
         this.polygons = [];
         this.markers = [];
     }
-    
+
     private addToMap(geometry: any, document: IdaiFieldDocument) {
 
         switch(geometry.type) {
@@ -115,7 +134,11 @@ export class MapComponent implements OnChanges {
     private addMarkerToMap(geometry: any, document: IdaiFieldDocument) {
 
         var latLng = L.latLng(geometry.coordinates);
-        var marker: IdaiFieldMarker = L.marker(latLng, { title: this.getShortDescription(document.resource) });
+
+        var marker: IdaiFieldMarker = L.marker(latLng, {
+            icon: this.markerIcons.blue,
+            title: this.getShortDescription(document.resource)
+        });
         marker.document = document;
 
         var mapComponent = this;
@@ -156,9 +179,9 @@ export class MapComponent implements OnChanges {
 
         return shortDescription;
     }
-    
+
     public toggleLayer(layer: any) {
-        
+
         var index = this.activeLayers.indexOf(layer);
         if (index == -1) {
             this.activeLayers.push(layer);
@@ -168,9 +191,9 @@ export class MapComponent implements OnChanges {
             this.map.removeLayer(layer.object);
         }
     }
-    
+
     public isActiveLayer(layer: any) {
-        
+
         return this.activeLayers.indexOf(layer) > -1;
     }
 
@@ -206,7 +229,7 @@ export class MapComponent implements OnChanges {
     private startPolygonEditing() {
 
         this.map.pm.enableDraw('Poly');
-        
+
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             mapComponent.editablePolygon = <L.Polygon> event.layer;
@@ -252,9 +275,9 @@ export class MapComponent implements OnChanges {
     }
 
     public finishEditing() {
-        
+
         var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
-        
+
         switch (this.editMode) {
             case "polygon":
                 geometry.type = "Polygon";
@@ -306,7 +329,7 @@ export class MapComponent implements OnChanges {
                 coordinates[i].push([ latLngs[i][j].lat, latLngs[i][j].lng ]);
             }
         }
-        
+
         return coordinates;
     }
 }

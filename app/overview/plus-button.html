@@ -15,7 +15,7 @@
                 <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
                     id="choose-type-option-{{index}}" class="list-group-item popover-item"
                     (click)="type = t.name">
-                    {{t.name}}
+                    {{t.label}}
                 </li>
             </ul>
         </div>

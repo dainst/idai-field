@@ -81,6 +81,7 @@ export class MapComponent implements OnChanges {
                 break;
             case "point":
                 this.fadeOutMapElements();
+                this.createEditableMarker(this.map.getCenter());
                 break;
         }
     }
@@ -98,8 +99,8 @@ export class MapComponent implements OnChanges {
         this.addLayerToMap(this.layers[0]);
 
         var mapComponent = this;
-        this.map.on('click', function(event: L.MouseEvent) {
-            mapComponent.clickOnMap(event.latlng);
+        this.map.on('click', function() {
+            mapComponent.clickOnMap();
         });
 
         this.map.pm.addControls({drawPolygon: false, editPolygon: false, deleteLayer: false});
@@ -197,15 +198,10 @@ export class MapComponent implements OnChanges {
         return this.activeLayers.indexOf(layer) > -1;
     }
 
-    private clickOnMap(clickPosition: L.LatLng) {
+    private clickOnMap() {
 
-        switch (this.editMode) {
-            case "point":
-                this.setEditableMarkerPosition(clickPosition);
-                break;
-            case "none":
-                this.deselect();
-                break;
+        if (this.editMode == "none") {
+            this.deselect();
         }
     }
 
@@ -228,11 +224,17 @@ export class MapComponent implements OnChanges {
 
     private startPolygonEditing() {
 
-        this.map.pm.enableDraw('Poly');
+        var drawOptions = {
+            templineStyle: { color: 'red' },
+            hintlineStyle: { color: 'red' }
+        };
+
+        this.map.pm.enableDraw('Poly', drawOptions);
 
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             mapComponent.editablePolygon = <L.Polygon> event.layer;
+            mapComponent.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
             mapComponent.editablePolygon.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
         });
     }
@@ -261,17 +263,8 @@ export class MapComponent implements OnChanges {
 
     private createEditableMarker(position: L.LatLng) {
 
-        this.editableMarker = L.marker(position, { draggable: true });
+        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
         this.editableMarker.addTo(this.map);
-    }
-
-    private setEditableMarkerPosition(position: L.LatLng) {
-
-        if (!this.editableMarker) {
-            this.createEditableMarker(position);
-        } else {
-            this.editableMarker.setLatLng(position);
-        }
     }
 
     public finishEditing() {

@@ -72,7 +72,7 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        this.removeEditableMapElements();
+        this.resetEditing();
 
         switch (this.editMode) {
             case "polygon":
@@ -285,7 +285,7 @@ export class MapComponent implements OnChanges {
         }
 
         this.fadeInMapElements();
-        this.removeEditableMapElements();
+        this.resetEditing();
 
         this.quitEditing.emit(geometry);
     }
@@ -293,14 +293,15 @@ export class MapComponent implements OnChanges {
     public abortEditing() {
 
         this.fadeInMapElements();
-        this.removeEditableMapElements();
+        this.resetEditing();
 
         this.quitEditing.emit(null);
     }
 
-    private removeEditableMapElements() {
+    private resetEditing() {
 
         if (this.editablePolygon) {
+            this.editablePolygon.pm.disable();
             this.map.removeLayer(this.editablePolygon);
             this.editablePolygon = undefined;
         }
@@ -309,6 +310,8 @@ export class MapComponent implements OnChanges {
             this.map.removeLayer(this.editableMarker);
             this.editableMarker = undefined;
         }
+
+        this.map.pm.disableDraw('Poly');
     }
 
     private getPolygonCoordinates(polygon: L.Polygon): Array<any> {

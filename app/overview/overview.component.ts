@@ -192,14 +192,6 @@ export class OverviewComponent implements OnInit {
         });
     }
 
-    public getEditedGeometry(): IdaiFieldGeometry {
-        return this.editedGeometry;
-    }
-
-    public setEditedGeometry(editedGeometry: IdaiFieldGeometry) {
-        this.editedGeometry = editedGeometry;
-    }
-
     private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;
     }

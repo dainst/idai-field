@@ -11,10 +11,6 @@ export var DOCS: IdaiFieldDocument[] = [
                 "cuts": ["o2"]
             },
             "geometries": [{
-                "type": "Point",
-                "coordinates": [0.5, 0.5],
-                "crs": "local"
-            }, {
                 "type": "Polygon",
                 "coordinates": [
                     [
@@ -43,18 +39,6 @@ export var DOCS: IdaiFieldDocument[] = [
                 "type": "Point",
                 "coordinates": [1.5, 1.5],
                 "crs": "local"
-            }, {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [1, 1],
-                        [2, 1],
-                        [2, 2],
-                        [1, 2],
-                        [1, 1]
-                    ]
-                ],
-                "crs": "local"
             }],
             "type": "object"
         },
@@ -68,10 +52,6 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "object",
             "relations": {},
             "geometries": [{
-                "type": "Point",
-                "coordinates": [-0.5, -0.5],
-                "crs": "local"
-            }, {
                 "type": "Polygon",
                 "coordinates": [
                     [
@@ -97,18 +77,6 @@ export var DOCS: IdaiFieldDocument[] = [
             "geometries": [{
                 "type": "Point",
                 "coordinates": [-1.5, -1.5],
-                "crs": "local"
-            }, {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [-1, -1],
-                        [-2, -1],
-                        [-2, -2],
-                        [-1, -2],
-                        [-1, -1]
-                    ]
-                ],
                 "crs": "local"
             }]
         },

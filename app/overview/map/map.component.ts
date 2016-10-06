@@ -18,15 +18,16 @@ import {MapState} from './map-state';
  */
 export class MapComponent implements OnChanges {
 
-    @Input() documents: any;
+    @Input() documents: Array<IdaiFieldDocument>;
+    @Input() selectedDocument: IdaiFieldDocument;
     @Input() editMode: string; // polygon | point | none
 
     @Output() selectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() quitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
     private map: L.Map;
-    private polygons: Array<IdaiFieldPolygon> = [];
-    private markers: Array<IdaiFieldMarker> = [];
+    private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
+    private markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
@@ -84,14 +85,28 @@ export class MapComponent implements OnChanges {
             }
         }
 
+        setTimeout(function() {
+
+            if (this.selectedDocument) {
+
+                this.map.invalidateSize(true);
+
+                if (this.polygons[this.selectedDocument.resource.id]) {
+                    this.focusPolygon(this.polygons[this.selectedDocument.resource.id]);
+                } else if (this.markers[this.selectedDocument.resource.id]) {
+                    this.focusMarker(this.markers[this.selectedDocument.resource.id]);
+                }
+            }
+        }.bind(this), 100);
+
         this.resetEditing();
 
         switch (this.editMode) {
-            case "polygon":
+            case 'polygon':
                 this.fadeOutMapElements();
                 this.startPolygonEditing();
                 break;
-            case "point":
+            case 'point':
                 this.fadeOutMapElements();
                 this.createEditableMarker(this.map.getCenter());
                 break;
@@ -121,20 +136,21 @@ export class MapComponent implements OnChanges {
     }
 
     private initializeViewport() {
-        if (this.mapState.getCenter()&&this.mapState.getZoom())
-            this.map.setView(this.mapState.getCenter(),this.mapState.getZoom(),{});
-        else
+
+        if (this.mapState.getCenter() && this.mapState.getZoom()) {
+            this.map.setView(this.mapState.getCenter(), this.mapState.getZoom(), {});
+        } else {
             this.map.setView([0, 0], 5);
+        }
     }
 
     private initializeViewportMonitoring() {
+
         this.map.on('moveend',function(){
             this.mapState.setCenter(this.map.getCenter());
             this.mapState.setZoom(this.map.getZoom());
         }.bind(this));
     }
-
-
 
     private clearMap() {
 
@@ -146,8 +162,8 @@ export class MapComponent implements OnChanges {
             this.map.removeLayer(this.markers[i]);
         }
 
-        this.polygons = [];
-        this.markers = [];
+        this.polygons = {};
+        this.markers = {};
     }
 
     private addToMap(geometry: any, document: IdaiFieldDocument) {
@@ -166,8 +182,10 @@ export class MapComponent implements OnChanges {
 
         var latLng = L.latLng(geometry.coordinates);
 
+        var icon = document == this.selectedDocument ? this.markerIcons.darkblue : this.markerIcons.blue;
+
         var marker: IdaiFieldMarker = L.marker(latLng, {
-            icon: this.markerIcons.blue,
+            icon: icon,
             title: this.getShortDescription(document.resource)
         });
         marker.document = document;
@@ -176,18 +194,21 @@ export class MapComponent implements OnChanges {
 
         marker.on('click', function(e) {
             mapComponent.select(this.document);
-            mapComponent.focusMarker(e.target);
         });
 
         marker.addTo(this.map);
-        this.markers.push(marker);
+        this.markers[document.resource.id] = marker;
     }
 
     private focusMarker(marker: L.Marker) {
 
-        this.map.invalidateSize(true);
         marker.setIcon(this.markerIcons.darkblue);
-        this.map.panTo(marker.getLatLng());
+        this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
+    }
+
+    private focusPolygon(polygon: L.Polygon) {
+
+        this.map.fitBounds(polygon.getBounds(), { padding: [25, 25] });
     }
 
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {
@@ -202,7 +223,7 @@ export class MapComponent implements OnChanges {
         });
 
         polygon.addTo(this.map);
-        this.polygons.push(polygon);
+        this.polygons[document.resource.id] = polygon;
     }
 
     private addLayerToMap(layer: any) {

@@ -1,6 +1,7 @@
 <div class="row">
     <div [class.col-sm-12]="!activeDoc" [class.col-sm-8]="activeDoc">
-        <map [documents]="docs" [editMode]="editMode" (selectDocument)="selectDocument($event)"
+        <map [documents]="docs" [selectedDocument]="overviewComponent.getSelected()"
+             [editMode]="editMode" (selectDocument)="selectDocument($event)"
              (quitEditing)="quitEditing($event)"></map>
     </div>
     <div *ngIf="activeDoc" class="col-sm-4">

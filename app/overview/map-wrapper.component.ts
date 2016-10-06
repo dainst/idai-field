@@ -22,7 +22,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     private docs;
     private projectConfiguration: ProjectConfiguration;
     private editMode: string; // polygon | point | none
-    private emptyDocumentDestruction: boolean = true;
 
     constructor(
         private router: Router,
@@ -87,22 +86,18 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             this.overviewComponent.getSelected().resource.geometries = [ geometry ];
         }
 
-        this.emptyDocumentDestruction = false;
-
         this.router.navigate(['resources', 'selected', 'edit']);
     }
     
     ngOnDestroy(): void {
 
-        if (this.emptyDocumentDestruction) {
-            this.removeEmptyDocument();
-        }
+        this.removeEmptyDocument();
     }
 
     private removeEmptyDocument() {
         
         var selectedDocument = this.overviewComponent.getSelected();
-        if (selectedDocument && !selectedDocument.id) {
+        if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometries) {
             this.overviewComponent.remove(selectedDocument);
         }
     }

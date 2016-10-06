@@ -45,6 +45,14 @@ export class MapComponent implements OnChanges {
             iconAnchor:   [12, 39],
             shadowAnchor: [13, 39]
         }),
+        'darkblue': L.icon({
+            iconUrl: 'img/marker-icons/marker-icon-darkblue.png',
+            shadowUrl: 'img/marker-icons/marker-shadow.png',
+            iconSize:     [25, 41],
+            shadowSize:   [41, 41],
+            iconAnchor:   [12, 39],
+            shadowAnchor: [13, 39]
+        }),
         'red': L.icon({
             iconUrl: 'img/marker-icons/marker-icon-red.png',
             shadowUrl: 'img/marker-icons/marker-shadow.png',
@@ -143,12 +151,21 @@ export class MapComponent implements OnChanges {
         marker.document = document;
 
         var mapComponent = this;
-        marker.on('click', function() {
+
+        marker.on('click', function(e) {
             mapComponent.select(this.document);
+            mapComponent.focusMarker(e.target);
         });
 
         marker.addTo(this.map);
         this.markers.push(marker);
+    }
+
+    private focusMarker(marker: L.Marker) {
+
+        this.map.invalidateSize(true);
+        marker.setIcon(this.markerIcons.darkblue);
+        this.map.panTo(marker.getLatLng());
     }
 
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {

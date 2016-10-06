@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
@@ -19,6 +20,7 @@ import {Observable} from "rxjs/Observable";
  */
 export class OverviewComponent implements OnInit {
 
+    private documents: Document[];
     private selectedDocument;
     private observers: Array<any> = [];
     private filterOverviewIsCollapsed = true;
@@ -59,7 +61,7 @@ export class OverviewComponent implements OnInit {
     /**
      * @returns {Document}
      */
-    public getSelected(): Document {
+    public getSelected(): IdaiFieldDocument {
         return this.selectedDocument;
     }
 
@@ -75,13 +77,6 @@ export class OverviewComponent implements OnInit {
         this.notify();
     }
 
-    private documents: Document[];
-
-    public startDocumentCreation(type: string) {
-
-        this.router.navigate(['resources', 'new:' + type, 'edit']);
-    }
-
     public createNewDocument(type: string) {
 
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
@@ -89,6 +84,7 @@ export class OverviewComponent implements OnInit {
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
 
         var newDocument = { "resource": { "relations": {}, "type": type } };
+
         this.documents.unshift(<Document> newDocument);
         this.notify();
 
@@ -195,7 +191,6 @@ export class OverviewComponent implements OnInit {
             );
         });
     }
-
 
     private toStringArray(str : any) : string[] {
         if ((typeof str)=="string") return [str]; else return str;

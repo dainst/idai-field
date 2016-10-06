@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {OverviewComponent} from './overview.component';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
-import {CanDeactivateGuard}    from './can-deactivate-guard';
+import {CanDeactivateDocumentEditWrapperGuard}  from './can-deactivate-document-edit-wrapper-guard';
 
 const overviewRoutes: Routes = [
     {
@@ -15,9 +15,13 @@ const overviewRoutes: Routes = [
                 component: MapWrapperComponent
             },
             {
+                path: 'editGeometry/:editMode/:id',
+                component: MapWrapperComponent
+            },
+            {
                 path: ':id/edit',
                 component: DocumentEditWrapperComponent,
-                canDeactivate: [CanDeactivateGuard]
+                canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
             }
         ]
     }

@@ -130,10 +130,36 @@
   color: #ddd;
 }
 
+.popover {
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+}
+
+.popover-content {
+  padding: 0 !important;
+}
+
+.popover-custom-title {
+  background-color: #eee;
+  padding: 10px;
+  font-weight: lighter;
+}
+
+.popover-arrow {
+  display: none !important;
+}
+
+.popover-custom-title {
+  font-size: 1.2em;
+  padding-bottom: 10px;
+}
+
 .popover-item {
-  margin-left: -16px;
-  margin-right: -16px;
   cursor: pointer;
+  border: 0 !important;
+  border-radius: 0 !important;
 }
 
 .popover-item:hover {

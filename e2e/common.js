@@ -5,7 +5,9 @@
 function createObject(identifier) {
     return clickCreateObjectButton()
         .then(selectObjectType)
+        .then(skipGeometryCreation)
         .then(typeInIdentifier(identifier))
+        .then(scrollUp)
         .then(saveObject)
 }
 
@@ -14,7 +16,11 @@ function clickCreateObjectButton() {
 }
 
 function selectObjectType() {
-    return element(by.id('create-object-option-0')).click();
+    return element(by.id('choose-type-option-0')).click();
+}
+
+function skipGeometryCreation() {
+    return element(by.id('choose-geometry-option-none')).click();
 }
 
 function typeInIdentifier(identifier) {
@@ -72,6 +78,7 @@ module.exports = {
     clickSaveInModal: clickSaveInModal,
     clickCreateObjectButton: clickCreateObjectButton,
     selectObjectType: selectObjectType,
+    skipGeometryCreation: skipGeometryCreation,
     createObject: createObject,
     switchToEditMode: switchToEditMode,
     saveObject: saveObject,

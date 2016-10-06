@@ -208,7 +208,7 @@ export class MapComponent implements OnChanges {
 
     private focusPolygon(polygon: L.Polygon) {
 
-        this.map.fitBounds(polygon.getBounds(), { padding: [25, 25] });
+        this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
     }
 
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {

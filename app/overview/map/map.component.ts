@@ -5,6 +5,7 @@ import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
+import {MapState} from './map-state';
 
 @Component({
     moduleId: module.id,
@@ -63,7 +64,10 @@ export class MapComponent implements OnChanges {
         })
     };
 
-    constructor(private router: Router) {}
+    constructor(
+        private router: Router,
+        private mapState: MapState
+    ) {}
 
     public ngOnChanges() {
 
@@ -96,7 +100,7 @@ export class MapComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("map-container", { crs: L.CRS.Simple }).setView([0, 0], 5);
+        this.map = L.map("map-container", { crs: L.CRS.Simple });
 
         for (var i in this.layers) {
             var pane = this.map.createPane(this.layers[i].name);
@@ -111,8 +115,26 @@ export class MapComponent implements OnChanges {
             mapComponent.clickOnMap();
         });
 
+        this.initializeViewport();
+        this.initializeViewportMonitoring();
         this.map.pm.addControls({drawPolygon: false, editPolygon: false, deleteLayer: false});
     }
+
+    private initializeViewport() {
+        if (this.mapState.getCenter()&&this.mapState.getZoom())
+            this.map.setView(this.mapState.getCenter(),this.mapState.getZoom(),{});
+        else
+            this.map.setView([0, 0], 5);
+    }
+
+    private initializeViewportMonitoring() {
+        this.map.on('moveend',function(){
+            this.mapState.setCenter(this.map.getCenter());
+            this.mapState.setZoom(this.map.getZoom());
+        }.bind(this));
+    }
+
+
 
     private clearMap() {
 

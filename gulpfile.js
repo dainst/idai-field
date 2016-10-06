@@ -170,7 +170,7 @@ gulp.task('versioning', function (){
 
 	var versionString = "v" + pkg.version + " (build #" + buildNo + ")";
 
-	console.log("current version String: " + versionString);
+	console.log("Updated version string: " + versionString);
 
 	return gulp.src(['app/info-window.html'])
 		.pipe(replace(/"VERSION-STRING"/g, versionString))

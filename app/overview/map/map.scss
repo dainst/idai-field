@@ -4,7 +4,14 @@
 
 #map-container {
   width: 100%;
-  height: calc(100vh - 75px);
+  height: 100vh;
+}
+
+#layer-button,
+#layer-menu {
+  border: none;
+  border-radius: 2px;
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
 #layer-button {

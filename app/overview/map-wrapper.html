@@ -4,8 +4,8 @@
              [editMode]="editMode" (selectDocument)="selectDocument($event)"
              (quitEditing)="quitEditing($event)"></map>
     </div>
-    <div *ngIf="activeDoc" class="col-sm-4">
-        <div class="card" style="height: calc(100vh - 75px);">
+    <div *ngIf="activeDoc" class="col-sm">
+        <div class="card">
             <div class="card-header">
                 <h4>
                     {{activeType}}

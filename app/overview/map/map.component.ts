@@ -70,6 +70,11 @@ export class MapComponent implements OnChanges {
         private mapState: MapState
     ) {}
 
+    public ngAfterViewInit() {
+        console.log('here')
+        this.map.invalidateSize(true);
+    }
+
     public ngOnChanges() {
 
         if (!this.map) {

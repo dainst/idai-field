@@ -207,14 +207,36 @@ textarea {
   background-color: #eee;
 }
 
+#document-edit-button-save-document:active,
+#document-edit-button-save-document:focus,
+#document-edit-button-goto-view:active,
+#document-edit-button-goto-view:focus,
+#document-view-button-edit-document:active,
+#document-view-button-edit-document:focus,
+#document-view-button-back-to-map:active,
+#document-view-button-back-to-map:focus {
+  outline: none;
+}
+
+#document-edit-button-save-document:focus,
+#document-edit-button-goto-view:focus {
+  background-color: #ddd;
+}
+
 #document-edit-button-save-document,
-#document-edit-button-goto-view,
-#document-view-button-edit-document,
-#document-view-button-back-to-map {
+#document-edit-button-goto-view {
   margin-right: 7px;
   margin-top: 7px;
   border: 0;
   border-radius: 2px;
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.3);
   color: #555;
+}
+
+#document-view-button-edit-document,
+#document-view-button-back-to-map {
+  margin-right: 5px;
+  margin-top: 5px;
+  border: 0;
+  color: #657faa;
 }

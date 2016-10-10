@@ -32,3 +32,12 @@
 .document-view-field .fieldvalue .relation-link {
   cursor: pointer;
 }
+
+#document-view-button-edit-geometry {
+  margin-bottom: 5px;
+}
+
+#document-view-button-create-polygon {
+  margin-left: -5px;
+  margin-right: -15px;
+}

@@ -68,7 +68,7 @@ export class MapComponent implements OnChanges {
     constructor(private mapState: MapState) {}
 
     public ngAfterViewInit() {
-        console.log('here')
+        // TODO Check if this is really necessary
         this.map.invalidateSize(true);
     }
 
@@ -89,10 +89,9 @@ export class MapComponent implements OnChanges {
 
         setTimeout(function() {
 
+            this.map.invalidateSize(true);
+
             if (this.selectedDocument) {
-
-                this.map.invalidateSize(true);
-
                 if (this.polygons[this.selectedDocument.resource.id]) {
                     this.focusPolygon(this.polygons[this.selectedDocument.resource.id]);
                 } else if (this.markers[this.selectedDocument.resource.id]) {

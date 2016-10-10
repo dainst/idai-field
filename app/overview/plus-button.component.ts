@@ -32,7 +32,7 @@ export class PlusButtonComponent {
         if (geometryType == "none") {
             this.router.navigate(['resources', 'new:' + this.type, 'edit']);
         } else {
-            this.router.navigate(['resources/editGeometry', geometryType, 'new:' + this.type]);
+            this.router.navigate(['resources/editGeometry', 'new:' + this.type, geometryType]);
         }
     }
     

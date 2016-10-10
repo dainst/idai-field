@@ -15,8 +15,7 @@ export class Validator {
     private relationsConfiguration: RelationsConfiguration;
 
     constructor(private configLoader: ConfigLoader) {
-
-
+        
         this.configLoader.configuration().subscribe((result)=>{
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;

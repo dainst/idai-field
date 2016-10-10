@@ -65,10 +65,7 @@ export class MapComponent implements OnChanges {
         })
     };
 
-    constructor(
-        private router: Router,
-        private mapState: MapState
-    ) {}
+    constructor(private mapState: MapState) {}
 
     public ngAfterViewInit() {
         console.log('here')
@@ -107,13 +104,19 @@ export class MapComponent implements OnChanges {
         this.resetEditing();
 
         switch (this.editMode) {
+            case 'none':
+                break;
             case 'polygon':
                 this.fadeOutMapElements();
-                this.startPolygonEditing();
+                this.startPolygonCreation();
                 break;
             case 'point':
                 this.fadeOutMapElements();
                 this.createEditableMarker(this.map.getCenter());
+                break;
+            case 'existing':
+                this.fadeOutMapElements();
+                this.editExistingGeometry();
                 break;
         }
     }
@@ -287,7 +290,19 @@ export class MapComponent implements OnChanges {
         }
     }
 
-    private startPolygonEditing() {
+
+    private editExistingGeometry() {
+
+        switch (this.selectedDocument.resource.geometries[0].type) {
+            case 'Polygon':
+                this.startPolygonEditing();
+                break;
+            case 'Point':
+                break;
+        }
+    }
+
+    private startPolygonCreation() {
 
         var drawOptions = {
             templineStyle: { color: 'red' },
@@ -304,14 +319,25 @@ export class MapComponent implements OnChanges {
         });
     }
 
+    private startPolygonEditing() {
+
+        this.polygons[this.selectedDocument.resource.id].setStyle({ color: 'red', fillColor: 'red' });
+        this.polygons[this.selectedDocument.resource.id].pm.enable({
+            draggable: true, snappable: true, snapDistance: 30 });
+    }
+
     private fadeOutMapElements() {
 
         for (var i in this.polygons) {
-            this.polygons[i].setStyle({ opacity: 0.25, fillOpacity: 0.1 });
+            if (this.polygons[i].document != this.selectedDocument) {
+                this.polygons[i].setStyle({ opacity: 0.25, fillOpacity: 0.1 });
+            }
         }
 
         for (var i in this.markers) {
-            this.markers[i].setOpacity(0.5);
+            if (this.markers[i].document != this.selectedDocument) {
+                this.markers[i].setOpacity(0.5);
+            }
         }
     }
 

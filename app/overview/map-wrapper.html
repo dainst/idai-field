@@ -11,16 +11,30 @@
                     {{activeType}}
                     <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-back-to-map"
                             [routerLink]="['/resources']">
-                        <span class="mdi mdi-close"></span>
+                        <span class="mdi mdi-close mdi-18px"></span>
+                    </button>
+                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-edit-geometry"
+                            [routerLink]="['/resources/', { id: activeDoc['resource']['id'],
+                                          menuMode: 'geometryEdit' }]">
+                        <span class="mdi mdi-vector-polygon mdi-18px"></span>
                     </button>
                     <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-edit-document"
                             [routerLink]="['/resources/', activeDoc['resource']['id'], 'edit']">
-                        <span class="mdi mdi-pencil"></span>
+                        <span class="mdi mdi-pencil mdi-18px"></span>
+                    </button>
+                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-show-data"
+                            [routerLink]="['/resources/', { id: activeDoc['resource']['id'],
+                                          menuMode: 'view' }]">
+                        <span class="mdi mdi-eye mdi-18px"></span>
                     </button>
                 </h4>
             </div>
             <div class="card-block">
-                <document-view [document]="activeDoc"></document-view>
+                <document-view *ngIf="menuMode == 'view'" [document]="activeDoc"></document-view>
+                <document-geometry-edit *ngIf="menuMode == 'geometryEdit'"
+                                        [document]="activeDoc"
+                                        [isEditing]="editMode != 'none'"
+                                        ></document-geometry-edit>
             </div>
         </div>
     </div>

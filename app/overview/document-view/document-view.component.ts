@@ -53,9 +53,7 @@ export class DocumentViewComponent implements OnChanges {
 
         this.initializeFields(resource);
         this.initializeRelations(resource);
-
     }
-
 
     public selectDocument(documentToJumpTo) {
         this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])

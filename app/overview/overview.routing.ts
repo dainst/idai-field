@@ -15,7 +15,7 @@ const overviewRoutes: Routes = [
                 component: MapWrapperComponent
             },
             {
-                path: 'editGeometry/:editMode/:id',
+                path: 'editGeometry/:id/:editMode',
                 component: MapWrapperComponent
             },
             {

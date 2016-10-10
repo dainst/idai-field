@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {overviewRouting} from './overview.routing';
 import {OverviewComponent} from './overview.component';
 import {DocumentViewComponent} from './document-view/document-view.component';
+import {DocumentGeometryEditComponent} from './document-geometry-edit/document-geometry-edit.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {MapWrapperComponent} from './map-wrapper.component';
@@ -21,6 +22,7 @@ import {MapState} from './map/map-state';
     declarations: [
         OverviewComponent,
         DocumentViewComponent,
+        DocumentGeometryEditComponent,
         DocumentEditWrapperComponent,
         MapWrapperComponent,
         MapComponent,

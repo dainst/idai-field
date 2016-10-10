@@ -89,7 +89,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
                 this.overviewComponent.getSelected()['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
 
-                this.navigate(this.overviewComponent.getSelected(),proceed);
+                this.navigate(this.overviewComponent.getSelected(), proceed);
                 // show message after route change
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },

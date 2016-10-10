@@ -21,6 +21,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     private activeType;
     private docs;
     private projectConfiguration: ProjectConfiguration;
+    private menuMode: string; // view | geometryEdit
     private editMode: string; // polygon | point | none
 
     constructor(
@@ -45,6 +46,12 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         this.route.params.forEach((params: Params) => {
 
+            if (params['menuMode']) {
+                this.menuMode = params['menuMode'];
+            } else {
+                this.menuMode = "view";
+            }
+
             if (params['editMode']) {
                 this.editMode = params['editMode'];
                 this.removeEmptyDocument();
@@ -68,7 +75,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
                 this.overviewComponent.setSelected(null);
             }
         });
-
     }
     
     public selectDocument(document: Document) {
@@ -81,7 +87,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     }
     
     public quitEditing(geometry: IdaiFieldGeometry) {
-        
+
         if (geometry) {
             this.overviewComponent.getSelected().resource.geometries = [ geometry ];
         }

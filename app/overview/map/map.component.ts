@@ -112,7 +112,7 @@ export class MapComponent implements OnChanges {
                 break;
             case 'point':
                 this.fadeOutMapElements();
-                this.createEditableMarker(this.map.getCenter());
+                this.startPointCreation();
                 break;
             case 'existing':
                 this.fadeOutMapElements();
@@ -190,7 +190,7 @@ export class MapComponent implements OnChanges {
 
         var latLng = L.latLng(geometry.coordinates);
 
-        var icon = document == this.selectedDocument ? this.markerIcons.darkblue : this.markerIcons.blue;
+        var icon = (document == this.selectedDocument) ? this.markerIcons.darkblue : this.markerIcons.blue;
 
         var marker: IdaiFieldMarker = L.marker(latLng, {
             icon: icon,
@@ -210,7 +210,9 @@ export class MapComponent implements OnChanges {
 
     private focusMarker(marker: L.Marker) {
 
-        marker.setIcon(this.markerIcons.darkblue);
+        if (marker != this.editableMarker) {
+            marker.setIcon(this.markerIcons.darkblue);
+        }
         this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
     }
 
@@ -290,7 +292,6 @@ export class MapComponent implements OnChanges {
         }
     }
 
-
     private editExistingGeometry() {
 
         switch (this.selectedDocument.resource.geometries[0].type) {
@@ -298,6 +299,7 @@ export class MapComponent implements OnChanges {
                 this.startPolygonEditing();
                 break;
             case 'Point':
+                this.startPointEditing();
                 break;
         }
     }
@@ -353,10 +355,20 @@ export class MapComponent implements OnChanges {
         }
     }
 
-    private createEditableMarker(position: L.LatLng) {
+    private startPointCreation() {
+
+        var position = this.map.getCenter();
 
         this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
         this.editableMarker.addTo(this.map);
+    }
+
+    private startPointEditing() {
+
+        this.editableMarker = this.markers[this.selectedDocument.resource.id];
+        this.editableMarker.setIcon(this.markerIcons.red);
+        this.editableMarker.dragging.enable();
+        this.editableMarker.setZIndexOffset(1000);
     }
 
     public deleteGeometry() {

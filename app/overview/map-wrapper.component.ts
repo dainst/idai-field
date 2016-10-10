@@ -2,7 +2,8 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {OverviewComponent} from "./overview.component";
 import {Document} from "idai-components-2/idai-components-2";
-import {ReadDatastore, ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
+import {PersistenceManager,ReadDatastore, RelationsConfiguration,
+    ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 
 @Component({
@@ -29,11 +30,13 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private datastore: ReadDatastore,
         private overviewComponent: OverviewComponent,
-        private configLoader: ConfigLoader
+        private configLoader: ConfigLoader,
+        private persistenceManager: PersistenceManager
     ) {
         this.configLoader.configuration().subscribe((result) => {
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;
+                this.persistenceManager.setRelationsConfiguration(result.relationsConfiguration);
             }
         });
     }
@@ -90,9 +93,18 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         if (geometry) {
             this.overviewComponent.getSelected().resource.geometries = [ geometry ];
+        } else if (geometry === null) {
+            delete this.overviewComponent.getSelected().resource.geometries;
         }
 
-        this.router.navigate(['resources', 'selected', 'edit']);
+        if (this.overviewComponent.getSelected().resource.id) {
+            if (geometry !== undefined) {
+                this.save();
+            }
+            this.router.navigate(['resources', {id: this.overviewComponent.getSelected().resource.id}]);
+        } else {
+            this.router.navigate(['resources', 'selected', 'edit']);
+        }
     }
     
     ngOnDestroy(): void {
@@ -106,5 +118,16 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometries) {
             this.overviewComponent.remove(selectedDocument);
         }
+    }
+
+    private save() {
+
+        this.persistenceManager.setOldVersion(this.overviewComponent.getSelected());
+
+        this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
+            () => {
+                this.overviewComponent.getSelected()['synced'] = 0;
+            },
+            errors => { console.log(errors); });
     }
 }

@@ -11,7 +11,8 @@
     </div>
 </div>
 
-<div *ngIf="selectedDocument && !selectedDocument.resource.id && editMode != 'none'">
+<div *ngIf="editMode != 'none'">
+    <div id="map-editor-button-delete" class="btn btn-secondary mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>
     <div id="map-editor-button-ok" class="btn btn-secondary" (click)="finishEditing()">OK</div>
     <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">Abbrechen</div>
 </div>

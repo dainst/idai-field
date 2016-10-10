@@ -1,10 +1,10 @@
 <div class="row">
-    <div [class.col-sm-12]="!activeDoc" [class.col-sm-8]="activeDoc">
+    <div [class.col-sm-12]="!activeDoc || menuMode != 'view'" [class.col-sm-8]="activeDoc && menuMode == 'view'">
         <map [documents]="docs" [selectedDocument]="overviewComponent.getSelected()"
              [editMode]="editMode" (selectDocument)="selectDocument($event)"
              (quitEditing)="quitEditing($event)"></map>
     </div>
-    <div *ngIf="activeDoc" class="col-sm">
+    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm">
         <div class="card">
             <div class="card-header">
                 <h4>
@@ -13,28 +13,14 @@
                             [routerLink]="['/resources']">
                         <span class="mdi mdi-close mdi-18px"></span>
                     </button>
-                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-edit-geometry"
-                            [routerLink]="['/resources/', { id: activeDoc['resource']['id'],
-                                          menuMode: 'geometryEdit' }]">
-                        <span class="mdi mdi-vector-polygon mdi-18px"></span>
-                    </button>
                     <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-edit-document"
                             [routerLink]="['/resources/', activeDoc['resource']['id'], 'edit']">
                         <span class="mdi mdi-pencil mdi-18px"></span>
                     </button>
-                    <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-show-data"
-                            [routerLink]="['/resources/', { id: activeDoc['resource']['id'],
-                                          menuMode: 'view' }]">
-                        <span class="mdi mdi-eye mdi-18px"></span>
-                    </button>
                 </h4>
             </div>
             <div class="card-block">
-                <document-view *ngIf="menuMode == 'view'" [document]="activeDoc"></document-view>
-                <document-geometry-edit *ngIf="menuMode == 'geometryEdit'"
-                                        [document]="activeDoc"
-                                        [isEditing]="editMode != 'none'"
-                                        ></document-geometry-edit>
+                <document-view [document]="activeDoc"></document-view>
             </div>
         </div>
     </div>

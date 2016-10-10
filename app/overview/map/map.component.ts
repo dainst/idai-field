@@ -321,9 +321,10 @@ export class MapComponent implements OnChanges {
 
     private startPolygonEditing() {
 
-        this.polygons[this.selectedDocument.resource.id].setStyle({ color: 'red', fillColor: 'red' });
-        this.polygons[this.selectedDocument.resource.id].pm.enable({
-            draggable: true, snappable: true, snapDistance: 30 });
+        this.editablePolygon = this.polygons[this.selectedDocument.resource.id];
+
+        this.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
+        this.editablePolygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
     }
 
     private fadeOutMapElements() {
@@ -358,21 +359,23 @@ export class MapComponent implements OnChanges {
         this.editableMarker.addTo(this.map);
     }
 
+    public deleteGeometry() {
+
+        this.resetEditing();
+    }
+
     public finishEditing() {
 
         var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
 
-        switch (this.editMode) {
-            case "polygon":
-                geometry.type = "Polygon";
-                geometry.coordinates = this.getPolygonCoordinates(this.editablePolygon);
-                break;
-            case "point":
-                geometry.type = "Point";
-                geometry.coordinates = [ this.editableMarker.getLatLng().lat, this.editableMarker.getLatLng().lng ];
-                break;
-            default:
-                geometry = null;
+        if (this.editablePolygon) {
+            geometry.type = "Polygon";
+            geometry.coordinates = this.getPolygonCoordinates(this.editablePolygon);
+        } else if (this.editableMarker) {
+            geometry.type = "Point";
+            geometry.coordinates = [this.editableMarker.getLatLng().lat, this.editableMarker.getLatLng().lng];
+        } else {
+            geometry = null;
         }
 
         this.fadeInMapElements();
@@ -386,7 +389,7 @@ export class MapComponent implements OnChanges {
         this.fadeInMapElements();
         this.resetEditing();
 
-        this.quitEditing.emit(null);
+        this.quitEditing.emit(undefined);
     }
 
     private resetEditing() {

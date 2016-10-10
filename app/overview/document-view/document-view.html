@@ -12,6 +12,18 @@
             <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
         </div>
 
+        <div class="document-view-field">
+            <div class="fieldname">Geometrie</div>
+            <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
+                <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>
+                <span *ngIf="document.resource.geometries[0].type == 'Point'" class="fieldvalue">Punkt</span>
+                <button class="btn btn-link btn-sm" id="document-view-button-edit-document"
+                        [routerLink]="['/resources/editGeometry', document.resource.id, 'existing',{menuMode:'geometryEdit'}]">
+                    <span class="mdi mdi-pencil mdi-18px"></span>
+                </button>
+            </div>
+        </div>
+
         <div *ngFor="let field of fields">
             <div *ngIf="field.isArray" class="document-view-field">
                 <div class="fieldname">{{field.name}}</div>

@@ -51,7 +51,7 @@ describe('relations', function() {
     });
 
 
-    fit('should create a new relation and the corresponding inverse relation', function() {
+    it('should create a new relation and the corresponding inverse relation', function() {
         // expect(getFirstRelationOfGroup(0).isPresent()).toBe(false); known not to work on ci
 
         common.createDoc("o1")

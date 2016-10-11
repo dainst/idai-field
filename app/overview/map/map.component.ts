@@ -191,14 +191,17 @@ export class MapComponent implements OnChanges {
         var icon = (document == this.selectedDocument) ? this.markerIcons.darkblue : this.markerIcons.blue;
 
         var marker: IdaiFieldMarker = L.marker(latLng, {
-            icon: icon,
-            title: this.getShortDescription(document.resource)
+            icon: icon
         });
         marker.document = document;
 
-        var mapComponent = this;
+        marker.bindTooltip(this.getShortDescription(document.resource), {
+            offset: L.point(0, -40),
+            direction: 'top',
+            opacity: 1.0});
 
-        marker.on('click', function(e) {
+        var mapComponent = this;
+        marker.on('click', function() {
             mapComponent.select(this.document);
         });
 
@@ -206,23 +209,14 @@ export class MapComponent implements OnChanges {
         this.markers[document.resource.id] = marker;
     }
 
-    private focusMarker(marker: L.Marker) {
-
-        if (marker != this.editableMarker) {
-            marker.setIcon(this.markerIcons.darkblue);
-        }
-        this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
-    }
-
-    private focusPolygon(polygon: L.Polygon) {
-
-        this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
-    }
-
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {
 
         var polygon: IdaiFieldPolygon = L.polygon(geometry.coordinates);
         polygon.document = document;
+
+        polygon.bindTooltip(this.getShortDescription(document.resource), {
+            direction: 'center',
+            opacity: 1.0});
 
         var mapComponent = this;
         polygon.on('click', function(event: L.Event) {
@@ -239,9 +233,22 @@ export class MapComponent implements OnChanges {
         layer.object = L.imageOverlay(layer.filePath, layer.bounds, { pane: layer.name }).addTo(this.map);
     }
 
+    private focusMarker(marker: L.Marker) {
+
+        if (marker != this.editableMarker) {
+            marker.setIcon(this.markerIcons.darkblue);
+        }
+        this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
+    }
+
+    private focusPolygon(polygon: L.Polygon) {
+
+        this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+    }
+
     private getShortDescription(resource: IdaiFieldResource) {
 
-        var shortDescription = resource.id;
+        var shortDescription = resource.identifier;
         if (resource.shortDescription && resource.shortDescription.length > 0) {
             shortDescription += " | " + resource.shortDescription;
         }
@@ -321,6 +328,7 @@ export class MapComponent implements OnChanges {
     private startPolygonEditing() {
 
         this.editablePolygon = this.polygons[this.selectedDocument.resource.id];
+        this.editablePolygon.unbindTooltip();
         this.setupEditablePolygon();
     }
 
@@ -348,6 +356,7 @@ export class MapComponent implements OnChanges {
     private startPointEditing() {
 
         this.editableMarker = this.markers[this.selectedDocument.resource.id];
+        this.editableMarker.unbindTooltip();
         this.editableMarker.setIcon(this.markerIcons.red);
         this.editableMarker.dragging.enable();
         this.editableMarker.setZIndexOffset(1000);

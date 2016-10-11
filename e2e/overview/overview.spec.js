@@ -61,10 +61,10 @@ describe('overview component', function() {
         common.createObject("1")
             .then(common.clickCreateObjectButton)
             .then(common.selectObjectType)
-            .then(common.skipGeometryCreation)
+            .then(common.chooseGeometry)
             .then(common.clickCreateObjectButton)
             .then(common.selectObjectType)
-            .then(common.skipGeometryCreation)
+            .then(common.chooseGeometry)
             .then(function(){
                 expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
             })
@@ -81,7 +81,7 @@ describe('overview component', function() {
             .then(common.typeInIdentifier("2"))
             .then(common.clickCreateObjectButton())
             .then(common.selectObjectType())
-            .then(common.skipGeometryCreation())
+            .then(common.chooseGeometry())
             .then(common.scrollUp)
             .then(common.clickSaveInModal)
             .then(common.scrollUp)

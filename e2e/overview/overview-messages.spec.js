@@ -8,42 +8,27 @@ describe('idai field app', function() {
     });
 
     it('should create a new object of first listed type ', function() {
-        common.createObject("12")
-            .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
-                expect(element(by.id('message-0')).getText())
-                    .toContain("erfolgreich");
-            });
+        common.createObject('12')
+            .then(common.expectMsg('erfolgreich'));
     });
 
     it('should show the success msg also on route change', function() {
-        common.createObject("12")
+        common.createObject('12')
             .then(common.removeMessage)
-            .then(common.typeInIdentifier("34"))
+            .then(common.typeInIdentifier('34'))
             .then(common.selectObject(0))
             .then(common.clickSaveInModal)
-            .then(function(){
-                expect(element(by.id('message-0')).getText())
-                    .toContain("erfolgreich");
-            });
+            .then(common.expectMsg('erfolgreich'));
     });
     
     it('should warn if identifier is missing', function () {
-        common.createObject("")
-            .then(function(){
-                expect(element(by.id('message-0')).getText())
-                    .toContain("fehlt");
-            });
+        common.createObject('')
+            .then(common.expectMsg('fehlt'));
     });
 
     it('should warn if an existing id is used', function() {
-        common.createObject("12")
-            .then(common.createObject("12"))
-            .then(function(){
-                expect(element(by.id('message-0')).getText())
-                    .toContain("existiert bereits");
-            });
+        common.createObject('12')
+            .then(common.createObject('12'))
+            .then(common.expectMsg("existiert bereits"));
     });
-
-
 });

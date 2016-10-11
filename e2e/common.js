@@ -5,7 +5,7 @@
 function createObject(identifier) {
     return clickCreateObjectButton()
         .then(selectObjectType)
-        .then(skipGeometryCreation)
+        .then(chooseGeometry)
         .then(typeInIdentifier(identifier))
         .then(scrollUp)
         .then(saveObject)
@@ -19,8 +19,10 @@ function selectObjectType() {
     return element(by.id('choose-type-option-0')).click();
 }
 
-function skipGeometryCreation() {
-    return element(by.id('choose-geometry-option-none')).click();
+function chooseGeometry(geometry) {
+    var geom = 'none';
+    if (geometry) geom = geometry;
+    return element(by.id('choose-geometry-option-'+geom)).click();
 }
 
 function typeInIdentifier(identifier) {
@@ -72,13 +74,23 @@ function removeMessage() {
     return element(by.css('#message-0 button')).click();
 }
 
+function expectObjectCreatedSuccessfully(identifier){
+    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual(identifier);
+    expectMsg("erfolgreich");
+}
+
+function expectMsg(partialMsg){
+    expect(element(by.id('message-0')).getText())
+        .toContain(partialMsg);
+}
+
 module.exports = {
     removeMessage: removeMessage,
     clickCancelInModal: clickCancelInModal,
     clickSaveInModal: clickSaveInModal,
     clickCreateObjectButton: clickCreateObjectButton,
     selectObjectType: selectObjectType,
-    skipGeometryCreation: skipGeometryCreation,
+    chooseGeometry: chooseGeometry,
     createObject: createObject,
     switchToEditMode: switchToEditMode,
     saveObject: saveObject,
@@ -86,5 +98,7 @@ module.exports = {
     typeInIdentifier: typeInIdentifier,
     typeIn: typeIn,
     scrollUp: scrollUp,
-    scrollDown: scrollDown
+    scrollDown: scrollDown,
+    expectObjectCreatedSuccessfully: expectObjectCreatedSuccessfully,
+    expectMsg: expectMsg
 };

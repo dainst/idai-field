@@ -1,5 +1,4 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
-import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
@@ -315,17 +314,43 @@ export class MapComponent implements OnChanges {
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             mapComponent.editablePolygon = <L.Polygon> event.layer;
-            mapComponent.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
-            mapComponent.editablePolygon.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
+            mapComponent.setupEditablePolygon();
         });
     }
 
     private startPolygonEditing() {
 
         this.editablePolygon = this.polygons[this.selectedDocument.resource.id];
+        this.setupEditablePolygon();
+    }
+
+    private setupEditablePolygon() {
 
         this.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
         this.editablePolygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+
+        var mapComponent = this;
+        this.editablePolygon.on('pm:edit', function() {
+            if (this._latlngs[0].length < 2) {
+                mapComponent.deleteGeometry();
+            }
+        });
+    }
+
+    private startPointCreation() {
+
+        var position = this.map.getCenter();
+
+        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
+        this.editableMarker.addTo(this.map);
+    }
+
+    private startPointEditing() {
+
+        this.editableMarker = this.markers[this.selectedDocument.resource.id];
+        this.editableMarker.setIcon(this.markerIcons.red);
+        this.editableMarker.dragging.enable();
+        this.editableMarker.setZIndexOffset(1000);
     }
 
     private fadeOutMapElements() {
@@ -352,22 +377,6 @@ export class MapComponent implements OnChanges {
         for (var i in this.markers) {
             this.markers[i].setOpacity(1);
         }
-    }
-
-    private startPointCreation() {
-
-        var position = this.map.getCenter();
-
-        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
-        this.editableMarker.addTo(this.map);
-    }
-
-    private startPointEditing() {
-
-        this.editableMarker = this.markers[this.selectedDocument.resource.id];
-        this.editableMarker.setIcon(this.markerIcons.red);
-        this.editableMarker.dragging.enable();
-        this.editableMarker.setZIndexOffset(1000);
     }
 
     public deleteGeometry() {

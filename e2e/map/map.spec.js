@@ -1,26 +1,26 @@
 var common = require("../common.js");
 var utils = require("../utils.js");
 
-describe('idai field app', function() {
+fdescribe('idai field app', function() {
 
     var mapEl;
     
-    function clickMap(map,toRight, toBottom) {
+    function clickMap(toRight, toBottom) {
         browser.actions()
-            .mouseMove(map, {x: toRight, y: toBottom})
+            .mouseMove(mapEl, {x: toRight, y: toBottom})
             .click()
             .perform();
     }
 
     function setMarker() {
-        clickMap(mapEl,100,100);
+        clickMap(100,100);
     }
 
     function setPolygon() {
-        clickMap(mapEl,100,100);
-        clickMap(mapEl,200,200);
-        clickMap(mapEl,100,200);
-        clickMap(mapEl,100,100);
+        clickMap(100,100);
+        clickMap(200,200);
+        clickMap(100,200);
+        clickMap(100,100);
     }
     
 
@@ -34,7 +34,7 @@ describe('idai field app', function() {
 
     function createObjectWithGeometry(identifier,geometry,geofun) {
         return common.clickCreateObjectButton()
-            .then(common.selectObjectType)
+            .then(common.selectType)
             .then(common.chooseGeometry(geometry))
             .then(geofun)
             .then(mapOption('ok'))
@@ -62,17 +62,17 @@ describe('idai field app', function() {
         createObjectWithGeometry('35','polygon',setPolygon)
             .then(common.gotoView)
             .then(clickReeditGeometry)
-            .then(clickMap(mapEl,100,100));
+            .then(clickMap(100,100));
     });
     
-    it('should delete a polygon geometry ', function() {
+    fit('should delete a polygon geometry ', function() {
         createObjectWithGeometry('36','polygon',setPolygon)
             .then(common.gotoView)
             .then(clickReeditGeometry)
             .then(mapOption('delete'))
             .then(mapOption('ok'))
             .then(function(){
-                expect(element(by.css('#document-view-field-geometry span')).getText()).toEqual('Keine');
+                expect(element.all(by.css('#document-view-field-geometry span')).get(0).getText()).toEqual('Keine');
             })
     });
 

@@ -12,7 +12,7 @@
             <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
         </div>
 
-        <div class="document-view-field">
+        <div class="document-view-field" id="document-view-field-geometry">
             <div class="fieldname">Geometrie</div>
             <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
                 <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>

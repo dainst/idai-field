@@ -4,7 +4,7 @@
 
 function createObject(identifier) {
     return clickCreateObjectButton()
-        .then(selectObjectType)
+        .then(selectType)
         .then(chooseGeometry)
         .then(typeInIdentifier(identifier))
         .then(scrollUp)
@@ -15,7 +15,7 @@ function clickCreateObjectButton() {
     return element(by.id('object-overview-button-create-object')).click()
 }
 
-function selectObjectType() {
+function selectType() {
     return element(by.id('choose-type-option-0')).click();
 }
 
@@ -89,7 +89,7 @@ module.exports = {
     clickCancelInModal: clickCancelInModal,
     clickSaveInModal: clickSaveInModal,
     clickCreateObjectButton: clickCreateObjectButton,
-    selectObjectType: selectObjectType,
+    selectType: selectType,
     chooseGeometry: chooseGeometry,
     createObject: createObject,
     switchToEditMode: switchToEditMode,

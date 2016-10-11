@@ -59,6 +59,12 @@ describe('idai field app', function() {
         }
     }
     
+    function createDocThenReedit(identifier,geometryType) {
+        return createDoc(identifier,geometryType)
+            .then(common.gotoView)
+            .then(clickReeditGeometry);
+    }
+    
     
     function expectGeometry(geometry) {
         expect(element.all(by.css('#document-view-field-geometry span')).get(0).getText()).toEqual(geometry);
@@ -79,26 +85,15 @@ describe('idai field app', function() {
             .then(common.expectObjectCreatedSuccessfully('34'));
     });
     
-    it('should modify a polygon geometry ', function() {
-        createDoc('35','polygon')
-            .then(common.gotoView)
-            .then(clickReeditGeometry)
-            .then(clickMap(100,100));
-    });
-    
     it('should delete a polygon geometry ', function() {
-        createDoc('36','polygon')
-            .then(common.gotoView)
-            .then(clickReeditGeometry)
+        createDocThenReedit('36','polygon')
             .then(mapOption('delete'))
             .then(mapOption('ok'))
             .then(expectGeometry('Keine'))
     });
 
     it('should delete a point geometry ', function() {
-        createDoc('37','point',setMarker)
-            .then(common.gotoView)
-            .then(clickReeditGeometry)
+        createDocThenReedit('37','point')
             .then(mapOption('delete'))
             .then(mapOption('ok'))
             .then(expectGeometry('Keine'))
@@ -124,18 +119,14 @@ describe('idai field app', function() {
 
 
     it('should cancel deleting a point geometry', function() {
-        createDoc('40','point')
-            .then(common.gotoView)
-            .then(clickReeditGeometry)
+        createDocThenReedit('40','point')
             .then(mapOption('delete'))
             .then(mapOption('abort'))
             .then(expectGeometry('Punkt'))
     });
 
     it('should cancel deleting a polygon geometry', function() {
-        createDoc('41','polygon')
-            .then(common.gotoView)
-            .then(clickReeditGeometry)
+        createDocThenReedit('41','polygon')
             .then(mapOption('delete'))
             .then(mapOption('abort'))
             .then(expectGeometry('Polygon'))

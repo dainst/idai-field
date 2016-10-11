@@ -65,7 +65,7 @@ fdescribe('idai field app', function() {
             .then(clickMap(100,100));
     });
     
-    fit('should delete a polygon geometry ', function() {
+    it('should delete a polygon geometry ', function() {
         createObjectWithGeometry('36','polygon',setPolygon)
             .then(common.gotoView)
             .then(clickReeditGeometry)

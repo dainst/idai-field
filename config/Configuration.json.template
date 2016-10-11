@@ -1,8 +1,8 @@
 {
   "types": [
     {
-      "type": "object",
-      "label" : "Objekt",
+      "type": "jedi",
+      "label" : "Jedi",
       "fields": [
         {
           "name" : "identifier",
@@ -19,46 +19,7 @@
           "valuelist": [
             "Alabaster",
             "Amber",
-            "Antler",
-            "Basalt",
-            "Bone",
-            "Botanical",
-            "Ceramic",
-            "Copper alloy",
-            "Enamel",
-            "Faience",
-            "Flint or chert",
-            "Frit",
-            "Gilded Bronze",
-            "Glass",
-            "Glaze",
-            "Gold",
-            "Hair",
-            "Horn",
-            "Iron",
-            "Ivory",
-            "Lead",
-            "Leather",
-            "Limestone",
-            "Marble",
-            "Mudstone",
-            "Obsidian",
-            "Pigment",
-            "Plaster",
-            "Semi-Precious",
-            "Shell",
-            "Silver",
-            "Slag",
-            "Slip",
-            "Steatite",
-            "Stone",
-            "Terracotta",
-            "Unbaked Clay",
-            "Unidentified",
-            "Unidentified Metal",
-            "Unidentified Stone",
-            "Unknown",
-            "Wood"
+            "Antler"
           ],
           "inputType": "checkboxes"
         },
@@ -66,62 +27,15 @@
           "name": "Category",
           "valuelist": [
             "Architecture Terracotta",
-            "Architecture Poros",
-            "Architecture Misc.",
-            "Architecture Marble",
-            "Bronze",
-            "Bone & Ivory",
-            "Coin",
-            "Glass",
-            "Inscriptions",
-            "Iron & Lead",
-            "Jewelry & Gems",
-            "Lamps",
-            "Misc. Clay Objects",
-            "Misc. Moulds",
-            "Plastic Vases",
-            "Pottery",
-            "Pottery Moulds",
-            "Sculpture",
-            "SS Misc.",
-            "SS Thasian",
-            "SS Rhodian",
-            "ST Marble",
-            "ST Stone",
-            "Terracotta",
-            "Terracotta Moulds",
-            "Wood"
+            "Architecture Poros"
           ],
           "inputType": "checkboxes"
         }
       ]
     },
     {
-      "type": "objectenhanced",
-      "label": "Erweitertes Objekt",
-      "parent" : "object",
-      "fields": [
-        {
-          "name": "Dimensions"
-        },
-        {
-          "name": "Storage"
-        },
-        {
-          "name": "Description",
-          "inputType": "text"
-        },
-        {
-          "name": "Range Start"
-        },
-        {
-          "name": "Range End"
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "label": "Schnittprofil",
+      "type": "dude",
+      "label": "Dude",
       "fields": [
         {
           "name" : "identifier"
@@ -134,19 +48,6 @@
         },
         {
           "name": "Elevations"
-        },
-        {
-          "name": "Start"
-        },
-        {
-          "name": "End"
-        },
-        {
-          "name": "Looking"
-        },
-        {
-          "name": "Description",
-          "inputType": "text"
         }
       ]
     }

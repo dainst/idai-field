@@ -8,13 +8,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob1",
             "shortDescription": "Obi One Kenobi",
             "relations": {
-                "cuts": ["o2"]
+                "isBuddyOf": ["o2"]
             },
             "geometries": [{ "type": "Polygon","coordinates":
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
                 ,"crs":"local"
             }],
-            "type": "object"
+            "type": "jedi"
         },
         "synced": 0
     }, {
@@ -24,12 +24,12 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob2",
             "shortDescription": "Qui Gon Jinn",
             "relations": {
-                "isCutBy": ["o1"]
+                "isFriendOf": ["o1"]
             },
             "geometries": [{
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
             }],
-            "type": "object"
+            "type": "jedi"
         },
         "synced": 0
     }, {
@@ -38,7 +38,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o3",
             "identifier": "ob3",
             "shortDescription": "Luke Skywalker",
-            "type": "object",
+            "type": "jedi",
             "relations": {},
             "geometries": [{
                 "type":"Polygon","coordinates":
@@ -54,7 +54,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o4",
             "identifier": "ob4",
             "shortDescription": "Han Solo",
-            "type": "object",
+            "type": "dude",
             "relations": {},
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
@@ -67,7 +67,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o5",
             "identifier": "ob5",
             "shortDescription": "Boba Fett",
-            "type": "object",
+            "type": "dude",
             "relations": {}
         },
         "synced": 0

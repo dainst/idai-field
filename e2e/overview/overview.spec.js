@@ -7,7 +7,7 @@ describe('overview component', function() {
     });
 
     it('should find it by its identifier', function() {
-        common.createObject("12")
+        common.createDoc("12")
             .then(typeInIdentifierInSearchField)
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
@@ -15,8 +15,8 @@ describe('overview component', function() {
     });
 
     it ('should reflect changes in overview in realtime', function() {
-        common.createObject("1a")
-            .then(common.createObject("2"))
+        common.createDoc("1a")
+            .then(common.createDoc("2"))
             .then(common.selectObject(1))
             .then(common.switchToEditMode)
             .then(common.typeInIdentifier("1b"))
@@ -33,7 +33,7 @@ describe('overview component', function() {
      * This however did not happen with an object already saved.
      */
     it ('should reflect changes in overview after creating object', function() {
-        common.createObject("12")
+        common.createDoc("12")
             .then(common.typeInIdentifier("34"))
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("34");
@@ -45,7 +45,7 @@ describe('overview component', function() {
      * The attempt to do so got rejected with the duplicate identifier message.
      */
     it ('should save a new object and then save it again', function() {
-        common.createObject("1")
+        common.createDoc("1")
             .then(common.saveObject)
             .then(function(){
                 expect(element(by.id('message-0')).getText())
@@ -58,7 +58,7 @@ describe('overview component', function() {
      * led to leftovers of "Neues Objekt" for every time the button was pressed.
      */
     it("should remove a new object from the list if it hasn't been saved", function() {
-        common.createObject("1")
+        common.createDoc("1")
             .then(common.clickCreateObjectButton)
             .then(common.selectType)
             .then(common.chooseGeometry)
@@ -75,7 +75,7 @@ describe('overview component', function() {
     });
 
     it ("should change the selection to new when saving via modal", function() {
-        common.createObject("1")
+        common.createDoc("1")
             .then(common.selectObject(0))
             .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2"))
@@ -91,8 +91,8 @@ describe('overview component', function() {
     });
 
     it ("should change the selection to existing when saving via modal", function() {
-        common.createObject("1")
-            .then(common.createObject("2"))
+        common.createDoc("1")
+            .then(common.createDoc("2"))
             .then(common.selectObject(0))
             .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2a"))
@@ -107,8 +107,8 @@ describe('overview component', function() {
     });
 
     it ("should not change the selection to existing when cancelling in modal", function() {
-        common.createObject("1")
-            .then(common.createObject("2"))
+        common.createDoc("1")
+            .then(common.createDoc("2"))
             .then(common.selectObject(0))
             .then(common.switchToEditMode())
             .then(common.typeInIdentifier("2a"))

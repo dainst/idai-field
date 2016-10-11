@@ -1,7 +1,7 @@
 var common = require("../common.js");
 var utils = require("../utils.js");
 
-fdescribe('idai field app', function() {
+describe('idai field app', function() {
 
     var mapEl;
     
@@ -32,7 +32,12 @@ fdescribe('idai field app', function() {
         return element(by.id('document-view-button-edit-geometry')).click();
     }
 
-    function createObjectWithGeometry(identifier,geometry,geofun) {
+    function clickCreateGeometry(geometry) {
+        return element(by.id('document-view-button-create-'+geometry)).click();
+    }
+
+
+    function createDocWithGeometry(identifier,geometry,geofun) {
         return common.clickCreateObjectButton()
             .then(common.selectType)
             .then(common.chooseGeometry(geometry))
@@ -43,37 +48,97 @@ fdescribe('idai field app', function() {
             .then(common.saveObject);
     }
     
+    
+    function createDoc(identifier,geometryType) {
+        if (geometryType == 'point') {
+            return createDocWithGeometry(identifier,geometryType,setMarker())
+        } else if (geometryType == 'polygon') {
+            return createDocWithGeometry(identifier,geometryType,setPolygon)
+        } else {
+            return common.createDoc(identifier);
+        }
+    }
+    
+    
+    function expectGeometry(geometry) {
+        expect(element.all(by.css('#document-view-field-geometry span')).get(0).getText()).toEqual(geometry);
+    }
+    
     beforeEach(function(){
         browser.get('/#/resources');
         mapEl = element(by.id("map-container"));
     });
 
     it('should create a new item with point geometry ', function() {
-        createObjectWithGeometry('33','point',setMarker)
+        createDoc('33','point')
             .then(common.expectObjectCreatedSuccessfully('33'));
     });
 
     it('should create a new item with polygon geometry ', function() {
-        createObjectWithGeometry('34','polygon',setPolygon)
+        createDoc('34','polygon')
             .then(common.expectObjectCreatedSuccessfully('34'));
     });
     
     it('should modify a polygon geometry ', function() {
-        createObjectWithGeometry('35','polygon',setPolygon)
+        createDoc('35','polygon')
             .then(common.gotoView)
             .then(clickReeditGeometry)
             .then(clickMap(100,100));
     });
     
     it('should delete a polygon geometry ', function() {
-        createObjectWithGeometry('36','polygon',setPolygon)
+        createDoc('36','polygon')
             .then(common.gotoView)
             .then(clickReeditGeometry)
             .then(mapOption('delete'))
             .then(mapOption('ok'))
-            .then(function(){
-                expect(element.all(by.css('#document-view-field-geometry span')).get(0).getText()).toEqual('Keine');
-            })
+            .then(expectGeometry('Keine'))
     });
 
+    it('should delete a point geometry ', function() {
+        createDoc('37','point',setMarker)
+            .then(common.gotoView)
+            .then(clickReeditGeometry)
+            .then(mapOption('delete'))
+            .then(mapOption('ok'))
+            .then(expectGeometry('Keine'))
+    });
+    
+    it('should create a polygon geometry later', function() {
+        common.createDoc('38')
+            .then(common.gotoView)
+            .then(clickCreateGeometry('polygon'))
+            .then(setPolygon)
+            .then(mapOption('ok'))
+            .then(expectGeometry('Polygon'))
+    });
+
+    it('should create a point geometry later', function() {
+        common.createDoc('39')
+            .then(common.gotoView)
+            .then(clickCreateGeometry('point'))
+            .then(setMarker)
+            .then(mapOption('ok'))
+            .then(expectGeometry('Punkt'))
+    });
+
+
+    it('should cancel deleting a point geometry', function() {
+        createDoc('40','point')
+            .then(common.gotoView)
+            .then(clickReeditGeometry)
+            .then(mapOption('delete'))
+            .then(mapOption('abort'))
+            .then(expectGeometry('Punkt'))
+    });
+
+    it('should cancel deleting a polygon geometry', function() {
+        createDoc('41','polygon')
+            .then(common.gotoView)
+            .then(clickReeditGeometry)
+            .then(mapOption('delete'))
+            .then(mapOption('abort'))
+            .then(expectGeometry('Polygon'))
+    });
+    
 });

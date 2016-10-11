@@ -91,7 +91,7 @@ module.exports = {
     clickCreateObjectButton: clickCreateObjectButton,
     selectType: selectType,
     chooseGeometry: chooseGeometry,
-    createObject: createObject,
+    createDoc: createObject,
     switchToEditMode: switchToEditMode,
     saveObject: saveObject,
     selectObject: selectObject,

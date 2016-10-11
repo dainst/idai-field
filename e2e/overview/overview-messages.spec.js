@@ -8,12 +8,12 @@ describe('idai field app', function() {
     });
 
     it('should create a new object of first listed type ', function() {
-        common.createObject('12')
+        common.createDoc('12')
             .then(common.expectMsg('erfolgreich'));
     });
 
     it('should show the success msg also on route change', function() {
-        common.createObject('12')
+        common.createDoc('12')
             .then(common.removeMessage)
             .then(common.typeInIdentifier('34'))
             .then(common.selectObject(0))
@@ -22,13 +22,13 @@ describe('idai field app', function() {
     });
     
     it('should warn if identifier is missing', function () {
-        common.createObject('')
+        common.createDoc('')
             .then(common.expectMsg('fehlt'));
     });
 
     it('should warn if an existing id is used', function() {
-        common.createObject('12')
-            .then(common.createObject('12'))
+        common.createDoc('12')
+            .then(common.createDoc('12'))
             .then(common.expectMsg("existiert bereits"));
     });
 });

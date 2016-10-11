@@ -26,8 +26,8 @@ describe('relations', function() {
     });
 
     it ('should create links for relations', function() {
-        common.createObject("o1")
-            .then(common.createObject("o2"))
+        common.createDoc("o1")
+            .then(common.createDoc("o2"))
             .then(common.scrollDown)
             .then(addRelation)
             .then(function(){
@@ -54,8 +54,8 @@ describe('relations', function() {
     it('should create a new relation and the corresponding inverse relation', function() {
         // expect(getFirstRelationOfGroup(0).isPresent()).toBe(false); known not to work on ci
 
-        common.createObject("o1")
-            .then(common.createObject("o2"))
+        common.createDoc("o1")
+            .then(common.createDoc("o2"))
             .then(common.scrollDown)
             .then(addRelation)
 

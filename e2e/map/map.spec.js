@@ -11,7 +11,7 @@ describe('idai field app', function() {
             .click()
             .perform();
     }
-    
+
     function setMarker() {
         clickMap(mapEl,100,100);
     }
@@ -24,16 +24,20 @@ describe('idai field app', function() {
     }
     
 
-    function mapClickOk() {
-        return element(by.id('map-editor-button-ok')).click();
+    function mapOption(what) {
+        return element(by.id('map-editor-button-'+what)).click();
     }
     
+    function clickReeditGeometry() {
+        return element(by.id('document-view-button-edit-geometry')).click();
+    }
+
     function createObjectWithGeometry(identifier,geometry,geofun) {
         return common.clickCreateObjectButton()
             .then(common.selectObjectType)
             .then(common.chooseGeometry(geometry))
             .then(geofun)
-            .then(mapClickOk)
+            .then(mapOption('ok'))
             .then(common.typeInIdentifier(identifier))
             .then(common.scrollUp)
             .then(common.saveObject);
@@ -53,4 +57,23 @@ describe('idai field app', function() {
         createObjectWithGeometry('34','polygon',setPolygon)
             .then(common.expectObjectCreatedSuccessfully('34'));
     });
+    
+    it('should modify a polygon geometry ', function() {
+        createObjectWithGeometry('35','polygon',setPolygon)
+            .then(common.gotoView)
+            .then(clickReeditGeometry)
+            .then(clickMap(mapEl,100,100));
+    });
+    
+    it('should delete a polygon geometry ', function() {
+        createObjectWithGeometry('36','polygon',setPolygon)
+            .then(common.gotoView)
+            .then(clickReeditGeometry)
+            .then(mapOption('delete'))
+            .then(mapOption('ok'))
+            .then(function(){
+                expect(element(by.css('#document-view-field-geometry span')).getText()).toEqual('Keine');
+            })
+    });
+
 });

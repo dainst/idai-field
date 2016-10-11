@@ -100,5 +100,6 @@ module.exports = {
     scrollUp: scrollUp,
     scrollDown: scrollDown,
     expectObjectCreatedSuccessfully: expectObjectCreatedSuccessfully,
-    expectMsg: expectMsg
+    expectMsg: expectMsg,
+    gotoView: gotoView
 };

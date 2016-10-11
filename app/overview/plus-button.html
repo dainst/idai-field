@@ -25,14 +25,17 @@
             <ul class="list-group">
                 <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('polygon');">
+                    <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
                     Polygon
                 </li>
                 <li id="choose-geometry-option-point" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('point');">
+                    <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
                     Punkt
                 </li>
                 <li id="choose-geometry-option-none" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('none');">
+                    <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
                     Keine Geometriedaten
                 </li>
             </ul>

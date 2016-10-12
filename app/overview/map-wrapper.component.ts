@@ -56,6 +56,23 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         });
     }
 
+    private setMenuMode(menuMode) {
+        if (menuMode) {
+            this.menuMode = menuMode;
+        } else {
+            this.menuMode = "view";
+        }
+    }
+
+    private setEditMode(editMode) {
+        if (editMode) {
+            this.editMode = editMode;
+            this.removeEmptyDocument();
+        } else {
+            this.editMode = "none";
+        }
+    }
+
     ngOnInit(): void {
 
         this.overviewComponent.getDocuments().subscribe(result => {
@@ -64,29 +81,17 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         this.evalParams(this.route.params,function(menuMode,editMode,id,type){
 
-            if (menuMode) {
-                this.menuMode = menuMode;
-            } else {
-                this.menuMode = "view";
-            }
+            this.setMenuMode(menuMode);
+            this.setEditMode(editMode);
 
-            if (editMode) {
-                this.editMode = editMode;
-                this.removeEmptyDocument();
-            } else {
-                this.editMode = "none";
-            }
-
-            if (id) {
-                if (type) {
-                    this.overviewComponent.createNewDocument(type);
-                } else {
-                    this.datastore.get(id).then(document => {
-                        this.activeDoc = document;
-                        this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
-                        this.overviewComponent.setSelected(<Document>document);
-                    });
-                }
+            if (type) {
+                this.overviewComponent.createNewDocument(type);
+            } else if (id) {
+                this.datastore.get(id).then(document => {
+                    this.activeDoc = document;
+                    this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
+                    this.overviewComponent.setSelected(<Document>document);
+                });
             } else {
                 this.activeDoc = null;
                 this.overviewComponent.setSelected(null);

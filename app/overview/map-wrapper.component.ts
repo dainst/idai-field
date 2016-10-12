@@ -45,9 +45,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     private evalParams(routeParams,callback) {
 
         routeParams.forEach((params:Params) => {
-            var menuMode = params['menuMode'];
-            var editMode = params['editMode'];
-
             var type = undefined;
             var id = undefined;
             if (params['id'] && params['id'].indexOf('new') > -1) {
@@ -55,7 +52,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             } else {
                 id = params['id'];
             }
-            callback(menuMode,editMode,id,type);
+            callback(params['menuMode'],params['editMode'],id,type);
         });
     }
 

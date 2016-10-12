@@ -8,7 +8,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob1",
             "shortDescription": "Obi One Kenobi",
             "relations": {
-                "isBuddyOf": ["o2"]
+                "friendOf": ["o2"]
             },
             "geometries": [{ "type": "Polygon","coordinates":
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
@@ -24,7 +24,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob2",
             "shortDescription": "Qui Gon Jinn",
             "relations": {
-                "isFriendOf": ["o1"]
+                "friendOf": ["o1"]
             },
             "geometries": [{
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
@@ -39,7 +39,11 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob3",
             "shortDescription": "Luke Skywalker",
             "type": "jedi",
-            "relations": {},
+            "lightsaber_color" : "Blau",
+            "relations": {
+                "sonOf" : ["o6"],
+                "friendOf" : ["o4"]
+            },
             "geometries": [{
                 "type":"Polygon","coordinates":
                     [[[2.140625,9.71875],[1.265625,9.796875],[1.234375,9.15625],[-3.796875,9.171875],[-3.8125,7.578125],
@@ -55,20 +59,25 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob4",
             "shortDescription": "Han Solo",
             "type": "dude",
-            "relations": {},
+            "relations": {
+                "friendOf" : ["o3"]
+            },
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
             }]
         },
         "synced": 0
     }, {
-        "id": "o5",
+        "id": "o6",
         "resource": {
-            "id": "o5",
-            "identifier": "ob5",
-            "shortDescription": "Boba Fett",
-            "type": "dude",
-            "relations": {}
+            "id": "o6",
+            "identifier": "ob6",
+            "shortDescription": "Darth Vader",
+            "type": "jedi",
+            "lightsaber_color" : "Rot",
+            "relations": {
+                "fatherOf" : ["o3"]
+            }
         },
         "synced": 0
     }

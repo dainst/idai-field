@@ -12,22 +12,12 @@
           "name" : "shortDescription"
         },
         {
-          "name": "Inventory Number"
-        },
-        {
-          "name": "Material",
+          "name": "lightsaber_color",
+          "label" : "Lichtschwertfarbe",
           "valuelist": [
-            "Alabaster",
-            "Amber",
-            "Antler"
-          ],
-          "inputType": "checkboxes"
-        },
-        {
-          "name": "Category",
-          "valuelist": [
-            "Architecture Terracotta",
-            "Architecture Poros"
+            "Grün",
+            "Rot",
+            "Blau"
           ],
           "inputType": "checkboxes"
         }

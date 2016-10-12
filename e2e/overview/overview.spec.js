@@ -68,6 +68,7 @@ describe('overview component', function() {
             .then(function(){
                 expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
             })
+            .then(common.scrollUp)
             .then(common.selectObject(1))
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");

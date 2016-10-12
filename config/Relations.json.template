@@ -2,16 +2,23 @@
 
   [
     {
-      "name": "friendOf",
-      "inverse": "buddyOf",
-      "label": "Freund von",
+      "name": "fatherOf",
+      "inverse": "sonOf",
+      "label": "Vater von",
       "domain": ["jedi", "dude"],
       "range": ["jedi", "dude"]
     },
     {
-      "name": "buddyOf",
+      "name": "sonOf",
+      "inverse": "fatherOf",
+      "label": "Sohn von",
+      "domain": ["jedi", "dude"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "friendOf",
       "inverse": "friendOf",
-      "label": "Kumpel von",
+      "label": "Freund von",
       "domain": ["jedi", "dude"],
       "range": ["jedi", "dude"]
     },
@@ -23,5 +30,4 @@
       "range": ["jedi", "dude"]
     }
   ]
-
 }

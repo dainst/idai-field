@@ -24,7 +24,6 @@ export class TypeIconComponent implements OnChanges {
     private url: string;
 
     ngOnChanges() {
-        console.log(this.type);
         var hash = Md5.hashStr(this.type) as string;
         var data = new Identicon(hash, this.size).toString();
         this.url = "data:image/png;base64," + data;

@@ -58,8 +58,10 @@ export class DocumentEditWrapperComponent implements  OnInit {
     private evalParams(routeParams,callbackWithType,callbackWithId) {
         routeParams.forEach((params: Params) => {
 
-            if (!params['id']) return callbackWithType(params['type']);
-            callbackWithId(params['id']);
+            if (params['id']) return callbackWithId(params['id']);
+            if (params['type']) return callbackWithType(params['type'])
+            
+            console.error("there should be either an id or a type")
         });
     }
 

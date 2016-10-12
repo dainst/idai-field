@@ -72,6 +72,19 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             this.editMode = "none";
         }
     }
+    
+    private setActiveDoc(id) {
+        if (id) {
+            this.datastore.get(id).then(document => {
+                this.activeDoc = document;
+                this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
+                this.overviewComponent.setSelected(<Document>document);
+            });
+        } else {
+            this.activeDoc = null;
+            this.overviewComponent.setSelected(null);
+        }   
+    }
 
     ngOnInit(): void {
 
@@ -86,15 +99,8 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
             if (type) {
                 this.overviewComponent.createNewDocument(type);
-            } else if (id) {
-                this.datastore.get(id).then(document => {
-                    this.activeDoc = document;
-                    this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
-                    this.overviewComponent.setSelected(<Document>document);
-                });
             } else {
-                this.activeDoc = null;
-                this.overviewComponent.setSelected(null);
+                this.setActiveDoc(id);
             }
         }.bind(this));
     }

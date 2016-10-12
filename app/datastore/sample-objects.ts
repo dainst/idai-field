@@ -7,9 +7,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o1",
             "identifier": "ob1",
             "shortDescription": "Obi One Kenobi",
-            "relations": {
-                "friendOf": ["o2"]
-            },
+            "relations": {},
             "geometries": [{ "type": "Polygon","coordinates":
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
                 ,"crs":"local"
@@ -22,14 +20,12 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o2",
             "identifier": "ob2",
-            "shortDescription": "Qui Gon Jinn",
-            "relations": {
-                "friendOf": ["o1"]
-            },
+            "shortDescription": "Boba Fett",
+            "relations": {},
             "geometries": [{
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
             }],
-            "type": "jedi"
+            "type": "dude"
         },
         "synced": 0
     }, {

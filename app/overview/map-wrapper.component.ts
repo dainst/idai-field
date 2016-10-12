@@ -115,22 +115,35 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             this.router.navigate(['resources']);
         }
     }
-    
+
+    private selectedDocIsNew() : boolean {
+        return (this.overviewComponent.getSelected().resource.id == undefined);
+    }
+
+    /**
+     * @param geometry <coce>null</code> indicates geometry 
+     *   should get deleted, <code>undefined</code> indicates editing operation aborted.
+     */
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
             this.overviewComponent.getSelected().resource.geometries = [ geometry ];
-        } else if (geometry === null) {
+        } else if (geometry === null) { 
             delete this.overviewComponent.getSelected().resource.geometries;
         }
 
-        if (this.overviewComponent.getSelected().resource.id) {
-            if (geometry !== undefined) {
-                this.save();
+        if (this.selectedDocIsNew()) {
+            
+            if (geometry === undefined) {
+                this.router.navigate(['resources'])
+            } else {
+                this.router.navigate(['resources', 'selected', 'edit']);
             }
-            this.router.navigate(['resources', {id: this.overviewComponent.getSelected().resource.id}]);
+            
         } else {
-            this.router.navigate(['resources', 'selected', 'edit']);
+            
+            if (geometry !== undefined) this.save();
+            this.router.navigate(['resources', {id: this.overviewComponent.getSelected().resource.id}]);
         }
     }
     

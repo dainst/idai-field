@@ -37,11 +37,15 @@ describe('idai field app', function() {
     }
 
 
-    function createDocWithGeometry(identifier,geometry,geofun) {
+    function beginCreateDocWithGeometry(geometry,geofun) {
         return common.clickCreateObjectButton()
             .then(common.selectType)
             .then(common.chooseGeometry(geometry))
-            .then(geofun)
+            .then(geofun);
+    }
+    
+    function createDocWithGeometry(identifier,geometry,geofun) {
+        return beginCreateDocWithGeometry(geometry,geofun)
             .then(mapOption('ok'))
             .then(common.typeInIdentifier(identifier))
             .then(common.scrollUp)
@@ -132,4 +136,13 @@ describe('idai field app', function() {
             .then(expectGeometry('Polygon'))
     });
     
+    
+    it('should abort item creation completely when aborting geometry editing', function() {
+        beginCreateDocWithGeometry('point',setMarker)
+            .then(mapOption('abort'))
+            .then(function() {
+                expect(browser.getCurrentUrl()).toContain('resources');
+                expect(browser.getCurrentUrl()).not.toContain('edit');
+            });
+    });
 });

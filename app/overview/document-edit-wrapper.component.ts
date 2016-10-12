@@ -59,7 +59,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
         routeParams.forEach((params: Params) => {
 
             if (params['id']) return callbackWithId(params['id']);
-            if (params['type']) return callbackWithType(params['type'])
+            if (params['type']) return callbackWithType(params['type']);
             
             console.error("there should be either an id or a type")
         });

@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {OverviewComponent} from "./overview.component";
 import {Document} from "idai-components-2/idai-components-2";
-import {PersistenceManager,ReadDatastore, RelationsConfiguration,
+import {PersistenceManager,ReadDatastore,
     ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 
@@ -34,10 +34,28 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private persistenceManager: PersistenceManager
     ) {
         this.configLoader.configuration().subscribe((result) => {
-            if(result.error == undefined) {
+            if(!result.error) {
                 this.projectConfiguration = result.projectConfiguration;
                 this.persistenceManager.setRelationsConfiguration(result.relationsConfiguration);
             }
+        });
+    }
+
+
+    private evalParams(routeParams,callback) {
+
+        routeParams.forEach((params:Params) => {
+            var menuMode = params['menuMode'];
+            var editMode = params['editMode'];
+
+            var type = undefined;
+            var id = undefined;
+            if (params['id'] && params['id'].indexOf('new') > -1) {
+                type = params['id'].substring(params['id'].indexOf(":") + 1);
+            } else {
+                id = params['id'];
+            }
+            callback(menuMode,editMode,id,type);
         });
     }
 
@@ -47,27 +65,26 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
            this.docs = result;
         });
 
-        this.route.params.forEach((params: Params) => {
+        this.evalParams(this.route.params,function(menuMode,editMode,id,type){
 
-            if (params['menuMode']) {
-                this.menuMode = params['menuMode'];
+            if (menuMode) {
+                this.menuMode = menuMode;
             } else {
                 this.menuMode = "view";
             }
 
-            if (params['editMode']) {
-                this.editMode = params['editMode'];
+            if (editMode) {
+                this.editMode = editMode;
                 this.removeEmptyDocument();
             } else {
                 this.editMode = "none";
             }
 
-            if (params['id']) {
-                if (params['id'].indexOf('new') > -1) {
-                    var type = params['id'].substring(params['id'].indexOf(":") + 1);
+            if (id) {
+                if (type) {
                     this.overviewComponent.createNewDocument(type);
                 } else {
-                    this.datastore.get(params['id']).then(document => {
+                    this.datastore.get(id).then(document => {
                         this.activeDoc = document;
                         this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
                         this.overviewComponent.setSelected(<Document>document);
@@ -77,7 +94,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
                 this.activeDoc = null;
                 this.overviewComponent.setSelected(null);
             }
-        });
+        }.bind(this));
     }
     
     public selectDocument(document: Document) {

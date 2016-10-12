@@ -55,21 +55,32 @@ export class DocumentEditWrapperComponent implements  OnInit {
     private document: any;
     public mode: string; // new | edit
 
-    ngOnInit() {
-        this.route.params.forEach((params: Params) => {
-            if (params['id'].indexOf('new') != -1) {
-                this.mode = 'new';
-                var type = params['id'].substring(params['id'].indexOf(":") + 1);
-                this.document = this.overviewComponent.createNewDocument(type);
-            } else if (params['id'] == 'selected') {
-                this.mode = 'new';
-                this.document = this.overviewComponent.getSelected();
-            } else {
-                this.mode = 'edit';
-                this.overviewComponent.loadDoc(params['id']).then(
-                    document => this.document = document);
-            }
+    private evalParams(routeParams,callbackWithType,callbackWithId) {
+        routeParams.forEach((params: Params) => {
+
+            if (!params['id']) return callbackWithType(params['type']);
+            callbackWithId(params['id']);
         });
+    }
+
+    ngOnInit() {
+        this.evalParams(this.route.params,
+            (type) => {
+                this.mode = 'new';
+                this.document = this.overviewComponent.createNewDocument(type);
+            },
+            (id) => {
+                if (id == 'selected') {
+                    this.mode = 'new';
+                    this.document = this.overviewComponent.getSelected();
+
+                } else {
+                    this.mode = 'edit';
+                    this.overviewComponent.loadDoc(id).then(
+                        document => this.document = document);
+                }
+            }
+        );
     }
 
 

@@ -19,6 +19,11 @@ const overviewRoutes: Routes = [
                 component: MapWrapperComponent
             },
             {
+                path: 'new', // ;type=typename
+                component: DocumentEditWrapperComponent,
+                canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
+            },
+            {
                 path: ':id/edit',
                 component: DocumentEditWrapperComponent,
                 canDeactivate: [CanDeactivateDocumentEditWrapperGuard]

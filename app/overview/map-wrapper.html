@@ -7,8 +7,9 @@
     <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm">
         <div class="card">
             <div class="card-header">
+                <type-icon [type]="activeType" size="25" class="pull-xs-left" style="margin-right:10px;"></type-icon>
                 <h4>
-                    {{activeType}}
+                    {{activeTypeLabel}}
                     <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-back-to-map"
                             [routerLink]="['/resources']">
                         <span class="mdi mdi-close mdi-18px"></span>

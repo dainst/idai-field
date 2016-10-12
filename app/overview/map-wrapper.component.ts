@@ -20,6 +20,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
     private activeDoc;
     private activeType;
+    private activeTypeLabel;
     private docs;
     private projectConfiguration: ProjectConfiguration;
     private menuMode: string; // view | geometryEdit
@@ -77,7 +78,8 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         if (id) {
             this.datastore.get(id).then(document => {
                 this.activeDoc = document;
-                this.activeType = this.projectConfiguration.getLabelForType(document.resource.type);
+                this.activeType = document.resource.type;
+                this.activeTypeLabel = this.projectConfiguration.getLabelForType(this.activeType);
                 this.overviewComponent.setSelected(<Document>document);
             });
         } else {

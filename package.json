@@ -39,7 +39,6 @@
     "leaflet": "1.0.1",
     "leaflet.pm": "^0.10.1",
     "papaparse": "github:dainst/PapaParse",
-    "pnglib": "github:dainst/pnglib",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.31",

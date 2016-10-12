@@ -35,7 +35,7 @@ function watch() {
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('./') // Yes, ./ is right. While developing, for convenience reasons
+	gulp.src('./dist/') // Yes, ./ is right. While developing, for convenience reasons
                    // e2e tests should run against the base dir,
                    // instead the dist dir. Only in ci the dist has to be tested.
         .pipe(webserver({
@@ -102,6 +102,8 @@ gulp.task('make-dist',function() {
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
     gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));
 	gulp.src('node_modules/papaparse/**/*').pipe(gulp.dest('dist/node_modules/papaparse/'));
+	gulp.src('node_modules/ts-md5/**/*').pipe(gulp.dest('dist/node_modules/ts-md5/'));
+	gulp.src('node_modules/identicon.js/**/*').pipe(gulp.dest('dist/node_modules/identicon.js/'));
     gulp.src('src/templates/**/*').pipe(gulp.dest('dist/src/templates/'));
 });
 

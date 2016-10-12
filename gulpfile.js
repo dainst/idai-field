@@ -35,7 +35,7 @@ function watch() {
 }
 
 gulp.task('webserver-watch', function() {
-	gulp.src('./dist/') // Yes, ./ is right. While developing, for convenience reasons
+	gulp.src('./') // Yes, ./ is right. While developing, for convenience reasons
                    // e2e tests should run against the base dir,
                    // instead the dist dir. Only in ci the dist has to be tested.
         .pipe(webserver({

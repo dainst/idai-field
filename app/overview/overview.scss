@@ -1,251 +1,136 @@
 /**
  * @author: Jan G. Wieners
+ * @author: Sebastian Cuy
  */
 
-
-#objectList {
-  margin-bottom: -5px;
-}
-
-#objectList .list-group-item {
-  cursor: pointer;
-  border: 0;
-  border-radius: 0;
-  margin: 1px 0;
-  font-size: 1.1em;
-}
-
-#objectList .list-group-item:hover {
-  background-color: #c7dee0;
-  transition: background-color .65s ease;
-}
-
-#objectList .selected {
-  background-color: #c7dee0;
-}
-
-#objectList .title {
-  color: #111;
-}
-
-#objectList .identifier {
-  font-size: 0.7em;
-  color: #999;
-}
-
-#objectList .new {
-  color: #111;
-  font-style: italic;
-}
-
-#objectList .synced {
-  border-right: 3px solid #657faa;
-  transition: border-right 1s ease;
-}
-
-#objectList .unsynced {
-  border-right: 3px solid #ccc;
-  transition: border-right 1s ease;
-}
-
-#objectOverview #object-overview-button-create-object {
-  left: 45%;
-  margin: -23px auto auto auto;
-  z-index: 100;
-}
+@import "map/map";
+@import "document-view/document-view";
+@import "document-edit-wrapper";
+@import "plus-button";
 
 #objectOverview {
   padding: 0 !important;
   background-color: #eee;
-}
 
-#objectOverview header {
-  background-color: #eee;
-  padding: 7px;
-  color: #fff;
-  border-bottom: 1px solid #ccc;
-}
+  #objectList {
+    height: calc(100vh - 200px);
+    overflow: auto;
+  }
 
-#objectOverview header .mdi {
-  display: inline-block;
-  font-size: 1.1em;
-  color: #fff;
-  background-color: #294b83;
-  padding: 10px 10px 10px 11px;
-  margin-right: 5px;
-}
+  #objectList .list-group-item {
+    cursor: pointer;
+    border: 0;
+    border-radius: 0;
+    margin: 1px 0;
+    font-size: 1.1em;
+  }
 
-#objectOverview header h1 {
-  font-size: 1.5em;
-  padding: 0;
-  margin: 0;
-  background-color: #657faa;
-}
+  #objectList .list-group-item:hover {
+    background-color: #c7dee0;
+    transition: background-color .65s ease;
+  }
 
-#objectOverview main {
-  padding: 7px;
-}
+  #objectList .selected {
+    background-color: #c7dee0;
+  }
 
-#object-search {
-  /*
-  border-radius: 2px;
-  box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.1);
-  */
-  border-radius: 0;
-  border: 0;
-  height: 45px;
-}
+  #objectList .title {
+    color: #111;
+  }
 
-.search {
-  position: relative;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 7px;
-}
+  #objectList .identifier {
+    font-size: 0.7em;
+    color: #999;
+  }
 
-.search input {
-  text-indent: 10px;
-}
+  #objectList .new {
+    color: #111;
+    font-style: italic;
+  }
 
-.search.input-group-btn {
-  height: 45px;
-  border: 0;
-  background-color: #b9c9e3;
-}
+  #objectList .synced {
+    border-right: 3px solid #657faa;
+    transition: border-right 1s ease;
+  }
 
-.search .btn {
-  border-radius: 0;
-  border: none !important;
-}
+  #objectList .unsynced {
+    border-right: 3px solid #ccc;
+    transition: border-right 1s ease;
+  }
 
-.search .btn-secondary {
-  background-color: #ddd;
-}
+  header {
+    background-color: #eee;
+    padding: 7px;
+    color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
 
-#searchfilter {
-  height: 45px !important;
-}
+  header .mdi {
+    display: inline-block;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: #294b83;
+    padding: 10px 10px 10px 11px;
+    margin-right: 5px;
+  }
 
-.search .glyphicon-search {
-  position: absolute;
-  top: 14px;
-  left: 10px;
-  font-size: 1.2em;
-  padding: 0 0 5px 0;
-  color: #ddd;
-}
+  header h1 {
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    background-color: #657faa;
+  }
 
-.popover {
-  padding: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
-}
+  main {
+    padding: 7px;
+  }
 
-.popover-content {
-  padding: 0 !important;
-}
+  #object-search {
+    /*
+    border-radius: 2px;
+    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.1);
+    */
+    border-radius: 0;
+    border: 0;
+    height: 45px;
+  }
 
-.popover-custom-title {
-  background-color: #eee;
-  padding: 10px;
-  font-weight: lighter;
-}
+  .search {
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 7px;
+  }
 
-.popover-arrow {
-  display: none !important;
-}
+  .search input {
+    text-indent: 10px;
+  }
 
-.popover-custom-title {
-  font-size: 1.2em;
-  padding-bottom: 10px;
-}
+  .search.input-group-btn {
+    height: 45px;
+    border: 0;
+    background-color: #b9c9e3;
+  }
 
-.popover-item {
-  cursor: pointer;
-  border: 0 !important;
-  border-radius: 0 !important;
-}
+  .search .btn {
+    border-radius: 0;
+    border: none !important;
+  }
 
-.popover-item:hover {
-  background-color: #c7dee0;
-  transition: background-color .65s ease;
-}
+  .search .btn-secondary {
+    background-color: #ddd;
+  }
 
-textarea {
-  width: 100%;
-  resize: vertical;
-}
+  #searchfilter {
+    height: 45px !important;
+  }
 
-#document-edit-wrapper header {
-  background-color: #eee;
-  padding: 7px;
-  color: #fff;
-  border-bottom: 1px solid #ccc;
-}
+  .search .glyphicon-search {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    font-size: 1.2em;
+    padding: 0 0 5px 0;
+    color: #ddd;
+  }
 
-#document-edit-wrapper .overview-document-heading .mdi {
-  display: inline-block;
-  font-size: 1.1em;
-  color: #fff;
-  background-color: #007883;
-  padding: 10px 10px 10px 11px;
-  margin-right: 5px;
-}
-
-#document-edit-wrapper header h1 {
-  font-size: 1.5em;
-  padding: 0;
-  margin: 0;
-  background-color: #67b2b9;
-}
-
-#document-edit-wrapper header h1 div {
-  display: inline;
-}
-
-#document-edit-wrapper main {
-  padding: 25px;
-  background-color: #eee;
-}
-
-#document-edit-button-save-document:active,
-#document-edit-button-save-document:focus,
-#document-edit-button-goto-view:active,
-#document-edit-button-goto-view:focus,
-#document-view-button-edit-document:active,
-#document-view-button-edit-document:focus,
-#document-view-button-back-to-map:active,
-#document-view-button-back-to-map:focus {
-  outline: none;
-}
-
-#document-edit-button-save-document:focus,
-#document-edit-button-goto-view:focus {
-  background-color: #ddd;
-}
-
-#document-edit-button-save-document,
-#document-edit-button-goto-view {
-  margin-right: 7px;
-  margin-top: 7px;
-  border: 0;
-  border-radius: 2px;
-  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.3);
-  color: #555;
-}
-
-#document-view-button-edit-document,
-#document-view-button-back-to-map,
-#document-view-button-edit-geometry,
-#document-view-button-show-data {
-  margin-right: 5px;
-  margin-top: 5px;
-  border: 0;
-  color: #657faa;
-}
-
-.choose-geometry-icon {
-  margin-right: 10px;
-  position: relative;
-  top: 2px;
 }

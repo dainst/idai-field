@@ -42,6 +42,12 @@
       "label": "Besitzer von",
       "domain": ["jedi","dude"],
       "range": ["vessel"]
+    },
+    {
+      "name": "origin",
+      "label": "Herkunft",
+      "domain": ["jedi","dude"],
+      "range": ["celestial_body"]
     }
   ]
 }

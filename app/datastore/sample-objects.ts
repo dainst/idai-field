@@ -38,7 +38,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "lightsaber_color" : "Blau",
             "relations": {
                 "sonOf" : ["o6"],
-                "friendOf" : ["o4"]
+                "friendOf" : ["o4"],
+                "origin" : ["o7"]
             },
             "geometries": [{
                 "type":"Polygon","coordinates":

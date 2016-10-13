@@ -56,7 +56,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Han Solo",
             "type": "dude",
             "relations": {
-                "friendOf" : ["o3"]
+                "friendOf" : ["o3"],
+                "owns" : ["o11"]
             },
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
@@ -73,6 +74,62 @@ export var DOCS: IdaiFieldDocument[] = [
             "lightsaber_color" : "Rot",
             "relations": {
                 "fatherOf" : ["o3"]
+            }
+        },
+        "synced": 0
+    }, {
+        "id": "o7",
+        "resource": {
+            "id": "o7",
+            "identifier": "ob7",
+            "shortDescription": "Tatooine",
+            "type": "planet",
+            "relations": {}
+        },
+        "synced": 0
+    },
+    {
+        "id": "o8",
+        "resource": {
+            "id": "o8",
+            "identifier": "ob8",
+            "shortDescription": "Dagobah",
+            "type": "planet",
+            "relations": {}
+        },
+        "synced": 0
+    },
+    {
+        "id": "o9",
+        "resource": {
+            "id": "o9",
+            "identifier": "ob9",
+            "shortDescription": "Hoth",
+            "type": "planet",
+            "relations": {}
+        },
+        "synced": 0
+    },
+    {
+        "id": "o10",
+        "resource": {
+            "id": "o10",
+            "identifier": "ob10",
+            "shortDescription": "Coruscant",
+            "type": "planet",
+            "relations": {}
+        },
+        "synced": 0
+    },
+    {
+        "id": "o11",
+        "resource": {
+            "id": "o11",
+            "identifier": "ob11",
+            "shortDescription": "Millenium Falcon",
+            "type": "vessel",
+            "relations": {
+                "belongsTo" : [ "o4" ]
             }
         },
         "synced": 0

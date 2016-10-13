@@ -40,6 +40,61 @@
           "name": "Elevations"
         }
       ]
+    },
+    {
+        "type" : "celestial_body",
+        "fields": [
+                {
+                  "name" : "identifier"
+                },
+                {
+                  "name" : "shortDescription"
+                },
+                {
+                  "name" : "clima",
+                  "label" : "Klima"
+                }
+        ]
+
+    },
+    {
+      "type": "planet",
+      "parent" : "celestial_body",
+      "label": "Planet",
+      "fields": [
+      ]
+    },
+    {
+      "type": "moon",
+      "parent" : "celestial_body",
+      "label": "Mond",
+      "fields": [
+        {
+          "name" : "class",
+          "label" : "Klasse",
+          "valuelist": [
+              "Waldmond",
+              "Standard",
+              "Künstlich"
+            ],
+            "inputType": "checkboxes"
+        }
+      ]
+    },
+
+    {
+      "type": "vessel",
+      "label" : "Schiff",
+      "fields": [
+        {
+          "name" : "identifier"
+        },
+        {
+          "name" : "shortDescription"
+        }
+      ]
     }
+
+
   ]
 }

@@ -28,6 +28,20 @@
       "label": "Feind von",
       "domain": ["jedi", "dude"],
       "range": ["jedi", "dude"]
+    },
+    {
+      "name": "belongsTo",
+      "inverse": "owns",
+      "label": "Gehört",
+      "domain": ["vessel"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "owns",
+      "inverse": "belongsTo",
+      "label": "Besitzer von",
+      "domain": ["jedi","dude"],
+      "range": ["vessel"]
     }
   ]
 }

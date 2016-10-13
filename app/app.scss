@@ -1,27 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700);
 
-@import "variables";
-@import "spinner";
 @import "bootstrap-flex";
-@import "navbar";
-@import "footer";
-@import "./overview/overview";
-@import "./import/import";
 @import "materialdesignicons";
-@import "buttons";
-@import "./overview/document-view/document-view";
-@import "overview/map/map";
+
+@import "variables";
+@import "navbar";
 @import "info-window";
+@import "spinner";
+@import "overview/overview";
+@import "import/import";
 
 html {
   position: relative;
   min-height: 100%;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
 
 #app {

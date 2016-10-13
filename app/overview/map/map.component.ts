@@ -132,8 +132,8 @@ export class MapComponent implements OnChanges {
         this.addLayerToMap(this.layers[0]);
 
         var mapComponent = this;
-        this.map.on('click', function() {
-            mapComponent.clickOnMap();
+        this.map.on('click', function(event: L.MouseEvent) {
+            mapComponent.clickOnMap(event.latlng);
         });
 
         this.initializeViewport();
@@ -273,10 +273,15 @@ export class MapComponent implements OnChanges {
         return this.activeLayers.indexOf(layer) > -1;
     }
 
-    private clickOnMap() {
+    private clickOnMap(clickPosition: L.LatLng) {
 
-        if (this.editMode == "none") {
-            this.deselect();
+        switch(this.editMode) {
+            case "point":
+                this.setEditableMarkerPosition(clickPosition);
+                break;
+            case "none":
+                this.deselect();
+                break;
         }
     }
 
@@ -301,9 +306,11 @@ export class MapComponent implements OnChanges {
 
         switch (this.selectedDocument.resource.geometries[0].type) {
             case 'Polygon':
+                this.editMode = "polygon";
                 this.startPolygonEditing();
                 break;
             case 'Point':
+                this.editMode = "point";
                 this.startPointEditing();
                 break;
         }
@@ -347,10 +354,7 @@ export class MapComponent implements OnChanges {
 
     private startPointCreation() {
 
-        var position = this.map.getCenter();
-
-        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
-        this.editableMarker.addTo(this.map);
+        this.createEditableMarker(this.map.getCenter());
     }
 
     private startPointEditing() {
@@ -360,6 +364,21 @@ export class MapComponent implements OnChanges {
         this.editableMarker.setIcon(this.markerIcons.red);
         this.editableMarker.dragging.enable();
         this.editableMarker.setZIndexOffset(1000);
+    }
+
+    private createEditableMarker(position: L.LatLng) {
+
+        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
+        this.editableMarker.addTo(this.map);
+    }
+
+    private setEditableMarkerPosition(position: L.LatLng) {
+
+        if (!this.editableMarker) {
+            this.createEditableMarker(position);
+        } else {
+            this.editableMarker.setLatLng(position);
+        }
     }
 
     private fadeOutMapElements() {

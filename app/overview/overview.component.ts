@@ -1,7 +1,6 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";

@@ -410,6 +410,10 @@ export class MapComponent implements OnChanges {
     public deleteGeometry() {
 
         this.resetEditing();
+
+        if (this.editMode == 'polygon') {
+            this.startPolygonCreation();
+        }
     }
 
     public finishEditing() {

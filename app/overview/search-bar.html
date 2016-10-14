@@ -8,8 +8,34 @@
     <span class="input-group-btn">
         <button class="btn btn-secondary"
                 id="searchfilter"
-                type="button">
-            <span class="mdi mdi-filter"></span>
+                type="button"
+                [ngbPopover]="filterMenu"
+                #p="ngbPopover"
+                placement="bottom">
+            <span *ngIf="query.filters['type'] == ''" class="mdi mdi-filter"></span>
+            <span *ngIf="query.filters['type'] != ''">
+                <type-icon [type]="query.filters['type']" size="30"></type-icon>
+            </span>
         </button>
     </span>
+
+    <template #filterMenu>
+        <div>
+            <div class="popover-custom-title">Nach Resourcentyp filtern:</div>
+            <ul class="list-group">
+                <li class="list-group-item popover-item" (click)="setTypeFilter(''); p.close();"
+                        [ngClass]="{ 'active': query.filters['type'] == '' }">
+                    <i>Alle Typen</i>
+                </li>
+                <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
+                        id="choose-type-option-{{index}}"
+                        class="list-group-item popover-item"
+                        (click)="setTypeFilter(t.name); p.close();"
+                        [ngClass]="{ 'active': query.filters['type'] == t.name }">
+                    <type-icon [type]="t.name" size="30"></type-icon> {{t.label}}
+                </li>
+            </ul>
+        </div>
+    </template>
+
 </div>

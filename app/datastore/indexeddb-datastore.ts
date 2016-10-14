@@ -1,6 +1,5 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Document} from "idai-components-2/idai-components-2";
-import {Datastore} from "idai-components-2/idai-components-2";
+import {Document, Datastore, Query} from "idai-components-2/idai-components-2";
 import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
@@ -144,16 +143,17 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    public find(query:string):Promise<Document[]> {
+    public find(query: Query):Promise<Document[]> {
 
-        query = query.toLowerCase();
+        var queryString = query.q.toLowerCase();
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
                 var ids:string[] = [];
 
-                var range = IDBKeyRange.bound(query, query + '\uffff', false, true);
+                // get a range that spans all index entries that start with the query string
+                var range = IDBKeyRange.bound(queryString, queryString + '\uffff', false, true);
                 var cursor = db.openCursor(IndexeddbDatastore.FULLTEXT, "terms", range);
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
@@ -163,8 +163,7 @@ export class IndexeddbDatastore implements Datastore {
                     } else {
                         // make ids unique
                         ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
-                        var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
-                        resolve(Promise.all(promises));
+                        this.buildResult(ids, query.filters).then( result => resolve(result) );
                     }
                 };
                 cursor.onerror = err => reject(cursor.error);
@@ -239,9 +238,26 @@ export class IndexeddbDatastore implements Datastore {
                 request.onerror = event => reject(request.error);
                 request.onsuccess = event => resolve(request.result);
             });
-        })
+        });
     }
 
+    private buildResult(ids: string[], filters): Promise<Document[]> {
+        var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
+        return Promise.all(promises).then( (docs: Document[]) => {
+            var result = docs.filter( doc => {
+                return this.docMatchesFilters(filters, doc);
+            });
+            return result;
+        });
+    }
+
+    private docMatchesFilters(filters: { [key: string]: string }, doc: Document):boolean {
+        if (!filters) return true;
+        for (var key in filters) {
+            if (!(key in doc.resource) || doc.resource[key] != filters[key]) return false;
+        }
+        return true;
+    }
 
     private notifyObserversOfObjectToSync(document:Document):void {
         

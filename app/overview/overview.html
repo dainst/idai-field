@@ -15,7 +15,7 @@
 
                 <search-bar (queryChanged)="queryChanged($event)"></search-bar>
 
-                <ul *ngIf="documents && documents.length > 0" class="list-group" id="objectList">
+                <ul class="list-group" id="objectList">
                     <li *ngFor="let document of documents; let index=index"
                             (click)="select(document)"
                             class="list-group-item"
@@ -53,7 +53,7 @@
                     </li>
                 </ul>
 
-                <plus-button *ngIf="query.q == '*'"></plus-button>
+                <plus-button *ngIf="query.q == ''"></plus-button>
 
             </main>
         </aside>

@@ -6,42 +6,4 @@ plus-button {
     z-index: 100;
   }
 
-  .popover {
-    padding: 0 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
-  }
-
-  .popover-content {
-    padding: 0 !important;
-  }
-
-  .popover-custom-title {
-    background-color: #eee;
-    padding: 10px;
-    font-weight: lighter;
-  }
-
-  .popover-custom-title {
-    font-size: 1.2em;
-    padding-bottom: 10px;
-  }
-
-  .popover-content .list-group {
-    max-height: calc(100vh - 120px);
-    overflow: auto;
-  }
-
-  .popover-item {
-    cursor: pointer;
-    border: 0 !important;
-    border-radius: 0 !important;
-  }
-
-  .popover-item:hover {
-    background-color: #c7dee0;
-    transition: background-color .65s ease;
-  }
-
 }

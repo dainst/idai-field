@@ -2,8 +2,7 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Query} from "../model/query";
-import {Document} from "idai-components-2/idai-components-2"
+import {Document, Query} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -49,7 +48,7 @@ export class OverviewComponent implements OnInit {
 
     public queryChanged(query: Query) {
         this.query = query;
-        this.fetchSomeDocuments(query.q);
+        this.fetchSomeDocuments(query);
     }
 
     /**
@@ -110,11 +109,11 @@ export class OverviewComponent implements OnInit {
      * the datastore which match the given <code>searchString</code>
      * @param searchString
      */
-    public fetchSomeDocuments(searchString) {
-        if (searchString == "") {
+    public fetchSomeDocuments(query) {
+        if (query.q == "" && ( (query.filters && query.filters['type'] == '') || !query.filters) ) {
             this.fetchAllDocuments()
         } else {
-            this.datastore.find(searchString).then(documents => {
+            this.datastore.find(query).then(documents => {
                 this.documents = documents;
                 this.notify();
             }).catch(err => console.error(err));

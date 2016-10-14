@@ -19,7 +19,6 @@ export class SearchBarComponent {
     public queryStringChanged(event) {
         if (event.target.value) this.query.q = event.target.value;
         else this.query.q = '';
-        console.log("search-bar", this.query);
         this.queryChanged.emit(this.query);
     }
     

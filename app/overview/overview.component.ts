@@ -48,7 +48,6 @@ export class OverviewComponent implements OnInit {
     }
 
     public queryChanged(query: Query) {
-        console.log("overview", query);
         this.query = query;
         this.fetchSomeDocuments(query.q);
     }

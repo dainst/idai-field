@@ -13,41 +13,16 @@
 
             <main>
 
-                <div class="search input-group">
-                    <input #searchInput (keyup)="onKey($event)"
-                           type="text"
-                           class="form-control"
-                           id="object-search"
-                           placeholder="Suchen...">
-                    <!--<span class="input-group-btn">
-                        <button class="btn btn-secondary"
-                                id="searchfilter"
-                                type="button"
-                                (click)="filterOverviewIsCollapsed = !filterOverviewIsCollapsed">
-                            <span class="mdi mdi-filter"></span>
-                        </button>
-                    </span>-->
-                </div>
-
-                <!--<div id="filteroptions"
-                     [ngbCollapse]="filterOverviewIsCollapsed">
-                    <div class="card card-block">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" checked> Alle Ressourcen anzeigen
-                            </label>
-                        </div>
-                    </div>
-                </div>-->
+                <search-bar (queryChanged)="queryChanged($event)"></search-bar>
 
                 <ul *ngIf="documents && documents.length > 0" class="list-group" id="objectList">
                     <li *ngFor="let document of documents; let index=index"
-                        (click)="select(document)"
-                        class="list-group-item"
-                        [class.synced]="document.synced"
-                        [class.unsynced]="!document.synced"
-                        [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                        onclick="window.scrollTo(0, 0)">
+                            (click)="select(document)"
+                            class="list-group-item"
+                            [class.synced]="document.synced"
+                            [class.unsynced]="!document.synced"
+                            [class.selected]="getSelected() && getSelected().resource.id === document.id"
+                            onclick="window.scrollTo(0, 0)">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                             -->
@@ -78,7 +53,7 @@
                     </li>
                 </ul>
 
-                <plus-button *ngIf="searchInput.value.length == 0"></plus-button>
+                <plus-button *ngIf="query.q == '*'"></plus-button>
 
             </main>
         </aside>

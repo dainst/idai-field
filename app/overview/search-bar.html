@@ -1,0 +1,15 @@
+<div class="search input-group">
+    <input #searchInput
+           (keyup)="queryStringChanged($event)"
+           type="text"
+           class="form-control"
+           id="object-search"
+           placeholder="Suchen...">
+    <span class="input-group-btn">
+        <button class="btn btn-secondary"
+                id="searchfilter"
+                type="button">
+            <span class="mdi mdi-filter"></span>
+        </button>
+    </span>
+</div>

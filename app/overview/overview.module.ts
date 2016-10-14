@@ -10,6 +10,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MapComponent} from './map/map.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {TypeIconComponent} from './type-icon.component';
+import {SearchBarComponent} from './search-bar.component';
 import {MapState} from './map/map-state';
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MapState} from './map/map-state';
         MapWrapperComponent,
         MapComponent,
         PlusButtonComponent,
-        TypeIconComponent
+        TypeIconComponent,
+        SearchBarComponent
     ],
     providers: [
         MapState

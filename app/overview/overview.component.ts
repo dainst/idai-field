@@ -2,6 +2,7 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Query} from "../model/query";
 import {Document} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
@@ -22,7 +23,7 @@ export class OverviewComponent implements OnInit {
     private documents: Document[];
     private selectedDocument;
     private observers: Array<any> = [];
-    private filterOverviewIsCollapsed = true;
+    private query: Query = { q: '' };
 
     constructor(@Inject('app.config') private config,
         private router: Router,
@@ -46,8 +47,10 @@ export class OverviewComponent implements OnInit {
         }
     }
 
-    onKey(event: any) {
-        this.fetchSomeDocuments(event.target.value);
+    public queryChanged(query: Query) {
+        console.log("overview", query);
+        this.query = query;
+        this.fetchSomeDocuments(query.q);
     }
 
     /**

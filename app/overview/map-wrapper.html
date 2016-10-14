@@ -4,7 +4,7 @@
              [editMode]="editMode" (selectDocument)="selectDocument($event)"
              (quitEditing)="quitEditing($event)"></map>
     </div>
-    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm document-info">
+    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-4 document-info">
         <div class="card">
             <div class="card-header">
                 <type-icon [type]="activeType" size="25" class="pull-xs-left" style="margin-right:10px;"></type-icon>

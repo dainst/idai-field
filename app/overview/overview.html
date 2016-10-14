@@ -40,7 +40,7 @@
                     </div>
                 </div>-->
 
-                <ul class="list-group" id="objectList">
+                <ul *ngIf="documents && documents.length > 0" class="list-group" id="objectList">
                     <li *ngFor="let document of documents; let index=index"
                         (click)="select(document)"
                         class="list-group-item"

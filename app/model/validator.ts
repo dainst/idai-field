@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {IdaiFieldDocument} from "./idai-field-document";
 import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
-import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
+import {ProjectConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
 
 /**
  * @author Daniel de Oliveira
@@ -12,14 +12,12 @@ import {ProjectConfiguration, RelationsConfiguration} from "../../node_modules/i
 export class Validator {
 
     private projectConfiguration: ProjectConfiguration;
-    private relationsConfiguration: RelationsConfiguration;
 
     constructor(private configLoader: ConfigLoader) {
         
         this.configLoader.configuration().subscribe((result)=>{
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;
-                this.relationsConfiguration = result.relationsConfiguration;
             } else {
                 // TODO Meldung geben/zeigen wenn es ein Problem mit der Configuration gibt
                 //this.messages.add(result.error.msgkey);
@@ -109,7 +107,7 @@ export class Validator {
     private validateFields(resource: any): string[] {
 
         var projectFields = this.projectConfiguration.getFields(resource.type);
-        var relationFields = this.relationsConfiguration.getRelationFields();
+        var relationFields = this.projectConfiguration.getRelationFields();
         var defaultFields = [ { name: "id" }, { name: "type" }, { name: "relations" }, { name: "geometries" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);

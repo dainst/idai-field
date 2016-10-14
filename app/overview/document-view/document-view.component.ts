@@ -3,7 +3,6 @@ import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {
     ProjectConfiguration,
-    RelationsConfiguration,
     ConfigLoader,
     ReadDatastore
 } from "idai-components-2/idai-components-2";
@@ -27,7 +26,6 @@ export class DocumentViewComponent implements OnChanges {
     private relations: Array<any>;
 
     private projectConfiguration: ProjectConfiguration;
-    private relationsConfiguration: RelationsConfiguration;
 
     constructor(
         private datastore: ReadDatastore,
@@ -37,7 +35,6 @@ export class DocumentViewComponent implements OnChanges {
         this.configLoader.configuration().subscribe((result) => {
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;
-                this.relationsConfiguration = result.relationsConfiguration;
             }
         });
     }
@@ -112,7 +109,7 @@ export class DocumentViewComponent implements OnChanges {
 
     private getRelationLabel(relationName: string) {
 
-        var relationFields = this.relationsConfiguration.getRelationFields();
+        var relationFields = this.projectConfiguration.getRelationFields();
         return this.getLabel(relationName, relationFields);
     }
 

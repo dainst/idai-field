@@ -37,7 +37,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         this.configLoader.configuration().subscribe((result) => {
             if(!result.error) {
                 this.projectConfiguration = result.projectConfiguration;
-                this.persistenceManager.setRelationsConfiguration(result.relationsConfiguration);
             }
         });
     }

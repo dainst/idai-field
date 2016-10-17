@@ -13,7 +13,7 @@
 
             <main>
 
-                <search-bar (queryChanged)="queryChanged($event)"></search-bar>
+                <search-bar (onQueryChanged)="queryChanged($event)"></search-bar>
 
                 <ul class="list-group" id="objectList">
                     <li *ngFor="let document of documents; let index=index"

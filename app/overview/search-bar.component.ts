@@ -15,7 +15,7 @@ export class SearchBarComponent {
     private projectConfiguration;
     private query: Query = { q: '', filters: { type: '' } };
 
-    @Output() queryChanged = new EventEmitter<Query>();
+    @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
         this.configLoader.configuration().subscribe(result => {
@@ -26,12 +26,12 @@ export class SearchBarComponent {
     public queryStringChanged(event) {
         if (event.target.value) this.query.q = event.target.value;
         else this.query.q = '';
-        this.queryChanged.emit(this.query);
+        this.onQueryChanged.emit(this.query);
     }
 
     public setTypeFilter(type) {
         this.query.filters['type'] = type;
-        this.queryChanged.emit(this.query);
+        this.onQueryChanged.emit(this.query);
     }
     
 }

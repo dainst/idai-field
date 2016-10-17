@@ -21,8 +21,8 @@ export class MapComponent implements OnChanges {
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() editMode: string; // polygon | point | none
 
-    @Output() selectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-    @Output() quitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
+    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
     private map: L.Map;
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
@@ -67,8 +67,8 @@ export class MapComponent implements OnChanges {
     constructor(private mapState: MapState) {}
 
     public ngAfterViewInit() {
-        // TODO Check if this is really necessary
-        this.map.invalidateSize(true);
+
+        this.map.invalidateSize(false);
     }
 
     public ngOnChanges() {
@@ -97,7 +97,7 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             }
-        }.bind(this), 100);
+        }.bind(this), 1);
 
         this.resetEditing();
 
@@ -144,7 +144,7 @@ export class MapComponent implements OnChanges {
     private initializeViewport() {
 
         if (this.mapState.getCenter() && this.mapState.getZoom()) {
-            this.map.setView(this.mapState.getCenter(), this.mapState.getZoom(), {});
+            this.map.setView(this.mapState.getCenter(), this.mapState.getZoom());
         } else {
             this.map.setView([0, 0], 5);
         }
@@ -288,7 +288,7 @@ export class MapComponent implements OnChanges {
     private select(document: IdaiFieldDocument): boolean {
 
         if (this.editMode == "none") {
-            this.selectDocument.emit(document);
+            this.onSelectDocument.emit(document);
             return true;
         } else {
             return false;
@@ -298,7 +298,7 @@ export class MapComponent implements OnChanges {
     private deselect() {
 
         if (this.editMode == "none") {
-            this.selectDocument.emit(null);
+            this.onSelectDocument.emit(null);
         }
     }
 
@@ -433,7 +433,7 @@ export class MapComponent implements OnChanges {
         this.fadeInMapElements();
         this.resetEditing();
 
-        this.quitEditing.emit(geometry);
+        this.onQuitEditing.emit(geometry);
     }
 
     public abortEditing() {
@@ -441,7 +441,7 @@ export class MapComponent implements OnChanges {
         this.fadeInMapElements();
         this.resetEditing();
 
-        this.quitEditing.emit(undefined);
+        this.onQuitEditing.emit(undefined);
     }
 
     private resetEditing() {

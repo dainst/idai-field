@@ -28,7 +28,7 @@
                     <i>Alle Typen</i>
                 </li>
                 <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
-                        id="choose-type-option-{{index}}"
+                        id="choose-type-filter-option-{{index}}"
                         class="list-group-item popover-item"
                         (click)="setTypeFilter(t.name); p.close();"
                         [ngClass]="{ 'active': query.filters['type'] == t.name }">

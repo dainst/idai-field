@@ -14,6 +14,19 @@ describe('overview component', function() {
             });
     });
 
+    it ('should show only resources of the selected type', function() {
+        common.createDoc("1", 0)
+            .then(common.createDoc("2", 1))
+            .then(setTypeFilter(0))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
+            })
+            .then(setTypeFilter(1))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
+            });
+    });
+
     it ('should reflect changes in overview in realtime', function() {
         common.createDoc("1a")
             .then(common.createDoc("2"))
@@ -127,5 +140,9 @@ describe('overview component', function() {
         return common.typeIn(element(by.id('object-search')), "12");
     }
 
+    function setTypeFilter(typeIndex) {
+        return element(by.id('searchfilter')).click()
+            .then(function() { return element(by.id('choose-type-filter-option-' + typeIndex)).click() });
+    }
 
 });

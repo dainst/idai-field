@@ -2,9 +2,14 @@
  * Common functions to be used in multiple e2e tests.
  */
 
-function createObject(identifier) {
+function createObject(identifier, typeIndex) {
+    if (typeIndex === undefined) typeIndex = 0;
+
     return clickCreateObjectButton()
-        .then(selectType)
+
+        // TODO Use selectType()
+        .then(function() { return element(by.id('choose-type-option-' + typeIndex)).click(); })
+
         .then(chooseGeometry)
         .then(typeInIdentifier(identifier))
         .then(scrollUp)
@@ -12,7 +17,7 @@ function createObject(identifier) {
 }
 
 function clickCreateObjectButton() {
-    return element(by.id('object-overview-button-create-object')).click()
+    return element(by.id('object-overview-button-create-object')).click();
 }
 
 function selectType() {
@@ -22,7 +27,7 @@ function selectType() {
 function chooseGeometry(geometry) {
     var geom = 'none';
     if (geometry) geom = geometry;
-    return element(by.id('choose-geometry-option-'+geom)).click();
+    return element(by.id('choose-geometry-option-' + geom)).click();
 }
 
 function typeInIdentifier(identifier) {

@@ -17,14 +17,19 @@ describe('overview component', function() {
     it ('should show only resources of the selected type', function() {
         common.createDoc("1", 0)
             .then(common.createDoc("2", 1))
+            .then(setTypeFilter(1))
+            .then(function(){
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
+            })
             .then(setTypeFilter(0))
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
             })
-            .then(setTypeFilter(1))
+            .then(setTypeFilter('all'))
             .then(function(){
                 expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
-            });
+                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("1");
+            })
     });
 
     it ('should reflect changes in overview in realtime', function() {
@@ -73,7 +78,7 @@ describe('overview component', function() {
     it("should remove a new object from the list if it hasn't been saved", function() {
         common.createDoc("1")
             .then(common.clickCreateObjectButton)
-            .then(common.selectType)
+            .then(common.selectType(0))
             .then(common.chooseGeometry)
             .then(common.clickCreateObjectButton)
             .then(common.selectType)

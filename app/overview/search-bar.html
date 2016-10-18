@@ -23,8 +23,8 @@
         <div>
             <div class="popover-custom-title">Nach Resourcentyp filtern:</div>
             <ul class="list-group">
-                <li class="list-group-item popover-item" (click)="setTypeFilter(''); p.close();"
-                        [ngClass]="{ 'active': query.filters['type'] == '' }">
+                <li id="choose-type-filter-option-all" class="list-group-item popover-item"
+                    (click)="setTypeFilter(''); p.close();" [ngClass]="{ 'active': query.filters['type'] == '' }">
                     <i>Alle Typen</i>
                 </li>
                 <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"

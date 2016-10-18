@@ -78,7 +78,7 @@ describe('overview component', function() {
     it("should remove a new object from the list if it hasn't been saved", function() {
         common.createDoc("1")
             .then(common.clickCreateObjectButton)
-            .then(common.selectType(0))
+            .then(common.selectType)
             .then(common.chooseGeometry)
             .then(common.clickCreateObjectButton)
             .then(common.selectType)

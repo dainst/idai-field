@@ -27,8 +27,8 @@ describe('overview component', function() {
             })
             .then(setTypeFilter('all'))
             .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
-                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("1");
+                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
+                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("2");
             })
     });
 

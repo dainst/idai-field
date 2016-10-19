@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {ConfigLoader, Query} from "idai-components-2/idai-components-2";
+import {ConfigLoader, Query, Filter} from "idai-components-2/idai-components-2";
 
 @Component({
     moduleId: module.id,
@@ -13,7 +13,8 @@ import {ConfigLoader, Query} from "idai-components-2/idai-components-2";
 export class SearchBarComponent {
 
     private projectConfiguration;
-    private query: Query = { q: '', filters: { type: '' } };
+    private typeFilter: Filter = { field: 'type', value: '', invert: false };
+    private query: Query = { q: '', filters: [this.typeFilter] };
 
     @Output() onQueryChanged = new EventEmitter<Query>();
 
@@ -30,7 +31,7 @@ export class SearchBarComponent {
     }
 
     public setTypeFilter(type) {
-        this.query.filters['type'] = type;
+        this.typeFilter['value'] = type;
         this.onQueryChanged.emit(this.query);
     }
     

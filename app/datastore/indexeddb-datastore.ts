@@ -1,5 +1,5 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Document, Datastore, Query} from "idai-components-2/idai-components-2";
+import {Document, Datastore, Query, Filter} from "idai-components-2/idai-components-2";
 import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
@@ -68,28 +68,24 @@ export class IndexeddbDatastore implements Datastore {
         return this.fetchObject(id);
     }
 
-    public get(resourceId:string):Promise<Document> {
+    public get(id:string):Promise<Document> {
 
-        let docId = resourceId;
-
-        if (this.documentCache[docId]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[docId]));
+        if (this.documentCache[id]) {
+            return new Promise((resolve, reject) => resolve(this.documentCache[id]));
         } else {
-            return this.fetchObject(docId);
+            return this.fetchObject(id);
         }
     }
 
-    public remove(resourceId:string):Promise<any> {
+    public remove(id:string):Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.db.then(db => {
 
-                var docId = resourceId;
-
-                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT, docId);
+                var objectRequest = db.remove(IndexeddbDatastore.IDAIFIELDOBJECT, id);
                 objectRequest.onerror = event => reject(objectRequest.error);
 
-                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT, docId);
+                var fulltextRequest = db.remove(IndexeddbDatastore.FULLTEXT, id);
                 fulltextRequest.onerror = event => reject(fulltextRequest.error);
 
                 var promises = [];
@@ -98,7 +94,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 Promise.all(promises).then(
                     () => {
-                        if (docId) delete this.documentCache[docId];
+                        if (id) delete this.documentCache[id];
                         resolve();
                     }
                 )
@@ -179,8 +175,6 @@ export class IndexeddbDatastore implements Datastore {
 
                 var objects = [];
 
-
-
                 var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT,"modified",null, "prev");
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
@@ -244,17 +238,21 @@ export class IndexeddbDatastore implements Datastore {
     private buildResult(ids: string[], filters): Promise<Document[]> {
         var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
         return Promise.all(promises).then( (docs: Document[]) => {
-            var result = docs.filter( doc => {
+            var result = docs.filter( (doc: Document) => {
                 return this.docMatchesFilters(filters, doc);
             });
             return result;
         });
     }
 
-    private docMatchesFilters(filters: { [key: string]: string }, doc: Document):boolean {
+    private docMatchesFilters(filters: Filter[], doc: Document):boolean {
         if (!filters) return true;
-        for (var key in filters) {
-            if (!(key in doc.resource) || doc.resource[key] != filters[key]) return false;
+        for (var filter of filters) {
+            if (filter.invert) {
+                if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return false;
+            } else {
+                if (!(filter.field in doc.resource) || doc.resource[filter.field] != filter.value) return false;
+            }
         }
         return true;
     }

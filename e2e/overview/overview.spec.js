@@ -15,25 +15,27 @@ describe('overview component', function() {
             });
     });
 
-    it ('should show only resources of the selected type', function() {
-        var elements = element.all(by.css('#objectList .list-group-item'));
-        elements.count().then(function(count) {
-            common.createDoc("1", 0)
-                .then(common.createDoc("2", 1))
-                .then(setTypeFilter(1))
-                .then(function(){
-                    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
-                })
-                .then(setTypeFilter(0))
-                .then(function(){
-                    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
-                })
-                .then(setTypeFilter('all'))
-                .then(function() {
-                    var elements = element.all(by.css('#objectList .list-group-item'));
-                    expect(elements.count()).toEqual(count + 2);
-                });
-        });
+    fit ('should show only resources of the selected type', function() {
+        common.createDoc("1", 0)
+            .then(common.createDoc("2", 1))
+            .then(setTypeFilter(1))
+            .then(function() {
+                browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
+                expect(element(by.id('resource-1')).isPresent()).toBe(false);
+                expect(element(by.id('resource-2')).isPresent()).toBe(true);
+            })
+            .then(setTypeFilter(0))
+            .then(function() {
+                browser.wait(EC.presenceOf(element(by.id('resource-1'))), 1000);
+                expect(element(by.id('resource-1')).isPresent()).toBe(true);
+                expect(element(by.id('resource-2')).isPresent()).toBe(false);
+            })
+            .then(setTypeFilter('all'))
+            .then(function() {
+                browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
+                expect(element(by.id('resource-1')).isPresent()).toBe(true);
+                expect(element(by.id('resource-2')).isPresent()).toBe(true);
+            });
     });
 
     it ('should reflect changes in overview in realtime', function() {

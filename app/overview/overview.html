@@ -22,7 +22,8 @@
                             [class.synced]="document.synced"
                             [class.unsynced]="!document.synced"
                             [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                            onclick="window.scrollTo(0, 0)">
+                            onclick="window.scrollTo(0, 0)"
+                            [id]="'resource-' + document.resource.identifier">
                         <!-- Enable when finally implemented in Chromium
                             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
                             -->

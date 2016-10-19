@@ -34,7 +34,7 @@
     "bootstrap": "4.0.0-alpha.4",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/200/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/201/.git",
     "identicon.js": "github:dainst/identicon.js",
     "leaflet": "1.0.1",
     "leaflet.pm": "^0.10.1",
@@ -62,10 +62,11 @@
     "karma-chrome-launcher": "1.0.1",
     "karma-jasmine": "1.0.2",
     "mdi": "^1.7.22",
-    "protractor": "^3.1.1",
+    "protractor": "^4.0.9",
     "protractor-console-plugin": "^0.1.1",
     "rimraf": "^2.5.4",
     "typescript": "^2.0.3",
+    "typings": "^1.4.0",
     "yargs": "^5.0.0"
   }
 }

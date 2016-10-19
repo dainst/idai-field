@@ -15,7 +15,7 @@ describe('overview component', function() {
             });
     });
 
-    fit ('should show only resources of the selected type', function() {
+    it ('should show only resources of the selected type', function() {
         common.createDoc("1", 0)
             .then(common.createDoc("2", 1))
             .then(setTypeFilter(1))

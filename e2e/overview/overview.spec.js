@@ -1,4 +1,5 @@
 var common = require("../common.js");
+var EC = protractor.ExpectedConditions;
 
 describe('overview component', function() {
 
@@ -15,21 +16,24 @@ describe('overview component', function() {
     });
 
     it ('should show only resources of the selected type', function() {
-        common.createDoc("1", 0)
-            .then(common.createDoc("2", 1))
-            .then(setTypeFilter(1))
-            .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
-            })
-            .then(setTypeFilter(0))
-            .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
-            })
-            .then(setTypeFilter('all'))
-            .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
-                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("2");
-            })
+        var elements = element.all(by.css('#objectList .list-group-item'));
+        elements.count().then(function(count) {
+            common.createDoc("1", 0)
+                .then(common.createDoc("2", 1))
+                .then(setTypeFilter(1))
+                .then(function(){
+                    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("2");
+                })
+                .then(setTypeFilter(0))
+                .then(function(){
+                    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
+                })
+                .then(setTypeFilter('all'))
+                .then(function() {
+                    var elements = element.all(by.css('#objectList .list-group-item'));
+                    expect(elements.count()).toEqual(count + 2);
+                });
+        });
     });
 
     it ('should reflect changes in overview in realtime', function() {

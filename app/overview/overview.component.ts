@@ -40,15 +40,15 @@ export class OverviewComponent implements OnInit {
     public ngOnInit() {
 
         if (this.config.environment == "test") {
-            setTimeout(() => this.fetchAllDocuments(), 500);
+            setTimeout(() => this.fetchDocuments(this.query), 500);
         } else {
-            this.fetchAllDocuments();
+            this.fetchDocuments(this.query);
         }
     }
 
     public queryChanged(query: Query) {
         this.query = query;
-        this.fetchSomeDocuments(query);
+        this.fetchDocuments(query);
     }
 
     /**
@@ -94,30 +94,15 @@ export class OverviewComponent implements OnInit {
     }
 
     /**
-     * Populates the document list with all documents
-     * available in the datastore.
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     * @param query
      */
-    public fetchAllDocuments() {
-        this.datastore.all().then(documents => {
+    public fetchDocuments(query: Query) {
+        this.datastore.find(query).then(documents => {
             this.documents = documents;
             this.notify();
         }).catch(err => console.error(err));
-    }
-
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match the given <code>searchString</code>
-     * @param searchString
-     */
-    public fetchSomeDocuments(query) {
-        if (query.q == "" && ( (query.filters && query.filters['type'] == '') || !query.filters) ) {
-            this.fetchAllDocuments()
-        } else {
-            this.datastore.find(query).then(documents => {
-                this.documents = documents;
-                this.notify();
-            }).catch(err => console.error(err));
-        }
     }
 
 

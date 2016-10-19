@@ -248,6 +248,7 @@ export class IndexeddbDatastore implements Datastore {
     private docMatchesFilters(filters: Filter[], doc: Document):boolean {
         if (!filters) return true;
         for (var filter of filters) {
+            if (!filter) continue;
             if (filter.invert) {
                 if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return false;
             } else {

@@ -13,8 +13,8 @@ import {ConfigLoader, Query, Filter} from "idai-components-2/idai-components-2";
 export class SearchBarComponent {
 
     private projectConfiguration;
-    private typeFilter: Filter = { field: 'type', value: '', invert: false };
-    private query: Query = { q: '', filters: [this.typeFilter] };
+    private type: string = '';
+    private q: string = '';
 
     @Output() onQueryChanged = new EventEmitter<Query>();
 
@@ -24,15 +24,21 @@ export class SearchBarComponent {
         });
     }
     
-    public queryStringChanged(event) {
-        if (event.target.value) this.query.q = event.target.value;
-        else this.query.q = '';
-        this.onQueryChanged.emit(this.query);
+    public qChanged(q): void {
+        if (q) this.q = q;
+        else this.q = '';
+        this.emitCurrentQuery();
     }
 
-    public setTypeFilter(type) {
-        this.typeFilter['value'] = type;
-        this.onQueryChanged.emit(this.query);
+    public setType(type): void {
+        this.type = type;
+        this.emitCurrentQuery();
+    }
+
+    private emitCurrentQuery() {
+        let query: Query = { q: this.q };
+        if (this.type) query.filters = [ { field: 'type', value: this.type, invert: false } ];
+        this.onQueryChanged.emit(query);
     }
     
 }

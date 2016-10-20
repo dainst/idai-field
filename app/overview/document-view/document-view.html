@@ -1,64 +1,67 @@
-<div id="document-view" *ngIf="document" class="row">
-    <div class="col-md-7">
-        <!--
-          In one project we have this assumption that there is always a shortDescription,
-          while in another there is only the identifier.
-        -->
-        <div *ngIf="document.resource.shortDescription">
-            <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
-            <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
-        </div>
-        <div *ngIf="!document.resource.shortDescription">
-            <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
-        </div>
+<div id="document-view" *ngIf="document">
+    <button class="btn btn-link btn-sm pull-xs-right" style="margin-top: -2px;" id="document-view-button-edit-document"
+            [routerLink]="['/resources/', document.resource.id, 'edit']">
+        <span class="mdi mdi-pencil mdi-18px"></span>
+    </button>
 
-        <div class="document-view-field" id="document-view-field-geometry">
-            <div class="fieldname">Geometrie</div>
-            <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
-                <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>
-                <span *ngIf="document.resource.geometries[0].type == 'Point'" class="fieldvalue">Punkt</span>
-                <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
-                        [routerLink]="['/resources/editGeometry', document.resource.id, 'existing', {menuMode:'geometryEdit'}]">
-                    <span class="mdi mdi-pencil mdi-18px"></span>
-                </button>
-            </div>
-            <div *ngIf="!document.resource.geometries || document.resource.geometries.length == 0">
-                <span>Keine</span>
-                <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
-                        [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
-                    <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
-                </button>
-                <button class="btn btn-link btn-sm" id="document-view-button-create-point"
-                        [routerLink]="['/resources/editGeometry', document.resource.id, 'point', {menuMode:'geometryEdit'}]">
-                    <span class="mdi mdi-map-marker-plus mdi-18px"></span>
-                </button>
-            </div>
-        </div>
+    <!--
+        In one project we have this assumption that there is always a shortDescription,
+        while in another there is only the identifier.
+    -->
+    <div *ngIf="document.resource.shortDescription">
+        <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
+        <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
+    </div>
+    <div *ngIf="!document.resource.shortDescription">
+        <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
+    </div>
 
-        <div *ngFor="let field of fields">
-            <div *ngIf="field.isArray" class="document-view-field">
-                <div class="fieldname">{{field.name}}</div>
-                <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
-            </div>
-            <div *ngIf="!field.isArray" class="document-view-field">
-                <div class="fieldname">{{field.name}}</div>
-                <div class="fieldvalue">{{field.value}}</div>
-            </div>
+    <div class="document-view-field" id="document-view-field-geometry">
+        <div class="fieldname">Geometrie</div>
+        <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
+            <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>
+            <span *ngIf="document.resource.geometries[0].type == 'Point'" class="fieldvalue">Punkt</span>
+            <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
+                    [routerLink]="['/resources/editGeometry', document.resource.id, 'existing', {menuMode:'geometryEdit'}]">
+                <span class="mdi mdi-pencil mdi-18px"></span>
+            </button>
         </div>
+        <div *ngIf="!document.resource.geometries || document.resource.geometries.length == 0">
+            <span>Keine</span>
+            <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
+                    [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
+                <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
+            </button>
+            <button class="btn btn-link btn-sm" id="document-view-button-create-point"
+                    [routerLink]="['/resources/editGeometry', document.resource.id, 'point', {menuMode:'geometryEdit'}]">
+                <span class="mdi mdi-map-marker-plus mdi-18px"></span>
+            </button>
+        </div>
+    </div>
 
-        <div *ngFor="let relation of relations">
-            <div class="document-view-field">
-                <div class="fieldname">{{relation.name}}</div>
-                <div *ngFor="let target of relation.targets" class="fieldvalue">
-                    <!--
-                      See corresponding comment on top of the page.
-                    -->
-                    <div *ngIf="document.resource.shortDescription">
-                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.shortDescription}} ({{target.resource.identifier}})</a>
-                    </div>
-                    <div *ngIf="!document.resource.shortDescription">
-                        <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
-                    </div>
+    <div *ngFor="let field of fields">
+        <div *ngIf="field.isArray" class="document-view-field">
+            <div class="fieldname">{{field.name}}</div>
+            <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
+        </div>
+        <div *ngIf="!field.isArray" class="document-view-field">
+            <div class="fieldname">{{field.name}}</div>
+            <div class="fieldvalue">{{field.value}}</div>
+        </div>
+    </div>
+
+    <div *ngFor="let relation of relations">
+        <div class="document-view-field">
+            <div class="fieldname">{{relation.name}}</div>
+            <div *ngFor="let target of relation.targets" class="fieldvalue">
+                <!--
+                  See corresponding comment on top of the page.
+                -->
+                <div *ngIf="document.resource.shortDescription">
+                    <a class="relation-link" (click)="selectDocument(target)">{{target.resource.shortDescription}} ({{target.resource.identifier}})</a>
+                </div>
+                <div *ngIf="!document.resource.shortDescription">
+                    <a class="relation-link" (click)="selectDocument(target)">{{target.resource.identifier}}</a>
                 </div>
             </div>
         </div>

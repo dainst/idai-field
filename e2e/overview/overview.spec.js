@@ -23,19 +23,16 @@ describe('overview component', function() {
             .then(function() {
                 browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
                 expect(element(by.id('resource-1')).isPresent()).toBe(false);
-                expect(element(by.id('resource-2')).isPresent()).toBe(true);
             })
             .then(setTypeFilter(0))
             .then(function() {
                 browser.wait(EC.presenceOf(element(by.id('resource-1'))), 1000);
-                expect(element(by.id('resource-1')).isPresent()).toBe(true);
                 expect(element(by.id('resource-2')).isPresent()).toBe(false);
             })
             .then(setTypeFilter('all'))
             .then(function() {
+                browser.wait(EC.presenceOf(element(by.id('resource-1'))), 1000);
                 browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
-                expect(element(by.id('resource-1')).isPresent()).toBe(true);
-                expect(element(by.id('resource-2')).isPresent()).toBe(true);
             });
     });
 

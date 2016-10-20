@@ -32,6 +32,11 @@ $navbar-default-toggle-hover-bg:           lighten($navbar-default-bg, 10%) !def
 $navbar-default-toggle-border-color:       #ddd !default;
 $navbar-default-toggle-icon-bar-bg:        $navbar-default-toggle-border-color;
 
+// Windows Ctrl Buttons
+$ctrl-button-close:               #d9534f;
+$ctrl-button-text-color:          #f2f2f2;
+$ctrl-button-bg:                  rgba(85, 114, 161, 0);
+
 //== Forms
 $input-border-focus:             lighten($brand-primary, 40%) !default;
 

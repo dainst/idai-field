@@ -10,8 +10,19 @@ img#about-logo {
 
 #close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  color: $ctrl-button-text-color;
+  background-color: $ctrl-button-bg;
+  border-color: $ctrl-button-bg;
+}
+
+#close-btn:hover,
+#close-btn:focus {
+  color: $ctrl-button-text-color;
+  background-color: $ctrl-button-close;
+  border-color: $ctrl-button-close;
 }
 
 p#about-version {
@@ -22,12 +33,10 @@ p#about-version {
 #header-block {
   margin-bottom: 20px;
   background-color: $navbar-default-bg;
-  height: 60px;
-  padding: 10px;
+  height: 38px;
+  padding: 5px;
 }
 h4#about-heading {
-  color: white;
+  color: $navbar-default-color;
   position: absolute;
-  top: 17px;
-  left: 10px;
 }

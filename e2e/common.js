@@ -3,13 +3,9 @@
  */
 
 function createObject(identifier, typeIndex) {
-    if (typeIndex === undefined) typeIndex = 0;
 
     return clickCreateObjectButton()
-
-        // TODO Use selectType()
-        .then(function() { return element(by.id('choose-type-option-' + typeIndex)).click(); })
-
+        .then(function() { return selectType(typeIndex); })
         .then(chooseGeometry)
         .then(typeInIdentifier(identifier))
         .then(scrollUp)
@@ -20,8 +16,9 @@ function clickCreateObjectButton() {
     return element(by.id('object-overview-button-create-object')).click();
 }
 
-function selectType() {
-    return element(by.id('choose-type-option-0')).click();
+function selectType(typeIndex) {
+    if (!typeIndex) typeIndex = 0;
+    return element(by.id('choose-type-option-' + typeIndex)).click();
 }
 
 function chooseGeometry(geometry) {

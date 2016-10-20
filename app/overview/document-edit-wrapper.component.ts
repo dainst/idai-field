@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-components-2";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {CanDeactivateDocumentEditWrapperGuard} from "./can-deactivate-document-edit-wrapper-guard";
 import {M} from "../m";
@@ -44,9 +45,13 @@ export class DocumentEditWrapperComponent implements  OnInit {
         private canDeactivateGuard:CanDeactivateDocumentEditWrapperGuard,
         private persistenceManager:PersistenceManager,
         private validator: Validator,
-        private documentEditChangeMonitor:DocumentEditChangeMonitor
-    )
-    {}
+        private documentEditChangeMonitor:DocumentEditChangeMonitor,
+        private configLoader: ConfigLoader
+    ) {
+        this.configLoader.configuration().subscribe(result => {
+            this.projectConfiguration = result.projectConfiguration;
+        });
+    }
 
     public showModal() {
         this.modal = this.modalService.open(this.modalTemplate);
@@ -54,6 +59,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
 
     private document: any;
     public mode: string; // new | edit
+    private projectConfiguration: ProjectConfiguration;
 
     private evalParams(routeParams,callbackWithType,callbackWithId) {
         routeParams.forEach((params: Params) => {
@@ -157,5 +163,14 @@ export class DocumentEditWrapperComponent implements  OnInit {
             }, (err) => {
                 this.messages.add(err);
             });
+    }
+
+    public getTypeLabel(): string {
+
+        if (!this.document) {
+            return "";
+        } else {
+            return this.projectConfiguration.getLabelForType(this.document.resource.type);
+        }
     }
 }

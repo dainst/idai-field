@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {OverviewComponent} from "./overview.component";
 
 @Component({
     selector: 'plus-button',
@@ -15,7 +14,7 @@ import {OverviewComponent} from "./overview.component";
  */
 export class PlusButtonComponent {
 
-    private projectConfiguration;
+    private projectConfiguration: ProjectConfiguration;
     private type: string;
 
     constructor(

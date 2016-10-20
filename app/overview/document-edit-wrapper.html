@@ -8,7 +8,7 @@
                     (click)="save();">Speichern</button>
             <span class="mdi mdi-blur"></span>
 
-            <span *ngIf="mode=='edit'">Ressource bearbeiten</span>
+            <span *ngIf="mode=='edit'">{{getTypeLabel()}} bearbeiten</span>
             <span *ngIf="mode=='new'">Neue Ressource</span>
         </h1>
     </header>

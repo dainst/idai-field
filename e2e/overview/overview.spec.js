@@ -18,6 +18,7 @@ describe('overview component', function() {
     it ('should show only resources of the selected type', function() {
         common.createDoc("1", 0)
             .then(common.createDoc("2", 1))
+            .then(setTypeFilter(2))
             .then(setTypeFilter(1))
             .then(function() {
                 browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);

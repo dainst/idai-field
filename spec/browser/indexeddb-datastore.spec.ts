@@ -1,6 +1,6 @@
-/// <reference path="../typings/globals/jasmine/index.d.ts" />
-import {IndexeddbDatastore} from "../app/datastore/indexeddb-datastore";
-import {Indexeddb} from "../app/datastore/indexeddb";
+/// <reference path="../../typings/globals/jasmine/index.d.ts" />
+import {IndexeddbDatastore} from "../../app/datastore/indexeddb-datastore";
+import {Indexeddb} from "../../app/datastore/indexeddb";
 
 /**
  * @author Daniel de Oliveira

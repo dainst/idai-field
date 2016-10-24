@@ -1,6 +1,6 @@
 exports.config = {
     baseUrl: 'http://localhost:8081',
-    specs: ['e2e/promises-delay.js','e2e/**/*.spec.js'],
+    specs: ['spec/e2e/promises-delay.js','spec/e2e/**/*.spec.js'],
     directConnect: true,
     exclude: [],
     multiCapabilities: [{

@@ -26,7 +26,7 @@ module.exports = function(config) {
 
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'templates/**/*.html', included: false, watched: true },
-            { pattern: 'test/**/*.spec.js', included: false, watched: true },
+            { pattern: 'spec/browser/**/*.spec.js', included: false, watched: true },
 
             'test-main.js'
         ],

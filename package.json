@@ -8,7 +8,7 @@
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",
-    "test:loop": "karma start karma.conf",
+    "test:loop": "karma start test/browser/config/karma.conf",
     "test": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json && karma start test/browser/config/karma.conf.js --single-run",
     "e2e": "webdriver-manager update && protractor test/e2e/config/protractor.conf.js",
     "server": "gulp webserver-watch",

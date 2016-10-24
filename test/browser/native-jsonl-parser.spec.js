@@ -49,4 +49,3 @@ function main() {
     });
 }
 exports.main = main;
-//# sourceMappingURL=native-jsonl-parser.spec.js.map

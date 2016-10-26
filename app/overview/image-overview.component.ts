@@ -9,16 +9,13 @@ import {Observable} from "rxjs/Observable";
 @Component({
 
     moduleId: module.id,
-    templateUrl: './resource-overview.html'
+    templateUrl: './image-overview.html'
 })
 
 /**
- * @author Sebastian Cuy
- * @author Daniel de Oliveira
- * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourceOverviewComponent extends OverviewComponent implements OnInit {
+export class ImageOverviewComponent extends OverviewComponent implements OnInit {
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
@@ -29,7 +26,7 @@ export class ResourceOverviewComponent extends OverviewComponent implements OnIn
 
     protected setUpDefaultFilters() {
 
-        this.defaultFilters = [ { field: 'type', value: 'image', invert: true } ];
+        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
     }
 
     /**
@@ -38,7 +35,7 @@ export class ResourceOverviewComponent extends OverviewComponent implements OnIn
      */
     public select(documentToSelect: IdaiFieldDocument) {
 
-        this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
+        this.router.navigate(['images', { id: documentToSelect.resource.id }]);
     }
 
     public ngOnInit() {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ConfigLoader, Query, Filter} from "idai-components-2/idai-components-2";
 
 @Component({
@@ -16,6 +16,7 @@ export class SearchBarComponent {
     private type: string = '';
     private q: string = '';
 
+    @Input() defaultFilters: Array<Filter>;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
@@ -37,7 +38,11 @@ export class SearchBarComponent {
 
     private emitCurrentQuery() {
         let query: Query = { q: this.q };
-        if (this.type) query.filters = [ { field: 'type', value: this.type, invert: false } ];
+
+        let filters: Array<Filter> = this.defaultFilters.slice();
+        if (this.type) filters.push({ field: 'type', value: this.type, invert: false });
+        query.filters = filters;
+
         this.onQueryChanged.emit(query);
     }
     

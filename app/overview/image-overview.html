@@ -2,20 +2,24 @@
 
 
     <div class="col-lg-3 col-md-3 col-sm-3"
-         id="objectOverview">
+         id="imageOverview">
         <aside>
             <header>
                 <h1>
-                    <span class="mdi mdi-view-list"></span>
-                    Ressourcen
+                    <span class="mdi mdi-image"></span>
+                    Bilder
                 </h1>
             </header>
 
             <main>
-
                 <search-bar [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>
+            </main>
+        </aside>
+    </div>
 
-                <ul class="list-group" id="objectList">
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <section>
+            <ul class="list-group">
                     <li *ngFor="let document of documents; let index=index"
                             (click)="select(document)"
                             class="list-group-item"
@@ -24,28 +28,17 @@
                             [class.selected]="getSelected() && getSelected().resource.id === document.id"
                             onclick="window.scrollTo(0, 0)"
                             [id]="'resource-' + document.resource.identifier">
-                        <!-- Enable when finally implemented in Chromium
-                            onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-                            -->
 
                         <div class="row">
-
-                            <div class="col-sm-2">
-                                <type-icon [type]="document.resource.type" size="42"></type-icon>
-                            </div>
                             <div class="col-sm-10">
                                 <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
-                                    <div id="object-overview-title-{{index}}" class="title">
+                                    <div class="title">
                                         {{document['resource'].shortDescription}}
                                     </div>
 
-                                    <div id="object-overview-identifier-{{index}}" class="identifier">
+                                    <div class="identifier">
                                         {{document['resource'].identifier}}
                                     </div>
-                                </div>
-                                <div id="object-overview-note-{{index}}"
-                                     *ngIf="!(document['resource'].identifier || document['resource'].shortDescription)"
-                                     class="new">Neues Objekt
                                 </div>
                             </div>
 
@@ -53,20 +46,8 @@
 
                     </li>
                 </ul>
-
-                <plus-button *ngIf="query.q == ''"></plus-button>
-
-            </main>
-        </aside>
-    </div>
-
-    <div class="col-lg-9 col-md-9 col-sm-9" id="document-edit-wrapper">
-        <section>
-            <router-outlet></router-outlet>
         </section>
     </div>
-
-
 
 </div>
 

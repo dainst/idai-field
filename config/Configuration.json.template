@@ -93,6 +93,19 @@
           "name" : "shortDescription"
         }
       ]
+    },
+
+    {
+      "type": "image",
+      "label" : "Bild",
+      "fields": [
+        {
+          "name" : "identifier"
+        },
+        {
+          "name" : "shortDescription"
+        }
+      ]
     }
   ],
   "relations" :

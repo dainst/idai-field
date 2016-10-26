@@ -134,5 +134,45 @@ export var DOCS: IdaiFieldDocument[] = [
             }
         },
         "synced": 0
+    },
+    {
+        "id": "o12",
+        "resource": {
+            "id": "o12",
+            "identifier": "ob12",
+            "shortDescription": "Foto von Han Solo",
+            "type": "image",
+            "relations": {}
+        }
+    },
+    {
+        "id": "o13",
+        "resource": {
+            "id": "o13",
+            "identifier": "ob13",
+            "shortDescription": "Foto von Boba Fett",
+            "type": "image",
+            "relations": {}
+        }
+    },
+    {
+        "id": "o14",
+        "resource": {
+            "id": "o14",
+            "identifier": "ob14",
+            "shortDescription": "Foto von Darth Vader mit Maske",
+            "type": "image",
+            "relations": {}
+        }
+    },
+    {
+        "id": "o15",
+        "resource": {
+            "id": "o15",
+            "identifier": "ob15",
+            "shortDescription": "Foto von Darth Vader ohne Maske",
+            "type": "image",
+            "relations": {}
+        }
     }
 ];

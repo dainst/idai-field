@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Document, Query} from "idai-components-2/idai-components-2"
+import {Document, Query, Filter} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 /**
@@ -16,14 +16,21 @@ export abstract class OverviewComponent {
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };
+    protected defaultFilters: Array<Filter>;
 
-    constructor(protected datastore: IndexeddbDatastore) {}
+    constructor(protected datastore: IndexeddbDatastore) {
+
+        this.setUpDefaultFilters();
+        this.query = { q: '', filters: this.defaultFilters };
+    }
+
+    protected abstract setUpDefaultFilters();
 
     /**
      * @param documentToSelect the object that should get selected if the preconditions
      *   to change the selection are met.
      */
-    public abstract select(documentToSelect: IdaiFieldDocument): void;
+    public abstract select(documentToSelect: IdaiFieldDocument);
 
     public queryChanged(query: Query) {
 

@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {resourceOverviewRouting} from './resource-overview.routing';
+import {ImageOverviewComponent} from './image-overview.component';
 import {ResourceOverviewComponent} from './resource-overview.component';
 import {DocumentViewComponent} from './document-view/document-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
@@ -22,6 +23,7 @@ import {MapState} from './map/map-state';
     ],
     declarations: [
         ResourceOverviewComponent,
+        ImageOverviewComponent,
         DocumentViewComponent,
         DocumentEditWrapperComponent,
         MapWrapperComponent,

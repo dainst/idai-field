@@ -17,6 +17,7 @@ export class SearchBarComponent {
     private q: string = '';
 
     @Input() defaultFilters: Array<Filter>;
+    @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {

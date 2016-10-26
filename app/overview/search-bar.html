@@ -5,8 +5,9 @@
            class="form-control"
            id="object-search"
            placeholder="Suchen...">
-    <span class="input-group-btn">
-        <button class="btn btn-secondary"
+    <span class="input-group-btn" *ngIf="showFiltersMenu">
+        <button
+                class="btn btn-secondary"
                 id="searchfilter"
                 type="button"
                 [ngbPopover]="filterMenu"
@@ -17,27 +18,27 @@
                 <type-icon [type]="type" size="30"></type-icon>
             </span>
         </button>
-    </span>
 
-    <template #filterMenu>
-        <div>
-            <div class="popover-custom-title">Nach Resourcentyp filtern:</div>
-            <ul class="list-group">
-                <li id="choose-type-filter-option-all"
-                        class="list-group-item popover-item"
-                        (click)="setType(''); p.close();"
-                        [ngClass]="{ 'active': type == '' }">
-                    <i>Alle Typen</i>
-                </li>
-                <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
-                        id="choose-type-filter-option-{{index}}"
-                        class="list-group-item popover-item"
-                        (click)="setType(t.name); p.close();"
-                        [ngClass]="{ 'active': type == t.name }">
-                    <type-icon [type]="t.name" size="30"></type-icon> {{t.label}}
-                </li>
-            </ul>
-        </div>
-    </template>
+        <template #filterMenu>
+            <div>
+                <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
+                <ul class="list-group">
+                    <li id="choose-type-filter-option-all"
+                            class="list-group-item popover-item"
+                            (click)="setType(''); p.close();"
+                            [ngClass]="{ 'active': type == '' }">
+                        <i>Alle Typen</i>
+                    </li>
+                    <li *ngFor="let t of projectConfiguration.getTypes(); let index = index"
+                            id="choose-type-filter-option-{{index}}"
+                            class="list-group-item popover-item"
+                            (click)="setType(t.name); p.close();"
+                            [ngClass]="{ 'active': type == t.name }">
+                        <type-icon [type]="t.name" size="30"></type-icon> {{t.label}}
+                    </li>
+                </ul>
+            </div>
+        </template>
+    </span>
 
 </div>

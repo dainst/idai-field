@@ -1,6 +1,6 @@
 import {ModuleWithProviders}   from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {OverviewComponent} from './overview.component';
+import {ResourceOverviewComponent} from './resource-overview.component';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {CanDeactivateDocumentEditWrapperGuard}  from './can-deactivate-document-edit-wrapper-guard';
@@ -8,7 +8,7 @@ import {CanDeactivateDocumentEditWrapperGuard}  from './can-deactivate-document-
 const overviewRoutes: Routes = [
     {
         path: 'resources',
-        component: OverviewComponent,
+        component: ResourceOverviewComponent,
         children: [
             {
                 path: '',
@@ -32,4 +32,4 @@ const overviewRoutes: Routes = [
     }
 ];
 
-export const overviewRouting: ModuleWithProviders = RouterModule.forChild(overviewRoutes);
+export const resourceOverviewRouting: ModuleWithProviders = RouterModule.forChild(overviewRoutes);

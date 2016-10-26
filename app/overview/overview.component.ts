@@ -5,48 +5,32 @@ import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document, Query} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
-@Component({
-
-    moduleId: module.id,
-    templateUrl: './overview.html'
-})
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class OverviewComponent implements OnInit {
+export abstract class OverviewComponent {
 
-    private documents: Document[];
-    private selectedDocument;
-    private observers: Array<any> = [];
-    private query: Query = { q: '' };
+    protected documents: Document[];
+    protected selectedDocument;
+    protected observers: Array<any> = [];
+    protected query: Query = { q: '' };
 
-    constructor(@Inject('app.config') private config,
-        private router: Router,
-        private datastore: IndexeddbDatastore
+    constructor(protected config,
+        protected router: Router,
+        protected datastore: IndexeddbDatastore
     ) {}
 
     /**
      * @param documentToSelect the object that should get selected if the preconditions
      *   to change the selection are met.
      */
-    public select(documentToSelect: IdaiFieldDocument) {
-        this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
-    }
-
-    public ngOnInit() {
-
-        if (this.config.environment == "test") {
-            setTimeout(() => this.fetchDocuments(this.query), 500);
-        } else {
-            this.fetchDocuments(this.query);
-        }
-    }
+    public abstract select(documentToSelect: IdaiFieldDocument): void;
 
     public queryChanged(query: Query) {
+        
         this.query = query;
         this.fetchDocuments(query);
     }
@@ -55,23 +39,27 @@ export class OverviewComponent implements OnInit {
      * @param documentToSelect
      */
     public setSelected(documentToSelect: Document) {
-        this.selectedDocument=documentToSelect;
+
+        this.selectedDocument = documentToSelect;
     }
 
     /**
      * @returns {Document}
      */
     public getSelected(): IdaiFieldDocument {
+
         return this.selectedDocument;
     }
 
     public replace(document: Document,restoredObject: Document) {
+
         var index = this.documents.indexOf(document);
         this.documents[index] = restoredObject;
         this.notify();
     }
 
     public remove(document: Document) {
+
         var index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
         this.notify();
@@ -99,6 +87,7 @@ export class OverviewComponent implements OnInit {
      * @param query
      */
     public fetchDocuments(query: Query) {
+
         this.datastore.find(query).then(documents => {
             this.documents = documents;
             this.notify();
@@ -114,6 +103,7 @@ export class OverviewComponent implements OnInit {
      * @returns {Promise<Document>}
      */
     public loadDoc(resourceId) : Promise<Document> {
+
         return new Promise<Document>((resolve,reject)=>{
 
             this.datastore.get(resourceId).then(document=> {
@@ -178,6 +168,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private toStringArray(str : any) : string[] {
+
         if ((typeof str)=="string") return [str]; else return str;
     }
 }

@@ -23,6 +23,7 @@ gulp.task('convert-sass', function() {
 			'node_modules/leaflet.pm/dist/leaflet.pm.css'
 		])
 	  	.pipe(sass({includePaths: [
+	  		'node_modules/roboto-fontface/css/roboto/sass/',
 			'node_modules/bootstrap/scss/',
 			'node_modules/mdi/scss/'
 		], precision: 8}))
@@ -50,6 +51,7 @@ const tscConfig = require('./tsconfig.json');
 gulp.task('compile',['convert-sass'], function () {
     // fonts
     gulp.src([
+    		'node_modules/roboto-fontface/fonts/**/*',
             'node_modules/mdi/fonts/**/*',
             'node_modules/bootstrap-sass/assets/fonts/**/*'
         ])

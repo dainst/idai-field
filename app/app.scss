@@ -1,8 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700);
-
 @import "bootstrap";
 @import "materialdesignicons";
 
+@import "roboto-fontface";
 @import "variables";
 @import "navbar";
 @import "info-window";
@@ -13,6 +12,10 @@
 html {
   position: relative;
   min-height: 100%;
+}
+
+body {
+  font-family: Roboto, sans-serif !important;
 }
 
 #app {

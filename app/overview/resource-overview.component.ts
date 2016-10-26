@@ -20,11 +20,11 @@ import {Observable} from "rxjs/Observable";
  */
 export class ResourceOverviewComponent extends OverviewComponent implements OnInit {
 
-    constructor(@Inject('app.config') config,
-                router: Router,
+    constructor(@Inject('app.config') private config,
+                private router: Router,
                 datastore: IndexeddbDatastore) {
 
-        super(config, router, datastore);
+        super(datastore);
     }
 
     /**

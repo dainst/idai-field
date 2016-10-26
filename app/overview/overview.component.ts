@@ -1,5 +1,4 @@
 import {Component, OnInit, Inject} from "@angular/core";
-import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document, Query} from "idai-components-2/idai-components-2"
@@ -18,10 +17,7 @@ export abstract class OverviewComponent {
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };
 
-    constructor(protected config,
-        protected router: Router,
-        protected datastore: IndexeddbDatastore
-    ) {}
+    constructor(protected datastore: IndexeddbDatastore) {}
 
     /**
      * @param documentToSelect the object that should get selected if the preconditions
@@ -30,7 +26,7 @@ export abstract class OverviewComponent {
     public abstract select(documentToSelect: IdaiFieldDocument): void;
 
     public queryChanged(query: Query) {
-        
+
         this.query = query;
         this.fetchDocuments(query);
     }

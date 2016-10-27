@@ -14,52 +14,6 @@
   padding: 0 !important;
   background-color: #eee;
 
-  #objectList {
-    height: calc(100vh - 200px);
-    overflow: auto;
-  }
-
-  #objectList .list-group-item {
-    cursor: pointer;
-    border: 0;
-    border-radius: 0;
-    margin: 1px 0;
-    font-size: 1.1em;
-  }
-
-  #objectList .list-group-item:hover {
-    background-color: #c7dee0;
-    transition: background-color .65s ease;
-  }
-
-  #objectList .selected {
-    background-color: #c7dee0;
-  }
-
-  #objectList .title {
-    color: #111;
-  }
-
-  #objectList .identifier {
-    font-size: 0.7em;
-    color: #999;
-  }
-
-  #objectList .new {
-    color: #111;
-    font-style: italic;
-  }
-
-  #objectList .synced {
-    border-right: 3px solid #657faa;
-    transition: border-right 1s ease;
-  }
-
-  #objectList .unsynced {
-    border-right: 3px solid #ccc;
-    transition: border-right 1s ease;
-  }
-
   header {
     background-color: #eee;
     padding: 7px;
@@ -135,4 +89,50 @@
     color: #ddd;
   }
 
+}
+
+.object-list {
+  height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+.object-list .list-group-item {
+  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  margin: 1px 0;
+  font-size: 1.1em;
+}
+
+.object-list .list-group-item:hover {
+  background-color: #c7dee0;
+  transition: background-color .65s ease;
+}
+
+.object-list .selected {
+  background-color: #c7dee0;
+}
+
+.object-list .title {
+  color: #111;
+}
+
+.object-list .identifier {
+  font-size: 0.7em;
+  color: #999;
+}
+
+.object-list .new {
+  color: #111;
+  font-style: italic;
+}
+
+.object-list .synced {
+  border-right: 3px solid #657faa;
+  transition: border-right 1s ease;
+}
+
+.object-list .unsynced {
+  border-right: 3px solid #ccc;
+  transition: border-right 1s ease;
 }

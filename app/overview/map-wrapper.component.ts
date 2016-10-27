@@ -35,16 +35,16 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private persistenceManager: PersistenceManager
     ) {
         this.configLoader.configuration().subscribe((result) => {
-            if(!result.error) {
+            if (!result.error) {
                 this.projectConfiguration = result.projectConfiguration;
             }
         });
     }
 
 
-    private evalParams(routeParams,callback) {
+    private evalParams(routeParams, callback) {
 
-        routeParams.forEach((params:Params) => {
+        routeParams.forEach((params: Params) => {
             var type = undefined;
             var id = undefined;
             if (params['id'] && params['id'].indexOf('new') > -1) {
@@ -52,7 +52,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             } else {
                 id = params['id'];
             }
-            callback(params['menuMode'],params['editMode'],id,type);
+            callback(params['menuMode'], params['editMode'], id, type);
         });
     }
 

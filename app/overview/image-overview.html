@@ -19,30 +19,23 @@
 
     <div class="col-lg-9 col-md-9 col-sm-9">
         <section>
-            <ul class="list-group">
-                    <li *ngFor="let document of documents; let index=index"
+            <ul class="list-group object-list" id="imageList">
+                    <li *ngFor="let document of documents; let index = index"
                             (click)="select(document)"
                             class="list-group-item"
-                            [class.synced]="document.synced"
-                            [class.unsynced]="!document.synced"
                             [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                            onclick="window.scrollTo(0, 0)"
-                            [id]="'resource-' + document.resource.identifier">
+                            [id]="'resource-' + document.resource.identifier"
+                            >
 
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
-                                    <div class="title">
-                                        {{document['resource'].shortDescription}}
-                                    </div>
+                            <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
+                                <div class="title">
+                                    {{document['resource'].shortDescription}}
+                                </div>
 
-                                    <div class="identifier">
-                                        {{document['resource'].identifier}}
-                                    </div>
+                                <div class="identifier">
+                                    {{document['resource'].identifier}}
                                 </div>
                             </div>
-
-                        </div>
 
                     </li>
                 </ul>

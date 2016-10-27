@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from "@angular/core";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {OverviewComponent} from './overview.component';
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
@@ -19,6 +19,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
+                private route: ActivatedRoute,
                 datastore: IndexeddbDatastore) {
 
         super(datastore);
@@ -45,5 +46,11 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         } else {
             this.fetchDocuments(this.query);
         }
+
+        this.route.params.subscribe(params => {
+            if (params['id']) {
+                this.datastore.get(params['id']).then(document => { this.setSelected(document) });
+            }
+        });
     }
 }

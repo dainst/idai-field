@@ -1,6 +1,6 @@
 import {Routes,RouterModule} from '@angular/router';
 
-import {ImageOverviewComponent} from './overview/image-overview.component';
+import {ImageOverviewComponent} from './overview/image-overview/image-overview.component';
 import {ImportComponent} from './import/import.component';
 import {CanDeactivateDocumentEditWrapperGuard} from './overview/can-deactivate-document-edit-wrapper-guard';
 

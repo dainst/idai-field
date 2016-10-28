@@ -6,7 +6,7 @@ import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {CanDeactivateDocumentEditWrapperGuard} from "./can-deactivate-document-edit-wrapper-guard";
 import {M} from "../m";
 import {Validator} from "../model/validator";
-import {ResourceOverviewComponent} from "./resource-overview.component";
+import {ResourceOverviewComponent} from "./resource-overview/resource-overview.component";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({

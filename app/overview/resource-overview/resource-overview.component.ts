@@ -1,25 +1,27 @@
 import {Component, OnInit, Inject} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
-import {OverviewComponent} from './overview.component';
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Router} from "@angular/router";
+import {OverviewComponent} from '../overview.component';
+import {IdaiFieldDocument} from "../../model/idai-field-document";
+import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
 import {Document, Query} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 @Component({
 
     moduleId: module.id,
-    templateUrl: './image-overview.html'
+    templateUrl: './resource-overview.html'
 })
 
 /**
+ * @author Sebastian Cuy
+ * @author Daniel de Oliveira
+ * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent extends OverviewComponent implements OnInit {
+export class ResourceOverviewComponent extends OverviewComponent implements OnInit {
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
-                private route: ActivatedRoute,
                 datastore: IndexeddbDatastore) {
 
         super(datastore);
@@ -27,7 +29,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
     protected setUpDefaultFilters() {
 
-        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
+        this.defaultFilters = [ { field: 'type', value: 'image', invert: true } ];
     }
 
     /**
@@ -36,7 +38,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
      */
     public select(documentToSelect: IdaiFieldDocument) {
 
-        this.router.navigate(['images', { id: documentToSelect.resource.id }]);
+        this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
     public ngOnInit() {
@@ -46,11 +48,5 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         } else {
             this.fetchDocuments(this.query);
         }
-
-        this.route.params.subscribe(params => {
-            if (params['id']) {
-                this.datastore.get(params['id']).then(document => { this.setSelected(document) });
-            }
-        });
     }
 }

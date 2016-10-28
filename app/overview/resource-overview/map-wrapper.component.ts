@@ -4,7 +4,7 @@ import {ResourceOverviewComponent} from "./resource-overview.component";
 import {Document} from "idai-components-2/idai-components-2";
 import {PersistenceManager,ReadDatastore,
     ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
-import {IdaiFieldGeometry} from "../model/idai-field-geometry";
+import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 
 @Component({
     moduleId: module.id,

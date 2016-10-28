@@ -2,8 +2,8 @@ import {ModuleWithProviders}   from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ResourceOverviewComponent} from './resource-overview.component';
 import {MapWrapperComponent} from './map-wrapper.component';
-import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
-import {CanDeactivateDocumentEditWrapperGuard}  from './can-deactivate-document-edit-wrapper-guard';
+import {DocumentEditWrapperComponent} from '../document-edit-wrapper.component';
+import {CanDeactivateDocumentEditWrapperGuard}  from '../can-deactivate-document-edit-wrapper-guard';
 
 const overviewRoutes: Routes = [
     {

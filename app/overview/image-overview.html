@@ -1,6 +1,5 @@
 <div class="row">
 
-
     <div class="col-lg-3 col-md-3 col-sm-3"
          id="imageOverview">
         <aside>
@@ -17,7 +16,7 @@
         </aside>
     </div>
 
-    <div class="col-lg-9 col-md-9 col-sm-9">
+    <div [class.col-sm-9]="!selectedDocument" [class.col-sm-6]="selectedDocument">
         <section>
             <ul class="list-group object-list" id="imageList">
                     <li *ngFor="let document of documents; let index = index"
@@ -42,5 +41,17 @@
         </section>
     </div>
 
-</div>
+    <div *ngIf="selectedDocument" class="col-sm-3 document-info">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <div style="margin-top: 3px; float: left;">Bild</div>
+                </h4>
+            </div>
+            <div class="card-block">
+                <document-view [document]="selectedDocument"></document-view>
+            </div>
+        </div>
+    </div>
 
+</div>

@@ -1,5 +1,6 @@
 <div id="document-view" *ngIf="document">
-    <button class="btn btn-link btn-sm pull-xs-right" style="margin-top: -2px;" id="document-view-button-edit-document"
+    <!-- TODO Remove check for image type and implement editor for images -->
+    <button *ngIf="document.resource.type != 'image'" class="btn btn-link btn-sm pull-xs-right" style="margin-top: -2px;" id="document-view-button-edit-document"
             [routerLink]="['/resources/', document.resource.id, 'edit']">
         <span class="mdi mdi-pencil mdi-18px"></span>
     </button>
@@ -16,7 +17,7 @@
         <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
     </div>
 
-    <div class="document-view-field" id="document-view-field-geometry">
+    <div *ngIf="document.resource.type != 'image'" class="document-view-field" id="document-view-field-geometry">
         <div class="fieldname">Geometrie</div>
         <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
             <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>

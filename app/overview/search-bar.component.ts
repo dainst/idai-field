@@ -12,32 +12,36 @@ import {ConfigLoader, Query, Filter} from "idai-components-2/idai-components-2";
  */
 export class SearchBarComponent {
 
-    private projectConfiguration;
     private type: string = '';
     private q: string = '';
+    private filterOptions: Array<any> = [];
 
     @Input() defaultFilters: Array<Filter>;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
+
         this.configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
+            this.initializeFilterOptions(result.projectConfiguration.getTypes());
         });
     }
     
     public qChanged(q): void {
+
         if (q) this.q = q;
         else this.q = '';
         this.emitCurrentQuery();
     }
 
     public setType(type): void {
+
         this.type = type;
         this.emitCurrentQuery();
     }
 
     private emitCurrentQuery() {
+
         let query: Query = { q: this.q };
 
         let filters: Array<Filter> = this.defaultFilters.slice();
@@ -45,6 +49,27 @@ export class SearchBarComponent {
         query.filters = filters;
 
         this.onQueryChanged.emit(query);
+    }
+
+    private initializeFilterOptions(types) {
+
+        this.filterOptions = [];
+
+        for (var i in types) {
+            var defaultFilterConflict = false;
+
+            for (var j in this.defaultFilters) {
+                if (this.defaultFilters[j].field == "type"
+                        && this.defaultFilters[j].value == types[i].name) {
+                    defaultFilterConflict = true;
+                    break;
+                }
+            }
+
+            if (!defaultFilterConflict) {
+                this.filterOptions.push(types[i]);
+            }
+        }
     }
     
 }

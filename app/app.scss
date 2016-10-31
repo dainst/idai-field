@@ -1,13 +1,17 @@
 @import "bootstrap";
 @import "materialdesignicons";
 
-@import "roboto-fontface";
 @import "variables";
 @import "navbar";
 @import "info-window";
 @import "spinner";
 @import "overview/overview";
 @import "import/import";
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto/Roboto-Regular.woff2") format("woff2");
+}
 
 html {
   position: relative;

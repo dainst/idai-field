@@ -23,7 +23,7 @@ export class SearchBarComponent {
     constructor(private configLoader: ConfigLoader) {
 
         this.configLoader.configuration().subscribe(result => {
-            this.initializeFilterOptions(result.projectConfiguration.getTypes());
+            this.initializeFilterOptions(result.projectConfiguration.getTypesList());
         });
     }
     

@@ -17,6 +17,13 @@
                     id="choose-type-option-{{index}}" class="list-group-item popover-item"
                     (click)="type = t.name">
                     <type-icon [type]="t.name" size="30"></type-icon> {{t.label}}
+                    <ul *ngIf="t['children']" style="padding:0;">
+                        <li *ngFor="let childType of t['children']; let childIndex = index"
+                            id="choose-type-option-{{index}}-{{childIndex}}" class="list-group-item popover-item"
+                            (click)="type = childType.name">
+                            <type-icon [type]="childType.name" size="30"></type-icon> {{childType['label']}}
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

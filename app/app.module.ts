@@ -59,6 +59,7 @@ import CONFIG = require("config/config.json!json");
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },
+        { provide: Mediastore, useClass: FileSystemMediastore},
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,

@@ -21,7 +21,6 @@ export class SearchBarComponent {
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
-
         this.configLoader.configuration().subscribe(result => {
             this.initializeFilterOptions(result.projectConfiguration.getTypesList());
         });
@@ -52,7 +51,6 @@ export class SearchBarComponent {
     }
 
     private initializeFilterOptions(types) {
-
         this.filterOptions = [];
 
         for (var i in types) {

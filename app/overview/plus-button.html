@@ -13,7 +13,7 @@
         <div *ngIf="!type">
             <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
             <ul class="list-group">
-                <li *ngFor="let t of projectConfiguration.getTypesList(); let index = index"
+                <li *ngFor="let t of projectConfiguration.getTypesTreeList(); let index = index"
                     id="choose-type-option-{{index}}" class="list-group-item popover-item"
                     (click)="type = t.name">
                     <type-icon [type]="t.name" size="30"></type-icon> {{t.label}}

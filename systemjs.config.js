@@ -7,7 +7,6 @@
         },
         map: {
             'app': 'app',
-
             '@angular': 'node_modules/@angular',
             '@ng-bootstrap': 'node_modules/@ng-bootstrap',
             'json': 'app/util/systemjs-json-plugin',
@@ -56,6 +55,11 @@
     }
   
     ngPackageNames.forEach(packUmd);
+
+    if(typeof process != 'object') {
+        console.log('running in browser, disabling NodeJS functionality');
+        config.map['@node/fs'] = '@empty';
+    }
 
     System.config(config);
 

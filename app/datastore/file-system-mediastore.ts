@@ -1,8 +1,7 @@
 import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
-import fs = require('fs');
-import path = require('path');
+import * as fs from '@node/fs';
 
 export class FileSystemMediastore implements Mediastore {
 

@@ -21,6 +21,8 @@ import {OverviewModule} from './overview/overview.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Mediastore} from './datastore/mediastore';
+import {FileSystemMediastore} from './datastore/file-system-mediastore';
 
 import CONFIG = require("config/config.json!json");
 
@@ -43,6 +45,7 @@ import CONFIG = require("config/config.json!json");
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },
+        { provide: Mediastore, useClass: FileSystemMediastore},
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,

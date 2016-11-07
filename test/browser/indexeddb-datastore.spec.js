@@ -48,4 +48,3 @@ function main() {
     });
 }
 exports.main = main;
-//# sourceMappingURL=indexeddb-datastore.spec.js.map

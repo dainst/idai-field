@@ -46,20 +46,19 @@ import CONFIG = require("config/config.json!json");
     providers: [
         {
             provide: Mediastore,
-            useFactory: () => {
+            useFactory: function(): Mediastore {
                 // running under node
-                if (process === 'object') {
+                if (typeof process === 'object') {
                     return new FileSystemMediastore();
                 // running in browser
                 } else {
                     return new FakeMediastore();
                 }
             }
-        }
+        },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },
-        { provide: Mediastore, useClass: FileSystemMediastore},
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,

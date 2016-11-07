@@ -5,10 +5,12 @@ import * as fs from '@node/fs';
 
 export class FileSystemMediastore implements Mediastore {
 
-    private basePath: string = 'store/';
+    private basePath: string = 'img/';
 
     constructor () {
         console.log("file system")
+        
+        
     }
 
     /**

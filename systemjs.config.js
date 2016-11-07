@@ -57,8 +57,10 @@
     ngPackageNames.forEach(packUmd);
 
     if(typeof process != 'object') {
-        console.log('running in browser, disabling NodeJS functionality');
+        console.log('Running in browser, disabling NodeJS functionality.');
         config.map['@node/fs'] = '@empty';
+    } else {
+        console.log('Running as electron app, enabling NodeJS functionality.');
     }
 
     System.config(config);

@@ -5,7 +5,7 @@ import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
 import {Document, Query} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
-import {Mediastore} from './datastore/mediastore'
+import {Mediastore} from '../../datastore/mediastore'
 
 @Component({
 
@@ -22,7 +22,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
                 private router: Router,
                 private route: ActivatedRoute,
                 datastore: IndexeddbDatastore,
-                mediastore: Mediastore
+                private mediastore: Mediastore
     ) {
 
         super(datastore);
@@ -55,5 +55,11 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
                 this.datastore.get(params['id']).then(document => { this.setSelected(document) });
             }
         });
+
+
+        // this.mediastore.read('logo.png').then(
+        //     data => console.log("ok",data),
+        //     err => console.log(err));
+
     }
 }

@@ -21,6 +21,10 @@ import {OverviewModule} from './overview/overview.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Mediastore} from './datastore/mediastore'
+import {FakeMediastore} from './datastore/fake-mediastore'
+import {FileSystemMediastore} from './datastore/file-system-mediastore'
+
 
 import CONFIG = require("config/config.json!json");
 
@@ -40,6 +44,18 @@ import CONFIG = require("config/config.json!json");
         SynchronizationComponent
     ],
     providers: [
+        {
+            provide: Mediastore,
+            useFactory: () => {
+                // running under node
+                if (process === 'object') {
+                    return new FileSystemMediastore();
+                // running in browser
+                } else {
+                    return new FakeMediastore();
+                }
+            }
+        }
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },

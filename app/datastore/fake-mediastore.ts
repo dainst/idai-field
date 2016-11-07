@@ -1,17 +1,15 @@
 import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
-import fs = require('fs');
-import path = require('path');
 
-export class FileSystemMediastore implements Mediastore {
+export class FakeMediastore implements Mediastore {
 
     private basePath: string = 'store/';
-
-    constructor () {
-        console.log("file system")
+    
+    constructor() {
+        console.log("fake")
     }
-
+    
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
@@ -19,13 +17,7 @@ export class FileSystemMediastore implements Mediastore {
      *   reject -> the error message
      */
     public create(key: string, data: any): Promise<any> {
-
-        return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, data, { flag: 'wx' }, (err) => {
-                if (err) reject(err);
-                else resolve();
-            });
-        });
+        return null;
     }
 
     /**
@@ -35,14 +27,7 @@ export class FileSystemMediastore implements Mediastore {
      */
     public read(key: string): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            fs.readFile(this.basePath + key, (err, data) => {
-                if (err) reject(err);
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        return null;
     }
 
     /**
@@ -53,12 +38,7 @@ export class FileSystemMediastore implements Mediastore {
      */
     public update(key: string, data: any): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, data, { flag: 'w' }, (err) => {
-                if (err) reject(err);
-                else resolve();
-            });
-        });
+        return null;
     }
 
     /**
@@ -68,12 +48,7 @@ export class FileSystemMediastore implements Mediastore {
      */
     public remove(key: string): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            fs.unlink(this.basePath + key, (err) => {
-                if (err) reject(err);
-                else resolve();
-            })
-        });
+        return null;
     }
 
     /**
@@ -82,7 +57,7 @@ export class FileSystemMediastore implements Mediastore {
      * methods defined here.
      */
     public objectChangesNotifications(): Observable<File> {
-        return new Observable();
+        return null;
     }
 
 }

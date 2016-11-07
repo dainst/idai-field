@@ -5,6 +5,7 @@ import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
 import {Document, Query} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
+import {Mediastore} from './datastore/mediastore'
 
 @Component({
 
@@ -20,7 +21,9 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
     constructor(@Inject('app.config') private config,
                 private router: Router,
                 private route: ActivatedRoute,
-                datastore: IndexeddbDatastore) {
+                datastore: IndexeddbDatastore,
+                mediastore: Mediastore
+    ) {
 
         super(datastore);
     }

@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/node": "^6.0.45",
     "archiver": "^1.1.0",
+    "chromedriver": "2.22.1",
     "electron-connect": "0.4.2",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "1.2.5",

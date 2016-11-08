@@ -6,4 +6,12 @@ plus-button {
     z-index: 100;
   }
 
+  .abstract-idai-type {
+    cursor: not-allowed;
+    font-style: italic;
+  }
+  .abstract-idai-type ul {
+    font-style: normal;
+  }
+
 }

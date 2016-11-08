@@ -67,7 +67,7 @@
     "karma": "1.1.0",
     "karma-chrome-launcher": "1.0.1",
     "karma-jasmine": "1.0.2",
-    "protractor": "^4.0.9",
+    "protractor": "4.0.10",
     "protractor-console-plugin": "^0.1.1",
     "rimraf": "^2.5.4",
     "typescript": "^2.0.3",

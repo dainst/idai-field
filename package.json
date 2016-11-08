@@ -10,7 +10,7 @@
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",
     "test": "karma start test/browser/config/karma.conf.js --single-run",
-    "e2e": "webdriver-manager update && protractor test/e2e/config/protractor.conf.js",
+    "e2e": "protractor test/e2e/config/protractor.conf.js",
     "server": "gulp webserver-watch",
     "make-dist": "rimraf dist/* && gulp make-dist && gulp versioning --build $1",
     "package": "rimraf release/* && gulp package",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@types/node": "^6.0.45",
     "archiver": "^1.1.0",
-    "chromedriver": "2.22.1",
+    "chromedriver": "2.25.1",
     "electron-connect": "0.4.2",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "1.2.5",

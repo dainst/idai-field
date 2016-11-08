@@ -1,4 +1,6 @@
 exports.config = {
+    chromeDriver : '../../../node_modules/chromedriver/lib/chromedriver/chromedriver',
+    
     baseUrl: 'http://localhost:8081',
     specs: ['../promises-delay.js','../**/*.spec.js'],
     directConnect: true,

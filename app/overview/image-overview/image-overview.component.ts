@@ -38,12 +38,8 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
             var originalRowWidth = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                if (this.documents[documentsIndex]) {
-
-                    var resource = this.documents[documentsIndex]['resource']
-                    originalRowWidth += parseFloat(resource['width']);
-                }
-                else console.error("no doc", documentsIndex)
+                var resource = this.documents[documentsIndex]['resource']
+                originalRowWidth += parseFloat(resource['width']);
 
                 documentsIndex++;
             }
@@ -55,12 +51,10 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
             this.rows[rowIndex]=[];
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                if (this.documents[documentsIndex]['resource']) {
-                    this.documents[documentsIndex]['resource']['calculatedWidth'] =
-                        this.documents[documentsIndex]['resource']['width'] * rowWidthRatio;
+                this.documents[documentsIndex]['resource']['calculatedWidth'] =
+                    this.documents[documentsIndex]['resource']['width'] * rowWidthRatio;
 
-                    this.rows[rowIndex][columnIndex]=this.documents[documentsIndex];
-                } else console.error("there should be a resource")
+                this.rows[rowIndex][columnIndex]=this.documents[documentsIndex];
 
                 documentsIndex++;
             }

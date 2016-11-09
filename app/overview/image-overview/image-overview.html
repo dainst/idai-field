@@ -19,25 +19,36 @@
     <div [class.col-sm-9]="!selectedDocument" [class.col-sm-6]="selectedDocument">
         <section>
             <ul class="list-group object-list" id="imageList">
-                    <li *ngFor="let document of documents; let index = index"
-                            (click)="select(document)"
-                            class="list-group-item"
-                            [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                            [id]="'resource-' + document.resource.identifier"
-                            >
+                    <li *ngFor="let row of rows; let index = index">
+                        <!--(click)="select(document)"-->
+                        <!--class="list-group-item"-->
+                        <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
+                        <!--[id]="'resource-' + document.resource.identifier"-->
 
-                            <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
-                                <div class="title">
-                                    {{document['resource'].shortDescription}}
-                                </div>
 
-                                <div class="identifier">
-                                    {{document['resource'].identifier}}
-                                </div>
-                            </div>
+                        <span *ngFor="let doc of row; let ind = ind"
+                              (click)="select(doc)"
+                              [class.selected]="getSelected() && getSelected().resource.id === doc.id"
+                              [id]="'resource-' + doc.resource.identifier">
 
-                            <img src="data:image/png;base64,{{data}}" style="height:100px">
+                            <!--<span *ngIf="doc['resource'].identifier || doc['resource'].shortDescription"
+                                     >
+                                <span class="title" style="font-size: 8px;">
+                                    {{doc['resource'].shortDescription}}
+                                </span>
 
+                                <span class="identifier" style="font-size: 8px;">
+                                    {{doc['resource'].identifier}}
+                                </span>
+                            </span>-->
+
+                            <img src="data:image/png;base64,{{data}}"
+                               [style.height.px]="100"
+                               [style.width.px]="doc.resource['calculatedWidth']" style="padding:2px">
+
+
+
+                        </span>
                     </li>
                 </ul>
         </section>

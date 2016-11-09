@@ -22,6 +22,12 @@ without risking of committing actual real configurations to the repo.
 
 ## config.json
 
+### mediastorepath
+
+The client uses one directory to store and manage all its media files.
+
+* must be an absolute path on the local file system. 
+
 ### environment
 
 * test -> the db gets cleared on every reload

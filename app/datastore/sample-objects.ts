@@ -142,7 +142,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob12",
             "shortDescription": "Foto von Han Solo",
             "type": "image",
-            "relations": {}
+            "relations": {},
+            "filename" : "logo.png"
         }
     },
     {
@@ -152,7 +153,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob13",
             "shortDescription": "Foto von Boba Fett",
             "type": "image",
-            "relations": {}
+            "relations": {},
+            "filename" : "logo.png"
         }
     },
     {
@@ -162,7 +164,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob14",
             "shortDescription": "Foto von Darth Vader mit Maske",
             "type": "image",
-            "relations": {}
+            "relations": {},
+            "filename" : "logo.png"
         }
     },
     {
@@ -172,7 +175,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob15",
             "shortDescription": "Foto von Darth Vader ohne Maske",
             "type": "image",
-            "relations": {}
+            "relations": {},
+            "filename" : "logo.png"
         }
     }
 ];

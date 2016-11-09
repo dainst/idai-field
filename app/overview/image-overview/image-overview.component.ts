@@ -18,6 +18,9 @@ import {Mediastore} from '../../datastore/mediastore'
  */
 export class ImageOverviewComponent extends OverviewComponent implements OnInit {
 
+
+    private data;
+
     constructor(@Inject('app.config') private config,
                 private router: Router,
                 private route: ActivatedRoute,
@@ -41,6 +44,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
         this.router.navigate(['images', { id: documentToSelect.resource.id }]);
     }
+    
 
     public ngOnInit() {
 
@@ -57,9 +61,14 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         });
 
 
-        // this.mediastore.read('logo.png').then(
-        //     data => console.log("ok",data),
-        //     err => console.log(err));
+        this.mediastore.read('logo.png').then(
+            data => {
+                console.log("ok",data)
+                this.data = data;
+            }
+            ,
+                    err => console.log(err)
+            );
 
     }
 }

@@ -2,15 +2,16 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
 import * as fs from '@node/fs';
+import CONFIG = require("config/config.json!json");
 
 export class FileSystemMediastore implements Mediastore {
 
-    private basePath: string = 'img/';
+    private basePath: string = 'mediastore/';
 
     constructor () {
-        console.log("file system")
-        
-        
+        if (CONFIG['mediastorepath']) {
+            this.basePath = CONFIG['mediastorepath'];
+        }
     }
 
     /**
@@ -37,7 +38,7 @@ export class FileSystemMediastore implements Mediastore {
     public read(key: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.readFile(this.basePath + key, (err, data) => {
+            fs.readFile(this.basePath + key,'base64', (err, data) => {
                 if (err) reject(err);
                 else {
                     resolve(data);

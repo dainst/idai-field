@@ -38,7 +38,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
             var originalRowWidth = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                var resource = this.documents[documentsIndex]['resource']
+                var resource = this.documents[documentsIndex]['resource'];
                 originalRowWidth += parseFloat(resource['width']);
 
                 documentsIndex++;
@@ -46,16 +46,19 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
             var rowWidthRatio = rowWidth / originalRowWidth;
             documentsIndex -= this.nrOfColumns;
-
-
+            
             this.rows[rowIndex]=[];
+            var positionWithinRow = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                this.documents[documentsIndex]['resource']['calculatedWidth'] =
+                this.rows[rowIndex][columnIndex] = {};
+                this.rows[rowIndex][columnIndex]['document'] =
+                    this.documents[documentsIndex];
+                this.rows[rowIndex][columnIndex]['calculatedWidth'] =
                     this.documents[documentsIndex]['resource']['width'] * rowWidthRatio;
+                this.rows[rowIndex][columnIndex]['positionWithinRow'] = positionWithinRow;
 
-                this.rows[rowIndex][columnIndex]=this.documents[documentsIndex];
-
+                positionWithinRow += this.rows[rowIndex][columnIndex]['calculatedWidth']+10;
                 documentsIndex++;
             }
         }

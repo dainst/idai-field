@@ -18,39 +18,43 @@
 
     <div [class.col-sm-9]="!selectedDocument" [class.col-sm-6]="selectedDocument">
         <section>
-            <ul class="list-group object-list" id="imageList">
-                    <li *ngFor="let row of rows; let index = index">
-                        <!--(click)="select(document)"-->
-                        <!--class="list-group-item"-->
-                        <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
-                        <!--[id]="'resource-' + document.resource.identifier"-->
+                <div *ngFor="let row of rows; let index = index">
+                    <!--(click)="select(document)"-->
+                    <!--class="list-group-item"-->
+                    <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
+                    <!--[id]="'resource-' + document.resource.identifier"-->
 
 
-                        <span *ngFor="let doc of row; let ind = ind"
-                              (click)="select(doc)"
-                              [class.selected]="getSelected() && getSelected().resource.id === doc.id"
-                              [id]="'resource-' + doc.resource.identifier">
+                    <div *ngFor="let column of row; let ind = ind"
+                          (click)="select(column['document'])"
 
-                            <!--<span *ngIf="doc['resource'].identifier || doc['resource'].shortDescription"
-                                     >
-                                <span class="title" style="font-size: 8px;">
-                                    {{doc['resource'].shortDescription}}
-                                </span>
+                          [id]="'resource-' + column['document'].resource.identifier" style="position:relative">
 
-                                <span class="identifier" style="font-size: 8px;">
-                                    {{doc['resource'].identifier}}
-                                </span>
-                            </span>-->
+                        <div *ngIf="column['document'].resource.identifier || column['document'].resource.shortDescription"
+                             class="imagedesc"
+                             [style.left.px]="column['positionWithinRow']">
+
+                            <span class="title" style="font-size: 8px;">
+                                {{column['document'].resource.shortDescription}}
+                            </span>
+
+                            <span class="identifier" style="font-size: 8px;">
+                                {{column['document'].resource.identifier}}
+                            </span>
+                        </div>
+
+                        <div class="cell"
+                            [style.left.px]="column['positionWithinRow']">
 
                             <img src="data:image/png;base64,{{data}}"
-                               [style.height.px]="100"
-                               [style.width.px]="doc.resource['calculatedWidth']" style="padding:2px">
+                                 [style.height.px]="100"
+                                 [style.width.px]="column['calculatedWidth']">
+                        </div>
 
 
 
-                        </span>
-                    </li>
-                </ul>
+                    </div>
+                </div>
         </section>
     </div>
 

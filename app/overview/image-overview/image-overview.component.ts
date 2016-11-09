@@ -18,7 +18,6 @@ import {Mediastore} from '../../datastore/mediastore'
  */
 export class ImageOverviewComponent extends OverviewComponent implements OnInit {
 
-
     private data;
 
     constructor(@Inject('app.config') private config,
@@ -27,10 +26,15 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
                 datastore: IndexeddbDatastore,
                 private mediastore: Mediastore
     ) {
-
         super(datastore);
+
+        // console.log(window.innerHeight)
     }
 
+    public onResize(event) {
+        console.log(event.target.innerWidth);
+    }
+    
     protected setUpDefaultFilters() {
 
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
@@ -63,11 +67,9 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
         this.mediastore.read('logo.png').then(
             data => {
-                console.log("ok",data)
                 this.data = data;
-            }
-            ,
-                    err => console.log(err)
+            },
+                err => console.log(err)
             );
 
     }

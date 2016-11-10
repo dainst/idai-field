@@ -18,7 +18,6 @@ import {Query} from "idai-components-2/idai-components-2"
  */
 export class ImageOverviewComponent extends OverviewComponent implements OnInit {
 
-    private data;
     private nrOfColumns = 3;
     private rows=[];
 
@@ -72,15 +71,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         var rowWidth = Math.ceil((event.target.innerWidth-100) / 2);
         var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
 
-        this.mediastore.read('logo.png').then(
-            data => {
-                this.data = data;
-                this.calcGrid(rowWidth,nrOfRows)
-            },
-            err => console.log(err)
-        );
-
-
+        this.calcGrid(rowWidth,nrOfRows)
     }
     
     protected setUpDefaultFilters() {
@@ -107,17 +98,9 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         this.datastore.find(query).then(documents => {
             this.documents = documents;
 
-
-            this.mediastore.read('logo.png').then(
-                data => {
-                    this.data = data;
-                    var rowWidth = Math.ceil((window.innerWidth-100) / 2);
-                    var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
-                    this.calcGrid(rowWidth,nrOfRows)
-                },
-                err => console.log(err)
-            );
-
+            var rowWidth = Math.ceil((window.innerWidth - 100) / 2);
+            var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
+            this.calcGrid(rowWidth, nrOfRows)
 
         }).catch(err => console.error(err));
     }

@@ -18,7 +18,7 @@ import {Query} from "idai-components-2/idai-components-2"
  */
 export class ImageOverviewComponent extends OverviewComponent implements OnInit {
 
-    private nrOfColumns = 3;
+    private nrOfColumns = 2;
     private rows=[];
 
     constructor(@Inject('app.config') private config,

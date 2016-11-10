@@ -32,16 +32,19 @@
 
                         <div *ngIf="column['document'].resource.identifier || column['document'].resource.shortDescription"
                              class="imagedesc"
-                             [style.left.px]="column['positionWithinRow']">
+                             [style.left.px]="column['positionWithinRow']"
+                             [style.top.px]="column['positionWithinColumn']">
 
                             <div class="identifier"
-                                 [style.left.px]="column['positionWithinRow']+2">
+                                 [style.left.px]="column['positionWithinRow']+2"
+                                 [style.top.px]="column['positionWithinColumn']+6">
                                 {{column['document'].resource.identifier}}
                             </div>
 
                             <div class="title"
                                  [style.maxWidth.px]="column['calculatedWidth']"
-                                 [style.left.px]="column['positionWithinRow']">
+                                 [style.left.px]="column['positionWithinRow']"
+                                 [style.top.px]="column['positionWithinColumn']+102">
                                  <!--style="font-size: 8px;" -->
 
                                 {{column['document'].resource.shortDescription}}
@@ -51,7 +54,8 @@
                         </div>
 
                         <div class="cell"
-                            [style.left.px]="column['positionWithinRow']">
+                             [style.left.px]="column['positionWithinRow']"
+                             [style.top.px]="column['positionWithinColumn']">
 
                             <img src="data:image/png;base64,{{data}}"
                                  [style.height.px]="100"

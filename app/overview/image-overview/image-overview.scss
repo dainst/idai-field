@@ -12,14 +12,12 @@
 .identifier {
   position: absolute;
   background-color: white;
-  top: 6px;
   font-size: 8px;
   z-index: 1000;
 }
 
 .title {
   position: absolute;
-  top: 102px;
   overflow:hidden;
   text-overflow:ellipsis;
   display:inline-block;

@@ -33,6 +33,7 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
 
     public calcGrid(rowWidth,nrOfRows) {
         var documentsIndex = 0;
+        var positionWithinColumn = 0;
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
 
             var originalRowWidth = 0;
@@ -57,10 +58,13 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
                 this.rows[rowIndex][columnIndex]['calculatedWidth'] =
                     this.documents[documentsIndex]['resource']['width'] * rowWidthRatio;
                 this.rows[rowIndex][columnIndex]['positionWithinRow'] = positionWithinRow;
+                this.rows[rowIndex][columnIndex]['positionWithinColumn'] = positionWithinColumn;
 
                 positionWithinRow += this.rows[rowIndex][columnIndex]['calculatedWidth']+10;
                 documentsIndex++;
             }
+
+            positionWithinColumn += 120;
         }
     }
 

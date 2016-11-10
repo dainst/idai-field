@@ -145,7 +145,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {},
             "filename" : "logo.png",
             "heigth" : 300,
-            "width" : 200
+            "width" : 400
         }
     },
     {
@@ -185,6 +185,92 @@ export var DOCS: IdaiFieldDocument[] = [
             "filename" : "logo.png",
             "heigth" : 200,
             "width" : 400
+        }
+    },
+
+
+
+
+
+    {
+        "id": "o16",
+        "resource": {
+            "id": "o16",
+            "identifier": "ob16",
+            "shortDescription": "Foto von Prinzessin Leia Organa",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 300,
+            "width" : 500
+        }
+    },
+    {
+        "id": "o17",
+        "resource": {
+            "id": "o17",
+            "identifier": "ob17",
+            "shortDescription": "Karte von Naboo",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 100,
+            "width" : 100
+        }
+    },
+    {
+        "id": "o18",
+        "resource": {
+            "id": "o18",
+            "identifier": "ob18",
+            "shortDescription": "Karte von Tatooine",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 200,
+            "width" : 200
+        }
+    },
+
+
+
+    {
+        "id": "o19",
+        "resource": {
+            "id": "o19",
+            "identifier": "ob19",
+            "shortDescription": "Foto von einem Sternenzerstörer",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 300,
+            "width" : 400
+        }
+    },
+    {
+        "id": "o20",
+        "resource": {
+            "id": "o20",
+            "identifier": "ob20",
+            "shortDescription": "Karte von Hoth",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 100,
+            "width" : 300
+        }
+    },
+    {
+        "id": "o21",
+        "resource": {
+            "id": "o21",
+            "identifier": "ob21",
+            "shortDescription": "Foto von Rey",
+            "type": "image",
+            "relations": {},
+            "filename" : "logo.png",
+            "heigth" : 200,
+            "width" : 800
         }
     }
 ];

@@ -35,35 +35,48 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         var positionWithinColumn = 0;
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
 
-            var originalRowWidth = 0;
+
+            var scaledRowWidth = 0;
+
+            this.rows[rowIndex]=[];
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
+                this.rows[rowIndex][columnIndex] = {};
 
                 var resource = this.documents[documentsIndex]['resource'];
-                originalRowWidth += parseFloat(resource['width']);
+                var scalingYFactor = 1000 / parseFloat(resource['height']);
+
+                this.rows[rowIndex][columnIndex]['scaledWidth'] = parseFloat(resource['width']) * scalingYFactor;
+                scaledRowWidth += this.rows[rowIndex][columnIndex]['scaledWidth'];
+                // scaledRowWidth = scalingYFactor * resource['height'];
 
                 documentsIndex++;
             }
 
-            var rowWidthRatio = rowWidth / originalRowWidth;
+            var rowWidthRatio = scaledRowWidth / rowWidth;
+            var calculatedHeight = 1000 / rowWidthRatio;
+
             documentsIndex -= this.nrOfColumns;
-            
-            this.rows[rowIndex]=[];
+
+
             var positionWithinRow = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                this.rows[rowIndex][columnIndex] = {};
                 this.rows[rowIndex][columnIndex]['document'] =
                     this.documents[documentsIndex];
                 this.rows[rowIndex][columnIndex]['calculatedWidth'] =
-                    this.documents[documentsIndex]['resource']['width'] * rowWidthRatio;
+                    this.rows[rowIndex][columnIndex]['scaledWidth'] / rowWidthRatio;
+                this.rows[rowIndex][columnIndex]['calculatedHeight'] = calculatedHeight;
+
                 this.rows[rowIndex][columnIndex]['positionWithinRow'] = positionWithinRow;
                 this.rows[rowIndex][columnIndex]['positionWithinColumn'] = positionWithinColumn;
+
+                console.log(":",this.rows[rowIndex][columnIndex])
 
                 positionWithinRow += this.rows[rowIndex][columnIndex]['calculatedWidth']+10;
                 documentsIndex++;
             }
 
-            positionWithinColumn += 120;
+            positionWithinColumn += calculatedHeight + 30;
         }
     }
 

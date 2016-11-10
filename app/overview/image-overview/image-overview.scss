@@ -1,6 +1,22 @@
 
 .image-grid {
   position: relative;
+
+  .identifier {
+    position: absolute;
+    background-color: white;
+    font-size: 8px;
+    z-index: 1000;
+  }
+
+  .title {
+    position: absolute;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:inline-block;
+    white-space:nowrap;
+    font-size: 12px;
+  }
 }
 
 .cell {
@@ -9,18 +25,3 @@
   top:0px;
 }
 
-.identifier {
-  position: absolute;
-  background-color: white;
-  font-size: 8px;
-  z-index: 1000;
-}
-
-.title {
-  position: absolute;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:inline-block;
-  white-space:nowrap;
-  font-size: 12px;
-}

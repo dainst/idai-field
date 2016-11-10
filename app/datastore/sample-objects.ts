@@ -143,8 +143,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Foto von Han Solo",
             "type": "image",
             "relations": {},
-            "filename" : "green400x300.png",
-            "heigth" : 300,
+            "filename" : "black400x300.png",
+            "height" : 300,
             "width" : 400
         }
     },
@@ -156,8 +156,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Foto von Boba Fett",
             "type": "image",
             "relations": {},
-            "filename" : "blue300x200.png",
-            "heigth" : 300,
+            "filename" : "black300x200.png",
+            "height" : 300,
             "width" : 200
         }
     },
@@ -170,27 +170,10 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "image",
             "relations": {},
             "filename" : "black700x100.png",
-            "heigth" : 100,
+            "height" : 100,
             "width" : 700
         }
     },
-    {
-        "id": "o15",
-        "resource": {
-            "id": "o15",
-            "identifier": "ob15",
-            "shortDescription": "Foto von Darth Vader ohne Maske",
-            "type": "image",
-            "relations": {},
-            "filename" : "black400x200.png",
-            "heigth" : 200,
-            "width" : 400
-        }
-    },
-
-
-
-
 
     {
         "id": "o16",
@@ -200,8 +183,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Foto von Prinzessin Leia Organa",
             "type": "image",
             "relations": {},
-            "filename" : "magenta500x300.png",
-            "heigth" : 300,
+            "filename" : "black500x300.png",
+            "height" : 300,
             "width" : 500
         }
     },
@@ -213,8 +196,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Karte von Naboo",
             "type": "image",
             "relations": {},
-            "filename" : "white100x100.png",
-            "heigth" : 100,
+            "filename" : "black100x100.png",
+            "height" : 100,
             "width" : 100
         }
     },
@@ -226,9 +209,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Karte von Tatooine",
             "type": "image",
             "relations": {},
-            "filename" : "lightblue200x200.png",
-            "heigth" : 200,
-            "width" : 200
+            "filename": "black200x200.png",
+            "height": 200,
+            "width": 200
         }
     },
 
@@ -242,8 +225,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Foto von einem Sternenzerstörer",
             "type": "image",
             "relations": {},
-            "filename" : "green400x300.png",
-            "heigth" : 300,
+            "filename" : "black400x300.png",
+            "height" : 300,
             "width" : 400
         }
     },
@@ -255,8 +238,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Karte von Hoth",
             "type": "image",
             "relations": {},
-            "filename" : "yellow300x100.png",
-            "heigth" : 100,
+            "filename" : "black300x100.png",
+            "height" : 100,
             "width" : 300
         }
     },
@@ -268,8 +251,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Foto von Rey",
             "type": "image",
             "relations": {},
-            "filename" : "brown800x200.png",
-            "heigth" : 200,
+            "filename" : "black800x200.png",
+            "height" : 200,
             "width" : 800
         }
     }

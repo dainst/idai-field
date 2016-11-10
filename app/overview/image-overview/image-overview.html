@@ -18,7 +18,7 @@
 
     <div [class.col-sm-9]="!selectedDocument" [class.col-sm-6]="selectedDocument">
         <section>
-                <div *ngFor="let row of rows; let index = index">
+                <div *ngFor="let row of rows; let index = index" class="image-grid">
                     <!--(click)="select(document)"-->
                     <!--class="list-group-item"-->
                     <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
@@ -28,19 +28,26 @@
                     <div *ngFor="let column of row; let ind = ind"
                           (click)="select(column['document'])"
 
-                          [id]="'resource-' + column['document'].resource.identifier" style="position:relative">
+                          [id]="'resource-' + column['document'].resource.identifier">
 
                         <div *ngIf="column['document'].resource.identifier || column['document'].resource.shortDescription"
                              class="imagedesc"
                              [style.left.px]="column['positionWithinRow']">
 
-                            <span class="title" style="font-size: 8px;">
-                                {{column['document'].resource.shortDescription}}
-                            </span>
-
-                            <span class="identifier" style="font-size: 8px;">
+                            <div class="identifier"
+                                 [style.left.px]="column['positionWithinRow']+2">
                                 {{column['document'].resource.identifier}}
-                            </span>
+                            </div>
+
+                            <div class="title"
+                                 [style.maxWidth.px]="column['calculatedWidth']"
+                                 [style.left.px]="column['positionWithinRow']">
+                                 <!--style="font-size: 8px;" -->
+
+                                {{column['document'].resource.shortDescription}}
+                            </div>
+
+
                         </div>
 
                         <div class="cell"

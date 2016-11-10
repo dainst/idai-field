@@ -1,11 +1,28 @@
 
-.imagedesc {
-  position: absolute;
-  top: 102px;
+.image-grid {
+  position: relative;
 }
 
 .cell {
 
   position:absolute;
   top:0px;
+}
+
+.identifier {
+  position: absolute;
+  background-color: white;
+  top: 6px;
+  font-size: 8px;
+  z-index: 1000;
+}
+
+.title {
+  position: absolute;
+  top: 102px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:inline-block;
+  white-space:nowrap;
+  font-size: 12px;
 }

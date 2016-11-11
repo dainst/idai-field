@@ -12,7 +12,7 @@ import {Observable} from "rxjs/Observable";
  */
 export abstract class OverviewComponent {
 
-    protected documents: Document[];
+    public documents: Document[];
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };

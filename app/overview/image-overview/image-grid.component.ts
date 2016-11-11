@@ -1,7 +1,9 @@
-import {Component, OnChanges, OnInit, Input} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Component, OnChanges, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
+import {Query} from "idai-components-2/idai-components-2";
+import {Mediastore} from "../../datastore/mediastore"
 
 @Component({
     selector: 'image-grid',
@@ -16,26 +18,99 @@ import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
  */
 export class ImageGridComponent implements OnChanges, OnInit {
 
-    @Input() documents;
+    private query : Query = { q: '' };
+    private documents;
+    protected defaultFilters: Array<Filter>;
 
     private nrOfColumns = 5;
     private rows=[];
 
-    constructor(private router: Router
-    ) { }
+    constructor(
+        private router: Router,
+        private datastore: IndexeddbDatastore,
+        private mediastore: Mediastore
+    ) {
+        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
+        this.query = { q: '', filters: this.defaultFilters };
+    }
 
-    public ngOnInit() {
-        if (this.documents) {
-            var rowWidth = Math.ceil((window.innerWidth - 100) );
-            this.calcGrid(rowWidth)
+    public onSelectImages(event) {
+        var files = event.srcElement.files;
+        if (files && files.length > 0) {
+            for (var i=0; i < files.length; i++) this.uploadFile(files[i]);
         }
     }
 
-    public ngOnChanges() {
-        if (this.documents) {
+    private uploadFile(file) {
+        var reader = new FileReader();
+        reader.onloadend = (that => {
+            return () => {
+                that.mediastore.create(file.name, reader.result).then(() => {
+                    console.log("upload finished ", file);
+                    return that.createImageDocument(file);
+                }).then(() => {
+                    console.log("created image document for " + file.name);
+                    that.fetchDocuments2(that.query);
+                });
+            }
+        })(this);
+        reader.readAsArrayBuffer(file);
+    }
+
+    private createImageDocument(file): Promise<any> {
+        return new Promise((resolve, reject) => {
+            var img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                var doc = {
+                    "resource": {
+                        "identifier": file.name,
+                        "type": "image",
+                        "filename": file.name,
+                        "width": img.width,
+                        "height": img.height
+                    }
+                };
+                this.datastore.create(doc).then(result => resolve(result));
+            };
+        });
+    }
+    
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     * @param query
+     */
+    public fetchDocuments2(query: Query) {
+
+        this.datastore.find(query).then(documents => {
+            this.documents = documents;
+            console.log("Fetched documents",this.documents);
             var rowWidth = Math.ceil((window.innerWidth - 100) );
             this.calcGrid(rowWidth)
-        }
+            
+        }).catch(err => console.error(err));
+    }
+    
+    protected setUpDefaultFilters() {
+        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
+    }
+
+    public ngOnInit() {
+        
+        console.log("ngOnInit",this.documents)
+        this.fetchDocuments2(this.query);
+    }
+
+    public ngOnChanges() {
+        console.log("ngOnChanges",this.documents)
+        this.fetchDocuments2(this.query);
+    }
+
+    public queryChanged(query: Query) {
+
+        this.query = query;
+        // this.fetchDocuments(query);
     }
 
     public onResize(event) {
@@ -44,6 +119,8 @@ export class ImageGridComponent implements OnChanges, OnInit {
     }
     
     public calcGrid(rowWidth) {
+        this.rows=[]
+
         var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
 
 

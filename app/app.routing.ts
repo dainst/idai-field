@@ -7,7 +7,6 @@ import {CanDeactivateDocumentEditWrapperGuard} from './overview/can-deactivate-d
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'resources', pathMatch: 'full' },
-    { path: 'images', component: ImageOverviewComponent},
     { path: 'import', component: ImportComponent }
 ];
 

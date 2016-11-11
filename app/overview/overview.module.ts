@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {resourceOverviewRouting} from './resource-overview/resource-overview.routing';
+import {imageOverviewRouting} from './image-overview/image-overview.routing';
 import {ImageOverviewComponent} from './image-overview/image-overview.component';
 import {ResourceOverviewComponent} from './resource-overview/resource-overview.component';
 import {DocumentViewComponent} from './document-view/document-view.component';
@@ -18,6 +19,7 @@ import {ImageGridComponent} from './image-overview/image-grid.component';
 @NgModule({
     imports: [
         resourceOverviewRouting,
+        imageOverviewRouting,
         BrowserModule,
         NgbModule,
         IdaiComponents2Module

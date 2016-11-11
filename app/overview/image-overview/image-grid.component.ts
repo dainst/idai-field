@@ -3,7 +3,8 @@ import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
 import {Query,Filter} from "idai-components-2/idai-components-2";
-import {Mediastore} from "../../datastore/mediastore"
+import {Mediastore} from "../../datastore/mediastore";
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'image-grid',
@@ -28,7 +29,8 @@ export class ImageGridComponent implements OnChanges, OnInit {
     constructor(
         private router: Router,
         private datastore: IndexeddbDatastore,
-        private mediastore: Mediastore
+        private mediastore: Mediastore,
+        private sanitizer: DomSanitizer
     ) {
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
@@ -151,21 +153,36 @@ export class ImageGridComponent implements OnChanges, OnInit {
             var positionWithinRow = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                this.rows[rowIndex][columnIndex]['document'] =
-                    this.documents[documentsIndex];
-                this.rows[rowIndex][columnIndex]['calculatedWidth'] =
-                    this.rows[rowIndex][columnIndex]['scaledWidth'] / rowWidthRatio;
-                this.rows[rowIndex][columnIndex]['calculatedHeight'] = calculatedHeight;
+                var column = this.rows[rowIndex][columnIndex];
 
-                this.rows[rowIndex][columnIndex]['positionWithinRow'] = positionWithinRow;
-                this.rows[rowIndex][columnIndex]['positionWithinColumn'] = positionWithinColumn;
+                column['document'] = this.documents[documentsIndex];
+                column['calculatedWidth'] = column['scaledWidth'] / rowWidthRatio;
+                column['calculatedHeight'] = calculatedHeight;
 
-                positionWithinRow += this.rows[rowIndex][columnIndex]['calculatedWidth']+10;
+                column['positionWithinRow'] = positionWithinRow;
+                column['positionWithinColumn'] = positionWithinColumn;
+
+                var callback = (column) => {
+                    return (url) => column['imgSrc'] = url;
+                };
+                this.urlForImage(column.document.resource.filename).then(callback(column));
+
+                positionWithinRow += column['calculatedWidth'] + 10;
                 documentsIndex++;
             }
 
             positionWithinColumn += calculatedHeight + 30;
         }
+    }
+
+    private urlForImage(filename): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.mediastore.read(filename).then(data => {
+                var url = URL.createObjectURL(new Blob([data]));
+                console.log(url);
+                resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
+            });
+        });
     }
 
     /**

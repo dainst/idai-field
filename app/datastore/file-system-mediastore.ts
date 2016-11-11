@@ -2,7 +2,6 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
 import * as fs from '@node/fs';
-import {Buffer} from '@node/buffer';
 import CONFIG = require("config/config.json!json");
 
 export class FileSystemMediastore implements Mediastore {

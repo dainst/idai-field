@@ -24,33 +24,27 @@ export class ImageGridComponent implements OnChanges, OnInit {
     constructor(private router: Router
     ) { }
 
-    public ngOnInit() { 
-        console.log("call ngOnInit")
+    public ngOnInit() {
         if (this.documents) {
             var rowWidth = Math.ceil((window.innerWidth - 100) / 4 * 3);
-            var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
-            this.calcGrid(rowWidth, nrOfRows)
+            this.calcGrid(rowWidth)
         }
     }
 
     public ngOnChanges() {
-        console.log("call ngOnChanges")
         if (this.documents) {
             var rowWidth = Math.ceil((window.innerWidth - 100) / 4 * 3);
-            var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
-            this.calcGrid(rowWidth, nrOfRows)
+            this.calcGrid(rowWidth)
         }
     }
 
     public onResize(event) {
         var rowWidth = Math.ceil((event.target.innerWidth-100) / 4 * 3);
-        var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
-
-        this.calcGrid(rowWidth,nrOfRows)
+        this.calcGrid(rowWidth)
     }
     
-    public calcGrid(rowWidth,nrOfRows) {
-
+    public calcGrid(rowWidth) {
+        var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
 
 
         var documentsIndex = 0;

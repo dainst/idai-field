@@ -1,4 +1,4 @@
-<div class="row" (window:resize)="onResize($event)" class="image-overview">
+<div class="row" class="image-overview">
 
     <div [class.col-sm-12]="!selectedDocument" [class.col-sm-9]="selectedDocument">
         <search-bar id="search-bar" [showFiltersMenu]="false" [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>

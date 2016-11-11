@@ -21,7 +21,7 @@ export class FileSystemMediastore implements Mediastore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    public create(key: string, data: any): Promise<any> {
+    public create(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
             fs.writeFile(this.basePath + key, Buffer.from(data), { flag: 'wx' }, (err) => {
@@ -36,7 +36,7 @@ export class FileSystemMediastore implements Mediastore {
      * @returns {Promise<any>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    public read(key: string): Promise<any> {
+    public read(key: string): Promise<ArrayBuffer> {
 
         return new Promise((resolve, reject) => {
             fs.readFile(this.basePath + key, (err, data) => {
@@ -54,10 +54,10 @@ export class FileSystemMediastore implements Mediastore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    public update(key: string, data: any): Promise<any> {
+    public update(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, data, { flag: 'w' }, (err) => {
+            fs.writeFile(this.basePath + key, Buffer.from(data), { flag: 'w' }, (err) => {
                 if (err) reject(err);
                 else resolve();
             });

@@ -14,14 +14,14 @@ export abstract class Mediastore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    abstract create(key: string, data: any): Promise<any>;
+    abstract create(key: string, data: ArrayBuffer): Promise<any>;
 
     /**
      * @param key the identifier for the data
-     * @returns {Promise<any>} resolve -> (data), the data read with the key,
+     * @returns {Promise<ArrayBuffer>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    abstract read(key: string): Promise<any>;
+    abstract read(key: string): Promise<ArrayBuffer>;
 
     /**
      * @param key the identifier for the data
@@ -29,7 +29,7 @@ export abstract class Mediastore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    abstract update(key: string, data: any): Promise<any>;
+    abstract update(key: string, data: ArrayBuffer): Promise<any>;
 
     /**
      * @param key the identifier for the data to be removed

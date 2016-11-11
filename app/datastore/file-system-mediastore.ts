@@ -2,6 +2,7 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
 import * as fs from '@node/fs';
+import {Buffer} from '@node/buffer';
 import CONFIG = require("config/config.json!json");
 
 export class FileSystemMediastore implements Mediastore {
@@ -23,7 +24,7 @@ export class FileSystemMediastore implements Mediastore {
     public create(key: string, data: any): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, data, { flag: 'wx' }, (err) => {
+            fs.writeFile(this.basePath + key, Buffer.from(data), { flag: 'wx' }, (err) => {
                 if (err) reject(err);
                 else resolve();
             });

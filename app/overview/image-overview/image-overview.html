@@ -2,6 +2,15 @@
 
     <div>
         <search-bar id="search-bar" [showFiltersMenu]="false" [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>
+        <div>
+            <label for="file"><strong>Bilder auswählen:</strong></label>
+            <input class="file"
+                   type="file"
+                   name="files[]"
+                   id="file"
+                   multiple
+                   (change)="onSelectImages($event)">
+        </div>
         <image-grid [(documents)]="documents"></image-grid>
     </div>
 
@@ -17,4 +26,5 @@
             </div>
         </div>
     </div>
+
 </div>

@@ -26,6 +26,47 @@ export class ImageOverviewComponent extends OverviewComponent implements OnInit 
         super(datastore);
     }
 
+    public onSelectImages(event) {
+        var files = event.srcElement.files;
+        if (files && files.length > 0) {
+            for (var i=0; i < files.length; i++) this.uploadFile(files[i]);
+        }
+    }
+
+    private uploadFile(file) {
+        var reader = new FileReader();
+        reader.onloadend = (that => {
+            return () => {
+                that.mediastore.create(file.name, reader.result).then(() => {
+                    console.log("upload finished ", file);
+                    return that.createImageDocument(file);
+                }).then(() => {
+                    console.log("created image document for " + file.name);
+                    that.fetchDocuments2(that.query);
+                });
+            }
+        })(this);
+        reader.readAsArrayBuffer(file);
+    }
+
+    private createImageDocument(file): Promise<any> {
+        return new Promise((resolve, reject) => {
+            var img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                var doc = {
+                    "resource": {
+                        "identifier": file.name,
+                        "type": "image",
+                        "filename": file.name,
+                        "width": img.width,
+                        "height": img.height
+                    }
+                };
+                this.datastore.create(doc).then(result => resolve(result));
+            };
+        });
+    }
     
     protected setUpDefaultFilters() {
 

@@ -1,0 +1,27 @@
+
+.image-grid {
+  position: relative;
+
+  .identifier {
+    position: absolute;
+    background-color: white;
+    font-size: 12px;
+    z-index: 1000;
+  }
+
+  .title {
+    position: absolute;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:inline-block;
+    white-space:nowrap;
+    font-size: 16px;
+  }
+}
+
+.cell {
+
+  position:absolute;
+  top:0px;
+}
+

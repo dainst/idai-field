@@ -1,0 +1,42 @@
+<div *ngFor="let row of rows; let index = index" class="image-grid">
+    <!--(click)="select(document)"-->
+    <!--class="list-group-item"-->
+    <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
+    <!--[id]="'resource-' + document.resource.identifier"-->
+
+
+    <div *ngFor="let column of row; let ind = ind"
+         (click)="select(column['document'])"
+
+         [id]="'resource-' + column['document'].resource.identifier">
+
+        <div *ngIf="column['document'].resource.identifier || column['document'].resource.shortDescription">
+
+            <div class="identifier"
+                 [style.left.px]="column['positionWithinRow']+3"
+                 [style.top.px]="column['positionWithinColumn']+3">
+                {{column['document'].resource.identifier}}
+            </div>
+
+            <div class="title"
+                 [style.maxWidth.px]="column['calculatedWidth']"
+                 [style.left.px]="column['positionWithinRow']"
+                 [style.top.px]="column['positionWithinColumn']+column['calculatedHeight']+0">
+                <!--style="font-size: 8px;" -->
+
+                {{column['document'].resource.shortDescription}}
+            </div>
+
+
+        </div>
+
+        <div class="cell"
+             [style.left.px]="column['positionWithinRow']"
+             [style.top.px]="column['positionWithinColumn']">
+
+            <img src="mediastore/{{column['document'].resource['filename']}}"
+                 [style.width.px]="column['calculatedWidth']"
+                 [style.height.px]="column['calculatedHeight']">
+        </div>
+    </div>
+</div>

@@ -1,9 +1,8 @@
-import {ModuleWithProviders}   from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {ImageOverviewComponent} from './image-overview.component';
-import {ImageGridComponent} from './image-grid.component';
-import {DocumentEditWrapperComponent} from '../document-edit-wrapper.component';
-import {CanDeactivateDocumentEditWrapperGuard}  from '../can-deactivate-document-edit-wrapper-guard';
+import {ModuleWithProviders} from "@angular/core";
+import {Routes, RouterModule} from "@angular/router";
+import {ImageOverviewComponent} from "./image-overview.component";
+import {ImageGridComponent} from "./image-grid.component";
+import {ImageViewComponent} from "./image-view.component";
 
 const overviewRoutes: Routes = [
     {
@@ -13,6 +12,10 @@ const overviewRoutes: Routes = [
             {
                 path: '',
                 component: ImageGridComponent
+            },
+            {
+                path: ':id/show',
+                component: ImageViewComponent
             }
         ]
     }

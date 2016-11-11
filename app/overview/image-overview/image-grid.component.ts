@@ -2,7 +2,7 @@ import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
-import {Query} from "idai-components-2/idai-components-2";
+import {Query,Filter} from "idai-components-2/idai-components-2";
 import {Mediastore} from "../../datastore/mediastore"
 
 @Component({
@@ -97,13 +97,10 @@ export class ImageGridComponent implements OnChanges, OnInit {
     }
 
     public ngOnInit() {
-        
-        console.log("ngOnInit",this.documents)
         this.fetchDocuments2(this.query);
     }
 
     public ngOnChanges() {
-        console.log("ngOnChanges",this.documents)
         this.fetchDocuments2(this.query);
     }
 
@@ -176,7 +173,6 @@ export class ImageGridComponent implements OnChanges, OnInit {
      *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
-
-        this.router.navigate(['images', { id: documentToSelect.resource.id }]);
+        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
     }
 }

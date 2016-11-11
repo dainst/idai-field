@@ -15,6 +15,7 @@ import {TypeIconComponent} from './type-icon.component';
 import {SearchBarComponent} from './search-bar.component';
 import {MapState} from './map/map-state';
 import {ImageGridComponent} from './image-overview/image-grid.component';
+import {ImageViewComponent} from './image-overview/image-view.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {ImageGridComponent} from './image-overview/image-grid.component';
         PlusButtonComponent,
         TypeIconComponent,
         SearchBarComponent,
-        ImageGridComponent
+        ImageGridComponent,
+        ImageViewComponent
     ],
     providers: [
         MapState

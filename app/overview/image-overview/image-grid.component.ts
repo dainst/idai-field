@@ -18,7 +18,7 @@ export class ImageGridComponent implements OnChanges, OnInit {
 
     @Input() documents;
 
-    private nrOfColumns = 4;
+    private nrOfColumns = 5;
     private rows=[];
 
     constructor(private router: Router
@@ -26,20 +26,20 @@ export class ImageGridComponent implements OnChanges, OnInit {
 
     public ngOnInit() {
         if (this.documents) {
-            var rowWidth = Math.ceil((window.innerWidth - 100) / 4 * 3);
+            var rowWidth = Math.ceil((window.innerWidth - 100) );
             this.calcGrid(rowWidth)
         }
     }
 
     public ngOnChanges() {
         if (this.documents) {
-            var rowWidth = Math.ceil((window.innerWidth - 100) / 4 * 3);
+            var rowWidth = Math.ceil((window.innerWidth - 100) );
             this.calcGrid(rowWidth)
         }
     }
 
     public onResize(event) {
-        var rowWidth = Math.ceil((event.target.innerWidth-100) / 4 * 3);
+        var rowWidth = Math.ceil((event.target.innerWidth-100) );
         this.calcGrid(rowWidth)
     }
     

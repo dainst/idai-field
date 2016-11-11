@@ -1,6 +1,6 @@
-<div class="row" class="image-overview">
+<div class="image-overview">
 
-    <div [class.col-sm-12]="!selectedDocument" [class.col-sm-9]="selectedDocument">
+    <div>
         <search-bar id="search-bar" [showFiltersMenu]="false" [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>
         <image-grid [(documents)]="documents"></image-grid>
     </div>

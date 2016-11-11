@@ -157,7 +157,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "image",
             "relations": {},
             "filename" : "black300x200.png",
-            "height" : 300,
+            "height" : 200,
             "width" : 200
         }
     },
@@ -254,6 +254,47 @@ export var DOCS: IdaiFieldDocument[] = [
             "filename" : "black800x200.png",
             "height" : 200,
             "width" : 800
+        }
+    },
+
+    {
+        "id": "o22",
+        "resource": {
+            "id": "o22",
+            "identifier": "ob22",
+            "shortDescription": "Foto von Finn",
+            "type": "image",
+            "relations": {},
+            "filename" : "black100x300.png",
+            "height" : 300,
+            "width" : 100
+        }
+    },
+    {
+        "id": "o23",
+        "resource": {
+            "id": "o23",
+            "identifier": "ob23",
+            "shortDescription": "Foto von Poe Dameron",
+            "type": "image",
+            "relations": {},
+            "filename" : "black200x200.png",
+            "height" : 200,
+            "width" : 200
+        }
+    },
+
+    {
+        "id": "o24",
+        "resource": {
+            "id": "o24",
+            "identifier": "ob24",
+            "shortDescription": "Foto von Kylo Ren",
+            "type": "image",
+            "relations": {},
+            "filename" : "black300x400.png",
+            "height" : 400,
+            "width" : 300
         }
     }
 ];

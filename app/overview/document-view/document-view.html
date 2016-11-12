@@ -5,40 +5,7 @@
         <span class="mdi mdi-pencil mdi-18px"></span>
     </button>
 
-    <!--
-        In one project we have this assumption that there is always a shortDescription,
-        while in another there is only the identifier.
-    -->
-    <div *ngIf="document.resource.shortDescription">
-        <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
-        <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
-    </div>
-    <div *ngIf="!document.resource.shortDescription">
-        <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
-    </div>
-
-    <div *ngIf="document.resource.type != 'image'" class="document-view-field" id="document-view-field-geometry">
-        <div class="fieldname">Geometrie</div>
-        <div *ngIf="document.resource.geometries && document.resource.geometries.length > 0">
-            <span *ngIf="document.resource.geometries[0].type == 'Polygon'" class="fieldvalue">Polygon</span>
-            <span *ngIf="document.resource.geometries[0].type == 'Point'" class="fieldvalue">Punkt</span>
-            <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
-                    [routerLink]="['/resources/editGeometry', document.resource.id, 'existing', {menuMode:'geometryEdit'}]">
-                <span class="mdi mdi-pencil mdi-18px"></span>
-            </button>
-        </div>
-        <div *ngIf="!document.resource.geometries || document.resource.geometries.length == 0">
-            <span>Keine</span>
-            <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
-                    [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
-                <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
-            </button>
-            <button class="btn btn-link btn-sm" id="document-view-button-create-point"
-                    [routerLink]="['/resources/editGeometry', document.resource.id, 'point', {menuMode:'geometryEdit'}]">
-                <span class="mdi mdi-map-marker-plus mdi-18px"></span>
-            </button>
-        </div>
-    </div>
+    <ng-content></ng-content>
 
     <basic-resource-view [(doc)]="document" (relationClicked)="selectDocument($event)"></basic-resource-view>
 </div>

@@ -18,7 +18,9 @@
                 </h4>
             </div>
             <div class="card-block">
-                <document-view [document]="activeDoc"></document-view>
+                <document-view [(document)]="activeDoc">
+                    <geometry-view [(document)]="activeDoc"></geometry-view>
+                </document-view>
             </div>
         </div>
     </div>

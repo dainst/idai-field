@@ -25,6 +25,7 @@ import {Mediastore} from './datastore/mediastore'
 import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
 import {ImagesModule} from './images/images.module'
+import {NavbarComponent} from './navbar.component'
 
 import CONFIG = require("config/config.json!json");
 
@@ -41,6 +42,7 @@ import CONFIG = require("config/config.json!json");
     ],
     declarations: [
         AppComponent,
+        NavbarComponent,
         ImportComponent,
         SynchronizationComponent
     ],

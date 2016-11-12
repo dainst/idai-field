@@ -127,7 +127,7 @@ const template = [{
                 infoWindow = null;
             });
             // load new panel with version info
-            infoWindow.loadURL('file://' + __dirname + '/app/info-window.html');
+            infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
             //console.log(app.getVersion());
         }
     }]

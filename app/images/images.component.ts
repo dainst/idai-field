@@ -2,15 +2,10 @@ import {Component} from "@angular/core";
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-overview.html'
+    templateUrl: './images.html'
 })
 
 /**
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent {
-
-    constructor(
-    ) {
-    }
-}
+export class ImagesComponent {}

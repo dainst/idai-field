@@ -1,13 +1,13 @@
 import {ModuleWithProviders} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
-import {ImageOverviewComponent} from "./image-overview.component";
+import {ImagesComponent} from "./images.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 
 const routes: Routes = [
     {
         path: 'images',
-        component: ImageOverviewComponent,
+        component: ImagesComponent,
         children: [
             {
                 path: '',
@@ -21,4 +21,4 @@ const routes: Routes = [
     }
 ];
 
-export const imageOverviewRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const imagesRouting: ModuleWithProviders = RouterModule.forChild(routes);

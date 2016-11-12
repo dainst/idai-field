@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {imageOverviewRouting} from "./image-overview.routing";
-import {ImageOverviewComponent} from "./image-overview.component";
+import {imagesRouting} from "./images.routing";
+import {ImagesComponent} from "./images.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 import {WidgetsModule} from '../widgets/widgets.module';
@@ -9,11 +9,11 @@ import {WidgetsModule} from '../widgets/widgets.module';
 @NgModule({
     imports: [
         BrowserModule,
-        imageOverviewRouting,
+        imagesRouting,
         WidgetsModule
     ],
     declarations: [
-        ImageOverviewComponent,
+        ImagesComponent,
         ImageGridComponent,
         ImageViewComponent
     ]

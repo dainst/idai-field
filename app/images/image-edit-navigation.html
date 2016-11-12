@@ -1,7 +1,7 @@
 <div class="row">
 
     <div *ngIf="doc" class="col-md-3" [routerLink]="['/images/', doc.resource.id, 'show']">
-        <img src="mediastore/{{doc.resource['filename']}}">
+        <img src="mediastore/{{doc.resource['filename']}}" style="width: 100%">
     </div>
 
     <div *ngIf="doc" class="col-md-9">

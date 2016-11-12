@@ -2,7 +2,6 @@ import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
-import {DocumentDetail} from "../common/document-detail";
 
 
 @Component({
@@ -15,28 +14,19 @@ import {DocumentDetail} from "../common/document-detail";
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class ImageMetadataComponent extends DocumentDetail implements OnChanges {
+export class ImageMetadataComponent implements OnChanges {
 
-    @Input() document: any;
+    @Input() doc: any;
 
-    constructor(
-        private router: Router,
-        datastore: ReadDatastore,
-        configLoader: ConfigLoader
-    ) {
-        super(datastore,configLoader);
-    }
+    constructor(private router: Router) { }
 
     ngOnChanges() {
 
-        if (!this.document) return;
+        if (!this.doc) return;
+        var resource:IdaiFieldResource = this.doc.resource;
+    }
 
-        this.fields = [];
-        this.relations = [];
-
-        var resource:IdaiFieldResource = this.document.resource;
-
-        this.initializeFields(resource);
-        this.initializeRelations(resource);
+    public selectDocument(documentToJumpTo) {
+        console.debug("Jump to related doc ",documentToJumpTo)
     }
 }

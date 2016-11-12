@@ -1,17 +1,29 @@
+import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angular/core";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
 
 
+@Component({
+    selector: 'basic-resource-view',
+    moduleId: module.id,
+    templateUrl: './basic-resource-view.html'
+})
+
 /**
+ * Shows relations and fields of a document.
+ *
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class DocumentDetail {
+export class BasicResourceViewComponent implements OnInit, OnChanges {
 
     protected fields: Array<any>;
     protected relations: Array<any>;
 
     protected projectConfiguration: ProjectConfiguration;
+
+    @Input() doc;
+    @Output() relationClicked = new EventEmitter();
 
     constructor(
         private datastore: ReadDatastore,
@@ -22,6 +34,26 @@ export class DocumentDetail {
                 this.projectConfiguration = result.projectConfiguration;
             }
         });
+    }
+
+    private init() {
+        this.fields = [];
+        this.relations = [];
+        if (!this.doc) return;
+        this.initializeFields(this.doc.resource);
+        this.initializeRelations(this.doc.resource);
+    }
+
+    ngOnInit() {
+        this.init();
+    }
+
+    ngOnChanges() {
+        this.init();
+    }
+
+    private clickRelation(doc) {
+        this.relationClicked.emit(doc);
     }
 
     protected initializeFields(resource: IdaiFieldResource) {

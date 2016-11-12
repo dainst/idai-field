@@ -24,12 +24,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Mediastore} from './datastore/mediastore'
 import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
-
+import {ImagesModule} from './images/images.module'
 
 import CONFIG = require("config/config.json!json");
 
 @NgModule({
     imports: [
+        ImagesModule,
         OverviewModule,
         BrowserModule,
         FormsModule,

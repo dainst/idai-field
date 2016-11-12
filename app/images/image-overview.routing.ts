@@ -4,7 +4,7 @@ import {ImageOverviewComponent} from "./image-overview.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 
-const overviewRoutes: Routes = [
+const routes: Routes = [
     {
         path: 'images',
         component: ImageOverviewComponent,
@@ -21,4 +21,4 @@ const overviewRoutes: Routes = [
     }
 ];
 
-export const imageOverviewRouting: ModuleWithProviders = RouterModule.forChild(overviewRoutes);
+export const imageOverviewRouting: ModuleWithProviders = RouterModule.forChild(routes);

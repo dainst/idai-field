@@ -5,7 +5,7 @@ import {MapWrapperComponent} from './map-wrapper.component';
 import {DocumentEditWrapperComponent} from '../document-edit-wrapper.component';
 import {CanDeactivateDocumentEditWrapperGuard}  from '../can-deactivate-document-edit-wrapper-guard';
 
-const overviewRoutes: Routes = [
+const routes: Routes = [
     {
         path: 'resources',
         component: ResourceOverviewComponent,
@@ -32,4 +32,4 @@ const overviewRoutes: Routes = [
     }
 ];
 
-export const resourceOverviewRouting: ModuleWithProviders = RouterModule.forChild(overviewRoutes);
+export const resourceOverviewRouting: ModuleWithProviders = RouterModule.forChild(routes);

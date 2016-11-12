@@ -3,10 +3,10 @@ import { CanDeactivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot }  from '@angular/router';
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import { DocumentEditWrapperComponent } from './document-edit-wrapper.component';
+import { DocumentEditNavigationComponent } from './document-edit-navigation.component';
 
 @Injectable()
-export class CanDeactivateDocumentEditWrapperGuard implements CanDeactivate<DocumentEditWrapperComponent> {
+export class CanDeactivateDocumentEditWrapperGuard implements CanDeactivate<DocumentEditNavigationComponent> {
 
     private _resolve;
 
@@ -22,7 +22,7 @@ export class CanDeactivateDocumentEditWrapperGuard implements CanDeactivate<Docu
 
 
     canDeactivate(
-        component: DocumentEditWrapperComponent,
+        component: DocumentEditNavigationComponent,
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Promise<boolean> | boolean {

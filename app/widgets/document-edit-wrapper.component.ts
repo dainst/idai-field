@@ -1,0 +1,110 @@
+import {Component, OnInit, ViewChild, TemplateRef, Input, Output, EventEmitter} from "@angular/core";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {M} from "../m";
+import {Validator} from "../model/validator";
+import {IdaiFieldDocument} from "../model/idai-field-document";
+
+@Component({
+    selector: 'document-edit-wrapper',
+    moduleId: module.id,
+    templateUrl: './document-edit-wrapper.html'
+})
+
+/**
+ * Handles
+ * <ul>
+ *   <li>loading or creating of the document to edit
+ *   <li>showing the document edit form and provision it with the document to edit
+ *   <li>validation and persistence of the document edited
+ *   <li>the navigation away from document edit
+ * </ul>
+ *
+ * Regarding the navigation: If the documents state is marked as edited
+ * but not saved, on trying to navigate to other routes, the user
+ * gets presented a modal which offers choices to save or abandon the
+ * changes or to cancel the navigation.
+ *
+ * @author Daniel de Oliveira
+ */
+export class DocumentEditWrapperComponent {
+
+    @Input() document;
+    @Output() saveSuccess = new EventEmitter<any>();
+
+    private modalTemplate: TemplateRef<any>;
+    private modal: NgbModalRef;
+
+    constructor(
+        private messages: Messages,
+        private modalService:NgbModal,
+        private persistenceManager:PersistenceManager,
+        private validator: Validator,
+        private documentEditChangeMonitor:DocumentEditChangeMonitor,
+        private configLoader: ConfigLoader
+    ) {
+        this.configLoader.configuration().subscribe(result => {
+            this.projectConfiguration = result.projectConfiguration;
+        });
+    }
+
+    public showModal() {
+        this.modal = this.modalService.open(this.modalTemplate);
+    }
+
+    private projectConfiguration: ProjectConfiguration;
+
+    private evalParams(routeParams,callbackWithType,callbackWithId) {
+        routeParams.forEach((params: Params) => {
+
+            if (params['id']) return callbackWithId(params['id']);
+            if (params['type']) return callbackWithType(params['type']);
+
+            console.error("there should be either an id or a type")
+        });
+    }
+
+
+
+    /**
+     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
+     */
+    public save(proceed:boolean=false) {
+
+        var validationReport = this.validate(this.document);
+        if (!validationReport.valid) {
+            return this.messages.add(validationReport.errorMessage, validationReport.errorData);
+        }
+
+        this.persistenceManager.persist(this.document).then(
+            () => {
+                this.document['synced'] = 0;
+                this.documentEditChangeMonitor.reset();
+
+                this.saveSuccess.emit({document:this.document,proceed:proceed})
+                // this.navigate(this.document, proceed);
+                // show message after route change
+                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+            },
+            errors => {
+                for (var err of errors) {
+                    this.messages.add(err);
+                }
+            });
+    }
+
+    private validate(doc) {
+        return this.validator.validate(<IdaiFieldDocument>doc);
+    }
+
+    public getTypeLabel(): string {
+
+        if (!this.document) {
+            return "";
+        } else {
+            return this.projectConfiguration.getLabelForType(this.document.resource.type);
+        }
+    }
+}

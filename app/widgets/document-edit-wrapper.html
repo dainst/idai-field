@@ -1,0 +1,19 @@
+<section>
+    <header>
+        <h1 class="overview-document-heading">
+
+            <button *ngIf="mode=='edit'" class="btn btn-secondary pull-xs-right" id="document-edit-button-goto-view"
+                    (click)="router.navigate(['resources', { id: document.resource.id }]);">Zur Ansicht</button>
+            <button class="btn btn-secondary pull-xs-right" id="document-edit-button-save-document"
+                    (click)="save();">Speichern</button>
+            <span class="mdi mdi-blur"></span>
+
+            <span *ngIf="mode=='edit'">{{getTypeLabel()}} bearbeiten</span>
+            <span *ngIf="mode=='new'">Neue Ressource</span>
+        </h1>
+    </header>
+    <main>
+        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
+    </main>
+</section>
+

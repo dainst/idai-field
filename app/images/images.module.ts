@@ -6,12 +6,14 @@ import {ImagesGridComponent} from "./images-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 import {ImageEditComponent} from "./image-edit.component";
 import {WidgetsModule} from '../widgets/widgets.module';
+import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 
 @NgModule({
     imports: [
         BrowserModule,
         imagesRouting,
-        WidgetsModule
+        WidgetsModule,
+        IdaiComponents2Module
     ],
     declarations: [
         ImagesComponent,

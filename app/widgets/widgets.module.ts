@@ -7,6 +7,7 @@ import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {TypeIconComponent} from './type-icon.component'
 import {BasicResourceViewComponent} from './basic-resource-view.component';
 import {DocumentViewComponent} from './document-view.component';
+import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
@@ -21,12 +22,14 @@ import {RouterModule} from '@angular/router';
         SearchBarComponent,
         TypeIconComponent,
         BasicResourceViewComponent,
-        DocumentViewComponent
+        DocumentViewComponent,
+        DocumentEditWrapperComponent
     ],
     exports : [
         SearchBarComponent,
         TypeIconComponent,
-        DocumentViewComponent
+        DocumentViewComponent,
+        DocumentEditWrapperComponent
     ]
 })
 

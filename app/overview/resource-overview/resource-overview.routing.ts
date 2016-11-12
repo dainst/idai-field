@@ -2,7 +2,7 @@ import {ModuleWithProviders}   from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ResourceOverviewComponent} from './resource-overview.component';
 import {MapWrapperComponent} from './map-wrapper.component';
-import {DocumentEditWrapperComponent} from '../document-edit-wrapper.component';
+import {DocumentEditNavigationComponent} from '../document-edit-navigation.component';
 import {CanDeactivateDocumentEditWrapperGuard}  from '../can-deactivate-document-edit-wrapper-guard';
 
 const routes: Routes = [
@@ -20,12 +20,12 @@ const routes: Routes = [
             },
             {
                 path: 'new', // ;type=typename
-                component: DocumentEditWrapperComponent,
+                component: DocumentEditNavigationComponent,
                 canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
             },
             {
                 path: ':id/edit',
-                component: DocumentEditWrapperComponent,
+                component: DocumentEditNavigationComponent,
                 canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
             }
         ]

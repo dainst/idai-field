@@ -1,17 +1,13 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {CanDeactivateDocumentEditWrapperGuard} from "./can-deactivate-document-edit-wrapper-guard";
-import {M} from "../m";
-import {Validator} from "../model/validator";
 import {ResourceOverviewComponent} from "./resource-overview/resource-overview.component";
-import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({
     moduleId: module.id,
-    templateUrl: './document-edit-wrapper.html'
+    templateUrl: './document-edit-navigation.html'
 })
 
 /**
@@ -30,7 +26,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
  *
  * @author Daniel de Oliveira
  */
-export class DocumentEditWrapperComponent implements  OnInit {
+export class DocumentEditNavigationComponent implements  OnInit {
 
     @ViewChild('modalTemplate')
     private modalTemplate: TemplateRef<any>;
@@ -43,14 +39,8 @@ export class DocumentEditWrapperComponent implements  OnInit {
         private messages: Messages,
         private modalService:NgbModal,
         private canDeactivateGuard:CanDeactivateDocumentEditWrapperGuard,
-        private persistenceManager:PersistenceManager,
-        private validator: Validator,
-        private documentEditChangeMonitor:DocumentEditChangeMonitor,
-        private configLoader: ConfigLoader
+        private documentEditChangeMonitor:DocumentEditChangeMonitor
     ) {
-        this.configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
-        });
     }
 
     public showModal() {
@@ -59,10 +49,9 @@ export class DocumentEditWrapperComponent implements  OnInit {
 
     private document: any;
     public mode: string; // new | edit
-    private projectConfiguration: ProjectConfiguration;
 
-    private evalParams(routeParams,callbackWithType,callbackWithId) {
-        routeParams.forEach((params: Params) => {
+    private getRouteParams(callbackWithType, callbackWithId) {
+        this.route.params.forEach((params: Params) => {
 
             if (params['id']) return callbackWithId(params['id']);
             if (params['type']) return callbackWithType(params['type']);
@@ -72,7 +61,7 @@ export class DocumentEditWrapperComponent implements  OnInit {
     }
 
     ngOnInit() {
-        this.evalParams(this.route.params,
+        this.getRouteParams(
             (type) => {
                 this.mode = 'new';
                 this.document = this.overviewComponent.createNewDocument(type);
@@ -91,38 +80,27 @@ export class DocumentEditWrapperComponent implements  OnInit {
         );
     }
 
-
+    public onSaveSuccess(e) {
+        console.debug("on save success ",e)
+        this.navigate(e['document'], e['proceed']);
+    }
 
     /**
+     * Discards changes of the document. Depending on whether it is a new or existing
+     * object, it will either restore it or remove it from the list.
+     *
      * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
-    public save(proceed:boolean=false) {
+    public discard(proceed:boolean=false) {
 
-        var validationReport = this.validate(this.overviewComponent.getSelected());
-        if (!validationReport.valid) {
-            return this.messages.add(validationReport.errorMessage, validationReport.errorData);
-        }
-
-        this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
+        this.overviewComponent.restore().then(
             () => {
-                this.overviewComponent.getSelected()['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
-
-                this.navigate(this.overviewComponent.getSelected(), proceed);
-                // show message after route change
-                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
-            },
-            errors => {
-                for (var err of errors) {
-                    this.messages.add(err);
-                }
+                if (proceed) this.canDeactivateGuard.proceed();
+            }, (err) => {
+                this.messages.add(err);
             });
     }
-
-    private validate(doc) {
-        return this.validator.validate(<IdaiFieldDocument>doc);
-    }
-
 
     /**
      * According to the current mode or the value of proceed,
@@ -146,31 +124,5 @@ export class DocumentEditWrapperComponent implements  OnInit {
                 document=>this.document=document);
         }
 
-    }
-
-    /**
-     * Discards changes of the document. Depending on whether it is a new or existing
-     * object, it will either restore it or remove it from the list.
-     *
-     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
-     */
-    public discard(proceed:boolean=false) {
-
-        this.overviewComponent.restore().then(
-            () => {
-                this.documentEditChangeMonitor.reset();
-                if (proceed) this.canDeactivateGuard.proceed();
-            }, (err) => {
-                this.messages.add(err);
-            });
-    }
-
-    public getTypeLabel(): string {
-
-        if (!this.document) {
-            return "";
-        } else {
-            return this.projectConfiguration.getLabelForType(this.document.resource.type);
-        }
     }
 }

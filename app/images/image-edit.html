@@ -6,5 +6,6 @@
 
     <div *ngIf="doc" class="col-md-9">
         Document Edit form goes here
+        <document-edit [(document)]="doc" [primary]="'identifier'"></document-edit>
     </div>
 </div>

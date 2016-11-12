@@ -7,17 +7,17 @@ import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-    selector: 'image-grid',
     moduleId: module.id,
-    templateUrl: './image-grid.html'
+    templateUrl: './images-grid.html'
 })
 
 /**
  * Displays images as a grid of tiles.
  *
  * @author Daniel de Oliveira
+ * @author Sebastian Cuy
  */
-export class ImageGridComponent implements OnChanges, OnInit {
+export class ImagesGridComponent implements OnChanges, OnInit {
 
     private query : Query = { q: '' };
     private documents;

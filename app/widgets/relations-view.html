@@ -1,14 +1,3 @@
-<div *ngFor="let field of fields">
-    <div *ngIf="field.isArray" class="document-view-field">
-        <div class="fieldname">{{field.name}}</div>
-        <div *ngFor="let value of field.value" class="fieldvalue">{{value}}</div>
-    </div>
-    <div *ngIf="!field.isArray" class="document-view-field">
-        <div class="fieldname">{{field.name}}</div>
-        <div class="fieldvalue">{{field.value}}</div>
-    </div>
-</div>
-
 <div *ngFor="let relation of relations">
     <div class="document-view-field">
         <div class="fieldname">{{relation.name}}</div>

@@ -22,7 +22,8 @@
 
             <ng-content></ng-content>
 
-            <basic-resource-view [(doc)]="document" (relationClicked)="onRelationClicked($event)"></basic-resource-view>
+            <fields-view [(doc)]="document"></fields-view>
+            <relations-view [(doc)]="document" (relationClicked)="onRelationClicked($event)"></relations-view>
         </div>
     </div>
 </div>

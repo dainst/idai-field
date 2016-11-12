@@ -2,11 +2,10 @@ import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angula
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
 
-
 @Component({
-    selector: 'basic-resource-view',
+    selector: 'relations-view',
     moduleId: module.id,
-    templateUrl: './basic-resource-view.html'
+    templateUrl: './relations-view.html'
 })
 
 /**
@@ -15,9 +14,8 @@ import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class BasicResourceViewComponent implements OnInit, OnChanges {
+export class RelationsViewComponent implements OnInit, OnChanges {
 
-    protected fields: Array<any>;
     protected relations: Array<any>;
 
     protected projectConfiguration: ProjectConfiguration;
@@ -37,10 +35,8 @@ export class BasicResourceViewComponent implements OnInit, OnChanges {
     }
 
     private init() {
-        this.fields = [];
         this.relations = [];
         if (!this.doc) return;
-        this.initializeFields(this.doc.resource);
         this.initializeRelations(this.doc.resource);
     }
 
@@ -54,21 +50,6 @@ export class BasicResourceViewComponent implements OnInit, OnChanges {
 
     private clickRelation(doc) {
         this.relationClicked.emit(doc);
-    }
-
-    protected initializeFields(resource: IdaiFieldResource) {
-
-        const ignoredFields: Array<string> = [ "id", "identifier", "shortDescription", "type", "relations", "geometries" ];
-
-        for (var fieldName in resource) {
-            if (resource.hasOwnProperty(fieldName) && ignoredFields.indexOf(fieldName) == -1) {
-                this.fields.push({
-                    name: this.getFieldLabel(resource.type, fieldName),
-                    value: resource[fieldName],
-                    isArray: Array.isArray(resource[fieldName])
-                });
-            }
-        }
     }
 
     protected initializeRelations(resource: IdaiFieldResource) {
@@ -99,12 +80,6 @@ export class BasicResourceViewComponent implements OnInit, OnChanges {
                 err => { console.error(err); }
             )
         }
-    }
-
-    private getFieldLabel(type: string, fieldName: string) {
-
-        var fields = this.projectConfiguration.getFields(type);
-        return this.getLabel(fieldName, fields);
     }
 
     private getRelationLabel(relationName: string) {

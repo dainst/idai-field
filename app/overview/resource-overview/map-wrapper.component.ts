@@ -42,9 +42,9 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     }
 
 
-    private evalParams(routeParams, callback) {
+    private getRouteParams(callback) {
 
-        routeParams.forEach((params: Params) => {
+        this.route.params.forEach((params: Params) => {
             var type = undefined;
             var id = undefined;
             if (params['id'] && params['id'].indexOf('new') > -1) {
@@ -93,7 +93,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
            this.docs = result;
         });
 
-        this.evalParams(this.route.params,function(menuMode,editMode,id,type){
+        this.getRouteParams(function(menuMode, editMode, id, type){
 
             this.setMenuMode(menuMode);
             this.setEditMode(editMode);

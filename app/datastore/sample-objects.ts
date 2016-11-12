@@ -153,10 +153,10 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o13",
             "identifier": "ob13",
-            "shortDescription": "Foto von Boba Fett",
+            "shortDescription": "Foto von Boba Fett / aus wikimedia commons",
             "type": "image",
             "relations": {},
-            "filename" : "black300x200.png",
+            "filename" : "Laudtee_Meenikunnos3500x2333.jpg",
             "height" : 200,
             "width" : 200
         }

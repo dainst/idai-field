@@ -5,24 +5,28 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {TypeIconComponent} from './type-icon.component'
-import {BasicResourceViewComponent} from './basic-resource-view.component'
+import {BasicResourceViewComponent} from './basic-resource-view.component';
+import {DocumentViewComponent} from './document-view.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     imports: [
         BrowserModule,
         NgbModule,
         FormsModule,
-        IdaiComponents2Module
+        IdaiComponents2Module,
+        RouterModule
     ],
     declarations: [
         SearchBarComponent,
         TypeIconComponent,
-        BasicResourceViewComponent
+        BasicResourceViewComponent,
+        DocumentViewComponent
     ],
     exports : [
         SearchBarComponent,
         TypeIconComponent,
-        BasicResourceViewComponent
+        DocumentViewComponent
     ]
 })
 

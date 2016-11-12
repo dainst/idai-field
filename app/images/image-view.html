@@ -5,7 +5,8 @@
     </div>
 
     <div *ngIf="doc" class="col-md-3">
-        <image-metadata [doc]="doc"></image-metadata>
+        <document-view [(document)]="doc" [basePath]="'images'">
+        </document-view>
     </div>
 </div>
 

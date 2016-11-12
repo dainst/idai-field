@@ -41,6 +41,19 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         });
     }
 
+    // TODO remove duplicate code
+    public selectRelatedDocument(documentToJumpTo) {
+        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
+    }
+
+    public selectDocument(document: Document) {
+
+        if (document) {
+            this.router.navigate(['resources', { id: document.resource.id }]);
+        } else {
+            this.router.navigate(['resources']);
+        }
+    }
 
     private getRouteParams(callback) {
 
@@ -106,14 +119,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         }.bind(this));
     }
     
-    public selectDocument(document: Document) {
-        
-        if (document) {
-            this.router.navigate(['resources', { id: document.resource.id }]);
-        } else {
-            this.router.navigate(['resources']);
-        }
-    }
+
 
     private selectedDocIsNew() : boolean {
         return (this.overviewComponent.getSelected().resource.id == undefined);

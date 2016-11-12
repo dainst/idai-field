@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {resourceOverviewRouting} from './resource-overview/resource-overview.routing';
 import {ResourceOverviewComponent} from './resource-overview/resource-overview.component';
-import {DocumentViewComponent} from './document-view/document-view.component';
-import {GeometryViewComponent} from './document-view/geometry-view.component';
+import {GeometryViewComponent} from './geometry-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {MapWrapperComponent} from './resource-overview/map-wrapper.component';
@@ -23,7 +22,6 @@ import {WidgetsModule} from '../widgets/widgets.module'
     ],
     declarations: [
         ResourceOverviewComponent,
-        DocumentViewComponent,
         GeometryViewComponent,
         DocumentEditWrapperComponent,
         MapWrapperComponent,

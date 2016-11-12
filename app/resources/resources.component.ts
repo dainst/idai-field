@@ -1,14 +1,14 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
-import {IdaiFieldDocument} from "../../model/idai-field-document";
-import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
+import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Document, Query, Filter} from "idai-components-2/idai-components-2"
 import {Observable} from "rxjs/Observable";
 
 @Component({
 
     moduleId: module.id,
-    templateUrl: './resource-overview.html'
+    templateUrl: './resources.html'
 })
 
 /**
@@ -17,7 +17,7 @@ import {Observable} from "rxjs/Observable";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourceOverviewComponent implements OnInit {
+export class ResourcesComponent implements OnInit {
 
     public documents: Document[];
     protected selectedDocument;

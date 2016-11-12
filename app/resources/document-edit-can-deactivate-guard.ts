@@ -6,7 +6,7 @@ import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import { DocumentEditNavigationComponent } from './document-edit-navigation.component';
 
 @Injectable()
-export class CanDeactivateDocumentEditWrapperGuard implements CanDeactivate<DocumentEditNavigationComponent> {
+export class DocumentEditCanDeactivateGuard implements CanDeactivate<DocumentEditNavigationComponent> {
 
     private _resolve;
 

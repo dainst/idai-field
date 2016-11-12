@@ -17,7 +17,7 @@ import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
 import {M} from './m';
 import {AppComponent} from './app.component';
-import {OverviewModule} from './overview/overview.module';
+import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,7 @@ import CONFIG = require("config/config.json!json");
 @NgModule({
     imports: [
         ImagesModule,
-        OverviewModule,
+        ResourcesModule,
         BrowserModule,
         FormsModule,
         HttpModule,

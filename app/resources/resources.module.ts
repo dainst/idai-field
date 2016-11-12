@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {resourceOverviewRouting} from './resource-overview/resource-overview.routing';
-import {ResourceOverviewComponent} from './resource-overview/resource-overview.component';
+import {resourcesRouting} from './resources.routing';
+import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
 import {DocumentEditNavigationComponent} from './document-edit-navigation.component';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
-import {MapWrapperComponent} from './resource-overview/map-wrapper.component';
+import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MapComponent} from './map/map.component';
 import {PlusButtonComponent} from './plus-button.component';
@@ -14,14 +14,14 @@ import {WidgetsModule} from '../widgets/widgets.module'
 
 @NgModule({
     imports: [
-        resourceOverviewRouting,
+        resourcesRouting,
         BrowserModule,
         NgbModule,
         IdaiComponents2Module,
         WidgetsModule
     ],
     declarations: [
-        ResourceOverviewComponent,
+        ResourcesComponent,
         GeometryViewComponent,
         DocumentEditNavigationComponent,
         MapWrapperComponent,
@@ -33,4 +33,4 @@ import {WidgetsModule} from '../widgets/widgets.module'
     ]
 })
 
-export class OverviewModule {}
+export class ResourcesModule {}

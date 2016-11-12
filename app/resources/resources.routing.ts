@@ -1,14 +1,14 @@
 import {ModuleWithProviders}   from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ResourceOverviewComponent} from './resource-overview.component';
+import {ResourcesComponent} from './resources.component';
 import {MapWrapperComponent} from './map-wrapper.component';
-import {DocumentEditNavigationComponent} from '../document-edit-navigation.component';
-import {CanDeactivateDocumentEditWrapperGuard}  from '../can-deactivate-document-edit-wrapper-guard';
+import {DocumentEditNavigationComponent} from './document-edit-navigation.component';
+import {DocumentEditCanDeactivateGuard}  from './document-edit-can-deactivate-guard';
 
 const routes: Routes = [
     {
         path: 'resources',
-        component: ResourceOverviewComponent,
+        component: ResourcesComponent,
         children: [
             {
                 path: '',
@@ -21,15 +21,15 @@ const routes: Routes = [
             {
                 path: 'new', // ;type=typename
                 component: DocumentEditNavigationComponent,
-                canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
+                canDeactivate: [DocumentEditCanDeactivateGuard]
             },
             {
                 path: ':id/edit',
                 component: DocumentEditNavigationComponent,
-                canDeactivate: [CanDeactivateDocumentEditWrapperGuard]
+                canDeactivate: [DocumentEditCanDeactivateGuard]
             }
         ]
     }
 ];
 
-export const resourceOverviewRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const resourcesRouting: ModuleWithProviders = RouterModule.forChild(routes);

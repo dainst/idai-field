@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params} from "@angular/router";
-import {ResourceOverviewComponent} from "./resource-overview.component";
+import {ResourcesComponent} from "./resources.component";
 import {Document} from "idai-components-2/idai-components-2";
 import {PersistenceManager,ReadDatastore,
     ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
-import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
+import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 
 @Component({
     moduleId: module.id,
@@ -30,7 +30,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         private datastore: ReadDatastore,
-        private overviewComponent: ResourceOverviewComponent,
+        private overviewComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
@@ -43,10 +43,10 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
     // TODO remove duplicate code
     public selectRelatedDocument(documentToJumpTo) {
-        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
-    }
 
-    public selectDocument(document: Document) {
+        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
+
+    } public selectDocument(document: Document) {
 
         if (document) {
             this.router.navigate(['resources', { id: document.resource.id }]);

@@ -4,7 +4,7 @@ import {imagesRouting} from "./images.routing";
 import {ImagesComponent} from "./images.component";
 import {ImagesGridComponent} from "./images-grid.component";
 import {ImageViewComponent} from "./image-view.component";
-import {ImageEditComponent} from "./image-edit.component";
+import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 
@@ -19,7 +19,7 @@ import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
         ImagesComponent,
         ImagesGridComponent,
         ImageViewComponent,
-        ImageEditComponent
+        ImageEditNavigationComponent
     ]
 })
 

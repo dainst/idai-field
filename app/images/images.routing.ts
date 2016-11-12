@@ -3,7 +3,7 @@ import {Routes, RouterModule} from "@angular/router";
 import {ImagesComponent} from "./images.component";
 import {ImagesGridComponent} from "./images-grid.component";
 import {ImageViewComponent} from "./image-view.component";
-import {ImageEditComponent} from "./image-edit.component";
+import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 
 const routes: Routes = [
     {
@@ -20,7 +20,7 @@ const routes: Routes = [
             },
             {
                 path: ':id/edit',
-                component: ImageEditComponent
+                component: ImageEditNavigationComponent
             }
         ]
     }

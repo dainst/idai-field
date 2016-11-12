@@ -1,19 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ReadDatastore} from 'idai-components-2/idai-components-2';
 import {ImageBase} from './image-base';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-edit.html'
+    templateUrl: './image-edit-navigation.html'
 })
 
 /**
  * @author Daniel de Oliveira
  */
-export class ImageEditComponent extends ImageBase implements OnInit {
+export class ImageEditNavigationComponent extends ImageBase implements OnInit {
 
     constructor(
+        private router: Router,
         route: ActivatedRoute,
         datastore: ReadDatastore
     ) {
@@ -26,5 +27,9 @@ export class ImageEditComponent extends ImageBase implements OnInit {
 
     public onSaveSuccess(e) {
         console.debug("on save success",e)
+    }
+
+    public onBackButtonClicked() {
+        this.router.navigate(['images',this.doc.resource.id,'show']);
     }
 }

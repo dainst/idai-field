@@ -8,7 +8,9 @@
 
         <document-edit-wrapper
                 [(document)]="doc"
-                (saveSuccess)="onSaveSuccess($event)" #f>
+                (saveSuccess)="onSaveSuccess($event)"
+                (backButtonClicked)="onBackButtonClicked()"
+                #f>
 
         </document-edit-wrapper>
     </div>

@@ -2,12 +2,12 @@ import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {DocumentEditCanDeactivateGuard} from "./document-edit-can-deactivate-guard";
+import {ResourceEditCanDeactivateGuard} from "./resource-edit-can-deactivate-guard";
 import {ResourcesComponent} from "./resources.component";
 
 @Component({
     moduleId: module.id,
-    templateUrl: './document-edit-navigation.html'
+    templateUrl: './resource-edit-navigation.html'
 })
 
 /**
@@ -26,7 +26,7 @@ import {ResourcesComponent} from "./resources.component";
  *
  * @author Daniel de Oliveira
  */
-export class DocumentEditNavigationComponent implements  OnInit {
+export class ResourceEditNavigationComponent implements  OnInit {
 
     @ViewChild('modalTemplate')
     private modalTemplate: TemplateRef<any>;
@@ -38,7 +38,7 @@ export class DocumentEditNavigationComponent implements  OnInit {
         private router: Router,
         private messages: Messages,
         private modalService:NgbModal,
-        private canDeactivateGuard:DocumentEditCanDeactivateGuard,
+        private canDeactivateGuard:ResourceEditCanDeactivateGuard,
         private documentEditChangeMonitor:DocumentEditChangeMonitor
     ) {
     }

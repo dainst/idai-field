@@ -3,10 +3,10 @@ import { CanDeactivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot }  from '@angular/router';
 import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import { DocumentEditNavigationComponent } from './document-edit-navigation.component';
+import { ResourceEditNavigationComponent } from './resource-edit-navigation.component';
 
 @Injectable()
-export class DocumentEditCanDeactivateGuard implements CanDeactivate<DocumentEditNavigationComponent> {
+export class ResourceEditCanDeactivateGuard implements CanDeactivate<ResourceEditNavigationComponent> {
 
     private _resolve;
 
@@ -22,7 +22,7 @@ export class DocumentEditCanDeactivateGuard implements CanDeactivate<DocumentEdi
 
 
     canDeactivate(
-        component: DocumentEditNavigationComponent,
+        component: ResourceEditNavigationComponent,
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Promise<boolean> | boolean {

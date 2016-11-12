@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {resourcesRouting} from './resources.routing';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
-import {DocumentEditNavigationComponent} from './document-edit-navigation.component';
+import {ResourceEditNavigationComponent} from './resource-edit-navigation.component';
 import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +23,7 @@ import {WidgetsModule} from '../widgets/widgets.module'
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
-        DocumentEditNavigationComponent,
+        ResourceEditNavigationComponent,
         MapWrapperComponent,
         MapComponent,
         PlusButtonComponent

@@ -1,21 +1,21 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
-import {IdaiFieldResource} from "../../model/idai-field-resource";
+import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
-import {DocumentDetail} from "../../common/document-detail";
+import {DocumentDetail} from "../common/document-detail";
 
 
 @Component({
-    selector: 'document-view',
+    selector: 'image-metadata',
     moduleId: module.id,
-    templateUrl: './document-view.html'
+    templateUrl: './image-metadata.html'
 })
 
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class DocumentViewComponent extends DocumentDetail implements OnChanges {
+export class ImageMetadataComponent extends DocumentDetail implements OnChanges {
 
     @Input() document: any;
 
@@ -38,9 +38,5 @@ export class DocumentViewComponent extends DocumentDetail implements OnChanges {
 
         this.initializeFields(resource);
         this.initializeRelations(resource);
-    }
-
-    public selectDocument(documentToJumpTo) {
-        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
     }
 }

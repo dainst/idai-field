@@ -4,6 +4,8 @@ import {imagesRouting} from "./images.routing";
 import {ImagesComponent} from "./images.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
+import {ImageMetadataComponent} from "./image-metadata.component";
+import {ImageEditComponent} from "./image-edit.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 
 @NgModule({
@@ -15,7 +17,9 @@ import {WidgetsModule} from '../widgets/widgets.module';
     declarations: [
         ImagesComponent,
         ImageGridComponent,
-        ImageViewComponent
+        ImageViewComponent,
+        ImageEditComponent,
+        ImageMetadataComponent
     ]
 })
 

@@ -81,8 +81,11 @@ export class DocumentEditNavigationComponent implements  OnInit {
     }
 
     public onSaveSuccess(e) {
-        console.debug("on save success ",e)
         this.navigate(e['document'], e['proceed']);
+    }
+
+    public onBackButtonClicked() {
+        this.router.navigate(['resources', { id: this.document.resource.id }]);
     }
 
     /**

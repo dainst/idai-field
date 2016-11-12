@@ -5,7 +5,11 @@
     </div>
 
     <div *ngIf="doc" class="col-md-9">
-        Document Edit form goes here
-        <document-edit [(document)]="doc" [primary]="'identifier'"></document-edit>
+
+        <document-edit-wrapper
+                [(document)]="doc"
+                (saveSuccess)="onSaveSuccess($event)" #f>
+
+        </document-edit-wrapper>
     </div>
 </div>

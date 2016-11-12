@@ -1,8 +1,11 @@
-import {Component, OnInit, ViewChild, TemplateRef, Input, Output, EventEmitter} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {PersistenceManager, Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
-import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-components-2";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {
+    PersistenceManager,
+    Messages,
+    DocumentEditChangeMonitor,
+    ConfigLoader,
+    ProjectConfiguration
+} from "idai-components-2/idai-components-2";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {IdaiFieldDocument} from "../model/idai-field-document";
@@ -32,14 +35,12 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 export class DocumentEditWrapperComponent {
 
     @Input() document;
+    @Input() showBackButton : boolean = true;
     @Output() saveSuccess = new EventEmitter<any>();
-
-    private modalTemplate: TemplateRef<any>;
-    private modal: NgbModalRef;
+    @Output() backButtonClicked = new EventEmitter<any>();
 
     constructor(
         private messages: Messages,
-        private modalService:NgbModal,
         private persistenceManager:PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
@@ -50,23 +51,12 @@ export class DocumentEditWrapperComponent {
         });
     }
 
-    public showModal() {
-        this.modal = this.modalService.open(this.modalTemplate);
-    }
-
     private projectConfiguration: ProjectConfiguration;
 
-    private evalParams(routeParams,callbackWithType,callbackWithId) {
-        routeParams.forEach((params: Params) => {
-
-            if (params['id']) return callbackWithId(params['id']);
-            if (params['type']) return callbackWithType(params['type']);
-
-            console.error("there should be either an id or a type")
-        });
+    private onBackButtonClicked() {
+        // router.navigate(['resources', { id: document.resource.id }]);
+        this.backButtonClicked.emit();
     }
-
-
 
     /**
      * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.

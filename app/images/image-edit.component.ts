@@ -23,4 +23,8 @@ export class ImageEditComponent extends ImageBase implements OnInit {
     ngOnInit() {
         this.fetchDoc();
     }
+
+    public onSaveSuccess(e) {
+        console.debug("on save success",e)
+    }
 }

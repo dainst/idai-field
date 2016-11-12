@@ -1,7 +1,9 @@
 <document-edit-wrapper
                        [(document)]="document"
-                        (saveSuccess)="onSaveSuccess($event)" #f>
-
+                        (saveSuccess)="onSaveSuccess($event)"
+                        [showBackButton]="(mode=='edit')"
+                        (backButtonClicked)="onBackButtonClicked()"
+                       #f>
 </document-edit-wrapper>
 
 <template #modalTemplate>

@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angular/core";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
-
+import {WithConfiguration} from '../util/with-configuration';
 
 @Component({
     selector: 'fields-view',
@@ -15,23 +15,19 @@ import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class FieldsViewComponent implements OnInit, OnChanges {
+export class FieldsViewComponent extends WithConfiguration implements OnInit, OnChanges {
 
     protected fields: Array<any>;
 
-    protected projectConfiguration: ProjectConfiguration;
+
 
     @Input() doc;
 
     constructor(
         private datastore: ReadDatastore,
-        private configLoader: ConfigLoader
+        configLoader: ConfigLoader
     ) {
-        this.configLoader.configuration().subscribe((result) => {
-            if(result.error == undefined) {
-                this.projectConfiguration = result.projectConfiguration;
-            }
-        });
+        super(configLoader);
     }
 
     private init() {
@@ -61,26 +57,5 @@ export class FieldsViewComponent implements OnInit, OnChanges {
                 });
             }
         }
-    }
-
-    private getFieldLabel(type: string, fieldName: string) {
-
-        var fields = this.projectConfiguration.getFields(type);
-        return this.getLabel(fieldName, fields);
-    }
-
-    private getLabel(fieldName: string, fields: Array<any>) {
-
-        for (var i in fields) {
-            if (fields[i].name == fieldName) {
-                if (fields[i].label) {
-                    return fields[i].label;
-                } else {
-                    return fieldName;
-                }
-            }
-        }
-
-        return fieldName;
     }
 }

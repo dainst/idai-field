@@ -1,8 +1,8 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ConfigLoader, ReadDatastore, ProjectConfiguration} from "idai-components-2/idai-components-2";
-
+import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {WithConfiguration} from "../util/with-configuration";
 
 @Component({
     selector: 'document-view',
@@ -14,23 +14,17 @@ import {ConfigLoader, ReadDatastore, ProjectConfiguration} from "idai-components
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class DocumentViewComponent implements OnChanges {
+export class DocumentViewComponent extends WithConfiguration implements OnChanges {
 
     @Input() document: any;
     @Input() basePath: string;
     @Output() relationClicked = new EventEmitter();
 
-    private projectConfiguration: ProjectConfiguration;
-
     constructor(
         private router: Router,
-        private configLoader: ConfigLoader
+        configLoader: ConfigLoader
     ) {
-        this.configLoader.configuration().subscribe((result) => {
-            if (!result.error) {
-                this.projectConfiguration = result.projectConfiguration;
-            }
-        });
+        super(configLoader);
     }
 
     ngOnChanges() {

@@ -1,6 +1,7 @@
 import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angular/core";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
+import {WithConfiguration} from '../util/with-configuration';
 
 @Component({
     selector: 'relations-view',
@@ -14,24 +15,18 @@ import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class RelationsViewComponent implements OnInit, OnChanges {
+export class RelationsViewComponent extends WithConfiguration implements OnInit, OnChanges {
 
     protected relations: Array<any>;
-
-    protected projectConfiguration: ProjectConfiguration;
 
     @Input() doc;
     @Output() relationClicked = new EventEmitter();
 
     constructor(
         private datastore: ReadDatastore,
-        private configLoader: ConfigLoader
+        configLoader: ConfigLoader
     ) {
-        this.configLoader.configuration().subscribe((result) => {
-            if(result.error == undefined) {
-                this.projectConfiguration = result.projectConfiguration;
-            }
-        });
+        super(configLoader);
     }
 
     private init() {
@@ -82,24 +77,5 @@ export class RelationsViewComponent implements OnInit, OnChanges {
         }
     }
 
-    private getRelationLabel(relationName: string) {
 
-        var relationFields = this.projectConfiguration.getRelationFields();
-        return this.getLabel(relationName, relationFields);
-    }
-
-    private getLabel(fieldName: string, fields: Array<any>) {
-
-        for (var i in fields) {
-            if (fields[i].name == fieldName) {
-                if (fields[i].label) {
-                    return fields[i].label;
-                } else {
-                    return fieldName;
-                }
-            }
-        }
-
-        return fieldName;
-    }
 }

@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-components-2";
+import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {WithConfiguration} from "../util/with-configuration";
 
 @Component({
     selector: 'plus-button',
@@ -12,18 +13,15 @@ import {ConfigLoader, ProjectConfiguration} from "idai-components-2/idai-compone
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class PlusButtonComponent {
+export class PlusButtonComponent extends WithConfiguration {
 
-    private projectConfiguration: ProjectConfiguration;
     private type: string;
 
     constructor(
         private router: Router,
-        private configLoader: ConfigLoader)
+        configLoader: ConfigLoader)
     {
-        this.configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
-        });
+        super(configLoader);
     }
 
     public startDocumentCreation(geometryType: string) {

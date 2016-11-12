@@ -9,6 +9,8 @@ import {
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {WithConfiguration} from '../util/with-configuration';
+
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -32,7 +34,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
  *
  * @author Daniel de Oliveira
  */
-export class DocumentEditWrapperComponent {
+export class DocumentEditWrapperComponent extends WithConfiguration {
 
     @Input() document;
     @Input() showBackButton : boolean = true;
@@ -44,14 +46,10 @@ export class DocumentEditWrapperComponent {
         private persistenceManager:PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
-        private configLoader: ConfigLoader
+        configLoader: ConfigLoader
     ) {
-        this.configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
-        });
+        super(configLoader);
     }
-
-    private projectConfiguration: ProjectConfiguration;
 
     private onBackButtonClicked() {
         // router.navigate(['resources', { id: document.resource.id }]);

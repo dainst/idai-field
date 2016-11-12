@@ -1,7 +1,6 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
 
 
 @Component({

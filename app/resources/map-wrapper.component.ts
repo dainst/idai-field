@@ -1,10 +1,9 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ResourcesComponent} from "./resources.component";
-import {Document} from "idai-components-2/idai-components-2";
-import {PersistenceManager,ReadDatastore,
-    ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
+import {Document, PersistenceManager, ReadDatastore, ConfigLoader} from "idai-components-2/idai-components-2";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
+import {WithConfiguration} from "../util/with-configuration";
 
 @Component({
     moduleId: module.id,
@@ -16,13 +15,12 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class MapWrapperComponent implements OnInit, OnDestroy {
+export class MapWrapperComponent extends WithConfiguration implements OnInit, OnDestroy {
 
     private activeDoc;
     private activeType;
     private activeTypeLabel;
     private docs;
-    private projectConfiguration: ProjectConfiguration;
     private menuMode: string; // view | geometryEdit
     private editMode: string; // polygon | point | none
 
@@ -34,11 +32,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
-        this.configLoader.configuration().subscribe((result) => {
-            if (!result.error) {
-                this.projectConfiguration = result.projectConfiguration;
-            }
-        });
+        super(configLoader);
     }
 
     // TODO remove duplicate code

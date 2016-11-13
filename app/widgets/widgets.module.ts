@@ -31,7 +31,9 @@ import {RouterModule} from '@angular/router';
         SearchBarComponent,
         TypeIconComponent,
         DocumentViewComponent,
-        DocumentEditWrapperComponent
+        DocumentEditWrapperComponent,
+        FieldsViewComponent,
+        RelationsViewComponent
     ]
 })
 

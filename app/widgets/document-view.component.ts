@@ -18,7 +18,6 @@ export class DocumentViewComponent extends WithConfiguration implements OnChange
 
     @Input() document: any;
     @Input() basePath: string;
-    @Output() relationClicked = new EventEmitter();
 
     constructor(
         private router: Router,
@@ -30,9 +29,5 @@ export class DocumentViewComponent extends WithConfiguration implements OnChange
     ngOnChanges() {
         if (!this.document) return;
         var resource:IdaiFieldResource = this.document.resource;
-    }
-
-    public onRelationClicked(docToJumpTo) {
-        this.relationClicked.emit(docToJumpTo);
     }
 }

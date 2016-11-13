@@ -23,7 +23,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     private documents;
     protected defaultFilters: Array<Filter>;
 
-    private nrOfColumns = 5;
+    private nrOfColumns = 4;
     private rows=[];
 
     constructor(

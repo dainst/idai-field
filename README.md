@@ -8,7 +8,7 @@ You need the following components in order for the local server to work:
 
 * [NodeJS](https://nodejs.org/download/) > 7.0.0
 * Node Package Manager (NPM) 
-* Under OS X you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows packages.
+* Under OS X you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
 
 ## Quickstart
 

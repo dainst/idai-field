@@ -67,7 +67,7 @@ For starting end to end testing, you need two terminals (marked as `1$` and `2$`
 1$ npm run server
 ```
 
-This starts a webserver which serves the ./ directory on port 8081
+This starts a webserver which serves the `./` directory on port `8081`
 which is from where it is loaded into the browser against which the tests are run.
 As the *start* command, it automatically converts scss files to css when they are changed.
 

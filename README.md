@@ -29,9 +29,8 @@ care that changes made to scss files result in automatic conversion to css.
 
 ## Configuration
 
-Prior to starting or e2e testing the app, it is necessary that config files are provided.
-`npm run build` does this automatically for you. Detailed information on how the app can be 
-configurated can be found [here](config).
+Prior to starting or e2e testing the app, it is necessary that config files are provided 
+(`npm run build` does this automatically for you when the repo is cloned freshly, but detailed information on how the app can be configurated can be obtained from [here](config)).
 
 ## Unit - Testing
 

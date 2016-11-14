@@ -53,7 +53,7 @@ import CONFIG = require("config/config.json!json");
             useFactory: function(): Mediastore {
                 // running under node
                 if (typeof process === 'object') {
-                    return new FileSystemMediastore();
+                    return new FileSystemMediastore(CONFIG['mediastorepath']);
                 // running in browser
                 } else {
                     return new FakeMediastore();

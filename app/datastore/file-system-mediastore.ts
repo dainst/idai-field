@@ -2,16 +2,13 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from './mediastore';
 
 import * as fs from '@node/fs';
-import CONFIG = require("config/config.json!json");
 
 export class FileSystemMediastore implements Mediastore {
 
     private basePath: string = 'mediastore/';
 
-    constructor () {
-        if (CONFIG['mediastorepath']) {
-            this.basePath = CONFIG['mediastorepath'];
-        }
+    constructor (basePath) {
+        if (basePath) this.basePath = basePath;
     }
 
     /**

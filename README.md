@@ -98,7 +98,7 @@ the iDAI.field 2 Client application on a developer machine is as follows
 2$ npm run server
 1$ npm run e2e
 1$ npm run make-dist 
-1$ npm run package # builds packages for MacOs and Windows 32/64 bit
+1$ npm run package
 ```
 
 After building you find packages of the application for different operating systems

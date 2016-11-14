@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
                 private configLoader: ConfigLoader,
-                private configValidator: ConfigurationValidator,
                 private router: Router,
                 private messages: Messages) {
 
@@ -51,17 +50,12 @@ export class AppComponent implements OnInit {
         this.configLoader.configuration().subscribe(result => {
             if (result.error) {
                 this.messages.add(result.error.msgkey, [result.error.msgparams]);
-            }
-        });
-        this.configValidator.validation().subscribe(result => {
-            if (result.errors.length > 0) {
-                result.errors.forEach(error => {
+            } else {
+                new ConfigurationValidator().validate(result.projectConfiguration).errors.forEach(error => {
                     this.messages.add(error);
                 });
-            } else {
-                console.log("Configuration is valid")
             }
-        })
+        });
     }
 
 

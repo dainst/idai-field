@@ -26,7 +26,6 @@ import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
 import {ImagesModule} from './images/images.module'
 import {NavbarComponent} from './navbar.component'
-import {ConfigurationValidator} from "./configuration-validator";
 
 import CONFIG = require("config/config.json!json");
 
@@ -69,7 +68,6 @@ import CONFIG = require("config/config.json!json");
         Messages,
         { provide: 'app.config', useValue: CONFIG },
         ConfigLoader,
-        ConfigurationValidator,
         PersistenceManager,
         DocumentEditChangeMonitor,
         Validator,

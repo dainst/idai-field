@@ -4,6 +4,7 @@ import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
 import {Messages} from "idai-components-2/idai-components-2";
 import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {ConfigurationValidator} from "./configuration-validator";
 
 @Component({
     moduleId: module.id,
@@ -18,11 +19,11 @@ import {ConfigLoader} from "idai-components-2/idai-components-2";
 export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
-    public static RELATIONS_CONFIGURATION_PATH = 'config/Relations.json';
 
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
                 private configLoader: ConfigLoader,
+                private configValidator: ConfigurationValidator,
                 private router: Router,
                 private messages: Messages) {
 
@@ -41,19 +42,28 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
 
-        this.setConfigs();
-
+        this.setConfig();
         if (this.config.environment == 'test') this.loadSampleData();
     }
 
-    private setConfigs() {
+    private setConfig() {
         this.configLoader.setConfigurationPath(AppComponent.PROJECT_CONFIGURATION_PATH);
         this.configLoader.configuration().subscribe(result => {
             if (result.error) {
                 this.messages.add(result.error.msgkey, [result.error.msgparams]);
             }
         });
+        this.configValidator.validation().subscribe(result => {
+            if (result.errors.length > 0) {
+                result.errors.forEach(error => {
+                    this.messages.add(error);
+                });
+            } else {
+                console.log("Configuration is valid")
+            }
+        })
     }
+
 
     loadSampleData(): void {
 

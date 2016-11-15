@@ -3,13 +3,13 @@ import {
     PersistenceManager,
     DocumentEditChangeMonitor,
     ConfigLoader,
-    ProjectConfiguration
+    ProjectConfiguration,
+    WithConfiguration
 } from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {WithConfiguration} from '../util/with-configuration';
 
 
 @Component({

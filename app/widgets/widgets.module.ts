@@ -5,8 +5,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {TypeIconComponent} from './type-icon.component'
-import {RelationsViewComponent} from './relations-view.component';
-import {FieldsViewComponent} from './fields-view.component';
 import {DocumentViewComponent} from './document-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {RouterModule} from '@angular/router';
@@ -22,8 +20,6 @@ import {RouterModule} from '@angular/router';
     declarations: [
         SearchBarComponent,
         TypeIconComponent,
-        RelationsViewComponent,
-        FieldsViewComponent,
         DocumentViewComponent,
         DocumentEditWrapperComponent
     ],
@@ -31,9 +27,7 @@ import {RouterModule} from '@angular/router';
         SearchBarComponent,
         TypeIconComponent,
         DocumentViewComponent,
-        DocumentEditWrapperComponent,
-        FieldsViewComponent,
-        RelationsViewComponent
+        DocumentEditWrapperComponent
     ]
 })
 

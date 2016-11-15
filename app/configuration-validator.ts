@@ -1,15 +1,16 @@
 import {M} from "./m";
-import {ProjectConfiguration} from "../node_modules/idai-components-2/idai-components-2";
+import {ProjectConfiguration, FieldDefinition} from "idai-components-2/idai-components-2";
+
 
 interface ConfigurationValidationResult {
     errors : string[]
 }
 
 export class ConfigurationValidator {
-    private errors : string[]
+    private errors : string[];
     private projectConfig : ProjectConfiguration;
 
-    constructor(private mandatoryFields) { }
+    constructor(private mandatoryFields:Array<FieldDefinition>) { }
 
     private validateMandatoryFields () {
         var typesList = this.projectConfig.getTypesList();
@@ -17,17 +18,19 @@ export class ConfigurationValidator {
         this.mandatoryFields.forEach(mandatoryField => {
             typesList.forEach(type => {
                 var mandatoryFieldFoundAt = -1;
-                type.getFields().forEach(function (field, index) {
-                    if(field.name == mandatoryField.name) {
+                type.getFields().forEach(function (fieldDefinition, index) {
+                    var fieldDef = <FieldDefinition> fieldDefinition;
+
+                    if(fieldDef.name == mandatoryField.name) {
                         // if necessary, move mandatory field to right index
-                        if ((mandatoryFieldFoundAt = index) != mandatoryField.index)
-                            type.fields.splice(mandatoryField.index, 0, type.fields.splice(mandatoryFieldFoundAt, 1)[0]);
+                        if ((mandatoryFieldFoundAt = index) != mandatoryField['index'])
+                            type.fields.splice(mandatoryField['index'], 0, type.fields.splice(mandatoryFieldFoundAt, 1)[0]);
                         return;
                     }
                 });
                 // if mandatory field was not found add it
                 if (mandatoryFieldFoundAt == -1) {
-                    type.fields.splice(mandatoryField.index, 0, mandatoryField);
+                    type.fields.splice(mandatoryField['index'], 0, mandatoryField);
                 }
             })
         })

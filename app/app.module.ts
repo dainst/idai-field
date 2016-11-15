@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
-import {IdaiComponents2Module, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
+import {IdaiDocumentsModule, IdaiMessagesModule, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
     DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
@@ -37,7 +37,8 @@ import CONFIG = require("config/config.json!json");
         FormsModule,
         HttpModule,
         NgbModule,
-        IdaiComponents2Module,
+        IdaiDocumentsModule,
+        IdaiMessagesModule,
         routing
     ],
     declarations: [

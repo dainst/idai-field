@@ -4,20 +4,20 @@ import {resourcesRouting} from './resources.routing';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
 import {ResourceEditNavigationComponent} from './resource-edit-navigation.component';
-import {IdaiComponents2Module} from 'idai-components-2/idai-components-2';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MapComponent} from './map/map.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {MapState} from './map/map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
+import {IdaiDocumentsModule} from 'idai-components-2/idai-components-2';
 
 @NgModule({
     imports: [
         resourcesRouting,
         BrowserModule,
         NgbModule,
-        IdaiComponents2Module,
+        IdaiDocumentsModule,
         WidgetsModule
     ],
     declarations: [

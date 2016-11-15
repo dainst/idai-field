@@ -30,8 +30,9 @@
                 <div *ngIf="column['document'].resource.identifier || column['document'].resource.shortDescription">
 
                     <div class="identifier"
-                         [style.left.px]="column['positionWithinRow']+3"
-                         [style.top.px]="column['positionWithinColumn']+3">
+                         [style.maxWidth.px]="column['calculatedWidth']"
+                         [style.left.px]="column['positionWithinRow']"
+                         [style.top.px]="column['positionWithinColumn']">
                         {{column['document'].resource.identifier}}
                     </div>
 

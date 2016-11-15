@@ -1,4 +1,4 @@
-import {Resource} from "idai-components-2/idai-components-2";
+import {Resource} from "idai-components-2/core";
 import {IdaiFieldGeometry} from "./idai-field-geometry";
 
 export interface IdaiFieldResource extends Resource {

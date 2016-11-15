@@ -2,28 +2,40 @@
 .image-grid {
   position: relative;
 
-  .identifier {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.8);
-    font-size: 12px;
-    z-index: 1000;
-    padding: 5px;
-    overflow: hidden;
+  .cell {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    .identifier {
+      @extend .tag, .tag-default;
+      position: absolute;
+      top: 7px;
+      left: 7px;
+    }
+
+    img {
+      border: 3px solid white;
+    }
+
+    .title {
+      position: absolute;
+      background-color: white;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+      padding: 2px 5px;
+    }
+
+    &:hover {
+      box-shadow: 1px 10px 30px 0px rgba(0,0,0,0.3);
+      z-index: 100;
+
+      .title {
+        white-space: normal;
+      }
+    }
   }
-
-  .title {
-    position: absolute;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:inline-block;
-    white-space:nowrap;
-    font-size: 16px;
-  }
-}
-
-.cell {
-
-  position:absolute;
-  top:0px;
 }
 

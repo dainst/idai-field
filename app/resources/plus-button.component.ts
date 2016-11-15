@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {WithConfiguration} from "../util/with-configuration";
+import {ConfigLoader, WithConfiguration} from "idai-components-2/documents";
 
 @Component({
     selector: 'plus-button',

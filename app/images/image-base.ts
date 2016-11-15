@@ -1,5 +1,5 @@
 import {ActivatedRoute, Params} from "@angular/router";
-import {ReadDatastore} from "idai-components-2/idai-components-2";
+import {ReadDatastore} from "idai-components-2/datastore";
 
 /**
  * @author Daniel de Oliveira

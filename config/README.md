@@ -5,7 +5,6 @@ For starting the app or running the e2e tests, it is expected that the files
 ```
 idai-field-client/config/config.json
 idai-field-client/config/Configuration.json
-idai-field-client/config/Relations.json
 ```
 
 exist. These files are provided as template files. These get automatically created
@@ -55,3 +54,16 @@ Example:
 If ommitted, syncing is disabled.
 
 ## Configuration.json
+
+In addition to the general rules for 
+[Configuration.json](https://github.com/dainst/idai-components-2/blob/master/docs/configuration.md),
+there are a few additional ones, regarding the iDAI.field 2 configuration.
+
+In iDAI.field 2, the fields `identifier` and `shortDescription`
+automatically get added to every defined type, if not defined
+explicitely.
+
+Furthermore, the `image` type has to be defined. Otherwise the
+application won't start.
+
+

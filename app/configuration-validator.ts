@@ -1,57 +1,54 @@
-import {Injectable} from "@angular/core";
 import {M} from "./m";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
-import {ProjectConfiguration} from "../node_modules/idai-components-2/idai-components-2";
-import {Observable} from "rxjs/Observable";
+import {ProjectConfiguration, FieldDefinition} from "idai-components-2/documents";
 
 
-@Injectable()
+interface ConfigurationValidationResult {
+    errors : string[]
+}
+
 export class ConfigurationValidator {
+    private errors : string[];
+    private projectConfig : ProjectConfiguration;
 
-    private observers = [];
+    constructor(private mandatoryFields:Array<FieldDefinition>) { }
 
-    private projectConfig: ProjectConfiguration = undefined;
-
-    private errors = [];
-
-    private valid = undefined;
-
-    constructor(private configLoader: ConfigLoader) { }
-
-    public validation() : Observable<any> {
-        if (this.valid == undefined) {
-            this.configLoader.configuration().subscribe(result => {
-                if (!result.error) {
-                    this.validate(result.projectConfiguration)
-                }
-            });
-        }
+    private validateMandatoryFields () {
+        var typesList = this.projectConfig.getTypesList();
         
-        return Observable.create( observer => {
-            this.observers.push(observer);
-            this.notify();
-        });
-    }
+        this.mandatoryFields.forEach(mandatoryField => {
+            typesList.forEach(type => {
+                var mandatoryFieldFoundAt = -1;
+                type.getFieldDefinitions().forEach(function (fieldDef, index) {
 
-    private notify() {
-        if (!this.projectConfig && this.errors.length == 0) return;
-        this.observers.forEach(observer => {
-            observer.next({
-                isValid: this.valid,
-                errors: this.errors
-            });
-        });
+                    if(fieldDef.name == mandatoryField.name) {
+                        // if necessary, move mandatory field to right index
+                        if ((mandatoryFieldFoundAt = index) != mandatoryField['index'])
+                            type.fields.splice(mandatoryField['index'], 0, type.fields.splice(mandatoryFieldFoundAt, 1)[0]);
+                        return;
+                    }
+                });
+                // if mandatory field was not found add it
+                if (mandatoryFieldFoundAt == -1) {
+                    type.fields.splice(mandatoryField['index'], 0, mandatoryField);
+                }
+            })
+        })
     }
     
-    private validate(projectConfiguration: ProjectConfiguration) {
+    public validate(
+        projectConfiguration: ProjectConfiguration):
+            ConfigurationValidationResult {
+
         this.projectConfig = projectConfiguration;
-        
-        if(!this.projectConfig.getTypesMap()["image"]) {
+        this.errors = [];
+
+        if(!this.projectConfig.getTypesMap()["image"])
             this.errors.push(M.CONFIG_VALIDATION_IMAGE_MISSING);
+
+        this.validateMandatoryFields();
+        
+        return {
+            errors:  this.errors
         }
-
-        if (this.errors.length > 0) {this.valid = false;} else {this.valid = true;}
-
-        this.notify();
     }
 }

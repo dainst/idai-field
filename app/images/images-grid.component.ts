@@ -2,7 +2,7 @@ import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Query,Filter} from "idai-components-2/idai-components-2";
+import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -88,7 +88,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         this.datastore.find(query).then(documents => {
             this.documents = documents;
             console.log("Fetched documents",this.documents);
-            var rowWidth = Math.ceil((window.innerWidth - 100) );
+            var rowWidth = Math.ceil((window.innerWidth - 60) );
             this.calcGrid(rowWidth)
             
         }).catch(err => console.error(err));
@@ -113,73 +113,53 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     }
 
     public onResize(event) {
-        var rowWidth = Math.ceil((event.target.innerWidth-100) );
+        var rowWidth = Math.ceil((event.target.innerWidth - 60) );
         this.calcGrid(rowWidth)
     }
     
     public calcGrid(rowWidth) {
-        this.rows=[]
 
+        this.rows = [];
         var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
 
-
-        var documentsIndex = 0;
-        var positionWithinColumn = 0;
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
 
+            var naturalRowWidth = 0;
+            this.rows[rowIndex] = [];
 
-            var scaledRowWidth = 0;
-
-            this.rows[rowIndex]=[];
+            // generate a row of images scaled to height 1 and sum up widths
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
-                this.rows[rowIndex][columnIndex] = {};
-
-                var resource = this.documents[documentsIndex]['resource'];
-                var scalingYFactor = 1000 / parseFloat(resource['height']);
-
-                this.rows[rowIndex][columnIndex]['scaledWidth'] = parseFloat(resource['width']) * scalingYFactor;
-                scaledRowWidth += this.rows[rowIndex][columnIndex]['scaledWidth'];
-                // scaledRowWidth = scalingYFactor * resource['height'];
-
-                documentsIndex++;
+                var resource = this.documents[rowIndex * this.nrOfColumns + columnIndex].resource;
+                naturalRowWidth += resource.width / parseFloat(resource.height);
             }
 
-            var rowWidthRatio = scaledRowWidth / rowWidth;
-            var calculatedHeight = 1000 / rowWidthRatio;
+            var calculatedHeight = rowWidth / naturalRowWidth;
 
-            documentsIndex -= this.nrOfColumns;
-
-
-            var positionWithinRow = 0;
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
-                var column = this.rows[rowIndex][columnIndex];
+                var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
+                var cell = {};
 
-                column['document'] = this.documents[documentsIndex];
-                column['calculatedWidth'] = column['scaledWidth'] / rowWidthRatio;
-                column['calculatedHeight'] = calculatedHeight;
+                cell['document'] = document;
+                cell['calculatedWidth'] = document.resource.width * calculatedHeight / document.resource.height;
+                cell['calculatedHeight'] = calculatedHeight;
 
-                column['positionWithinRow'] = positionWithinRow;
-                column['positionWithinColumn'] = positionWithinColumn;
-
-                var callback = (column) => {
-                    return (url) => column['imgSrc'] = url;
+                var callback = (cell) => {
+                    return (url) => cell['imgSrc'] = url;
                 };
-                this.urlForImage(column.document.resource.filename).then(callback(column));
+                this.urlForImage(document.resource.filename).then(callback(cell));
 
-                positionWithinRow += column['calculatedWidth'] + 10;
-                documentsIndex++;
+                this.rows[rowIndex][columnIndex] = cell;
             }
 
-            positionWithinColumn += calculatedHeight + 30;
         }
+
     }
 
     private urlForImage(filename): Promise<string> {
         return new Promise((resolve, reject) => {
             this.mediastore.read(filename).then(data => {
                 var url = URL.createObjectURL(new Blob([data]));
-                console.log(url);
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
             });
         });

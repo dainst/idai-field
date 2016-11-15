@@ -2,7 +2,8 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Document, Query, Filter} from "idai-components-2/idai-components-2"
+import {Query, Filter} from "idai-components-2/datastore"
+import {Document} from "idai-components-2/core"
 import {Observable} from "rxjs/Observable";
 
 @Component({

@@ -1,7 +1,7 @@
 import {Injectable, Inject} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Indexeddb} from "../datastore/indexeddb"
-import {Datastore} from "idai-components-2/idai-components-2";
+import {Datastore} from "idai-components-2/datastore";
 
 /**
  * @author Daniel de Oliveira

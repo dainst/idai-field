@@ -1,15 +1,15 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {
     PersistenceManager,
-    Messages,
     DocumentEditChangeMonitor,
     ConfigLoader,
-    ProjectConfiguration
-} from "idai-components-2/idai-components-2";
+    ProjectConfiguration,
+    WithConfiguration
+} from "idai-components-2/documents";
+import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {WithConfiguration} from '../util/with-configuration';
 
 
 @Component({

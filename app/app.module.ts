@@ -3,8 +3,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
-import {IdaiComponents2Module, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
-    DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
+import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
+import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
+import {IdaiDocumentsModule, ConfigLoader,
+    PersistenceManager, DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
@@ -26,7 +28,6 @@ import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
 import {ImagesModule} from './images/images.module'
 import {NavbarComponent} from './navbar.component'
-import {ConfigurationValidator} from "./configuration-validator";
 
 import CONFIG = require("config/config.json!json");
 
@@ -38,7 +39,8 @@ import CONFIG = require("config/config.json!json");
         FormsModule,
         HttpModule,
         NgbModule,
-        IdaiComponents2Module,
+        IdaiDocumentsModule,
+        IdaiMessagesModule,
         routing
     ],
     declarations: [
@@ -69,7 +71,6 @@ import CONFIG = require("config/config.json!json");
         Messages,
         { provide: 'app.config', useValue: CONFIG },
         ConfigLoader,
-        ConfigurationValidator,
         PersistenceManager,
         DocumentEditChangeMonitor,
         Validator,

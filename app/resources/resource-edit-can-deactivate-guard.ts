@@ -2,7 +2,7 @@ import { Injectable }           from '@angular/core';
 import { CanDeactivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot }  from '@angular/router';
-import {DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import { ResourceEditNavigationComponent } from './resource-edit-navigation.component';
 
 @Injectable()

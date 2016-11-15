@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {IdaiFieldBackend} from "./idai-field-backend";
 import {Inject} from '@angular/core';
-import {Datastore} from 'idai-components-2/idai-components-2';
+import {Datastore} from 'idai-components-2/datastore';
 import {SyncMediator} from './sync-mediator';
-import {ProjectConfiguration, ConfigLoader} from "idai-components-2/idai-components-2";
+import {ProjectConfiguration, ConfigLoader} from "idai-components-2/documents";
 
 /**
  * @author Thomas Kleinke

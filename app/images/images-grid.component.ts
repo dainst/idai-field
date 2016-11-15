@@ -127,7 +127,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public calcGrid(rowWidth) {
 
         this.rows = [];
-        var nrOfRows = Math.floor(this.documents.length / this.nrOfColumns);
+        var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
 
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
 
@@ -136,8 +136,12 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
             // generate a row of images scaled to height 1 and sum up widths
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
-                var resource = this.documents[rowIndex * this.nrOfColumns + columnIndex].resource;
-                naturalRowWidth += resource.width / parseFloat(resource.height);
+                var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
+                if (!document) {
+                    naturalRowWidth += naturalRowWidth * (this.nrOfColumns - columnIndex) / columnIndex;
+                    break;
+                }
+                naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
             }
 
             var calculatedHeight = rowWidth / naturalRowWidth;
@@ -145,6 +149,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
                 var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
+                if (!document) break;
+
                 var cell = {};
 
                 cell['document'] = document;
@@ -160,6 +166,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             }
 
         }
+
+        console.log(this.rows);
 
     }
 

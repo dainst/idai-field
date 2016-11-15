@@ -16,7 +16,7 @@
                      class="droparea-container"
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
-                    
+
                     <div class="droparea">
                         <input class="file"
                                type="file"
@@ -38,8 +38,8 @@
                      class="cell" >
 
                     <div class="identifier"
-                         *ngIf="column['calculatedWidth'] > 25"
-                         [style.maxWidth.px]="column['calculatedWidth']-15">
+                         *ngIf="cell['calculatedWidth'] > 25"
+                         [style.maxWidth.px]="cell['calculatedWidth']-15">
                         {{cell['document'].resource.identifier}}
                     </div>
 

@@ -26,10 +26,11 @@
                  [id]="'resource-' + column['document'].resource.identifier"
                  class="cell"
                  [style.width.px]="column['calculatedWidth']"
-                 [style.height.px]="column['calculatedHeight'] + 30"
-            >
+                 [style.height.px]="column['calculatedHeight'] + 30">
 
-                <div class="identifier">
+                <div class="identifier"
+                     *ngIf="column['calculatedWidth'] > 25"
+                     [style.maxWidth.px]="column['calculatedWidth']-15">
                     {{column['document'].resource.identifier}}
                 </div>
 

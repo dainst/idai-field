@@ -5,13 +5,6 @@
       "label" : "Jedi",
       "fields": [
         {
-          "name" : "identifier",
-          "description" : "use this to uniquely identify your object"
-        },
-        {
-          "name" : "shortDescription"
-        },
-        {
           "name": "lightsaber_color",
           "label" : "Lichtschwertfarbe",
           "valuelist": [
@@ -28,12 +21,6 @@
       "label": "Dude",
       "fields": [
         {
-          "name" : "identifier"
-        },
-        {
-          "name" : "shortDescription"
-        },
-        {
           "name": "Chronology"
         },
         {
@@ -42,19 +29,13 @@
       ]
     },
     {
-        "type" : "celestial_body",
-        "fields": [
-                {
-                  "name" : "identifier"
-                },
-                {
-                  "name" : "shortDescription"
-                },
-                {
-                  "name" : "clima",
-                  "label" : "Klima"
-                }
-        ]
+      "type" : "celestial_body",
+      "fields": [
+        {
+          "name" : "clima",
+          "label" : "Klima"
+        }
+      ]
 
     },
     {
@@ -73,11 +54,11 @@
           "name" : "class",
           "label" : "Klasse",
           "valuelist": [
-              "Waldmond",
-              "Standard",
-              "Künstlich"
-            ],
-            "inputType": "checkboxes"
+            "Waldmond",
+            "Standard",
+            "Künstlich"
+          ],
+          "inputType": "checkboxes"
         }
       ]
     },
@@ -86,12 +67,6 @@
       "type": "vessel",
       "label" : "Schiff",
       "fields": [
-        {
-          "name" : "identifier"
-        },
-        {
-          "name" : "shortDescription"
-        }
       ]
     },
 
@@ -99,64 +74,58 @@
       "type": "image",
       "label" : "Bild",
       "fields": [
-        {
-          "name" : "identifier"
-        },
-        {
-          "name" : "shortDescription"
-        }
       ]
     }
   ],
   "relations" :
-    [
-      {
-        "name": "fatherOf",
-        "inverse": "sonOf",
-        "label": "Vater von",
-        "domain": ["jedi", "dude"],
-        "range": ["jedi", "dude"]
-      },
-      {
-        "name": "sonOf",
-        "inverse": "fatherOf",
-        "label": "Sohn von",
-        "domain": ["jedi", "dude"],
-        "range": ["jedi", "dude"]
-      },
-      {
-        "name": "friendOf",
-        "inverse": "friendOf",
-        "label": "Freund von",
-        "domain": ["jedi", "dude"],
-        "range": ["jedi", "dude"]
-      },
-      {
-        "name": "enemyOf",
-        "inverse": "enemyOf",
-        "label": "Feind von",
-        "domain": ["jedi", "dude"],
-        "range": ["jedi", "dude"]
-      },
-      {
-        "name": "belongsTo",
-        "inverse": "owns",
-        "label": "Gehört",
-        "domain": ["vessel"],
-        "range": ["jedi", "dude"]
-      },
-      {
-        "name": "owns",
-        "inverse": "belongsTo",
-        "label": "Besitzer von",
-        "domain": ["jedi","dude"],
-        "range": ["vessel"]
-      },
-      {
-        "name": "origin",
-        "label": "Herkunft",
-        "domain": ["jedi","dude"],
-        "range": ["celestial_body"]
-      }
-    ]
+  [
+    {
+      "name": "fatherOf",
+      "inverse": "sonOf",
+      "label": "Vater von",
+      "domain": ["jedi", "dude"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "sonOf",
+      "inverse": "fatherOf",
+      "label": "Sohn von",
+      "domain": ["jedi", "dude"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "friendOf",
+      "inverse": "friendOf",
+      "label": "Freund von",
+      "domain": ["jedi", "dude"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "enemyOf",
+      "inverse": "enemyOf",
+      "label": "Feind von",
+      "domain": ["jedi", "dude"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "belongsTo",
+      "inverse": "owns",
+      "label": "Gehört",
+      "domain": ["vessel"],
+      "range": ["jedi", "dude"]
+    },
+    {
+      "name": "owns",
+      "inverse": "belongsTo",
+      "label": "Besitzer von",
+      "domain": ["jedi","dude"],
+      "range": ["vessel"]
+    },
+    {
+      "name": "origin",
+      "label": "Herkunft",
+      "domain": ["jedi","dude"],
+      "range": ["celestial_body"]
+    }
+  ]
 }

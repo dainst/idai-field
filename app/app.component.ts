@@ -20,6 +20,17 @@ export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
 
+    private mandatoryFields = [{
+        name : "identifier",
+        description : "use this to uniquely identify your object",
+        label : "Identifier",
+        index: 0
+    },{
+        name : "shortDescription",
+        label : "Kurzbeschreibung",
+        index: 1
+    }];
+
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
                 private configLoader: ConfigLoader,
@@ -51,7 +62,9 @@ export class AppComponent implements OnInit {
             if (result.error) {
                 this.messages.add(result.error.msgkey, [result.error.msgparams]);
             } else {
-                new ConfigurationValidator().validate(result.projectConfiguration).errors.forEach(error => {
+                new ConfigurationValidator(this.mandatoryFields)
+                    .validate(result.projectConfiguration)
+                    .errors.forEach(error => {
                     this.messages.add(error);
                 });
             }

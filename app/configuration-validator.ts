@@ -9,15 +9,7 @@ export class ConfigurationValidator {
     private errors : string[]
     private projectConfig : ProjectConfiguration;
 
-    private mandatoryFields = [{
-        name : "identifier",
-        inputType : "text",
-        index: 0
-    },{
-        name : "shortDescription",
-        inputType : "text",
-        index: 1
-    }];
+    constructor(private mandatoryFields) { }
 
     private validateMandatoryFields () {
         var typesList = this.projectConfig.getTypesList();
@@ -36,15 +28,16 @@ export class ConfigurationValidator {
                 // if mandatory field was not found add it
                 if (mandatoryFieldFoundAt == -1) {
                     type.fields.splice(mandatoryField.index, 0, mandatoryField);
-                    this.errors.push("Configuration: Type " + type.name + " has no " + mandatoryField.name + ". It was added.");
                 }
             })
         })
     }
     
-    public validate(projectConfiguration: ProjectConfiguration) : ConfigurationValidationResult {
+    public validate(
+        projectConfiguration: ProjectConfiguration):
+            ConfigurationValidationResult {
 
-        this.projectConfig = projectConfiguration
+        this.projectConfig = projectConfiguration;
         this.errors = [];
 
         if(!this.projectConfig.getTypesMap()["image"])

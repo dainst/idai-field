@@ -5,7 +5,6 @@ For starting the app or running the e2e tests, it is expected that the files
 ```
 idai-field-client/config/config.json
 idai-field-client/config/Configuration.json
-idai-field-client/config/Relations.json
 ```
 
 exist. These files are provided as template files. These get automatically created

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Messages} from "idai-components-2/idai-components-2";
+import {Messages} from "idai-components-2/messages";
 import {Importer} from "./importer";
 import {Reader} from "./reader";
 import {FileSystemReader} from "./file-system-reader";

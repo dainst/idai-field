@@ -1,7 +1,7 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {ConfigLoader} from "idai-components-2/documents";
 import {WithConfiguration} from "../util/with-configuration";
 
 @Component({

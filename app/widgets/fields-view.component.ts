@@ -1,6 +1,7 @@
 import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angular/core";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
+import {ReadDatastore} from "idai-components-2/datastore";
+import {ProjectConfiguration, ConfigLoader} from "idai-components-2/documents";
 import {WithConfiguration} from '../util/with-configuration';
 
 @Component({

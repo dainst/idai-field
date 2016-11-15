@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Messages, DocumentEditChangeMonitor} from "idai-components-2/idai-components-2";
+import {DocumentEditChangeMonitor} from "idai-components-2/documents";
+import {Messages} from "idai-components-2/messages";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ResourceEditCanDeactivateGuard} from "./resource-edit-can-deactivate-guard";
 import {ResourcesComponent} from "./resources.component";

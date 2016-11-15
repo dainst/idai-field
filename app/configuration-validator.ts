@@ -1,5 +1,5 @@
 import {M} from "./m";
-import {ProjectConfiguration, FieldDefinition} from "idai-components-2/idai-components-2";
+import {ProjectConfiguration, FieldDefinition} from "idai-components-2/documents";
 
 
 interface ConfigurationValidationResult {
@@ -18,8 +18,7 @@ export class ConfigurationValidator {
         this.mandatoryFields.forEach(mandatoryField => {
             typesList.forEach(type => {
                 var mandatoryFieldFoundAt = -1;
-                type.getFields().forEach(function (fieldDefinition, index) {
-                    var fieldDef = <FieldDefinition> fieldDefinition;
+                type.getFieldDefinitions().forEach(function (fieldDef, index) {
 
                     if(fieldDef.name == mandatoryField.name) {
                         // if necessary, move mandatory field to right index

@@ -1,6 +1,7 @@
 import {Component, OnInit, OnChanges, Input, EventEmitter, Output} from "@angular/core";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ProjectConfiguration, ConfigLoader, ReadDatastore} from "idai-components-2/idai-components-2";
+import {ProjectConfiguration, ConfigLoader,} from "idai-components-2/documents";
+import {ReadDatastore} from "idai-components-2/datastore";
 
 /**
  * @author Daniel de Oliveira
@@ -27,7 +28,7 @@ export class WithConfiguration  {
 
     protected getFieldLabel(type: string, fieldName: string) {
 
-        var fields = this.projectConfiguration.getFields(type);
+        var fields = this.projectConfiguration.getFieldDefinitions(type);
         return this.getLabel(fieldName, fields);
     }
 

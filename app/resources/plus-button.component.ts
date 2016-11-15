@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {ConfigLoader} from "idai-components-2/documents";
 import {WithConfiguration} from "../util/with-configuration";
 
 @Component({

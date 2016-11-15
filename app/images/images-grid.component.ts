@@ -2,7 +2,7 @@ import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Query,Filter} from "idai-components-2/idai-components-2";
+import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
 

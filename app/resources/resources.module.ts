@@ -10,7 +10,7 @@ import {MapComponent} from './map/map.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {MapState} from './map/map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
-import {IdaiDocumentsModule} from 'idai-components-2/idai-components-2';
+import {IdaiDocumentsModule} from 'idai-components-2/documents';
 
 @NgModule({
     imports: [

@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {IdaiFieldDocument} from "./idai-field-document";
-import {ConfigLoader} from "../../node_modules/idai-components-2/idai-components-2";
-import {ProjectConfiguration} from "../../node_modules/idai-components-2/idai-components-2";
+import {ConfigLoader} from "idai-components-2/documents";
+import {ProjectConfiguration} from "idai-components-2/documents";
 
 /**
  * @author Daniel de Oliveira
@@ -106,7 +106,7 @@ export class Validator {
      */
     private validateFields(resource: any): string[] {
 
-        var projectFields = this.projectConfiguration.getFields(resource.type);
+        var projectFields = this.projectConfiguration.getFieldDefinitions(resource.type);
         var relationFields = this.projectConfiguration.getRelationFields();
         var defaultFields = [ { name: "id" }, { name: "type" }, { name: "relations" }, { name: "geometries" } ];
 

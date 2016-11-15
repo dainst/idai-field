@@ -2,8 +2,8 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {Router, Event, NavigationStart} from '@angular/router';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
-import {Messages} from "idai-components-2/idai-components-2";
-import {ConfigLoader} from "idai-components-2/idai-components-2";
+import {Messages} from "idai-components-2/messages";
+import {ConfigLoader} from "idai-components-2/documents";
 import {ConfigurationValidator} from "./configuration-validator";
 
 @Component({

@@ -3,8 +3,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
-import {IdaiDocumentsModule, IdaiMessagesModule, Datastore, ReadDatastore, Messages, ConfigLoader, MD, PersistenceManager,
-    DocumentEditChangeMonitor} from 'idai-components-2/idai-components-2';
+import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
+import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
+import {IdaiDocumentsModule, ConfigLoader,
+    PersistenceManager, DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";

@@ -86,9 +86,16 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public fetchDocuments2(query: Query) {
 
         this.datastore.find(query).then(documents => {
+
             this.documents = documents;
-            console.log("Fetched documents",this.documents);
             var rowWidth = Math.ceil((window.innerWidth - 60) );
+
+            // insert stub document for first cell that will act as drop area for uploading images
+            this.documents.unshift({
+                id: 'droparea',
+                resource: { width: 1, height: 1 }
+            });
+
             this.calcGrid(rowWidth)
             
         }).catch(err => console.error(err));
@@ -147,7 +154,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 var callback = (cell) => {
                     return (url) => cell['imgSrc'] = url;
                 };
-                this.urlForImage(document.resource.filename).then(callback(cell));
+                if(document.resource.filename) this.urlForImage(document.resource.filename).then(callback(cell));
 
                 this.rows[rowIndex][columnIndex] = cell;
             }

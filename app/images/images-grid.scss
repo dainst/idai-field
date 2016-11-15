@@ -2,8 +2,38 @@
 .image-grid {
   position: relative;
 
-  .cell {
+  .cell-container {
     display: inline-block;
+    vertical-align: top;
+  }
+
+  .droparea-container {
+    padding: 5px;
+    display: flex;
+
+    .droparea {
+      border: 2px dashed gray;
+      background-color: lightgray;
+      border-radius: 6px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      label {
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: initial;
+      }
+
+      input {
+        display: none;
+      }
+    }
+  }
+
+  .cell {
     position: relative;
     cursor: pointer;
 
@@ -34,6 +64,7 @@
       z-index: 100;
 
       .title {
+        position: static;
         white-space: normal;
       }
     }

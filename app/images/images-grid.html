@@ -1,45 +1,56 @@
 
 <div>
 
-    <div>
-        <label for="file"><strong>Bilder auswählen:</strong></label>
-        <input class="file"
-               type="file"
-               name="files[]"
-               id="file"
-               multiple
-               (change)="onSelectImages($event)">
-    </div>
-
     <search-bar id="search-bar" [showFiltersMenu]="false" [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>
 
     <div class="image-grid" (window:resize)="onResize($event)">
 
         <div *ngFor="let row of rows; let index = index">
-            <!--(click)="select(document)"-->
-            <!--class="list-group-item"-->
-            <!--[class.selected]="getSelected() && getSelected().resource.id === document.id"-->
-            <!--[id]="'resource-' + document.resource.identifier"-->
 
-            <div *ngFor="let column of row; let ind = ind"
-                 (click)="select(column['document'])"
-                 [id]="'resource-' + column['document'].resource.identifier"
-                 class="cell"
-                 [style.width.px]="column['calculatedWidth']"
-                 [style.height.px]="column['calculatedHeight'] + 30">
+            <div *ngFor="let cell of row; let ind = ind"
+                 class="cell-container"
+                 [style.width.px]="cell['calculatedWidth']"
+                 [style.height.px]="cell['calculatedHeight'] + 30">
 
-                <div class="identifier"
-                     *ngIf="column['calculatedWidth'] > 25"
-                     [style.maxWidth.px]="column['calculatedWidth']-15">
-                    {{column['document'].resource.identifier}}
+                <div *ngIf="cell['document'].id == 'droparea'"
+                     class="droparea-container"
+                     [style.width.px]="cell['calculatedWidth']"
+                     [style.height.px]="cell['calculatedHeight']">
+                    
+                    <div class="droparea">
+                        <input class="file"
+                               type="file"
+                               name="files[]"
+                               id="file"
+                               multiple
+                               (change)="onSelectImages($event)">
+                        <label for="file">
+                            <span class="mdi mdi-48px mdi-plus-circle"></span><br>
+                            <strong>Bilder auswählen</strong> oder hier fallen lassen
+                        </label>
+                    </div>
+
                 </div>
 
-                <img *ngIf="column.imgSrc" [src]="column.imgSrc"
-                     [style.width.px]="column['calculatedWidth']"
-                     [style.height.px]="column['calculatedHeight']">
+                <div *ngIf="cell['document'].id != 'droparea'"
+                     (click)="select(cell['document'])"
+                     [id]="'resource-' + cell['document'].resource.identifier"
+                     class="cell" >
 
-                <div class="title" [style.maxWidth.px]="column['calculatedWidth']">
-                    {{column['document'].resource.shortDescription}}
+                    <div class="identifier"
+                         *ngIf="column['calculatedWidth'] > 25"
+                         [style.maxWidth.px]="column['calculatedWidth']-15">
+                        {{cell['document'].resource.identifier}}
+                    </div>
+
+                    <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
+                         [style.width.px]="cell['calculatedWidth']"
+                         [style.height.px]="cell['calculatedHeight']">
+
+                    <div class="title" [style.width.px]="cell['calculatedWidth']">
+                        {{cell['document'].resource.shortDescription}}
+                    </div>
+
                 </div>
 
             </div>

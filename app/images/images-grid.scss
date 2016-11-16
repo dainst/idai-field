@@ -48,7 +48,7 @@
     cursor: pointer;
 
     .identifier {
-      @extend .tag, .tag-default;
+      //@extend .tag, .tag-default;
       position: absolute;
       top: 7px;
       left: 7px;

@@ -36,8 +36,25 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         this.query = { q: '', filters: this.defaultFilters };
     }
 
+    public onDragOver(event) {
+        event.preventDefault();
+        event.target.classList.add("dragover");
+    }
+
+    public onDragLeave(event) {
+        event.target.classList.remove("dragover");
+    }
+
+    public onDrop(event) {
+        event.preventDefault();
+        this.uploadFiles(event.dataTransfer.files);
+    }
+
     public onSelectImages(event) {
-        var files = event.srcElement.files;
+        this.uploadFiles(event.srcElement.files);
+    }
+
+    private uploadFiles(files) {
         if (files && files.length > 0) {
             for (var i=0; i < files.length; i++) this.uploadFile(files[i]);
         }

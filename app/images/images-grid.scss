@@ -20,6 +20,10 @@
       align-items: center;
       justify-content: center;
 
+      &.dragover {
+        background-color: $navbar-default-bg;
+      }
+
       label {
         display: block;
         text-align: center;

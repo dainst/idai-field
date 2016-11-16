@@ -17,7 +17,10 @@
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
 
-                    <div class="droparea">
+                    <div class="droparea"
+                         (dragover)="onDragOver($event)"
+                         (dragend)="onDragEnd($event)"
+                         (drop)="onDrop($event)">
                         <input class="file"
                                type="file"
                                name="files[]"

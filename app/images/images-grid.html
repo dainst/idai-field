@@ -41,7 +41,7 @@
                      class="cell" >
 
                     <div class="identifier"
-                         *ngIf="cell['calculatedWidth'] > 25"
+                         *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                          [style.maxWidth.px]="cell['calculatedWidth']-15">
                         {{cell['document'].resource.identifier}}
                     </div>

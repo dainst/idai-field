@@ -34,6 +34,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static VALIDATION_ERROR_INVALIDFIELD: string = 'validation/error/invalidfield';
     public static VALIDATION_ERROR_INVALIDFIELDS: string = 'validation/error/invalidfields';
     public static CONFIG_VALIDATION_IMAGE_MISSING: string = 'config/validation/error/imagemissing';
+    public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
+    public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
+    public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -155,6 +158,21 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIG_VALIDATION_IMAGE_MISSING]={
             content: "Typ-Definition für Bilder fehlt.",
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_ERROR_FILEREADER]={
+            content: "Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_ERROR_MEDIASTORE_READ]={
+            content: "Datei '{0}' konnte nicht aus dem MediaStore gelesen werden.",
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_ERROR_MEDIASTORE_WRITE]={
+            content: "Datei '{0}' konnte nicht im MediaStore gespeichert werden.",
             level: 'danger',
             params: []
         };

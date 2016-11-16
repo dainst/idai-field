@@ -2,6 +2,8 @@ import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Messages} from 'idai-components-2/messages';
+import {M} from "../m";
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
@@ -30,7 +32,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         private router: Router,
         private datastore: IndexeddbDatastore,
         private mediastore: Mediastore,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private messages: Messages
     ) {
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
@@ -65,12 +68,19 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         reader.onloadend = (that => {
             return () => {
                 that.mediastore.create(file.name, reader.result).then(() => {
-                    console.log("upload finished ", file);
                     return that.createImageDocument(file);
                 }).then(() => {
-                    console.log("created image document for " + file.name);
-                    that.fetchDocuments2(that.query);
+                    that.fetchDocuments(that.query);
+                }).catch(error => {
+                    that.messages.add(M.IMAGES_ERROR_MEDIASTORE_WRITE, [file.name]);
+                    console.error(error);
                 });
+            }
+        })(this);
+        reader.onerror = (that => {
+            return (e) => {
+                that.messages.add(M.IMAGES_ERROR_FILEREADER, [file.name]);
+                console.error(e.target.error);
             }
         })(this);
         reader.readAsArrayBuffer(file);
@@ -90,7 +100,9 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                         "height": img.height
                     }
                 };
-                this.datastore.create(doc).then(result => resolve(result));
+                this.datastore.create(doc)
+                    .then(result => resolve(result))
+                    .catch(error => reject(error));
             };
         });
     }
@@ -100,7 +112,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    public fetchDocuments2(query: Query) {
+    public fetchDocuments(query: Query) {
 
         this.datastore.find(query).then(documents => {
 
@@ -123,11 +135,11 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     }
 
     public ngOnInit() {
-        this.fetchDocuments2(this.query);
+        this.fetchDocuments(this.query);
     }
 
     public ngOnChanges() {
-        this.fetchDocuments2(this.query);
+        this.fetchDocuments(this.query);
     }
 
     public queryChanged(query: Query) {
@@ -174,17 +186,21 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 cell['calculatedWidth'] = document.resource.width * calculatedHeight / document.resource.height;
                 cell['calculatedHeight'] = calculatedHeight;
 
-                var callback = (cell) => {
-                    return (url) => cell['imgSrc'] = url;
+                var callback = cell => { return url => cell['imgSrc'] = url };
+                var errorCallback = cell => { return url =>
+                    // display a black image
+                    cell['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs='
                 };
-                if(document.resource.filename) this.urlForImage(document.resource.filename).then(callback(cell));
+                if(document.resource.filename) {
+                    this.urlForImage(document.resource.filename)
+                        .then(callback(cell))
+                        .catch(errorCallback(cell));
+                }
 
                 this.rows[rowIndex][columnIndex] = cell;
             }
 
         }
-
-        console.log(this.rows);
 
     }
 
@@ -193,6 +209,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             this.mediastore.read(filename).then(data => {
                 var url = URL.createObjectURL(new Blob([data]));
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
+            }).catch(error => {
+                this.messages.add(M.IMAGES_ERROR_MEDIASTORE_READ, [filename]);
+                console.error(error);
+                reject(error);
             });
         });
     }

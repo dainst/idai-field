@@ -18,15 +18,14 @@ gulp.task('convert-sass', function () {
 
     return gulp.src([
         'app/app.scss',
-        'node_modules/idai-components-2/src/scss/app.scss',
+        'node_modules/mdbootstrap/css/bootstrap.css',
         'node_modules/leaflet/dist/leaflet.css',
-        'node_modules/leaflet.pm/dist/leaflet.pm.css',
-        'node_modules/mdbootstrap/css/bootstrap.css'
+        'node_modules/leaflet.pm/dist/leaflet.pm.css'
     ])
         .pipe(sass({
             includePaths: [
-                'node_modules/roboto-fontface/css/roboto/sass/',
-                'node_modules/mdbootstrap/sass/',
+                'node_modules/idai-components-2/src/scss',
+                'node_modules/mdbootstrap/sass',
                 'node_modules/mdi/scss/'
             ], precision: 8
         }))
@@ -92,7 +91,6 @@ gulp.task('make-dist', function () {
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
     gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
-    gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
     gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));

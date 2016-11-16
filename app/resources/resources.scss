@@ -48,45 +48,6 @@
     border: 0;
     height: 45px;
   }
-
-  .search {
-    position: relative;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 7px;
-  }
-
-  .search input {
-    text-indent: 10px;
-  }
-
-  .search.input-group-btn {
-    height: 45px;
-    border: 0;
-    background-color: #b9c9e3;
-  }
-
-  .search .btn {
-    border-radius: 0;
-    border: none !important;
-  }
-
-  .search .btn-secondary {
-    background-color: #ddd;
-  }
-
-  #searchfilter {
-    height: 45px !important;
-  }
-
-  .search .glyphicon-search {
-    position: absolute;
-    top: 14px;
-    left: 10px;
-    font-size: 1.2em;
-    padding: 0 0 5px 0;
-    color: #ddd;
-  }
-
 }
 
 .object-list {

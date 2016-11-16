@@ -1,5 +1,5 @@
-//@import "bootstrap";
-@import "mdb";
+@import "idai-components-2";
+
 @import "materialdesignicons";
 
 @import "variables";
@@ -10,11 +10,6 @@
 @import "import/import";
 @import "images/images";
 @import 'widgets/widgets';
-
-@font-face {
-  font-family: "Roboto";
-  src: url("../fonts/Roboto/Roboto-Regular.woff2") format("woff2");
-}
 
 html {
   position: relative;

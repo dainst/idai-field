@@ -1,0 +1,31 @@
+.droparea {
+  height: 100%;
+  color: gray;
+  border: 2px dashed lightgray;
+  border-radius: 3px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.dragover {
+    background-color: $navbar-default-bg;
+    color: white;
+    border-color: white;
+
+    label {
+      pointer-events: none;
+    }
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: initial;
+  }
+
+  input {
+    display: none;
+  }
+}

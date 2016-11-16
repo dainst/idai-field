@@ -7,6 +7,8 @@ import {ImageViewComponent} from "./image-view.component";
 import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
+import {DropAreaComponent} from './drop-area.component';
+
 
 @NgModule({
     imports: [
@@ -16,6 +18,7 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         IdaiDocumentsModule
     ],
     declarations: [
+        DropAreaComponent,
         ImagesComponent,
         ImagesGridComponent,
         ImageViewComponent,

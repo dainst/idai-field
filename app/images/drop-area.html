@@ -1,0 +1,15 @@
+<div
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)">
+    <input class="file"
+           type="file"
+           name="files[]"
+           id="file"
+           multiple
+           (change)="onSelectImages($event)">
+    <label for="file">
+        <span class="mdi mdi-48px mdi-plus-circle"></span><br>
+        <strong>Bilder auswählen</strong> oder hier fallen lassen
+    </label>
+</div>

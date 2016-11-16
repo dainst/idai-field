@@ -5,6 +5,7 @@
   .cell-container {
     display: inline-block;
     vertical-align: top;
+    padding: 0 3px;
   }
 
   .droparea-container {
@@ -47,6 +48,10 @@
     position: relative;
     cursor: pointer;
 
+    &.selected {
+      box-shadow: 0px 0px 10px 2px $brand-primary !important;
+    }
+
     .identifier {
       @extend .tag, .tag-default;
       position: absolute;
@@ -60,7 +65,6 @@
     }
 
     .title {
-      position: absolute;
       background-color: white;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -74,7 +78,6 @@
       z-index: 100;
 
       .title {
-        position: static;
         white-space: normal;
       }
     }

@@ -26,9 +26,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     protected defaultFilters: Array<Filter>;
 
     private nrOfColumns = 4;
-    private rows=[];
+    private rows = [];
+    private selected = [];
 
-    constructor(
+    public constructor(
         private router: Router,
         private datastore: IndexeddbDatastore,
         private mediastore: Mediastore,
@@ -117,7 +118,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         this.datastore.find(query).then(documents => {
 
             this.documents = documents;
-            var rowWidth = Math.ceil((window.innerWidth - 60) );
+            var rowWidth = Math.ceil((window.innerWidth - 57) );
 
             // insert stub document for first cell that will act as drop area for uploading images
             this.documents.unshift({
@@ -149,7 +150,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     }
 
     public onResize(event) {
-        var rowWidth = Math.ceil((event.target.innerWidth - 60) );
+        var rowWidth = Math.ceil((event.target.innerWidth - 57) );
         this.calcGrid(rowWidth)
     }
     
@@ -189,7 +190,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 var callback = cell => { return url => cell['imgSrc'] = url };
                 var errorCallback = cell => { return url =>
                     // display a black image
-                    cell['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs='
+                    cell['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
                 };
                 if(document.resource.filename) {
                     this.urlForImage(document.resource.filename)
@@ -218,10 +219,22 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     }
 
     /**
-     * @param documentToSelect the object that should get selected if the preconditions
+     * @param documentToSelect the object that should be selected
+     */
+    public select(document: IdaiFieldDocument) {
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        else this.selected.splice(this.selected.indexOf(document), 1);
+    }
+
+    /**
+     * @param documentToSelect the object that should be navigated to if the preconditions
      *   to change the selection are met.
      */
-    public select(documentToSelect: IdaiFieldDocument) {
+    public navigateTo(documentToSelect: IdaiFieldDocument) {
         this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+    }
+
+    public clearSelection() {
+        this.selected = [];
     }
 }

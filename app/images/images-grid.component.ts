@@ -91,6 +91,25 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
         var rowWidth = Math.ceil((event.target.innerWidth - 57) );
         this.calcGrid(rowWidth)
     }
+
+    /*
+     * Generate a row of images scaled to height 1 and sum up widths.
+     */
+    private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
+
+        var naturalRowWidth = 0;
+        
+        for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
+            var document = documents[rowIndex * nrOfColumns + columnIndex];
+            if (!document) {
+                naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
+                break;
+            }
+            naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
+        }
+        
+        return naturalRowWidth;
+    }
     
     public calcGrid(rowWidth) {
 
@@ -98,21 +117,10 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
         var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
 
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
-
-            var naturalRowWidth = 0;
+            
             this.rows[rowIndex] = [];
 
-            // generate a row of images scaled to height 1 and sum up widths
-            for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
-                var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
-                if (!document) {
-                    naturalRowWidth += naturalRowWidth * (this.nrOfColumns - columnIndex) / columnIndex;
-                    break;
-                }
-                naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
-            }
-
-            var calculatedHeight = rowWidth / naturalRowWidth;
+            var calculatedHeight = rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
 
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 

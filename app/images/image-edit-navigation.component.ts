@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/datastore";
-import {ImageBase} from "./image-base";
+import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -14,7 +14,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 /**
  * @author Daniel de Oliveira
  */
-export class ImageEditNavigationComponent extends ImageBase implements OnInit {
+export class ImageEditNavigationComponent extends ImageComponentBase implements OnInit {
 
     constructor(
         private router: Router,

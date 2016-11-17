@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ReadDatastore} from 'idai-components-2/datastore';
-import {ImageBase} from './image-base';
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ReadDatastore} from "idai-components-2/datastore";
+import {ImageBase} from "./image-base";
+import {Messages} from "idai-components-2/messages";
+import {Mediastore} from "../datastore/mediastore";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     moduleId: module.id,
@@ -16,13 +19,16 @@ export class ImageEditNavigationComponent extends ImageBase implements OnInit {
     constructor(
         private router: Router,
         route: ActivatedRoute,
-        datastore: ReadDatastore
+        datastore: ReadDatastore,
+        mediastore: Mediastore,
+        sanitizer: DomSanitizer,
+        messages: Messages
     ) {
-        super(route,datastore);
+        super(route,datastore,mediastore,sanitizer,messages);
     }
 
     ngOnInit() {
-        this.fetchDoc();
+        this.fetchDocAndImage();
     }
 
     public onSaveSuccess(e) {

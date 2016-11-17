@@ -7,6 +7,7 @@ import {M} from "../m";
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
+import {WithImages} from './with-images';
 
 @Component({
     moduleId: module.id,
@@ -19,7 +20,7 @@ import {DomSanitizer} from '@angular/platform-browser';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export class ImagesGridComponent implements OnChanges, OnInit {
+export class ImagesGridComponent extends WithImages implements OnChanges, OnInit {
 
     private query : Query = { q: '' };
     private documents;
@@ -32,15 +33,24 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public constructor(
         private router: Router,
         private datastore: IndexeddbDatastore,
-        private mediastore: Mediastore,
-        private sanitizer: DomSanitizer,
-        private messages: Messages
+        mediastore: Mediastore,
+        sanitizer: DomSanitizer,
+        messages: Messages
     ) {
+        super(mediastore,sanitizer,messages);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
     }
 
     public refreshGrid() {
+        this.fetchDocuments(this.query);
+    }
+
+    public ngOnInit() {
+        this.fetchDocuments(this.query);
+    }
+
+    public ngOnChanges() {
         this.fetchDocuments(this.query);
     }
 
@@ -69,14 +79,6 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     
     protected setUpDefaultFilters() {
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
-    }
-
-    public ngOnInit() {
-        this.fetchDocuments(this.query);
-    }
-
-    public ngOnChanges() {
-        this.fetchDocuments(this.query);
     }
 
     public queryChanged(query: Query) {
@@ -139,19 +141,6 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
         }
 
-    }
-
-    private urlForImage(filename): Promise<string> {
-        return new Promise((resolve, reject) => {
-            this.mediastore.read(filename).then(data => {
-                var url = URL.createObjectURL(new Blob([data]));
-                resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
-            }).catch(error => {
-                this.messages.add(M.IMAGES_ERROR_MEDIASTORE_READ, [filename]);
-                console.error(error);
-                reject(error);
-            });
-        });
     }
 
     /**

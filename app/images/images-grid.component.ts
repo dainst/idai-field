@@ -7,7 +7,7 @@ import {M} from "../m";
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
-import {WithImages} from './with-images';
+import {WithImages,ImageContainer} from './with-images';
 
 @Component({
     moduleId: module.id,
@@ -119,11 +119,11 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
                 var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
                 if (!document) break;
 
-                var cell = {};
-                cell['document'] = document;
-                cell['calculatedWidth'] = document.resource.width * calculatedHeight / document.resource.height;
-                cell['calculatedHeight'] = calculatedHeight;
-                if (document.resource.filename) this.setImgSrc(cell,document.resource.filename);
+                var cell : ImageContainer = {};
+                cell.document = document;
+                cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
+                cell.calculatedHeight = calculatedHeight;
+                if (document.resource.filename) this.setImgSrc(cell);
                 this.rows[rowIndex][columnIndex] = cell;
             }
 

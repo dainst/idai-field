@@ -1,7 +1,28 @@
 
 <div>
 
-    <search-bar id="search-bar" [showFiltersMenu]="false" [defaultFilters]="defaultFilters" (onQueryChanged)="queryChanged($event)"></search-bar>
+    <div class="navbar navbar-light bg-faded">
+        <search-bar *ngIf="!selected.length"
+                    id="search-bar"
+                    [showFiltersMenu]="false"
+                    [defaultFilters]="defaultFilters"
+                    (onQueryChanged)="queryChanged($event)">
+        </search-bar>
+
+        <span *ngIf="selected.length">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary">
+                    <span class="mdi mdi-delete"></span>
+                </button>
+                <button type="button" class="btn btn-secondary">
+                    <span class="mdi mdi-link"></span>
+                </button>
+            </div>
+            <button type="button" class="btn btn-secondary" (click)="clearSelection()">
+                Auswahl aufheben
+            </button>
+        </span>
+    </div>
 
     <div class="image-grid" (window:resize)="onResize($event)">
 
@@ -9,36 +30,22 @@
 
             <div *ngFor="let cell of row; let ind = ind"
                  class="cell-container"
-                 [style.width.px]="cell['calculatedWidth']"
+                 [style.width.px]="cell['calculatedWidth'] + 1"
                  [style.height.px]="cell['calculatedHeight'] + 30">
 
                 <div *ngIf="cell['document'].id == 'droparea'"
                      class="droparea-container"
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
-
-                    <div class="droparea"
-                         (dragover)="onDragOver($event)"
-                         (dragleave)="onDragLeave($event)"
-                         (drop)="onDrop($event)">
-                        <input class="file"
-                               type="file"
-                               name="files[]"
-                               id="file"
-                               multiple
-                               (change)="onSelectImages($event)">
-                        <label for="file">
-                            <span class="mdi mdi-48px mdi-plus-circle"></span><br>
-                            <strong>Bilder auswählen</strong> oder hier fallen lassen
-                        </label>
-                    </div>
-
+                    <drop-area (onImageUploaded)="refreshGrid()"></drop-area>
                 </div>
 
                 <div *ngIf="cell['document'].id != 'droparea'"
                      (click)="select(cell['document'])"
+                     (dblclick)="navigateTo(cell['document'])"
                      [id]="'resource-' + cell['document'].resource.identifier"
-                     class="cell" >
+                     class="cell"
+                     [class.selected]="selected.includes(cell['document'])">
 
                     <div class="identifier"
                          *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"

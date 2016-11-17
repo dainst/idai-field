@@ -23,7 +23,7 @@ export class ConfigurationValidator {
                     if(fieldDef.name == mandatoryField.name) {
                         // if necessary, move mandatory field to right index
                         if ((mandatoryFieldFoundAt = index) != mandatoryField['index'])
-                            type.fields.splice(mandatoryField['index'], 0, type.fields.splice(mandatoryFieldFoundAt, 1)[0]);
+                             type.fields.splice(mandatoryField['index'], 0, type.fields.splice(mandatoryFieldFoundAt, 1)[0]);
                         return;
                     }
                 });

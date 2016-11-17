@@ -2,6 +2,7 @@ import {Routes,RouterModule} from '@angular/router';
 
 import {ImportComponent} from './import/import.component';
 import {ResourceEditCanDeactivateGuard}  from './resources/resource-edit-can-deactivate-guard';
+import {ImageEditCanDeactivateGuard}  from './images/image-edit-can-deactivate-guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'resources', pathMatch: 'full' },
@@ -9,7 +10,8 @@ const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-    ResourceEditCanDeactivateGuard
+    ResourceEditCanDeactivateGuard,
+    ImageEditCanDeactivateGuard
 ];
 
 export const routing = RouterModule.forRoot(routes);

@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">Speichern?</h4>
+</div>
+<div class="modal-body">
+    Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
+</div>
+<div class="modal-footer">
+    <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
+            (click)="onSave.emit();">Speichern</button>
+    <button type="button" class="btn btn-primary"
+            (click)="onDiscard.emit();">Änderungen verwerfen</button>
+    <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-primary"
+            (click)="onCancel.emit()">Abbrechen
+    </button>
+</div>

@@ -28,7 +28,7 @@ export class ImageComponentBase {
             this.id=id;
             this.datastore.get(id).then(
                 doc=>{
-                    this.doc = doc;
+                    // this.doc = doc;
                     this.image.document = doc;
                     if (doc.resource.filename) this.imageTool.setImgSrc(this.image);
                 },

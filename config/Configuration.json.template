@@ -1,6 +1,21 @@
 {
   "types": [
     {
+        "type" : "image",
+        "label" : "Bild",
+        "fields" : [
+            {
+                "name" : "height"
+            },
+            {
+                "name" : "width"
+            },
+            {
+                "name" : "filename"
+            }
+        ]
+    },
+    {
       "type": "jedi",
       "label" : "Jedi",
       "fields": [
@@ -66,13 +81,6 @@
     {
       "type": "vessel",
       "label" : "Schiff",
-      "fields": [
-      ]
-    },
-
-    {
-      "type": "image",
-      "label" : "Bild",
       "fields": [
       ]
     }

@@ -3,7 +3,6 @@ import {
     PersistenceManager,
     DocumentEditChangeMonitor,
     ConfigLoader,
-    ProjectConfiguration,
     WithConfiguration
 } from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
@@ -63,6 +62,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
         var validationReport = this.validate(this.document);
         if (!validationReport.valid) {
+            console.debug("validation report",validationReport);
             return this.messages.add(validationReport.errorMessage, validationReport.errorData);
         }
 
@@ -86,7 +86,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
     private validate(doc) {
         return this.validator.validate(<IdaiFieldDocument>doc);
     }
-
+    
     public getTypeLabel(): string {
 
         if (!this.document) {

@@ -7,6 +7,7 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {TypeIconComponent} from './type-icon.component'
 import {DocumentViewComponent} from './document-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
+import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
@@ -21,13 +22,15 @@ import {RouterModule} from '@angular/router';
         SearchBarComponent,
         TypeIconComponent,
         DocumentViewComponent,
-        DocumentEditWrapperComponent
+        DocumentEditWrapperComponent,
+        EditSaveDialogComponent
     ],
     exports : [
         SearchBarComponent,
         TypeIconComponent,
         DocumentViewComponent,
-        DocumentEditWrapperComponent
+        DocumentEditWrapperComponent,
+        EditSaveDialogComponent
     ]
 })
 

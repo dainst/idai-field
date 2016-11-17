@@ -15,12 +15,12 @@ export interface ImageContainer {
  * @author Sebastian Cuy
  * @autor Daniel de Oliveira
  */
-export class WithImages {
-    
+export class ImageTool {
+
     constructor(
-        protected mediastore: Mediastore,
-        protected sanitizer: DomSanitizer,
-        protected messages: Messages
+        private mediastore: Mediastore,
+        private sanitizer: DomSanitizer,
+        private messages: Messages
     ) { }
 
     private urlForImage(filename): Promise<string> {
@@ -40,7 +40,7 @@ export class WithImages {
      * @param imageContainer
      *   imgCell.document.resource['filename'] must be a filename of an existing file in the mediastore.
      */
-    protected setImgSrc(imageContainer : ImageContainer) {
+    public setImgSrc(imageContainer : ImageContainer) {
         var image : ImageContainer = imageContainer;
 
         var callback = image => { return url => image['imgSrc'] = url };

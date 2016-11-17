@@ -4,15 +4,15 @@ import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {WithImages,ImageContainer} from "./with-images";
+import {ImageTool,ImageContainer} from "./image-tool";
 
 /**
  * @author Daniel de Oliveira
  */
-export class ImageBase extends WithImages {
+export class ImageBase {
 
     protected image : ImageContainer = {};
-    protected doc : Document;
+    private imageTool : ImageTool;
 
     constructor(
         private route: ActivatedRoute,
@@ -21,7 +21,7 @@ export class ImageBase extends WithImages {
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(mediastore,sanitizer,messages);
+        this.imageTool = new ImageTool(mediastore,sanitizer,messages);
     }
 
     protected fetchDocAndImage() {
@@ -31,7 +31,7 @@ export class ImageBase extends WithImages {
                 doc=>{
                     this.doc = doc;
                     this.image.document = doc;
-                    if (doc.resource.filename) this.setImgSrc(this.image);
+                    if (doc.resource.filename) this.imageTool.setImgSrc(this.image);
                 },
                 err=>{
                     console.error("Fatal error: could not load document for id ",id);

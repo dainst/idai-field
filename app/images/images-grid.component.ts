@@ -120,22 +120,10 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
                 if (!document) break;
 
                 var cell = {};
-
                 cell['document'] = document;
                 cell['calculatedWidth'] = document.resource.width * calculatedHeight / document.resource.height;
                 cell['calculatedHeight'] = calculatedHeight;
-
-                var callback = cell => { return url => cell['imgSrc'] = url };
-                var errorCallback = cell => { return url =>
-                    // display a black image
-                    cell['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-                };
-                if(document.resource.filename) {
-                    this.urlForImage(document.resource.filename)
-                        .then(callback(cell))
-                        .catch(errorCallback(cell));
-                }
-
+                if (document.resource.filename) this.setImgSrc(cell,document.resource.filename);
                 this.rows[rowIndex][columnIndex] = cell;
             }
 

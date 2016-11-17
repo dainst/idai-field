@@ -30,19 +30,7 @@ export class ImageBase extends WithImages {
             this.datastore.get(id).then(
                 doc=>{
                     this.doc = doc;
-                    
-                    // TODO this stuff here seems so similar to the code in images grid. see if we can do something about that
-                    var image = this.image;
-                    var callback = image => { return url => image['imgSrc'] = url };
-                    var errorCallback = image => { return url =>
-                        // display a black image
-                        image['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-                    };
-                    if(doc.resource.filename) {
-                        this.urlForImage(doc.resource.filename)
-                            .then(callback(image))
-                            .catch(errorCallback(image));
-                    }
+                    if (doc.resource.filename) this.setImgSrc(this.image,doc.resource.filename);
                 },
                 err=>{
                     console.error("Fatal error: could not load document for id ",id);

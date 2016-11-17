@@ -36,6 +36,6 @@ export class ImageEditNavigationComponent extends ImageBase implements OnInit {
     }
 
     public onBackButtonClicked() {
-        this.router.navigate(['images',this.doc.resource.id,'show']);
+        this.router.navigate(['images',this.image.document.resource.id,'show']);
     }
 }

@@ -7,7 +7,7 @@ import {M} from "../m";
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
-import {WithImages,ImageContainer} from './with-images';
+import {ImageTool,ImageContainer} from './image-tool';
 
 @Component({
     moduleId: module.id,
@@ -20,8 +20,10 @@ import {WithImages,ImageContainer} from './with-images';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export class ImagesGridComponent extends WithImages implements OnChanges, OnInit {
+export class ImagesGridComponent implements OnChanges, OnInit {
 
+    private imageTool : ImageTool;
+    
     private query : Query = { q: '' };
     private documents;
     protected defaultFilters: Array<Filter>;
@@ -37,7 +39,7 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(mediastore,sanitizer,messages);
+        this.imageTool = new ImageTool(mediastore,sanitizer,messages);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
     }
@@ -131,7 +133,7 @@ export class ImagesGridComponent extends WithImages implements OnChanges, OnInit
                 cell.document = document;
                 cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
                 cell.calculatedHeight = calculatedHeight;
-                if (document.resource.filename) this.setImgSrc(cell);
+                if (document.resource.filename) this.imageTool.setImgSrc(cell);
                 this.rows[rowIndex][columnIndex] = cell;
             }
 

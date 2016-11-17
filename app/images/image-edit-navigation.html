@@ -7,7 +7,7 @@
     <div *ngIf="doc" class="col-md-9">
 
         <document-edit-wrapper
-                [(document)]="doc"
+                [(document)]="image.document"
                 (saveSuccess)="onSaveSuccess($event)"
                 (backButtonClicked)="onBackButtonClicked()"
                 #f>

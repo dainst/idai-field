@@ -1,15 +1,14 @@
 import {ActivatedRoute, Params} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
-import {Document} from "idai-components-2/core";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {ImageTool,ImageContainer} from "./image-tool";
+import {ImageTool, ImageContainer} from "./image-tool";
 
 /**
  * @author Daniel de Oliveira
  */
-export class ImageBase {
+export class ImageComponentBase {
 
     protected image : ImageContainer = {};
     private imageTool : ImageTool;

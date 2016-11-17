@@ -8,6 +8,7 @@ import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
 import {ImageTool,ImageContainer} from './image-tool';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     moduleId: module.id,
@@ -35,6 +36,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public constructor(
         private router: Router,
         private datastore: IndexeddbDatastore,
+        private modalService: NgbModal,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages
@@ -66,7 +68,6 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         this.datastore.find(query).then(documents => {
 
             this.documents = documents;
-            var rowWidth = Math.ceil((window.innerWidth - 57) );
 
             // insert stub document for first cell that will act as drop area for uploading images
             this.documents.unshift({
@@ -74,7 +75,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 resource: { width: 1, height: 1 }
             });
 
-            this.calcGrid(rowWidth)
+            this.calcGrid();
             
         }).catch(err => console.error(err));
     }
@@ -89,9 +90,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         // this.fetchDocuments(query);
     }
 
-    public onResize(event) {
-        var rowWidth = Math.ceil((event.target.innerWidth - 57) );
-        this.calcGrid(rowWidth)
+    public onResize() {
+        this.calcGrid();
     }
 
     /*
@@ -113,7 +113,9 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         return naturalRowWidth;
     }
     
-    public calcGrid(rowWidth) {
+    public calcGrid() {
+
+        var rowWidth = Math.ceil((window.innerWidth - 57) );
 
         this.rows = [];
         var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
@@ -159,5 +161,31 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
     public clearSelection() {
         this.selected = [];
+    }
+
+    public openDeleteModal(modal) {
+        this.modalService.open(modal).result.then(result => {
+            if (result == 'delete') {
+                var results = this.selected.map(document => this.delete(document));
+                Promise.all(results).then(() => {
+                    this.clearSelection();
+                    this.fetchDocuments(this.query);
+                });
+            }
+        });
+    }
+
+    private delete(document): Promise<any> {
+        return new Promise((resolve) => {
+            this.mediastore.remove(document.resource.filename).then(() => {
+                this.datastore.remove(document.id).then(() => resolve()).catch(err => {
+                    this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.filename]);
+                    console.log(err);
+                });
+            }).catch(err => {
+                this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.filename]);
+                console.log(err);
+            });
+        });
     }
 }

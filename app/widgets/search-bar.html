@@ -1,19 +1,15 @@
-<div class="search input-group">
-
-
-    <div class="md-form">
+<div class="md-form input-group">
 
     <input #searchInput
            (keyup)="qChanged($event.target.value)"
            type="text"
+           placeholder="Suchen..."
            class="form-control"
            id="object-search">
-        <label for="object-search" class="">Suchen...</label>
-        </div>
 
     <span class="input-group-btn" *ngIf="showFiltersMenu">
         <button
-                class="btn btn-secondary"
+                class="btn btn-primary"
                 id="searchfilter"
                 type="button"
                 [ngbPopover]="filterMenu"
@@ -30,21 +26,21 @@
                 <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
                 <ul class="list-group">
                     <li id="choose-type-filter-option-all"
-                            class="list-group-item popover-item"
-                            (click)="setType(''); p.close();"
-                            [ngClass]="{ 'active': type == '' }">
+                        class="list-group-item popover-item"
+                        (click)="setType(''); p.close();"
+                        [ngClass]="{ 'active': type == '' }">
                         <i>Alle Typen</i>
                     </li>
                     <li *ngFor="let f of filterOptions; let index = index"
-                            id="choose-type-filter-option-{{index}}"
-                            class="list-group-item popover-item"
-                            (click)="setType(f.name); p.close();"
-                            [ngClass]="{ 'active': type == f.name }">
+                        id="choose-type-filter-option-{{index}}"
+                        class="list-group-item popover-item"
+                        (click)="setType(f.name); p.close();"
+                        [ngClass]="{ 'active': type == f.name }">
                         <type-icon [type]="f.name" size="30"></type-icon> {{f.label}}
                     </li>
                 </ul>
             </div>
         </template>
-    </span>
 
+        </span>
 </div>

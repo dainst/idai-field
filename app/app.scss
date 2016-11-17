@@ -28,6 +28,14 @@ body {
   height: 35px;
 }
 
+.btn {
+  border-radius: 0 !important;
+}
+
+.md-form {
+  margin-bottom: 0 !important;
+}
+
 /* override needed for buttons to look good in chrome with bootstrap 4 */
 button,
 html [type="button"],

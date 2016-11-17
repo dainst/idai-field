@@ -1,27 +1,32 @@
-<div class="card">
+<div class="card document-card">
     <div class="card-header">
-        <type-icon [type]="document.resource.type" size="25" class="pull-xs-left"
-                   style="margin-right: 10px; margin-top: 3px;"></type-icon>
-        <h4>
-            <div style="margin-top: 3px; float: left;">{{projectConfiguration.getLabelForType(document.resource.type)}}</div>
-            <button class="btn btn-link btn-sm pull-xs-right" id="document-view-button-back-to-map"
-                    [routerLink]="['/'+basePath]">
-                <span class="mdi mdi-close mdi-18px"></span>
-            </button>
+        <type-icon [type]="document.resource.type" size="25"
+                   class="type-icon"
+                   style="margin-right: 10px; display: inline-block;">
+        </type-icon>
+        <h4 class="document-title" style="display: inline; margin: 0; padding: 0;">
+            {{projectConfiguration.getLabelForType(document.resource.type)}}
         </h4>
+        <button class="btn btn-link btn-xs pull-right"
+                id="document-view-button-back-to-map"
+                style="display: inline;"
+                [routerLink]="['/'+basePath]">
+            <span class="mdi mdi-close mdi-18px"></span>
+        </button>
     </div>
     <div class="card-block">
 
-
         <div id="document-view" *ngIf="document">
             <!-- TODO Remove check for image type and implement editor for images -->
-            <button class="btn btn-link btn-sm pull-xs-right" style="margin-top: -2px;" id="document-view-button-edit-document"
+            <button class="btn btn-link btn-xs pull-right" style="margin-top: -2px; float: right;"
+                    id="document-view-button-edit-document"
                     [routerLink]="['/'+basePath+'/', document.resource.id, 'edit']">
-                <span class="mdi mdi-pencil mdi-18px"></span>
+                <span class="mdi mdi-pencil pull-right mdi-18px"></span>
             </button>
 
             <ng-content></ng-content>
         </div>
+
     </div>
 </div>
 

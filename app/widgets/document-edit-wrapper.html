@@ -2,9 +2,13 @@
     <header>
         <h1 class="overview-document-heading">
 
-            <button *ngIf="showBackButton" class="btn btn-primary pull-xs-right" id="document-edit-button-goto-view"
+            <button *ngIf="showBackButton" class="btn btn-primary"
+                    id="document-edit-button-goto-view"
+                    style="float: right;"
                     (click)="onBackButtonClicked()">Zur Ansicht</button>
-            <button class="btn btn-primary pull-xs-right" id="document-edit-button-save-document"
+            <button class="btn btn-primary pull-right"
+                    id="document-edit-button-save-document"
+                    style="float: right;"
                     (click)="save();">Speichern</button>
             <span class="mdi mdi-blur"></span>
 

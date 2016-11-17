@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>iDAI.field 2</title>
 
@@ -14,6 +14,12 @@
 
     <link rel="icon" href="img/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/idai-field-client.css">
+
+    <!-- Needed in order to make jQuery run -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="node_modules/mdbootstrap/js/jquery-3.1.1.js"></script>
+    <script src="node_modules/mdbootstrap/js/tether.js"></script>
+    <script src="node_modules/mdbootstrap/js/bootstrap.js"></script>
 
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
@@ -29,11 +35,6 @@
     <script>
         System.import('app').catch(function(err){ console.error(err); });
     </script>
-    <script src="node_modules/mdbootstrap/js/jquery-3.1.1.min.js"></script>
-    <script src="node_modules/mdbootstrap/js/tether.min.js"></script>
-    <script src="node_modules/mdbootstrap/js/bootstrap.min.js"></script>
-    <script src="node_modules/mdbootstrap/js/mdb.min.js"></script>
-
 </head>
 
 <body>
@@ -41,5 +42,5 @@
         <div class="spinner"></div>
     </idai-field-app>
 </body>
-
+<script src="node_modules/mdbootstrap/js/mdb.js"></script>
 </html>

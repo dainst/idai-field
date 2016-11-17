@@ -1,7 +1,15 @@
 import {Messages} from "idai-components-2/messages";
+import {Document} from "idai-components-2/core";
 import {M} from "../m";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
+
+export interface ImageContainer {
+    imgSrc? : string;
+    calculatedWidth? : number;
+    calculatedHeight? : number;
+    document? : Document;
+}
 
 /**
  * @author Sebastian Cuy
@@ -28,15 +36,19 @@ export class WithImages {
         });
     }
 
-    protected setImgSrc(imgCell,filename) {
-        var image = imgCell;
+    /**
+     * @param imageContainer
+     *   imgCell.document.resource['filename'] must be a filename of an existing file in the mediastore.
+     */
+    protected setImgSrc(imageContainer : ImageContainer) {
+        var image : ImageContainer = imageContainer;
 
         var callback = image => { return url => image['imgSrc'] = url };
         var errorCallback = image => { return url =>
             // display a black image
-            image['imgSrc'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+            image.imgSrc = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
         };
-        this.urlForImage(filename)
+        this.urlForImage(imageContainer.document.resource['filename'])
             .then(callback(image))
             .catch(errorCallback(image));
     }

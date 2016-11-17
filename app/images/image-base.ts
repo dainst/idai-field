@@ -4,14 +4,14 @@ import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {WithImages} from "./with-images";
+import {WithImages,ImageContainer} from "./with-images";
 
 /**
  * @author Daniel de Oliveira
  */
 export class ImageBase extends WithImages {
 
-    protected image = {};
+    protected image : ImageContainer = {};
     protected doc : Document;
 
     constructor(
@@ -30,7 +30,8 @@ export class ImageBase extends WithImages {
             this.datastore.get(id).then(
                 doc=>{
                     this.doc = doc;
-                    if (doc.resource.filename) this.setImgSrc(this.image,doc.resource.filename);
+                    this.image.document = doc;
+                    if (doc.resource.filename) this.setImgSrc(this.image);
                 },
                 err=>{
                     console.error("Fatal error: could not load document for id ",id);

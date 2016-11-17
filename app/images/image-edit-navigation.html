@@ -7,8 +7,8 @@
     <div class="col-md-9">
         <document-edit-wrapper #f
                 [(document)]="image.document"
-                (saveSuccess)="onSaveSuccess($event)"
-                (backButtonClicked)="navigateBack()">
+                (saveSuccess)="navigate($event['proceed']);"
+                (backButtonClicked)="navigateBack();">
         </document-edit-wrapper>
     </div>
 </div>

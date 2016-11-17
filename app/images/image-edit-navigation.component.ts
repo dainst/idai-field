@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ReadDatastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
+import {IndexeddbDatastore} from '../datastore/indexeddb-datastore';
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -21,29 +22,30 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
     @ViewChild('modalTemplate')
     private modalTemplate: TemplateRef<any>;
     private modal: NgbModalRef;
-    
+
+    private idbDatastore;
+
     constructor(
         private router: Router,
         private modalService:NgbModal,
         private canDeactivateGuard:ImageEditCanDeactivateGuard,
         route: ActivatedRoute,
-        datastore: ReadDatastore,
+        datastore: IndexeddbDatastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(route,datastore,mediastore,sanitizer,messages);
+        super(route,<ReadDatastore>datastore,mediastore,sanitizer,messages);
+        this.idbDatastore = datastore;
     }
 
     ngOnInit() {
         this.fetchDocAndImage();
     }
 
-    public onSaveSuccess(e) {
-        console.debug("on save success",e)
-    }
-
-    public navigateBack() {
+    public navigate(proceed) {
+        if (proceed) return this.canDeactivateGuard.proceed();
+        
         this.router.navigate(['images',this.image.document.resource.id,'show']);
     }
     
@@ -52,6 +54,11 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
     }
     
     public discard() {
-        console.log("discard")
+        this.idbDatastore.refresh(this.image.document.resource.id).then(
+            restoredObject => {
+                this.canDeactivateGuard.proceed();
+            },
+            err => { console.error("error while refreshing document") }
+        );
     }
 }

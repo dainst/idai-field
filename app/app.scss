@@ -32,6 +32,15 @@ body {
   border-radius: 0 !important;
 }
 
+.btn-primary {
+  background-color: rgba(85, 114, 161, 1) !important;
+  border-color: rgba(85, 114, 161, 1) !important;
+}
+
+.btn-primary:hover {
+  background-color: lighten(rgba(85, 114, 161, 1), 10%) !important;
+}
+
 .md-form {
   margin-bottom: 0 !important;
 }

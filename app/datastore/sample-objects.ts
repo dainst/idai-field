@@ -12,7 +12,8 @@ export var DOCS: IdaiFieldDocument[] = [
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
                 ,"crs":"local"
             }],
-            "type": "jedi"
+            "type": "jedi",
+            "images": ["o21"]
         },
         "synced": 0
     }, {
@@ -25,7 +26,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "geometries": [{
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
             }],
-            "type": "dude"
+            "type": "dude",
+            "images": [ "o13" ]
         },
         "synced": 0
     }, {
@@ -38,7 +40,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "lightsaber_color" : "Blau",
             "relations": {
                 "sonOf" : ["o6"],
-                "friendOf" : ["o4"],
+                "friendOf" : ["o4", "o5"],
                 "origin" : ["o7"]
             },
             "geometries": [{
@@ -57,12 +59,26 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Han Solo",
             "type": "dude",
             "relations": {
-                "friendOf" : ["o3"],
+                "friendOf" : ["o3", "o5"],
                 "owns" : ["o11"]
             },
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
-            }]
+            }],
+            "images": ["o12"]
+        },
+        "synced": 0
+    }, {
+        "id": "o5",
+        "resource": {
+            "id": "o5",
+            "identifier": "ob5",
+            "shortDescription": "Leia Organa",
+            "type": "dude",
+            "relations": {
+                "friendOf" : ["o3", "o4"]
+            },
+            "images": ["o16"]
         },
         "synced": 0
     }, {
@@ -75,7 +91,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "lightsaber_color" : "Rot",
             "relations": {
                 "fatherOf" : ["o3"]
-            }
+            },
+            "images": ["o14"]
         },
         "synced": 0
     }, {
@@ -85,7 +102,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob7",
             "shortDescription": "Tatooine",
             "type": "planet",
-            "relations": {}
+            "relations": {},
+            "images": ["o18"]
         },
         "synced": 0
     },
@@ -94,9 +112,10 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o8",
             "identifier": "ob8",
-            "shortDescription": "Dagobah",
+            "shortDescription": "Naboo",
             "type": "planet",
-            "relations": {}
+            "relations": {},
+            "images": ["o17"]
         },
         "synced": 0
     },
@@ -107,7 +126,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob9",
             "shortDescription": "Hoth",
             "type": "planet",
-            "relations": {}
+            "relations": {},
+            "images": ["o20"]
         },
         "synced": 0
     },
@@ -131,7 +151,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "vessel",
             "relations": {
                 "belongsTo" : [ "o4" ]
-            }
+            },
+            "images": ["o22"]
         },
         "synced": 0
     },
@@ -140,12 +161,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o12",
             "identifier": "ob12",
-            "shortDescription": "Foto von Han Solo",
+            "shortDescription": "SWCA - Pink Chewie and Reno-911 Han Solo; Star Wars Celebration in Anaheim, April 2015.",
             "type": "image",
             "relations": {},
-            "filename" : "black400x300.png",
-            "height" : 300,
-            "width" : 400
+            "filename" : "hans.jpg",
+            "height" : 1066,
+            "width" : 1599,
+            "author" : "William Tung from USA",
+            "depicts": "o4"
         }
     },
     {
@@ -153,12 +176,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o13",
             "identifier": "ob13",
-            "shortDescription": "Foto von Boba Fett / aus wikimedia commons",
+            "shortDescription": "Boba Fett (the parade at DragonCon 2006).",
             "type": "image",
             "relations": {},
-            "filename" : "Laudtee_Meenikunnos3500x2333.jpg",
-            "height" : 200,
-            "width" : 200
+            "filename" : "boba.jpg",
+            "height" : 600,
+            "width" : 452,
+            "author": "Michael Neel from Knoxville, TN, USA",
+            "depicts": "o2"
         }
     },
     {
@@ -166,12 +191,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o14",
             "identifier": "ob14",
-            "shortDescription": "Foto von Darth Vader mit Maske",
+            "shortDescription": "Bernie Thomas took this photograph of Darth Vader in Columbus Ohio on Friday of August 11th of 2006.",
             "type": "image",
             "relations": {},
-            "filename" : "black700x100.png",
-            "height" : 100,
-            "width" : 700
+            "filename" : "vader.jpg",
+            "height" : 600,
+            "width" : 793,
+            "author": "Bernie Thomas",
+            "depicts": "o6"
         }
     },
 
@@ -180,12 +207,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o16",
             "identifier": "ob16",
-            "shortDescription": "Foto von Prinzessin Leia Organa",
+            "shortDescription": "You can't unsee this. Read more at the Official Celebration IV blog. Costumes at Star Wars Celebration IV in 2007 at the Los Angeles Convention Center in Los Angeles.",
             "type": "image",
             "relations": {},
-            "filename" : "black500x300.png",
-            "height" : 300,
-            "width" : 500
+            "filename" : "leia.jpg",
+            "height" : 800,
+            "width" : 533,
+            "author": "Jenny Elwick",
+            "depicts": "o5"
         }
     },
     {
@@ -193,12 +222,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o17",
             "identifier": "ob17",
-            "shortDescription": "Karte von Naboo",
+            "shortDescription": "Snoqualmie Falls",
             "type": "image",
             "relations": {},
-            "filename" : "jenkins957x916.png",
-            "height" : 916,
-            "width" : 957
+            "filename" : "naboo.jpg",
+            "height": 853,
+            "width": 1280,
+            "author": "Meher Anand Kasam",
+            "depicts": "o8"
         }
     },
     {
@@ -206,12 +237,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o18",
             "identifier": "ob18",
-            "shortDescription": "Karte von Tatooine",
+            "shortDescription": "Abstract in sand and sky",
             "type": "image",
             "relations": {},
-            "filename": "black200x200.png",
-            "height": 200,
-            "width": 200
+            "filename": "tatooine.jpg",
+            "height": 768,
+            "width": 1024,
+            "author": "Peter Dowley from Dubai, United Arab Emirates",
+            "depicts": "o7"
         }
     },
 
@@ -222,12 +255,13 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o19",
             "identifier": "ob19",
-            "shortDescription": "Foto von einem Sternenzerstörer",
+            "shortDescription": "Star Wars: Knights of the Old Republic Quest map based on File:Galaxymap p1.jpg",
             "type": "image",
             "relations": {},
-            "filename" : "black400x300.png",
-            "height" : 300,
-            "width" : 400
+            "filename" : "map.jpg",
+            "height" : 1695,
+            "width" : 2400,
+            "author": "W. R. van Hage and FR"
         }
     },
     {
@@ -235,12 +269,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o20",
             "identifier": "ob20",
-            "shortDescription": "Karte von Hoth",
+            "shortDescription": "Star Wars Celebration V - scenes from the Hoth Echo Base Battle diorama",
             "type": "image",
             "relations": {},
-            "filename" : "black300x100.png",
-            "height" : 100,
-            "width" : 300
+            "filename" : "hoth.jpg",
+            "height" : 768,
+            "width" : 1024,
+            "author": "The Conmunity - Pop Culture Geek from Los Angeles, CA, USA",
+            "depicts": ["o9"]
         }
     },
     {
@@ -248,12 +284,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o21",
             "identifier": "ob21",
-            "shortDescription": "Foto von Rey",
+            "shortDescription": "Gandalf the Grey",
             "type": "image",
             "relations": {},
-            "filename" : "black800x200.png",
-            "height" : 200,
-            "width" : 800
+            "filename" : "gandalf.jpg",
+            "height" : 768,
+            "width" : 548,
+            "author": "http://nidoart.blogspot.fr/",
+            "depicts": "o1"
         }
     },
 
@@ -262,12 +300,14 @@ export var DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "o22",
             "identifier": "ob22",
-            "shortDescription": "Foto von Finn",
+            "shortDescription": "Copy of USS Enterprise NCC-1701-A from Star Trek movies",
             "type": "image",
             "relations": {},
-            "filename" : "black100x300.png",
-            "height" : 300,
-            "width" : 100
+            "filename" : "enterprise.png",
+            "height" : 315,
+            "width" : 800,
+            "author" : "Vulcan.jpg: dave_7",
+            "depicts": "o11"
         }
     }
 ];

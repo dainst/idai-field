@@ -15,3 +15,11 @@ plus-button {
   }
 
 }
+
+#new-object-menu ul li li {
+  background-color: inherit;
+}
+
+#new-object-menu ul li li:hover {
+  background-color: lighten(#c8dee1, 5%);
+}

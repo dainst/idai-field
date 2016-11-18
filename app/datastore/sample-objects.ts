@@ -309,5 +309,32 @@ export var DOCS: IdaiFieldDocument[] = [
             "author" : "Vulcan.jpg: dave_7",
             "depicts": "o11"
         }
-    }
+    },
+
+    {
+        "id": "o23",
+        "resource": {
+            "id": "o23",
+            "identifier": "ob23",
+            "shortDescription": "Finn",
+            "type": "dude",
+            "images": ["finn.jpg"]
+        },
+        "synced": 0
+    },
+
+    {
+        "id": "o12",
+        "resource": {
+            "id": "o12",
+            "identifier": "finn.jpg",
+            "shortDescription": "Finn",
+            "type": "image",
+            "relations": {},
+            "filename" : "hans.jpg",
+            "height" : 337,
+            "width" : 300,
+            "depicts": "o23"
+        }
+    },
 ];

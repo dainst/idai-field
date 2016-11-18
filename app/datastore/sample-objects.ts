@@ -13,7 +13,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 ,"crs":"local"
             }],
             "type": "jedi",
-            "images": ["o21"]
+            "images": ["gandalf.jpg"]
         },
         "synced": 0
     }, {
@@ -27,7 +27,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
             }],
             "type": "dude",
-            "images": [ "o13" ]
+            "images": [ "boba.jpg" ]
         },
         "synced": 0
     }, {
@@ -65,7 +65,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
             }],
-            "images": ["o12"]
+            "images": ["hans.jpg"]
         },
         "synced": 0
     }, {
@@ -78,7 +78,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "friendOf" : ["o3", "o4"]
             },
-            "images": ["o16"]
+            "images": ["leia.jpg"]
         },
         "synced": 0
     }, {
@@ -92,7 +92,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "fatherOf" : ["o3"]
             },
-            "images": ["o14"]
+            "images": ["vader.jpg"]
         },
         "synced": 0
     }, {
@@ -103,7 +103,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Tatooine",
             "type": "planet",
             "relations": {},
-            "images": ["o18"]
+            "images": ["tatooine.jpg"]
         },
         "synced": 0
     },
@@ -115,7 +115,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Naboo",
             "type": "planet",
             "relations": {},
-            "images": ["o17"]
+            "images": ["naboo.jpg"]
         },
         "synced": 0
     },
@@ -127,7 +127,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Hoth",
             "type": "planet",
             "relations": {},
-            "images": ["o20"]
+            "images": ["hoth.jpg"]
         },
         "synced": 0
     },
@@ -152,7 +152,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "belongsTo" : [ "o4" ]
             },
-            "images": ["o22"]
+            "images": ["enterprise.png"]
         },
         "synced": 0
     },
@@ -160,7 +160,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o12",
         "resource": {
             "id": "o12",
-            "identifier": "ob12",
+            "identifier": "hans.jpg",
             "shortDescription": "SWCA - Pink Chewie and Reno-911 Han Solo; Star Wars Celebration in Anaheim, April 2015.",
             "type": "image",
             "relations": {},
@@ -175,7 +175,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o13",
         "resource": {
             "id": "o13",
-            "identifier": "ob13",
+            "identifier": "boba.jpg",
             "shortDescription": "Boba Fett (the parade at DragonCon 2006).",
             "type": "image",
             "relations": {},
@@ -190,7 +190,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o14",
         "resource": {
             "id": "o14",
-            "identifier": "ob14",
+            "identifier": "vader.jpg",
             "shortDescription": "Bernie Thomas took this photograph of Darth Vader in Columbus Ohio on Friday of August 11th of 2006.",
             "type": "image",
             "relations": {},
@@ -206,7 +206,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o16",
         "resource": {
             "id": "o16",
-            "identifier": "ob16",
+            "identifier": "leia.jpg",
             "shortDescription": "You can't unsee this. Read more at the Official Celebration IV blog. Costumes at Star Wars Celebration IV in 2007 at the Los Angeles Convention Center in Los Angeles.",
             "type": "image",
             "relations": {},
@@ -221,7 +221,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o17",
         "resource": {
             "id": "o17",
-            "identifier": "ob17",
+            "identifier": "naboo.jpg",
             "shortDescription": "Snoqualmie Falls",
             "type": "image",
             "relations": {},
@@ -236,7 +236,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o18",
         "resource": {
             "id": "o18",
-            "identifier": "ob18",
+            "identifier": "tatooine.jpg",
             "shortDescription": "Abstract in sand and sky",
             "type": "image",
             "relations": {},
@@ -254,7 +254,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o19",
         "resource": {
             "id": "o19",
-            "identifier": "ob19",
+            "identifier": "map.jpg",
             "shortDescription": "Star Wars: Knights of the Old Republic Quest map based on File:Galaxymap p1.jpg",
             "type": "image",
             "relations": {},
@@ -268,7 +268,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o20",
         "resource": {
             "id": "o20",
-            "identifier": "ob20",
+            "identifier": "hoth.jpg",
             "shortDescription": "Star Wars Celebration V - scenes from the Hoth Echo Base Battle diorama",
             "type": "image",
             "relations": {},
@@ -283,7 +283,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o21",
         "resource": {
             "id": "o21",
-            "identifier": "ob21",
+            "identifier": "gandalf.jpg",
             "shortDescription": "Gandalf the Grey",
             "type": "image",
             "relations": {},
@@ -299,7 +299,7 @@ export var DOCS: IdaiFieldDocument[] = [
         "id": "o22",
         "resource": {
             "id": "o22",
-            "identifier": "ob22",
+            "identifier": "enterprise.png",
             "shortDescription": "Copy of USS Enterprise NCC-1701-A from Star Trek movies",
             "type": "image",
             "relations": {},

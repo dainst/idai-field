@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {resourcesRouting} from './resources.routing';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
+import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {ResourceEditNavigationComponent} from './resource-edit-navigation.component';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +27,8 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         ResourceEditNavigationComponent,
         MapWrapperComponent,
         MapComponent,
-        PlusButtonComponent
+        PlusButtonComponent,
+        ThumbnailViewComponent
     ],
     providers: [
         MapState

@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from "@angular/core";
+import {Datastore} from 'idai-components-2/datastore';
 import {M} from "../m";
 import {Mediastore} from "../datastore/mediastore";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
 import {Messages} from 'idai-components-2/messages';
 
 @Component({
@@ -19,7 +19,7 @@ export class DropAreaComponent {
     
     public constructor(
         private mediastore: Mediastore,
-        private datastore: IndexeddbDatastore,
+        private datastore: Datastore,
         private messages: Messages
     ) {
     }

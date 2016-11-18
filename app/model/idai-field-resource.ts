@@ -6,5 +6,5 @@ export interface IdaiFieldResource extends Resource {
     identifier: string;
     shortDescription: string;
     geometries?: Array<IdaiFieldGeometry>;
-    images?: Array<IdaiFieldImage>;
+    images?: Array<string>;
 }

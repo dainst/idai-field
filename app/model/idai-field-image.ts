@@ -6,5 +6,5 @@ export interface IdaiFieldImage extends Resource {
     filename: string;
     width: number;
     height: number;
-    depicts?: IdaiFieldResource;
+    depicts?: string;
 }

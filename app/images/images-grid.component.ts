@@ -1,9 +1,8 @@
 import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
+import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {M} from "../m";
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
@@ -35,13 +34,13 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
     public constructor(
         private router: Router,
-        private datastore: IndexeddbDatastore,
+        private datastore: Datastore,
         private modalService: NgbModal,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        this.imageTool = new ImageTool(mediastore,sanitizer,messages);
+        this.imageTool = new ImageTool(datastore,mediastore,sanitizer,messages);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
     }
@@ -135,7 +134,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 cell.document = document;
                 cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
                 cell.calculatedHeight = calculatedHeight;
-                if (document.resource.filename) this.imageTool.setImgSrc(cell);
+                if (document.resource.identifier) this.imageTool.setImgSrc(cell);
                 this.rows[rowIndex][columnIndex] = cell;
             }
 
@@ -166,26 +165,12 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public openDeleteModal(modal) {
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') {
-                var results = this.selected.map(document => this.delete(document));
+                var results = this.selected.map(document => this.imageTool.delete(document));
                 Promise.all(results).then(() => {
                     this.clearSelection();
                     this.fetchDocuments(this.query);
                 });
             }
-        });
-    }
-
-    private delete(document): Promise<any> {
-        return new Promise((resolve) => {
-            this.mediastore.remove(document.resource.filename).then(() => {
-                this.datastore.remove(document.id).then(() => resolve()).catch(err => {
-                    this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.filename]);
-                    console.log(err);
-                });
-            }).catch(err => {
-                this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.filename]);
-                console.log(err);
-            });
         });
     }
 }

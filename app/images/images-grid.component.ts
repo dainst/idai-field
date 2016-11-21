@@ -7,7 +7,7 @@ import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from '@angular/platform-browser';
 import {BlobProxy,ImageContainer} from '../widgets/blob-proxy';
-import {ImageTool} from './image-tool';
+import {ImageTool} from '../widgets/image-tool';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

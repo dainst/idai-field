@@ -17,9 +17,9 @@ export class ImageTool {
     /**
      * 
      * @param document
-     * @returns {Promise<T>}
+     * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
      */
-    public remove(document): Promise<any> {
+    public remove(document): Promise<Array<string>> {
         return new Promise((resolve,reject) => {
             this.mediastore.remove(document.resource.identifier).then(() => {
                 this.datastore.remove(document.id).then(() => resolve()).catch(err => {

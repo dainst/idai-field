@@ -23,7 +23,8 @@ import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Mediastore} from './datastore/mediastore'
+import {Mediastore} from 'idai-components-2/datastore'
+import {ReadMediastore} from 'idai-components-2/datastore'
 import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
 import {ImagesModule} from './images/images.module'
@@ -62,6 +63,7 @@ import CONFIG = require("config/config.json!json");
                 }
             }
         },
+        { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },

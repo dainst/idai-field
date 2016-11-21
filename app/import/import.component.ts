@@ -115,11 +115,11 @@ export class ImportComponent {
 
         if (importReport['io_error']) {
             var filename = this.file ? this.file.name : "";
-            this.messages.add(M.IMPORTER_FAILURE_FILEUNREADABLE, [filename]);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_FILEUNREADABLE, filename]);
         }
 
         for (var parserError of importReport["parser_errors"])
-            this.messages.add(parserError.message, [parserError.lineNumber, parserError.errorData]);
+            this.messages.addWithParams([parserError.message, parserError.lineNumber, parserError.errorData]);
 
         for (var err of importReport['validation_errors'])
             this.showValidationErrorMessage(err.msg, err.msgParams);
@@ -136,7 +136,7 @@ export class ImportComponent {
         if (count == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
         } else {
-            this.messages.add(M.IMPORTER_SUCCESS_MULTIPLE, [count.toString()]);
+            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, count.toString()]);
         }
     }
 
@@ -145,20 +145,20 @@ export class ImportComponent {
         if (msg == M.VALIDATION_ERROR_IDMISSING) {
             this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
         } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDTYPE, msgParams);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDTYPE].concat(msgParams));
         } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELD, msgParams);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELD].concat(msgParams));
         } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
-            this.messages.add(M.IMPORTER_FAILURE_INVALIDFIELDS, msgParams);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELDS].concat(msgParams));
         }
     }
 
     private showDatastoreErrorMessage(doc: any, msg: any) {
 
         if (msg == M.DATASTORE_IDEXISTS) {
-            this.messages.add(M.IMPORTER_FAILURE_IDEXISTS, [doc.resource.identifier]);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_IDEXISTS, doc.resource.identifier]);
         } else {
-            this.messages.add(M.IMPORTER_FAILURE_GENERICDATASTOREERROR, [doc.resource.identifier]);
+            this.messages.addWithParams([M.IMPORTER_FAILURE_GENERICDATASTOREERROR, doc.resource.identifier]);
         }
     }
 }

@@ -1,8 +1,8 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {Mediastore} from "../datastore/mediastore";
-import {ImageTool} from "../images/image-tool";
+import {Mediastore} from "idai-components-2/datastore";
+import {BlobProxy} from "../images/blob-proxy";
 import {DomSanitizer} from '@angular/platform-browser';
 
 
@@ -17,26 +17,25 @@ import {DomSanitizer} from '@angular/platform-browser';
  */
 export class ThumbnailViewComponent implements OnChanges {
 
-    private imageTool : ImageTool;
+    private blobProxy : BlobProxy;
 
     @Input() document: any;
     
     public images = [];
 
     constructor(
-        private datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        this.imageTool = new ImageTool(datastore,mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
     }
 
     ngOnChanges() {
         if (!this.document || !this.document.resource.images) {
             this.images = []
         } else {
-            Promise.all(this.document.resource.images.map(id => this.imageTool.urlForImage(id)))
+            Promise.all(this.document.resource.images.map(id => this.blobProxy.urlForImage(id)))
                 .then(images => this.images = images);
         }
     }

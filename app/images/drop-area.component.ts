@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from "@angular/core";
 import {Datastore} from 'idai-components-2/datastore';
 import {M} from "../m";
-import {Mediastore} from "../datastore/mediastore";
+import {Mediastore} from "idai-components-2/datastore";
 import {Messages} from 'idai-components-2/messages';
 
 @Component({
@@ -57,14 +57,14 @@ export class DropAreaComponent {
                 }).then(() => {
                     that.onImageUploaded.emit();
                 }).catch(error => {
-                    that.messages.add(M.IMAGES_ERROR_MEDIASTORE_WRITE, [file.name]);
+                    that.messages.addWithParams([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
                     console.error(error);
                 });
             }
         })(this);
         reader.onerror = (that => {
             return (e) => {
-                that.messages.add(M.IMAGES_ERROR_FILEREADER, [file.name]);
+                that.messages.addWithParams([M.IMAGES_ERROR_FILEREADER, file.name]);
                 console.error(e.target.error);
             }
         })(this);

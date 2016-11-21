@@ -4,7 +4,7 @@ import {ReadDatastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {IndexeddbDatastore} from '../datastore/indexeddb-datastore';
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "../datastore/mediastore";
+import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ImageEditCanDeactivateGuard} from './image-edit-can-deactivate-guard';

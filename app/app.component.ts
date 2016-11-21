@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
         this.configLoader.setConfigurationPath(AppComponent.PROJECT_CONFIGURATION_PATH);
         this.configLoader.configuration().subscribe(result => {
             if (result.error) {
-                this.messages.add(result.error.msgkey, [result.error.msgparams]);
+                this.messages.addWithParams([result.error.msgkey].concat([result.error.msgparams]));
             } else {
                 new ConfigurationValidator(this.mandatoryFields)
                     .validate(result.projectConfiguration)

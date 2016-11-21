@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Query,Filter} from "idai-components-2/datastore";
-import {Mediastore} from "../datastore/mediastore";
+import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from '@angular/platform-browser';
 import {BlobProxy,ImageContainer} from './blob-proxy';
 import {ImageTool} from './image-tool';
@@ -169,7 +169,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') {
                 var results = this.selected.map(document => this.imageTool.remove(document).catch(err=>{
-                    this.messages.add(err[0],err[1]);
+                    this.messages.add(err);
                 }));
                 Promise.all(results).then(() => {
                     this.clearSelection();

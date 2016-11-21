@@ -13,7 +13,7 @@ Module.prototype.require = function() {
     return originalRequire.apply(this, arguments);
 };
 
-import {Mediastore} from"../../app/datastore/mediastore";
+import {Mediastore} from"idai-components-2/datastore";
 import {FileSystemMediastore} from "../../app/datastore/file-system-mediastore";
 
 import fs = require('fs');

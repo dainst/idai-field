@@ -3,7 +3,7 @@ import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {BlobProxy, ImageContainer} from "./blob-proxy";
+import {BlobProxy, ImageContainer} from "../widgets/blob-proxy";
 
 /**
  * @author Daniel de Oliveira
@@ -20,7 +20,7 @@ export class ImageComponentBase {
         sanitizer: DomSanitizer,
         protected messages: Messages
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer);
     }
 
     protected fetchDocAndImage() {

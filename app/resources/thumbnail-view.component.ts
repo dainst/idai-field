@@ -1,9 +1,7 @@
 import {Component, OnChanges, Input} from "@angular/core";
-import {Datastore} from 'idai-components-2/datastore';
-import {Messages} from 'idai-components-2/messages';
 import {Mediastore} from "idai-components-2/datastore";
-import {BlobProxy} from "../images/blob-proxy";
-import {DomSanitizer} from '@angular/platform-browser';
+import {BlobProxy} from "../widgets/blob-proxy";
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -20,22 +18,26 @@ export class ThumbnailViewComponent implements OnChanges {
     private blobProxy : BlobProxy;
 
     @Input() document: any;
-    
+
+    // TODO create an event emitter for error handling
+
     public images = [];
 
     constructor(
         mediastore: Mediastore,
-        sanitizer: DomSanitizer,
-        messages: Messages
+        sanitizer: DomSanitizer
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer);
     }
 
     ngOnChanges() {
         if (!this.document || !this.document.resource.images) {
             this.images = []
         } else {
-            Promise.all(this.document.resource.images.map(id => this.blobProxy.urlForImage(id)))
+            Promise.all(this.document.resource.images.map(id =>
+
+                // TODO handle error
+                this.blobProxy.urlForImage(id)))
                 .then(images => this.images = images);
         }
     }

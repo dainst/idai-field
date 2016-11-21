@@ -1,6 +1,6 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Mediastore} from "idai-components-2/datastore";
-import {BlobProxy} from "../widgets/blob-proxy";
+import {BlobProxy} from "../common/blob-proxy";
 import {DomSanitizer} from "@angular/platform-browser";
 
 

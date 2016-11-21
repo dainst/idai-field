@@ -36,7 +36,7 @@ export class BlobProxy {
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
             }).catch(error => {
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
-                reject(error);
+                // reject(error);
             });
         });
     }

@@ -1,7 +1,5 @@
-import {Messages} from "idai-components-2/messages";
-import {Datastore} from "idai-components-2/datastore";
+import {Datastore, Mediastore} from "idai-components-2/datastore";
 import {M} from "../m";
-import {Mediastore} from "idai-components-2/datastore";
 
 /**
  * @author Sebastian Cuy

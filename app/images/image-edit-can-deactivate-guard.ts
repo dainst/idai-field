@@ -4,7 +4,7 @@ import { CanDeactivate,
     RouterStateSnapshot }  from '@angular/router';
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import { ImageEditNavigationComponent } from './image-edit-navigation.component';
-import { CanDeactivateGuardBase} from '../widgets/can-deactivate-guard-base';
+import { CanDeactivateGuardBase} from '../common/can-deactivate-guard-base';
 
 /**
  * @author Daniel de Oliveira

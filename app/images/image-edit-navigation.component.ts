@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ReadDatastore} from "idai-components-2/datastore";
+import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {IndexeddbDatastore} from '../datastore/indexeddb-datastore';
 import {Messages} from "idai-components-2/messages";
@@ -30,12 +30,12 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
         private modalService:NgbModal,
         private canDeactivateGuard:ImageEditCanDeactivateGuard,
         route: ActivatedRoute,
-        datastore: IndexeddbDatastore,
+        datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(route,<ReadDatastore>datastore,mediastore,sanitizer,messages);
+        super(route,datastore,mediastore,sanitizer,messages);
         this.idbDatastore = datastore;
     }
 

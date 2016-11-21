@@ -86,7 +86,8 @@ export class DropAreaComponent {
                         "type": "image",
                         "filename": file.name,
                         "width": img.width,
-                        "height": img.height
+                        "height": img.height,
+                        "relations": {}
                     }
                 };
                 this.datastore.create(doc)

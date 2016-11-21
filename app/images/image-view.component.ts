@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {ReadDatastore} from "idai-components-2/datastore";
+import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "idai-components-2/datastore";
@@ -18,7 +18,7 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
 
     constructor(
         route: ActivatedRoute,
-        datastore: ReadDatastore,
+        datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         messages: Messages

@@ -169,7 +169,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 1599,
             "author" : "William Tung from USA",
             "depicts": "o4"
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o13",
@@ -184,7 +185,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 452,
             "author": "Michael Neel from Knoxville, TN, USA",
             "depicts": "o2"
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o14",
@@ -199,7 +201,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 793,
             "author": "Bernie Thomas",
             "depicts": "o6"
-        }
+        },
+        "synced": 0
     },
 
     {
@@ -215,7 +218,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 533,
             "author": "Jenny Elwick",
             "depicts": "o5"
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o17",
@@ -230,7 +234,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width": 1280,
             "author": "Meher Anand Kasam",
             "depicts": "o8"
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o18",
@@ -245,7 +250,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width": 1024,
             "author": "Peter Dowley from Dubai, United Arab Emirates",
             "depicts": "o7"
-        }
+        },
+        "synced": 0
     },
 
 
@@ -262,7 +268,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "height" : 1695,
             "width" : 2400,
             "author": "W. R. van Hage and FR"
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o20",
@@ -277,7 +284,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 1024,
             "author": "The Conmunity - Pop Culture Geek from Los Angeles, CA, USA",
             "depicts": ["o9"]
-        }
+        },
+        "synced": 0
     },
     {
         "id": "o21",
@@ -292,7 +300,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 548,
             "author": "http://nidoart.blogspot.fr/",
             "depicts": "o1"
-        }
+        },
+        "synced": 0
     },
 
     {
@@ -308,7 +317,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "width" : 800,
             "author" : "Vulcan.jpg: dave_7",
             "depicts": "o11"
-        }
+        },
+        "synced": 0
     },
 
     {
@@ -318,6 +328,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob23",
             "shortDescription": "Finn",
             "type": "dude",
+            "relations": {},
             "images": ["finn.jpg"]
         },
         "synced": 0
@@ -335,6 +346,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "height" : 337,
             "width" : 300,
             "depicts": "o23"
-        }
+        },
+        "synced": 0
     },
 ];

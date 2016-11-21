@@ -4,22 +4,17 @@ import { CanDeactivate,
     RouterStateSnapshot }  from '@angular/router';
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import { ResourceEditNavigationComponent } from './resource-edit-navigation.component';
+import { CanDeactivateGuardBase} from '../widgets/can-deactivate-guard-base';
 
+/**
+ * @author Daniel de Oliveira
+ */
 @Injectable()
-export class ResourceEditCanDeactivateGuard implements CanDeactivate<ResourceEditNavigationComponent> {
-
-    private _resolve;
-
-    constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) {}
-
-    public proceed() {
-        this._resolve(true);
-    }
-
-    public cancel() {
-        this._resolve(false);
-    }
-
+export class ResourceEditCanDeactivateGuard
+    extends CanDeactivateGuardBase
+    implements CanDeactivate<ResourceEditNavigationComponent> {
+    
+    constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) {super();}
 
     canDeactivate(
         component: ResourceEditNavigationComponent,
@@ -27,18 +22,14 @@ export class ResourceEditCanDeactivateGuard implements CanDeactivate<ResourceEdi
         state: RouterStateSnapshot
     ): Promise<boolean> | boolean {
 
-        return new Promise<boolean>((resolve_)=>{
-
+        return this.resolveOrShowModal(component,function() {
             if (!this.documentEditChangeMonitor.isChanged()) {
                 if (component.mode=='new') {
                     component.discard();
                 }
-                return resolve_(true);
+                return true;
             }
-
-            this._resolve=resolve_;
-
-            component.showModal();
-        });
+            return false;
+        }.bind(this));
     }
 }

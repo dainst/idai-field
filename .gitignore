@@ -44,5 +44,8 @@ css
 fonts
 app/**/*.js
 app/**/*.js.map
-test/**/*.spec.js
-test/**/*.js.spec.map
+test/browser/*.spec.js
+test/browser/*.js.spec.map
+test/node/*.spec.js
+test/node/*.js.spec.map
+

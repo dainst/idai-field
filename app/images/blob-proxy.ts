@@ -1,4 +1,3 @@
-import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {ReadMediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -12,47 +11,67 @@ export interface ImageContainer {
 }
 
 /**
+ * This tool is used to get binary data from a mediastore and put them as blobs into html img tags.
+ *
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
 export class BlobProxy {
 
-    private imgSrc = 'imgSrc';
     private blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
     constructor(
         private mediastore: ReadMediastore,
-        private sanitizer: DomSanitizer,
-        private messages: Messages
+        private sanitizer: DomSanitizer
     ) { }
 
-    public urlForImage(identifier): Promise<string> {
+    /**
+     * @param identifier
+     * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
+     */
+    public urlForImage(identifier): Promise<Array<string>> {
         return new Promise((resolve, reject) => {
             this.mediastore.read(identifier).then(data => {
                 var url = URL.createObjectURL(new Blob([data]));
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
             }).catch(error => {
-                this.messages.addWithParams([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
-                console.error(error);
+                reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
                 reject(error);
             });
         });
     }
 
     /**
-     * @param imageContainer
-     *   imgCell.document.resource['filename'] must be a filename of an existing file in the mediastore.
+     * Fills the <code>imgSrc</code> of the <code>imageContainer</code> with blob data extracted from
+     * the file associated to the containers resource.
+     *
+     * @param <code>imageContainer</code>
+     *   <code>imgContainer.document.resource['filename']</code>
+     *   must be a filename of an existing file in the mediastore.
+     *
+     * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
      */
-    public setImgSrc(imageContainer : ImageContainer) {
-        var image : ImageContainer = imageContainer;
+    public setImgSrc(imageContainer : ImageContainer) : Promise<Array<string>>{
 
-        var callback = image => { return url => image[this.imgSrc] = url };
-        var errorCallback = image => { return url =>
-            // display a black image
-            image.imgSrc = this.blackImg;
-        };
-        this.urlForImage(imageContainer.document.resource.identifier)
-            .then(callback(image))
-            .catch(errorCallback(image));
+        return new Promise((resolve, reject) => {
+            var image:ImageContainer = imageContainer;
+
+            var callback = image => {
+                return url => {
+                    image.imgSrc = url;
+                    resolve();
+                }
+            };
+            var errorCallback = image => {
+                return errors => {
+                    // display a black image
+                    image.imgSrc = this.blackImg;
+                    reject(errors)
+                }
+            };
+            this.urlForImage(imageContainer.document.resource.identifier)
+                .then(callback(image))
+                .catch(errorCallback(image));
+        });
     }
 }

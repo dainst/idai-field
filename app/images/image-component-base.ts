@@ -18,7 +18,7 @@ export class ImageComponentBase {
         private datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        messages: Messages
+        protected messages: Messages
     ) {
         this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
     }
@@ -30,7 +30,9 @@ export class ImageComponentBase {
                 doc=>{
                     // this.doc = doc;
                     this.image.document = doc;
-                    if (doc.resource.filename) this.blobProxy.setImgSrc(this.image);
+                    if (doc.resource.filename) this.blobProxy.setImgSrc(this.image).catch(err=>{
+                        this.messages.addWithParams(err);
+                    });
                 },
                 ()=>{
                     console.error("Fatal error: could not load document for id ",id);

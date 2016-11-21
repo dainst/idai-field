@@ -137,7 +137,9 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 cell.document = document;
                 cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
                 cell.calculatedHeight = calculatedHeight;
-                if (document.resource.identifier) this.blobProxy.setImgSrc(cell);
+                if (document.resource.identifier) this.blobProxy.setImgSrc(cell).catch(err=>{
+                    this.messages.addWithParams(err);
+                });
                 this.rows[rowIndex][columnIndex] = cell;
             }
 

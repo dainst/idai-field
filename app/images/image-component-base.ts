@@ -1,9 +1,9 @@
 import {ActivatedRoute, Params} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "../datastore/mediastore";
+import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {ImageTool, ImageContainer} from "./image-tool";
+import {BlobProxy, ImageContainer} from "./blob-proxy";
 
 /**
  * @author Daniel de Oliveira
@@ -11,16 +11,16 @@ import {ImageTool, ImageContainer} from "./image-tool";
 export class ImageComponentBase {
 
     protected image : ImageContainer = {};
-    private imageTool : ImageTool;
+    private blobProxy : BlobProxy;
 
     constructor(
         private route: ActivatedRoute,
         private datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        messages: Messages
+        protected messages: Messages
     ) {
-        this.imageTool = new ImageTool(datastore,mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
     }
 
     protected fetchDocAndImage() {
@@ -30,7 +30,9 @@ export class ImageComponentBase {
                 doc=>{
                     // this.doc = doc;
                     this.image.document = doc;
-                    if (doc.resource.filename) this.imageTool.setImgSrc(this.image);
+                    if (doc.resource.filename) this.blobProxy.setImgSrc(this.image).catch(err=>{
+                        this.messages.addWithParams(err);
+                    });
                 },
                 ()=>{
                     console.error("Fatal error: could not load document for id ",id);

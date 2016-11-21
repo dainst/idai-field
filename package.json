@@ -33,7 +33,7 @@
     "angular2-uuid": "^1.1.0",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/226/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/232/.git",
     "identicon.js": "github:dainst/identicon.js",
     "leaflet": "1.0.1",
     "leaflet.pm": "^0.10.1",

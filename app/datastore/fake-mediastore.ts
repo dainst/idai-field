@@ -1,5 +1,5 @@
 import {Observable} from "rxjs/Observable";
-import {Mediastore} from './mediastore';
+import {Mediastore} from 'idai-components-2/datastore';
 
 
 export class FakeMediastore implements Mediastore {

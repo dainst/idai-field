@@ -5,25 +5,28 @@ import {Mediastore} from "../datastore/mediastore";
 
 /**
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export class ImageTool {
 
     constructor(
         private datastore: Datastore,
-        private mediastore: Mediastore,
-        private messages: Messages
+        private mediastore: Mediastore
     ) { }
-    
-    public delete(document): Promise<any> {
-        return new Promise((resolve) => {
+
+    /**
+     * 
+     * @param document
+     * @returns {Promise<T>}
+     */
+    public remove(document): Promise<any> {
+        return new Promise((resolve,reject) => {
             this.mediastore.remove(document.resource.identifier).then(() => {
                 this.datastore.remove(document.id).then(() => resolve()).catch(err => {
-                    this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.identifier]);
-                    console.log(err);
+                    reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
                 });
             }).catch(err => {
-                this.messages.add(M.IMAGES_ERROR_DELETE, [document.resource.identifier]);
-                console.log(err);
+                reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
             });
         });
     }

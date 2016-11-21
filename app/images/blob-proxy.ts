@@ -13,7 +13,7 @@ export interface ImageContainer {
 
 /**
  * @author Sebastian Cuy
- * @autor Daniel de Oliveira
+ * @author Daniel de Oliveira
  */
 export class BlobProxy {
 

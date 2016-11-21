@@ -40,10 +40,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         private modalService: NgbModal,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        messages: Messages
+        private messages: Messages
     ) {
         this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
-        this.imageTool = new ImageTool(datastore,mediastore,messages);
+        this.imageTool = new ImageTool(datastore,mediastore);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
     }
@@ -168,7 +168,9 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public openDeleteModal(modal) {
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') {
-                var results = this.selected.map(document => this.imageTool.delete(document));
+                var results = this.selected.map(document => this.imageTool.remove(document).catch(err=>{
+                    this.messages.add(err[0],err[1]);
+                }));
                 Promise.all(results).then(() => {
                     this.clearSelection();
                     this.fetchDocuments(this.query);

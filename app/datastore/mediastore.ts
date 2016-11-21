@@ -1,4 +1,5 @@
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
+import {ReadMediastore} from './read-mediastore';
 
 /**
  * The interface for general media stores supporting
@@ -6,7 +7,7 @@ import {Observable} from "rxjs/Observable";
  *
  * @author Sebastian Cuy
  */
-export abstract class Mediastore {
+export abstract class Mediastore extends ReadMediastore {
 
     /**
      * @param key the identifier for the data
@@ -15,13 +16,6 @@ export abstract class Mediastore {
      *   reject -> the error message
      */
     abstract create(key: string, data: ArrayBuffer): Promise<any>;
-
-    /**
-     * @param key the identifier for the data
-     * @returns {Promise<ArrayBuffer>} resolve -> (data), the data read with the key,
-     *  reject -> the error message
-     */
-    abstract read(key: string): Promise<ArrayBuffer>;
 
     /**
      * @param key the identifier for the data
@@ -44,5 +38,4 @@ export abstract class Mediastore {
      * methods defined here.
      */
     abstract objectChangesNotifications(): Observable<File>;
-
 }

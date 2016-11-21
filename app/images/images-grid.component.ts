@@ -6,7 +6,8 @@ import {Messages} from 'idai-components-2/messages';
 import {Query,Filter} from "idai-components-2/datastore";
 import {Mediastore} from "../datastore/mediastore";
 import {DomSanitizer} from '@angular/platform-browser';
-import {ImageTool,ImageContainer} from './image-tool';
+import {BlobProxy,ImageContainer} from './blob-proxy';
+import {ImageTool} from './image-tool';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -22,6 +23,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
  */
 export class ImagesGridComponent implements OnChanges, OnInit {
 
+    private blobProxy : BlobProxy;
     private imageTool : ImageTool;
     
     private query : Query = { q: '' };
@@ -40,7 +42,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        this.imageTool = new ImageTool(datastore,mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
+        this.imageTool = new ImageTool(datastore,mediastore,messages);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
     }
@@ -134,7 +137,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 cell.document = document;
                 cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
                 cell.calculatedHeight = calculatedHeight;
-                if (document.resource.identifier) this.imageTool.setImgSrc(cell);
+                if (document.resource.identifier) this.blobProxy.setImgSrc(cell);
                 this.rows[rowIndex][columnIndex] = cell;
             }
 

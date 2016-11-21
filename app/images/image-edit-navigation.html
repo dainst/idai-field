@@ -7,15 +7,15 @@
     <div class="col-md-9">
         <document-edit-wrapper #f
                 [(document)]="image.document"
-                (saveSuccess)="navigate($event['proceed']);"
-                (backButtonClicked)="navigateBack();">
+                (onSaveSuccess)="navigate($event);"
+                (onBbackButtonClicked)="navigateBack();">
         </document-edit-wrapper>
     </div>
 </div>
 
 <template #modalTemplate>
     <edit-save-dialog
-            (onSave)="f.save(true); modal.close();"
+            (onSave)="f.save(); modal.close();"
             (onDiscard)="discard(true); modal.close();"
             (onCancel)="canDeactivateGuard.cancel(); modal.close();">
     </edit-save-dialog>

@@ -37,8 +37,8 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
     @Input() document;
     @Input() showBackButton : boolean = true;
-    @Output() saveSuccess = new EventEmitter<any>();
-    @Output() backButtonClicked = new EventEmitter<any>();
+    @Output() onSaveSuccess = new EventEmitter<any>();
+    @Output() onBackButtonClicked = new EventEmitter<any>();
 
     constructor(
         private messages: Messages,
@@ -50,15 +50,10 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         super(configLoader);
     }
 
-    private onBackButtonClicked() {
-        // router.navigate(['resources', { id: document.resource.id }]);
-        this.backButtonClicked.emit();
-    }
-
     /**
      * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
-    public save(proceed:boolean=false) {
+    public save(bySaveButton:boolean=false) {
 
         var validationReport = this.validate(this.document);
         if (!validationReport.valid) {
@@ -71,7 +66,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                 this.document['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
 
-                this.saveSuccess.emit({document:this.document,proceed:proceed})
+                this.onSaveSuccess.emit(bySaveButton);
                 // this.navigate(this.document, proceed);
                 // show message after route change
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
@@ -86,7 +81,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
     private validate(doc) {
         return this.validator.validate(<IdaiFieldDocument>doc);
     }
-    
+
     public getTypeLabel(): string {
 
         if (!this.document) {

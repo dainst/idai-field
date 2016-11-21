@@ -81,10 +81,6 @@ export class ResourceEditNavigationComponent implements  OnInit {
         );
     }
 
-    public onSaveSuccess(e) {
-        this.navigate(e['document'], e['proceed']);
-    }
-
     public onBackButtonClicked() {
         this.router.navigate(['resources', { id: this.document.resource.id }]);
     }
@@ -113,18 +109,18 @@ export class ResourceEditNavigationComponent implements  OnInit {
      * @param doc
      * @param proceed
      */
-    private navigate(doc, proceed) {
+    private navigate(bySaveButton) {
 
-        if (proceed) return this.canDeactivateGuard.proceed();
+        if (!bySaveButton) return this.canDeactivateGuard.proceed();
 
         if (this.mode=='new') {
-            this.router.navigate(['resources',doc.resource.id,'edit']);
+            this.router.navigate(['resources',this.document.resource.id,'edit']);
 
             // since ngOnInit will not get triggered
             this.mode='edit';
             // doc must be reloaded so instance of this.document is
             // the same as the one in overviewComponent
-            this.overviewComponent.loadDoc(doc.resource.id).then(
+            this.overviewComponent.loadDoc(this.document.resource.id).then(
                 document=>this.document=document);
         }
 

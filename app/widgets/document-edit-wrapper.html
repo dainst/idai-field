@@ -5,11 +5,11 @@
             <button *ngIf="showBackButton" class="btn btn-primary"
                     id="document-edit-button-goto-view"
                     style="float: right;"
-                    (click)="onBackButtonClicked()">Zur Ansicht</button>
+                    (click)="onBackButtonClicked.emit();">Zur Ansicht</button>
             <button class="btn btn-primary pull-right"
                     id="document-edit-button-save-document"
                     style="float: right;"
-                    (click)="save();">Speichern</button>
+                    (click)="save(true);">Speichern</button>
             <span class="mdi mdi-blur"></span>
 
             <span *ngIf="showBackButton">{{getTypeLabel()}} bearbeiten</span>

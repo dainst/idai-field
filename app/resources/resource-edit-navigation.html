@@ -1,14 +1,14 @@
 <document-edit-wrapper #f
                        [(document)]="document"
-                        (saveSuccess)="onSaveSuccess($event)"
+                        (onSaveSuccess)="navigate($event)"
                         [showBackButton]="(mode=='edit')"
-                        (backButtonClicked)="onBackButtonClicked()"
+                        (onBackButtonClicked)="onBackButtonClicked()"
                        >
 </document-edit-wrapper>
 
 <template #modalTemplate>
     <edit-save-dialog
-        (onSave)="f.save(true); modal.close();"
+        (onSave)="f.save(); modal.close();"
         (onDiscard)="discard(true); modal.close();"
         (onCancel)="canDeactivateGuard.cancel(); modal.close();">
     </edit-save-dialog>

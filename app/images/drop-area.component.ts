@@ -2,7 +2,6 @@ import {Component, Output, EventEmitter} from "@angular/core";
 import {Datastore} from 'idai-components-2/datastore';
 import {M} from "../m";
 import {Mediastore} from "idai-components-2/datastore";
-import {Messages} from 'idai-components-2/messages';
 
 @Component({
     selector: 'drop-area',
@@ -12,15 +11,16 @@ import {Messages} from 'idai-components-2/messages';
 
 /**
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export class DropAreaComponent {
 
     @Output() onImageUploaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
     
     public constructor(
         private mediastore: Mediastore,
-        private datastore: Datastore,
-        private messages: Messages
+        private datastore: Datastore
     ) {
     }
 
@@ -48,6 +48,12 @@ export class DropAreaComponent {
         }
     }
 
+    /**
+     * Emits <code>onUploadError</code> with {Array<string>>} where the string 
+     * array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
+     * 
+     * @param file
+     */
     private uploadFile(file) {
         var reader = new FileReader();
         reader.onloadend = (that => {
@@ -57,15 +63,13 @@ export class DropAreaComponent {
                 }).then(() => {
                     that.onImageUploaded.emit();
                 }).catch(error => {
-                    that.messages.addWithParams([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
-                    console.error(error);
+                    that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
                 });
             }
         })(this);
         reader.onerror = (that => {
             return (e) => {
-                that.messages.addWithParams([M.IMAGES_ERROR_FILEREADER, file.name]);
-                console.error(e.target.error);
+                that.onUploadError.emit([M.IMAGES_ERROR_FILEREADER, file.name]);
             }
         })(this);
         reader.readAsArrayBuffer(file);

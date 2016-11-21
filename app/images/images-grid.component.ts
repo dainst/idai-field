@@ -42,7 +42,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         sanitizer: DomSanitizer,
         private messages: Messages
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer,messages);
+        this.blobProxy = new BlobProxy(mediastore,sanitizer);
         this.imageTool = new ImageTool(datastore,mediastore);
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
         this.query = { q: '', filters: this.defaultFilters };
@@ -58,6 +58,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
     public ngOnChanges() {
         this.fetchDocuments(this.query);
+    }
+
+    public showUploadErrorMsg(msgWithParams) {
+        this.messages.addWithParams(msgWithParams);
     }
 
     /**

@@ -50,10 +50,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         super(configLoader);
     }
 
-    /**
-     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
-     */
-    public save(bySaveButton:boolean=false) {
+    public save(viaSaveButton:boolean=false) {
 
         var validationReport = this.validate(this.document);
         if (!validationReport.valid) {
@@ -66,7 +63,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                 this.document['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
 
-                this.onSaveSuccess.emit(bySaveButton);
+                this.onSaveSuccess.emit(viaSaveButton);
                 // this.navigate(this.document, proceed);
                 // show message after route change
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);

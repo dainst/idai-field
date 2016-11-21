@@ -81,7 +81,7 @@ export class ResourceEditNavigationComponent implements  OnInit {
         );
     }
 
-    public onBackButtonClicked() {
+    public goBack() {
         this.router.navigate(['resources', { id: this.document.resource.id }]);
     }
 
@@ -106,12 +106,11 @@ export class ResourceEditNavigationComponent implements  OnInit {
      * According to the current mode or the value of proceed,
      * initiates an appropriate route change.
      *
-     * @param doc
-     * @param proceed
+     * @param savedViaSaveButton
      */
-    private navigate(bySaveButton) {
+    private navigate(savedViaSaveButton:boolean) {
 
-        if (!bySaveButton) return this.canDeactivateGuard.proceed();
+        if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
 
         if (this.mode=='new') {
             this.router.navigate(['resources',this.document.resource.id,'edit']);

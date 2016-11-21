@@ -43,8 +43,8 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
         this.fetchDocAndImage();
     }
 
-    public navigate(bySaveButton) {
-        if (!bySaveButton) return this.canDeactivateGuard.proceed();
+    public navigate(savedViaSaveButton:boolean) {
+        if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
         
         this.router.navigate(['images',this.image.document.resource.id,'show']);
     }

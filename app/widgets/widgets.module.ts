@@ -9,6 +9,7 @@ import {DocumentViewComponent} from './document-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {RouterModule} from '@angular/router';
+import {DropAreaComponent} from './drop-area.component';
 
 @NgModule({
     imports: [
@@ -23,14 +24,16 @@ import {RouterModule} from '@angular/router';
         TypeIconComponent,
         DocumentViewComponent,
         DocumentEditWrapperComponent,
-        EditSaveDialogComponent
+        EditSaveDialogComponent,
+        DropAreaComponent
     ],
     exports : [
         SearchBarComponent,
         TypeIconComponent,
         DocumentViewComponent,
         DocumentEditWrapperComponent,
-        EditSaveDialogComponent
+        EditSaveDialogComponent,
+        DropAreaComponent
     ]
 })
 

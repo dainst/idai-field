@@ -25,7 +25,7 @@ export class ResourceEditCanDeactivateGuard
         return this.resolveOrShowModal(component,function() {
             if (!this.documentEditChangeMonitor.isChanged()) {
                 if (component.mode=='new') {
-                    component.discard();
+                    component.discard(true);
                 }
                 return true;
             }

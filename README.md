@@ -76,7 +76,7 @@ As the *start* command, it automatically converts scss files to css when they ar
 
 This command runs the end to end tests once.
 
-## Packacking
+## Packaging
 
 To create binaries run 
 

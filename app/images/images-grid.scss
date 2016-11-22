@@ -3,6 +3,13 @@
   margin-top: 15px;
   position: relative;
 
+  .tag {
+    font-weight: normal;
+    padding: 5px;
+    border-radius: 0.15rem;
+    color: #eee;
+  }
+
   .cell-container {
     display: inline-block;
     vertical-align: top;

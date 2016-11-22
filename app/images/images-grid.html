@@ -62,7 +62,7 @@
                     <div class="identifier"
                          *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                          [style.maxWidth.px]="cell['calculatedWidth']-15">
-                        {{cell['document'].resource.identifier}}
+                        <span class="tag tag-default">{{cell['document'].resource.identifier}}</span>
                     </div>
 
                     <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"

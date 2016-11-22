@@ -17,7 +17,7 @@ export interface EditNavigation {
      */
     navigate(savedViaSaveButton:boolean);
 
-    discard(optional?:any);
+    discard();
 
     goBack();
 

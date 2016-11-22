@@ -82,16 +82,26 @@ export class ResourceEditNavigationComponent
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
      */
-    public discard(calledFromDeactivateGuard:boolean = false) {
-
-        this.overviewComponent.restore().then(
-            () => {
-                this.documentEditChangeMonitor.reset();
-                if (!calledFromDeactivateGuard) this.canDeactivateGuard.proceed();
-            }, (err) => {
-                this.messages.add(err);
-            });
+    public discard() {
+        this.restore().then(()=>{
+            this.canDeactivateGuard.proceed();
+        });
     }
+
+    public restore() : Promise<any> {
+        return new Promise<any>((resolve,reject)=>{
+            this.overviewComponent.restore().then(
+                () => {
+                    this.documentEditChangeMonitor.reset();
+                    resolve();
+                }, (err) => {
+                    this.messages.add(err);
+                    reject();
+                });
+        });
+    }
+
+
 
     /**
      * According to the current mode or the value of savedViaSaveButton,

@@ -23,13 +23,23 @@ export class ResourceEditCanDeactivateGuard
     ): Promise<boolean> | boolean {
 
         return this.resolveOrShowModal(component,function() {
+            
             if (!this.documentEditChangeMonitor.isChanged()) {
+                
                 if (component.mode=='new') {
-                    component.discard(true);
+                    component.restore().then(()=>{
+                        return true;
+                    }).catch(()=>{
+                        return false;
+                    });
+                } else {
+                    return true;
                 }
-                return true;
+
+            } else {
+                return false;
             }
-            return false;
+            
         }.bind(this));
     }
 }

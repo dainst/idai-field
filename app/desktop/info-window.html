@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="../../css/idai-field-client.css">
-    </head>
-    <body style="-webkit-app-region: drag">
-        <div class="info-window">
-            <div id="header-block">
-                <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
-                <button id="close-btn" class="btn btn-danger">X</button>
-            </div>
-            <img id="about-logo" src="../../img/favicon.png" class="m-x-auto d-block" alt="idai-field-client logo">
-            <div>
-                <p id="about-version">"VERSION-STRING"</p>
-            </div>
-        </div>
-        <script>
-            const electron = require('electron');
-            const remote = electron.remote;
+<head>
+    <link rel="stylesheet" type="text/css" href="../../css/idai-field-client.css">
+</head>
+<body style="-webkit-app-region: drag">
+<div class="info-window">
+    <div id="header-block">
+        <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
+        <button id="close-btn">X</button>
+    </div>
+    <img id="about-logo" src="../../img/favicon.png"
+         class="m-x-auto d-block"
+         alt="idai-field-client logo">
+    <p id="about-version">"VERSION-STRING"</p>
+</div>
+<script>
+    const electron = require('electron');
+    const remote = electron.remote;
 
-            document.getElementById("close-btn").addEventListener("click", function () {
-                var window = remote.getCurrentWindow();
-                window.close();
-            });
-        </script>
-    </body>
+    document.getElementById("close-btn").addEventListener("click", function () {
+        var window = remote.getCurrentWindow();
+        window.close();
+    });
+</script>
+</body>
 </html>

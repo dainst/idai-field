@@ -1,9 +1,47 @@
 /**
  * @author: Thomas Kleinke
+ * @author: Jan G. Wieners
  */
 
-h4.document-title {
+$buttoncolor: #657faa;
+
+#document-view .card-header {
+  padding-bottom: 4px;
+}
+
+#document-view .card-header .type-icon {
+  position: absolute;
+  top: 17px;
+}
+
+#document-view .card-header .document-title {
+  margin-left: 35px;
+  margin-top: 5px;
+  margin-bottom: 3px !important;
+}
+
+#document-view .card-header h4.document-title {
   font-weight: lighter;
+  margin-bottom: 0;
+}
+
+#document-view .card-header .close-button {
+  padding: 5px;
+  float: right;
+  margin-top: -9px !important;
+  margin-right: 0 !important;
+  font-size: 27px;
+  color: $buttoncolor !important;
+}
+
+#document-view-button-edit-document {
+  font-size: 27px;
+  color: $buttoncolor !important;
+  position: absolute;
+  right: 0;
+  padding: 0;
+  margin-top: -4px;
+  margin-right: 24px;
 }
 
 .document-card .btn-link {
@@ -48,4 +86,21 @@ h4.document-title {
 #document-view-button-create-polygon {
   margin-left: -5px;
   margin-right: -15px;
+}
+
+#document-view-button-back-to-map,
+#document-view-button-edit-geometry,
+#document-view-button-show-data {
+  margin-top: 1px;
+  padding: 0;
+  font-size: 23px;
+  color: $buttoncolor !important;
+}
+
+#document-view .card-header .close-button:hover,
+#document-view-button-edit-document:hover,
+#document-view-button-back-to-map:hover,
+#document-view-button-edit-geometry:hover,
+#document-view-button-show-data:hover {
+  color: lighten($buttoncolor, 10%) !important;
 }

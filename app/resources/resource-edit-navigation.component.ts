@@ -5,6 +5,7 @@ import {Messages} from "idai-components-2/messages";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ResourceEditCanDeactivateGuard} from "./resource-edit-can-deactivate-guard";
 import {ResourcesComponent} from "./resources.component";
+import {EditNavigation} from '../common/edit-navigation';
 
 @Component({
     moduleId: module.id,
@@ -18,7 +19,8 @@ import {ResourcesComponent} from "./resources.component";
  * 
  * @author Daniel de Oliveira
  */
-export class ResourceEditNavigationComponent implements  OnInit {
+export class ResourceEditNavigationComponent
+    implements  EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
     modalTemplate: TemplateRef<any>;
@@ -79,28 +81,23 @@ export class ResourceEditNavigationComponent implements  OnInit {
     /**
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
-     *
-     * // TODO review param / see savedViaSaveButton in navigate
-     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
-    public discard(proceed:boolean=false) {
+    public discard(calledFromDeactivateGuard:boolean = false) {
 
         this.overviewComponent.restore().then(
             () => {
                 this.documentEditChangeMonitor.reset();
-                if (proceed) this.canDeactivateGuard.proceed();
+                if (!calledFromDeactivateGuard) this.canDeactivateGuard.proceed();
             }, (err) => {
                 this.messages.add(err);
             });
     }
 
     /**
-     * According to the current mode or the value of proceed,
+     * According to the current mode or the value of savedViaSaveButton,
      * initiates an appropriate route change.
-     *
-     * @param savedViaSaveButton
      */
-    private navigate(savedViaSaveButton:boolean) {
+    public navigate(savedViaSaveButton:boolean = false) {
 
         if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
 

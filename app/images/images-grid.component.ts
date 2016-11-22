@@ -25,7 +25,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
     private blobProxy : BlobProxy;
     private imageTool : ImageTool;
-    
+
     private query : Query = { q: '' };
     private documents;
     protected defaultFilters: Array<Filter>;
@@ -33,6 +33,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     private nrOfColumns = 4;
     private rows = [];
     private selected = [];
+
+    private dataStoreRetries : number = 5;
 
     public constructor(
         private router: Router,
@@ -69,10 +71,18 @@ export class ImagesGridComponent implements OnChanges, OnInit {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    public fetchDocuments(query: Query) {
-
+    private fetchDocuments(query: Query, retries = this.dataStoreRetries) {
         this.datastore.find(query).then(documents => {
+            if (documents.length == 0) {
+                if (retries > 0) {
+                    console.log("Datastore empty, retrying in 3 seconds (" + retries + " retries left).");
+                    return setTimeout(this.fetchDocuments(query, retries - 1), 3000);
+                }
+                else {
+                    console.log("Failed to fetch any document.");
+                }
 
+            }
             this.documents = documents;
 
             // insert stub document for first cell that will act as drop area for uploading images
@@ -82,10 +92,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             });
 
             this.calcGrid();
-            
+
         }).catch(err => console.error(err));
     }
-    
+
     protected setUpDefaultFilters() {
         this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
     }
@@ -106,7 +116,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
 
         var naturalRowWidth = 0;
-        
+
         for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
             var document = documents[rowIndex * nrOfColumns + columnIndex];
             if (!document) {
@@ -115,10 +125,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             }
             naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
         }
-        
+
         return naturalRowWidth;
     }
-    
+
     public calcGrid() {
 
         var rowWidth = Math.ceil((window.innerWidth - 57) );
@@ -127,7 +137,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
 
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
-            
+
             this.rows[rowIndex] = [];
 
             var calculatedHeight = rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);

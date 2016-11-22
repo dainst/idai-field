@@ -3,5 +3,40 @@
 }
 
 #search-bar {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+#search-bar .input-group-btn {
+  padding: 1px;
+}
+
+#search-bar .md-form {
+  margin-top: 15px;
+}
+
+#search-bar .form-control {
+  margin: 10px 0;
+  padding: 0 !important;
+  background-color: inherit !important;
+}
+
+.md-form label.active {
+  color: #37588e !important;
+}
+
+input[type=text]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=url]:focus:not([readonly]),
+input[type=time]:focus:not([readonly]),
+input[type=date]:focus:not([readonly]),
+input[type=datetime-local]:focus:not([readonly]),
+input[type=tel]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
+input[type=search-md]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]),
+textarea.md-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #37588e !important;
+  box-shadow: 0 1px 0 0 lighten(#37588e, 10%) !important;
 }

@@ -1,11 +1,12 @@
-<div class="md-form input-group">
+<div class="md-form input-group" id="search-bar">
 
     <input #searchInput
            (keyup)="qChanged($event.target.value)"
            type="text"
-           placeholder="Suchen..."
            class="form-control"
            id="object-search">
+
+    <label for="object-search" class="">Suchen...</label>
 
     <span class="input-group-btn" *ngIf="showFiltersMenu">
         <button

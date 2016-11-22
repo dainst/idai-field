@@ -13,7 +13,6 @@
 
     <div class="navbar navbar-light bg-faded">
         <search-bar *ngIf="!selected.length"
-                    id="search-bar"
                     [showFiltersMenu]="false"
                     [defaultFilters]="defaultFilters"
                     (onQueryChanged)="queryChanged($event)">

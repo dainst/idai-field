@@ -1,13 +1,12 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Datastore} from "idai-components-2/datastore";
+import {Datastore, Mediastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
-import {IndexeddbDatastore} from '../datastore/indexeddb-datastore';
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ImageEditCanDeactivateGuard} from './image-edit-can-deactivate-guard';
+import {ImageEditCanDeactivateGuard} from "./image-edit-can-deactivate-guard";
+import {EditNavigation} from "../common/edit-navigation";
 
 @Component({
     moduleId: module.id,
@@ -21,7 +20,9 @@ import {ImageEditCanDeactivateGuard} from './image-edit-can-deactivate-guard';
  *
  * @author Daniel de Oliveira
  */
-export class ImageEditNavigationComponent extends ImageComponentBase implements OnInit {
+export class ImageEditNavigationComponent 
+    extends ImageComponentBase 
+    implements EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
     private modalTemplate: TemplateRef<any>;
@@ -47,7 +48,7 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
         this.fetchDocAndImage();
     }
 
-    public navigate(savedViaSaveButton:boolean) {
+    public navigate(savedViaSaveButton:boolean = false) {
         if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
         
         this.router.navigate(['images',this.image.document.resource.id,'show']);
@@ -64,5 +65,9 @@ export class ImageEditNavigationComponent extends ImageComponentBase implements 
             },
             err => { console.error("error while refreshing document") }
         );
+    }
+
+    public goBack() {
+        this.router.navigate(['/images/', this.image.document.resource.id, 'show']);
     }
 }

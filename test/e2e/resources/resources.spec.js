@@ -1,7 +1,7 @@
 var common = require("../common.js");
 var EC = protractor.ExpectedConditions;
 
-describe('overview component', function() {
+describe('resources', function() {
 
     beforeEach(function(){
         browser.get('/#/resources');

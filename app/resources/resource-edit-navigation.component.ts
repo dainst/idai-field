@@ -5,7 +5,6 @@ import {Messages} from "idai-components-2/messages";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ResourceEditCanDeactivateGuard} from "./resource-edit-can-deactivate-guard";
 import {ResourcesComponent} from "./resources.component";
-import {EditNavigation} from '../common/edit-navigation';
 
 @Component({
     moduleId: module.id,
@@ -19,8 +18,7 @@ import {EditNavigation} from '../common/edit-navigation';
  * 
  * @author Daniel de Oliveira
  */
-export class ResourceEditNavigationComponent
-    implements  EditNavigation, OnInit {
+export class ResourceEditNavigationComponent implements  OnInit {
 
     @ViewChild('modalTemplate')
     modalTemplate: TemplateRef<any>;
@@ -81,23 +79,28 @@ export class ResourceEditNavigationComponent
     /**
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
+     *
+     * // TODO review param / see savedViaSaveButton in navigate
+     * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
-    public discard(calledFromDeactivateGuard:boolean = false) {
+    public discard(proceed:boolean=false) {
 
         this.overviewComponent.restore().then(
             () => {
                 this.documentEditChangeMonitor.reset();
-                if (!calledFromDeactivateGuard) this.canDeactivateGuard.proceed();
+                if (proceed) this.canDeactivateGuard.proceed();
             }, (err) => {
                 this.messages.add(err);
             });
     }
 
     /**
-     * According to the current mode or the value of savedViaSaveButton,
+     * According to the current mode or the value of proceed,
      * initiates an appropriate route change.
+     *
+     * @param savedViaSaveButton
      */
-    public navigate(savedViaSaveButton:boolean = false) {
+    private navigate(savedViaSaveButton:boolean) {
 
         if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
 

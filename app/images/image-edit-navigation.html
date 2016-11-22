@@ -8,7 +8,7 @@
         <document-edit-wrapper #f
                 [(document)]="image.document"
                 (onSaveSuccess)="navigate($event);"
-                (onBbackButtonClicked)="goBack();">
+                (onBbackButtonClicked)="navigateBack();">
         </document-edit-wrapper>
     </div>
 </div>
@@ -16,7 +16,7 @@
 <template #modalTemplate>
     <edit-save-dialog
             (onSave)="f.save(); modal.close();"
-            (onDiscard)="discard(); modal.close();"
+            (onDiscard)="discard(true); modal.close();"
             (onCancel)="canDeactivateGuard.cancel(); modal.close();">
     </edit-save-dialog>
 </template>

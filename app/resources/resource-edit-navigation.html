@@ -9,7 +9,7 @@
 <template #modalTemplate>
     <edit-save-dialog
         (onSave)="f.save(); modal.close();"
-        (onDiscard)="discard(); modal.close();"
+        (onDiscard)="discard(true); modal.close();"
         (onCancel)="canDeactivateGuard.cancel(); modal.close();">
     </edit-save-dialog>
 </template>

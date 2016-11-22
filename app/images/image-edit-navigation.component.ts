@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
+import {IndexeddbDatastore} from '../datastore/indexeddb-datastore';
 import {Messages} from "idai-components-2/messages";
+import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ImageEditCanDeactivateGuard} from "./image-edit-can-deactivate-guard";
-import {EditNavigation} from "../common/edit-navigation";
+import {ImageEditCanDeactivateGuard} from './image-edit-can-deactivate-guard';
 
 @Component({
     moduleId: module.id,
@@ -20,9 +21,7 @@ import {EditNavigation} from "../common/edit-navigation";
  *
  * @author Daniel de Oliveira
  */
-export class ImageEditNavigationComponent 
-    extends ImageComponentBase 
-    implements EditNavigation, OnInit {
+export class ImageEditNavigationComponent extends ImageComponentBase implements OnInit {
 
     @ViewChild('modalTemplate')
     modalTemplate: TemplateRef<any>;
@@ -48,7 +47,7 @@ export class ImageEditNavigationComponent
         this.fetchDocAndImage();
     }
 
-    public navigate(savedViaSaveButton:boolean = false) {
+    public navigate(savedViaSaveButton:boolean) {
         if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
         
         this.router.navigate(['images',this.image.document.resource.id,'show']);
@@ -65,9 +64,5 @@ export class ImageEditNavigationComponent
             },
             err => { console.error("error while refreshing document") }
         );
-    }
-
-    public goBack() {
-        this.router.navigate(['/images/', this.image.document.resource.id, 'show']);
     }
 }

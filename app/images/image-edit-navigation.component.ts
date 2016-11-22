@@ -25,8 +25,8 @@ export class ImageEditNavigationComponent
     implements EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
-    private modalTemplate: TemplateRef<any>;
-    private modal: NgbModalRef;
+    modalTemplate: TemplateRef<any>;
+    modal: NgbModalRef;
 
     private idbDatastore;
 

@@ -23,8 +23,8 @@ export class ResourceEditNavigationComponent
     implements  EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
-    private modalTemplate: TemplateRef<any>;
-    private modal: NgbModalRef;
+    modalTemplate: TemplateRef<any>;
+    modal: NgbModalRef;
 
     constructor(
         private overviewComponent: ResourcesComponent,

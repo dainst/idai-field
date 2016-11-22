@@ -12,19 +12,10 @@ import {ResourcesComponent} from "./resources.component";
 })
 
 /**
- * Handles
- * <ul>
- *   <li>loading or creating of the document to edit
- *   <li>showing the document edit form and provision it with the document to edit
- *   <li>validation and persistence of the document edited
- *   <li>the navigation away from document edit
- * </ul>
- *
- * Regarding the navigation: If the documents state is marked as edited
- * but not saved, on trying to navigate to other routes, the user
- * gets presented a modal which offers choices to save or abandon the
- * changes or to cancel the navigation.
- *
+ * Handles the navigation for the resource edit workflow
+ * by managing all the interaction between the document edit
+ * form, a deactivate guard and a save options modal.
+ * 
  * @author Daniel de Oliveira
  */
 export class ResourceEditNavigationComponent implements  OnInit {
@@ -89,6 +80,7 @@ export class ResourceEditNavigationComponent implements  OnInit {
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
      *
+     * // TODO review param / see savedViaSaveButton in navigate
      * @param proceed proceed with canDeactivateGuard.proceed() if <code>true</code>.
      */
     public discard(proceed:boolean=false) {

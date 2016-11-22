@@ -15,6 +15,10 @@ import {ImageEditCanDeactivateGuard} from './image-edit-can-deactivate-guard';
 })
 
 /**
+ * Handles the navigation for the resource edit workflow
+ * by managing all the interaction between the document edit
+ * form, a deactivate guard and a save options modal.
+ *
  * @author Daniel de Oliveira
  */
 export class ImageEditNavigationComponent extends ImageComponentBase implements OnInit {

@@ -18,18 +18,9 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 })
 
 /**
- * Handles
- * <ul>
- *   <li>loading or creating of the document to edit
- *   <li>showing the document edit form and provision it with the document to edit
- *   <li>validation and persistence of the document edited
- *   <li>the navigation away from document edit
- * </ul>
- *
- * Regarding the navigation: If the documents state is marked as edited
- * but not saved, on trying to navigate to other routes, the user
- * gets presented a modal which offers choices to save or abandon the
- * changes or to cancel the navigation.
+ * Uses the document edit form of idai-components-2 and adds styling
+ * and save and back buttons. The save button is used to save and
+ * validate the document.
  *
  * @author Daniel de Oliveira
  */

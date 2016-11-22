@@ -11,8 +11,11 @@
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Quelle:</label>
+
+                    <div class="md-form">
+                        <div class="col-sm-2">
+                            <label class="control-label col-sm-2">Quelle:</label>
+                        </div>
                         <div class="col-sm-10">
                             <select id="importSourceSelect" class="form-control" [(ngModel)]="sourceType"
                                     (ngModelChange)="reset()">
@@ -23,28 +26,30 @@
                     </div>
 
                     <div *ngIf="sourceType == 'file'">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Pfad:</label>
-                            <div class="col-sm-10 row">
-                                <div class="col-sm-10">
-                                    <input id="importFileInput" type="file" class="form-control"
-                                           (change)="selectFile($event)">
-                                </div>
+                        <div class="md-form">
+                            <div class="col-sm-2">
+                                <label class="control-label col-sm-2">Pfad:</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input id="importFileInput" type="file" class="form-control"
+                                       (change)="selectFile($event)">
                             </div>
                         </div>
                     </div>
 
                     <div *ngIf="sourceType == 'http'">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">URL:</label>
-                            <div class="col-sm-10">
+                        <div class="md-form">
+                            <div class="col-sm-12">
                                 <input id="importUrlInput" type="text" class="form-control" [(ngModel)]="url">
+                                <label for="importUrlInput" class="col-sm-2">URL</label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Format:</label>
+                    <div class="md-form">
+                        <div class="col-sm-2">
+                            <label class="control-label col-sm-2">Format:</label>
+                        </div>
                         <div class="col-sm-10">
                             <select id="importFormatSelect" class="form-control" [(ngModel)]="format">
                                 <option value="native">iDAI.field</option>
@@ -55,9 +60,10 @@
 
                 </div>
 
-                <button *ngIf="isReady()" id="importStartButton" class="btn btn-default pull-right"
-                        (click)="startImport()">Import starten</button>
-                <button *ngIf="!isReady()" class="btn btn-default pull-right disabled">Import starten</button>
+                <button *ngIf="isReady()" id="importStartButton" class="btn btn-primary"
+                        (click)="startImport()">Import starten
+                </button>
+                <button *ngIf="!isReady()" class="btn btn-primary disabled">Import starten</button>
             </div>
         </div>
     </main>

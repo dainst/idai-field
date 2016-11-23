@@ -32,8 +32,12 @@ export class BlobProxy {
     public urlForImage(identifier): Promise<Array<string>> {
         return new Promise((resolve, reject) => {
             this.mediastore.read(identifier).then(data => {
+
+                if (data==undefined) return resolve(this.blackImg)
+
                 var url = URL.createObjectURL(new Blob([data]));
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
+
             }).catch(error => {
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
                 // reject(error);

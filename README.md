@@ -71,7 +71,7 @@ which is from where it is loaded into the browser against which the tests are ru
 As the *start* command, it automatically converts scss files to css when they are changed.
 
 ```
-2$ export LC_NUMERIC=”en_US.UTF-8″ && npm run e2e
+2$ export LC_NUMERIC="en_US.UTF-8" && npm run e2e
 ```
 
 This command runs the end to end tests once.
@@ -96,7 +96,7 @@ the iDAI.field 2 Client application on a developer machine is as follows
 1$ npm run build
 1$ npm test
 2$ npm run server
-1$ export LC_NUMERIC=”en_US.UTF-8″ && npm run e2e
+1$ export LC_NUMERIC="en_US.UTF-8" && npm run e2e
 1$ npm run make-dist 
 1$ npm run package
 ```

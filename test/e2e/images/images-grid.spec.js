@@ -1,7 +1,10 @@
+var EC = protractor.ExpectedConditions;
+
 describe('idai field app', function(){
 
     beforeEach(function(){
         browser.get('/#/images');
+        browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.');
     });
 
     it('image cells should be (de-)selectable', function(){
@@ -11,27 +14,27 @@ describe('idai field app', function(){
             var random = Math.floor(Math.random() * last);
 
             cells[first].click().then(function(){
-                expect(cells[first].getAttribute("class")).toMatch("selected");
-            });
-
-            cells[last].click().then(function(){
-                expect(cells[last].getAttribute("class")).toMatch("selected");
+                expect(cells[first].getAttribute('class')).toMatch('selected');
             });
 
             cells[first].click().then(function(){
-                expect(cells[first].getAttribute("class")).not.toMatch("selected");
-            });
-
-            cells[random].click().then(function(){
-                expect(cells[random].getAttribute("class")).toMatch("selected");
+                expect(cells[first].getAttribute('class')).not.toMatch('selected');
             });
 
             cells[last].click().then(function(){
-                expect(cells[last].getAttribute("class")).not.toMatch("selected");
+                expect(cells[last].getAttribute('class')).toMatch('selected');
+            });
+
+            cells[last].click().then(function(){
+                expect(cells[last].getAttribute('class')).not.toMatch('selected');
             });
 
             cells[random].click().then(function(){
-                expect(cells[random].getAttribute("class")).not.toMatch("selected");
+                expect(cells[random].getAttribute('class')).toMatch('selected');
+            });
+
+            cells[random].click().then(function(){
+                expect(cells[random].getAttribute('class')).not.toMatch('selected');
             });
         });
     });

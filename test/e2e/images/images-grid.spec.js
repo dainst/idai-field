@@ -1,6 +1,6 @@
 var EC = protractor.ExpectedConditions;
 
-describe('idai field app', function(){
+describe('image grid tests', function(){
 
     beforeEach(function(){
         browser.get('/#/images');
@@ -35,6 +35,16 @@ describe('idai field app', function(){
 
             cells[random].click().then(function(){
                 expect(cells[random].getAttribute('class')).not.toMatch('selected');
+            });
+        });
+    });
+
+    it('deselecting all images by clicking appropriate button', function() {
+        var cell = element(by.css('.cell'));
+        cell.click().then(function(){
+            expect(cell.getAttribute('class')).toMatch('selected');
+            element(by.id('deselect-images')).click().then(function(){
+                expect(cell.getAttribute('class')).not.toMatch('selected');
             });
         });
     });

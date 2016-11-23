@@ -33,7 +33,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static VALIDATION_ERROR_INVALIDTYPE: string = 'validation/error/invalidtype';
     public static VALIDATION_ERROR_INVALIDFIELD: string = 'validation/error/invalidfield';
     public static VALIDATION_ERROR_INVALIDFIELDS: string = 'validation/error/invalidfields';
-    public static CONFIG_VALIDATION_IMAGE_MISSING: string = 'config/validation/error/imagemissing';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
@@ -154,11 +153,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.VALIDATION_ERROR_INVALIDFIELDS]={
             content: "Fehlende Felddefinitionen für mehrere Felder der Ressource.",
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.CONFIG_VALIDATION_IMAGE_MISSING]={
-            content: "Typ-Definition für Bilder fehlt.",
             level: 'danger',
             params: []
         };

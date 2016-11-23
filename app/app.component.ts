@@ -3,8 +3,7 @@ import {Router, Event, NavigationStart} from '@angular/router';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {DOCS} from "./datastore/sample-objects";
 import {Messages} from "idai-components-2/messages";
-import {ConfigLoader} from "idai-components-2/documents";
-import {ConfigurationValidator} from "./configuration-validator";
+import {ConfigLoader, ConfigurationValidator} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -30,6 +29,8 @@ export class AppComponent implements OnInit {
         label : "Kurzbeschreibung",
         index: 1
     }];
+
+    private mandatoryTypes = ["image"];
 
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
@@ -62,7 +63,7 @@ export class AppComponent implements OnInit {
             if (result.error) {
                 this.messages.addWithParams([result.error.msgkey].concat([result.error.msgparams]));
             } else {
-                new ConfigurationValidator(this.mandatoryFields)
+                new ConfigurationValidator(this.mandatoryFields, this.mandatoryTypes)
                     .validate(result.projectConfiguration)
                     .errors.forEach(error => {
                     this.messages.add(error);

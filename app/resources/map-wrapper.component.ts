@@ -162,6 +162,7 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
 
     private save() {
 
+        this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
         this.persistenceManager.setOldVersion(this.overviewComponent.getSelected());
 
         this.persistenceManager.persist(this.overviewComponent.getSelected()).then(

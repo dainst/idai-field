@@ -26,7 +26,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
  */
 export class DocumentEditWrapperComponent extends WithConfiguration {
 
-    @Input() document;
+    @Input() document: IdaiFieldDocument;
     @Input() showBackButton : boolean = true;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();

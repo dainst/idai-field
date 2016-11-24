@@ -1,6 +1,7 @@
 import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
+import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Query,Filter} from "idai-components-2/datastore";
@@ -27,7 +28,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     private imageTool : ImageTool;
 
     private query : Query = { q: '' };
-    private documents;
+    private documents: IdaiFieldImageDocument[];
     protected defaultFilters: Array<Filter>;
 
     private nrOfColumns = 4;
@@ -83,12 +84,13 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 }
 
             }
-            this.documents = documents;
+            this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images
             this.documents.unshift({
                 id: 'droparea',
-                resource: { width: 1, height: 1 }
+                resource: { identifier: '', type: '', width: 1, height: 1, filename: '', relations: {} },
+                synced: 0
             });
 
             this.calcGrid();
@@ -148,8 +150,9 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 if (!document) break;
 
                 var cell : ImageContainer = {};
+                var image = document.resource as IdaiFieldImageResource;
                 cell.document = document;
-                cell.calculatedWidth = document.resource.width * calculatedHeight / document.resource.height;
+                cell.calculatedWidth = image.width * calculatedHeight / image.height;
                 cell.calculatedHeight = calculatedHeight;
                 if (document.resource.identifier) this.blobProxy.setImgSrc(cell).catch(err=>{
                     this.messages.addWithParams(err);
@@ -164,7 +167,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     /**
      * @param documentToSelect the object that should be selected
      */
-    public select(document: IdaiFieldDocument) {
+    public select(document: IdaiFieldImageDocument) {
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
     }
@@ -173,7 +176,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
      * @param documentToSelect the object that should be navigated to if the preconditions
      *   to change the selection are met.
      */
-    public navigateTo(documentToSelect: IdaiFieldDocument) {
+    public navigateTo(documentToSelect: IdaiFieldImageDocument) {
         this.router.navigate(['images', documentToSelect.resource.id, 'show']);
     }
 

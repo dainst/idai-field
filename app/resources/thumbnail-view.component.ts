@@ -1,6 +1,7 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Mediastore} from "idai-components-2/datastore";
 import {BlobProxy} from "../common/blob-proxy";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 import {DomSanitizer} from "@angular/platform-browser";
 
 
@@ -17,7 +18,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
     private blobProxy : BlobProxy;
 
-    @Input() document: any;
+    @Input() document: IdaiFieldDocument;
 
     // TODO create an event emitter for error handling
 

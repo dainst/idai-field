@@ -1,6 +1,6 @@
 import {Resource} from "idai-components-2/core";
 
-export interface IdaiFieldImage extends Resource {
+export interface IdaiFieldImageResource extends Resource {
     identifier: string;
     filename: string;
     width: number;

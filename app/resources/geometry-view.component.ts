@@ -1,5 +1,6 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Router} from "@angular/router";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldResource} from "../model/idai-field-resource";
 
 
@@ -15,7 +16,7 @@ import {IdaiFieldResource} from "../model/idai-field-resource";
  */
 export class GeometryViewComponent implements OnChanges {
 
-    @Input() document: any;
+    @Input() document: IdaiFieldDocument;
 
     constructor(
         private router: Router

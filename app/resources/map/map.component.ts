@@ -32,12 +32,7 @@ export class MapComponent implements OnChanges {
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
 
-    private layers: { [id: string]: any } = {
-        defaultLayer1: { id: "defaultLayer1", name: "Karte 1", filePath: "img/mapLayerTest1.png",
-            latLngs: [L.latLng([25, -25]), L.latLng([25, 25]), L.latLng([-25, -25])], zIndex: 0 },
-        defaultLayer2: { id: "defaultLayer2", name: "Karte 2", filePath: "img/mapLayerTest2.png",
-            latLngs: [L.latLng([25, -75]), L.latLng([25, -25]), L.latLng([-25, -75])], zIndex: 1 }
-    };
+    private layers: { [id: string]: any } = {};
     private activeLayers: Array<any> = [];
     private panes: { [id: string]: any } = {};
 

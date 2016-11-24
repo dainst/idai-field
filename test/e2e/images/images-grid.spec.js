@@ -8,7 +8,7 @@ describe('image grid tests', function(){
         browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.');
     });
 
-    it('image cells should be (de-)selectable', function(){
+    it('cells should be (de-)selectable', function(){
         element.all(by.css('.cell')).then(function(cells) {
             var first = 0;
             var last =  cells.length - 1;
@@ -40,7 +40,7 @@ describe('image grid tests', function(){
         });
     });
 
-    it('deselecting all images by clicking appropriate button', function() {
+    it('all images should become deselected by clicking the appropriate button', function() {
         var cell = element.all(by.css('.cell')).first();
         cell.click().then(function(){
             expect(cell.getAttribute('class')).toMatch('selected');
@@ -50,7 +50,7 @@ describe('image grid tests', function(){
         });
     });
 
-    it('image can be deleted in the grid view.', function () {
+    it('user should be able to delete an image in the grid view.', function () {
 
         var elementToDelete = element.all(by.css('.cell')).first();
 
@@ -61,13 +61,29 @@ describe('image grid tests', function(){
             .then(function() { element(by.id('delete-images')).click() })
             .then(function() { element(by.id('delete-images-confirm')).click() })
             .then(function() {
+                browser.wait(EC.stalenessOf(element(by.css('.modal-dialog'))), 1000);
                 browser.wait(EC.stalenessOf(element(by.xpath(xpath))), 1000);
-                expect(element(by.xpath(xpath)).isPresent()).toBe(false);
             });
         });
     });
 
-    it('testing navigation grid -> single view -> grid', function() {
+    it('user should be able to cancel an image delete in the modal', function () {
+        var elementToDelete = element.all(by.css('.cell')).first();
+
+        elementToDelete.element(by.css('.tag.tag-default')).getText()
+            .then(function (imageName) {
+                var xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
+                elementToDelete.click()
+                    .then(function() { element(by.id('delete-images')).click() })
+                    .then(function() { element(by.id('delete-images-cancel')).click() })
+                    .then(function() {
+                        browser.wait(EC.stalenessOf(element(by.css('.modal-dialog'))), 1000);
+                        browser.wait(EC.presenceOf(element(by.xpath(xpath))), 1000);
+                    });
+            });
+    });
+
+    it('user should be able to navigate from grid to view, and back to grid', function() {
         var xpath = '//div[@class="fieldname"][text()="filename"]/following-sibling::div[@class="fieldvalue"]';
         var originalCell = element.all(by.css('.cell')).first();
 
@@ -89,13 +105,14 @@ describe('image grid tests', function(){
         });
     });
 
-    it('image upload creates a JSON document in datastore, which in turn gets displayed in the grid.', function() {
+    it('image upload should create a JSON document, which in turn gets displayed in the grid.', function() {
         var fileName = 'Aldrin_Apollo_11.jpg';
         var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
 
-        element(by.id('file')).sendKeys(path.resolve(__dirname, '../../test-data/' + fileName));
-        element(by.css('.droparea')).click().then(function () {
-            expect(element(by.xpath(xpath)).isPresent()).toBe(true);
-        });
+        element(by.id('file')).sendKeys(path.resolve(__dirname, '../../test-data/' + fileName))
+            .then(function() { element(by.css('.droparea')).click() })
+            .then(function () {
+                expect(element(by.xpath(xpath)).isPresent()).toBe(true);
+            })
     });
 });

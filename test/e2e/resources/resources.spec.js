@@ -11,7 +11,7 @@ describe('resources', function() {
         common.createDoc("12")
             .then(typeInIdentifierInSearchField)
             .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("12");
+                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("12");
             });
     });
 
@@ -43,7 +43,7 @@ describe('resources', function() {
             .then(common.switchToEditMode)
             .then(common.typeInIdentifier("1b"))
             .then(function(){
-                expect(element(by.id('object-overview-identifier-1')).getText()).toEqual("1b");
+                expect(element.all(by.css('#objectList .list-group-item .identifier')).get(1).getText()).toEqual("1b");
             });
     });
 
@@ -58,7 +58,7 @@ describe('resources', function() {
         common.createDoc("12")
             .then(common.typeInIdentifier("34"))
             .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("34");
+                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("34");
             });
     });
 
@@ -88,12 +88,12 @@ describe('resources', function() {
             .then(common.selectType)
             .then(common.chooseGeometry)
             .then(function(){
-                expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
+                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual("Neues Objekt");
             })
             .then(common.scrollUp)
             .then(common.selectObject(1))
             .then(function(){
-                expect(element(by.id('object-overview-identifier-0')).getText()).toEqual("1");
+                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("1");
             })
     });
 
@@ -109,7 +109,7 @@ describe('resources', function() {
             .then(common.clickSaveInModal)
             .then(common.scrollUp)
             .then(function(){
-                expect(element(by.id('object-overview-note-0')).getText()).toEqual("Neues Objekt");
+                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual("Neues Objekt");
             })
     });
 

@@ -198,4 +198,10 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             }
         });
     }
+
+    public openLinkModal(modal) {
+        this.modalService.open(modal).result.then(result => {
+            // TODO
+        });
+    }
 }

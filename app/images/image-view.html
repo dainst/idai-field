@@ -6,6 +6,7 @@
 
     <div *ngIf="image.document" class="col-md-3">
         <document-view [(document)]="image.document" [basePath]="'images'">
+            <georeference-view [(document)]="image.document"></georeference-view>
             <fields-view [(doc)]="image.document"></fields-view>
             <relations-view [(doc)]="image.document"></relations-view>
         </document-view>

@@ -1,0 +1,14 @@
+<div class="document-view-field" id="document-view-field-georeference">
+    <div class="fieldname">Georeferenzdaten</div>
+    <div *ngIf="document.resource.georeference">
+        Vorhanden
+    </div>
+    <div *ngIf="!document.resource.georeference">
+        <span>Nicht vorhanden</span>
+        <input class="file"
+               type="file"
+               name="files[]"
+               id="file"
+               (change)="onSelectFile($event)">
+    </div>
+</div>

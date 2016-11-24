@@ -5,6 +5,7 @@ import {ImagesComponent} from "./images.component";
 import {ImagesGridComponent} from "./images-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
+import {GeoreferenceViewComponent} from "./georeference-view.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 
@@ -20,7 +21,8 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         ImagesComponent,
         ImagesGridComponent,
         ImageViewComponent,
-        ImageEditNavigationComponent
+        ImageEditNavigationComponent,
+        GeoreferenceViewComponent
     ]
 })
 

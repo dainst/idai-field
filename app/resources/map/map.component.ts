@@ -5,6 +5,7 @@ import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
+import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
 
 @Component({
     moduleId: module.id,
@@ -31,11 +32,14 @@ export class MapComponent implements OnChanges {
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
 
-    private layers: Array<any> = [
-        { name: "Karte 1", filePath: "img/mapLayerTest1.png", bounds: L.latLngBounds([-25, -25], [25, 25]), zIndex: 0 },
-        { name: "Karte 2", filePath: "img/mapLayerTest2.png", bounds: L.latLngBounds([-25, -75], [25, -25]), zIndex: 1 }
-    ];
+    private layers: { [id: string]: any } = {
+        defaultLayer1: { id: "defaultLayer1", name: "Karte 1", filePath: "img/mapLayerTest1.png",
+            latLngs: [L.latLng([25, -25]), L.latLng([25, 25]), L.latLng([-25, -25])], zIndex: 0 },
+        defaultLayer2: { id: "defaultLayer2", name: "Karte 2", filePath: "img/mapLayerTest2.png",
+            latLngs: [L.latLng([25, -75]), L.latLng([25, -25]), L.latLng([-25, -75])], zIndex: 1 }
+    };
     private activeLayers: Array<any> = [];
+    private panes: { [id: string]: any } = {};
 
     private markerIcons = {
         'blue': L.icon({
@@ -64,7 +68,10 @@ export class MapComponent implements OnChanges {
         })
     };
 
-    constructor(private mapState: MapState) {}
+    constructor(
+        private mapState: MapState,
+        private datastore: IndexeddbDatastore
+    ) {}
 
     public ngAfterViewInit() {
 
@@ -78,6 +85,18 @@ export class MapComponent implements OnChanges {
         } else {
             this.clearMap();
         }
+
+        this.initializeLayers().then(
+            () => {
+                this.initializePanes();
+                var layers = this.getLayersAsList();
+                if (this.activeLayers.length == 0 && layers.length > 0) {
+                    var defaultLayer = layers[0];
+                    this.activeLayers.push(defaultLayer);
+                    this.addLayerToMap(defaultLayer);
+               }
+            }
+        );
 
         for (var i in this.documents) {
             var resource = this.documents[i].resource;
@@ -121,15 +140,7 @@ export class MapComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("map-container", { crs: L.CRS.Simple });
-
-        for (var i in this.layers) {
-            var pane = this.map.createPane(this.layers[i].name);
-            pane.style.zIndex = this.layers[i].zIndex;
-        }
-
-        this.activeLayers.push(this.layers[0]);
-        this.addLayerToMap(this.layers[0]);
+        this.map = L.map("map-container");
 
         var mapComponent = this;
         this.map.on('click', function(event: L.MouseEvent) {
@@ -156,6 +167,47 @@ export class MapComponent implements OnChanges {
             this.mapState.setCenter(this.map.getCenter());
             this.mapState.setZoom(this.map.getZoom());
         }.bind(this));
+    }
+
+    private initializeLayers(): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            var query = {q: '', filters: [{'field': 'type', 'value': 'image', invert: false}]};
+            this.datastore.find(query).then(documents => {
+                var zIndex = 0;
+                for (var i in documents) {
+                    var resource: any = documents[i].resource;
+                    if (resource.georeference && !this.layers[resource.id]) {
+                        var layer = {
+                            id: resource.id,
+                            name: resource.shortDescription,
+                            filePath: "mediastore/" + resource.filename,
+                            latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
+                                L.latLng(resource.georeference.topRightCoordinates),
+                                L.latLng(resource.georeference.bottomLeftCoordinates)],
+                            zIndex: zIndex++
+                        };
+
+                        this.layers[resource.id] = layer;
+                    }
+                }
+                resolve();
+            }, error => { reject(error); });
+        });
+    }
+
+    private initializePanes() {
+
+        var layers = this.getLayersAsList();
+        for (var i in layers) {
+            var id = layers[i].id;
+            if (!this.panes[id]) {
+                var pane = this.map.createPane(id);
+                pane.style.zIndex = layers[i].zIndex;
+                this.panes[id] = pane;
+            }
+        }
     }
 
     private clearMap() {
@@ -230,7 +282,8 @@ export class MapComponent implements OnChanges {
 
     private addLayerToMap(layer: any) {
 
-        layer.object = L.imageOverlay(layer.filePath, layer.bounds, { pane: layer.name }).addTo(this.map);
+        layer.object = L.imageOverlay.rotated(layer.filePath, layer.latLngs[0], layer.latLngs[1], layer.latLngs[2],
+            { pane: layer.id }).addTo(this.map);
     }
 
     private focusMarker(marker: L.Marker) {
@@ -473,6 +526,19 @@ export class MapComponent implements OnChanges {
         }
 
         return coordinates;
+    }
+
+    private getLayersAsList() {
+
+        var layersList = [];
+
+        for (var i in this.layers) {
+            if (this.layers.hasOwnProperty(i)) {
+                layersList.push(this.layers[i]);
+            }
+        }
+
+        return layersList;
     }
 }
 

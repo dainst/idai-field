@@ -4,7 +4,7 @@
         (mouseenter)="layerMenuVisible = true;">Karten</div>
 <div *ngIf="layerMenuVisible" id="layer-menu" class="card card-block form-group"
         (mouseleave)="layerMenuVisible = false;">
-    <div *ngFor="let layer of layers">
+    <div *ngFor="let layer of getLayersAsList()">
         <label>
             <input type="checkbox" [checked]="isActiveLayer(layer)" (click)="toggleLayer(layer)" /> {{layer.name}}
         </label>

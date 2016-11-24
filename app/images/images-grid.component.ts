@@ -21,6 +21,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
  *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author Jan G. Wieners
  */
 export class ImagesGridComponent implements OnChanges, OnInit {
 
@@ -105,7 +106,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public queryChanged(query: Query) {
 
         this.query = query;
-        // this.fetchDocuments(query);
+        this.fetchDocuments(query);
     }
 
     public onResize() {

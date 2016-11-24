@@ -8,21 +8,20 @@ img#about-logo {
   margin: 0 auto 20px auto;
 }
 
-#close-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  border-radius: 0;
-  color: $ctrl-button-text-color;
-  background-color: $ctrl-button-bg;
-  border-color: $ctrl-button-bg;
+.centered {
+  text-align: center;
 }
 
-#close-btn:hover,
-#close-btn:focus {
-  color: $ctrl-button-text-color;
-  background-color: $ctrl-button-close;
-  border-color: $ctrl-button-close;
+#thirdparty {
+  padding: 15px;
+}
+
+#thirdparty ul {
+  margin-left: 25px;
+}
+
+#thirdparty ul li {
+  list-style-type: square;
 }
 
 p#about-version {

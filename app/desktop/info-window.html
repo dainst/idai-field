@@ -7,12 +7,20 @@
 <div class="info-window">
     <div id="header-block">
         <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
-        <button id="close-btn">X</button>
     </div>
     <img id="about-logo" src="../../img/favicon.png"
          class="m-x-auto d-block"
          alt="idai-field-client logo">
-    <p id="about-version">"VERSION-STRING"</p>
+    <p id="about-version">Version: "VERSION-STRING"</p>
+    <div id="thirdparty">
+        Drittanbieter-Software:
+        <ul>
+            <li>Leaflet (leafletjs.com)</li>
+        </ul>
+    </div>
+    <p class="centered">
+    <button id="close-btn" class="btn btn-primary">Schlie&szlig;en</button>
+    </p>
 </div>
 <script>
     const electron = require('electron');

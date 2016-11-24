@@ -121,7 +121,7 @@ export class MapComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("map-container", { crs: L.CRS.Simple });
+        this.map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false });
 
         for (var i in this.layers) {
             var pane = this.map.createPane(this.layers[i].name);

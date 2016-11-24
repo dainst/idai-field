@@ -9,7 +9,9 @@
     </div>
 </template>
 
-<div>
+<div (dragover)="false"
+     (dragleave)="false"
+     (drop)="false">
 
     <div class="navbar navbar-light bg-faded">
         <search-bar *ngIf="!selected.length"

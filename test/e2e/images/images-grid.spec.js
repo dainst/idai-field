@@ -50,6 +50,23 @@ describe('image grid tests', function(){
         });
     });
 
+    it('image can be deleted in the grid view.', function () {
+
+        var elementToDelete = element.all(by.css('.cell')).first();
+
+        elementToDelete.element(by.css('.tag.tag-default')).getText()
+            .then(function (imageName) {
+                var xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
+                elementToDelete.click()
+            .then(function() { element(by.id('delete-images')).click() })
+            .then(function() { element(by.id('delete-images-confirm')).click() })
+            .then(function() {
+                browser.wait(EC.stalenessOf(element(by.xpath(xpath))), 1000);
+                expect(element(by.xpath(xpath)).isPresent()).toBe(false);
+            });
+        });
+    });
+
     it('testing navigation grid -> single view -> grid', function() {
         var xpath = '//div[@class="fieldname"][text()="filename"]/following-sibling::div[@class="fieldvalue"]';
         var originalCell = element.all(by.css('.cell')).first();
@@ -64,7 +81,7 @@ describe('image grid tests', function(){
             var backButton = element(by.id('document-view-button-back-to-map'));
 
             backButton.click().then(function(){
-                browser.wait(EC.presenceOf(element.all(by.css('.cell')).first()));
+                browser.wait(EC.presenceOf(element.all(by.css('.cell')).first()), 1000);
 
                 expect(element.all(by.css('.cell')).first().element(by.css('.tag.tag-default')).getText())
                     .toEqual(initialId)

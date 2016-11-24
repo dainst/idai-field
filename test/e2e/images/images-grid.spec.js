@@ -1,46 +1,55 @@
 var EC = protractor.ExpectedConditions;
 var path = require('path');
 
-describe('image grid tests', function(){
+describe('image grid tests -- ', function(){
 
     beforeEach(function(){
         browser.get('/#/images');
         browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.');
     });
 
-    it('cells should be (de-)selectable', function(){
+    it('cells should be (de-)selectable.', function(){
         element.all(by.css('.cell')).then(function(cells) {
             var first = 0;
-            var last =  cells.length - 1;
-            var random = Math.floor(Math.random() * last);
+            var last = cells.length - 1;
 
-            cells[first].click().then(function(){
-                expect(cells[first].getAttribute('class')).toMatch('selected');
-            });
+            cells[first].click()
+                .then(function() {
+                    expect(cells[first].getAttribute('class')).toMatch('selected');
+                    return cells[first].click();
+                })
+                .then(function() {
+                    expect(cells[first].getAttribute('class')).not.toMatch('selected');
+                });
 
-            cells[first].click().then(function(){
-                expect(cells[first].getAttribute('class')).not.toMatch('selected');
-            });
+            if (last != first)
+            {
+                cells[last].click()
+                    .then(function() {
+                        expect(cells[last].getAttribute('class')).toMatch('selected');
+                        return cells[last].click();
+                    })
+                    .then(function() {
+                        expect(cells[last].getAttribute('class')).not.toMatch('selected');
+                    });
 
-            cells[last].click().then(function(){
-                expect(cells[last].getAttribute('class')).toMatch('selected');
-            });
+                if (last > 1) {
+                    var middle = Math.floor(0.5 * (cells.length));
 
-            cells[last].click().then(function(){
-                expect(cells[last].getAttribute('class')).not.toMatch('selected');
-            });
-
-            cells[random].click().then(function(){
-                expect(cells[random].getAttribute('class')).toMatch('selected');
-            });
-
-            cells[random].click().then(function(){
-                expect(cells[random].getAttribute('class')).not.toMatch('selected');
-            });
+                    cells[middle].click()
+                        .then(function() {
+                            expect(cells[middle].getAttribute('class')).toMatch('selected');
+                            return cells[middle].click();
+                        })
+                        .then(function() {
+                            expect(cells[middle].getAttribute('class')).not.toMatch('selected');
+                        });
+                }
+            }
         });
     });
 
-    it('all images should become deselected by clicking the appropriate button', function() {
+    it('all images should become deselected by clicking the appropriate button.', function() {
         var cell = element.all(by.css('.cell')).first();
         cell.click().then(function(){
             expect(cell.getAttribute('class')).toMatch('selected');
@@ -67,7 +76,7 @@ describe('image grid tests', function(){
         });
     });
 
-    it('user should be able to cancel an image delete in the modal', function () {
+    it('user should be able to cancel an image delete in the modal.', function () {
         var elementToDelete = element.all(by.css('.cell')).first();
 
         elementToDelete.element(by.css('.tag.tag-default')).getText()
@@ -83,7 +92,7 @@ describe('image grid tests', function(){
             });
     });
 
-    it('user should be able to navigate from grid to view, and back to grid', function() {
+    it('user should be able to navigate from grid to view, and back to grid.', function() {
         var xpath = '//div[@class="fieldname"][text()="filename"]/following-sibling::div[@class="fieldvalue"]';
         var originalCell = element.all(by.css('.cell')).first();
 

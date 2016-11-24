@@ -96,6 +96,8 @@ gulp.task('make-dist', function () {
     gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));
     gulp.src('node_modules/leaflet/**/*').pipe(gulp.dest('dist/node_modules/leaflet/'));
     gulp.src('node_modules/leaflet.pm/**/*').pipe(gulp.dest('dist/node_modules/leaflet.pm/'));
+    gulp.src('node_modules/leaflet-imageoverlay-rotate/**/*')
+        .pipe(gulp.dest('dist/node_modules/leaflet-imageoverlay-rotate/'));
     gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('dist/node_modules/systemjs/'));
     gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('dist/node_modules/zone.js/'));
     gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));

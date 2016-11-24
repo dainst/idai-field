@@ -1,4 +1,5 @@
 var EC = protractor.ExpectedConditions;
+var path = require('path');
 
 describe('image grid tests', function(){
 
@@ -68,6 +69,16 @@ describe('image grid tests', function(){
                 expect(element.all(by.css('.cell')).first().element(by.css('.tag.tag-default')).getText())
                     .toEqual(initialId)
             });
+        });
+    });
+
+    it('image upload creates a JSON document in datastore, which in turn gets displayed in the grid.', function() {
+        var fileName = 'Aldrin_Apollo_11.jpg';
+        var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
+
+        element(by.id('file')).sendKeys(path.resolve(__dirname, '../../test-data/' + fileName));
+        element(by.css('.droparea')).click().then(function () {
+            expect(element(by.xpath(xpath)).isPresent()).toBe(true);
         });
     });
 });

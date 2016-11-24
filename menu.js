@@ -115,7 +115,7 @@ const template = [{
             // new frameless window
             var infoWindow = new BrowserWindow({
                 width: 300,
-                height: 300,
+                height: 400,
                 frame: false,
                 webPreferences: {nodeIntegration: true}
             });

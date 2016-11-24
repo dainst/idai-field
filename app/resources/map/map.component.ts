@@ -140,7 +140,7 @@ export class MapComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("map-container");
+        this.map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false });
 
         var mapComponent = this;
         this.map.on('click', function(event: L.MouseEvent) {

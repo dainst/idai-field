@@ -7,7 +7,7 @@ export interface ImageContainer {
     imgSrc? : string;
     calculatedWidth? : number;
     calculatedHeight? : number;
-    document? : IdaiFieldDocument;
+    document? : IdaiFieldImageDocument;
 }
 
 /**

@@ -4,8 +4,8 @@
         <p *ngIf="selected.length == 1">Möchten Sie das markierte Bild wirklich löschen?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="c('delete')">Löschen</button>
-        <button type="button" class="btn btn-secondary" (click)="c('cancel')">Abbrechen</button>
+        <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
+        <button type="button" id="delete-images-cancel" class="btn btn-secondary" (click)="c('cancel')">Abbrechen</button>
     </div>
 </template>
 
@@ -20,7 +20,7 @@
 
         <span *ngIf="selected.length">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-danger" (click)="openDeleteModal(deleteModal)">
+                <button type="button" id="delete-images" class="btn btn-danger" (click)="openDeleteModal(deleteModal)">
                     <span class="mdi mdi-delete"></span>
                 </button>
                 <button type="button" class="btn btn-primary">

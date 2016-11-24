@@ -3,7 +3,7 @@ import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ResourcesComponent} from "./resources.component";
 import {ReadDatastore} from "idai-components-2/datastore";
 import {PersistenceManager, ConfigLoader, WithConfiguration} from "idai-components-2/documents";
-import {Document} from "idai-components-2/core";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 
 @Component({
@@ -18,10 +18,10 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
  */
 export class MapWrapperComponent extends WithConfiguration implements OnInit, OnDestroy {
 
-    private activeDoc;
-    private activeType;
-    private activeTypeLabel;
-    private docs;
+    private activeDoc: IdaiFieldDocument;
+    private activeType: string;
+    private activeTypeLabel: string;
+    private docs: IdaiFieldDocument[];
     private menuMode: string; // view | geometryEdit
     private editMode: string; // polygon | point | none
 
@@ -41,7 +41,7 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
 
         this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
 
-    } public selectDocument(document: Document) {
+    } public selectDocument(document: IdaiFieldDocument) {
 
         if (document) {
             this.router.navigate(['resources', { id: document.resource.id }]);
@@ -84,10 +84,10 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
     private setActiveDoc(id) {
         if (id) {
             this.datastore.get(id).then(document => {
-                this.activeDoc = document;
+                this.activeDoc = document as IdaiFieldDocument;
                 this.activeType = document.resource.type;
                 this.activeTypeLabel = this.projectConfiguration.getLabelForType(this.activeType);
-                this.overviewComponent.setSelected(<Document>document);
+                this.overviewComponent.setSelected(<IdaiFieldDocument>document);
             });
         } else {
             this.activeDoc = null;
@@ -98,7 +98,7 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
     ngOnInit(): void {
 
         this.overviewComponent.getDocuments().subscribe(result => {
-           this.docs = result;
+           this.docs = result as IdaiFieldDocument[];
         });
 
         this.getRouteParams(function(menuMode, editMode, id, type){

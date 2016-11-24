@@ -335,14 +335,14 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o12",
+        "id": "o24",
         "resource": {
-            "id": "o12",
+            "id": "o24",
             "identifier": "finn.jpg",
             "shortDescription": "Finn",
             "type": "image",
             "relations": {},
-            "filename" : "hans.jpg",
+            "filename" : "finn.jpg",
             "height" : 337,
             "width" : 300,
             "depicts": "o23"

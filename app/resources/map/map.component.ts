@@ -1,11 +1,13 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnChanges, SecurityContext} from "@angular/core";
+import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
-import {IndexeddbDatastore} from "../../datastore/indexeddb-datastore";
+import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {BlobProxy} from "../../common/blob-proxy";
 
 @Component({
     moduleId: module.id,
@@ -24,6 +26,8 @@ export class MapComponent implements OnChanges {
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
+
+    private blobProxy: BlobProxy;
 
     private map: L.Map;
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
@@ -65,8 +69,12 @@ export class MapComponent implements OnChanges {
 
     constructor(
         private mapState: MapState,
-        private datastore: IndexeddbDatastore
-    ) {}
+        private datastore: Datastore,
+        private mediastore: Mediastore,
+        private sanitizer: DomSanitizer
+    ) {
+        this.blobProxy = new BlobProxy(mediastore, sanitizer);
+    }
 
     public ngAfterViewInit() {
 
@@ -171,23 +179,26 @@ export class MapComponent implements OnChanges {
             var query = {q: '', filters: [{'field': 'type', 'value': 'image', invert: false}]};
             this.datastore.find(query).then(documents => {
                 var zIndex = 0;
+                var promises = [];
                 for (var i in documents) {
                     var resource: any = documents[i].resource;
                     if (resource.georeference && !this.layers[resource.id]) {
-                        var layer = {
-                            id: resource.id,
-                            name: resource.shortDescription,
-                            filePath: "mediastore/" + resource.filename,
-                            latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
-                                L.latLng(resource.georeference.topRightCoordinates),
-                                L.latLng(resource.georeference.bottomLeftCoordinates)],
-                            zIndex: zIndex++
+                        var callback = (resource) => url => {
+                            var layer = {
+                                id: resource.id,
+                                name: resource.shortDescription,
+                                filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
+                                latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
+                                    L.latLng(resource.georeference.topRightCoordinates),
+                                    L.latLng(resource.georeference.bottomLeftCoordinates)],
+                                zIndex: zIndex++
+                            }
+                            this.layers[resource.id] = layer;
                         };
-
-                        this.layers[resource.id] = layer;
+                        this.blobProxy.urlForImage(resource.identifier).then(callback(resource));
                     }
                 }
-                resolve();
+                Promise.all(promises).then(() => resolve());
             }, error => { reject(error); });
         });
     }

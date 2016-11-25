@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
 import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
@@ -23,13 +23,14 @@ import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Mediastore} from 'idai-components-2/datastore'
-import {ReadMediastore} from 'idai-components-2/datastore'
-import {FakeMediastore} from './datastore/fake-mediastore'
-import {FileSystemMediastore} from './datastore/file-system-mediastore'
-import {ImagesModule} from './images/images.module'
-import {NavbarComponent} from './navbar.component'
+import {Mediastore} from 'idai-components-2/datastore';
+import {ReadMediastore} from 'idai-components-2/datastore';
+import {HttpMediastore} from './datastore/fake-mediastore';
+import {FileSystemMediastore} from './datastore/file-system-mediastore';
+import {ImagesModule} from './images/images.module';
+import {NavbarComponent} from './navbar.component';
 import {DOCS} from "./datastore/sample-objects";
+
 
 import CONFIG = require("config/config.json!json");
 
@@ -54,15 +55,16 @@ import CONFIG = require("config/config.json!json");
     providers: [
         {
             provide: Mediastore,
-            useFactory: function(): Mediastore {
+            useFactory: function(http: Http): Mediastore {
                 // running under node
                 if (typeof process === 'object') {
                     return new FileSystemMediastore(CONFIG['mediastorepath']);
                 // running in browser
                 } else {
-                    return new FakeMediastore();
+                    return new HttpMediastore(http, CONFIG['mediastorepath']);
                 }
-            }
+            },
+            deps: [Http]
         },
         { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -1,5 +1,6 @@
 import {Component, OnChanges, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
 import {Datastore} from 'idai-components-2/datastore';
@@ -10,6 +11,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {BlobProxy,ImageContainer} from '../common/blob-proxy';
 import {ImageTool} from '../common/image-tool';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LinkModalComponent} from './link-modal.component';
 
 @Component({
     moduleId: module.id,
@@ -182,14 +184,56 @@ export class ImagesGridComponent implements OnChanges, OnInit {
                 Promise.all(results).then(() => {
                     this.clearSelection();
                     this.fetchDocuments(this.query);
+                }).catch(error => {
+                    this.messages.add(error);
                 });
             }
         });
     }
 
-    public openLinkModal(modal) {
-        this.modalService.open(modal).result.then(result => {
-            // TODO
+    public openLinkModal() {
+        this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
+            if (targetDoc) {
+                this.updateImageLinks(targetDoc).then(() => {
+                    this.clearSelection();
+                }).catch(error => {
+                    this.messages.add(error);
+                });
+            }
         });
     }
+
+    private updateImageLinks(targetDoc): Promise<any> {
+        var promises = [];
+        this.selected.forEach( (imageDoc:IdaiFieldImageDocument) => {
+            if (imageDoc.resource.depicts) promises.push(this.removeExistingReference(imageDoc));
+            imageDoc.resource.depicts = targetDoc.id;
+        });
+        if (!targetDoc.resource.images) targetDoc.resource.images = [];
+        targetDoc.resource.images =
+            this.makeUnique(targetDoc.resource.images.concat(this.selected.map(imageDoc => imageDoc.resource.identifier)));
+        promises.concat(this.selected.map(document => this.datastore.update(document)));
+        promises.push(this.datastore.update(targetDoc));
+        return Promise.all(promises);
+    }
+
+    private removeExistingReference(imageDoc) {
+        return this.datastore.get(imageDoc.resource.depicts).then( (oldTargetDoc: IdaiFieldDocument) => {
+            oldTargetDoc.resource.images.splice(oldTargetDoc.resource.images.indexOf(imageDoc.resource.identifier), 1);
+            return this.datastore.update(oldTargetDoc);
+        });
+    }
+
+    private makeUnique(a) {
+        var n = {}, r = [];
+        for(var i = 0; i < a.length; i++) {
+            if (!n[a[i]]) {
+                n[a[i]] = true;
+                r.push(a[i]);
+            }
+        }
+        return r;
+    }
+
+    
 }

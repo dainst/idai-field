@@ -4,7 +4,7 @@
 
     <ul class="list-group object-list" id="objectList">
         <li *ngFor="let document of documents; let index=index"
-            (click)="selectedDocument.emit(document)"
+            (click)="documentSelected.emit(document)"
             class="list-group-item"
             [id]="'resource-' + document.resource.identifier">
 

@@ -41,7 +41,7 @@ import CONFIG = require("config/config.json!json");
         BrowserModule,
         FormsModule,
         HttpModule,
-        NgbModule,
+        NgbModule.forRoot(),
         IdaiDocumentsModule,
         IdaiMessagesModule,
         routing

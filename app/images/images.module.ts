@@ -8,6 +8,7 @@ import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 import {GeoreferenceViewComponent} from "./georeference-view.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
+import {LinkModalComponent} from './link-modal.component'
 
 
 @NgModule({
@@ -22,7 +23,11 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         ImagesGridComponent,
         ImageViewComponent,
         ImageEditNavigationComponent,
-        GeoreferenceViewComponent
+        GeoreferenceViewComponent,
+        LinkModalComponent
+    ],
+    entryComponents: [
+        LinkModalComponent
     ]
 })
 

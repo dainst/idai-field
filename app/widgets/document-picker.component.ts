@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Filter} from "idai-components-2/datastore";
+import {Datastore, Query, Filter} from "idai-components-2/datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
 @Component({
@@ -11,5 +11,30 @@ export class DocumentPickerComponent {
 
     @Input() filters: Array<Filter>;
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+
+    public documents: IdaiFieldDocument[];
+    protected query: Query;
+
+    constructor(private datastore: Datastore) {
+        this.query = { q: '', filters: this.filters };
+    }
+
+    public queryChanged(query: Query) {
+
+        this.query = query;
+        this.fetchDocuments(query);
+    }
+
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     * @param query
+     */
+    public fetchDocuments(query: Query) {
+
+        this.datastore.find(query).then(documents => {
+            this.documents = documents as IdaiFieldDocument[];
+        }).catch(err => console.error(err));
+    }
     
 }

@@ -8,7 +8,7 @@
         map: {
             'app': 'app',
             '@angular': 'node_modules/@angular',
-            '@ng-bootstrap': 'node_modules/@ng-bootstrap',
+            '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
             'json': 'app/util/systemjs-json-plugin',
             'rxjs': 'node_modules/rxjs',
             'ts-md5': 'node_modules/ts-md5',
@@ -31,8 +31,7 @@
                     }
                 }
             },
-            'rxjs': {main: 'index.js'},
-            '@ng-bootstrap/ng-bootstrap': { main: 'index.js' }
+            'rxjs': {main: 'index.js'}
         },
         meta: {
             'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }

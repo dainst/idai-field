@@ -9,16 +9,6 @@
     </div>
 </template>
 
-<template #linkModal let-c="close">
-    <div class="modal-body">
-        <p>Zu verknüpfende Ressource wählen:</p>
-        <document-picker (documentSelected)="documentSelected($event)" [filters]="defaultFilters"></document-picker>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
-    </div>
-</template>
-
 <div (dragover)="false"
      (dragleave)="false"
      (drop)="false">
@@ -75,6 +65,9 @@
                          *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                          [style.maxWidth.px]="cell['calculatedWidth']-15">
                         <span class="tag tag-default">{{cell['document'].resource.identifier}}</span>
+                        <span *ngIf="cell['document'].resource.depicts" class="tag tag-default">
+                            <span class="mdi mdi-link"></span> {{cell['document'].resource.depicts}}
+                        </span>
                     </div>
 
                     <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"

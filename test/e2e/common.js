@@ -77,7 +77,7 @@ function removeMessage() {
 }
 
 function expectObjectCreatedSuccessfully(identifier){
-    expect(element(by.id('object-overview-identifier-0')).getText()).toEqual(identifier);
+    expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual(identifier);
     expectMsg("erfolgreich");
 }
 

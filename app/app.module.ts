@@ -69,24 +69,7 @@ import CONFIG = require("config/config.json!json");
         { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
-        {
-            provide: Datastore,
-            useFactory: function (idb: Indexeddb): IndexeddbDatastore {
-                var datastore = new IndexeddbDatastore(idb);
-                if (CONFIG['environment'] == 'test') {
-                    var promises = [];
-                    for (var ob of DOCS) promises.push(datastore.update(ob));
-
-                    Promise.all(promises)
-                        .then(() => {
-                            console.log("Successfully stored sample objects");
-                        })
-                        .catch(err => console.error("Problem when storing sample data", err));
-                }
-                return datastore;
-            },
-            deps: [Indexeddb]
-        },
+        { provide: Datastore, useClass: IndexeddbDatastore },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,

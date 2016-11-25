@@ -8,6 +8,9 @@ import {Indexeddb} from "./indexeddb";
 import {M} from "../m";
 import {SearchTermExtractor} from "./search-term-extractor";
 
+import CONFIG = require("config/config.json!json");
+import {DOCS} from "./sample-objects";
+
 /**
  * @author Sebastian Cuy
  * @author Daniel M. de Oliveira
@@ -21,9 +24,24 @@ export class IndexeddbDatastore implements Datastore {
     private db: Promise<any>;
     private observers = [];
     private documentCache: { [resourceId: string]: Document } = {};
+    private readyForQuery: boolean = false;
     
     constructor(private idb:Indexeddb){
-        this.db=idb.db()
+        this.db=idb.db();
+
+        if (CONFIG['environment'] == 'test') {
+            var promises = [];
+            for (var ob of DOCS) promises.push(this.update(ob));
+
+            Promise.all(promises)
+                .then(() => {
+                    console.log("Successfully stored sample objects");
+                    this.readyForQuery = true;
+                })
+                .catch(err => console.error("Problem when storing sample data", err));
+        } else {
+            this.readyForQuery = true;
+        }
     };
 
     public create(document:any):Promise<string> {
@@ -70,7 +88,15 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     public get(id:string):Promise<Document> {
-
+        var this_ = this;
+        if (!this.readyForQuery) {
+            return new Promise(function(resolve, reject) {
+                console.log("Waiting for initialization.");
+                setTimeout(function() {
+                    resolve(this_.get(id));
+                }, 1000);
+            });
+        }
         if (this.documentCache[id]) {
             return new Promise((resolve, reject) => resolve(this.documentCache[id]));
         } else {
@@ -141,6 +167,15 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     public find(query: Query):Promise<Document[]> {
+        var this_ = this;
+        if (!this.readyForQuery) {
+            return new Promise(function(resolve, reject) {
+                console.log("Waiting for initialization.");
+                setTimeout(function() {
+                    resolve(this_.find(query));
+                }, 1000);
+            });
+        }
 
         var queryString = query.q.toLowerCase();
 
@@ -170,13 +205,22 @@ export class IndexeddbDatastore implements Datastore {
 
     public all():Promise<Document[]> {
 
+        var this_ = this;
+        if (!this.readyForQuery) {
+            return new Promise(function(resolve, reject) {
+                console.log("Waiting for initialization.");
+                setTimeout(function() {
+                    resolve(this_.all());
+                }, 1000);
+            });
+        }
         return new Promise<Document[]>((resolve, reject) => {
 
             this.db.then(db => {
 
                 var objects = [];
 
-                var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT,"modified",null, "prev");
+                var cursor = db.openCursor(IndexeddbDatastore.IDAIFIELDOBJECT, "modified", null, "prev");
                 cursor.onsuccess = (event) => {
                     var cursor = event.target.result;
                     if (cursor) {
@@ -191,6 +235,16 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private fetchObject(documentId:string): Promise<Document> {
+        var this_ = this;
+        if (!this.readyForQuery) {
+            return new Promise(function(resolve, reject) {
+                console.log("Waiting for initialization.");
+                setTimeout(function() {
+                   resolve(this_.fetchObject(documentId));
+                }, 1000);
+            });
+        }
+
         return new Promise((resolve, reject) => {
             this.db.then(db => {
                 var request = db.get(IndexeddbDatastore.IDAIFIELDOBJECT,documentId);
@@ -274,5 +328,4 @@ export class IndexeddbDatastore implements Datastore {
 
         return this.documentCache[document['id']];
     }
-
 }

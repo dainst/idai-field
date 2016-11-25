@@ -25,7 +25,7 @@ import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Mediastore} from 'idai-components-2/datastore';
 import {ReadMediastore} from 'idai-components-2/datastore';
-import {HttpMediastore} from './datastore/fake-mediastore';
+import {HttpMediastore} from './datastore/http-mediastore';
 import {FileSystemMediastore} from './datastore/file-system-mediastore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';

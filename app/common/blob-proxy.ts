@@ -1,7 +1,7 @@
 import {M} from "../m";
 import {ReadMediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 
 export interface ImageContainer {
     imgSrc? : string;
@@ -26,10 +26,11 @@ export class BlobProxy {
     ) { }
 
     /**
+     * Generate a blob url for an Image given its identifier
      * @param identifier
-     * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
+     * @return {Promise<string>} A promise returning the url
      */
-    public urlForImage(identifier): Promise<Array<string>> {
+    public urlForImage(identifier): Promise<string> {
         return new Promise((resolve, reject) => {
             this.mediastore.read(identifier).then(data => {
 
@@ -39,23 +40,25 @@ export class BlobProxy {
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
 
             }).catch(error => {
+                console.error(error);
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
-                // reject(error);
             });
         });
     }
 
     /**
-     * Fills the <code>imgSrc</code> of the <code>imageContainer</code> with blob data extracted from
+     * Fills the <code>imgSrc</code> of the <code>imageContainer</code> with a blob url generated from
      * the file associated to the containers resource.
      *
      * @param <code>imageContainer</code>
-     *   <code>imgContainer.document.resource['filename']</code>
-     *   must be a filename of an existing file in the mediastore.
+     *   <code>imgContainer.document.resource.identifier</code>
+     *   must be an identifier of an existing file in the mediastore.
      *
-     * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
+     * @return {Promise<ImageContainer>} Promise that returns the given
+     *  <code>imageContainer</code> with <code>imgSrc</code> set.
+     *  In case of error the imgSrc is set to a data url that represents a black img.
      */
-    public setImgSrc(imageContainer : ImageContainer) : Promise<Array<string>>{
+    public setImgSrc(imageContainer : ImageContainer) : Promise<ImageContainer>{
 
         return new Promise((resolve, reject) => {
             var image:ImageContainer = imageContainer;
@@ -63,7 +66,7 @@ export class BlobProxy {
             var callback = image => {
                 return url => {
                     image.imgSrc = url;
-                    resolve();
+                    resolve(image);
                 }
             };
             var errorCallback = image => {

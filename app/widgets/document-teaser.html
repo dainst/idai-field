@@ -1,0 +1,21 @@
+<div class="row">
+
+    <div class="col-sm-2">
+        <type-icon [type]="document.resource.type" size="42"></type-icon>
+    </div>
+    <div class="col-sm-10">
+        <div *ngIf="document['resource'].identifier || document['resource'].shortDescription">
+            <div class="title">
+                {{document['resource'].shortDescription}}
+            </div>
+
+            <div class="identifier">
+                {{document['resource'].identifier}}
+            </div>
+        </div>
+        <div *ngIf="!(document['resource'].identifier || document['resource'].shortDescription)"
+             class="new">Neues Objekt
+        </div>
+    </div>
+
+</div>

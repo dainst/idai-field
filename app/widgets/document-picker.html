@@ -1,0 +1,16 @@
+<div class="resource-picker">
+
+    <search-bar [showFiltersMenu]="true" [defaultFilters]="filters" (onQueryChanged)="queryChanged($event)"></search-bar>
+
+    <ul class="list-group object-list" id="objectList">
+        <li *ngFor="let document of documents; let index=index"
+            (click)="selectedDocument.emit(document)"
+            class="list-group-item"
+            [id]="'resource-' + document.resource.identifier">
+
+            <document-teaser [document]="document"></document-teaser>
+
+        </li>
+    </ul>
+
+</div>

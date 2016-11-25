@@ -52,9 +52,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.setConfig();
-        if (this.config.environment == 'test') this.loadSampleData();
     }
 
     private setConfig() {
@@ -69,19 +67,6 @@ export class AppComponent implements OnInit {
                     this.messages.add(error);
                 });
             }
-        });
-    }
-
-
-    loadSampleData(): void {
-
-        this.datastore.clear()
-        .then(() => {
-            var promises = [];
-            for (var ob of DOCS) promises.push(this.datastore.update(ob));
-            Promise.all(promises)
-                .then(() => console.log("Successfully stored sample objects"))
-                .catch(err => console.error("Problem when storing sample data", err));
         });
     }
 }

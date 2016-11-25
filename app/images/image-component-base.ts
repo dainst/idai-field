@@ -12,7 +12,6 @@ export class ImageComponentBase {
 
     protected image : ImageContainer = {};
     private blobProxy : BlobProxy;
-    private datastoreRetries : number = 5;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,22 +23,11 @@ export class ImageComponentBase {
         this.blobProxy = new BlobProxy(mediastore,sanitizer);
     }
 
-    protected fetchDocAndImage(retries = this.datastoreRetries) {
+    protected fetchDocAndImage() {
         this.getRouteParams(function(id){
             this.id=id;
             this.datastore.get(id).then(
                 doc=>{
-                    if(typeof doc === 'undefined') {
-                        if (retries > 0) {
-                            console.log("Could not find document with id " + id + ". " + retries + " retries left.");
-                            return setTimeout(this.fetchDocAndImage(retries - 1), 100);
-                        }
-                        else {
-                            console.error("Fatal error: could not load document for id ", id);
-                        }
-                    }
-
-                    // this.doc = doc;
                     this.image.document = doc;
                     if (doc.resource.filename) this.blobProxy.setImgSrc(this.image).catch(err=>{
                         this.messages.addWithParams(err);

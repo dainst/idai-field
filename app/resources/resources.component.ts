@@ -49,12 +49,7 @@ export class ResourcesComponent implements OnInit {
     }
 
     public ngOnInit() {
-
-        if (this.config.environment == "test") {
-            setTimeout(() => this.fetchDocuments(this.query), 500);
-        } else {
-            this.fetchDocuments(this.query);
-        }
+        this.fetchDocuments(this.query);
     }
 
     public queryChanged(query: Query) {

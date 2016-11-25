@@ -29,6 +29,7 @@ import {FakeMediastore} from './datastore/fake-mediastore'
 import {FileSystemMediastore} from './datastore/file-system-mediastore'
 import {ImagesModule} from './images/images.module'
 import {NavbarComponent} from './navbar.component'
+import {DOCS} from "./datastore/sample-objects";
 
 import CONFIG = require("config/config.json!json");
 
@@ -66,7 +67,24 @@ import CONFIG = require("config/config.json!json");
         { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         Indexeddb,
-        { provide: Datastore, useClass: IndexeddbDatastore },
+        {
+            provide: Datastore,
+            useFactory: function (idb: Indexeddb): IndexeddbDatastore {
+                var datastore = new IndexeddbDatastore(idb);
+                if (CONFIG['environment'] == 'test') {
+                    var promises = [];
+                    for (var ob of DOCS) promises.push(datastore.update(ob));
+
+                    Promise.all(promises)
+                        .then(() => {
+                            console.log("Successfully stored sample objects");
+                        })
+                        .catch(err => console.error("Problem when storing sample data", err));
+                }
+                return datastore;
+            },
+            deps: [Indexeddb]
+        },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,

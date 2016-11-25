@@ -36,8 +36,6 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     private rows = [];
     private selected = [];
 
-    private dataStoreRetries : number = 5;
-
     public constructor(
         private router: Router,
         private datastore: Datastore,
@@ -73,18 +71,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    private fetchDocuments(query: Query, retries = this.dataStoreRetries) {
+    private fetchDocuments(query: Query) {
         this.datastore.find(query).then(documents => {
-            if (documents.length == 0) {
-                if (retries > 0) {
-                    console.log("Datastore empty, retrying in 3 seconds (" + retries + " retries left).");
-                    return setTimeout(this.fetchDocuments(query, retries - 1), 3000);
-                }
-                else {
-                    console.log("Failed to fetch any document.");
-                }
-
-            }
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images

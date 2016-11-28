@@ -195,7 +195,7 @@ export class MapComponent implements OnChanges {
         for (var i in documents) {
             var resource: any = documents[i].resource;
             if (resource.georeference && !this.layers[resource.id]) {
-                var promise = this.makeLayerForImageResource(resource, zIndex);
+                var promise = this.makeLayerForImageResource(resource, zIndex++);
                 promises.push(promise);
             }
         }
@@ -210,7 +210,7 @@ export class MapComponent implements OnChanges {
                 name: resource.shortDescription,
                 filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
                 georeference: resource.georeference,
-                zIndex: zIndex++
+                zIndex: zIndex
             };
             this.layers[resource.id] = layer;
 
@@ -583,7 +583,7 @@ export class MapComponent implements OnChanges {
 
     private getLayersAsList(): Array<IdaiFieldMapLayer> {
 
-        var layersList = [];
+        var layersList: Array<IdaiFieldMapLayer> = [];
 
         for (var i in this.layers) {
             if (this.layers.hasOwnProperty(i)) {
@@ -591,7 +591,7 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        return layersList;
+        return layersList.sort((layer1, layer2) => layer1.zIndex - layer2.zIndex);
     }
 }
 

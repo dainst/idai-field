@@ -95,11 +95,11 @@ export class MapComponent implements OnChanges {
         this.initializeLayers().then(
             () => {
                 this.initializePanes();
+                this.addActiveLayersFromMapState();
                 var layers = this.getLayersAsList();
                 if (this.activeLayers.length == 0 && layers.length > 0) {
-                    var defaultLayer = layers[0];
-                    this.activeLayers.push(defaultLayer);
-                    this.addLayerToMap(defaultLayer);
+                    this.addLayerToMap(layers[0]);
+                    this.saveActiveLayersIdsInMapState();
                }
             }
         );
@@ -310,23 +310,50 @@ export class MapComponent implements OnChanges {
             layer.georeference.topRightCoordinates,
             layer.georeference.bottomLeftCoordinates,
             { pane: layer.id }).addTo(this.map);
+
+        this.activeLayers.push(layer);
     }
 
     public toggleLayer(layer: IdaiFieldMapLayer) {
 
         var index = this.activeLayers.indexOf(layer);
         if (index == -1) {
-            this.activeLayers.push(layer);
             this.addLayerToMap(layer);
         } else {
             this.activeLayers.splice(index, 1);
             this.map.removeLayer(layer.object);
         }
+
+        this.saveActiveLayersIdsInMapState();
     }
 
     public isActiveLayer(layer: any) {
 
         return this.activeLayers.indexOf(layer) > -1;
+    }
+
+    private saveActiveLayersIdsInMapState() {
+
+        var activeLayersIds: Array<string> = [];
+
+        for (var i in this.activeLayers) {
+            activeLayersIds.push(this.activeLayers[i].id);
+        }
+
+        this.mapState.setActiveLayersIds(activeLayersIds);
+    }
+
+    private addActiveLayersFromMapState() {
+
+        var activeLayersIds: Array<string> = this.mapState.getActiveLayersIds();
+
+        for (var i in activeLayersIds) {
+            var layerId = activeLayersIds[i];
+            var layer = this.layers[layerId];
+            if (layer && this.activeLayers.indexOf(layer) == -1) {
+                this.addLayerToMap(layer);
+            }
+        }
     }
 
     private focusMarker(marker: L.Marker) {

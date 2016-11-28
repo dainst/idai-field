@@ -10,6 +10,7 @@ import {MapState} from './map-state';
 import {Datastore, Mediastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {BlobProxy} from "../../common/blob-proxy";
+import {IdaiFieldMapLayer} from "./idai-field-map-layer";
 
 @Component({
     moduleId: module.id,
@@ -38,8 +39,8 @@ export class MapComponent implements OnChanges {
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
 
-    private layers: { [id: string]: any } = {};
-    private activeLayers: Array<any> = [];
+    private layers: { [id: string]: IdaiFieldMapLayer } = {};
+    private activeLayers: Array<IdaiFieldMapLayer> = [];
     private panes: { [id: string]: any } = {};
 
     private markerIcons = {
@@ -204,13 +205,11 @@ export class MapComponent implements OnChanges {
     private makeLayerForImageResource(resource: IdaiFieldImageResource, zIndex: number) {
 
         var callback = (resource) => url => {
-            var layer = {
+            var layer: IdaiFieldMapLayer = {
                 id: resource.id,
                 name: resource.shortDescription,
                 filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
-                latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
-                    L.latLng(resource.georeference.topRightCoordinates),
-                    L.latLng(resource.georeference.bottomLeftCoordinates)],
+                georeference: resource.georeference,
                 zIndex: zIndex++
             };
             this.layers[resource.id] = layer;
@@ -229,7 +228,7 @@ export class MapComponent implements OnChanges {
             var id = layers[i].id;
             if (!this.panes[id]) {
                 var pane = this.map.createPane(id);
-                pane.style.zIndex = layers[i].zIndex;
+                pane.style.zIndex = String(layers[i].zIndex);
                 this.panes[id] = pane;
             }
         }
@@ -304,10 +303,30 @@ export class MapComponent implements OnChanges {
         this.polygons[document.resource.id] = polygon;
     }
 
-    private addLayerToMap(layer: any) {
+    private addLayerToMap(layer: IdaiFieldMapLayer) {
 
-        layer.object = L.imageOverlay.rotated(layer.filePath, layer.latLngs[0], layer.latLngs[1], layer.latLngs[2],
+        layer.object = L.imageOverlay.rotated(layer.filePath,
+            layer.georeference.topLeftCoordinates,
+            layer.georeference.topRightCoordinates,
+            layer.georeference.bottomLeftCoordinates,
             { pane: layer.id }).addTo(this.map);
+    }
+
+    public toggleLayer(layer: IdaiFieldMapLayer) {
+
+        var index = this.activeLayers.indexOf(layer);
+        if (index == -1) {
+            this.activeLayers.push(layer);
+            this.addLayerToMap(layer);
+        } else {
+            this.activeLayers.splice(index, 1);
+            this.map.removeLayer(layer.object);
+        }
+    }
+
+    public isActiveLayer(layer: any) {
+
+        return this.activeLayers.indexOf(layer) > -1;
     }
 
     private focusMarker(marker: L.Marker) {
@@ -331,23 +350,6 @@ export class MapComponent implements OnChanges {
         }
 
         return shortDescription;
-    }
-
-    public toggleLayer(layer: any) {
-
-        var index = this.activeLayers.indexOf(layer);
-        if (index == -1) {
-            this.activeLayers.push(layer);
-            this.addLayerToMap(layer);
-        } else {
-            this.activeLayers.splice(index, 1);
-            this.map.removeLayer(layer.object);
-        }
-    }
-
-    public isActiveLayer(layer: any) {
-
-        return this.activeLayers.indexOf(layer) > -1;
     }
 
     private clickOnMap(clickPosition: L.LatLng) {
@@ -552,7 +554,7 @@ export class MapComponent implements OnChanges {
         return coordinates;
     }
 
-    private getLayersAsList() {
+    private getLayersAsList(): Array<IdaiFieldMapLayer> {
 
         var layersList = [];
 

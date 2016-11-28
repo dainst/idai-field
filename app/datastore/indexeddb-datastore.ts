@@ -30,15 +30,8 @@ export class IndexeddbDatastore implements Datastore {
         this.db=idb.db();
 
         if (CONFIG['environment'] == 'test') {
-            var promises = [];
-            for (var ob of DOCS) promises.push(this.update(ob));
-
-            Promise.all(promises)
-                .then(() => {
-                    console.log("Successfully stored sample objects");
-                    this.readyForQuery = true;
-                })
-                .catch(err => console.error("Problem when storing sample data", err));
+            this.clear();
+            this.loadSampleData();
         } else {
             this.readyForQuery = true;
         }
@@ -314,7 +307,7 @@ export class IndexeddbDatastore implements Datastore {
     }
 
     private notifyObserversOfObjectToSync(document:Document):void {
-        
+
         this.observers.forEach( observer => {
             observer.next(document)
         } );
@@ -327,5 +320,17 @@ export class IndexeddbDatastore implements Datastore {
         }
 
         return this.documentCache[document['id']];
+    }
+
+    private loadSampleData(): void {
+        var promises = [];
+        for (var ob of DOCS) promises.push(this.update(ob));
+
+        Promise.all(promises)
+            .then(() => {
+                console.log("Successfully stored sample objects");
+                this.readyForQuery = true;
+            })
+            .catch(err => console.error("Problem when storing sample data", err));
     }
 }

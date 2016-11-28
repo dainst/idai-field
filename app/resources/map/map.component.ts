@@ -278,7 +278,6 @@ export class MapComponent implements OnChanges {
 
         var mapComponent = this;
         polygon.on('click', function(event: L.Event) {
-            // TODO Wait for updated typings file to get rid of error message...
             if (mapComponent.select(this.document)) L.DomEvent.stop(event);
         });
 

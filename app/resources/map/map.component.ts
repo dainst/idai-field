@@ -2,11 +2,13 @@ import {Component, Input, Output, EventEmitter, OnChanges, SecurityContext} from
 import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
+import {IdaiFieldImageResource} from "../../model/idai-field-image-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
 import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Document} from "idai-components-2/core";
 import {BlobProxy} from "../../common/blob-proxy";
 
 @Component({
@@ -166,7 +168,7 @@ export class MapComponent implements OnChanges {
 
     private initializeViewportMonitoring() {
 
-        this.map.on('moveend',function(){
+        this.map.on('moveend', function () {
             this.mapState.setCenter(this.map.getCenter());
             this.mapState.setZoom(this.map.getZoom());
         }.bind(this));
@@ -177,30 +179,47 @@ export class MapComponent implements OnChanges {
         return new Promise((resolve, reject) => {
 
             var query = {q: '', filters: [{'field': 'type', 'value': 'image', invert: false}]};
-            this.datastore.find(query).then(documents => {
-                var zIndex = 0;
-                var promises = [];
-                for (var i in documents) {
-                    var resource: any = documents[i].resource;
-                    if (resource.georeference && !this.layers[resource.id]) {
-                        var callback = (resource) => url => {
-                            var layer = {
-                                id: resource.id,
-                                name: resource.shortDescription,
-                                filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
-                                latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
-                                    L.latLng(resource.georeference.topRightCoordinates),
-                                    L.latLng(resource.georeference.bottomLeftCoordinates)],
-                                zIndex: zIndex++
-                            }
-                            this.layers[resource.id] = layer;
-                        };
-                        this.blobProxy.urlForImage(resource.identifier).then(callback(resource));
-                    }
-                }
-                Promise.all(promises).then(() => resolve());
-            }, error => { reject(error); });
+            this.datastore.find(query).then(
+                documents => this.makeLayersForDocuments(documents, resolve),
+                error => {
+                    reject(error);
+                });
         });
+    }
+
+    private makeLayersForDocuments(documents: Array<Document>, resolve: any) {
+
+        var zIndex: number = 0;
+        var promises: Array<Promise<any>> = [];
+        for (var i in documents) {
+            var resource: any = documents[i].resource;
+            if (resource.georeference && !this.layers[resource.id]) {
+                var promise = this.makeLayerForImageResource(resource, zIndex);
+                promises.push(promise);
+            }
+        }
+        Promise.all(promises).then(() => resolve());
+    }
+
+    private makeLayerForImageResource(resource: IdaiFieldImageResource, zIndex: number) {
+
+        var callback = (resource) => url => {
+            var layer = {
+                id: resource.id,
+                name: resource.shortDescription,
+                filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
+                latLngs: [L.latLng(resource.georeference.topLeftCoordinates),
+                    L.latLng(resource.georeference.topRightCoordinates),
+                    L.latLng(resource.georeference.bottomLeftCoordinates)],
+                zIndex: zIndex++
+            };
+            this.layers[resource.id] = layer;
+
+            return new Promise<any>((resolve) => resolve());
+        };
+
+        var promise = this.blobProxy.urlForImage(resource.identifier);
+        return promise.then(callback(resource));
     }
 
     private initializePanes() {

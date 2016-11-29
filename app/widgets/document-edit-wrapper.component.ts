@@ -45,7 +45,6 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
         var validationReport = this.validate(this.document);
         if (!validationReport.valid) {
-            console.debug("validation report",validationReport);
             return this.messages.addWithParams([validationReport.errorMessage].concat(validationReport.errorData));
         }
 

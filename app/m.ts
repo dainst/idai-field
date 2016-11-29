@@ -147,12 +147,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: []
         };
         this.msgs[M.VALIDATION_ERROR_INVALIDFIELD]={
-            content: "Fehlende Felddefinition für ein Feld der Ressource.",
+            content: "Fehlende Felddefinition für das Feld \"{1}\" der Ressource vom Typ \"{0}\".",
             level: 'danger',
             params: []
         };
         this.msgs[M.VALIDATION_ERROR_INVALIDFIELDS]={
-            content: "Fehlende Felddefinitionen für mehrere Felder der Ressource.",
+            content: "Fehlende Felddefinitionen für die Felder \"{1}\" der Ressource vom Typ \"{0}\".",
             level: 'danger',
             params: []
         };

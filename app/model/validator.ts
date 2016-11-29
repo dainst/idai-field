@@ -124,7 +124,7 @@ export class Validator {
                     }
                 }
                 if (!fieldFound) {
-                    invalidFields.push("\"" + resourceField + "\"");
+                    invalidFields.push( resourceField );
                 }
             }
         }

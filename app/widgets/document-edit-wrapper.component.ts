@@ -1,11 +1,10 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {
     PersistenceManager,
-    DocumentEditChangeMonitor,
-    ConfigLoader,
-    WithConfiguration
+    DocumentEditChangeMonitor
 } from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
+import {WithConfiguration,ConfigLoader} from "idai-components-2/configuration";
 import {M} from "../m";
 import {Validator} from "../model/validator";
 import {IdaiFieldDocument} from "../model/idai-field-document";

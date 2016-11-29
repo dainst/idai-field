@@ -3,7 +3,7 @@ import {IdaiFieldBackend} from "./idai-field-backend";
 import {Inject} from '@angular/core';
 import {Datastore} from 'idai-components-2/datastore';
 import {SyncMediator} from './sync-mediator';
-import {ProjectConfiguration, ConfigLoader} from "idai-components-2/documents";
+import {ProjectConfiguration, ConfigLoader} from "idai-components-2/configuration";
 
 /**
  * @author Thomas Kleinke

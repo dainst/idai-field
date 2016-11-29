@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {PersistenceManager, WithConfiguration, ConfigLoader} from "idai-components-2/documents"
+import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration"
+import {PersistenceManager} from "idai-components-2/documents"
 import {M} from "../m";
 import {IdaiFieldGeoreference} from "../model/idai-field-georeference";
 

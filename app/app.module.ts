@@ -5,8 +5,9 @@ import {HttpModule, Http} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
 import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
-import {IdaiDocumentsModule, ConfigLoader,
+import {IdaiDocumentsModule,
     PersistenceManager, DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Query, Filter} from "idai-components-2/datastore";
-import {ConfigLoader} from "idai-components-2/documents";
+import {ConfigLoader} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,

@@ -1,7 +1,7 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldResource} from "../model/idai-field-resource";
-import {ConfigLoader, WithConfiguration} from "idai-components-2/documents";
+import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration";
 
 @Component({
     selector: 'document-view',

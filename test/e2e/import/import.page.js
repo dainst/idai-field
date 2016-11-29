@@ -1,40 +1,42 @@
 'use strict';
 
-module.exports = {
-    getSourceOptions: function() {
+var ImportPage = function (){
+    this.getSourceOptions = function() {
         return element(by.id('importSourceSelect')).all(by.css('select option'));
-    },
-    clickSourceOption: function (index) {
+    };
+    this.clickSourceOption = function (index) {
         return this.getSourceOptions().get(index).click();
-    },
-    getSourceOptionValue: function(index) {
+    };
+    this.getSourceOptionValue = function(index) {
         return this.getSourceOptions().get(index).getAttribute("value");
-    },
-    getFormatOptions: function() {
+    };
+    this.getFormatOptions = function() {
         return element(by.id('importFormatSelect')).all(by.css('select option'));
-    },
-    clickFormatOption: function (index) {
+    };
+    this.clickFormatOption = function (index) {
         return this.getFormatOptions().get(index).click();
-    },
-    getFormatOptionValue: function(index) {
+    };
+    this.getFormatOptionValue = function(index) {
         return this.getFormatOptions().get(index).getAttribute("value");
-    },
-    getImportURLInput: function () {
+    };
+    this.getImportURLInput = function () {
         return element(by.id('importUrlInput'));
-    },
-    getMessageElement: function (index) {
+    };
+    this.getMessageElement = function (index) {
         return element(by.id('message-' + index));
-    },
-    getMessage: function (index) {
+    };
+    this.getMessage = function (index) {
         return this.getMessageElement(index).getText();
-    },
-    clickImportButton: function () {
+    };
+    this.clickImportButton = function () {
         return element(by.id('importButton')).click();
-    },
-    clickStartImportButton: function () {
+    };
+    this.clickStartImportButton = function () {
         return element(by.id('importStartButton')).click();
-    },
-    get: function () {
+    };
+    this.get = function () {
         browser.get('/#/resources/');
-    }
+    };
 };
+
+module.exports = new ImportPage();

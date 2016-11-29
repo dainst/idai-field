@@ -1,10 +1,12 @@
 'use strict';
 
-module.exports = {
-    getDocumentCard: function () {
+var ImagesViewPage = function (){
+    this.getDocumentCard = function () {
         return element(by.id('document-view'));
-    },
-    clickBackToGridButton: function () {
+    };
+    this.clickBackToGridButton = function () {
         return element(by.id('document-view-button-back-to-map')).click();
-    }
+    };
 };
+
+module.exports = new ImagesViewPage();

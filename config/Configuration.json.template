@@ -70,19 +70,22 @@
       ]
     },
     {
-        "type" : "image",
-        "label" : "Bild",
-        "fields" : [
-            {
-                "name" : "height"
-            },
-            {
-                "name" : "width"
-            },
-            {
-                "name" : "filename"
-            }
-        ]
+      "type" : "image",
+      "label" : "Bild",
+      "fields" : [
+        {
+          "name" : "height"
+        },
+        {
+          "name" : "width"
+        },
+        {
+          "name" : "filename"
+        },
+        {
+          "name" : "author"
+        }
+      ]
     }
   ],
   "relations" :

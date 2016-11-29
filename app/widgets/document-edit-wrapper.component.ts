@@ -43,9 +43,12 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
     public save(viaSaveButton:boolean=false) {
 
-        var validationReport = this.validate(this.document);
+        var validationReport = this.validator.validate(
+            <IdaiFieldDocument>this.document);
         if (!validationReport.valid) {
-            return this.messages.addWithParams([validationReport.errorMessage].concat(validationReport.errorData));
+            return this.messages.addWithParams(
+                [validationReport.errorMessage]
+                .concat(validationReport.errorData));
         }
 
         this.persistenceManager.persist(this.document).then(
@@ -63,18 +66,5 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                     this.messages.add(err);
                 }
             });
-    }
-
-    private validate(doc) {
-        return this.validator.validate(<IdaiFieldDocument>doc);
-    }
-
-    public getTypeLabel(): string {
-
-        if (!this.document) {
-            return "";
-        } else {
-            return this.projectConfiguration.getLabelForType(this.document.resource.type);
-        }
     }
 }

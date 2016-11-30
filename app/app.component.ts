@@ -1,7 +1,5 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {Router, Event, NavigationStart} from '@angular/router';
-import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
-import {DOCS} from "./datastore/sample-objects";
+import {Component, OnInit, Inject} from "@angular/core";
+import {Router, Event, NavigationStart} from "@angular/router";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader, ConfigurationValidator} from "idai-components-2/configuration";
 
@@ -19,7 +17,7 @@ export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
 
-    private extraTypes = [{
+    private defaultTypes = [{
         "type" : "image",
         "fields" : [
             {
@@ -34,7 +32,7 @@ export class AppComponent implements OnInit {
         ]
     }];
 
-    private extraFields = [{
+    private defaultFields = [{
         name : "shortDescription",
         label : "Kurzbeschreibung"
     },{
@@ -45,8 +43,7 @@ export class AppComponent implements OnInit {
 
 
 
-    constructor(private datastore: IndexeddbDatastore,
-                @Inject('app.config') private config,
+    constructor(@Inject('app.config') private config,
                 private configLoader: ConfigLoader,
                 private router: Router,
                 private messages: Messages) {
@@ -71,8 +68,8 @@ export class AppComponent implements OnInit {
     private setConfig() {
         this.configLoader.load(
             AppComponent.PROJECT_CONFIGURATION_PATH,
-            this.extraTypes,
-            this.extraFields
+            this.defaultTypes,
+            this.defaultFields
         );
         this.configLoader.configuration().subscribe(result => {
             if (result.error) {

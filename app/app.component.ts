@@ -19,18 +19,31 @@ export class AppComponent implements OnInit {
 
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
 
-    private mandatoryFields = [{
-        name : "identifier",
-        description : "use this to uniquely identify your object",
-        label : "Identifier",
-        index: 0
-    },{
-        name : "shortDescription",
-        label : "Kurzbeschreibung",
-        index: 1
+    private extraTypes = [{
+        "type" : "image",
+        "fields" : [
+            {
+                "name" : "height"
+            },
+            {
+                "name" : "width"
+            },
+            {
+                "name" : "filename"
+            }
+        ]
     }];
 
-    private mandatoryTypes = ["image"];
+    private extraFields = [{
+        name : "shortDescription",
+        label : "Kurzbeschreibung"
+    },{
+        name : "identifier",
+        description : "use this to uniquely identify your object",
+        label : "Identifier"
+    }];
+
+
 
     constructor(private datastore: IndexeddbDatastore,
                 @Inject('app.config') private config,
@@ -56,12 +69,16 @@ export class AppComponent implements OnInit {
     }
 
     private setConfig() {
-        this.configLoader.setConfigurationPath(AppComponent.PROJECT_CONFIGURATION_PATH);
+        this.configLoader.load(
+            AppComponent.PROJECT_CONFIGURATION_PATH,
+            this.extraTypes,
+            this.extraFields
+        );
         this.configLoader.configuration().subscribe(result => {
             if (result.error) {
                 this.messages.addWithParams([result.error.msgkey].concat([result.error.msgparams]));
             } else {
-                new ConfigurationValidator(this.mandatoryFields, this.mandatoryTypes)
+                new ConfigurationValidator([],[])
                     .validate(result.projectConfiguration)
                     .errors.forEach(error => {
                     this.messages.add(error);

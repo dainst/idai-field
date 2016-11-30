@@ -74,15 +74,6 @@
       "label" : "Bild",
       "fields" : [
         {
-          "name" : "height"
-        },
-        {
-          "name" : "width"
-        },
-        {
-          "name" : "filename"
-        },
-        {
           "name" : "author"
         }
       ]

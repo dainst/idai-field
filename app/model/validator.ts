@@ -110,7 +110,12 @@ export class Validator {
         var relationFields = this.projectConfiguration.getRelationDefinitions(resource.type);
 
 
-        var defaultFields = [ { name: "id" }, { name: "type" }, { name: "relations" }, { name: "geometries" } ];
+        var defaultFields = [
+            { name: "id" }, 
+            { name: "type" },
+            { name: "relations" },
+            { name: "depicts" },
+            { name: "geometries" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);
 

@@ -21,25 +21,43 @@ export class AppComponent implements OnInit {
         "type" : "image",
         "fields" : [
             {
-                "name" : "height"
+                name : "height",
+                editable : false,
+                label: "Höhe"
             },
             {
-                "name" : "width"
+                name : "width",
+                editable : false,
+                label: "Breite"
             },
             {
-                "name" : "filename"
+                name : "filename",
+                editable : false,
+                label: "Dateiname"
             }
         ]
     }];
 
     private defaultFields = [{
         name : "shortDescription",
-        label : "Kurzbeschreibung"
+        label : "Kurzbeschreibung",
+        visible: false
     },{
         name : "identifier",
         description : "use this to uniquely identify your object",
-        label : "Identifier"
-    }];
+        label : "Identifier",
+        visible: false,
+    },{
+        name: "id",
+        visible: false,
+        editable: false
+    },{
+        name: "type",
+        visible: false,
+        editable: false
+    }
+
+    ];
 
 
 

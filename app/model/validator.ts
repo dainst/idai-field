@@ -111,8 +111,6 @@ export class Validator {
 
 
         var defaultFields = [
-            { name: "id" }, 
-            { name: "type" },
             { name: "relations" },
             { name: "depicts" },
             { name: "geometries" } ];

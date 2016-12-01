@@ -116,12 +116,13 @@ export class Importer {
         var index = this.docsToUpdate.indexOf(doc);
         if (index > -1) this.docsToUpdate.splice(index, 1);
 
-        var validationReport = this.validator.validate(doc);
-        if (!validationReport.valid) {
+        var validationErrors = this.validator.validate(doc);
+        if (validationErrors) {
+            
             this.importReport['validation_errors'].push({
                 doc: doc,
-                msg: validationReport.errorMessage,
-                msgParams: validationReport.errorData
+                msg: validationErrors[0],
+                msgParams: validationErrors.slice(1)
             });
 
             this.currentImportWithError = true;

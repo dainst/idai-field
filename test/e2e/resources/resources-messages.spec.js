@@ -1,7 +1,7 @@
 var common = require("../common.js");
 var utils = require("../utils.js");
 
-describe('resources/messages', function() {
+    describe('resources/messages', function() {
 
     beforeEach(function(){
         browser.get('/#/resources');
@@ -23,12 +23,12 @@ describe('resources/messages', function() {
     
     it('should warn if identifier is missing', function () {
         common.createDoc('')
-            .then(common.expectMsg('fehlt'));
+            .then(common.expectMsg('identifier'));
     });
 
     it('should warn if an existing id is used', function() {
         common.createDoc('12')
             .then(common.createDoc('12'))
-            .then(common.expectMsg("existiert bereits"));
+            .then(common.expectMsg('existiert bereits'));
     });
 });

@@ -47,18 +47,7 @@ export class AppComponent implements OnInit {
         description : "use this to uniquely identify your object",
         label : "Identifier",
         visible: false,
-    },{
-        name: "id",
-        visible: false,
-        editable: false
-    },{
-        name: "type",
-        visible: false,
-        editable: false
-    }
-
-    ];
-
+    }];
 
 
     constructor(@Inject('app.config') private config,

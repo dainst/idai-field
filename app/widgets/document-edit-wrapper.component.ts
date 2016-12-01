@@ -49,10 +49,10 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                 [validationReport.errorMessage]
                 .concat(validationReport.errorData));
         }
-
+        
+        this.document['synced'] = 0;
         this.persistenceManager.persist(this.document).then(
             () => {
-                this.document['synced'] = 0;
                 this.documentEditChangeMonitor.reset();
 
                 this.onSaveSuccess.emit(viaSaveButton);

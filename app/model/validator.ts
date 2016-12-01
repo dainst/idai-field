@@ -112,7 +112,6 @@ export class Validator {
 
         var defaultFields = [
             { name: "relations" },
-            { name: "depicts" },
             { name: "geometries" } ];
 
         var fields = projectFields.concat(relationFields).concat(defaultFields);

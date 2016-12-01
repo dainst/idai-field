@@ -74,7 +74,8 @@
       "label" : "Bild",
       "fields" : [
         {
-          "name" : "author"
+          "name" : "author",
+          "label" : "Autor"
         }
       ]
     }

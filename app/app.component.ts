@@ -34,6 +34,11 @@ export class AppComponent implements OnInit {
                 name : "filename",
                 editable : false,
                 label: "Dateiname"
+            },
+            {
+                name: "depicts",
+                editable : false,
+                label: "Abbildung von"
             }
         ]
     }];

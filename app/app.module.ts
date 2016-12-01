@@ -5,8 +5,9 @@ import {HttpModule, Http} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
 import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
-import {IdaiDocumentsModule,
-    PersistenceManager, DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {IdaiDocumentsModule, DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Validator} from 'idai-components-2/persist';
+import {PersistenceManager} from 'idai-components-2/persist';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
@@ -14,7 +15,6 @@ import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
 import {Indexeddb} from "./datastore/indexeddb";
-import {Validator} from './model/validator';
 import {Importer} from "./import/importer";
 import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
@@ -30,7 +30,6 @@ import {HttpMediastore} from './datastore/http-mediastore';
 import {FileSystemMediastore} from './datastore/file-system-mediastore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
-import {DOCS} from "./datastore/sample-objects";
 
 
 import CONFIG = require("config/config.json!json");

@@ -52,6 +52,10 @@ export class AppComponent implements OnInit {
         description : "use this to uniquely identify your object",
         label : "Identifier",
         visible: false,
+    },{
+        name : "geometries",
+        visible: false,
+        editable: false
     }];
 
 

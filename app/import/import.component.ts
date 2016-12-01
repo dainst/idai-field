@@ -140,17 +140,20 @@ export class ImportComponent {
         }
     }
 
-    private showValidationErrorMessage(msg: string, msgParams: any[]) {
+    private showValidationErrorMessage(msg: string, msgParams: string[]) {
 
-        if (msg == M.VALIDATION_ERROR_IDMISSING) {
-            this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
-        } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
-            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDTYPE].concat(msgParams));
-        } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
-            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELD].concat(msgParams));
-        } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
-            this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELDS].concat(msgParams));
-        }
+        if (msgParams.length>0)
+            this.messages.addWithParams([msg].concat(msgParams));
+
+        // if (msg == M.VALIDATION_ERROR_IDMISSING) {
+        //     this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
+        // } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
+        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDTYPE].concat(msgParams));
+        // } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
+        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELD].concat(msgParams));
+        // } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
+        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELDS].concat(msgParams));
+        // }
     }
 
     private showDatastoreErrorMessage(doc: any, msg: any) {

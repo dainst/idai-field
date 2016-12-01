@@ -29,10 +29,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MESSAGES_NOBODY : string = 'messages/nobody';
     public static PC_GENERIC_ERROR : string = 'pmc/generic';
     public static PARSE_GENERIC_ERROR : string = 'parse/generic';
-    public static VALIDATION_ERROR_IDMISSING : string = 'validation/error/idmissing';
-    public static VALIDATION_ERROR_INVALIDTYPE: string = 'validation/error/invalidtype';
-    public static VALIDATION_ERROR_INVALIDFIELD: string = 'validation/error/invalidfield';
-    public static VALIDATION_ERROR_INVALIDFIELDS: string = 'validation/error/invalidfields';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
@@ -121,11 +117,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger',
             params: ["?", ""]
         };
-        this.msgs[M.VALIDATION_ERROR_IDMISSING]={
-            content: 'Objekt-Identifier fehlt.',
-            level: 'danger',
-            params: []
-        };
         this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
             content: 'Das Objekt wurde erfolgreich gespeichert.',
             level: 'success',
@@ -138,21 +129,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern des Objekts ist ein Fehler aufgetreten.',
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.VALIDATION_ERROR_INVALIDTYPE]={
-            content: "Der Typ der Ressource wird nicht unterstützt.",
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.VALIDATION_ERROR_INVALIDFIELD]={
-            content: "Fehlende Felddefinition für das Feld \"{1}\" der Ressource vom Typ \"{0}\".",
-            level: 'danger',
-            params: []
-        };
-        this.msgs[M.VALIDATION_ERROR_INVALIDFIELDS]={
-            content: "Fehlende Felddefinitionen für die Felder \"{1}\" der Ressource vom Typ \"{0}\".",
             level: 'danger',
             params: []
         };

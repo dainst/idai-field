@@ -28,7 +28,7 @@ function chooseGeometry(geometry) {
 }
 
 function typeInIdentifier(identifier) {
-    var inputField = element(by.css('#edit-form-element-2 input')); // element-2, 0 and 1 are type and id
+    var inputField = element(by.css('#edit-form-element-3 input')); // element-2, 0,1 and 2 are type, id, geometries 
     return typeIn(inputField, identifier);
 }
 

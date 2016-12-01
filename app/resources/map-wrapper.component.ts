@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from "@angular/core";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ResourcesComponent} from "./resources.component";
 import {ReadDatastore} from "idai-components-2/datastore";
-import {PersistenceManager} from "idai-components-2/documents";
+import {PersistenceManager} from "idai-components-2/persist";
 import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";

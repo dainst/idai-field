@@ -1,7 +1,7 @@
 var common = require("../common.js");
 var utils = require("../utils.js");
 
-describe('idai field app', function() {
+describe('resources/messages', function() {
 
     beforeEach(function(){
         browser.get('/#/resources');

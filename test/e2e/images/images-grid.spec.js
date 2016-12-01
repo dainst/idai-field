@@ -94,7 +94,7 @@ describe('image grid tests -- ', function(){
             });
     });
 
-    it('user should be able to navigate from grid to view, and back to grid.', function() {
+    fit('user should be able to navigate from grid to view, and back to grid.', function() {
         var xpath = '//div[@class="fieldname"][text()="filename"]/following-sibling::div[@class="fieldvalue"]';
 
         gridPage.getCellImageName(0).then(function(imageName){

@@ -1,8 +1,23 @@
 exports.config = {
-    chromeDriver : '../../../node_modules/chromedriver/lib/chromedriver/chromedriver',
-    
+    chromeDriver: '../../../node_modules/chromedriver/lib/chromedriver/chromedriver',
+
     baseUrl: 'http://localhost:8081',
-    specs: ['../promises-delay.js','../**/*.spec.js'],
+
+    suites: {
+        resources: [
+            '../promises-delay.js', '../resources/*.spec.js'
+        ],
+        map: [
+            '../promises-delay.js', '../map/*.spec.js'
+        ],
+        images: [
+            '../promises-delay.js', '../images/*.spec.js'
+        ],
+        import: [
+            '../promises-delay.js', '../import/*.spec.js'
+        ]
+    },
+
     directConnect: true,
     exclude: [],
     multiCapabilities: [{

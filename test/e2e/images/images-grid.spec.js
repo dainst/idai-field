@@ -95,7 +95,7 @@ describe('image grid tests -- ', function(){
     });
 
     fit('user should be able to navigate from grid to view, and back to grid.', function() {
-        var xpath = '//div[@class="fieldname"][text()="filename"]/following-sibling::div[@class="fieldvalue"]';
+        var xpath = '//div[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         gridPage.getCellImageName(0).then(function(imageName){
             gridPage.doubleClickCell(0);

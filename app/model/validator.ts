@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {M} from "../m";
 import {IdaiFieldDocument} from "./idai-field-document";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {ProjectConfiguration} from "idai-components-2/documents";
+import {ConfigLoader,ProjectConfiguration} from "idai-components-2/configuration";
 
 /**
  * @author Daniel de Oliveira

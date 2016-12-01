@@ -83,7 +83,7 @@ export class IdaiFieldBackend {
 
     private performPut(resourceId:string,document:any) : Observable<Response> {
 
-        return this.http.put(this.configuration.uri + '/objects/' +
+        return this.http.put(this.configuration.uri + '/objects/'
             + resourceId,
             JSON.stringify(document), 
             {headers: this.createAuthorizationHeader()});

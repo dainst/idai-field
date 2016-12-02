@@ -39,13 +39,9 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
     public save(viaSaveButton:boolean=false) {
 
-        console.log("a",this.document)
-        
         var validationError = this.validator.validate(
             <IdaiFieldDocument>this.document);
         if (validationError) return this.messages.addWithParams(validationError);
-
-        console.log("b")
 
         this.document['synced'] = 0;
         this.persistenceManager.persist(this.document).then(

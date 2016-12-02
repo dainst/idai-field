@@ -1,7 +1,7 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router, Event, NavigationStart} from "@angular/router";
 import {Messages} from "idai-components-2/messages";
-import {ConfigLoader, ConfigurationValidator} from "idai-components-2/configuration";
+import {ConfigLoader} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -86,18 +86,11 @@ export class AppComponent implements OnInit {
         this.configLoader.load(
             AppComponent.PROJECT_CONFIGURATION_PATH,
             this.defaultTypes,
-            this.defaultFields
+            this.defaultFields,
+            []
         );
         this.configLoader.configuration().subscribe(result => {
-            if (result.error) {
-                this.messages.addWithParams([result.error.msgkey].concat([result.error.msgparams]));
-            } else {
-                new ConfigurationValidator([],[])
-                    .validate(result.projectConfiguration)
-                    .errors.forEach(error => {
-                    this.messages.add(error);
-                });
-            }
-        });
+            if (result.error) this.messages.addWithParams(result.error);
+    });
     }
 }

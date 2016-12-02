@@ -57,9 +57,9 @@ $buttoncolor: #657faa;
 }
 
 #document-view h2{
-  font-size: 15px;
-  color: #999;
-  margin-bottom: 20px;
+   font-size: 15px;
+   color: #999;
+   margin-bottom: 20px;
 }
 
 .document-view-field {
@@ -67,6 +67,7 @@ $buttoncolor: #657faa;
 }
 
 .document-view-field .fieldname {
+  font-size: 1rem;
   font-weight: bold;
 }
 

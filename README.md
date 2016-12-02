@@ -76,6 +76,11 @@ As the *start* command, it automatically converts scss files to css when they ar
 
 This command runs the end to end tests once.
 
+For running only tests of a specific subfolder of `test/e2e/`, for example `resources`, run
+```
+2$ protractor test/e2e/config/protractor.conf.js --suite=resources
+```
+
 ## Packaging
 
 To create binaries run 

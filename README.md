@@ -93,7 +93,11 @@ $ npm run package
 ```
 
 This will create packages for MacOs and Windows 32/64 bit.
-Linux is possible with electron but here this is yet untested and not enabled. 
+Linux is possible with electron but here this is yet untested and not enabled.
+
+Please note that when using windows, that due to nested node_modules and the 
+windows default maximum path length you might be running into errors while attempting
+to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
 ## Deployment
 

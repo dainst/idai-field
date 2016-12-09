@@ -21,7 +21,7 @@
         </button>
     </div>
     <div *ngIf="!document.resource.geometries || document.resource.geometries.length == 0">
-        <span>Keine</span>
+        <span class="fieldvalue">Keine</span>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
                 [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>

@@ -41,6 +41,20 @@ var ResourcesPage = function () {
         return element(by.id('document-view-button-edit-geometry')).click();
     };
 
+    this.clickRelationSuggestionByIndices = function (groupIndex, pickerIndex, suggestionIndex) {
+        return this.getRelationByIndices(groupIndex, pickerIndex)
+            .all(by.css('.suggestion')).get(suggestionIndex).click();
+    };
+
+    this.clickAddRelationForGroupWithIndex = function (groupIndex) {
+        return element.all(by.tagName('relation-picker-group')).get(groupIndex)
+            .element(by.css('.circular-button.add-relation')).click();
+    };
+
+    this.clickRelationInDocumentView = function (relationIndex) {
+        return element.all(by.css('#document-view a')).get(relationIndex).click();
+    };
+
     this.createResource = function(identifier, typeIndex) {
         var _this = this;
         return this.clickCreateObject()
@@ -71,6 +85,27 @@ var ResourcesPage = function () {
 
     this.getTypeOfSelectedGeometry = function() {
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
+    };
+
+    this.getRelationByIndices = function (groupIndex, pickerIndex) {
+        return element.all(by.tagName('relation-picker-group')).get(groupIndex)
+            .all(by.tagName('relation-picker')).get(pickerIndex);
+    };
+
+    this.getRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
+    };
+
+    this.getRelationButtonByIndices = function (groupIndex, pickerIndex, relationIndex) {
+        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
+    };
+
+    this.getRelationButtonTextByIndices = function (groupIndex, pickerIndex, relationIndex) {
+        return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+    };
+
+    this.getRelationNameInDocumetView = function (relationIndex) {
+        return element.all(by.css('#document-view a')).get(relationIndex).getText();
     };
 
     this.get = function () {
@@ -114,6 +149,11 @@ var ResourcesPage = function () {
     this.typeInIdentifier = function(identifier) {
         // element-2, 0,1 and 2 are type, id, geometries
         return common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
+    };
+
+    this.typeInRelationByIndices = function(groupIndex, pickerIndex, input) {
+        common.typeIn(this.getRelationByIndices(groupIndex, pickerIndex)
+            .element(by.tagName('input')), input);
     };
 };
 

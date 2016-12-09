@@ -1,7 +1,7 @@
 var mapPage = require('./map.page');
 var resourcePage = require('../resources/resources.page');
 
-fdescribe('idai field app', function() {
+describe('idai field app', function() {
 
     var mapEl;
     

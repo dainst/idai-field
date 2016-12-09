@@ -10,7 +10,7 @@
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",
     "test": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json && karma start test/browser/config/karma.conf.js --single-run",
-    "e2e": "protractor test/e2e/config/protractor.conf.js --suite=resources && protractor test/e2e/config/protractor.conf.js --suite=images && protractor test/e2e/config/protractor.conf.js --suite=map && protractor test/e2e/config/protractor.conf.js --suite=import",
+    "e2e": "protractor test/e2e/config/protractor.conf.js",
     "server": "gulp webserver-watch",
     "make-dist": "rimraf dist/* && gulp make-dist && gulp versioning --build $1",
     "package": "rimraf release/* && gulp package",

@@ -1,49 +1,49 @@
-var common = require("../common.js");
+var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
 
 describe('resources', function() {
 
     beforeEach(function(){
-        browser.get('/#/resources');
+        resourcesPage.get();
     });
 
     it('should find it by its identifier', function() {
-        common.createDoc("12")
-            .then(typeInIdentifierInSearchField)
+        resourcesPage.createResource('12')
+            .then(resourcesPage.typeInIdentifierInSearchField('12'))
             .then(function(){
-                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("12");
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('12')));
             });
     });
 
     it ('should show only resources of the selected type', function() {
-        common.createDoc("1", 0)
-            .then(common.createDoc("2", 1))
-            .then(setTypeFilter(2))
-            .then(setTypeFilter(1))
+        resourcesPage.createResource('1', 0)
+            .then(resourcesPage.createResource('2', 1))
+            .then(resourcesPage.setTypeFilter(2))
+            .then(resourcesPage.setTypeFilter(1))
             .then(function() {
-                browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
-                expect(element(by.id('resource-1')).isPresent()).toBe(false);
+                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), 1000);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), 1000);
             })
-            .then(setTypeFilter(0))
+            .then(resourcesPage.setTypeFilter(0))
             .then(function() {
-                browser.wait(EC.presenceOf(element(by.id('resource-1'))), 1000);
-                expect(element(by.id('resource-2')).isPresent()).toBe(false);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), 1000);
+                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), 1000);
             })
-            .then(setTypeFilter('all'))
+            .then(resourcesPage.setTypeFilter('all'))
             .then(function() {
-                browser.wait(EC.presenceOf(element(by.id('resource-1'))), 1000);
-                browser.wait(EC.presenceOf(element(by.id('resource-2'))), 1000);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), 1000);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), 1000);
             });
     });
 
     it ('should reflect changes in overview in realtime', function() {
-        common.createDoc("1a")
-            .then(common.createDoc("2"))
-            .then(common.selectObject(1))
-            .then(common.switchToEditMode)
-            .then(common.typeInIdentifier("1b"))
+        resourcesPage.createResource('1a')
+            .then(resourcesPage.createResource('2'))
+            .then(resourcesPage.selectObjectByIndex(1))
+            .then(resourcesPage.clickEditDocument)
+            .then(resourcesPage.typeInIdentifier('1b'))
             .then(function(){
-                expect(element.all(by.css('#objectList .list-group-item .identifier')).get(1).getText()).toEqual("1b");
+                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), 1000));
             });
     });
 
@@ -55,10 +55,10 @@ describe('resources', function() {
      * This however did not happen with an object already saved.
      */
     it ('should reflect changes in overview after creating object', function() {
-        common.createDoc("12")
-            .then(common.typeInIdentifier("34"))
+        resourcesPage.createResource('12')
+            .then(resourcesPage.typeInIdentifier('34'))
             .then(function(){
-                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("34");
+                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), 1000));
             });
     });
 
@@ -67,91 +67,78 @@ describe('resources', function() {
      * The attempt to do so got rejected with the duplicate identifier message.
      */
     it ('should save a new object and then save it again', function() {
-        common.createDoc("1")
-            .then(common.saveObject)
+        resourcesPage.createResource('1')
+            .then(resourcesPage.clickSaveDocument)
             .then(function(){
-                expect(element(by.id('message-0')).getText())
-                    .toContain("erfolgreich");
+                expect(resourcesPage.getMessage()).toContain('erfolgreich');
             });
     });
 
     /**
      * There has been a bug where clicking the new button without doing anything
-     * led to leftovers of "Neues Objekt" for every time the button was pressed.
+     * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
-    it("should remove a new object from the list if it hasn't been saved", function() {
-        common.createDoc("1")
-            .then(common.clickCreateObjectButton)
-            .then(common.selectType)
-            .then(common.chooseGeometry)
-            .then(common.clickCreateObjectButton)
-            .then(common.selectType)
-            .then(common.chooseGeometry)
+    it('should remove a new object from the list if it has not been saved', function() {
+        resourcesPage.createResource('1')
+            .then(resourcesPage.clickCreateObject)
+            .then(resourcesPage.selectResourceType)
+            .then(resourcesPage.selectGeometryType)
+            .then(resourcesPage.clickCreateObject)
+            .then(resourcesPage.selectResourceType)
+            .then(resourcesPage.selectGeometryType)
             .then(function(){
-                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual("Neues Objekt");
+                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), 1000);
             })
-            .then(common.scrollUp)
-            .then(common.selectObject(1))
+            .then(resourcesPage.scrollUp)
+            .then(resourcesPage.selectObjectByIndex(1))
             .then(function(){
-                expect(element(by.css('#objectList .list-group-item .identifier')).getText()).toEqual("1");
-            })
-    });
-
-    it ("should change the selection to new when saving via modal", function() {
-        common.createDoc("1")
-            .then(common.selectObject(0))
-            .then(common.switchToEditMode())
-            .then(common.typeInIdentifier("2"))
-            .then(common.clickCreateObjectButton())
-            .then(common.selectType())
-            .then(common.chooseGeometry())
-            .then(common.scrollUp)
-            .then(common.clickSaveInModal)
-            .then(common.scrollUp)
-            .then(function(){
-                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual("Neues Objekt");
+                expect(resourcesPage.getFirstListItemIdentifier()).toEqual('1');
             })
     });
 
-    it ("should change the selection to existing when saving via modal", function() {
-        common.createDoc("1")
-            .then(common.createDoc("2"))
-            .then(common.selectObject(0))
-            .then(common.switchToEditMode())
-            .then(common.typeInIdentifier("2a"))
-            .then(common.selectObject(1))
-            .then(common.scrollUp)
-            .then(common.clickSaveInModal)
-            .then(common.scrollUp)
+    it ('should change the selection to new when saving via modal', function() {
+        resourcesPage.createResource('1')
+            .then(resourcesPage.selectObjectByIndex(0))
+            .then(resourcesPage.clickEditDocument)
+            .then(resourcesPage.typeInIdentifier('2'))
+            .then(resourcesPage.clickCreateObject)
+            .then(resourcesPage.selectResourceType)
+            .then(resourcesPage.selectGeometryType)
+            .then(resourcesPage.scrollUp)
+            .then(resourcesPage.clickSaveInModal)
+            .then(resourcesPage.scrollUp)
             .then(function(){
-                expect(element.all(by.css('#objectList .list-group-item')).get(1)
-                    .getAttribute('class')).toContain('selected')
+                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual('Neues Objekt');
             })
     });
 
-    it ("should not change the selection to existing when cancelling in modal", function() {
-        common.createDoc("1")
-            .then(common.createDoc("2"))
-            .then(common.selectObject(0))
-            .then(common.switchToEditMode())
-            .then(common.typeInIdentifier("2a"))
-            .then(common.selectObject(1))
-            .then(common.scrollUp)
-            .then(common.clickCancelInModal)
-            .then(common.scrollUp)
+    it ('should change the selection to existing when saving via modal', function() {
+        resourcesPage.createResource('1')
+            .then(resourcesPage.createResource('2'))
+            .then(resourcesPage.selectObjectByIndex(0))
+            .then(resourcesPage.clickEditDocument)
+            .then(resourcesPage.typeInIdentifier('2a'))
+            .then(resourcesPage.selectObjectByIndex(1))
+            .then(resourcesPage.scrollUp)
+            .then(resourcesPage.clickSaveInModal)
+            .then(resourcesPage.scrollUp)
             .then(function(){
-                expect(element.all(by.css('#objectList .list-group-item')).get(0)
-                    .getAttribute('class')).toContain('selected')
+                expect(resourcesPage.selectObjectByIndex(1).getAttribute('class')).toContain('selected')
             })
     });
 
-    function typeInIdentifierInSearchField() {
-        return common.typeIn(element(by.id('object-search')), "12");
-    }
-
-    function setTypeFilter(typeIndex) {
-        return element(by.id('searchfilter')).click()
-            .then(function() { return element(by.id('choose-type-filter-option-' + typeIndex)).click() });
-    }
-
+    it ('should not change the selection to existing when cancelling in modal', function() {
+        resourcesPage.createResource('1')
+            .then(resourcesPage.createResource('2'))
+            .then(resourcesPage.selectObjectByIndex(0))
+            .then(resourcesPage.clickEditDocument)
+            .then(resourcesPage.typeInIdentifier('2a'))
+            .then(resourcesPage.selectObjectByIndex(1))
+            .then(resourcesPage.scrollUp)
+            .then(resourcesPage.clickCancelInModal)
+            .then(resourcesPage.scrollUp)
+            .then(function(){
+                expect(resourcesPage.selectObjectByIndex(0).getAttribute('class')).toContain('selected')
+            })
+    });
 });

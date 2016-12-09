@@ -1,34 +1,34 @@
-var common = require("../common.js");
+var resourcesPage = require('./resources.page');
 var utils = require("../utils.js");
 
-    describe('resources/messages', function() {
+describe('resources/messages', function() {
 
     beforeEach(function(){
-        browser.get('/#/resources');
+        resourcesPage.get();
     });
 
     it('should create a new object of first listed type ', function() {
-        common.createDoc('12')
-            .then(common.expectMsg('erfolgreich'));
+        resourcesPage.createResource('12')
+            .then(expect(resourcesPage.getMessage()).toContain('erfolgreich'));
     });
 
     it('should show the success msg also on route change', function() {
-        common.createDoc('12')
-            .then(common.removeMessage)
-            .then(common.typeInIdentifier('34'))
-            .then(common.selectObject(0))
-            .then(common.clickSaveInModal)
-            .then(common.expectMsg('erfolgreich'));
+        resourcesPage.createResource('12')
+            .then(resourcesPage.clickCloseMessage)
+            .then(resourcesPage.typeInIdentifier('34'))
+            .then(resourcesPage.selectObjectByIndex(0))
+            .then(resourcesPage.clickSaveInModal)
+            .then(expect(resourcesPage.getMessage()).toContain('erfolgreich'));
     });
     
     it('should warn if identifier is missing', function () {
-        common.createDoc('')
-            .then(common.expectMsg('identifier'));
+        resourcesPage.createResource('')
+            .then(expect(resourcesPage.getMessage()).toContain('identifier'));
     });
 
     it('should warn if an existing id is used', function() {
-        common.createDoc('12')
-            .then(common.createDoc('12'))
-            .then(common.expectMsg('existiert bereits'));
+        resourcesPage.createResource('12')
+            .then(resourcesPage.createResource('12'))
+            .then(expect(resourcesPage.getMessage()).toContain('existiert bereits'));
     });
 });

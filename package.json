@@ -14,7 +14,7 @@
     "server": "gulp webserver-watch",
     "make-dist": "rimraf dist/* && gulp make-dist && gulp versioning --build $1",
     "postinstall": "typings install",
-    "package": "rimraf release/* && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release"
+    "package": "rimraf release/* && electron-packager . --platform=darwin --arch=x64 --icon=dist/img/logo --prune=true --out=release"
   },
   "repository": {
     "type": "git",

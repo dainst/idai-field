@@ -117,7 +117,7 @@ gulp.task('package', [], function () {
     packager({
         dir: 'dist/',
         name: pkg.name,
-        platform: ['win32', 'darwin'],
+        platform: ['win32'],
         arch: 'all',
         version: '1.4.13',
         appBundleId: pkg.name,

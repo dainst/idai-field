@@ -119,7 +119,7 @@ gulp.task('package', [], function () {
         name: pkg.name,
         platform: ['win32', 'darwin'],
         arch: 'all',
-        version: '1.4.13',
+        version: '0.36.10',
         appBundleId: pkg.name,
         appVersion: pkg.version,
         'download.cache': 'cache/',

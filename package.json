@@ -53,7 +53,7 @@
     "archiver": "^1.1.0",
     "chromedriver": "2.25.1",
     "electron-connect": "0.4.2",
-    "electron-packager": "^8.4.0",
+    "electron-packager": "^7.0.0",
     "electron-prebuilt": "1.4.13",
     "file-api": "^0.10.4",
     "gulp": "^3.9.0",

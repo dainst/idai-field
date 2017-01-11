@@ -23,6 +23,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDTYPE: string = 'importer/failure/invalidtype';
     public static IMPORTER_FAILURE_INVALIDFIELD: string = 'importer/failure/invalidfield';
     public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
+    public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static DATASTORE_IDEXISTS : string = 'datastore/idexists';
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
@@ -116,6 +117,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             "Ressource des Typs \"{0}\".",
             level: 'danger',
             params: ["?", ""]
+        };
+        this.msgs[M.IMPORTER_FAILURE_INVALIDGEOMETRY] = {
+            content: "Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile {0}.",
+            level: 'danger',
+            params: ["?"]
         };
         this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
             content: 'Das Objekt wurde erfolgreich gespeichert.',

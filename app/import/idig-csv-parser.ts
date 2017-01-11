@@ -213,6 +213,8 @@ export class IdigCsvParser implements Parser {
 
         if (geometryString.startsWith("point")) {
             geometry = this.parsePointGeometryString(geometryString);
+        } else if (geometryString.startsWith("polygon")) {
+            geometry = this.parsePolygonGeometryString(geometryString);
         }
 
         return geometry;
@@ -224,21 +226,49 @@ export class IdigCsvParser implements Parser {
 
         geometryString = geometryString
             .replace("point ((", "")
-            .replace("))", "")
-            .replace(",", ".");
+            .replace("))", "");
 
-        var coordinates = geometryString.split(" ");
+        geometry.coordinates = this.parsePoint(geometryString);
+
+        return geometry;
+    }
+
+    private parsePolygonGeometryString(geometryString): IdaiFieldGeometry {
+
+        var geometry: IdaiFieldGeometry = {type: "Polygon", coordinates: [[]], crs: "local"};
+
+        geometryString = geometryString
+            .replace("polygon ((", "")
+            .replace("))", "");
+
+        var coordinates: Array<string> = geometryString.split(", ");
+        if (coordinates.length < 3) {
+            throw M.IMPORTER_FAILURE_INVALIDGEOMETRY;
+        }
+
+        for (var pointCoordinates of coordinates) {
+            geometry.coordinates[0].push(this.parsePoint(pointCoordinates));
+        }
+
+        return geometry;
+    }
+
+    private parsePoint(coordinatesString): Array<number> {
+
+        var point: Array<number> = [];
+
+        var coordinates: Array<string> = coordinatesString.split(" ");
         if (coordinates.length != 2) {
             throw M.IMPORTER_FAILURE_INVALIDGEOMETRY;
         }
 
-        geometry.coordinates[0] = parseInt(coordinates[0]);
-        geometry.coordinates[1] = parseInt(coordinates[1]);
-        if (isNaN(geometry.coordinates[0]) || isNaN(geometry.coordinates[1])) {
+        point[0] = parseInt(coordinates[0].replace(",", "."));
+        point[1] = parseInt(coordinates[1].replace(",", "."));
+        if (isNaN(point[0]) || isNaN(point[1])) {
             throw M.IMPORTER_FAILURE_INVALIDGEOMETRY;
         }
 
-        return geometry;
+        return point;
     }
 
     /**

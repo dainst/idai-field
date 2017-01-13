@@ -12,6 +12,7 @@ import {RouterModule} from '@angular/router';
 import {DropAreaComponent} from './drop-area.component';
 import {DocumentPickerComponent} from './document-picker.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
+import {ThumbnailViewComponent} from './thumbnail-view.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import {DocumentTeaserComponent} from './document-teaser.component';
         DocumentTeaserComponent,
         EditSaveDialogComponent,
         DropAreaComponent,
-        DocumentPickerComponent
+        DocumentPickerComponent,
+        ThumbnailViewComponent
     ],
     exports : [
         SearchBarComponent,
@@ -40,7 +42,8 @@ import {DocumentTeaserComponent} from './document-teaser.component';
         EditSaveDialogComponent,
         DropAreaComponent,
         DropAreaComponent,
-        DocumentPickerComponent
+        DocumentPickerComponent,
+        ThumbnailViewComponent
     ]
 })
 

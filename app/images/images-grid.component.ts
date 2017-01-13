@@ -36,7 +36,7 @@ export class ImagesGridComponent implements OnChanges, OnInit {
 
     private nrOfColumns = 4;
     private rows = [];
-    private selected = [];
+    private selected: IdaiFieldImageDocument[] = [];
 
     public constructor(
         private router: Router,
@@ -87,10 +87,6 @@ export class ImagesGridComponent implements OnChanges, OnInit {
             this.calcGrid();
 
         }).catch(err => console.error(err));
-    }
-
-    protected setUpDefaultFilters() {
-        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
     }
 
     public queryChanged(query: Query) {
@@ -194,46 +190,17 @@ export class ImagesGridComponent implements OnChanges, OnInit {
     public openLinkModal() {
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
             if (targetDoc) {
-                this.updateImageLinks(targetDoc).then(() => {
+                this.imageTool.updateImageLinks(this.selected, targetDoc).then(() => {
                     this.clearSelection();
                 }).catch(error => {
                     this.messages.add(error);
                 });
             }
+        }, (closeReason) => {
         });
     }
 
-    private updateImageLinks(targetDoc): Promise<any> {
-        var promises = [];
-        this.selected.forEach( (imageDoc:IdaiFieldImageDocument) => {
-            if (imageDoc.resource.depicts) promises.push(this.removeExistingReference(imageDoc));
-            imageDoc.resource.depicts = targetDoc.id;
-        });
-        if (!targetDoc.resource.images) targetDoc.resource.images = [];
-        targetDoc.resource.images =
-            this.makeUnique(targetDoc.resource.images.concat(this.selected.map(imageDoc => imageDoc.resource.identifier)));
-        promises.concat(this.selected.map(document => this.datastore.update(document)));
-        promises.push(this.datastore.update(targetDoc));
-        return Promise.all(promises);
-    }
 
-    private removeExistingReference(imageDoc) {
-        return this.datastore.get(imageDoc.resource.depicts).then( (oldTargetDoc: IdaiFieldDocument) => {
-            oldTargetDoc.resource.images.splice(oldTargetDoc.resource.images.indexOf(imageDoc.resource.identifier), 1);
-            return this.datastore.update(oldTargetDoc);
-        });
-    }
-
-    private makeUnique(a) {
-        var n = {}, r = [];
-        for(var i = 0; i < a.length; i++) {
-            if (!n[a[i]]) {
-                n[a[i]] = true;
-                r.push(a[i]);
-            }
-        }
-        return r;
-    }
 
     
 }

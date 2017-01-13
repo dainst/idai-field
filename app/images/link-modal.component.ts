@@ -10,7 +10,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
                          [filters]="[ { field: 'type', value: 'image', invert: true } ]"></document-picker>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
+        <button type="button" class="btn btn-default" (click)="activeModal.dismiss('dismissedByCancel')">Abbrechen</button>
     </div>
   `
 })

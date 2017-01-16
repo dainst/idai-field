@@ -41,7 +41,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "sonOf" : ["o6"],
                 "friendOf" : ["o4", "o5"],
-                "origin" : ["o7"]
+                "origin" : ["o7"],
+                "depictedIn": ["o24"]
             },
             "geometries": [{
                 "type":"Polygon","coordinates":
@@ -341,11 +342,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "finn.jpg",
             "shortDescription": "Finn",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o3"]
+            },
             "filename" : "finn.jpg",
             "height" : 337,
             "width" : 300,
-            "depicts": "o23"
+            "depicts": "o3"
         },
         "synced": 0
     },

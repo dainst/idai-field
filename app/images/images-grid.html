@@ -68,6 +68,9 @@
                         <span *ngIf="cell['document'].resource.depicts" class="tag tag-default">
                             <span class="mdi mdi-link"></span> {{cell['document'].resource.depicts}}
                         </span>
+                        <span *ngFor="let sd of cell['document'].resource.relations['depicts']" class="tag tag-warning">
+                             <span class="mdi mdi-link"></span> {{sd}}
+                        </span>
                     </div>
 
                     <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"

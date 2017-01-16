@@ -129,6 +129,19 @@
       "label": "Herkunft",
       "domain": ["jedi","dude"],
       "range": ["celestial_body"]
+    },
+    {
+      "name": "depicts",
+      "inverse": "depictedIn",
+      "label": "Stellt dar",
+      "domain": ["image"],
+      "range": ["jedi", "vessel", "dude", "celestial_body"]
+    },{
+      "name": "depictedIn",
+      "inverse": "depicts",
+      "label": "Wird dargestellt von",
+      "domain": ["jedi", "vessel", "dude", "celestial_body"],
+      "range": ["image"]
     }
   ]
 }

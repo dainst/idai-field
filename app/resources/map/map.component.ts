@@ -36,6 +36,8 @@ export class MapComponent implements OnChanges {
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
     private markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
+    private bounds: L.LatLngBounds;
+
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
 
@@ -104,6 +106,8 @@ export class MapComponent implements OnChanges {
             }
         );
 
+        this.bounds = L.latLngBounds(L.latLng(-1.0, -1.0), L.latLng(1.0, 1.0));
+
         for (var i in this.documents) {
             var resource = this.documents[i].resource;
             for (var j in resource.geometries) {
@@ -121,6 +125,8 @@ export class MapComponent implements OnChanges {
                 } else if (this.markers[this.selectedDocument.resource.id]) {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
+            } else {
+                this.map.fitBounds(this.bounds);
             }
         }.bind(this), 1);
 
@@ -252,15 +258,19 @@ export class MapComponent implements OnChanges {
 
         switch(geometry.type) {
             case "Point":
-                this.addMarkerToMap(geometry, document);
+                var marker: IdaiFieldMarker = this.addMarkerToMap(geometry, document);
+                this.bounds.extend(marker.getLatLng());
                 break;
             case "Polygon":
-                this.addPolygonToMap(geometry, document);
+                var polygon: IdaiFieldPolygon = this.addPolygonToMap(geometry, document);
+                for (var latLng of polygon.getLatLngs()) {
+                    this.bounds.extend(latLng);
+                }
                 break;
         }
     }
 
-    private addMarkerToMap(geometry: any, document: IdaiFieldDocument) {
+    private addMarkerToMap(geometry: any, document: IdaiFieldDocument): IdaiFieldMarker {
 
         var latLng = L.latLng(geometry.coordinates);
 
@@ -283,9 +293,11 @@ export class MapComponent implements OnChanges {
 
         marker.addTo(this.map);
         this.markers[document.resource.id] = marker;
+
+        return marker;
     }
 
-    private addPolygonToMap(geometry: any, document: IdaiFieldDocument) {
+    private addPolygonToMap(geometry: any, document: IdaiFieldDocument): IdaiFieldPolygon {
 
         var polygon: IdaiFieldPolygon = L.polygon(geometry.coordinates);
         polygon.document = document;
@@ -301,6 +313,8 @@ export class MapComponent implements OnChanges {
 
         polygon.addTo(this.map);
         this.polygons[document.resource.id] = polygon;
+
+        return polygon;
     }
 
     private addLayerToMap(layer: IdaiFieldMapLayer) {

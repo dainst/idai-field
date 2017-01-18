@@ -1,7 +1,13 @@
 .map-wrapper {
 
+  .document-info .card {
+    margin-bottom: 0;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+  }
+
   .document-info .card-block {
-    height: calc(100vh - 125px);
+    height: calc(100vh - 143px);
   }
 
 }

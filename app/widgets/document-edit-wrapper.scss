@@ -1,5 +1,9 @@
 #document-edit-wrapper {
 
+  .document-info .card-block {
+    overflow: auto;
+  }
+
   textarea {
     width: 100%;
     resize: vertical;

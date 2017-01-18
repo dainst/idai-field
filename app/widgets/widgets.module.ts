@@ -13,6 +13,7 @@ import {DropAreaComponent} from './drop-area.component';
 import {DocumentPickerComponent} from './document-picker.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
+import {DescriptionViewComponent} from './description-view.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {ThumbnailViewComponent} from './thumbnail-view.component';
         EditSaveDialogComponent,
         DropAreaComponent,
         DocumentPickerComponent,
-        ThumbnailViewComponent
+        ThumbnailViewComponent,
+        DescriptionViewComponent
     ],
     exports : [
         SearchBarComponent,
@@ -43,7 +45,8 @@ import {ThumbnailViewComponent} from './thumbnail-view.component';
         DropAreaComponent,
         DropAreaComponent,
         DocumentPickerComponent,
-        ThumbnailViewComponent
+        ThumbnailViewComponent,
+        DescriptionViewComponent
     ]
 })
 

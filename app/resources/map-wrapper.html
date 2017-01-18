@@ -6,8 +6,9 @@
     </div>
     <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-4 document-info">
         <document-view [(document)]="activeDoc" [basePath]="'resources'">
+            <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [document]="activeDoc"></thumbnail-view>
-            <geometry-view [document]="activeDoc" ></geometry-view>
+            <geometry-view [document]="activeDoc"></geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="selectRelatedDocument($event)"></relations-view>
         </document-view>

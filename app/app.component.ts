@@ -82,6 +82,10 @@ export class AppComponent implements OnInit {
             AppComponent.PROJECT_CONFIGURATION_PATH,
             this.defaultTypes,
             this.defaultFields,
+            [
+                {name:'depicts', domain:['image:inherit'], inverse:'isDepictedBy', label: 'zeigt'},
+                {name:'isDepictedBy', range:['image:inherit'], inverse: 'depicts', label: 'dargestellt durch'}
+            ],
             []
         );
         this.configLoader.configuration().subscribe(result => {

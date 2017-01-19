@@ -10,9 +10,9 @@ describe('relations', function() {
         resourcesPage.createResource('o1')
             .then(resourcesPage.createResource('o2'))
             .then(resourcesPage.scrollDown)
-            .then(resourcesPage.clickAddRelationForGroupWithIndex(0))
-            .then(resourcesPage.typeInRelationByIndices(0, 0, 'o1'))
-            .then(resourcesPage.clickRelationSuggestionByIndices(0, 0, 0))
+            .then(resourcesPage.clickAddRelationForGroupWithIndex(1))
+            .then(resourcesPage.typeInRelationByIndices(1, 0, 'o1'))
+            .then(resourcesPage.clickRelationSuggestionByIndices(1, 0, 0))
             .then(resourcesPage.scrollUp)
             .then(resourcesPage.clickSaveDocument)
             .then(resourcesPage.selectObjectByIndex(1))
@@ -30,18 +30,18 @@ describe('relations', function() {
         resourcesPage.createResource('o1')
             .then(resourcesPage.createResource('o2'))
             .then(resourcesPage.scrollDown)
-            .then(resourcesPage.clickAddRelationForGroupWithIndex(0))
-            .then(resourcesPage.typeInRelationByIndices(0, 0, 'o1'))
-            .then(resourcesPage.clickRelationSuggestionByIndices(0, 0, 0))
+            .then(resourcesPage.clickAddRelationForGroupWithIndex(1))
+            .then(resourcesPage.typeInRelationByIndices(1, 0, 'o1'))
+            .then(resourcesPage.clickRelationSuggestionByIndices(1, 0, 0))
             .then(function() {
-                expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('o1');
+                expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('o1');
                 return resourcesPage.scrollUp()
             })
             .then(resourcesPage.clickSaveDocument)
             .then(resourcesPage.selectObjectByIndex(1))
             .then(resourcesPage.clickEditDocument)
             .then(function() {
-                expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('o2');
+                expect(resourcesPage.getRelationButtonTextByIndices(2, 0, 0)).toEqual('o2');
             });
     });
 

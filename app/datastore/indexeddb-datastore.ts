@@ -1,5 +1,5 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Datastore, Query, Filter} from "idai-components-2/datastore";
+import {Datastore, Query, FilterSet, Filter} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
@@ -14,6 +14,7 @@ import {DOCS} from "./sample-objects";
 /**
  * @author Sebastian Cuy
  * @author Daniel M. de Oliveira
+ * @author Thomas Kleinke
  */
 @Injectable()
 export class IndexeddbDatastore implements Datastore {
@@ -188,7 +189,7 @@ export class IndexeddbDatastore implements Datastore {
                     } else {
                         // make ids unique
                         ids = ids.filter((value, index, self) => (self.indexOf(value) === index));
-                        this.buildResult(ids, query.filters).then( result => resolve(result) );
+                        this.buildResult(ids, query.filterSets).then(result => resolve(result));
                     }
                 };
                 cursor.onerror = err => reject(cursor.error);
@@ -283,19 +284,34 @@ export class IndexeddbDatastore implements Datastore {
         });
     }
 
-    private buildResult(ids: string[], filters): Promise<Document[]> {
+    private buildResult(ids: string[], filterSets: FilterSet[]): Promise<Document[]> {
         var promises:Promise<Document>[] = Array.from(ids).map(id => this.get(id));
         return Promise.all(promises).then( (docs: Document[]) => {
             var result = docs.filter( (doc: Document) => {
-                return this.docMatchesFilters(filters, doc);
+                return this.docMatchesFilterSets(filterSets, doc);
             });
             return result;
         });
     }
 
-    private docMatchesFilters(filters: Filter[], doc: Document):boolean {
+    private docMatchesFilterSets(filterSets: FilterSet[], doc: Document): boolean {
+
+        if (!filterSets) return true;
+
+        for (let filterSet of filterSets) {
+            if (!filterSet) continue;
+            if (filterSet.type == "and" && !this.docMatchesAndFilters(filterSet.filters, doc)) return false;
+            if (filterSet.type == "or" && !this.docMatchesOrFilters(filterSet.filters, doc)) return false;
+        }
+
+        return true;
+    }
+
+    private docMatchesAndFilters(filters: Filter[], doc: Document): boolean {
+
         if (!filters) return true;
-        for (var filter of filters) {
+
+        for (let filter of filters) {
             if (!filter) continue;
             if (filter.invert) {
                 if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return false;
@@ -303,7 +319,23 @@ export class IndexeddbDatastore implements Datastore {
                 if (!(filter.field in doc.resource) || doc.resource[filter.field] != filter.value) return false;
             }
         }
+
         return true;
+    }
+
+    private docMatchesOrFilters(filters: Filter[], doc: Document): boolean {
+
+        if (!filters || filters.length == 0) return true;
+
+        for (let filter of filters) {
+            if (filter.invert) {
+                if (!(filter.field in doc.resource) || doc.resource[filter.field] != filter.value) return true;
+            } else {
+                if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return true;
+            }
+        }
+
+        return false;
     }
 
     private notifyObserversOfObjectToSync(document:Document):void {

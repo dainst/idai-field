@@ -83,10 +83,14 @@ export class MapComponent implements OnChanges {
 
     public ngAfterViewInit() {
 
-        this.map.invalidateSize(false);
+        if (this.map) {
+            this.map.invalidateSize(false);
+        }
     }
 
     public ngOnChanges() {
+
+        if (!this.documents) return;
 
         if (!this.map) {
             this.initializeMap();

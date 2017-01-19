@@ -1,17 +1,19 @@
-import {Component, OnChanges, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {Query,Filter} from "idai-components-2/datastore";
+import {Query, FilterSet} from "idai-components-2/datastore";
 import {Mediastore} from "idai-components-2/datastore";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {DomSanitizer} from '@angular/platform-browser';
-import {BlobProxy,ImageContainer} from '../common/blob-proxy';
+import {BlobProxy, ImageContainer} from '../common/blob-proxy';
 import {ImageTool} from '../common/image-tool';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {LinkModalComponent} from './link-modal.component';
+import {FilterUtility} from '../util/filter-utility';
 
 @Component({
     moduleId: module.id,
@@ -25,14 +27,14 @@ import {LinkModalComponent} from './link-modal.component';
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class ImagesGridComponent implements OnChanges, OnInit {
+export class ImagesGridComponent {
 
     private blobProxy : BlobProxy;
     private imageTool : ImageTool;
 
     private query : Query = { q: '' };
     private documents: IdaiFieldImageDocument[];
-    protected defaultFilters: Array<Filter>;
+    private defaultFilterSet: FilterSet;
 
     private nrOfColumns = 4;
     private rows = [];
@@ -42,25 +44,30 @@ export class ImagesGridComponent implements OnChanges, OnInit {
         private router: Router,
         private datastore: Datastore,
         private modalService: NgbModal,
+        private messages: Messages,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        private messages: Messages
+        configLoader: ConfigLoader
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer);
-        this.imageTool = new ImageTool(datastore,mediastore);
-        this.defaultFilters = [ { field: 'type', value: 'image', invert: false } ];
-        this.query = { q: '', filters: this.defaultFilters };
+        this.blobProxy = new BlobProxy(mediastore, sanitizer);
+        this.imageTool = new ImageTool(datastore, mediastore);
+
+        var defaultFilterSet = {
+            filters: [{field: 'type', value: 'image', invert: false}],
+            type: 'or'
+        };
+
+        configLoader.configuration().subscribe(result => {
+            if (!this.defaultFilterSet) {
+                this.defaultFilterSet =
+                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                this.query = {q: '', filterSets: [this.defaultFilterSet]};
+                this.fetchDocuments(this.query);
+            }
+        });
     }
 
     public refreshGrid() {
-        this.fetchDocuments(this.query);
-    }
-
-    public ngOnInit() {
-        this.fetchDocuments(this.query);
-    }
-
-    public ngOnChanges() {
         this.fetchDocuments(this.query);
     }
 
@@ -74,6 +81,8 @@ export class ImagesGridComponent implements OnChanges, OnInit {
      * @param query
      */
     private fetchDocuments(query: Query) {
+        this.query = query;
+
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 

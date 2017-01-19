@@ -1,10 +1,12 @@
-import {Component, OnInit, Inject} from "@angular/core";
+import {Component, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Query, Filter} from "idai-components-2/datastore";
+import {Query, FilterSet} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {Observable} from "rxjs/Observable";
+import {FilterUtility} from '../util/filter-utility';
 
 @Component({
 
@@ -18,25 +20,30 @@ import {Observable} from "rxjs/Observable";
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent {
 
     public documents: Document[];
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };
-    protected defaultFilters: Array<Filter>;
+    protected defaultFilterSet: FilterSet;
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
-                private datastore: IndexeddbDatastore) {
+                private datastore: IndexeddbDatastore,
+                configLoader: ConfigLoader) {
+        var defaultFilterSet = {
+            filters: [{field: 'type', value: 'image', invert: true}],
+            type: 'and'
+        };
 
-        this.setUpDefaultFilters();
-        this.query = { q: '', filters: this.defaultFilters };
-    }
-
-    protected setUpDefaultFilters() {
-
-        this.defaultFilters = [ { field: 'type', value: 'image', invert: true } ];
+        configLoader.configuration().subscribe(result => {
+            if (!this.defaultFilterSet) {
+                this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                this.query = {q: '', filterSets: [this.defaultFilterSet]};
+                this.fetchDocuments(this.query);
+            }
+        });
     }
 
     /**
@@ -48,11 +55,9 @@ export class ResourcesComponent implements OnInit {
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
-    public ngOnInit() {
-        this.fetchDocuments(this.query);
-    }
-
     public queryChanged(query: Query) {
+
+        console.log(".. QUERY CHANGED ..");
 
         this.query = query;
         this.fetchDocuments(query);

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Query, Filter} from "idai-components-2/datastore";
-import {ConfigLoader} from "idai-components-2/configuration";
+import {Query, FilterSet} from "idai-components-2/datastore";
+import {ConfigLoader, IdaiType} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -10,6 +10,7 @@ import {ConfigLoader} from "idai-components-2/configuration";
 
 /**
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class SearchBarComponent {
 
@@ -17,13 +18,13 @@ export class SearchBarComponent {
     private q: string = '';
     private filterOptions: Array<any> = [];
 
-    @Input() defaultFilters: Array<Filter>;
+    @Input() defaultFilterSet: FilterSet;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
         this.configLoader.configuration().subscribe(result => {
-            this.initializeFilterOptions(result.projectConfiguration.getTypesList());
+            this.initializeFilterOptions(result.projectConfiguration.getTypesTreeList());
         });
     }
     
@@ -44,29 +45,47 @@ export class SearchBarComponent {
 
         let query: Query = { q: this.q };
 
-        let filters: Array<Filter> = this.defaultFilters.slice();
-        if (this.type) filters.push({ field: 'type', value: this.type, invert: false });
-        query.filters = filters;
+        let filterSets: Array<FilterSet> = [];
+        if (this.defaultFilterSet) filterSets.push(this.defaultFilterSet);
+
+        if (this.type) filterSets.push({
+            filters: [{field: 'type', value: this.type, invert: false}],
+            type: 'and'
+        });
+
+        query.filterSets = filterSets;
 
         this.onQueryChanged.emit(query);
     }
 
-    private initializeFilterOptions(types) {
+    private initializeFilterOptions(types: Array<IdaiType>) {
+
         this.filterOptions = [];
 
-        for (var i in types) {
-            var defaultFilterConflict = false;
+        for (let i in types) {
+            this.addFilterOption(types[i]);
+        }
+    }
 
-            for (var j in this.defaultFilters) {
-                if (this.defaultFilters[j].field == "type"
-                        && this.defaultFilters[j].value == types[i].name) {
-                    defaultFilterConflict = true;
-                    break;
-                }
+    private addFilterOption(type) {
+
+        var defaultFilterConflict = false;
+        var defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
+
+        for (let i in defaultFilters) {
+            if (defaultFilters[i].field == "type"
+                && defaultFilters[i].value == type.name) {
+                defaultFilterConflict = true;
+                break;
             }
+        }
 
-            if (!defaultFilterConflict) {
-                this.filterOptions.push(types[i]);
+        if (!defaultFilterConflict) {
+            this.filterOptions.push(type);
+            if (type.children) {
+                for (let i in type.children) {
+                    this.addFilterOption(type.children[i]);
+                }
             }
         }
     }

@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild-sharp",
+    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild",
     "rebuild": "./node_modules/.bin/electron-rebuild -f -w sharp",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",

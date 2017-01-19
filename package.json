@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild",
-    "rebuild": "./node_modules/.bin/electron-rebuild -v 1.4.13",
+    "rebuild": "npm rebuild --runtime=electron --target=1.4.13 --disturl=https://atom.io/download/atom-shell --build-from-source",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",

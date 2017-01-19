@@ -36,16 +36,7 @@ export class ThumbnailViewComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        if (!this.document || !this.document.resource.images) {
-            this.images = []
-        } else {
-            Promise.all(this.document.resource.images.map(identifier =>
-
-                // TODO handle error
-                this.blobProxy.urlForImage(identifier)))
-                .then(images => this.images = images);
-        }
-
+        this.images = [];
 
         if(this.document.resource.relations["depictedIn"]) {
             this.document.resource.relations["depictedIn"].forEach(id =>

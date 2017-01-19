@@ -5,7 +5,8 @@
   "version": "0.2.0",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
+    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild",
+    "rebuild": "./node_modules/.bin/electron-rebuild -f -w sharp",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",
@@ -44,6 +45,7 @@
     "reflect-metadata": "^0.1.8",
     "roboto-fontface": "^0.6.0",
     "rxjs": "5.0.0-beta.12",
+    "sharp": "0.17.1",
     "systemjs": "0.19.31",
     "ts-md5": "^1.2.0",
     "zone.js": "0.6.21"
@@ -55,6 +57,7 @@
     "electron-connect": "0.4.2",
     "electron-packager": "8.4.0",
     "electron-prebuilt": "1.4.13",
+    "electron-rebuild": "^1.5.7",
     "file-api": "^0.10.4",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

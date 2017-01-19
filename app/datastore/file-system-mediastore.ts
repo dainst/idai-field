@@ -2,10 +2,12 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from 'idai-components-2/datastore';
 
 import * as fs from '@node/fs';
+import * as sharp from '@node/sharp';
 
 export class FileSystemMediastore implements Mediastore {
 
-    constructor (private basePath: string = 'mediastore/') { }
+    constructor(private basePath: string = 'mediastore/') {
+    }
 
     /**
      * @param key the identifier for the data
@@ -16,10 +18,33 @@ export class FileSystemMediastore implements Mediastore {
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, Buffer.from(data), { flag: 'wx' }, (err) => {
-                if (err) reject(err);
-                else resolve();
-            });
+
+            let fileName = key.substr(0, key.lastIndexOf('.')) || key;
+            let ext = key.substr(key.lastIndexOf('.') + 1);
+
+            if (ext === 'tif' || ext === 'tiff') {
+
+                sharp(Buffer.from(data))
+                    .jpeg({quality: 100})
+                    .toBuffer()
+                    .then(data => {
+
+                        console.log('HERE')
+                        fs.writeFile(this.basePath + fileName + '.jpg', Buffer.from(data), {flag: 'wx'}, (err) => {
+                            if (err) reject(err);
+                            else resolve();
+                        });
+                    })
+                    .catch(err => {
+                        reject(err);
+                    })
+
+            } else {
+                fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
+                    if (err) reject(err);
+                    else resolve();
+                });
+            }
         });
     }
 
@@ -49,7 +74,7 @@ export class FileSystemMediastore implements Mediastore {
     public update(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, Buffer.from(data), { flag: 'w' }, (err) => {
+            fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'w'}, (err) => {
                 if (err) reject(err);
                 else resolve();
             });

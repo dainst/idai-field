@@ -58,6 +58,7 @@
     if(typeof process != 'object') {
         console.log('Running in browser, disabling NodeJS functionality.');
         config.map['@node/fs'] = '@empty';
+        config.map['@node/sharp'] = '@empty';
     } else {
         console.log('Running as electron app, enabling NodeJS functionality.');
     }

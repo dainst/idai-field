@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
 import {Query, FilterSet} from "idai-components-2/datastore";
-import {ConfigLoader, IdaiType} from "idai-components-2/configuration";
+import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -12,11 +12,12 @@ import {ConfigLoader, IdaiType} from "idai-components-2/configuration";
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class SearchBarComponent {
+export class SearchBarComponent implements OnChanges {
 
     private type: string = '';
     private q: string = '';
     private filterOptions: Array<any> = [];
+    private projectConfiguration: ProjectConfiguration;
 
     @Input() defaultFilterSet: FilterSet;
     @Input() showFiltersMenu: boolean;
@@ -24,8 +25,14 @@ export class SearchBarComponent {
 
     constructor(private configLoader: ConfigLoader) {
         this.configLoader.configuration().subscribe(result => {
-            this.initializeFilterOptions(result.projectConfiguration.getTypesTreeList());
+            this.projectConfiguration = result.projectConfiguration;
+            this.initializeFilterOptions();
         });
+    }
+
+    public ngOnChanges(): void {
+
+        this.initializeFilterOptions();
     }
     
     public qChanged(q): void {
@@ -58,8 +65,11 @@ export class SearchBarComponent {
         this.onQueryChanged.emit(query);
     }
 
-    private initializeFilterOptions(types: Array<IdaiType>) {
+    private initializeFilterOptions() {
 
+        if (!this.projectConfiguration) return;
+
+        var types = this.projectConfiguration.getTypesTreeList();
         this.filterOptions = [];
 
         for (let i in types) {

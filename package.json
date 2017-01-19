@@ -55,7 +55,7 @@
     "chromedriver": "2.25.1",
     "electron-connect": "0.4.2",
     "electron-packager": "8.4.0",
-    "electron-prebuilt": "1.4.14",
+    "electron-prebuilt": "1.4.13",
     "electron-rebuild": "^1.5.7",
     "file-api": "^0.10.4",
     "gulp": "^3.9.0",

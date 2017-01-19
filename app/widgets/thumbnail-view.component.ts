@@ -23,7 +23,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
 
-    // TODO create an event emitter for error handling
+    // TODO create an event emitter for error handling - loading fails
 
     public images = [];
 
@@ -41,8 +41,14 @@ export class ThumbnailViewComponent implements OnChanges {
         if(this.document.resource.relations["depictedIn"]) {
             this.document.resource.relations["depictedIn"].forEach(id =>
                 this.datastore.get(id)
-                .then(doc => this.blobProxy.urlForImage(doc.resource["identifier"])).then(imageUrl => this.images.push(imageUrl))
+                    .then(doc => this.blobProxy.urlForImage(doc.resource["identifier"]))
+                    .then(imageUrl => this.images.push(imageUrl))
             )
+        } else {
+            if (this.document.resource.type == "image") {
+                this.blobProxy.urlForImage(this.document.resource["identifier"])
+                    .then(imageUrl => this.images.push(imageUrl))
+            }
         }
 
     }

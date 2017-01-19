@@ -5,7 +5,8 @@
   "version": "0.2.0",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && ./node_modules/.bin/electron-rebuild",
+    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild",
+    "rebuild": "./node_modules/.bin/electron-rebuild -v 1.4.13",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",

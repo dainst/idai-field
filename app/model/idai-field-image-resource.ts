@@ -6,6 +6,5 @@ export interface IdaiFieldImageResource extends Resource {
     filename: string;
     width: number;
     height: number;
-    depicts?: string;
     georeference?: IdaiFieldGeoreference;
 }

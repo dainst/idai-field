@@ -33,22 +33,20 @@ export class ImageTool {
 
     public updateImageLinks(imageDocs: IdaiFieldImageDocument[], targetDoc: IdaiFieldDocument): Promise<any> {
         var promises = [];
+        if(!targetDoc.resource.relations["depictedIn"]) targetDoc.resource.relations["depictedIn"] = [];
+
         imageDocs.forEach( (imageDoc:IdaiFieldImageDocument) => {
-            if (imageDoc.resource.depicts) promises.push(this.removeExistingReference(imageDoc));
-            imageDoc.resource.depicts = targetDoc.id;
+            if(!imageDoc.resource.relations["depicts"]) imageDoc.resource.relations["depicts"] = [];
+            imageDoc.resource.relations["depicts"].push(targetDoc.resource.id);
+            imageDoc.resource.relations["depicts"] = this.makeUnique(imageDoc.resource.relations["depicts"]);
+            
+            targetDoc.resource.relations["depictedIn"].push(imageDoc.resource.id);
         });
-        if (!targetDoc.resource.images) targetDoc.resource.images = [];
-        targetDoc.resource.images = this.makeUnique(targetDoc.resource.images.concat(imageDocs.map(imageDoc => imageDoc.resource.identifier)));
+        targetDoc.resource.relations["depictedIn"] = this.makeUnique(targetDoc.resource.relations["depictedIn"]);
+
         promises.concat(imageDocs.map(document => this.datastore.update(document)));
         promises.push(this.datastore.update(targetDoc));
         return Promise.all(promises);
-    }
-
-    private removeExistingReference(imageDoc) {
-        return this.datastore.get(imageDoc.resource.depicts).then( (oldTargetDoc: IdaiFieldDocument) => {
-            oldTargetDoc.resource.images.splice(oldTargetDoc.resource.images.indexOf(imageDoc.resource.identifier), 1);
-            return this.datastore.update(oldTargetDoc);
-        });
     }
 
     private makeUnique(a) {

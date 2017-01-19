@@ -57,8 +57,6 @@ export class ResourcesComponent {
 
     public queryChanged(query: Query) {
 
-        console.log(".. QUERY CHANGED ..");
-
         this.query = query;
         this.fetchDocuments(query);
     }

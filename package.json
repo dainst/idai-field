@@ -5,8 +5,7 @@
   "version": "0.2.0",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/* && npm run rebuild",
-    "rebuild": "./node_modules/.bin/electron-rebuild -f -w sharp",
+    "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "start": "gulp run",
     "test:loop": "karma start test/browser/config/karma.conf",
@@ -45,7 +44,6 @@
     "reflect-metadata": "^0.1.8",
     "roboto-fontface": "^0.6.0",
     "rxjs": "5.0.0-beta.12",
-    "sharp": "0.17.1",
     "systemjs": "0.19.31",
     "ts-md5": "^1.2.0",
     "zone.js": "0.6.21"

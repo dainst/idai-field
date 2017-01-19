@@ -34,11 +34,6 @@ export class AppComponent implements OnInit {
                 name : "filename",
                 editable : false,
                 label: "Dateiname"
-            },
-            {
-                name: "depicts",
-                editable : false,
-                label: "Abbildung von"
             }
         ]
     }];
@@ -57,10 +52,6 @@ export class AppComponent implements OnInit {
         name : "geometries",
         visible: false,
         editable: false
-    },{
-        name : "images",
-        label : "Alte Bilders",
-        visible: true
     }];
 
 

@@ -7,13 +7,14 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o1",
             "identifier": "ob1",
             "shortDescription": "Obi One Kenobi",
-            "relations": {},
+            "relations": {
+                "depictedIn": ["o21"]
+            },
             "geometries": [{ "type": "Polygon","coordinates":
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
                 ,"crs":"local"
             }],
-            "type": "jedi",
-            "images": ["gandalf.jpg"]
+            "type": "jedi"
         },
         "synced": 0
     }, {
@@ -22,12 +23,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o2",
             "identifier": "ob2",
             "shortDescription": "Boba Fett",
-            "relations": {},
+            "relations": {
+                "depictedIn": ["o13"]
+            },
             "geometries": [{
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
             }],
-            "type": "dude",
-            "images": [ "boba.jpg" ]
+            "type": "dude"
         },
         "synced": 0
     }, {
@@ -61,12 +63,12 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "dude",
             "relations": {
                 "friendOf" : ["o3", "o5"],
-                "owns" : ["o11"]
+                "owns" : ["o11"],
+                "depictedIn": "o12"
             },
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
-            }],
-            "images": ["hans.jpg"]
+            }]
         },
         "synced": 0
     }, {
@@ -77,9 +79,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Leia Organa",
             "type": "dude",
             "relations": {
-                "friendOf" : ["o3", "o4"]
-            },
-            "images": ["leia.jpg"]
+                "friendOf" : ["o3", "o4"],
+                "depictedIn": ["o16"]
+            }
         },
         "synced": 0
     }, {
@@ -91,9 +93,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "type": "jedi",
             "lightsaber_color" : "Rot",
             "relations": {
-                "fatherOf" : ["o3"]
-            },
-            "images": ["vader.jpg"]
+                "fatherOf" : ["o3"],
+                "depictedIn": ["o14"]
+            }
         },
         "synced": 0
     }, {
@@ -103,8 +105,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob7",
             "shortDescription": "Tatooine",
             "type": "planet",
-            "relations": {},
-            "images": ["tatooine.jpg"]
+            "relations": {
+                "depictedIn": ["o18"]
+            }
         },
         "synced": 0
     },
@@ -115,8 +118,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob8",
             "shortDescription": "Naboo",
             "type": "planet",
-            "relations": {},
-            "images": ["naboo.jpg"]
+            "relations": {
+                "depictedIn": ["o8"]
+            }
         },
         "synced": 0
     },
@@ -127,8 +131,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob9",
             "shortDescription": "Hoth",
             "type": "planet",
-            "relations": {},
-            "images": ["hoth.jpg"]
+            "relations": {
+                "depictedIn": ["o20"]
+            }
         },
         "synced": 0
     },
@@ -151,9 +156,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Millenium Falcon",
             "type": "vessel",
             "relations": {
-                "belongsTo" : [ "o4" ]
-            },
-            "images": ["enterprise.png"]
+                "belongsTo": [ "o4" ],
+                "depictedIn": ["o22"]
+            }
         },
         "synced": 0
     },
@@ -164,12 +169,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "hans.jpg",
             "shortDescription": "SWCA - Pink Chewie and Reno-911 Han Solo; Star Wars Celebration in Anaheim, April 2015.",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o4"]
+            },
             "filename" : "hans.jpg",
             "height" : 1066,
             "width" : 1599,
-            "author" : "William Tung from USA",
-            "depicts": "o4"
+            "author" : "William Tung from USA"
         },
         "synced": 0
     },
@@ -180,12 +186,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "boba.jpg",
             "shortDescription": "Boba Fett (the parade at DragonCon 2006).",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o2"]
+            },
             "filename" : "boba.jpg",
             "height" : 600,
             "width" : 452,
-            "author": "Michael Neel from Knoxville, TN, USA",
-            "depicts": "o2"
+            "author": "Michael Neel from Knoxville, TN, USA"
         },
         "synced": 0
     },
@@ -196,12 +203,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "vader.jpg",
             "shortDescription": "Bernie Thomas took this photograph of Darth Vader in Columbus Ohio on Friday of August 11th of 2006.",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o6"]
+            },
             "filename" : "vader.jpg",
             "height" : 600,
             "width" : 793,
-            "author": "Bernie Thomas",
-            "depicts": "o6"
+            "author": "Bernie Thomas"
         },
         "synced": 0
     },
@@ -213,12 +221,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "leia.jpg",
             "shortDescription": "You can't unsee this. Read more at the Official Celebration IV blog. Costumes at Star Wars Celebration IV in 2007 at the Los Angeles Convention Center in Los Angeles.",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o5"]
+            },
             "filename" : "leia.jpg",
             "height" : 800,
             "width" : 533,
-            "author": "Jenny Elwick",
-            "depicts": "o5"
+            "author": "Jenny Elwick"
         },
         "synced": 0
     },
@@ -229,12 +238,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "naboo.jpg",
             "shortDescription": "Snoqualmie Falls",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o8"]
+            },
             "filename" : "naboo.jpg",
             "height": 853,
             "width": 1280,
-            "author": "Meher Anand Kasam",
-            "depicts": "o8"
+            "author": "Meher Anand Kasam"
         },
         "synced": 0
     },
@@ -245,12 +255,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "tatooine.jpg",
             "shortDescription": "Abstract in sand and sky",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o7"]
+            },
             "filename": "tatooine.jpg",
             "height": 768,
             "width": 1024,
-            "author": "Peter Dowley from Dubai, United Arab Emirates",
-            "depicts": "o7"
+            "author": "Peter Dowley from Dubai, United Arab Emirates"
         },
         "synced": 0
     },
@@ -279,12 +290,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "hoth.jpg",
             "shortDescription": "Star Wars Celebration V - scenes from the Hoth Echo Base Battle diorama",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o9"]
+            },
             "filename" : "hoth.jpg",
             "height" : 768,
             "width" : 1024,
-            "author": "The Conmunity - Pop Culture Geek from Los Angeles, CA, USA",
-            "depicts": ["o9"]
+            "author": "The Conmunity - Pop Culture Geek from Los Angeles, CA, USA"
         },
         "synced": 0
     },
@@ -295,12 +307,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "gandalf.jpg",
             "shortDescription": "Gandalf the Grey",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o1"]
+            },
             "filename" : "gandalf.jpg",
             "height" : 768,
             "width" : 548,
-            "author": "http://nidoart.blogspot.fr/",
-            "depicts": "o1"
+            "author": "http://nidoart.blogspot.fr/"
         },
         "synced": 0
     },
@@ -312,12 +325,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "enterprise.png",
             "shortDescription": "Copy of USS Enterprise NCC-1701-A from Star Trek movies",
             "type": "image",
-            "relations": {},
+            "relations": {
+                "depicts": ["o11"]
+            },
             "filename" : "enterprise.png",
             "height" : 315,
             "width" : 800,
-            "author" : "Vulcan.jpg: dave_7",
-            "depicts": "o11"
+            "author" : "Vulcan.jpg: dave_7"
         },
         "synced": 0
     },
@@ -329,8 +343,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob23",
             "shortDescription": "Finn",
             "type": "dude",
-            "relations": {},
-            "images": ["finn.jpg"]
+            "relations": {}
         },
         "synced": 0
     },
@@ -347,8 +360,7 @@ export var DOCS: IdaiFieldDocument[] = [
             },
             "filename" : "finn.jpg",
             "height" : 337,
-            "width" : 300,
-            "depicts": "o3"
+            "width" : 300
         },
         "synced": 0
     },

@@ -78,7 +78,7 @@ describe('image grid tests -- ', function(){
             });
     });
 
-    fit('user should be able to connect a resource with an image in the grid view', function () {
+    it('user should be able to connect a resource with an image in the grid view', function () {
         var imageToConnect = gridPage.getCell(0);
         var resourceId = "o1";
         var resourceIdentifier = "ob1";

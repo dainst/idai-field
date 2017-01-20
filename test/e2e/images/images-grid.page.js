@@ -1,6 +1,8 @@
 'use strict';
 var EC = protractor.ExpectedConditions;
 
+var common = require("../common.js");
+
 var ImagesGridPage = function() {
     this.selectedClass = 'selected';
     this.getAllCells = function() {
@@ -24,6 +26,9 @@ var ImagesGridPage = function() {
     this.clickDeleteButton = function () {
         return element(by.id('delete-images')).click();
     };
+    this.clickCreateRelationsButton = function () {
+        return element(by.id('create-relations-btn')).click();
+    };
     this.clickConfirmDeleteButton = function () {
         return element(by.id('delete-images-confirm')).click();
     };
@@ -32,6 +37,15 @@ var ImagesGridPage = function() {
     };
     this.getDeleteConfirmationModal = function() {
         return element(by.css('.modal-dialog'));
+    };
+    this.getLinkModal = function() {
+        return element(by.id('link-modal'));
+    };
+    this.typeInIdentifierInLinkModal = function(identifier) {
+        return common.typeIn(this.getLinkModal().element(by.id('object-search')), identifier);
+    };
+    this.getSuggestedResourcesInLinkModalByIdentifier = function (identifier) {
+        return this.getLinkModal().element(by.id('resource-'+identifier))
     };
     this.uploadImage = function (filePath) {
         return element(by.id('file')).sendKeys(filePath);

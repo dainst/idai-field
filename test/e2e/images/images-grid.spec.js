@@ -78,6 +78,22 @@ describe('image grid tests -- ', function(){
             });
     });
 
+    fit('user should be able to connect a resource with an image in the grid view', function () {
+        var imageToConnect = gridPage.getCell(0);
+        var resourceId = "o1";
+        var resourceIdentifier = "ob1";
+
+        imageToConnect.click()
+            .then(function () { expect(imageToConnect.getAttribute('class')).toMatch(gridPage.selectedClass); })
+            .then(function () { gridPage.clickCreateRelationsButton() })
+            .then(function () { gridPage.typeInIdentifierInLinkModal(resourceIdentifier) })
+            .then(function () { gridPage.getSuggestedResourcesInLinkModalByIdentifier(resourceIdentifier).click() })
+            .then(function () { 
+                    var relationMarker = imageToConnect.all(by.id('related-resource-'+resourceId)).first();
+                    expect(relationMarker.isPresent()).toBeTruthy();
+                });
+    });
+
     it('user should be able to cancel an image delete in the modal.', function () {
         var elementToDelete = gridPage.getCell(0);
 

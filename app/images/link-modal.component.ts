@@ -4,7 +4,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'link-modal',
     template: `
-    <div class="modal-body">
+    <div class="modal-body" id="link-modal">
         <p>Zu verknüpfende Ressource wählen:</p>
         <document-picker (documentSelected)="activeModal.close($event)"
                          [filterSet]="{ filters: [ { field: 'type', value: 'image', invert: true } ], type: 'and' }"></document-picker>

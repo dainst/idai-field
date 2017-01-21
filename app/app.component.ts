@@ -1,7 +1,9 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Router, Event, NavigationStart} from "@angular/router";
 import {Messages} from "idai-components-2/messages";
-import {ConfigLoader} from "idai-components-2/configuration";
+import {ConfigLoader,
+    ConfigurationPreprocessor,
+    ConfigurationValidator} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -54,6 +56,11 @@ export class AppComponent implements OnInit {
         editable: false
     }];
 
+    private defaultRelations = [
+        {name:'depicts', domain:['image:inherit'], inverse:'depictedIn', label: 'zeigt', visible: false, editable: false},
+        {name:'depictedIn', range:['image:inherit'], inverse: 'depicts', label: 'dargestellt durch', visible: false, editable: false}
+    ];
+
 
     constructor(@Inject('app.config') private config,
                 private configLoader: ConfigLoader,
@@ -78,15 +85,15 @@ export class AppComponent implements OnInit {
     }
 
     private setConfig() {
-        this.configLoader.load(
+
+        this.configLoader.go(
             AppComponent.PROJECT_CONFIGURATION_PATH,
-            this.defaultTypes,
-            this.defaultFields,
-            [
-                {name:'depicts', domain:['image:inherit'], inverse:'isDepictedBy', label: 'zeigt'},
-                {name:'isDepictedBy', range:['image:inherit'], inverse: 'depicts', label: 'dargestellt durch'}
-            ],
-            []
+            new ConfigurationPreprocessor(
+                this.defaultTypes,
+                this.defaultFields,
+                this.defaultRelations)
+            ,
+            new ConfigurationValidator([])
         );
         this.configLoader.configuration().subscribe(result => {
             if (result.error) this.messages.addWithParams(result.error);

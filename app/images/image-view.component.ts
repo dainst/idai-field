@@ -28,5 +28,6 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
 
     ngOnInit() {
         this.fetchDocAndImage();
+        window.getSelection().removeAllRanges();
     }
 }

@@ -2,15 +2,14 @@ import {Component, Input, Output, EventEmitter, OnChanges, SecurityContext} from
 import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
-import {IdaiFieldImageResource} from "../../model/idai-field-image-resource";
 import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
 import {Datastore, Mediastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
-import {BlobProxy} from "../../common/blob-proxy";
-import {IdaiFieldMapLayer} from "./idai-field-map-layer";
+import {BlobProxy, ImageContainer} from "../../common/blob-proxy";
+import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
 
 @Component({
     moduleId: module.id,
@@ -41,8 +40,8 @@ export class MapComponent implements OnChanges {
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
 
-    private layers: { [id: string]: IdaiFieldMapLayer } = {};
-    private activeLayers: Array<IdaiFieldMapLayer> = [];
+    private layers: { [id: string]: ImageContainer } = {};
+    private activeLayers: Array<ImageContainer> = [];
     private panes: { [id: string]: any } = {};
 
     private markerIcons = {
@@ -202,40 +201,30 @@ export class MapComponent implements OnChanges {
 
         var zIndex: number = 0;
         var promises: Array<Promise<any>> = [];
-        for (var i in documents) {
-            var resource: any = documents[i].resource;
-            if (resource.georeference && !this.layers[resource.id]) {
-                var promise = this.makeLayerForImageResource(resource, zIndex++);
+        for (var doc of documents) {
+            if (doc.resource['georeference'] && !this.layers[doc.resource.id]) {
+                var promise = this.makeLayerForImageResource(doc, zIndex++);
                 promises.push(promise);
             }
         }
         Promise.all(promises).then(() => resolve());
     }
 
-    private makeLayerForImageResource(resource: IdaiFieldImageResource, zIndex: number) {
+    private makeLayerForImageResource(document: Document, zIndex: number) {
 
-        var callback = (resource) => url => {
-            var layer: IdaiFieldMapLayer = {
-                id: resource.id,
-                name: resource.shortDescription,
-                filePath: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url),
-                georeference: resource.georeference,
-                zIndex: zIndex
-            };
-            this.layers[resource.id] = layer;
-
-            return new Promise<any>((resolve) => resolve());
+        var imgContainer : ImageContainer = {
+            document: (<IdaiFieldImageDocument>document),
+            zIndex: zIndex
         };
-
-        var promise = this.blobProxy.urlForImage(resource.identifier);
-        return promise.then(callback(resource));
+        this.layers[document.resource.id] = imgContainer;
+        return this.blobProxy.setImgSrc(imgContainer,true);
     }
 
     private initializePanes() {
 
         var layers = this.getLayersAsList();
         for (var i in layers) {
-            var id = layers[i].id;
+            var id = layers[i].document.resource.id;
             if (!this.panes[id]) {
                 var pane = this.map.createPane(id);
                 pane.style.zIndex = String(layers[i].zIndex);
@@ -321,18 +310,18 @@ export class MapComponent implements OnChanges {
         return polygon;
     }
 
-    private addLayerToMap(layer: IdaiFieldMapLayer) {
+    private addLayerToMap(layer: ImageContainer) {
 
-        layer.object = L.imageOverlay.rotated(layer.filePath,
-            layer.georeference.topLeftCoordinates,
-            layer.georeference.topRightCoordinates,
-            layer.georeference.bottomLeftCoordinates,
-            { pane: layer.id }).addTo(this.map);
+        layer.object = L.imageOverlay.rotated(layer.imgSrc,
+            layer.document.resource.georeference.topLeftCoordinates,
+            layer.document.resource.georeference.topRightCoordinates,
+            layer.document.resource.georeference.bottomLeftCoordinates,
+            { pane: layer.document.resource.id }).addTo(this.map);
 
         this.activeLayers.push(layer);
     }
 
-    public toggleLayer(layer: IdaiFieldMapLayer) {
+    public toggleLayer(layer: ImageContainer) {
 
         var index = this.activeLayers.indexOf(layer);
         if (index == -1) {
@@ -355,7 +344,7 @@ export class MapComponent implements OnChanges {
         var activeLayersIds: Array<string> = [];
 
         for (var i in this.activeLayers) {
-            activeLayersIds.push(this.activeLayers[i].id);
+            activeLayersIds.push(this.activeLayers[i].document.resource.id);
         }
 
         this.mapState.setActiveLayersIds(activeLayersIds);
@@ -599,9 +588,9 @@ export class MapComponent implements OnChanges {
         return coordinates;
     }
 
-    private getLayersAsList(): Array<IdaiFieldMapLayer> {
+    private getLayersAsList(): Array<ImageContainer> {
 
-        var layersList: Array<IdaiFieldMapLayer> = [];
+        var layersList: Array<ImageContainer> = [];
 
         for (var i in this.layers) {
             if (this.layers.hasOwnProperty(i)) {

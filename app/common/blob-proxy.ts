@@ -2,19 +2,28 @@ import {M} from "../m";
 import {ReadMediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
+import {SecurityContext} from "@angular/core";
 
 export interface ImageContainer {
     imgSrc? : string;
+    document? : IdaiFieldImageDocument;
+
+    // used by ImagesGridComponent
     calculatedWidth? : number;
     calculatedHeight? : number;
-    document? : IdaiFieldImageDocument;
+
+    // used by MapComponent
+    zIndex? : number;
+    object?: L.ImageOverlay;
 }
 
 /**
- * This tool is used to get binary data from a mediastore and put them as blobs into html img tags.
+ * This tool is used to get binary data from a
+ * mediastore and put them as blobs into html img tags.
  *
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class BlobProxy {
 
@@ -27,17 +36,16 @@ export class BlobProxy {
 
 
 
-    // TODO make this private
     /**
      * Generate a blob url for an Image given its identifier
      * @param identifier
      * @return {Promise<string>} A promise returning the url
      */
-    public urlForImage(identifier): Promise<string> {
+    private urlForImage(identifier): Promise<string> {
         return new Promise((resolve, reject) => {
             this.mediastore.read(identifier).then(data => {
 
-                if (data == undefined) return resolve(this.blackImg)
+                if (data == undefined) return resolve(this.blackImg);
 
                 var url = URL.createObjectURL(new Blob([data]));
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
@@ -61,14 +69,18 @@ export class BlobProxy {
      *  In case of error the imgSrc is set to a data url that represents a black img
      *    and the promise gets rejected with an array of error msgs.
      */
-    public setImgSrc(imageContainer : ImageContainer) : Promise<ImageContainer>{
+    public setImgSrc(imageContainer : ImageContainer,sanitizeAfter:boolean = false) : Promise<ImageContainer>{
 
         return new Promise((resolve, reject) => {
             var image:ImageContainer = imageContainer;
 
             var callback = image => {
                 return url => {
-                    image.imgSrc = url;
+                    if (sanitizeAfter) {
+                        image.imgSrc = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url)
+                    } else {
+                        image.imgSrc = url;
+                    }
                     resolve(image); // TODO since there are side effects anyway, don't return the imageContainer here
                 }
             };

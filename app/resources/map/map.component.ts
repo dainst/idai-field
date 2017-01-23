@@ -9,7 +9,8 @@ import {MapState} from './map-state';
 import {Datastore, Mediastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
-import {BlobProxy, ImageContainer} from "../../common/blob-proxy";
+import {BlobProxy} from "../../common/blob-proxy";
+import {ImageContainer} from "../../common/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
 
 @Component({

@@ -3,7 +3,8 @@ import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {BlobProxy, ImageContainer} from "../common/blob-proxy";
+import {BlobProxy} from "../common/blob-proxy";
+import {ImageContainer} from "../common/image-container";
 
 /**
  * @author Daniel de Oliveira

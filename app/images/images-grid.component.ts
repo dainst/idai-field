@@ -93,7 +93,7 @@ export class ImagesGridComponent {
                 synced: 0
             });
 
-            this.calcGrid();
+            this.calcGrid(true);
 
         }).catch(err => console.error(err));
     }
@@ -105,29 +105,16 @@ export class ImagesGridComponent {
     }
 
     public onResize() {
-        this.calcGrid();
+        this.calcGrid(true);
     }
 
-    /*
-     * Generate a row of images scaled to height 1 and sum up widths.
+
+
+    /**
+     * @param showAllAtOnce if true, all images are shown at once.
+     *   if false, images are shown as soon as they are loaded
      */
-    private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
-
-        var naturalRowWidth = 0;
-
-        for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
-            var document = documents[rowIndex * nrOfColumns + columnIndex];
-            if (!document) {
-                naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
-                break;
-            }
-            naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
-        }
-
-        return naturalRowWidth;
-    }
-
-    public calcGrid() {
+    public calcGrid(showAllAtOnce:boolean = false) {
         if (!this.documents) return;
 
         var rowWidth = Math.ceil((window.innerWidth - 57) );
@@ -138,14 +125,14 @@ export class ImagesGridComponent {
         var ps = [];
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
             var calculatedHeight = rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
-            ps.push(this.calcRow(rowIndex,calculatedHeight));
+            ps.push(this.calcRow(rowIndex,calculatedHeight,showAllAtOnce));
         }
         Promise.all(ps).then(rows=>{
             this.rows = rows;
         });
     }
 
-    private calcRow(rowIndex,calculatedHeight) {
+    private calcRow(rowIndex,calculatedHeight,showAllAtOnce:boolean) {
         return new Promise<any>((resolve,reject)=>{
             var ps = [];
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
@@ -164,7 +151,7 @@ export class ImagesGridComponent {
                         resolve(cell);
                     }));
                 } else {
-                    ps.push(this.getImg(document.resource.identifier,cell,rowIndex,columnIndex));
+                    ps.push(this.getImg(document.resource.identifier,cell,showAllAtOnce));
                 }
             }
             Promise.all(ps).then(cells=> {
@@ -173,15 +160,41 @@ export class ImagesGridComponent {
         });
     }
 
-    private getImg(identifier,cell,r,c) {
-        return new Promise<any>((resolve,reject)=>{
+    /**
+     * @param identifier
+     * @param cell
+     * @param showAllAtOnce is applied here
+     */
+    private getImg(identifier,cell,showAllAtOnce:boolean) {
+        return new Promise<any>((resolve)=>{
+
+            if (!showAllAtOnce) resolve(cell);
             this.blobProxy.getBlobUrl(identifier).then(url=>{
+                if (showAllAtOnce) resolve(cell);
                 cell.imgSrc = url;
-                resolve(cell)
             }).catch(err=> {
                 this.messages.addWithParams(err);
             });
         })
+    }
+
+    /**
+     * Generate a row of images scaled to height 1 and sum up widths.
+     */
+    private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
+
+        var naturalRowWidth = 0;
+
+        for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
+            var document = documents[rowIndex * nrOfColumns + columnIndex];
+            if (!document) {
+                naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
+                break;
+            }
+            naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
+        }
+
+        return naturalRowWidth;
     }
 
     /**

@@ -119,7 +119,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Naboo",
             "type": "planet",
             "relations": {
-                "depictedIn": ["o8"]
+                "depictedIn": ["o17"]
             }
         },
         "synced": 0

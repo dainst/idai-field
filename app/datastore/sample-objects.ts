@@ -64,7 +64,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "friendOf" : ["o3", "o5"],
                 "owns" : ["o11"],
-                "depictedIn": "o12"
+                "depictedIn": ["o12"]
             },
             "geometries": [{
                 "type":"Point","coordinates":[0.828125,0.375],"crs":"local"

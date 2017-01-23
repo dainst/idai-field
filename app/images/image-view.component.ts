@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute,Router} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
@@ -21,7 +21,8 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        messages: Messages
+        messages: Messages,
+        private router: Router
     ) {
         super(route,datastore,mediastore,sanitizer,messages);
     }
@@ -29,5 +30,9 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     ngOnInit() {
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
+    }
+
+    public selectRelatedDocument(documentToJumpTo) {
+        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
     }
 }

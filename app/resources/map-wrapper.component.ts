@@ -38,14 +38,13 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
     }
 
     // TODO remove duplicate code
-    public selectRelatedDocument(documentToJumpTo) {
+    // public selectRelatedDocument(documentToJumpTo) {
+    //     this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
 
-        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
+    public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
-    } public selectDocument(document: IdaiFieldDocument) {
-
-        if (document) {
-            this.router.navigate(['resources', { id: document.resource.id }]);
+        if (documentToJumpTo) {
+            this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
         } else {
             this.router.navigate(['resources']);
         }

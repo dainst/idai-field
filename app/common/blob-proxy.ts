@@ -25,6 +25,9 @@ export class BlobProxy {
         private sanitizer: DomSanitizer
     ) { }
 
+
+
+    // TODO make this private
     /**
      * Generate a blob url for an Image given its identifier
      * @param identifier
@@ -53,9 +56,10 @@ export class BlobProxy {
      *   <code>imgContainer.document.resource.identifier</code>
      *   must be an identifier of an existing file in the mediastore.
      *
-     * @return {Promise<ImageContainer>} Promise that returns the given
-     *  <code>imageContainer</code> with <code>imgSrc</code> set.
-     *  In case of error the imgSrc is set to a data url that represents a black img.
+     * @return {Promise<ImageContainer|Array<string>} Promise that returns the given
+     *    <code>imageContainer</code> with <code>imgSrc</code> set.
+     *  In case of error the imgSrc is set to a data url that represents a black img
+     *    and the promise gets rejected with an array of error msgs.
      */
     public setImgSrc(imageContainer : ImageContainer) : Promise<ImageContainer>{
 
@@ -65,7 +69,7 @@ export class BlobProxy {
             var callback = image => {
                 return url => {
                     image.imgSrc = url;
-                    resolve(image);
+                    resolve(image); // TODO since there are side effects anyway, don't return the imageContainer here
                 }
             };
             var errorCallback = image => {

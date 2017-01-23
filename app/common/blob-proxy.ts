@@ -27,6 +27,7 @@ export interface ImageContainer {
  */
 export class BlobProxy {
 
+    // TODO see if this is still needed and where it can be applied
     private blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
     constructor(
@@ -57,7 +58,6 @@ export class BlobProxy {
                 }
 
             }).catch(() => {
-                // TODO see if this is still needed and where it can be applied
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
             });
         });

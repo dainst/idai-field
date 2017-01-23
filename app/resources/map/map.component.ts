@@ -7,6 +7,7 @@ import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
 import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {BlobProxy, ImageContainer} from "../../common/blob-proxy";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
@@ -75,7 +76,8 @@ export class MapComponent implements OnChanges {
         private mapState: MapState,
         private datastore: Datastore,
         private mediastore: Mediastore,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private messages: Messages
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
     }
@@ -212,12 +214,27 @@ export class MapComponent implements OnChanges {
 
     private makeLayerForImageResource(document: Document, zIndex: number) {
 
-        var imgContainer : ImageContainer = {
-            document: (<IdaiFieldImageDocument>document),
-            zIndex: zIndex
-        };
-        this.layers[document.resource.id] = imgContainer;
-        return this.blobProxy.setImgSrc(imgContainer,true);
+        return new Promise<any>((resolve,reject)=> {
+            var imgContainer : ImageContainer = {
+                document: (<IdaiFieldImageDocument>document),
+                zIndex: zIndex
+            };
+            this.blobProxy.getBlobUrl(document.resource['identifier'],true).then(
+                url => {
+                    imgContainer.imgSrc = url;
+                    this.layers[document.resource.id] = imgContainer;
+                    resolve();
+                }
+            ).catch(
+                msgWithParams => {
+                    this.messages.addWithParams(msgWithParams);
+                    reject();
+                }
+            );
+        });
+
+
+        // return this.blobProxy.getBlobUrl(imgContainer,true);
     }
 
     private initializePanes() {

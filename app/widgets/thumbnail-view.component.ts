@@ -49,14 +49,17 @@ export class ThumbnailViewComponent implements OnChanges {
         this.document.resource.relations["depictedIn"].forEach(id =>
             this.datastore.get(id)
                 .then(doc => {
-                    var imgContainer : ImageContainer = {
+                    var imgContainer: ImageContainer = {
                         document: <IdaiFieldImageDocument> doc
                     };
-                    this.blobProxy.setImgSrc(imgContainer).then(()=>{
-                        this.images.push(imgContainer);
-                    }).catch(errs=>{
-                        for (var err of errs) this.messages.add(err);
-                    });
+                    this.blobProxy.getBlobUrl(
+                        imgContainer.document.resource.identifier).
+                        then(url=> {
+                            imgContainer.imgSrc = url;
+                            this.images.push(imgContainer);
+                        }).catch(msgWithParams=>{
+                            this.messages.addWithParams(msgWithParams)
+                        });
                 })
         );
     }

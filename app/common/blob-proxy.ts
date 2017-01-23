@@ -34,8 +34,6 @@ export class BlobProxy {
         private sanitizer: DomSanitizer
     ) { }
 
-
-
     /**
      * Generate a blob url for an Image given its identifier
      * @param identifier
@@ -57,43 +55,37 @@ export class BlobProxy {
     }
 
     /**
-     * Fills the <code>imgSrc</code> of the <code>imageContainer</code> with a blob url generated from
-     * the file associated to the containers resource.
+     * Loads an image from the mediastore and returns an url through which it is accessible.
+     * @param mediastoreFilename must be an identifier of an existing file in the mediastore.
      *
-     * @param <code>imageContainer</code>
-     *   <code>imgContainer.document.resource.identifier</code>
-     *   must be an identifier of an existing file in the mediastore.
-     *
-     * @return {Promise<ImageContainer|Array<string>} Promise that returns the given
-     *    <code>imageContainer</code> with <code>imgSrc</code> set.
-     *  In case of error the imgSrc is set to a data url that represents a black img
-     *    and the promise gets rejected with an array of error msgs.
+     * @return {Promise<string>} Promise that returns the blob url.
+     *  In case of error the promise gets rejected with msgWithParams.
      */
-    public setImgSrc(imageContainer : ImageContainer,sanitizeAfter:boolean = false) : Promise<ImageContainer>{
+    public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false) : Promise<string> {
 
         return new Promise((resolve, reject) => {
-            var image:ImageContainer = imageContainer;
-
-            var callback = image => {
+            var callback = () => {
                 return url => {
+                    var imgSrc;
                     if (sanitizeAfter) {
-                        image.imgSrc = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url)
+                        imgSrc = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url)
                     } else {
-                        image.imgSrc = url;
+                        imgSrc = url;
                     }
-                    resolve(image); // TODO since there are side effects anyway, don't return the imageContainer here
+                    resolve(imgSrc);
                 }
             };
-            var errorCallback = image => {
-                return errors => {
+            var errorCallback = () => {
+                return msgWithParams => {
+                    // TODO see if this is still needed and where it can be applied
                     // display a black image
-                    image.imgSrc = this.blackImg;
-                    reject(errors)
+                    // image.imgSrc = this.blackImg;
+                    reject(msgWithParams)
                 }
             };
-            this.urlForImage(imageContainer.document.resource.identifier)
-                .then(callback(image))
-                .catch(errorCallback(image));
+            this.urlForImage(mediastoreFilename)
+                .then(callback())
+                .catch(errorCallback());
         });
     }
 }

@@ -87,7 +87,7 @@ export class ImagesGridComponent {
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images
-            this.documents.unshift({
+            this.documents.unshift(<IdaiFieldImageDocument>{
                 id: 'droparea',
                 resource: { identifier: '', type: '', width: 1, height: 1, filename: '', relations: {} },
                 synced: 0
@@ -128,18 +128,26 @@ export class ImagesGridComponent {
     }
 
     public calcGrid() {
+        if (!this.documents) return;
 
         var rowWidth = Math.ceil((window.innerWidth - 57) );
 
         this.rows = [];
         var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
 
+        var ps = [];
         for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
-
-            this.rows[rowIndex] = [];
-
             var calculatedHeight = rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
+            ps.push(this.calcRow(rowIndex,calculatedHeight));
+        }
+        Promise.all(ps).then(rows=>{
+            this.rows = rows;
+        });
+    }
 
+    private calcRow(rowIndex,calculatedHeight) {
+        return new Promise<any>((resolve,reject)=>{
+            var ps = [];
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
                 var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
@@ -150,14 +158,31 @@ export class ImagesGridComponent {
                 cell.document = document;
                 cell.calculatedWidth = image.width * calculatedHeight / image.height;
                 cell.calculatedHeight = calculatedHeight;
-                if (document.resource.identifier) this.blobProxy.setImgSrc(cell).catch(err=>{
-                    this.messages.addWithParams(err);
-                });
-                this.rows[rowIndex][columnIndex] = cell;
+
+                if (document.id == 'droparea') {
+                    ps.push(new Promise<any>((resolve)=>{
+                        resolve(cell);
+                    }));
+                } else {
+                    ps.push(this.getImg(document.resource.identifier,cell,rowIndex,columnIndex));
+                }
             }
+            Promise.all(ps).then(cells=> {
+                resolve(cells);
+            });
+        });
+    }
 
-        }
-
+    private getImg(identifier,cell,r,c) {
+        return new Promise<any>((resolve,reject)=>{
+            this.blobProxy.getBlobUrl(identifier).then(url=>{
+                cell.imgSrc = url;
+                resolve(cell)
+            },err=> {
+                console.error("here is an error");
+                this.messages.addWithParams(err);
+            });
+        })
     }
 
     /**

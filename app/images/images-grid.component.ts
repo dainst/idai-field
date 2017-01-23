@@ -110,7 +110,6 @@ export class ImagesGridComponent {
     }
 
 
-
     /**
      * @param showAllAtOnce if true, all images are shown at once.
      *   if false, images are shown as soon as they are loaded
@@ -118,46 +117,35 @@ export class ImagesGridComponent {
     public calcGrid(showAllAtOnce:boolean = false) {
         if (!this.documents) return;
 
-        var rowWidth = Math.ceil((window.innerWidth - 57) );
-
         this.rows = [];
-        var nrOfRows = Math.ceil(this.documents.length / this.nrOfColumns);
 
-        var ps = [];
-        for (var rowIndex = 0; rowIndex < nrOfRows; rowIndex++) {
-            var calculatedHeight = rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
-            ps.push(this.calcRow(rowIndex,calculatedHeight,showAllAtOnce));
+        var promises = [];
+        for (var i = 0; i < this.nrOfRows(); i++) {
+            promises.push(this.calcRow(i,this.calculatedHeight(i),showAllAtOnce));
         }
-        Promise.all(ps).then(rows=>{
-            this.rows = rows;
-        });
+        Promise.all(promises).then(rows=> this.rows = rows);
     }
+
 
     private calcRow(rowIndex,calculatedHeight,showAllAtOnce:boolean) {
         return new Promise<any>((resolve,reject)=>{
-            var ps = [];
+            var promises = [];
             for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
 
                 var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
                 if (!document) break;
 
-                var cell : ImageContainer = {};
-                var image = document.resource as IdaiFieldImageResource;
-                cell.document = document;
-                cell.calculatedWidth = image.width * calculatedHeight / image.height;
-                cell.calculatedHeight = calculatedHeight;
+                var cell = this.newCell(document,calculatedHeight);
 
                 if (document.id == 'droparea') {
-                    ps.push(new Promise<any>((resolve)=>{
+                    promises.push(new Promise<any>((resolve)=>{
                         resolve(cell);
                     }));
                 } else {
-                    ps.push(this.getImg(document.resource.identifier,cell,showAllAtOnce));
+                    promises.push(this.getImg(document.resource.identifier,cell,showAllAtOnce));
                 }
             }
-            Promise.all(ps).then(cells=> {
-                resolve(cells);
-            });
+            Promise.all(promises).then(cells=> resolve(cells));
         });
     }
 
@@ -185,7 +173,6 @@ export class ImagesGridComponent {
     private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
 
         var naturalRowWidth = 0;
-
         for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
             var document = documents[rowIndex * nrOfColumns + columnIndex];
             if (!document) {
@@ -194,8 +181,25 @@ export class ImagesGridComponent {
             }
             naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
         }
-
         return naturalRowWidth;
+    }
+
+    private newCell(document,calculatedHeight) : ImageContainer {
+        var cell : ImageContainer = {};
+        var image = document.resource as IdaiFieldImageResource;
+        cell.document = document;
+        cell.calculatedWidth = image.width * calculatedHeight / image.height;
+        cell.calculatedHeight = calculatedHeight;
+        return cell;
+    }
+
+    private calculatedHeight(rowIndex) {
+        var rowWidth = Math.ceil((window.innerWidth - 57) );
+        return rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
+    }
+
+    private nrOfRows() {
+        return Math.ceil(this.documents.length / this.nrOfColumns);
     }
 
     /**

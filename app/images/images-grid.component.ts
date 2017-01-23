@@ -128,22 +128,20 @@ export class ImagesGridComponent {
 
 
     private calcRow(rowIndex,calculatedHeight,showAllAtOnce:boolean) {
-        return new Promise<any>((resolve,reject)=>{
+        return new Promise<any>((resolve)=>{
             var promises = [];
-            for (var columnIndex = 0; columnIndex < this.nrOfColumns; columnIndex++) {
+            for (var i = 0; i < this.nrOfColumns; i++) {
 
-                var document = this.documents[rowIndex * this.nrOfColumns + columnIndex];
+                var document = this.documents[rowIndex * this.nrOfColumns + i];
                 if (!document) break;
 
-                var cell = this.newCell(document,calculatedHeight);
-
-                if (document.id == 'droparea') {
-                    promises.push(new Promise<any>((resolve)=>{
-                        resolve(cell);
-                    }));
-                } else {
-                    promises.push(this.getImg(document.resource.identifier,cell,showAllAtOnce));
-                }
+                promises.push(
+                    this.getImg(
+                        document,
+                        this.newCell(document,calculatedHeight),
+                        showAllAtOnce
+                    )
+                );
             }
             Promise.all(promises).then(cells=> resolve(cells));
         });
@@ -154,11 +152,12 @@ export class ImagesGridComponent {
      * @param cell
      * @param showAllAtOnce is applied here
      */
-    private getImg(identifier,cell,showAllAtOnce:boolean) {
+    private getImg(document,cell,showAllAtOnce:boolean) {
         return new Promise<any>((resolve)=>{
+            if (document.id == 'droparea') return resolve(cell);
 
             if (!showAllAtOnce) resolve(cell);
-            this.blobProxy.getBlobUrl(identifier).then(url=>{
+            this.blobProxy.getBlobUrl(document.resource.identifier).then(url=>{
                 if (showAllAtOnce) resolve(cell);
                 cell.imgSrc = url;
             }).catch(err=> {
@@ -224,17 +223,19 @@ export class ImagesGridComponent {
 
     public openDeleteModal(modal) {
         this.modalService.open(modal).result.then(result => {
-            if (result == 'delete') {
-                var results = this.selected.map(document => this.imageTool.remove(document).catch(err=>{
-                    this.messages.add(err);
-                }));
-                Promise.all(results).then(() => {
-                    this.clearSelection();
-                    this.fetchDocuments(this.query);
-                }).catch(error => {
-                    this.messages.add(error);
-                });
-            }
+            if (result == 'delete') this.deleteSelected();
+        });
+    }
+
+    private deleteSelected() {
+        var results = this.selected.map(document => this.imageTool.remove(document).catch(err=>{
+            this.messages.add(err);
+        }));
+        Promise.all(results).then(() => {
+            this.clearSelection();
+            this.fetchDocuments(this.query);
+        }).catch(error => {
+            this.messages.add(error);
         });
     }
 

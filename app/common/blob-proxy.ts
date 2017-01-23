@@ -14,7 +14,7 @@ import {SecurityContext} from "@angular/core";
  */
 export class BlobProxy {
 
-    // TODO see if this is still needed and where it can be applied
+    // TODO see if this is also useful outside this class
     private blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
     constructor(
@@ -33,20 +33,21 @@ export class BlobProxy {
         return new Promise((resolve, reject) => {
             // TODO catch errors
             this.mediastore.read(mediastoreFilename).then(data => {
-
                 if (data == undefined) return resolve(this.blackImg);
-
-                var url = URL.createObjectURL(new Blob([data]));
-                var safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-                if (sanitizeAfter) {
-                    resolve(this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl));
-                } else {
-                    resolve(safeResourceUrl);
-                }
-
+                resolve(this.makeBlob(data,sanitizeAfter));
             }).catch(() => {
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
             });
         });
+    }
+
+    private makeBlob(data,sanitizeAfter) {
+        var url = URL.createObjectURL(new Blob([data]));
+        var safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        if (sanitizeAfter) {
+            return this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl);
+        } else {
+            return safeResourceUrl;
+        }
     }
 }

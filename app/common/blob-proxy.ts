@@ -34,13 +34,12 @@ export class BlobProxy {
         return new Promise((resolve, reject) => {
             this.mediastore.read(identifier).then(data => {
 
-                if (data==undefined) return resolve(this.blackImg)
+                if (data == undefined) return resolve(this.blackImg)
 
                 var url = URL.createObjectURL(new Blob([data]));
                 resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
 
             }).catch(error => {
-                console.error(error);
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
             });
         });

@@ -35,57 +35,31 @@ export class BlobProxy {
     ) { }
 
     /**
-     * Generate a blob url for an Image given its identifier
-     * @param identifier
-     * @return {Promise<string>} A promise returning the url
+     * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
+     * @param mediastoreFilename must be an identifier of an existing file in the mediastore.
+     * @param sanitizeAfter
+     * @return {Promise<string>} Promise that returns the blob url.
+     *  In case of error the promise gets rejected with msgWithParams.
      */
-    private urlForImage(identifier): Promise<string> {
+    public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.mediastore.read(identifier).then(data => {
+            // TODO catch errors
+            this.mediastore.read(mediastoreFilename).then(data => {
 
                 if (data == undefined) return resolve(this.blackImg);
 
                 var url = URL.createObjectURL(new Blob([data]));
-                resolve(this.sanitizer.bypassSecurityTrustResourceUrl(url));
+                var safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                if (sanitizeAfter) {
+                    resolve(this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl));
+                } else {
+                    resolve(safeResourceUrl);
+                }
 
-            }).catch(error => {
-                reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([identifier]));
+            }).catch(() => {
+                // TODO see if this is still needed and where it can be applied
+                reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
             });
-        });
-    }
-
-    /**
-     * Loads an image from the mediastore and returns an url through which it is accessible.
-     * @param mediastoreFilename must be an identifier of an existing file in the mediastore.
-     *
-     * @return {Promise<string>} Promise that returns the blob url.
-     *  In case of error the promise gets rejected with msgWithParams.
-     */
-    public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false) : Promise<string> {
-
-        return new Promise((resolve, reject) => {
-            var callback = () => {
-                return url => {
-                    var imgSrc;
-                    if (sanitizeAfter) {
-                        imgSrc = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url)
-                    } else {
-                        imgSrc = url;
-                    }
-                    resolve(imgSrc);
-                }
-            };
-            var errorCallback = () => {
-                return msgWithParams => {
-                    // TODO see if this is still needed and where it can be applied
-                    // display a black image
-                    // image.imgSrc = this.blackImg;
-                    reject(msgWithParams)
-                }
-            };
-            this.urlForImage(mediastoreFilename)
-                .then(callback())
-                .catch(errorCallback());
         });
     }
 }

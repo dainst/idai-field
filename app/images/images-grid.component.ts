@@ -178,8 +178,7 @@ export class ImagesGridComponent {
             this.blobProxy.getBlobUrl(identifier).then(url=>{
                 cell.imgSrc = url;
                 resolve(cell)
-            },err=> {
-                console.error("here is an error");
+            }).catch(err=> {
                 this.messages.addWithParams(err);
             });
         })

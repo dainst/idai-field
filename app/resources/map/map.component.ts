@@ -209,7 +209,12 @@ export class MapComponent implements OnChanges {
                 promises.push(promise);
             }
         }
-        Promise.all(promises).then(() => resolve());
+        Promise.all(promises).then((imgContainers) => {
+            for (var imgContainer of imgContainers) {
+                this.layers[imgContainer.document.resource.id] = imgContainer;
+            }
+            resolve();
+        });
     }
 
     private makeLayerForImageResource(document: Document, zIndex: number) {
@@ -222,8 +227,7 @@ export class MapComponent implements OnChanges {
             this.blobProxy.getBlobUrl(document.resource['identifier'],true).then(
                 url => {
                     imgContainer.imgSrc = url;
-                    this.layers[document.resource.id] = imgContainer;
-                    resolve();
+                    resolve(imgContainer);
                 }
             ).catch(
                 msgWithParams => {
@@ -232,9 +236,6 @@ export class MapComponent implements OnChanges {
                 }
             );
         });
-
-
-        // return this.blobProxy.getBlobUrl(imgContainer,true);
     }
 
     private initializePanes() {

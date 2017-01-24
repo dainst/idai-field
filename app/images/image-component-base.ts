@@ -3,7 +3,8 @@ import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Mediastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {BlobProxy, ImageContainer} from "../common/blob-proxy";
+import {BlobProxy} from "../common/blob-proxy";
+import {ImageContainer} from "../common/image-container";
 
 /**
  * @author Daniel de Oliveira
@@ -29,9 +30,13 @@ export class ImageComponentBase {
             this.datastore.get(id).then(
                 doc=>{
                     this.image.document = doc;
-                    if (doc.resource.filename) this.blobProxy.setImgSrc(this.image).catch(err=>{
-                        this.messages.addWithParams(err);
-                    });
+                    if (doc.resource.filename) {
+                        this.blobProxy.getBlobUrl(doc.resource.filename).then(url=>{
+                            this.image.imgSrc = url;
+                        }).catch(err=>{
+                            this.messages.addWithParams(err);
+                        });
+                    }
                 },
                 ()=>{
                     console.error("Fatal error: could not load document for id ",id);

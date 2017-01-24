@@ -1,3 +1,5 @@
 <div>
-    <img *ngFor="let image of images" [src]="image">
+    <a *ngFor="let image of images" (click)="selectImage(image.document);">
+        <img [src]="image.imgSrc">
+    </a>
 </div>

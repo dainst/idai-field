@@ -1,4 +1,3 @@
-/// <reference path="../../typings/globals/jasmine/index.d.ts" />
 import {IdaiFieldBackend} from "../../app/sync/idai-field-backend";
 import {IdaiFieldDocument} from "../../app/model/idai-field-document";
 import {Headers} from "@angular/http";

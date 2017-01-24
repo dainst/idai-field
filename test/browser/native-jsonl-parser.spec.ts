@@ -1,4 +1,3 @@
-/// <reference path="../../typings/globals/jasmine/index.d.ts" />
 import {NativeJsonlParser} from "../../app/import/native-jsonl-parser";
 import {M} from "../../app/m"
 

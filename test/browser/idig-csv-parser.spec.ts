@@ -1,4 +1,3 @@
-/// <reference path="../../typings/globals/jasmine/index.d.ts" />
 import {IdigCsvParser} from "../../app/import/idig-csv-parser";
 import {M} from "../../app/m";
 

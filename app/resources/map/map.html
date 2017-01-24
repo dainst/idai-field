@@ -6,7 +6,7 @@
         (mouseleave)="layerMenuVisible = false;">
     <div *ngFor="let layer of getLayersAsList()">
         <label>
-            <input type="checkbox" [checked]="isActiveLayer(layer)" (click)="toggleLayer(layer)" /> {{layer.name}}
+            <input type="checkbox" [checked]="isActiveLayer(layer)" (click)="toggleLayer(layer)" /> {{layer.document.resource.shortDescription}}
         </label>
     </div>
 </div>

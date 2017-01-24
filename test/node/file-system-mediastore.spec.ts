@@ -1,5 +1,3 @@
-/// <reference path="../../typings/globals/jasmine/index.d.ts" />
-
 /**
  * @author Sebastian Cuy
  */

@@ -29,14 +29,16 @@ export class IndexeddbDatastore implements Datastore {
     
     constructor(private idb:Indexeddb){
         this.db=idb.db();
+    };
 
+    public init() {
         if (CONFIG['environment'] == 'test') {
             this.clear();
             this.loadSampleData();
         } else {
             this.readyForQuery = true;
         }
-    };
+    }
 
     public create(document:any):Promise<string> {
 
@@ -261,6 +263,7 @@ export class IndexeddbDatastore implements Datastore {
 
                 request.onerror = event => reject("databaseError");
                 request.onsuccess = event => {
+
                     this.notifyObserversOfObjectToSync(document);
                     resolve(request.result);
                 }

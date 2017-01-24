@@ -15,10 +15,10 @@ export class HttpMediastore implements Mediastore {
     }
 
     public read(key: string): Promise<ArrayBuffer> {
-        return new Promise<any>((resolve)=>{
+        return new Promise<any>((resolve,reject)=>{
             this.http.get(this.basePath + key, { responseType: ResponseContentType.ArrayBuffer }).subscribe(response => {
                 resolve(response.arrayBuffer());
-            });
+            },error=>reject(error));
         });
     }
 

@@ -71,18 +71,10 @@ which is from where it is loaded into the browser against which the tests are ru
 As the *start* command, it automatically converts scss files to css when they are changed.
 
 ```
-2$ export LC_NUMERIC="en_US.UTF-8" && npm run e2e
+2$ npm run e2e
 ```
 
 This command runs the end to end tests once.
-
-For running only tests of a specific subfolder of `test/e2e/`, for example `resources`, run
-
-```
-2$ node_modules/protractor/bin/protractor test/e2e/config/protractor.conf.js --suite=resources
-```
-
-where `node_modules/protractor/bin/`can be omitted if protractor is installed globally via `npm install -g`.
 
 ## Packaging
 
@@ -108,7 +100,7 @@ the iDAI.field 2 Client application on a developer machine is as follows
 1$ npm run build
 1$ npm test
 2$ npm run server
-1$ export LC_NUMERIC="en_US.UTF-8" && npm run e2e
+1$ npm run e2e
 1$ npm run make-dist 
 1$ npm run package
 ```

@@ -167,7 +167,6 @@ export class MapComponent implements OnChanges {
 
         this.initializeViewport();
         this.initializeViewportMonitoring();
-        this.map.pm.addControls({drawPolygon: false, editPolygon: false, deleteLayer: false});
     }
 
     private initializeViewport() {

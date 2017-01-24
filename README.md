@@ -68,7 +68,7 @@ which can be a result of custom json loading as it is done from within `Indexedd
 using `app/util/systemjs-json-plugin`.
 
 It is strongly recommended that it is grepped for WARN and ERROR when doing CI,
-since both of them will not lead to an exit code other than 0.
+since both of them will not lead to an exit code other than `0`.
 
 ## E2E - Testing
 

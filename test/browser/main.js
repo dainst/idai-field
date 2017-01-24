@@ -33,9 +33,20 @@ System.config({
     map: {
         'rxjs': 'node_modules/rxjs',
         '@angular': 'node_modules/@angular',
-        'idai-components-2' : 'node_modules/idai-components-2'
+        'idai-components-2' : 'node_modules/idai-components-2',
+        'json': 'app/util/systemjs-json-plugin'
     },
     packages: {
+        config: {
+            defaultExtension: false,
+            meta: {
+                '*.json': {
+                    loader: 'json'
+                }
+            }
+        },
+
+
         '@angular/core': {
             main: 'bundles/core.umd.min.js',
             defaultExtension: 'js'

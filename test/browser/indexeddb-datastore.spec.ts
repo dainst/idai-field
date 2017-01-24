@@ -1,4 +1,3 @@
-/// <reference path="../../typings/globals/jasmine/index.d.ts" />
 import {IndexeddbDatastore} from "../../app/datastore/indexeddb-datastore";
 import {Indexeddb} from "../../app/datastore/indexeddb";
 

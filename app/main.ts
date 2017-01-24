@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 /// <reference path="../config/config.d.ts" />
 
 import {enableProdMode} from '@angular/core';

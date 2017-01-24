@@ -56,9 +56,9 @@ export class GeoreferenceViewComponent extends WithConfiguration {
         var width: number = parseInt(this.document.resource.width);
         var height: number = parseInt(this.document.resource.height);
 
-        var topLeftCoordinates: Array<number> = this.computeLatLng(0, 0, worldfileContent);
-        var topRightCoordinates: Array<number> = this.computeLatLng(width - 1, 0, worldfileContent);
-        var bottomLeftCoordinates: Array<number> = this.computeLatLng(0, height - 1, worldfileContent);
+        var topLeftCoordinates: [number, number] = this.computeLatLng(0, 0, worldfileContent);
+        var topRightCoordinates: [number, number] = this.computeLatLng(width - 1, 0, worldfileContent);
+        var bottomLeftCoordinates: [number, number] = this.computeLatLng(0, height - 1, worldfileContent);
 
         var georeference: IdaiFieldGeoreference = {
             topLeftCoordinates: topLeftCoordinates,
@@ -70,7 +70,7 @@ export class GeoreferenceViewComponent extends WithConfiguration {
         
     }
 
-    private computeLatLng(imageX, imageY, worldfileContent): Array<number> {
+    private computeLatLng(imageX, imageY, worldfileContent): [number, number] {
 
         var latPosition: number = parseFloat(worldfileContent[3]) * imageY;
         var latRotation: number = parseFloat(worldfileContent[1]) * imageX;

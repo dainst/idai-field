@@ -1,5 +1,5 @@
 export interface IdaiFieldGeoreference {
-    topLeftCoordinates: Array<number>;
-    topRightCoordinates: Array<number>;
-    bottomLeftCoordinates: Array<number>;
+    topLeftCoordinates: [number, number];
+    topRightCoordinates: [number, number];
+    bottomLeftCoordinates: [number, number];
 }

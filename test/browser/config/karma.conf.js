@@ -25,7 +25,7 @@ module.exports = function(config) {
             'test/browser/main.js',
 
             // our stuff
-            { pattern: 'node_modules/idai-components-2/**/*.js', included: false, watched: false },
+            // { pattern: 'node_modules/idai-components-2/**/*.js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
             { pattern: 'test/browser/**/*.spec.js', included: false, watched: true }
@@ -44,7 +44,7 @@ module.exports = function(config) {
 
         colors: true,
 
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_INFO, // it must show WARN for them to be catched in ci. see build script.
         autoWatch: true,
 
         browsers: [

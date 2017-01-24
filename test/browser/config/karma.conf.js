@@ -22,20 +22,20 @@ module.exports = function(config) {
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
-            'test/browser/main.js',
 
             // our stuff
             { pattern: 'node_modules/idai-components-2/**/*.js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
-            { pattern: 'test/browser/**/*.spec.js', included: false, watched: true }
+            { pattern: 'test/browser/**/*.spec.js', included: false, watched: true },
+            'test/browser/main.js'
         ],
 
         exclude: [
             'node_modules/@angular/**/*_spec.js',
 
             // our stuff
-            'node_modules/idai-components-2/test/**/*.spec.js'
+            'node_modules/idai-components-2/test/**/*'
         ],
 
         reporters: ['dots'],

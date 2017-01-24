@@ -106,6 +106,7 @@ gulp.task('make-dist', function () {
     gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
     gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));
     gulp.src('node_modules/papaparse/**/*').pipe(gulp.dest('dist/node_modules/papaparse/'));
+    gulp.src('node_modules/sharp/**/*').pipe(gulp.dest('dist/node_modules/sharp/'));
     gulp.src('node_modules/ts-md5/**/*').pipe(gulp.dest('dist/node_modules/ts-md5/'));
     gulp.src('node_modules/identicon.js/**/*').pipe(gulp.dest('dist/node_modules/identicon.js/'));
     gulp.src('src/templates/**/*').pipe(gulp.dest('dist/src/templates/'));

@@ -9,8 +9,6 @@ import {ImageContainer} from "../common/image-container";
  */
 export class ImageGridBuilder {
 
-    private blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 57;
     private documents: Array<Document>;

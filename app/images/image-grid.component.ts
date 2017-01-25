@@ -16,7 +16,7 @@ import {ElementRef} from "@angular/core";
 
 @Component({
     moduleId: module.id,
-    templateUrl: './images-grid.html'
+    templateUrl: './image-grid.html'
 })
 
 /**
@@ -26,7 +26,7 @@ import {ElementRef} from "@angular/core";
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class ImagesGridComponent {
+export class ImageGridComponent {
 
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;

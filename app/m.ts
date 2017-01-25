@@ -34,6 +34,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
     public static IMAGES_ERROR_DELETE: string = 'images/error/delete';
+    public static IMAGES_ERROR_INVALID_WORLDFILE: string = 'images/error/invalidworldfile';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -155,6 +156,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_DELETE]={
             content: "Fehler beim Löschen des Bilds '{0}'.",
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_ERROR_INVALID_WORLDFILE] = {
+            content: "Datei '{0}' ist kein gültiges World-File.",
             level: 'danger',
             params: []
         };

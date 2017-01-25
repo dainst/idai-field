@@ -2,7 +2,6 @@ import {Component, OnChanges, Input} from "@angular/core";
 import {Mediastore, Datastore} from "idai-components-2/datastore";
 import {BlobProxy} from "../common/blob-proxy";
 import {ImageContainer} from "../common/image-container";
-import {IdaiFieldDocument} from "../model/idai-field-document";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
@@ -10,7 +9,7 @@ import {Messages} from "idai-components-2/messages";
 
 
 @Component({
-    selector: 'thumbnail-view',
+    selector: 'thumgbnail-view',
     moduleId: module.id,
     templateUrl: './thumbnail-view.html'
 })

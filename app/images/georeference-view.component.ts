@@ -1,6 +1,7 @@
 import {Component, Input} from "@angular/core";
-import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration"
-import {PersistenceManager} from "idai-components-2/persist"
+import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration";
+import {PersistenceManager} from "idai-components-2/persist";
+import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {IdaiFieldGeoreference} from "../model/idai-field-georeference";
 
@@ -20,7 +21,8 @@ export class GeoreferenceViewComponent extends WithConfiguration {
 
     constructor(
         private persistenceManager: PersistenceManager,
-        private configLoader: ConfigLoader
+        private configLoader: ConfigLoader,
+        private messages: Messages
     ) {
         super(configLoader);
     }
@@ -36,16 +38,14 @@ export class GeoreferenceViewComponent extends WithConfiguration {
     private importWorldFile(file) {
 
         var reader = new FileReader();
-        reader.onloadend = (that => {
-            return () => {
-                var worldfileContent = reader.result.split("\n");
-                this.document.resource.georeference = this.createGeoreference(worldfileContent);
-                this.save();
-            }
-        })(this);
+        reader.onloadend = () => {
+            var worldfileContent = reader.result.split("\n");
+            this.document.resource.georeference = this.createGeoreference(worldfileContent);
+            this.save();
+        };
         reader.onerror = (that => {
             return (err) => {
-                that.onUploadError.emit([M.IMAGES_ERROR_FILEREADER, file.name]);
+                that.messages.addWithParams([M.IMAGES_ERROR_FILEREADER, file.name]);
             }
         })(this);
         reader.readAsText(file);

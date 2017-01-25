@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {imagesRouting} from "./images.routing";
 import {ImagesComponent} from "./images.component";
-import {ImageGridComponent} from "./images-grid.component";
+import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 import {GeoreferenceViewComponent} from "./georeference-view.component";

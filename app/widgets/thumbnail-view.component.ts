@@ -9,7 +9,7 @@ import {Messages} from "idai-components-2/messages";
 
 
 @Component({
-    selector: 'thumgbnail-view',
+    selector: 'thumbnail-view',
     moduleId: module.id,
     templateUrl: './thumbnail-view.html'
 })

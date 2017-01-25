@@ -1,5 +1,4 @@
 var resourcesPage = require('./resources.page');
-var utils = require("../utils.js");
 
 describe('resources/messages', function() {
 

@@ -1,3 +1,12 @@
+/*
+ * In order to prevent errors caused by e2e tests running too fast you can slow them down by calling the following
+ * function. Use higher values for slower tests.
+ *
+ * utils.delayPromises(30);
+ *
+ */
+var delay = 30;
+
 function delayPromises(milliseconds) {
     var executeFunction = browser.driver.controlFlow().execute;
 
@@ -12,6 +21,6 @@ function delayPromises(milliseconds) {
     };
 }
 
-module.exports = {
-    delayPromises: delayPromises
-};
+console.log("Set promises delay to " + delay + " ms.");
+delayPromises(delay);
+    

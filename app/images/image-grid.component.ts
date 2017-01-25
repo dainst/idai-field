@@ -94,10 +94,7 @@ export class ImageGridComponent {
                 synced: 0
             });
 
-            this.rows = [];
-            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(rows=>{
-                this.rows = rows;
-            });
+            this.calcGrid();
 
         }).catch(err => console.error(err));
     }
@@ -109,8 +106,13 @@ export class ImageGridComponent {
     }
 
     public onResize() {
+        this.calcGrid();
+    }
+
+    private calcGrid() {
         this.rows = [];
-        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
+        this.imageGridBuilder.calcGrid(
+            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(rows=>{
             this.rows = rows;
         });
     }

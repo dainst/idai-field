@@ -14,6 +14,7 @@ import {DocumentPickerComponent} from './document-picker.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
+import {ImagePickerComponent} from './image-picker.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import {DescriptionViewComponent} from './description-view.component';
         DropAreaComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
-        DescriptionViewComponent
+        DescriptionViewComponent,
+        ImagePickerComponent
     ],
     exports : [
         SearchBarComponent,
@@ -47,6 +49,9 @@ import {DescriptionViewComponent} from './description-view.component';
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent
+    ],
+    entryComponents: [
+        ImagePickerComponent
     ]
 })
 

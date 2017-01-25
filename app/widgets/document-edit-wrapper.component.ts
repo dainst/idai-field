@@ -5,6 +5,9 @@ import {WithConfiguration,ConfigLoader} from "idai-components-2/configuration";
 import {M} from "../m";
 import {Validator,PersistenceManager} from "idai-components-2/persist";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ImagePickerComponent} from "./image-picker.component";
+import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 
 
 @Component({
@@ -32,7 +35,9 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         private persistenceManager:PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
-        configLoader: ConfigLoader
+        configLoader: ConfigLoader,
+        private modalService: NgbModal
+
     ) {
         super(configLoader);
     }
@@ -58,5 +63,11 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                     this.messages.add(err);
                 }
             });
+    }
+
+    public openImagePicker() {
+        this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then( (selectedImages: IdaiFieldImageDocument[]) => {
+
+        });
     }
 }

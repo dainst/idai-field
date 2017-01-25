@@ -31,8 +31,13 @@ import {FileSystemMediastore} from './datastore/file-system-mediastore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
 
-
 import CONFIG = require("config/config.json!json");
+
+
+var validate = function(path) {
+    var newpath = path ? path : 'mediastore';
+    return (newpath.split('/').pop()) ? newpath + '/' : newpath;
+};
 
 @NgModule({
     imports: [
@@ -56,12 +61,13 @@ import CONFIG = require("config/config.json!json");
         {
             provide: Mediastore,
             useFactory: function(http: Http): Mediastore {
+
                 // running under node
                 if (typeof process === 'object') {
-                    return new FileSystemMediastore(CONFIG['mediastorepath']);
+                    return new FileSystemMediastore(validate(CONFIG['mediastorepath']));
                 // running in browser
                 } else {
-                    return new HttpMediastore(http, CONFIG['mediastorepath']);
+                    return new HttpMediastore(http, validate(CONFIG['mediastorepath']));
                 }
             },
             deps: [Http]

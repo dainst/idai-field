@@ -8,7 +8,7 @@ import {Mediastore} from 'idai-components-2/datastore';
  */
 export class HttpMediastore implements Mediastore {
 
-    constructor(private http: Http, private basePath: string = 'mediastore/') { }
+    constructor(private http: Http, private basePath: string) { }
 
     public create(): Promise<any> {
         return new Promise<any>((resolve)=>{resolve();});

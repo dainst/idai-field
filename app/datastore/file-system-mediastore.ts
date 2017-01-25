@@ -5,8 +5,7 @@ import * as fs from '@node/fs';
 
 export class FileSystemMediastore implements Mediastore {
 
-    constructor(private basePath: string = 'mediastore/') {
-    }
+    constructor(private basePath: string) { }
 
     /**
      * @param key the identifier for the data

@@ -51,7 +51,7 @@ export class ImageGridComponent {
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(
-            new BlobProxy(mediastore, sanitizer), messages, true);
+            new BlobProxy(mediastore, sanitizer), true);
 
         var defaultFilterSet = {
             filters: [{field: 'type', value: 'image', invert: false}],
@@ -112,8 +112,11 @@ export class ImageGridComponent {
     private calcGrid() {
         this.rows = [];
         this.imageGridBuilder.calcGrid(
-            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(rows=>{
-            this.rows = rows;
+            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.rows = result['rows'];
+            for (var msgWithParams of result['msgsWithParams']) {
+                this.messages.addWithParams(msgWithParams);
+            }
         });
     }
 

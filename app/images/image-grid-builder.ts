@@ -10,17 +10,17 @@ import {Messages} from "idai-components-2/messages";
  */
 export class ImageGridBuilder {
 
+    // nr of pixels between the right end of the screenspace and the grid
+    private paddingRight: number = 57;
     private documents: IdaiFieldImageDocument[];
 
     /**
      * @param blobProxy
-     * @param messages
      * @param showAllAtOnce if true, all images are shown at once.
      *   if false, images are shown as soon as they are loaded
      */
     constructor(
         private blobProxy: BlobProxy,
-        private messages: Messages,
         private showAllAtOnce:boolean = false
     ) { }
 
@@ -29,6 +29,8 @@ export class ImageGridBuilder {
      * @param nrOfColumns <code>integer</code> expected. images will be devided into
      *   rows of <code>nrOfColumns</code> images.
      * @param gridWidth
+     * @returns an object with rows containing the rows of the calculated grid
+     *   and msgsWithParams containing one or more msgWithParams.
      */
     public calcGrid(documents, nrOfColumns: number, gridWidth: number)
         : Promise<Array<any>> {
@@ -43,9 +45,30 @@ export class ImageGridBuilder {
             for (var i = 0; i < this.nrOfRows(nrOfColumns); i++) {
                 promises.push(this.calcRow(i,this.calculatedHeight(i,nrOfColumns,gridWidth),nrOfColumns));
             }
-            Promise.all(promises).then(rows=> resolve(rows)); 
+            resolve(this.collect(promises));
         });
     }
+
+    private collect(promises) {
+        return new Promise<any>((resolve)=>{
+            Promise.all(promises).then(
+                rows=> {
+                    var rows_ = [];
+                    var msgsWithParams = [];
+                    rows.forEach(row=> {
+                        var row_ = [];
+                        row.forEach(cell => {
+                            if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
+                            row_.push(cell.cell);
+                        });
+                        rows_.push(row_);
+                    });
+                    resolve({rows:rows_,msgsWithParams:msgsWithParams});
+                }
+            );
+        })
+    }
+
 
     private calcRow(rowIndex,calculatedHeight,nrOfColumns) {
         return new Promise<any>((resolve)=>{
@@ -71,16 +94,16 @@ export class ImageGridBuilder {
      * @param cell
      * @param showAllAtOnce is applied here
      */
-    private getImg(document,cell) {
+    private getImg(document,cell) : Promise<any> {
         return new Promise<any>((resolve)=>{
-            if (document.id == 'droparea') return resolve(cell);
+            if (document.id == 'droparea') return resolve({cell:cell});
 
-            if (!this.showAllAtOnce) resolve(cell);
+            if (!this.showAllAtOnce) resolve({cell:cell});
             this.blobProxy.getBlobUrl(document.resource.identifier).then(url=>{
-                if (this.showAllAtOnce) resolve(cell);
+                if (this.showAllAtOnce) resolve({cell:cell});
                 cell.imgSrc = url;
-            }).catch(err=> {
-                this.messages.addWithParams(err);
+            }).catch(msgWithParams=> {
+                resolve({cell:cell,msgWithParams:msgWithParams});
             });
         })
     }
@@ -95,7 +118,7 @@ export class ImageGridBuilder {
     }
 
     private calculatedHeight(rowIndex,nrOfColumns,gridWidth) {
-        var rowWidth = Math.ceil((gridWidth - 57) );
+        var rowWidth = Math.ceil((gridWidth - this.paddingRight) );
         return rowWidth / this.calcNaturalRowWidth(this.documents,nrOfColumns,rowIndex);
     }
 

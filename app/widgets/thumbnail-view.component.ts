@@ -59,6 +59,8 @@ export class ThumbnailViewComponent implements OnChanges {
                             imgContainer.imgSrc = url;
                             this.images.push(imgContainer);
                         }).catch(msgWithParams=>{
+                            imgContainer.imgSrc = BlobProxy.blackImg;
+                            this.images.push(imgContainer);
                             this.messages.addWithParams(msgWithParams)
                         });
                 })

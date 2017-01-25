@@ -34,6 +34,7 @@ export class ImageComponentBase {
                         this.blobProxy.getBlobUrl(doc.resource.filename).then(url=>{
                             this.image.imgSrc = url;
                         }).catch(err=>{
+                            this.image.imgSrc = BlobProxy.blackImg;
                             this.messages.addWithParams(err);
                         });
                     }

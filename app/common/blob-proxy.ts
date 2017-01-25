@@ -14,8 +14,7 @@ import {SecurityContext} from "@angular/core";
  */
 export class BlobProxy {
 
-    // TODO see if this is also useful outside this class
-    private blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    public static blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
     constructor(
         private mediastore: ReadMediastore,
@@ -33,7 +32,7 @@ export class BlobProxy {
         return new Promise((resolve, reject) => {
             // TODO catch errors
             this.mediastore.read(mediastoreFilename).then(data => {
-                if (data == undefined) return resolve(this.blackImg);
+                if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
                 resolve(this.makeBlob(data,sanitizeAfter));
             }).catch(() => {
                 reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));

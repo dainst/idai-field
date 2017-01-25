@@ -25,7 +25,7 @@
                             Verknüpfte Bilder
                         </div>
                         <div class="card-block">
-                            <thumbnail-view *ngIf="document" [document]="document"></thumbnail-view>
+                            <thumbnail-view *ngIf="document.resource.relations['depictedIn']" [imageIds]="document.resource.relations['depictedIn']"></thumbnail-view>
                             <button type="button" id="create-depicts-relations-btn"
                                     class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild einfügen</button>
                         </div>

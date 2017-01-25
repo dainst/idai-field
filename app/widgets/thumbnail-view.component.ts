@@ -21,7 +21,7 @@ import {Messages} from "idai-components-2/messages";
  */
 export class ThumbnailViewComponent implements OnChanges {
 
-    @Input() document: IdaiFieldDocument;
+    @Input() imageIds: string[];
     // TODO create an event emitter for error handling - loading fails
 
     private blobProxy : BlobProxy;
@@ -44,10 +44,10 @@ export class ThumbnailViewComponent implements OnChanges {
 
 
     ngOnChanges() {
-        if(!this.document.resource.relations["depictedIn"]) return;
+        if(!this.imageIds) return;
 
         this.images = [];
-        this.document.resource.relations["depictedIn"].forEach(id =>
+        this.imageIds.forEach(id =>
             this.datastore.get(id)
                 .then(doc => {
                     var imgContainer: ImageContainer = {

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImageGridBuilder} from '../images/image-grid-builder';
+import {ImageGridBuilder} from '../common/image-grid-builder';
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {BlobProxy} from "../common/blob-proxy";
 import {Messages} from "idai-components-2/messages";
@@ -35,7 +35,7 @@ export class ImagePickerComponent {
         configLoader: ConfigLoader,
         private el: ElementRef
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(new BlobProxy(mediastore, sanitizer), messages, true);
+        this.imageGridBuilder = new ImageGridBuilder(new BlobProxy(mediastore, sanitizer), true);
 
         var defaultFilterSet = {
             filters: [{field: 'type', value: 'image', invert: false}],
@@ -59,8 +59,11 @@ export class ImagePickerComponent {
 
     public onResize() {
         this.rows = [];
-        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
-            this.rows = rows;
+        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(result=>{
+            this.rows = result['rows'];
+            for (var msgWithParams of result['msgsWithParams']) {
+                this.messages.addWithParams(msgWithParams);
+            }
         });
     }
 

@@ -30,7 +30,6 @@ export class BlobProxy {
      */
     public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
         return new Promise((resolve, reject) => {
-            // TODO catch errors
             this.mediastore.read(mediastoreFilename).then(data => {
                 if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
                 resolve(this.makeBlob(data,sanitizeAfter));

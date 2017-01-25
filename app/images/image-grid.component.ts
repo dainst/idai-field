@@ -6,7 +6,7 @@ import {Datastore, Query, FilterSet, Mediastore} from "idai-components-2/datasto
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {DomSanitizer} from "@angular/platform-browser";
-import {ImageGridBuilder} from "./image-grid-builder";
+import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";

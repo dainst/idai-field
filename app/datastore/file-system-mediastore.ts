@@ -34,9 +34,7 @@ export class FileSystemMediastore implements Mediastore {
         return new Promise((resolve, reject) => {
             fs.readFile(this.basePath + key, (err, data) => {
                 if (err) reject(err);
-                else {
-                    resolve(data);
-                }
+                else resolve(data);
             });
         });
     }

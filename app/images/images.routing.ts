@@ -1,7 +1,7 @@
 import {ModuleWithProviders} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
 import {ImagesComponent} from "./images.component";
-import {ImageGridComponent} from "./images-grid.component";
+import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
 import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
 import {ImageEditCanDeactivateGuard} from "./image-edit-can-deactivate-guard";

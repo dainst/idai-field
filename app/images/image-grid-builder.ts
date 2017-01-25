@@ -1,8 +1,7 @@
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
+import {Document} from "idai-components-2/core";
 import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
 import {BlobProxy} from "../common/blob-proxy";
 import {ImageContainer} from "../common/image-container";
-import {Messages} from "idai-components-2/messages";
 
 /**
  * @author Daniel de Oliveira
@@ -12,7 +11,7 @@ export class ImageGridBuilder {
 
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 57;
-    private documents: IdaiFieldImageDocument[];
+    private documents: Array<Document>;
 
     /**
      * @param blobProxy
@@ -32,7 +31,7 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents, nrOfColumns: number, gridWidth: number)
+    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number)
         : Promise<Array<any>> {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
@@ -41,34 +40,13 @@ export class ImageGridBuilder {
             this.documents = documents;
             if (!this.documents) resolve([]);
 
-            var promises = [];
+            var rowPromises = [];
             for (var i = 0; i < this.nrOfRows(nrOfColumns); i++) {
-                promises.push(this.calcRow(i,this.calculatedHeight(i,nrOfColumns,gridWidth),nrOfColumns));
+                rowPromises.push(this.calcRow(i,this.calculatedHeight(i,nrOfColumns,gridWidth),nrOfColumns));
             }
-            resolve(this.collect(promises));
+            resolve(this.splitCellsAndMessages(rowPromises));
         });
     }
-
-    private collect(promises) {
-        return new Promise<any>((resolve)=>{
-            Promise.all(promises).then(
-                rows=> {
-                    var rows_ = [];
-                    var msgsWithParams = [];
-                    rows.forEach(row=> {
-                        var row_ = [];
-                        row.forEach(cell => {
-                            if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
-                            row_.push(cell.cell);
-                        });
-                        rows_.push(row_);
-                    });
-                    resolve({rows:rows_,msgsWithParams:msgsWithParams});
-                }
-            );
-        })
-    }
-
 
     private calcRow(rowIndex,calculatedHeight,nrOfColumns) {
         return new Promise<any>((resolve)=>{
@@ -85,27 +63,8 @@ export class ImageGridBuilder {
                     )
                 );
             }
-            Promise.all(promises).then(cells=> resolve(cells));
+            Promise.all(promises).then(cellsWithMsgs => resolve(cellsWithMsgs));
         });
-    }
-
-    /**
-     * @param identifier
-     * @param cell
-     * @param showAllAtOnce is applied here
-     */
-    private getImg(document,cell) : Promise<any> {
-        return new Promise<any>((resolve)=>{
-            if (document.id == 'droparea') return resolve({cell:cell});
-
-            if (!this.showAllAtOnce) resolve({cell:cell});
-            this.blobProxy.getBlobUrl(document.resource.identifier).then(url=>{
-                if (this.showAllAtOnce) resolve({cell:cell});
-                cell.imgSrc = url;
-            }).catch(msgWithParams=> {
-                resolve({cell:cell,msgWithParams:msgWithParams});
-            });
-        })
     }
 
     private newCell(document,calculatedHeight) : ImageContainer {
@@ -141,5 +100,46 @@ export class ImageGridBuilder {
             naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
         }
         return naturalRowWidth;
+    }
+
+    /**
+     * @param identifier
+     * @param cell
+     * @param showAllAtOnce is applied here
+     */
+    private getImg(document,cell) : Promise<any> {
+        return new Promise<any>((resolve)=>{
+            if (document.id == 'droparea') return resolve({cell:cell});
+
+            if (!this.showAllAtOnce) resolve({cell:cell});
+            this.blobProxy.getBlobUrl(document.resource.identifier).then(url=>{
+                if (this.showAllAtOnce) resolve({cell:cell});
+                cell.imgSrc = url;
+            }).catch(msgWithParams=> {
+                resolve({cell:cell,msgWithParams:msgWithParams});
+            });
+        })
+    }
+
+    private splitCellsAndMessages(rowPromises) {
+        return new Promise<any>((resolve)=>{
+            Promise.all(rowPromises).then(
+                rows=> this.split(rows,resolve)
+            );
+        })
+    }
+
+    private split(rows, resolve) {
+        var rows_ = [];
+        var msgsWithParams = [];
+        rows.forEach(row=> {
+            var row_ = [];
+            row.forEach(cell => {
+                if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
+                row_.push(cell.cell);
+            });
+            rows_.push(row_);
+        });
+        resolve({rows:rows_,msgsWithParams:msgsWithParams});
     }
 }

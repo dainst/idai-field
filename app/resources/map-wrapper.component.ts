@@ -37,10 +37,6 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
         super(configLoader);
     }
 
-    // TODO remove duplicate code
-    // public selectRelatedDocument(documentToJumpTo) {
-    //     this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
-
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
         if (documentToJumpTo) {

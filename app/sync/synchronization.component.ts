@@ -30,7 +30,7 @@ export class SynchronizationComponent {
         @Inject('app.config') private config) {
 
         if (config['backend']==undefined) return;
-        
+
         this.configLoader.configuration().subscribe((result)=>{
             if(result.error == undefined) {
                 this.projectConfiguration = result.projectConfiguration;

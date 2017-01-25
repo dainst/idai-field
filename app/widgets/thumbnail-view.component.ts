@@ -22,7 +22,6 @@ import {Messages} from "idai-components-2/messages";
 export class ThumbnailViewComponent implements OnChanges {
 
     @Input() imageIds: string[];
-    // TODO create an event emitter for error handling - loading fails
 
     private blobProxy : BlobProxy;
     public images = [];

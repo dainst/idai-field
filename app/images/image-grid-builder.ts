@@ -11,8 +11,6 @@ import {Messages} from "idai-components-2/messages";
 export class ImageGridBuilder {
 
     private documents: IdaiFieldImageDocument[];
-    private nrOfColumns = 4;
-    private gridWidth: number;
 
     /**
      * @param blobProxy
@@ -37,28 +35,24 @@ export class ImageGridBuilder {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
-        this.gridWidth = gridWidth;
-
         return new Promise((resolve)=>{
             this.documents = documents;
             if (!this.documents) resolve([]);
-            this.nrOfColumns = nrOfColumns;
 
             var promises = [];
-            for (var i = 0; i < this.nrOfRows(); i++) {
-                promises.push(this.calcRow(i,this.calculatedHeight(i)));
+            for (var i = 0; i < this.nrOfRows(nrOfColumns); i++) {
+                promises.push(this.calcRow(i,this.calculatedHeight(i,nrOfColumns,gridWidth),nrOfColumns));
             }
             Promise.all(promises).then(rows=> resolve(rows)); 
         });
     }
 
-
-    private calcRow(rowIndex,calculatedHeight) {
+    private calcRow(rowIndex,calculatedHeight,nrOfColumns) {
         return new Promise<any>((resolve)=>{
             var promises = [];
-            for (var i = 0; i < this.nrOfColumns; i++) {
+            for (var i = 0; i < nrOfColumns; i++) {
 
-                var document = this.documents[rowIndex * this.nrOfColumns + i];
+                var document = this.documents[rowIndex * nrOfColumns + i];
                 if (!document) break;
 
                 promises.push(
@@ -91,6 +85,24 @@ export class ImageGridBuilder {
         })
     }
 
+    private newCell(document,calculatedHeight) : ImageContainer {
+        var cell : ImageContainer = {};
+        var image = document.resource as IdaiFieldImageResource;
+        cell.document = document;
+        cell.calculatedWidth = image.width * calculatedHeight / image.height;
+        cell.calculatedHeight = calculatedHeight;
+        return cell;
+    }
+
+    private calculatedHeight(rowIndex,nrOfColumns,gridWidth) {
+        var rowWidth = Math.ceil((gridWidth - 57) );
+        return rowWidth / this.calcNaturalRowWidth(this.documents,nrOfColumns,rowIndex);
+    }
+
+    private nrOfRows(nrOfColumns) {
+        return Math.ceil(this.documents.length / nrOfColumns);
+    }
+
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
      */
@@ -106,23 +118,5 @@ export class ImageGridBuilder {
             naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
         }
         return naturalRowWidth;
-    }
-
-    private newCell(document,calculatedHeight) : ImageContainer {
-        var cell : ImageContainer = {};
-        var image = document.resource as IdaiFieldImageResource;
-        cell.document = document;
-        cell.calculatedWidth = image.width * calculatedHeight / image.height;
-        cell.calculatedHeight = calculatedHeight;
-        return cell;
-    }
-
-    private calculatedHeight(rowIndex) {
-        var rowWidth = Math.ceil((this.gridWidth - 57) );
-        return rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
-    }
-
-    private nrOfRows() {
-        return Math.ceil(this.documents.length / this.nrOfColumns);
     }
 }

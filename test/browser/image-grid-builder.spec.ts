@@ -55,7 +55,7 @@ export function main() {
         );
 
 
-        it('should throw when nrOfColumns not integer', (done) => {
+        it('should throw when nrOfColumns not integer', () => {
 
             expect(function(){imageGridBuilder.calcGrid([],4.1,0)}).toThrow();
         });

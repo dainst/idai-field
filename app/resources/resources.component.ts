@@ -93,11 +93,11 @@ export class ResourcesComponent {
 
     public createNewDocument(type: string) {
 
-        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
-        //     { "synced" : 1, "resource" :
-        //     { "type" : undefined, "identifier":"hallo","title":undefined}};
-
-        var newDocument = { "resource": { "relations": {}, "type": type } };
+        var newDocument : IdaiFieldDocument =
+            { synced: 1, resource: {
+                shortDescription: undefined,
+                identifier: undefined,
+                relations: {}, type: type } };
 
         this.documents.unshift(<Document> newDocument);
         this.notify();

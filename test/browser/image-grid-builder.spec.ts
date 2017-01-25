@@ -40,7 +40,7 @@ export function main() {
                     }
 
                 }];
-                imageGridBuilder.calcGrid(documents,4).then(rows=>{
+                imageGridBuilder.calcGrid(documents,4,800).then(rows=>{
                     expect(rows[0][0].calculatedWidth).toBe(
                         rows[0][0].calculatedHeight * 2
                     );

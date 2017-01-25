@@ -95,7 +95,7 @@ export class ImageGridComponent {
             });
 
             this.rows = [];
-            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
+            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(rows=>{
                 this.rows = rows;
             });
 

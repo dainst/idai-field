@@ -30,7 +30,7 @@ describe('image grid tests -- ', function(){
                         .then(function() {
                             expect(cells[last].getAttribute('class')).toMatch(gridPage.selectedClass);
                             return cells[last].click();
-                        })
+                       })
                         .then(function() {
                             expect(cells[last].getAttribute('class')).not.toMatch(gridPage.selectedClass);
                         });

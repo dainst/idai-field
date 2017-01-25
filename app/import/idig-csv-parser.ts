@@ -45,12 +45,9 @@ export class IdigCsvParser implements Parser {
 
     public parse(content: string): Observable<IdaiFieldDocument> {
 
-        console.debug("starting parsing file content");
-
         return Observable.create(observer => {
 
             var errorCallback = e => {
-                console.debug("error while parsing", e);
                 let error: ParserError = new ParserError();
                 error.lineNumber = e.row;
                 error.message = M.IMPORTER_FAILURE_INVALIDCSV;
@@ -58,7 +55,6 @@ export class IdigCsvParser implements Parser {
             };
 
             var completeCallback = result => {
-                console.debug("finished parsing file content");
                 result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
                     var validationResult: any = this.checkExistenceOfMandatoryFields(object);
@@ -76,11 +72,9 @@ export class IdigCsvParser implements Parser {
                         observer.error(validationResult);
                     }
                 });
-                console.debug("finished mapping file content");
                 observer.complete();
             };
 
-            console.debug("set up callbacks");
 
             try {
                 Papa.parse(content, {
@@ -95,9 +89,6 @@ export class IdigCsvParser implements Parser {
                 error.message = M.IMPORTER_FAILURE_GENERICCSVERROR;
                 observer.error(error);
             }
-
-            console.debug("started parsing file content");
-
         });
 
     }

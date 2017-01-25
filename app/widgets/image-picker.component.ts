@@ -2,6 +2,13 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImageGridBuilder} from '../images/image-grid-builder';
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
+import {BlobProxy} from "../common/blob-proxy";
+import {Messages} from "idai-components-2/messages";
+import {Mediastore, FilterSet, Query, Datastore} from "idai-components-2/datastore";
+import {DomSanitizer} from "@angular/platform-browser";
+import {ConfigLoader} from "idai-components-2/configuration";
+import {FilterUtility} from "../util/filter-utility";
+import {ElementRef} from "@angular/core";
 
 @Component({
     selector: 'image-picker',
@@ -9,6 +16,80 @@ import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
     templateUrl: './image-picker.html'
 })
 export class ImagePickerComponent {
-    selectedImages: IdaiFieldImageDocument[] = [];
-    constructor(public activeModal: NgbActiveModal) {}
+
+    selected: IdaiFieldImageDocument[] = [];
+    private imageGridBuilder : ImageGridBuilder;
+    private defaultFilterSet: FilterSet;
+    private query : Query = { q: '' };
+    private rows = [];
+    private documents: IdaiFieldImageDocument[];
+    private nrOfColumns = 3;
+
+
+    constructor(
+        public activeModal: NgbActiveModal,
+        private messages: Messages,
+        mediastore: Mediastore,
+        private datastore: Datastore,
+        sanitizer: DomSanitizer,
+        configLoader: ConfigLoader,
+        private el: ElementRef
+    ) {
+        this.imageGridBuilder = new ImageGridBuilder(new BlobProxy(mediastore, sanitizer), messages, true);
+
+        var defaultFilterSet = {
+            filters: [{field: 'type', value: 'image', invert: false}],
+            type: 'or'
+        };
+
+        configLoader.configuration().subscribe(result => {
+            if (!this.defaultFilterSet) {
+                this.defaultFilterSet =
+                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                this.query = {q: '', filterSets: [this.defaultFilterSet]};
+                this.fetchDocuments(this.query);
+            }
+        });
+    }
+
+    public queryChanged(query: Query) {
+        this.query = query;
+        this.fetchDocuments(query);
+    }
+
+    public onResize() {
+        this.rows = [];
+        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
+            this.rows = rows;
+        });
+    }
+
+    /**
+     * @param documentToSelect the object that should be selected
+     */
+    public select(document: IdaiFieldImageDocument) {
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        else this.selected.splice(this.selected.indexOf(document), 1);
+    }
+
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     * @param query
+     */
+    private fetchDocuments(query: Query) {
+        this.query = query;
+
+        this.datastore.find(query).then(documents => {
+            this.documents = documents as IdaiFieldImageDocument[];
+
+            this.rows = [];
+            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth ).then(rows=>{
+                this.rows = rows;
+            });
+
+        }).catch(err => console.error(err));
+    }
+
+
 }

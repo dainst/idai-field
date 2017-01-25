@@ -8,6 +8,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
+import {ImageTool} from '../common/image-tool';
 
 
 @Component({
@@ -67,7 +68,12 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
     public openImagePicker() {
         this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then( (selectedImages: IdaiFieldImageDocument[]) => {
-
+            var imageTool = new ImageTool();
+            imageTool.addDepictsRelations(selectedImages, this.document);
+            
+        }, (closeReason) => {
         });
     }
+
+
 }

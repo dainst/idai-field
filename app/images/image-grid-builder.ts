@@ -8,6 +8,7 @@ export class ImageGridBuilder {
 
     private documents: IdaiFieldImageDocument[];
     private nrOfColumns = 4;
+    private gridWidth: number;
 
     constructor(
         private blobProxy: BlobProxy,
@@ -19,7 +20,9 @@ export class ImageGridBuilder {
      * @param showAllAtOnce if true, all images are shown at once.
      *   if false, images are shown as soon as they are loaded
      */
-    public calcGrid(documents,nrOfColumns) : Promise<Array<any>> {
+    public calcGrid(documents,nrOfColumns, gridWidth: number) : Promise<Array<any>> {
+        this.gridWidth = gridWidth;
+
         return new Promise((resolve)=>{
             this.documents = documents;
             if (!this.documents) resolve([]);
@@ -100,7 +103,7 @@ export class ImageGridBuilder {
     }
 
     private calculatedHeight(rowIndex) {
-        var rowWidth = Math.ceil((window.innerWidth - 57) );
+        var rowWidth = Math.ceil((this.gridWidth - 57) );
         return rowWidth / this.calcNaturalRowWidth(this.documents,this.nrOfColumns,rowIndex);
     }
 

@@ -12,6 +12,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
 import {FilterUtility} from "../util/filter-utility";
 import {BlobProxy} from "../common/blob-proxy";
+import {ElementRef} from "@angular/core";
 
 @Component({
     moduleId: module.id,
@@ -43,11 +44,12 @@ export class ImagesGridComponent {
         private datastore: Datastore,
         private modalService: NgbModal,
         private messages: Messages,
-        mediastore: Mediastore,
+        private mediastore: Mediastore,
         sanitizer: DomSanitizer,
-        configLoader: ConfigLoader
+        configLoader: ConfigLoader,
+        private el : ElementRef
     ) {
-        this.imageTool = new ImageTool(datastore, mediastore);
+        this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(
             new BlobProxy(mediastore, sanitizer), messages, true);
 
@@ -93,7 +95,7 @@ export class ImagesGridComponent {
             });
 
             this.rows = [];
-            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns).then(rows=>{
+            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
                 this.rows = rows;
             });
 
@@ -108,7 +110,7 @@ export class ImagesGridComponent {
 
     public onResize() {
         this.rows = [];
-        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns).then(rows=>{
+        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(rows=>{
             this.rows = rows;
         });
     }
@@ -140,7 +142,7 @@ export class ImagesGridComponent {
     }
 
     private deleteSelected() {
-        var results = this.selected.map(document => this.imageTool.remove(document).catch(err=>{
+        var results = this.selected.map(document => this.imageTool.remove(document, this.mediastore, this.datastore).catch(err=>{
             this.messages.add(err);
         }));
         Promise.all(results).then(() => {
@@ -154,7 +156,7 @@ export class ImagesGridComponent {
     public openLinkModal() {
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
             if (targetDoc) {
-                this.imageTool.updateImageLinks(this.selected, targetDoc).then(() => {
+                this.imageTool.updateAndPersistDepictsRelations(this.selected, targetDoc, this.datastore).then(() => {
                     this.clearSelection();
                 }).catch(error => {
                     this.messages.add(error);

@@ -6,29 +6,34 @@ import {ImageGridBuilder} from "../../app/images/image-grid-builder";
 export function main() {
     describe('ImageGridBuilder', () => {
 
-        it('should do some calculation',
-            (done)=>{
+        var imageGridBuilder;
 
-                var mockMessages = jasmine.createSpyObj('mockMessages', [ 'addWithParams' ]);
-                var blobProxyMock = {
-                    getBlobUrl: function() {
-                        return {
-                            then: function(callback) {
-                                callback("url");
-                                return {
-                                    catch: function(callback) {
-                                        callback("err")
-                                    }
+        beforeEach(function () {
+            var mockMessages = jasmine.createSpyObj('mockMessages', [ 'addWithParams' ]);
+            var blobProxyMock = {
+                getBlobUrl: function() {
+                    return {
+                        then: function(callback) {
+                            callback("url");
+                            return {
+                                catch: function(callback) {
+                                    callback("err")
                                 }
                             }
                         }
                     }
-                };
+                }
+            };
 
-                var imageGridBuilder = new ImageGridBuilder(
-                    <any> blobProxyMock ,mockMessages, true);
+            imageGridBuilder = new ImageGridBuilder(
+                <any> blobProxyMock ,mockMessages, true);
 
-                var documents = [{
+        });
+
+        it('should keep the aspect ration of an image', (done)=> {
+
+
+            var documents = [{
                     id: "o1",
                     resource: {
                         id: "o1",
@@ -48,5 +53,11 @@ export function main() {
                 });
             }
         );
+
+
+        it('should throw when nrOfColumns not integer', (done) => {
+
+            expect(function(){imageGridBuilder.calcGrid([],4.1,0)}).toThrow();
+        });
     })
 }

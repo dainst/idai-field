@@ -9,13 +9,11 @@ import {DocumentViewComponent} from './document-view.component';
 import {DocumentEditWrapperComponent} from './document-edit-wrapper.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {RouterModule} from '@angular/router';
-import {DropAreaComponent} from './drop-area.component';
 import {DocumentPickerComponent} from './document-picker.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
-import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 
 @NgModule({
     imports: [
@@ -32,12 +30,10 @@ import {ImageTypePickerModalComponent} from './image-type-picker-modal.component
         DocumentEditWrapperComponent,
         DocumentTeaserComponent,
         EditSaveDialogComponent,
-        DropAreaComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,
         ImagePickerComponent,
-        ImageTypePickerModalComponent
     ],
     exports : [
         SearchBarComponent,
@@ -46,15 +42,12 @@ import {ImageTypePickerModalComponent} from './image-type-picker-modal.component
         DocumentEditWrapperComponent,
         DocumentTeaserComponent,
         EditSaveDialogComponent,
-        DropAreaComponent,
-        DropAreaComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent
     ],
     entryComponents: [
-        ImagePickerComponent,
-        ImageTypePickerModalComponent
+        ImagePickerComponent
     ]
 })
 

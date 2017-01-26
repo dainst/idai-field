@@ -9,6 +9,8 @@ import {GeoreferenceViewComponent} from "./georeference-view.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {LinkModalComponent} from './link-modal.component'
+import {DropAreaComponent} from './drop-area.component';
+import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 
 
 @NgModule({
@@ -24,10 +26,13 @@ import {LinkModalComponent} from './link-modal.component'
         ImageViewComponent,
         ImageEditNavigationComponent,
         GeoreferenceViewComponent,
-        LinkModalComponent
+        LinkModalComponent,
+        DropAreaComponent,
+        ImageTypePickerModalComponent
     ],
     entryComponents: [
-        LinkModalComponent
+        LinkModalComponent,
+        ImageTypePickerModalComponent
     ]
 })
 

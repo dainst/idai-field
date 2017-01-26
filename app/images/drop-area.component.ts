@@ -3,7 +3,7 @@ import {Datastore, Mediastore} from 'idai-components-2/datastore';
 import {M} from "../m";
 import {WithConfiguration, ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImageTypePickerModalComponent} from "../widgets/image-type-picker-modal.component";
+import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component";
 
 @Component({
     selector: 'drop-area',

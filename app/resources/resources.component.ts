@@ -1,8 +1,7 @@
 import {Component, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IndexeddbDatastore} from "../datastore/indexeddb-datastore";
-import {Query, FilterSet} from "idai-components-2/datastore";
+import {Query, FilterSet, Datastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {Observable} from "rxjs/Observable";
@@ -30,7 +29,7 @@ export class ResourcesComponent {
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
-                private datastore: IndexeddbDatastore,
+                private datastore: Datastore,
                 configLoader: ConfigLoader) {
         var defaultFilterSet = {
             filters: [{field: 'type', value: 'image', invert: true}],

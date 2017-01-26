@@ -12,6 +12,7 @@ import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
 import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
+import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
 import {Indexeddb} from "./datastore/indexeddb";
@@ -77,7 +78,6 @@ var validate = function(path) {
         Indexeddb,
         { provide: Datastore, useClass: IndexeddbDatastore },
         { provide: ReadDatastore, useExisting: Datastore },
-        { provide: IndexeddbDatastore, useExisting: Datastore },
         IdaiFieldBackend,
         Messages,
         { provide: 'app.config', useValue: CONFIG },

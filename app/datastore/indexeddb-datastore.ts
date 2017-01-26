@@ -28,13 +28,13 @@ export class IndexeddbDatastore implements Datastore {
     private readyForQuery: boolean = false;
     
     constructor(private idb:Indexeddb){
-        this.db=idb.db();
+        this.db = idb.db();
+        this.init();
     };
 
     public init() {
         if (CONFIG['environment'] == 'test') {
-            this.clear();
-            this.loadSampleData();
+            this.clear().then(() => this.loadSampleData());
         } else {
             this.readyForQuery = true;
         }

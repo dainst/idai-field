@@ -4,7 +4,6 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader,
     ConfigurationPreprocessor,
     ConfigurationValidator} from 'idai-components-2/configuration';
-import {IndexeddbDatastore} from './datastore/indexeddb-datastore';
 
 @Component({
     moduleId: module.id,
@@ -66,10 +65,7 @@ export class AppComponent implements OnInit {
     constructor(@Inject('app.config') private config,
                 private configLoader: ConfigLoader,
                 private router: Router,
-                private messages: Messages,
-                datastore: IndexeddbDatastore) {
-
-        datastore.init();
+                private messages: Messages) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user

@@ -21,10 +21,6 @@ __karma__.loaded = function() {};
 
 // Load our SystemJS configuration.
 System.config({
-    baseURL: '/base/'
-});
-
-System.config({
     baseURL: '/base/',
     defaultJSExtensions: true,
     paths: {
@@ -34,7 +30,8 @@ System.config({
         'rxjs': 'node_modules/rxjs',
         '@angular': 'node_modules/@angular',
         'idai-components-2' : 'node_modules/idai-components-2',
-        'json': 'app/util/systemjs-json-plugin'
+        'json': 'app/util/systemjs-json-plugin',
+        'pouchdb': 'node_modules/pouchdb/dist/pouchdb'
     },
     packages: {
         config: {

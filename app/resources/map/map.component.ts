@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges, SecurityContext} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
@@ -6,12 +6,14 @@ import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
-import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Datastore, Mediastore, Query, FilterSet} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {BlobProxy} from "../../common/blob-proxy";
 import {ImageContainer} from "../../common/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
+import {FilterUtility} from '../../util/filter-utility';
 
 @Component({
     moduleId: module.id,
@@ -78,7 +80,8 @@ export class MapComponent implements OnChanges {
         private datastore: Datastore,
         private mediastore: Mediastore,
         private sanitizer: DomSanitizer,
-        private messages: Messages
+        private messages: Messages,
+        private configLoader: ConfigLoader
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
     }
@@ -190,12 +193,27 @@ export class MapComponent implements OnChanges {
 
         return new Promise((resolve, reject) => {
 
-            var query = {q: '', filters: [{'field': 'type', 'value': 'image', invert: false}]};
-            this.datastore.find(query).then(
-                documents => this.makeLayersForDocuments(documents, resolve),
-                error => {
-                    reject(error);
-                });
+            this.configLoader.configuration().subscribe(result => {
+
+                var filterSet: FilterSet = {
+                    filters: [{'field': 'type', 'value': 'image', invert: false}],
+                    type: 'or'
+                };
+
+                var query: Query = {
+                    q: '',
+                    filterSets: [
+                        FilterUtility.addChildTypesToFilterSet(filterSet,
+                            result.projectConfiguration.getTypesMap())
+                    ]
+                };
+
+                this.datastore.find(query).then(
+                    documents => this.makeLayersForDocuments(documents, resolve),
+                    error => {
+                        reject(error);
+                    });
+            });
         });
     }
 

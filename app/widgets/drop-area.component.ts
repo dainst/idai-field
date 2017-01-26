@@ -1,7 +1,9 @@
 import {Component, Output, EventEmitter} from "@angular/core";
-import {Datastore} from 'idai-components-2/datastore';
+import {Datastore, Mediastore} from 'idai-components-2/datastore';
 import {M} from "../m";
-import {Mediastore} from "idai-components-2/datastore";
+import {WithConfiguration, ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ImageTypePickerModalComponent} from "../widgets/image-type-picker-modal.component";
 
 @Component({
     selector: 'drop-area',
@@ -12,39 +14,68 @@ import {Mediastore} from "idai-components-2/datastore";
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class DropAreaComponent {
+export class DropAreaComponent extends WithConfiguration {
 
     @Output() onImageUploaded: EventEmitter<any> = new EventEmitter<any>();
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
     
     public constructor(
         private mediastore: Mediastore,
-        private datastore: Datastore
+        private datastore: Datastore,
+        private modalService: NgbModal,
+        configLoader: ConfigLoader
     ) {
+        super(configLoader);
     }
 
     public onDragOver(event) {
+
         event.preventDefault();
         event.target.classList.add("dragover");
     }
 
     public onDragLeave(event) {
+
         event.target.classList.remove("dragover");
     }
 
     public onDrop(event) {
+
         event.preventDefault();
-        this.uploadFiles(event.dataTransfer.files);
+        this.chooseType().then(
+            type => this.uploadFiles(event.dataTransfer.files, type)
+        );
     }
 
     public onSelectImages(event) {
-        this.uploadFiles(event.srcElement.files);
+
+        this.chooseType().then(
+            type => this.uploadFiles(event.srcElement.files, type)
+        );
     }
 
-    private uploadFiles(files) {
+    private chooseType(): Promise<IdaiType> {
+
+        return new Promise((resolve, reject) => {
+
+            var imageType: IdaiType = this.projectConfiguration.getTypesTree()['image'];
+            if (imageType.children && imageType.children.length > 0) {
+                this.modalService.open(ImageTypePickerModalComponent).result.then(
+                    (type: IdaiType) => resolve(type),
+                    (closeReason) => reject()
+                );
+            } else {
+                resolve(imageType);
+            }
+        });
+    }
+
+    private uploadFiles(files: File[], type: IdaiType) {
+
         if (files && files.length > 0) {
-            for (var i=0; i < files.length; i++) this.uploadFile(files[i]);
+            for (var i = 0; i < files.length; i++) this.uploadFile(files[i], type);
         }
     }
 
@@ -54,12 +85,13 @@ export class DropAreaComponent {
      * 
      * @param file
      */
-    private uploadFile(file) {
+    private uploadFile(file: File, type: IdaiType) {
+
         var reader = new FileReader();
         reader.onloadend = (that => {
             return () => {
                 that.mediastore.create(file.name, reader.result).then(() => {
-                    return that.createImageDocument(file);
+                    return that.createImageDocument(file, type);
                 }).then(() => {
                     that.onImageUploaded.emit();
                 }).catch(error => {
@@ -75,7 +107,8 @@ export class DropAreaComponent {
         reader.readAsArrayBuffer(file);
     }
 
-    private createImageDocument(file): Promise<any> {
+    private createImageDocument(file: File, type: IdaiType): Promise<any> {
+
         return new Promise((resolve, reject) => {
             var img = new Image();
             img.src = URL.createObjectURL(file);
@@ -83,7 +116,7 @@ export class DropAreaComponent {
                 var doc = {
                     "resource": {
                         "identifier": file.name,
-                        "type": "image",
+                        "type": type.name,
                         "filename": file.name,
                         "width": img.width,
                         "height": img.height,

@@ -15,6 +15,7 @@ import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
+import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import {ImagePickerComponent} from './image-picker.component';
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,
-        ImagePickerComponent
+        ImagePickerComponent,
+        ImageTypePickerModalComponent
     ],
     exports : [
         SearchBarComponent,
@@ -51,7 +53,8 @@ import {ImagePickerComponent} from './image-picker.component';
         DescriptionViewComponent
     ],
     entryComponents: [
-        ImagePickerComponent
+        ImagePickerComponent,
+        ImageTypePickerModalComponent
     ]
 })
 

@@ -2,12 +2,11 @@
     <p>Bitte wählen Sie den gewünschten Typ aus.</p>
     <ul class="list-group">
         <li [ngClass]="{'abstract-idai-type': imageType.isAbstract}" class="list-group-item popover-item"
-            id="choose-image-maintype" (click)="!imageType.isAbstract && activeModal.close(imageType)">
+            (click)="!imageType.isAbstract && activeModal.close(imageType)">
             <type-icon [type]="imageType.name" size="30"></type-icon>
             {{imageType.label}}
             <ul *ngIf="imageType['children']" style="padding:0;">
-                <li *ngFor="let childType of imageType['children']; let index = index"
-                    id="choose-image-subtype-option-{{index}}"
+                <li *ngFor="let childType of imageType['children']"
                     class="list-group-item popover-item"
                     (click)="activeModal.close(childType)">
                     <type-icon [type]="childType.name" size="30"></type-icon>

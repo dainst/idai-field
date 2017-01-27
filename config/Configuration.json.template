@@ -78,28 +78,6 @@
           "label" : "Autor"
         }
       ]
-    },
-    {
-      "type" : "drawing",
-      "parent": "image",
-      "label" : "Zeichnung",
-      "fields" : [
-        {
-          "name" : "author",
-          "label" : "Autor"
-        }
-      ]
-    },
-    {
-      "type" : "photo",
-      "parent": "image",
-      "label" : "Foto",
-      "fields" : [
-        {
-           "name" : "author",
-           "label" : "Autor"
-        }
-      ]
     }
   ],
   "relations" :

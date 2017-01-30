@@ -13,8 +13,7 @@
             'rxjs': 'node_modules/rxjs',
             'ts-md5': 'node_modules/ts-md5',
             'idai-components-2' : 'node_modules/idai-components-2',
-            'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
-            'fs' : '@node/fs'
+            'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js'
         },
         packages: {
             app: {

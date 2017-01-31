@@ -35,7 +35,7 @@ exports.config = {
                 if (spec.status === 'failed') {
 
                     browser.takeScreenshot().then(function (png) {
-                        var stream = fs.createWriteStream('test/e2e-screenshots/'+spec.fullName.replace(/ /g,"_")+'.png');
+                        var stream = fs.createWriteStream('test/e2e-screenshots/'+spec.fullName.replace(/ |\//g,"_")+'.png');
                         stream.write(new Buffer(png, 'base64'));
                         stream.end();
                     });

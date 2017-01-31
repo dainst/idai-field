@@ -37,11 +37,11 @@ $buttoncolor: #657faa;
 #document-view-button-edit-document {
   font-size: 27px;
   color: $buttoncolor !important;
-  position: absolute;
-  right: 0;
+  display: inline;
+  float: right;
   padding: 0;
   margin-top: -4px;
-  margin-right: 24px;
+  margin-right: 4px;
 }
 
 .document-card .btn-link {

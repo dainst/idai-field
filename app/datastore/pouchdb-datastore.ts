@@ -36,45 +36,57 @@ export class PouchdbDatastore implements Datastore {
     };
 
     public create(document:any):Promise<string> {
-
         return new Promise((resolve, reject) => {
+
             if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                 "Maybe you wanted to update the object with update()?");
             document.id = IdGenerator.generateId();
             document['resource']['id'] = document.id;
             document.created = new Date();
             document.modified = document.created;
+            document['_id'] = document['id'];
             this.documentCache[document['id']] = document;
 
-            return this.saveDocument(document).then(
-                result => {
-                    document['rev'] = result['rev'];
-                    resolve();
-                },
-                () => {
-                    document.id = undefined;
-                    document['resource']['id'] = undefined;
-                    document.created = undefined;
-                    document.modified = undefined;
-                    reject(M.DATASTORE_IDEXISTS);
-                }
-            );
+            this.db.put(document).then(result => {
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                console.debug("created doc successfully",document);
+                resolve();
+            },err=>{
+                console.error("err",err);
+                document.id = undefined;
+                document['resource']['id'] = undefined;
+                document.created = undefined;
+                document.modified = undefined;
+                reject(M.DATASTORE_IDEXISTS);
+            })
+
+
         });
     }
 
-    public update(document:IdaiFieldDocument):Promise<any> {
+    public update(document:IdaiFieldDocument,initial = false):Promise<any> {
 
         return new Promise((resolve, reject) => {
            if (document.id == null) reject("Aborting update: No ID given. " +
                "Maybe you wanted to create the object with create()?");
            document.modified = new Date();
-           return this.saveDocument(document).then(
-               result => {
-                   document['rev'] = result['rev'];
-                   resolve();
-               },
-               () => reject(M.DATASTORE_GENERIC_SAVE_ERROR)
-           );
+
+            if (initial) {
+                document['_id'] = document['id'];
+            } else {
+                // delete document['rev']
+            }
+            console.debug("preparing update",document)
+            this.db.put(document).then(result => {
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                console.debug("updated doc successfully",document);
+                resolve();
+            },err=>{
+                console.error("not updates successfully",err); reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                reject(err)
+            })
        });
     }
 
@@ -128,16 +140,10 @@ export class PouchdbDatastore implements Datastore {
         return this.db.get(id);
     }
 
-    private saveDocument(document:Document):Promise<any> {
-        document['_id'] = document['id'];
-        return this.db.put(document).then(result => {
-            this.notifyObserversOfObjectToSync(document);
-            return result;
-        });
-    }
+
 
     private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
-        console.log(result);
+        console.debug("buildResult",result);
         var docs = result['rows'].map(row => { return row.doc; });
         return docs.filter( (doc: Document) => {
             return this.docMatchesFilterSets(filterSets, doc);
@@ -150,7 +156,7 @@ export class PouchdbDatastore implements Datastore {
             views: {
                 fulltext: {
                     map: "function mapFun(doc) {" +
-                        "emit(doc.resource.shortDescription.toLowerCase(), doc);" +
+                        "if (doc.resource.shortDescription) emit(doc.resource.shortDescription.toLowerCase(), doc);" +
                         "emit(doc.resource.identifier.toLowerCase(), doc);" +
                     "}" // TODO add more fields to index
                 }
@@ -158,7 +164,7 @@ export class PouchdbDatastore implements Datastore {
         };
 
         return this.db.put(ddoc).then(
-            () => console.log('successfully set up fulltext index'),
+            () => console.debug('successfully set up fulltext index'),
             err => {
                 if (err.name !== 'conflict') {
                     throw err;
@@ -229,11 +235,11 @@ export class PouchdbDatastore implements Datastore {
 
     private loadSampleData(): void {
         var promises = [];
-        for (var ob of DOCS) promises.push(this.update(ob));
+        for (var ob of DOCS) promises.push(this.update(ob,true));
 
         Promise.all(promises)
             .then(() => {
-                console.log("Successfully stored sample objects");
+                console.debug("Successfully stored sample objects");
             })
             .catch(err => console.error("Problem when storing sample data", err));
     }

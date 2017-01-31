@@ -131,9 +131,9 @@ export class Importer {
         }
         
         this.inUpdateDocumentLoop = true;
-        this.datastore.update(doc).then(() => {
+        this.datastore.create(doc).then(() => {
             this.importSuccessCounter++;
-            // console.log("successfully imported document", doc);
+            console.log("successfully imported document", doc);
 
             if (this.docsToUpdate.length > 0) {
                 this.update(this.docsToUpdate[0]);
@@ -144,6 +144,8 @@ export class Importer {
             }
 
         }, error => {
+
+            console.log("there is an error",error)
 
             this.importReport['datastore_errors'].push({
                 doc: doc,

@@ -4,7 +4,7 @@ import {PouchdbDatastore} from "../../app/datastore/pouchdb-datastore";
  * @author Daniel de Oliveira
  */
 export function main() {
-    describe('PouchdbDatastore', () => {
+    xdescribe('PouchdbDatastore', () => {
 
         var datastore : PouchdbDatastore;
 

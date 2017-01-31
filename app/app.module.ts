@@ -11,11 +11,9 @@ import {PersistenceManager} from 'idai-components-2/persist';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
-import {IndexeddbDatastore} from "./datastore/indexeddb-datastore";
 import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
-import {Indexeddb} from "./datastore/indexeddb";
 import {Importer} from "./import/importer";
 import {NativeJsonlParser} from "./import/native-jsonl-parser";
 import {IdigCsvParser} from './import/idig-csv-parser';
@@ -75,8 +73,7 @@ var validate = function(path) {
         },
         { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        Indexeddb,
-        { provide: Datastore, useClass: IndexeddbDatastore },
+        { provide: Datastore, useClass: PouchdbDatastore },
         { provide: ReadDatastore, useExisting: Datastore },
         IdaiFieldBackend,
         Messages,

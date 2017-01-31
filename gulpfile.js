@@ -18,7 +18,7 @@ gulp.task('convert-sass', function () {
 
     return gulp.src([
         'app/app.scss',
-        'node_modules/mdbootstrap/css/bootstrap.css',
+        'node_modules/mdbootstrap/css/bootstrap.min.css',
         'node_modules/leaflet/dist/leaflet.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'
     ])

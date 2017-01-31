@@ -22,16 +22,12 @@
 
                 <ul class="list-group object-list" id="objectList">
                     <li *ngFor="let document of documents; let index=index"
-                            (click)="select(document)"
-                            class="list-group-item"
-                            [class.synced]="document.synced"
-                            [class.unsynced]="!document.synced"
-                            [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                            onclick="window.scrollTo(0, 0)"
-                            [id]="'resource-' + document.resource.identifier">
-                        <!-- Enable when finally implemented in Chromium
-                            onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-                            -->
+                        (click)="select(document)"
+                        class="list-group-item"
+                        [class.synced]="document.synced"
+                        [class.unsynced]="!document.synced"
+                        [class.selected]="getSelected() && getSelected().resource.id === document.id"
+                        [id]="'resource-' + document.resource.identifier">
 
                         <document-teaser [document]="document"></document-teaser>
 

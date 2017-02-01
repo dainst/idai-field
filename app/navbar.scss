@@ -1,7 +1,3 @@
-/**
- * @author: Jan G. Wieners
- */
-
 .navbar.bg-primary {
   background-color: $navbar-default-bg !important;
 }
@@ -10,19 +6,10 @@
   font-weight: 700;
 }
 
-#navbar-collapse {
-  margin-top: 0;
-}
-
-#logotext {
-  margin-top: 3px;
-  margin-right: 40px;
-}
-
 #objectsToSyncCount {
   position: absolute;
-  top: 12px;
-  right: 15px;
+  top: 7px;
+  right: 7px;
 
   padding: 3px 0 0 0;
 

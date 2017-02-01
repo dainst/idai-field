@@ -1,39 +1,28 @@
-<nav class="navbar navbar-dark navbar-toggleable-md bg-primary navbar-fixed-top"
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top"
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
 
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
+    <img src="img/logo.png" style="height:38px; width:38px; float:left; margin-right:12px;">
     <a class="navbar-brand" routerLink="/">
-        <img src="img/logo.png" style="height:38px; width:38px; float:left; margin-right:12px;">
-        <div id="logotext">
-            <span style="color: #ccc; font-size:90%; font-weight:300;">iDAI.</span>field
-            <small style="color: #ccc;">2.0</small>
-        </div>
+        <span style="color: #ccc; font-size:90%; font-weight:300;">iDAI.</span>field
+        <small style="color: #ccc;">2.0</small>
     </a>
 
-    <div class="collapse navbar-collapse" id="navbar-collapse">
-        <ul class="navbar-nav mr-auto" style="margin-top: 2px;">
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/resources">Ressourcen</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/images">Bilder</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/import" id="importButton">Import</a>
-            </li>
-        </ul>
+    <ul class="nav navbar-nav" style="margin-top: 2px;">
+        <li class="nav-item">
+            <a class="nav-link" href="#" routerLink="/resources">Ressourcen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" routerLink="/images">Bilder</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" routerLink="/import" id="importButton">Import</a>
+        </li>
+    </ul>
 
-        <div class="navbar-text navbar-right">
-            <synchronization></synchronization>
-        </div>
-
+    <div class="navbar-text navbar-right">
+        <synchronization></synchronization>
     </div>
 
 </nav>

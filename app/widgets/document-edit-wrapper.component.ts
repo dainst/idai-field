@@ -69,13 +69,13 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
         this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then(
             (selectedImages: IdaiFieldImageDocument[]) => {
-                this.addDepictsRelations(selectedImages);
+                this.addDepictedInRelations(selectedImages);
                 this.documentEditChangeMonitor.setChanged();
             }, (closeReason) => {}
         );
     }
 
-    private addDepictsRelations(imageDocuments: IdaiFieldImageDocument[]) {
+    private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
         var relations = this.document.resource.relations["depictedIn"]
             ? this.document.resource.relations["depictedIn"].slice() : [];

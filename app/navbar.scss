@@ -2,15 +2,6 @@
  * @author: Jan G. Wieners
  */
 
-// Disable navbar-collapsing
-.navbar-collapse.collapse{
-  display: block !important;
-}
-
-.navbar-nav>li, .navbar-nav{
-  float: left !important;
-}
-
 .navbar.bg-primary {
   background-color: $navbar-default-bg !important;
 }

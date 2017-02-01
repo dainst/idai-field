@@ -202,7 +202,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o14",
             "identifier": "vader.jpg",
             "shortDescription": "Bernie Thomas took this photograph of Darth Vader in Columbus Ohio on Friday of August 11th of 2006.",
-            "type": "image",
+            "type": "photo",
             "relations": {
                 "depicts": ["o6"]
             },
@@ -306,7 +306,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o21",
             "identifier": "gandalf.jpg",
             "shortDescription": "Gandalf the Grey",
-            "type": "image",
+            "type": "drawing",
             "relations": {
                 "depicts": ["o1"]
             },
@@ -354,7 +354,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "o24",
             "identifier": "finn.jpg",
             "shortDescription": "Finn",
-            "type": "image",
+            "type": "photo",
             "relations": {
                 "depicts": ["o3"]
             },

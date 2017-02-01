@@ -135,13 +135,9 @@ describe('image grid tests -- ', function(){
         var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
 
         gridPage.clickUploadArea()
-            .then(function () {
-                gridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));
-            })
-            .then(function () {
-                gridPage.chooseImageSubtype(0);
-            })
-            .then(function () {
+            .then(function() { gridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName)); })
+            .then(function() { gridPage.chooseImageSubtype(0); })
+            .then(function() {
                 browser.wait(EC.presenceOf(element(by.xpath(xpath))), 10000);
             })
     });

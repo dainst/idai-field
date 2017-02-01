@@ -59,12 +59,13 @@ export class ImagePickerComponent {
 
     public onResize() {
         this.rows = [];
-        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth).then(result=>{
-            this.rows = result['rows'];
-            for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.addWithParams(msgWithParams);
-            }
-        });
+        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth)
+            .then(result => {
+                this.rows = result.rows;
+                for (var msgWithParams of result['msgsWithParams']) {
+                    this.messages.addWithParams(msgWithParams);
+                }
+            });
     }
 
     /**
@@ -87,12 +88,12 @@ export class ImagePickerComponent {
             this.documents = documents as IdaiFieldImageDocument[];
 
             this.rows = [];
-            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth ).then(rows=>{
-                this.rows = rows;
-            });
+            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth)
+                .then(result => {
+                    this.rows = result.rows;
+                });
 
         }).catch(err => console.error(err));
     }
-
 
 }

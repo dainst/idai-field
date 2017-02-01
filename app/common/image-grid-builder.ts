@@ -20,7 +20,7 @@ export class ImageGridBuilder {
      */
     constructor(
         private blobProxy: BlobProxy,
-        private showAllAtOnce:boolean = false
+        private showAllAtOnce: boolean = false
     ) { }
 
     /**
@@ -31,8 +31,7 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number)
-        : Promise<Array<any>> {
+    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): Promise<any> {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -42,14 +41,15 @@ export class ImageGridBuilder {
 
             var rowPromises = [];
             for (var i = 0; i < this.nrOfRows(nrOfColumns); i++) {
-                rowPromises.push(this.calcRow(i,this.calculatedHeight(i,nrOfColumns,gridWidth),nrOfColumns));
+                rowPromises.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
             }
             resolve(this.splitCellsAndMessages(rowPromises));
         });
     }
 
-    private calcRow(rowIndex,calculatedHeight,nrOfColumns) {
-        return new Promise<any>((resolve)=>{
+    private calcRow(rowIndex, calculatedHeight, nrOfColumns) {
+
+        return new Promise<any>((resolve) => {
             var promises = [];
             for (var i = 0; i < nrOfColumns; i++) {
 
@@ -59,7 +59,7 @@ export class ImageGridBuilder {
                 promises.push(
                     this.getImg(
                         document,
-                        this.newCell(document,calculatedHeight)
+                        this.newCell(document, calculatedHeight)
                     )
                 );
             }
@@ -67,8 +67,9 @@ export class ImageGridBuilder {
         });
     }
 
-    private newCell(document,calculatedHeight) : ImageContainer {
-        var cell : ImageContainer = {};
+    private newCell(document, calculatedHeight): ImageContainer {
+
+        var cell: ImageContainer = {};
         var image = document.resource as IdaiFieldImageResource;
         cell.document = document;
         cell.calculatedWidth = image.width * calculatedHeight / image.height;
@@ -76,9 +77,10 @@ export class ImageGridBuilder {
         return cell;
     }
 
-    private calculatedHeight(rowIndex,nrOfColumns,gridWidth) {
-        var rowWidth = Math.ceil((gridWidth - this.paddingRight) );
-        return rowWidth / this.calcNaturalRowWidth(this.documents,nrOfColumns,rowIndex);
+    private calculatedHeight(rowIndex, nrOfColumns, gridWidth) {
+
+        var rowWidth = Math.ceil(gridWidth - this.paddingRight);
+        return rowWidth / this.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
     }
 
     private nrOfRows(nrOfColumns) {
@@ -88,7 +90,7 @@ export class ImageGridBuilder {
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
      */
-    private calcNaturalRowWidth(documents,nrOfColumns,rowIndex) {
+    private calcNaturalRowWidth(documents, nrOfColumns, rowIndex) {
 
         var naturalRowWidth = 0;
         for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
@@ -107,33 +109,36 @@ export class ImageGridBuilder {
      * @param cell
      * @param showAllAtOnce is applied here
      */
-    private getImg(document,cell) : Promise<any> {
-        return new Promise<any>((resolve)=>{
-            if (document.id == 'droparea') return resolve({cell:cell});
+    private getImg(document, cell): Promise<any> {
 
-            if (!this.showAllAtOnce) resolve({cell:cell});
-            this.blobProxy.getBlobUrl(document.resource.identifier).then(url=>{
-                if (this.showAllAtOnce) resolve({cell:cell});
+        return new Promise<any>((resolve) => {
+            if (document.id == 'droparea') return resolve({cell: cell});
+
+            if (!this.showAllAtOnce) resolve({cell: cell});
+            this.blobProxy.getBlobUrl(document.resource.identifier).then(url => {
+                if (this.showAllAtOnce) resolve({cell: cell});
                 cell.imgSrc = url;
-            }).catch(msgWithParams=> {
+            }).catch(msgWithParams => {
                 cell.imgSrc = BlobProxy.blackImg;
-                resolve({cell:cell,msgWithParams:msgWithParams});
+                resolve({cell: cell, msgWithParams: msgWithParams});
             });
         })
     }
 
     private splitCellsAndMessages(rowPromises) {
-        return new Promise<any>((resolve)=>{
+
+        return new Promise<any>((resolve) => {
             Promise.all(rowPromises).then(
-                rows=> this.split(rows,resolve)
+                rows => this.split(rows, resolve)
             );
         })
     }
 
     private split(rows, resolve) {
+
         var rows_ = [];
         var msgsWithParams = [];
-        rows.forEach(row=> {
+        rows.forEach(row => {
             var row_ = [];
             row.forEach(cell => {
                 if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
@@ -141,6 +146,6 @@ export class ImageGridBuilder {
             });
             rows_.push(row_);
         });
-        resolve({rows:rows_,msgsWithParams:msgsWithParams});
+        resolve({rows: rows_, msgsWithParams: msgsWithParams});
     }
 }

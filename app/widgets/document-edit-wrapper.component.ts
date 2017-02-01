@@ -70,6 +70,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then(
             (selectedImages: IdaiFieldImageDocument[]) => {
                 this.addDepictsRelations(selectedImages);
+                this.documentEditChangeMonitor.setChanged();
             }, (closeReason) => {}
         );
     }

@@ -1,7 +1,7 @@
 <div>
     <a *ngFor="let image of images" (click)="selectImage(image.document);">
         <img
-            style="width:100%; // so that black img with 1x1px for error cases can strech to full width"
+            style="width:100%; // so that black img with 1x1px for error cases can stretch to full width"
          [src]="image.imgSrc">
     </a>
 </div>

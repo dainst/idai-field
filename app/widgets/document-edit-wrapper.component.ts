@@ -1,14 +1,13 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import { DocumentEditChangeMonitor } from "idai-components-2/documents";
+import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
-import {WithConfiguration,ConfigLoader} from "idai-components-2/configuration";
+import {WithConfiguration, ConfigLoader} from "idai-components-2/configuration";
 import {M} from "../m";
-import {Validator,PersistenceManager} from "idai-components-2/persist";
+import {Validator, PersistenceManager} from "idai-components-2/persist";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {ImageTool} from '../common/image-tool';
 
 
 @Component({
@@ -27,13 +26,13 @@ import {ImageTool} from '../common/image-tool';
 export class DocumentEditWrapperComponent extends WithConfiguration {
 
     @Input() document: IdaiFieldDocument;
-    @Input() showBackButton : boolean = true;
+    @Input() showBackButton: boolean = true;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
 
     constructor(
         private messages: Messages,
-        private persistenceManager:PersistenceManager,
+        private persistenceManager: PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         configLoader: ConfigLoader,
@@ -43,7 +42,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         super(configLoader);
     }
 
-    public save(viaSaveButton:boolean=false) {
+    public save(viaSaveButton: boolean = false) {
 
         var validationError = this.validator.validate(
             <IdaiFieldDocument>this.document);
@@ -67,14 +66,25 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
     }
 
     public openImagePicker() {
-        this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then( (selectedImages: IdaiFieldImageDocument[]) => {
-            var imageTool = new ImageTool();
-            imageTool.addDepictsRelations(selectedImages, this.document);
-            var doc = this.document;
-            this.document = doc;
-        }, (closeReason) => {
-        });
+
+        this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then(
+            (selectedImages: IdaiFieldImageDocument[]) => {
+                this.addDepictsRelations(selectedImages);
+            }, (closeReason) => {}
+        );
     }
 
+    private addDepictsRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
+        var relations = this.document.resource.relations["depictedIn"]
+            ? this.document.resource.relations["depictedIn"].slice() : [];
+
+        for (let i in imageDocuments) {
+            if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
+                relations.push(imageDocuments[i].resource.id);
+            }
+        }
+
+        this.document.resource.relations["depictedIn"] = relations;
+    }
 }

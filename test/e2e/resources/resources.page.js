@@ -48,7 +48,7 @@ var ResourcesPage = function () {
 
     this.clickAddRelationForGroupWithIndex = function (groupIndex) {
         return element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .element(by.css('.add-relation')).click();
+            .element(by.css('.circular-button.add-relation')).click();
     };
 
     this.clickRelationInDocumentView = function (relationIndex) {

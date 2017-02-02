@@ -110,7 +110,7 @@ describe('image grid tests -- ', function(){
             });
     });
 
-    fit('user should be able to navigate from grid to view, and back to grid.', function() {
+    it('user should be able to navigate from grid to view, and back to grid.', function() {
         var xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         gridPage.getCellImageName(0).then(function(imageName){
@@ -123,7 +123,7 @@ describe('image grid tests -- ', function(){
 
             viewPage.clickBackToGridButton()
             .then(function(){
-                browser.wait(EC.presenceOf(gridPage.getCell(0)), 1000);
+                browser.wait(EC.presenceOf(gridPage.getCell(0)), 5000);
                 expect(gridPage.getCellImageName(0)).toEqual(imageName)
             });
         });

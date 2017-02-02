@@ -38,9 +38,6 @@ export class AppComponent implements OnInit {
                 label: "Dateiname"
             }
         ]
-    }, {
-        "type" : "photo",
-        "parent" : "image"
     }];
 
     private defaultFields = [{

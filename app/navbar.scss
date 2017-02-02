@@ -1,3 +1,33 @@
+/**
+ * @author: Jan G. Wieners
+ */
+
+#navbar-menu {
+  margin-top: 0;
+}
+
+#navbar-menu .navbar-nav {
+  margin-bottom: 0 !important;
+}
+
+#navbar-menu .nav-item a {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+#logotext {
+  float: right;
+}
+
+// Disable navbar-collapsing
+.navbar-collapse.collapse{
+  display: block !important;
+}
+
+.navbar-nav>li, .navbar-nav{
+  float: left !important;
+}
+
 .navbar.bg-primary {
   background-color: $navbar-default-bg !important;
 }
@@ -8,8 +38,8 @@
 
 #objectsToSyncCount {
   position: absolute;
-  top: 7px;
-  right: 7px;
+  top: 12px;
+  right: 15px;
 
   padding: 3px 0 0 0;
 
@@ -55,10 +85,10 @@
 #syncprogress.active {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffdbb7+0,ffa73d+50,ff7c00+51,ff7f04+100 */
   background: #ffdbb7; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffdbb7 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  #ffdbb7 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  #ffdbb7 0%,#ffa73d 50%,#ff7c00 51%,#ff7f04 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdbb7', endColorstr='#ff7f04',GradientType=0 ); /* IE6-9 */
+  background: -moz-linear-gradient(top, #ffdbb7 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffdbb7 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ffdbb7 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdbb7', endColorstr='#ff7f04', GradientType=0); /* IE6-9 */
 }
 
 #syncprogress {
@@ -91,23 +121,39 @@
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 @-ms-keyframes spin {
-  from { -ms-transform: rotate(0deg); }
-  to { -ms-transform: rotate(360deg); }
-}
-@-moz-keyframes spin {
-  from { -moz-transform: rotate(0deg); }
-  to { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-  from { -webkit-transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
   from {
-    transform:rotate(0deg);
+    -ms-transform: rotate(0deg);
   }
   to {
-    transform:rotate(360deg);
+    -ms-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

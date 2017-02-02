@@ -5,6 +5,7 @@ import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {Datastore, Query, FilterSet, Mediastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
+import {PersistenceManager} from "idai-components-2/persist";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
@@ -25,6 +26,7 @@ import {ElementRef} from "@angular/core";
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Jan G. Wieners
+ * @author Thomas Kleinke
  */
 export class ImageGridComponent {
 
@@ -45,9 +47,10 @@ export class ImageGridComponent {
         private modalService: NgbModal,
         private messages: Messages,
         private mediastore: Mediastore,
+        private persistenceManager: PersistenceManager,
+        private el: ElementRef,
         sanitizer: DomSanitizer,
-        configLoader: ConfigLoader,
-        private el : ElementRef
+        configLoader: ConfigLoader
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(
@@ -59,6 +62,7 @@ export class ImageGridComponent {
         };
 
         configLoader.configuration().subscribe(result => {
+            this.persistenceManager.setProjectConfiguration(result.projectConfiguration);
             if (!this.defaultFilterSet) {
                 this.defaultFilterSet =
                     FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
@@ -82,6 +86,7 @@ export class ImageGridComponent {
      * @param query
      */
     private fetchDocuments(query: Query) {
+
         this.query = query;
 
         this.datastore.find(query).then(documents => {
@@ -110,6 +115,7 @@ export class ImageGridComponent {
     }
 
     private calcGrid() {
+
         this.rows = [];
         this.imageGridBuilder.calcGrid(
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
@@ -147,6 +153,7 @@ export class ImageGridComponent {
     }
 
     private deleteSelected() {
+
         var results = this.selected.map(document => this.imageTool.remove(document, this.mediastore, this.datastore).catch(err=>{
             this.messages.add(err);
         }));
@@ -159,15 +166,44 @@ export class ImageGridComponent {
     }
 
     public openLinkModal() {
+
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
             if (targetDoc) {
-                this.imageTool.updateAndPersistDepictsRelations(this.selected, targetDoc, this.datastore).then(() => {
-                    this.clearSelection();
-                }).catch(error => {
-                    this.messages.add(error);
-                });
+                this.updateAndPersistDepictsRelations(this.selected, targetDoc)
+                    .then(() => {
+                        this.clearSelection();
+                    }).catch(error => {
+                        this.messages.add(error);
+                    });
             }
         }, (closeReason) => {
+        });
+    }
+
+    private updateAndPersistDepictsRelations(imageDocuments: IdaiFieldImageDocument[],
+                 targetDocument: IdaiFieldDocument, imageDocumentIndex: number = 0): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+            var imageDocument = imageDocuments[imageDocumentIndex];
+            var oldVersion = JSON.parse(JSON.stringify(imageDocument));
+
+            if (!imageDocument.resource.relations["depicts"]) {
+                imageDocument.resource.relations["depicts"] = [];
+            }
+
+            if (imageDocument.resource.relations["depicts"].indexOf(targetDocument.resource.id) == -1) {
+                imageDocument.resource.relations["depicts"].push(targetDocument.resource.id);
+            }
+
+            return this.persistenceManager.persist(imageDocument, oldVersion)
+                .then(() => {
+                    if (imageDocumentIndex < imageDocuments.length - 1) {
+                        return this.updateAndPersistDepictsRelations(imageDocuments, targetDocument,
+                            ++imageDocumentIndex);
+                    } else {
+                        resolve();
+                    }
+                }, err => reject(err));
         });
     }
 }

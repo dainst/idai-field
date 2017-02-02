@@ -105,9 +105,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob7",
             "shortDescription": "Tatooine",
             "type": "planet",
-            "relations": {
-                "depictedIn": ["o18"]
-            }
+            "relations": {}
         },
         "synced": 0
     },
@@ -255,9 +253,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "tatooine.jpg",
             "shortDescription": "Abstract in sand and sky",
             "type": "image",
-            "relations": {
-                "depicts": ["o7"]
-            },
+            "relations": {},
             "filename": "tatooine.jpg",
             "height": 768,
             "width": 1024,

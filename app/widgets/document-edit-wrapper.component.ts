@@ -29,6 +29,7 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
     @Input() showBackButton: boolean = true;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
+    private projectImageTypes:any = {};
 
     constructor(
         private messages: Messages,
@@ -40,6 +41,22 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
 
     ) {
         super(configLoader);
+
+        configLoader.configuration().subscribe(result => {
+            this.projectConfiguration = result.projectConfiguration;
+            this.getProjectImageTypes();
+        });
+    }
+    private getProjectImageTypes() {
+        var projectTypesTree = this.projectConfiguration.getTypesTree();
+
+        if (projectTypesTree["image"]) {
+            this.projectImageTypes["image"] = projectTypesTree["image"];
+
+            for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
+                this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+            }
+        }
     }
 
     public save(viaSaveButton: boolean = false) {

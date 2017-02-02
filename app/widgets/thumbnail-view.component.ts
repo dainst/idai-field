@@ -52,7 +52,7 @@ export class ThumbnailViewComponent implements OnChanges {
                         document: <IdaiFieldImageDocument> doc
                     };
                     this.blobProxy.getBlobUrl(
-                        imgContainer.document.resource.identifier).
+                        imgContainer.document.resource.filename).
                         then(url=> {
                             imgContainer.imgSrc = url;
                             this.images.push(imgContainer);

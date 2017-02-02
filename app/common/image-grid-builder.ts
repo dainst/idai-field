@@ -115,7 +115,7 @@ export class ImageGridBuilder {
             if (document.id == 'droparea') return resolve({cell: cell});
 
             if (!this.showAllAtOnce) resolve({cell: cell});
-            this.blobProxy.getBlobUrl(document.resource.identifier).then(url => {
+            this.blobProxy.getBlobUrl(document.resource.filename).then(url => {
                 if (this.showAllAtOnce) resolve({cell: cell});
                 cell.imgSrc = url;
             }).catch(msgWithParams => {

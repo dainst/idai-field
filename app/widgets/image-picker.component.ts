@@ -58,14 +58,18 @@ export class ImagePickerComponent {
     }
 
     public onResize() {
+        this.calcGrid();
+    }
+
+    private calcGrid() {
         this.rows = [];
-        this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth)
-            .then(result => {
-                this.rows = result.rows;
-                for (var msgWithParams of result['msgsWithParams']) {
-                    this.messages.addWithParams(msgWithParams);
-                }
-            });
+        this.imageGridBuilder.calcGrid(
+            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.rows = result['rows'];
+            for (var msgWithParams of result['msgsWithParams']) {
+                this.messages.addWithParams(msgWithParams);
+            }
+        });
     }
 
     /**
@@ -87,11 +91,7 @@ export class ImagePickerComponent {
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
-            this.rows = [];
-            this.imageGridBuilder.calcGrid(this.documents,this.nrOfColumns, this.el.nativeElement.offsetWidth)
-                .then(result => {
-                    this.rows = result.rows;
-                });
+            this.calcGrid();
 
         }).catch(err => console.error(err));
     }

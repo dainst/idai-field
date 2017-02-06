@@ -1,7 +1,8 @@
 import {Component, Output, EventEmitter} from "@angular/core";
-import {Datastore, Mediastore} from 'idai-components-2/datastore';
+import {Mediastore} from 'idai-components-2/datastore';
 import {M} from "../m";
 import {WithConfiguration, ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {PersistenceManager} from 'idai-components-2/persist';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component";
 
@@ -23,8 +24,8 @@ export class DropAreaComponent extends WithConfiguration {
     
     public constructor(
         private mediastore: Mediastore,
-        private datastore: Datastore,
         private modalService: NgbModal,
+        private persistenceManager: PersistenceManager,
         configLoader: ConfigLoader
     ) {
         super(configLoader);
@@ -125,7 +126,8 @@ export class DropAreaComponent extends WithConfiguration {
                         "relations": {}
                     }
                 };
-                this.datastore.create(doc)
+                this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
+                this.persistenceManager.persist(doc, doc)
                     .then(result => resolve(result))
                     .catch(error => reject(error));
             };

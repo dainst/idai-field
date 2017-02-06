@@ -53,10 +53,13 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
         if (projectTypesTree["image"]) {
             this.projectImageTypes["image"] = projectTypesTree["image"];
 
-            for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
-                this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+            if(projectTypesTree["image"].children) {
+                for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
+                    this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+                }
             }
         }
+        console.log(this.projectImageTypes)
     }
 
     public save(viaSaveButton: boolean = false) {

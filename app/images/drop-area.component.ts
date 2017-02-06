@@ -96,12 +96,14 @@ export class DropAreaComponent extends WithConfiguration {
                     that.onImageUploaded.emit();
                 }).catch(error => {
                     that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
+                    console.error(error);
                 });
             }
         })(this);
         reader.onerror = (that => {
-            return (e) => {
+            return (error) => {
                 that.onUploadError.emit([M.IMAGES_ERROR_FILEREADER, file.name]);
+                console.error(error);
             }
         })(this);
         reader.readAsArrayBuffer(file);

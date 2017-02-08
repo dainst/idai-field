@@ -9,8 +9,7 @@
     <label for="object-search" class="">Suchen...</label>
 
     <span class="input-group-btn" *ngIf="showFiltersMenu">
-        <button
-                class="btn btn-primary"
+        <button class="btn btn-primary"
                 id="searchfilter"
                 type="button"
                 [ngbPopover]="filterMenu"
@@ -23,7 +22,6 @@
         </button>
 
         <template #filterMenu>
-            <div>
                 <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
                 <ul class="list-group">
                     <li id="choose-type-filter-option-all"
@@ -40,8 +38,6 @@
                         <type-icon [type]="f.name" size="30"></type-icon> {{f.label}}
                     </li>
                 </ul>
-            </div>
         </template>
-
-        </span>
+    </span>
 </div>

@@ -2,16 +2,10 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from 'idai-components-2/datastore';
 
 import * as fs from '@node/fs';
-const app = (<any>window).require('electron').remote.app;
 
 export class FileSystemMediastore implements Mediastore {
 
-    private basePath;
-
-    constructor(basePath: string) {
-        this.basePath = app.getAppPath() + "/" + basePath;
-        if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
-    }
+    constructor(private basePath: string) { }
 
     /**
      * @param key the identifier for the data

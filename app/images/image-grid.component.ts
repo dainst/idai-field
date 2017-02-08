@@ -184,17 +184,16 @@ export class ImageGridComponent {
         return new Promise<any>((resolve, reject) => {
             var document = documents[documentIndex];
 
-            return this.mediastore.remove(document.resource.identifier).then(
-                () => {
-                    this.persistenceManager.remove(document, document).then(
-                        () => {
-                            if (documentIndex < documents.length - 1) {
-                                return this.deleteImageDocuments(documents, ++documentIndex);
-                            } else {
-                                resolve();
-                            }
-                        }, err => reject(err));
-                }, err => reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]));
+            return this.mediastore.remove(document.resource.identifier)
+                .then(() => this.persistenceManager.remove(document, document),
+                    err => reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
+                .then(() => {
+                    if (documentIndex < documents.length - 1) {
+                        return this.deleteImageDocuments(documents, ++documentIndex);
+                    } else {
+                        resolve();
+                    }
+                }, err => reject(err));
         });
     }
 

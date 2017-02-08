@@ -1,0 +1,8 @@
+#link-modal .list-group-item {
+  cursor: pointer;
+}
+
+#link-modal .list-group-item:hover {
+  background-color: $list-item-hover-colour !important;
+  transition: background-color .65s ease;
+}

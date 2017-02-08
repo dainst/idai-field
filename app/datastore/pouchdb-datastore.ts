@@ -26,55 +26,42 @@ export class PouchdbDatastore implements Datastore {
     
     constructor(loadSampleData: boolean = false) {
         this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT);
+
         if (loadSampleData) {
             this.readyForQuery = this.clear()
-                .then(() => this.loadSampleData())
-                .then(() => this.setupFulltextIndex());
+                .then(() => this.setupFulltextIndex())
+                .then(() => this.setupIdentifierIndex()).then(()=>this.loadSampleData());
         } else {
             this.readyForQuery = this.setupFulltextIndex()
-                .then(() => this.setupIdentifierIndex());
+                .then(() => this.setupIdentifierIndex())
         }
-    };
+    }
 
     private setupFulltextIndex(): Promise<any> {
-
-        var ddoc = {
-            _id: '_design/fulltext',
-            views: {
+        return this.setupIndex('_design/fulltext', {
                 fulltext: {
                     map: "function mapFun(doc) {" +
                     "if (doc.resource.shortDescription) emit(doc.resource.shortDescription.toLowerCase(), doc);" +
                     "emit(doc.resource.identifier.toLowerCase(), doc);" +
                     "}" // TODO add more fields to index
                 }
-            }
-        };
-
-        return this.db.put(ddoc).then(
-            () => console.debug('successfully set up fulltext index'),
-            err => {
-                if (err.name !== 'conflict') {
-                    throw err;
-                }
-            }
-        );
+            });
     }
 
     private setupIdentifierIndex(): Promise<any> {
+        return this.setupIndex('_design/identifier',{ identifier: { map: "function mapFun(doc) {"+
+            "emit(doc.resource.identifier);" +
+            "}"}})
+    }
 
+    private setupIndex(id,views) {
         var ddoc = {
-            _id: '_design/identifier',
-            views: {
-                fulltext: {
-                    map: "function mapFun(doc) {" +
-                    "emit(doc.resource.identifier);" +
-                    "}" // TODO add more fields to index
-                }
-            }
+            _id: id,
+            views: views
         };
 
         return this.db.put(ddoc).then(
-            () => console.debug('successfully set up identifier index'),
+            () => {},
             err => {
                 if (err.name !== 'conflict') {
                     throw err;
@@ -83,82 +70,107 @@ export class PouchdbDatastore implements Datastore {
         );
     }
 
-    private identifierExists(identifier: string) : Promise<boolean> {
+
+
+    /**
+     * @returns {Promise<boolean>} true if there is at least one other document
+     *   having the same resource identifier as <code>document</code>.
+     */
+    private identifierExists(document: any) : Promise<boolean> {
         return new Promise<boolean> ((resolve,reject)=> {
-            this.db.query('fulltext', {
-                startkey: identifier,
-                endkey: identifier + '\uffff',
+
+            this.db.query('identifier', {
+                startkey: document.resource.identifier,
+                endkey: document.resource.identifier + '\uffff',
                 include_docs: true
             }).then((result)=>{
-                resolve(result['rows'].length > 0);
+                var hits = 0;
+                for (let hit of result['rows']) {
+                    if (!document['id'] || (hit['id']!=document['id'])){
+                        hits++;
+                    }
+                }
+                resolve(hits > 0);
+
+
             },err=>reject(err));
         });
     }
 
     public create(document: any): Promise<string> {
+
         return new Promise((resolve, reject) => {
             this.readyForQuery
-                .then(()=>this.identifierExists(document.resource.identifier))
+                .then(()=>this.identifierExists(document))
                 .then((exists)=>{
 
-                    if (exists) {
+                    if (exists) return reject(M.DATASTORE_IDEXISTS);
 
-                        reject(M.DATASTORE_IDEXISTS);
+                    if (document.id != null) reject("Aborting creation: Object already has an ID. " +
+                        "Maybe you wanted to update the object with update()?");
+                    document.id = IdGenerator.generateId();
+                    document['resource']['id'] = document.id;
+                    document.created = new Date();
+                    document.modified = document.created;
+                    document['_id'] = document['id'];
+                    this.documentCache[document['id']] = document;
 
-                    } else {
-
-                        if (document.id != null) reject("Aborting creation: Object already has an ID. " +
-                            "Maybe you wanted to update the object with update()?");
-                        document.id = IdGenerator.generateId();
-                        document['resource']['id'] = document.id;
-                        document.created = new Date();
-                        document.modified = document.created;
-                        document['_id'] = document['id'];
-                        this.documentCache[document['id']] = document;
-
-                        this.db.put(document).then(result => {
-                            this.notifyObserversOfObjectToSync(document);
-                            document['_rev'] = result['rev'];
-                            resolve();
-                        },err => {
-                            document.id = undefined;
-                            document['resource']['id'] = undefined;
-                            document.created = undefined;
-                            document.modified = undefined;
-                            reject(err);
-                        })
-                    }
+                    this.db.put(document).then(result => {
+                        this.notifyObserversOfObjectToSync(document);
+                        document['_rev'] = result['rev'];
+                        resolve();
+                    },err => {
+                        document.id = undefined;
+                        document['resource']['id'] = undefined;
+                        document.created = undefined;
+                        document.modified = undefined;
+                        reject(err);
+                    })
 
             }).catch(err=>{
-                console.log("error in create",err);
                 reject(err);
             });
         });
     }
 
+    private updateReadyForQuery(skipCheck) : Promise<any>{
+        if (!skipCheck) {
+            return this.readyForQuery;
+        }
+        else {
+            return new Promise<any>((resolve)=>{resolve();})
+        }
+    }
+
     public update(document:IdaiFieldDocument, initial = false): Promise<any> {
 
         return new Promise((resolve, reject) => {
-           if (document.id == null) reject("Aborting update: No ID given. " +
-               "Maybe you wanted to create the object with create()?");
-           document.modified = new Date();
+            this.updateReadyForQuery(initial)
+                .then(()=>this.identifierExists(document))
+                .then((exists)=> {
+                    if (exists) return reject(M.DATASTORE_IDEXISTS);
 
-            if (initial) {
-                document['_id'] = document['id'];
-            } else {
-                // delete document['rev']
-            }
-            console.debug("preparing update", document);
-            this.db.put(document).then(result => {
-                this.notifyObserversOfObjectToSync(document);
-                document['_rev'] = result['rev'];
-                this.documentCache[document['id']] = document;
-                console.debug("updated doc successfully", document);
-                resolve();
-            }, err => {
-                console.error("not updates successfully", err); reject(M.DATASTORE_GENERIC_SAVE_ERROR);
-                reject(err)
-            })
+                    if (document.id == null) reject("Aborting update: No ID given. " +
+                        "Maybe you wanted to create the object with create()?");
+                    document.modified = new Date();
+
+                    if (initial) {
+                        document['_id'] = document['id'];
+                    } else {
+                        // delete document['rev']
+                    }
+                    this.db.put(document).then(result => {
+                        this.notifyObserversOfObjectToSync(document);
+                        document['_rev'] = result['rev'];
+                        this.documentCache[document['id']] = document;
+                        resolve();
+                    }, err => {
+                        reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                        reject(err)
+                    })
+
+
+                }).catch(err=>{console.log("error",err)});
        });
     }
 
@@ -182,8 +194,12 @@ export class PouchdbDatastore implements Datastore {
         })
     }
 
-    public clear(): Promise<any> {
+    private clear(): Promise<any> {
         return this.db.destroy().then(() => this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT));
+    }
+
+    public shutDown(): Promise<any> {
+        return this.db.destroy();
     }
 
     public documentChangesNotifications(): Observable<Document> {
@@ -270,21 +286,24 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private notifyObserversOfObjectToSync(document:Document): void {
-
         this.observers.forEach( observer => {
             observer.next(document);
         } );
     }
 
-    private loadSampleData(): void {
+    private loadSampleData(): Promise<any> {
 
-        var promises = [];
-        for (var ob of DOCS) promises.push(this.update(ob, true));
+        return new Promise<any>((resolve,reject)=>{
 
-        Promise.all(promises)
-            .then(() => {
-                console.debug("Successfully stored sample objects");
-            })
-            .catch(err => console.error("Problem when storing sample data", err));
+            var promises = [];
+            for (var ob of DOCS) promises.push(this.update(ob, true));
+
+            Promise.all(promises)
+                .then(() => {
+                    console.debug("Successfully stored sample objects");
+                    resolve();
+                })
+                .catch(err => {console.error("Problem when storing sample data", err);reject();});
+        });
     }
 }

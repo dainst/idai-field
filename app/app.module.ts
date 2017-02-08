@@ -76,7 +76,12 @@ var validate = function(path) {
         },
         { provide: ReadMediastore, useExisting: Mediastore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: Datastore, useClass: PouchdbDatastore },
+        {
+            provide: Datastore,
+            useFactory: function() : Datastore {
+                return new PouchdbDatastore(CONFIG['environment'] == 'test');
+            }
+        },
         { provide: ReadDatastore, useExisting: Datastore },
         IdaiFieldBackend,
         Messages,

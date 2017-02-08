@@ -35,15 +35,11 @@ Prior to starting or e2e testing the app, it is necessary that config files are 
 ## Unit - Testing
 
 The app must have been build (`npm run build`) before running the tests.
-To run the tests, execute one of the following commands
+To execute the tests, run 
 
 ```
-$ npm test      # runs tests once
-$ npm test:loop # runs tests continuously
+$ npm test   
 ```
-
-This second command runs the tests in a loop and is useful,
-when the sources are automatically recompiled on every change, as for example IntelliJ does.
 
 ### Troubleshooting
 

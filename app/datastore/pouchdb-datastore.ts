@@ -7,12 +7,11 @@ import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
 
-import CONFIG = require("config/config.json!json");
 import {DOCS} from "./sample-objects";
 
 /**
  * @author Sebastian Cuy
- * @author Daniel M. de Oliveira
+ * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 @Injectable()
@@ -25,41 +24,115 @@ export class PouchdbDatastore implements Datastore {
     private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
     
-    constructor() {
+    constructor(loadSampleData: boolean = false) {
         this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT);
-        if (CONFIG['environment'] == 'test') {
-            this.readyForQuery = this.clear().then(() => this.loadSampleData());
+        if (loadSampleData) {
+            this.readyForQuery = this.clear()
+                .then(() => this.loadSampleData())
+                .then(() => this.setupFulltextIndex());
         } else {
-            this.readyForQuery = new Promise(resolve => resolve());
+            this.readyForQuery = this.setupFulltextIndex()
+                .then(() => this.setupIdentifierIndex());
         }
     };
 
+    private setupFulltextIndex(): Promise<any> {
+
+        var ddoc = {
+            _id: '_design/fulltext',
+            views: {
+                fulltext: {
+                    map: "function mapFun(doc) {" +
+                    "if (doc.resource.shortDescription) emit(doc.resource.shortDescription.toLowerCase(), doc);" +
+                    "emit(doc.resource.identifier.toLowerCase(), doc);" +
+                    "}" // TODO add more fields to index
+                }
+            }
+        };
+
+        return this.db.put(ddoc).then(
+            () => console.debug('successfully set up fulltext index'),
+            err => {
+                if (err.name !== 'conflict') {
+                    throw err;
+                }
+            }
+        );
+    }
+
+    private setupIdentifierIndex(): Promise<any> {
+
+        var ddoc = {
+            _id: '_design/identifier',
+            views: {
+                fulltext: {
+                    map: "function mapFun(doc) {" +
+                    "emit(doc.resource.identifier);" +
+                    "}" // TODO add more fields to index
+                }
+            }
+        };
+
+        return this.db.put(ddoc).then(
+            () => console.debug('successfully set up identifier index'),
+            err => {
+                if (err.name !== 'conflict') {
+                    throw err;
+                }
+            }
+        );
+    }
+
+    private identifierExists(identifier: string) : Promise<boolean> {
+        return new Promise<boolean> ((resolve,reject)=> {
+            this.db.query('fulltext', {
+                startkey: identifier,
+                endkey: identifier + '\uffff',
+                include_docs: true
+            }).then((result)=>{
+                resolve(result['rows'].length > 0);
+            },err=>reject(err));
+        });
+    }
+
     public create(document: any): Promise<string> {
-
         return new Promise((resolve, reject) => {
+            this.readyForQuery
+                .then(()=>this.identifierExists(document.resource.identifier))
+                .then((exists)=>{
 
-            if (document.id != null) reject("Aborting creation: Object already has an ID. " +
-                "Maybe you wanted to update the object with update()?");
-            document.id = IdGenerator.generateId();
-            document['resource']['id'] = document.id;
-            document.created = new Date();
-            document.modified = document.created;
-            document['_id'] = document['id'];
-            this.documentCache[document['id']] = document;
+                    if (exists) {
 
-            this.db.put(document).then(result => {
-                this.notifyObserversOfObjectToSync(document);
-                document['_rev'] = result['rev'];
-                console.debug("created doc successfully",document);
-                resolve();
-            },err => {
-                console.error("err",err);
-                document.id = undefined;
-                document['resource']['id'] = undefined;
-                document.created = undefined;
-                document.modified = undefined;
-                reject(M.DATASTORE_IDEXISTS);
-            })
+                        reject(M.DATASTORE_IDEXISTS);
+
+                    } else {
+
+                        if (document.id != null) reject("Aborting creation: Object already has an ID. " +
+                            "Maybe you wanted to update the object with update()?");
+                        document.id = IdGenerator.generateId();
+                        document['resource']['id'] = document.id;
+                        document.created = new Date();
+                        document.modified = document.created;
+                        document['_id'] = document['id'];
+                        this.documentCache[document['id']] = document;
+
+                        this.db.put(document).then(result => {
+                            this.notifyObserversOfObjectToSync(document);
+                            document['_rev'] = result['rev'];
+                            resolve();
+                        },err => {
+                            document.id = undefined;
+                            document['resource']['id'] = undefined;
+                            document.created = undefined;
+                            document.modified = undefined;
+                            reject(err);
+                        })
+                    }
+
+            }).catch(err=>{
+                console.log("error in create",err);
+                reject(err);
+            });
         });
     }
 
@@ -123,8 +196,6 @@ export class PouchdbDatastore implements Datastore {
     public find(query: Query):Promise<Document[]> {
 
         return this.readyForQuery.then(() => {
-            return this.setupFulltextIndex();
-        }).then(() => {
             var queryString = query.q.toLowerCase();
             return this.db.query('fulltext', {
                 startkey: queryString,
@@ -146,36 +217,13 @@ export class PouchdbDatastore implements Datastore {
 
     private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
 
-        console.debug("buildResult", result);
         var docs = result['rows'].map(row => { return row.doc; });
         return docs.filter( (doc: Document) => {
             return this.docMatchesFilterSets(filterSets, doc);
         });
     }
 
-    private setupFulltextIndex(): Promise<any> {
 
-        var ddoc = {
-            _id: '_design/fulltext',
-            views: {
-                fulltext: {
-                    map: "function mapFun(doc) {" +
-                        "if (doc.resource.shortDescription) emit(doc.resource.shortDescription.toLowerCase(), doc);" +
-                        "emit(doc.resource.identifier.toLowerCase(), doc);" +
-                    "}" // TODO add more fields to index
-                }
-            }
-        };
-
-        return this.db.put(ddoc).then(
-            () => console.debug('successfully set up fulltext index'),
-            err => {
-                if (err.name !== 'conflict') {
-                    throw err;
-                }
-            }
-        );
-    }
 
     private docMatchesFilterSets(filterSets: FilterSet[], doc: Document): boolean {
 

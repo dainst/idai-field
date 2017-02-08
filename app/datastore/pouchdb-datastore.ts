@@ -81,6 +81,7 @@ export class PouchdbDatastore implements Datastore {
             this.db.put(document).then(result => {
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
+                this.documentCache[document['id']] = document;
                 console.debug("updated doc successfully",document);
                 resolve();
             },err=>{

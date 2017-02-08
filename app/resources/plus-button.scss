@@ -16,10 +16,23 @@ plus-button {
 
 }
 
-#new-object-menu ul li li {
-  background-color: inherit;
+#new-object-menu ul li.list-group-item {
+  border: 1px solid #eee !important;
 }
 
-#new-object-menu ul li li:hover {
-  background-color: lighten(#c8dee1, 5%);
+#new-object-menu ul li ul {
+  margin-top: 10px;
+}
+
+#new-object-menu ul li:hover > ul li {
+  background-color: $list-item-hover-colour !important;
+  transition: background-color .65s ease;
+}
+
+#new-object-menu ul li ul li.list-group-item {
+  border: none !important;
+}
+
+#new-object-menu ul li ul li:hover {
+  background-color: darken($list-item-hover-colour, 5%) !important;
 }

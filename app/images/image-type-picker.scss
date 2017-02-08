@@ -1,0 +1,24 @@
+#link-modal ul li.list-group-item {
+  border: 1px solid #eee !important;
+}
+
+#link-modal ul li ul {
+  margin-top: 10px;
+}
+
+#link-modal ul li:hover > ul li {
+  background-color: $list-item-hover-colour !important;
+  transition: background-color .65s ease;
+}
+
+#link-modal ul li ul li.list-group-item {
+  border: none !important;
+}
+
+#link-modal ul li ul li:hover {
+  background-color: darken($list-item-hover-colour, 5%) !important;
+}
+
+#link-modal .list-group-item {
+  cursor: pointer;
+}

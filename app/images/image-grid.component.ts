@@ -14,6 +14,7 @@ import {LinkModalComponent} from "./link-modal.component";
 import {FilterUtility} from "../util/filter-utility";
 import {BlobProxy} from "../common/blob-proxy";
 import {ElementRef} from "@angular/core";
+import {M} from '../m';
 
 @Component({
     moduleId: module.id,
@@ -152,19 +153,6 @@ export class ImageGridComponent {
         });
     }
 
-    private deleteSelected() {
-
-        var results = this.selected.map(document => this.imageTool.remove(document, this.mediastore, this.datastore).catch(err=>{
-            this.messages.add(err);
-        }));
-        Promise.all(results).then(() => {
-            this.clearSelection();
-            this.fetchDocuments(this.query);
-        }).catch(error => {
-            this.messages.add(error);
-        });
-    }
-
     public openLinkModal() {
 
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
@@ -177,6 +165,36 @@ export class ImageGridComponent {
                     });
             }
         }, (closeReason) => {
+        });
+    }
+
+    private deleteSelected() {
+
+        this.deleteImageDocuments(this.selected).then(
+            () => {
+                this.clearSelection();
+                this.fetchDocuments(this.query);
+            }).catch(error => {
+                this.messages.add(error);
+            });
+    }
+
+    private deleteImageDocuments(documents: IdaiFieldImageDocument[], documentIndex: number = 0): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+            var document = documents[documentIndex];
+
+            return this.mediastore.remove(document.resource.identifier).then(
+                () => {
+                    this.persistenceManager.remove(document, document).then(
+                        () => {
+                            if (documentIndex < documents.length - 1) {
+                                return this.deleteImageDocuments(documents, ++documentIndex);
+                            } else {
+                                resolve();
+                            }
+                        }, err => reject(err));
+                }, err => reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]));
         });
     }
 
@@ -195,8 +213,8 @@ export class ImageGridComponent {
                 imageDocument.resource.relations["depicts"].push(targetDocument.resource.id);
             }
 
-            return this.persistenceManager.persist(imageDocument, oldVersion)
-                .then(() => {
+            return this.persistenceManager.persist(imageDocument, oldVersion).then(
+                () => {
                     if (imageDocumentIndex < imageDocuments.length - 1) {
                         return this.updateAndPersistDepictsRelations(imageDocuments, targetDocument,
                             ++imageDocumentIndex);

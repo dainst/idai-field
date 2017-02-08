@@ -104,7 +104,9 @@ export class PouchdbDatastore implements Datastore {
 
     public remove(id:string):Promise<any> {
 
-        return this.db.remove(id).then(() => delete this.documentCache[id]);
+        return this.get(id).then((doc) => {
+            return this.db.remove(doc).then(() => delete this.documentCache[id]);
+        })
     }
 
     public clear():Promise<any> {

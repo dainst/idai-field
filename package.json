@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.14",
     "angular2-uuid": "1.1.0",
     "es6-shim": "0.35.0",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/396/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/403/.git",
     "identicon.js": "github:dainst/identicon.js",
     "leaflet": "1.0.1",
     "leaflet-imageoverlay-rotated": "0.1.1",

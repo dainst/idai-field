@@ -32,9 +32,12 @@ import {NavbarComponent} from './navbar.component';
 
 import CONFIG = require("config/config.json!json");
 
+const app = (<any>window).require('electron').remote.app;
+
 
 var validate = function(path) {
-    var newpath = path ? path : 'mediastore';
+    let newpath = path ? path : 'mediastore';
+    newpath = app.getAppPath() + '/' + newpath;
     return (newpath.split('/').pop()) ? newpath + '/' : newpath;
 };
 

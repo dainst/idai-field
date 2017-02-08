@@ -97,6 +97,12 @@ export class PouchdbDatastore implements Datastore {
         });
     }
 
+    /**
+     * The created instance is put to the cache.
+     *
+     * @param document
+     * @returns {Promise<T>}
+     */
     public create(document: any): Promise<string> {
 
         return new Promise((resolve, reject) => {
@@ -142,6 +148,13 @@ export class PouchdbDatastore implements Datastore {
         }
     }
 
+    /**
+     * The updated instance gets put to the cache.
+     *
+     * @param document
+     * @param initial
+     * @returns {Promise<T>}
+     */
     public update(document:IdaiFieldDocument, initial = false): Promise<any> {
 
         return new Promise((resolve, reject) => {
@@ -209,6 +222,12 @@ export class PouchdbDatastore implements Datastore {
         });
     }
 
+    /**
+     * The find method guarantees to return a cached instance if there is any.
+     *
+     * @param query
+     * @returns {Promise<TResult>}
+     */
     public find(query: Query):Promise<Document[]> {
 
         return this.readyForQuery.then(() => {
@@ -219,9 +238,19 @@ export class PouchdbDatastore implements Datastore {
                 include_docs: true
             });
         }).then(result => {
-            return this.buildResult(result, query.filterSets);
+            return this.replaceWithCached(this.buildResult(result, query.filterSets));
         });
     }
+
+    private replaceWithCached(results_) {
+        for (let i in results_) {
+            if (this.documentCache[results_[i].resource.id]) {
+                results_[i] = this.documentCache[results_[i].resource.id];
+            }
+        }
+        return results_;
+    }
+
 
     public all(): Promise<Document[]> {
         return this.db.allDocs();

@@ -1,7 +1,11 @@
 var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
 
+var waitingTime = 1000;
+
+
 describe('resources', function() {
+
 
     beforeEach(function(){
         resourcesPage.get();
@@ -21,18 +25,18 @@ describe('resources', function() {
             .then(resourcesPage.setTypeFilter(2))
             .then(resourcesPage.setTypeFilter(1))
             .then(function() {
-                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), 1000);
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), 1000);
+                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
             })
             .then(resourcesPage.setTypeFilter(0))
             .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), 1000);
-                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), 1000);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
+                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
             })
             .then(resourcesPage.setTypeFilter('all'))
             .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), 1000);
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), 1000);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
             });
     });
 
@@ -43,7 +47,7 @@ describe('resources', function() {
             .then(resourcesPage.clickEditDocument)
             .then(resourcesPage.typeInIdentifier('1b'))
             .then(function(){
-                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), 1000));
+                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), waitingTime));
             });
     });
 
@@ -58,7 +62,7 @@ describe('resources', function() {
         resourcesPage.createResource('12')
             .then(resourcesPage.typeInIdentifier('34'))
             .then(function(){
-                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), 1000));
+                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), waitingTime));
             });
     });
 
@@ -87,7 +91,7 @@ describe('resources', function() {
             .then(resourcesPage.selectResourceType)
             .then(resourcesPage.selectGeometryType)
             .then(function(){
-                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), 1000);
+                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), waitingTime);
             })
             .then(resourcesPage.scrollUp)
             .then(resourcesPage.selectObjectByIndex(1))

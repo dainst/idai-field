@@ -27,7 +27,7 @@ export class ResourceEditNavigationComponent
     modal: NgbModalRef;
 
     constructor(
-        private overviewComponent: ResourcesComponent,
+        private resourceComponent: ResourcesComponent,
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
@@ -58,16 +58,16 @@ export class ResourceEditNavigationComponent
         this.getRouteParams(
             (type) => {
                 this.mode = 'new';
-                this.document = this.overviewComponent.createNewDocument(type);
+                this.document = this.resourceComponent.createNewDocument(type);
             },
             (id) => {
                 if (id == 'selected') {
                     this.mode = 'new';
-                    this.document = this.overviewComponent.getSelected();
+                    this.document = this.resourceComponent.getSelected();
 
                 } else {
                     this.mode = 'edit';
-                    this.overviewComponent.loadDoc(id).then(
+                    this.resourceComponent.loadDoc(id).then(
                         document => this.document = document);
                 }
             }
@@ -90,7 +90,7 @@ export class ResourceEditNavigationComponent
 
     public restore() : Promise<any> {
         return new Promise<any>((resolve,reject)=>{
-            this.overviewComponent.restore().then(
+            this.resourceComponent.restore().then(
                 () => {
                     this.documentEditChangeMonitor.reset();
                     resolve();
@@ -118,7 +118,7 @@ export class ResourceEditNavigationComponent
             this.mode='edit';
             // doc must be reloaded so instance of this.document is
             // the same as the one in overviewComponent
-            this.overviewComponent.loadDoc(this.document.resource.id).then(
+            this.resourceComponent.loadDoc(this.document.resource.id).then(
                 document=>this.document=document);
         }
 

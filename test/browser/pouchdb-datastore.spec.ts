@@ -1,6 +1,7 @@
 import {PouchdbDatastore} from "../../app/datastore/pouchdb-datastore";
 import {M} from "../../app/m";
 import {IdaiFieldDocument} from "../../app/model/idai-field-document";
+import {Query} from "idai-components-2/datastore";
 
 /**
  * @author Daniel de Oliveira
@@ -12,15 +13,15 @@ export function main() {
 
         function doc(identifier) : IdaiFieldDocument {
             return {
-                "resource" : {
-                    "identifier": identifier,
-                    "shortDescription" : "sd",
-                    "title": "title",
-                    "type": "object",
-                    "synced": 0,
-                    "relations" : undefined
+                resource : {
+                    identifier: identifier,
+                    shortDescription : "sd",
+                    title: "title",
+                    type: "object",
+                    synced: 0,
+                    relations : undefined
                 },
-                "synced" : 0
+                synced : 0
             }
         }
 
@@ -97,5 +98,27 @@ export function main() {
                 );
             }
         );
+
+        it('should return the cached instance on calling find',
+            function (done) {
+
+                var doc1 = doc('id1');
+
+                datastore.create(doc1)
+                    .then(() => datastore.find({q:'id1'}))
+                    .then(
+                        result => {
+                            doc1.resource.identifier = 'i4';
+                            expect(result[0].resource['identifier']).toBe('i4');
+                            done();
+                        },
+                        err => {
+                            fail(err);
+                            done();
+                        }
+                    );
+            }
+        );
+
     })
 }

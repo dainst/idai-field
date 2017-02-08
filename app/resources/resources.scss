@@ -54,12 +54,12 @@
   }
 
   .list-group-item:hover {
-    background-color: #c7dee0;
+    background-color: $list-item-hover-colour;
     transition: background-color .65s ease;
   }
 
   .selected {
-    background-color: #c7dee0;
+    background-color: darken($list-item-hover-colour, 5%);
   }
 
   .title {

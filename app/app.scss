@@ -110,6 +110,6 @@ html [type="button"],
 }
 
 .popover-item:hover {
-  background-color: #c7dee0;
+  background-color: $list-item-hover-colour;
   transition: background-color .65s ease;
 }

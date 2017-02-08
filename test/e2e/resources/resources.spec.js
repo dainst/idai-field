@@ -1,9 +1,12 @@
 var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
 
-var waitingTime = 1000;
+var waitingTime = 2000;
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 describe('resources', function() {
 
 
@@ -52,7 +55,7 @@ describe('resources', function() {
     });
 
     /**
-     * There was a bug which caused that a freshly created object
+     * Addresses a bug which caused that a freshly created object
      * was not the same instance in the document edit and the overview component anymore
      * so that changes made to one would not be reflected in the other.
      *
@@ -65,6 +68,23 @@ describe('resources', function() {
                 expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), waitingTime));
             });
     });
+
+
+    /**
+     * Addresses a bug where a call on datastore.find led to detached documents in the resource overview.
+     * The instances didn't reflect the state of the db and vice versa because they were different instances.
+     */
+    it ('should reflect changes in overview after creating object', function() {
+        resourcesPage.createResource('12')
+            .then(resourcesPage.setTypeFilter(0)) // calls find
+            .then(resourcesPage.selectObjectByIndex(0))
+            .then(resourcesPage.clickEditDocument)
+            .then(resourcesPage.typeInIdentifier('56')) // same ...
+            .then(function(){
+                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), waitingTime)); // ... instance
+            });
+    });
+
 
     /**
      * There has been a bug where this was not possible.

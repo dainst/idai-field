@@ -6,7 +6,6 @@ import * as PouchDB from "pouchdb";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
-import {SearchTermExtractor} from "./search-term-extractor";
 
 import CONFIG = require("config/config.json!json");
 import {DOCS} from "./sample-objects";
@@ -21,7 +20,7 @@ export class PouchdbDatastore implements Datastore {
 
     private static IDAIFIELDOBJECT = 'idai-field-object';
 
-    private db:any;
+    private db: any;
     private observers = [];
     private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
@@ -35,7 +34,8 @@ export class PouchdbDatastore implements Datastore {
         }
     };
 
-    public create(document:any):Promise<string> {
+    public create(document: any): Promise<string> {
+
         return new Promise((resolve, reject) => {
 
             if (document.id != null) reject("Aborting creation: Object already has an ID. " +
@@ -52,7 +52,7 @@ export class PouchdbDatastore implements Datastore {
                 document['_rev'] = result['rev'];
                 console.debug("created doc successfully",document);
                 resolve();
-            },err=>{
+            },err => {
                 console.error("err",err);
                 document.id = undefined;
                 document['resource']['id'] = undefined;
@@ -60,12 +60,10 @@ export class PouchdbDatastore implements Datastore {
                 document.modified = undefined;
                 reject(M.DATASTORE_IDEXISTS);
             })
-
-
         });
     }
 
-    public update(document:IdaiFieldDocument,initial = false):Promise<any> {
+    public update(document:IdaiFieldDocument, initial = false): Promise<any> {
 
         return new Promise((resolve, reject) => {
            if (document.id == null) reject("Aborting update: No ID given. " +
@@ -77,25 +75,26 @@ export class PouchdbDatastore implements Datastore {
             } else {
                 // delete document['rev']
             }
-            console.debug("preparing update",document)
+            console.debug("preparing update", document);
             this.db.put(document).then(result => {
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 this.documentCache[document['id']] = document;
-                console.debug("updated doc successfully",document);
+                console.debug("updated doc successfully", document);
                 resolve();
-            },err=>{
-                console.error("not updates successfully",err); reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+            }, err => {
+                console.error("not updates successfully", err); reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 reject(err)
             })
        });
     }
 
-    public refresh(id:string):Promise<Document>  {
+    public refresh(id: string): Promise<Document> {
         return this.fetchObject(id);
     }
 
-    public get(id:string):Promise<Document> {
+    public get(id: string): Promise<Document> {
+
         if (this.documentCache[id]) {
             return new Promise((resolve, reject) => resolve(this.documentCache[id]));
         } else {
@@ -103,24 +102,26 @@ export class PouchdbDatastore implements Datastore {
         }
     }
 
-    public remove(id:string):Promise<any> {
+    public remove(id: string): Promise<any> {
 
         return this.get(id).then((doc) => {
             return this.db.remove(doc).then(() => delete this.documentCache[id]);
         })
     }
 
-    public clear():Promise<any> {
+    public clear(): Promise<any> {
         return this.db.destroy().then(() => this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT));
     }
 
     public documentChangesNotifications(): Observable<Document> {
+
         return Observable.create( observer => {
             this.observers.push(observer);
         });
     }
 
     public find(query: Query):Promise<Document[]> {
+
         return this.readyForQuery.then(() => {
             return this.setupFulltextIndex();
         }).then(() => {
@@ -135,18 +136,17 @@ export class PouchdbDatastore implements Datastore {
         });
     }
 
-    public all():Promise<Document[]> {
+    public all(): Promise<Document[]> {
         return this.db.allDocs();
     }
 
-    private fetchObject(id:string): Promise<Document> {
+    private fetchObject(id: string): Promise<Document> {
         return this.db.get(id);
     }
 
-
-
     private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
-        console.debug("buildResult",result);
+
+        console.debug("buildResult", result);
         var docs = result['rows'].map(row => { return row.doc; });
         return docs.filter( (doc: Document) => {
             return this.docMatchesFilterSets(filterSets, doc);
@@ -154,6 +154,7 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private setupFulltextIndex(): Promise<any> {
+
         var ddoc = {
             _id: '_design/fulltext',
             views: {
@@ -220,25 +221,17 @@ export class PouchdbDatastore implements Datastore {
         return false;
     }
 
-    private notifyObserversOfObjectToSync(document:Document):void {
+    private notifyObserversOfObjectToSync(document:Document): void {
 
         this.observers.forEach( observer => {
-            observer.next(document)
+            observer.next(document);
         } );
     }
 
-    private getCachedInstance(document: any): Document {
-
-        if (!this.documentCache[document['id']]) {
-            this.documentCache[document['id']] = document;
-        }
-
-        return this.documentCache[document['id']];
-    }
-
     private loadSampleData(): void {
+
         var promises = [];
-        for (var ob of DOCS) promises.push(this.update(ob,true));
+        for (var ob of DOCS) promises.push(this.update(ob, true));
 
         Promise.all(promises)
             .then(() => {

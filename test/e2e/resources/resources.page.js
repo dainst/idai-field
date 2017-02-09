@@ -28,7 +28,10 @@ var ResourcesPage = function () {
     };
 
     this.clickBackToDocumentView = function () {
-        return element(by.id('document-edit-button-goto-view')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), ECWaitTime)
+            .then(function(){
+                return element(by.id('document-edit-button-goto-view')).click();
+            })
     };
 
     this.clickSaveDocument = function () {

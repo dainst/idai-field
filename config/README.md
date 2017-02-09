@@ -25,7 +25,11 @@ without risking of committing actual real configurations to the repo.
 
 The client uses one directory to store and manage all its media files.
 
-* must be an absolute path on the local file system. 
+* when omitted, image files are stored folder `idai-field-client/mediastore` under the OS app data path
+** %APPDATA% on Windows
+** $XDG_CONFIG_HOME or ~/.config on Linux
+** ~/Library/Application Support on macOS
+* this can be overwritten by setting the mediastorepath to an absolute path in the config
 
 ### environment
 

@@ -28,24 +28,33 @@ describe('resources', function() {
             });
     });
 
-    it ('should show only resources of the selected type', function() {
+    it ('should show only resources of the selected type', function(done) {
         resourcesPage.createResource('1', 0)
-            .then(resourcesPage.createResource('2', 1))
-            .then(resourcesPage.setTypeFilter(2))
-            .then(resourcesPage.setTypeFilter(1))
+            .then(function(){return resourcesPage.createResource('2', 1)})
+            .then(function(){return resourcesPage.setTypeFilter(2)})
+            .then(function(){return resourcesPage.setTypeFilter(1)})
             .then(function() {
-                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                    .then(function() {
+                        return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                    })
             })
-            .then(resourcesPage.setTypeFilter(0))
+            .then(function(){resourcesPage.setTypeFilter(0)})
             .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
-                browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                    .then(function(){
+                        return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                    })
             })
             .then(resourcesPage.setTypeFilter('all'))
             .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime);
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                    .then(function(){
+                        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime)
+                            .then(function(){
+                                done()
+                            })
+                    })
             });
     });
 
@@ -115,7 +124,7 @@ describe('resources', function() {
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
-    it('should remove a new object from the list if it has not been saved', function() {
+    it('should remove a new object from the list if it has not been saved', function(done) {
         resourcesPage.createResource('1')
             .then(resourcesPage.clickCreateObject)
             .then(resourcesPage.selectResourceType)
@@ -127,9 +136,10 @@ describe('resources', function() {
                 return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), waitingTime);
             })
             .then(resourcesPage.scrollUp)
-            .then(resourcesPage.selectObjectByIndex(1))
+            .then(function(){return resourcesPage.selectObjectByIndex(1)})
             .then(function(){
                 expect(resourcesPage.getFirstListItemIdentifier()).toEqual('1');
+                done()
             })
     });
 
@@ -165,18 +175,19 @@ describe('resources', function() {
             })
     });
 
-    it ('should not change the selection to existing when cancelling in modal', function() {
+    it ('should not change the selection to existing when cancelling in modal', function(done) {
         resourcesPage.createResource('1')
-            .then(resourcesPage.createResource('2'))
-            .then(resourcesPage.selectObjectByIndex(0))
+            .then(function(){return resourcesPage.createResource('2')})
+            .then(function(){return resourcesPage.selectObjectByIndex(0)})
             .then(resourcesPage.clickEditDocument)
-            .then(resourcesPage.typeInIdentifier('2a'))
-            .then(resourcesPage.selectObjectByIndex(1))
+            .then(function(){return resourcesPage.typeInIdentifier('2a')})
+            .then(function(){return resourcesPage.selectObjectByIndex(1)})
             .then(resourcesPage.scrollUp)
             .then(resourcesPage.clickCancelInModal)
             .then(resourcesPage.scrollUp)
             .then(function(){
                 expect(resourcesPage.selectObjectByIndex(0).getAttribute('class')).toContain('selected')
+                done();
             })
     });
 });

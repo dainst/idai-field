@@ -49,45 +49,49 @@ describe('idai field app', function() {
         });
     });
 
-    it('should create a new item with point geometry ', function() {
+    it('should create a new item with point geometry ', function(done) {
         createDoc('33','point', function(){return mapPage.setMarker(100, 100)})
             .then(function () {
                 return resourcePage.clickBackToDocumentView();
             })
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+                done();
             });
     });
 
-    it('should create a new item with polygon geometry ', function() {
+    it('should create a new item with polygon geometry ', function(done) {
         createDoc('34', 'polygon', setPolygon)
             .then(function () {
                 return resourcePage.clickBackToDocumentView();
             })
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+                done();
             });
     });
 
-    it('should delete a point geometry ', function() {
+    it('should delete a point geometry ', function(done) {
         createDocThenReedit('37', 'point', function(){mapPage.setMarker(100, 100)})
             .then(function(){return mapPage.clickMapOption('delete')})
             .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
+                done();
             })
     });
 
-    it('should delete a polygon geometry ', function() {
+    it('should delete a polygon geometry ', function(done) {
         createDocThenReedit('36' ,'polygon', setPolygon)
             .then(function(){return mapPage.clickMapOption('delete')})
             .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
+                done();
             })
     });
 
-    it('should create a point geometry later', function() {
+    it('should create a point geometry later', function(done) {
         resourcePage.createResource('39')
             .then(resourcePage.clickBackToDocumentView)
             .then(function(){return resourcePage.clickCreateGeometry('point')})
@@ -95,10 +99,11 @@ describe('idai field app', function() {
             .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+                done()
             })
     });
 
-    it('should create a polygon geometry later', function() {
+    it('should create a polygon geometry later', function(done) {
         resourcePage.createResource('38')
             .then(resourcePage.clickBackToDocumentView)
             .then(function(){return resourcePage.clickCreateGeometry('polygon')})
@@ -106,35 +111,39 @@ describe('idai field app', function() {
             .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+                done();
             })
     });
 
 
-    it('should cancel deleting a point geometry', function() {
+    it('should cancel deleting a point geometry', function(done) {
         createDocThenReedit('40','point', function(){return mapPage.setMarker(100, 100)})
             .then(function(){return mapPage.clickMapOption('delete')})
             .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+                done();
             })
     });
 
-    it('should cancel deleting a polygon geometry', function() {
+    it('should cancel deleting a polygon geometry', function(done) {
         createDocThenReedit('41','polygon', setPolygon)
             .then(function(){return mapPage.clickMapOption('delete')})
             .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+                done();
             })
     });
     
     
-    it('should abort item creation completely when aborting geometry editing', function() {
+    it('should abort item creation completely when aborting geometry editing', function(done) {
         beginCreateDocWithGeometry('point', function(){return mapPage.setMarker(100, 100)})
             .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(browser.getCurrentUrl()).toContain('resources');
                 expect(browser.getCurrentUrl()).not.toContain('edit');
+                done();
             });
     });
 });

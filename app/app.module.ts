@@ -61,9 +61,12 @@ var validate = function(path) {
             provide: Mediastore,
             useFactory: function(http: Http): Mediastore {
 
-                // running under node
+                // running under node / electron
                 if (typeof process === 'object') {
-                    return new FileSystemMediastore(validate(CONFIG['mediastorepath']));
+                    const app = (<any>window).require('electron').remote.app;
+                    let path = validate(CONFIG['mediastorepath']);
+                    path = app.getAppPath() + '/' + path;
+                    return new FileSystemMediastore(path);
                 // running in browser
                 } else {
                     return new HttpMediastore(http, validate(CONFIG['mediastorepath']));

@@ -5,7 +5,10 @@ import * as fs from '@node/fs';
 
 export class FileSystemMediastore implements Mediastore {
 
-    constructor(private basePath: string) { }
+    constructor(private basePath: string) {
+        if (this.basePath.substr(-1) != '/') this.basePath += '/';
+        if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
+    }
 
     /**
      * @param key the identifier for the data

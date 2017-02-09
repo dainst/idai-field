@@ -32,12 +32,6 @@ import {NavbarComponent} from './navbar.component';
 
 import CONFIG = require("config/config.json!json");
 
-
-var validate = function(path) {
-    var newpath = path ? path : 'mediastore';
-    return (newpath.split('/').pop()) ? newpath + '/' : newpath;
-};
-
 @NgModule({
     imports: [
         ImagesModule,
@@ -63,13 +57,17 @@ var validate = function(path) {
 
                 // running under node / electron
                 if (typeof process === 'object') {
-                    const app = (<any>window).require('electron').remote.app;
-                    let path = validate(CONFIG['mediastorepath']);
-                    path = app.getPath('appData') + '/' + path;
+                    let path;
+                    if (CONFIG['mediastorepath']) {
+                        path = CONFIG['mediastorepath'];
+                    } else {
+                        const app = (<any>window).require('electron').remote.app;
+                        path = app.getPath('appData') + '/' + app.getName() + '/mediastore/';
+                    }
                     return new FileSystemMediastore(path);
                 // running in browser
                 } else {
-                    return new HttpMediastore(http, validate(CONFIG['mediastorepath']));
+                    return new HttpMediastore(http, CONFIG['mediastorepath']);
                 }
             },
             deps: [Http]

@@ -1,6 +1,6 @@
 var resourcesPage = require('./resources.page');
 
-fdescribe('relations', function() {
+describe('relations', function() {
 
     beforeEach(function(done) {
         resourcesPage.get().then(function(){

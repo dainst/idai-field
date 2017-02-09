@@ -7,7 +7,7 @@ var waitingTime = 2000;
 /**
  * @author Daniel de Oliveira
  */
-fdescribe('resources', function() {
+describe('resources', function() {
 
 
     beforeEach(function(done){

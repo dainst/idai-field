@@ -2,7 +2,7 @@
 var common = require("../common.js");
 var timeToWaitAfterClickSave = 100;
 var EC = protractor.ExpectedConditions;
-var ECWaitTime = 500;
+var ECWaitTime = 2500;
 var browserSleepTime = 200;
 
 var ResourcesPage = function () {

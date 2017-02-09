@@ -62,7 +62,7 @@ describe('image grid tests -- ', function(){
             });
     });
 
-    xit('user should be able to delete an image in the grid view.', function () {
+    it('user should be able to delete an image in the grid view.', function () {
         var elementToDelete = gridPage.getCell(0);
 
         gridPage.getCellImageName(0)

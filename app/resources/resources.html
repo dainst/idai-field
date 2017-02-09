@@ -20,14 +20,15 @@
                             (onQueryChanged)="queryChanged($event)">
                 </search-bar>
 
-                <ul class="list-group object-list" id="objectList">
+                <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
                     <li *ngFor="let document of documents; let index=index"
-                            (click)="select(document)"
-                            class="list-group-item"
-                            [class.synced]="document.synced"
-                            [class.unsynced]="!document.synced"
-                            [class.selected]="getSelected() && getSelected().resource.id === document.id"
-                            [id]="'resource-' + document.resource.identifier">
+                        (click)="select(document)"
+                        onclick="document.getElementById(this.id).scrollIntoView({ behavior: 'smooth' });"
+                        class="list-group-item"
+                        [class.synced]="document.synced"
+                        [class.unsynced]="!document.synced"
+                        [class.selected]="getSelected() && getSelected().resource.id === document.id"
+                        [id]="'resource-' + document.resource.identifier">
 
                         <document-teaser [document]="document"></document-teaser>
 

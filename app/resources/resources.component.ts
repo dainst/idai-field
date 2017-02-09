@@ -52,6 +52,8 @@ export class ResourcesComponent {
     public select(documentToSelect: IdaiFieldDocument) {
 
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
+        document.getElementById('resource-' + documentToSelect.resource.identifier)
+            .scrollIntoView({ behavior: 'smooth' });
     }
 
     public queryChanged(query: Query) {

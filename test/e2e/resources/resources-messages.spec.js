@@ -2,8 +2,10 @@ var resourcesPage = require('./resources.page');
 
 describe('resources/messages', function() {
 
-    beforeEach(function(){
-        resourcesPage.get();
+    beforeEach(function(done){
+        resourcesPage.get().then(function(){
+            done();
+        })
     });
 
     it('should create a new object of first listed type ', function() {

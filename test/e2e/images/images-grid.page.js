@@ -54,8 +54,10 @@ var ImagesGridPage = function() {
         return element(by.css('.droparea')).click();
     };
     this.get = function() {
-        browser.get('/#/images');
-        browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.');
+        return browser.get('/#/images').
+            then(function(){
+                browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.')
+            });
     };
     this.chooseImageSubtype = function (index) {
         return element(by.id('choose-image-subtype-option-' + index)).click();

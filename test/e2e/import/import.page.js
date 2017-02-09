@@ -35,7 +35,7 @@ var ImportPage = function (){
         return element(by.id('importStartButton')).click();
     };
     this.get = function () {
-        browser.get('/#/resources/');
+        return browser.get('/#/resources/');
     };
 };
 

@@ -1,14 +1,27 @@
 'use strict';
 
-
+var afterClickPauseTime = 250;
 
 var MapPage = function () {
 
     var mapElement = element(by.id("map-container"));
 
     this.clickMap = function(x, y) {
-        return browser.actions().mouseMove(mapElement, {x: x}, {y: y}).click().perform();
+        // return browser.actions().mouseMove(mapElement, {x: x}, {y: y}).click().perform();
+        return new Promise(function(resolve){
+            browser.actions()
+                .mouseMove(mapElement, {x: x, y: y})
+                .click()
+                .perform()
+                .then(function(){
+                    setTimeout(function(){resolve()},afterClickPauseTime)
+                })
+        });
     };
+
+    // function clickMap(toRight, toBottom) {
+    //
+    // }
 
     this.setMarker = function (x, y) {
         return this.clickMap(x, y);

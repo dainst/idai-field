@@ -1,6 +1,9 @@
 'use strict';
-
 var common = require("../common.js");
+var timeToWaitAfterClickSave = 100;
+var EC = protractor.ExpectedConditions;
+var ECWaitTime = 500;
+var browserSleepTime = 200;
 
 var ResourcesPage = function () {
 
@@ -29,7 +32,18 @@ var ResourcesPage = function () {
     };
 
     this.clickSaveDocument = function () {
-        return element(by.id('document-edit-button-save-document')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), ECWaitTime)
+            .then(function(){
+                element(by.id('document-edit-button-save-document')).click().then(
+                    function() {
+                        return new Promise(function(resolve){
+                            setTimeout(function(){
+                                resolve();
+                            },timeToWaitAfterClickSave);
+                        })
+                    }
+                )
+            })
     };
 
     this.clickCreateGeometry = function (type) {
@@ -37,8 +51,9 @@ var ResourcesPage = function () {
     };
 
     this.clickReeditGeometry = function () {
-        browser.sleep(10000);
-        return element(by.id('document-view-button-edit-geometry')).click();
+        return browser.sleep(browserSleepTime).then(function(){
+            return element(by.id('document-view-button-edit-geometry')).click();
+        })
     };
 
     this.clickRelationSuggestionByIndices = function (groupIndex, pickerIndex, suggestionIndex) {
@@ -55,16 +70,25 @@ var ResourcesPage = function () {
         return element.all(by.css('#document-view a')).get(relationIndex).click();
     };
 
+    this.selectGeometryType = function (type) {
+        var geom = 'none';
+        if (type) geom = type;
+        return browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), ECWaitTime)
+            .then(function(){
+                return element(by.id('choose-geometry-option-' + geom)).click();
+            });
+    };
+
     this.createResource = function(identifier, typeIndex) {
         var _this = this;
         return this.clickCreateObject()
             .then(function() {
                 return _this.selectResourceType(typeIndex);
             })
-            .then(this.selectGeometryType)
-            .then(this.typeInIdentifier(identifier))
-            .then(this.scrollUp)
-            .then(this.clickSaveDocument)
+            .then(_this.selectGeometryType)
+            .then(function(){return _this.typeInIdentifier(identifier)})
+            .then(_this.scrollUp)
+            .then(_this.clickSaveDocument)
     };
 
     this.findListItemMarkedNew = function () {
@@ -109,7 +133,7 @@ var ResourcesPage = function () {
     };
 
     this.get = function () {
-        browser.get('/#/resources');
+        return browser.get('/#/resources');
     };
 
     this.scrollDown = function () {
@@ -136,11 +160,7 @@ var ResourcesPage = function () {
         return element(by.id('choose-type-option-' + typeIndex)).click();
     };
 
-    this.selectGeometryType = function (type) {
-        var geom = 'none';
-        if (type) geom = type;
-        return element(by.id('choose-geometry-option-' + geom)).click();
-    };
+
 
     this.typeInIdentifierInSearchField = function(identifier) {
         return common.typeIn(element(by.id('object-search')), identifier);
@@ -148,7 +168,10 @@ var ResourcesPage = function () {
 
     this.typeInIdentifier = function(identifier) {
         // element-2, 0,1 and 2 are type, id, geometries
-        return common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
+        return browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), ECWaitTime)
+            .then(function(){
+                return common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
+            });
     };
 
     this.typeInRelationByIndices = function(groupIndex, pickerIndex, input) {

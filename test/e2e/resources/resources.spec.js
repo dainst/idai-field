@@ -10,8 +10,10 @@ var waitingTime = 2000;
 describe('resources', function() {
 
 
-    beforeEach(function(){
-        resourcesPage.get();
+    beforeEach(function(done){
+        resourcesPage.get().then(function(){
+            done();
+        })
     });
 
     it('should find it by its identifier', function() {

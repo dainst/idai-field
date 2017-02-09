@@ -1,35 +1,27 @@
 var mapPage = require('./map.page');
 var resourcePage = require('../resources/resources.page');
 
+
 describe('idai field app', function() {
 
-    var mapEl;
-    
-    function clickMap(toRight, toBottom) {
-        browser.actions()
-            .mouseMove(mapEl, {x: toRight, y: toBottom})
-            .click()
-            .perform();
-    }
-
     function setPolygon() {
-        clickMap(100,100);
-        clickMap(200,200);
-        clickMap(100,200);
-        clickMap(100,100);
+        return mapPage.clickMap(100,100)
+            .then(function(){return mapPage.clickMap(200,200)})
+            .then(function(){return mapPage.clickMap(100,200)})
+            .then(function(){return mapPage.clickMap(100,100)});
     }
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
         return resourcePage.clickCreateObject()
             .then(resourcePage.selectResourceType)
-            .then(resourcePage.selectGeometryType(geometry))
+            .then(function(){return resourcePage.selectGeometryType(geometry)})
             .then(mapClickCallback);
     }
     
     function createDocWithGeometry(identifier,geometry, mapClickCallback) {
         return beginCreateDocWithGeometry(geometry, mapClickCallback)
-            .then(mapPage.clickMapOption('ok'))
-            .then(resourcePage.typeInIdentifier(identifier))
+            .then(function(){return mapPage.clickMapOption('ok')})
+            .then(function(){return resourcePage.typeInIdentifier(identifier)})
             .then(resourcePage.scrollUp)
             .then(resourcePage.clickSaveDocument);
     }
@@ -51,16 +43,15 @@ describe('idai field app', function() {
             .then(resourcePage.clickReeditGeometry);
     }
     
-    beforeEach(function(){
-        resourcePage.get();
-        mapEl = element(by.id("map-container"));
+    beforeEach(function(done){
+        resourcePage.get().then(function(){
+           done();
+        });
     });
 
     it('should create a new item with point geometry ', function() {
-        createDoc('33','point', mapPage.setMarker(100, 100))
+        createDoc('33','point', function(){return mapPage.setMarker(100, 100)})
             .then(function () {
-                expect(resourcePage.getFirstListItemIdentifier()).toEqual('33');
-                expect(resourcePage.getMessage()).toContain('erfolgreich');
                 return resourcePage.clickBackToDocumentView();
             })
             .then(function() {
@@ -71,8 +62,6 @@ describe('idai field app', function() {
     it('should create a new item with polygon geometry ', function() {
         createDoc('34', 'polygon', setPolygon)
             .then(function () {
-                expect(resourcePage.getFirstListItemIdentifier()).toEqual('34');
-                expect(resourcePage.getMessage()).toContain('erfolgreich');
                 return resourcePage.clickBackToDocumentView();
             })
             .then(function() {
@@ -81,9 +70,9 @@ describe('idai field app', function() {
     });
 
     it('should delete a point geometry ', function() {
-        createDocThenReedit('37', 'point', mapPage.setMarker(100, 100))
-            .then(mapPage.clickMapOption('delete'))
-            .then(mapPage.clickMapOption('ok'))
+        createDocThenReedit('37', 'point', function(){mapPage.setMarker(100, 100)})
+            .then(function(){return mapPage.clickMapOption('delete')})
+            .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
             })
@@ -91,8 +80,8 @@ describe('idai field app', function() {
 
     it('should delete a polygon geometry ', function() {
         createDocThenReedit('36' ,'polygon', setPolygon)
-            .then(mapPage.clickMapOption('delete'))
-            .then(mapPage.clickMapOption('ok'))
+            .then(function(){return mapPage.clickMapOption('delete')})
+            .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
             })
@@ -101,9 +90,9 @@ describe('idai field app', function() {
     it('should create a point geometry later', function() {
         resourcePage.createResource('39')
             .then(resourcePage.clickBackToDocumentView)
-            .then(resourcePage.clickCreateGeometry('point'))
-            .then(mapPage.setMarker(100, 100))
-            .then(mapPage.clickMapOption('ok'))
+            .then(function(){return resourcePage.clickCreateGeometry('point')})
+            .then(function(){return mapPage.setMarker(100, 100)})
+            .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
             })
@@ -112,9 +101,9 @@ describe('idai field app', function() {
     it('should create a polygon geometry later', function() {
         resourcePage.createResource('38')
             .then(resourcePage.clickBackToDocumentView)
-            .then(resourcePage.clickCreateGeometry('polygon'))
+            .then(function(){return resourcePage.clickCreateGeometry('polygon')})
             .then(setPolygon)
-            .then(mapPage.clickMapOption('ok'))
+            .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
             })
@@ -122,9 +111,9 @@ describe('idai field app', function() {
 
 
     it('should cancel deleting a point geometry', function() {
-        createDocThenReedit('40','point', mapPage.setMarker(100, 100))
-            .then(mapPage.clickMapOption('delete'))
-            .then(mapPage.clickMapOption('abort'))
+        createDocThenReedit('40','point', function(){return mapPage.setMarker(100, 100)})
+            .then(function(){return mapPage.clickMapOption('delete')})
+            .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
             })
@@ -132,8 +121,8 @@ describe('idai field app', function() {
 
     it('should cancel deleting a polygon geometry', function() {
         createDocThenReedit('41','polygon', setPolygon)
-            .then(mapPage.clickMapOption('delete'))
-            .then(mapPage.clickMapOption('abort'))
+            .then(function(){return mapPage.clickMapOption('delete')})
+            .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
             })
@@ -141,8 +130,8 @@ describe('idai field app', function() {
     
     
     it('should abort item creation completely when aborting geometry editing', function() {
-        beginCreateDocWithGeometry('point', mapPage.setMarker(100, 100))
-            .then(mapPage.clickMapOption('abort'))
+        beginCreateDocWithGeometry('point', function(){return mapPage.setMarker(100, 100)})
+            .then(function(){return mapPage.clickMapOption('abort')})
             .then(function() {
                 expect(browser.getCurrentUrl()).toContain('resources');
                 expect(browser.getCurrentUrl()).not.toContain('edit');

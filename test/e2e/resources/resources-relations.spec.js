@@ -2,8 +2,10 @@ var resourcesPage = require('./resources.page');
 
 describe('relations', function() {
 
-    beforeEach(function() {
-        resourcesPage.get();
+    beforeEach(function(done) {
+        resourcesPage.get().then(function(){
+            done();
+        });
     });
 
     it ('should create links for relations', function() {

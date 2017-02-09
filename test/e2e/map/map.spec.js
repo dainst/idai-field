@@ -72,7 +72,7 @@ describe('idai field app', function() {
     });
 
     it('should delete a point geometry ', function(done) {
-        createDocThenReedit('37', 'point', function(){mapPage.setMarker(100, 100)})
+        createDocThenReedit('37', 'point', function(){return mapPage.setMarker(100, 100)})
             .then(function(){return mapPage.clickMapOption('delete')})
             .then(function(){return mapPage.clickMapOption('ok')})
             .then(function() {

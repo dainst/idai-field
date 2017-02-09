@@ -65,7 +65,7 @@ var validate = function(path) {
                 if (typeof process === 'object') {
                     const app = (<any>window).require('electron').remote.app;
                     let path = validate(CONFIG['mediastorepath']);
-                    path = app.getAppPath() + '/' + path;
+                    path = app.getPath('appData') + '/' + path;
                     return new FileSystemMediastore(path);
                 // running in browser
                 } else {

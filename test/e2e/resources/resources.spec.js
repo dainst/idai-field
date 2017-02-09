@@ -160,18 +160,19 @@ describe('resources', function() {
             })
     });
 
-    it ('should change the selection to existing when saving via modal', function() {
+    it ('should change the selection to existing when saving via modal', function(done) {
         resourcesPage.createResource('1')
-            .then(resourcesPage.createResource('2'))
-            .then(resourcesPage.selectObjectByIndex(0))
+            .then(function(){return resourcesPage.createResource('2')})
+            .then(function(){return resourcesPage.selectObjectByIndex(0)})
             .then(resourcesPage.clickEditDocument)
-            .then(resourcesPage.typeInIdentifier('2a'))
-            .then(resourcesPage.selectObjectByIndex(1))
+            .then(function(){return resourcesPage.typeInIdentifier('2a')})
+            .then(function(){return resourcesPage.selectObjectByIndex(1)})
             .then(resourcesPage.scrollUp)
             .then(resourcesPage.clickSaveInModal)
             .then(resourcesPage.scrollUp)
             .then(function(){
                 expect(resourcesPage.selectObjectByIndex(1).getAttribute('class')).toContain('selected')
+                done();
             })
     });
 

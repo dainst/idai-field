@@ -41,7 +41,7 @@ describe('relations', function() {
                 return resourcesPage.scrollUp()
             })
             .then(resourcesPage.clickSaveDocument)
-            .then(resourcesPage.selectObjectByIndex(1))
+            .then(function(){return resourcesPage.selectObjectByIndex(1)})
             .then(resourcesPage.clickEditDocument)
             .then(function() {
                 expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('o2');

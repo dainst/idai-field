@@ -7,7 +7,7 @@
     <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-4 document-info">
         <document-view [(document)]="activeDoc" [basePath]="'resources'">
             <description-view [document]="activeDoc"></description-view>
-            <thumbnail-view *ngIf="activeDoc && activeDoc.resource.relations['depictedIn']" [imageIds]="activeDoc.resource.relations['depictedIn']"></thumbnail-view>
+            <thumbnail-view *ngIf="activeDoc && activeDoc.resource.relations && activeDoc.resource.relations['depictedIn']" [imageIds]="activeDoc.resource.relations['depictedIn']"></thumbnail-view>
             <geometry-view [document]="activeDoc"></geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="selectDocument($event)"></relations-view>

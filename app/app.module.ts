@@ -64,10 +64,11 @@ import CONFIG = require("config/config.json!json");
                         const app = (<any>window).require('electron').remote.app;
                         path = app.getPath('appData') + '/' + app.getName() + '/mediastore/';
                     }
-                    return new FileSystemMediastore(path);
+                    return new FileSystemMediastore(path, CONFIG['environment'] == 'test');
                 // running in browser
                 } else {
-                    return new HttpMediastore(http, CONFIG['mediastorepath']);
+                    let path = CONFIG['mediastorepath'] ? CONFIG['mediastorepath'] : 'mediastore';
+                    return new HttpMediastore(http, path);
                 }
             },
             deps: [Http]

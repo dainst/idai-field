@@ -2,12 +2,14 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from 'idai-components-2/datastore';
 
 import * as fs from '@node/fs';
+import {ncp} from 'ncp';
 
 export class FileSystemMediastore implements Mediastore {
 
-    constructor(private basePath: string) {
+    constructor(private basePath: string, loadSampleData: boolean) {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
+        if (loadSampleData) this.loadSampleData();
     }
 
     /**
@@ -80,6 +82,14 @@ export class FileSystemMediastore implements Mediastore {
      */
     public objectChangesNotifications(): Observable<File> {
         return new Observable();
+    }
+
+    private loadSampleData(): void {
+        fs.readdir('mediastore', (err, files) => {
+            files.forEach(file => {
+                fs.createReadStream('mediastore/' + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
+            });
+        })
     }
 
 }

@@ -8,28 +8,40 @@ describe('resources/messages', function() {
         })
     });
 
-    it('should create a new object of first listed type ', function() {
+    it('should create a new object of first listed type ', function(done) {
         resourcesPage.createResource('12')
-            .then(expect(resourcesPage.getMessage()).toContain('erfolgreich'));
+            .then(function(){
+                expect(resourcesPage.getMessage()).toContain('erfolgreich');
+                done();
+            });
     });
 
-    it('should show the success msg also on route change', function() {
+    it('should show the success msg also on route change', function(done) {
         resourcesPage.createResource('12')
             .then(resourcesPage.clickCloseMessage)
-            .then(resourcesPage.typeInIdentifier('34'))
-            .then(resourcesPage.selectObjectByIndex(0))
+            .then(function(){return resourcesPage.typeInIdentifier('34')})
+            .then(function(){return resourcesPage.selectObjectByIndex(0)})
             .then(resourcesPage.clickSaveInModal)
-            .then(expect(resourcesPage.getMessage()).toContain('erfolgreich'));
+            .then(function(){
+                expect(resourcesPage.getMessage()).toContain('erfolgreich');
+                done();
+            });
     });
     
-    it('should warn if identifier is missing', function () {
+    it('should warn if identifier is missing', function (done) {
         resourcesPage.createResource('')
-            .then(expect(resourcesPage.getMessage()).toContain('identifier'));
+            .then(function(){
+                expect(resourcesPage.getMessage()).toContain('identifier');
+                done();
+            });
     });
 
-    it('should warn if an existing id is used', function() {
+    it('should warn if an existing id is used', function(done) {
         resourcesPage.createResource('12')
             .then(resourcesPage.createResource('12'))
-            .then(expect(resourcesPage.getMessage()).toContain('existiert bereits'));
+            .then(function(){
+                expect(resourcesPage.getMessage()).toContain('existiert bereits');
+                done();
+            });
     });
 });

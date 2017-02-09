@@ -59,7 +59,6 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                 }
             }
         }
-        console.log(this.projectImageTypes)
     }
 
     public save(viaSaveButton: boolean = false) {

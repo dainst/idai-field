@@ -43,12 +43,12 @@ export class AppComponent implements OnInit {
     private defaultFields = [{
         name : "shortDescription",
         label : "Kurzbeschreibung",
-        visible: false
+        visible: true
     },{
         name : "identifier",
         description : "use this to uniquely identify your object",
         label : "Identifier",
-        visible: false,
+        visible: true,
         mandatory: true
     },{
         name : "geometries",

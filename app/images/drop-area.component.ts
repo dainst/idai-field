@@ -45,9 +45,8 @@ export class DropAreaComponent extends WithConfiguration {
     public onDrop(event) {
 
         event.preventDefault();
-        this.chooseType().then(
-            type => this.uploadFiles(event.dataTransfer.files, type)
-        );
+        let files = event.dataTransfer.files;
+        this.chooseType().then(type => this.uploadFiles(files, type));
     }
 
     public onSelectImages(event) {
@@ -74,6 +73,8 @@ export class DropAreaComponent extends WithConfiguration {
     }
 
     private uploadFiles(files: File[], type: IdaiType) {
+
+        console.log("uploadFiles", files);
 
         if (files && files.length > 0) {
             for (var i = 0; i < files.length; i++) this.uploadFile(files[i], type);

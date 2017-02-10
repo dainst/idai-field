@@ -83,7 +83,7 @@ export function main() {
 
                 mockHttp.get.and.callFake(successFunction);
                 idaiFieldBackend.checkConnection();
-                expect(j).toBe(1);
+                expect(j).toBe(2);
             }
         );
 

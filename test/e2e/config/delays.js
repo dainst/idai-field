@@ -5,7 +5,7 @@
  * utils.delayPromises(30);
  *
  */
-var promisesDelay = 12;
+var promisesDelay = 20;
 
 
 function delayPromises(milliseconds) {

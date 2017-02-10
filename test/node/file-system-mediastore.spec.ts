@@ -66,7 +66,7 @@ describe('FileSystemMediastore', () => {
         store.create('test_read', str2ab('qwer'))
             .then(() => { return store.read('test_read'); })
             .then((data) => {
-                expect(ab2str(data)).toEqual('qklö');
+                expect(ab2str(data)).toEqual('qwer');
                 done();
             })
             .catch(err => {

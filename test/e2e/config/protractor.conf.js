@@ -1,4 +1,5 @@
 fs = require('fs');
+var failFast = require('protractor-fail-fast');
 
 exports.config = {
     chromeDriver: '../../../node_modules/chromedriver/lib/chromedriver/chromedriver',
@@ -27,8 +28,12 @@ exports.config = {
         failOnError: true,
         logWarnings: true,
         exclude: []
+    },{
+        package: 'protractor-fail-fast'
     }],
     onPrepare: function() {
+        jasmine.getEnv().addReporter(failFast.init());
+
         var FailureScreenshotReporter = function() {
 
             this.specDone = function(spec) {
@@ -50,6 +55,9 @@ exports.config = {
             browser.manage().window().setSize(
                 800, 600);
         }});
+    },
+    afterLaunch: function() {
+        failFast.clean();
     },
     /**
      * ng2 related configuration

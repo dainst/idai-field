@@ -81,6 +81,7 @@
     "karma-jasmine": "1.1.0",
     "protractor": "4.0.10",
     "protractor-console-plugin": "0.1.1",
+    "protractor-fail-fast": "2.0.0",
     "rimraf": "2.5.4",
     "typescript": "2.1.5",
     "yargs": "5.0.0"

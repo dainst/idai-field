@@ -118,7 +118,7 @@ var ResourcesPage = function () {
 
     this.getTypeOfSelectedGeometry = function() {
         return new Promise(function(resolve){
-            browser.wait(EC.visibilityOf(by.css('#document-view-field-geometry .fieldvalue')), ECWaitTime)
+            browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), ECWaitTime)
                 .then(function() {
                     resolve(element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText());
                 })

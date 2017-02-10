@@ -58,7 +58,9 @@ export class ResourceEditNavigationComponent
         this.getRouteParams(
             (type) => {
                 this.mode = 'new';
-                this.document = this.resourceComponent.createNewDocument(type);
+                this.resourceComponent.createNewDocument(type).then(doc=>{
+                    this.document = doc;
+                })
             },
             (id) => {
                 if (id == 'selected') {

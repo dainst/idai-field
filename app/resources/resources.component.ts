@@ -21,11 +21,13 @@ import {FilterUtility} from '../util/filter-utility';
  */
 export class ResourcesComponent {
 
-    public documents: Document[];
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };
     protected defaultFilterSet: FilterSet;
+
+    public documents: Document[];
+    private ready: Promise<any>;
 
     constructor(@Inject('app.config') private config,
                 private router: Router,
@@ -36,11 +38,18 @@ export class ResourcesComponent {
             type: 'and'
         };
 
+        let readyResolveFun: Function;
+        this.ready = new Promise<any>(resolve=>{
+            readyResolveFun = resolve;
+        });
+
         configLoader.configuration().subscribe(result => {
             if (!this.defaultFilterSet) {
                 this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
-                this.fetchDocuments(this.query);
+                this.fetchDocuments(this.query).then(()=>{
+                   readyResolveFun();
+                });
             }
         });
     }
@@ -92,20 +101,23 @@ export class ResourcesComponent {
         this.notify();
     }
 
-    public createNewDocument(type: string) {
+    public createNewDocument(type: string): Promise<any> {
 
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
-
         var newDocument = { "resource": { "relations": {}, "type": type } };
-
-        this.documents.unshift(<Document> newDocument);
-        this.notify();
-
         this.selectedDocument = newDocument;
 
-        return newDocument;
+
+        return new Promise<any>(resolve=>{
+            this.ready.then(()=>{
+                this.documents.unshift(<Document> newDocument);
+                this.notify();
+                resolve(newDocument);
+
+            }).catch(err=>console.error("ResourcesComponent.createNewDocument caught promise err",err));
+        });
     }
 
     /**
@@ -115,7 +127,7 @@ export class ResourcesComponent {
      */
     public fetchDocuments(query: Query) {
 
-        this.datastore.find(query).then(documents => {
+        return this.datastore.find(query).then(documents => {
             this.documents = documents;
             this.notify();
         }).catch(err => console.error(err));

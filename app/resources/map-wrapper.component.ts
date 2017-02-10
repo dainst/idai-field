@@ -30,7 +30,7 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
         private router: Router,
         private route: ActivatedRoute,
         private datastore: ReadDatastore,
-        private overviewComponent: ResourcesComponent,
+        private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
@@ -46,18 +46,20 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
         }
     }
 
-    private getRouteParams(callback) {
+    private getRouteParams(callback): Promise<any> {
 
-        this.route.params.forEach((params: Params) => {
+        return this.route.params.forEach((params: Params) => {
             var type = undefined;
             var id = undefined;
-            if (params['id'] && params['id'].indexOf('new') > -1) {
-                type = params['id'].substring(params['id'].indexOf(":") + 1);
+            if (params['id'] && params['id'].indexOf('new') == 0) {
+                type = params['id'].substring(4);
+                console.debug("new doc of type:",type);
             } else {
                 id = params['id'];
             }
             callback(params['menuMode'], params['editMode'], id, type);
-        });
+
+        })
     }
 
     private setMenuMode(menuMode) {
@@ -83,17 +85,17 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
                 this.activeDoc = document as IdaiFieldDocument;
                 this.activeType = document.resource.type;
                 this.activeTypeLabel = this.projectConfiguration.getLabelForType(this.activeType);
-                this.overviewComponent.setSelected(<IdaiFieldDocument>document);
+                this.resourcesComponent.setSelected(<IdaiFieldDocument>document);
             });
         } else {
             this.activeDoc = null;
-            this.overviewComponent.setSelected(null);
+            this.resourcesComponent.setSelected(null);
         }   
     }
 
     ngOnInit(): void {
 
-        this.overviewComponent.getDocuments().subscribe(result => {
+        this.resourcesComponent.getDocuments().subscribe(result => {
            this.docs = result as IdaiFieldDocument[];
         });
 
@@ -103,17 +105,18 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
             this.setEditMode(editMode);
 
             if (type) {
-                this.overviewComponent.createNewDocument(type);
+                this.resourcesComponent.createNewDocument(type);
             } else {
                 this.setActiveDoc(id);
             }
-        }.bind(this));
+
+        }.bind(this)).catch(err=>console.log("MapWrapperComponent.ngOnInit caught err after calling getRouteParams: ",err));
     }
     
 
 
     private selectedDocIsNew() : boolean {
-        return (this.overviewComponent.getSelected().resource.id == undefined);
+        return (this.resourcesComponent.getSelected().resource.id == undefined);
     }
 
     /**
@@ -123,9 +126,9 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
-            this.overviewComponent.getSelected().resource.geometries = [ geometry ];
+            this.resourcesComponent.getSelected().resource.geometries = [ geometry ];
         } else if (geometry === null) { 
-            delete this.overviewComponent.getSelected().resource.geometries;
+            delete this.resourcesComponent.getSelected().resource.geometries;
         }
 
         if (this.selectedDocIsNew()) {
@@ -139,7 +142,7 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
         } else {
             
             if (geometry !== undefined) this.save();
-            this.router.navigate(['resources', {id: this.overviewComponent.getSelected().resource.id}]);
+            this.router.navigate(['resources', {id: this.resourcesComponent.getSelected().resource.id}]);
         }
     }
     
@@ -150,20 +153,20 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
 
     private removeEmptyDocument() {
         
-        var selectedDocument = this.overviewComponent.getSelected();
+        var selectedDocument = this.resourcesComponent.getSelected();
         if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometries) {
-            this.overviewComponent.remove(selectedDocument);
+            this.resourcesComponent.remove(selectedDocument);
         }
     }
 
     private save() {
 
         this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
-        this.persistenceManager.setOldVersion(this.overviewComponent.getSelected());
+        this.persistenceManager.setOldVersion(this.resourcesComponent.getSelected());
 
-        this.persistenceManager.persist(this.overviewComponent.getSelected()).then(
+        this.persistenceManager.persist(this.resourcesComponent.getSelected()).then(
             () => {
-                this.overviewComponent.getSelected()['synced'] = 0;
+                this.resourcesComponent.getSelected()['synced'] = 0;
             },
             errors => { console.log(errors); });
     }

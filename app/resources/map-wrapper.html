@@ -1,6 +1,6 @@
 <div class="row map-wrapper">
     <div [class.col-sm-12]="!activeDoc || menuMode != 'view'" [class.col-sm-8]="activeDoc && menuMode == 'view'">
-        <map [documents]="docs" [selectedDocument]="overviewComponent.getSelected()"
+        <map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="selectDocument($event)"
              (onQuitEditing)="quitEditing($event)"></map>
     </div>

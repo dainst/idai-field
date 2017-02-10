@@ -43,9 +43,16 @@ export class PouchdbDatastore implements Datastore {
                     map: "function mapFun(doc) {" +
                         "if (doc.resource.shortDescription)" +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
-                                "emit(token.toLowerCase(), null);" +
+                                "emit(token.toLowerCase(), doc._id);" +
                             "});" +
-                        "emit(doc.resource.identifier.toLowerCase(), null);" +
+                        "emit(doc.resource.identifier.toLowerCase(), doc._id);" +
+                    "}",
+                    reduce: "function reduceFun(keys, values) {" +
+                        "var result = [];" +
+                        "values.forEach(function(value) {" +
+                            "if (result.indexOf(value) == -1) result.push(value);" +
+                        "});" +
+                        "return result" +
                     "}"
                 }
             });
@@ -238,34 +245,10 @@ export class PouchdbDatastore implements Datastore {
             return this.db.query('fulltext', {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
-                include_docs: true
+                reduce: true
             });
-        }).then(result => {
-            console.log(result);
-            return this.replaceWithCached(
-                this.distinctDocuments( // for some reason we get duplicates from buildResult
-                    this.buildResult(result, query.filterSets))
-                )
-        });
-    }
-
-    private distinctDocuments(documents) {
-        var keep = [];
-        var del = [];
-        for (var i in documents) {
-            if (keep.indexOf(documents[i].resource.id) == -1) {
-                keep.push(documents[i].resource.id);
-            } else {
-                del.push(i)
-            }
-        }
-
-        for (var j=documents.length;j>0;j--) {
-            if (del.indexOf(j.toString())!=-1) {
-                documents.splice(j,1);
-            }
-        }
-        return documents;
+        }).then(result => this.buildResult(result, query.filterSets))
+        .then(result => this.replaceWithCached(result));
     }
 
     private replaceWithCached(results_) {
@@ -286,12 +269,11 @@ export class PouchdbDatastore implements Datastore {
         return this.db.get(id);
     }
 
-    private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
+    private buildResult(result: any[], filterSets: FilterSet[]): Promise<Document[]> {
 
-        var docs = result['rows'].map(row => { return row.doc; });
-
-        return docs.filter( (doc: Document) => {
-            return this.docMatchesFilterSets(filterSets, doc);
+        let docIds = result['rows'][0].value;
+        return Promise.all(docIds.map(docId => this.get(docId))).then(docs => {
+            return docs.filter( (doc: Document) => this.docMatchesFilterSets(filterSets, doc));
         });
     }
 

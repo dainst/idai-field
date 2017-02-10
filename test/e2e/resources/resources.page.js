@@ -20,7 +20,10 @@ var ResourcesPage = function () {
     };
 
     this.clickCloseMessage = function () {
-        return element(by.css('#message-0 button')).click();
+        return browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), ECWaitTime)
+            .then(function(){
+                return element(by.css('#message-0 button')).click();
+            })
     };
 
     this.clickEditDocument = function () {
@@ -107,7 +110,10 @@ var ResourcesPage = function () {
     };
 
     this.getMessage = function(){
-        return element(by.id('message-0')).getText();
+        return browser.wait(EC.visibilityOf(element(by.id('message-0'))), ECWaitTime)
+            .then(function() {
+                return element(by.id('message-0')).getText();
+            });
     };
 
     this.getTypeOfSelectedGeometry = function() {
@@ -148,9 +154,16 @@ var ResourcesPage = function () {
     };
 
     this.setTypeFilter = function(typeIndex) {
-        return element(by.id('searchfilter')).click()
-            .then(function() {
-                return element(by.id('choose-type-filter-option-' + typeIndex)).click()
+
+        return browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), ECWaitTime)
+            .then(function(){
+                return element(by.id('searchfilter')).click()
+                    .then(function() {
+                        return browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), ECWaitTime)
+                            .then(function() {
+                                return element(by.id('choose-type-filter-option-' + typeIndex)).click()
+                            })
+                    });
             });
     };
 

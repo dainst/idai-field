@@ -39,14 +39,14 @@ describe('resources', function() {
                         return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
                     })
             })
-            .then(function(){resourcesPage.setTypeFilter(0)})
+            .then(function(){return resourcesPage.setTypeFilter(0)})
             .then(function() {
                 return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
                     .then(function(){
                         return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
                     })
             })
-            .then(resourcesPage.setTypeFilter('all'))
+            .then(function(){return resourcesPage.setTypeFilter('all')})
             .then(function() {
                 browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
                     .then(function(){
@@ -65,8 +65,10 @@ describe('resources', function() {
             .then(resourcesPage.clickEditDocument)
             .then(function(){return resourcesPage.typeInIdentifier('1b')})
             .then(function(){
-                expect(browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), waitingTime));
-                done();
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), waitingTime)
+                    .then(function(){
+                        done();
+                    });
             });
     });
 

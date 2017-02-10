@@ -100,7 +100,7 @@ export function main() {
                 mockHttp.get.and.callFake(failFunction);
                 idaiFieldBackend.checkConnection();
 
-                expect(j).toBe(2);
+                expect(j).toBe(1);
             }
         );
 

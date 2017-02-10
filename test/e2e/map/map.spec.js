@@ -28,9 +28,7 @@ describe('resources/map', function() {
     
     
     function createDoc(identifier,geometryType, mapClickCallback) {
-        if (geometryType == 'point') {
-            return createDocWithGeometry(identifier, geometryType, mapClickCallback)
-        } else if (geometryType == 'polygon') {
+        if (geometryType) {
             return createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
             return resourcePage.createResource(identifier);

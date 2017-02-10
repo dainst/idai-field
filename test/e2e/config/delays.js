@@ -5,7 +5,7 @@
  * utils.delayPromises(30);
  *
  */
-var promisesDelay = 5;
+var promisesDelay = 0;
 
 function delayPromises(milliseconds) {
     var executeFunction = browser.driver.controlFlow().execute;

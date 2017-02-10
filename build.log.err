@@ -1,5 +1,0 @@
-/Users/daniel/Workspace/Checkouts/idai-field-client/app/datastore/file-system-mediastore.ts(4,21): error TS2307: Cannot find module '@node/fs'.
-/Users/daniel/Workspace/Checkouts/idai-field-client/app/datastore/file-system-mediastore.ts(5,19): error TS2307: Cannot find module 'ncp'.
-test/node/file-system-mediastore.spec.ts(41,17): error TS2346: Supplied parameters do not match any signature of call target.
-app/datastore/file-system-mediastore.ts(4,21): error TS2307: Cannot find module '@node/fs'.
-app/datastore/file-system-mediastore.ts(5,19): error TS2307: Cannot find module 'ncp'.

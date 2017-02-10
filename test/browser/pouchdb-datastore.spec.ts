@@ -27,7 +27,7 @@ export function main() {
 
         beforeEach(
             function () {
-                datastore = new PouchdbDatastore();
+                datastore = new PouchdbDatastore("a","b");
             }
         );
 

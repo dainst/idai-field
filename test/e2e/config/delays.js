@@ -5,7 +5,7 @@
  * utils.delayPromises(30);
  *
  */
-var promisesDelay = 12;
+var promisesDelay = 0;
 
 
 function delayPromises(milliseconds) {
@@ -34,4 +34,3 @@ module.exports = {
     ECWaitTime: ECWaitTime,
     shortRest: shortRest
 };
-    

@@ -2,7 +2,6 @@ import {Observable} from "rxjs/Observable";
 import {Mediastore} from 'idai-components-2/datastore';
 
 import * as fs from '@node/fs';
-import {ncp} from 'ncp';
 
 export class FileSystemMediastore implements Mediastore {
 

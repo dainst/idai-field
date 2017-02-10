@@ -38,7 +38,7 @@ describe('FileSystemMediastore', () => {
 
     beforeEach(() => {
         fs.mkdirSync(storePath);
-        store = new FileSystemMediastore(storePath);
+        store = new FileSystemMediastore(storePath,false);
     });
 
     afterEach(done => {

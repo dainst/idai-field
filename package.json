@@ -55,6 +55,8 @@
     "@types/geojson": "0.0.32",
     "@types/jasmine": "^2.5.41",
     "@types/leaflet": "^1.0.49",
+    "@types/leaflet-imageoverlay-rotated": "^0.1.0",
+    "@types/leaflet.pm": "^0.13.0",
     "@types/node": "7.0.3",
     "@types/papaparse": "^4.1.28",
     "@types/pouchdb": "^5.4.28",

@@ -40,6 +40,8 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
         if (documentToJumpTo) {
+            document.getElementById('resource-' + documentToJumpTo.resource.identifier)
+                .scrollIntoView({ behavior: 'smooth' });
             this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
         } else {
             this.router.navigate(['resources']);

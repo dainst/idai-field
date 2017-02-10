@@ -156,6 +156,9 @@ describe('resources', function() {
             .then(resourcesPage.clickSaveInModal)
             .then(resourcesPage.scrollUp)
             .then(function(){
+                return browser.wait(EC.presenceOf(element(by.css('#objectList .list-group-item .new'))), delays.ECWaitTime)
+            })
+            .then(function(){
                 expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual('Neues Objekt');
                 done();
             })

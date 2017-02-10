@@ -41,9 +41,12 @@ export class PouchdbDatastore implements Datastore {
         return this.setupIndex('_design/fulltext', {
                 fulltext: {
                     map: "function mapFun(doc) {" +
-                    "if (doc.resource.shortDescription) emit(doc.resource.shortDescription.toLowerCase(), doc);" +
-                    "emit(doc.resource.identifier.toLowerCase(), doc);" +
-                    "}" // TODO add more fields to index
+                        "if (doc.resource.shortDescription)" +
+                            "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
+                                "emit(token.toLowerCase(), null);" +
+                            "});" +
+                        "emit(doc.resource.identifier.toLowerCase(), null);" +
+                    "}"
                 }
             });
     }
@@ -238,9 +241,11 @@ export class PouchdbDatastore implements Datastore {
                 include_docs: true
             });
         }).then(result => {
+            console.log(result);
             return this.replaceWithCached(
                 this.distinctDocuments( // for some reason we get duplicates from buildResult
-                    this.buildResult(result, query.filterSets)))
+                    this.buildResult(result, query.filterSets))
+                )
         });
     }
 
@@ -284,6 +289,7 @@ export class PouchdbDatastore implements Datastore {
     private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
 
         var docs = result['rows'].map(row => { return row.doc; });
+
         return docs.filter( (doc: Document) => {
             return this.docMatchesFilterSets(filterSets, doc);
         });

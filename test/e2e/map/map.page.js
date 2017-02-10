@@ -19,7 +19,7 @@ var MapPage = function () {
                         .then(function () {
                             setTimeout(function () {
                                 resolve()
-                            }, delays.afterClickPauseTime)
+                            }, delays.shortRest)
                         })
                 })
         });

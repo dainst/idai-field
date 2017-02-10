@@ -1,11 +1,13 @@
 var mapPage = require('./map.page');
 var resourcePage = require('../resources/resources.page');
-
+var delays = require('../config/delays');
 
 describe('resources/map', function() {
 
     function setPolygon() {
-        return mapPage.clickMap(100,100)
+        return Promise.resolve()
+            .then(function(){return new Promise(function(resolve){setTimeout(function(){resolve()},delays.shortRest)})})
+            .then(function(){return mapPage.clickMap(100,100)})
             .then(function(){return mapPage.clickMap(200,200)})
             .then(function(){return mapPage.clickMap(100,200)})
             .then(function(){return mapPage.clickMap(100,100)});

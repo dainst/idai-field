@@ -238,8 +238,29 @@ export class PouchdbDatastore implements Datastore {
                 include_docs: true
             });
         }).then(result => {
-            return this.replaceWithCached(this.buildResult(result, query.filterSets));
+            return this.replaceWithCached(
+                this.distinctDocuments( // for some reason we get duplicates from buildResult
+                    this.buildResult(result, query.filterSets)))
         });
+    }
+
+    private distinctDocuments(documents) {
+        var keep = [];
+        var del = [];
+        for (var i in documents) {
+            if (keep.indexOf(documents[i].resource.id) == -1) {
+                keep.push(documents[i].resource.id);
+            } else {
+                del.push(i)
+            }
+        }
+
+        for (var j=documents.length;j>0;j--) {
+            if (del.indexOf(j.toString())!=-1) {
+                documents.splice(j,1);
+            }
+        }
+        return documents;
     }
 
     private replaceWithCached(results_) {

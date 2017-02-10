@@ -7,15 +7,25 @@ var ECWaitTime = 2500;
 var ResourcesPage = function () {
 
     this.clickCreateObject = function() {
-        return element(by.id('object-overview-button-create-object')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), ECWaitTime)
+            .then(function() {
+                return element(by.id('object-overview-button-create-object')).click();
+            })
+
     };
 
     this.clickSaveInModal = function () {
-        return element(by.id('overview-save-confirmation-modal-save-button')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), ECWaitTime)
+            .then(function() {
+                return element(by.id('overview-save-confirmation-modal-save-button')).click();
+            });
     };
 
     this.clickCancelInModal = function () {
-        return element(by.id('overview-save-confirmation-modal-cancel-button')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), ECWaitTime)
+            .then(function() {
+                return element(by.id('overview-save-confirmation-modal-cancel-button')).click();
+            });
     };
 
     this.clickCloseMessage = function () {
@@ -26,7 +36,10 @@ var ResourcesPage = function () {
     };
 
     this.clickEditDocument = function () {
-        return element(by.id('document-view-button-edit-document')).click();
+        return browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), ECWaitTime)
+            .then(function() {
+                return element(by.id('document-view-button-edit-document')).click();
+            });
     };
 
     this.clickBackToDocumentView = function () {

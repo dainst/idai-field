@@ -5,7 +5,8 @@
  * utils.delayPromises(30);
  *
  */
-var promisesDelay = 0;
+var promisesDelay = 10;
+
 
 function delayPromises(milliseconds) {
     var executeFunction = browser.driver.controlFlow().execute;
@@ -25,10 +26,12 @@ console.log("Set promises delay to " + promisesDelay + " ms.");
 delayPromises(promisesDelay);
 
 
-var ECWaitTime = 2500;
+var ECWaitTime = 2000;
+var afterClickPauseTime = 200;
 
 
 module.exports = {
-    ECWaitTime: ECWaitTime
+    ECWaitTime: ECWaitTime,
+    afterClickPauseTime: afterClickPauseTime
 };
     

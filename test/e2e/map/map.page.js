@@ -2,7 +2,7 @@
 var delays = require('../config/delays');
 var EC = protractor.ExpectedConditions;
 
-var afterClickPauseTime = 150;
+
 
 var MapPage = function () {
 
@@ -19,7 +19,7 @@ var MapPage = function () {
                         .then(function () {
                             setTimeout(function () {
                                 resolve()
-                            }, afterClickPauseTime)
+                            }, delays.afterClickPauseTime)
                         })
                 })
         });

@@ -1,27 +1,29 @@
 'use strict';
+var delays = require('../config/delays');
+var EC = protractor.ExpectedConditions;
 
-var afterClickPauseTime = 250;
+var afterClickPauseTime = 150;
 
 var MapPage = function () {
 
     var mapElement = element(by.id("map-container"));
 
     this.clickMap = function(x, y) {
-        // return browser.actions().mouseMove(mapElement, {x: x}, {y: y}).click().perform();
         return new Promise(function(resolve){
-            browser.actions()
-                .mouseMove(mapElement, {x: x, y: y})
-                .click()
-                .perform()
-                .then(function(){
-                    setTimeout(function(){resolve()},afterClickPauseTime)
+            return browser.wait(EC.visibilityOf(element(by.id('map-container'))), delays.ECWaitTime)
+                .then(function() {
+                    browser.actions()
+                        .mouseMove(mapElement, {x: x, y: y})
+                        .click()
+                        .perform()
+                        .then(function () {
+                            setTimeout(function () {
+                                resolve()
+                            }, afterClickPauseTime)
+                        })
                 })
         });
     };
-
-    // function clickMap(toRight, toBottom) {
-    //
-    // }
 
     this.setMarker = function (x, y) {
         return this.clickMap(x, y);

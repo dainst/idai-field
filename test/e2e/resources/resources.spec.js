@@ -1,7 +1,6 @@
 var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
-
-var waitingTime = 2000;
+var delays = require('../config/delays');
 
 
 /**
@@ -34,23 +33,23 @@ describe('resources', function() {
             .then(function(){return resourcesPage.setTypeFilter(2)})
             .then(function(){return resourcesPage.setTypeFilter(1)})
             .then(function() {
-                return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
                     .then(function() {
-                        return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                        return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
                     })
             })
             .then(function(){return resourcesPage.setTypeFilter(0)})
             .then(function() {
-                return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
                     .then(function(){
-                        return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), waitingTime);
+                        return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
                     })
             })
             .then(function(){return resourcesPage.setTypeFilter('all')})
             .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), waitingTime)
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
                     .then(function(){
-                        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), waitingTime)
+                        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime)
                             .then(function(){
                                 done()
                             })
@@ -65,7 +64,7 @@ describe('resources', function() {
             .then(resourcesPage.clickEditDocument)
             .then(function(){return resourcesPage.typeInIdentifier('1b')})
             .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), waitingTime)
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), delays.ECWaitTime)
                     .then(function(){
                         done();
                     });
@@ -83,7 +82,7 @@ describe('resources', function() {
         resourcesPage.createResource('12')
             .then(function(){return resourcesPage.typeInIdentifier('34')})
             .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), waitingTime)
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), delays.ECWaitTime)
                     .then(function(){
                         done();
                     })
@@ -102,7 +101,7 @@ describe('resources', function() {
             .then(resourcesPage.clickEditDocument)
             .then(function(){return resourcesPage.typeInIdentifier('56')}) // same ...
             .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), waitingTime) // ... instance
+                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), delays.ECWaitTime) // ... instance
                     .then(function(){
                         done();
                     });
@@ -135,7 +134,7 @@ describe('resources', function() {
             .then(resourcesPage.selectResourceType)
             .then(resourcesPage.selectGeometryType)
             .then(function(){
-                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), waitingTime);
+                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), delays.ECWaitTime);
             })
             .then(resourcesPage.scrollUp)
             .then(function(){return resourcesPage.selectObjectByIndex(1)})

@@ -5,7 +5,7 @@ exports.config = {
 
     baseUrl: 'http://localhost:8081',
 
-    specs: ['./promises-delay.js', '../**/*.spec.js'],
+    specs: ['./delays.js', '../**/*.spec.js'],
 
     directConnect: true,
     exclude: [],

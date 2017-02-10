@@ -2,7 +2,7 @@ var mapPage = require('./map.page');
 var resourcePage = require('../resources/resources.page');
 
 
-describe('idai field app', function() {
+describe('resources/map', function() {
 
     function setPolygon() {
         return mapPage.clickMap(100,100)

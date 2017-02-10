@@ -168,6 +168,6 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
             () => {
                 this.resourcesComponent.getSelected()['synced'] = 0;
             },
-            errors => { console.log(errors); });
+            err => { console.log(err); });
     }
 }

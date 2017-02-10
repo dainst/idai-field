@@ -77,10 +77,8 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
                 // show message after route change
                 this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
             },
-            errors => {
-                for (var err of errors) {
-                    this.messages.add(err);
-                }
+            err => {
+                this.messages.add(err);
             });
     }
 

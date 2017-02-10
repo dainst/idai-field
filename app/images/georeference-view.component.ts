@@ -131,7 +131,7 @@ export class GeoreferenceViewComponent extends WithConfiguration {
 
         this.persistenceManager.persist(this.document).then(
             () => {},
-            errors => { console.log(errors); }
+            err => { console.log(err); }
         );
     }
 

@@ -38,7 +38,7 @@ describe('resources/messages', function() {
 
     it('should warn if an existing id is used', function(done) {
         resourcesPage.createResource('12')
-            .then(resourcesPage.createResource('12'))
+            .then(function(){return resourcesPage.createResource('12')})
             .then(function(){
                 expect(resourcesPage.getMessage()).toContain('existiert bereits');
                 done();

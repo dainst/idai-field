@@ -3,7 +3,6 @@ var common = require("../common.js");
 var timeToWaitAfterClickSave = 100;
 var EC = protractor.ExpectedConditions;
 var ECWaitTime = 2500;
-var browserSleepTime = 200;
 
 var ResourcesPage = function () {
 
@@ -57,7 +56,8 @@ var ResourcesPage = function () {
     };
 
     this.clickReeditGeometry = function () {
-        return browser.sleep(browserSleepTime).then(function(){
+        return browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), ECWaitTime)
+            .then(function(){
             return element(by.id('document-view-button-edit-geometry')).click();
         })
     };

@@ -13,60 +13,34 @@ describe('resources', function() {
         resourcesPage.get();
     });
 
-    it('should find it by its identifier', function(done) {
-        resourcesPage.createResource('12')
-            .then(function(){return resourcesPage.typeInIdentifierInSearchField('12')})
-            .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('12'))).then(
-                    function() {
-                        done();
-                    }
-                )
-            });
+    it('should find it by its identifier', function() {
+        resourcesPage.createResource('1');
+        resourcesPage.typeInIdentifierInSearchField('1');
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')),delays.ECWaitTime);
     });
 
-    it ('should show only resources of the selected type', function(done) {
-        resourcesPage.createResource('1', 0)
-            .then(function(){return resourcesPage.createResource('2', 1)})
-            .then(function(){return resourcesPage.setTypeFilter(2)})
-            .then(function(){return resourcesPage.setTypeFilter(1)})
-            .then(function() {
-                return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
-                    .then(function() {
-                        return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
-                    })
-            })
-            .then(function(){return resourcesPage.setTypeFilter(0)})
-            .then(function() {
-                return browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
-                    .then(function(){
-                        return browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
-                    })
-            })
-            .then(function(){return resourcesPage.setTypeFilter('all')})
-            .then(function() {
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime)
-                    .then(function(){
-                        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime)
-                            .then(function(){
-                                done()
-                            })
-                    })
-            });
+    it ('should show only resources of the selected type', function() {
+        resourcesPage.createResource('1', 0);
+        resourcesPage.createResource('2', 1);
+        resourcesPage.setTypeFilter(2);
+        resourcesPage.setTypeFilter(1);
+        browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
+        resourcesPage.setTypeFilter(0);
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime);
+        resourcesPage.setTypeFilter('all');
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('2')), delays.ECWaitTime)
     });
 
-    it ('should reflect changes in overview in realtime', function(done) {
-        resourcesPage.createResource('1a')
-            .then(function(){return resourcesPage.createResource('2')})
-            .then(function(){return resourcesPage.selectObjectByIndex(1)})
-            .then(resourcesPage.clickEditDocument)
-            .then(function(){return resourcesPage.typeInIdentifier('1b')})
-            .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), delays.ECWaitTime)
-                    .then(function(){
-                        done();
-                    });
-            });
+    it ('should reflect changes in overview in realtime', function() {
+        resourcesPage.createResource('1a');
+        resourcesPage.createResource('2');
+        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.clickEditDocument();
+        resourcesPage.typeInIdentifier('1b');
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), delays.ECWaitTime);
     });
 
     /**
@@ -76,15 +50,10 @@ describe('resources', function() {
      *
      * This however did not happen with an object already saved.
      */
-    it ('should reflect changes in overview after creating object', function(done) {
-        resourcesPage.createResource('12')
-            .then(function(){return resourcesPage.typeInIdentifier('34')})
-            .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), delays.ECWaitTime)
-                    .then(function(){
-                        done();
-                    })
-            });
+    it ('should reflect changes in overview after creating object', function() {
+        resourcesPage.createResource('12');
+        resourcesPage.typeInIdentifier('34');
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), delays.ECWaitTime);
     });
 
 
@@ -92,18 +61,13 @@ describe('resources', function() {
      * Addresses a bug where a call on datastore.find led to detached documents in the resource overview.
      * The instances didn't reflect the state of the db and vice versa because they were different instances.
      */
-    it ('should reflect changes in overview after creating object', function(done) {
-        resourcesPage.createResource('12')
-            .then(function(){return resourcesPage.setTypeFilter(0)}) // calls find
-            .then(function(){return resourcesPage.selectObjectByIndex(0)})
-            .then(resourcesPage.clickEditDocument)
-            .then(function(){return resourcesPage.typeInIdentifier('56')}) // same ...
-            .then(function(){
-                browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), delays.ECWaitTime) // ... instance
-                    .then(function(){
-                        done();
-                    });
-            });
+    it ('should reflect changes in overview after creating object', function() {
+        resourcesPage.createResource('12');
+        resourcesPage.setTypeFilter(0); // calls find
+        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.clickEditDocument();
+        resourcesPage.typeInIdentifier('56'); // same ...
+        browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), delays.ECWaitTime); // ... instance
     });
 
 

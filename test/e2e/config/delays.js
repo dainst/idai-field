@@ -26,7 +26,7 @@ console.log("Set promises delay to " + promisesDelay + " ms.");
 delayPromises(promisesDelay);
 
 
-var ECWaitTime = 2000;
+var ECWaitTime = 4500;
 var shortRest = 200;
 
 

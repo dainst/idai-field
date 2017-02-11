@@ -1,5 +1,6 @@
 'use strict';
 var EC = protractor.ExpectedConditions;
+var delays = require('../config/delays');
 
 var common = require("../common.js");
 
@@ -57,10 +58,8 @@ var ImagesGridPage = function() {
             .perform();
     };
     this.get = function() {
-        return browser.get('/#/images').
-            then(function(){
-                browser.wait(EC.presenceOf(element(by.css('.cell'))), 10000, 'Waiting for image cells.')
-            });
+        browser.get('/#/images');
+        browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.')
     };
     this.chooseImageSubtype = function (index) {
         return element(by.id('choose-image-subtype-option-' + index)).click();

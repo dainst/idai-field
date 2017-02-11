@@ -9,10 +9,8 @@ var delays = require('../config/delays');
 describe('resources', function() {
 
 
-    beforeEach(function(done){
-        resourcesPage.get().then(function(){
-            done();
-        })
+    beforeEach(function(){
+        resourcesPage.get();
     });
 
     it('should find it by its identifier', function(done) {
@@ -114,85 +112,67 @@ describe('resources', function() {
      * The attempt to do so got rejected with the duplicate identifier message.
      */
     it ('should save a new object and then save it again', function() {
-        resourcesPage.createResource('1')
-            .then(resourcesPage.clickSaveDocument)
-            .then(function(){
-                expect(resourcesPage.getMessage()).toContain('erfolgreich');
-            });
+        resourcesPage.createResource('1');
+        resourcesPage.clickSaveDocument();
+        expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });
 
     /**
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
-    it('should remove a new object from the list if it has not been saved', function(done) {
-        resourcesPage.createResource('1')
-            .then(resourcesPage.clickCreateObject)
-            .then(resourcesPage.selectResourceType)
-            .then(resourcesPage.selectGeometryType)
-            .then(resourcesPage.clickCreateObject)
-            .then(resourcesPage.selectResourceType)
-            .then(resourcesPage.selectGeometryType)
-            .then(function(){
-                return browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), delays.ECWaitTime);
-            })
-            .then(resourcesPage.scrollUp)
-            .then(function(){return resourcesPage.selectObjectByIndex(1)})
-            .then(function(){
-                expect(resourcesPage.getFirstListItemIdentifier()).toEqual('1');
-                done()
-            })
+    it('should remove a new object from the list if it has not been saved', function() {
+        resourcesPage.createResource('1');
+        resourcesPage.clickCreateObject();
+        resourcesPage.selectResourceType();
+        resourcesPage.selectGeometryType();
+        resourcesPage.clickCreateObject();
+        resourcesPage.selectResourceType();
+        resourcesPage.selectGeometryType();
+        browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), delays.ECWaitTime);
+        resourcesPage.scrollUp();
+        resourcesPage.selectObjectByIndex(1);
+        expect(resourcesPage.getFirstListItemIdentifier()).toEqual('1');
     });
 
-    it ('should change the selection to new when saving via modal', function(done) {
-        resourcesPage.createResource('1')
-            .then(function(){return resourcesPage.selectObjectByIndex(0)})
-            .then(resourcesPage.clickEditDocument)
-            .then(function(){return resourcesPage.typeInIdentifier('2')})
-            .then(resourcesPage.clickCreateObject)
-            .then(resourcesPage.selectResourceType)
-            .then(resourcesPage.selectGeometryType)
-            .then(resourcesPage.scrollUp)
-            .then(resourcesPage.clickSaveInModal)
-            .then(resourcesPage.scrollUp)
-            .then(function(){
-                return browser.wait(EC.presenceOf(element(by.css('#objectList .list-group-item .new'))), delays.ECWaitTime)
-            })
-            .then(function(){
-                expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual('Neues Objekt');
-                done();
-            })
+    it ('should change the selection to new when saving via modal', function() {
+        resourcesPage.createResource('1');
+        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.clickEditDocument();
+        resourcesPage.typeInIdentifier('2');
+        resourcesPage.clickCreateObject();
+        resourcesPage.selectResourceType();
+        resourcesPage.selectGeometryType();
+        resourcesPage.scrollUp();
+        resourcesPage.clickSaveInModal();
+        resourcesPage.scrollUp();
+        browser.wait(EC.presenceOf(element(by.css('#objectList .list-group-item .new'))), delays.ECWaitTime);
+        expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual('Neues Objekt');
     });
 
-    it ('should change the selection to existing when saving via modal', function(done) {
-        resourcesPage.createResource('1')
-            .then(function(){return resourcesPage.createResource('2')})
-            .then(function(){return resourcesPage.selectObjectByIndex(0)})
-            .then(resourcesPage.clickEditDocument)
-            .then(function(){return resourcesPage.typeInIdentifier('2a')})
-            .then(function(){return resourcesPage.selectObjectByIndex(1)})
-            .then(resourcesPage.scrollUp)
-            .then(resourcesPage.clickSaveInModal)
-            .then(resourcesPage.scrollUp)
-            .then(function(){
-                expect(resourcesPage.selectObjectByIndex(1).getAttribute('class')).toContain('selected')
-                done();
-            })
+    it ('should change the selection to existing when saving via modal', function() {
+        resourcesPage.createResource('1');
+        resourcesPage.createResource('2');
+        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.clickEditDocument();
+        resourcesPage.typeInIdentifier('2a');
+        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.scrollUp();
+        resourcesPage.clickSaveInModal();
+        resourcesPage.scrollUp();
+        expect(resourcesPage.selectObjectByIndex(1).getAttribute('class')).toContain('selected')
     });
 
-    it ('should not change the selection to existing when cancelling in modal', function(done) {
-        resourcesPage.createResource('1')
-            .then(function(){return resourcesPage.createResource('2')})
-            .then(function(){return resourcesPage.selectObjectByIndex(0)})
-            .then(resourcesPage.clickEditDocument)
-            .then(function(){return resourcesPage.typeInIdentifier('2a')})
-            .then(function(){return resourcesPage.selectObjectByIndex(1)})
-            .then(resourcesPage.scrollUp)
-            .then(resourcesPage.clickCancelInModal)
-            .then(resourcesPage.scrollUp)
-            .then(function(){
-                expect(resourcesPage.selectObjectByIndex(0).getAttribute('class')).toContain('selected')
-                done();
-            })
+    it ('should not change the selection to existing when cancelling in modal', function() {
+        resourcesPage.createResource('1');
+        resourcesPage.createResource('2');
+        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.clickEditDocument();
+        resourcesPage.typeInIdentifier('2a');
+        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.scrollUp();
+        resourcesPage.clickCancelInModal();
+        resourcesPage.scrollUp();
+        expect(resourcesPage.selectObjectByIndex(0).getAttribute('class')).toContain('selected');
     });
 });

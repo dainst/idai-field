@@ -2,46 +2,32 @@ var resourcesPage = require('./resources.page');
 
 describe('resources/messages', function() {
 
-    beforeEach(function(done){
-        resourcesPage.get().then(function(){
-            done();
-        })
+    beforeEach(function(){
+        resourcesPage.get();
     });
 
-    it('should create a new object of first listed type ', function(done) {
-        resourcesPage.createResource('12')
-            .then(function(){
-                expect(resourcesPage.getMessage()).toContain('erfolgreich');
-                done();
-            });
+    it('should create a new object of first listed type ', function() {
+        resourcesPage.createResource('12');
+        expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });
 
-    it('should show the success msg also on route change', function(done) {
-        resourcesPage.createResource('12')
-            .then(resourcesPage.clickCloseMessage)
-            .then(function(){return resourcesPage.typeInIdentifier('34')})
-            .then(function(){return resourcesPage.selectObjectByIndex(0)})
-            .then(resourcesPage.clickSaveInModal)
-            .then(function(){
-                expect(resourcesPage.getMessage()).toContain('erfolgreich');
-                done();
-            });
+    it('should show the success msg also on route change', function() {
+        resourcesPage.createResource('12');
+        resourcesPage.clickCloseMessage();
+        resourcesPage.typeInIdentifier('34');
+        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.clickSaveInModal();
+        expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });
     
-    it('should warn if identifier is missing', function (done) {
-        resourcesPage.createResource('')
-            .then(function(){
-                expect(resourcesPage.getMessage()).toContain('identifier');
-                done();
-            });
+    it('should warn if identifier is missing', function () {
+        resourcesPage.createResource('');
+        expect(resourcesPage.getMessage()).toContain('identifier');
     });
 
-    it('should warn if an existing id is used', function(done) {
-        resourcesPage.createResource('12')
-            .then(function(){return resourcesPage.createResource('12')})
-            .then(function(){
-                expect(resourcesPage.getMessage()).toContain('existiert bereits');
-                done();
-            });
+    it('should warn if an existing id is used', function() {
+        resourcesPage.createResource('12');
+        resourcesPage.createResource('12');
+        expect(resourcesPage.getMessage()).toContain('existiert bereits');
     });
 });

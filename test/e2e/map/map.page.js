@@ -39,6 +39,7 @@ var MapPage = function () {
     };
 
     this.clickMapOption = function(optionName) {
+        browser.wait(EC.presenceOf(element(by.id('map-editor-button-'+optionName))), delays.ECWaitTime);
         return element(by.id('map-editor-button-'+optionName)).click();
     };
 };

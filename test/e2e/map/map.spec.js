@@ -14,39 +14,39 @@ describe('resources/map', function() {
     }
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
-        return resourcePage.clickCreateObject()
-            .then(resourcePage.selectResourceType)
-            .then(function(){return resourcePage.selectGeometryType(geometry)})
-            .then(mapClickCallback);
+        resourcePage.clickCreateObject();
+        resourcePage.selectResourceType();
+        return resourcePage.selectGeometryType(geometry)
+            .then(function(){return mapClickCallback()});
     }
     
     function createDocWithGeometry(identifier,geometry, mapClickCallback) {
-        return beginCreateDocWithGeometry(geometry, mapClickCallback)
-            .then(function(){return mapPage.clickMapOption('ok')})
-            .then(function(){return resourcePage.typeInIdentifier(identifier)})
-            .then(resourcePage.scrollUp)
-            .then(resourcePage.clickSaveDocument);
+        beginCreateDocWithGeometry(geometry, mapClickCallback).then(
+            function(){
+                mapPage.clickMapOption('ok');
+                resourcePage.typeInIdentifier(identifier);
+                resourcePage.scrollUp();
+                resourcePage.clickSaveDocument();
+            });
     }
     
     
     function createDoc(identifier,geometryType, mapClickCallback) {
         if (geometryType) {
-            return createDocWithGeometry(identifier, geometryType, mapClickCallback)
+            createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
-            return resourcePage.createResource(identifier);
+            resourcePage.createResource(identifier);
         }
     }
     
     function createDocThenReedit(identifier,geometryType, mapClickCallback) {
-        return createDoc(identifier, geometryType, mapClickCallback)
-            .then(resourcePage.clickBackToDocumentView)
-            .then(resourcePage.clickReeditGeometry);
+        createDoc(identifier, geometryType, mapClickCallback);
+        resourcePage.clickBackToDocumentView();
+        resourcePage.clickReeditGeometry();
     }
     
-    beforeEach(function(done){
-        resourcePage.get().then(function(){
-           done();
-        });
+    beforeEach(function(){
+        resourcePage.get();
     });
 
     it('should create a new item with point geometry ', function() {

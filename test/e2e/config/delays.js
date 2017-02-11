@@ -1,10 +1,4 @@
-/*
- * In order to prevent errors caused by e2e tests running too fast you can slow them down by calling the following
- * function. Use higher values for slower tests.
- *
- * utils.delayPromises(30);
- *
- */
+// use higher values to slow down tests for debugging
 var promisesDelay = 0; // this should work perfectly fine on a dev machine. the build script will overwrite this automatically.
 
 

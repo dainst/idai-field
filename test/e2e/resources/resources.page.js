@@ -156,6 +156,7 @@ var ResourcesPage = function () {
     };
 
     this.getRelationNameInDocumetView = function (relationIndex) {
+        browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), ECWaitTime);
         return element.all(by.css('#document-view a')).get(relationIndex).getText();
     };
 

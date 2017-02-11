@@ -5,7 +5,7 @@
  * utils.delayPromises(30);
  *
  */
-var promisesDelay = 0;
+var promisesDelay = 0; // this should work perfectly fine on a dev machine. the build script will overwrite this automatically.
 
 
 function delayPromises(milliseconds) {

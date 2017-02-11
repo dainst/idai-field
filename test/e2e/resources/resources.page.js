@@ -1,50 +1,50 @@
 'use strict';
 var common = require("../common.js");
-var timeToWaitAfterClickSave = 100;
 var EC = protractor.ExpectedConditions;
-var ECWaitTime = 2500;
+var delays = require('../config/delays');
+
 
 var ResourcesPage = function () {
 
     this.clickCreateObject = function() {
-        browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), delays.ECWaitTime);
         element(by.id('object-overview-button-create-object')).click();
     };
 
     this.clickSaveInModal = function () {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-save-button')).click();
     };
 
     this.clickCancelInModal = function () {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-cancel-button')).click();
     };
 
     this.clickCloseMessage = function () {
-        browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);
         element(by.css('#message-0 button')).click();
     };
 
     this.clickEditDocument = function () {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-document')).click();
     };
 
     this.clickBackToDocumentView = function () {
-        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
     };
 
     this.clickSaveDocument = function () {
-        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), ECWaitTime)
+        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function(){
                 element(by.id('document-edit-button-save-document')).click().then(
                     function() {
                         return new Promise(function(resolve){
                             setTimeout(function(){
                                 resolve();
-                            },timeToWaitAfterClickSave);
+                            },delays.shortRest);
                         })
                     }
                 )
@@ -56,7 +56,7 @@ var ResourcesPage = function () {
     };
 
     this.clickReeditGeometry = function () {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-geometry')).click();
     };
 
@@ -77,7 +77,7 @@ var ResourcesPage = function () {
     this.selectGeometryType = function (type) {
         var geom = 'none';
         if (type) geom = type;
-        browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), delays.ECWaitTime);
         return element(by.id('choose-geometry-option-' + geom)).click();
     };
 
@@ -103,12 +103,12 @@ var ResourcesPage = function () {
     };
 
     this.getMessage = function(){
-        browser.wait(EC.visibilityOf(element(by.id('message-0'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
         return element(by.id('message-0')).getText();
     };
 
     this.getTypeOfSelectedGeometry = function() {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 
@@ -130,7 +130,7 @@ var ResourcesPage = function () {
     };
 
     this.getRelationNameInDocumetView = function (relationIndex) {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), delays.ECWaitTime);
         return element.all(by.css('#document-view a')).get(relationIndex).getText();
     };
 
@@ -148,9 +148,9 @@ var ResourcesPage = function () {
 
     this.setTypeFilter = function(typeIndex) {
 
-        browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);
         element(by.id('searchfilter')).click();
-        browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), delays.ECWaitTime);
         element(by.id('choose-type-filter-option-' + typeIndex)).click();
     };
 
@@ -169,7 +169,7 @@ var ResourcesPage = function () {
 
     this.typeInIdentifier = function(identifier) {
         // element-2, 0,1 and 2 are type, id, geometries
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), ECWaitTime)
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), delays.ECWaitTime)
         common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
     };
 

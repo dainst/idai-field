@@ -51,7 +51,10 @@ var ImagesGridPage = function() {
         return element(by.id('file')).sendKeys(filePath);
     };
     this.clickUploadArea = function() {
-        return element(by.css('.droparea')).click();
+        return browser.actions()
+            .mouseMove(element(by.css(".droparea")), {x: 10, y: 10})
+            .click()
+            .perform();
     };
     this.get = function() {
         return browser.get('/#/images').

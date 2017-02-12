@@ -1,5 +1,5 @@
 // use higher values to slow down tests for debugging
-var promisesDelay = 0; // this should work perfectly fine on a dev machine. the build script will overwrite this automatically.
+var promisesDelay = 0; // 0 should work perfectly fine on a dev machine. the build script will overwrite this automatically.
 
 
 function delayPromises(milliseconds) {

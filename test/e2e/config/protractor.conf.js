@@ -32,7 +32,11 @@ exports.config = {
         package: 'protractor-fail-fast'
     }],
     onPrepare: function() {
-        jasmine.getEnv().addReporter(failFast.init());
+        if (browser.params.skip_fail_fast == 'noff') {
+            console.log("No fail fast.")
+        } else {
+            jasmine.getEnv().addReporter(failFast.init());
+        }
 
         var FailureScreenshotReporter = function() {
 

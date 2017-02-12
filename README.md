@@ -89,7 +89,17 @@ As the *start* command, it automatically converts scss files to css when they ar
 2$ npm run e2e
 ```
 
-This command runs the end to end tests once.
+This command runs the end to end tests once, until all tests pass or  the first error is found.
+To alter this behaviour, you can use the `noff` option (no fail fast)
+
+```
+2$ npm run e2e noff
+```
+
+so that test execution continues regardless of errors. 
+
+
+
 
 ## Packaging
 

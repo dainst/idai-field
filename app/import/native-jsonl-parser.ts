@@ -11,7 +11,7 @@ import {M} from "../m";
 @Injectable()
 export class NativeJsonlParser implements Parser {
 
-    public parse(content: string):Observable<IdaiFieldDocument> {
+    public parse(content: string): Observable<IdaiFieldDocument> {
 
         return Observable.create(observer => {
 
@@ -34,6 +34,8 @@ export class NativeJsonlParser implements Parser {
     }
 
     private makeDoc(resource) {
+
+        if (!resource.relations) resource.relations = {};
         
         return {
             "resource": resource,

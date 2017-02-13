@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 import {IdaiFieldDocument} from "../../model/idai-field-document";
 import {IdaiFieldResource} from "../../model/idai-field-resource";
@@ -75,6 +75,8 @@ export class MapComponent implements OnChanges {
         })
     };
 
+    private typesMap;
+
     constructor(
         private mapState: MapState,
         private datastore: Datastore,
@@ -84,6 +86,10 @@ export class MapComponent implements OnChanges {
         private configLoader: ConfigLoader
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
+
+        this.configLoader.configuration().subscribe(result => {
+            this.typesMap = result.projectConfiguration.getTypesMap();
+        });
     }
 
     public ngAfterViewInit() {
@@ -93,7 +99,7 @@ export class MapComponent implements OnChanges {
         }
     }
 
-    public ngOnChanges() {
+    public ngOnChanges(changes: SimpleChanges) {
 
         if (!this.documents) return;
 
@@ -103,17 +109,19 @@ export class MapComponent implements OnChanges {
             this.clearMap();
         }
 
-        this.initializeLayers().then(
-            () => {
-                this.initializePanes();
-                this.addActiveLayersFromMapState();
-                var layers = this.getLayersAsList();
-                if (this.activeLayers.length == 0 && layers.length > 0) {
-                    this.addLayerToMap(layers[0]);
-                    this.saveActiveLayersIdsInMapState();
-               }
-            }
-        );
+        if (changes['documents']) {
+            this.initializeLayers().then(
+                () => {
+                    this.initializePanes();
+                    this.addActiveLayersFromMapState();
+                    var layers = this.getLayersAsList();
+                    if (this.activeLayers.length == 0 && layers.length > 0) {
+                        this.addLayerToMap(layers[0]);
+                        this.saveActiveLayersIdsInMapState();
+                   }
+                }
+            );
+        }
 
         this.bounds = L.latLngBounds(L.latLng(-1.0, -1.0), L.latLng(1.0, 1.0));
 
@@ -193,27 +201,26 @@ export class MapComponent implements OnChanges {
 
         return new Promise((resolve, reject) => {
 
-            this.configLoader.configuration().subscribe(result => {
+            let filterSet: FilterSet = {
+                filters: [{'field': 'type', 'value': 'image', invert: false}],
+                type: 'or'
+            };
 
-                var filterSet: FilterSet = {
-                    filters: [{'field': 'type', 'value': 'image', invert: false}],
-                    type: 'or'
-                };
+            let query: Query = {
+                q: '',
+                filterSets: [
+                    FilterUtility.addChildTypesToFilterSet(filterSet,
+                        this.typesMap)
+                ]
+            };
 
-                var query: Query = {
-                    q: '',
-                    filterSets: [
-                        FilterUtility.addChildTypesToFilterSet(filterSet,
-                            result.projectConfiguration.getTypesMap())
-                    ]
-                };
-
-                this.datastore.find(query).then(
-                    documents => this.makeLayersForDocuments(documents, resolve),
-                    error => {
-                        reject(error);
-                    });
-            });
+            this.datastore.find(query).then(
+                documents => {
+                this.makeLayersForDocuments(documents, resolve);
+                },
+                error => {
+                    reject(error);
+                });
         });
     }
 
@@ -222,7 +229,9 @@ export class MapComponent implements OnChanges {
         var zIndex: number = 0;
         var promises: Array<Promise<any>> = [];
         for (var doc of documents) {
-            if (doc.resource['georeference'] && !this.layers[doc.resource.id]) {
+            if (doc.resource['georeference']
+                && !this.layers[doc.resource.id]
+            ) {
                 var promise = this.makeLayerForImageResource(doc, zIndex++);
                 promises.push(promise);
             }

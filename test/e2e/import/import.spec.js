@@ -3,13 +3,13 @@ var importPage = require('./import.page');
 
 var EC = protractor.ExpectedConditions;
 
-describe('import', function() {
+xdescribe('import', function() {
 
     beforeEach(function() {
         importPage.get();
     });
 
-    it('should import a valid iDAI.field JSONL file via HTTP', function() {
+    xit('should import a valid iDAI.field JSONL file via HTTP', function() {
         var url = "./test/test-data/importer-test-ok.jsonl";
 
         importPage.clickImportButton();

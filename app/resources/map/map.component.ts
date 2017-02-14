@@ -75,7 +75,6 @@ export class MapComponent implements OnChanges {
         })
     };
 
-    private typesMap;
 
     constructor(
         private mapState: MapState,
@@ -87,9 +86,7 @@ export class MapComponent implements OnChanges {
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
 
-        this.configLoader.configuration().subscribe(result => {
-            this.typesMap = result.projectConfiguration.getTypesMap();
-        });
+
     }
 
     public ngAfterViewInit() {
@@ -201,26 +198,28 @@ export class MapComponent implements OnChanges {
 
         return new Promise((resolve, reject) => {
 
-            let filterSet: FilterSet = {
-                filters: [{'field': 'type', 'value': 'image', invert: false}],
-                type: 'or'
-            };
+            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+                let filterSet: FilterSet = {
+                    filters: [{'field': 'type', 'value': 'image', invert: false}],
+                    type: 'or'
+                };
 
-            let query: Query = {
-                q: '',
-                filterSets: [
-                    FilterUtility.addChildTypesToFilterSet(filterSet,
-                        this.typesMap)
-                ]
-            };
+                let query: Query = {
+                    q: '',
+                    filterSets: [
+                        FilterUtility.addChildTypesToFilterSet(filterSet,
+                            projectConfiguration.getTypesMap())
+                    ]
+                };
 
-            this.datastore.find(query).then(
-                documents => {
-                this.makeLayersForDocuments(documents, resolve);
-                },
-                error => {
-                    reject(error);
-                });
+                this.datastore.find(query).then(
+                    documents => {
+                    this.makeLayersForDocuments(documents, resolve);
+                    },
+                    error => {
+                        reject(error);
+                    });
+            });
         });
     }
 

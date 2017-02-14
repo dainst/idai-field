@@ -12,7 +12,7 @@
                     (click)="save(true);">Speichern</button>
             <span class="mdi mdi-blur"></span>
 
-            <span *ngIf="showBackButton && document">{{projectConfiguration.getLabelForType(document.resource.type)}} bearbeiten</span>
+            <span *ngIf="showBackButton && document">{{typeLabel}} bearbeiten</span>
             <span *ngIf="!showBackButton">Neue Ressource</span>
         </h1>
     </header>

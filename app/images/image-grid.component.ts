@@ -62,11 +62,10 @@ export class ImageGridComponent {
             type: 'or'
         };
 
-        configLoader.configuration().subscribe(result => {
-            this.persistenceManager.setProjectConfiguration(result.projectConfiguration);
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
             if (!this.defaultFilterSet) {
                 this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
                 this.fetchDocuments(this.query);
             }

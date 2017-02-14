@@ -43,9 +43,9 @@ export class ResourcesComponent {
             readyResolveFun = resolve;
         });
 
-        configLoader.configuration().subscribe(result => {
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
             if (!this.defaultFilterSet) {
-                this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
                 this.fetchDocuments(this.query).then(()=>{
                    readyResolveFun();

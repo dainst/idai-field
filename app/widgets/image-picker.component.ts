@@ -41,11 +41,11 @@ export class ImagePickerComponent {
             filters: [{field: 'type', value: 'image', invert: false}],
             type: 'or'
         };
-
-        configLoader.configuration().subscribe(result => {
+        
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
             if (!this.defaultFilterSet) {
                 this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, result.projectConfiguration.getTypesMap());
+                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
                 this.fetchDocuments(this.query);
             }

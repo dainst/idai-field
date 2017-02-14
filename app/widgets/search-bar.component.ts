@@ -17,17 +17,13 @@ export class SearchBarComponent implements OnChanges {
     private type: string = '';
     private q: string = '';
     private filterOptions: Array<any> = [];
-    private projectConfiguration: ProjectConfiguration;
 
     @Input() defaultFilterSet: FilterSet;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
     constructor(private configLoader: ConfigLoader) {
-        this.configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
-            this.initializeFilterOptions();
-        });
+        this.initializeFilterOptions();
     }
 
     public ngOnChanges(): void {
@@ -67,14 +63,15 @@ export class SearchBarComponent implements OnChanges {
 
     private initializeFilterOptions() {
 
-        if (!this.projectConfiguration) return;
-
-        var types = this.projectConfiguration.getTypesTreeList();
-        this.filterOptions = [];
-
-        for (let i in types) {
-            this.addFilterOption(types[i]);
-        }
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            
+            var types = projectConfiguration.getTypesTreeList();
+            this.filterOptions = [];
+    
+            for (let i in types) {
+                this.addFilterOption(types[i]);
+            }
+        })
     }
 
     private addFilterOption(type) {

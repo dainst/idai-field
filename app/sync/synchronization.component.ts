@@ -18,8 +18,6 @@ import {ProjectConfiguration, ConfigLoader} from "idai-components-2/configuratio
 
 export class SynchronizationComponent {
     
-    private projectConfiguration : ProjectConfiguration;
-
     private connected: boolean = false;
     private resourceIdsOfDocsToSync: string[] = [];
 
@@ -31,13 +29,8 @@ export class SynchronizationComponent {
 
         if (config['backend']==undefined) return;
 
-        this.configLoader.configuration().subscribe((result)=>{
-            if(result.error == undefined) {
-                this.projectConfiguration = result.projectConfiguration;
-                this.setupConnectionCheck();
-                this.subscribeForUnsyncedDocuments();
-            }
-        });
+        this.setupConnectionCheck();
+        this.subscribeForUnsyncedDocuments();
     }
 
     private subscribeForUnsyncedDocuments() {
@@ -64,17 +57,20 @@ export class SynchronizationComponent {
     }
 
     private sync(doc: any) {
+        
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            this.idaiFieldBackend.save(doc,projectConfiguration.getExcavationName()).then(
+                document => {
+                    document['synced'] = 1;
+                    this.datastore.update(document);
+                    this.removeObjectId(document['resource']['id']);
+                },
+                err => {
+                    this.connected=false;
+                }
+            );
+        })
 
-        this.idaiFieldBackend.save(doc,this.projectConfiguration.getExcavationName()).then(
-            document => {
-                document['synced'] = 1;
-                this.datastore.update(document);
-                this.removeObjectId(document['resource']['id']);
-            },
-            err => {
-                this.connected=false;
-            }
-        );
     }
 
     private syncAll() {

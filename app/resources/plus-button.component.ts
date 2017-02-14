@@ -21,8 +21,8 @@ export class PlusButtonComponent {
         private router: Router,
         configLoader: ConfigLoader)
     {
-        configLoader.configuration().subscribe(result => {
-            this.initializeTypesTreeList(result.projectConfiguration);
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
+            this.initializeTypesTreeList(projectConfiguration);
         });
     }
 

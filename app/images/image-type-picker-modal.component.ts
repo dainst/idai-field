@@ -16,8 +16,8 @@ export class ImageTypePickerModalComponent {
     private imageType: IdaiType;
 
     constructor(public activeModal: NgbActiveModal, configLoader: ConfigLoader) {
-        configLoader.configuration().subscribe(result => {
-            this.imageType = result.projectConfiguration.getTypesTree()['image'];
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
+            this.imageType = projectConfiguration.getTypesTree()['image'];
         });
     }
 }

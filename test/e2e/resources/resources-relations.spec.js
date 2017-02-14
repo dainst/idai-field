@@ -16,9 +16,9 @@ describe('relations', function() {
         resourcesPage.scrollUp();
         resourcesPage.clickSaveDocument();
         resourcesPage.selectObjectByIndex(1);
-        expect(resourcesPage.getRelationNameInDocumetView(0)).toEqual('o2');
+        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o2');
         resourcesPage.clickRelationInDocumentView(0);
-        expect(resourcesPage.getRelationNameInDocumetView(0)).toEqual('o1');
+        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o1');
     });
 
 

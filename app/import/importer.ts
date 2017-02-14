@@ -4,6 +4,7 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "idai-components-2/persist";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
+import {M} from "../m";
 
 
 /**
@@ -66,18 +67,12 @@ export class Importer {
 
         return new Promise<any>(resolve => {
 
-            console.log("importing resources");
-
             this.resolvePromise = resolve;
             this.initState();
 
             reader.read().then(fileContent => {
 
-                console.log("read file content");
-
                 parser.parse(fileContent).subscribe(doc => {
-
-                    // console.debug("read document", doc);
 
                     if (this.currentImportWithError) return;
 
@@ -111,73 +106,51 @@ export class Importer {
      *
      * @param doc
      */
-    private update(doc: IdaiFieldDocument) : Promise<any> {
+    private update(doc: IdaiFieldDocument) {
+        this.inUpdateDocumentLoop = true;
 
+        this.validator.validate(doc)
+            .then(
+                () => {
+                    return this.datastore.create(doc);
+                })
+            .then(() => {
+                this.importSuccessCounter++;
 
+                let index = this.docsToUpdate.indexOf(doc);
+                if (index > -1) this.docsToUpdate.splice(index, 1);
 
-        return new Promise<any>((resolve,reject)=>{
-
-            this.validator.validate(doc).then(()=>{
-
-                console.log("validation success",doc);
-
-                this.inUpdateDocumentLoop = true;
-                this.datastore.create(doc).then(() => {
-
-                    var index = this.docsToUpdate.indexOf(doc);
-                    if (index > -1) this.docsToUpdate.splice(index, 1);
-
-                    this.importSuccessCounter++;
-                    console.log("successfully imported document", doc);
-
-                    if (this.docsToUpdate.length > 0) {
-                        this.update(this.docsToUpdate[0]).then(()=>{
-                            console.log("nect")
-                            resolve();
-                        },err=>reject(err))
+                if (this.docsToUpdate.length > 0) {
+                    return this.update(this.docsToUpdate[0]);
+                } else {
+                    this.finishImport();
+                }
+            })
+            .catch(
+                msgWithParams => {
+                    if (msgWithParams == M.DATASTORE_IDEXISTS) {
+                        this.importReport['validation_errors'].push({
+                            doc: doc,
+                            msg: M.IMPORTER_FAILURE_IDEXISTS,
+                            msgParams: [doc.resource.identifier]
+                        });
                     } else {
-                        console.log("nonect")
-                        resolve();
-                        this.finishImport();
-                        this.inUpdateDocumentLoop = false;
+                        this.importReport['validation_errors'].push({
+                            doc: doc,
+                            msg: msgWithParams[0],
+                            msgParams: msgWithParams.slice(1)
+                        });
                     }
-
-                }, error => {
-
-                    console.log("there is an error",error)
-
-                    this.importReport['datastore_errors'].push({
-                        doc: doc,
-                        msg: error
-                    });
 
                     this.currentImportWithError = true;
                     this.finishImport();
-                    this.inUpdateDocumentLoop = false;
-
-                    reject();
-                });
-
-            },msgWithParams=>{
-                this.importReport['validation_errors'].push({
-                    doc: doc,
-                    msg: msgWithParams[0],
-                    msgParams: msgWithParams.slice(1)
-                });
-
-                this.currentImportWithError = true;
-                this.finishImport();
-                reject();
-            })
-        })
-
-
-
+                }
+            );
     }
 
     private finishImport() {
-        console.debug("finished import");
         this.importReport["successful_imports"] = this.importSuccessCounter;
+        this.inUpdateDocumentLoop = false;
         this.resolvePromise(this.importReport);
     }
 }

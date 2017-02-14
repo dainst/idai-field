@@ -4,39 +4,39 @@ var EC = protractor.ExpectedConditions;
 var delays = require('../config/delays');
 
 
-var ResourcesPage = function () {
+var ResourcesPage = function() {
 
     this.clickCreateObject = function() {
         browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), delays.ECWaitTime);
         element(by.id('object-overview-button-create-object')).click();
     };
 
-    this.clickSaveInModal = function () {
+    this.clickSaveInModal = function() {
         browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-save-button')).click();
     };
 
-    this.clickCancelInModal = function () {
+    this.clickCancelInModal = function() {
         browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-cancel-button')).click();
     };
 
-    this.clickCloseMessage = function () {
+    this.clickCloseMessage = function() {
         browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);
         element(by.css('#message-0 button')).click();
     };
 
-    this.clickEditDocument = function () {
+    this.clickEditDocument = function() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-document')).click();
     };
 
-    this.clickBackToDocumentView = function () {
+    this.clickBackToDocumentView = function() {
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
     };
 
-    this.clickSaveDocument = function () {
+    this.clickSaveDocument = function() {
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function(){
                 element(by.id('document-edit-button-save-document')).click().then(
@@ -51,30 +51,35 @@ var ResourcesPage = function () {
             })
     };
 
-    this.clickCreateGeometry = function (type) {
+    this.clickCreateGeometry = function(type) {
         return element(by.id('document-view-button-create-' + type)).click();
     };
 
-    this.clickReeditGeometry = function () {
+    this.clickReeditGeometry = function() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-geometry')).click();
     };
 
-    this.clickRelationSuggestionByIndices = function (groupIndex, pickerIndex, suggestionIndex) {
+    this.clickRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
         this.getRelationByIndices(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };
 
-    this.clickAddRelationForGroupWithIndex = function (groupIndex) {
+    this.clickAddRelationForGroupWithIndex = function(groupIndex) {
         element.all(by.tagName('relation-picker-group')).get(groupIndex)
             .element(by.css('.circular-button.add-relation')).click();
     };
 
-    this.clickRelationInDocumentView = function (relationIndex) {
+    this.clickRelationInDocumentView = function(relationIndex) {
         return element.all(by.css('#document-view a')).get(relationIndex).click();
     };
 
-    this.selectGeometryType = function (type) {
+    this.clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
+            .click();
+    };
+
+    this.selectGeometryType = function(type) {
         var geom = 'none';
         if (type) geom = type;
         browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), delays.ECWaitTime);
@@ -90,19 +95,19 @@ var ResourcesPage = function () {
         this.clickSaveDocument();
     };
 
-    this.findListItemMarkedNew = function () {
+    this.findListItemMarkedNew = function() {
         return element(by.css('#objectList .list-group-item .new'))
     };
 
-    this.getFirstListItemIdentifier = function () {
+    this.getFirstListItemIdentifier = function() {
         return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
     };
 
-    this.getListItemByIdentifier = function (identifier) {
+    this.getListItemByIdentifier = function(identifier) {
         return element(by.id('resource-' + identifier));
     };
 
-    this.getMessage = function(){
+    this.getMessage = function() {
         browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
         return element(by.id('message-0')).getText();
     };
@@ -112,7 +117,7 @@ var ResourcesPage = function () {
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 
-    this.getRelationByIndices = function (groupIndex, pickerIndex) {
+    this.getRelationByIndices = function(groupIndex, pickerIndex) {
         return element.all(by.tagName('relation-picker-group')).get(groupIndex)
             .all(by.tagName('relation-picker')).get(pickerIndex);
     };
@@ -121,24 +126,28 @@ var ResourcesPage = function () {
         return this.getRelationByIndices(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
     };
 
-    this.getRelationButtonByIndices = function (groupIndex, pickerIndex, relationIndex) {
+    this.getRelationButtonByIndices = function(groupIndex, pickerIndex, relationIndex) {
         return this.getRelationByIndices(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 
-    this.getRelationButtonTextByIndices = function (groupIndex, pickerIndex, relationIndex) {
+    this.getRelationButtonTextByIndices = function(groupIndex, pickerIndex, relationIndex) {
         return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 
-    this.getRelationNameInDocumentView = function (relationIndex) {
+    this.getRelationNameInDocumentView = function(relationIndex) {
         browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), delays.ECWaitTime);
         return element.all(by.css('#document-view a')).get(relationIndex).getText();
     };
 
-    this.get = function () {
+    this.getRelationsInDocumentView = function() {
+        return element.all(by.css('#document-view a'));
+    };
+
+    this.get = function() {
         return browser.get('/#/resources');
     };
 
-    this.scrollDown = function () {
+    this.scrollDown = function() {
         return browser.executeScript('window.scrollTo(0,200);');
     };
 
@@ -154,11 +163,11 @@ var ResourcesPage = function () {
         element(by.id('choose-type-filter-option-' + typeIndex)).click();
     };
 
-    this.selectObjectByIndex = function (listIndex) {
+    this.selectObjectByIndex = function(listIndex) {
         return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
     };
 
-    this.selectResourceType = function (typeIndex) {
+    this.selectResourceType = function(typeIndex) {
         if (!typeIndex) typeIndex = 0;
         return element(by.id('choose-type-option-' + typeIndex)).click();
     };
@@ -169,7 +178,7 @@ var ResourcesPage = function () {
 
     this.typeInIdentifier = function(identifier) {
         // element-2, 0,1 and 2 are type, id, geometries
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), delays.ECWaitTime)
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), delays.ECWaitTime);
         common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
     };
 

@@ -21,7 +21,9 @@ export class NativeJsonlParser implements Parser {
             for (var i = 0; i < len; i++) {
 
                 try {
-                    observer.next(this.makeDoc(JSON.parse(lines[i])));
+                    if (lines[i].length > 0) {
+                        observer.next(this.makeDoc(JSON.parse(lines[i])));
+                    }
                 } catch (e) {
                     let error: ParserError = e;
                     error.message = M.IMPORTER_FAILURE_INVALIDJSON;

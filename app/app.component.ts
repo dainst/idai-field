@@ -95,8 +95,8 @@ export class AppComponent implements OnInit {
             ,
             new ConfigurationValidator([])
         );
-        this.configLoader.configuration().subscribe(result => {
-            if (result.error) this.messages.addWithParams(result.error);
+        this.configLoader.getProjectConfiguration().catch(msgWithParams => {
+            this.messages.addWithParams(msgWithParams);
     });
     }
 }

@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
-import {WithConfiguration, ConfigLoader} from "idai-components-2/configuration";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {M} from "../m";
 import {Validator, PersistenceManager} from "idai-components-2/persist";
 import {IdaiFieldDocument} from "../model/idai-field-document";
@@ -23,7 +23,7 @@ import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
  *
  * @author Daniel de Oliveira
  */
-export class DocumentEditWrapperComponent extends WithConfiguration {
+export class DocumentEditWrapperComponent {
 
     @Input() document: IdaiFieldDocument;
     @Input() showBackButton: boolean = true;
@@ -31,55 +31,72 @@ export class DocumentEditWrapperComponent extends WithConfiguration {
     @Output() onBackButtonClicked = new EventEmitter<any>();
     private projectImageTypes:any = {};
 
+    private typeLabel;
+
     constructor(
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
-        configLoader: ConfigLoader,
+        private configLoader: ConfigLoader,
         private modalService: NgbModal
 
     ) {
-        super(configLoader);
+        this.getProjectImageTypes();
+    }
 
-        configLoader.configuration().subscribe(result => {
-            this.projectConfiguration = result.projectConfiguration;
-            this.getProjectImageTypes();
+    ngOnChanges() {
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            if (this.document)
+                this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type)
         });
     }
+
     private getProjectImageTypes() {
-        var projectTypesTree = this.projectConfiguration.getTypesTree();
-
-        if (projectTypesTree["image"]) {
-            this.projectImageTypes["image"] = projectTypesTree["image"];
-
-            if(projectTypesTree["image"].children) {
-                for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
-                    this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+        
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            
+            var projectTypesTree = projectConfiguration.getTypesTree();
+    
+            if (projectTypesTree["image"]) {
+                this.projectImageTypes["image"] = projectTypesTree["image"];
+    
+                if(projectTypesTree["image"].children) {
+                    for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
+                        this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+                    }
                 }
             }
-        }
+        })
+        
     }
 
     public save(viaSaveButton: boolean = false) {
 
         var validationError = this.validator.validate(
-            <IdaiFieldDocument>this.document);
-        if (validationError) return this.messages.addWithParams(validationError);
+            <IdaiFieldDocument>this.document)
+            .then(()=>{
 
-        this.document['synced'] = 0;
-        this.persistenceManager.persist(this.document).then(
-            () => {
-                this.documentEditChangeMonitor.reset();
+                this.document['synced'] = 0;
+                this.persistenceManager.persist(this.document).then(
+                    () => {
+                        this.documentEditChangeMonitor.reset();
 
-                this.onSaveSuccess.emit(viaSaveButton);
-                // this.navigate(this.document, proceed);
-                // show message after route change
-                this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
-            },
-            err => {
-                this.messages.add(err);
-            });
+                        this.onSaveSuccess.emit(viaSaveButton);
+                        // this.navigate(this.document, proceed);
+                        // show message after route change
+                        this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+                    },
+                    err => {
+                        this.messages.add(err);
+                    });
+            })
+
+            .catch(msgWithParams => {
+
+                this.messages.addWithParams(msgWithParams);
+
+            })
     }
 
     public openImagePicker() {

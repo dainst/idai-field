@@ -1,5 +1,4 @@
 import {Component, Input} from "@angular/core";
-import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
@@ -15,17 +14,14 @@ import {IdaiFieldGeoreference} from "../model/idai-field-georeference";
 /**
  * @author Thomas Kleinke
  */
-export class GeoreferenceViewComponent extends WithConfiguration {
+export class GeoreferenceViewComponent {
 
     @Input() document: any;
 
     constructor(
         private persistenceManager: PersistenceManager,
-        private configLoader: ConfigLoader,
         private messages: Messages
-    ) {
-        super(configLoader);
-    }
+    ) {}
 
     public onSelectFile(event) {
 
@@ -126,7 +122,6 @@ export class GeoreferenceViewComponent extends WithConfiguration {
 
     private save() {
 
-        this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
         this.persistenceManager.setOldVersion(this.document);
 
         this.persistenceManager.persist(this.document).then(

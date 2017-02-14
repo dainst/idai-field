@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from "@angular/core";
 import {Mediastore} from 'idai-components-2/datastore';
 import {M} from "../m";
-import {WithConfiguration, ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component";
@@ -17,7 +17,7 @@ import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DropAreaComponent extends WithConfiguration {
+export class DropAreaComponent {
 
     @Output() onImageUploaded: EventEmitter<any> = new EventEmitter<any>();
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
@@ -26,9 +26,8 @@ export class DropAreaComponent extends WithConfiguration {
         private mediastore: Mediastore,
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
-        configLoader: ConfigLoader
+        private configLoader: ConfigLoader
     ) {
-        super(configLoader);
     }
 
     public onDragOver(event) {
@@ -59,16 +58,18 @@ export class DropAreaComponent extends WithConfiguration {
     private chooseType(): Promise<IdaiType> {
 
         return new Promise((resolve, reject) => {
+            this.configLoader.getProjectConfiguration().then( projectConfiguration => {
 
-            var imageType: IdaiType = this.projectConfiguration.getTypesTree()['image'];
-            if (imageType.children && imageType.children.length > 0) {
-                this.modalService.open(ImageTypePickerModalComponent).result.then(
-                    (type: IdaiType) => resolve(type),
-                    (closeReason) => reject()
-                );
-            } else {
-                resolve(imageType);
-            }
+                var imageType: IdaiType = projectConfiguration.getTypesTree()['image'];
+                if (imageType.children && imageType.children.length > 0) {
+                    this.modalService.open(ImageTypePickerModalComponent).result.then(
+                        (type: IdaiType) => resolve(type),
+                        (closeReason) => reject()
+                    );
+                } else {
+                    resolve(imageType);
+                }
+            })
         });
     }
 
@@ -114,24 +115,26 @@ export class DropAreaComponent extends WithConfiguration {
     private createImageDocument(file: File, type: IdaiType): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            var img = new Image();
-            img.src = URL.createObjectURL(file);
-            img.onload = () => {
-                var doc = {
-                    "resource": {
-                        "identifier": file.name,
-                        "type": type.name,
-                        "filename": file.name,
-                        "width": img.width,
-                        "height": img.height,
-                        "relations": {}
-                    }
+            this.configLoader.getProjectConfiguration().then( projectConfiguration => {
+
+                var img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = () => {
+                    var doc = {
+                        "resource": {
+                            "identifier": file.name,
+                            "type": type.name,
+                            "filename": file.name,
+                            "width": img.width,
+                            "height": img.height,
+                            "relations": {}
+                        }
+                    };
+                    this.persistenceManager.persist(doc, doc)
+                        .then(result => resolve(result))
+                        .catch(error => reject(error));
                 };
-                this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
-                this.persistenceManager.persist(doc, doc)
-                    .then(result => resolve(result))
-                    .catch(error => reject(error));
-            };
+            })
         });
     }
 }

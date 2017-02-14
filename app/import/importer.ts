@@ -111,51 +111,68 @@ export class Importer {
      *
      * @param doc
      */
-    private update(doc: IdaiFieldDocument) {
+    private update(doc: IdaiFieldDocument) : Promise<any> {
 
-        var index = this.docsToUpdate.indexOf(doc);
-        if (index > -1) this.docsToUpdate.splice(index, 1);
 
-        var validationErrors = this.validator.validate(doc);
-        if (validationErrors) {
-            
-            this.importReport['validation_errors'].push({
-                doc: doc,
-                msg: validationErrors[0],
-                msgParams: validationErrors.slice(1)
-            });
 
-            this.currentImportWithError = true;
-            this.finishImport();
-            return;
-        }
-        
-        this.inUpdateDocumentLoop = true;
-        this.datastore.create(doc).then(() => {
-            this.importSuccessCounter++;
-            console.log("successfully imported document", doc);
+        return new Promise<any>((resolve,reject)=>{
 
-            if (this.docsToUpdate.length > 0) {
-                this.update(this.docsToUpdate[0]);
-            } else {
+            this.validator.validate(doc).then(()=>{
+
+                console.log("validation success",doc);
+
+                this.inUpdateDocumentLoop = true;
+                this.datastore.create(doc).then(() => {
+
+                    var index = this.docsToUpdate.indexOf(doc);
+                    if (index > -1) this.docsToUpdate.splice(index, 1);
+
+                    this.importSuccessCounter++;
+                    console.log("successfully imported document", doc);
+
+                    if (this.docsToUpdate.length > 0) {
+                        this.update(this.docsToUpdate[0]).then(()=>{
+                            console.log("nect")
+                            resolve();
+                        },err=>reject(err))
+                    } else {
+                        console.log("nonect")
+                        resolve();
+                        this.finishImport();
+                        this.inUpdateDocumentLoop = false;
+                    }
+
+                }, error => {
+
+                    console.log("there is an error",error)
+
+                    this.importReport['datastore_errors'].push({
+                        doc: doc,
+                        msg: error
+                    });
+
+                    this.currentImportWithError = true;
+                    this.finishImport();
+                    this.inUpdateDocumentLoop = false;
+
+                    reject();
+                });
+
+            },msgWithParams=>{
+                this.importReport['validation_errors'].push({
+                    doc: doc,
+                    msg: msgWithParams[0],
+                    msgParams: msgWithParams.slice(1)
+                });
+
+                this.currentImportWithError = true;
                 this.finishImport();
-                this.inUpdateDocumentLoop = false;
-                return;
-            }
+                reject();
+            })
+        })
 
-        }, error => {
 
-            console.log("there is an error",error)
 
-            this.importReport['datastore_errors'].push({
-                doc: doc,
-                msg: error
-            });
-
-            this.currentImportWithError = true;
-            this.finishImport();
-            this.inUpdateDocumentLoop = false;
-        });
     }
 
     private finishImport() {

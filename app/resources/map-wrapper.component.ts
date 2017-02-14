@@ -3,7 +3,7 @@ import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ResourcesComponent} from "./resources.component";
 import {ReadDatastore} from "idai-components-2/datastore";
 import {PersistenceManager} from "idai-components-2/persist";
-import {ConfigLoader, WithConfiguration} from "idai-components-2/configuration";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 
@@ -17,7 +17,7 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class MapWrapperComponent extends WithConfiguration implements OnInit, OnDestroy {
+export class MapWrapperComponent implements OnInit, OnDestroy {
 
     private activeDoc: IdaiFieldDocument;
     private activeType: string;
@@ -34,7 +34,6 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
         private configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
-        super(configLoader);
     }
 
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
@@ -86,7 +85,9 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
             this.datastore.get(id).then(document => {
                 this.activeDoc = document as IdaiFieldDocument;
                 this.activeType = document.resource.type;
-                this.activeTypeLabel = this.projectConfiguration.getLabelForType(this.activeType);
+                this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+                    this.activeTypeLabel = projectConfiguration.getLabelForType(this.activeType); 
+                });
                 this.resourcesComponent.setSelected(<IdaiFieldDocument>document);
             });
         } else {
@@ -163,7 +164,6 @@ export class MapWrapperComponent extends WithConfiguration implements OnInit, On
 
     private save() {
 
-        this.persistenceManager.setProjectConfiguration(this.projectConfiguration);
         this.persistenceManager.setOldVersion(this.resourcesComponent.getSelected());
 
         this.persistenceManager.persist(this.resourcesComponent.getSelected()).then(

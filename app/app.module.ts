@@ -7,6 +7,7 @@ import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
 import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
 import {IdaiDocumentsModule, DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Validator} from 'idai-components-2/persist';
+import {IdaiFieldValidator} from './model/idai-field-validator';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
@@ -88,7 +89,7 @@ import CONFIG = require("config/config.json!json");
         ConfigLoader,
         PersistenceManager,
         DocumentEditChangeMonitor,
-        Validator,
+        { provide: Validator, useClass: IdaiFieldValidator },
         SyncMediator,
         { provide: MD, useClass: M},
         NativeJsonlParser,

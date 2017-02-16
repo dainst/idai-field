@@ -72,7 +72,7 @@ export function main() {
 
             imageGridBuilder.calcGrid(documents,4,800).then(result=>{
                 expect(result.rows[0][0].document.resource.identifier).toBe('ob1');
-                expect(result.msgsWithParams).toContain(['error1']);
+                expect(result.msgsWithParams).toContain(['error']);
                 done();
             });
         });

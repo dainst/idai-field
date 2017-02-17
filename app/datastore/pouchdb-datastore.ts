@@ -80,10 +80,12 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link Datastore#create}.
+     *
      * The created instance is put to the cache.
      *
      * @param document
-     * @returns {Promise<Document|string>} either a document or an error message
+     * @returns {Promise<Document|string>}
      */
     public create(document: any): Promise<Document|string> {
 
@@ -126,11 +128,13 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link Datastore#update}.
+     *
      * The updated instance gets put to the cache.
      *
      * @param document
      * @param initial
-     * @returns {Promise<Document|string>} either a document or an error message
+     * @returns {Promise<Document|string>}
      */
     public update(document:Document, initial = false): Promise<Document|string> {
 
@@ -160,15 +164,23 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link ReadDatastore#refresh}.
+     *
      * @param doc
-     * @returns {Promise<Document|string>} either a document or an error message
+     * @returns {Promise<Document|string>}
      */
     public refresh(doc: Document): Promise<Document|string> {
 
         return this.fetchObject(doc.resource.id);
     }
 
-    public get(id: string): Promise<Document> {
+    /**
+     * Implements {@link ReadDatastore#get}.
+     *
+     * @param id
+     * @returns {any}
+     */
+    public get(id: string): Promise<Document|string> {
 
         if (this.documentCache[id]) {
             return new Promise((resolve, reject) => resolve(this.documentCache[id]));
@@ -178,8 +190,10 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link Datastore#remove}.
+     *
      * @param doc
-     * @returns {Promise<undefined|string>} undefined or an error message
+     * @returns {Promise<undefined|string>}
      */
     public remove(doc: Document): Promise<undefined|string> {
         return this.db.remove(doc).then(() => delete this.documentCache[doc.resource.id]);
@@ -201,11 +215,13 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link ReadDatastore#find}.
+     *
      * The find method guarantees to return a cached instance if there is any.
      *
      * @param query
      * @param fieldName
-     * @returns {Promise<Document[]|string>} an array of documents or an error message
+     * @returns {Promise<Document[]|string>}
      */
     public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
 
@@ -229,10 +245,10 @@ export class PouchdbDatastore implements Datastore {
         return results;
     }
 
-
     /**
+     * Implements {@link ReadDatastore#all}.
      *
-     * @returns {Promise<Core.AllDocsResponse<Content>|string>} either an array of documents or an error message
+     * @returns {Promise<Document[]|string>}
      */
     public all(): Promise<Document[]|string> {
         return this.db.allDocs();

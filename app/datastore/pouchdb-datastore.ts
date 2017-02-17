@@ -93,34 +93,32 @@ export class PouchdbDatastore implements Datastore {
      */
     public create(document: any): Promise<string> {
 
-        return new Promise((resolve, reject) => {
-            this.readyForQuery
-                .then(()=>{
-                    if (document.id != null) reject("Aborting creation: Object already has an ID. " +
-                        "Maybe you wanted to update the object with update()?");
-                    document.id = IdGenerator.generateId();
-                    document['resource']['id'] = document.id;
-                    document.created = new Date();
-                    document.modified = document.created;
-                    document['_id'] = document['id'];
-                    this.documentCache[document['id']] = document;
+        return this.readyForQuery
+            .then(()=> {
+                if (document.id != null) return Promise.reject("Aborting creation: Object already has an ID. " +
+                    "Maybe you wanted to update the object with update()?");
+                document.id = IdGenerator.generateId();
+                document['resource']['id'] = document.id;
+                document.created = new Date();
+                document.modified = document.created;
+                document['_id'] = document['id'];
+                this.documentCache[document['id']] = document;
 
-                    this.db.put(document).then(result => {
-                        this.notifyObserversOfObjectToSync(document);
-                        document['_rev'] = result['rev'];
-                        resolve();
-                    },err => {
-                        document.id = undefined;
-                        document['resource']['id'] = undefined;
-                        document.created = undefined;
-                        document.modified = undefined;
-                        reject(err);
-                    })
+                return this.db.put(document);
+            })
+            .then(result => {
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                return Promise.resolve(undefined);
 
-            }).catch(err=>{
-                reject(err);
-            });
-        });
+            }).catch(err => {
+                document.id = undefined;
+                document['resource']['id'] = undefined;
+                document.created = undefined;
+                document.modified = undefined;
+                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                return Promise.reject(err);
+            })
     }
     // TODO is this still necessary?
     private updateReadyForQuery(skipCheck) : Promise<any>{
@@ -139,33 +137,31 @@ export class PouchdbDatastore implements Datastore {
      * @param initial
      * @returns {Promise<any>}
      */
-    public update(document:Document, initial = false): Promise<any> {
+    public update(document:Document, initial = false): Promise<string> {
 
-        return new Promise((resolve, reject) => {
-            this.updateReadyForQuery(initial)
-                .then(()=> {
-                    if (document['id'] == null) reject("Aborting update: No ID given. " +
-                        "Maybe you wanted to create the object with create()?");
-                    document.modified = new Date();
+        return this.updateReadyForQuery(initial)
+            .then(()=> {
+                if (document['id'] == null) return Promise.reject("Aborting update: No ID given. " +
+                    "Maybe you wanted to create the object with create()?");
+                document.modified = new Date();
 
-                    if (initial) {
-                        document['_id'] = document['id'];
-                    } else {
-                        // delete document['rev']
-                    }
-                    this.db.put(document).then(result => {
-                        this.notifyObserversOfObjectToSync(document);
-                        document['_rev'] = result['rev'];
-                        this.documentCache[document['id']] = document;
-                        resolve();
-                    }, err => {
-                        reject(M.DATASTORE_GENERIC_SAVE_ERROR);
-                        reject(err)
-                    })
+                if (initial) {
+                    document['_id'] = document['id'];
+                } else {
+                    // delete document['rev']
+                }
+                return this.db.put(document)
 
+            }).then(result => {
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                this.documentCache[document['id']] = document;
+                return Promise.resolve(undefined);
 
-                }).catch(err=>{console.log("error",err)});
-       });
+            }).catch(err => {
+                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                return Promise.reject(err)
+            })
     }
 
     public refresh(doc: Document): Promise<Document> {

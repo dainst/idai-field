@@ -156,10 +156,6 @@ export class ImportComponent {
 
     private showDatastoreErrorMessage(doc: any, msg: any) {
 
-        if (msg == M.DATASTORE_IDEXISTS) {
-            this.messages.addWithParams([M.IMPORTER_FAILURE_IDEXISTS, doc.resource.identifier]);
-        } else {
-            this.messages.addWithParams([M.IMPORTER_FAILURE_GENERICDATASTOREERROR, doc.resource.identifier]);
-        }
+        this.messages.addWithParams([M.IMPORTER_FAILURE_GENERICDATASTOREERROR, doc.resource.identifier]);
     }
 }

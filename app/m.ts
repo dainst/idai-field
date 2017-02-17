@@ -17,7 +17,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORTER_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
     public static IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
-    public static IMPORTER_FAILURE_IDEXISTS: string = 'importer/failure/idexists';
     public static IMPORTER_FAILURE_IDMISSING: string = 'importer/failure/idmissing';
     public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
     public static IMPORTER_FAILURE_INVALIDTYPE: string = 'importer/failure/invalidtype';
@@ -25,16 +24,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
-    public static DATASTORE_IDEXISTS : string = 'datastore/idexists';
+    public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
-    public static MESSAGES_NOBODY : string = 'messages/nobody';
-    public static PC_GENERIC_ERROR : string = 'pmc/generic';
-    public static PARSE_GENERIC_ERROR : string = 'parse/generic';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
     public static IMAGES_ERROR_DELETE: string = 'images/error/delete';
     public static IMAGES_ERROR_INVALID_WORLDFILE: string = 'images/error/invalidworldfile';
+
+    public static VALIDATION_ERROR_IDEXISTS: string = 'validation/error/idexists';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -85,7 +83,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger',
             params: [ "?", "?" ]
         };
-        this.msgs[M.IMPORTER_FAILURE_IDEXISTS]={
+        this.msgs[M.VALIDATION_ERROR_IDEXISTS]={
             content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen-Identifier {0} existiert bereits.',
             level: 'danger',
             params: [ "" ]

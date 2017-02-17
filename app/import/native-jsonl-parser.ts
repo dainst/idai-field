@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {Document} from "idai-components-2/core";
 import {Parser,ParserError} from "./parser";
 import {M} from "../m";
 
@@ -11,7 +11,7 @@ import {M} from "../m";
 @Injectable()
 export class NativeJsonlParser implements Parser {
 
-    public parse(content: string): Observable<IdaiFieldDocument> {
+    public parse(content: string): Observable<Document> {
 
         return Observable.create(observer => {
 

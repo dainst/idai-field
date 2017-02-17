@@ -213,13 +213,13 @@ export class PouchdbDatastore implements Datastore {
         .then(result => this.replaceWithCached(result));
     }
 
-    private replaceWithCached(results_) {
-        for (let i in results_) {
-            if (this.documentCache[results_[i].resource.id]) {
-                results_[i] = this.documentCache[results_[i].resource.id];
+    private replaceWithCached(results) {
+        for (let result of results) {
+            if (this.documentCache[result.resource.id]) {
+                result = this.documentCache[result.resource.id];
             }
         }
-        return results_;
+        return results;
     }
 
 

@@ -27,6 +27,7 @@ export class SyncMediator {
 
     public getUnsyncedDocuments(): Observable<Document> {
         return Observable.create( observer => {
+
             // this.db.then(db => {
             //     var cursor = db.openCursor("idai-field-object","synced",IDBKeyRange.only(0));
             //     cursor.onsuccess = (event) => {

@@ -192,7 +192,7 @@ export class ImageGridComponent {
                     } else {
                         resolve();
                     }
-                }, err => reject(err));
+                });
         });
     }
 

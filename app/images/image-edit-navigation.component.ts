@@ -28,7 +28,7 @@ export class ImageEditNavigationComponent
     modalTemplate: TemplateRef<any>;
     modal: NgbModalRef;
 
-    private idbDatastore;
+    private datastore;
 
     constructor(
         private router: Router,
@@ -41,7 +41,7 @@ export class ImageEditNavigationComponent
         messages: Messages
     ) {
         super(route,datastore,mediastore,sanitizer,messages);
-        this.idbDatastore = datastore;
+        this.datastore = datastore;
     }
 
     ngOnInit() {
@@ -59,8 +59,8 @@ export class ImageEditNavigationComponent
     }
     
     public discard() {
-        this.idbDatastore.refresh(this.image.document.resource.id).then(
-            restoredObject => {
+        this.datastore.refresh(this.image.document).then(
+            () => {
                 this.canDeactivateGuard.proceed();
             },
             err => { console.error("error while refreshing document") }

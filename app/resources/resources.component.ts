@@ -192,7 +192,7 @@ export class ResourcesComponent {
                 return resolve();
             }
 
-            this.datastore.refresh(document['id']).then(
+            this.datastore.refresh(document).then(
                 restoredObject => {
 
                     this.replace(document,<Document>restoredObject);

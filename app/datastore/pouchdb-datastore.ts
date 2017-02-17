@@ -171,8 +171,9 @@ export class PouchdbDatastore implements Datastore {
        });
     }
 
-    public refresh(id: string): Promise<Document> {
-        return this.fetchObject(id);
+    public refresh(doc: Document): Promise<Document> {
+
+        return this.fetchObject(doc.resource.id);
     }
 
     public get(id: string): Promise<Document> {
@@ -184,11 +185,8 @@ export class PouchdbDatastore implements Datastore {
         }
     }
 
-    public remove(id: string): Promise<any> {
-
-        return this.get(id).then((doc) => {
-            return this.db.remove(doc).then(() => delete this.documentCache[id]);
-        })
+    public remove(doc: Document): Promise<any> {
+        return this.db.remove(doc).then(() => delete this.documentCache[doc.resource.id]);
     }
 
     private clear(): Promise<any> {

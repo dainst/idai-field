@@ -18,7 +18,7 @@ export class ImageTool {
     public remove(document, mediastore: Mediastore, datastore: Datastore): Promise<Array<string>> {
         return new Promise((resolve,reject) => {
             mediastore.remove(document.resource.identifier).then(() => {
-                datastore.remove(document.id).then(() => resolve()).catch(err => {
+                datastore.remove(document).then(() => resolve()).catch(err => {
                     reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
                 });
             }).catch(err => {

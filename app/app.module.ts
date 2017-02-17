@@ -30,6 +30,7 @@ import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
 
 import CONFIG = require("config/config.json!json");
+import {CachedDatastore} from "./datastore/cached-datastore";
 
 @NgModule({
     imports: [
@@ -77,7 +78,7 @@ import CONFIG = require("config/config.json!json");
         {
             provide: Datastore,
             useFactory: function() : Datastore {
-                return new PouchdbDatastore('idai-field-documents',CONFIG['environment'] == 'test');
+                return new CachedDatastore(new PouchdbDatastore('idai-field-documents',CONFIG['environment'] == 'test'));
             }
         },
         { provide: ReadDatastore, useExisting: Datastore },

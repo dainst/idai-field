@@ -117,7 +117,6 @@ export class PouchdbDatastore implements Datastore {
             })
     }
 
-    // TODO is this still necessary?
     private updateReadyForQuery(skipCheck) : Promise<any>{
         if (!skipCheck) {
             return this.readyForQuery;

@@ -10,8 +10,6 @@ export interface Parser {
 
     /**
      * Parses content to extract documents.
-     * Subscription can take place safely as often as one needs it.
-     * Implementations guarantee that observers are not stored permanently.
      * @param content
      */
     parse(content:string): Observable<Document>;

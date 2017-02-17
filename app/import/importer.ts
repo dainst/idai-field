@@ -4,7 +4,6 @@ import {Validator} from "idai-components-2/persist";
 import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
-import {M} from "../m";
 
 
 /**
@@ -129,19 +128,11 @@ export class Importer {
             .catch(
                 msgWithParams => {
 
-                    if (msgWithParams == M.DATASTORE_IDEXISTS) {
-                        this.importReport['validation_errors'].push({
-                            doc: doc,
-                            msg: M.IMPORTER_FAILURE_IDEXISTS, // TODO comes from validator, not from datastore
-                            msgParams: [doc.resource['identifier']] // TODO should not depend on identifier, since we want to work with Document
-                        });
-                    } else {
-                        this.importReport['validation_errors'].push({
-                            doc: doc,
-                            msg: msgWithParams[0],
-                            msgParams: msgWithParams.slice(1)
-                        });
-                    }
+                    this.importReport['validation_errors'].push({
+                        doc: doc,
+                        msg: msgWithParams[0],
+                        msgParams: msgWithParams.slice(1)
+                    });
 
                     this.currentImportWithError = true;
                     this.finishImport();

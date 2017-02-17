@@ -36,7 +36,7 @@ export function main() {
                 datastore.shutDown().then(()=>done());
             }
         );
-        
+
         it('should update an existing document with no identifier conflict',
             function (done) {
 

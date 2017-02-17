@@ -28,8 +28,6 @@ export class ImageEditNavigationComponent
     modalTemplate: TemplateRef<any>;
     modal: NgbModalRef;
 
-    private datastore;
-
     constructor(
         private router: Router,
         private modalService:NgbModal,
@@ -41,7 +39,6 @@ export class ImageEditNavigationComponent
         messages: Messages
     ) {
         super(route,datastore,mediastore,sanitizer,messages);
-        this.datastore = datastore;
     }
 
     ngOnInit() {

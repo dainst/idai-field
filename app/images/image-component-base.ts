@@ -16,7 +16,7 @@ export class ImageComponentBase {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: Datastore,
+        protected datastore: Datastore,
         mediastore: Mediastore,
         sanitizer: DomSanitizer,
         protected messages: Messages

@@ -16,15 +16,13 @@ import {DOCS} from "./sample-objects";
 @Injectable()
 export class PouchdbDatastore implements Datastore {
 
-    private static IDAIFIELDOBJECT = 'idai-field-object';
-
     private db: any;
     private observers = [];
     private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
     
-    constructor(loadSampleData: boolean = false) {
-        this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT);
+    constructor(private dbname,loadSampleData: boolean = false) {
+        this.db = new PouchDB(dbname);
 
         if (loadSampleData) {
             this.readyForQuery = this.clear()
@@ -124,7 +122,7 @@ export class PouchdbDatastore implements Datastore {
             });
         });
     }
-
+    // TODO is this still necessary?
     private updateReadyForQuery(skipCheck) : Promise<any>{
         if (!skipCheck) {
             return this.readyForQuery;
@@ -189,7 +187,7 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private clear(): Promise<any> {
-        return this.db.destroy().then(() => this.db = new PouchDB(PouchdbDatastore.IDAIFIELDOBJECT));
+        return this.db.destroy().then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 
     public shutDown(): Promise<any> {

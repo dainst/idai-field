@@ -77,7 +77,7 @@ import CONFIG = require("config/config.json!json");
         {
             provide: Datastore,
             useFactory: function() : Datastore {
-                return new PouchdbDatastore(CONFIG['environment'] == 'test');
+                return new PouchdbDatastore('idai-field-documents',CONFIG['environment'] == 'test');
             }
         },
         { provide: ReadDatastore, useExisting: Datastore },

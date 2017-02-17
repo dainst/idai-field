@@ -32,6 +32,8 @@ export class PouchdbDatastore implements Datastore {
     constructor(private dbname,loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
+        this.db.on('error', function (err) { console.log("error",err) });
+
         if (loadSampleData) {
             this.readyForQuery = this.clear()
                 .then(() => this.setupFulltextIndex())
@@ -46,11 +48,11 @@ export class PouchdbDatastore implements Datastore {
         return this.setupIndex('_design/fulltext', {
                 fulltext: {
                     map: "function mapFun(doc) {" +
-                        "if (doc.resource.shortDescription)" +
+                        "if (doc.resource.shortDescription) {" +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
                                 "emit(token.toLowerCase(), doc._id);" +
-                            "});" +
-                        "emit(doc.resource.identifier.toLowerCase(), doc._id);" +
+                            "})}" +
+                        "else { emit(doc.resource.identifier.toLowerCase(), doc._id) }" +
                     "}",
                     reduce: PouchdbDatastore.reduceFun
                 }
@@ -219,11 +221,16 @@ export class PouchdbDatastore implements Datastore {
      *
      * The find method guarantees to return a cached instance if there is any.
      *
+     * TODO implement option to match exactly
+     *
      * @param query
      * @param fieldName
      * @returns {Promise<Document[]|string>}
      */
     public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
+
+        if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
+        if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();

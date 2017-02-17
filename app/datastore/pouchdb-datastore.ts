@@ -20,7 +20,15 @@ export class PouchdbDatastore implements Datastore {
     private observers = [];
     private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
-    
+
+    private static reduceFun: string = "function reduceFun(keys, values) {" +
+        "var result = [];" +
+        "values.forEach(function(value) {" +
+        "if (result.indexOf(value) == -1) result.push(value);" +
+        "});" +
+        "return result" +
+        "}";
+
     constructor(private dbname,loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
@@ -44,13 +52,7 @@ export class PouchdbDatastore implements Datastore {
                             "});" +
                         "emit(doc.resource.identifier.toLowerCase(), doc._id);" +
                     "}",
-                    reduce: "function reduceFun(keys, values) {" +
-                        "var result = [];" +
-                        "values.forEach(function(value) {" +
-                            "if (result.indexOf(value) == -1) result.push(value);" +
-                        "});" +
-                        "return result" +
-                    "}"
+                    reduce: PouchdbDatastore.reduceFun
                 }
             });
     }
@@ -58,13 +60,7 @@ export class PouchdbDatastore implements Datastore {
     private setupIdentifierIndex(): Promise<any> {
         return this.setupIndex('_design/identifier',{ identifier: { map: "function mapFun(doc) {"+
             "emit(doc.resource.identifier,doc._id);" +
-            "}",reduce:"function reduceFun(keys, values) {" +
-        "var result = [];" +
-        "values.forEach(function(value) {" +
-        "if (result.indexOf(value) == -1) result.push(value);" +
-        "});" +
-        "return result" +
-        "}"}})
+            "}",reduce:PouchdbDatastore.reduceFun }})
     }
 
     private setupIndex(id,views) {

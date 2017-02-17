@@ -64,7 +64,7 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private setupIndex(id,views) {
-        var ddoc = {
+        let ddoc = {
             _id: id,
             views: views
         };
@@ -297,8 +297,8 @@ export class PouchdbDatastore implements Datastore {
 
         return new Promise<any>((resolve,reject)=>{
 
-            var promises = [];
-            for (var ob of DOCS) promises.push(this.update(ob, true));
+            let promises = [];
+            for (let ob of DOCS) promises.push(this.update(ob, true));
 
             Promise.all(promises)
                 .then(() => {

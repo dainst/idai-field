@@ -1,6 +1,5 @@
 import {PouchdbDatastore} from "../../app/datastore/pouchdb-datastore";
-import {IdaiFieldDocument} from "../../app/model/idai-field-document";
-import {Document} from 'idai-components-2/core';
+import {Document} from "idai-components-2/core";
 
 /**
  * @author Daniel de Oliveira

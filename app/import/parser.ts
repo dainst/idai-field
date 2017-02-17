@@ -1,5 +1,5 @@
 import {Observable} from "rxjs/Observable";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {Document} from "idai-components-2/core";
 
 export class ParserError extends SyntaxError {
     lineNumber: number;
@@ -7,5 +7,12 @@ export class ParserError extends SyntaxError {
 }
 
 export interface Parser {
-    parse(string): Observable<IdaiFieldDocument>;
+
+    /**
+     * Parses content to extract documents.
+     * Subscription can take place safely as often as one needs it.
+     * Implementations guarantee that observers are not stored permanently.
+     * @param content
+     */
+    parse(content:string): Observable<Document>;
 }

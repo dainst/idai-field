@@ -15,14 +15,14 @@ export class NativeJsonlParser implements Parser {
 
         return Observable.create(observer => {
 
-            var lines = content.split('\n');
-            var len = lines.length;
+            let lines = content.split('\n');
+            let len = lines.length;
 
-            for (var i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
 
                 try {
                     if (lines[i].length > 0) {
-                        observer.next(this.makeDoc(JSON.parse(lines[i])));
+                        observer.next(NativeJsonlParser.makeDoc(JSON.parse(lines[i])));
                     }
                 } catch (e) {
                     let error: ParserError = e;
@@ -35,7 +35,7 @@ export class NativeJsonlParser implements Parser {
         });
     }
 
-    private makeDoc(resource) {
+    private static makeDoc(resource) {
 
         if (!resource.relations) resource.relations = {};
         

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Datastore} from "idai-components-2/datastore";
-import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Validator} from "idai-components-2/persist";
+import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
 import {M} from "../m";
@@ -21,7 +21,7 @@ import {M} from "../m";
 export class Importer {
 
     private inUpdateDocumentLoop:boolean;
-    private docsToUpdate: Array<IdaiFieldDocument>;
+    private docsToUpdate: Array<Document>;
     private importSuccessCounter:number;
     private objectReaderFinished:boolean;
     private currentImportWithError:boolean;
@@ -106,7 +106,7 @@ export class Importer {
      *
      * @param doc
      */
-    private update(doc: IdaiFieldDocument) {
+    private update(doc: Document) {
         this.inUpdateDocumentLoop = true;
 
         this.validator.validate(doc)
@@ -132,8 +132,8 @@ export class Importer {
                     if (msgWithParams == M.DATASTORE_IDEXISTS) {
                         this.importReport['validation_errors'].push({
                             doc: doc,
-                            msg: M.IMPORTER_FAILURE_IDEXISTS,
-                            msgParams: [doc.resource.identifier]
+                            msg: M.IMPORTER_FAILURE_IDEXISTS, // TODO comes from validator, not from datastore
+                            msgParams: [doc.resource['identifier']] // TODO should not depend on identifier, since we want to work with Document
                         });
                     } else {
                         this.importReport['validation_errors'].push({

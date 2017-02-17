@@ -50,7 +50,7 @@ describe('resources', function() {
      *
      * This however did not happen with an object already saved.
      */
-    it ('should reflect changes in overview after creating object', function() {
+    it ('should reflect changes in overview after creating object - first scenario', function() {
         resourcesPage.createResource('12');
         resourcesPage.typeInIdentifier('34');
         browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('34')), delays.ECWaitTime);
@@ -61,7 +61,7 @@ describe('resources', function() {
      * Addresses a bug where a call on datastore.find led to detached documents in the resource overview.
      * The instances didn't reflect the state of the db and vice versa because they were different instances.
      */
-    it ('should reflect changes in overview after creating object', function() {
+    it ('should reflect changes in overview after creating object - second scenario', function() {
         resourcesPage.createResource('12');
         resourcesPage.setTypeFilter(0); // calls find
         resourcesPage.selectObjectByIndex(0);

@@ -18,7 +18,6 @@ export class PouchdbDatastore implements Datastore {
 
     private db: any;
     private observers = [];
-    private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
 
     private static reduceFun: string = "function reduceFun(keys, values) {" +
@@ -85,7 +84,7 @@ export class PouchdbDatastore implements Datastore {
      * The created instance is put to the cache.
      *
      * @param document
-     * @returns {Promise<Document|string>}
+     * @returns {Promise<Document|string>} same instance of the document or error message
      */
     public create(document: any): Promise<Document|string> {
 
@@ -98,7 +97,6 @@ export class PouchdbDatastore implements Datastore {
                 document.created = new Date();
                 document.modified = document.created;
                 document['_id'] = document['id'];
-                this.documentCache[document['id']] = document;
 
                 return this.db.put(document);
             })
@@ -133,7 +131,7 @@ export class PouchdbDatastore implements Datastore {
      *
      * @param document
      * @param initial
-     * @returns {Promise<Document|string>}
+     * @returns {Promise<Document|string>} same instance of the document or error message
      */
     public update(document:Document, initial = false): Promise<Document|string> {
 
@@ -151,13 +149,14 @@ export class PouchdbDatastore implements Datastore {
                 return this.db.put(document)
 
             }).then(result => {
+
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
-                this.documentCache[document['id']] = document;
                 return Promise.resolve(document);
 
             }).catch(err => {
                 if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+
                 return Promise.reject(err)
             })
     }
@@ -180,12 +179,7 @@ export class PouchdbDatastore implements Datastore {
      * @returns {any}
      */
     public get(id: string): Promise<Document|string> {
-
-        if (this.documentCache[id]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[id]));
-        } else {
-            return this.fetchObject(id);
-        }
+        return this.fetchObject(id);
     }
 
     /**
@@ -195,7 +189,7 @@ export class PouchdbDatastore implements Datastore {
      * @returns {Promise<undefined|string>}
      */
     public remove(doc: Document): Promise<undefined|string> {
-        return this.db.remove(doc).then(() => delete this.documentCache[doc.resource.id]);
+        return this.db.remove(doc);
     }
 
     private clear(): Promise<any> {
@@ -236,17 +230,7 @@ export class PouchdbDatastore implements Datastore {
                 endkey: queryString + '\uffff',
                 reduce: true
             });
-        }).then(result => this.buildResult(result, query.filterSets))
-        .then(result => this.replaceWithCached(result));
-    }
-
-    private replaceWithCached(results) {
-        for (let result of results) {
-            if (this.documentCache[result.resource.id]) {
-                result = this.documentCache[result.resource.id];
-            }
-        }
-        return results;
+        }).then(result => { return this.buildResult(result, query.filterSets)} )
     }
 
     /**

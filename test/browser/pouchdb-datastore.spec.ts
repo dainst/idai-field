@@ -36,48 +36,7 @@ export function main() {
                 datastore.shutDown().then(()=>done());
             }
         );
-
-        // it('should revert id on failed creation',
-        it('should not create two documents with the same identifier',
-            function (done) {
-
-                datastore.create(doc('id1'))
-                    .then(() => datastore.create(doc('id1')))
-                    .then(
-                        () => {
-                            fail('expected promise to reject, not to resolve');
-                            done();
-                        },
-                        err => {
-                            expect(err).toBe(M.DATASTORE_IDEXISTS);
-                            done();
-                        }
-                    );
-            }
-        );
-
-        it('should not update a document with an existing identifier of another doc',
-            function (done) {
-
-                var doc2 = doc('id2');
-
-                datastore.create(doc('id1'))
-                    .then(() => datastore.create(doc2))
-                    .then(() => {
-                        doc2.resource.identifier = 'id1';
-                        return datastore.update(doc2);
-                    }).then(
-                        () => {
-                            fail('expected promise to reject, not to resolve'); done();
-                        },
-                        err => {
-                            expect(err).toBe(M.DATASTORE_IDEXISTS);
-                            done();
-                        }
-                    );
-            }
-        );
-
+        
         it('should update an existing document with no identifier conflict',
             function (done) {
 

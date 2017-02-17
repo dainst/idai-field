@@ -79,15 +79,13 @@ export class PouchdbDatastore implements Datastore {
         );
     }
 
-
-
     /**
      * The created instance is put to the cache.
      *
      * @param document
-     * @returns {Promise<string>}
+     * @returns {Promise<Document|string>} either a document or an error message
      */
-    public create(document: any): Promise<string> {
+    public create(document: any): Promise<Document|string> {
 
         return this.readyForQuery
             .then(()=> {
@@ -105,7 +103,7 @@ export class PouchdbDatastore implements Datastore {
             .then(result => {
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
-                return Promise.resolve(undefined);
+                return Promise.resolve(document);
 
             }).catch(err => {
                 document.id = undefined;
@@ -116,6 +114,7 @@ export class PouchdbDatastore implements Datastore {
                 return Promise.reject(err);
             })
     }
+
     // TODO is this still necessary?
     private updateReadyForQuery(skipCheck) : Promise<any>{
         if (!skipCheck) {
@@ -131,9 +130,9 @@ export class PouchdbDatastore implements Datastore {
      *
      * @param document
      * @param initial
-     * @returns {Promise<any>}
+     * @returns {Promise<Document|string>} either a document or an error message
      */
-    public update(document:Document, initial = false): Promise<string> {
+    public update(document:Document, initial = false): Promise<Document|string> {
 
         return this.updateReadyForQuery(initial)
             .then(()=> {
@@ -152,7 +151,7 @@ export class PouchdbDatastore implements Datastore {
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 this.documentCache[document['id']] = document;
-                return Promise.resolve(undefined);
+                return Promise.resolve(document);
 
             }).catch(err => {
                 if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
@@ -160,7 +159,11 @@ export class PouchdbDatastore implements Datastore {
             })
     }
 
-    public refresh(doc: Document): Promise<Document> {
+    /**
+     * @param doc
+     * @returns {Promise<Document|string>} either a document or an error message
+     */
+    public refresh(doc: Document): Promise<Document|string> {
 
         return this.fetchObject(doc.resource.id);
     }
@@ -174,7 +177,11 @@ export class PouchdbDatastore implements Datastore {
         }
     }
 
-    public remove(doc: Document): Promise<any> {
+    /**
+     * @param doc
+     * @returns {Promise<undefined|string>} undefined or an error message
+     */
+    public remove(doc: Document): Promise<undefined|string> {
         return this.db.remove(doc).then(() => delete this.documentCache[doc.resource.id]);
     }
 
@@ -198,7 +205,7 @@ export class PouchdbDatastore implements Datastore {
      *
      * @param query
      * @param fieldName
-     * @returns {Promise<Document[]>}
+     * @returns {Promise<Document[]|string>} an array of documents or an error message
      */
     public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
 
@@ -223,7 +230,11 @@ export class PouchdbDatastore implements Datastore {
     }
 
 
-    public all(): Promise<Document[]> {
+    /**
+     *
+     * @returns {Promise<Core.AllDocsResponse<Content>|string>} either an array of documents or an error message
+     */
+    public all(): Promise<Document[]|string> {
         return this.db.allDocs();
     }
 

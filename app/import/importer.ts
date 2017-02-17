@@ -128,6 +128,7 @@ export class Importer {
             })
             .catch(
                 msgWithParams => {
+
                     if (msgWithParams == M.DATASTORE_IDEXISTS) {
                         this.importReport['validation_errors'].push({
                             doc: doc,

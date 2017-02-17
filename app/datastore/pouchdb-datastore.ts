@@ -60,8 +60,14 @@ export class PouchdbDatastore implements Datastore {
 
     private setupIdentifierIndex(): Promise<any> {
         return this.setupIndex('_design/identifier',{ identifier: { map: "function mapFun(doc) {"+
-            "emit(doc.resource.identifier);" +
-            "}"}})
+            "emit(doc.resource.identifier,doc._id);" +
+            "}",reduce:"function reduceFun(keys, values) {" +
+        "var result = [];" +
+        "values.forEach(function(value) {" +
+        "if (result.indexOf(value) == -1) result.push(value);" +
+        "});" +
+        "return result" +
+        "}"}})
     }
 
     private setupIndex(id,views) {
@@ -83,31 +89,6 @@ export class PouchdbDatastore implements Datastore {
 
 
     /**
-     * @returns {Promise<boolean>} true if there is at least one other document
-     *   having the same resource identifier as <code>document</code>.
-     */
-    private identifierExists(document: any) : Promise<boolean> {
-        return new Promise<boolean> ((resolve,reject)=> {
-
-            this.db.query('identifier', {
-                startkey: document.resource.identifier,
-                endkey: document.resource.identifier + '\uffff',
-                include_docs: true
-            }).then((result)=>{
-                var hits = 0;
-                for (let hit of result['rows']) {
-                    if (!document['id'] || (hit['id']!=document['id'])){
-                        hits++;
-                    }
-                }
-                resolve(hits > 0);
-
-
-            },err=>reject(err));
-        });
-    }
-
-    /**
      * The created instance is put to the cache.
      *
      * @param document
@@ -117,11 +98,7 @@ export class PouchdbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.readyForQuery
-                .then(()=>this.identifierExists(document))
-                .then((exists)=>{
-
-                    if (exists) return reject(M.DATASTORE_IDEXISTS);
-
+                .then(()=>{
                     if (document.id != null) reject("Aborting creation: Object already has an ID. " +
                         "Maybe you wanted to update the object with update()?");
                     document.id = IdGenerator.generateId();
@@ -169,10 +146,7 @@ export class PouchdbDatastore implements Datastore {
 
         return new Promise((resolve, reject) => {
             this.updateReadyForQuery(initial)
-                .then(()=>this.identifierExists(document))
-                .then((exists)=> {
-                    if (exists) return reject(M.DATASTORE_IDEXISTS);
-
+                .then(()=> {
                     if (document.id == null) reject("Aborting update: No ID given. " +
                         "Maybe you wanted to create the object with create()?");
                     document.modified = new Date();
@@ -238,11 +212,11 @@ export class PouchdbDatastore implements Datastore {
      * @param query
      * @returns {Promise<TResult>}
      */
-    public find(query: Query):Promise<Document[]> {
+    public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
 
         return this.readyForQuery.then(() => {
             var queryString = query.q.toLowerCase();
-            return this.db.query('fulltext', {
+            return this.db.query(fieldName, {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
                 reduce: true
@@ -270,6 +244,8 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private buildResult(result: any[], filterSets: FilterSet[]): Promise<Document[]> {
+
+        if (result['rows'] == undefined || result['rows'][0] == undefined) return Promise.resolve([]);
 
         let docIds = result['rows'][0].value;
         return Promise.all(docIds.map(docId => this.get(docId))).then(docs => {

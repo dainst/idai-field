@@ -89,7 +89,13 @@ import CONFIG = require("config/config.json!json");
         ConfigLoader,
         PersistenceManager,
         DocumentEditChangeMonitor,
-        { provide: Validator, useClass: IdaiFieldValidator },
+        {
+            provide: Validator,
+            useFactory: function(configLoader:ConfigLoader,datastore:ReadDatastore) {
+                return new IdaiFieldValidator(configLoader,datastore);
+            },
+            deps: [ConfigLoader,ReadDatastore]
+        },
         SyncMediator,
         { provide: MD, useClass: M},
         NativeJsonlParser,

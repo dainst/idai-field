@@ -93,7 +93,6 @@ export class DocumentEditWrapperComponent {
             })
 
             .catch(msgWithParams => {
-
                 this.messages.addWithParams(msgWithParams);
 
             })

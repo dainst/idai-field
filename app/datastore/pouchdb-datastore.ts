@@ -32,8 +32,6 @@ export class PouchdbDatastore implements Datastore {
     constructor(private dbname,loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
-        this.db.on('error', function (err) { console.log("error",err) });
-
         if (loadSampleData) {
             this.readyForQuery = this.clear()
                 .then(() => this.setupFulltextIndex())
@@ -48,11 +46,11 @@ export class PouchdbDatastore implements Datastore {
         return this.setupIndex('_design/fulltext', {
                 fulltext: {
                     map: "function mapFun(doc) {" +
-                        "if (doc.resource.shortDescription) {" +
+                        "if (doc.resource.shortDescription) " +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
                                 "emit(token.toLowerCase(), doc._id);" +
-                            "})}" +
-                        "else { emit(doc.resource.identifier.toLowerCase(), doc._id) }" +
+                            "});" +
+                        "if (doc.resource.identifier) emit(doc.resource.identifier.toLowerCase(), doc._id)" +
                     "}",
                     reduce: PouchdbDatastore.reduceFun
                 }

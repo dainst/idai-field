@@ -13,7 +13,8 @@
             'rxjs': 'node_modules/rxjs',
             'ts-md5': 'node_modules/ts-md5',
             'idai-components-2' : 'node_modules/idai-components-2',
-            'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js'
+            'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
+            'fs' : '@node/fs'
         },
         packages: {
             app: {
@@ -58,7 +59,7 @@
 
     if(typeof process != 'object') {
         console.log('Running in browser, disabling NodeJS functionality.');
-        config.map['@node/fs'] = '@empty';
+        config.map['fs'] = '@empty';
     } else {
         console.log('Running as electron app, enabling NodeJS functionality.');
     }

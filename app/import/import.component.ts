@@ -36,8 +36,6 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private nativeJsonlParser: NativeJsonlParser,
-        private idigCsvParser: IdigCsvParser,
         private http: Http
     ) {}
 
@@ -94,9 +92,9 @@ export class ImportComponent {
 
         switch (this.format) {
             case "native":
-                return this.nativeJsonlParser;
+                return new NativeJsonlParser();
             case "idig":
-                return this.idigCsvParser;
+                return new IdigCsvParser();
         }
     }
 

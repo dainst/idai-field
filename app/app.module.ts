@@ -16,8 +16,6 @@ import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
 import {Importer} from "./import/importer";
-import {NativeJsonlParser} from "./import/native-jsonl-parser";
-import {IdigCsvParser} from './import/idig-csv-parser';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
@@ -98,8 +96,6 @@ import CONFIG = require("config/config.json!json");
         },
         SyncMediator,
         { provide: MD, useClass: M},
-        NativeJsonlParser,
-        IdigCsvParser,
         Importer,
         appRoutingProviders
     ],

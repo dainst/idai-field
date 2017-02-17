@@ -1,4 +1,3 @@
-import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Datastore, Query, FilterSet, Filter} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
@@ -92,7 +91,7 @@ export class PouchdbDatastore implements Datastore {
      * The created instance is put to the cache.
      *
      * @param document
-     * @returns {Promise<T>}
+     * @returns {Promise<string>}
      */
     public create(document: any): Promise<string> {
 
@@ -140,14 +139,14 @@ export class PouchdbDatastore implements Datastore {
      *
      * @param document
      * @param initial
-     * @returns {Promise<T>}
+     * @returns {Promise<any>}
      */
-    public update(document:IdaiFieldDocument, initial = false): Promise<any> {
+    public update(document:Document, initial = false): Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.updateReadyForQuery(initial)
                 .then(()=> {
-                    if (document.id == null) reject("Aborting update: No ID given. " +
+                    if (document['id'] == null) reject("Aborting update: No ID given. " +
                         "Maybe you wanted to create the object with create()?");
                     document.modified = new Date();
 
@@ -208,12 +207,13 @@ export class PouchdbDatastore implements Datastore {
      * The find method guarantees to return a cached instance if there is any.
      *
      * @param query
-     * @returns {Promise<TResult>}
+     * @param fieldName
+     * @returns {Promise<Document[]>}
      */
     public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
 
         return this.readyForQuery.then(() => {
-            var queryString = query.q.toLowerCase();
+            let queryString = query.q.toLowerCase();
             return this.db.query(fieldName, {
                 startkey: queryString,
                 endkey: queryString + '\uffff',

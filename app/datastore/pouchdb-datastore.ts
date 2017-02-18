@@ -210,7 +210,6 @@ export class PouchdbDatastore implements Datastore {
     /**
      * Implements {@link ReadDatastore#find}.
      *
-     * The find method guarantees to return a cached instance if there is any.
      *
      * TODO implement option to match exactly
      *

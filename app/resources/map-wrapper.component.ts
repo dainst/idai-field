@@ -82,9 +82,9 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     
     private setActiveDoc(id) {
         if (id) {
-            this.datastore.get(id).then(document => {
+            this.datastore.get(id).then(document=> {
                 this.activeDoc = document as IdaiFieldDocument;
-                this.activeType = document.resource.type;
+                this.activeType = this.activeDoc.resource.type;
                 this.configLoader.getProjectConfiguration().then(projectConfiguration => {
                     this.activeTypeLabel = projectConfiguration.getLabelForType(this.activeType); 
                 });

@@ -80,7 +80,7 @@ export class FileSystemMediastore implements Mediastore {
      * methods defined here.
      */
     public objectChangesNotifications(): Observable<File> {
-        return new Observable();
+        return undefined;
     }
 
     private loadSampleData(): void {

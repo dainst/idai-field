@@ -33,6 +33,7 @@ export class DocumentPickerComponent {
     public fetchDocuments(query: Query) {
 
         this.datastore.find(query).then(documents => {
+            console.log("find",documents)
             this.documents = documents as IdaiFieldDocument[];
         }).catch(err => console.error(err));
     }

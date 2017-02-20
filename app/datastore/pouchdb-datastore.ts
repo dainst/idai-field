@@ -18,9 +18,16 @@ export class PouchdbDatastore implements Datastore {
 
     private db: any;
     private observers = [];
-    private documentCache: { [resourceId: string]: Document } = {};
     private readyForQuery: Promise<any>;
-    
+
+    private static reduceFun: string = "function reduceFun(keys, values) {" +
+        "var result = [];" +
+        "values.forEach(function(value) {" +
+        "if (result.indexOf(value) == -1) result.push(value);" +
+        "});" +
+        "return result" +
+        "}";
+
     constructor(private dbname,loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
@@ -38,19 +45,13 @@ export class PouchdbDatastore implements Datastore {
         return this.setupIndex('_design/fulltext', {
                 fulltext: {
                     map: "function mapFun(doc) {" +
-                        "if (doc.resource.shortDescription)" +
+                        "if (doc.resource.shortDescription) " +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
                                 "emit(token.toLowerCase(), doc._id);" +
                             "});" +
-                        "emit(doc.resource.identifier.toLowerCase(), doc._id);" +
+                        "if (doc.resource.identifier) emit(doc.resource.identifier.toLowerCase(), doc._id)" +
                     "}",
-                    reduce: "function reduceFun(keys, values) {" +
-                        "var result = [];" +
-                        "values.forEach(function(value) {" +
-                            "if (result.indexOf(value) == -1) result.push(value);" +
-                        "});" +
-                        "return result" +
-                    "}"
+                    reduce: PouchdbDatastore.reduceFun
                 }
             });
     }
@@ -58,17 +59,11 @@ export class PouchdbDatastore implements Datastore {
     private setupIdentifierIndex(): Promise<any> {
         return this.setupIndex('_design/identifier',{ identifier: { map: "function mapFun(doc) {"+
             "emit(doc.resource.identifier,doc._id);" +
-            "}",reduce:"function reduceFun(keys, values) {" +
-        "var result = [];" +
-        "values.forEach(function(value) {" +
-        "if (result.indexOf(value) == -1) result.push(value);" +
-        "});" +
-        "return result" +
-        "}"}})
+            "}",reduce:PouchdbDatastore.reduceFun }})
     }
 
     private setupIndex(id,views) {
-        var ddoc = {
+        let ddoc = {
             _id: id,
             views: views
         };
@@ -83,46 +78,43 @@ export class PouchdbDatastore implements Datastore {
         );
     }
 
-
-
     /**
+     * Implements {@link Datastore#create}.
+     *
      * The created instance is put to the cache.
      *
      * @param document
-     * @returns {Promise<string>}
+     * @returns {Promise<Document|string>} same instance of the document or error message
      */
-    public create(document: any): Promise<string> {
+    public create(document: any): Promise<Document|string> {
 
-        return new Promise((resolve, reject) => {
-            this.readyForQuery
-                .then(()=>{
-                    if (document.id != null) reject("Aborting creation: Object already has an ID. " +
-                        "Maybe you wanted to update the object with update()?");
-                    document.id = IdGenerator.generateId();
-                    document['resource']['id'] = document.id;
-                    document.created = new Date();
-                    document.modified = document.created;
-                    document['_id'] = document['id'];
-                    this.documentCache[document['id']] = document;
+        return this.readyForQuery
+            .then(()=> {
+                if (document.id != null) return Promise.reject("Aborting creation: Object already has an ID. " +
+                    "Maybe you wanted to update the object with update()?");
+                document.id = IdGenerator.generateId();
+                document['resource']['id'] = document.id;
+                document.created = new Date();
+                document.modified = document.created;
+                document['_id'] = document['id'];
 
-                    this.db.put(document).then(result => {
-                        this.notifyObserversOfObjectToSync(document);
-                        document['_rev'] = result['rev'];
-                        resolve();
-                    },err => {
-                        document.id = undefined;
-                        document['resource']['id'] = undefined;
-                        document.created = undefined;
-                        document.modified = undefined;
-                        reject(err);
-                    })
+                return this.db.put(document);
+            })
+            .then(result => {
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                return Promise.resolve(document);
 
-            }).catch(err=>{
-                reject(err);
-            });
-        });
+            }).catch(err => {
+                document.id = undefined;
+                document['resource']['id'] = undefined;
+                document.created = undefined;
+                document.modified = undefined;
+                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                return Promise.reject(err);
+            })
     }
-    // TODO is this still necessary?
+
     private updateReadyForQuery(skipCheck) : Promise<any>{
         if (!skipCheck) {
             return this.readyForQuery;
@@ -133,57 +125,71 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
+     * Implements {@link Datastore#update}.
+     *
      * The updated instance gets put to the cache.
      *
      * @param document
      * @param initial
-     * @returns {Promise<any>}
+     * @returns {Promise<Document|string>} same instance of the document or error message
      */
-    public update(document:Document, initial = false): Promise<any> {
+    public update(document:Document, initial = false): Promise<Document|string> {
 
-        return new Promise((resolve, reject) => {
-            this.updateReadyForQuery(initial)
-                .then(()=> {
-                    if (document['id'] == null) reject("Aborting update: No ID given. " +
-                        "Maybe you wanted to create the object with create()?");
-                    document.modified = new Date();
+        return this.updateReadyForQuery(initial)
+            .then(()=> {
+                if (document['id'] == null) return Promise.reject("Aborting update: No ID given. " +
+                    "Maybe you wanted to create the object with create()?");
+                document.modified = new Date();
 
-                    if (initial) {
-                        document['_id'] = document['id'];
-                    } else {
-                        // delete document['rev']
-                    }
-                    this.db.put(document).then(result => {
-                        this.notifyObserversOfObjectToSync(document);
-                        document['_rev'] = result['rev'];
-                        this.documentCache[document['id']] = document;
-                        resolve();
-                    }, err => {
-                        reject(M.DATASTORE_GENERIC_SAVE_ERROR);
-                        reject(err)
-                    })
+                if (initial) {
+                    document['_id'] = document['id'];
+                } else {
+                    // delete document['rev']
+                }
+                return this.db.put(document)
 
+            }).then(result => {
 
-                }).catch(err=>{console.log("error",err)});
-       });
+                this.notifyObserversOfObjectToSync(document);
+                document['_rev'] = result['rev'];
+                return Promise.resolve(document);
+
+            }).catch(err => {
+                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+
+                return Promise.reject(err)
+            })
     }
 
-    public refresh(doc: Document): Promise<Document> {
+    /**
+     * Implements {@link ReadDatastore#refresh}.
+     *
+     * @param doc
+     * @returns {Promise<Document|string>}
+     */
+    public refresh(doc: Document): Promise<Document|string> {
 
         return this.fetchObject(doc.resource.id);
     }
 
-    public get(id: string): Promise<Document> {
-
-        if (this.documentCache[id]) {
-            return new Promise((resolve, reject) => resolve(this.documentCache[id]));
-        } else {
-            return this.fetchObject(id);
-        }
+    /**
+     * Implements {@link ReadDatastore#get}.
+     *
+     * @param id
+     * @returns {any}
+     */
+    public get(id: string): Promise<Document|string> {
+        return this.fetchObject(id);
     }
 
-    public remove(doc: Document): Promise<any> {
-        return this.db.remove(doc).then(() => delete this.documentCache[doc.resource.id]);
+    /**
+     * Implements {@link Datastore#remove}.
+     *
+     * @param doc
+     * @returns {Promise<undefined|string>}
+     */
+    public remove(doc: Document): Promise<undefined|string> {
+        return this.db.remove(doc);
     }
 
     private clear(): Promise<any> {
@@ -202,13 +208,19 @@ export class PouchdbDatastore implements Datastore {
     }
 
     /**
-     * The find method guarantees to return a cached instance if there is any.
+     * Implements {@link ReadDatastore#find}.
+     *
+     *
+     * TODO implement option to match exactly
      *
      * @param query
      * @param fieldName
-     * @returns {Promise<Document[]>}
+     * @returns {Promise<Document[]|string>}
      */
     public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
+
+        if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
+        if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();
@@ -217,21 +229,15 @@ export class PouchdbDatastore implements Datastore {
                 endkey: queryString + '\uffff',
                 reduce: true
             });
-        }).then(result => this.buildResult(result, query.filterSets))
-        .then(result => this.replaceWithCached(result));
+        }).then(result => { return this.buildResult(result, query.filterSets)} )
     }
 
-    private replaceWithCached(results_) {
-        for (let i in results_) {
-            if (this.documentCache[results_[i].resource.id]) {
-                results_[i] = this.documentCache[results_[i].resource.id];
-            }
-        }
-        return results_;
-    }
-
-
-    public all(): Promise<Document[]> {
+    /**
+     * Implements {@link ReadDatastore#all}.
+     *
+     * @returns {Promise<Document[]|string>}
+     */
+    public all(): Promise<Document[]|string> {
         return this.db.allDocs();
     }
 
@@ -305,8 +311,8 @@ export class PouchdbDatastore implements Datastore {
 
         return new Promise<any>((resolve,reject)=>{
 
-            var promises = [];
-            for (var ob of DOCS) promises.push(this.update(ob, true));
+            let promises = [];
+            for (let ob of DOCS) promises.push(this.update(ob, true));
 
             Promise.all(promises)
                 .then(() => {

@@ -134,15 +134,6 @@ var ResourcesPage = function() {
         return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 
-    this.getRelationNameInDocumentView = function(relationIndex) {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), delays.ECWaitTime);
-        return element.all(by.css('#document-view a')).get(relationIndex).getText();
-    };
-
-    this.getRelationsInDocumentView = function() {
-        return element.all(by.css('#document-view a'));
-    };
-
     this.get = function() {
         return browser.get('/#/resources');
     };

@@ -126,7 +126,7 @@ export class ResourcesComponent {
     public fetchDocuments(query: Query) {
 
         return this.datastore.find(query).then(documents => {
-            this.documents = documents;
+            this.documents = documents as Document[];
             this.notify();
         }).catch(err => console.error(err));
     }
@@ -144,7 +144,7 @@ export class ResourcesComponent {
         return new Promise<Document>((resolve,reject)=>{
 
             this.datastore.get(resourceId).then(document=> {
-                resolve(document);
+                resolve(document as Document);
                 this.setSelected(<Document>document);
             })
         });

@@ -1,4 +1,5 @@
 var resourcesPage = require('./resources.page');
+var documentViewPage = require('../widgets/document-view.page');
 
 describe('relations', function() {
 
@@ -16,9 +17,9 @@ describe('relations', function() {
         resourcesPage.scrollUp();
         resourcesPage.clickSaveDocument();
         resourcesPage.selectObjectByIndex(1);
-        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o2');
+        expect(documentViewPage.getRelationName(0)).toEqual('o2');
         resourcesPage.clickRelationInDocumentView(0);
-        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o1');
+        expect(documentViewPage.getRelationName(0)).toEqual('o1');
     });
 
 
@@ -66,11 +67,11 @@ describe('relations', function() {
         resourcesPage.scrollUp();
         resourcesPage.clickSaveDocument();
         resourcesPage.clickBackToDocumentView();
-        resourcesPage.getRelationsInDocumentView().then(function(relations) {
+        documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
         resourcesPage.selectObjectByIndex(1);
-        resourcesPage.getRelationsInDocumentView().then(function(relations) {
+        documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

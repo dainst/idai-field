@@ -39,18 +39,18 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob3",
             "shortDescription": "Luke Skywalker",
             "type": "jedi",
-            "lightsaber_color" : "Blau",
+            "lightsaber_color": ["Blau", "Grün"],
             "relations": {
-                "sonOf" : ["o6"],
-                "friendOf" : ["o4", "o5"],
-                "origin" : ["o7"],
+                "sonOf": ["o6"],
+                "friendOf": ["o4", "o5"],
+                "origin": ["o7"],
                 "depictedIn": ["o24"]
             },
             "geometries": [{
-                "type":"Polygon","coordinates":
+                "type": "Polygon","coordinates":
                     [[[2.140625,9.71875],[1.265625,9.796875],[1.234375,9.15625],[-3.796875,9.171875],[-3.8125,7.578125],
                         [-3.171875,7.5],[-3.171875,8.484375],[1.28125,8.40625],[1.265625,7.5],[2.15625,7.484375]]],
-                "crs":"local"
+                "crs": "local"
             }]
         },
         "synced": 0
@@ -62,12 +62,12 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Han Solo",
             "type": "dude",
             "relations": {
-                "friendOf" : ["o3", "o5"],
-                "owns" : ["o11"],
+                "friendOf": ["o3", "o5"],
+                "owns": ["o11"],
                 "depictedIn": ["o12"]
             },
             "geometries": [{
-                "type":"Point","coordinates":[0.828125,0.375],"crs":"local"
+                "type": "Point","coordinates": [0.828125,0.375],"crs": "local"
             }]
         },
         "synced": 0
@@ -91,7 +91,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "ob6",
             "shortDescription": "Darth Vader",
             "type": "jedi",
-            "lightsaber_color" : "Rot",
+            "lightsaber_color": ["Rot"],
             "relations": {
                 "fatherOf" : ["o3"],
                 "depictedIn": ["o14"]

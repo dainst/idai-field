@@ -1,6 +1,6 @@
 var mapPage = require('./map.page');
-var resourcePage = require('../resources/resources.page');
-var delays = require('../config/delays');
+var resourcePage = require('../../resources/resources.page');
+var delays = require('../../config/delays');
 
 describe('resources/map', function() {
 

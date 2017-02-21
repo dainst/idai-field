@@ -33,8 +33,16 @@ describe('relations', function() {
     });
 
     it('should delete a relation and the corresponding inverse relation', function() {
-        // TODO check element length to be 1 (after duplicate relation bug fixed)
         resourcesPage.createLink();
+        resourcesPage.selectObjectByIndex(0);
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        resourcesPage.selectObjectByIndex(0);
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        resourcesPage.clickEditDocument();
         resourcesPage.scrollDown();
         resourcesPage.clickRelationDeleteButtonByIndices(0, 0, 0);
         resourcesPage.scrollUp();

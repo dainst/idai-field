@@ -9,7 +9,6 @@ var delays = require('../config/delays');
  */
 describe('resources view tests --', function() {
 
-
     beforeEach(function () {
         resourcesPage.get();
     });
@@ -35,14 +34,14 @@ describe('resources view tests --', function() {
     it('fields view should show the relations present in the object', function () {
         resourcesPage.createLink();
         resourcesPage.selectObjectByIndex(1);
-        expect(documentViewPage.getRelationName(0)).toBe('Sohn von'); // with the correct field label
+        expect(documentViewPage.getRelationName(0)).toBe('Sohn von'); // with the correct relation label
         expect(documentViewPage.getRelationValue(0)).toBe('2');
     });
 
     /**
      * Addresses an issue where relations were shown double.
      */
-    xit('fields view should show only relations present in the object', function () {
+    it('fields view should show only relations present in the object', function () {
         resourcesPage.createLink();
         resourcesPage.selectObjectByIndex(1);
         documentViewPage.getRelations().then(function(relations) {

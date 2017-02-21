@@ -93,3 +93,40 @@ html [type="button"],
   background-color: $list-item-hover-colour;
   transition: background-color .65s ease;
 }
+
+/* Cards */
+/* override ugly styling of list-group-items inside cards in bootstrap 4 */
+.card > .list-group {
+  > .list-group-item {
+    border-width: 1px 0 0;
+  }
+  > .list-group-item:first-child {
+    border-width: 0;
+  }
+}
+
+.card {
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: #eee !important;
+}
+
+.card-header {
+  border-radius: 0 !important;
+  padding: 5px 5px 2px 15px !important;
+}
+
+.card-title {
+  font-weight: normal !important;
+  font-size: 17px !important;
+  margin: 0 !important;
+  padding: 4px 0 7px 0 !important;
+}
+
+.card-block {
+  padding: 10px !important;
+}
+
+.card-block .form-control {
+  margin: 0 !important;
+}

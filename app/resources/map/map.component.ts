@@ -106,8 +106,11 @@ export class MapComponent implements OnChanges {
             this.clearMap();
         }
 
+        this.bounds = L.latLngBounds(L.latLng(0, 0), L.latLng(0, 0));
+
+        let p;
         if (changes['documents']) {
-            this.initializeLayers().then(
+            p = this.initializeLayers().then(
                 () => {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
@@ -118,9 +121,9 @@ export class MapComponent implements OnChanges {
                    }
                 }
             );
+        } else {
+            p = Promise.resolve();
         }
-
-        this.bounds = L.latLngBounds(L.latLng(-1.0, -1.0), L.latLng(1.0, 1.0));
 
         for (var i in this.documents) {
             var resource = this.documents[i].resource;
@@ -129,8 +132,7 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        setTimeout(function() {
-
+        p.then(() => {
             this.map.invalidateSize(true);
 
             if (this.selectedDocument) {
@@ -142,7 +144,7 @@ export class MapComponent implements OnChanges {
             } else {
                 this.map.fitBounds(this.bounds);
             }
-        }.bind(this), 1);
+        });
 
         this.resetEditing();
 
@@ -166,7 +168,7 @@ export class MapComponent implements OnChanges {
 
     private initializeMap() {
 
-        this.map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false });
+        this.map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false, minZoom: -1000 });
 
         var mapComponent = this;
         this.map.on('click', function(event: L.MouseEvent) {
@@ -190,7 +192,7 @@ export class MapComponent implements OnChanges {
 
         this.map.on('moveend', function () {
             this.mapState.setCenter(this.map.getCenter());
-            this.mapState.setZoom(this.map.getZoom());
+            this.mapState.setZoom(this.map.getZoom());;
         }.bind(this));
     }
 
@@ -214,7 +216,7 @@ export class MapComponent implements OnChanges {
 
                 this.datastore.find(query).then(
                     documents => {
-                    this.makeLayersForDocuments(documents as Document[], resolve);
+                        this.makeLayersForDocuments(documents as Document[], resolve);
                     },
                     error => {
                         reject(error);
@@ -362,6 +364,7 @@ export class MapComponent implements OnChanges {
             layer.document.resource.georeference.topRightCoordinates,
             layer.document.resource.georeference.bottomLeftCoordinates,
             { pane: layer.document.resource.id }).addTo(this.map);
+        this.bounds.extend(layer.object.getBounds());
 
         this.activeLayers.push(layer);
     }

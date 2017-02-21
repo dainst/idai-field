@@ -20,45 +20,50 @@ export class AppComponent implements OnInit {
     public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
 
     private defaultTypes = [{
-        "type" : "image",
-        "fields" : [
+        "type": "image",
+        "fields": [
             {
-                name : "height",
-                editable : false,
+                name: "height",
+                editable: false,
                 label: "Höhe"
             },
             {
-                name : "width",
-                editable : false,
+                name: "width",
+                editable: false,
                 label: "Breite"
             },
             {
                 name : "filename",
-                editable : false,
+                editable: false,
                 label: "Dateiname"
+            },
+            {
+                name: "georeference",
+                visible: false,
+                editable: false,
             }
         ]
     }];
 
     private defaultFields = [{
-        name : "shortDescription",
-        label : "Kurzbeschreibung",
+        name: "shortDescription",
+        label: "Kurzbeschreibung",
         visible: true
-    },{
-        name : "identifier",
-        description : "use this to uniquely identify your object",
-        label : "Identifier",
+    }, {
+        name: "identifier",
+        description: "use this to uniquely identify your object",
+        label: "Identifier",
         visible: true,
         mandatory: true
-    },{
-        name : "geometries",
+    }, {
+        name: "geometries",
         visible: false,
         editable: false
     }];
 
     private defaultRelations = [
-        {name:'depicts', domain:['image:inherit'], inverse:'depictedIn', label: 'Zeigt', editable: false},
-        {name:'depictedIn', range:['image:inherit'], inverse: 'depicts', visible: false, editable: false}
+        {name: 'depicts', domain: ['image:inherit'], inverse: 'depictedIn', label: 'Zeigt', editable: false},
+        {name: 'depictedIn', range: ['image:inherit'], inverse: 'depicts', visible: false, editable: false}
     ];
 
 

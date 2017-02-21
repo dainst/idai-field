@@ -17,6 +17,8 @@
         </h1>
     </header>
     <main>
+        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
+
         <div *ngIf="document && !projectImageTypes[document.resource.type]" class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -33,7 +35,6 @@
                 </div>
             </div>
         </div>
-        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
     </main>
 </section>
 

@@ -72,6 +72,20 @@ html [type="button"],
 
 .card-header {
   border-radius: 0 !important;
+  padding: 5px 5px 2px 15px !important;
+}
+
+.card-title {
+  margin: 0 !important;
+  padding: 7px 0 7px 0 !important;
+}
+
+.card-block {
+  padding: 10px !important;
+}
+
+.card-block .form-control {
+  margin: 0 !important;
 }
 
 /* override popover styles */

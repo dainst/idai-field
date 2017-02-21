@@ -75,7 +75,6 @@ export class IdigCsvParser implements Parser {
                 observer.complete();
             };
 
-
             try {
                 Papa.parse(content, {
                     header: true,
@@ -132,7 +131,6 @@ export class IdigCsvParser implements Parser {
                 shortDescription: object['Title'],
                 relations: {}
             },
-            id: object['IdentifierUUID'],
             synced: 0
         };
 

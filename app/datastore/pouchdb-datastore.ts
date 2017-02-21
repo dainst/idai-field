@@ -93,7 +93,9 @@ export class PouchdbDatastore implements Datastore {
                 if (document.id != null) return Promise.reject("Aborting creation: Object already has an ID. " +
                     "Maybe you wanted to update the object with update()?");
                 document.id = IdGenerator.generateId();
-                document['resource']['id'] = document.id;
+                if (!document['resource']['id']) {
+                    document['resource']['id'] = document.id;
+                }
                 document.created = new Date();
                 document.modified = document.created;
                 document['_id'] = document['id'];

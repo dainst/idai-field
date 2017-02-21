@@ -36,6 +36,7 @@ export class Importer {
         this.importReport = {
             "io_error": false,
             "parser_errors": [],
+            "parser_info": [],
             "successful_imports": 0,
             "validation_errors": [],
             "datastore_errors": []
@@ -71,14 +72,18 @@ export class Importer {
 
             reader.read().then(fileContent => {
 
-                parser.parse(fileContent).subscribe(doc => {
+                parser.parse(fileContent).subscribe(result => {
 
                     if (this.currentImportWithError) return;
 
+                    for (var i in result.messages) {
+                        this.importReport.parser_info.push(result.messages[i]);
+                    }
+
                     if (!this.inUpdateDocumentLoop) {
-                        this.update(doc);
+                        this.update(result.document);
                     } else {
-                        this.docsToUpdate.push(doc);
+                        this.docsToUpdate.push(result.document);
                     }
 
                 }, error => {

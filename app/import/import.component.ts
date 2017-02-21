@@ -112,12 +112,15 @@ export class ImportComponent {
     private evaluate(importReport) {
 
         if (importReport['io_error']) {
-            var filename = this.file ? this.file.name : "";
+            var filename = this.file ? this.file.name : '';
             this.messages.addWithParams([M.IMPORTER_FAILURE_FILEUNREADABLE, filename]);
         }
 
-        for (var parserError of importReport["parser_errors"])
+        for (var parserError of importReport['parser_errors'])
             this.messages.addWithParams([parserError.message, parserError.lineNumber, parserError.errorData]);
+
+        for (var parserInfo of importReport['parser_info'])
+            this.messages.add(parserInfo);
 
         for (var err of importReport['validation_errors'])
             this.showValidationErrorMessage(err.msg, err.msgParams);

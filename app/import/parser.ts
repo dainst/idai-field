@@ -6,11 +6,16 @@ export class ParserError extends SyntaxError {
     errorData: string;
 }
 
+export interface ParserResult {
+    document: Document,
+    messages: Array<String>
+}
+
 export interface Parser {
 
     /**
      * Parses content to extract documents.
      * @param content
      */
-    parse(content:string): Observable<Document>;
+    parse(content:string): Observable<ParserResult>;
 }

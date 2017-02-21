@@ -117,6 +117,15 @@ export class Importer {
             .then(
                 () => {
                     return this.datastore.create(doc);
+                }, msgWithParams => {
+                    this.importReport['validation_errors'].push({
+                        doc: doc,
+                        msg: msgWithParams[0],
+                        msgParams: msgWithParams.slice(1)
+                    });
+
+                    this.currentImportWithError = true;
+                    this.finishImport();
                 })
             .then(() => {
                 this.importSuccessCounter++;
@@ -129,20 +138,15 @@ export class Importer {
                 } else {
                     this.finishImport();
                 }
-            })
-            .catch(
-                msgWithParams => {
+            }, error => {
+                this.importReport['datastore_errors'].push({
+                    msg: error,
+                    doc: doc
+                });
 
-                    this.importReport['validation_errors'].push({
-                        doc: doc,
-                        msg: msgWithParams[0],
-                        msgParams: msgWithParams.slice(1)
-                    });
-
-                    this.currentImportWithError = true;
-                    this.finishImport();
-                }
-            );
+                this.currentImportWithError = true;
+                this.finishImport();
+            });
     }
 
     private finishImport() {

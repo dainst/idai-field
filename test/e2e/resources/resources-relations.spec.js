@@ -8,45 +8,24 @@ describe('relations', function() {
     });
 
     it ('should create links for relations', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
+        resourcesPage.createLink();
         resourcesPage.selectObjectByIndex(1);
-        expect(documentViewPage.getRelationName(0)).toEqual('o2');
+        expect(documentViewPage.getRelationValue(0)).toEqual('2');
         resourcesPage.clickRelationInDocumentView(0);
-        expect(documentViewPage.getRelationName(0)).toEqual('o1');
+        expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
 
     it('should create a new relation and the corresponding inverse relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('o1');
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
+        resourcesPage.createLink();
+        expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('1');
         resourcesPage.selectObjectByIndex(1);
         resourcesPage.clickEditDocument();
-        expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('o2');
+        expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('2');
     });
 
     it('should edit a resource that contains a relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
+        resourcesPage.createLink();
         resourcesPage.clickCloseMessage();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();
@@ -54,14 +33,8 @@ describe('relations', function() {
     });
 
     it('should delete a relation and the corresponding inverse relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
+        // TODO check element length to be 1 (after duplicate relation bug fixed)
+        resourcesPage.createLink();
         resourcesPage.scrollDown();
         resourcesPage.clickRelationDeleteButtonByIndices(0, 0, 0);
         resourcesPage.scrollUp();

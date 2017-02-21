@@ -36,6 +36,23 @@ var ResourcesPage = function() {
         element(by.id('document-edit-button-goto-view')).click();
     };
 
+
+
+
+    this.createLink = function() {
+        this.createResource('1');
+        this.createResource('2');
+        this.scrollDown();
+        this.clickAddRelationForGroupWithIndex(0);
+        this.typeInRelationByIndices(0, 0, '1');
+        this.clickRelationSuggestionByIndices(0, 0, 0);
+        this.scrollUp();
+        this.clickSaveDocument();
+        browser.sleep(delays.shortRest);
+    };
+
+
+
     this.clickSaveDocument = function() {
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function(){
@@ -61,6 +78,7 @@ var ResourcesPage = function() {
     };
 
     this.clickRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+        browser.wait(EC.visibilityOf(element(by.css('.suggestion'))), delays.ECWaitTime);
         this.getRelationByIndices(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };
@@ -155,6 +173,7 @@ var ResourcesPage = function() {
     };
 
     this.selectObjectByIndex = function(listIndex) {
+        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)), delays.ECWaitTime);
         return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
     };
 

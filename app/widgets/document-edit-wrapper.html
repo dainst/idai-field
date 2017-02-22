@@ -31,12 +31,13 @@
                                            [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
                             </template>
                         </ngb-tab>
-                        <ngb-tab title="Relationen" id="document-edit-relations-tab">
+                        <ngb-tab *ngIf="relationDefinitions && relationDefinitions.length > 0" title="Relationen"
+                                 id="document-edit-relations-tab">
                             <template ngbTabContent>
                                 <relations-form
                                         [(document)]="document"
                                         [primary]="'identifier'"
-                                        [relationDefinitions]="projectConfiguration.getRelationDefinitions(document.resource.type,'editable')"></relations-form>
+                                        [relationDefinitions]="relationDefinitions"></relations-form>
                             </template>
                         </ngb-tab>
                         <ngb-tab *ngIf="!projectImageTypes[document.resource.type]" title="Bilder"

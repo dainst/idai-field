@@ -1,10 +1,9 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
-import {ConfigLoader} from "idai-components-2/configuration";
+import {ConfigLoader, ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
 import {M} from "../m";
 import {Validator, PersistenceManager} from "idai-components-2/persist";
-import {ProjectConfiguration} from "idai-components-2/configuration";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
@@ -30,10 +29,11 @@ export class DocumentEditWrapperComponent {
     @Input() showBackButton: boolean = true;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
-    private projectImageTypes:any = {};
+    private projectImageTypes: any = {};
     private projectConfiguration: ProjectConfiguration;
 
-    private typeLabel;
+    private typeLabel: string;
+    private relationDefinitions: Array<RelationDefinition>;
 
     constructor(
         private messages: Messages,
@@ -53,6 +53,8 @@ export class DocumentEditWrapperComponent {
 
             if (this.document) {
                 this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
+                this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
+                    'editable');
                 this.persistenceManager.setOldVersion(this.document);
             }
         });

@@ -35,7 +35,7 @@
                             <template ngbTabContent>
                                 <relations-form
                                         [(document)]="document"
-                                        [primary]="primary"
+                                        [primary]="'identifier'"
                                         [relationDefinitions]="projectConfiguration.getRelationDefinitions(document.resource.type,'editable')"></relations-form>
                             </template>
                         </ngb-tab>

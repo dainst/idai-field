@@ -53,7 +53,7 @@ describe('document view tests --', function() {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    xit('fields view should show only relations present in the object', function () {
+    it('fields view should show only relations present in the object', function () {
         resourcesPage.createResource('1');
         resourcesPage.createResource('2');
         resourcesPage.selectResourceByIdentifier("1");

@@ -13,13 +13,13 @@
     <div *ngIf="document.resource.georeference">
         <span class="fieldvalue">Vorhanden</span>
         <div *ngIf="document.resource.georeference" id="delete-georeference-button" class="btn btn-link"
-             (click)="openDeleteModal(deleteModal)">
+             data-toggle="tooltip" title="Georeferenzdaten löschen" (click)="openDeleteModal(deleteModal)">
             <span class="mdi mdi-delete"></span>
         </div>
     </div>
     <div *ngIf="!document.resource.georeference">
         <span class="fieldvalue">Nicht vorhanden</span>
-        <div id="worldfile-upload" class="btn btn-link">
+        <div id="worldfile-upload" class="btn btn-link" data-toggle="tooltip" title="Worldfile laden">
             <span class="mdi mdi-file-import"></span>
             <input #worldfileInput type="file"
                    name="files[]"

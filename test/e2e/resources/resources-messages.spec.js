@@ -15,7 +15,7 @@ describe('resources/messages', function() {
         resourcesPage.createResource('12');
         resourcesPage.clickCloseMessage();
         resourcesPage.typeInIdentifier('34');
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('34');
         resourcesPage.clickSaveInModal();
         expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });

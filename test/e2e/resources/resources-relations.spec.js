@@ -9,7 +9,7 @@ describe('relations', function() {
 
     it ('should create links for relations', function() {
         resourcesPage.createLink();
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         expect(documentViewPage.getRelationValue(0)).toEqual('2');
         resourcesPage.clickRelationInDocumentView(0);
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
@@ -19,7 +19,7 @@ describe('relations', function() {
     it('should create a new relation and the corresponding inverse relation', function() {
         resourcesPage.createLink();
         expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('1');
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         resourcesPage.clickEditDocument();
         expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('2');
     });
@@ -34,11 +34,11 @@ describe('relations', function() {
 
     it('should delete a relation and the corresponding inverse relation', function() {
         resourcesPage.createLink();
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('2');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('2');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -51,7 +51,7 @@ describe('relations', function() {
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

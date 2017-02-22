@@ -37,7 +37,7 @@ describe('resources', function() {
     it ('should reflect changes in overview in realtime', function() {
         resourcesPage.createResource('1a');
         resourcesPage.createResource('2');
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1a');
         resourcesPage.clickEditDocument();
         resourcesPage.typeInIdentifier('1b');
         browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('1b')), delays.ECWaitTime);
@@ -64,7 +64,7 @@ describe('resources', function() {
     it ('should reflect changes in overview after creating object - second scenario', function() {
         resourcesPage.createResource('12');
         resourcesPage.setTypeFilter(0); // calls find
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('12');
         resourcesPage.clickEditDocument();
         resourcesPage.typeInIdentifier('56'); // same ...
         browser.wait(EC.presenceOf(resourcesPage.getListItemByIdentifier('56')), delays.ECWaitTime); // ... instance
@@ -95,13 +95,13 @@ describe('resources', function() {
         resourcesPage.selectGeometryType();
         browser.wait(EC.presenceOf(resourcesPage.findListItemMarkedNew()), delays.ECWaitTime);
         resourcesPage.scrollUp();
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         expect(resourcesPage.getFirstListItemIdentifier()).toEqual('1');
     });
 
     it ('should change the selection to new when saving via modal', function() {
         resourcesPage.createResource('1');
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('1');
         resourcesPage.clickEditDocument();
         resourcesPage.typeInIdentifier('2');
         resourcesPage.clickCreateObject();
@@ -117,10 +117,10 @@ describe('resources', function() {
     it ('should change the selection to existing when saving via modal', function() {
         resourcesPage.createResource('1');
         resourcesPage.createResource('2');
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('2');
         resourcesPage.clickEditDocument();
         resourcesPage.typeInIdentifier('2a');
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         resourcesPage.scrollUp();
         resourcesPage.clickSaveInModal();
         resourcesPage.scrollUp();
@@ -130,10 +130,10 @@ describe('resources', function() {
     it ('should not change the selection to existing when cancelling in modal', function() {
         resourcesPage.createResource('1');
         resourcesPage.createResource('2');
-        resourcesPage.selectObjectByIndex(0);
+        resourcesPage.selectResourceByIdentifier('2');
         resourcesPage.clickEditDocument();
         resourcesPage.typeInIdentifier('2a');
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.selectResourceByIdentifier('1');
         resourcesPage.scrollUp();
         resourcesPage.clickCancelInModal();
         resourcesPage.scrollUp();

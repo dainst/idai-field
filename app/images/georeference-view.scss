@@ -1,10 +1,21 @@
-.worldfile-upload {
+.georeference-view-field {
+    margin-bottom: 0px !important;
+}
+
+#worldfile-upload {
     position: relative;
     overflow: hidden;
     margin: 10px;
+    padding: 0;
+    font-size: 23px;
+    color: #657faa !important;
 }
 
-.worldfile-upload input {
+#worldfile-upload:hover {
+    color: lighten(#657faa, 10%) !important;
+}
+
+#worldfile-upload input {
     position: absolute;
     top: 0;
     right: 0;
@@ -13,4 +24,14 @@
     opacity: 0;
     cursor: pointer;
     filter: alpha(opacity = 0);
+}
+
+#delete-georeference-button {
+    padding: 0;
+    font-size: 23px;
+    color: #d9534f !important;
+}
+
+#delete-georeference-button:hover {
+    color: lighten(#d9534f, 10%) !important;
 }

@@ -8,23 +8,23 @@
     </div>
 </template>
 
-<div class="document-view-field" id="document-view-field-georeference">
+<div class="document-view-field georeference-view-field">
     <div class="fieldname">Georeferenzdaten</div>
     <div *ngIf="document.resource.georeference">
-        Vorhanden
+        <span class="fieldvalue">Vorhanden</span>
+        <div *ngIf="document.resource.georeference" id="delete-georeference-button" class="btn btn-link"
+             (click)="openDeleteModal(deleteModal)">
+            <span class="mdi mdi-delete"></span>
+        </div>
     </div>
     <div *ngIf="!document.resource.georeference">
-        <span>Nicht vorhanden</span>
-    </div>
-    <div class="worldfile-upload btn btn-primary">
-        <span>Worldfile laden</span>
-        <input #worldfileInput type="file"
-               name="files[]"
-               id="file"
-               (change)="onSelectFile($event)">
-    </div>
-    <div *ngIf="document.resource.georeference" class="worldfile-upload btn btn-danger"
-            (click)="openDeleteModal(deleteModal)">
-        <span class="mdi mdi-delete"></span>
+        <span class="fieldvalue">Nicht vorhanden</span>
+        <div id="worldfile-upload" class="btn btn-link">
+            <span class="mdi mdi-file-import"></span>
+            <input #worldfileInput type="file"
+                   name="files[]"
+                   id="file"
+                   (change)="onSelectFile($event)">
+        </div>
     </div>
 </div>

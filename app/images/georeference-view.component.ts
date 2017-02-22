@@ -41,7 +41,7 @@ export class GeoreferenceViewComponent {
             }
         })(this);
         reader.onerror = (that => {
-            return (err) => {
+            return err => {
                 that.messages.addWithParams([M.IMAGES_ERROR_FILEREADER, file.name]);
             }
         })(this);
@@ -53,7 +53,9 @@ export class GeoreferenceViewComponent {
         worldfileContent = this.removeEmptyLines(worldfileContent);
         if (this.worldFileContentIsValid(worldfileContent)) {
             this.document.resource.georeference = this.createGeoreference(worldfileContent);
-            this.save();
+            this.save().then(
+                () => this.messages.add(M.IMAGES_SUCCESS_WORLDFILE_UPLOADED),
+                err => this.messages.add(err));
         } else {
             this.messages.addWithParams([M.IMAGES_ERROR_INVALID_WORLDFILE, file.name]);
         }
@@ -120,14 +122,16 @@ export class GeoreferenceViewComponent {
         return [ lat, lng ];
     }
 
-    private save() {
+    private save(): Promise<any> {
 
-        this.persistenceManager.setOldVersion(this.document);
+        return new Promise<any>((resolve, reject) => {
+            this.persistenceManager.setOldVersion(this.document);
 
-        this.persistenceManager.persist(this.document).then(
-            () => {},
-            err => { console.log(err); }
-        );
+            this.persistenceManager.persist(this.document).then(
+                () => { resolve(); },
+                err => { console.error(err); reject(M.DATASTORE_GENERIC_SAVE_ERROR); }
+            );
+        });
     }
 
 }

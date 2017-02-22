@@ -88,6 +88,14 @@ var ResourcesPage = function() {
             .click();
     };
 
+    this.clickRelationsTab = function() {
+        element(by.id('document-edit-relations-tab')).click();
+    }
+
+    this.clickFieldsTab = function() {
+        element(by.id('document-edit-fields-tab')).click();
+    }
+
     this.selectGeometryType = function(type) {
         var geom = 'none';
         if (type) geom = type;
@@ -160,7 +168,7 @@ var ResourcesPage = function() {
     this.createLink = function() {
         this.createResource('1');
         this.createResource('2');
-        this.scrollDown();
+        this.clickRelationsTab();
         this.clickAddRelationForGroupWithIndex(0);
         this.typeInRelationByIndices(0, 0, '1');
         this.clickRelationSuggestionByIndices(0, 0, 0);

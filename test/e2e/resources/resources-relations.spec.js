@@ -27,12 +27,13 @@ describe('relations', function() {
     it('should edit a resource that contains a relation', function() {
         resourcesPage.createLink();
         resourcesPage.clickCloseMessage();
+        resourcesPage.clickFieldsTab();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();
         expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });
 
-    it('should delete a relation and the corresponding inverse relation', function() {
+    fit('should delete a relation and the corresponding inverse relation', function() {
         resourcesPage.createLink();
         resourcesPage.selectObjectByIndex(0);
         documentViewPage.getRelations().then(function(relations) {
@@ -43,9 +44,9 @@ describe('relations', function() {
             expect(relations.length).toBe(1);
         });
         resourcesPage.clickEditDocument();
-        resourcesPage.scrollDown();
+        resourcesPage.clickRelationsTab();
         resourcesPage.clickRelationDeleteButtonByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
+
         resourcesPage.clickSaveDocument();
         resourcesPage.clickBackToDocumentView();
         documentViewPage.getRelations().then(function(relations) {

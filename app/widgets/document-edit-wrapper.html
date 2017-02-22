@@ -19,26 +19,49 @@
         </h1>
     </header>
     <main>
-        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
 
         <div *ngIf="document && !projectImageTypes[document.resource.type]" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group card">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                Verknüpfte Bilder
-                            </h3>
-                        </div>
-                        <div class="card-block">
-                            <thumbnail-view *ngIf="document && document.resource.relations['depictedIn']"
-                                            [imageIds]="document.resource.relations['depictedIn']"></thumbnail-view>
-                            <button type="button" id="create-depicts-relations-btn"
-                                    class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild
-                                einfügen
-                            </button>
-                        </div>
-                    </div>
+
+                    <ngb-tabset>
+                        <ngb-tab title="Felder"  id="document-edit-fields-tab">
+                            <template ngbTabContent>
+                                <edit-form *ngIf="projectConfiguration" [(document)]="document"
+                                           [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
+                            </template>
+                        </ngb-tab>
+                        <ngb-tab title="Relationen" id="document-edit-relations-tab">
+                            <template ngbTabContent>
+                                <relations-form
+                                        [(document)]="document"
+                                        [primary]="primary"
+                                        [relationDefinitions]="projectConfiguration.getRelationDefinitions(document.resource.type,'editable')"></relations-form>
+                            </template>
+                        </ngb-tab>
+                        <ngb-tab title="Bilder" id="document-edit-images-tab">
+                            <template ngbTabContent>
+                                <div class="form-group card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            Verknüpfte Bilder
+                                        </h3>
+                                    </div>
+                                    <div class="card-block">
+                                        <thumbnail-view *ngIf="document && document.resource.relations['depictedIn']"
+                                                        [imageIds]="document.resource.relations['depictedIn']"></thumbnail-view>
+                                        <button type="button" id="create-depicts-relations-btn"
+                                                class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild
+                                            einfügen
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </ngb-tab>
+                    </ngb-tabset>
+
+
+
                 </div>
             </div>
         </div>

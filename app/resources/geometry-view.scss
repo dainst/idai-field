@@ -1,0 +1,25 @@
+$buttoncolor: #657faa;
+
+#document-view-button-create-polygon {
+    margin-left: 2px;
+    margin-right: -4px;
+}
+
+#document-view-button-edit-geometry {
+    margin-bottom: 5px;
+}
+
+#document-view-button-create-polygon,
+#document-view-button-create-point,
+#document-view-button-edit-geometry {
+    margin-top: 1px;
+    padding: 0;
+    font-size: 23px;
+    color: $buttoncolor !important;
+}
+
+#document-view-button-create-polygon:hover,
+#document-view-button-create-point:hover,
+#document-view-button-edit-geometry:hover {
+    color: lighten($buttoncolor, 10%) !important;
+}

@@ -50,13 +50,28 @@ describe('image grid tests -- ', function(){
 
     it('user should be able to delete an image in the grid view.', function () {
         gridPage.getCellImageName(0)
-            .then(function (imageName) {
-                var xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
+            .then(function (filename) {
                 gridPage.getCell(0).click();
                 gridPage.clickDeleteButton();
                 gridPage.clickConfirmDeleteButton();
                 browser.wait(EC.stalenessOf(gridPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-                browser.wait(EC.stalenessOf(element(by.xpath(xpath))), delays.ECWaitTime);
+                browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(filename)), delays.ECWaitTime);
+            });
+    });
+
+    it('user should be able to delete two images in the grid view.', function () {
+        gridPage.getCellImageName(0)
+            .then(function (image1filename) {
+                gridPage.getCellImageName(1)
+                    .then(function (image2filename) {
+                        gridPage.getCell(0).click();
+                        gridPage.getCell(1).click();
+                        gridPage.clickDeleteButton();
+                        gridPage.clickConfirmDeleteButton();
+                        browser.wait(EC.stalenessOf(gridPage.getDeleteConfirmationModal()), delays.ECWaitTime);
+                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image1filename)), delays.ECWaitTime);
+                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image2filename)), delays.ECWaitTime);
+                    })
             });
     });
 

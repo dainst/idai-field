@@ -339,7 +339,7 @@ export class MapComponent implements OnChanges {
 
     private addPolygonToMap(geometry: any, document: IdaiFieldDocument): IdaiFieldPolygon {
 
-        var polygon: IdaiFieldPolygon = L.polygon(geometry.coordinates);
+        var polygon: IdaiFieldPolygon = this.getPolygonFromCoordinates(geometry.coordinates);
         polygon.document = document;
 
         polygon.bindTooltip(this.getShortDescription(document.resource), {
@@ -583,10 +583,10 @@ export class MapComponent implements OnChanges {
 
         if (this.editablePolygon) {
             geometry.type = "Polygon";
-            geometry.coordinates = this.getPolygonCoordinates(this.editablePolygon);
+            geometry.coordinates = this.getCoordinatesFromPolygon(this.editablePolygon);
         } else if (this.editableMarker) {
             geometry.type = "Point";
-            geometry.coordinates = [this.editableMarker.getLatLng().lat, this.editableMarker.getLatLng().lng];
+            geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
         } else {
             geometry = null;
         }
@@ -621,7 +621,7 @@ export class MapComponent implements OnChanges {
         this.map.pm.disableDraw('Poly');
     }
 
-    private getPolygonCoordinates(polygon: L.Polygon): Array<any> {
+    private getCoordinatesFromPolygon(polygon: L.Polygon): Array<any> {
 
         var coordinates = [];
         var latLngs = polygon.getLatLngs();
@@ -629,11 +629,18 @@ export class MapComponent implements OnChanges {
         for (var i in latLngs) {
             coordinates.push([]);
             for (var j in latLngs[i]) {
-                coordinates[i].push([ latLngs[i][j].lat, latLngs[i][j].lng ]);
+                coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
             }
         }
 
         return coordinates;
+    }
+
+    private getPolygonFromCoordinates(coordinates: Array<any>): L.Polygon {
+
+        var feature = L.polygon(coordinates).toGeoJSON();
+        return L.polygon(<any> feature.geometry.coordinates[0]);
+        
     }
 
     private getLayersAsList(): Array<ImageContainer> {

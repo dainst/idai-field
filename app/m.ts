@@ -28,6 +28,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
+    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
@@ -147,6 +148,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_SUCCESS_WORLDFILE_UPLOADED] = {
             content: "Das Worldfile wurde erfolgreich geladen.",
+            level: 'success',
+            params: []
+        };
+        this.msgs[M.IMAGES_SUCCESS_GEOREFERENCE_DELETED] = {
+            content: "Die Georeferenzdaten wurden erfolgreich gelöscht.",
             level: 'success',
             params: []
         };

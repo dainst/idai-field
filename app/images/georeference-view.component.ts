@@ -1,8 +1,9 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, ViewChild, ElementRef} from "@angular/core";
 import {PersistenceManager} from "idai-components-2/persist";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {IdaiFieldGeoreference} from "../model/idai-field-georeference";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -18,9 +19,12 @@ export class GeoreferenceViewComponent {
 
     @Input() document: any;
 
+    @ViewChild('worldfileInput') worldfileInput: ElementRef;
+
     constructor(
         private persistenceManager: PersistenceManager,
-        private messages: Messages
+        private messages: Messages,
+        private modalService: NgbModal
     ) {}
 
     public onSelectFile(event) {
@@ -31,11 +35,19 @@ export class GeoreferenceViewComponent {
         }
     }
 
+    public openDeleteModal(modal) {
+
+        this.modalService.open(modal).result.then(result => {
+            if (result == 'delete') this.deleteGeoreference();
+        });
+    }
+
     private readFile(file: File) {
 
         var reader = new FileReader();
         reader.onloadend = (that => {
             return () => {
+                this.worldfileInput.nativeElement.value = '';
                 var worldfileContent = reader.result.split("\n");
                 that.importWorldfile(worldfileContent, file);
             }
@@ -104,7 +116,6 @@ export class GeoreferenceViewComponent {
         };
 
         return georeference;
-        
     }
 
     private computeLatLng(imageX: number, imageY: number, worldfileContent: string[]): [number, number] {
@@ -120,6 +131,15 @@ export class GeoreferenceViewComponent {
         var lng: number = lngPosition + lngRotation + lngTranslation;
 
         return [ lat, lng ];
+    }
+
+    private deleteGeoreference() {
+
+        this.document.resource.georeference = undefined;
+
+        this.save().then(
+            () => this.messages.add(M.IMAGES_SUCCESS_GEOREFERENCE_DELETED),
+            err => this.messages.add(err));
     }
 
     private save(): Promise<any> {

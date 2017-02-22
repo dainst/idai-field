@@ -1,3 +1,13 @@
+<template #deleteModal let-c="close">
+    <div class="modal-body">
+        Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
+        <button type="button" id="delete-images-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
+    </div>
+</template>
+
 <div class="document-view-field" id="document-view-field-georeference">
     <div class="fieldname">Georeferenzdaten</div>
     <div *ngIf="document.resource.georeference">
@@ -8,9 +18,13 @@
     </div>
     <div class="worldfile-upload btn btn-primary">
         <span>Worldfile laden</span>
-        <input type="file"
+        <input #worldfileInput type="file"
                name="files[]"
                id="file"
                (change)="onSelectFile($event)">
+    </div>
+    <div *ngIf="document.resource.georeference" class="worldfile-upload btn btn-danger"
+            (click)="openDeleteModal(deleteModal)">
+        <span class="mdi mdi-delete"></span>
     </div>
 </div>

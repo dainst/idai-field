@@ -20,7 +20,7 @@
     </header>
     <main>
 
-        <div *ngIf="document && !projectImageTypes[document.resource.type]" class="container">
+        <div *ngIf="document" class="container">
             <div class="row">
                 <div class="col-md-12">
 
@@ -39,7 +39,8 @@
                                         [relationDefinitions]="projectConfiguration.getRelationDefinitions(document.resource.type,'editable')"></relations-form>
                             </template>
                         </ngb-tab>
-                        <ngb-tab title="Bilder" id="document-edit-images-tab">
+                        <ngb-tab *ngIf="!projectImageTypes[document.resource.type]" title="Bilder"
+                                 id="document-edit-images-tab">
                             <template ngbTabContent>
                                 <div class="form-group card">
                                     <div class="card-header">

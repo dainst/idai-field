@@ -24,22 +24,18 @@ export class ResourceEditCanDeactivateGuard
 
         return this.resolveOrShowModal(component,function() {
             
-            if (!this.documentEditChangeMonitor.isChanged()) {
+            if (this.documentEditChangeMonitor.isChanged()) return false;
                 
-                if (component.mode=='new') {
-                    component.restore().then(()=>{
-                        return true;
-                    }).catch(()=>{
-                        return false;
-                    });
-                } else {
+            if (component.mode=='new') {
+                component.restore().then(()=>{
                     return true;
-                }
-
+                }).catch(()=>{
+                    return false;
+                });
             } else {
-                return false;
+                return true;
             }
-            
+
         }.bind(this));
     }
 }

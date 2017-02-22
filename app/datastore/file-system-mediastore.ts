@@ -87,8 +87,9 @@ export class FileSystemMediastore implements Mediastore {
         fs.readdir('mediastore', (err, files) => {
             files.forEach(file => {
                 fs.createReadStream('mediastore/' + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
-            });
-        })
+            })
+        });
+        console.debug("Successfully put sample images to mediastore ("+this.basePath+")");
     }
 
 }

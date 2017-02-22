@@ -318,7 +318,7 @@ export class PouchdbDatastore implements Datastore {
 
             Promise.all(promises)
                 .then(() => {
-                    console.debug("Successfully stored sample objects");
+                    console.debug("Successfully stored sample documents");
                     resolve();
                 })
                 .catch(err => {console.error("Problem when storing sample data", err);reject();});

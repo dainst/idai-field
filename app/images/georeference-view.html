@@ -5,10 +5,12 @@
     </div>
     <div *ngIf="!document.resource.georeference">
         <span>Nicht vorhanden</span>
-        <input class="file"
-               type="file"
-               name="files[]"
-               id="file"
-               (change)="onSelectFile($event)">
+        <div class="worldfile-upload btn btn-primary">
+            <span>Worldfile laden</span>
+            <input type="file"
+                   name="files[]"
+                   id="file"
+                   (change)="onSelectFile($event)">
+        </div>
     </div>
 </div>

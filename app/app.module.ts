@@ -67,7 +67,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
                     return new FileSystemMediastore(path, CONFIG['environment'] == 'test');
                 // running in browser
                 } else {
-                    let path = CONFIG['mediastorepath'] ? CONFIG['mediastorepath'] : 'sample-images';
+                    let path = CONFIG['mediastorepath'] ? CONFIG['mediastorepath'] : 'mediastore';
                     return new HttpMediastore(http, path);
                 }
             },

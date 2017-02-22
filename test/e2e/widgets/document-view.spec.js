@@ -58,6 +58,7 @@ describe('document view tests --', function() {
         resourcesPage.createResource('2');
         resourcesPage.selectResourceByIdentifier("1");
         resourcesPage.clickEditDocument();
+        resourcesPage.clickRelationsTab();
         resourcesPage.clickAddRelationForGroupWithIndex(0);
         resourcesPage.typeInRelationByIndices(0, 0, '2');
         resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);

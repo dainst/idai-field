@@ -122,6 +122,7 @@ var ResourcesPage = function() {
     };
 
     this.getRelationButtonTextByIndices = function(groupIndex, pickerIndex, relationIndex) {
+        this.clickRelationsTab();
         return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 

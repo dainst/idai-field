@@ -17,15 +17,14 @@ export function main() {
 
             var parser = new IdigCsvParser();
             var objects = [];
-            parser.parse(fileContent).subscribe(object => {
-                expect(object).not.toBe(undefined);
-                objects.push(object);
+            parser.parse(fileContent).subscribe(result => {
+                expect(result).not.toBe(undefined);
+                objects.push(result.document);
             }, () => {
                 fail();
             }, () => {
                 expect(objects[0]['resource']['id']).toEqual("1");
                 expect(objects[0]['resource']['type']).toEqual("context");
-                expect(objects[0]['id']).toEqual("1");
                 expect(objects[1]['resource'].shortDescription).toEqual("Two");
                 expect(objects.length).toEqual(2);
                 done();
@@ -41,11 +40,10 @@ export function main() {
             
             var parser = new IdigCsvParser();
             var objects = [];
-            parser.parse(fileContent).subscribe(object => {
-                expect(object).not.toBe(undefined);
-                objects.push(object);
+            parser.parse(fileContent).subscribe(result => {
+                expect(result).not.toBe(undefined);
+                objects.push(result.document);
             }, (error) => {
-                
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['id']).toEqual("1");
                 expect(error).toEqual(jasmine.any(SyntaxError));

@@ -1,14 +1,30 @@
-<div class="document-view-field" id="document-view-field-georeference">
+<template #deleteModal let-c="close">
+    <div class="modal-body">
+        Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
+        <button type="button" id="delete-images-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
+    </div>
+</template>
+
+<div class="document-view-field georeference-view-field">
     <div class="fieldname">Georeferenzdaten</div>
     <div *ngIf="document.resource.georeference">
-        Vorhanden
+        <span class="fieldvalue">Vorhanden</span>
+        <div *ngIf="document.resource.georeference" id="delete-georeference-button" class="btn btn-link"
+             data-toggle="tooltip" title="Georeferenzdaten löschen" (click)="openDeleteModal(deleteModal)">
+            <span class="mdi mdi-delete"></span>
+        </div>
     </div>
     <div *ngIf="!document.resource.georeference">
-        <span>Nicht vorhanden</span>
-        <input class="file"
-               type="file"
-               name="files[]"
-               id="file"
-               (change)="onSelectFile($event)">
+        <span class="fieldvalue">Nicht vorhanden</span>
+        <div id="worldfile-upload" class="btn btn-link" data-toggle="tooltip" title="Worldfile laden">
+            <span class="mdi mdi-file-import"></span>
+            <input #worldfileInput type="file"
+                   name="files[]"
+                   id="file"
+                   (change)="onSelectFile($event)">
+        </div>
     </div>
 </div>

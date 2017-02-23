@@ -73,7 +73,10 @@ export class CachedDatastore implements Datastore {
     }
 
     refresh(doc: Document): Promise<Document|string> {
-        return this.datastore.refresh(doc);
+        return this.datastore.refresh(doc).then(result => {
+            this.documentCache[doc.resource.id] = result as Document;
+            return Promise.resolve(result);
+        });
     }
 
 }

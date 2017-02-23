@@ -12,6 +12,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_GENERIC_START_ERROR: string = 'importer/genericstarterror';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
+    public static IMPORTER_INFO_NOMULTIPOLYGONSUPPORT: string = 'importer/info/nomultipolygonsupport';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
@@ -26,6 +27,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
+    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
+    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
@@ -57,6 +60,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: '{0} Ressourcen wurden erfolgreich importiert.',
             level: 'success',
             params: [ "Mehrere"]
+        };
+        this.msgs[M.IMPORTER_INFO_NOMULTIPOLYGONSUPPORT]={
+            content: 'Die Geometriedaten enthalten eine Geometrie vom Typ Multipolygon. Da Multipolygone von der ' +
+                'Anwendung zurzeit nicht unterstützt werden, konnten diese Geometriedaten nicht importiert werden.',
+            level: 'info',
+            params: []
         };
         this.msgs[M.IMPORTER_FAILURE_FILEUNREADABLE]={
             content: 'Beim Import ist ein Fehler aufgetreten: Die Datei {0} konnte nicht gelesen werden.',
@@ -135,6 +144,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern des Objekts ist ein Fehler aufgetreten.',
             level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_SUCCESS_WORLDFILE_UPLOADED] = {
+            content: "Das Worldfile wurde erfolgreich geladen.",
+            level: 'success',
+            params: []
+        };
+        this.msgs[M.IMAGES_SUCCESS_GEOREFERENCE_DELETED] = {
+            content: "Die Georeferenzdaten wurden erfolgreich gelöscht.",
+            level: 'success',
             params: []
         };
         this.msgs[M.IMAGES_ERROR_FILEREADER]={

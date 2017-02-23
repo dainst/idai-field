@@ -1,23 +1,22 @@
 <div id="document-view"
      class="card document-card">
-    <div class="card-header">
-        <type-icon [type]="document.resource.type" size="25"
-                   class="type-icon">
-        </type-icon>
-        <h4 class="document-title">
-            {{typeLabel}}
 
-            <button class="close-button btn btn-link btn-xs"
-                    id="document-view-button-back-to-map"
-                    [routerLink]="['/'+basePath]">
-                <span class="mdi mdi-close-circle-outline"></span>
-            </button>
-        </h4>
-    </div>
-    <div class="card-block">
+    <div *ngIf="document">
+        <div class="card-header">
+            <type-icon [type]="document.resource.type" size="25"
+                       class="type-icon">
+            </type-icon>
+            <h4 class="document-title">
+                {{typeLabel}}
 
-        <div *ngIf="document">
-
+                <button class="close-button btn btn-link btn-xs"
+                        id="document-view-button-back-to-map"
+                        [routerLink]="['/'+basePath]">
+                    <span class="mdi mdi-close-circle-outline"></span>
+                </button>
+            </h4>
+        </div>
+        <div class="card-block">
             <button class="btn btn-link btn-xs"
                     id="document-view-button-edit-document"
                     [routerLink]="['/'+basePath+'/', document.resource.id, 'edit']">
@@ -26,9 +25,9 @@
 
             <ng-content></ng-content>
         </div>
-
     </div>
 </div>
+
 
 
 

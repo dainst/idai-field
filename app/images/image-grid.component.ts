@@ -180,20 +180,17 @@ export class ImageGridComponent {
 
     private deleteImageDocuments(documents: IdaiFieldImageDocument[], documentIndex: number = 0): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-            var document = documents[documentIndex];
+        let document = documents[documentIndex];
 
-            return this.mediastore.remove(document.resource.identifier)
-                .then(() => this.persistenceManager.remove(document, document),
-                    err => reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
-                .then(() => {
-                    if (documentIndex < documents.length - 1) {
-                        return this.deleteImageDocuments(documents, ++documentIndex);
-                    } else {
-                        resolve();
-                    }
-                });
-        });
+        return this.mediastore.remove(document.resource.identifier)
+            .then(() => {return this.persistenceManager.remove(document, document)},
+                err => {return Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]])})
+            .then(() => {
+                if (documentIndex < documents.length - 1) {
+                    return this.deleteImageDocuments(documents, ++documentIndex);
+                }
+                return Promise.resolve();
+            })
     }
 
     private updateAndPersistDepictsRelations(imageDocuments: IdaiFieldImageDocument[],

@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Document} from "idai-components-2/core";
-import {Parser,ParserError} from "./parser";
+import {Parser, ParserError, ParserResult} from "./parser";
 import {M} from "../m";
 
 /**
@@ -11,7 +10,7 @@ import {M} from "../m";
 @Injectable()
 export class NativeJsonlParser implements Parser {
 
-    public parse(content: string): Observable<Document> {
+    public parse(content: string): Observable<ParserResult> {
 
         return Observable.create(observer => {
 
@@ -22,7 +21,11 @@ export class NativeJsonlParser implements Parser {
 
                 try {
                     if (lines[i].length > 0) {
-                        observer.next(NativeJsonlParser.makeDoc(JSON.parse(lines[i])));
+                        let result: ParserResult = {
+                            document: NativeJsonlParser.makeDoc(JSON.parse(lines[i])),
+                            messages: []
+                        };
+                        observer.next(result);
                     }
                 } catch (e) {
                     let error: ParserError = e;

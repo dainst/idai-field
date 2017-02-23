@@ -21,6 +21,9 @@ var ImagesGridPage = function() {
     this.getCellImageName = function(index) {
         return this.getCell(index).element(by.css('.tag.tag-default')).getText();
     };
+    this.getCellFilenameElement = function(filename) {
+        return element(by.xpath('//span[@class="tag tag-default"][text()="' + filename + '"]'));
+    };
     this.clickDeselectButton = function () {
         return element(by.id('deselect-images')).click();
     };

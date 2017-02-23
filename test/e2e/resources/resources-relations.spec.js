@@ -1,4 +1,5 @@
 var resourcesPage = require('./resources.page');
+var documentViewPage = require('../widgets/document-view.page');
 
 describe('relations', function() {
 
@@ -7,70 +8,52 @@ describe('relations', function() {
     });
 
     it ('should create links for relations', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
-        resourcesPage.selectObjectByIndex(1);
-        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o2');
+        resourcesPage.createLink();
+        resourcesPage.selectResourceByIdentifier('1');
+        expect(documentViewPage.getRelationValue(0)).toEqual('2');
         resourcesPage.clickRelationInDocumentView(0);
-        expect(resourcesPage.getRelationNameInDocumentView(0)).toEqual('o1');
+        expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
 
     it('should create a new relation and the corresponding inverse relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('o1');
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
-        resourcesPage.selectObjectByIndex(1);
+        resourcesPage.createLink();
+        expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('1');
+        resourcesPage.selectResourceByIdentifier('1');
         resourcesPage.clickEditDocument();
-        expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('o2');
+        expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('2');
     });
 
     it('should edit a resource that contains a relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
+        resourcesPage.createLink();
         resourcesPage.clickCloseMessage();
+        resourcesPage.clickFieldsTab();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();
         expect(resourcesPage.getMessage()).toContain('erfolgreich');
     });
 
     it('should delete a relation and the corresponding inverse relation', function() {
-        resourcesPage.createResource('o1');
-        resourcesPage.createResource('o2');
-        resourcesPage.scrollDown();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, 'o1');
-        resourcesPage.clickRelationSuggestionByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveDocument();
-        resourcesPage.scrollDown();
+        resourcesPage.createLink();
+        resourcesPage.selectResourceByIdentifier('2');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        resourcesPage.selectResourceByIdentifier('2');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        resourcesPage.clickEditDocument();
+        resourcesPage.clickRelationsTab();
         resourcesPage.clickRelationDeleteButtonByIndices(0, 0, 0);
-        resourcesPage.scrollUp();
+
         resourcesPage.clickSaveDocument();
         resourcesPage.clickBackToDocumentView();
-        resourcesPage.getRelationsInDocumentView().then(function(relations) {
+        documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
-        resourcesPage.selectObjectByIndex(1);
-        resourcesPage.getRelationsInDocumentView().then(function(relations) {
+        resourcesPage.selectResourceByIdentifier('1');
+        documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

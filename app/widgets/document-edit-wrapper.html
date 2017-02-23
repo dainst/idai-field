@@ -5,11 +5,13 @@
             <button *ngIf="showBackButton" class="btn btn-primary"
                     id="document-edit-button-goto-view"
                     style="float: right;"
-                    (click)="onBackButtonClicked.emit();">Zur Ansicht</button>
+                    (click)="onBackButtonClicked.emit();">Zur Ansicht
+            </button>
             <button class="btn btn-primary pull-right"
                     id="document-edit-button-save-document"
                     style="float: right;"
-                    (click)="save(true);">Speichern</button>
+                    (click)="save(true);">Speichern
+            </button>
             <span class="mdi mdi-blur"></span>
 
             <span *ngIf="showBackButton && document">{{typeLabel}} bearbeiten</span>
@@ -17,23 +19,54 @@
         </h1>
     </header>
     <main>
-        <div *ngIf="document && !projectImageTypes[document.resource.type]" class="container">
+
+        <div *ngIf="document" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group card">
-                        <div class="card-header">
-                            Verknüpfte Bilder
-                        </div>
-                        <div class="card-block">
-                            <thumbnail-view *ngIf="document && document.resource.relations['depictedIn']" [imageIds]="document.resource.relations['depictedIn']"></thumbnail-view>
-                            <button type="button" id="create-depicts-relations-btn"
-                                    class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild einfügen</button>
-                        </div>
-                    </div>
+
+                    <ngb-tabset>
+                        <ngb-tab title="Felder"  id="document-edit-fields-tab">
+                            <template ngbTabContent>
+                                <edit-form *ngIf="projectConfiguration" [(document)]="document"
+                                           [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
+                            </template>
+                        </ngb-tab>
+                        <ngb-tab *ngIf="relationDefinitions && relationDefinitions.length > 0" title="Relationen"
+                                 id="document-edit-relations-tab">
+                            <template ngbTabContent>
+                                <relations-form
+                                        [(document)]="document"
+                                        [primary]="'identifier'"
+                                        [relationDefinitions]="relationDefinitions"></relations-form>
+                            </template>
+                        </ngb-tab>
+                        <ngb-tab *ngIf="!projectImageTypes[document.resource.type]" title="Bilder"
+                                 id="document-edit-images-tab">
+                            <template ngbTabContent>
+                                <div class="form-group card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            Verknüpfte Bilder
+                                        </h3>
+                                    </div>
+                                    <div class="card-block">
+                                        <thumbnail-view *ngIf="document && document.resource.relations['depictedIn']"
+                                                        [imageIds]="document.resource.relations['depictedIn']"></thumbnail-view>
+                                        <button type="button" id="create-depicts-relations-btn"
+                                                class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild
+                                            einfügen
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </ngb-tab>
+                    </ngb-tabset>
+
+
+
                 </div>
             </div>
         </div>
-        <document-edit [(document)]="document" [primary]="'identifier'"></document-edit>
     </main>
 </section>
 

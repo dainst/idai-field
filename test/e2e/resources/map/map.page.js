@@ -1,5 +1,5 @@
 'use strict';
-var delays = require('../config/delays');
+var delays = require('../../config/delays');
 var EC = protractor.ExpectedConditions;
 
 

@@ -87,7 +87,7 @@ export class ResourcesComponent {
 
     public replace(document: Document,restoredObject: Document) {
 
-        var index = this.documents.indexOf(document);
+        let index = this.documents.indexOf(document);
         this.documents[index] = restoredObject;
         this.notify();
     }
@@ -181,27 +181,22 @@ export class ResourcesComponent {
      */
     public restore(): Promise<any> {
 
-        var document=this.selectedDocument;
+        let document=this.selectedDocument;
+        if (document==undefined) return Promise.resolve();
+        if (!document['id']) {
+            this.remove(document);
+            this.selectedDocument=undefined;
+            return Promise.resolve();
+        }
 
-        return new Promise<any>((resolve, reject) => {
-            if (document==undefined) resolve();
-
-            if (!document['id']) {
-                this.remove(document);
-                this.selectedDocument=undefined;
-                return resolve();
-            }
-
-            this.datastore.refresh(document).then(
-                restoredObject => {
-
-                    this.replace(document,<Document>restoredObject);
-                    this.selectedDocument=restoredObject;
-                    resolve(restoredObject);
-                },
-                err => { reject(this.toStringArray(err)); }
-            );
-        });
+        return this.datastore.refresh(document).then(
+            restoredObject => {
+                this.replace(document,<Document>restoredObject);
+                this.selectedDocument=restoredObject;
+                return Promise.resolve(restoredObject);
+            },
+            err => { return Promise.reject(this.toStringArray(err)); }
+        );
     }
 
     private toStringArray(str : any) : string[] {

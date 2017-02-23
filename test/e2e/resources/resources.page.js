@@ -6,6 +6,16 @@ var delays = require('../config/delays');
 
 var ResourcesPage = function() {
 
+    this.get = function() {
+        return browser.get('/#/resources');
+    };
+
+
+
+    // click
+
+    // TODO create click function in common
+
     this.clickCreateObject = function() {
         browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), delays.ECWaitTime);
         element(by.id('object-overview-button-create-object')).click();
@@ -19,6 +29,11 @@ var ResourcesPage = function() {
     this.clickCancelInModal = function() {
         browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-cancel-button')).click();
+    };
+
+    this.clickDiscardInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-discard-button'))), delays.ECWaitTime);
+        element(by.id('overview-save-confirmation-modal-discard-button')).click();
     };
 
     this.clickCloseMessage = function() {
@@ -36,19 +51,12 @@ var ResourcesPage = function() {
         element(by.id('document-edit-button-goto-view')).click();
     };
 
-    this.clickSaveDocument = function() {
-        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
-            .then(function(){
-                element(by.id('document-edit-button-save-document')).click().then(
-                    function() {
-                        return new Promise(function(resolve){
-                            setTimeout(function(){
-                                resolve();
-                            },delays.shortRest);
-                        })
-                    }
-                )
-            })
+    this.setTypeFilter = function(typeIndex) {
+
+        browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);
+        element(by.id('searchfilter')).click();
+        browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), delays.ECWaitTime);
+        element(by.id('choose-type-filter-option-' + typeIndex)).click();
     };
 
     this.clickCreateGeometry = function(type) {
@@ -61,6 +69,7 @@ var ResourcesPage = function() {
     };
 
     this.clickRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+        browser.wait(EC.visibilityOf(element(by.css('.suggestion'))), delays.ECWaitTime);
         this.getRelationByIndices(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };
@@ -79,6 +88,14 @@ var ResourcesPage = function() {
             .click();
     };
 
+    this.clickRelationsTab = function() {
+        element(by.id('document-edit-relations-tab')).click();
+    }
+
+    this.clickFieldsTab = function() {
+        element(by.id('document-edit-fields-tab')).click();
+    }
+
     this.selectGeometryType = function(type) {
         var geom = 'none';
         if (type) geom = type;
@@ -86,25 +103,12 @@ var ResourcesPage = function() {
         return element(by.id('choose-geometry-option-' + geom)).click();
     };
 
-    this.createResource = function(identifier, typeIndex) {
-        this.clickCreateObject();
-        this.selectResourceType(typeIndex);
-        this.selectGeometryType();
-        this.typeInIdentifier(identifier);
-        this.scrollUp();
-        this.clickSaveDocument();
-    };
 
-    this.findListItemMarkedNew = function() {
-        return element(by.css('#objectList .list-group-item .new'))
-    };
+
+    // get text
 
     this.getFirstListItemIdentifier = function() {
         return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
-    };
-
-    this.getListItemByIdentifier = function(identifier) {
-        return element(by.id('resource-' + identifier));
     };
 
     this.getMessage = function() {
@@ -115,6 +119,23 @@ var ResourcesPage = function() {
     this.getTypeOfSelectedGeometry = function() {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
+    };
+
+    this.getRelationButtonTextByIndices = function(groupIndex, pickerIndex, relationIndex) {
+        this.clickRelationsTab();
+        return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+    };
+
+
+
+    // elements
+
+    this.findListItemMarkedNew = function() {
+        return element(by.css('#objectList .list-group-item .new'))
+    };
+
+    this.getListItemByIdentifier = function(identifier) {
+        return element(by.id('resource-' + identifier));
     };
 
     this.getRelationByIndices = function(groupIndex, pickerIndex) {
@@ -130,22 +151,51 @@ var ResourcesPage = function() {
         return this.getRelationByIndices(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 
-    this.getRelationButtonTextByIndices = function(groupIndex, pickerIndex, relationIndex) {
-        return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+
+
+
+    // sequences
+
+    this.createResource = function(identifier, typeIndex) {
+        this.clickCreateObject();
+        this.selectResourceType(typeIndex);
+        this.selectGeometryType();
+        this.typeInIdentifier(identifier);
+        this.scrollUp();
+        this.clickSaveDocument();
     };
 
-    this.getRelationNameInDocumentView = function(relationIndex) {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view a'))), delays.ECWaitTime);
-        return element.all(by.css('#document-view a')).get(relationIndex).getText();
+
+    this.createLink = function() {
+        this.createResource('1');
+        this.createResource('2');
+        this.clickRelationsTab();
+        this.clickAddRelationForGroupWithIndex(0);
+        this.typeInRelationByIndices(0, 0, '1');
+        this.clickRelationSuggestionByIndices(0, 0, 0);
+        this.scrollUp();
+        this.clickSaveDocument();
+        browser.sleep(delays.shortRest);
     };
 
-    this.getRelationsInDocumentView = function() {
-        return element.all(by.css('#document-view a'));
+    this.clickSaveDocument = function() {
+        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
+            .then(function(){
+                element(by.id('document-edit-button-save-document')).click().then(
+                    function() {
+                        return new Promise(function(resolve){
+                            setTimeout(function(){
+                                resolve();
+                            },delays.shortRest);
+                        })
+                    }
+                )
+            })
     };
 
-    this.get = function() {
-        return browser.get('/#/resources');
-    };
+
+
+    // script
 
     this.scrollDown = function() {
         return browser.executeScript('window.scrollTo(0,200);');
@@ -155,22 +205,29 @@ var ResourcesPage = function() {
         return browser.executeScript('window.scrollTo(0,0);');
     };
 
-    this.setTypeFilter = function(typeIndex) {
 
-        browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);
-        element(by.id('searchfilter')).click();
-        browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), delays.ECWaitTime);
-        element(by.id('choose-type-filter-option-' + typeIndex)).click();
+
+    // select
+
+    /**
+     * @deprecated use selectObjectByIdentifier instead
+     */
+    this.selectObjectByIndex = function(listIndex) {
+        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)), delays.ECWaitTime);
+        return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
     };
 
-    this.selectObjectByIndex = function(listIndex) {
-        return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
+    this.selectResourceByIdentifier = function(identifier) {
+        browser.wait(EC.visibilityOf(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']"))), delays.ECWaitTime);
+        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']")).click();
     };
 
     this.selectResourceType = function(typeIndex) {
         if (!typeIndex) typeIndex = 0;
         return element(by.id('choose-type-option-' + typeIndex)).click();
     };
+
+    // type in
 
     this.typeInIdentifierInSearchField = function(identifier) {
         return common.typeIn(element(by.id('object-search')), identifier);

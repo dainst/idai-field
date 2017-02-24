@@ -1,4 +1,4 @@
-import {browser,protractor} from 'Protractor';
+import {browser,protractor} from 'protractor';
 
 var common = require("../common.js");
 var importPage = require('./import.page');

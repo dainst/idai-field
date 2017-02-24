@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'Protractor';
+import {browser,protractor,element,by} from 'protractor';
 
 var mapPage = require('./map.page');
 var resourcePage = require('../../resources/resources.page');

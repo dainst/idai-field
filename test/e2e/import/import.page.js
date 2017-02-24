@@ -25,7 +25,7 @@ var ImportPage = function (){
     this.getMessageElement = function (index) {
         return element(by.id('message-' + index));
     };
-    this.getMessage = function (index) {
+    this.getMessageText = function (index) {
         return this.getMessageElement(index).getText();
     };
     this.clickImportButton = function () {

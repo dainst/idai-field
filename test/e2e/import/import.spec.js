@@ -20,7 +20,7 @@ describe('import', function() {
         common.typeIn(importPage.getImportURLInput(), url);
         importPage.clickStartImportButton();
         browser.wait(EC.presenceOf(importPage.getMessageElement(1)), 5000);
-        expect(importPage.getMessage(0).getText()).toContain("Starte Import");
-        expect(importPage.getMessage(1).getText()).toContain("4 Ressourcen wurden erfolgreich importiert.");
+        expect(importPage.getMessageText(0).getText()).toContain("Starte Import");
+        expect(importPage.getMessageText(1).getText()).toContain("4 Ressourcen wurden erfolgreich importiert.");
     });
 });

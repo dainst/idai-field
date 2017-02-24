@@ -10,8 +10,6 @@ var ResourcesPage = function() {
         return browser.get('/#/resources');
     };
 
-
-
     // click
 
     // TODO create click function in common
@@ -51,7 +49,7 @@ var ResourcesPage = function() {
         element(by.id('document-edit-button-goto-view')).click();
     };
 
-    this.setTypeFilter = function(typeIndex) {
+    this.clickChooseTypeFilter = function(typeIndex) {
 
         browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);
         element(by.id('searchfilter')).click();
@@ -68,9 +66,9 @@ var ResourcesPage = function() {
         element(by.id('document-view-button-edit-geometry')).click();
     };
 
-    this.clickRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+    this.clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
         browser.wait(EC.visibilityOf(element(by.css('.suggestion'))), delays.ECWaitTime);
-        this.getRelationByIndices(groupIndex, pickerIndex)
+        this.getRelationEl(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };
 
@@ -84,95 +82,106 @@ var ResourcesPage = function() {
     };
 
     this.clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
-        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
+        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
             .click();
     };
 
     this.clickRelationsTab = function() {
         element(by.id('document-edit-relations-tab')).click();
-    }
+    };
 
     this.clickFieldsTab = function() {
         element(by.id('document-edit-fields-tab')).click();
-    }
+    };
 
-    this.selectGeometryType = function(type) {
+    this.clickSelectGeometryType = function(type) {
         var geom = 'none';
         if (type) geom = type;
         browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), delays.ECWaitTime);
         return element(by.id('choose-geometry-option-' + geom)).click();
     };
 
+    /**
+     * @deprecated use selectObjectByIdentifier instead
+     */
+    this.clickSelectObjectByIndex = function(listIndex) {
+        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)), delays.ECWaitTime);
+        return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
+    };
 
+    this.clickSelectResource = function(identifier) {
+        browser.wait(EC.visibilityOf(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']"))), delays.ECWaitTime);
+        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']")).click();
+    };
+
+    this.clickSelectResourceType = function(typeIndex) {
+        if (!typeIndex) typeIndex = 0;
+        return element(by.id('choose-type-option-' + typeIndex)).click();
+    };
 
     // get text
 
-    this.getFirstListItemIdentifier = function() {
+    this.getFirstListItemIdentifierText = function() {
         return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
     };
 
-    this.getMessage = function() {
+    this.getMessageText = function() {
         browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
         return element(by.id('message-0')).getText();
     };
 
-    this.getTypeOfSelectedGeometry = function() {
+    this.getSelectedGeometryTypeText = function() {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 
-    this.getRelationButtonTextByIndices = function(groupIndex, pickerIndex, relationIndex) {
+    this.getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
         this.clickRelationsTab();
-        return this.getRelationButtonByIndices(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+        return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
-
-
 
     // elements
 
-    this.findListItemMarkedNew = function() {
+    this.getListItemMarkedNewEl = function() {
         return element(by.css('#objectList .list-group-item .new'))
     };
 
-    this.getListItemByIdentifier = function(identifier) {
+    this.getListItemEl = function(identifier) {
         return element(by.id('resource-' + identifier));
     };
 
-    this.getRelationByIndices = function(groupIndex, pickerIndex) {
+    this.getRelationEl = function(groupIndex, pickerIndex) {
         return element.all(by.tagName('relation-picker-group')).get(groupIndex)
             .all(by.tagName('relation-picker')).get(pickerIndex);
     };
 
-    this.getRelationSuggestionByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
-        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
+    this.getRelationSuggestionEl = function(groupIndex, pickerIndex, suggestionIndex) {
+        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
     };
 
-    this.getRelationButtonByIndices = function(groupIndex, pickerIndex, relationIndex) {
-        return this.getRelationByIndices(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
+    this.getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
+        return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
-
-
-
 
     // sequences
 
-    this.createResource = function(identifier, typeIndex) {
+    this.performCreateResource = function(identifier, typeIndex) {
         this.clickCreateObject();
-        this.selectResourceType(typeIndex);
-        this.selectGeometryType();
+        this.clickSelectResourceType(typeIndex);
+        this.clickSelectGeometryType();
         this.typeInIdentifier(identifier);
         this.scrollUp();
         this.clickSaveDocument();
     };
 
 
-    this.createLink = function() {
-        this.createResource('1');
-        this.createResource('2');
+    this.performCreateLink = function() {
+        this.performCreateResource('1');
+        this.performCreateResource('2');
         this.clickRelationsTab();
         this.clickAddRelationForGroupWithIndex(0);
         this.typeInRelationByIndices(0, 0, '1');
-        this.clickRelationSuggestionByIndices(0, 0, 0);
+        this.clickChooseRelationSuggestion(0, 0, 0);
         this.scrollUp();
         this.clickSaveDocument();
         browser.sleep(delays.shortRest);
@@ -192,9 +201,7 @@ var ResourcesPage = function() {
                 )
             })
     };
-
-
-
+    
     // script
 
     this.scrollDown = function() {
@@ -203,28 +210,6 @@ var ResourcesPage = function() {
 
     this.scrollUp = function() {
         return browser.executeScript('window.scrollTo(0,0);');
-    };
-
-
-
-    // select
-
-    /**
-     * @deprecated use selectObjectByIdentifier instead
-     */
-    this.selectObjectByIndex = function(listIndex) {
-        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)), delays.ECWaitTime);
-        return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
-    };
-
-    this.selectResourceByIdentifier = function(identifier) {
-        browser.wait(EC.visibilityOf(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']"))), delays.ECWaitTime);
-        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']")).click();
-    };
-
-    this.selectResourceType = function(typeIndex) {
-        if (!typeIndex) typeIndex = 0;
-        return element(by.id('choose-type-option-' + typeIndex)).click();
     };
 
     // type in
@@ -240,7 +225,7 @@ var ResourcesPage = function() {
     };
 
     this.typeInRelationByIndices = function(groupIndex, pickerIndex, input) {
-        common.typeIn(this.getRelationByIndices(groupIndex, pickerIndex)
+        common.typeIn(this.getRelationEl(groupIndex, pickerIndex)
             .element(by.tagName('input')), input);
     };
 };

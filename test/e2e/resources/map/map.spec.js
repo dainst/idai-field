@@ -15,8 +15,8 @@ describe('resources/map', function() {
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
         resourcePage.clickCreateObject();
-        resourcePage.selectResourceType();
-        return resourcePage.selectGeometryType(geometry)
+        resourcePage.clickSelectResourceType();
+        return resourcePage.clickSelectGeometryType(geometry)
             .then(function(){return mapClickCallback()});
     }
     
@@ -35,7 +35,7 @@ describe('resources/map', function() {
         if (geometryType) {
             createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
-            resourcePage.createResource(identifier);
+            resourcePage.performCreateResource(identifier);
         }
     }
     
@@ -52,44 +52,44 @@ describe('resources/map', function() {
     it('should create a new item with point geometry ', function() {
         createDoc('33','point', function(){return mapPage.setMarker(100, 100)});
         resourcePage.clickBackToDocumentView();
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
     it('should create a new item with polygon geometry ', function() {
         createDoc('34', 'polygon', setPolygon);
         resourcePage.clickBackToDocumentView();
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
     it('should delete a point geometry ', function() {
         createDocThenReedit('37', 'point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('ok');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Keine');
     });
 
     it('should delete a polygon geometry ', function() {
         createDocThenReedit('36' ,'polygon', setPolygon);
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('ok');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Keine');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Keine');
     });
 
     it('should create a point geometry later', function() {
-        resourcePage.createResource('39');
+        resourcePage.performCreateResource('39');
         resourcePage.clickBackToDocumentView();
         resourcePage.clickCreateGeometry('point');
         mapPage.setMarker(100, 100);
         mapPage.clickMapOption('ok');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
     it('should create a polygon geometry later', function() {
-        resourcePage.createResource('38');
+        resourcePage.performCreateResource('38');
         resourcePage.clickBackToDocumentView();
         resourcePage.clickCreateGeometry('polygon').then(setPolygon);
         mapPage.clickMapOption('ok');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
 
@@ -97,14 +97,14 @@ describe('resources/map', function() {
         createDocThenReedit('40','point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('abort');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Punkt');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
     it('should cancel deleting a polygon geometry', function() {
         createDocThenReedit('41','polygon', setPolygon);
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('abort');
-        expect(resourcePage.getTypeOfSelectedGeometry()).toEqual('Polygon');
+        expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
     
     

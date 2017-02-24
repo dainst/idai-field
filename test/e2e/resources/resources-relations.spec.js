@@ -8,8 +8,8 @@ describe('relations', function() {
     });
 
     it ('should create links for relations', function() {
-        resourcesPage.createLink();
-        resourcesPage.selectResourceByIdentifier('1');
+        resourcesPage.performCreateLink();
+        resourcesPage.clickSelectResource('1');
         expect(documentViewPage.getRelationValue(0)).toEqual('2');
         resourcesPage.clickRelationInDocumentView(0);
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
@@ -17,29 +17,29 @@ describe('relations', function() {
 
 
     it('should create a new relation and the corresponding inverse relation', function() {
-        resourcesPage.createLink();
-        expect(resourcesPage.getRelationButtonTextByIndices(0, 0, 0)).toEqual('1');
-        resourcesPage.selectResourceByIdentifier('1');
+        resourcesPage.performCreateLink();
+        expect(resourcesPage.getRelationButtonText(0, 0, 0)).toEqual('1');
+        resourcesPage.clickSelectResource('1');
         resourcesPage.clickEditDocument();
-        expect(resourcesPage.getRelationButtonTextByIndices(1, 0, 0)).toEqual('2');
+        expect(resourcesPage.getRelationButtonText(1, 0, 0)).toEqual('2');
     });
 
     it('should edit a resource that contains a relation', function() {
-        resourcesPage.createLink();
+        resourcesPage.performCreateLink();
         resourcesPage.clickCloseMessage();
         resourcesPage.clickFieldsTab();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();
-        expect(resourcesPage.getMessage()).toContain('erfolgreich');
+        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('should delete a relation and the corresponding inverse relation', function() {
-        resourcesPage.createLink();
-        resourcesPage.selectResourceByIdentifier('2');
+        resourcesPage.performCreateLink();
+        resourcesPage.clickSelectResource('2');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
-        resourcesPage.selectResourceByIdentifier('2');
+        resourcesPage.clickSelectResource('2');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -52,7 +52,7 @@ describe('relations', function() {
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
-        resourcesPage.selectResourceByIdentifier('1');
+        resourcesPage.clickSelectResource('1');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

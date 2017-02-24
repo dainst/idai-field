@@ -7,27 +7,27 @@ describe('resources/messages', function() {
     });
 
     it('should create a new object of first listed type ', function() {
-        resourcesPage.createResource('12');
-        expect(resourcesPage.getMessage()).toContain('erfolgreich');
+        resourcesPage.performCreateResource('12');
+        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('should show the success msg also on route change', function() {
-        resourcesPage.createResource('12');
+        resourcesPage.performCreateResource('12');
         resourcesPage.clickCloseMessage();
         resourcesPage.typeInIdentifier('34');
-        resourcesPage.selectResourceByIdentifier('34');
+        resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
-        expect(resourcesPage.getMessage()).toContain('erfolgreich');
+        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
     
     it('should warn if identifier is missing', function () {
-        resourcesPage.createResource('');
-        expect(resourcesPage.getMessage()).toContain('identifier');
+        resourcesPage.performCreateResource('');
+        expect(resourcesPage.getMessageText()).toContain('identifier');
     });
 
     it('should warn if an existing id is used', function() {
-        resourcesPage.createResource('12');
-        resourcesPage.createResource('12');
-        expect(resourcesPage.getMessage()).toContain('existiert bereits');
+        resourcesPage.performCreateResource('12');
+        resourcesPage.performCreateResource('12');
+        expect(resourcesPage.getMessageText()).toContain('existiert bereits');
     });
 });

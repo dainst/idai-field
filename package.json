@@ -60,7 +60,6 @@
     "@types/node": "7.0.3",
     "@types/papaparse": "^4.1.28",
     "@types/pouchdb": "^5.4.28",
-    "@types/selenium-webdriver":"2.53.37",
     "archiver": "1.1.0",
     "chromedriver": "2.25.1",
     "electron-connect": "0.4.2",

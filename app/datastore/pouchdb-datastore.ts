@@ -20,14 +20,6 @@ export class PouchdbDatastore implements Datastore {
     private observers = [];
     private readyForQuery: Promise<any>;
 
-    private static reduceFun: string = "function reduceFun(keys, values) {" +
-        "var result = [];" +
-        "values.forEach(function(value) {" +
-        "if (result.indexOf(value) == -1) result.push(value);" +
-        "});" +
-        "return result" +
-        "}";
-
     constructor(private dbname,loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
@@ -47,19 +39,18 @@ export class PouchdbDatastore implements Datastore {
                     map: "function mapFun(doc) {" +
                         "if (doc.resource.shortDescription) " +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
-                                "emit(token.toLowerCase(), doc._id);" +
+                                "emit(token.toLowerCase());" +
                             "});" +
-                        "if (doc.resource.identifier) emit(doc.resource.identifier.toLowerCase(), doc._id)" +
-                    "}",
-                    reduce: PouchdbDatastore.reduceFun
+                        "if (doc.resource.identifier) emit(doc.resource.identifier.toLowerCase())" +
+                    "}"
                 }
             });
     }
 
     private setupIdentifierIndex(): Promise<any> {
         return this.setupIndex('_design/identifier',{ identifier: { map: "function mapFun(doc) {"+
-            "emit(doc.resource.identifier,doc._id);" +
-            "}",reduce:PouchdbDatastore.reduceFun }})
+            "emit(doc.resource.identifier);" +
+            "}" }})
     }
 
     private setupIndex(id,views) {
@@ -229,9 +220,10 @@ export class PouchdbDatastore implements Datastore {
             return this.db.query(fieldName, {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
-                reduce: true
+                reduce: false,
+                include_docs: true
             });
-        }).then(result => { return this.buildResult(result, query.filterSets)} )
+        }).then(result => { return this.buildResult(result, query.filterSets)} );
     }
 
     /**
@@ -247,14 +239,14 @@ export class PouchdbDatastore implements Datastore {
         return this.db.get(id);
     }
 
-    private buildResult(result: any[], filterSets: FilterSet[]): Promise<Document[]> {
+    private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
 
-        if (result['rows'] == undefined || result['rows'][0] == undefined) return Promise.resolve([]);
-
-        let docIds = result['rows'][0].value;
-        return Promise.all(docIds.map(docId => this.get(docId))).then(docs => {
-            return docs.filter( (doc: Document) => this.docMatchesFilterSets(filterSets, doc));
+        // only return every doc once by using Set
+        let docs: Set<Document> = new Set<Document>();
+        result['rows'].forEach(row => {
+            if(this.docMatchesFilterSets(filterSets, row.doc)) docs.add(row.doc);
         });
+        return Array.from(docs);
     }
 
 

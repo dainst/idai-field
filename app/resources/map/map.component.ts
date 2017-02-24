@@ -39,7 +39,7 @@ export class MapComponent implements OnChanges {
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
     private markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
-    private bounds: L.LatLngBounds;
+    private bounds: any[]; // in fact L.LatLng[], but leaflet typing are incomplete
 
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
@@ -85,7 +85,7 @@ export class MapComponent implements OnChanges {
         private configLoader: ConfigLoader
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
-
+        this.bounds = [];
 
     }
 
@@ -105,8 +105,6 @@ export class MapComponent implements OnChanges {
         } else {
             this.clearMap();
         }
-
-        this.bounds = L.latLngBounds(L.latLng(1, 1), L.latLng(-1, -1));
 
         let p;
         if (changes['documents']) {
@@ -142,7 +140,7 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             } else {
-                this.map.fitBounds(this.bounds);
+                if (this.bounds.length) this.map.fitBounds(L.latLngBounds(this.bounds));
             }
         });
 
@@ -294,17 +292,21 @@ export class MapComponent implements OnChanges {
         this.markers = {};
     }
 
+    private extendBounds(latLng: L.LatLng) {
+        this.bounds.push(latLng);
+    }
+
     private addToMap(geometry: any, document: IdaiFieldDocument) {
 
         switch(geometry.type) {
             case "Point":
                 var marker: IdaiFieldMarker = this.addMarkerToMap(geometry, document);
-                this.bounds.extend(marker.getLatLng());
+                this.extendBounds(marker.getLatLng());
                 break;
             case "Polygon":
                 var polygon: IdaiFieldPolygon = this.addPolygonToMap(geometry, document);
                 for (var latLng of polygon.getLatLngs()) {
-                    this.bounds.extend(latLng);
+                    this.extendBounds(latLng);
                 }
                 break;
         }
@@ -359,12 +361,15 @@ export class MapComponent implements OnChanges {
 
     private addLayerToMap(layer: ImageContainer) {
 
+        let georef = layer.document.resource.georeference;
         layer.object = L.imageOverlay.rotated(layer.imgSrc,
-            layer.document.resource.georeference.topLeftCoordinates,
-            layer.document.resource.georeference.topRightCoordinates,
-            layer.document.resource.georeference.bottomLeftCoordinates,
+            georef.topLeftCoordinates,
+            georef.topRightCoordinates,
+            georef.bottomLeftCoordinates,
             { pane: layer.document.resource.id }).addTo(this.map);
-        this.bounds.extend(layer.object.getBounds());
+        this.extendBounds(L.latLng(georef.topLeftCoordinates));
+        this.extendBounds(L.latLng(georef.topRightCoordinates));
+        this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
 
         this.activeLayers.push(layer);
     }

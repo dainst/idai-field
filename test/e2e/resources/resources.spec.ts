@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
 var delays = require('../config/delays');

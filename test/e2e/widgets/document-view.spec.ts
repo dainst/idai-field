@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 var resourcesPage = require('../resources/resources.page');
 var documentViewPage = require('./document-view.page');
 var EC = protractor.ExpectedConditions;

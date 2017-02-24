@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 var resourcesPage = require('./resources.page');
 
 describe('resources/messages', function() {

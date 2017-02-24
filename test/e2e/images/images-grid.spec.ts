@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 var path = require('path');
 
 var EC = protractor.ExpectedConditions;

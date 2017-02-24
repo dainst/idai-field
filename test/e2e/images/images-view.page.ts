@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 'use strict';
 
 var ImagesViewPage = function (){

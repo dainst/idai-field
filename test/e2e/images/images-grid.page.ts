@@ -1,3 +1,5 @@
+import {browser,protractor,element,by} from 'Protractor';
+
 'use strict';
 var EC = protractor.ExpectedConditions;
 var delays = require('../config/delays');
@@ -5,6 +7,7 @@ var delays = require('../config/delays');
 var common = require("../common.js");
 
 var ImagesGridPage = function() {
+
     this.selectedClass = 'selected';
     this.getAllCells = function() {
         return element.all(by.css('.cell'));

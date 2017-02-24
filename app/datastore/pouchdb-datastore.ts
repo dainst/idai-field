@@ -210,19 +210,20 @@ export class PouchdbDatastore implements Datastore {
      * @param fieldName
      * @returns {Promise<Document[]|string>}
      */
-    public find(query: Query,fieldName:string='fulltext'):Promise<Document[]> {
+    public find(query: Query, fieldName:string='fulltext'):Promise<Document[]> {
 
         if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
         if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();
-            return this.db.query(fieldName, {
+            if (queryString) return this.db.query(fieldName, {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
                 reduce: false,
                 include_docs: true
             });
+            else return this.all();
         }).then(result => { return this.buildResult(result, query.filterSets)} );
     }
 
@@ -232,7 +233,9 @@ export class PouchdbDatastore implements Datastore {
      * @returns {Promise<Document[]|string>}
      */
     public all(): Promise<Document[]|string> {
-        return this.db.allDocs();
+        return this.db.allDocs({
+            include_docs: true
+        });
     }
 
     private fetchObject(id: string): Promise<Document> {
@@ -253,6 +256,7 @@ export class PouchdbDatastore implements Datastore {
 
     private docMatchesFilterSets(filterSets: FilterSet[], doc: Document): boolean {
 
+        if (!doc.resource) return false;
         if (!filterSets) return true;
 
         for (let filterSet of filterSets) {

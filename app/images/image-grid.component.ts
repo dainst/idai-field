@@ -183,8 +183,8 @@ export class ImageGridComponent {
         let document = documents[documentIndex];
 
         return this.mediastore.remove(document.resource.identifier)
-            .then(() => {return this.persistenceManager.remove(document, document)},
-                err => {return Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]])})
+            .then(() => this.persistenceManager.remove(document, document),
+                err => Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
             .then(() => {
                 if (documentIndex < documents.length - 1) {
                     return this.deleteImageDocuments(documents, ++documentIndex);

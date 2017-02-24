@@ -201,7 +201,7 @@ var ResourcesPage = function() {
                 )
             })
     };
-    
+
     // script
 
     this.scrollDown = function() {

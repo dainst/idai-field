@@ -314,7 +314,7 @@ export class MapComponent implements OnChanges {
 
     private addMarkerToMap(geometry: any, document: IdaiFieldDocument): IdaiFieldMarker {
 
-        var latLng = L.latLng(geometry.coordinates);
+        var latLng = L.latLng([geometry.coordinates[1], geometry.coordinates[0]]);
 
         var icon = (document == this.selectedDocument) ? this.markerIcons.darkblue : this.markerIcons.blue;
 

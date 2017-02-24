@@ -106,7 +106,7 @@ export class MapComponent implements OnChanges {
             this.clearMap();
         }
 
-        this.bounds = L.latLngBounds(L.latLng(0, 0), L.latLng(0, 0));
+        this.bounds = L.latLngBounds(L.latLng(1, 1), L.latLng(-1, -1));
 
         let p;
         if (changes['documents']) {

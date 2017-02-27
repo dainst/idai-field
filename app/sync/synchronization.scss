@@ -32,9 +32,15 @@
 }
 
 #syncSymbol {
+  margin-top: -2px;
   display: block;
   color: #fff;
   font-size: 1.7em;
+}
+
+#syncNumber {
+  margin-top: -4px;
+  color: white;
 }
 
 #objectsToSyncCount #success {

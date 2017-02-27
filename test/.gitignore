@@ -3,6 +3,7 @@ browser/**/*.spec.js.map
 e2e/**/*.js
 e2e/**/*.js.map
 !e2e/config
+!e2e/*.ts
 browser/references.js*
 node/**/*.spec.js
 node/**/*.spec.js.map

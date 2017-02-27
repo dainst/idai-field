@@ -27,6 +27,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
+
+
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
@@ -34,6 +36,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
     public static IMAGES_ERROR_DELETE: string = 'images/error/delete';
     public static IMAGES_ERROR_INVALID_WORLDFILE: string = 'images/error/invalidworldfile';
+    public static IMAGES_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/unsupportedexts';
 
     public static VALIDATION_ERROR_IDEXISTS: string = 'validation/error/idexists';
 
@@ -178,6 +181,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_INVALID_WORLDFILE] = {
             content: "Datei '{0}' ist kein gültiges World-File.",
+            level: 'danger',
+            params: []
+        };
+        this.msgs[M.IMAGES_DROP_AREA_UNSUPPORTED_EXTS] = {
+            content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
             level: 'danger',
             params: []
         };

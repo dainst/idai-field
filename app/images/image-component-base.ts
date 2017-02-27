@@ -28,7 +28,7 @@ export class ImageComponentBase {
     protected fetchDocAndImage() {
         let id;
         this.route.params.forEach((params: Params) => {
-            this._fetchDocAndImage((id=params['id']));
+            return this._fetchDocAndImage((id=params['id']));
         }).catch(()=>{
             console.error("Fatal error: could not load document for id ",id);
         });

@@ -107,6 +107,43 @@ export function main() {
                 );
         });
 
+        it('should find in identifier',function(done){
+            let doc1 = doc('bla','blub');
+            let doc2 = doc('blub','bla');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.find({q:'bla'},'identifier'))
+                .then(
+                    result => {
+                        expect(result[0].resource['shortDescription']).toBe('blub');
+                        expect(result.length).toBe(1);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should not find in unknown field',function(done){
+            let doc1 = doc('bla','blub');
+
+            datastore.create(doc1)
+                .then(() => datastore.find({q:'bla'},'unknown'))
+                .then(
+                    result => {
+                        expect(result.length).toBe(0);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
         it('should match part of identifier',function(done){
             let doc1 = doc('bla','blub');
 

@@ -19,7 +19,7 @@ export class FilterUtility {
                 });
             }
         }
-        return filters;
+        return { filters, type: undefined };
     }
 
     public static getImageTypesFilterSet(typesMap) {
@@ -33,6 +33,6 @@ export class FilterUtility {
                 });
             }
         }
-        return filters;
+        return { filters, type: undefined };
     }
 }

@@ -202,10 +202,9 @@ export class MapComponent implements OnChanges {
 
                 let query: Query = {
                     q: '',
-                    filterSets: [{
-                        filters: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap()),
-                        type: undefined
-                    }]
+                    filterSets: [
+                        FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap())
+                    ]
                 };
 
                 this.datastore.find(query).then(

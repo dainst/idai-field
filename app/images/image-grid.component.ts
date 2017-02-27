@@ -58,10 +58,7 @@ export class ImageGridComponent {
             new BlobProxy(mediastore, sanitizer), true);
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            let defaultFilterSet = {
-                filters: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap()),
-                type: undefined
-            };
+            let defaultFilterSet = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
             if (!this.defaultFilterSet) {
                 this.defaultFilterSet = defaultFilterSet;
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};

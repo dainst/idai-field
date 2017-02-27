@@ -40,7 +40,7 @@ export class ResourcesComponent {
         });
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.defaultFilterSet = { filters: FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap()), type: undefined };
+            this.defaultFilterSet = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
             this.query = {q: '', filterSets: [this.defaultFilterSet]};
             this.fetchDocuments(this.query).then(()=>{
                readyResolveFun();

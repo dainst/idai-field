@@ -23,7 +23,10 @@ export class IdaiFieldBackend {
         if (config['backend']==undefined) return;
         
         this.validateAndUse(config['backend']);
-        this.checkConnection();
+        setTimeout(
+            this.checkConnection.bind(this),
+            this.configuration.connectionCheckInterval
+        );
     }
 
     /**

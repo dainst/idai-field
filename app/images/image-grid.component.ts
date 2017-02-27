@@ -57,15 +57,13 @@ export class ImageGridComponent {
         this.imageGridBuilder = new ImageGridBuilder(
             new BlobProxy(mediastore, sanitizer), true);
 
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: false}],
-            type: 'or'
-        };
-
         configLoader.getProjectConfiguration().then(projectConfiguration => {
+            let defaultFilterSet = {
+                filters: FilterUtility.getImageTypesInvertedFilterSet(projectConfiguration.getTypesMap()),
+                type: undefined
+            };
             if (!this.defaultFilterSet) {
-                this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
+                this.defaultFilterSet = defaultFilterSet;
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
                 this.fetchDocuments(this.query);
             }

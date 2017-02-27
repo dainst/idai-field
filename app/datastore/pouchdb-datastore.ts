@@ -203,21 +203,17 @@ export class PouchdbDatastore implements Datastore {
     /**
      * Implements {@link ReadDatastore#find}.
      *
-     *
-     * TODO implement option to match exactly
-     *
      * @param query
-     * @param fieldName
+     * @param set TODO rename fieldName to set in interface
      * @returns {Promise<Document[]|string>}
      */
-    public find(query: Query, fieldName:string='fulltext'):Promise<Document[]> {
+    public find(query: Query, set:string = undefined):Promise<Document[]> {
 
-        if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
         if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();
-            if (queryString) return this.db.query(fieldName, {
+            if (queryString) return this.db.query('fulltext', {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
                 reduce: false,
@@ -229,7 +225,7 @@ export class PouchdbDatastore implements Datastore {
 
     /**
      * Implements {@link ReadDatastore#all}.
-     *
+     * TODO add param set
      * @returns {Promise<Document[]|string>}
      */
     public all(): Promise<Document[]|string> {
@@ -261,42 +257,26 @@ export class PouchdbDatastore implements Datastore {
 
         for (let filterSet of filterSets) {
             if (!filterSet) continue;
-            if (filterSet.type == "and" && !this.docMatchesAndFilters(filterSet.filters, doc)) return false;
-            if (filterSet.type == "or" && !this.docMatchesOrFilters(filterSet.filters, doc)) return false;
+            if (!this.docMatchesFilters(filterSet.filters, doc)) return false;
         }
 
         return true;
     }
 
-    private docMatchesAndFilters(filters: Filter[], doc: Document): boolean {
+    private docMatchesFilters(filters: Filter[], doc: Document): boolean {
 
         if (!filters) return true;
 
         for (let filter of filters) {
             if (!filter) continue;
             if (filter.invert) {
-                if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return false;
+                if ((filter.field in doc.resource) && doc.resource.type == filter.value) return false;
             } else {
-                if (!(filter.field in doc.resource) || doc.resource[filter.field] != filter.value) return false;
+                if (!(filter.field in doc.resource) || doc.resource.type != filter.value) return false;
             }
         }
 
         return true;
-    }
-
-    private docMatchesOrFilters(filters: Filter[], doc: Document): boolean {
-
-        if (!filters || filters.length == 0) return true;
-
-        for (let filter of filters) {
-            if (filter.invert) {
-                if (!(filter.field in doc.resource) || doc.resource[filter.field] != filter.value) return true;
-            } else {
-                if ((filter.field in doc.resource) && doc.resource[filter.field] == filter.value) return true;
-            }
-        }
-
-        return false;
     }
 
     private notifyObserversOfObjectToSync(document:Document): void {

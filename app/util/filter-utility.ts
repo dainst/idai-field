@@ -3,12 +3,13 @@ import {FilterSet, Filter} from 'idai-components-2/datastore';
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class FilterUtility {
 
     public static addChildTypesToFilterSet(filterSet: FilterSet, typesMap: { [type: string]: IdaiType }): FilterSet {
 
-        var filters: Array<Filter> = [];
+        let filters: Array<Filter> = [];
 
         for (let i in filterSet.filters) {
             filters.push(filterSet.filters[i]);
@@ -27,5 +28,21 @@ export class FilterUtility {
         }
 
         return {filters: filters, type: filterSet.type};
+    }
+
+
+
+    public static getImageTypesInvertedFilterSet(typesMap) {
+        let filters: Array<Filter> = [];
+        for (let i in typesMap) {
+            if (typesMap[i].name!='image' && (!typesMap[i].parentType || typesMap[i].parentType.name!='image')) {
+                filters.push({
+                    field: 'type',
+                    value: typesMap[i].name,
+                    invert: true
+                });
+            }
+        }
+        return filters;
     }
 }

@@ -199,17 +199,13 @@ export class MapComponent implements OnChanges {
         return new Promise((resolve, reject) => {
 
             this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-                let filterSet: FilterSet = {
-                    filters: [{'field': 'type', 'value': 'image', invert: false}],
-                    type: 'or'
-                };
 
                 let query: Query = {
                     q: '',
-                    filterSets: [
-                        FilterUtility.addChildTypesToFilterSet(filterSet,
-                            projectConfiguration.getTypesMap())
-                    ]
+                    filterSets: [{
+                        filters: FilterUtility.getImageTypesInvertedFilterSet(projectConfiguration.getTypesMap()),
+                        type: undefined
+                    }]
                 };
 
                 this.datastore.find(query).then(

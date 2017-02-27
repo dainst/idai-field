@@ -35,7 +35,7 @@ export class ResourcesComponent {
                 configLoader: ConfigLoader) {
         var defaultFilterSet = {
             filters: [{field: 'type', value: 'image', invert: true}],
-            type: 'and'
+            type: undefined
         };
 
         let readyResolveFun: Function;

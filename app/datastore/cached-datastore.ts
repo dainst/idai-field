@@ -68,8 +68,8 @@ export class CachedDatastore implements Datastore {
         return results_;
     }
 
-    all(options: any): Promise<Document[]|string> {
-        return this.datastore.all(options);
+    all(): Promise<Document[]|string> {
+        return this.datastore.all();
     }
 
     refresh(doc: Document): Promise<Document|string> {

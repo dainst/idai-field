@@ -52,8 +52,7 @@ export class SearchBarComponent implements OnChanges {
         if (this.defaultFilterSet) filterSets.push(this.defaultFilterSet);
 
         if (this.type) filterSets.push({
-            filters: [{field: 'type', value: this.type, invert: false}],
-            type: 'and'
+            filters: [{field: 'type', value: this.type}]
         });
 
         query.filterSets = filterSets;

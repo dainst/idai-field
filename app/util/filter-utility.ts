@@ -14,8 +14,7 @@ export class FilterUtility {
             if (typesMap[i].name!='image' && (!typesMap[i].parentType || typesMap[i].parentType.name!='image')) {
                 filters.push({
                     field: 'type',
-                    value: typesMap[i].name,
-                    invert: false
+                    value: typesMap[i].name
                 });
             }
         }
@@ -28,8 +27,7 @@ export class FilterUtility {
             if (typesMap[i].name=='image' || (typesMap[i].parentType && typesMap[i].parentType.name=='image')) {
                 filters.push({
                     field: 'type',
-                    value: typesMap[i].name,
-                    invert: false
+                    value: typesMap[i].name
                 });
             }
         }

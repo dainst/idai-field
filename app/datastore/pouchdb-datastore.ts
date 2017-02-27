@@ -1,4 +1,4 @@
-import {Datastore, Query, FilterSet, Filter} from "idai-components-2/datastore";
+import {Datastore, Query, FilterSet} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import * as PouchDB from "pouchdb";
@@ -225,7 +225,7 @@ export class PouchdbDatastore implements Datastore {
 
     /**
      * Implements {@link ReadDatastore#all}.
-     * TODO add param set
+     * TODO add param set in interface
      * @returns {Promise<Document[]|string>}
      */
     public all(): Promise<Document[]|string> {
@@ -263,12 +263,12 @@ export class PouchdbDatastore implements Datastore {
         return true;
     }
 
-    private docMatchesFilters(filters: Filter[], doc: Document): boolean {
+    private docMatchesFilters(filters: string[], doc: Document): boolean {
         if (!filters) return true;
         let match = false;
         for (let filter of filters) {
             if (!filter) continue;
-            if (doc.resource.type == filter.value) {
+            if (doc.resource.type == filter) {
 
                 match = true;
             }

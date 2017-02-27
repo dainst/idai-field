@@ -52,7 +52,7 @@ export class SearchBarComponent implements OnChanges {
         if (this.defaultFilterSet) filterSets.push(this.defaultFilterSet);
 
         if (this.type) filterSets.push({
-            filters: [{field: 'type', value: this.type}]
+            filters: [this.type]
         });
 
         query.filterSets = filterSets;
@@ -78,7 +78,7 @@ export class SearchBarComponent implements OnChanges {
         let defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
 
         for (let i in defaultFilters) {
-            if (defaultFilters[i].value == type.name) {
+            if (defaultFilters[i] == type.name) {
 
                 if (this.filterOptions.indexOf(type) == -1) {
                     this.filterOptions.push(type);

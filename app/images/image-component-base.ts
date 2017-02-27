@@ -35,7 +35,7 @@ export class ImageComponentBase {
     }
 
     private _fetchDocAndImage(id) {
-        this.datastore.get(id).then(
+        return this.datastore.get(id).then(
             doc=>{
                 this.image.document = doc as IdaiFieldImageDocument;
                 if (this.image.document.resource.filename) {

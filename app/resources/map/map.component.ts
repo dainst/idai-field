@@ -316,7 +316,7 @@ export class MapComponent implements OnChanges {
 
         var latLng = L.latLng([geometry.coordinates[1], geometry.coordinates[0]]);
 
-        var icon = (document == this.selectedDocument) ? this.markerIcons.darkblue : this.markerIcons.blue;
+        var icon = (document == this.selectedDocument) ? this.markerIcons.red : this.markerIcons.blue;
 
         var marker: IdaiFieldMarker = L.marker(latLng, {
             icon: icon
@@ -343,6 +343,10 @@ export class MapComponent implements OnChanges {
 
         var polygon: IdaiFieldPolygon = this.getPolygonFromCoordinates(geometry.coordinates);
         polygon.document = document;
+
+        if (document == this.selectedDocument) {
+            polygon.setStyle({color: 'red'});
+        }
 
         polygon.bindTooltip(this.getShortDescription(document.resource), {
             direction: 'center',
@@ -418,9 +422,6 @@ export class MapComponent implements OnChanges {
 
     private focusMarker(marker: L.Marker) {
 
-        if (marker != this.editableMarker) {
-            marker.setIcon(this.markerIcons.darkblue);
-        }
         this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
     }
 
@@ -645,7 +646,6 @@ export class MapComponent implements OnChanges {
 
         var feature = L.polygon(coordinates).toGeoJSON();
         return L.polygon(<any> feature.geometry.coordinates[0]);
-        
     }
 
     private getLayersAsList(): Array<ImageContainer> {

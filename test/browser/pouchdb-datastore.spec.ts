@@ -58,7 +58,7 @@ export function main() {
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({q:'sd1',filterSets:undefined}))
+                .then(() => datastore.find({q:'sd1',types:undefined}))
                 .then(
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('sd1');

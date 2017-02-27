@@ -6,7 +6,7 @@ import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
-import {Datastore, Mediastore, Query, FilterSet} from "idai-components-2/datastore";
+import {Datastore, Mediastore, Query} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
@@ -202,9 +202,8 @@ export class MapComponent implements OnChanges {
 
                 let query: Query = {
                     q: '',
-                    filterSets: [
-                        FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap())
-                    ]
+                    types: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap())
+
                 };
 
                 this.datastore.find(query).then(

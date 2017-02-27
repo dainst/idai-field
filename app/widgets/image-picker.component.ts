@@ -4,7 +4,7 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {BlobProxy} from "../common/blob-proxy";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore, FilterSet, Query, Datastore} from "idai-components-2/datastore";
+import {Mediastore, Query, Datastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {FilterUtility} from "../util/filter-utility";
@@ -19,7 +19,7 @@ export class ImagePickerComponent {
 
     selected: IdaiFieldImageDocument[] = [];
     private imageGridBuilder : ImageGridBuilder;
-    private defaultFilterSet: FilterSet;
+    private types: Array<string>;
     private query : Query = { q: '' };
     private rows = [];
     private documents: IdaiFieldImageDocument[];
@@ -43,9 +43,9 @@ export class ImagePickerComponent {
         };
         
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
+            if (!this.types) {
+                this.types = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
+                this.query = {q: '', types: this.types};
                 this.fetchDocuments(this.query);
             }
         });

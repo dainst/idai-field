@@ -23,7 +23,7 @@ export class IdaiFieldValidator extends Validator {
     protected validateCustom(doc:IdaiFieldDocument): Promise<any> {
         return new Promise<any>((resolve,reject) => {
 
-            this.datastore.find({q:doc.resource.identifier,filterSets:[]},'identifier').then(results => {
+            this.datastore.find({q:doc.resource.identifier,types:[]},'identifier').then(results => {
 
                 if (IdaiFieldValidator.isDuplicate(results,doc)) return reject([M.VALIDATION_ERROR_IDEXISTS,doc.resource.identifier]);
                 resolve();

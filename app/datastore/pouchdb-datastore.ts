@@ -1,4 +1,4 @@
-import {Datastore, Query, FilterSet} from "idai-components-2/datastore";
+import {Datastore, Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import * as PouchDB from "pouchdb";
@@ -220,7 +220,7 @@ export class PouchdbDatastore implements Datastore {
                 include_docs: true
             });
             else return this.all();
-        }).then(result => { return this.buildResult(result, query.filterSets)} );
+        }).then(result => { return this.filterResult(result, query.types)} );
     }
 
     /**
@@ -238,40 +238,24 @@ export class PouchdbDatastore implements Datastore {
         return this.db.get(id);
     }
 
-    private buildResult(result: any[], filterSets: FilterSet[]): Document[] {
-
+    private filterResult(result: any[], types: string[]): Document[] {
         // only return every doc once by using Set
         let docs: Set<Document> = new Set<Document>();
         result['rows'].forEach(row => {
-            if(this.docMatchesFilterSets(filterSets, row.doc)) docs.add(row.doc);
+            if(this.resourceMatchesTypes(types, row.doc)) docs.add(row.doc);
         });
         return Array.from(docs);
     }
 
-
-
-    private docMatchesFilterSets(filterSets: FilterSet[], doc: Document): boolean {
+    private resourceMatchesTypes(types: string[], doc: Document): boolean {
 
         if (!doc.resource) return false;
-        if (!filterSets) return true;
-
-        for (let filterSet of filterSets) {
-            if (!filterSet) continue;
-            if (!this.docMatchesFilters(filterSet.filters, doc)) return false;
-        }
-
-        return true;
-    }
-
-    private docMatchesFilters(filters: string[], doc: Document): boolean {
-        if (!filters) return true;
+        if (!types) return true;
+        // if (!this.resourceMatchesTypes(types, doc)) return false;
         let match = false;
-        for (let filter of filters) {
-            if (!filter) continue;
-            if (doc.resource.type == filter) {
-
-                match = true;
-            }
+        for (let type of types) {
+            if (!type) continue;
+            if (doc.resource.type == type) match = true;
         }
         return match;
     }

@@ -5,7 +5,7 @@
 <div class="modal-body" id="image-picker-modal">
     <search-bar *ngIf="!selected.length"
                 [showFiltersMenu]="false"
-                [defaultFilterSet]="defaultFilterSet"
+                [defaultFilterSet]="defaultTypes"
                 (onQueryChanged)="queryChanged($event)">
     </search-bar>
     <div class="image-grid" (window:resize)="onResize($event)">

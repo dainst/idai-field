@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
-import {Query, FilterSet} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 
 @Component({
@@ -18,7 +18,7 @@ export class SearchBarComponent implements OnChanges {
     private q: string = '';
     private filterOptions: Array<any> = [];
 
-    @Input() defaultFilterSet: FilterSet;
+    @Input() defaultFilterSet: Array<string>;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
@@ -48,14 +48,14 @@ export class SearchBarComponent implements OnChanges {
 
         let query: Query = { q: this.q };
 
-        let filterSets: Array<FilterSet> = [];
-        if (this.defaultFilterSet) filterSets.push(this.defaultFilterSet);
+        let filterSets: Array<string> = [];
+        if (this.defaultFilterSet) filterSets = this.defaultFilterSet;
 
-        if (this.type) filterSets.push({
-            filters: [this.type]
-        });
+        if (this.type) filterSets = [
+            this.type
+        ];
 
-        query.filterSets = filterSets;
+        query.types = filterSets;
 
         this.onQueryChanged.emit(query);
     }
@@ -75,7 +75,7 @@ export class SearchBarComponent implements OnChanges {
 
     private addFilterOption(type) {
 
-        let defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
+        let defaultFilters = this.defaultFilterSet ? this.defaultFilterSet : [];
 
         for (let i in defaultFilters) {
             if (defaultFilters[i] == type.name) {

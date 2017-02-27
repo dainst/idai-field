@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Datastore, Query, FilterSet} from "idai-components-2/datastore";
+import {Datastore, Query} from "idai-components-2/datastore";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {FilterUtility} from "../util/filter-utility";
@@ -21,7 +21,7 @@ export class DocumentPickerComponent {
         private configLoader: ConfigLoader
 
     ) {
-        this.query = {q: '', filterSets: []};
+        this.query = {q: '', types: []};
     }
 
     public queryChanged(query: Query) {
@@ -39,7 +39,7 @@ export class DocumentPickerComponent {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration=>{
 
-            this.query.filterSets = [FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap())];
+            this.query.types = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
 
             this.datastore.find(query).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];

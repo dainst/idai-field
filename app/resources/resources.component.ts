@@ -1,7 +1,7 @@
 import {Component, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Query, FilterSet, Datastore} from "idai-components-2/datastore";
+import {Query, Datastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {Observable} from "rxjs/Observable";
@@ -24,7 +24,7 @@ export class ResourcesComponent {
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = { q: '' };
-    protected defaultFilterSet: FilterSet;
+    protected defaultTypes: Array<string>;
 
     public documents: Document[];
     private ready: Promise<any>;
@@ -40,8 +40,8 @@ export class ResourcesComponent {
         });
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.defaultFilterSet = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
-            this.query = {q: '', filterSets: [this.defaultFilterSet]};
+            this.defaultTypes = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
+            this.query = {q: '', types: this.defaultTypes};
             this.fetchDocuments(this.query).then(()=>{
                readyResolveFun();
             });

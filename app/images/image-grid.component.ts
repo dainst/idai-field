@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {Datastore, Query, FilterSet, Mediastore} from "idai-components-2/datastore";
+import {Datastore, Query, Mediastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
@@ -36,7 +36,7 @@ export class ImageGridComponent {
 
     private query : Query = { q: '' };
     private documents: IdaiFieldImageDocument[];
-    private defaultFilterSet: FilterSet;
+    private types: Array<string>;
 
     private nrOfColumns = 4;
     private rows = [];
@@ -58,10 +58,10 @@ export class ImageGridComponent {
             new BlobProxy(mediastore, sanitizer), true);
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            let defaultFilterSet = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet = defaultFilterSet;
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
+            let defaultTypes = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
+            if (!this.types) {
+                this.types = defaultTypes;
+                this.query = {q: '', types: this.types};
                 this.fetchDocuments(this.query);
             }
         });

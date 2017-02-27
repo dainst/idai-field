@@ -250,7 +250,7 @@ export class PouchdbDatastore implements Datastore {
 
         if (!doc.resource) return false;
         if (!types || types.length == 0) return true;
-        // if (!this.resourceMatchesTypes(types, doc)) return false;
+        
         let match = false;
         for (let type of types) {
             if (!type) continue;

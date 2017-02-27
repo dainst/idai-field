@@ -264,19 +264,16 @@ export class PouchdbDatastore implements Datastore {
     }
 
     private docMatchesFilters(filters: Filter[], doc: Document): boolean {
-
         if (!filters) return true;
-
+        let match = false;
         for (let filter of filters) {
             if (!filter) continue;
-            if (filter.invert) {
-                if ((filter.field in doc.resource) && doc.resource.type == filter.value) return false;
-            } else {
-                if (!(filter.field in doc.resource) || doc.resource.type != filter.value) return false;
+            if (doc.resource.type == filter.value) {
+
+                match = true;
             }
         }
-
-        return true;
+        return match;
     }
 
     private notifyObserversOfObjectToSync(document:Document): void {

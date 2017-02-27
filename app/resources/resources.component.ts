@@ -33,10 +33,6 @@ export class ResourcesComponent {
                 private router: Router,
                 private datastore: Datastore,
                 configLoader: ConfigLoader) {
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: true}],
-            type: undefined
-        };
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{
@@ -44,13 +40,11 @@ export class ResourcesComponent {
         });
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
-                this.fetchDocuments(this.query).then(()=>{
-                   readyResolveFun();
-                });
-            }
+            this.defaultFilterSet = { filters: FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap()), type: undefined };
+            this.query = {q: '', filterSets: [this.defaultFilterSet]};
+            this.fetchDocuments(this.query).then(()=>{
+               readyResolveFun();
+            });
         });
     }
 

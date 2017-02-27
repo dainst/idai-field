@@ -7,39 +7,29 @@ import {FilterSet, Filter} from 'idai-components-2/datastore';
  */
 export class FilterUtility {
 
-    public static addChildTypesToFilterSet(filterSet: FilterSet, typesMap: { [type: string]: IdaiType }): FilterSet {
 
-        let filters: Array<Filter> = [];
-
-        for (let i in filterSet.filters) {
-            filters.push(filterSet.filters[i]);
-            if (filterSet.filters[i].field == "type") {
-                let type = typesMap[filterSet.filters[i].value];
-                if (type.children) {
-                    for (let j in type.children) {
-                        filters.push({
-                            field: 'type',
-                            value: type.children[j].name,
-                            invert: filterSet.filters[i].invert
-                        });
-                    }
-                }
-            }
-        }
-
-        return {filters: filters, type: filterSet.type};
-    }
-
-
-
-    public static getImageTypesInvertedFilterSet(typesMap) {
+    public static getNonImageTypesFilterSet(typesMap) {
         let filters: Array<Filter> = [];
         for (let i in typesMap) {
             if (typesMap[i].name!='image' && (!typesMap[i].parentType || typesMap[i].parentType.name!='image')) {
                 filters.push({
                     field: 'type',
                     value: typesMap[i].name,
-                    invert: true
+                    invert: false
+                });
+            }
+        }
+        return filters;
+    }
+
+    public static getImageTypesFilterSet(typesMap) {
+        let filters: Array<Filter> = [];
+        for (let i in typesMap) {
+            if (typesMap[i].name=='image' || (typesMap[i].parentType && typesMap[i].parentType.name=='image')) {
+                filters.push({
+                    field: 'type',
+                    value: typesMap[i].name,
+                    invert: false
                 });
             }
         }

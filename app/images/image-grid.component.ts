@@ -59,7 +59,7 @@ export class ImageGridComponent {
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             let defaultFilterSet = {
-                filters: FilterUtility.getImageTypesInvertedFilterSet(projectConfiguration.getTypesMap()),
+                filters: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap()),
                 type: undefined
             };
             if (!this.defaultFilterSet) {

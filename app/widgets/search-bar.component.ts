@@ -65,7 +65,7 @@ export class SearchBarComponent implements OnChanges {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             
-            var types = projectConfiguration.getTypesTreeList();
+            let types = projectConfiguration.getTypesMap();
             this.filterOptions = [];
     
             for (let i in types) {
@@ -76,22 +76,13 @@ export class SearchBarComponent implements OnChanges {
 
     private addFilterOption(type) {
 
-        var defaultFilterConflict = false;
-        var defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
+        let defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
 
         for (let i in defaultFilters) {
-            if (defaultFilters[i].field == "type"
-                && defaultFilters[i].value == type.name) {
-                defaultFilterConflict = true;
-                break;
-            }
-        }
+            if (defaultFilters[i].value == type.name) {
 
-        if (!defaultFilterConflict) {
-            this.filterOptions.push(type);
-            if (type.children) {
-                for (let i in type.children) {
-                    this.addFilterOption(type.children[i]);
+                if (this.filterOptions.indexOf(type) == -1) {
+                    this.filterOptions.push(type);
                 }
             }
         }

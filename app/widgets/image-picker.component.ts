@@ -44,8 +44,10 @@ export class ImagePickerComponent {
         
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             if (!this.defaultFilterSet) {
-                this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
+                this.defaultFilterSet = {
+                    filters: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap()),
+                    type: undefined
+                }
                 this.query = {q: '', filterSets: [this.defaultFilterSet]};
                 this.fetchDocuments(this.query);
             }

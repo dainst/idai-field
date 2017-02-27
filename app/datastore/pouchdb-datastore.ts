@@ -202,18 +202,18 @@ export class PouchdbDatastore implements Datastore {
 
     /**
      * Implements {@link ReadDatastore#find}.
-     *
+     * TODO implement option to match exactly
      * @param query
-     * @param set TODO rename fieldName to set in interface
-     * @returns {Promise<Document[]|string>}
+     * @param fieldName
      */
-    public find(query: Query, set:string = undefined):Promise<Document[]> {
+    public find(query: Query, fieldName:string='fulltext'):Promise<Document[]> {
 
+        if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
         if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();
-            if (queryString) return this.db.query('fulltext', {
+            if (queryString) return this.db.query(fieldName, {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
                 reduce: false,
@@ -225,7 +225,6 @@ export class PouchdbDatastore implements Datastore {
 
     /**
      * Implements {@link ReadDatastore#all}.
-     * TODO add param set in interface
      * @returns {Promise<Document[]|string>}
      */
     public all(): Promise<Document[]|string> {
@@ -250,7 +249,7 @@ export class PouchdbDatastore implements Datastore {
     private resourceMatchesTypes(types: string[], doc: Document): boolean {
 
         if (!doc.resource) return false;
-        if (!types) return true;
+        if (!types || types.length == 0) return true;
         // if (!this.resourceMatchesTypes(types, doc)) return false;
         let match = false;
         for (let type of types) {

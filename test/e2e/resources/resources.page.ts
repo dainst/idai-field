@@ -128,8 +128,11 @@ var ResourcesPage = function() {
     };
 
     this.getMessageText = function() {
-        browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
-        return element(by.id('message-0')).getText();
+        // browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
+        browser.ignoreSynchronization = true;
+        var text =  element(by.id('message-0')).getText();
+        browser.ignoreSynchronization = false;
+        return text;
     };
 
     this.getSelectedGeometryTypeText = function() {

@@ -47,147 +47,175 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORTER_START]={
             content: 'Starte Import...',
             level: 'info',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_GENERIC_START_ERROR]={
             content: 'Import kann nicht gestartet werden.',
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_SUCCESS_SINGLE]={
             content: 'Eine Ressource wurde erfolgreich importiert.',
             level: 'success',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_SUCCESS_MULTIPLE]={
             content: '{0} Ressourcen wurden erfolgreich importiert.',
             level: 'success',
-            params: [ "Mehrere"]
+            params: [ "Mehrere"],
+            hidden: false
         };
         this.msgs[M.IMPORTER_INFO_NOMULTIPOLYGONSUPPORT]={
             content: 'Die Geometriedaten enthalten eine Geometrie vom Typ Multipolygon. Da Multipolygone von der ' +
                 'Anwendung zurzeit nicht unterstützt werden, konnten diese Geometriedaten nicht importiert werden.',
             level: 'info',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_FILEUNREADABLE]={
             content: 'Beim Import ist ein Fehler aufgetreten: Die Datei {0} konnte nicht gelesen werden.',
             level: 'danger',
-            params: [ "" ]
+            params: [ "" ],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDJSON]={
             content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
             level: 'danger',
-            params: [ "?" ]
+            params: [ "?" ],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDCSV]={
             content: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile {0} konnte nicht gelesen werden.',
             level: 'danger',
-            params: [ "?" ]
+            params: [ "?" ],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_GENERICCSVERROR]={
             content: 'Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.',
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING]={
             content: 'Beim Import ist ein Fehler aufgetreten: In Zeile {0} fehlt das Pflichtfeld \"{1}\".',
             level: 'danger',
-            params: [ "?", "?" ]
+            params: [ "?", "?" ],
+            hidden: false
         };
         this.msgs[M.VALIDATION_ERROR_IDEXISTS]={
             content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen-Identifier {0} existiert bereits.',
             level: 'danger',
-            params: [ "" ]
+            params: [ "" ],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_GENERICDATASTOREERROR]={
             content: 'Beim Import ist ein Fehler aufgetreten: Die Ressource {0} konnte nicht ' +
                      'gespeichert werden.',
             level: 'danger',
-            params: [ "?" ]
+            params: [ "?" ],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_IDMISSING]={
             content: 'Beim Import ist ein Fehler aufgetreten: Ein Ressourcen-Identifier fehlt.',
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDTYPE]={
             content: "Beim Import ist ein Fehler aufgetreten: Fehlende Typendefinition für den Typ {1} der " +
                      "Ressource {0}.",
             level: 'danger',
-            params: ["", ""]
+            params: ["", ""],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELD]={
             content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für das Feld {1} der " +
                      "Ressource {0}.",
             level: 'danger',
-            params: ["?", ""]
+            params: ["?", ""],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDFIELDS]={
             content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinitionen für die Felder {1} der " +
             "Ressource des Typs \"{0}\".",
             level: 'danger',
-            params: ["?", ""]
+            params: ["?", ""],
+            hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDGEOMETRY] = {
             content: "Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile {0}.",
             level: 'danger',
-            params: ["?"]
+            params: ["?"],
+            hidden: false
         };
         this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
             content: 'Das Objekt wurde erfolgreich gespeichert.',
             level: 'success',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.DATASTORE_IDEXISTS]={
             content: 'Objekt-Identifier existiert bereits.',
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern des Objekts ist ein Fehler aufgetreten.',
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_SUCCESS_WORLDFILE_UPLOADED] = {
             content: "Das Worldfile wurde erfolgreich geladen.",
             level: 'success',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_SUCCESS_GEOREFERENCE_DELETED] = {
             content: "Die Georeferenzdaten wurden erfolgreich gelöscht.",
             level: 'success',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_ERROR_FILEREADER]={
             content: "Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_ERROR_MEDIASTORE_READ]={
             content: "Datei '{0}' konnte nicht aus dem MediaStore gelesen werden.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_ERROR_MEDIASTORE_WRITE]={
             content: "Datei '{0}' konnte nicht im MediaStore gespeichert werden.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_ERROR_DELETE]={
             content: "Fehler beim Löschen des Bilds '{0}'.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_ERROR_INVALID_WORLDFILE] = {
             content: "Datei '{0}' ist kein gültiges World-File.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
         this.msgs[M.IMAGES_DROP_AREA_UNSUPPORTED_EXTS] = {
             content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
             level: 'danger',
-            params: []
+            params: [],
+            hidden: false
         };
     }
 }

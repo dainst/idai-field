@@ -15,10 +15,10 @@ describe('resources/messages', function() {
 
     it('should show the success msg also on route change', function() {
         resourcesPage.performCreateResource('12');
-        resourcesPage.clickCloseMessage();
         resourcesPage.typeInIdentifier('34');
         resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
+        browser.sleep(500);
         expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
     

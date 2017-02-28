@@ -30,6 +30,9 @@ var ImportPage = function (){
     this.getMessageText = function (index) {
         return this.getMessageElement(index).getText();
     };
+    this.getFirstAlertText = function () {
+        return element.all(by.className('alert')).get(-1).getText();
+    }
     this.clickImportButton = function () {
         return element(by.id('importButton')).click();
     };

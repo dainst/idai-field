@@ -28,7 +28,7 @@ describe('relations', function() {
 
     it('should edit a resource that contains a relation', function() {
         resourcesPage.performCreateLink();
-        resourcesPage.clickCloseMessage();
+        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
         resourcesPage.clickFieldsTab();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();

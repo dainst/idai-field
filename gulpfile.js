@@ -29,8 +29,8 @@ gulp.task('convert-sass', function () {
                 'node_modules/mdi/scss/'
             ], precision: 8
         }))
-        .pipe(concat(pkg.name + '.css'))
-        .pipe(gulp.dest('css'));
+        .pipe(concat('app.css'))
+        .pipe(gulp.dest('app'));
 });
 
 function watch() {
@@ -89,7 +89,6 @@ gulp.task('make-dist', function () {
     gulp.src('app/**/*').pipe(gulp.dest('dist/app/'));
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
-    gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
     gulp.src('mediastore/**/*').pipe(gulp.dest('dist/mediastore/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));

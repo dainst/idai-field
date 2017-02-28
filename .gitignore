@@ -41,6 +41,7 @@ release
 cache
 typings
 css
+app/app.css
 fonts
 app/**/*.js
 app/**/*.js.map

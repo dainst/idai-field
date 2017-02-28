@@ -1,10 +1,11 @@
-import {Datastore, Query} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import * as PouchDB from "pouchdb";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
 
 import {DOCS} from "./sample-objects";
 
@@ -14,7 +15,7 @@ import {DOCS} from "./sample-objects";
  * @author Thomas Kleinke
  */
 @Injectable()
-export class PouchdbDatastore implements Datastore {
+export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private db: any;
     private observers = [];
@@ -228,6 +229,8 @@ export class PouchdbDatastore implements Datastore {
            return this.db.query('identifier', {
                key: identifier,
                include_docs: true
+           }).then(result => {
+               if (result.rows.length > 0) return result.rows[0].doc;
            });
         });
     }

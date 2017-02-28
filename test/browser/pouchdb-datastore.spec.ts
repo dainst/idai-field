@@ -9,13 +9,14 @@ export function main() {
 
         let datastore : PouchdbDatastore;
 
-        function doc(sd,identifier?) : Document {
+        function doc(sd,identifier?,type?) : Document {
+            if (!type) type = 'object';
             return {
                 resource : {
                     shortDescription: sd,
                     identifier: identifier,
-                    title: "title",
-                    type: "object",
+                    title: 'title',
+                    type: type,
                     relations : undefined
                 }
             }
@@ -153,6 +154,31 @@ export function main() {
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('bla');
                         expect(result.length).toBe(1);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should find in identifier',function(done){
+            let doc1 = doc('bla','blub','type1');
+            let doc2 = doc('bla','blub','type2');
+            let doc3 = doc('bla','blub','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find({q:'blub',types:['type2','type3']}))
+                .then(
+                    result => {
+                        expect(result[0].resource['shortDescription']).toBe('bla');
+                        expect(result[0].resource.type).not.toBe('type1');
+                        expect(result[1].resource['shortDescription']).toBe('bla');
+                        expect(result[1].resource.type).not.toBe('type1');
+                        expect(result.length).toBe(2);
                         done();
                     },
                     err => {

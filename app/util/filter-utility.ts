@@ -15,9 +15,7 @@ export class FilterUtility {
     private static fun(typesMap,cb) {
         let types: Array<string> = [];
         for (let i in typesMap) {
-            if (cb(typesMap[i])) {
-                types.push(typesMap[i].name)
-            }
+            if (cb(typesMap[i])) types.push(typesMap[i].name)
         }
         return types;
     }
@@ -25,5 +23,4 @@ export class FilterUtility {
     private static isImageType(type) {
         return (type.name=='image' || (type.parentType && type.parentType.name=='image'));
     }
-
 }

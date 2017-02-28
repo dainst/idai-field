@@ -83,6 +83,8 @@ export class AppComponent implements OnInit {
                 this.messages.clear();
             }
         });
+
+        this.preventDefaultDragAndDropBehavior();
     }
 
     ngOnInit() {
@@ -102,6 +104,12 @@ export class AppComponent implements OnInit {
         );
         this.configLoader.getProjectConfiguration().catch(msgWithParams => {
             this.messages.addWithParams(msgWithParams);
-    });
+        });
+    }
+
+    private preventDefaultDragAndDropBehavior() {
+
+        document.addEventListener('dragover', event => event.preventDefault());
+        document.addEventListener('drop', event => event.preventDefault());
     }
 }

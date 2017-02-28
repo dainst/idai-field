@@ -114,46 +114,10 @@ export function main() {
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
-                .then(() => datastore.find({q:'bla'},'identifier'))
+                .then(() => datastore.findByIdentifier('bla'))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('blub');
-                        expect(result.length).toBe(1);
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should not find in unknown field',function(done){
-            let doc1 = doc('bla','blub');
-
-            datastore.create(doc1)
-                .then(() => datastore.find({q:'bla'},'unknown'))
-                .then(
-                    result => {
-                        expect(result.length).toBe(0);
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should match part of identifier',function(done){
-            let doc1 = doc('bla','blub');
-
-            datastore.create(doc1)
-                .then(() => datastore.find({q:'blu'},'identifier'))
-                .then(
-                    result => {
-                        expect(result[0].resource['shortDescription']).toBe('bla');
-                        expect(result.length).toBe(1);
+                        expect(result.resource['shortDescription']).toBe('blub');
                         done();
                     },
                     err => {

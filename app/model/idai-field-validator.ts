@@ -1,8 +1,8 @@
 import {ConfigLoader} from 'idai-components-2/configuration'
-import {ReadDatastore} from 'idai-components-2/datastore'
 import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from './idai-field-document';
 import {M} from "../m";
+import {PouchdbDatastore} from '../datastore/pouchdb-datastore';
 
 
 
@@ -11,8 +11,8 @@ import {M} from "../m";
  */
 export class IdaiFieldValidator extends Validator {
 
-    constructor(configLoader:ConfigLoader,private datastore:ReadDatastore) {
-        super(configLoader)
+    constructor(configLoader:ConfigLoader, private datastore:PouchdbDatastore) {
+        super(configLoader);
     }
 
     /**
@@ -23,9 +23,9 @@ export class IdaiFieldValidator extends Validator {
     protected validateCustom(doc:IdaiFieldDocument): Promise<any> {
         return new Promise<any>((resolve,reject) => {
 
-            this.datastore.find({q:doc.resource.identifier,types:[]},'identifier').then(results => {
+            this.datastore.findByIdentifier(doc.resource.identifier).then(result => {
 
-                if (IdaiFieldValidator.isDuplicate(results,doc)) return reject([M.VALIDATION_ERROR_IDEXISTS,doc.resource.identifier]);
+                if (IdaiFieldValidator.isDuplicate(result,doc)) return reject([M.VALIDATION_ERROR_IDEXISTS,doc.resource.identifier]);
                 resolve();
             });
         });

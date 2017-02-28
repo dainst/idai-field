@@ -1,10 +1,11 @@
-import {Datastore, Query} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import * as PouchDB from "pouchdb";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
 
 import {DOCS} from "./sample-objects";
 
@@ -14,7 +15,7 @@ import {DOCS} from "./sample-objects";
  * @author Thomas Kleinke
  */
 @Injectable()
-export class PouchdbDatastore implements Datastore {
+export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private db: any;
     private observers = [];
@@ -206,14 +207,13 @@ export class PouchdbDatastore implements Datastore {
      * @param query
      * @param fieldName
      */
-    public find(query: Query, fieldName:string='fulltext'):Promise<Document[]> {
+    public find(query: Query):Promise<Document[]> {
 
-        if (['fulltext','identifier'].indexOf(fieldName) == -1) return Promise.resolve([]);
         if (query == undefined) query = {q:''};
 
         return this.readyForQuery.then(() => {
             let queryString = query.q.toLowerCase();
-            if (queryString) return this.db.query(fieldName, {
+            if (queryString) return this.db.query('fulltext', {
                 startkey: queryString,
                 endkey: queryString + '\uffff',
                 reduce: false,
@@ -221,6 +221,18 @@ export class PouchdbDatastore implements Datastore {
             });
             else return this.all();
         }).then(result => { return this.filterResult(result, query.types)} );
+    }
+
+    public findByIdentifier(identifier: string): Promise<Document> {
+
+        return this.readyForQuery.then(() => {
+           return this.db.query('identifier', {
+               key: identifier,
+               include_docs: true
+           }).then(result => {
+               if (result.rows.length > 0) return result.rows[0].doc;
+           });
+        });
     }
 
     /**

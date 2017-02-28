@@ -90,7 +90,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader:ConfigLoader,datastore:ReadDatastore) {
+            useFactory: function(configLoader:ConfigLoader,datastore:PouchdbDatastore) {
                 return new IdaiFieldValidator(configLoader,datastore);
             },
             deps: [ConfigLoader,ReadDatastore]

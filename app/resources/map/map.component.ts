@@ -385,7 +385,7 @@ export class MapComponent implements OnChanges {
         this.saveActiveLayersIdsInMapState();
     }
 
-    public isActiveLayer(layer: any) {
+    public isActiveLayer(layer: ImageContainer) {
 
         return this.activeLayers.indexOf(layer) > -1;
     }
@@ -422,6 +422,18 @@ export class MapComponent implements OnChanges {
     private focusPolygon(polygon: L.Polygon) {
 
         this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+    }
+
+    public focusLayer(layer: ImageContainer) {
+
+        let georef = layer.document.resource.georeference;
+        let bounds = [];
+
+        bounds.push(L.latLng(georef.topLeftCoordinates));
+        bounds.push(L.latLng(georef.topRightCoordinates));
+        bounds.push(L.latLng(georef.bottomLeftCoordinates));
+
+        this.map.fitBounds(bounds);
     }
 
     private getShortDescription(resource: IdaiFieldResource) {

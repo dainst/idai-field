@@ -1,7 +1,8 @@
-import {Datastore,Query} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
 
 @Injectable()
 /**
@@ -9,11 +10,11 @@ import {Observable} from "rxjs";
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CachedDatastore implements Datastore {
+export class CachedDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
 
-    constructor(private datastore:Datastore) { }
+    constructor(private datastore:IdaiFieldDatastore) { }
 
     create(document: Document): Promise<Document|string> {
         return this.datastore.create(document).then(doc => {
@@ -49,23 +50,32 @@ export class CachedDatastore implements Datastore {
     }
 
     find(query: Query, fieldName?: string): Promise<Document[] | string> {
-        return this.datastore.find(query,fieldName).then(results => {
-            return Promise.resolve(this.replaceWithCached(results));
-        })
+        return this.datastore.find(query,fieldName).then(result => {
+            return Promise.resolve(this.replaceAllWithCached(result));
+        });
     }
 
-    private replaceWithCached(results) {
+    findByIdentifier(identifier: string): Promise<Document> {
+        return this.datastore.findByIdentifier(identifier).then(result => {
+            return Promise.resolve(this.replaceWithCached(result));
+        });
+    }
+
+    private replaceAllWithCached(results) {
         let results_ = [];
         for (let result of results) {
-            if (this.documentCache[result.resource.id]) {
-                results_.push(this.documentCache[result.resource.id]);
-            }
-            else {
-                this.documentCache[result.resource.id] = result;
-                results_.push(result);
-            }
+            results_.push(this.replaceWithCached(result));
         }
         return results_;
+    }
+
+    private replaceWithCached(result) {
+        if (!result)
+            return result;
+        else if (this.documentCache[result.resource.id])
+            return this.documentCache[result.resource.id];
+        else
+            return this.documentCache[result.resource.id] = result;
     }
 
     all(): Promise<Document[]|string> {

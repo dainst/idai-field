@@ -11,12 +11,12 @@ export function main() {
 
         it('should create objects from file content', (done) => {
 
-            var fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
+            let fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
                 + '1,one,One,context\n'
                 + '2,two,Two,context\n';
 
-            var parser = new IdigCsvParser();
-            var objects = [];
+            let parser = new IdigCsvParser();
+            let objects = [];
             parser.parse(fileContent).subscribe(result => {
                 expect(result).not.toBe(undefined);
                 objects.push(result.document);
@@ -34,21 +34,19 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            var fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
+            let fileContent  = 'IdentifierUUID,Identifier,Title,Type\n'
                 + '1,one,One,context\n'
                 + ',two,Two,context\n';
             
-            var parser = new IdigCsvParser();
-            var objects = [];
+            let parser = new IdigCsvParser();
+            let objects = [];
             parser.parse(fileContent).subscribe(result => {
                 expect(result).not.toBe(undefined);
                 objects.push(result.document);
-            }, (error) => {
+            }, (msgWithParams) => {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['id']).toEqual("1");
-                expect(error).toEqual(jasmine.any(SyntaxError));
-                expect(error.message).toEqual(M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING);
-                expect(error.lineNumber).toEqual(2);
+                expect(msgWithParams).toEqual([M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING,2,'IdentifierUUID']);
                 done();
             });
 

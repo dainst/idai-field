@@ -11,12 +11,12 @@ export function main() {
 
        it('should create objects from file content', (done) => {
 
-            var fileContent  = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+            let fileContent  = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
                 + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
                 + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-            var parser = new NativeJsonlParser();
-            var objects = [];
+            let parser = new NativeJsonlParser();
+            let objects = [];
             parser.parse(fileContent).subscribe(result => {
                 expect(result).not.toBe(undefined);
                 objects.push(result.document);
@@ -35,21 +35,19 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            var fileContent = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+            let fileContent = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
                 + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
                 + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-            var parser = new NativeJsonlParser();
-            var objects = [];
+            let parser = new NativeJsonlParser();
+            let objects = [];
             parser.parse(fileContent).subscribe(result => {
                 expect(result).not.toBe(undefined);
                 objects.push(result.document);
             }, (error) => {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['id']).toEqual("id1");
-                expect(error).toEqual(jasmine.any(SyntaxError));
-                expect(error.message).toEqual(M.IMPORTER_FAILURE_INVALIDJSON);
-                expect(error.lineNumber).toEqual(2);
+                expect(error).toEqual([M.IMPORTER_FAILURE_INVALIDJSON,2]);
                 done();
             });
 

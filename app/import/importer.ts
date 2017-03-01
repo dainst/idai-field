@@ -35,11 +35,9 @@ export class Importer {
         this.currentImportWithError = false;
         this.importReport = {
             "io_error": false,
-            "parser_errors": [],
+            "errors": [],
             "parser_info": [],
             "successful_imports": 0,
-            "validation_errors": [],
-            "datastore_errors": []
         };
     }
 
@@ -76,7 +74,7 @@ export class Importer {
 
                     if (this.currentImportWithError) return;
 
-                    for (var i in result.messages) {
+                    for (let i in result.messages) {
                         this.importReport.parser_info.push(result.messages[i]);
                     }
 
@@ -86,12 +84,16 @@ export class Importer {
                         this.docsToUpdate.push(result.document);
                     }
 
-                }, error => {
-                    this.importReport["parser_errors"].push(error);
+                }, msgWithParams => {
+
+                    console.log("error",msgWithParams)
+
+                    this.importReport["errors"].push(msgWithParams);
 
                     this.objectReaderFinished = true;
                     this.currentImportWithError = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
+
                 }, () => {
                     this.objectReaderFinished = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
@@ -118,12 +120,7 @@ export class Importer {
                 () => {
                     return this.datastore.create(doc);
                 }, msgWithParams => {
-                    this.importReport['validation_errors'].push({
-                        doc: doc,
-                        msg: msgWithParams[0],
-                        msgParams: msgWithParams.slice(1)
-                    });
-
+                    this.importReport['errors'].push(msgWithParams);
                     this.currentImportWithError = true;
                     this.finishImport();
                 })
@@ -139,7 +136,7 @@ export class Importer {
                     this.finishImport();
                 }
             }, error => {
-                this.importReport['datastore_errors'].push({
+                this.importReport['errors'].push({
                     msg: error,
                     doc: doc
                 });

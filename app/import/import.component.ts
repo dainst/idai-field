@@ -43,8 +43,8 @@ export class ImportComponent {
 
         this.messages.clear();
 
-        var reader: Reader = this.createReader();
-        var parser: Parser = this.chooseParser();
+        let reader: Reader = this.createReader();
+        let parser: Parser = this.chooseParser();
 
         if (!reader || !parser) {
             this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
@@ -100,7 +100,7 @@ export class ImportComponent {
 
     private selectFile(event) {
 
-        var files = event.target.files;
+        let files = event.target.files;
 
         if (!files || files.length == 0) {
             this.file = undefined;
@@ -112,21 +112,14 @@ export class ImportComponent {
     private evaluate(importReport) {
 
         if (importReport['io_error']) {
-            var filename = this.file ? this.file.name : '';
+            let filename = this.file ? this.file.name : '';
             this.messages.addWithParams([M.IMPORTER_FAILURE_FILEUNREADABLE, filename]);
         }
+        for (let msgWithParams of importReport['errors'])
+            this.messages.addWithParams(msgWithParams);
 
-        for (var parserError of importReport['parser_errors'])
-            this.messages.addWithParams([parserError.message, parserError.lineNumber, parserError.errorData]);
-
-        for (var parserInfo of importReport['parser_info'])
+        for (let parserInfo of importReport['parser_info'])
             this.messages.add(parserInfo);
-
-        for (var err of importReport['validation_errors'])
-            this.showValidationErrorMessage(err.msg, err.msgParams);
-
-        for (var err of importReport['datastore_errors'])
-            this.showDatastoreErrorMessage(err.doc, err.msg);
 
         if (importReport['successful_imports'] > 0)
             this.showSuccessMessage(importReport['successful_imports']);
@@ -139,26 +132,5 @@ export class ImportComponent {
         } else {
             this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, count.toString()]);
         }
-    }
-
-    private showValidationErrorMessage(msg: string, msgParams: string[]) {
-
-        if (msgParams.length>0)
-            this.messages.addWithParams([msg].concat(msgParams));
-
-        // if (msg == M.VALIDATION_ERROR_IDMISSING) {
-        //     this.messages.add(M.IMPORTER_FAILURE_IDMISSING);
-        // } else if (msg == M.VALIDATION_ERROR_INVALIDTYPE) {
-        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDTYPE].concat(msgParams));
-        // } else if (msg == M.VALIDATION_ERROR_INVALIDFIELD) {
-        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELD].concat(msgParams));
-        // } else if (msg == M.VALIDATION_ERROR_INVALIDFIELDS) {
-        //     this.messages.addWithParams([M.IMPORTER_FAILURE_INVALIDFIELDS].concat(msgParams));
-        // }
-    }
-
-    private showDatastoreErrorMessage(doc: any, msg: any) {
-
-        this.messages.addWithParams([M.IMPORTER_FAILURE_GENERICDATASTOREERROR, doc.resource.identifier]);
     }
 }

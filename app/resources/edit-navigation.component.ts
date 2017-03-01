@@ -4,7 +4,7 @@ import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
-import {ListingComponent} from "./listing.component";
+import {ResourcesComponent} from "./resources.component";
 import {EditNavigation} from '../common/edit-navigation';
 
 @Component({
@@ -27,7 +27,7 @@ export class EditNavigationComponent
     modal: NgbModalRef;
 
     constructor(
-        private listingComponent: ListingComponent,
+        private resourcesComponent: ResourcesComponent,
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
@@ -58,18 +58,18 @@ export class EditNavigationComponent
         this.getRouteParams(
             (type) => {
                 this.mode = 'new';
-                this.listingComponent.createNewDocument(type).then(doc=>{
+                this.resourcesComponent.createNewDocument(type).then(doc=>{
                     this.document = doc;
                 })
             },
             (id) => {
                 if (id == 'selected') {
                     this.mode = 'new';
-                    this.document = this.listingComponent.getSelected();
+                    this.document = this.resourcesComponent.getSelected();
 
                 } else {
                     this.mode = 'edit';
-                    this.listingComponent.loadDoc(id).then(
+                    this.resourcesComponent.loadDoc(id).then(
                         document => this.document = document);
                 }
             }
@@ -81,7 +81,7 @@ export class EditNavigationComponent
     }
 
     public goToOverview() {
-        this.listingComponent.fetchDocuments();
+        this.resourcesComponent.fetchDocuments();
         this.router.navigate(['resources']);
     }
 
@@ -97,7 +97,7 @@ export class EditNavigationComponent
 
     public restore() : Promise<any> {
         return new Promise<any>((resolve,reject)=>{
-            this.listingComponent.restore().then(
+            this.resourcesComponent.restore().then(
                 () => {
                     this.documentEditChangeMonitor.reset();
                     resolve();
@@ -123,7 +123,7 @@ export class EditNavigationComponent
             this.mode='edit';
             // doc must be reloaded so instance of this.document is
             // the same as the one in overviewComponent
-            this.listingComponent.loadDoc(this.document.resource.id).then(
+            this.resourcesComponent.loadDoc(this.document.resource.id).then(
                 document=>this.document=document);
         }
     }

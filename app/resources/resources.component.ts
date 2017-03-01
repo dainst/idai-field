@@ -10,7 +10,7 @@ import {FilterUtility} from '../util/filter-utility';
 @Component({
 
     moduleId: module.id,
-    templateUrl: './listing.html'
+    templateUrl: './resources.html'
 })
 
 /**
@@ -19,7 +19,7 @@ import {FilterUtility} from '../util/filter-utility';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ListingComponent {
+export class ResourcesComponent {
 
     protected selectedDocument;
     protected observers: Array<any> = [];

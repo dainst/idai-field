@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {resourcesRouting} from './resources.routing';
-import {ListingComponent} from './listing.component';
+import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
 import {EditNavigationComponent} from './edit-navigation.component';
 import {MapWrapperComponent} from './map-wrapper.component';
@@ -21,7 +21,7 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         WidgetsModule
     ],
     declarations: [
-        ListingComponent,
+        ResourcesComponent,
         GeometryViewComponent,
         EditNavigationComponent,
         MapWrapperComponent,

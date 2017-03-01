@@ -87,7 +87,7 @@ export class ImagePickerComponent {
     private fetchDocuments(query: Query) {
         this.query = query;
 
-        this.datastore.find(query).then(documents => {
+        this.datastore.find(query.q, query.types).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
             this.calcGrid();

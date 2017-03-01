@@ -206,7 +206,7 @@ export class MapComponent implements OnChanges {
 
                 };
 
-                this.datastore.find(query).then(
+                this.datastore.find(query.q, query.types).then(
                     documents => {
                         this.makeLayersForDocuments(documents as Document[], resolve);
                     },

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Parser, ParserError, ParserResult} from "./parser";
+import {Parser, ParserResult} from "./parser";
 import {M} from "../m";
 
 /**
@@ -28,10 +28,7 @@ export class NativeJsonlParser implements Parser {
                         observer.next(result);
                     }
                 } catch (e) {
-                    let error: ParserError = e;
-                    error.message = M.IMPORTER_FAILURE_INVALIDJSON;
-                    error.lineNumber = i + 1;
-                    observer.error(error);
+                    observer.error([M.IMPORTER_FAILURE_INVALIDJSON,i+1]);
                 }
             }
             observer.complete();

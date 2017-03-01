@@ -203,24 +203,28 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     /**
      * Implements {@link ReadDatastore#find}.
-     * TODO implement option to match exactly
-     * @param query
-     * @param fieldName
      */
-    public find(query: Query):Promise<Document[]> {
+    public find(query:string='',
+                sets?:string[],
+                prefix:boolean=false,
+                offset:number=0,
+                limit:number=-1):Promise<Document[]> {
 
-        if (query == undefined) query = {q:''};
+        let opt = {
+            reduce: false,
+            include_docs: true,
+        };
+        opt['startKey'] = query.toLowerCase();
+        opt['endKey'] = prefix ? opt['startKey'] + '\uffff' : opt['startKey'];
+        // performs poorly according to PouchDB documentation
+        // could be replaced by using startKey instead
+        // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
+        if (offset) opt['skip'] = offset;
+        if (limit > -1) opt['limit'] = limit;
 
-        return this.readyForQuery.then(() => {
-            let queryString = query.q.toLowerCase();
-            if (queryString) return this.db.query('fulltext', {
-                startkey: queryString,
-                endkey: queryString + '\uffff',
-                reduce: false,
-                include_docs: true
-            });
-            else return this.all();
-        }).then(result => { return this.filterResult(result, query.types)} );
+        return this.readyForQuery
+            .then(() => this.db.query('fulltext', opt))
+            .then(result => this.filterResult(result, sets));
     }
 
     public findByIdentifier(identifier: string): Promise<Document> {
@@ -237,12 +241,23 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     /**
      * Implements {@link ReadDatastore#all}.
-     * @returns {Promise<Document[]|string>}
      */
-    public all(): Promise<Document[]|string> {
-        return this.db.allDocs({
+    public all(sets?:string[],
+               offset:number=0,
+               limit:number=-1): Promise<Document[]|string> {
+
+        let opt = {
             include_docs: true
-        });
+        };
+        // performs poorly according to PouchDB documentation
+        // could be replaced by using startKey instead
+        // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
+        if (offset) opt['skip'] = offset;
+        if (limit > -1) opt['limit'] = limit;
+
+        return this.readyForQuery
+            .then(() => this.db.allDocs(opt))
+            .then(result => this.filterResult(result, sets));
     }
 
     private fetchObject(id: string): Promise<Document> {
@@ -262,7 +277,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         if (!doc.resource) return false;
         if (!types || types.length == 0) return true;
-        
+
         let match = false;
         for (let type of types) {
             if (!type) continue;

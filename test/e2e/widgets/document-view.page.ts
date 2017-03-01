@@ -10,6 +10,19 @@ var delays = require('../config/delays');
  */
 var DocumentViewPage = function() {
 
+    // click
+
+    this.clickRelation = function(relationIndex) {
+        return element.all(by.css('#document-view a')).get(relationIndex).click();
+    };
+
+    this.clickEditDocument = function() {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
+        element(by.id('document-view-button-edit-document')).click();
+    };
+
+    // get text
+
     /**
      * @param index counting from 0 for the first field
      */

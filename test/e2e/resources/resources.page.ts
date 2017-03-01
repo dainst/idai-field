@@ -1,12 +1,13 @@
 import {browser,protractor,element,by} from 'protractor';
 
 'use strict';
-var common = require("../common.js");
-var EC = protractor.ExpectedConditions;
-var delays = require('../config/delays');
+let common = require("../common.js");
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
+import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 
-var ResourcesPage = function() {
+let ResourcesPage = function() {
 
     this.get = function() {
         return browser.get('/#/resources');
@@ -36,21 +37,6 @@ var ResourcesPage = function() {
         element(by.id('overview-save-confirmation-modal-discard-button')).click();
     };
 
-    this.clickCloseMessage = function() {
-        browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);
-        element(by.css('#message-0 button')).click();
-    };
-
-    this.clickEditDocument = function() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
-        element(by.id('document-view-button-edit-document')).click();
-    };
-
-    this.clickBackToDocumentView = function() {
-        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
-        element(by.id('document-edit-button-goto-view')).click();
-    };
-
     this.clickDeleteDocument = function() {
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-delete-document'))), delays.ECWaitTime);
         element(by.id('document-edit-button-delete-document')).click();
@@ -76,34 +62,6 @@ var ResourcesPage = function() {
     this.clickReeditGeometry = function() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-geometry')).click();
-    };
-
-    this.clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
-        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
-        this.getRelationEl(groupIndex, pickerIndex)
-            .all(by.css('.suggestion')).get(suggestionIndex).click();
-    };
-
-    this.clickAddRelationForGroupWithIndex = function(groupIndex) {
-        element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .element(by.css('.circular-button.add-relation')).click();
-    };
-
-    this.clickRelationInDocumentView = function(relationIndex) {
-        return element.all(by.css('#document-view a')).get(relationIndex).click();
-    };
-
-    this.clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
-            .click();
-    };
-
-    this.clickRelationsTab = function() {
-        element(by.id('document-edit-relations-tab')).click();
-    };
-
-    this.clickFieldsTab = function() {
-        element(by.id('document-edit-fields-tab')).click();
     };
 
     this.clickSelectGeometryType = function(type) {
@@ -137,16 +95,9 @@ var ResourcesPage = function() {
         return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
     };
 
-
-
     this.getSelectedGeometryTypeText = function() {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
-    };
-
-    this.getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
-        this.clickRelationsTab();
-        return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 
     // elements
@@ -159,56 +110,28 @@ var ResourcesPage = function() {
         return element(by.id('resource-' + identifier));
     };
 
-    this.getRelationEl = function(groupIndex, pickerIndex) {
-        return element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .all(by.tagName('relation-picker')).get(pickerIndex);
-    };
-
-    this.getRelationSuggestionEl = function(groupIndex, pickerIndex, suggestionIndex) {
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
-    };
-
-    this.getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
-    };
-
     // sequences
 
     this.performCreateResource = function(identifier, typeIndex) {
         this.clickCreateObject();
         this.clickSelectResourceType(typeIndex);
         this.clickSelectGeometryType();
-        this.typeInIdentifier(identifier);
+        DocumentEditWrapperPage.typeInIdentifier(identifier);
         this.scrollUp();
-        this.clickSaveDocument();
+        DocumentEditWrapperPage.clickSaveDocument();
     };
 
 
     this.performCreateLink = function() {
         this.performCreateResource('1');
         this.performCreateResource('2');
-        this.clickRelationsTab();
-        this.clickAddRelationForGroupWithIndex(0);
-        this.typeInRelationByIndices(0, 0, '1');
-        this.clickChooseRelationSuggestion(0, 0, 0);
+        DocumentEditWrapperPage.clickRelationsTab();
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
+        DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '1');
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(0, 0, 0);
         this.scrollUp();
-        this.clickSaveDocument();
+        DocumentEditWrapperPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-    };
-
-    this.clickSaveDocument = function() {
-        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
-            .then(function(){
-                element(by.id('document-edit-button-save-document')).click().then(
-                    function() {
-                        return new Promise(function(resolve){
-                            setTimeout(function(){
-                                resolve();
-                            },delays.shortRest);
-                        })
-                    }
-                )
-            })
     };
 
     // script
@@ -225,17 +148,6 @@ var ResourcesPage = function() {
 
     this.typeInIdentifierInSearchField = function(identifier) {
         return common.typeIn(element(by.id('object-search')), identifier);
-    };
-
-    this.typeInIdentifier = function(identifier) {
-        // element-2, 0,1 and 2 are type, id, geometries
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), delays.ECWaitTime);
-        common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
-    };
-
-    this.typeInRelationByIndices = function(groupIndex, pickerIndex, input) {
-        common.typeIn(this.getRelationEl(groupIndex, pickerIndex)
-            .element(by.tagName('input')), input);
     };
 };
 

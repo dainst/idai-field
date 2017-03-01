@@ -1,8 +1,9 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser} from 'protractor';
 
-var mapPage = require('./map.page');
-var resourcePage = require('../../resources/resources.page');
-var delays = require('../../config/delays');
+let mapPage = require('./map.page');
+let resourcePage = require('../../resources/resources.page');
+let delays = require('../../config/delays');
+import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
 
 describe('resources/map', function() {
 
@@ -26,9 +27,9 @@ describe('resources/map', function() {
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
             function(){
                 mapPage.clickMapOption('ok');
-                resourcePage.typeInIdentifier(identifier);
+                DocumentEditWrapperPage.typeInIdentifier(identifier);
                 resourcePage.scrollUp();
-                resourcePage.clickSaveDocument();
+                DocumentEditWrapperPage.clickSaveDocument();
             });
     }
     
@@ -43,7 +44,7 @@ describe('resources/map', function() {
     
     function createDocThenReedit(identifier,geometryType, mapClickCallback) {
         createDoc(identifier, geometryType, mapClickCallback);
-        resourcePage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickBackToDocumentView();
         resourcePage.clickReeditGeometry();
     }
     
@@ -53,13 +54,13 @@ describe('resources/map', function() {
 
     it('should create a new item with point geometry ', function() {
         createDoc('33','point', function(){return mapPage.setMarker(100, 100)});
-        resourcePage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
     it('should create a new item with polygon geometry ', function() {
         createDoc('34', 'polygon', setPolygon);
-        resourcePage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
@@ -79,7 +80,7 @@ describe('resources/map', function() {
 
     it('should create a point geometry later', function() {
         resourcePage.performCreateResource('39');
-        resourcePage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickBackToDocumentView();
         resourcePage.clickCreateGeometry('point');
         mapPage.setMarker(100, 100);
         mapPage.clickMapOption('ok');
@@ -88,7 +89,7 @@ describe('resources/map', function() {
 
     it('should create a polygon geometry later', function() {
         resourcePage.performCreateResource('38');
-        resourcePage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickBackToDocumentView();
         resourcePage.clickCreateGeometry('polygon').then(setPolygon);
         mapPage.clickMapOption('ok');
         expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');

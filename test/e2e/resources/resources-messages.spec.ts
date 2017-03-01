@@ -1,5 +1,6 @@
 let resourcesPage = require('./resources.page');
 import {NavbarPage} from '../navbar.page';
+import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 describe('resources/messages', function() {
 
@@ -14,7 +15,7 @@ describe('resources/messages', function() {
 
     it('should show the success msg also on route change', function() {
         resourcesPage.performCreateResource('12');
-        resourcesPage.typeInIdentifier('34');
+        DocumentEditWrapperPage.typeInIdentifier('34');
         resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
         

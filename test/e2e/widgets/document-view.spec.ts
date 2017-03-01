@@ -1,9 +1,10 @@
 import {browser,protractor,element,by} from 'protractor';
+import {DocumentEditWrapperPage} from "./document-edit-wrapper.page";
 
-var resourcesPage = require('../resources/resources.page');
-var documentViewPage = require('./document-view.page');
-var EC = protractor.ExpectedConditions;
-var delays = require('../config/delays');
+let resourcesPage = require('../resources/resources.page');
+let documentViewPage = require('./document-view.page');
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
 
 
 /**
@@ -59,11 +60,11 @@ describe('document view tests --', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource("1");
-        resourcesPage.clickEditDocument();
-        resourcesPage.clickRelationsTab();
-        resourcesPage.clickAddRelationForGroupWithIndex(0);
-        resourcesPage.typeInRelationByIndices(0, 0, '2');
-        resourcesPage.clickChooseRelationSuggestion(0, 0, 0);
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.clickRelationsTab();
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
+        DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '2');
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(0, 0, 0);
         resourcesPage.clickSelectResource("1");
         resourcesPage.clickDiscardInModal();
 

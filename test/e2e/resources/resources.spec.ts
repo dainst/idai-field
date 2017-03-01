@@ -1,9 +1,11 @@
 import {browser,protractor,element,by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
-var resourcesPage = require('./resources.page');
-var EC = protractor.ExpectedConditions;
-var delays = require('../config/delays');
+let resourcesPage = require('./resources.page');
+let documentViewPage = require('../widgets/document-view.page');
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
 
 
 /**
@@ -41,8 +43,8 @@ describe('resources', function() {
         resourcesPage.performCreateResource('1a');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('1a');
-        resourcesPage.clickEditDocument();
-        resourcesPage.typeInIdentifier('1b');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('1b');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1b')), delays.ECWaitTime);
     });
 
@@ -55,7 +57,7 @@ describe('resources', function() {
      */
     it ('should reflect changes in overview after creating object - first scenario', function() {
         resourcesPage.performCreateResource('12');
-        resourcesPage.typeInIdentifier('34');
+        DocumentEditWrapperPage.typeInIdentifier('34');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('34')), delays.ECWaitTime);
     });
 
@@ -68,8 +70,8 @@ describe('resources', function() {
         resourcesPage.performCreateResource('12');
         resourcesPage.clickChooseTypeFilter(0); // calls find
         resourcesPage.clickSelectResource('12');
-        resourcesPage.clickEditDocument();
-        resourcesPage.typeInIdentifier('56'); // same ...
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('56'); // same ...
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('56')), delays.ECWaitTime); // ... instance
     });
 
@@ -80,7 +82,7 @@ describe('resources', function() {
      */
     it ('should save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
-        resourcesPage.clickSaveDocument();
+        DocumentEditWrapperPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
@@ -105,8 +107,8 @@ describe('resources', function() {
     it ('should change the selection to new when saving via modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
-        resourcesPage.clickEditDocument();
-        resourcesPage.typeInIdentifier('2');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('2');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
         resourcesPage.clickSelectGeometryType();
@@ -121,8 +123,8 @@ describe('resources', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
-        resourcesPage.clickEditDocument();
-        resourcesPage.typeInIdentifier('2a');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('2a');
         resourcesPage.clickSelectResource('1');
         resourcesPage.scrollUp();
         resourcesPage.clickSaveInModal();
@@ -134,8 +136,8 @@ describe('resources', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
-        resourcesPage.clickEditDocument();
-        resourcesPage.typeInIdentifier('2a');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('2a');
         resourcesPage.clickSelectResource('1');
         resourcesPage.scrollUp();
         resourcesPage.clickCancelInModal();
@@ -147,7 +149,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         resourcesPage.clickSelectResource('1');
-        resourcesPage.clickEditDocument();
+        documentViewPage.clickEditDocument();
         resourcesPage.clickDeleteDocument();
         resourcesPage.clickDeleteInModal();
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);

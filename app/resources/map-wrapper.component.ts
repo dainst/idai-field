@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {Router, ActivatedRoute, Params} from "@angular/router";
-import {ResourcesComponent} from "./resources.component";
+import {ListingComponent} from "./listing.component";
 import {ReadDatastore} from "idai-components-2/datastore";
 import {PersistenceManager} from "idai-components-2/persist";
 import {ConfigLoader} from "idai-components-2/configuration";
@@ -30,7 +30,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         private datastore: ReadDatastore,
-        private resourcesComponent: ResourcesComponent,
+        private listingComponent: ListingComponent,
         private configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
@@ -88,17 +88,17 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
                 this.configLoader.getProjectConfiguration().then(projectConfiguration => {
                     this.activeTypeLabel = projectConfiguration.getLabelForType(this.activeType); 
                 });
-                this.resourcesComponent.setSelected(<IdaiFieldDocument>document);
+                this.listingComponent.setSelected(<IdaiFieldDocument>document);
             });
         } else {
             this.activeDoc = null;
-            this.resourcesComponent.setSelected(null);
+            this.listingComponent.setSelected(null);
         }   
     }
 
     ngOnInit(): void {
 
-        this.resourcesComponent.getDocuments().subscribe(result => {
+        this.listingComponent.getDocuments().subscribe(result => {
            this.docs = result as IdaiFieldDocument[];
         });
 
@@ -108,7 +108,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             this.setEditMode(editMode);
 
             if (type) {
-                this.resourcesComponent.createNewDocument(type);
+                this.listingComponent.createNewDocument(type);
             } else {
                 this.setActiveDoc(id);
             }
@@ -119,7 +119,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
 
     private selectedDocIsNew() : boolean {
-        return (this.resourcesComponent.getSelected().resource.id == undefined);
+        return (this.listingComponent.getSelected().resource.id == undefined);
     }
 
     /**
@@ -129,9 +129,9 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
-            this.resourcesComponent.getSelected().resource.geometries = [ geometry ];
+            this.listingComponent.getSelected().resource.geometries = [ geometry ];
         } else if (geometry === null) { 
-            delete this.resourcesComponent.getSelected().resource.geometries;
+            delete this.listingComponent.getSelected().resource.geometries;
         }
 
         if (this.selectedDocIsNew()) {
@@ -145,7 +145,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         } else {
             
             if (geometry !== undefined) this.save();
-            this.router.navigate(['resources', {id: this.resourcesComponent.getSelected().resource.id}]);
+            this.router.navigate(['resources', {id: this.listingComponent.getSelected().resource.id}]);
         }
     }
     
@@ -156,19 +156,19 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
     private removeEmptyDocument() {
         
-        var selectedDocument = this.resourcesComponent.getSelected();
+        var selectedDocument = this.listingComponent.getSelected();
         if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometries) {
-            this.resourcesComponent.remove(selectedDocument);
+            this.listingComponent.remove(selectedDocument);
         }
     }
 
     private save() {
 
-        this.persistenceManager.setOldVersion(this.resourcesComponent.getSelected());
+        this.persistenceManager.setOldVersion(this.listingComponent.getSelected());
 
-        this.persistenceManager.persist(this.resourcesComponent.getSelected()).then(
+        this.persistenceManager.persist(this.listingComponent.getSelected()).then(
             () => {
-                this.resourcesComponent.getSelected()['synced'] = 0;
+                this.listingComponent.getSelected()['synced'] = 0;
             },
             err => { console.log(err); });
     }

@@ -3,13 +3,13 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 import {Messages} from "idai-components-2/messages";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ResourceEditCanDeactivateGuard} from "./resource-edit-can-deactivate-guard";
-import {ResourcesComponent} from "./resources.component";
+import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
+import {ListingComponent} from "./listing.component";
 import {EditNavigation} from '../common/edit-navigation';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './resource-edit-navigation.html'
+    templateUrl: './edit-navigation.html'
 })
 
 /**
@@ -19,7 +19,7 @@ import {EditNavigation} from '../common/edit-navigation';
  * 
  * @author Daniel de Oliveira
  */
-export class ResourceEditNavigationComponent
+export class EditNavigationComponent
     implements  EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
@@ -27,12 +27,12 @@ export class ResourceEditNavigationComponent
     modal: NgbModalRef;
 
     constructor(
-        private resourceComponent: ResourcesComponent,
+        private listingComponent: ListingComponent,
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
         private modalService:NgbModal,
-        private canDeactivateGuard:ResourceEditCanDeactivateGuard,
+        private canDeactivateGuard:EditCanDeactivateGuard,
         private documentEditChangeMonitor:DocumentEditChangeMonitor
     ) {
     }
@@ -58,18 +58,18 @@ export class ResourceEditNavigationComponent
         this.getRouteParams(
             (type) => {
                 this.mode = 'new';
-                this.resourceComponent.createNewDocument(type).then(doc=>{
+                this.listingComponent.createNewDocument(type).then(doc=>{
                     this.document = doc;
                 })
             },
             (id) => {
                 if (id == 'selected') {
                     this.mode = 'new';
-                    this.document = this.resourceComponent.getSelected();
+                    this.document = this.listingComponent.getSelected();
 
                 } else {
                     this.mode = 'edit';
-                    this.resourceComponent.loadDoc(id).then(
+                    this.listingComponent.loadDoc(id).then(
                         document => this.document = document);
                 }
             }
@@ -81,7 +81,7 @@ export class ResourceEditNavigationComponent
     }
 
     public goToOverview() {
-        this.resourceComponent.fetchDocuments();
+        this.listingComponent.fetchDocuments();
         this.router.navigate(['resources']);
     }
 
@@ -97,7 +97,7 @@ export class ResourceEditNavigationComponent
 
     public restore() : Promise<any> {
         return new Promise<any>((resolve,reject)=>{
-            this.resourceComponent.restore().then(
+            this.listingComponent.restore().then(
                 () => {
                     this.documentEditChangeMonitor.reset();
                     resolve();
@@ -123,7 +123,7 @@ export class ResourceEditNavigationComponent
             this.mode='edit';
             // doc must be reloaded so instance of this.document is
             // the same as the one in overviewComponent
-            this.resourceComponent.loadDoc(this.document.resource.id).then(
+            this.listingComponent.loadDoc(this.document.resource.id).then(
                 document=>this.document=document);
         }
     }

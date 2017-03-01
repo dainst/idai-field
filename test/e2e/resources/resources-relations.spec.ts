@@ -17,7 +17,6 @@ describe('relations', function() {
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
-
     it('should create a new relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         expect(resourcesPage.getRelationButtonText(0, 0, 0)).toEqual('1');
@@ -54,6 +53,16 @@ describe('relations', function() {
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
+        resourcesPage.clickSelectResource('1');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(0);
+        });
+    });
+
+    it('should delete inverse relations when deleting a resource', function() {
+        resourcesPage.performCreateLink();
+        resourcesPage.clickDeleteDocument();
+        resourcesPage.clickDeleteInModal();
         resourcesPage.clickSelectResource('1');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);

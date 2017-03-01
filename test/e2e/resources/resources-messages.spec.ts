@@ -1,6 +1,5 @@
-import {browser,protractor,element,by} from 'protractor';
-
-var resourcesPage = require('./resources.page');
+let resourcesPage = require('./resources.page');
+import {NavbarPage} from '../navbar.page';
 
 describe('resources/messages', function() {
 
@@ -10,7 +9,7 @@ describe('resources/messages', function() {
 
     it('should create a new object of first listed type ', function() {
         resourcesPage.performCreateResource('12');    
-        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('should show the success msg also on route change', function() {
@@ -19,17 +18,19 @@ describe('resources/messages', function() {
         resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
         
-        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     
     it('should warn if identifier is missing', function () {
         resourcesPage.performCreateResource('');
-        expect(resourcesPage.getMessageText()).toContain('identifier');
+
+        NavbarPage.awaitAlert('identifier',false)
     });
 
     it('should warn if an existing id is used', function() {
         resourcesPage.performCreateResource('12');
         resourcesPage.performCreateResource('12');
-        expect(resourcesPage.getMessageText()).toContain('existiert bereits');
+
+        NavbarPage.awaitAlert('existiert bereits',false);
     });
 });

@@ -137,13 +137,7 @@ var ResourcesPage = function() {
         return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
     };
 
-    this.getMessageText = function() {
-        browser.sleep(200);
-        browser.ignoreSynchronization = true;
-        var text =  element(by.id('message-0')).getText();
-        browser.ignoreSynchronization = false;
-        return text;
-    };
+
 
     this.getSelectedGeometryTypeText = function() {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);

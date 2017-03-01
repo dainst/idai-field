@@ -33,10 +33,6 @@ let ImportPage = function (){
         browser.wait(EC.presenceOf(this.getMessageEl(index)), delays.ECWaitTime);
         return this.getMessageEl(index).getText();
     };
-    this.awaitAlert = function (text) {
-        browser.wait(EC.presenceOf(element(by.xpath("//span[@class='content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
-        // return element(by.xpath("//div[@class='alert']//span[@class='content' and normalize-space(text())='"+text+"']")).getText();
-    };
     this.clickImportButton = function () {
         browser.wait(EC.visibilityOf(element(by.id('importButton'))), delays.ECWaitTime);
         return element(by.id('importButton')).click();

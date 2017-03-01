@@ -3,12 +3,12 @@ import {browser,protractor} from 'protractor';
 let common = require("../common.js");
 let importPage = require('./import.page');
 let resourcesPage = require('../resources/resources.page');
-let navbarPage = require('../navbar.page');
+import {NavbarPage} from '../navbar.page';
 let delays = require('../config/delays');
 
 let EC = protractor.ExpectedConditions;
 
-describe('import tests', function() {
+describe('import tests -- ', function() {
 
     beforeEach(function() {
         importPage.get();
@@ -27,8 +27,8 @@ describe('import tests', function() {
     it('importer should import a valid iDAI.field JSONL file via HTTP', function() {
         importIt("./test/test-data/importer-test-ok.jsonl");
         browser.sleep(2000);
+        NavbarPage.clickNavigateToResources();
 
-        navbarPage.clickNavigateToResources();
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
@@ -37,27 +37,27 @@ describe('import tests', function() {
 
     it('importer should import until a missing field definition is found', function() {
         importIt("./test/test-data/importer-test-missing-field-definition.jsonl");
-        importPage.awaitAlert('Fehlende Felddefinition für das Feld "a" der Ressource vom Typ "jedi".');
+        NavbarPage.awaitAlert('Fehlende Felddefinition',false);
+        NavbarPage.clickNavigateToResources();
 
-        navbarPage.clickNavigateToResources();
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
     });
 
     it('importer should import until a missing field definition is found', function() {
         importIt("./test/test-data/importer-test-invalid_json.jsonl");
-        importPage.awaitAlert('Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile 3 ist nicht valide.');
+        NavbarPage.awaitAlert('nicht valide',false);
+        NavbarPage.clickNavigateToResources();
 
-        navbarPage.clickNavigateToResources();
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
     });
 
     it('importer should import until a constraint violation is detected', function() {
         importIt("./test/test-data/importer-test-constraint-violation.jsonl");
-        importPage.awaitAlert('Beim Import ist ein Fehler aufgetreten: Ressourcen-Identifier obob2 existiert bereits.');
+        NavbarPage.awaitAlert('existiert bereits',false);
+        NavbarPage.clickNavigateToResources();
 
-        navbarPage.clickNavigateToResources();
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
     });

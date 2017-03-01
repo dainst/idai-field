@@ -1,5 +1,7 @@
-var resourcesPage = require('./resources.page');
-var documentViewPage = require('../widgets/document-view.page');
+import {NavbarPage} from '../navbar.page';
+
+let resourcesPage = require('./resources.page');
+let documentViewPage = require('../widgets/document-view.page');
 
 describe('relations', function() {
 
@@ -25,11 +27,11 @@ describe('relations', function() {
 
     it('should edit a resource that contains a relation', function() {
         resourcesPage.performCreateLink();
-        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         resourcesPage.clickFieldsTab();
         resourcesPage.typeInIdentifier('123');
         resourcesPage.clickSaveDocument();
-        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('should delete a relation and the corresponding inverse relation', function() {

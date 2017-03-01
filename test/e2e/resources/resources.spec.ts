@@ -1,4 +1,5 @@
 import {browser,protractor,element,by} from 'protractor';
+import {NavbarPage} from '../navbar.page';
 
 var resourcesPage = require('./resources.page');
 var EC = protractor.ExpectedConditions;
@@ -80,7 +81,7 @@ describe('resources', function() {
     it ('should save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSaveDocument();
-        expect(resourcesPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
     /**

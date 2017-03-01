@@ -9,7 +9,7 @@ describe('resources/messages', function() {
     });
 
     it('should create a new object of first listed type ', function() {
-        resourcesPage.performCreateResource('12');
+        resourcesPage.performCreateResource('12');    
         expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
 
@@ -18,7 +18,7 @@ describe('resources/messages', function() {
         resourcesPage.typeInIdentifier('34');
         resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
-        browser.sleep(500);
+        
         expect(resourcesPage.getMessageText()).toContain('erfolgreich');
     });
     

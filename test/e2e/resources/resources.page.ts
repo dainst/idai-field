@@ -128,7 +128,7 @@ var ResourcesPage = function() {
     };
 
     this.getMessageText = function() {
-        // browser.wait(EC.visibilityOf(element(by.id('message-0'))), delays.ECWaitTime);
+        browser.sleep(200);
         browser.ignoreSynchronization = true;
         var text =  element(by.id('message-0')).getText();
         browser.ignoreSynchronization = false;

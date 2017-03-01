@@ -53,6 +53,10 @@
     margin: 1px 0;
     font-size: 1em;
     padding: 10px 5px 10px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .list-group-item:hover {

@@ -1,3 +1,11 @@
+<template #deleteModal let-c="close">
+    <div class="modal-body">Möchten Sie die Ressource wirklich löschen?</div>
+    <div class="modal-footer">
+        <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
+        <button type="button" id="delete-images-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
+    </div>
+</template>
+
 <section id="document-edit-wrapper">
     <header>
         <h1 class="overview-document-heading">
@@ -11,6 +19,11 @@
                     id="document-edit-button-save-document"
                     style="float: right;"
                     (click)="save(true);">Speichern
+            </button>
+            <button *ngIf="showDeleteButton" class="btn btn-danger pull-right"
+                    id="document-edit-button-delete-document"
+                    style="float: right;"
+                    (click)="openDeleteModal(deleteModal);">Löschen
             </button>
             <span class="mdi mdi-blur"></span>
 
@@ -62,11 +75,8 @@
                         </ngb-tab>
                     </ngb-tabset>
 
-
-
                 </div>
             </div>
         </div>
     </main>
 </section>
-

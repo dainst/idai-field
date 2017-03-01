@@ -80,6 +80,11 @@ export class ResourceEditNavigationComponent
         this.router.navigate(['resources', { id: this.document.resource.id }]);
     }
 
+    public goToOverview() {
+        this.resourceComponent.fetchDocuments();
+        this.router.navigate(['resources']);
+    }
+
     /**
      * Discards changes of the document. Depending on whether it is a new or existing
      * object, it will either restore it or remove it from the list.
@@ -103,8 +108,6 @@ export class ResourceEditNavigationComponent
         });
     }
 
-
-
     /**
      * According to the current mode or the value of savedViaSaveButton,
      * initiates an appropriate route change.
@@ -123,6 +126,5 @@ export class ResourceEditNavigationComponent
             this.resourceComponent.loadDoc(this.document.resource.id).then(
                 document=>this.document=document);
         }
-
     }
 }

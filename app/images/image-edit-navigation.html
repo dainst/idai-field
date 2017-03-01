@@ -8,7 +8,8 @@
         <document-edit-wrapper #f
                 [(document)]="image.document"
                 (onSaveSuccess)="navigate($event);"
-                (onBackButtonClicked)="goBack();">
+                (onBackButtonClicked)="goBack();"
+                [showDeleteButton]="false">
         </document-edit-wrapper>
     </div>
 </div>

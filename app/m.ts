@@ -25,6 +25,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
+    public static OVERVIEW_DELETE_SUCCESS : string = 'overview/deletesuccess';
     public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
 
@@ -152,7 +153,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
-            content: 'Das Objekt wurde erfolgreich gespeichert.',
+            content: 'Die Ressource wurde erfolgreich gespeichert.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.OVERVIEW_DELETE_SUCCESS]={
+            content: 'Die Ressource wurde erfolgreich gelöscht.',
             level: 'success',
             params: [],
             hidden: false

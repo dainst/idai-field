@@ -27,8 +27,10 @@ export class DocumentEditWrapperComponent {
 
     @Input() document: IdaiFieldDocument;
     @Input() showBackButton: boolean = true;
+    @Input() showDeleteButton: boolean = true;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
+    @Output() onDeleteSuccess = new EventEmitter<any>();
     private projectImageTypes: any = {};
     private projectConfiguration: ProjectConfiguration;
 
@@ -59,8 +61,6 @@ export class DocumentEditWrapperComponent {
             }
         });
     }
-
-
 
     private getProjectImageTypes() {
         
@@ -130,5 +130,22 @@ export class DocumentEditWrapperComponent {
         }
 
         this.document.resource.relations["depictedIn"] = relations;
+    }
+
+    public openDeleteModal(modal) {
+
+        this.modalService.open(modal).result.then(result => {
+            if (result == 'delete') this.delete();
+        });
+    }
+
+    private delete() {
+
+        return this.persistenceManager.remove(this.document).then(
+            () => {
+                this.onDeleteSuccess.emit();
+                this.messages.add(M.OVERVIEW_DELETE_SUCCESS);
+            },
+            err => this.messages.add(err));
     }
 }

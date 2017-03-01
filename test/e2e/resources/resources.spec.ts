@@ -141,4 +141,14 @@ describe('resources', function() {
         resourcesPage.scrollUp();
         expect(resourcesPage.clickSelectObjectByIndex(0).getAttribute('class')).toContain('selected');
     });
+
+    it('should delete a resource', function() {
+        resourcesPage.performCreateResource('1');
+        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        resourcesPage.clickSelectResource('1');
+        resourcesPage.clickEditDocument();
+        resourcesPage.clickDeleteDocument();
+        resourcesPage.clickDeleteInModal();
+        browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
 });

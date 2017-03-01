@@ -51,6 +51,16 @@ var ResourcesPage = function() {
         element(by.id('document-edit-button-goto-view')).click();
     };
 
+    this.clickDeleteDocument = function() {
+        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-delete-document'))), delays.ECWaitTime);
+        element(by.id('document-edit-button-delete-document')).click();
+    };
+
+    this.clickDeleteInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('delete-resource-confirm'))), delays.ECWaitTime);
+        element(by.id('delete-resource-confirm')).click();
+    };
+
     this.clickChooseTypeFilter = function(typeIndex) {
 
         browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);

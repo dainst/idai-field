@@ -119,7 +119,7 @@ export class ResourcesComponent {
      */
     public fetchDocuments(query: Query) {
 
-        return this.datastore.find(query).then(documents => {
+        return this.datastore.find(query.q, query.types, true).then(documents => {
             this.documents = documents as Document[];
             this.notify();
         }).catch(err => console.error(err));

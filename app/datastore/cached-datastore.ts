@@ -49,16 +49,24 @@ export class CachedDatastore implements IdaiFieldDatastore {
         return this.datastore.get(id);
     }
 
-    find(query: Query, fieldName?: string): Promise<Document[] | string> {
-        return this.datastore.find(query,fieldName).then(result => {
-            return Promise.resolve(this.replaceAllWithCached(result));
-        });
+    find(query:string='',
+                sets?:string[],
+                prefix:boolean=false,
+                offset?:number,
+                limit?:number):Promise<Document[]> {
+
+        return this.datastore.find(query,sets,prefix,offset,limit)
+            .then(result => this.replaceAllWithCached(result));
     }
 
     findByIdentifier(identifier: string): Promise<Document> {
-        return this.datastore.findByIdentifier(identifier).then(result => {
-            return Promise.resolve(this.replaceWithCached(result));
-        });
+        return this.datastore.findByIdentifier(identifier)
+            .then(result => this.replaceWithCached(result));
+    }
+
+    all(sets?:string[], offset?:number, limit?:number): Promise<Document[]|string> {
+        return this.datastore.all(sets, offset, limit)
+            .then(result => this.replaceAllWithCached(result));
     }
 
     private replaceAllWithCached(results) {
@@ -76,10 +84,6 @@ export class CachedDatastore implements IdaiFieldDatastore {
             return this.documentCache[result.resource.id];
         else
             return this.documentCache[result.resource.id] = result;
-    }
-
-    all(): Promise<Document[]|string> {
-        return this.datastore.all();
     }
 
     refresh(doc: Document): Promise<Document|string> {

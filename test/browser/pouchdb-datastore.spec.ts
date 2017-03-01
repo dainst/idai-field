@@ -59,7 +59,7 @@ export function main() {
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({q:'sd1',types:undefined}))
+                .then(() => datastore.find('sd1'))
                 .then(
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('sd1');
@@ -95,7 +95,7 @@ export function main() {
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
-                .then(() => datastore.find({q:'bla'}))
+                .then(() => datastore.find('bla'))
                 .then(
                     result => {
                         // expect(result.length).toBe(2); TODO fix it
@@ -135,7 +135,7 @@ export function main() {
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find({q:'blub',types:['type2','type3']}))
+                .then(() => datastore.find('blub', ['type2','type3']))
                 .then(
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('bla');

@@ -3,8 +3,8 @@ import {Routes, RouterModule} from "@angular/router";
 import {ImagesComponent} from "./images.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
-import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
-import {ImageEditCanDeactivateGuard} from "./image-edit-can-deactivate-guard";
+import {EditNavigationComponent} from "./edit-navigation.component";
+import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
 
 const routes: Routes = [
     {
@@ -21,8 +21,8 @@ const routes: Routes = [
             },
             {
                 path: ':id/edit',
-                component: ImageEditNavigationComponent,
-                canDeactivate: [ImageEditCanDeactivateGuard]
+                component: EditNavigationComponent,
+                canDeactivate: [EditCanDeactivateGuard]
             }
         ]
     }

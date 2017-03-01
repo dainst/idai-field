@@ -5,12 +5,12 @@ import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ImageEditCanDeactivateGuard} from "./image-edit-can-deactivate-guard";
+import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
 import {EditNavigation} from "../common/edit-navigation";
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-edit-navigation.html'
+    templateUrl: './edit-navigation.html'
 })
 
 /**
@@ -20,7 +20,7 @@ import {EditNavigation} from "../common/edit-navigation";
  *
  * @author Daniel de Oliveira
  */
-export class ImageEditNavigationComponent 
+export class EditNavigationComponent
     extends ImageComponentBase 
     implements EditNavigation, OnInit {
 
@@ -31,7 +31,7 @@ export class ImageEditNavigationComponent
     constructor(
         private router: Router,
         private modalService:NgbModal,
-        private canDeactivateGuard:ImageEditCanDeactivateGuard,
+        private canDeactivateGuard:EditCanDeactivateGuard,
         route: ActivatedRoute,
         datastore: Datastore,
         mediastore: Mediastore,

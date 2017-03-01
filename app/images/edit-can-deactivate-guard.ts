@@ -3,21 +3,21 @@ import { CanDeactivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot }  from '@angular/router';
 import {DocumentEditChangeMonitor} from "idai-components-2/documents";
-import { ImageEditNavigationComponent } from './image-edit-navigation.component';
+import { EditNavigationComponent } from './edit-navigation.component';
 import { CanDeactivateGuardBase} from '../common/can-deactivate-guard-base';
 
 /**
  * @author Daniel de Oliveira
  */
 @Injectable()
-export class ImageEditCanDeactivateGuard
+export class EditCanDeactivateGuard
     extends CanDeactivateGuardBase
-    implements CanDeactivate<ImageEditNavigationComponent> {
+    implements CanDeactivate<EditNavigationComponent> {
 
     constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) {super();}
     
     canDeactivate(
-        component: ImageEditNavigationComponent,
+        component: EditNavigationComponent,
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Promise<boolean> | boolean {

@@ -13,17 +13,23 @@
             <button *ngIf="showBackButton" class="btn btn-primary"
                     id="document-edit-button-goto-view"
                     style="float: right;"
-                    (click)="onBackButtonClicked.emit();">Zur Ansicht
+                    (click)="onBackButtonClicked.emit();">
+                <span class="mdi mdi-arrow-left"></span>
+                <span class="button-label">Zur Ansicht</span>
             </button>
             <button class="btn btn-primary pull-right"
                     id="document-edit-button-save-document"
                     style="float: right;"
-                    (click)="save(true);">Speichern
+                    (click)="save(true);">
+                <span class="mdi mdi-content-save"></span>
+                <span class="button-label">Speichern</span>
             </button>
             <button *ngIf="showDeleteButton" class="btn btn-danger pull-right"
                     id="document-edit-button-delete-document"
                     style="float: right;"
-                    (click)="openDeleteModal(deleteModal);">Löschen
+                    (click)="openDeleteModal(deleteModal);">
+                <span class="mdi mdi-delete"></span>
+                <span class="button-label">Löschen</span>
             </button>
             <span class="mdi mdi-blur"></span>
 

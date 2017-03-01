@@ -16,13 +16,18 @@
     border-bottom: 1px solid #ccc;
   }
 
-  .overview-document-heading .mdi {
+  .overview-document-heading .mdi-blur {
     display: inline-block;
     font-size: 1.1em;
     color: #fff;
     background-color: #007883;
     padding: 10px 10px 10px 11px;
     margin-right: 5px;
+  }
+
+  .mdi-arrow-left {
+    margin-left: -5px;
+    margin-right: -3px;
   }
 
   header h1 {
@@ -45,6 +50,8 @@
 
   #document-edit-button-save-document:active,
   #document-edit-button-save-document:focus,
+  #document-edit-button-delete-document:active,
+  #document-edit-button-delete-document:focus,
   #document-edit-button-goto-view:active,
   #document-edit-button-goto-view:focus,
   #document-view-button-edit-document:active,
@@ -54,12 +61,14 @@
     outline: none;
   }
 
+  #document-edit-button-delete-document:focus,
   #document-edit-button-save-document:focus,
   #document-edit-button-goto-view:focus {
     background-color: #ddd;
   }
 
   #document-edit-button-save-document,
+  #document-edit-button-delete-document,
   #document-edit-button-goto-view {
     margin-right: 7px;
     margin-top: 7px;
@@ -67,6 +76,11 @@
     border-radius: 2px;
     box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.3);
     color: #555;
+  }
+
+  .button-label {
+    display: inline-block;
+    margin-left: 5px;
   }
 
   .choose-geometry-icon {

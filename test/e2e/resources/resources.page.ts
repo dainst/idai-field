@@ -79,7 +79,7 @@ var ResourcesPage = function() {
     };
 
     this.clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
-        browser.wait(EC.visibilityOf(element(by.css('.suggestion'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
         this.getRelationEl(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };

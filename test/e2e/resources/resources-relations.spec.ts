@@ -1,5 +1,3 @@
-import {browser,protractor,element,by} from 'protractor';
-
 var resourcesPage = require('./resources.page');
 var documentViewPage = require('../widgets/document-view.page');
 

@@ -1,8 +1,10 @@
 import {browser,protractor,element,by} from 'protractor';
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
 
 'use strict';
 
-var ImportPage = function (){
+let ImportPage = function (){
     this.getSourceOptions = function() {
         return element(by.id('importSourceSelect')).all(by.css('select option'));
     };
@@ -24,19 +26,23 @@ var ImportPage = function (){
     this.getImportURLInput = function () {
         return element(by.id('importUrlInput'));
     };
-    this.getMessageElement = function (index) {
+    this.getMessageEl = function (index) {
         return element(by.id('message-' + index));
     };
     this.getMessageText = function (index) {
-        return this.getMessageElement(index).getText();
+        browser.wait(EC.presenceOf(this.getMessageEl(index)), delays.ECWaitTime);
+        return this.getMessageEl(index).getText();
     };
-    this.getFirstAlertText = function () {
-        return element.all(by.className('alert')).get(-1).getText();
-    }
+    this.awaitAlert = function (text) {
+        browser.wait(EC.presenceOf(element(by.xpath("//span[@class='content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
+        // return element(by.xpath("//div[@class='alert']//span[@class='content' and normalize-space(text())='"+text+"']")).getText();
+    };
     this.clickImportButton = function () {
+        browser.wait(EC.visibilityOf(element(by.id('importButton'))), delays.ECWaitTime);
         return element(by.id('importButton')).click();
     };
     this.clickStartImportButton = function () {
+        browser.wait(EC.visibilityOf(element(by.id('importStartButton'))), delays.ECWaitTime);
         return element(by.id('importStartButton')).click();
     };
     this.get = function () {

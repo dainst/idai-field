@@ -24,11 +24,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDFIELD: string = 'importer/failure/invalidfield';
     public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
+
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static OVERVIEW_DELETE_SUCCESS : string = 'overview/deletesuccess';
-    public static DATASTORE_IDEXISTS : string = 'datastore/idexists'; // TODO remove
-    public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
 
+    public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
@@ -164,14 +164,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.DATASTORE_IDEXISTS]={
-            content: 'Objekt-Identifier existiert bereits.',
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
-            content: 'Beim Speichern des Objekts ist ein Fehler aufgetreten.',
+            content: 'Beim Speichern des Dokumentes ist ein Fehler aufgetreten.',
             level: 'danger',
             params: [],
             hidden: false

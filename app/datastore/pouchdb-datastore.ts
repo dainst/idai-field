@@ -98,9 +98,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(()=> {
-                if (document.id != undefined) return Promise.reject("Aborting creation: Object already has an ID. " +
-                    "Maybe you wanted to update the object with update()?");
+                if (document.id != undefined) {
+                    console.error('Aborting creation: document.id already exists. Maybe you wanted to update the object with update()?');
+                    return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                }
                 document.id = IdGenerator.generateId();
+
                 if (!document['resource']['id']) {
                     document['resource']['id'] = document.id;
                 }

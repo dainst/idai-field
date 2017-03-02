@@ -10,7 +10,7 @@ export interface Parser {
 
     /**
      * Parses content to extract documents.
-     * @param content
+     * @param content, a msgWithParams for each problem occured during parsing.
      */
     parse(content:string): Observable<ParserResult>;
 }

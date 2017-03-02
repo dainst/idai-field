@@ -78,11 +78,8 @@ export class Importer {
                         this.importReport.parser_info.push(result.messages[i]);
                     }
 
-                    if (!this.inUpdateDocumentLoop) {
-                        this.update(result.document);
-                    } else {
-                        this.docsToUpdate.push(result.document);
-                    }
+                    if (!this.inUpdateDocumentLoop) this.update(result.document);
+                    else this.docsToUpdate.push(result.document);
 
                 }, msgWithParams => {
 
@@ -133,12 +130,8 @@ export class Importer {
                 } else {
                     this.finishImport();
                 }
-            }, error => {
-                this.importReport['errors'].push({
-                    msg: error,
-                    doc: doc
-                });
-
+            }, keyOfMOrMsg => {
+                this.importReport['errors'].push([keyOfMOrMsg]);
                 this.currentImportWithError = true;
                 this.finishImport();
             });

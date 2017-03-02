@@ -87,7 +87,7 @@ describe('resources', function() {
     });
 
     /**
-     * There has been a bug where this was not possible due to a broken datastore implementation.
+     * There has been a bug where this was not possible due to a faulty datastore implementation.
      */
     it ('should restore a document properly', function() {
         resourcesPage.performCreateResource('old');

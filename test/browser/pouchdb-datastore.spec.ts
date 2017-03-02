@@ -53,7 +53,7 @@ export function main() {
             }
         );
 
-        fit('should create a document and take the existing resource.id',
+        it('should create a document and take the existing resource.id',
             function (done) {
 
                 let docToCreate: Document = doc('id1');

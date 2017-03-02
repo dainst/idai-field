@@ -87,6 +87,20 @@ describe('resources', function() {
     });
 
     /**
+     * There has been a bug where this was not possible due to a broken datastore implementation.
+     */
+    it ('should restore a document properly', function() {
+        resourcesPage.performCreateResource('old');
+        resourcesPage.performCreateResource('2');
+        resourcesPage.clickSelectResource('old');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInIdentifier('new');
+        resourcesPage.clickSelectResource('2');
+        resourcesPage.clickDiscardInModal();
+        expect(resourcesPage.getListItemIdentifierText(1)).toEqual('old');
+    });
+
+    /**
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
@@ -101,7 +115,7 @@ describe('resources', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
         resourcesPage.scrollUp();
         resourcesPage.clickSelectResource('1');
-        expect(resourcesPage.getFirstListItemIdentifierText()).toEqual('1');
+        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
     });
 
     it ('should change the selection to new when saving via modal', function() {

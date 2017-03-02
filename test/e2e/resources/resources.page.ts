@@ -91,8 +91,8 @@ let ResourcesPage = function() {
 
     // get text
 
-    this.getFirstListItemIdentifierText = function() {
-        return element.all(by.css('#objectList .list-group-item .identifier')).first().getText();
+    this.getListItemIdentifierText = function(itemNr) {
+        return element.all(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier')).first().getText();
     };
 
     this.getSelectedGeometryTypeText = function() {

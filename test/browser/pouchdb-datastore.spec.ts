@@ -35,6 +35,45 @@ export function main() {
             }
         );
 
+        fit('should create a document and create a resource.id',
+            function (done) {
+
+                datastore.create(doc('id1'))
+                    .then(
+                    _createdDoc => {
+                        let createdDoc = _createdDoc as Document;
+                        expect(createdDoc.resource.id).not.toBe(undefined);
+                        done();
+                    },
+                    err => {
+                        fail();
+                        done();
+                    }
+                );
+            }
+        );
+
+        fit('should create a document and take the existing resource.id',
+            function (done) {
+
+                let docToCreate: Document = doc('id1');
+                docToCreate.resource.id = 'a1';
+
+                datastore.create(docToCreate)
+                    .then(
+                        _createdDoc => {
+                            let createdDoc = _createdDoc as Document;
+                            expect(createdDoc.resource.id).toBe('a1');
+                            done();
+                        },
+                        err => {
+                            fail();
+                            done();
+                        }
+                    );
+            }
+        );
+
         it('should update an existing document with no identifier conflict',
             function (done) {
 

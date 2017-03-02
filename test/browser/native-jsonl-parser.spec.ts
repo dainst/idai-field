@@ -25,7 +25,6 @@ export function main() {
             }, () => {
                 expect(objects[0]['resource']['id']).toEqual("id1");
                 expect(objects[0]['resource']['type']).toEqual("object");
-                expect(objects[0]['id']).toEqual("id1");
                 expect(objects[2]['resource'].title).toEqual("Obi-Three Kenobi");
                 expect(objects.length).toEqual(3);
                 done();

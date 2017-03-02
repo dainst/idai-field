@@ -125,6 +125,24 @@ export function main() {
             }
         );
 
+        it('should reject with keyOfM in when trying to get a non existing document',
+            function (done) {
+
+                datastore.create(doc('id1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
+                    .then(() => datastore.get('nonexisting'))
+                    .then(
+                        () => {
+                            fail();
+                            done();
+                        },
+                        err => {
+                            expect(err).toBe(M.DATASTORE_NOT_FOUND);
+                            done();
+                        }
+                    );
+            }
+        );
+
         it('should find with filterSet undefined', function(done){
             let doc1 = doc('sd1');
 

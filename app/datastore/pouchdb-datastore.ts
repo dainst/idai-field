@@ -216,11 +216,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link ReadDatastore#get}.
      *
-     * @param id
+     * @param resourceId
      * @returns {any}
      */
-    public get(id: string): Promise<Document|string> {
-        return this.fetchObject(id);
+    public get(resourceId: string): Promise<Document|string> {
+        return this.fetchObject(resourceId);
     }
 
     /**
@@ -332,7 +332,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private fetchObject(id: string): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
-        return this.db.get(id);
+        return this.db.get(id).catch(err => Promise.reject(M.DATASTORE_NOT_FOUND))
     }
 
     private docsFromResult(result: any[]): Document[] {

@@ -95,23 +95,22 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @param initial
      * @returns {Promise<Document|string>} same instance of the document or error message
      */
-    public create(document: any, initial: boolean = false): Promise<Document|string> {
+    public create(document: Document, initial: boolean = false): Promise<Document|string> {
 
         let reset = this.resetDocOnErrInCreate(document.resource.id);
 
         return this.updateReadyForQuery(initial)
             .then(()=> {
 
-                if (document.id != undefined) {
-                    console.error('Aborting creation: document.id already exists. Maybe you wanted to update the object with update()?');
+                if (document['id']||document['_id']) {
+                    console.error(PouchdbDatastore.MSG_ID_EXISTS_IN_CREATE);
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
 
-                document.id = IdGenerator.generateId();
+                document['id'] = IdGenerator.generateId();
 
-                if (!document['resource']['id']) {
-                    document['resource']['id'] = document.id;
-                }
+                if (!document.resource.id) document.resource.id = document['id'];
+
                 document.created = new Date();
                 document.modified = document.created;
                 document['_id'] = document['id'];
@@ -131,6 +130,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return Promise.reject(err);
             })
     }
+
+    private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
+        'Maybe you wanted to update the object with update()?';
 
     private resetDocOnErrInCreate(originalResourceId:string) {
         return function(document:Document) {

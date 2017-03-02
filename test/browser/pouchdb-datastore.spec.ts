@@ -95,7 +95,7 @@ export function main() {
             }
         );
 
-        it('should find with filterSet undefined',function(done){
+        it('should find with filterSet undefined', function(done){
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
@@ -112,7 +112,7 @@ export function main() {
                 );
         });
 
-        it('should not find with query undefined',function(done){
+        it('should not find with query undefined', function(done){
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
@@ -129,7 +129,7 @@ export function main() {
                 );
         });
 
-        it('should find with prefix query undefined',function(done){
+        it('should find with prefix query undefined', function(done){
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
@@ -146,7 +146,7 @@ export function main() {
                 );
         });
 
-        it('should match all fields',function(done){
+        it('should match all fields', function(done){
             let doc1 = doc('bla','blub');
             let doc2 = doc('blub','bla');
 
@@ -165,7 +165,7 @@ export function main() {
                 );
         });
 
-        it('should find by identifier',function(done){
+        it('should find by identifier', function(done){
             let doc1 = doc('bla','blub');
             let doc2 = doc('blub','bla');
 
@@ -184,7 +184,7 @@ export function main() {
                 );
         });
 
-        it('should filter by one type in find',function(done){
+        it('should filter by one type in find', function(done){
             let doc1 = doc('bla1','blub','type1');
             let doc2 = doc('bla2','blub','type2');
             let doc3 = doc('bla3','blub','type3');
@@ -207,7 +207,7 @@ export function main() {
                 );
         });
 
-        it('should filter by several types in find',function(done){
+        it('should filter by several types in find', function(done){
             let doc1 = doc('bla1','blub','type1');
             let doc2 = doc('bla2','blub','type2');
             let doc3 = doc('bla3','blub','type3');
@@ -232,7 +232,7 @@ export function main() {
                 );
         });
 
-        it('should find by prefix query and filter',function(done){
+        it('should find by prefix query and filter', function(done){
             let doc1 = doc('bla1','blub1','type1');
             let doc2 = doc('bla2','blub2','type2');
             let doc3 = doc('bla3','blub3','type3');
@@ -255,6 +255,31 @@ export function main() {
                         done();
                     },
                     err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should show all sorted by lastModified', function(done){
+            let doc1 = doc('bla1','blub1','type1');
+            let doc2 = doc('bla2','blub2','type2');
+            let doc3 = doc('bla3','blub3','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.all())
+                .then(
+                    result => {
+                        expect(result.length).toBe(3);
+                        expect(result[0].resource['shortDescription']).toBe('bla3');
+                        expect(result[1].resource['shortDescription']).toBe('bla2');
+                        expect(result[2].resource['shortDescription']).toBe('bla1');
+                        done();
+                    },
+                    err => {
+                        console.log(err);
                         fail(err);
                         done();
                     }

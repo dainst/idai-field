@@ -3,6 +3,7 @@ import {Document} from "idai-components-2/core";
 
 /**
  * @author Daniel de Oliveira
+ * @author Sebastian Cuy
  */
 export function main() {
     describe('PouchdbDatastore', () => {
@@ -72,11 +73,28 @@ export function main() {
                 );
         });
 
-        it('should find with query undefined',function(done){
+        it('should not find with query undefined',function(done){
             let doc1 = doc('sd1');
 
             datastore.create(doc1)
                 .then(() => datastore.find(undefined))
+                .then(
+                    result => {
+                        expect(result.length).toBe(0);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should find with prefix query undefined',function(done){
+            let doc1 = doc('sd1');
+
+            datastore.create(doc1)
+                .then(() => datastore.find(undefined, undefined, true))
                 .then(
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('sd1');
@@ -98,7 +116,7 @@ export function main() {
                 .then(() => datastore.find('bla'))
                 .then(
                     result => {
-                        // expect(result.length).toBe(2); TODO fix it
+                        expect(result.length).toBe(2);
                         done();
                     },
                     err => {
@@ -108,7 +126,7 @@ export function main() {
                 );
         });
 
-        it('should find in identifier',function(done){
+        it('should find by identifier',function(done){
             let doc1 = doc('bla','blub');
             let doc2 = doc('blub','bla');
 
@@ -127,10 +145,33 @@ export function main() {
                 );
         });
 
-        it('should find in identifier',function(done){
-            let doc1 = doc('bla','blub','type1');
-            let doc2 = doc('bla','blub','type2');
-            let doc3 = doc('bla','blub','type3');
+        it('should filter by one type in find',function(done){
+            let doc1 = doc('bla1','blub','type1');
+            let doc2 = doc('bla2','blub','type2');
+            let doc3 = doc('bla3','blub','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find('blub', ['type3']))
+                .then(
+                    result => {
+                        expect(result.length).toBe(1);
+                        expect(result[0].resource['shortDescription']).toBe('bla3');
+                        expect(result[0].resource.type).toBe('type3');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter by several types in find',function(done){
+            let doc1 = doc('bla1','blub','type1');
+            let doc2 = doc('bla2','blub','type2');
+            let doc3 = doc('bla3','blub','type3');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -138,11 +179,36 @@ export function main() {
                 .then(() => datastore.find('blub', ['type2','type3']))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('bla');
-                        expect(result[0].resource.type).not.toBe('type1');
-                        expect(result[1].resource['shortDescription']).toBe('bla');
-                        expect(result[1].resource.type).not.toBe('type1');
                         expect(result.length).toBe(2);
+                        expect(result[0].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[0].resource.type).not.toBe('type1');
+                        expect(result[1].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[1].resource.type).not.toBe('type1');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should find by prefix query and filter',function(done){
+            let doc1 = doc('bla1','blub1','type1');
+            let doc2 = doc('bla2','blub2','type2');
+            let doc3 = doc('bla3','blub3','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find('blub', ['type2','type3'], true))
+                .then(
+                    result => {
+                        expect(result.length).toBe(2);
+                        expect(result[0].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[0].resource.type).not.toBe('type1');
+                        expect(result[1].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[1].resource.type).not.toBe('type1');
                         done();
                     },
                     err => {

@@ -40,9 +40,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     map: "function mapFun(doc) {" +
                         "if (doc.resource.shortDescription) " +
                             "doc.resource.shortDescription.split(/[\\.;,\\- ]+/).forEach(function(token) { "+
-                                "emit(token.toLowerCase());" +
+                                "emit(['', token.toLowerCase()]);" +
+                                "emit([doc.resource.type, token.toLowerCase()]);" +
                             "});" +
-                        "if (doc.resource.identifier) emit(doc.resource.identifier.toLowerCase())" +
+                        "if (doc.resource.identifier) {" +
+                            "emit(['', doc.resource.identifier.toLowerCase()]);" +
+                            "emit([doc.resource.type, doc.resource.identifier.toLowerCase()]);" +
+                        "}" +
                     "}"
                 }
             });
@@ -205,26 +209,51 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link ReadDatastore#find}.
      */
     public find(query:string='',
-                sets?:string[],
+                sets:string[]=[''],
                 prefix:boolean=false,
                 offset:number=0,
                 limit:number=-1):Promise<Document[]> {
+
+        console.log("query", query);
+        console.log("set", sets);
+
+        let promises = sets
+            .map(set => this.queryForSet(query, set, prefix, offset, limit));
+
+        return Promise.all(promises)
+            .then(results => {
+                let result = results.reduce((acc, val) => {
+                    return acc.concat(val);
+                }, []);
+                return this.filterResult(result);
+            });
+    }
+
+    private queryForSet(query:string, set:string, prefix:boolean, offset:number,
+                        limit:number):Promise<Document[]> {
 
         let opt = {
             reduce: false,
             include_docs: true,
         };
-        opt['startKey'] = query.toLowerCase();
-        opt['endKey'] = prefix ? opt['startKey'] + '\uffff' : opt['startKey'];
+        let q = query.toLowerCase();
+        opt['startkey'] = [set, q];
+        let endKey = prefix ? q + '\uffff' : q;
+        opt['endkey'] = [set, endKey];
         // performs poorly according to PouchDB documentation
         // could be replaced by using startKey instead
         // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
         if (offset) opt['skip'] = offset;
         if (limit > -1) opt['limit'] = limit;
 
+        console.log("query", opt);
         return this.readyForQuery
             .then(() => this.db.query('fulltext', opt))
-            .then(result => this.filterResult(result, sets));
+            .then(result => {
+                result.rows.forEach(row => console.log("key", row.key));
+                let docs = this.docsFromResult(result);
+                return docs;
+            });
     }
 
     public findByIdentifier(identifier: string): Promise<Document> {
@@ -257,33 +286,28 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(() => this.db.allDocs(opt))
-            .then(result => this.filterResult(result, sets));
+            .then(result => this.docsFromResult(result));
     }
 
     private fetchObject(id: string): Promise<Document> {
         return this.db.get(id);
     }
 
-    private filterResult(result: any[], types: string[]): Document[] {
-        // only return every doc once by using Set
-        let docs: Set<Document> = new Set<Document>();
-        result['rows'].forEach(row => {
-            if(this.resourceMatchesTypes(types, row.doc)) docs.add(row.doc);
-        });
-        return Array.from(docs);
+    private docsFromResult(result: any[]): Document[] {
+        return result['rows'].map(row => row.doc);
     }
 
-    private resourceMatchesTypes(types: string[], doc: Document): boolean {
-
-        if (!doc.resource) return false;
-        if (!types || types.length == 0) return true;
-
-        let match = false;
-        for (let type of types) {
-            if (!type) continue;
-            if (doc.resource.type == type) match = true;
-        }
-        return match;
+    // only return every doc once by using Set
+    private filterResult(docs: Document[]): Document[] {
+        let set: Set<string> = new Set<string>();
+        let filtered = [];
+        docs.forEach(doc => {
+            if (!set.has(doc.resource.id)) {
+                set.add(doc.resource.id);
+                filtered.push(doc);
+            }
+        });
+        return filtered;
     }
 
     private notifyObserversOfObjectToSync(document:Document): void {

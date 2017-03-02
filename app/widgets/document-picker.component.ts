@@ -41,7 +41,7 @@ export class DocumentPickerComponent {
 
             this.query.types = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
 
-            this.datastore.find(query.q, query.types).then(documents => {
+            this.datastore.find(query.q, query.types, true).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
             }).catch(err => console.error(err));
         })

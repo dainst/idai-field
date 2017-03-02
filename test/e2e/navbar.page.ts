@@ -22,10 +22,10 @@ export class NavbarPage {
 
     public static awaitAlert (text,matchExactly=true) {
         if (matchExactly) {
-            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
         }
         else {
-            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='content' and contains(text(),'"+text+"')]"))), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and contains(text(),'"+text+"')]"))), delays.ECWaitTime);
         }
     };
 

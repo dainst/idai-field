@@ -93,7 +93,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link Datastore#create}.
      * @param document
      * @param initial
-     * @returns {Promise<Document|string>} same instance of the document or error message
+     * @returns {Promise<Document|string>} same instance of the document | error key
      */
     public create(document: Document, initial: boolean = false): Promise<Document|string> {
 
@@ -115,7 +115,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document.modified = document.created;
                 document['_id'] = document['id'];
 
-                return this.db.put(document);
+                return this.db.put(document).catch(
+                    err => {
+                        console.error(err);
+                        return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                    }
+                )
             })
             .then(result => {
 
@@ -123,11 +128,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document['_rev'] = result['rev'];
                 return Promise.resolve(document);
 
-            }).catch(err => {
+            }).catch(keyOfM => {
 
                 reset(document);
-                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
-                return Promise.reject(err);
+                return Promise.reject(keyOfM);
             })
     }
 
@@ -156,17 +160,25 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link Datastore#update}.
      * @param document
-     * @returns {Promise<Document|string>} same instance of the document or error message
+     * @returns {Promise<Document|string>} same instance of the document | error key
      */
     public update(document:Document): Promise<Document|string> {
 
         return this.readyForQuery
             .then(()=> {
-                if (document['id'] == null) return Promise.reject("Aborting update: No ID given. " +
-                    "Maybe you wanted to create the object with create()?");
+                if (document['id'] == null) {
+                    console.error("Aborting update: No ID given. " +
+                        "Maybe you wanted to create the object with create()?");
+                    return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                }
                 document.modified = new Date();
 
-                return this.db.put(document)
+                return this.db.put(document).catch(
+                    err => {
+                        console.error(err);
+                        return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                    }
+                )
 
             }).then(result => {
 
@@ -174,10 +186,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document['_rev'] = result['rev'];
                 return Promise.resolve(document);
 
-            }).catch(err => {
-                if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
-
-                return Promise.reject(err)
+            }).catch(keyOfM => {
+                // TODO reset modified date
+                return Promise.reject(keyOfM)
             })
     }
 
@@ -308,7 +319,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private fetchObject(id: string): Promise<Document> {
-        return this.db.get(id);
+        return this.db.get(id).then(result=>{
+            return Promise.resolve(result)
+        })
     }
 
     private docsFromResult(result: any[]): Document[] {

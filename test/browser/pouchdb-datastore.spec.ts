@@ -143,6 +143,26 @@ export function main() {
             }
         );
 
+        it('should reject with keyOfM in when trying to refresh a non existing document',
+            function (done) {
+
+                let non = doc('sd2');
+
+                datastore.create(doc('id1'))
+                    .then(() => datastore.refresh(non))
+                    .then(
+                        () => {
+                            fail();
+                            done();
+                        },
+                        err => {
+                            expect(err).toBe(M.DATASTORE_NOT_FOUND);
+                            done();
+                        }
+                    );
+            }
+        );
+
         it('should find with filterSet undefined', function(done){
             let doc1 = doc('sd1');
 

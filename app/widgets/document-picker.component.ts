@@ -21,7 +21,7 @@ export class DocumentPickerComponent {
         private configLoader: ConfigLoader
 
     ) {
-        this.query = {q: '', types: []};
+        this.query = {q: '', types: [], prefix: true};
     }
 
     public queryChanged(query: Query) {
@@ -41,7 +41,7 @@ export class DocumentPickerComponent {
 
             this.query.types = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
 
-            this.datastore.find(query.q, query.types, true).then(documents => {
+            this.datastore.find(query).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
             }).catch(err => console.error(err));
         })

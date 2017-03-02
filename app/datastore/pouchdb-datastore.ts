@@ -208,17 +208,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link ReadDatastore#find}.
      */
-    public find(query:string='',
-                sets:string[]=[''],
-                prefix:boolean=false,
+    public find(query: Query,
                 offset:number=0,
                 limit:number=-1):Promise<Document[]> {
 
-        console.log("query", query);
-        console.log("set", sets);
+        if (!query) return Promise.resolve([]);
+
+        let q = query.q ? query.q : '';
+        let sets = query.types ? query.types : [''];
 
         let promises = sets
-            .map(set => this.queryForSet(query, set, prefix, offset, limit));
+            .map(set => this.queryForSet(q, set, query.prefix, offset, limit));
 
         return Promise.all(promises)
             .then(results => {
@@ -246,14 +246,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (offset) opt['skip'] = offset;
         if (limit > -1) opt['limit'] = limit;
 
-        console.log("query", opt);
         return this.readyForQuery
             .then(() => this.db.query('fulltext', opt))
-            .then(result => {
-                result.rows.forEach(row => console.log("key", row.key));
-                let docs = this.docsFromResult(result);
-                return docs;
-            });
+            .then(result => this.docsFromResult(result));
     }
 
     public findByIdentifier(identifier: string): Promise<Document> {

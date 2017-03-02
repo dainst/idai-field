@@ -43,7 +43,7 @@ export function main() {
                 let doc1 = doc('sd1');
 
                 datastore.create(doc1)
-                    .then(() => datastore.find('sd1'))
+                    .then(() => datastore.find({q: 'sd1'}))
                     .then(
                         result => {
                             doc1.resource['shortDescription'] = 's4';

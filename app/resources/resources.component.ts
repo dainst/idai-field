@@ -41,7 +41,7 @@ export class ResourcesComponent {
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.defaultTypes = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
-            this.query = {q: '', types: this.defaultTypes};
+            this.query = {q: '', types: this.defaultTypes, prefix: true};
             this.fetchDocuments().then(()=>{
                readyResolveFun();
             });
@@ -119,7 +119,7 @@ export class ResourcesComponent {
      */
     public fetchDocuments(query: Query = this.query) {
 
-        return this.datastore.find(query.q, query.types, true).then(documents => {
+        return this.datastore.find(query).then(documents => {
             this.documents = documents as Document[];
             this.notify();
         }).catch(err => console.error(err));

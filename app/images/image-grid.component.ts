@@ -61,7 +61,7 @@ export class ImageGridComponent {
             let defaultTypes = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
             if (!this.types) {
                 this.types = defaultTypes;
-                this.query = {q: '', types: this.types};
+                this.query = {q: '', types: this.types, prefix: true};
                 this.fetchDocuments(this.query);
             }
         });
@@ -84,7 +84,7 @@ export class ImageGridComponent {
 
         this.query = query;
 
-        this.datastore.find(query.q, query.types, true).then(documents => {
+        this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images

@@ -49,13 +49,9 @@ export class CachedDatastore implements IdaiFieldDatastore {
         return this.datastore.get(id);
     }
 
-    find(query:string='',
-                sets?:string[],
-                prefix:boolean=false,
-                offset?:number,
-                limit?:number):Promise<Document[]> {
+    find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
 
-        return this.datastore.find(query,sets,prefix,offset,limit)
+        return this.datastore.find(query, offset, limit)
             .then(result => this.replaceAllWithCached(result));
     }
 

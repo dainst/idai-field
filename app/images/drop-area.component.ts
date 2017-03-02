@@ -36,10 +36,10 @@ export class DropAreaComponent {
     }
 
     public onDragOver(event) {
-        if (!this.dragOverActive) this.reportUnsuportedFileTypes(event);
+        if (this.dragOverActive) return;
         this.dragOverActive = true;
-        event.preventDefault();
         event.target.classList.add("dragover");
+        event.preventDefault();
     }
 
     public onDragLeave(event) {
@@ -48,37 +48,60 @@ export class DropAreaComponent {
     }
 
     public onDrop(event) {
-
         event.preventDefault();
-        let files = event.dataTransfer.files;
-        this.chooseType().then(type => this.uploadFiles(files, type));
+        this.startUpload(event);
+        this.onDragLeave(event);
     }
 
     public onSelectImages(event) {
+        this.startUpload(event);
+    }
 
+    private startUpload(event) {
+        let files = this.getFiles(event);
+        if(files.length == 0) return;
+
+        let unsupportedExts = this.getUnsupportedExts(files);
+        if (unsupportedExts.length > 0) {
+            this.reportUnsupportedFileTypes(unsupportedExts);
+        }
         this.chooseType().then(
-            type => this.uploadFiles(event.srcElement.files, type)
+            type => this.uploadFiles(files, type)
         );
     }
 
-    private reportUnsuportedFileTypes(event) {
-        if (!event) return;
-        if (!event.dataTransfer) return;
-        if (!event.dataTransfer.files) return;
 
+    private getFiles(event) {
+        if (!event) return [];
+        let files = [];
+
+        if (event.dataTransfer) {
+            if (event.dataTransfer.files)
+                files = event.dataTransfer.files;
+        } else if (event.srcElement) {
+            if (event.srcElement.files)
+                files = event.srcElement.files;
+        }
+
+        return files;
+    }
+
+    private getUnsupportedExts (files) {
         let unsupportedExts: Array<string> = [];
-        for (let file of event.dataTransfer.files) {
+        for (let file of files) {
             let ext;
             if ((ext=this.ofUnsupportedExtension(file))!=undefined) unsupportedExts.push('"*.'+ext+'"');
         }
+        return unsupportedExts;
+    }
 
+    private reportUnsupportedFileTypes(unsupportedExts) {
         if (unsupportedExts.length > 0) {
             this.messages.addWithParams([M.IMAGES_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
         }
     }
 
     private chooseType(): Promise<IdaiType> {
-
         return new Promise((resolve, reject) => {
             this.configLoader.getProjectConfiguration().then( projectConfiguration => {
 
@@ -96,6 +119,7 @@ export class DropAreaComponent {
     }
 
     private uploadFiles(files: File[], type: IdaiType) {
+        console.log(3);
         if (!files) return;
 
         for (let file of files) {

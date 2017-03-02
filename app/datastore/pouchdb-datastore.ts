@@ -97,8 +97,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      */
     public create(document: any, initial: boolean = false): Promise<Document|string> {
 
+        let resetDocFun = this.resetDoc(document.resource.id);
+
         return this.updateReadyForQuery(initial)
             .then(()=> {
+
                 if (document.id != undefined) {
                     console.error('Aborting creation: document.id already exists. Maybe you wanted to update the object with update()?');
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
@@ -116,20 +119,28 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return this.db.put(document);
             })
             .then(result => {
+                
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(document);
 
             }).catch(err => {
 
-                document.id = undefined;
-                document.resource.id = undefined; // TODO this should only be done if it wasn't set initially
-                document.created = undefined;
-                document.modified = undefined;
+                resetDocFun(document);
                 if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 return Promise.reject(err);
             })
     }
+
+    private resetDoc(originalResourceId:string) {
+        return function(document:Document) {
+            document['id'] = undefined;
+            document.resource.id = originalResourceId;
+            document.created = undefined;
+            document.modified = undefined;
+        }
+    }
+
 
     private updateReadyForQuery(skipCheck) : Promise<any>{
         if (!skipCheck) {

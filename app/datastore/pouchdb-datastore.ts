@@ -97,7 +97,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      */
     public create(document: any, initial: boolean = false): Promise<Document|string> {
 
-        let resetDocFun = this.resetDoc(document.resource.id);
+        let reset = this.resetDocOnErrInCreate(document.resource.id);
 
         return this.updateReadyForQuery(initial)
             .then(()=> {
@@ -119,20 +119,20 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return this.db.put(document);
             })
             .then(result => {
-                
+
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(document);
 
             }).catch(err => {
 
-                resetDocFun(document);
+                reset(document);
                 if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 return Promise.reject(err);
             })
     }
 
-    private resetDoc(originalResourceId:string) {
+    private resetDocOnErrInCreate(originalResourceId:string) {
         return function(document:Document) {
             document['id'] = undefined;
             document.resource.id = originalResourceId;

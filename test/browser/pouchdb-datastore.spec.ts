@@ -1,5 +1,6 @@
 import {PouchdbDatastore} from "../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
+import {M} from "../../app/m";
 
 /**
  * @author Daniel de Oliveira
@@ -38,7 +39,7 @@ export function main() {
         it('should create a document and create a resource.id',
             function (done) {
 
-                datastore.create(doc('id1'))
+                datastore.create(doc('sd1'))
                     .then(
                     _createdDoc => {
                         let createdDoc = _createdDoc as Document;
@@ -56,10 +57,16 @@ export function main() {
         it('should create a document and take the existing resource.id',
             function (done) {
 
-                let docToCreate: Document = doc('id1');
+                let docToCreate: Document = doc('sd1');
                 docToCreate.resource.id = 'a1';
 
                 datastore.create(docToCreate)
+                    // this step was added to adress a problem where a document
+                    // with an existing resource.id was stored but could not
+                    // get refreshed later
+                    .then(() => datastore.refresh(docToCreate))
+                    // and the same may occur on get
+                    .then(() => datastore.get(docToCreate.resource.id))
                     .then(
                         _createdDoc => {
                             let createdDoc = _createdDoc as Document;
@@ -68,6 +75,29 @@ export function main() {
                         },
                         err => {
                             fail();
+                            done();
+                        }
+                    );
+            }
+        );
+
+        it('should not create a document with the resource.id of an alredy existing doc',
+            function (done) {
+
+                let docToCreate1: Document = doc('sd1');
+                docToCreate1.resource.id = 'a1';
+                let docToCreate2: Document = doc('sd1');
+                docToCreate2.resource.id = 'a1';
+
+                datastore.create(docToCreate1)
+                    .then(() => datastore.create(docToCreate2))
+                    .then(
+                        () => {
+                            fail();
+                            done();
+                        },
+                        keyOfM => {
+                            expect(keyOfM).toBe(M.DATASTORE_RESOURCE_ID_EXISTS);
                             done();
                         }
                     );

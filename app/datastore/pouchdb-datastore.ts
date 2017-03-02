@@ -100,6 +100,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let reset = this.resetDocOnErrInCreate(document.resource.id);
 
         return this.updateReadyForQuery(initial)
+            .then(()=>this.proveThatDoesNotExist(document))
             .then(()=> {
 
                 if (document['id']||document['_id']) {
@@ -107,13 +108,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
 
-                document['id'] = IdGenerator.generateId();
-
-                if (!document.resource.id) document.resource.id = document['id'];
+                if (!document.resource.id)  document.resource.id = IdGenerator.generateId();
+                document['id'] = document.resource.id;
+                document['_id'] = document.resource.id;
 
                 document.created = new Date();
                 document.modified = document.created;
-                document['_id'] = document['id'];
 
                 return this.db.put(document).catch(
                     err => {
@@ -133,6 +133,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 reset(document);
                 return Promise.reject(keyOfM);
             })
+    }
+
+    /**
+     * @param doc
+     * @return resolve when document with the given resource id does not exist already, reject otherwise
+     */
+    private proveThatDoesNotExist(doc:Document): Promise<any> {
+        if (doc.resource.id) {
+            return this.fetchObject(doc.resource.id)
+                .then(result => Promise.reject(M.DATASTORE_RESOURCE_ID_EXISTS), () => Promise.resolve())
+        } else return Promise.resolve();
     }
 
     private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
@@ -319,9 +330,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private fetchObject(id: string): Promise<Document> {
-        return this.db.get(id).then(result=>{
-            return Promise.resolve(result)
-        })
+        // Beware that for this to work we need to make sure
+        // the document _id/id and the resource.id are always the same.
+        return this.db.get(id);
     }
 
     private docsFromResult(result: any[]): Document[] {

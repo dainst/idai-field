@@ -29,6 +29,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static OVERVIEW_DELETE_SUCCESS : string = 'overview/deletesuccess';
 
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
+    public static DATASTORE_RESOURCE_ID_EXISTS : string = 'datastore/resourceidexists';
 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
@@ -166,6 +167,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern des Dokumentes ist ein Fehler aufgetreten.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DATASTORE_RESOURCE_ID_EXISTS]={
+            content: 'Die Resourcen-Id eines zu speichernden Dokumentes besteht bereit.',
             level: 'danger',
             params: [],
             hidden: false

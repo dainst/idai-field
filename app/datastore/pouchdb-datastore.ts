@@ -76,9 +76,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     /**
      * Implements {@link Datastore#create}.
-     *
-     * The created instance is put to the cache.
-     *
      * @param document
      * @returns {Promise<Document|string>} same instance of the document or error message
      */
@@ -86,7 +83,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(()=> {
-                if (document.id != null) return Promise.reject("Aborting creation: Object already has an ID. " +
+                if (document.id != undefined) return Promise.reject("Aborting creation: Object already has an ID. " +
                     "Maybe you wanted to update the object with update()?");
                 document.id = IdGenerator.generateId();
                 if (!document['resource']['id']) {
@@ -124,9 +121,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     /**
      * Implements {@link Datastore#update}.
-     *
-     * The updated instance gets put to the cache.
-     *
      * @param document
      * @param initial
      * @returns {Promise<Document|string>} same instance of the document or error message

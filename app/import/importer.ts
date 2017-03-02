@@ -86,8 +86,6 @@ export class Importer {
 
                 }, msgWithParams => {
 
-                    console.log("error",msgWithParams)
-
                     this.importReport["errors"].push(msgWithParams);
 
                     this.objectReaderFinished = true;

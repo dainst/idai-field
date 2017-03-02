@@ -35,7 +35,7 @@ export function main() {
             }
         );
 
-        fit('should create a document and create a resource.id',
+        it('should create a document and create a resource.id',
             function (done) {
 
                 datastore.create(doc('id1'))

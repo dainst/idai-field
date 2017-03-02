@@ -92,16 +92,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link Datastore#create}.
      * @param document
+     * @param initial
      * @returns {Promise<Document|string>} same instance of the document or error message
      */
-    public create(document: any): Promise<Document|string> {
+    public create(document: any, initial: boolean = false): Promise<Document|string> {
 
-        return this.readyForQuery
+        return this.updateReadyForQuery(initial)
             .then(()=> {
                 if (document.id != undefined) {
                     console.error('Aborting creation: document.id already exists. Maybe you wanted to update the object with update()?');
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
+
                 document.id = IdGenerator.generateId();
 
                 if (!document['resource']['id']) {
@@ -119,8 +121,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return Promise.resolve(document);
 
             }).catch(err => {
+
                 document.id = undefined;
-                document['resource']['id'] = undefined;
+                document.resource.id = undefined; // TODO this should only be done if it wasn't set initially
                 document.created = undefined;
                 document.modified = undefined;
                 if (err == undefined) return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
@@ -140,22 +143,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link Datastore#update}.
      * @param document
-     * @param initial
      * @returns {Promise<Document|string>} same instance of the document or error message
      */
-    public update(document:Document, initial = false): Promise<Document|string> {
+    public update(document:Document): Promise<Document|string> {
 
-        return this.updateReadyForQuery(initial)
+        return this.readyForQuery
             .then(()=> {
                 if (document['id'] == null) return Promise.reject("Aborting update: No ID given. " +
                     "Maybe you wanted to create the object with create()?");
                 document.modified = new Date();
 
-                if (initial) {
-                    document['_id'] = document['id'];
-                } else {
-                    // delete document['rev']
-                }
                 return this.db.put(document)
 
             }).then(result => {
@@ -178,7 +175,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<Document|string>}
      */
     public refresh(doc: Document): Promise<Document|string> {
-
         return this.fetchObject(doc.resource.id);
     }
 
@@ -342,7 +338,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return new Promise<any>((resolve,reject)=>{
 
             let promises = [];
-            for (let ob of DOCS) promises.push(this.update(ob, true));
+            for (let doc of DOCS) promises.push(this.create(doc,true));
 
             Promise.all(promises)
                 .then(() => {

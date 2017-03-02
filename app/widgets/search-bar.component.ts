@@ -46,7 +46,7 @@ export class SearchBarComponent implements OnChanges {
 
     private emitCurrentQuery() {
 
-        let query: Query = { q: this.q };
+        let query: Query = { q: this.q, prefix: true };
 
         let filterSets: Array<string> = [];
         if (this.defaultFilterSet) filterSets = this.defaultFilterSet;
@@ -56,6 +56,7 @@ export class SearchBarComponent implements OnChanges {
         ];
 
         query.types = filterSets;
+        console.log("query", query)
 
         this.onQueryChanged.emit(query);
     }

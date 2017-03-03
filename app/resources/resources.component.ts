@@ -29,8 +29,7 @@ export class ResourcesComponent {
     public documents: Document[];
     private ready: Promise<any>;
 
-    constructor(@Inject('app.config') private config,
-                private router: Router,
+    constructor(private router: Router,
                 private datastore: Datastore,
                 configLoader: ConfigLoader) {
 

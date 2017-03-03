@@ -12,6 +12,7 @@ import {PersistenceManager} from 'idai-components-2/persist';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
+import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
 import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
@@ -90,7 +91,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader:ConfigLoader,datastore:PouchdbDatastore) {
+            useFactory: function(configLoader:ConfigLoader,datastore:IdaiFieldDatastore) {
                 return new IdaiFieldValidator(configLoader,datastore);
             },
             deps: [ConfigLoader,ReadDatastore]

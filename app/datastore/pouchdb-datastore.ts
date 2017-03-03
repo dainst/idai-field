@@ -24,7 +24,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private observers = [];
     private readyForQuery: Promise<any>;
 
-    constructor(private dbname,loadSampleData: boolean = false) {
+    constructor(private dbname, loadSampleData: boolean = false) {
         this.db = new PouchDB(dbname);
 
         this.readyForQuery = Promise.resolve();

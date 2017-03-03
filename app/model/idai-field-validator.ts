@@ -2,7 +2,7 @@ import {ConfigLoader} from 'idai-components-2/configuration'
 import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from './idai-field-document';
 import {M} from "../m";
-import {PouchdbDatastore} from '../datastore/pouchdb-datastore';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 
 
 
@@ -11,7 +11,7 @@ import {PouchdbDatastore} from '../datastore/pouchdb-datastore';
  */
 export class IdaiFieldValidator extends Validator {
 
-    constructor(configLoader:ConfigLoader, private datastore:PouchdbDatastore) {
+    constructor(configLoader:ConfigLoader, private datastore:IdaiFieldDatastore) {
         super(configLoader);
     }
 

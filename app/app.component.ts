@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
     }];
 
     private defaultRelations = [
-        {name: 'depicts', domain: ['image:inherit'], inverse: 'depictedIn', label: 'Zeigt', editable: false},
+        {name: 'depicts', domain: ['image:inherit'], inverse: 'depictedIn', label: 'Zeigt', editable: true},
         {name: 'depictedIn', range: ['image:inherit'], inverse: 'depicts', visible: false, editable: false}
     ];
 

@@ -14,6 +14,7 @@ import {routing} from './app.routing';
 import {appRoutingProviders} from './app.routing';
 import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
 import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
+import {PouchdbServerDatastore} from "./datastore/pouchdb-server-datastore";
 import {IdaiFieldBackend} from "./sync/idai-field-backend";
 import {SyncMediator} from "./sync/sync-mediator";
 import {Importer} from "./import/importer";
@@ -79,13 +80,17 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         {
             provide: Datastore,
             useFactory: function(configLoader:ConfigLoader) : Datastore {
-                return new CachedDatastore(
-                    new PouchdbDatastore(
-                        'idai-field-documents',
-                        configLoader,
-                        CONFIG['environment'] == 'test'
-                    )
-                );
+                let test = CONFIG['environment'] == 'test';
+                let dbname = CONFIG['database'] ? CONFIG['database'] : 'idai-field-documents';
+                let datastore;
+                // running under node / electron
+                if (typeof process === 'object') {
+                    datastore = new PouchdbServerDatastore(dbname, configLoader, test);
+                // running in browser
+                } else {
+                    datastore = new PouchdbDatastore(dbname, configLoader, test);
+                }
+                return new CachedDatastore(datastore);
             },
             deps: [ConfigLoader]
         },

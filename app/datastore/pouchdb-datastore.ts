@@ -30,9 +30,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 configLoader:ConfigLoader,
                 loadSampleData: boolean = false) {
 
-        this.db = new PouchDB(dbname);
-
-        this.readyForQuery = Promise.resolve();
+        this.readyForQuery = this.setupDatabase();
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.clear());
         this.readyForQuery = this.readyForQuery
@@ -44,6 +42,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.loadSampleData());
 
+    }
+
+    protected setupDatabase(): Promise<void> {
+        this.db = new PouchDB(this.dbname);
+        return Promise.resolve();
     }
 
     private setupFulltextIndex(): Promise<any> {

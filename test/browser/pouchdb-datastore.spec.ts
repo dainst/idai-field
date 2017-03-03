@@ -11,6 +11,24 @@ export function main() {
 
         let datastore : PouchdbDatastore;
 
+        let mockProjectConfiguration = jasmine.createSpyObj(
+            'mockProjectConfiguration',
+            ['getParentTypes']
+        );
+        mockProjectConfiguration.getParentTypes.and.callFake(type => {
+           if (type == 'root') return [];
+           if (type == 'type1') return ['root'];
+           if (type == 'type1.1') return ['type1','root'];
+           if (type == 'type2') return ['root'];
+        });
+
+        let mockConfigLoader = jasmine.createSpyObj(
+            'mockConfigLoader',
+            [ 'getProjectConfiguration' ]
+        );
+        mockConfigLoader.getProjectConfiguration
+            .and.callFake(() => Promise.resolve(mockProjectConfiguration));
+
         function doc(sd,identifier?,type?) : Document {
             if (!type) type = 'object';
             return {
@@ -26,7 +44,7 @@ export function main() {
 
         beforeEach(
             function () {
-                datastore = new PouchdbDatastore('testdb');
+                datastore = new PouchdbDatastore('testdb', mockConfigLoader);
             }
         );
 

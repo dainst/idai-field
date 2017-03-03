@@ -78,9 +78,16 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,
-            useFactory: function() : Datastore {
-                return new CachedDatastore(new PouchdbDatastore('idai-field-documents',CONFIG['environment'] == 'test'));
-            }
+            useFactory: function(configLoader:ConfigLoader) : Datastore {
+                return new CachedDatastore(
+                    new PouchdbDatastore(
+                        'idai-field-documents',
+                        configLoader,
+                        CONFIG['environment'] == 'test'
+                    )
+                );
+            },
+            deps: [ConfigLoader]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         IdaiFieldBackend,

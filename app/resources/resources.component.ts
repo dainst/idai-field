@@ -31,7 +31,7 @@ export class ResourcesComponent {
 
     constructor(private router: Router,
                 private datastore: Datastore,
-                configLoader: ConfigLoader) {
+                private configLoader: ConfigLoader) {
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{

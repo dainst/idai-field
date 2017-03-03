@@ -1,5 +1,6 @@
 import {Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
+import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 import {Injectable} from "@angular/core";
 import * as PouchDB from "pouchdb";
 import {IdGenerator} from "./id-generator";
@@ -23,8 +24,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private db: any;
     private observers = [];
     private readyForQuery: Promise<any>;
+    private config: ProjectConfiguration;
 
-    constructor(private dbname, loadSampleData: boolean = false) {
+    constructor(private dbname,
+                configLoader:ConfigLoader,
+                loadSampleData: boolean = false) {
+
         this.db = new PouchDB(dbname);
 
         this.readyForQuery = Promise.resolve();
@@ -33,7 +38,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         this.readyForQuery = this.readyForQuery
             .then(() => this.setupFulltextIndex())
             .then(() => this.setupIdentifierIndex())
-            .then(() => this.setupAllIndex());
+            .then(() => this.setupAllIndex())
+            .then(() => configLoader.getProjectConfiguration())
+            .then(config => this.config = config);
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.loadSampleData());
 
@@ -111,6 +118,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 if (!document.resource.id)  document.resource.id = IdGenerator.generateId();
                 document['id'] = document.resource.id;
                 document['_id'] = document.resource.id;
+                //document['_parents'] = this.config
+                //    .getParentTypes(document.resource.type);
 
                 document.created = new Date();
                 document.modified = document.created;

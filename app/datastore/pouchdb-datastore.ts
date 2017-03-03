@@ -21,16 +21,18 @@ declare function emit(key:any, value?:any):void;
  */
 export class PouchdbDatastore implements IdaiFieldDatastore {
 
-    private db: any;
+    protected db: any;
     private observers = [];
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
 
-    constructor(private dbname,
-                configLoader:ConfigLoader,
+    constructor(private dbname: string,
+                configLoader: ConfigLoader,
                 loadSampleData: boolean = false) {
 
-        this.readyForQuery = this.setupDatabase();
+        this.dbname = dbname;
+        this.readyForQuery = this.setupDatabase(dbname)
+            .then(db => this.db = db);
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.clear());
         this.readyForQuery = this.readyForQuery
@@ -44,9 +46,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     }
 
-    protected setupDatabase(): Promise<void> {
-        this.db = new PouchDB(this.dbname);
-        return Promise.resolve();
+    protected setupDatabase(dbname:string): Promise<void> {
+        return Promise.resolve(new PouchDB(dbname));
     }
 
     private setupFulltextIndex(): Promise<any> {

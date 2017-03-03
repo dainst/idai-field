@@ -24,7 +24,7 @@ export class DropAreaComponent {
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
 
     private dragOverActive = false;
-    private supportedFileTypes: Array<string> = ['jpg','bmp','png','gif'];
+    private supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
 
     public constructor(
         private mediastore: Mediastore,

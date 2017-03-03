@@ -18,11 +18,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORTER_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
     public static IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
-    public static IMPORTER_FAILURE_IDMISSING: string = 'importer/failure/idmissing';
     public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
-    public static IMPORTER_FAILURE_INVALIDTYPE: string = 'importer/failure/invalidtype';
-    public static IMPORTER_FAILURE_INVALIDFIELD: string = 'importer/failure/invalidfield';
-    public static IMPORTER_FAILURE_INVALIDFIELDS: string = 'importer/failure/invalidfields';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
 
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
@@ -119,33 +115,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                      'gespeichert werden.',
             level: 'danger',
             params: [ "?" ],
-            hidden: false
-        };
-        this.msgs[M.IMPORTER_FAILURE_IDMISSING]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Ein Ressourcen-Identifier fehlt.',
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMPORTER_FAILURE_INVALIDTYPE]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Typendefinition für den Typ {1} der " +
-                     "Ressource {0}.",
-            level: 'danger',
-            params: ["", ""],
-            hidden: false
-        };
-        this.msgs[M.IMPORTER_FAILURE_INVALIDFIELD]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinition für das Feld {1} der " +
-                     "Ressource {0}.",
-            level: 'danger',
-            params: ["?", ""],
-            hidden: false
-        };
-        this.msgs[M.IMPORTER_FAILURE_INVALIDFIELDS]={
-            content: "Beim Import ist ein Fehler aufgetreten: Fehlende Felddefinitionen für die Felder {1} der " +
-            "Ressource des Typs \"{0}\".",
-            level: 'danger',
-            params: ["?", ""],
             hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDGEOMETRY] = {

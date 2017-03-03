@@ -82,7 +82,6 @@ export class Importer {
                     else this.docsToUpdate.push(result.document);
 
                 }, msgWithParams => {
-
                     this.importReport["errors"].push(msgWithParams);
 
                     this.objectReaderFinished = true;
@@ -111,27 +110,23 @@ export class Importer {
         this.inUpdateDocumentLoop = true;
 
         this.validator.validate(doc)
-            .then(
-                () => {
-                    return this.datastore.create(doc);
-                }, msgWithParams => {
-                    this.importReport['errors'].push(msgWithParams);
-                    this.currentImportWithError = true;
-                    this.finishImport();
+            .then(() => {
+                    return this.datastore.create(doc).catch(keyOfM=>Promise.reject([keyOfM])); // TODO unit test this
                 })
             .then(() => {
+
                 this.importSuccessCounter++;
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0]);
+                    return this.update(this.docsToUpdate[0])
                 } else {
                     this.finishImport();
                 }
-            }, keyOfMOrMsg => {
-                this.importReport['errors'].push([keyOfMOrMsg]);
+            }, msgWithParams => {
+                this.importReport['errors'].push(msgWithParams);
                 this.currentImportWithError = true;
                 this.finishImport();
             });

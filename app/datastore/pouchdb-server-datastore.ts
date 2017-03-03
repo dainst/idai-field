@@ -4,12 +4,10 @@ import {PouchdbDatastore} from "./pouchdb-datastore";
 import * as express from 'express';
 var expressPouchDB = require('express-pouchdb');
 
+@Injectable()
 /**
  * @author Sebastian Cuy
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
  */
-@Injectable()
 export class PouchdbServerDatastore extends PouchdbDatastore {
 
     protected setupDatabase(): Promise<any> {

@@ -13,12 +13,12 @@ import {DOCS} from "./sample-objects";
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
 
+@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-@Injectable()
 export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private db: any;

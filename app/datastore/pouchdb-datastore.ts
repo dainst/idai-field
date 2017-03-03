@@ -46,7 +46,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     }
 
-    protected setupDatabase(dbname:string): Promise<void> {
+    protected setupDatabase(dbname:string): Promise<any> {
         return Promise.resolve(new PouchDB(dbname));
     }
 

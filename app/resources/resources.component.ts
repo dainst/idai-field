@@ -23,27 +23,20 @@ export class ResourcesComponent {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
-    protected query: Query = { q: '' };
-    protected defaultTypes: Array<string>;
+    protected query: Query = {q: '', type: 'resource', prefix: true};
 
     public documents: Document[];
     private ready: Promise<any>;
 
     constructor(private router: Router,
-                private datastore: Datastore,
-                private configLoader: ConfigLoader) {
+                private datastore: Datastore) {
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{
             readyResolveFun = resolve;
         });
-
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.defaultTypes = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
-            this.query = {q: '', types: this.defaultTypes, prefix: true};
-            this.fetchDocuments().then(()=>{
-               readyResolveFun();
-            });
+        this.fetchDocuments().then(()=>{
+           readyResolveFun();
         });
     }
 

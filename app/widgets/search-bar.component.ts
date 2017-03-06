@@ -14,7 +14,7 @@ import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuratio
  */
 export class SearchBarComponent implements OnChanges {
 
-    private type: string = '';
+    private type: string = 'resource';
     private q: string = '';
     private filterOptions: Array<any> = [];
 
@@ -46,45 +46,30 @@ export class SearchBarComponent implements OnChanges {
 
     private emitCurrentQuery() {
 
-        let query: Query = { q: this.q, prefix: true };
-
-        let filterSets: Array<string> = [];
-        if (this.defaultFilterSet) filterSets = this.defaultFilterSet;
-
-        if (this.type) filterSets = [
-            this.type
-        ];
-
-        query.types = filterSets;
-        console.log("query", query)
-
+        let query: Query = { q: this.q, type: this.type, prefix: true };
         this.onQueryChanged.emit(query);
     }
 
     private initializeFilterOptions() {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            
+
             let types = projectConfiguration.getTypesMap();
             this.filterOptions = [];
     
             for (let i in types) {
-                this.addFilterOption(types[i]);
+                let pTypes = projectConfiguration.getParentTypes(types[i].name);
+
+                if (pTypes.indexOf('image') == -1)
+                    this.addFilterOption(types[i]);
             }
         })
     }
 
     private addFilterOption(type) {
 
-        let defaultFilters = this.defaultFilterSet ? this.defaultFilterSet : [];
-
-        for (let i in defaultFilters) {
-            if (defaultFilters[i] == type.name) {
-
-                if (this.filterOptions.indexOf(type) == -1) {
-                    this.filterOptions.push(type);
-                }
-            }
+        if (this.filterOptions.indexOf(type) == -1) {
+            this.filterOptions.push(type);
         }
     }
     

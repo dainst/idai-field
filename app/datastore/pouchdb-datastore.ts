@@ -140,7 +140,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
-                return Promise.resolve(document);
+                return Promise.resolve(this.cleanDoc(document));
 
             }).catch(keyOfM => {
 
@@ -211,7 +211,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
                 this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
-                return Promise.resolve(document);
+                return Promise.resolve(this.cleanDoc(document));
 
             }).catch(keyOfM => {
                 // TODO reset modified date
@@ -226,7 +226,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<Document|string>}
      */
     public refresh(doc: Document): Promise<Document|string> {
-        return this.fetchObject(doc.resource.id);
+        return this.fetchObject(doc.resource.id)
+            .then(doc => this.cleanDoc(doc));
     }
 
     /**
@@ -236,7 +237,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {any}
      */
     public get(resourceId: string): Promise<Document|string> {
-        return this.fetchObject(resourceId);
+        return this.fetchObject(resourceId)
+            .then(doc => this.cleanDoc(doc));
     }
 
     /**
@@ -273,26 +275,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         if (!query) return Promise.resolve([]);
 
-        let q = query.q ? query.q : '';
-        let sets = query.types ? query.types : [''];
-
-        let promises = sets
-            .map(set => this.findForSet(q, set, query.prefix, offset, limit));
-
-        return this.concatResults(promises);
-    }
-
-    private findForSet(query:string, set:string, prefix:boolean, offset:number,
-                        limit:number):Promise<Document[]> {
+        let q = query.q ? query.q.toLowerCase() : '';
+        let type = query.type ? query.type : '';
 
         let opt = {
             reduce: false,
             include_docs: true,
         };
-        let q = query.toLowerCase();
-        opt['startkey'] = [set, q];
-        let endKey = prefix ? q + '\uffff' : q;
-        opt['endkey'] = [set, endKey];
+        opt['startkey'] = [type, q];
+        let endKey = query.prefix ? q + '\uffff' : q;
+        opt['endkey'] = [type, endKey];
         // performs poorly according to PouchDB documentation
         // could be replaced by using startKey instead
         // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
@@ -301,7 +293,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(() => this.db.query('fulltext', opt))
-            .then(result => this.docsFromResult(result));
+            .then(result => this.filterResult(this.docsFromResult(result)));
     }
 
     public findByIdentifier(identifier: string): Promise<Document> {
@@ -319,19 +311,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     /**
      * Implements {@link ReadDatastore#all}.
      */
-    public all(sets:string[]=[''],
+    public all(type:string='',
                offset:number=0,
                limit:number=-1): Promise<Document[]> {
 
-        let promises = sets.map(set => this.allForSet(set, offset, limit));
-        return this.concatResults(promises);
-    }
-
-    private allForSet(set:string, offset:number, limit:number) {
         let opt = {
             include_docs: true,
-            startkey: [set, {}],
-            endkey: [set],
+            startkey: [type, {}],
+            endkey: [type],
             descending: true
         };
         // performs poorly according to PouchDB documentation
@@ -342,7 +329,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(() => this.db.query('all', opt))
-            .then(result => this.docsFromResult(result));
+            .then(result => this.filterResult(this.docsFromResult(result)));
     }
 
     private fetchObject(id: string): Promise<Document> {
@@ -352,17 +339,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private docsFromResult(result: any[]): Document[] {
-        return result['rows'].map(row => row.doc);
+        return result['rows'].map(row => this.cleanDoc(row.doc));
     }
 
-    private concatResults(promises:Promise<Document[]>[]): Promise<Document[]> {
-
-        return Promise.all(promises).then(results => {
-            let result = results.reduce((acc, val) => {
-                return acc.concat(val);
-            }, []);
-            return this.filterResult(result);
-        });
+    // strips document of any properties that are only
+    // used to simplify index creation
+    private cleanDoc(doc:Document): Document {
+        delete doc.resource['_parentTypes'];
+        return doc;
     }
 
     // only return every doc once by using Set

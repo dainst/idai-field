@@ -11,7 +11,6 @@ import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
-import {FilterUtility} from "../util/filter-utility";
 import {BlobProxy} from "../common/blob-proxy";
 import {ElementRef} from "@angular/core";
 import {M} from '../m';
@@ -34,7 +33,7 @@ export class ImageGridComponent {
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;
 
-    private query : Query = { q: '' };
+    private query : Query = {q: '', type: 'image', prefix: true};
     private documents: IdaiFieldImageDocument[];
     private types: Array<string>;
 
@@ -57,14 +56,7 @@ export class ImageGridComponent {
         this.imageGridBuilder = new ImageGridBuilder(
             new BlobProxy(mediastore, sanitizer), true);
 
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            let defaultTypes = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
-            if (!this.types) {
-                this.types = defaultTypes;
-                this.query = {q: '', types: this.types, prefix: true};
-                this.fetchDocuments(this.query);
-            }
-        });
+        this.fetchDocuments(this.query);
     }
 
     public refreshGrid() {
@@ -85,7 +77,7 @@ export class ImageGridComponent {
         this.query = query;
 
         let p;
-        if (!query.q) p = this.datastore.all(query.types);
+        if (!query.q) p = this.datastore.all(query.type);
         else p = this.datastore.find(query);
 
         p.then(documents => {
@@ -94,7 +86,8 @@ export class ImageGridComponent {
             // insert stub document for first cell that will act as drop area for uploading images
             this.documents.unshift(<IdaiFieldImageDocument>{
                 id: 'droparea',
-                resource: { identifier: '', type: '', width: 1, height: 1, filename: '', relations: {} },
+                resource: { identifier: '', shortDescription:'', type: '',
+                    width: 1, height: 1, filename: '', relations: {} },
                 synced: 0
             });
 

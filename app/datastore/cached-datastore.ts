@@ -60,8 +60,8 @@ export class CachedDatastore implements IdaiFieldDatastore {
             .then(result => this.replaceWithCached(result));
     }
 
-    all(sets?:string[], offset?:number, limit?:number): Promise<Document[]|string> {
-        return this.datastore.all(sets, offset, limit)
+    all(type?:string, offset?:number, limit?:number): Promise<Document[]|string> {
+        return this.datastore.all(type, offset, limit)
             .then(result => this.replaceAllWithCached(result));
     }
 

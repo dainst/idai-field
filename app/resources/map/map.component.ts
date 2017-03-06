@@ -202,7 +202,7 @@ export class MapComponent implements OnChanges {
 
                 let query: Query = {
                     q: '',
-                    types: FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap()),
+                    type: 'image',
                     prefix: true
                 };
 

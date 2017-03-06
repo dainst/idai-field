@@ -19,8 +19,7 @@ export class ImagePickerComponent {
 
     selected: IdaiFieldImageDocument[] = [];
     private imageGridBuilder : ImageGridBuilder;
-    private types: Array<string>;
-    private query : Query = { q: '' };
+    private query : Query = { q: '', type: 'image', prefix: true };
     private rows = [];
     private documents: IdaiFieldImageDocument[];
     private nrOfColumns = 3;
@@ -32,23 +31,12 @@ export class ImagePickerComponent {
         mediastore: Mediastore,
         private datastore: Datastore,
         sanitizer: DomSanitizer,
-        configLoader: ConfigLoader,
         private el: ElementRef
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(new BlobProxy(mediastore, sanitizer), true);
 
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: false}],
-            type: 'or'
-        };
-        
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.types) {
-                this.types = FilterUtility.getImageTypesFilterSet(projectConfiguration.getTypesMap());
-                this.query = {q: '', types: this.types, prefix: true};
-                this.fetchDocuments(this.query);
-            }
-        });
+        this.imageGridBuilder = new ImageGridBuilder(
+            new BlobProxy(mediastore,sanitizer), true);
+        this.fetchDocuments(this.query);
     }
 
     public queryChanged(query: Query) {

@@ -17,11 +17,10 @@ export class DocumentPickerComponent {
     protected query: Query;
 
     constructor(
-        private datastore: Datastore,
-        private configLoader: ConfigLoader
+        private datastore: Datastore
 
     ) {
-        this.query = {q: '', types: [], prefix: true};
+        this.query = {q: '', type: 'resource', prefix: true};
     }
 
     public queryChanged(query: Query) {
@@ -37,15 +36,9 @@ export class DocumentPickerComponent {
      */
     public fetchDocuments(query: Query) {
 
-        this.configLoader.getProjectConfiguration().then(projectConfiguration=>{
-
-            this.query.types = FilterUtility.getNonImageTypesFilterSet(projectConfiguration.getTypesMap());
-
-            this.datastore.find(query).then(documents => {
-                this.documents = documents as IdaiFieldDocument[];
-            }).catch(err => console.error(err));
-        })
-
+        this.datastore.find(query).then(documents => {
+            this.documents = documents as IdaiFieldDocument[];
+        }).catch(err => console.error(err));
     }
     
 }

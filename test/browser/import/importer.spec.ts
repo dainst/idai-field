@@ -1,6 +1,5 @@
 import {Importer} from "../../../app/import/importer";
 import {Observable} from "rxjs/Observable";
-import {DefaultImportStrategy} from "../../../app/import/default-import-strategy";
 import {ImportStrategy} from "../../../app/import/import-strategy";
 
 
@@ -12,19 +11,14 @@ export function main() {
     let mockReader;
     let mockParser;
     let importer;
-    let mockValidator;
-    let mockDatastore;
-    let importStrategy: ImportStrategy;
+    let mockImportStrategy;
 
     beforeEach(()=>{
         mockReader = jasmine.createSpyObj('reader',['read']);
         mockReader.read.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser',['parse']);
-        mockDatastore = jasmine.createSpyObj('datastore', ['create']);
-        mockValidator = jasmine.createSpyObj('validator', ['validate']);
-        mockValidator.validate.and.callFake(function() {return Promise.resolve();});
-        mockDatastore.create.and.callFake(function(a){return Promise.resolve(a)});
-        importStrategy = new DefaultImportStrategy(mockValidator,mockDatastore);
+
+        mockImportStrategy = jasmine.createSpyObj('importStrategy',['go']);
         importer = new Importer();
     });
 
@@ -36,8 +30,8 @@ export function main() {
                     observer.complete();
                 })});
 
-                mockValidator.validate.and.returnValue(Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader,mockParser,importStrategy)
+                mockImportStrategy.go.and.returnValue(Promise.reject(['constraintviolation']));
+                importer.importResources(mockReader,mockParser,mockImportStrategy)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
                         done();
@@ -53,13 +47,14 @@ export function main() {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {
                     observer.next({ document: {resource: {type: "object", id:"abc1",relations:{} }}, messages: []});
                     observer.next({ document: {resource: {type: "object", id:"abc2",relations:{} }}, messages: []});
+                    observer.next({ document: {resource: {type: "object", id:"abc3",relations:{} }}, messages: []});
                     observer.complete();
                 })});
 
-                mockValidator.validate.and.returnValues(Promise.resolve(undefined),Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader,mockParser,importStrategy)
+                mockImportStrategy.go.and.returnValues(Promise.resolve(undefined),Promise.reject(['constraintviolation']));
+                importer.importResources(mockReader,mockParser,mockImportStrategy)
                     .then(importReport=>{
-                        expect(mockDatastore.create).toHaveBeenCalledTimes(1);
+                        expect(mockImportStrategy.go).toHaveBeenCalledTimes(2);
                         expect(importReport['successful_imports']).toBe(1);
                         done();
                     },err => {

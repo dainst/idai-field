@@ -42,8 +42,7 @@ export class Importer {
         };
     }
 
-    constructor() {
-    }
+    constructor() { }
 
     /**
      * Returns a promise which resolves to an importReport object with detailed information about the import,

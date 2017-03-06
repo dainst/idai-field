@@ -15,7 +15,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     go(doc: Document): Promise<any> {
         return this.validator.validate(doc)
             .then(() => {
-                return this.datastore.create(doc).catch(keyOfM=>Promise.reject([keyOfM])); // TODO unit test this
+                return this.datastore.create(doc).catch(keyOfM=>Promise.reject([keyOfM]));
             })
     }
 }

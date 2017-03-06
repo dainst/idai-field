@@ -13,6 +13,8 @@ import {DefaultImportStrategy} from "./default-import-strategy";
 import {Datastore} from "idai-components-2/datastore";
 import {Validator} from "idai-components-2/persist";
 import {ImportStrategy} from "./import-strategy";
+import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
+import {GeojsonJsonlParser} from "./geojson-jsonl-parser";
 
 
 @Component({
@@ -49,7 +51,7 @@ export class ImportComponent {
 
         let reader = ImportComponent.createReader(this.sourceType,this.file,this.url,this.http);
         let parser = ImportComponent.createParser(this.format);
-        let importStrategy = ImportComponent.createImportStrategy(this.validator,this.datastore);
+        let importStrategy = ImportComponent.createImportStrategy(this.format,this.validator,this.datastore);
 
         this.messages.clear();
         if (!reader || !parser || !importStrategy) return this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
@@ -78,11 +80,19 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private static createImportStrategy(validator, datastore): ImportStrategy {
-        return new DefaultImportStrategy(validator, datastore)
+    private static createImportStrategy(format: string, validator, datastore): ImportStrategy {
+
+        switch (format) {
+            case "native":
+                return new DefaultImportStrategy(validator, datastore);
+            case "idig":
+                return new DefaultImportStrategy(validator, datastore);
+            case "geojson":
+                return new MergeGeometriesImportStrategy(datastore);
+        }
     }
 
-    private static createReader(sourceType, file, url, http): Reader {
+    private static createReader(sourceType: string, file: File, url: string, http: Http): Reader {
 
         switch (sourceType) {
             case "file":
@@ -92,13 +102,15 @@ export class ImportComponent {
         }
     }
 
-    private static createParser(format): Parser {
+    private static createParser(format: string): Parser {
 
         switch (format) {
             case "native":
                 return new NativeJsonlParser();
             case "idig":
                 return new IdigCsvParser();
+            case "geojson":
+                return new GeojsonJsonlParser();
         }
     }
 

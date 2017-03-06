@@ -119,7 +119,6 @@ export class DropAreaComponent {
     }
 
     private uploadFiles(files: File[], type: IdaiType) {
-        console.log(3);
         if (!files) return;
 
         for (let file of files) {

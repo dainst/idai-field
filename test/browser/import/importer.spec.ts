@@ -1,8 +1,7 @@
-import {Importer} from "../../app/import/importer";
+import {Importer} from "../../../app/import/importer";
 import {Observable} from "rxjs/Observable";
-import {M} from "../../app/m";
-import {DefaultImportStrategy} from "../../app/import/default-import-strategy";
-import {ImportStrategy} from "../../app/import/import-strategy";
+import {DefaultImportStrategy} from "../../../app/import/default-import-strategy";
+import {ImportStrategy} from "../../../app/import/import-strategy";
 
 
 /**

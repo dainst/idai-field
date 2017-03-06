@@ -1,5 +1,5 @@
-import {IdigCsvParser} from "../../app/import/idig-csv-parser";
-import {M} from "../../app/m";
+import {IdigCsvParser} from "../../../app/import/idig-csv-parser";
+import {M} from "../../../app/m";
 
 /**
  * @author Sebastian Cuy

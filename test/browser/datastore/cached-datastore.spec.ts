@@ -1,6 +1,6 @@
-import {PouchdbDatastore} from "../../app/datastore/pouchdb-datastore";
+import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
-import {CachedDatastore} from "../../app/datastore/cached-datastore";
+import {CachedDatastore} from "../../../app/datastore/cached-datastore";
 
 /**
  * @author Daniel de Oliveira

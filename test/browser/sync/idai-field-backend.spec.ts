@@ -1,5 +1,5 @@
-import {IdaiFieldBackend} from "../../app/sync/idai-field-backend";
-import {IdaiFieldDocument} from "../../app/model/idai-field-document";
+import {IdaiFieldBackend} from "../../../app/sync/idai-field-backend";
+import {IdaiFieldDocument} from "../../../app/model/idai-field-document";
 import {Headers} from "@angular/http";
 
 /**

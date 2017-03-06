@@ -1,6 +1,8 @@
 import {Importer} from "../../app/import/importer";
 import {Observable} from "rxjs/Observable";
 import {M} from "../../app/m";
+import {DefaultImportStrategy} from "../../app/import/default-import-strategy";
+import {ImportStrategy} from "../../app/import/import-strategy";
 
 
 /**
@@ -13,6 +15,7 @@ export function main() {
     let importer;
     let mockValidator;
     let mockDatastore;
+    let importStrategy: ImportStrategy;
 
     beforeEach(()=>{
         mockReader = jasmine.createSpyObj('reader',['read']);
@@ -22,7 +25,8 @@ export function main() {
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
         mockValidator.validate.and.callFake(function() {return Promise.resolve();});
         mockDatastore.create.and.callFake(function(a){return Promise.resolve(a)});
-        importer = new Importer(mockDatastore,mockValidator);
+        importStrategy = new DefaultImportStrategy(mockValidator,mockDatastore);
+        importer = new Importer();
     });
 
     describe('Importer', () => {
@@ -34,7 +38,7 @@ export function main() {
                 })});
 
                 mockValidator.validate.and.returnValue(Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader,mockParser)
+                importer.importResources(mockReader,mockParser,importStrategy)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
                         done();
@@ -54,7 +58,7 @@ export function main() {
                 })});
 
                 mockValidator.validate.and.returnValues(Promise.resolve(undefined),Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader,mockParser)
+                importer.importResources(mockReader,mockParser,importStrategy)
                     .then(importReport=>{
                         expect(mockDatastore.create).toHaveBeenCalledTimes(1);
                         expect(importReport['successful_imports']).toBe(1);

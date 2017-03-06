@@ -79,7 +79,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,
-            useFactory: function(configLoader:ConfigLoader) : Datastore {
+            useFactory: function(configLoader: ConfigLoader) : Datastore {
                 let test = CONFIG['environment'] == 'test';
                 let dbname = CONFIG['database'] ? CONFIG['database'] : 'idai-field-documents';
                 let datastore;
@@ -103,10 +103,10 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader:ConfigLoader,datastore:IdaiFieldDatastore) {
-                return new IdaiFieldValidator(configLoader,datastore);
+            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDatastore) {
+                return new IdaiFieldValidator(configLoader, datastore);
             },
-            deps: [ConfigLoader,ReadDatastore]
+            deps: [ConfigLoader, ReadDatastore]
         },
         SyncMediator,
         { provide: MD, useClass: M},

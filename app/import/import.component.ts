@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {Messages} from "idai-components-2/messages";
 import {Importer} from "./importer";
 import {Reader} from "./reader";
@@ -9,6 +9,9 @@ import {NativeJsonlParser} from "./native-jsonl-parser";
 import {IdigCsvParser} from "./idig-csv-parser";
 import {M} from "../m";
 import {Http} from "@angular/http";
+import {DefaultImportStrategy} from "./default-import-strategy";
+import {Datastore} from "idai-components-2/datastore";
+import {Validator} from "idai-components-2/persist";
 
 
 @Component({
@@ -36,6 +39,8 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
+        private datastore: Datastore,
+        private validator: Validator,
         private http: Http
     ) {}
 
@@ -53,7 +58,11 @@ export class ImportComponent {
 
         this.messages.add(M.IMPORTER_START);
 
-        this.importer.importResources(reader, parser).then(
+        this.importer.importResources(
+            reader,
+            parser,
+            new DefaultImportStrategy(this.validator,this.datastore))
+        .then(
             importReport => {
                 this.evaluate(importReport);
             }

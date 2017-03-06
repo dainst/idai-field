@@ -11,7 +11,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
  */
 export class IdaiFieldValidator extends Validator {
 
-    constructor(configLoader:ConfigLoader, private datastore:IdaiFieldDatastore) {
+    constructor(configLoader: ConfigLoader, private datastore: IdaiFieldDatastore) {
         super(configLoader);
     }
 

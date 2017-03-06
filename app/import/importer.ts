@@ -4,6 +4,7 @@ import {Validator} from "idai-components-2/persist";
 import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
+import {ImportStrategy} from "./import-strategy";
 
 
 /**
@@ -41,8 +42,7 @@ export class Importer {
         };
     }
 
-    constructor(private datastore: Datastore,
-                private validator: Validator) {
+    constructor() {
     }
 
     /**
@@ -61,7 +61,7 @@ export class Importer {
      * @param parser
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResources(reader: Reader, parser: Parser): Promise<any> {
+    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<any> {
 
         return new Promise<any>(resolve => {
 
@@ -78,7 +78,7 @@ export class Importer {
                         this.importReport.parser_info.push(result.messages[i]);
                     }
 
-                    if (!this.inUpdateDocumentLoop) this.update(result.document);
+                    if (!this.inUpdateDocumentLoop) this.update(result.document,importStrategy);
                     else this.docsToUpdate.push(result.document);
 
                 }, msgWithParams => {
@@ -106,13 +106,10 @@ export class Importer {
      *
      * @param doc
      */
-    private update(doc: Document) {
+    private update(doc: Document,importStrategy: ImportStrategy) {
         this.inUpdateDocumentLoop = true;
 
-        this.validator.validate(doc)
-            .then(() => {
-                    return this.datastore.create(doc).catch(keyOfM=>Promise.reject([keyOfM])); // TODO unit test this
-                })
+        importStrategy.go(doc)
             .then(() => {
 
                 this.importSuccessCounter++;
@@ -121,7 +118,7 @@ export class Importer {
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0])
+                    return this.update(this.docsToUpdate[0],importStrategy)
                 } else {
                     this.finishImport();
                 }

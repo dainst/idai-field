@@ -4,11 +4,11 @@ import {Observable} from "rxjs/Observable";
 import {Parser, ParserResult} from "./parser";
 import {M} from "../m";
 
+@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-@Injectable()
 export class NativeJsonlParser implements Parser {
 
     public parse(content: string): Observable<ParserResult> {

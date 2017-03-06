@@ -14,11 +14,11 @@ export function main() {
     let mockImportStrategy;
 
     beforeEach(()=>{
-        mockReader = jasmine.createSpyObj('reader',['read']);
-        mockReader.importDoc.and.callFake(function() {return Promise.resolve();});
+        mockReader = jasmine.createSpyObj('reader',['go']);
+        mockReader.go.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser',['parse']);
 
-        mockImportStrategy = jasmine.createSpyObj('importStrategy',['go']);
+        mockImportStrategy = jasmine.createSpyObj('importStrategy',['importDoc']);
         importer = new Importer();
     });
 

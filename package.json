@@ -35,11 +35,7 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb": "2.3.6",
-<<<<<<< HEAD
     "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/508/.git",
-=======
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/507/.git",
->>>>>>> use parent type for filtering (see #4546)
     "identicon.js": "github:dainst/identicon.js",
     "leaflet": "1.0.1",
     "leaflet-imageoverlay-rotated": "0.1.1",

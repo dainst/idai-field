@@ -22,6 +22,7 @@ export function main() {
                 objects.push(result.document);
             }, () => {
                 fail();
+                done();
             }, () => {
                 expect(objects[0]['resource']['id']).toEqual("id1");
                 expect(objects[0]['resource']['type']).toEqual("object");

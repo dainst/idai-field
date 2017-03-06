@@ -12,6 +12,7 @@ import {Http} from "@angular/http";
 import {DefaultImportStrategy} from "./default-import-strategy";
 import {Datastore} from "idai-components-2/datastore";
 import {Validator} from "idai-components-2/persist";
+import {ImportStrategy} from "./import-strategy";
 
 
 @Component({
@@ -46,27 +47,17 @@ export class ImportComponent {
 
     public startImport() {
 
+        let reader = ImportComponent.createReader(this.sourceType,this.file,this.url,this.http);
+        let parser = ImportComponent.createParser(this.format);
+        let importStrategy = ImportComponent.createImportStrategy(this.validator,this.datastore);
+
         this.messages.clear();
-
-        let reader: Reader = this.createReader();
-        let parser: Parser = this.chooseParser();
-
-        if (!reader || !parser) {
-            this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
-            return;
-        }
+        if (!reader || !parser || !importStrategy) return this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
 
         this.messages.add(M.IMPORTER_START);
+        this.importer.importResources(reader, parser, importStrategy)
+            .then(importReport => this.evaluate(importReport))
 
-        this.importer.importResources(
-            reader,
-            parser,
-            new DefaultImportStrategy(this.validator,this.datastore))
-        .then(
-            importReport => {
-                this.evaluate(importReport);
-            }
-        );
     }
 
     public isReady(): boolean {
@@ -87,19 +78,23 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private createReader(): Reader {
+    private static createImportStrategy(validator, datastore): ImportStrategy {
+        return new DefaultImportStrategy(validator, datastore)
+    }
 
-        switch (this.sourceType) {
+    private static createReader(sourceType, file, url, http): Reader {
+
+        switch (sourceType) {
             case "file":
-                return new FileSystemReader(this.file);
+                return new FileSystemReader(file);
             case "http":
-                return new HttpReader(this.url,this.http);
+                return new HttpReader(url, http);
         }
     }
 
-    private chooseParser(): Parser {
+    private static createParser(format): Parser {
 
-        switch (this.format) {
+        switch (format) {
             case "native":
                 return new NativeJsonlParser();
             case "idig":
@@ -107,7 +102,7 @@ export class ImportComponent {
         }
     }
 
-    private selectFile(event) {
+    public selectFile(event) {
 
         let files = event.target.files;
 
@@ -128,19 +123,17 @@ export class ImportComponent {
 
             this.messages.addWithParams(msgWithParams);
         }
-
         for (let parserInfo of importReport['parser_info'])
             this.messages.add(parserInfo);
 
-        if (importReport['successful_imports'] > 0)
-            this.showSuccessMessage(importReport['successful_imports']);
+        this.showSuccessMessage(importReport['successful_imports']);
     }
 
     private showSuccessMessage(count) {
 
         if (count == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
-        } else {
+        } else if (count > 1) {
             this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, count.toString()]);
         }
     }

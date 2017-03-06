@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Document} from 'idai-components-2/core'
 import {Observable} from "rxjs/Observable";
 import {Parser, ParserResult} from "./parser";
-import {M} from "../m";
 import {JsonlParser} from "./jsonl-parser";
 
 @Injectable()

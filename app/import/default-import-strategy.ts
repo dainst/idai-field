@@ -4,10 +4,10 @@ import {ImportStrategy} from "./import-strategy";
 import {Validator} from "idai-components-2/persist";
 import {Datastore} from "idai-components-2/datastore";
 
+@Injectable()
 /**
  * @author Daniel de Oliveira
  */
-@Injectable()
 export class DefaultImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator, private datastore: Datastore) { }

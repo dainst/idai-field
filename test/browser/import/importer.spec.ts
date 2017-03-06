@@ -15,7 +15,7 @@ export function main() {
 
     beforeEach(()=>{
         mockReader = jasmine.createSpyObj('reader',['read']);
-        mockReader.read.and.callFake(function() {return Promise.resolve();});
+        mockReader.importDoc.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser',['parse']);
 
         mockImportStrategy = jasmine.createSpyObj('importStrategy',['go']);
@@ -30,7 +30,7 @@ export function main() {
                     observer.complete();
                 })});
 
-                mockImportStrategy.go.and.returnValue(Promise.reject(['constraintviolation']));
+                mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
                 importer.importResources(mockReader,mockParser,mockImportStrategy)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
@@ -51,10 +51,10 @@ export function main() {
                     observer.complete();
                 })});
 
-                mockImportStrategy.go.and.returnValues(Promise.resolve(undefined),Promise.reject(['constraintviolation']));
+                mockImportStrategy.importDoc.and.returnValues(Promise.resolve(undefined),Promise.reject(['constraintviolation']));
                 importer.importResources(mockReader,mockParser,mockImportStrategy)
                     .then(importReport=>{
-                        expect(mockImportStrategy.go).toHaveBeenCalledTimes(2);
+                        expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
                         expect(importReport['successful_imports']).toBe(1);
                         done();
                     },err => {

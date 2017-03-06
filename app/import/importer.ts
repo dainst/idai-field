@@ -65,7 +65,7 @@ export class Importer {
             this.resolvePromise = resolve;
             this.initState();
 
-            reader.read().then(fileContent => {
+            reader.go().then(fileContent => {
 
                 parser.parse(fileContent).subscribe(result => {
 
@@ -108,7 +108,7 @@ export class Importer {
     private update(doc: Document,importStrategy: ImportStrategy) {
         this.inUpdateDocumentLoop = true;
 
-        importStrategy.go(doc)
+        importStrategy.importDoc(doc)
             .then(() => {
 
                 this.importSuccessCounter++;

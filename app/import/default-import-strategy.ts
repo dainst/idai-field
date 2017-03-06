@@ -12,7 +12,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator, private datastore: Datastore) { }
 
-    go(doc: Document): Promise<any> {
+    importDoc(doc: Document): Promise<any> {
         return this.validator.validate(doc)
             .then(() => {
                 return this.datastore.create(doc).catch(keyOfM=>Promise.reject([keyOfM]));

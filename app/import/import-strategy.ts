@@ -7,5 +7,5 @@ export interface ImportStrategy {
 
     /**
      */
-    go(doc:Document): Promise<any>;
+    importDoc(doc:Document): Promise<any>;
 }

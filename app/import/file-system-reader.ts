@@ -18,7 +18,7 @@ export class FileSystemReader implements Reader {
      *
      * @returns {Promise<string>} file content | msgWithParams
      */
-    public read(): Promise<string> {
+    public go(): Promise<string> {
 
         return new Promise((resolve, reject) => {
 

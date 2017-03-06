@@ -14,7 +14,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 private datastore: IdaiFieldDatastore)  // TODO check this. this is strange, i can define the type here, but on the caller i just pass a regular datastore, so this a call to findByIdentifier would fail
     { }
 
-    go(doc: Document): Promise<any> {
+    importDoc(doc: Document): Promise<any> {
         let idaiFieldDoc = doc as IdaiFieldDocument;
         return this.datastore.findByIdentifier(idaiFieldDoc.resource.identifier)
             .then(existingIdaiFieldDoc => {

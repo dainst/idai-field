@@ -25,7 +25,7 @@ export function main() {
 
         it('should resolve on success', (done) => {
 
-            importStrategy.go({resource:{type:undefined,id:undefined,relations:undefined}})
+            importStrategy.importDoc({resource:{type:undefined,id:undefined,relations:undefined}})
                 .then(
                     () => done(),
                     () => { fail(); done() }
@@ -35,7 +35,7 @@ export function main() {
         it('should reject on err in validator', (done) => {
 
             mockValidator.validate.and.callFake(function() {return Promise.reject(['abc']);});
-            importStrategy.go({resource:{type:undefined,id:undefined,relations:undefined}})
+            importStrategy.importDoc({resource:{type:undefined,id:undefined,relations:undefined}})
                 .then(
                     () => { fail(); done() },
                     err => {
@@ -48,7 +48,7 @@ export function main() {
         it('should reject on err in validator', (done) => {
 
             mockDatastore.create.and.callFake(function() {return Promise.reject('abc');});
-            importStrategy.go({resource:{type:undefined,id:undefined,relations:undefined}})
+            importStrategy.importDoc({resource:{type:undefined,id:undefined,relations:undefined}})
                 .then(
                     () => done(),
                     err => {

@@ -1,6 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Datastore} from "idai-components-2/datastore";
-import {Validator} from "idai-components-2/persist";
 import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
@@ -35,7 +33,6 @@ export class Importer {
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
         this.importReport = {
-            "io_error": false,
             "errors": [],
             "parser_info": [],
             "successful_imports": 0,
@@ -58,6 +55,7 @@ export class Importer {
      *
      * @param reader
      * @param parser
+     * @param importStrategy
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<any> {
@@ -91,8 +89,9 @@ export class Importer {
                     this.objectReaderFinished = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
                 });
-            }).catch(error => {
-                this.importReport['io_error'] = true;
+            }).catch(msgWithParams => { // TODO test this
+                this.importReport["errors"].push(msgWithParams);
+                this.finishImport();
             });
         });
     }
@@ -104,6 +103,7 @@ export class Importer {
      * Triggers a datastore update of <code>doc</code> on every call.
      *
      * @param doc
+     * @param importStrategy
      */
     private update(doc: Document,importStrategy: ImportStrategy) {
         this.inUpdateDocumentLoop = true;

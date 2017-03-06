@@ -127,14 +127,10 @@ export class ImportComponent {
     
     private evaluate(importReport) {
 
-        if (importReport['io_error']) {
-            let filename = this.file ? this.file.name : '';
-            this.messages.addWithParams([M.IMPORTER_FAILURE_FILEUNREADABLE, filename]);
-        }
         for (let msgWithParams of importReport['errors']) {
-
             this.messages.addWithParams(msgWithParams);
         }
+
         for (let parserInfo of importReport['parser_info'])
             this.messages.add(parserInfo);
 

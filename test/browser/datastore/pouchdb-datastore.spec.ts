@@ -318,6 +318,34 @@ export function main() {
                 );
         });
 
+        it('should filter by parent type in find', function(done){
+            let doc1 = doc('blub','bla1','type1');
+            let doc2 = doc('blub','bla2','type2');
+            let doc3 = doc('blub','bla1.1','type1.1');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find({q: 'blub', types: ['type1']}))
+                .then(result => {
+                    expect(result.length).toBe(2);
+                    expect(result[0].resource['shortDescription']).not.toBe('bla2');
+                    expect(result[0].resource.type).not.toBe('type2');
+                    expect(result[1].resource['shortDescription']).not.toBe('bla2');
+                    expect(result[1].resource.type).not.toBe('type2');
+                })
+                .then(() => datastore.find({q: 'blub', types: ['root']}))
+                .then(result => {
+                    expect(result.length).toBe(3);
+                    done();
+                },
+                err => {
+                    fail(err);
+                    done();
+                }
+            );;
+        });
+
         it('should find by prefix query and filter', function(done){
             let doc1 = doc('bla1','blub1','type1');
             let doc2 = doc('bla2','blub2','type2');
@@ -362,6 +390,30 @@ export function main() {
                         expect(result[0].resource['shortDescription']).toBe('bla3');
                         expect(result[1].resource['shortDescription']).toBe('bla2');
                         expect(result[2].resource['shortDescription']).toBe('bla1');
+                        done();
+                    },
+                    err => {
+                        console.log(err);
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter by parent type in all', function(done){
+            let doc1 = doc('blub','bla1','type1');
+            let doc2 = doc('blub','bla2','type2');
+            let doc3 = doc('blub','bla1.1','type1.1');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.all(['type1']))
+                .then(
+                    result => {
+                        expect(result.length).toBe(2);
+                        expect(result[0].resource['identifier']).toBe('bla1.1');
+                        expect(result[1].resource['identifier']).toBe('bla1');
                         done();
                     },
                     err => {

@@ -51,17 +51,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private setupFulltextIndex(): Promise<any> {
+        this.db.on('error', err => console.error(err.toString()));
         let mapFun = function(doc) {
-            if (doc.resource.shortDescription)
-                doc.resource.shortDescription.split(/[.;,\- ]+/)
-                        .forEach(function(token) {
-                    emit((['', token.toLowerCase()]));
-                    emit([doc.resource.type, token.toLowerCase()]);
-                });
-            if (doc.resource.identifier) {
-                emit(['', doc.resource.identifier.toLowerCase()]);
-                emit([doc.resource.type, doc.resource.identifier.toLowerCase()]);
-            }
+            var types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
+            if (types.indexOf('image') == -1) types.push('resource');
+            types.forEach(function(type) {
+                if (doc.resource.shortDescription)
+                    doc.resource.shortDescription.split(/[.;,\- ]+/)
+                        .forEach(token => emit([type, token.toLowerCase()]));
+                if (doc.resource.identifier)
+                    emit([type, doc.resource.identifier.toLowerCase()]);
+            });
         };
         return this.setupIndex('fulltext', mapFun);
     }
@@ -75,8 +75,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private setupAllIndex(): Promise<any> {
         let mapFun = function(doc) {
-            emit(['', doc.modified]);
-            emit([doc.resource.type, doc.modified]);
+            var types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
+            if (types.indexOf('image') == -1) types.push('resource');
+            types.forEach(type => emit([type, doc.modified]));
         };
         return this.setupIndex('all', mapFun);
     }
@@ -122,8 +123,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 if (!document.resource.id)  document.resource.id = IdGenerator.generateId();
                 document['id'] = document.resource.id;
                 document['_id'] = document.resource.id;
-                //document['_parents'] = this.config
-                //    .getParentTypes(document.resource.type);
+                document.resource['_parentTypes'] = this.config
+                    .getParentTypes(document.resource.type);
 
                 document.created = new Date();
                 document.modified = document.created;
@@ -196,6 +197,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
                 document.modified = new Date();
+                document.resource['_parentTypes'] = this.config
+                    .getParentTypes(document.resource.type);
 
                 return this.db.put(document).catch(
                     err => {

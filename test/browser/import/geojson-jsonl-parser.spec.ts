@@ -8,20 +8,23 @@ export function main() {
 
     describe('GeojsonJsonlParser', () => {
 
-        it('should create objects from file content', (done) => {
+        it('should create a document from file content', (done) => {
 
-            let fileContent  = '{ "properties" : { "identifier" : "123" } }';
+            let fileContent  = '{ "type" : "Feature", ' +
+                '"geometry" : { "type": "Point", "coordinates": [6.71875,-6.96875] }, ' +
+                '"properties" : { "identifier" : "123" } }';
 
             let parser = new GeojsonJsonlParser();
             let docs: Document[] = [];
             parser.parse(fileContent).subscribe(result => {
                 expect(result).not.toBe(undefined);
                 docs.push(result.document);
-            }, () => {
-                fail();
+            }, err => {
+                fail(err);
                 done();
             }, () => {
                 expect(docs[0].resource['identifier']).toEqual("123");
+                expect(docs[0].resource['geometries'][0]['type']).toEqual("Point");
                 done();
             });
 

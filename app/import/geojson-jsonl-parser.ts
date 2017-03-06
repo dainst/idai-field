@@ -20,6 +20,7 @@ export class GeojsonJsonlParser extends JsonlParser implements Parser {
         let lineItem = JSON.parse(line);
         let resource = {
             identifier: lineItem['properties']['identifier'],
+            geometries: [lineItem['geometry']],
             relations: {}
         };
         return {

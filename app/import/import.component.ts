@@ -49,9 +49,9 @@ export class ImportComponent {
 
     public startImport() {
 
-        let reader = ImportComponent.createReader(this.sourceType,this.file,this.url,this.http);
+        let reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
         let parser = ImportComponent.createParser(this.format);
-        let importStrategy = ImportComponent.createImportStrategy(this.format,this.validator,this.datastore);
+        let importStrategy = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
 
         this.messages.clear();
         if (!reader || !parser || !importStrategy) return this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
@@ -127,9 +127,14 @@ export class ImportComponent {
     }
     
     private evaluate(importReport) {
+
         for (let msgWithParams of importReport['errors']) {
             this.messages.addWithParams(msgWithParams);
         }
+        for (let msgWithParams of importReport['warnings']) {
+            this.messages.addWithParams(msgWithParams);
+        }
+
         if (importReport['successful_imports'] == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
         } else if (importReport['successful_imports'] > 1) {

@@ -12,7 +12,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_GENERIC_START_ERROR: string = 'importer/genericstarterror';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
-    public static IMPORTER_INFO_NOMULTIPOLYGONSUPPORT: string = 'importer/info/nomultipolygonsupport';
+    public static IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT: string = 'importer/warning/nomultipolygonsupport';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
@@ -67,10 +67,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ "Mehrere"],
             hidden: false
         };
-        this.msgs[M.IMPORTER_INFO_NOMULTIPOLYGONSUPPORT]={
+        this.msgs[M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT]={
             content: 'Die Geometriedaten enthalten eine Geometrie vom Typ Multipolygon. Da Multipolygone von der ' +
                 'Anwendung zurzeit nicht unterstützt werden, konnten diese Geometriedaten nicht importiert werden.',
-            level: 'info',
+            level: 'warning',
             params: [],
             hidden: false
         };

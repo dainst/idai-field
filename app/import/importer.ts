@@ -32,6 +32,7 @@ export class Importer {
         this.currentImportWithError = false;
         this.importReport = {
             errors: [],
+            warnings: [],
             successful_imports: 0,
         };
     }
@@ -68,7 +69,7 @@ export class Importer {
 
                     if (this.currentImportWithError) return;
 
-                    if (!this.inUpdateDocumentLoop) this.update(resultDocument,importStrategy);
+                    if (!this.inUpdateDocumentLoop) this.update(resultDocument, importStrategy);
                     else this.docsToUpdate.push(resultDocument);
 
                 }, msgWithParams => {
@@ -79,6 +80,7 @@ export class Importer {
                     if (!this.inUpdateDocumentLoop) this.finishImport();
 
                 }, () => {
+                    this.importReport.warnings = parser.getWarnings();
                     this.objectReaderFinished = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
                 });

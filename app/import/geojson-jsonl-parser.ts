@@ -17,6 +17,10 @@ export class GeojsonJsonlParser extends JsonlParser implements Parser {
         });
     }
 
+    public getWarnings(): string[][] {
+        return [];
+    }
+
     private static makeDoc(line) {
         let lineItem = JSON.parse(line);
         let resource = {

@@ -19,6 +19,10 @@ export class NativeJsonlParser extends JsonlParser implements Parser {
         });
     }
 
+    public getWarnings(): string[][] {
+        return [];
+    }
+
     private static makeDoc(line) {
         let resource = JSON.parse(line);
         if (!resource.relations) resource.relations = {};

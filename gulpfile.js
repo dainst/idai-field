@@ -90,7 +90,7 @@ gulp.task('make-dist', function () {
     gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
     gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
-    gulp.src('imaegstore/**/*').pipe(gulp.dest('dist/imagestore/'));
+    gulp.src('imagestore/**/*').pipe(gulp.dest('dist/imagestore/'));
     gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
     gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));
     gulp.src('node_modules/leaflet/**/*').pipe(gulp.dest('dist/node_modules/leaflet/'));

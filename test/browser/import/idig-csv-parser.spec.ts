@@ -17,9 +17,9 @@ export function main() {
 
             let parser = new IdigCsvParser();
             let objects = [];
-            parser.parse(fileContent).subscribe(result => {
-                expect(result).not.toBe(undefined);
-                objects.push(result.document);
+            parser.parse(fileContent).subscribe(resultDocument => {
+                expect(resultDocument).not.toBe(undefined);
+                objects.push(resultDocument);
             }, () => {
                 fail();
             }, () => {
@@ -40,9 +40,9 @@ export function main() {
             
             let parser = new IdigCsvParser();
             let objects = [];
-            parser.parse(fileContent).subscribe(result => {
-                expect(result).not.toBe(undefined);
-                objects.push(result.document);
+            parser.parse(fileContent).subscribe(resultDocument => {
+                expect(resultDocument).not.toBe(undefined);
+                objects.push(resultDocument);
             }, (msgWithParams) => {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['id']).toEqual("1");

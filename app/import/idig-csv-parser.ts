@@ -2,15 +2,16 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
-import {Parser, ParserResult} from "./parser";
+import {Parser} from "./parser";
 import {M} from "../m";
+import {Document} from 'idai-components-2/core';
 
+@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-@Injectable()
 export class IdigCsvParser implements Parser {
 
     private static MANDATORY_FIELDS: string[] = ["IdentifierUUID", "Type"];
@@ -43,7 +44,7 @@ export class IdigCsvParser implements Parser {
     ];
     private static GEOMETRY_FIELD: string = "CoverageUnion";
 
-    public parse(content: string): Observable<ParserResult> {
+    public parse(content: string): Observable<Document> {
 
         return Observable.create(observer => {
 
@@ -102,7 +103,7 @@ export class IdigCsvParser implements Parser {
             return object['IdentifierUUID'];
     }
 
-    private documentFrom(object, lineNumber:number): ParserResult {
+    private documentFrom(object, lineNumber:number): Document {
 
         let doc: IdaiFieldDocument = {
             resource: {
@@ -123,9 +124,7 @@ export class IdigCsvParser implements Parser {
     }
 
 
-    private map(object, doc, lineNumber:number): ParserResult {
-
-        let result: ParserResult = { document: doc, messages: [] };
+    private map(object, doc, lineNumber:number): Document {
 
         Object.keys(object).forEach( field => {
             if (IdigCsvParser.IGNORED_FIELDS.indexOf(field) == -1) {
@@ -133,17 +132,13 @@ export class IdigCsvParser implements Parser {
                 if (this.isRelation(field)) {
                     this.mapRelationField(object, doc.resource, field);
                 } else if (field == IdigCsvParser.GEOMETRY_FIELD) {
-                    try {
-                        this.mapGeometryField(object, doc.resource,lineNumber);
-                    } catch(error) {
-                        result.messages.push(error);
-                    }
+                    this.mapGeometryField(object, doc.resource,lineNumber);
                 }
                 else this.copyField(object, doc.resource,field);
             }
         });
 
-        return result;
+        return doc;
     }
 
     private isRelation(field) {

@@ -16,9 +16,9 @@ export function main() {
 
             let parser = new GeojsonJsonlParser();
             let docs: Document[] = [];
-            parser.parse(fileContent).subscribe(result => {
-                expect(result).not.toBe(undefined);
-                docs.push(result.document);
+            parser.parse(fileContent).subscribe(resultDocument => {
+                expect(resultDocument).not.toBe(undefined);
+                docs.push(resultDocument);
             }, err => {
                 fail(err);
                 done();

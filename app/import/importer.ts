@@ -5,6 +5,7 @@ import {Parser} from "./parser";
 import {ImportStrategy} from "./import-strategy";
 
 
+@Injectable()
 /**
  * The Importer's responsibility is to read resources from jsonl files
  * residing on the local file system and to convert them to documents, which
@@ -15,12 +16,10 @@ import {ImportStrategy} from "./import-strategy";
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-@Injectable()
 export class Importer {
 
     private inUpdateDocumentLoop:boolean;
     private docsToUpdate: Array<Document>;
-    private importSuccessCounter:number;
     private objectReaderFinished:boolean;
     private currentImportWithError:boolean;
     private importReport:any;
@@ -29,13 +28,11 @@ export class Importer {
     private initState() {
         this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
-        this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
         this.importReport = {
-            "errors": [],
-            "parser_info": [],
-            "successful_imports": 0,
+            errors: [],
+            successful_imports: 0,
         };
     }
 
@@ -67,16 +64,12 @@ export class Importer {
 
             reader.go().then(fileContent => {
 
-                parser.parse(fileContent).subscribe(result => {
+                parser.parse(fileContent).subscribe(resultDocument => {
 
                     if (this.currentImportWithError) return;
 
-                    for (let i in result.messages) {
-                        this.importReport.parser_info.push(result.messages[i]);
-                    }
-
-                    if (!this.inUpdateDocumentLoop) this.update(result.document,importStrategy);
-                    else this.docsToUpdate.push(result.document);
+                    if (!this.inUpdateDocumentLoop) this.update(resultDocument,importStrategy);
+                    else this.docsToUpdate.push(resultDocument);
 
                 }, msgWithParams => {
                     this.importReport["errors"].push(msgWithParams);
@@ -111,7 +104,7 @@ export class Importer {
         importStrategy.importDoc(doc)
             .then(() => {
 
-                this.importSuccessCounter++;
+                this.importReport["successful_imports"]++;
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);
@@ -129,7 +122,6 @@ export class Importer {
     }
 
     private finishImport() {
-        this.importReport["successful_imports"] = this.importSuccessCounter;
         this.inUpdateDocumentLoop = false;
         this.resolvePromise(this.importReport);
     }

@@ -126,23 +126,13 @@ export class ImportComponent {
     }
     
     private evaluate(importReport) {
-
         for (let msgWithParams of importReport['errors']) {
             this.messages.addWithParams(msgWithParams);
         }
-
-        for (let parserInfo of importReport['parser_info'])
-            this.messages.add(parserInfo);
-
-        this.showSuccessMessage(importReport['successful_imports']);
-    }
-
-    private showSuccessMessage(count) {
-
-        if (count == 1) {
+        if (importReport['successful_imports'] == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
-        } else if (count > 1) {
-            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, count.toString()]);
+        } else if (importReport['successful_imports'] > 1) {
+            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, importReport['successful_imports'].toString()]);
         }
     }
 }

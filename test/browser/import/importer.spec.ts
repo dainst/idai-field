@@ -1,6 +1,5 @@
 import {Importer} from "../../../app/import/importer";
 import {Observable} from "rxjs/Observable";
-import {ImportStrategy} from "../../../app/import/import-strategy";
 
 
 /**
@@ -26,7 +25,7 @@ export function main() {
         it('should import until constraint violation is detected',
             function (done) {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {
-                    observer.next({ document: {resource: {type: "object", id:"abc1",relations:{} }}, messages: []});
+                    observer.next({ resource: {type: "object", id:"abc1",relations:{} }});
                     observer.complete();
                 })});
 
@@ -45,9 +44,9 @@ export function main() {
         it('should import as long as no error is detected',
             function (done) {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {
-                    observer.next({ document: {resource: {type: "object", id:"abc1",relations:{} }}, messages: []});
-                    observer.next({ document: {resource: {type: "object", id:"abc2",relations:{} }}, messages: []});
-                    observer.next({ document: {resource: {type: "object", id:"abc3",relations:{} }}, messages: []});
+                    observer.next({resource: {type: "object", id:"abc1",relations:{} }});
+                    observer.next({resource: {type: "object", id:"abc2",relations:{} }});
+                    observer.next({resource: {type: "object", id:"abc3",relations:{} }});
                     observer.complete();
                 })});
 

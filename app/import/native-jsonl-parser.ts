@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Parser, ParserResult} from "./parser";
+import {Parser} from "./parser";
 import {JsonlParser} from "./jsonl-parser";
+import {Document} from 'idai-components-2/core';
 
 @Injectable()
 /**
@@ -10,7 +11,7 @@ import {JsonlParser} from "./jsonl-parser";
  */
 export class NativeJsonlParser extends JsonlParser implements Parser {
 
-    public parse(content: string): Observable<ParserResult> {
+    public parse(content: string): Observable<Document> {
 
         return Observable.create(observer => {
             JsonlParser.parseContent(content,observer,NativeJsonlParser.makeDoc);
@@ -22,8 +23,7 @@ export class NativeJsonlParser extends JsonlParser implements Parser {
         let resource = JSON.parse(line);
         if (!resource.relations) resource.relations = {};
         return {
-            document: {resource: resource},
-            messages: []
+            resource: resource
         };
     }
 }

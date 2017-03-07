@@ -38,6 +38,7 @@ export class ImportComponent {
     private format: string = "native";
     private file: File;
     private url: string;
+    private running: boolean = false;
 
     constructor(
         private messages: Messages,
@@ -57,8 +58,10 @@ export class ImportComponent {
         if (!reader || !parser || !importStrategy) return this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
 
         this.messages.add(M.IMPORTER_START);
+        this.running = true;
         this.importer.importResources(reader, parser, importStrategy)
             .then(importReport => this.evaluate(importReport))
+            .then(() => this.running = false);
 
     }
 

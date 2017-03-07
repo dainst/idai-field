@@ -12,7 +12,7 @@
 
     <main>
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-sm-6 offset-sm-3">
                 <div class="form-horizontal">
 
                     <div class="md-form">
@@ -20,8 +20,10 @@
                             <label class="control-label col-sm-2">Quelle:</label>
                         </div>
                         <div class="col-sm-10">
-                            <select id="importSourceSelect" class="form-control" [(ngModel)]="sourceType"
-                                    (ngModelChange)="reset()">
+                            <select id="importSourceSelect" class="form-control"
+                                    [(ngModel)]="sourceType"
+                                    (ngModelChange)="reset()"
+                                    [class.disabled]="running">
                                 <option value="file">Datei</option>
                                 <option value="http">HTTP</option>
                             </select>
@@ -34,7 +36,9 @@
                                 <label class="control-label col-sm-2">Pfad:</label>
                             </div>
                             <div class="col-sm-10">
-                                <input id="importFileInput" type="file" class="form-control"
+                                <input id="importFileInput" type="file"
+                                       class="form-control"
+                                       [class.disabled]="running"
                                        (change)="selectFile($event)">
                             </div>
                         </div>
@@ -43,7 +47,10 @@
                     <div *ngIf="sourceType == 'http'">
                         <div class="md-form">
                             <div class="col-sm-12">
-                                <input id="importUrlInput" type="text" class="form-control" [(ngModel)]="url">
+                                <input id="importUrlInput" type="text"
+                                       class="form-control"
+                                       [(ngModel)]="url"
+                                       [class.disabled]="running">
                                 <label for="importUrlInput" class="col-sm-2">URL</label>
                             </div>
                         </div>
@@ -54,7 +61,9 @@
                             <label class="control-label col-sm-2">Format:</label>
                         </div>
                         <div class="col-sm-10">
-                            <select id="importFormatSelect" class="form-control" [(ngModel)]="format">
+                            <select id="importFormatSelect" class="form-control"
+                                    [(ngModel)]="format"
+                                    [class.disabled]="running">
                                 <option value="native">iDAI.field</option>
                                 <option value="idig">iDig</option>
                                 <option value="geojson">GeoJSON</option>
@@ -62,12 +71,24 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="md-form">
+                        <div class="col-sm-3">
+                            <button *ngIf="isReady()" id="importStartButton"
+                                    class="btn btn-primary"
+                                    (click)="startImport()">
+                                Import starten
+                            </button>
+                            <button *ngIf="!isReady()"
+                                    class="btn btn-primary disabled">
+                                Import starten
+                            </button>
+                        </div>
+                        <div class="col-sm-9">
+                            <div *ngIf="running" class="spinner"></div>
+                        </div>
+                    </div>
 
-                <button *ngIf="isReady()" id="importStartButton" class="btn btn-primary"
-                        (click)="startImport()">Import starten
-                </button>
-                <button *ngIf="!isReady()" class="btn btn-primary disabled">Import starten</button>
+                </div>
             </div>
         </div>
     </main>

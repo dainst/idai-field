@@ -248,8 +248,8 @@ export class IdigCsvParser implements Parser {
             throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
-        point[0] = parseInt(coordinates[0].replace(",", "."));
-        point[1] = parseInt(coordinates[1].replace(",", "."));
+        point[0] = parseFloat(coordinates[0].replace(",", "."));
+        point[1] = parseFloat(coordinates[1].replace(",", "."));
         if (isNaN(point[0]) || isNaN(point[1])) {
             throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
         }

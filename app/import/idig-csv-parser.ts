@@ -59,7 +59,7 @@ export class IdigCsvParser implements Parser {
                 result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
                     let msgWithParams = this.checkExistenceOfMandatoryFields(object, i + 1);
-                    if (msgWithParams != undefined) return observer.error(msgWithParams);
+                    if (msgWithParams != undefined) observer.error(msgWithParams);
 
                     try {
                         observer.next(this.documentFrom(object, i + 1));

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Messages} from "idai-components-2/messages";
-import {Importer} from "./importer";
+import {Importer, ImportReport} from "./importer";
 import {Reader} from "./reader";
 import {FileSystemReader} from "./file-system-reader";
 import {HttpReader} from "./http-reader";
@@ -126,19 +126,20 @@ export class ImportComponent {
         }
     }
     
-    private evaluate(importReport) {
+    private evaluate(importReport: ImportReport) {
 
-        for (let msgWithParams of importReport['errors']) {
+        for (let msgWithParams of importReport.errors) {
             this.messages.addWithParams(msgWithParams);
         }
-        for (let msgWithParams of importReport['warnings']) {
+        for (let msgWithParams of importReport.warnings) {
             this.messages.addWithParams(msgWithParams);
         }
 
-        if (importReport['successful_imports'] == 1) {
+        if (importReport.importedResourcesIds.length == 1) {
             this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
-        } else if (importReport['successful_imports'] > 1) {
-            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, importReport['successful_imports'].toString()]);
+        } else if (importReport.importedResourcesIds.length > 1) {
+            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE,
+                importReport.importedResourcesIds.length.toString()]);
         }
     }
 }

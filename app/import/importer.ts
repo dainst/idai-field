@@ -5,6 +5,14 @@ import {Parser} from "./parser";
 import {ImportStrategy} from "./import-strategy";
 
 
+export interface ImportReport {
+
+    errors: string[][],
+    warnings: string[][],
+    importedResourcesIds: string[]
+}
+
+
 @Injectable()
 /**
  * The Importer's responsibility is to read resources from jsonl files
@@ -18,12 +26,12 @@ import {ImportStrategy} from "./import-strategy";
  */
 export class Importer {
 
-    private inUpdateDocumentLoop:boolean;
+    private inUpdateDocumentLoop: boolean;
     private docsToUpdate: Array<Document>;
-    private objectReaderFinished:boolean;
-    private currentImportWithError:boolean;
-    private importReport:any;
-    private resolvePromise:(any) => any;
+    private objectReaderFinished: boolean;
+    private currentImportWithError: boolean;
+    private importReport: ImportReport;
+    private resolvePromise: (any) => any;
 
     private initState() {
         this.docsToUpdate = [];
@@ -33,7 +41,7 @@ export class Importer {
         this.importReport = {
             errors: [],
             warnings: [],
-            successful_imports: 0,
+            importedResourcesIds: [],
         };
     }
 
@@ -56,7 +64,7 @@ export class Importer {
      * @param importStrategy
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<any> {
+    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 
@@ -73,7 +81,7 @@ export class Importer {
                     else this.docsToUpdate.push(resultDocument);
 
                 }, msgWithParams => {
-                    this.importReport["errors"].push(msgWithParams);
+                    this.importReport.errors.push(msgWithParams);
 
                     this.objectReaderFinished = true;
                     this.currentImportWithError = true;
@@ -85,7 +93,7 @@ export class Importer {
                     if (!this.inUpdateDocumentLoop) this.finishImport();
                 });
             }).catch(msgWithParams => { // TODO test this
-                this.importReport["errors"].push(msgWithParams);
+                this.importReport.errors.push(msgWithParams);
                 this.finishImport();
             });
         });
@@ -100,24 +108,24 @@ export class Importer {
      * @param doc
      * @param importStrategy
      */
-    private update(doc: Document,importStrategy: ImportStrategy) {
+    private update(doc: Document, importStrategy: ImportStrategy) {
         this.inUpdateDocumentLoop = true;
 
         importStrategy.importDoc(doc)
             .then(() => {
 
-                this.importReport["successful_imports"]++;
+                this.importReport.importedResourcesIds.push(doc.resource.id);
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0],importStrategy)
+                    return this.update(this.docsToUpdate[0], importStrategy);
                 } else {
                     this.finishImport();
                 }
             }, msgWithParams => {
-                this.importReport['errors'].push(msgWithParams);
+                this.importReport.errors.push(msgWithParams);
                 this.currentImportWithError = true;
                 this.finishImport();
             });

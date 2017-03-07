@@ -95,6 +95,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
             deps: [ConfigLoader]
         },
         { provide: ReadDatastore, useExisting: Datastore },
+        { provide: IdaiFieldDatastore, useExisting: Datastore },
         IdaiFieldBackend,
         Messages,
         { provide: 'app.config', useValue: CONFIG },

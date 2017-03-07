@@ -10,7 +10,7 @@ import {IdigCsvParser} from "./idig-csv-parser";
 import {M} from "../m";
 import {Http} from "@angular/http";
 import {DefaultImportStrategy} from "./default-import-strategy";
-import {Datastore} from "idai-components-2/datastore";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Validator} from "idai-components-2/persist";
 import {ImportStrategy} from "./import-strategy";
 import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
@@ -42,7 +42,7 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private datastore: Datastore,
+        private datastore: IdaiFieldDatastore,
         private validator: Validator,
         private http: Http
     ) {}
@@ -80,7 +80,8 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private static createImportStrategy(format: string, validator, datastore): ImportStrategy {
+    private static createImportStrategy(format: string, validator: Validator,
+                                        datastore: IdaiFieldDatastore): ImportStrategy {
 
         switch (format) {
             case "native":

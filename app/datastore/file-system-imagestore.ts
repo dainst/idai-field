@@ -3,7 +3,7 @@ import {Mediastore} from 'idai-components-2/datastore';
 
 import * as fs from 'fs';
 
-export class FileSystemMediastore implements Mediastore {
+export class FileSystemImagestore implements Mediastore {
 
     constructor(private basePath: string, loadSampleData: boolean) {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
@@ -84,12 +84,12 @@ export class FileSystemMediastore implements Mediastore {
     }
 
     private loadSampleData(): void {
-        fs.readdir('mediastore', (err, files) => {
+        fs.readdir('imagestore', (err, files) => {
             files.forEach(file => {
-                fs.createReadStream('mediastore/' + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
+                fs.createReadStream('imagestore/' + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
             })
         });
-        console.debug("Successfully put sample images to mediastore ("+this.basePath+")");
+        console.debug("Successfully put sample images to imagestore ("+this.basePath+")");
     }
 
 }

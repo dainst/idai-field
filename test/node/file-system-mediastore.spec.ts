@@ -12,7 +12,7 @@ Module.prototype.require = function() {
 };
 
 import {Mediastore} from"idai-components-2/datastore";
-import {FileSystemMediastore} from "../../app/datastore/file-system-mediastore";
+import {FileSystemImagestore} from "../../app/datastore/file-system-imagestore";
 
 import fs = require('fs');
 import rimraf = require('rimraf');
@@ -31,14 +31,14 @@ function ab2str(buf: ArrayBuffer): string {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
-describe('FileSystemMediastore', () => {
+describe('FileSystemImagestore', () => {
 
     var store: Mediastore;
     var storePath = 'store/';
 
     beforeEach(() => {
         fs.mkdirSync(storePath);
-        store = new FileSystemMediastore(storePath,false);
+        store = new FileSystemImagestore(storePath,false);
     });
 
     afterEach(done => {

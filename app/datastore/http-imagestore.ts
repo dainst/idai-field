@@ -6,7 +6,7 @@ import {Mediastore} from 'idai-components-2/datastore';
  * Read-only datastore for retrieving images from the local mediastore folder via Http
  * @author Sebastian Cuy
  */
-export class HttpMediastore implements Mediastore {
+export class HttpImagestore implements Mediastore {
 
     constructor(private http: Http, private basePath: string) {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';

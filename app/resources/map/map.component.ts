@@ -252,7 +252,7 @@ export class MapComponent implements OnChanges {
             ).catch(
                 msgWithParams => {
                     imgContainer.imgSrc = BlobProxy.blackImg;
-                    this.messages.addWithParams(msgWithParams);
+                    this.messages.add(msgWithParams);
                     reject();
                 }
             );

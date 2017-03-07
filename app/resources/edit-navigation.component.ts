@@ -101,8 +101,8 @@ export class EditNavigationComponent
                 () => {
                     this.documentEditChangeMonitor.reset();
                     resolve();
-                }, (err) => {
-                    this.messages.add(err);
+                }, msgWithParams => {
+                    this.messages.add(msgWithParams);
                     reject();
                 });
         });

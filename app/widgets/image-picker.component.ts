@@ -54,7 +54,7 @@ export class ImagePickerComponent {
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
             this.rows = result['rows'];
             for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.addWithParams(msgWithParams);
+                this.messages.add(msgWithParams);
             }
         });
     }

@@ -97,7 +97,7 @@ export class DropAreaComponent {
 
     private reportUnsupportedFileTypes(unsupportedExts) {
         if (unsupportedExts.length > 0) {
-            this.messages.addWithParams([M.IMAGES_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
+            this.messages.add([M.IMAGES_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
         }
     }
 

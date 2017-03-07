@@ -54,9 +54,9 @@ export class ImportComponent {
         let importStrategy = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
 
         this.messages.clear();
-        if (!reader || !parser || !importStrategy) return this.messages.add(M.IMPORTER_GENERIC_START_ERROR);
+        if (!reader || !parser || !importStrategy) return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
 
-        this.messages.add(M.IMPORTER_START);
+        this.messages.add([M.IMPORTER_START]);
         this.importer.importResources(reader, parser, importStrategy)
             .then(importReport => this.evaluate(importReport))
 
@@ -129,16 +129,16 @@ export class ImportComponent {
     private evaluate(importReport) {
 
         for (let msgWithParams of importReport['errors']) {
-            this.messages.addWithParams(msgWithParams);
+            this.messages.add(msgWithParams);
         }
         for (let msgWithParams of importReport['warnings']) {
-            this.messages.addWithParams(msgWithParams);
+            this.messages.add(msgWithParams);
         }
 
         if (importReport['successful_imports'] == 1) {
-            this.messages.add(M.IMPORTER_SUCCESS_SINGLE);
+            this.messages.add([M.IMPORTER_SUCCESS_SINGLE]);
         } else if (importReport['successful_imports'] > 1) {
-            this.messages.addWithParams([M.IMPORTER_SUCCESS_MULTIPLE, importReport['successful_imports'].toString()]);
+            this.messages.add([M.IMPORTER_SUCCESS_MULTIPLE, importReport['successful_imports'].toString()]);
         }
     }
 }

@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
         // Note that if you want show a message to the user
         // on changing route, you have to write something
         // like
-        // { router.navigate(['target']); messages.add('some'); }
+        // { router.navigate(['target']); messages.add(['some']); }
         //
         router.events.subscribe( (event:Event) => {
             if(event instanceof NavigationStart) {
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit {
             new ConfigurationValidator([])
         );
         this.configLoader.getProjectConfiguration().catch(msgWithParams => {
-            this.messages.addWithParams(msgWithParams);
+            this.messages.add(msgWithParams);
         });
     }
 

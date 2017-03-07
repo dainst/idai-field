@@ -95,15 +95,15 @@ export class DocumentEditWrapperComponent {
                         this.onSaveSuccess.emit(viaSaveButton);
                         // this.navigate(this.document, proceed);
                         // show message after route change
-                        this.messages.add(M.OVERVIEW_SAVE_SUCCESS);
+                        this.messages.add([M.OVERVIEW_SAVE_SUCCESS]);
                     },
-                    err => {
-                        this.messages.add(err);
+                    keyOfM => {
+                        this.messages.add([keyOfM]);
                     });
             })
 
             .catch(msgWithParams => {
-                this.messages.addWithParams(msgWithParams);
+                this.messages.add(msgWithParams);
 
             })
     }
@@ -144,8 +144,8 @@ export class DocumentEditWrapperComponent {
         return this.persistenceManager.remove(this.document).then(
             () => {
                 this.onDeleteSuccess.emit();
-                this.messages.add(M.OVERVIEW_DELETE_SUCCESS);
+                this.messages.add([M.OVERVIEW_DELETE_SUCCESS]);
             },
-            err => this.messages.add(err));
+            keyOfM => this.messages.add([keyOfM]));
     }
 }

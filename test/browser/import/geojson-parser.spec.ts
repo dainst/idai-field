@@ -46,10 +46,10 @@ export function main() {
                 done();
             }, () => {
                 expect(docs[0].resource['identifier']).toEqual("122");
-                expect(docs[0].resource['geometries'][0]['type']).toEqual("Point");
+                expect(docs[0].resource['geometry']['type']).toEqual("Point");
 
                 expect(docs[1].resource['identifier']).toEqual("123");
-                expect(docs[1].resource['geometries'][0]['type']).toEqual("LineString");
+                expect(docs[1].resource['geometry']['type']).toEqual("LineString");
 
                 expect(docs.length).toEqual(2);
                 // expect(parser.getWarnings()[0]).toEqual([M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT]);

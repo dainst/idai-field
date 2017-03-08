@@ -40,7 +40,7 @@ export class GeojsonParser extends AbstractParser {
     private static makeResource(feature) {
         return {
             identifier: feature['properties']['identifier'],
-            geometries: [feature['geometry']],
+            geometry: feature['geometry'],
             relations: {}
         };
     }

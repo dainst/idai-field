@@ -13,7 +13,6 @@ import {ConfigLoader} from "idai-components-2/configuration";
 import {BlobProxy} from "../../common/blob-proxy";
 import {ImageContainer} from "../../common/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
-import {FilterUtility} from '../../util/filter-utility';
 
 @Component({
     moduleId: module.id,
@@ -124,9 +123,8 @@ export class MapComponent implements OnChanges {
         }
 
         for (var i in this.documents) {
-            var resource = this.documents[i].resource;
-            for (var j in resource.geometries) {
-                this.addToMap(resource.geometries[j], this.documents[i]);
+            if (this.documents[i].resource.geometry) {
+                this.addToMap(this.documents[i].resource.geometry, this.documents[i]);
             }
         }
 
@@ -477,7 +475,7 @@ export class MapComponent implements OnChanges {
 
     private editExistingGeometry() {
 
-        switch (this.selectedDocument.resource.geometries[0].type) {
+        switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
                 this.editMode = "polygon";
                 this.startPolygonEditing();

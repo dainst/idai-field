@@ -79,10 +79,10 @@ export function main() {
             }, () => {
                 expect(documents.length).toBe(2);
                 expect(parser.getWarnings().length).toBe(0);
-                expect(documents[0].resource.geometries[0].type).toEqual('Point');
-                expect(documents[0].resource.geometries[0].coordinates).toEqual([416.361, 354.404]);
-                expect(documents[1].resource.geometries[0].type).toEqual('Polygon');
-                expect(documents[1].resource.geometries[0].coordinates).toEqual(
+                expect(documents[0].resource.geometry.type).toEqual('Point');
+                expect(documents[0].resource.geometry.coordinates).toEqual([416.361, 354.404]);
+                expect(documents[1].resource.geometry.type).toEqual('Polygon');
+                expect(documents[1].resource.geometry.coordinates).toEqual(
                     [[[415.732, 354.88], [416.982, 353.988], [416.227, 352.992], [415.732, 354.88]]]);
                 done();
             });

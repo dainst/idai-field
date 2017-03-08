@@ -14,7 +14,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
         let idaiFieldDoc = doc as IdaiFieldDocument;
         return this.datastore.findByIdentifier(idaiFieldDoc.resource.identifier)
             .then(existingIdaiFieldDoc => {
-                existingIdaiFieldDoc.resource.geometries = idaiFieldDoc.resource.geometries;
+                existingIdaiFieldDoc.resource.geometry = idaiFieldDoc.resource.geometry;
                 return this.datastore.update(existingIdaiFieldDoc);
             }, keyOfM => {
                 return Promise.reject([keyOfM]);

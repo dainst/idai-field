@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
         visible: true,
         mandatory: true
     }, {
-        name: "geometries",
+        name: "geometry",
         visible: false,
         editable: false
     }];

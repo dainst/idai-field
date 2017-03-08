@@ -178,9 +178,7 @@ export class IdigCsvParser extends AbstractParser {
         if (this.hasContent(object, IdigCsvParser.GEOMETRY_FIELD)) {
             let geometryString = object[IdigCsvParser.GEOMETRY_FIELD];
             let geometry: IdaiFieldGeometry = this.parseGeometryString(geometryString, lineNumber);
-            if (geometry) {
-                resource.geometries = [geometry];
-            }
+            if (geometry) resource.geometry = geometry;
         }
     }
 

@@ -36,15 +36,14 @@ describe('import tests -- ', function() {
     });
 
     it('importer should delete already imported iDAI.field documents if an error occurs', function() {
-        var listElsLength;
-        resourcesPage.getListItemEls().then((listEls) => { listElsLength = listEls.length; });
 
         importIt("./test/test-data/importer-test-constraint-violation.jsonl");
         NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickNavigateToResources();
 
-        resourcesPage.getListItemEls().then((listEls) => {
-            expect(listEls.length).toBe(listElsLength);
-        });
+        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('ob1')), delays.ECWaitTime);
+
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
     });
 });

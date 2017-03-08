@@ -105,22 +105,22 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link Datastore#create}.
      * @param document
      * @param initial
-     * @returns {Promise<Document|string>} same instance of the document | error key
+     * @returns {Promise<Document>} same instance of the document
      */
-    public create(document: Document, initial: boolean = false): Promise<Document|string> {
+    public create(document: Document, initial: boolean = false): Promise<Document> {
 
         let reset = this.resetDocOnErrInCreate(document.resource.id);
 
         return this.updateReadyForQuery(initial)
-            .then(()=>this.proveThatDoesNotExist(document))
-            .then(()=> {
+            .then(() => this.proveThatDoesNotExist(document))
+            .then(() => {
 
-                if (document['id']||document['_id']) {
+                if (document['id'] || document['_id']) {
                     console.error(PouchdbDatastore.MSG_ID_EXISTS_IN_CREATE);
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
 
-                if (!document.resource.id)  document.resource.id = IdGenerator.generateId();
+                if (!document.resource.id) document.resource.id = IdGenerator.generateId();
                 document['id'] = document.resource.id;
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
@@ -163,8 +163,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
         'Maybe you wanted to update the object with update()?';
 
-    private resetDocOnErrInCreate(originalResourceId:string) {
-        return function(document:Document) {
+    private resetDocOnErrInCreate(originalResourceId: string) {
+        return function(document: Document) {
             document['id'] = undefined;
             document.resource.id = originalResourceId;
             document.created = undefined;
@@ -173,21 +173,21 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
 
-    private updateReadyForQuery(skipCheck) : Promise<any>{
+    private updateReadyForQuery(skipCheck): Promise<any>{
         if (!skipCheck) {
             return this.readyForQuery;
         }
         else {
-            return new Promise<any>((resolve)=>{resolve();})
+            return new Promise<any>((resolve) => {resolve();})
         }
     }
 
     /**
      * Implements {@link Datastore#update}.
      * @param document
-     * @returns {Promise<Document|string>} same instance of the document | error key
+     * @returns {Promise<Document>} same instance of the document
      */
-    public update(document:Document): Promise<Document|string> {
+    public update(document: Document): Promise<Document> {
 
         return this.readyForQuery
             .then(()=> {
@@ -223,9 +223,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link ReadDatastore#refresh}.
      *
      * @param doc
-     * @returns {Promise<Document|string>}
+     * @returns {Promise<Document>}
      */
-    public refresh(doc: Document): Promise<Document|string> {
+    public refresh(doc: Document): Promise<Document> {
         return this.fetchObject(doc.resource.id)
             .then(doc => this.cleanDoc(doc));
     }
@@ -236,7 +236,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @param resourceId
      * @returns {any}
      */
-    public get(resourceId: string): Promise<Document|string> {
+    public get(resourceId: string): Promise<Document> {
         return this.fetchObject(resourceId)
             .then(doc => this.cleanDoc(doc));
     }
@@ -245,9 +245,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link Datastore#remove}.
      *
      * @param doc
-     * @returns {Promise<undefined|string>}
+     * @returns {Promise<undefined>}
      */
-    public remove(doc: Document): Promise<undefined|string> {
+    public remove(doc: Document): Promise<undefined> {
         return this.db.remove(doc);
     }
 
@@ -270,8 +270,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link ReadDatastore#find}.
      */
     public find(query: Query,
-                offset:number=0,
-                limit:number=-1):Promise<Document[]> {
+                offset: number=0,
+                limit: number=-1): Promise<Document[]> {
 
         if (!query) return Promise.resolve([]);
 
@@ -363,7 +363,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return filtered;
     }
 
-    private notifyObserversOfObjectToSync(document:Document): void {
+    private notifyObserversOfObjectToSync(document: Document): void {
 
         this.observers.forEach( observer => {
             observer.next(document);
@@ -372,17 +372,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private loadSampleData(): Promise<any> {
 
-        return new Promise<any>((resolve,reject)=>{
+        return new Promise<any>((resolve, reject)=>{
 
             let promises = [];
-            for (let doc of DOCS) promises.push(this.create(doc,true));
+            for (let doc of DOCS) promises.push(this.create(doc,  true));
 
             Promise.all(promises)
                 .then(() => {
                     console.debug("Successfully stored sample documents");
                     resolve();
                 })
-                .catch(err => {console.error("Problem when storing sample data", err);reject();});
+                .catch(err => {console.error("Problem when storing sample data", err); reject();});
         });
     }
 }

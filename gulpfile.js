@@ -3,7 +3,6 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
-var electronConnect = require('electron-connect');
 var packager = require('electron-packager');
 var archiver = require('archiver');
 var fs = require('fs');
@@ -72,14 +71,6 @@ gulp.task('compile', ['convert-sass'], function () {
         .pipe(gulp.dest('test/'));
 });
 
-// runs the development server and sets up browser reloading
-var electronServer = electronConnect.server.create({path: './'});
-gulp.task('run', function () {
-    electronServer.start();
-    watch();
-});
-
-
 gulp.task('make-dist', function () {
     gulp.src('index.html').pipe(gulp.dest('dist/'));
     gulp.src('package.json').pipe(gulp.dest('dist/'));
@@ -119,7 +110,7 @@ gulp.task('package', [], function () {
         name: pkg.name,
         platform: ['win32'],
         arch: 'all',
-        version: '1.4.13',
+        version: '1.6.1',
         appBundleId: pkg.name,
         appVersion: pkg.version,
         'download.cache': 'cache/',

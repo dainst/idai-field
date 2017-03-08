@@ -7,7 +7,7 @@ import {HttpReader} from "./http-reader";
 import {Parser} from "./parser";
 import {NativeJsonlParser} from "./native-jsonl-parser";
 import {IdigCsvParser} from "./idig-csv-parser";
-import {GeojsonJsonlParser} from "./geojson-jsonl-parser";
+import {GeojsonParser} from "./geojson-parser";
 import {M} from "../m";
 import {Http} from "@angular/http";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
@@ -126,7 +126,7 @@ export class ImportComponent {
             case "idig":
                 return new IdigCsvParser();
             case "geojson":
-                return new GeojsonJsonlParser();
+                return new GeojsonParser();
         }
     }
 

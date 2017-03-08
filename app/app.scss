@@ -132,3 +132,13 @@ html [type="button"],
   margin: 0 !important;
   font-size: 13px;
 }
+
+.form-control {
+  border-radius: 1px !important;
+}
+
+.fieldcollapse {
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold !important;
+}

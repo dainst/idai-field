@@ -13,7 +13,7 @@ export class GeojsonJsonlParser extends AbstractJsonlParser {
     public parse(content: string): Observable<Document> {
         this.warnings = [];
         return Observable.create(observer => {
-            AbstractJsonlParser.parseContent(content,observer,this.makeDoc.bind(this));
+            AbstractJsonlParser.parseContent(content,observer,(lineItem) => this.makeDoc(lineItem));
             observer.complete();
         });
     }

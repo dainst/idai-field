@@ -1,11 +1,12 @@
 import {M} from "../m";
+import {AbstractParser} from "./abstract-parser";
 
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  * @author Daniel de Oliveira
  */
-export class JsonlParser  {
+export abstract class AbstractJsonlParser extends AbstractParser {
 
     protected static parseContent(content,observer,makeDocFun) {
 

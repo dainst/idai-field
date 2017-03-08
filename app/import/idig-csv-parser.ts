@@ -5,6 +5,7 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 import {Parser} from "./parser";
 import {M} from "../m";
 import {Document} from 'idai-components-2/core';
+import {AbstractParser} from "./abstract-parser";
 
 @Injectable()
 /**
@@ -12,7 +13,7 @@ import {Document} from 'idai-components-2/core';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class IdigCsvParser implements Parser {
+export class IdigCsvParser extends AbstractParser {
 
     private static MANDATORY_FIELDS: string[] = ["IdentifierUUID", "Type"];
     private static MANUALLY_MAPPED_FIELDS: string[] = ["Identifier", "Title"];
@@ -43,8 +44,6 @@ export class IdigCsvParser implements Parser {
         "RelationIsCoevalWithUUID"
     ];
     private static GEOMETRY_FIELD: string = "CoverageUnion";
-
-    private warnings: string[][];
 
 
     public parse(content: string): Observable<Document> {
@@ -83,10 +82,6 @@ export class IdigCsvParser implements Parser {
             }
         });
 
-    }
-
-    public getWarnings(): string[][] {
-        return this.warnings;
     }
 
     /**
@@ -199,8 +194,7 @@ export class IdigCsvParser implements Parser {
         } else if (geometryString.startsWith("polygon")) {
             geometry = this.parsePolygonGeometryString(geometryString, lineNumber);
         } else if (geometryString.startsWith("multipolygon")) {
-            if (!this.isInWarnings(M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT))
-                this.warnings.push([ M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT ]);
+            this.addToWarnings(M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT);
         }
 
         return geometry;
@@ -271,14 +265,5 @@ export class IdigCsvParser implements Parser {
             IdigCsvParser.MANUALLY_MAPPED_FIELDS.indexOf(field) == -1) {
             resource[field] = object[field];
         }
-    }
-
-    private isInWarnings(messageType: string) {
-
-        for (let msgWithParams of this.warnings) {
-            if (msgWithParams[0] == messageType) return true;
-        }
-
-        return false;
     }
 }

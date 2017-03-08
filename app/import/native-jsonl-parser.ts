@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Parser} from "./parser";
-import {JsonlParser} from "./jsonl-parser";
+import {AbstractJsonlParser} from "./abstract-jsonl-parser";
 import {Document} from 'idai-components-2/core';
 
 @Injectable()
@@ -9,18 +9,14 @@ import {Document} from 'idai-components-2/core';
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class NativeJsonlParser extends JsonlParser implements Parser {
+export class NativeJsonlParser extends AbstractJsonlParser {
 
     public parse(content: string): Observable<Document> {
-
+        this.warnings = [];
         return Observable.create(observer => {
-            JsonlParser.parseContent(content,observer,NativeJsonlParser.makeDoc);
+            AbstractJsonlParser.parseContent(content,observer,NativeJsonlParser.makeDoc);
             observer.complete();
         });
-    }
-
-    public getWarnings(): string[][] {
-        return [];
     }
 
     private static makeDoc(line) {

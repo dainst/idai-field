@@ -1,24 +1,20 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Parser} from "./parser";
-import {JsonlParser} from "./jsonl-parser";
-import {Document} from 'idai-components-2/core'
+import {AbstractJsonlParser} from "./abstract-jsonl-parser";
+import {Document} from "idai-components-2/core";
 
 @Injectable()
 /**
  * @author Daniel de Oliveira
  */
-export class GeojsonJsonlParser extends JsonlParser implements Parser {
+export class GeojsonJsonlParser extends AbstractJsonlParser {
 
     public parse(content: string): Observable<Document> {
+        this.warnings = [];
         return Observable.create(observer => {
-            JsonlParser.parseContent(content,observer,GeojsonJsonlParser.makeDoc);
+            AbstractJsonlParser.parseContent(content,observer,GeojsonJsonlParser.makeDoc);
             observer.complete();
         });
-    }
-
-    public getWarnings(): string[][] {
-        return [];
     }
 
     private static makeDoc(line) {
@@ -30,5 +26,4 @@ export class GeojsonJsonlParser extends JsonlParser implements Parser {
         };
         return {resource: resource};
     }
-
 }

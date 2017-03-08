@@ -14,7 +14,7 @@ import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Validator} from "idai-components-2/persist";
 import {ImportStrategy} from "./import-strategy";
 import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
-import {GeojsonJsonlParser} from "./geojson-jsonl-parser";
+import {GeojsonParser} from "./geojson-parser";
 
 
 @Component({
@@ -111,7 +111,7 @@ export class ImportComponent {
             case "idig":
                 return new IdigCsvParser();
             case "geojson":
-                return new GeojsonJsonlParser();
+                return new GeojsonParser();
         }
     }
 

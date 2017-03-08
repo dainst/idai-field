@@ -1,20 +1,20 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Parser} from "./parser";
-import {AbstractJsonlParser} from "./abstract-jsonl-parser";
-import {Document} from 'idai-components-2/core';
+import {Document} from "idai-components-2/core";
+import {M} from "../m";
+import {AbstractParser} from "./abstract-parser";
 
 @Injectable()
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class NativeJsonlParser extends AbstractJsonlParser {
+export class NativeJsonlParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
         this.warnings = [];
         return Observable.create(observer => {
-            AbstractJsonlParser.parseContent(content,observer,NativeJsonlParser.makeDoc);
+            NativeJsonlParser.parseContent(content,observer,NativeJsonlParser.makeDoc);
             observer.complete();
         });
     }
@@ -25,5 +25,23 @@ export class NativeJsonlParser extends AbstractJsonlParser {
         return {
             resource: resource
         };
+    }
+
+    private static parseContent(content,observer,makeDocFun) {
+
+        let lines = content.split('\n');
+        let len = lines.length;
+
+        for (let i = 0; i < len; i++) {
+
+            try {
+
+                if (lines[i].length > 0) observer.next(makeDocFun(lines[i]))
+
+            } catch (e) {
+                console.error('parse content error. reason: ',e);
+                observer.error([M.IMPORTER_FAILURE_INVALIDJSON,i+1]);
+            }
+        }
     }
 }

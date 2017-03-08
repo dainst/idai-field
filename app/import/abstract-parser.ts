@@ -10,7 +10,7 @@ import {Document} from "idai-components-2/core";
  */
 export abstract class AbstractParser implements Parser {
 
-    protected warnings: string[][];
+    protected warnings: string[][]; // array of msgWithParams
 
     abstract parse(content: string): Observable<Document>;
 

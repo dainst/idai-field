@@ -20,6 +20,7 @@ export abstract class AbstractJsonlParser extends AbstractParser {
                 if (lines[i].length > 0) observer.next(makeDocFun(lines[i]))
 
             } catch (e) {
+                console.error('parse content error. reason: ',e);
                 observer.error([M.IMPORTER_FAILURE_INVALIDJSON,i+1]);
             }
         }

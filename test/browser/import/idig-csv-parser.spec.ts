@@ -9,6 +9,12 @@ import {M} from '../../../app/m';
  */
 export function main() {
 
+    beforeEach(
+        function(){
+            spyOn(console, 'error'); // to suppress console.error output
+        }
+    );
+
     describe('IdigCsvParser', () => {
 
         it('should create documents from file content', (done) => {

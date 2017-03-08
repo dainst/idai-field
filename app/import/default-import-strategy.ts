@@ -1,10 +1,8 @@
-import {Injectable} from "@angular/core";
 import {Document} from "idai-components-2/core";
 import {ImportStrategy} from "./import-strategy";
 import {Validator} from "idai-components-2/persist";
 import {Datastore} from "idai-components-2/datastore";
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */

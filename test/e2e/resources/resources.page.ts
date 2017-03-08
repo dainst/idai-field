@@ -103,11 +103,15 @@ let ResourcesPage = function() {
     // elements
 
     this.getListItemMarkedNewEl = function() {
-        return element(by.css('#objectList .list-group-item .new'))
+        return element(by.css('#objectList .list-group-item .new'));
     };
 
     this.getListItemEl = function(identifier) {
         return element(by.id('resource-' + identifier));
+    };
+
+    this.getListItemEls = function() {
+        return element.all(by.css('#objectList .list-group-item'));
     };
 
     // sequences

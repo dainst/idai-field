@@ -7,14 +7,17 @@ import {HttpReader} from "./http-reader";
 import {Parser} from "./parser";
 import {NativeJsonlParser} from "./native-jsonl-parser";
 import {IdigCsvParser} from "./idig-csv-parser";
+import {GeojsonJsonlParser} from "./geojson-jsonl-parser";
 import {M} from "../m";
 import {Http} from "@angular/http";
-import {DefaultImportStrategy} from "./default-import-strategy";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Validator} from "idai-components-2/persist";
 import {ImportStrategy} from "./import-strategy";
+import {DefaultImportStrategy} from "./default-import-strategy";
 import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
-import {GeojsonJsonlParser} from "./geojson-jsonl-parser";
+import {RollbackStrategy} from "./rollback-strategy";
+import {DefaultRollbackStrategy} from "./default-rollback-strategy";
+import {NoRollbackStrategy} from "./no-rollback-strategy";
 
 
 @Component({
@@ -49,17 +52,17 @@ export class ImportComponent {
 
     public startImport() {
 
-        let reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
-        let parser = ImportComponent.createParser(this.format);
-        let importStrategy = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
+        let reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
+        let parser: Parser = ImportComponent.createParser(this.format);
+        let importStrategy: ImportStrategy
+            = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
 
         this.messages.clear();
         if (!reader || !parser || !importStrategy) return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
 
         this.messages.add([M.IMPORTER_START]);
         this.importer.importResources(reader, parser, importStrategy)
-            .then(importReport => this.evaluate(importReport))
-
+            .then(importReport => this.evaluate(importReport));
     }
 
     public isReady(): boolean {
@@ -90,6 +93,18 @@ export class ImportComponent {
                 return new DefaultImportStrategy(validator, datastore);
             case "geojson":
                 return new MergeGeometriesImportStrategy(datastore);
+        }
+    }
+
+    private static createRollbackStrategy(format: string, datastore: IdaiFieldDatastore): RollbackStrategy {
+
+        switch (format) {
+            case "native":
+                return new DefaultRollbackStrategy(datastore);
+            case "idig":
+                return new DefaultRollbackStrategy(datastore);
+            case "geojson":
+                return new NoRollbackStrategy();
         }
     }
 
@@ -128,18 +143,49 @@ export class ImportComponent {
     
     private evaluate(importReport: ImportReport) {
 
-        for (let msgWithParams of importReport.errors) {
-            this.messages.add(msgWithParams);
+        if (importReport.errors.length > 0) {
+            this.rollback(importReport.importedResourcesIds).then(
+                () => {
+                    this.showMessages(importReport.errors);
+                }, err => {
+                    this.showMessages(importReport.errors);
+                    this.messages.add([M.IMPORTER_FAILURE_ROLLBACKERROR]);
+                    console.error(err);
+                }
+            );
+        } else {
+            this.showMessages(importReport.warnings);
+            this.showSuccessMessage(importReport.importedResourcesIds);
         }
-        for (let msgWithParams of importReport.warnings) {
-            this.messages.add(msgWithParams);
-        }
+    }
 
-        if (importReport.importedResourcesIds.length == 1) {
+    private rollback(importedResourcesIds: string[]): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            let rollbackStrategy: RollbackStrategy
+                = ImportComponent.createRollbackStrategy(this.format, this.datastore);
+
+            rollbackStrategy.rollback(importedResourcesIds).then(
+                () => resolve(),
+                err => reject(err)
+            );
+        });
+    }
+
+    private showSuccessMessage(importedResourcesIds: string[]) {
+
+        if (importedResourcesIds.length == 1) {
             this.messages.add([M.IMPORTER_SUCCESS_SINGLE]);
-        } else if (importReport.importedResourcesIds.length > 1) {
-            this.messages.add([M.IMPORTER_SUCCESS_MULTIPLE,
-                importReport.importedResourcesIds.length.toString()]);
+        } else if (importedResourcesIds.length > 1) {
+            this.messages.add([M.IMPORTER_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);
+        }
+    }
+
+    private showMessages(messages: string[][]) {
+
+        for (let msgWithParams of messages) {
+            this.messages.add(msgWithParams);
         }
     }
 }

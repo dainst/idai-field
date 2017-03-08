@@ -1,10 +1,8 @@
-import {Injectable} from "@angular/core";
 import {Document} from "idai-components-2/core";
 import {ImportStrategy} from "./import-strategy";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */

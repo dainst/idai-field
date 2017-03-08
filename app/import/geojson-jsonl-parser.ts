@@ -19,7 +19,7 @@ export class GeojsonJsonlParser extends AbstractJsonlParser {
     }
 
     private makeDoc(line) {
-        let lineItem = JSON.parse(line);
+        let lineItem = JSON.parse(line); // TODO put this to AbstractJsonlParser
 
         if (lineItem['type'] == 'FeatureCollection') {
             if (lineItem['features'].length == 0) {

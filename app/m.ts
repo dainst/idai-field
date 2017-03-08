@@ -149,7 +149,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.DATASTORE_RESOURCE_ID_EXISTS]={
-            content: 'Die Resourcen-Id eines zu speichernden Dokumentes besteht bereit.',
+            content: 'Die Ressourcen-Id eines zu speichernden Dokumentes besteht bereits.',
             level: 'danger',
             params: [],
             hidden: false

@@ -1,11 +1,11 @@
-import {Observable} from "rxjs/Observable";
-import {Mediastore} from 'idai-components-2/datastore';
+import {Imagestore} from './imagestore';
 
 import * as fs from 'fs';
 
-export class FileSystemImagestore implements Mediastore {
+export class FileSystemImagestore extends Imagestore {
 
     constructor(private basePath: string, loadSampleData: boolean) {
+        super();
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
         if (loadSampleData) this.loadSampleData();
@@ -74,15 +74,6 @@ export class FileSystemImagestore implements Mediastore {
         });
     }
 
-    /**
-     * Subscription enables clients to get notified
-     * when files get modified via one of the accessor
-     * methods defined here.
-     */
-    public objectChangesNotifications(): Observable<File> {
-        return undefined;
-    }
-
     private loadSampleData(): void {
         fs.readdir('imagestore', (err, files) => {
             files.forEach(file => {
@@ -91,5 +82,4 @@ export class FileSystemImagestore implements Mediastore {
         });
         console.debug("Successfully put sample images to imagestore ("+this.basePath+")");
     }
-
 }

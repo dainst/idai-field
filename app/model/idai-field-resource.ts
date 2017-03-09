@@ -5,6 +5,6 @@ export interface IdaiFieldResource extends Resource {
     // as specified in AppComponent
     identifier: string;
     shortDescription: string;
-    geometries?: Array<IdaiFieldGeometry>;
+    geometry?: IdaiFieldGeometry;
     // -
 }

@@ -12,7 +12,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_GENERIC_START_ERROR: string = 'importer/genericstarterror';
     public static IMPORTER_SUCCESS_SINGLE : string = 'importer/success/single';
     public static IMPORTER_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
-    public static IMPORTER_INFO_NOMULTIPOLYGONSUPPORT: string = 'importer/info/nomultipolygonsupport';
+    public static IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT: string = 'importer/warning/nomultipolygonsupport';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
@@ -20,6 +20,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
     public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
+    public static IMPORTER_FAILURE_ROLLBACKERROR: string = 'importer/failure/rollbackerror';
 
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static OVERVIEW_DELETE_SUCCESS : string = 'overview/deletesuccess';
@@ -67,10 +68,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ "Mehrere"],
             hidden: false
         };
-        this.msgs[M.IMPORTER_INFO_NOMULTIPOLYGONSUPPORT]={
+        this.msgs[M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT]={
             content: 'Die Geometriedaten enthalten eine Geometrie vom Typ Multipolygon. Da Multipolygone von der ' +
                 'Anwendung zurzeit nicht unterstützt werden, konnten diese Geometriedaten nicht importiert werden.',
-            level: 'info',
+            level: 'warning',
             params: [],
             hidden: false
         };
@@ -123,6 +124,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ["?"],
             hidden: false
         };
+        this.msgs[M.IMPORTER_FAILURE_ROLLBACKERROR] = {
+            content: "Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.OVERVIEW_SAVE_SUCCESS]={
             content: 'Die Ressource wurde erfolgreich gespeichert.',
             level: 'success',
@@ -142,7 +149,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.DATASTORE_RESOURCE_ID_EXISTS]={
-            content: 'Die Resourcen-Id eines zu speichernden Dokumentes besteht bereit.',
+            content: 'Die Ressourcen-Id eines zu speichernden Dokumentes besteht bereits.',
             level: 'danger',
             params: [],
             hidden: false

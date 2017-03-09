@@ -1,4 +1,4 @@
-import {browser,protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 
 let common = require("../common.js");
 let importPage = require('./import.page');
@@ -35,16 +35,15 @@ describe('import tests -- ', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
 
-    it('importer should import until the first error occurs', function() {
+    it('importer should delete already imported iDAI.field documents if an error occurs', function() {
+
         importIt("./test/test-data/importer-test-constraint-violation.jsonl");
-        NavbarPage.awaitAlert('existiert bereits',false);
+        NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickNavigateToResources();
 
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('ob1')), delays.ECWaitTime);
 
-        // the third element can be one of the sample objects, but the objects shown on top are the two imported ones
-        expect(resourcesPage.getListItemIdentifierText(2)).not.toEqual('obob1');
-        expect(resourcesPage.getListItemIdentifierText(2)).not.toEqual('obob2');
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
     });
 });

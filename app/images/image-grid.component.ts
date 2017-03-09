@@ -64,7 +64,7 @@ export class ImageGridComponent {
     }
 
     public showUploadErrorMsg(msgWithParams) {
-        this.messages.addWithParams(msgWithParams);
+        this.messages.add(msgWithParams);
     }
 
     /**
@@ -113,7 +113,7 @@ export class ImageGridComponent {
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
             this.rows = result['rows'];
             for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.addWithParams(msgWithParams);
+                this.messages.add(msgWithParams);
             }
         });
     }
@@ -151,8 +151,8 @@ export class ImageGridComponent {
                 this.updateAndPersistDepictsRelations(this.selected, targetDoc)
                     .then(() => {
                         this.clearSelection();
-                    }).catch(error => {
-                        this.messages.add(error);
+                    }).catch(keyOfM => {
+                        this.messages.add([keyOfM]);
                     });
             }
         }, (closeReason) => {
@@ -166,7 +166,7 @@ export class ImageGridComponent {
                 this.clearSelection();
                 this.fetchDocuments(this.query);
             }).catch(error => {
-                this.messages.add(error);
+                this.messages.add(error); // TODO seems that this can not happen, see catch in fetchDocuments
             });
     }
 

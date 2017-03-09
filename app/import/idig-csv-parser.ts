@@ -5,6 +5,7 @@ import {IdaiFieldGeometry} from "../model/idai-field-geometry";
 import {Parser} from "./parser";
 import {M} from "../m";
 import {Document} from 'idai-components-2/core';
+import {AbstractParser} from "./abstract-parser";
 
 @Injectable()
 /**
@@ -12,7 +13,7 @@ import {Document} from 'idai-components-2/core';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class IdigCsvParser implements Parser {
+export class IdigCsvParser extends AbstractParser {
 
     private static MANDATORY_FIELDS: string[] = ["IdentifierUUID", "Type"];
     private static MANUALLY_MAPPED_FIELDS: string[] = ["Identifier", "Title"];
@@ -44,20 +45,23 @@ export class IdigCsvParser implements Parser {
     ];
     private static GEOMETRY_FIELD: string = "CoverageUnion";
 
+
     public parse(content: string): Observable<Document> {
+
+        this.warnings = [];
 
         return Observable.create(observer => {
 
-            let errorCallback = e => observer.error([M.IMPORTER_FAILURE_INVALIDCSV,e.row]);
+            let errorCallback = e => observer.error([M.IMPORTER_FAILURE_INVALIDCSV, e.row]);
 
             let completeCallback = result => {
                 result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
-                    let msgWithParams = this.checkExistenceOfMandatoryFields(object,i+1);
-                    if (msgWithParams != undefined) return observer.error(msgWithParams);
+                    let msgWithParams = this.checkExistenceOfMandatoryFields(object, i + 1);
+                    if (msgWithParams != undefined) observer.error(msgWithParams);
 
                     try {
-                        observer.next(this.documentFrom(object, i+1));
+                        observer.next(this.documentFrom(object, i + 1));
                     } catch (msgWithParams) {
                         observer.error(msgWithParams);
                     }
@@ -85,7 +89,7 @@ export class IdigCsvParser implements Parser {
      * @param lineNumber
      * @returns {any} msgWithParams for the first occurence of a missing field
      */
-    private checkExistenceOfMandatoryFields(object: any,lineNumber:number): any {
+    private checkExistenceOfMandatoryFields(object: any, lineNumber: number): any {
         let msgWithParams = undefined;
         IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
@@ -95,15 +99,14 @@ export class IdigCsvParser implements Parser {
         return msgWithParams;
     }
 
-
     private identifier(object) {
-        if (object['Identifier']!=undefined)
+        if (object['Identifier'] != undefined)
             return object['Identifier'];
         else
             return object['IdentifierUUID'];
     }
 
-    private documentFrom(object, lineNumber:number): Document {
+    private documentFrom(object, lineNumber: number): Document {
 
         let doc: IdaiFieldDocument = {
             resource: {
@@ -124,7 +127,7 @@ export class IdigCsvParser implements Parser {
     }
 
 
-    private map(object, doc, lineNumber:number): Document {
+    private map(object, doc, lineNumber: number): Document {
 
         Object.keys(object).forEach( field => {
             if (IdigCsvParser.IGNORED_FIELDS.indexOf(field) == -1) {
@@ -132,7 +135,7 @@ export class IdigCsvParser implements Parser {
                 if (this.isRelation(field)) {
                     this.mapRelationField(object, doc.resource, field);
                 } else if (field == IdigCsvParser.GEOMETRY_FIELD) {
-                    this.mapGeometryField(object, doc.resource,lineNumber);
+                    this.mapGeometryField(object, doc.resource, lineNumber);
                 }
                 else this.copyField(object, doc.resource,field);
             }
@@ -145,7 +148,7 @@ export class IdigCsvParser implements Parser {
         return (IdigCsvParser.RELATION_FIELDS.indexOf(field) != -1);
     }
 
-    private hasContent(object,field) {
+    private hasContent(object, field) {
         return (object[field] != undefined && object[field] != "");
     }
 
@@ -170,34 +173,32 @@ export class IdigCsvParser implements Parser {
         }
     };
 
-    private mapGeometryField(object, resource,lineNumber:number) {
+    private mapGeometryField(object, resource, lineNumber: number) {
 
         if (this.hasContent(object, IdigCsvParser.GEOMETRY_FIELD)) {
             let geometryString = object[IdigCsvParser.GEOMETRY_FIELD];
-            let geometry: IdaiFieldGeometry = this.parseGeometryString(geometryString,lineNumber);
-            if (geometry) {
-                resource.geometries = [geometry];
-            }
+            let geometry: IdaiFieldGeometry = this.parseGeometryString(geometryString, lineNumber);
+            if (geometry) resource.geometry = geometry;
         }
     }
 
-    private parseGeometryString(geometryString,lineNumber:number): IdaiFieldGeometry {
+    private parseGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
 
         geometryString = geometryString.toLowerCase();
-        let geometry: IdaiFieldGeometry;
+        let geometry: IdaiFieldGeometry = null;
 
         if (geometryString.startsWith("point")) {
-            geometry = this.parsePointGeometryString(geometryString,lineNumber);
+            geometry = this.parsePointGeometryString(geometryString, lineNumber);
         } else if (geometryString.startsWith("polygon")) {
-            geometry = this.parsePolygonGeometryString(geometryString,lineNumber);
+            geometry = this.parsePolygonGeometryString(geometryString, lineNumber);
         } else if (geometryString.startsWith("multipolygon")) {
-            throw M.IMPORTER_INFO_NOMULTIPOLYGONSUPPORT;
+            this.addToWarnings(M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT);
         }
 
         return geometry;
     }
 
-    private parsePointGeometryString(geometryString,lineNumber:number): IdaiFieldGeometry {
+    private parsePointGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
 
         let geometry: IdaiFieldGeometry = {type: "Point", coordinates: [], crs: "local"};
 
@@ -205,12 +206,12 @@ export class IdigCsvParser implements Parser {
             .replace("point ((", "")
             .replace("))", "");
 
-        geometry.coordinates = this.parsePoint(geometryString,lineNumber);
+        geometry.coordinates = this.parsePoint(geometryString, lineNumber);
 
         return geometry;
     }
 
-    private parsePolygonGeometryString(geometryString,lineNumber:number): IdaiFieldGeometry {
+    private parsePolygonGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
 
         let geometry: IdaiFieldGeometry = {type: "Polygon", coordinates: [[]], crs: "local"};
 
@@ -220,29 +221,29 @@ export class IdigCsvParser implements Parser {
 
         let coordinates: Array<string> = geometryString.split(", ");
         if (coordinates.length < 3) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY,lineNumber];
+            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         for (let pointCoordinates of coordinates) {
-            geometry.coordinates[0].push(this.parsePoint(pointCoordinates,lineNumber));
+            geometry.coordinates[0].push(this.parsePoint(pointCoordinates, lineNumber));
         }
 
         return geometry;
     }
 
-    private parsePoint(coordinatesString,lineNumber:number): Array<number> {
+    private parsePoint(coordinatesString, lineNumber: number): Array<number> {
 
         let point: Array<number> = [];
 
         let coordinates: Array<string> = coordinatesString.split(" ");
         if (coordinates.length != 2) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY,lineNumber];
+            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
-        point[0] = parseInt(coordinates[0].replace(",", "."));
-        point[1] = parseInt(coordinates[1].replace(",", "."));
+        point[0] = parseFloat(coordinates[0].replace(",", "."));
+        point[1] = parseFloat(coordinates[1].replace(",", "."));
         if (isNaN(point[0]) || isNaN(point[1])) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY,lineNumber];
+            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         return point;
@@ -256,7 +257,7 @@ export class IdigCsvParser implements Parser {
      * @param resource
      * @param field
      */
-    private copyField(object,resource,field) {
+    private copyField(object, resource, field) {
 
         if (IdigCsvParser.MANDATORY_FIELDS.indexOf(field) == -1 &&
             IdigCsvParser.MANUALLY_MAPPED_FIELDS.indexOf(field) == -1) {

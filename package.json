@@ -24,7 +24,7 @@
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "target": "dmg",
+      "target": "tar.gz",
       "icon": "img/logo.icns"
     },
     "win": {

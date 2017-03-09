@@ -4,6 +4,7 @@
   "main": "main.js",
   "version": "0.2.0",
   "license": "Apache-2.0",
+  "author": "German Archaeological Institute",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
@@ -12,10 +13,25 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "protractor test/e2e/config/protractor.conf.js --params.skip_fail_fast $1",
     "server": "gulp webserver-watch",
-    "premake-dist": "rimraf dist/*",
-    "make-dist": "gulp make-dist && gulp versioning --build $1",
-    "prepackage": "rimraf dist/mediastore && rimraf release/*",
-    "package": "gulp package && electron-packager ./dist --platform=darwin --arch=x64 --icon=dist/img/logo --prune=true --out=release"
+    "make-dist": "gulp versioning --build $1",
+    "package": "build -mw"
+  },
+  "build": {
+    "appId": "org.dainst.idai-field-client",
+    "directories": {
+      "buildResources": "img",
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dmg",
+      "icon": "img/logo.icns"
+    },
+    "win": {
+      "icon": "img/logo.ico"
+    },
+    "npmRebuild": false,
+    "extraResources": "imagestore"
   },
   "repository": {
     "type": "git",
@@ -67,6 +83,7 @@
     "archiver": "1.1.0",
     "chromedriver": "2.25.1",
     "electron": "1.6.1",
+    "electron-builder": "^15.2.0",
     "electron-packager": "8.4.0",
     "electron-rebuild": "^1.5.7",
     "file-api": "0.10.4",

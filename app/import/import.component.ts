@@ -57,16 +57,37 @@ export class ImportComponent {
         let parser: Parser = ImportComponent.createParser(this.format);
         let importStrategy: ImportStrategy
             = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
+        let rollbackStrategy: RollbackStrategy
+            = ImportComponent.createRollbackStrategy(this.format, this.datastore);
 
         this.messages.clear();
-        if (!reader || !parser || !importStrategy) return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
+        if (!reader || !parser || !importStrategy || !rollbackStrategy) {
+            return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
+        }
 
         this.messages.add([M.IMPORTER_START]);
         this.running = true;
         this.importer.importResources(reader, parser, importStrategy)
-            .then(importReport => this.evaluate(importReport))
+            .then(importReport => this.finishImport(importReport, rollbackStrategy))
             .then(() => this.running = false);
+    }
 
+    private finishImport(importReport: ImportReport, rollbackStrategy: RollbackStrategy) {
+
+        if (importReport.errors.length > 0) {
+            rollbackStrategy.rollback(importReport.importedResourcesIds).then(
+                () => {
+                    this.showMessages(importReport.errors);
+                }, err => {
+                    this.showMessages(importReport.errors);
+                    this.messages.add([M.IMPORTER_FAILURE_ROLLBACKERROR]);
+                    console.error(err);
+                }
+            );
+        } else {
+            this.showMessages(importReport.warnings);
+            this.showSuccessMessage(importReport.importedResourcesIds);
+        }
     }
 
     public isReady(): boolean {
@@ -143,38 +164,6 @@ export class ImportComponent {
         } else {
             this.file = files[0];
         }
-    }
-    
-    private evaluate(importReport: ImportReport) {
-
-        if (importReport.errors.length > 0) {
-            this.rollback(importReport.importedResourcesIds).then(
-                () => {
-                    this.showMessages(importReport.errors);
-                }, err => {
-                    this.showMessages(importReport.errors);
-                    this.messages.add([M.IMPORTER_FAILURE_ROLLBACKERROR]);
-                    console.error(err);
-                }
-            );
-        } else {
-            this.showMessages(importReport.warnings);
-            this.showSuccessMessage(importReport.importedResourcesIds);
-        }
-    }
-
-    private rollback(importedResourcesIds: string[]): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            let rollbackStrategy: RollbackStrategy
-                = ImportComponent.createRollbackStrategy(this.format, this.datastore);
-
-            rollbackStrategy.rollback(importedResourcesIds).then(
-                () => resolve(),
-                err => reject(err)
-            );
-        });
     }
 
     private showSuccessMessage(importedResourcesIds: string[]) {

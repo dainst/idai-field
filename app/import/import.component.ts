@@ -61,7 +61,7 @@ export class ImportComponent {
         this.messages.clear();
         if (!reader || !parser || !importStrategy) return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
 
-        this.messages.add(M.IMPORTER_START);
+        this.messages.add([M.IMPORTER_START]);
         this.importer.importResources(reader, parser, importStrategy)
             .then(importReport => this.evaluate(importReport))
             .then(() => this.running = false);

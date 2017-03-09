@@ -39,8 +39,17 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
         if (documentToJumpTo) {
-            this.scrollToDocument(documentToJumpTo);
-            this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
+            if (this.docs.indexOf(documentToJumpTo) == -1) {
+                this.resourcesComponent.queryChanged({q: '', type: 'resource', prefix: true}).then(
+                    () => {
+                        this.scrollToDocument(documentToJumpTo);
+                        this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
+                    }
+                )
+            } else {
+                this.scrollToDocument(documentToJumpTo);
+                this.router.navigate(['resources', {id: documentToJumpTo.resource.id}]);
+            }
         } else {
             this.router.navigate(['resources']);
         }

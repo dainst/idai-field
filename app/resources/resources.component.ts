@@ -49,10 +49,19 @@ export class ResourcesComponent {
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
-    public queryChanged(query: Query) {
+    public queryChanged(query: Query): Promise<any> {
 
-        this.query = query;
-        this.fetchDocuments(query);
+        return new Promise<any>((resolve) => {
+            this.query = query;
+            this.fetchDocuments(query).then(
+                () => {
+                    if (this.selectedDocument && this.documents.indexOf(this.selectedDocument) == -1) {
+                        this.router.navigate(['resources']);
+                    }
+                    resolve();
+                }
+            );
+        });
     }
 
     /**
@@ -109,12 +118,15 @@ export class ResourcesComponent {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    public fetchDocuments(query: Query = this.query) {
+    public fetchDocuments(query: Query = this.query): Promise<any> {
 
-        return this.datastore.find(query).then(documents => {
-            this.documents = documents as Document[];
-            this.notify();
-        }).catch(err => console.error(err));
+        return new Promise<any>((resolve, reject) => {
+            return this.datastore.find(query).then(documents => {
+                this.documents = documents as Document[];
+                this.notify();
+                resolve();
+            }).catch(err => { console.error(err); reject(); } );
+        });
     }
 
 

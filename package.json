@@ -15,8 +15,7 @@
     "premake-dist": "rimraf dist/*",
     "make-dist": "gulp make-dist && gulp versioning --build $1",
     "prepackage": "rimraf dist/mediastore && rimraf release/*",
-    "package": "gulp package && electron-packager ./dist --platform=darwin --arch=x64 --icon=dist/img/logo --prune=true --out=release",
-    "postinstall": "electron-rebuild"
+    "package": "gulp package && electron-packager ./dist --platform=darwin --arch=x64 --icon=dist/img/logo --prune=true --out=release"
   },
   "repository": {
     "type": "git",

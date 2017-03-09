@@ -66,6 +66,9 @@
         config.map['express-pouchdb'] = '@empty';
     } else {
         console.log('Running as electron app, enabling NodeJS functionality.');
+        // ensure that pouchdb is loaded using node's require
+        // in order to trigger use of leveldb backend
+        config.map['pouchdb'] = '@node/pouchdb'
     }
 
     System.config(config);

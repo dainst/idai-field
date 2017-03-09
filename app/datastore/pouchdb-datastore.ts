@@ -32,7 +32,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         this.dbname = dbname;
         this.readyForQuery = this.setupDatabase(dbname)
-            .then(db => this.db = db);
+            .then(db => {
+                console.log("PouchDB uses adapter: " + db.adapter);
+                this.db = db;
+            });
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.clear());
         this.readyForQuery = this.readyForQuery

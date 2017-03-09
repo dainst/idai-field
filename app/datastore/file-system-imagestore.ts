@@ -75,11 +75,14 @@ export class FileSystemImagestore extends Imagestore {
     }
 
     private loadSampleData(): void {
-        fs.readdir('imagestore', (err, files) => {
+
+        let isPath = process.cwd() + '/imagestore/';
+        if (!fs.existsSync(isPath)) isPath = process.resourcesPath + '/imagestore/';
+        fs.readdir(isPath, (err, files) => {
             files.forEach(file => {
-                fs.createReadStream('imagestore/' + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
-            })
+                fs.createReadStream(isPath + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
+            });
+            console.debug("Successfully put sample images to imagestore ("+this.basePath+")");
         });
-        console.debug("Successfully put sample images to imagestore ("+this.basePath+")");
     }
 }

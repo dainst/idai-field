@@ -16,7 +16,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     constructor(private datastore:IdaiFieldDatastore) { }
 
-    create(document: Document): Promise<Document|string> {
+    create(document: Document): Promise<Document> {
         return this.datastore.create(document).then(doc => {
             let d = doc as Document;
             this.documentCache[d.resource.id] = d;
@@ -24,7 +24,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
         })
     }
 
-    update(document: Document): Promise<Document|string> {
+    update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
             let d = doc as Document;
             this.documentCache[d.resource.id] = d;
@@ -32,7 +32,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
         })
     }
 
-    remove(doc: Document): Promise<any|any> {
+    remove(doc: Document): Promise<any> {
         return this.datastore.remove(doc).then(() => {
             delete this.documentCache[doc.resource.id];
         })
@@ -42,7 +42,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
         return this.datastore.documentChangesNotifications();
     }
 
-    get(id: string): Promise<Document|string> {
+    get(id: string): Promise<Document> {
         if (this.documentCache[id]) {
             return Promise.resolve(this.documentCache[id]);
         }
@@ -60,7 +60,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
             .then(result => this.replaceWithCached(result));
     }
 
-    all(type?:string, offset?:number, limit?:number): Promise<Document[]|string> {
+    all(type?:string, offset?:number, limit?:number): Promise<Document[]> {
         return this.datastore.all(type, offset, limit)
             .then(result => this.replaceAllWithCached(result));
     }
@@ -82,7 +82,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
             return this.documentCache[result.resource.id] = result;
     }
 
-    refresh(doc: Document): Promise<Document|string> {
+    refresh(doc: Document): Promise<Document> {
         return this.datastore.refresh(doc).then(result => {
             this.documentCache[doc.resource.id] = result as Document;
             return Promise.resolve(result);

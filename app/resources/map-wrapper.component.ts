@@ -39,12 +39,17 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
         if (documentToJumpTo) {
-            document.getElementById('resource-' + documentToJumpTo.resource.identifier)
-                .scrollIntoView({ behavior: 'smooth' });
+            this.scrollToDocument(documentToJumpTo);
             this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
         } else {
             this.router.navigate(['resources']);
         }
+    }
+
+    private scrollToDocument(doc) {
+
+        let element = document.getElementById('resource-' + doc.resource.identifier);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
     private getRouteParams(callback): Promise<any> {

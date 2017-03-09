@@ -1,6 +1,7 @@
 <document-edit-wrapper #f
                        [(document)]="document"
                         (onSaveSuccess)="navigate($event)"
+                        [showDeleteButton]="(mode=='edit')"
                         (onDeleteSuccess)="goToOverview()"
                         [showBackButton]="(mode=='edit')"
                         (onBackButtonClicked)="goBack()"

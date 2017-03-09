@@ -4,7 +4,7 @@ import {imagesRouting} from "./images.routing";
 import {ImagesComponent} from "./images.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {ImageViewComponent} from "./image-view.component";
-import {ImageEditNavigationComponent} from "./image-edit-navigation.component";
+import {EditNavigationComponent} from "./edit-navigation.component";
 import {GeoreferenceViewComponent} from "./georeference-view.component";
 import {WidgetsModule} from '../widgets/widgets.module';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
@@ -24,7 +24,7 @@ import {ImageTypePickerModalComponent} from './image-type-picker-modal.component
         ImagesComponent,
         ImageGridComponent,
         ImageViewComponent,
-        ImageEditNavigationComponent,
+        EditNavigationComponent,
         GeoreferenceViewComponent,
         LinkModalComponent,
         DropAreaComponent,

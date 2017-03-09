@@ -4,7 +4,7 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {BlobProxy} from "../common/blob-proxy";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore, FilterSet, Query, Datastore} from "idai-components-2/datastore";
+import {Mediastore, Query, Datastore} from "idai-components-2/datastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {FilterUtility} from "../util/filter-utility";
@@ -19,8 +19,7 @@ export class ImagePickerComponent {
 
     selected: IdaiFieldImageDocument[] = [];
     private imageGridBuilder : ImageGridBuilder;
-    private defaultFilterSet: FilterSet;
-    private query : Query = { q: '' };
+    private query : Query = { q: '', type: 'image', prefix: true };
     private rows = [];
     private documents: IdaiFieldImageDocument[];
     private nrOfColumns = 3;
@@ -32,24 +31,12 @@ export class ImagePickerComponent {
         mediastore: Mediastore,
         private datastore: Datastore,
         sanitizer: DomSanitizer,
-        configLoader: ConfigLoader,
         private el: ElementRef
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(new BlobProxy(mediastore, sanitizer), true);
 
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: false}],
-            type: 'or'
-        };
-        
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
-                this.fetchDocuments(this.query);
-            }
-        });
+        this.imageGridBuilder = new ImageGridBuilder(
+            new BlobProxy(mediastore,sanitizer), true);
+        this.fetchDocuments(this.query);
     }
 
     public queryChanged(query: Query) {
@@ -67,7 +54,7 @@ export class ImagePickerComponent {
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
             this.rows = result['rows'];
             for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.addWithParams(msgWithParams);
+                this.messages.add(msgWithParams);
             }
         });
     }

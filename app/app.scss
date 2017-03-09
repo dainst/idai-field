@@ -10,6 +10,7 @@
 @import "import/import";
 @import "images/images";
 @import 'widgets/widgets';
+@import "sync/synchronization";
 
 html {
   position: relative;
@@ -130,4 +131,14 @@ html [type="button"],
 .card-block .form-control {
   margin: 0 !important;
   font-size: 13px;
+}
+
+.form-control {
+  border-radius: 1px !important;
+}
+
+.fieldcollapse {
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold !important;
 }

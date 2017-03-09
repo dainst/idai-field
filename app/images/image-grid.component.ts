@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {Datastore, Query, FilterSet, Mediastore} from "idai-components-2/datastore";
+import {Datastore, Query, Mediastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
@@ -11,7 +11,6 @@ import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
-import {FilterUtility} from "../util/filter-utility";
 import {BlobProxy} from "../common/blob-proxy";
 import {ElementRef} from "@angular/core";
 import {M} from '../m';
@@ -34,9 +33,9 @@ export class ImageGridComponent {
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;
 
-    private query : Query = { q: '' };
+    private query : Query = {q: '', type: 'image', prefix: true};
     private documents: IdaiFieldImageDocument[];
-    private defaultFilterSet: FilterSet;
+    private types: Array<string>;
 
     private nrOfColumns = 4;
     private rows = [];
@@ -57,19 +56,7 @@ export class ImageGridComponent {
         this.imageGridBuilder = new ImageGridBuilder(
             new BlobProxy(mediastore, sanitizer), true);
 
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: false}],
-            type: 'or'
-        };
-
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet =
-                    FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
-                this.fetchDocuments(this.query);
-            }
-        });
+        this.fetchDocuments(this.query);
     }
 
     public refreshGrid() {
@@ -77,7 +64,7 @@ export class ImageGridComponent {
     }
 
     public showUploadErrorMsg(msgWithParams) {
-        this.messages.addWithParams(msgWithParams);
+        this.messages.add(msgWithParams);
     }
 
     /**
@@ -89,13 +76,18 @@ export class ImageGridComponent {
 
         this.query = query;
 
-        this.datastore.find(query).then(documents => {
+        let p;
+        if (!query.q) p = this.datastore.all(query.type);
+        else p = this.datastore.find(query);
+
+        p.then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images
             this.documents.unshift(<IdaiFieldImageDocument>{
                 id: 'droparea',
-                resource: { identifier: '', type: '', width: 1, height: 1, filename: '', relations: {} },
+                resource: { identifier: '', shortDescription:'', type: '',
+                    width: 1, height: 1, filename: '', relations: {} },
                 synced: 0
             });
 
@@ -121,7 +113,7 @@ export class ImageGridComponent {
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
             this.rows = result['rows'];
             for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.addWithParams(msgWithParams);
+                this.messages.add(msgWithParams);
             }
         });
     }
@@ -159,8 +151,8 @@ export class ImageGridComponent {
                 this.updateAndPersistDepictsRelations(this.selected, targetDoc)
                     .then(() => {
                         this.clearSelection();
-                    }).catch(error => {
-                        this.messages.add(error);
+                    }).catch(keyOfM => {
+                        this.messages.add([keyOfM]);
                     });
             }
         }, (closeReason) => {
@@ -174,7 +166,7 @@ export class ImageGridComponent {
                 this.clearSelection();
                 this.fetchDocuments(this.query);
             }).catch(error => {
-                this.messages.add(error);
+                this.messages.add(error); // TODO seems that this can not happen, see catch in fetchDocuments
             });
     }
 
@@ -183,8 +175,8 @@ export class ImageGridComponent {
         let document = documents[documentIndex];
 
         return this.mediastore.remove(document.resource.identifier)
-            .then(() => {return this.persistenceManager.remove(document, document)},
-                err => {return Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]])})
+            .then(() => this.persistenceManager.remove(document, document),
+                err => Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
             .then(() => {
                 if (documentIndex < documents.length - 1) {
                     return this.deleteImageDocuments(documents, ++documentIndex);

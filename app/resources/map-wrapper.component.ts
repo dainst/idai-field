@@ -39,12 +39,26 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
 
         if (documentToJumpTo) {
-            document.getElementById('resource-' + documentToJumpTo.resource.identifier)
-                .scrollIntoView({ behavior: 'smooth' });
-            this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
+            if (this.docs.indexOf(documentToJumpTo) == -1) {
+                this.resourcesComponent.queryChanged({q: '', type: 'resource', prefix: true}).then(
+                    () => {
+                        this.scrollToDocument(documentToJumpTo);
+                        this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
+                    }
+                )
+            } else {
+                this.scrollToDocument(documentToJumpTo);
+                this.router.navigate(['resources', {id: documentToJumpTo.resource.id}]);
+            }
         } else {
             this.router.navigate(['resources']);
         }
+    }
+
+    private scrollToDocument(doc) {
+
+        let element = document.getElementById('resource-' + doc.resource.identifier);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
     private getRouteParams(callback): Promise<any> {
@@ -129,9 +143,9 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
-            this.resourcesComponent.getSelected().resource.geometries = [ geometry ];
+            this.resourcesComponent.getSelected().resource.geometry = geometry;
         } else if (geometry === null) { 
-            delete this.resourcesComponent.getSelected().resource.geometries;
+            delete this.resourcesComponent.getSelected().resource.geometry;
         }
 
         if (this.selectedDocIsNew()) {
@@ -157,7 +171,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     private removeEmptyDocument() {
         
         var selectedDocument = this.resourcesComponent.getSelected();
-        if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometries) {
+        if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometry) {
             this.resourcesComponent.remove(selectedDocument);
         }
     }

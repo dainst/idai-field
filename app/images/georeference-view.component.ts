@@ -54,7 +54,7 @@ export class GeoreferenceViewComponent {
         })(this);
         reader.onerror = (that => {
             return err => {
-                that.messages.addWithParams([M.IMAGES_ERROR_FILEREADER, file.name]);
+                that.messages.add([M.IMAGES_ERROR_FILEREADER, file.name]);
             }
         })(this);
         reader.readAsText(file);
@@ -66,10 +66,10 @@ export class GeoreferenceViewComponent {
         if (this.worldFileContentIsValid(worldfileContent)) {
             this.document.resource.georeference = this.createGeoreference(worldfileContent);
             this.save().then(
-                () => this.messages.add(M.IMAGES_SUCCESS_WORLDFILE_UPLOADED),
-                err => this.messages.add(err));
+                () => this.messages.add([M.IMAGES_SUCCESS_WORLDFILE_UPLOADED]),
+                msgWithParams => this.messages.add(msgWithParams));
         } else {
-            this.messages.addWithParams([M.IMAGES_ERROR_INVALID_WORLDFILE, file.name]);
+            this.messages.add([M.IMAGES_ERROR_INVALID_WORLDFILE, file.name]);
         }
     }
 
@@ -138,8 +138,8 @@ export class GeoreferenceViewComponent {
         this.document.resource.georeference = undefined;
 
         this.save().then(
-            () => this.messages.add(M.IMAGES_SUCCESS_GEOREFERENCE_DELETED),
-            err => this.messages.add(err));
+            () => this.messages.add([M.IMAGES_SUCCESS_GEOREFERENCE_DELETED]),
+            msgWithParams => this.messages.add(msgWithParams));
     }
 
     private save(): Promise<any> {
@@ -149,7 +149,7 @@ export class GeoreferenceViewComponent {
 
             this.persistenceManager.persist(this.document).then(
                 () => { resolve(); },
-                err => { console.error(err); reject(M.DATASTORE_GENERIC_SAVE_ERROR); }
+                err => { console.error(err); reject([M.DATASTORE_GENERIC_SAVE_ERROR]); }
             );
         });
     }

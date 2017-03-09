@@ -16,7 +16,7 @@
     <div class="navbar navbar-light bg-faded">
         <search-bar *ngIf="!selected.length"
                     [showFiltersMenu]="false"
-                    [defaultFilterSet]="defaultFilterSet"
+                    [defaultFilterSet]="types"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>
 
@@ -25,7 +25,8 @@
                 <button type="button" id="delete-images" class="btn btn-danger" (click)="openDeleteModal(deleteModal)">
                     <span class="mdi mdi-delete"></span>
                 </button>
-                <button type="button" id="create-relations-btn" class="btn btn-primary" (click)="openLinkModal(linkModal)">
+                <button type="button" id="create-relations-btn" class="btn btn-primary" (click)="openLinkModal(linkModal)"
+                        data-toggle="tooltip" title="Mit dieser Funktion kannst du ein oder mehrere ausgewählte Bilder mit einer anderen Ressource verknüpfen. Eine Verknüpfung ist zu allen Ressourcen möglich, bei denen es sich nicht selbst wiederum um Bilder handelt.">
                     <span class="mdi mdi-link"></span>
                 </button>
             </div>

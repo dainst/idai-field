@@ -56,13 +56,13 @@ export class AppComponent implements OnInit {
         visible: true,
         mandatory: true
     }, {
-        name: "geometries",
+        name: "geometry",
         visible: false,
         editable: false
     }];
 
     private defaultRelations = [
-        {name: 'depicts', domain: ['image:inherit'], inverse: 'depictedIn', label: 'Zeigt', editable: false},
+        {name: 'depicts', domain: ['image:inherit'], inverse: 'depictedIn', label: 'Zeigt', editable: true},
         {name: 'depictedIn', range: ['image:inherit'], inverse: 'depicts', visible: false, editable: false}
     ];
 
@@ -76,13 +76,15 @@ export class AppComponent implements OnInit {
         // Note that if you want show a message to the user
         // on changing route, you have to write something
         // like
-        // { router.navigate(['target']); messages.add('some'); }
+        // { router.navigate(['target']); messages.add(['some']); }
         //
         router.events.subscribe( (event:Event) => {
             if(event instanceof NavigationStart) {
                 this.messages.clear();
             }
         });
+
+        this.preventDefaultDragAndDropBehavior();
     }
 
     ngOnInit() {
@@ -101,7 +103,13 @@ export class AppComponent implements OnInit {
             new ConfigurationValidator([])
         );
         this.configLoader.getProjectConfiguration().catch(msgWithParams => {
-            this.messages.addWithParams(msgWithParams);
-    });
+            this.messages.add(msgWithParams);
+        });
+    }
+
+    private preventDefaultDragAndDropBehavior() {
+
+        document.addEventListener('dragover', event => event.preventDefault());
+        document.addEventListener('drop', event => event.preventDefault());
     }
 }

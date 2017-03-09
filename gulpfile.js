@@ -3,9 +3,6 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var typescript = require('gulp-typescript');
-var electronConnect = require('electron-connect');
-var packager = require('electron-packager');
-var archiver = require('archiver');
 var fs = require('fs');
 var path = require('path');
 var pkg = require('./package.json');
@@ -29,8 +26,8 @@ gulp.task('convert-sass', function () {
                 'node_modules/mdi/scss/'
             ], precision: 8
         }))
-        .pipe(concat(pkg.name + '.css'))
-        .pipe(gulp.dest('css'));
+        .pipe(concat('app.css'))
+        .pipe(gulp.dest('app'));
 });
 
 function watch() {
@@ -72,46 +69,6 @@ gulp.task('compile', ['convert-sass'], function () {
         .pipe(gulp.dest('test/'));
 });
 
-// runs the development server and sets up browser reloading
-var electronServer = electronConnect.server.create({path: './'});
-gulp.task('run', function () {
-    electronServer.start();
-    watch();
-});
-
-
-gulp.task('make-dist', function () {
-    gulp.src('index.html').pipe(gulp.dest('dist/'));
-    gulp.src('package.json').pipe(gulp.dest('dist/'));
-    gulp.src('systemjs.config.js').pipe(gulp.dest('dist/'));
-    gulp.src('main.js').pipe(gulp.dest('dist/'));
-    gulp.src('menu.js').pipe(gulp.dest('dist/'));
-    gulp.src('app/**/*').pipe(gulp.dest('dist/app/'));
-    gulp.src('fonts/**/*').pipe(gulp.dest('dist/fonts/'));
-    gulp.src('img/**/*').pipe(gulp.dest('dist/img/'));
-    gulp.src('css/**/*').pipe(gulp.dest('dist/css/'));
-    gulp.src('config/**/*').pipe(gulp.dest('dist/config/'));
-    gulp.src('mediastore/**/*').pipe(gulp.dest('dist/mediastore/'));
-    gulp.src('node_modules/@angular/**/*').pipe(gulp.dest('dist/node_modules/@angular/'));
-    gulp.src('node_modules/@ng-bootstrap/**/*').pipe(gulp.dest('dist/node_modules/@ng-bootstrap/'));
-    gulp.src('node_modules/leaflet/**/*').pipe(gulp.dest('dist/node_modules/leaflet/'));
-    gulp.src('node_modules/leaflet.pm/**/*').pipe(gulp.dest('dist/node_modules/leaflet.pm/'));
-    gulp.src('node_modules/leaflet-imageoverlay-rotated/**/*')
-        .pipe(gulp.dest('dist/node_modules/leaflet-imageoverlay-rotated/'));
-    gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('dist/node_modules/systemjs/'));
-    gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('dist/node_modules/zone.js/'));
-    gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('dist/node_modules/reflect-metadata/'));
-    gulp.src('node_modules/mdbootstrap/**/*').pipe(gulp.dest('dist/node_modules/mdbootstrap'));
-    gulp.src('node_modules/angular2-uuid/**/*').pipe(gulp.dest('dist/node_modules/angular2-uuid/'));
-    gulp.src('node_modules/rxjs/**/*').pipe(gulp.dest('dist/node_modules/rxjs/'));
-    gulp.src('node_modules/idai-components-2/**/*').pipe(gulp.dest('dist/node_modules/idai-components-2/'));
-    gulp.src('node_modules/papaparse/**/*').pipe(gulp.dest('dist/node_modules/papaparse/'));
-    gulp.src('node_modules/ts-md5/**/*').pipe(gulp.dest('dist/node_modules/ts-md5/'));
-    gulp.src('node_modules/identicon.js/**/*').pipe(gulp.dest('dist/node_modules/identicon.js/'));
-    gulp.src('node_modules/pouchdb/**/*').pipe(gulp.dest('dist/node_modules/pouchdb/'));
-    gulp.src('src/templates/**/*').pipe(gulp.dest('dist/src/templates/'));
-});
-
 // builds an electron app package for different platforms
 gulp.task('package', [], function () {
 
@@ -120,7 +77,7 @@ gulp.task('package', [], function () {
         name: pkg.name,
         platform: ['win32'],
         arch: 'all',
-        version: '1.4.13',
+        version: '1.6.1',
         appBundleId: pkg.name,
         appVersion: pkg.version,
         'download.cache': 'cache/',

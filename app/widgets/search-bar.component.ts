@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
-import {Query, FilterSet} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 
 @Component({
@@ -14,11 +14,11 @@ import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuratio
  */
 export class SearchBarComponent implements OnChanges {
 
-    private type: string = '';
+    private type: string = 'resource';
     private q: string = '';
     private filterOptions: Array<any> = [];
 
-    @Input() defaultFilterSet: FilterSet;
+    @Input() defaultFilterSet: Array<string>;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
 
@@ -46,54 +46,30 @@ export class SearchBarComponent implements OnChanges {
 
     private emitCurrentQuery() {
 
-        let query: Query = { q: this.q };
-
-        let filterSets: Array<FilterSet> = [];
-        if (this.defaultFilterSet) filterSets.push(this.defaultFilterSet);
-
-        if (this.type) filterSets.push({
-            filters: [{field: 'type', value: this.type, invert: false}],
-            type: 'and'
-        });
-
-        query.filterSets = filterSets;
-
+        let query: Query = { q: this.q, type: this.type, prefix: true };
         this.onQueryChanged.emit(query);
     }
 
     private initializeFilterOptions() {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            
-            var types = projectConfiguration.getTypesTreeList();
+
+            let types = projectConfiguration.getTypesMap();
             this.filterOptions = [];
     
             for (let i in types) {
-                this.addFilterOption(types[i]);
+                let pTypes = projectConfiguration.getParentTypes(types[i].name);
+
+                if (pTypes.indexOf('image') == -1)
+                    this.addFilterOption(types[i]);
             }
         })
     }
 
     private addFilterOption(type) {
 
-        var defaultFilterConflict = false;
-        var defaultFilters = this.defaultFilterSet ? this.defaultFilterSet.filters : [];
-
-        for (let i in defaultFilters) {
-            if (defaultFilters[i].field == "type"
-                && defaultFilters[i].value == type.name) {
-                defaultFilterConflict = true;
-                break;
-            }
-        }
-
-        if (!defaultFilterConflict) {
+        if (this.filterOptions.indexOf(type) == -1) {
             this.filterOptions.push(type);
-            if (type.children) {
-                for (let i in type.children) {
-                    this.addFilterOption(type.children[i]);
-                }
-            }
         }
     }
     

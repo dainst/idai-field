@@ -1,10 +1,25 @@
-import {Component, OnChanges, Input} from "@angular/core";
+import {Component, OnChanges, Input, Injectable} from "@angular/core";
 import {Md5} from 'ts-md5/dist/md5';
 
 // no typings available
 declare class Identicon {
     constructor(hash: string, size: number);
     toString(): string;
+}
+
+class TypeIconService {
+
+    private static icons = {};
+
+    public static generateIconUrl(type: string, size:number) {
+        if (!this.icons[type+size]) {
+            var hash = Md5.hashStr(type) as string;
+            var data = new Identicon(hash, size).toString();
+            this.icons[type+size] = "data:image/png;base64," + data;
+        }
+        return this.icons[type+size];
+    }
+
 }
 
 @Component({
@@ -24,9 +39,7 @@ export class TypeIconComponent implements OnChanges {
     private url: string;
 
     ngOnChanges() {
-        var hash = Md5.hashStr(this.type) as string;
-        var data = new Identicon(hash, this.size).toString();
-        this.url = "data:image/png;base64," + data;
+        this.url = TypeIconService.generateIconUrl(this.type, this.size);
     }
 
 }

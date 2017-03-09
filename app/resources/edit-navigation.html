@@ -1,0 +1,18 @@
+<document-edit-wrapper #f
+                       [(document)]="document"
+                        (onSaveSuccess)="navigate($event)"
+                        [showDeleteButton]="(mode=='edit')"
+                        (onDeleteSuccess)="goToOverview()"
+                        [showBackButton]="(mode=='edit')"
+                        (onBackButtonClicked)="goBack()"
+                       >
+</document-edit-wrapper>
+
+<template #modalTemplate>
+    <edit-save-dialog
+        (onSave)="f.save(); modal.close();"
+        (onDiscard)="discard(); modal.close();"
+        (onCancel)="canDeactivateGuard.cancel(); modal.close();">
+    </edit-save-dialog>
+</template>
+

@@ -1,7 +1,8 @@
-import {Datastore,Query} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
 
 @Injectable()
 /**
@@ -9,13 +10,13 @@ import {Observable} from "rxjs";
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CachedDatastore implements Datastore {
+export class CachedDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
 
-    constructor(private datastore:Datastore) { }
+    constructor(private datastore:IdaiFieldDatastore) { }
 
-    create(document: Document): Promise<Document|string> {
+    create(document: Document): Promise<Document> {
         return this.datastore.create(document).then(doc => {
             let d = doc as Document;
             this.documentCache[d.resource.id] = d;
@@ -23,7 +24,7 @@ export class CachedDatastore implements Datastore {
         })
     }
 
-    update(document: Document): Promise<Document|string> {
+    update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
             let d = doc as Document;
             this.documentCache[d.resource.id] = d;
@@ -31,7 +32,7 @@ export class CachedDatastore implements Datastore {
         })
     }
 
-    remove(doc: Document): Promise<any|any> {
+    remove(doc: Document): Promise<any> {
         return this.datastore.remove(doc).then(() => {
             delete this.documentCache[doc.resource.id];
         })
@@ -41,38 +42,47 @@ export class CachedDatastore implements Datastore {
         return this.datastore.documentChangesNotifications();
     }
 
-    get(id: string): Promise<Document|string> {
+    get(id: string): Promise<Document> {
         if (this.documentCache[id]) {
             return Promise.resolve(this.documentCache[id]);
         }
         return this.datastore.get(id);
     }
 
-    find(query: Query, fieldName?: string): Promise<Document[] | string> {
-        return this.datastore.find(query,fieldName).then(results => {
-            return Promise.resolve(this.replaceWithCached(results));
-        })
+    find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
+
+        return this.datastore.find(query, offset, limit)
+            .then(result => this.replaceAllWithCached(result));
     }
 
-    private replaceWithCached(results) {
+    findByIdentifier(identifier: string): Promise<Document> {
+        return this.datastore.findByIdentifier(identifier)
+            .then(result => this.replaceWithCached(result));
+    }
+
+    all(type?:string, offset?:number, limit?:number): Promise<Document[]> {
+        return this.datastore.all(type, offset, limit)
+            .then(result => this.replaceAllWithCached(result));
+    }
+
+    private replaceAllWithCached(results) {
         let results_ = [];
         for (let result of results) {
-            if (this.documentCache[result.resource.id]) {
-                results_.push(this.documentCache[result.resource.id]);
-            }
-            else {
-                this.documentCache[result.resource.id] = result;
-                results_.push(result);
-            }
+            results_.push(this.replaceWithCached(result));
         }
         return results_;
     }
 
-    all(options: any): Promise<Document[]|string> {
-        return this.datastore.all(options);
+    private replaceWithCached(result) {
+        if (!result)
+            return result;
+        else if (this.documentCache[result.resource.id])
+            return this.documentCache[result.resource.id];
+        else
+            return this.documentCache[result.resource.id] = result;
     }
 
-    refresh(doc: Document): Promise<Document|string> {
+    refresh(doc: Document): Promise<Document> {
         return this.datastore.refresh(doc).then(result => {
             this.documentCache[doc.resource.id] = result as Document;
             return Promise.resolve(result);

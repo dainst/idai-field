@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Datastore, Query, FilterSet} from "idai-components-2/datastore";
+import {Datastore, Query} from "idai-components-2/datastore";
+import {ConfigLoader} from "idai-components-2/configuration";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {FilterUtility} from "../util/filter-utility";
 
 @Component({
     selector: 'document-picker',
@@ -9,14 +11,16 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 })
 export class DocumentPickerComponent {
 
-    @Input() filterSet: FilterSet;
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: IdaiFieldDocument[];
     protected query: Query;
 
-    constructor(private datastore: Datastore) {
-        this.query = {q: '', filterSets: [this.filterSet]};
+    constructor(
+        private datastore: Datastore
+
+    ) {
+        this.query = {q: '', type: 'resource', prefix: true};
     }
 
     public queryChanged(query: Query) {
@@ -33,7 +37,6 @@ export class DocumentPickerComponent {
     public fetchDocuments(query: Query) {
 
         this.datastore.find(query).then(documents => {
-            console.log("find",documents)
             this.documents = documents as IdaiFieldDocument[];
         }).catch(err => console.error(err));
     }

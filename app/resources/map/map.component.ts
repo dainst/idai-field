@@ -6,14 +6,13 @@ import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
-import {Datastore, Mediastore, Query, FilterSet} from "idai-components-2/datastore";
+import {Datastore, Mediastore, Query} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {BlobProxy} from "../../common/blob-proxy";
 import {ImageContainer} from "../../common/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
-import {FilterUtility} from '../../util/filter-utility';
 
 @Component({
     moduleId: module.id,
@@ -39,7 +38,7 @@ export class MapComponent implements OnChanges {
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
     private markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
-    private bounds: L.LatLngBounds;
+    private bounds: any[]; // in fact L.LatLng[], but leaflet typing are incomplete
 
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
@@ -85,7 +84,7 @@ export class MapComponent implements OnChanges {
         private configLoader: ConfigLoader
     ) {
         this.blobProxy = new BlobProxy(mediastore, sanitizer);
-
+        this.bounds = [];
 
     }
 
@@ -106,8 +105,6 @@ export class MapComponent implements OnChanges {
             this.clearMap();
         }
 
-        this.bounds = L.latLngBounds(L.latLng(0, 0), L.latLng(0, 0));
-
         let p;
         if (changes['documents']) {
             p = this.initializeLayers().then(
@@ -126,9 +123,8 @@ export class MapComponent implements OnChanges {
         }
 
         for (var i in this.documents) {
-            var resource = this.documents[i].resource;
-            for (var j in resource.geometries) {
-                this.addToMap(resource.geometries[j], this.documents[i]);
+            if (this.documents[i].resource.geometry) {
+                this.addToMap(this.documents[i].resource.geometry, this.documents[i]);
             }
         }
 
@@ -142,7 +138,7 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             } else {
-                this.map.fitBounds(this.bounds);
+                if (this.bounds.length) this.map.fitBounds(L.latLngBounds(this.bounds));
             }
         });
 
@@ -201,17 +197,11 @@ export class MapComponent implements OnChanges {
         return new Promise((resolve, reject) => {
 
             this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-                let filterSet: FilterSet = {
-                    filters: [{'field': 'type', 'value': 'image', invert: false}],
-                    type: 'or'
-                };
 
                 let query: Query = {
                     q: '',
-                    filterSets: [
-                        FilterUtility.addChildTypesToFilterSet(filterSet,
-                            projectConfiguration.getTypesMap())
-                    ]
+                    type: 'image',
+                    prefix: true
                 };
 
                 this.datastore.find(query).then(
@@ -260,7 +250,7 @@ export class MapComponent implements OnChanges {
             ).catch(
                 msgWithParams => {
                     imgContainer.imgSrc = BlobProxy.blackImg;
-                    this.messages.addWithParams(msgWithParams);
+                    this.messages.add(msgWithParams);
                     reject();
                 }
             );
@@ -294,17 +284,21 @@ export class MapComponent implements OnChanges {
         this.markers = {};
     }
 
+    private extendBounds(latLng: L.LatLng) {
+        this.bounds.push(latLng);
+    }
+
     private addToMap(geometry: any, document: IdaiFieldDocument) {
 
         switch(geometry.type) {
             case "Point":
                 var marker: IdaiFieldMarker = this.addMarkerToMap(geometry, document);
-                this.bounds.extend(marker.getLatLng());
+                this.extendBounds(marker.getLatLng());
                 break;
             case "Polygon":
                 var polygon: IdaiFieldPolygon = this.addPolygonToMap(geometry, document);
                 for (var latLng of polygon.getLatLngs()) {
-                    this.bounds.extend(latLng);
+                    this.extendBounds(latLng);
                 }
                 break;
         }
@@ -312,9 +306,9 @@ export class MapComponent implements OnChanges {
 
     private addMarkerToMap(geometry: any, document: IdaiFieldDocument): IdaiFieldMarker {
 
-        var latLng = L.latLng(geometry.coordinates);
+        var latLng = L.latLng([geometry.coordinates[1], geometry.coordinates[0]]);
 
-        var icon = (document == this.selectedDocument) ? this.markerIcons.darkblue : this.markerIcons.blue;
+        var icon = (document == this.selectedDocument) ? this.markerIcons.red : this.markerIcons.blue;
 
         var marker: IdaiFieldMarker = L.marker(latLng, {
             icon: icon
@@ -342,6 +336,10 @@ export class MapComponent implements OnChanges {
         var polygon: IdaiFieldPolygon = this.getPolygonFromCoordinates(geometry.coordinates);
         polygon.document = document;
 
+        if (document == this.selectedDocument) {
+            polygon.setStyle({color: 'red'});
+        }
+
         polygon.bindTooltip(this.getShortDescription(document.resource), {
             direction: 'center',
             opacity: 1.0});
@@ -359,12 +357,15 @@ export class MapComponent implements OnChanges {
 
     private addLayerToMap(layer: ImageContainer) {
 
+        let georef = layer.document.resource.georeference;
         layer.object = L.imageOverlay.rotated(layer.imgSrc,
-            layer.document.resource.georeference.topLeftCoordinates,
-            layer.document.resource.georeference.topRightCoordinates,
-            layer.document.resource.georeference.bottomLeftCoordinates,
+            georef.topLeftCoordinates,
+            georef.topRightCoordinates,
+            georef.bottomLeftCoordinates,
             { pane: layer.document.resource.id }).addTo(this.map);
-        this.bounds.extend(layer.object.getBounds());
+        this.extendBounds(L.latLng(georef.topLeftCoordinates));
+        this.extendBounds(L.latLng(georef.topRightCoordinates));
+        this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
 
         this.activeLayers.push(layer);
     }
@@ -382,7 +383,7 @@ export class MapComponent implements OnChanges {
         this.saveActiveLayersIdsInMapState();
     }
 
-    public isActiveLayer(layer: any) {
+    public isActiveLayer(layer: ImageContainer) {
 
         return this.activeLayers.indexOf(layer) > -1;
     }
@@ -413,15 +414,24 @@ export class MapComponent implements OnChanges {
 
     private focusMarker(marker: L.Marker) {
 
-        if (marker != this.editableMarker) {
-            marker.setIcon(this.markerIcons.darkblue);
-        }
         this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
     }
 
     private focusPolygon(polygon: L.Polygon) {
 
         this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+    }
+
+    public focusLayer(layer: ImageContainer) {
+
+        let georef = layer.document.resource.georeference;
+        let bounds = [];
+
+        bounds.push(L.latLng(georef.topLeftCoordinates));
+        bounds.push(L.latLng(georef.topRightCoordinates));
+        bounds.push(L.latLng(georef.bottomLeftCoordinates));
+
+        this.map.fitBounds(bounds);
     }
 
     private getShortDescription(resource: IdaiFieldResource) {
@@ -465,7 +475,7 @@ export class MapComponent implements OnChanges {
 
     private editExistingGeometry() {
 
-        switch (this.selectedDocument.resource.geometries[0].type) {
+        switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
                 this.editMode = "polygon";
                 this.startPolygonEditing();
@@ -640,7 +650,6 @@ export class MapComponent implements OnChanges {
 
         var feature = L.polygon(coordinates).toGeoJSON();
         return L.polygon(<any> feature.geometry.coordinates[0]);
-        
     }
 
     private getLayersAsList(): Array<ImageContainer> {

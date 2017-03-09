@@ -106,7 +106,7 @@ so that test execution continues regardless of errors.
 To create binaries run 
 
 ```
-$ npm run package 
+$ npm run dist 
 ```
 
 This will create packages for MacOs and Windows 32/64 bit.

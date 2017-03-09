@@ -3,9 +3,12 @@
   height: 40px;
   background-color: $navbar-default-bg;
 
-  margin: 200px auto;
   -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
   animation: sk-rotateplane 1.2s infinite ease-in-out;
+
+  &.fullscreen {
+    margin: 200px auto;
+  }
 }
 
 @-webkit-keyframes sk-rotateplane {

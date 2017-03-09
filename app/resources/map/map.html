@@ -4,10 +4,19 @@
         (mouseenter)="layerMenuVisible = true;">Karten</div>
 <div *ngIf="layerMenuVisible" id="layer-menu" class="card card-block form-group"
         (mouseleave)="layerMenuVisible = false;">
-    <div *ngFor="let layer of getLayersAsList()">
-        <label>
-            <input type="checkbox" [checked]="isActiveLayer(layer)" (click)="toggleLayer(layer)" /> {{layer.document.resource.shortDescription}}
-        </label>
+    <div *ngFor="let layer of getLayersAsList()" class="layer-entry">
+        <span *ngIf="isActiveLayer(layer)">
+            <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
+                  data-toggle="tooltip" title="Karte ausblenden"></span>
+            <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                  data-toggle="tooltip" title="Karte fokussieren" (click)="focusLayer(layer)"></span>
+        </span>
+        <span *ngIf="!isActiveLayer(layer)">
+            <span class="mdi mdi-eye-off layer-menu-button layer-inactive" (click)="toggleLayer(layer)"
+                  data-toggle="tooltip" title="Karte anzeigen"></span>
+            <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive"></span>
+        </span>
+        <span class="layer-menu-label">{{layer.document.resource.shortDescription}}</span>
     </div>
 </div>
 

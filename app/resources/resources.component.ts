@@ -1,7 +1,7 @@
 import {Component, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Query, FilterSet, Datastore} from "idai-components-2/datastore";
+import {Query, Datastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {Observable} from "rxjs/Observable";
@@ -23,34 +23,20 @@ export class ResourcesComponent {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
-    protected query: Query = { q: '' };
-    protected defaultFilterSet: FilterSet;
+    protected query: Query = {q: '', type: 'resource', prefix: true};
 
     public documents: Document[];
     private ready: Promise<any>;
 
-    constructor(@Inject('app.config') private config,
-                private router: Router,
-                private datastore: Datastore,
-                configLoader: ConfigLoader) {
-        var defaultFilterSet = {
-            filters: [{field: 'type', value: 'image', invert: true}],
-            type: 'and'
-        };
+    constructor(private router: Router,
+                private datastore: Datastore) {
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{
             readyResolveFun = resolve;
         });
-
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            if (!this.defaultFilterSet) {
-                this.defaultFilterSet = FilterUtility.addChildTypesToFilterSet(defaultFilterSet, projectConfiguration.getTypesMap());
-                this.query = {q: '', filterSets: [this.defaultFilterSet]};
-                this.fetchDocuments(this.query).then(()=>{
-                   readyResolveFun();
-                });
-            }
+        this.fetchDocuments().then(()=>{
+           readyResolveFun();
         });
     }
 
@@ -63,10 +49,19 @@ export class ResourcesComponent {
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
-    public queryChanged(query: Query) {
+    public queryChanged(query: Query): Promise<any> {
 
-        this.query = query;
-        this.fetchDocuments(query);
+        return new Promise<any>((resolve) => {
+            this.query = query;
+            this.fetchDocuments(query).then(
+                () => {
+                    if (this.selectedDocument && this.documents.indexOf(this.selectedDocument) == -1) {
+                        this.router.navigate(['resources']);
+                    }
+                    resolve();
+                }
+            );
+        });
     }
 
     /**
@@ -123,12 +118,15 @@ export class ResourcesComponent {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    public fetchDocuments(query: Query) {
+    public fetchDocuments(query: Query = this.query): Promise<any> {
 
-        return this.datastore.find(query).then(documents => {
-            this.documents = documents as Document[];
-            this.notify();
-        }).catch(err => console.error(err));
+        return new Promise<any>((resolve, reject) => {
+            return this.datastore.find(query).then(documents => {
+                this.documents = documents as Document[];
+                this.notify();
+                resolve();
+            }).catch(err => { console.error(err); reject(); } );
+        });
     }
 
 

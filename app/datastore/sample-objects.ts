@@ -2,7 +2,6 @@ import {IdaiFieldDocument} from '../model/idai-field-document';
 
 export var DOCS: IdaiFieldDocument[] = [
     {
-        "id": "o1",
         "resource": {
             "id": "o1",
             "identifier": "ob1",
@@ -10,15 +9,14 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "depictedIn": ["o21"]
             },
-            "geometries": [{ "type": "Polygon","coordinates":
+            "geometry": { "type": "Polygon","coordinates":
                 [[[2.34375,-2.90625],[0.7421875,-2.8984375],[0.7421875,-3.921875],[2.34375,-3.90625]]]
                 ,"crs":"local"
-            }],
+            },
             "type": "jedi"
         },
         "synced": 0
     }, {
-        "id": "o2",
         "resource": {
             "id": "o2",
             "identifier": "ob2",
@@ -26,14 +24,13 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "depictedIn": ["o13"]
             },
-            "geometries": [{
+            "geometry": {
                 "type":"Point","coordinates":[4.71875,-12.96875],"crs":"local"
-            }],
+            },
             "type": "dude"
         },
         "synced": 0
     }, {
-        "id": "o3",
         "resource": {
             "id": "o3",
             "identifier": "ob3",
@@ -46,16 +43,15 @@ export var DOCS: IdaiFieldDocument[] = [
                 "origin": ["o7"],
                 "depictedIn": ["o24"]
             },
-            "geometries": [{
+            "geometry": {
                 "type": "Polygon","coordinates":
                     [[[2.140625,9.71875],[1.265625,9.796875],[1.234375,9.15625],[-3.796875,9.171875],[-3.8125,7.578125],
                         [-3.171875,7.5],[-3.171875,8.484375],[1.28125,8.40625],[1.265625,7.5],[2.15625,7.484375]]],
                 "crs": "local"
-            }]
+            }
         },
         "synced": 0
     }, {
-        "id": "o4",
         "resource": {
             "id": "o4",
             "identifier": "ob4",
@@ -66,13 +62,12 @@ export var DOCS: IdaiFieldDocument[] = [
                 "owns": ["o11"],
                 "depictedIn": ["o12"]
             },
-            "geometries": [{
+            "geometry": {
                 "type": "Point","coordinates": [0.828125,0.375],"crs": "local"
-            }]
+            }
         },
         "synced": 0
     }, {
-        "id": "o5",
         "resource": {
             "id": "o5",
             "identifier": "ob5",
@@ -85,7 +80,6 @@ export var DOCS: IdaiFieldDocument[] = [
         },
         "synced": 0
     }, {
-        "id": "o6",
         "resource": {
             "id": "o6",
             "identifier": "ob6",
@@ -99,7 +93,6 @@ export var DOCS: IdaiFieldDocument[] = [
         },
         "synced": 0
     }, {
-        "id": "o7",
         "resource": {
             "id": "o7",
             "identifier": "ob7",
@@ -110,7 +103,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o8",
         "resource": {
             "id": "o8",
             "identifier": "ob8",
@@ -123,7 +115,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o9",
         "resource": {
             "id": "o9",
             "identifier": "ob9",
@@ -136,7 +127,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o10",
         "resource": {
             "id": "o10",
             "identifier": "ob10",
@@ -147,7 +137,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o11",
         "resource": {
             "id": "o11",
             "identifier": "ob11",
@@ -161,7 +150,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o12",
         "resource": {
             "id": "o12",
             "identifier": "hans.jpg",
@@ -178,7 +166,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o13",
         "resource": {
             "id": "o13",
             "identifier": "boba.jpg",
@@ -195,7 +182,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o14",
         "resource": {
             "id": "o14",
             "identifier": "vader.jpg",
@@ -213,7 +199,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o16",
         "resource": {
             "id": "o16",
             "identifier": "leia.jpg",
@@ -230,7 +215,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o17",
         "resource": {
             "id": "o17",
             "identifier": "naboo.jpg",
@@ -247,7 +231,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o18",
         "resource": {
             "id": "o18",
             "identifier": "tatooine.jpg",
@@ -265,7 +248,6 @@ export var DOCS: IdaiFieldDocument[] = [
 
 
     {
-        "id": "o19",
         "resource": {
             "id": "o19",
             "identifier": "map.jpg",
@@ -280,7 +262,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o20",
         "resource": {
             "id": "o20",
             "identifier": "hoth.jpg",
@@ -297,7 +278,6 @@ export var DOCS: IdaiFieldDocument[] = [
         "synced": 0
     },
     {
-        "id": "o21",
         "resource": {
             "id": "o21",
             "identifier": "gandalf.jpg",
@@ -315,7 +295,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o22",
         "resource": {
             "id": "o22",
             "identifier": "enterprise.png",
@@ -333,7 +312,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o23",
         "resource": {
             "id": "o23",
             "identifier": "ob23",
@@ -345,7 +323,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o24",
         "resource": {
             "id": "o24",
             "identifier": "finn.jpg",
@@ -362,7 +339,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o25",
         "resource": {
             "id": "o25",
             "identifier": "mapLayerTest1.png",
@@ -382,7 +358,6 @@ export var DOCS: IdaiFieldDocument[] = [
     },
 
     {
-        "id": "o26",
         "resource": {
             "id": "o26",
             "identifier": "mapLayerTest2.png",

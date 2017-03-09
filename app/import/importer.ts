@@ -1,11 +1,19 @@
 import {Injectable} from "@angular/core";
-import {Datastore} from "idai-components-2/datastore";
-import {Validator} from "idai-components-2/persist";
 import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
+import {ImportStrategy} from "./import-strategy";
 
 
+export interface ImportReport {
+
+    errors: string[][],
+    warnings: string[][],
+    importedResourcesIds: string[]
+}
+
+
+@Injectable()
 /**
  * The Importer's responsibility is to read resources from jsonl files
  * residing on the local file system and to convert them to documents, which
@@ -16,36 +24,28 @@ import {Parser} from "./parser";
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-@Injectable()
 export class Importer {
 
-    private inUpdateDocumentLoop:boolean;
+    private inUpdateDocumentLoop: boolean;
     private docsToUpdate: Array<Document>;
-    private importSuccessCounter:number;
-    private objectReaderFinished:boolean;
-    private currentImportWithError:boolean;
-    private importReport:any;
-    private resolvePromise:(any) => any;
+    private objectReaderFinished: boolean;
+    private currentImportWithError: boolean;
+    private importReport: ImportReport;
+    private resolvePromise: (any) => any;
 
     private initState() {
         this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
-        this.importSuccessCounter = 0;
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
         this.importReport = {
-            "io_error": false,
-            "parser_errors": [],
-            "parser_info": [],
-            "successful_imports": 0,
-            "validation_errors": [],
-            "datastore_errors": []
+            errors: [],
+            warnings: [],
+            importedResourcesIds: [],
         };
     }
 
-    constructor(private datastore: Datastore,
-                private validator: Validator) {
-    }
+    constructor() { }
 
     /**
      * Returns a promise which resolves to an importReport object with detailed information about the import,
@@ -61,43 +61,40 @@ export class Importer {
      *
      * @param reader
      * @param parser
+     * @param importStrategy
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResources(reader: Reader, parser: Parser): Promise<any> {
+    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 
             this.resolvePromise = resolve;
             this.initState();
 
-            reader.read().then(fileContent => {
+            reader.go().then(fileContent => {
 
-                parser.parse(fileContent).subscribe(result => {
+                parser.parse(fileContent).subscribe(resultDocument => {
 
                     if (this.currentImportWithError) return;
 
-                    for (var i in result.messages) {
-                        this.importReport.parser_info.push(result.messages[i]);
-                    }
+                    if (!this.inUpdateDocumentLoop) this.update(resultDocument, importStrategy);
+                    else this.docsToUpdate.push(resultDocument);
 
-                    if (!this.inUpdateDocumentLoop) {
-                        this.update(result.document);
-                    } else {
-                        this.docsToUpdate.push(result.document);
-                    }
-
-                }, error => {
-                    this.importReport["parser_errors"].push(error);
+                }, msgWithParams => {
+                    this.importReport.errors.push(msgWithParams);
 
                     this.objectReaderFinished = true;
                     this.currentImportWithError = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
+
                 }, () => {
+                    this.importReport.warnings = parser.getWarnings();
                     this.objectReaderFinished = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
                 });
-            }).catch(error => {
-                this.importReport['io_error'] = true;
+            }).catch(msgWithParams => { // TODO test this
+                this.importReport.errors.push(msgWithParams);
+                this.finishImport();
             });
         });
     }
@@ -109,48 +106,32 @@ export class Importer {
      * Triggers a datastore update of <code>doc</code> on every call.
      *
      * @param doc
+     * @param importStrategy
      */
-    private update(doc: Document) {
+    private update(doc: Document, importStrategy: ImportStrategy) {
         this.inUpdateDocumentLoop = true;
 
-        this.validator.validate(doc)
-            .then(
-                () => {
-                    return this.datastore.create(doc);
-                }, msgWithParams => {
-                    this.importReport['validation_errors'].push({
-                        doc: doc,
-                        msg: msgWithParams[0],
-                        msgParams: msgWithParams.slice(1)
-                    });
-
-                    this.currentImportWithError = true;
-                    this.finishImport();
-                })
+        importStrategy.importDoc(doc)
             .then(() => {
-                this.importSuccessCounter++;
+
+                this.importReport.importedResourcesIds.push(doc.resource.id);
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0]);
+                    return this.update(this.docsToUpdate[0], importStrategy);
                 } else {
                     this.finishImport();
                 }
-            }, error => {
-                this.importReport['datastore_errors'].push({
-                    msg: error,
-                    doc: doc
-                });
-
+            }, msgWithParams => {
+                this.importReport.errors.push(msgWithParams);
                 this.currentImportWithError = true;
                 this.finishImport();
             });
     }
 
     private finishImport() {
-        this.importReport["successful_imports"] = this.importSuccessCounter;
         this.inUpdateDocumentLoop = false;
         this.resolvePromise(this.importReport);
     }

@@ -2,6 +2,9 @@
  * @author: Thomas Kleinke
  */
 
+$layer-menu-button-color: #657faa;
+$layer-menu-button-inactive-color: grey;
+
 #map-container {
   width: 100%;
   height: calc(100vh - 65px);
@@ -28,14 +31,6 @@
   padding-bottom: 10px;
 }
 
-#layer-menu label {
-  margin-left: -5px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
 #map-editor-button-ok {
   position: absolute;
   z-index: 1000;
@@ -55,4 +50,40 @@
   z-index: 1000;
   bottom: 20px;
   left: 25px;
+}
+
+.layer-entry {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.layer-menu-button {
+  padding: 0;
+  font-size: 18px;
+  cursor: pointer !important;
+}
+
+.layer-menu-button.layer-active {
+  color: $layer-menu-button-color !important;
+}
+
+.layer-menu-button.layer-inactive {
+  color: $layer-menu-button-inactive-color !important;
+}
+
+.layer-menu-button:hover {
+  color: lighten($layer-menu-button-color, 10%) !important;
+}
+
+.layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
+  visibility: hidden;
+}
+
+.layer-menu-label {
+  position: relative;
+  top: -1px;
+  font-size: 14px;
 }

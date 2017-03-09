@@ -65,7 +65,7 @@ export function main() {
             },()=>fail('should not complete'));
         });
 
-        fit('should emit an error on unsupported type', (done) => {
+        it('should emit an error on unsupported type', (done) => {
 
             let fileContent  = '{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "LineString", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } } ' +

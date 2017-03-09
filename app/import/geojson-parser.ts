@@ -12,7 +12,6 @@ export class GeojsonParser extends AbstractParser {
 
         this.warnings = [];
         return Observable.create(observer => {
-
             let content_;
             try {
                 content_ = JSON.parse(content);
@@ -20,14 +19,24 @@ export class GeojsonParser extends AbstractParser {
                 return observer.error([M.IMPORTER_FAILURE_INVALIDJSON,e.toString()]);
             }
 
-            if (content_['type'] != 'FeatureCollection') throw "content type is no feature collection"; // TODO improve
-            for (let i in content_['features']) {
-                if (content_['features'][i]['type'] != 'Feature') throw "feature type is no feature"; // TODO improve
-                observer.next(this.makeDoc(content_['features'][i]));
-            }
+            const msgWithParams = GeojsonParser.getStructErrors(content_);
+            if (msgWithParams != undefined) observer.error(msgWithParams);
 
+            this.iterateDocs(content_,observer);
             observer.complete();
         });
+    }
+
+    private iterateDocs(content,observer) {
+        for (let i in content['features']) {
+            if (content['features'][i]['type'] != 'Feature') throw "feature type is no feature"; // TODO improve
+            observer.next(this.makeDoc(content['features'][i]));
+        }
+    }
+
+    private static getStructErrors(content) {
+        if (content['type'] != 'FeatureCollection') return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,'"type":"FeatureCollection" not found at top level.'];
+        if (content['features'] == undefined) return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,'Property "features" not found at top level.'];
     }
 
     private makeDoc(feature) {

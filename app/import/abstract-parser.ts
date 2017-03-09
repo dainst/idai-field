@@ -3,7 +3,6 @@ import {Parser} from "./parser";
 import {Observable} from "rxjs/Observable";
 import {Document} from "idai-components-2/core";
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

@@ -1,13 +1,10 @@
-import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldGeometry} from "../model/idai-field-geometry";
-import {Parser} from "./parser";
 import {M} from "../m";
-import {Document} from 'idai-components-2/core';
+import {Document} from "idai-components-2/core";
 import {AbstractParser} from "./abstract-parser";
 
-@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira

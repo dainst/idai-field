@@ -1,10 +1,8 @@
-import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Document} from "idai-components-2/core";
 import {M} from "../m";
 import {AbstractParser} from "./abstract-parser";
 
-@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners

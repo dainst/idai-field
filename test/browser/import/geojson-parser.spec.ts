@@ -12,7 +12,7 @@ export function main() {
 
             let fileContent  = '{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } }, ' +
-                '{ "type": "Feature", "geometry": { "type": "LineString", "coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, "properties" : {"identifier":"123"} }' +
+                '{ "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, "properties" : {"identifier":"123"} }' +
                 '] }';
 
             let parser = new GeojsonParser();
@@ -28,7 +28,7 @@ export function main() {
                 expect(docs[0].resource['geometry']['type']).toEqual("Point");
 
                 expect(docs[1].resource['identifier']).toEqual("123");
-                expect(docs[1].resource['geometry']['type']).toEqual("LineString");
+                expect(docs[1].resource['geometry']['type']).toEqual("Polygon");
 
                 expect(docs.length).toEqual(2);
                 // expect(parser.getWarnings()[0]).toEqual([M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT]);

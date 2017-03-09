@@ -82,7 +82,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDJSON]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: {0}.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

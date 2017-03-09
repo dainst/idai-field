@@ -13,18 +13,17 @@ export class GeojsonParser extends AbstractParser {
         this.warnings = [];
         return Observable.create(observer => {
 
-            let con;
+            let content_;
             try {
-                con = JSON.parse(content);
+                content_ = JSON.parse(content);
             } catch (e) {
-                console.error('parse content error. reason: ',e);
-                observer.error([M.IMPORTER_FAILURE_INVALIDJSON]); // TODO add param
+                return observer.error([M.IMPORTER_FAILURE_INVALIDJSON,e.toString()]);
             }
 
-            if (con['type'] != 'FeatureCollection') throw "content type is no feature collection"; // TODO improve
-            for (let i in con['features']) {
-                if (con['features'][i]['type'] != 'Feature') throw "feature type is no feature"; // TODO improve
-                observer.next(this.makeDoc(con['features'][i]));
+            if (content_['type'] != 'FeatureCollection') throw "content type is no feature collection"; // TODO improve
+            for (let i in content_['features']) {
+                if (content_['features'][i]['type'] != 'Feature') throw "feature type is no feature"; // TODO improve
+                observer.next(this.makeDoc(content_['features'][i]));
             }
 
             observer.complete();

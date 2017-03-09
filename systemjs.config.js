@@ -68,7 +68,7 @@
         console.log('Running as electron app, enabling NodeJS functionality.');
         // ensure that pouchdb is loaded using node's require
         // in order to trigger use of leveldb backend
-        config.map['pouchdb'] = '@node/pouchdb';
+        //config.map['pouchdb'] = '@node/pouchdb';
         // make sure papaparse is loaded using node's require
         // in order to avoid errors
         config.map['papaparse'] = '@node/papaparse';

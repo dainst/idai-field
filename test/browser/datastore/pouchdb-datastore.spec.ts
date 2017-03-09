@@ -7,6 +7,13 @@ import {M} from "../../../app/m";
  * @author Sebastian Cuy
  */
 export function main() {
+
+    beforeEach(
+        function(){
+            spyOn(console, 'debug'); // to suppress console.error output
+        }
+    );
+
     describe('PouchdbDatastore', () => {
 
         let datastore : PouchdbDatastore;

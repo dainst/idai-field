@@ -8,6 +8,14 @@ import {AbstractParser} from "./abstract-parser";
  */
 export class GeojsonParser extends AbstractParser {
 
+    /**
+     * The content json must be of a certain structure to
+     * get accepted. Any deviance of this structure will lead
+     * to a msgWithParams emitted and no document created at all.
+     *
+     * @param content
+     * @returns {any}
+     */
     public parse(content: string): Observable<Document> {
 
         this.warnings = [];
@@ -29,14 +37,23 @@ export class GeojsonParser extends AbstractParser {
 
     private iterateDocs(content,observer) {
         for (let i in content['features']) {
-            if (content['features'][i]['type'] != 'Feature') throw "feature type is no feature"; // TODO improve
             observer.next(this.makeDoc(content['features'][i]));
         }
     }
 
     private static getStructErrors(content) {
-        if (content['type'] != 'FeatureCollection') return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,'"type":"FeatureCollection" not found at top level.'];
-        if (content['features'] == undefined) return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,'Property "features" not found at top level.'];
+        function structErr(text) {
+            return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,text];
+        }
+
+        if (content['type'] != 'FeatureCollection') return structErr('"type":"FeatureCollection" not found at top level.');
+        if (content['features'] == undefined) return structErr('Property "features" not found at top level.');
+
+        for (let i in content['features']) {
+            if (content['features'][i]['type'] == undefined) return structErr('Property "type" not found for at least one feature.');
+            if (content['features'][i]['type'] != 'Feature') return structErr('Second level elements must be of type "Feature".');
+            if (['Polygon','Point'].indexOf(content['features'][i]['geometry']['type']) == -1) return structErr('geometry type "'+content['features'][i]['geometry']['type']+'" not supported.');
+        }
     }
 
     private makeDoc(feature) {

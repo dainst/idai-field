@@ -65,6 +65,20 @@ export function main() {
             },()=>fail('should not complete'));
         });
 
+        fit('should emit an error on unsupported type', (done) => {
+
+            let fileContent  = '{ "type": "FeatureCollection", "features": [' +
+                '{ "type": "Feature", "geometry": { "type": "LineString", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } } ' +
+                '] }';
+
+            let parser = new GeojsonParser();
+            parser.parse(fileContent).subscribe(() => {
+                fail('should not emit next');
+            }, err => {
+                expect(err[0]).toBe(M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
+                done();
+            },()=>fail('should not complete'));
+        });
 
     });
 }

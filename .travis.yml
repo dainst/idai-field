@@ -1,39 +1,40 @@
 osx_image: xcode7.3
-
 dist: trusty
 sudo: false
-
 language: c
-
 matrix:
   include:
-    - os: osx
-
+  - os: osx
 cache:
   directories:
   - node_modules
-  - $HOME/.electron
-  - $HOME/.cache
-
+  - "$HOME/.electron"
+  - "$HOME/.cache"
 addons:
   apt:
     packages:
-      - libgnome-keyring-dev
-      - icnsutils
-
+    - libgnome-keyring-dev
+    - icnsutils
 before_install:
-  - mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.5.5/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.5.5.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
-
+- mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.5.5/git-lfs-$([
+  "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.5.5.tar.gz
+  | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH="$HOME/.yarn/bin:$PATH"
 install:
 - nvm install 7
 - yarn install
-- yarn add electron-builder@next --dev # force install next version to test electron-builder
-
+- yarn add electron-builder@next --dev
 script:
 - yarn run package
-
 branches:
   except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+deploy:
+  provider: releases
+  api_key:
+    secure: t02Fmok7MHVzTELgAZi4HRSCXN8lu9wpgueh33RWamnsIrDf6PrHQOWqh5yxXiPysTsPDUrhJMjlTUqDWV0akWRHSMsqAU9n+HHpuAtf5qrrjGAsc934WHOgT3Ly7Pcdo8di/cZ5SlkfCovBe6N3JWpaACeuRAL9teZ7gcNGEzEthpDIaLk4kRVG2b8CzYu6+4e7HHhlL5hIV6hwk9P07uMQ0JWIUhVV158oZIjR1KHbmB954yqf1+cQofkR9FIZgCRFSgR8lll/PnTmuXbcrGPsacsrBYhuGD9AsHw7lRVSoGskYiHYOjs6USKA25CDMdXF6W/DvB0CoBHo1qYptVT68QGzdE1VYUXGEXuNUfItAsoX0+kR9iLndCekFcq1kRL+FQ+KVWMh3Orzfbh9e8wO/F8eC1UstyQ3lLRhHLRDuDkDBOwJ1ktp3JHjzDYGONgYaCzvwAjKtbVgOvcWRFq0o9g3d/j5Ux2yy8WGjYAzCdt2L0bRmDlQXsRTwOeW2TnLs9PTOboRQQ0QXyyaj/Y97J52z+8vZcHExqlk4IWFvfTnLvYrezQKzR5LkMcE6DH6afeywgn0GFtori46ly8qLZ9iOhzugwfCJCvGKtp9I24hlq7j2BVKhNO8lYAAgccxMZCOpdyc2C1ZD6xCuZFuzYHUzuTlTWcIwFAwRpU=
+  file_glob: true
+  file: package/mac/*
+  on:
+    repo: dainst/idai-field-client

@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter} from "@angular/core";
-import {Mediastore} from '../imagestore/mediastore';
+import {Imagestore} from '../imagestore/imagestore';
 import {M} from "../m";
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
@@ -27,7 +27,7 @@ export class DropAreaComponent {
     private supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
 
     public constructor(
-        private mediastore: Mediastore,
+        private imagestore: Imagestore,
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
         private configLoader: ConfigLoader,
@@ -145,7 +145,7 @@ export class DropAreaComponent {
         let reader = new FileReader();
         reader.onloadend = (that => {
             return () => {
-                that.mediastore.create(file.name, reader.result).then(() => {
+                that.imagestore.create(file.name, reader.result).then(() => {
                     return that.createImageDocument(file, type);
                 }).then(() => {
                     that.onImageUploaded.emit();

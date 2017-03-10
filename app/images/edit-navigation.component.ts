@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -35,11 +35,11 @@ export class EditNavigationComponent
         private canDeactivateGuard:EditCanDeactivateGuard,
         route: ActivatedRoute,
         datastore: Datastore,
-        mediastore: Mediastore,
+        imagestore: Imagestore,
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(route,datastore,mediastore,sanitizer,messages);
+        super(route,datastore,imagestore,sanitizer,messages);
     }
 
     ngOnInit() {

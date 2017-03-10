@@ -1,5 +1,5 @@
 import {Component, OnChanges, Input} from "@angular/core";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {Datastore} from "idai-components-2/datastore";
 import {BlobProxy} from "../imagestore/blob-proxy";
 import {ImageContainer} from "../imagestore/image-container";
@@ -27,14 +27,14 @@ export class ThumbnailViewComponent implements OnChanges {
     public images = [];
 
     constructor(
-        mediastore: Mediastore,
+        imagestore: Imagestore,
         sanitizer: DomSanitizer,
         private datastore: Datastore,
 
         private router: Router,
         private messages: Messages
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer);
+        this.blobProxy = new BlobProxy(imagestore,sanitizer);
     }
 
     public selectImage(documentToJumpTo) {

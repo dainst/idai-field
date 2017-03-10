@@ -4,7 +4,7 @@
  *
  * @author Sebastian Cuy
  */
-export abstract class ReadMediastore {
+export abstract class ReadImagestore {
 
     /**
      * @param key the identifier for the data

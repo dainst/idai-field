@@ -1,5 +1,5 @@
 import {M} from "../m";
-import {ReadMediastore} from "./read-mediastore";
+import {ReadImagestore} from "./read-imagestore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SecurityContext} from "@angular/core";
 
@@ -17,7 +17,7 @@ export class BlobProxy {
     public static blackImg = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
     constructor(
-        private mediastore: ReadMediastore,
+        private imagestore: ReadImagestore,
         private sanitizer: DomSanitizer
     ) { }
 
@@ -30,7 +30,7 @@ export class BlobProxy {
      */
     public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.mediastore.read(mediastoreFilename).then(data => {
+            this.imagestore.read(mediastoreFilename).then(data => {
                 if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
                 resolve(this.makeBlob(data,sanitizeAfter));
             }).catch(() => {

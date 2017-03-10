@@ -5,7 +5,7 @@ import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {BlobProxy} from "../imagestore/blob-proxy";
 import {Messages} from "idai-components-2/messages";
 import {Query, Datastore} from "idai-components-2/datastore";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {FilterUtility} from "../util/filter-utility";
@@ -29,14 +29,14 @@ export class ImagePickerComponent {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        mediastore: Mediastore,
+        imagestore: Imagestore,
         private datastore: Datastore,
         sanitizer: DomSanitizer,
         private el: ElementRef
     ) {
 
         this.imageGridBuilder = new ImageGridBuilder(
-            new BlobProxy(mediastore,sanitizer), true);
+            new BlobProxy(imagestore,sanitizer), true);
         this.fetchDocuments(this.query);
     }
 

@@ -1,7 +1,7 @@
 import {ActivatedRoute, Params} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {BlobProxy} from "../imagestore/blob-proxy";
 import {ImageContainer} from "../imagestore/image-container";
@@ -17,11 +17,11 @@ export class ImageComponentBase {
     constructor(
         private route: ActivatedRoute,
         protected datastore: Datastore,
-        mediastore: Mediastore,
+        imagestore: Imagestore,
         sanitizer: DomSanitizer,
         protected messages: Messages
     ) {
-        this.blobProxy = new BlobProxy(mediastore,sanitizer);
+        this.blobProxy = new BlobProxy(imagestore,sanitizer);
     }
 
     protected fetchDocAndImage() {

@@ -3,7 +3,7 @@ import {ActivatedRoute,Router} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
@@ -19,12 +19,12 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     constructor(
         route: ActivatedRoute,
         datastore: Datastore,
-        mediastore: Mediastore,
+        imagestore: Imagestore,
         sanitizer: DomSanitizer,
         messages: Messages,
         private router: Router
     ) {
-        super(route,datastore,mediastore,sanitizer,messages);
+        super(route,datastore,imagestore,sanitizer,messages);
     }
 
     ngOnInit() {

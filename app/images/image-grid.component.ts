@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {Datastore, Query} from "idai-components-2/datastore";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
@@ -47,7 +47,7 @@ export class ImageGridComponent {
         private datastore: Datastore,
         private modalService: NgbModal,
         private messages: Messages,
-        private mediastore: Mediastore,
+        private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
         sanitizer: DomSanitizer,
@@ -55,7 +55,7 @@ export class ImageGridComponent {
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(
-            new BlobProxy(mediastore, sanitizer), true);
+            new BlobProxy(imagestore, sanitizer), true);
 
         this.fetchDocuments(this.query);
     }
@@ -175,7 +175,7 @@ export class ImageGridComponent {
 
         let document = documents[documentIndex];
 
-        return this.mediastore.remove(document.resource.identifier)
+        return this.imagestore.remove(document.resource.identifier)
             .then(() => this.persistenceManager.remove(document, document),
                 err => Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
             .then(() => {

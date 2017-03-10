@@ -1,9 +1,9 @@
-import {Imagestore} from './imagestore';
+import {AbstractImagestore} from './abstract-imagestore';
 
 import * as fs from 'fs';
 import {M} from "../m";
 
-export class FileSystemImagestore extends Imagestore {
+export class FileSystemImagestore extends AbstractImagestore {
 
     constructor(private basePath: string, loadSampleData: boolean) {
         super();

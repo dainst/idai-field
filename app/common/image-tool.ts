@@ -1,5 +1,5 @@
 import {Datastore} from "idai-components-2/datastore";
-import {Mediastore} from "../imagestore/mediastore";
+import {Imagestore} from "../imagestore/imagestore";
 import {M} from "../m";
 
 /**
@@ -16,9 +16,9 @@ export class ImageTool {
      * @param document
      * @return {Promise<Array<string>>} where the string array is a <code>msgWithParams</code> ({@link Messages#addWithParams}).
      */
-    public remove(document, mediastore: Mediastore, datastore: Datastore): Promise<Array<string>> {
+    public remove(document, imagestore: Imagestore, datastore: Datastore): Promise<Array<string>> {
         return new Promise((resolve,reject) => {
-            mediastore.remove(document.resource.identifier).then(() => {
+            imagestore.remove(document.resource.identifier).then(() => {
                 datastore.remove(document).then(() => resolve()).catch(err => {
                     reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
                 });

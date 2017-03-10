@@ -11,7 +11,7 @@ Module.prototype.require = function() {
     return originalRequire.apply(this, arguments);
 };
 
-import {Mediastore} from"../../app/imagestore/mediastore";
+import {Imagestore} from"../../app/imagestore/imagestore";
 import {FileSystemImagestore} from "../../app/imagestore/file-system-imagestore";
 
 import fs = require('fs');
@@ -40,7 +40,7 @@ function ab2str(buf: ArrayBuffer): string {
 describe('FileSystemImagestore', () => {
 
 
-    var store: Mediastore;
+    var store: Imagestore;
     var storePath = 'store/';
 
     beforeEach(() => {

@@ -1,12 +1,12 @@
 import {Http, ResponseContentType} from '@angular/http';
-import {Imagestore} from './imagestore';
+import {AbstractImagestore} from './abstract-imagestore';
 import {DomSanitizer} from "@angular/platform-browser";
 
 /**
  * Read-only datastore for retrieving images from the local mediastore folder via Http
  * @author Sebastian Cuy
  */
-export class HttpImagestore extends Imagestore {
+export class HttpImagestore extends AbstractImagestore {
 
     constructor(private http: Http, private basePath: string) {
         super();
@@ -19,5 +19,16 @@ export class HttpImagestore extends Imagestore {
                 resolve(response.arrayBuffer());
             },error=>reject(error));
         });
+    }
+
+    public create(key: string, data: ArrayBuffer): Promise<any> {
+        return new Promise<any>((resolve)=>{resolve();});
+    }
+    public update(key: string, data: ArrayBuffer): Promise<any> {
+        return new Promise<any>((resolve)=>{resolve();});
+    }
+
+    public remove(key: string): Promise<any> {
+        return new Promise<any>((resolve)=>{resolve();});
     }
 }

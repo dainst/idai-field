@@ -7,7 +7,7 @@ import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
 import {Datastore, Query} from "idai-components-2/datastore";
-import {Mediastore} from "../../imagestore/mediastore";
+import {Imagestore} from "../../imagestore/imagestore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
@@ -79,12 +79,12 @@ export class MapComponent implements OnChanges {
     constructor(
         private mapState: MapState,
         private datastore: Datastore,
-        private mediastore: Mediastore,
+        private imagestore: Imagestore,
         private sanitizer: DomSanitizer,
         private messages: Messages,
         private configLoader: ConfigLoader
     ) {
-        this.blobProxy = new BlobProxy(mediastore, sanitizer);
+        this.blobProxy = new BlobProxy(imagestore, sanitizer);
         this.bounds = [];
 
     }

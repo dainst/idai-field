@@ -24,8 +24,8 @@ import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Mediastore} from './imagestore/mediastore';
-import {ReadMediastore} from './imagestore/read-mediastore';
+import {Imagestore} from './imagestore/imagestore';
+import {ReadImagestore} from './imagestore/read-imagestore';
 import {HttpImagestore} from './imagestore/http-imagestore';
 import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
@@ -54,8 +54,8 @@ import {CachedDatastore} from "./datastore/cached-datastore";
     ],
     providers: [
         {
-            provide: Mediastore,
-            useFactory: function(http: Http): Mediastore {
+            provide: Imagestore,
+            useFactory: function(http: Http): Imagestore {
 
                 // running under node / electron
                 if (typeof process === 'object') {
@@ -75,7 +75,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
             },
             deps: [Http]
         },
-        { provide: ReadMediastore, useExisting: Mediastore },
+        { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,

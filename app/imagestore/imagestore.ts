@@ -1,27 +1,41 @@
-import {Observable} from "rxjs/Observable";
-import {Mediastore} from './mediastore';
-import {DomSanitizer} from "@angular/platform-browser";
+import {Observable} from 'rxjs/Observable';
+import {ReadImagestore} from './read-imagestore';
 
-export class Imagestore implements Mediastore {
-	public sani: DomSanitizer = undefined;
+/**
+ * The interface for general media stores supporting
+ * the storage of general binary data
+ *
+ * @author Sebastian Cuy
+ */
+export abstract class Imagestore extends ReadImagestore {
 
-	
-	public read(key: string): Promise<ArrayBuffer> {
-        return new Promise<any>((resolve)=>{resolve();});
-    }
+    /**
+     * @param key the identifier for the data
+     * @param data the binary data to be stored
+     * @returns {Promise<any>} resolve -> (),
+     *   reject -> the error message
+     */
+    abstract create(key: string, data: ArrayBuffer): Promise<any>;
 
-	public create(key: string, data: ArrayBuffer): Promise<any> {
-        return new Promise<any>((resolve)=>{resolve();});
-    }
-    public update(key: string, data: ArrayBuffer): Promise<any> {
-        return new Promise<any>((resolve)=>{resolve();});
-    }
+    /**
+     * @param key the identifier for the data
+     * @param data the binary data to be stored
+     * @returns {Promise<any>} resolve -> (),
+     *   reject -> the error message
+     */
+    abstract update(key: string, data: ArrayBuffer): Promise<any>;
 
-    public remove(key: string): Promise<any> {
-        return new Promise<any>((resolve)=>{resolve();});
-    }
+    /**
+     * @param key the identifier for the data to be removed
+     * @returns {Promise<any>} resolve -> (),
+     *   reject -> the error message
+     */
+    abstract remove(key: string): Promise<any>;
 
-    public objectChangesNotifications(): Observable<File> {
-        return Observable.create( () => {});
-    }
+    /**
+     * Subscription enables clients to get notified
+     * when files get modified via one of the accessor
+     * methods defined here.
+     */
+    abstract objectChangesNotifications(): Observable<File>;
 }

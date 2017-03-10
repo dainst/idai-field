@@ -38,4 +38,5 @@ deploy:
   file_glob: true
   file: release/*.dmg
   on:
+    tags: true
     repo: dainst/idai-field-client

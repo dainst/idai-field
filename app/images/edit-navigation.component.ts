@@ -39,7 +39,7 @@ export class EditNavigationComponent
         sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(route,datastore,imagestore,sanitizer,messages);
+        super(route,datastore,imagestore,messages);
     }
 
     ngOnInit() {

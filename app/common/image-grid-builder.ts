@@ -1,7 +1,8 @@
 import {Document} from "idai-components-2/core";
 import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
-import {BlobProxy} from "../imagestore/blob-proxy";
 import {ImageContainer} from "../imagestore/image-container";
+import {BlobMaker} from "../imagestore/blob-maker";
+import {Imagestore} from "../imagestore/imagestore";
 
 /**
  * @author Daniel de Oliveira
@@ -14,12 +15,12 @@ export class ImageGridBuilder {
     private documents: Array<Document>;
 
     /**
-     * @param blobProxy
+     * @param imagestore
      * @param showAllAtOnce if true, all images are shown at once.
      *   if false, images are shown as soon as they are loaded
      */
     constructor(
-        private blobProxy: BlobProxy,
+        private imagestore: Imagestore,
         private showAllAtOnce: boolean = false
     ) { }
 
@@ -115,11 +116,11 @@ export class ImageGridBuilder {
             if (document.id == 'droparea') return resolve({cell: cell});
 
             if (!this.showAllAtOnce) resolve({cell: cell});
-            this.blobProxy.getBlobUrl(document.resource.filename).then(url => {
+            this.imagestore.getBlobUrl(document.resource.filename).then(url => {
                 if (this.showAllAtOnce) resolve({cell: cell});
                 cell.imgSrc = url;
             }).catch(msgWithParams => {
-                cell.imgSrc = BlobProxy.blackImg;
+                cell.imgSrc = BlobMaker.blackImg;
                 resolve({cell: cell, msgWithParams: msgWithParams});
             });
         })

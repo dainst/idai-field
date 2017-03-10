@@ -11,9 +11,9 @@ import {Imagestore} from "../../imagestore/imagestore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
-import {BlobProxy} from "../../imagestore/blob-proxy";
 import {ImageContainer} from "../../imagestore/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
+import {BlobMaker} from '../../imagestore/blob-maker';
 
 @Component({
     moduleId: module.id,
@@ -32,8 +32,6 @@ export class MapComponent implements OnChanges {
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
-
-    private blobProxy: BlobProxy;
 
     private map: L.Map;
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
@@ -84,7 +82,6 @@ export class MapComponent implements OnChanges {
         private messages: Messages,
         private configLoader: ConfigLoader
     ) {
-        this.blobProxy = new BlobProxy(imagestore, sanitizer);
         this.bounds = [];
 
     }
@@ -243,14 +240,14 @@ export class MapComponent implements OnChanges {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
-            this.blobProxy.getBlobUrl(document.resource['identifier'],true).then(
+            this.imagestore.getBlobUrl(document.resource['identifier'],true).then(
                 url => {
                     imgContainer.imgSrc = url;
                     resolve(imgContainer);
                 }
             ).catch(
                 msgWithParams => {
-                    imgContainer.imgSrc = BlobProxy.blackImg;
+                    imgContainer.imgSrc = BlobMaker.blackImg;
                     this.messages.add(msgWithParams);
                     reject();
                 }

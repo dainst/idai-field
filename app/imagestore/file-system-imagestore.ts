@@ -2,11 +2,12 @@ import {AbstractImagestore} from './abstract-imagestore';
 
 import * as fs from 'fs';
 import {M} from "../m";
+import {BlobMaker} from "./blob-maker";
 
 export class FileSystemImagestore extends AbstractImagestore {
 
-    constructor(private basePath: string, loadSampleData: boolean) {
-        super();
+    constructor(blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
+        super(blobMaker);
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
         if (loadSampleData) this.loadSampleData();

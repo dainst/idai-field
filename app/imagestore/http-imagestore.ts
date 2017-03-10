@@ -1,6 +1,7 @@
 import {Http, ResponseContentType} from '@angular/http';
 import {AbstractImagestore} from './abstract-imagestore';
 import {DomSanitizer} from "@angular/platform-browser";
+import {BlobMaker} from "./blob-maker";
 
 /**
  * Read-only datastore for retrieving images from the local mediastore folder via Http
@@ -8,8 +9,8 @@ import {DomSanitizer} from "@angular/platform-browser";
  */
 export class HttpImagestore extends AbstractImagestore {
 
-    constructor(private http: Http, private basePath: string) {
-        super();
+    constructor(blobMaker: BlobMaker, private http: Http, private basePath: string) {
+        super(blobMaker);
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
     }
   

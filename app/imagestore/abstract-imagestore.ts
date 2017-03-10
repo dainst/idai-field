@@ -1,8 +1,13 @@
 import {Observable} from "rxjs/Observable";
 import {Imagestore} from './imagestore';
 import {DomSanitizer} from "@angular/platform-browser";
+import {M} from "../m";
+import {BlobMaker} from "./blob-maker";
 
 export abstract class AbstractImagestore implements Imagestore {
+
+    constructor(private blobMaker: BlobMaker) { }
+
 	public sani: DomSanitizer = undefined;
 
 	public abstract read(key: string): Promise<ArrayBuffer>;
@@ -15,5 +20,23 @@ export abstract class AbstractImagestore implements Imagestore {
 
     public objectChangesNotifications(): Observable<File> {
         return Observable.create( () => {});
+    }
+
+    /**
+     * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
+     * @param mediastoreFilename must be an identifier of an existing file in the mediastore.
+     * @param sanitizeAfter
+     * @return {Promise<string>} Promise that returns the blob url.
+     *  In case of error the promise gets rejected with msgWithParams.
+     */
+    public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.read(mediastoreFilename).then(data => {
+                if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
+                resolve(this.blobMaker.makeBlob(data,sanitizeAfter));
+            }).catch(() => {
+                reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
+            });
+        });
     }
 }

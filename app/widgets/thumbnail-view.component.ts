@@ -1,7 +1,7 @@
 import {Component, OnChanges, Input} from "@angular/core";
 import {Imagestore} from "../imagestore/imagestore";
 import {Datastore} from "idai-components-2/datastore";
-import {BlobProxy} from "../imagestore/blob-proxy";
+import {BlobMaker} from "../imagestore/blob-maker";
 import {ImageContainer} from "../imagestore/image-container";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Router} from "@angular/router";
@@ -23,19 +23,14 @@ export class ThumbnailViewComponent implements OnChanges {
 
     @Input() imageIds: string[];
 
-    private blobProxy : BlobProxy;
     public images = [];
 
     constructor(
-        imagestore: Imagestore,
-        sanitizer: DomSanitizer,
+        private imagestore: Imagestore,
         private datastore: Datastore,
-
         private router: Router,
         private messages: Messages
-    ) {
-        this.blobProxy = new BlobProxy(imagestore,sanitizer);
-    }
+    ) { }
 
     public selectImage(documentToJumpTo) {
         this.router.navigate(['images',documentToJumpTo.resource.id,'show'])
@@ -52,13 +47,13 @@ export class ThumbnailViewComponent implements OnChanges {
                     var imgContainer: ImageContainer = {
                         document: <IdaiFieldImageDocument> doc
                     };
-                    this.blobProxy.getBlobUrl(
+                    this.imagestore.getBlobUrl(
                         imgContainer.document.resource.filename).
                         then(url=> {
                             imgContainer.imgSrc = url;
                             this.images.push(imgContainer);
                         }).catch(msgWithParams=>{
-                            imgContainer.imgSrc = BlobProxy.blackImg;
+                            imgContainer.imgSrc = BlobMaker.blackImg;
                             this.images.push(imgContainer);
                             this.messages.add(msgWithParams)
                         });

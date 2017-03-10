@@ -44,8 +44,10 @@ describe('FileSystemImagestore', () => {
     var storePath = 'store/';
 
     beforeEach(() => {
+        const mockBlobProxy = jasmine.createSpyObj('blobProxy',['getBlobUrl']);
+
         fs.mkdirSync(storePath);
-        store = new FileSystemImagestore(storePath,false);
+        store = new FileSystemImagestore(mockBlobProxy,storePath,false);
     });
 
     afterEach(done => {

@@ -33,6 +33,7 @@ import {NavbarComponent} from './navbar.component';
 
 import CONFIG = require("config/config.json!json");
 import {CachedDatastore} from "./datastore/cached-datastore";
+import {BlobMaker} from "./imagestore/blob-maker";
 
 @NgModule({
     imports: [
@@ -55,7 +56,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
     providers: [
         {
             provide: Imagestore,
-            useFactory: function(http: Http): Imagestore {
+            useFactory: function(http: Http,blobMaker: BlobMaker): Imagestore {
 
                 // running under node / electron
                 if (typeof process === 'object') {
@@ -66,14 +67,14 @@ import {CachedDatastore} from "./datastore/cached-datastore";
                         const app = (<any>window).require('electron').remote.app;
                         path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
                     }
-                    return new FileSystemImagestore(path, CONFIG['environment'] == 'test');
+                    return new FileSystemImagestore(blobMaker, path, CONFIG['environment'] == 'test');
                 // running in browser
                 } else {
                     let path = CONFIG['imagestorepath'] ? CONFIG['imagestorepath'] : 'imagestore';
-                    return new HttpImagestore(http, path);
+                    return new HttpImagestore(blobMaker, http, path);
                 }
             },
-            deps: [Http]
+            deps: [Http, BlobMaker]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -98,6 +99,7 @@ import {CachedDatastore} from "./datastore/cached-datastore";
         { provide: IdaiFieldDatastore, useExisting: Datastore },
         IdaiFieldBackend,
         Messages,
+        BlobMaker,
         { provide: 'app.config', useValue: CONFIG },
         ConfigLoader,
         PersistenceManager,

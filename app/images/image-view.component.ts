@@ -20,11 +20,10 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         route: ActivatedRoute,
         datastore: Datastore,
         imagestore: Imagestore,
-        sanitizer: DomSanitizer,
         messages: Messages,
         private router: Router
     ) {
-        super(route,datastore,imagestore,sanitizer,messages);
+        super(route,datastore,imagestore,messages);
     }
 
     ngOnInit() {

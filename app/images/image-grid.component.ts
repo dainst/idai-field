@@ -12,7 +12,6 @@ import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
-import {BlobProxy} from "../imagestore/blob-proxy";
 import {ElementRef} from "@angular/core";
 import {M} from '../m';
 
@@ -50,12 +49,10 @@ export class ImageGridComponent {
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
-        sanitizer: DomSanitizer,
         configLoader: ConfigLoader
     ) {
         this.imageTool = new ImageTool();
-        this.imageGridBuilder = new ImageGridBuilder(
-            new BlobProxy(imagestore, sanitizer), true);
+        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
 
         this.fetchDocuments(this.query);
     }

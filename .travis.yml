@@ -31,6 +31,7 @@ branches:
   except:
   - "/^v\\d+\\.\\d+\\.\\d+$/"
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: t02Fmok7MHVzTELgAZi4HRSCXN8lu9wpgueh33RWamnsIrDf6PrHQOWqh5yxXiPysTsPDUrhJMjlTUqDWV0akWRHSMsqAU9n+HHpuAtf5qrrjGAsc934WHOgT3Ly7Pcdo8di/cZ5SlkfCovBe6N3JWpaACeuRAL9teZ7gcNGEzEthpDIaLk4kRVG2b8CzYu6+4e7HHhlL5hIV6hwk9P07uMQ0JWIUhVV158oZIjR1KHbmB954yqf1+cQofkR9FIZgCRFSgR8lll/PnTmuXbcrGPsacsrBYhuGD9AsHw7lRVSoGskYiHYOjs6USKA25CDMdXF6W/DvB0CoBHo1qYptVT68QGzdE1VYUXGEXuNUfItAsoX0+kR9iLndCekFcq1kRL+FQ+KVWMh3Orzfbh9e8wO/F8eC1UstyQ3lLRhHLRDuDkDBOwJ1ktp3JHjzDYGONgYaCzvwAjKtbVgOvcWRFq0o9g3d/j5Ux2yy8WGjYAzCdt2L0bRmDlQXsRTwOeW2TnLs9PTOboRQQ0QXyyaj/Y97J52z+8vZcHExqlk4IWFvfTnLvYrezQKzR5LkMcE6DH6afeywgn0GFtori46ly8qLZ9iOhzugwfCJCvGKtp9I24hlq7j2BVKhNO8lYAAgccxMZCOpdyc2C1ZD6xCuZFuzYHUzuTlTWcIwFAwRpU=

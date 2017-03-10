@@ -14,7 +14,7 @@
     "e2e": "protractor test/e2e/config/protractor.conf.js --params.skip_fail_fast $1",
     "server": "gulp webserver-watch",
     "make-dist": "gulp versioning --build $1",
-    "package": "build"
+    "package": "build -mw"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",
@@ -24,10 +24,11 @@
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "target": "dmg",
+      "target": "zip",
       "icon": "img/logo.icns"
     },
     "win": {
+      "target": "win",
       "icon": "img/logo.ico"
     },
     "npmRebuild": false,

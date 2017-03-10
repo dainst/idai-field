@@ -26,7 +26,7 @@ install:
 - yarn install
 - yarn add electron-builder@next --dev
 script:
-- yarn run package
+- yarn run package-dmg
 branches:
   except:
   - "/^v\\d+\\.\\d+\\.\\d+$/"

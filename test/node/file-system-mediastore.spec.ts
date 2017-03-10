@@ -11,8 +11,8 @@ Module.prototype.require = function() {
     return originalRequire.apply(this, arguments);
 };
 
-import {Mediastore} from"idai-components-2/datastore";
-import {FileSystemImagestore} from "../../app/datastore/file-system-imagestore";
+import {Mediastore} from"../../app/imagestore/mediastore";
+import {FileSystemImagestore} from "../../app/imagestore/file-system-imagestore";
 
 import fs = require('fs');
 import rimraf = require('rimraf');
@@ -31,7 +31,14 @@ function ab2str(buf: ArrayBuffer): string {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
+// var Reflect = {
+//     getMetadata: function() {
+//         return ""
+//     }
+// }
+
 describe('FileSystemImagestore', () => {
+
 
     var store: Mediastore;
     var storePath = 'store/';

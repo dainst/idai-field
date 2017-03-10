@@ -2,7 +2,8 @@ import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {Datastore, Query, Mediastore} from "idai-components-2/datastore";
+import {Datastore, Query} from "idai-components-2/datastore";
+import {Mediastore} from "../imagestore/mediastore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
@@ -11,7 +12,7 @@ import {ImageGridBuilder} from "../common/image-grid-builder";
 import {ImageTool} from "../common/image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
-import {BlobProxy} from "../common/blob-proxy";
+import {BlobProxy} from "../imagestore/blob-proxy";
 import {ElementRef} from "@angular/core";
 import {M} from '../m';
 

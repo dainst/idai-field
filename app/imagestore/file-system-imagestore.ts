@@ -1,6 +1,7 @@
 import {Imagestore} from './imagestore';
 
 import * as fs from 'fs';
+import {M} from "../m";
 
 export class FileSystemImagestore extends Imagestore {
 
@@ -19,6 +20,7 @@ export class FileSystemImagestore extends Imagestore {
      */
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
+        let a = M.DATASTORE_GENERIC_SAVE_ERROR;
         return new Promise((resolve, reject) => {
 
             fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {

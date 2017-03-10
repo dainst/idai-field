@@ -1,5 +1,5 @@
 import {Observable} from "rxjs/Observable";
-import {Mediastore} from 'idai-components-2/datastore';
+import {Mediastore} from './mediastore';
 import {DomSanitizer} from "@angular/platform-browser";
 
 export class Imagestore implements Mediastore {

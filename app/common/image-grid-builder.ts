@@ -1,7 +1,7 @@
 import {Document} from "idai-components-2/core";
 import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
-import {BlobProxy} from "../common/blob-proxy";
-import {ImageContainer} from "../common/image-container";
+import {BlobProxy} from "../imagestore/blob-proxy";
+import {ImageContainer} from "../imagestore/image-container";
 
 /**
  * @author Daniel de Oliveira

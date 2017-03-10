@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter} from "@angular/core";
-import {Mediastore} from 'idai-components-2/datastore';
+import {Mediastore} from '../imagestore/mediastore';
 import {M} from "../m";
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';

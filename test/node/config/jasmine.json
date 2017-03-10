@@ -4,6 +4,7 @@
     "*.spec.js"
   ],
   "helpers": [
+    "../../node_modules/reflect-metadata/Reflect.js",
     "helpers/**/*.js"
   ],
   "stopSpecOnExpectationFailure": false,

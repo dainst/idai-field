@@ -1,4 +1,5 @@
-import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Datastore} from "idai-components-2/datastore";
+import {Mediastore} from "../imagestore/mediastore";
 import {M} from "../m";
 
 /**

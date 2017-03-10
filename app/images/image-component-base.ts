@@ -1,10 +1,10 @@
 import {ActivatedRoute, Params} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "idai-components-2/datastore";
+import {Mediastore} from "../imagestore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
-import {BlobProxy} from "../common/blob-proxy";
-import {ImageContainer} from "../common/image-container";
+import {BlobProxy} from "../imagestore/blob-proxy";
+import {ImageContainer} from "../imagestore/image-container";
 
 /**
  * @author Daniel de Oliveira

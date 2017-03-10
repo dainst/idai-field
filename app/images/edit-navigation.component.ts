@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Datastore, Mediastore} from "idai-components-2/datastore";
+import {Datastore} from "idai-components-2/datastore";
+import {Mediastore} from "../imagestore/mediastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {DomSanitizer} from "@angular/platform-browser";

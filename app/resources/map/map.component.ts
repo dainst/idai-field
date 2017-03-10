@@ -6,12 +6,13 @@ import {IdaiFieldPolygon} from "./idai-field-polygon";
 import {IdaiFieldMarker} from "./idai-field-marker";
 import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
 import {MapState} from './map-state';
-import {Datastore, Mediastore, Query} from "idai-components-2/datastore";
+import {Datastore, Query} from "idai-components-2/datastore";
+import {Mediastore} from "../../imagestore/mediastore";
 import {Messages} from "idai-components-2/messages";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader} from "idai-components-2/configuration";
-import {BlobProxy} from "../../common/blob-proxy";
-import {ImageContainer} from "../../common/image-container";
+import {BlobProxy} from "../../imagestore/blob-proxy";
+import {ImageContainer} from "../../imagestore/image-container";
 import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
 
 @Component({

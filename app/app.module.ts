@@ -24,10 +24,10 @@ import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Mediastore} from 'idai-components-2/datastore';
-import {ReadMediastore} from 'idai-components-2/datastore';
-import {HttpImagestore} from './datastore/http-imagestore';
-import {FileSystemImagestore} from './datastore/file-system-imagestore';
+import {Mediastore} from './imagestore/mediastore';
+import {ReadMediastore} from './imagestore/read-mediastore';
+import {HttpImagestore} from './imagestore/http-imagestore';
+import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
 

@@ -1,5 +1,5 @@
 import {M} from "../m";
-import {ReadMediastore} from "idai-components-2/datastore";
+import {ReadMediastore} from "./read-mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SecurityContext} from "@angular/core";
 

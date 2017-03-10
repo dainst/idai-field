@@ -3,7 +3,7 @@ import {ActivatedRoute,Router} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
-import {Mediastore} from "idai-components-2/datastore";
+import {Mediastore} from "../imagestore/mediastore";
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({

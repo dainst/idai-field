@@ -29,7 +29,7 @@
       "icon": "img/logo.icns"
     },
     "win": {
-      "target": "win",
+      "target": "zip",
       "icon": "img/logo.ico"
     },
     "npmRebuild": false,

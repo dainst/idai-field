@@ -240,7 +240,7 @@ export class MapComponent implements OnChanges {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
-            this.imagestore.getBlobUrl(document.resource['identifier'],true).then(
+            this.imagestore.read(document.resource['identifier'],true).then(
                 url => {
                     imgContainer.imgSrc = url;
                     resolve(imgContainer);

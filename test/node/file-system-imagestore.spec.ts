@@ -1,17 +1,17 @@
+import {M} from "../../app/m";
 /**
  * @author Sebastian Cuy
  */
 
 // override nodes require function in order to make special
 // systemjs requires starting with '@node' work
-var Module = require('module');
-var originalRequire = Module.prototype.require;
+const Module = require('module');
+const originalRequire = Module.prototype.require;
 Module.prototype.require = function() {
     if (arguments[0].startsWith('@node')) arguments[0] = arguments[0].substring(6);
     return originalRequire.apply(this, arguments);
 };
 
-import {Imagestore} from"../../app/imagestore/imagestore";
 import {FileSystemImagestore} from "../../app/imagestore/file-system-imagestore";
 
 import fs = require('fs');
@@ -19,9 +19,9 @@ import rimraf = require('rimraf');
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
-    var buf = new ArrayBuffer(str.length); // 2 bytes for each char
-    var bufView = new Uint8Array(buf);
-    for (var i=0, strLen=str.length; i<strLen; i++) {
+    const buf = new ArrayBuffer(str.length); // 2 bytes for each char
+    const bufView = new Uint8Array(buf);
+    for (let i=0, strLen=str.length; i<strLen; i++) {
         bufView[i] = str.charCodeAt(i);
     }
     return buf;
@@ -31,12 +31,6 @@ function ab2str(buf: ArrayBuffer): string {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
-// var Reflect = {
-//     getMetadata: function() {
-//         return ""
-//     }
-// }
-
 describe('FileSystemImagestore', () => {
 
 
@@ -45,7 +39,7 @@ describe('FileSystemImagestore', () => {
 
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
-        mockBlobMaker.makeBlob.and.returnValue('someUrl');
+        mockBlobMaker.makeBlob.and.callFake((data)=>{return data});
 
         fs.mkdirSync(storePath);
         store = new FileSystemImagestore(mockBlobMaker,storePath,false);
@@ -55,18 +49,6 @@ describe('FileSystemImagestore', () => {
         rimraf(storePath, () => {
             done();
         });
-    });
-
-    it('should create a blob', (done) => {
-        store.create('test_read', str2ab('qwer')).then(()=>{
-            store.getBlobUrl('test_read').then(blobUrl=>{
-                expect(blobUrl).toBe('someUrl');
-                done();
-            }).catch(err => {
-                fail(err);
-                done();
-            });
-        })
     });
 
     it('should create a file', (done) => {
@@ -88,7 +70,8 @@ describe('FileSystemImagestore', () => {
         store.create('test_read', str2ab('qwer'))
             .then(() => { return store.read('test_read'); })
             .then((data) => {
-                expect(ab2str(data)).toEqual('qwer');
+
+                expect(data.toString()).toEqual('qwer');
                 done();
             })
             .catch(err => {
@@ -126,7 +109,8 @@ describe('FileSystemImagestore', () => {
                                 done();
                             })
                             .catch(err => {
-                                expect(err.code).toEqual('ENOENT');
+                                expect(err[0]).toEqual(M.IMAGES_ERROR_MEDIASTORE_READ);
+
                                 fs.readFile(storePath + 'test_remove', (err) => {
                                     expect(err).toBeTruthy();
                                     expect(err.code).toEqual('ENOENT');

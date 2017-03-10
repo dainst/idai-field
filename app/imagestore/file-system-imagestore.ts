@@ -1,7 +1,6 @@
 import {AbstractImagestore} from './abstract-imagestore';
 
 import * as fs from 'fs';
-import {M} from "../m";
 import {BlobMaker} from "./blob-maker";
 
 export class FileSystemImagestore extends AbstractImagestore {
@@ -35,7 +34,7 @@ export class FileSystemImagestore extends AbstractImagestore {
      * @returns {Promise<any>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    public read(key: string): Promise<ArrayBuffer> {
+    protected _read(key: string): Promise<ArrayBuffer> {
 
         return new Promise((resolve, reject) => {
             fs.readFile(this.basePath + key, (err, data) => {

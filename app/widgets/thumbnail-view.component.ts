@@ -3,7 +3,6 @@ import {Imagestore} from "../imagestore/imagestore";
 import {Datastore} from "idai-components-2/datastore";
 import {BlobMaker} from "../imagestore/blob-maker";
 import {ImageContainer} from "../imagestore/image-container";
-import {DomSanitizer} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {Messages} from "idai-components-2/messages";
@@ -47,7 +46,7 @@ export class ThumbnailViewComponent implements OnChanges {
                     var imgContainer: ImageContainer = {
                         document: <IdaiFieldImageDocument> doc
                     };
-                    this.imagestore.getBlobUrl(
+                    this.imagestore.read(
                         imgContainer.document.resource.filename).
                         then(url=> {
                             imgContainer.imgSrc = url;

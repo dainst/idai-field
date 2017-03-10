@@ -14,7 +14,7 @@ export class HttpImagestore extends AbstractImagestore {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
     }
   
-    public read(key: string): Promise<ArrayBuffer> {
+    protected _read(key: string): Promise<ArrayBuffer> {
         return new Promise<any>((resolve,reject)=>{
             this.http.get(this.basePath + key, { responseType: ResponseContentType.ArrayBuffer }).subscribe(response => {
                 resolve(response.arrayBuffer());

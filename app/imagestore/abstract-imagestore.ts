@@ -10,17 +10,18 @@ export abstract class AbstractImagestore implements Imagestore {
 
 	public sani: DomSanitizer = undefined;
 
-	public abstract read(key: string): Promise<ArrayBuffer>;
-
 	public abstract create(key: string, data: ArrayBuffer): Promise<any>;
 
     public abstract update(key: string, data: ArrayBuffer): Promise<any>;
 
     public abstract remove(key: string): Promise<any>;
 
+
     public objectChangesNotifications(): Observable<File> {
         return Observable.create( () => {});
     }
+
+    protected abstract _read(key: string): Promise<ArrayBuffer>;
 
     /**
      * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
@@ -29,9 +30,9 @@ export abstract class AbstractImagestore implements Imagestore {
      * @return {Promise<string>} Promise that returns the blob url.
      *  In case of error the promise gets rejected with msgWithParams.
      */
-    public getBlobUrl(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
+    public read(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.read(mediastoreFilename).then(data => {
+            this._read(mediastoreFilename).then(data => {
                 if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
                 resolve(this.blobMaker.makeBlob(data,sanitizeAfter));
             }).catch(() => {

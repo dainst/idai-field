@@ -6,9 +6,9 @@ import {ImageGridBuilder} from "../../../app/common/image-grid-builder";
 export function main() {
     describe('ImageGridBuilder', () => {
 
-        var imageGridBuilder;
+        let imageGridBuilder;
 
-        var documents = [{
+        const documents = [{
             id: "o1",
             resource: {
                 id: "o1",
@@ -21,8 +21,8 @@ export function main() {
         }];
 
         beforeEach(function () {
-            var blobProxyMock = {
-                getBlobUrl: function() {
+            const imagestoreMock = {
+                read: function() {
                     return {
                         then: function(callback) {
                             callback("url");
@@ -37,7 +37,7 @@ export function main() {
             };
 
             imageGridBuilder = new ImageGridBuilder(
-                <any> blobProxyMock, true);
+                <any> imagestoreMock, true);
 
         });
 
@@ -59,8 +59,8 @@ export function main() {
 
         it ('should accumulate errors', (done) => {
 
-            var blobProxyMock = {
-                getBlobUrl: function () {
+            const imagestoreMock = {
+                read: function () {
                     return new Promise<any>((resolve,reject) => {
                         reject(['error']);
                     });
@@ -68,7 +68,7 @@ export function main() {
             };
 
             imageGridBuilder = new ImageGridBuilder(
-                <any> blobProxyMock, true);
+                <any> imagestoreMock, true);
 
             imageGridBuilder.calcGrid(documents,4,800).then(result=>{
                 expect(result.rows[0][0].document.resource.identifier).toBe('ob1');

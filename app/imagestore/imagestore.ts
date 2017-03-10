@@ -38,6 +38,4 @@ export abstract class Imagestore extends ReadImagestore {
      * methods defined here.
      */
     abstract objectChangesNotifications(): Observable<File>;
-
-    abstract getBlobUrl(mediastoreFilename:string,sanitizeAfter?:boolean): Promise<string>;
 }

@@ -40,20 +40,33 @@ function ab2str(buf: ArrayBuffer): string {
 describe('FileSystemImagestore', () => {
 
 
-    var store: Imagestore;
-    var storePath = 'store/';
+    let store: FileSystemImagestore;
+    const storePath = 'store/';
 
     beforeEach(() => {
-        const mockBlobProxy = jasmine.createSpyObj('blobProxy',['getBlobUrl']);
+        const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
+        mockBlobMaker.makeBlob.and.returnValue('someUrl');
 
         fs.mkdirSync(storePath);
-        store = new FileSystemImagestore(mockBlobProxy,storePath,false);
+        store = new FileSystemImagestore(mockBlobMaker,storePath,false);
     });
 
     afterEach(done => {
         rimraf(storePath, () => {
             done();
         });
+    });
+
+    it('should create a blob', (done) => {
+        store.create('test_read', str2ab('qwer')).then(()=>{
+            store.getBlobUrl('test_read').then(blobUrl=>{
+                expect(blobUrl).toBe('someUrl');
+                done();
+            }).catch(err => {
+                fail(err);
+                done();
+            });
+        })
     });
 
     it('should create a file', (done) => {

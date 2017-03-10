@@ -21,7 +21,6 @@ export class FileSystemImagestore extends AbstractImagestore {
      */
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
-        let a = M.DATASTORE_GENERIC_SAVE_ERROR;
         return new Promise((resolve, reject) => {
 
             fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {

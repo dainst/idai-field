@@ -14,7 +14,7 @@
     "e2e": "protractor test/e2e/config/protractor.conf.js --params.skip_fail_fast $1",
     "server": "gulp webserver-watch",
     "make-dist": "gulp versioning --build $1",
-    "package": "build -mw",
+    "package": "build -mw --publish never",
     "package-dmg": "build -m dmg"
   },
   "build": {

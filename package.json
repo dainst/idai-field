@@ -20,7 +20,6 @@
   "build": {
     "appId": "org.dainst.idai-field-client",
     "directories": {
-      "buildResources": "img",
       "output": "release"
     },
     "mac": {
@@ -33,7 +32,7 @@
       "icon": "img/logo.ico"
     },
     "npmRebuild": false,
-    "extraResources": "imagestore"
+    "extraResources": ["imagestore"]
   },
   "repository": {
     "type": "git",

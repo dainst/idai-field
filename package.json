@@ -15,7 +15,8 @@
     "server": "gulp webserver-watch",
     "make-dist": "gulp versioning --build $1",
     "package": "build -mw --publish never",
-    "package-dmg": "build -m dmg --publish never"
+    "package-mac": "build -m dmg --publish never",
+    "package-win": "build -w nsis --publish never"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",

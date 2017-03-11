@@ -2,6 +2,7 @@ import {Document} from "idai-components-2/core";
 import {ImportStrategy} from "./import-strategy";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {M} from "../m";
 
 /**
  * @author Daniel de Oliveira
@@ -16,8 +17,8 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
             .then(existingIdaiFieldDoc => {
                 existingIdaiFieldDoc.resource.geometry = idaiFieldDoc.resource.geometry;
                 return this.datastore.update(existingIdaiFieldDoc);
-            }, keyOfM => {
-                return Promise.reject([keyOfM]);
+            }, () => {
+                return Promise.reject([M.IMPORTER_FAILURE_MISSING_RESOURCE,idaiFieldDoc.resource.identifier]);
             })
     }
 }

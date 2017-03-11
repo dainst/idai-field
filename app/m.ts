@@ -22,6 +22,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
     public static IMPORTER_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
     public static IMPORTER_FAILURE_ROLLBACKERROR: string = 'importer/failure/rollbackerror';
+    public static IMPORTER_FAILURE_MISSING_RESOURCE: string = 'importer/failure/missingresource';
 
     public static OVERVIEW_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static OVERVIEW_DELETE_SUCCESS : string = 'overview/deletesuccess';
@@ -133,6 +134,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORTER_FAILURE_ROLLBACKERROR] = {
             content: "Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORTER_FAILURE_MISSING_RESOURCE] = {
+            content: "Die Zuordnung zu einer Resource mit dem Identifier {0} ist fehlgeschlagen. Die Resource wurde nicht gefunden.",
             level: 'danger',
             params: [],
             hidden: false

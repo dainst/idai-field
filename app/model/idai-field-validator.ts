@@ -28,6 +28,8 @@ export class IdaiFieldValidator extends Validator {
                 if (result && IdaiFieldValidator.isDuplicate(result,doc))
                     return reject([M.VALIDATION_ERROR_IDEXISTS,doc.resource.identifier]);
                 resolve();
+            },() => {
+                resolve();
             });
         });
     }

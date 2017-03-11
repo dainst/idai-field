@@ -306,7 +306,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                key: identifier,
                include_docs: true
            }).then(result => {
-               if (result.rows.length > 0) return result.rows[0].doc;
+               if (result.rows.length > 0) {
+                   return Promise.resolve(result.rows[0].doc);
+               } else {
+                   return Promise.reject(M.DATASTORE_NOT_FOUND);
+               }
            });
         });
     }

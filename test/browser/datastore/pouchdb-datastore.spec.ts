@@ -277,6 +277,24 @@ export function main() {
                 );
         });
 
+        it("should reject when can't find by identifier", function(done){
+            let doc1 = doc('bla','blub');
+
+            datastore.create(doc1)
+                .then(() => datastore.findByIdentifier('abc'))
+                .then(
+                    result => {
+                        fail('should not find anything');
+                        done();
+                    },
+                    keyOfM => {
+                        expect(keyOfM).toBe(M.DATASTORE_NOT_FOUND);
+                        done();
+                    }
+                );
+        });
+
+
         it('should filter by one type in find', function(done){
             let doc1 = doc('bla1','blub','type1');
             let doc2 = doc('bla2','blub','type2');

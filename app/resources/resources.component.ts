@@ -49,6 +49,14 @@ export class ResourcesComponent {
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
+    /**
+     * @param document the object that should get opened
+     */
+    public open(document: IdaiFieldDocument) {
+
+        this.router.navigate(['resources', document.resource.id, 'edit']);
+    }
+
     public queryChanged(query: Query): Promise<any> {
 
         return new Promise<any>((resolve) => {

@@ -120,6 +120,7 @@ export class MapComponent implements OnChanges {
             p = Promise.resolve();
         }
 
+        this.bounds = [];
         for (var i in this.documents) {
             if (this.documents[i].resource.geometry) {
                 this.addToMap(this.documents[i].resource.geometry, this.documents[i]);
@@ -136,7 +137,7 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             } else {
-                if (this.bounds.length) this.map.fitBounds(L.latLngBounds(this.bounds));
+                if (this.bounds.length > 1) this.map.fitBounds(L.latLngBounds(this.bounds));
             }
         });
 

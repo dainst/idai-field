@@ -47,7 +47,7 @@ export function main() {
             }, (error) => {
                 expect(objects.length).toEqual(1);
                 expect(objects[0]['resource']['id']).toEqual("id1");
-                expect(error).toEqual([M.IMPORTER_FAILURE_INVALIDJSON,2]);
+                expect(error).toEqual([M.IMPORTER_FAILURE_INVALIDJSONL,2]);
                 done();
             });
 

@@ -240,7 +240,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {any}
      */
     public get(resourceId: string): Promise<Document> {
-        return this.fetchObject(resourceId)
+        return this.readyForQuery
+            .then(() => this.fetchObject(resourceId))
             .then(doc => this.cleanDoc(doc));
     }
 

@@ -142,3 +142,24 @@ html [type="button"],
   cursor: pointer;
   font-weight: bold !important;
 }
+
+/* Relation Picker */
+
+#relation-picker .btn-default {
+  margin: 0 0 0 10px !important;
+  padding: 5px 5px 5px 15px!important;
+  border-radius: 2px !important;
+}
+
+#relation-picker .badge {
+  background-color: transparent;
+}
+
+#relation-picker .delete-relation {
+  font-size: 18px !important;
+
+}
+
+.small-circular-button {
+  padding: 5px;
+}

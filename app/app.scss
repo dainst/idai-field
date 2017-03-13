@@ -163,3 +163,14 @@ html [type="button"],
 .small-circular-button {
   padding: 5px;
 }
+
+.relation-link:before {
+  color: #333;
+  margin-right: 5px;
+  margin-left: -10px;
+  content: '\2022';
+}
+
+relations-view .fieldvalue:hover {
+  background-color: #ddd;
+}

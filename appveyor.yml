@@ -24,7 +24,7 @@ test: off
 deploy:
   provider: GitHub
   auth_token:
-    secure: pEuxMVBcXVR+mpN/lHIjk0G+zYvvzvF+U6Zt2RUl0j96BcqCdJEBJ627St6yVN8Y
+    secure: 3aQM4eQwpFvNNftJYWFOsF7jAl6svWY1xjFSxUR0npeVJl65TLmiTgrjw0iU5xtU
   artifact: /.*\.exe/
   draft: false
   prerelease: false

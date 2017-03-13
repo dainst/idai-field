@@ -15,6 +15,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT: string = 'importer/warning/nomultipolygonsupport';
     public static IMPORTER_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
     public static IMPORTER_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
+    public static IMPORTER_FAILURE_INVALIDJSONL : string = 'importer/failure/invalidjsonl';
     public static IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT : string = 'importer/failure/invalidgeojsonimportstruct';
     public static IMPORTER_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORTER_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
@@ -85,6 +86,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORTER_FAILURE_INVALIDJSON]={
             content: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: {0}.',
+            level: 'danger',
+            params: [ "?" ],
+            hidden: false
+        };
+        this.msgs[M.IMPORTER_FAILURE_INVALIDJSONL]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

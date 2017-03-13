@@ -79,8 +79,8 @@ describe('image grid tests -- ', function(){
 
     it('user should be able to connect a resource with an image in the grid view', function () {
         var imageToConnect = gridPage.getCell(0);
-        var resourceId = "o10";
-        var resourceIdentifier = "ob10";
+        var resourceId = "tf1";
+        var resourceIdentifier = "testf1";
 
         imageToConnect.click();
         expect(imageToConnect.getAttribute('class')).toMatch(gridPage.selectedClass);

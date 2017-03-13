@@ -1,156 +1,806 @@
 {
-  "types": [
+  "types":[
+
     {
-      "type": "jedi",
-      "label" : "Jedi",
-      "fields": [
+      "type":"trench",
+      "label":"Schnitt",
+      "fields":[
         {
-          "name": "lightsaber_color",
-          "label" : "Lichtschwertfarbe",
-          "valuelist": [
-            "Grün",
-            "Rot",
-            "Blau"
-          ],
-          "inputType": "checkboxes"
-        }
-      ]
-    },
-    {
-      "type": "dude",
-      "label": "Dude",
-      "fields": [
-        {
-          "name": "Chronology"
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
         },
         {
-          "name": "Elevations"
-        }
-      ]
-    },
-    {
-      "type" : "celestial_body",
-      "fields": [
+          "name":"number",
+          "label":"Nummer",
+          "description":"Fortlaufende Nummer des Objektes auf der Grabung"
+        },
         {
-          "name" : "clima",
-          "label" : "Klima"
-        }
-      ]
-
-    },
-    {
-      "type": "planet",
-      "parent" : "celestial_body",
-      "label": "Planet",
-      "fields": [
-      ]
-    },
-    {
-      "type": "moon",
-      "parent" : "celestial_body",
-      "label": "Mond",
-      "fields": [
+          "name":"processor",
+          "label":"Bearbeiter",
+          "description":"Wer hat die Arbeit durchgeführt"
+        },
         {
-          "name" : "class",
-          "label" : "Klasse",
-          "valuelist": [
-            "Waldmond",
-            "Standard",
-            "Künstlich"
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        },
+        {
+          "name":"classificaton",
+          "label":"Klassifikation",
+          "valuelist":[
+            "Suchschnitt"
           ],
-          "inputType": "checkboxes"
+          "inputType":"dropdown"
+        },
+        {
+          "name":"description",
+          "inputType":"text"
         }
       ]
     },
 
     {
-      "type": "vessel",
-      "label" : "Schiff",
-      "fields": [
-      ]
-    },
-    {
-      "type" : "image",
-      "label" : "Bild",
-      "fields" : [
+      "type":"context",
+      "label":"Befund",
+      "fields":[
         {
-          "name" : "author",
-          "label" : "Autor"
+          "name":"colour",
+          "label":"Farbe",
+          "valuelist":[
+            "orange",
+            "orangerot",
+            "rot",
+            "dunkelrot",
+            "rotbraun",
+            "mittelbraun",
+            "dunkelbraun",
+            "hellbraun",
+            "ocker",
+            "beige",
+            "gelb",
+            "schwarz",
+            "grau",
+            "weiß",
+            "rosa",
+            "hellgrau"
+          ],
+          "inputType":"dropdown",
+          "description":"Farbton des Befunds, z.B. ocker"
+        },
+        {
+          "name":"processor",
+          "label":"Bearbeiter",
+          "description":"Wer hat die Arbeit durchgeführt"
+        },
+        {
+          "name":"length",
+          "label":"Länge",
+          "description":"Maximale Ausdehnung des Befunds in der Länge (in cm)"
+        },
+        {
+          "name":"classificaton",
+          "label":"Klassifikation",
+          "valuelist":[
+            "Schicht",
+            "Fußboden",
+            "Baubefund",
+            "Mauer",
+            "Sonstiges"
+          ],
+          "inputType":"dropdown",
+          "description":"Befundart, z.B. Schichtr"
+        },
+        {
+          "name":"diary",
+          "label":"Tagebuch",
+          "description":"Verweis auf Tagebuch, in welcher Befund ggfs. weitergehend beschrieben ist.r"
+        },
+        {
+          "name":"endingDate",
+          "label":"Abschlussdatum",
+          "description":"Ende der Arbeit"
+        },
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
+        },
+        {
+          "name":"height",
+          "label":"Höhe",
+          "description":"Maximale Ausdehnung des Befunds in der Höhe, Schichtmächtigkeit (in cm)"
+        },
+        {
+          "name":"differentiator",
+          "label":"Unterscheidungskriterium",
+          "description":"Unterschreidungskriterium, nach welchem dieser Befund von anderen unterschieden wurde, z.B. Wechsel der Bestandteile"
+        },
+        {
+          "name":"position",
+          "label":"Lage",
+          "description":"Kurzbeschreibung der Lage des Befunds im Schnitt, je nach Grabungsmethode auch nach Abschnitten bzw Quadranten, z.B. Abschnitt XI"
+        },
+        {
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        },
+        {
+          "name":"intrusion",
+          "label":"Störung",
+          "valuelist":[
+            "ja",
+            "nein"
+          ],
+          "inputType":"radio",
+          "description":"Störung des Befunds vorhanden? 1=Ja; 2=Nein"
+        },
+        {
+          "name":"heightReferencePoint",
+          "label":"Höhe Bezugspunkt",
+          "valuelist":[
+            "absolute Höhe (über NN)",
+            "unter rezenter Oberfläche",
+            "unter Meßpunkt",
+            "unter Planum"
+          ],
+          "inputType":"dropdown",
+          "description":"Bezugspunkt zu den Höhen"
+        },
+        {
+          "name":"condition",
+          "label":"Erhaltung",
+          "inputType":"text",
+          "description":"Beschreibung der Befunderhaltung, z.B. Erstreckt sich im gesamten Raum; Ungestört."
+        },
+        {
+          "name":"width",
+          "label":"Breite",
+          "description":"Maximale Ausdehnung des Befunds in der Breite (in cm)"
+        },
+        {
+          "name":"heightLowerEdge",
+          "label":"Höhe Unterkante",
+          "description":"Untergrenzen Höhenniveau des Befunds, je nach Festlegung in absoluter Höhe oder relativer Höhe zur Grasnarbe"
+        },
+        {
+          "name":"heightTopEdge",
+          "label":"Höhe Oberkante",
+          "description":"Obergrenzen Höhenniveau des Befunds, je nach Festlegung in absoluter Höhe oder relativer Höhe zur Grasnarbe"
+        },
+        {
+          "name":"number",
+          "label":"Nummer",
+          "description":"Befundnummer je nach projektspezifischer Nummerierung, z.B. PRJ S01 - 12r"
         }
       ]
     },
+
     {
-      "type" : "drawing",
-      "parent": "image",
-      "label" : "Zeichnung",
-      "fields" : [
+      "type":"object",
+      "label":"Fund",
+      "fields":[
         {
-          "name" : "author",
-          "label" : "Autor"
+          "name":"number",
+          "label":"Nummer",
+          "description":"Fundnummer"
+        },
+        {
+          "name":"diameter",
+          "label":"Durchmesser",
+          "description":"Durchmesser des Fundes in cm"
+        },
+        {
+          "name":"provenance",
+          "label":"Provenienz",
+          "description":"Herkunftort oder -region des Fundes"
+        },
+        {
+          "name":"condition",
+          "label":"Erhaltung",
+          "inputType":"text",
+          "description":"Funderhaltung"
+        },
+        {
+          "name":"thickness",
+          "label":"Stärke",
+          "description":"Dicke, Stärke des Fundes in cm"
+        },
+        {
+          "name":"height",
+          "label":"Höhe",
+          "description":"Höhe des Fundes  in cm, vor allem bei Gefäßen anstatt Länge benutzen"
+        },
+        {
+          "name":"inventoryLocation",
+          "label":"Ort der Inventarisierung",
+          "description":"Aufbewahrungsort"
+        },
+        {
+          "name":"inventoryNumber",
+          "label":"Inventarnummer",
+          "description":"inventarisierte Nummer des Aufbewahrungsortes"
+        },
+        {
+          "name":"archivNr",
+          "label":"Archivnummer",
+          "description":"interne Nummer zum Archivieren"
+        },
+        {
+          "name":"dating",
+          "label":"Datierung",
+          "description":"archäologische Datierung"
+        },
+        {
+          "name":"weight",
+          "label":"Gewicht",
+          "description":"Gewicht des Fundes in g"
+        },
+        {
+          "name":"length",
+          "label":"Länge",
+          "description":"Länge des Fundes in cm"
+        },
+        {
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        },
+        {
+          "name":"width",
+          "label":"Breite",
+          "description":"Breite des Fundes in cm"
+        },
+        {
+          "name":"percentage",
+          "label":"Prozent",
+          "description":"Prozent der Erhaltung"
+        },
+        {
+          "name":"catalogueNumber",
+          "label":"Katalognummer"
+        },
+        {
+          "name":"date",
+          "label":"Datum",
+          "description":"Funddatum"
+        },
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
         }
       ]
     },
+
     {
-      "type" : "photo",
-      "parent": "image",
-      "label" : "Foto",
-      "fields" : [
+      "type":"section",
+      "label":"Profil",
+      "fields":[
         {
-           "name" : "author",
-           "label" : "Autor"
+          "name":"findingMaterial",
+          "label":"Fundmaterial"
+        },
+        {
+          "name":"soilType",
+          "label":"Bodenart"
+        },
+        {
+          "name":"thickness",
+          "label":"Mächtigkeit",
+          "description":"größte Stärke/Dicke in cm"
+        },
+        {
+          "name":"heightReference",
+          "label":"Höhenbezug",
+          "valuelist":[
+            "N",
+            "NNO",
+            "NO",
+            "ONO",
+            "O",
+            "OSO",
+            "SO",
+            "SSO",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW"
+          ],
+          "inputType":"dropdown",
+          "description":"Bezugspunkt zu Höhen- bzw. Tiefenmessungen, z.B. Höhe über NN"
+        },
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
+        },
+        {
+          "name":"heightReferencePoint",
+          "label":"Höhe Bezugspunkt",
+          "description":"Bezugspunkt zu Höhe_Oberkante und Höhe_Unterkante"
+        },
+        {
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        },
+        {
+          "name":"heightLowerEdge",
+          "label":"Höhe Unterkante",
+          "description":"Tiefster Punkt in m, z.B. 20,89 m"
+        },
+        {
+          "name":"cardinalDirection",
+          "label":"Himmelsrichtung",
+          "valuelist":[
+            "absolute Höhe (über NN)",
+            "unter rezenter Oberfläche",
+            "unter Meßpunkt",
+            "unter Planum"
+          ],
+          "inputType":"dropdown",
+          "description":"in welche Richtung schaut der Betrachter"
+        },
+        {
+          "name":"heightTopEdge",
+          "label":"Höhe Oberkante",
+          "description":"Höchster Punkt in m, z.B. 22,89 m"
+        },
+        {
+          "name":"colour",
+          "label":"Farbe"
+        },
+        {
+          "name":"number",
+          "label":"Nummer",
+          "description":"Fortlaufende Nummer des Objektes auf der Grabung"
+        },
+        {
+          "name":"processor",
+          "label":"Bearbeiter",
+          "description":"Wer hat die Arbeit durchgeführt"
+        },
+        {
+          "name":"sectionClassification",
+          "label":"Profilklassifikation",
+          "valuelist":[
+            "Grabungsprofil",
+            "Geoprofil",
+            "Geophysikalischer Schnitt",
+            "Synopse von Bohrlöchern",
+            "Baugrubenprofil",
+            "Befundprofil"
+          ],
+          "inputType":"dropdown",
+          "description":"Art des Profils."
+        }
+      ]
+    },
+
+    {
+      "type":"plana",
+      "label":"Planum",
+      "fields":[
+        {
+          "name":"extentX",
+          "label":"Ausdehnung X"
+        },
+        {
+          "name":"processor",
+          "label":"Bearbeiter",
+          "description":"Wer hat die Arbeit durchgeführt"
+        },
+        {
+          "name":"planumDepth",
+          "label":"Planumstiefe",
+          "description":"Tiefe in welcher das Planum angelegt wurde in cm, z.B. 0,35 cm (unter rezenter Oberfläche)"
+        },
+        {
+          "name":"heightReference",
+          "label":"Höhenbezug",
+          "description":"Bezugspunkt zu Höhen- bzw. Tiefenmessungen, z.B. Höhe über NN"
+        },
+        {
+          "name":"cardinalDirection",
+          "label":"Himmelsrichtung",
+          "valuelist":[
+            "N",
+            "NNO",
+            "NO",
+            "ONO",
+            "O",
+            "OSO",
+            "SO",
+            "SSO",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW"
+          ],
+          "inputType":"dropdown",
+          "description":"in welche Richtung schaut der Betrachter"
+        },
+        {
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        },
+        {
+          "name":"number",
+          "label":"Nummer",
+          "description":"Fortlaufende Nummer des Objektes auf der Grabung"
+        },
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
+        },
+        {
+          "name":"extentY",
+          "label":"Ausdehnung Y"
+        },
+        {
+          "name":"horizontalPosition",
+          "label":"Horizontallage",
+          "valuelist":[
+            "eben",
+            "leicht abfallend",
+            "stark abfallend",
+            "unregelmässig"
+          ],
+          "inputType":"dropdown",
+          "description":"Beschreibung der Horizontallage des Planums, z.B. eben"
+        },
+        {
+          "name":"faceShape",
+          "label":"Flächenform",
+          "valuelist":[
+            "L-förmig",
+            "rechteckig",
+            "quadratisch",
+            "unregelmässig"
+          ],
+          "inputType":"dropdown",
+          "description":"Beschreibung der Flächenform, z.B. rechteckig"
+        }
+      ]
+    },
+
+    {
+      "type":"image",
+      "label":"Abbildung",
+      "fields":[
+        {
+          "name":"number",
+          "label":"Nummer",
+          "description":"Fortlaufende Nummer des Objektes auf der Grabung"
+        },
+        {
+          "name":"subject",
+          "label":"Gegenstand",
+          "inputType":"text",
+          "description":"Gegenstand bzw. Inhalt der Dokumentation, z.B. Fundzeichnung oder Arbeitsfoto"
+        },
+        {
+          "name":"filename",
+          "label":"Dateiname",
+          "description":"Dateiname"
+        },
+        {
+          "name":"archivNr",
+          "label":"Archivnummer",
+          "description":"interne Nummer zum Archivieren"
+        },
+        {
+          "name":"processor",
+          "label":"Bearbeiter",
+          "description":"Wer hat die Arbeit durchgeführt"
+        },
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
+        },
+        {
+          "name":"notes",
+          "label":"Notizen",
+          "inputType":"text",
+          "description":"temporäre Arbeitsnotizen"
+        }
+      ]
+    },
+
+    {
+      "type":"photo",
+      "label":"Foto",
+      "parent":"image",
+      "fields":[
+        {
+          "name":"original",
+          "label":"Vorlagenart",
+          "valuelist":[
+            "Scan",
+            "Digitalfoto",
+            "Kleinbild_s/w",
+            "Meßbild",
+            "Kleinbild bunt",
+            "Dia bunt",
+            "Glasnegativ",
+            "Mittelformat"
+          ],
+          "inputType":"dropdown",
+          "description":"Ursprungsformat des Bildes: bei Digitalisaten ursprüngliches analoges Format, z.B. Glasnegativ"
+        },
+        {
+          "name":"cardinalDirection",
+          "label":"Himmelsrichtung",
+          "valuelist":[
+            "N",
+            "NNO",
+            "NO",
+            "ONO",
+            "O",
+            "OSO",
+            "SO",
+            "SSO",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW"
+          ],
+          "inputType":"dropdown",
+          "description":"in welche Richtung schaut der Betrachter?"
+        },
+        {
+          "name":"labeling",
+          "label":"Beschriftung",
+          "inputType":"text"
+        }
+      ]
+    },
+
+    {
+      "type":"drawing",
+      "label":"Zeichnung",
+      "parent":"image",
+      "fields":[
+        {
+          "name":"scale",
+          "label":"Maßstab",
+          "valuelist":[
+            "1:1",
+            "1:5",
+            "1:20",
+            "1:50",
+            "1:100",
+            "1:200",
+            "1:500",
+            "1:1000"
+          ],
+          "inputType":"dropdown"
+        },
+        {
+          "name":"archivNumber",
+          "label":"Archivnummer",
+          "description":"interne Nummer zum Archivieren"
+        },
+        {
+          "name":"cardinalDirection",
+          "label":"Himmelsrichtung",
+          "valuelist":[
+            "N",
+            "NNO",
+            "NO",
+            "ONO",
+            "O",
+            "OSO",
+            "SO",
+            "SSO",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW"
+          ],
+          "inputType":"dropdown",
+          "description":"in welche Richtung schaut der Betrachter"
+        },
+        {
+          "name":"drawingType",
+          "label":"Zeichnungsart",
+          "valuelist":[
+            "Originalzeichnung",
+            "Tuschezeichnung",
+            "Umgezeichnetes Meßbild",
+            "Vektorisierte Zeichnung",
+            "Druckvorlage",
+            "Publizierte Zeichnung",
+            "Vorarbeiten",
+            "Skizze",
+            "Photogrammetrie"
+          ],
+          "inputType":"dropdown",
+          "description":"Art der Zeichnung, z.B. Tuschezeichnung"
+        },
+        {
+          "name":"labeling",
+          "label":"Beschriftung",
+          "inputType":"text",
+          "description":"Beschriftung von Fotos, Zeichnungen, Dias etc."
+        },
+        {
+          "name":"drawingMaterial",
+          "label":"Zeichungsmaterial",
+          "valuelist":[
+            "Karton",
+            "Lichtpause",
+            "Mikrofilm",
+            "Transparentpapier",
+            "Folie",
+            "Photoabzüge",
+            "Transparent-Film",
+            "Digitale Datei",
+            "Papier",
+            "Milimeterpapier"
+          ],
+          "inputType":"dropdown",
+          "description":"Art des Materials, was als Papier verwendet wurde; bei analogen Zeichnungen, z.B. Milimeterpapier"
+        },
+        {
+          "name":"drawingTool",
+          "label":"Zeichnungswerkzeug",
+          "valuelist":[
+            "Tusche",
+            "digital erstellt",
+            "Bleistift",
+            "Buntstift"
+          ],
+          "inputType":"dropdown",
+          "description":"Werkzeug mit dem die Zeichnung erstellt wurde, z.B. Buntstift"
+        },
+        {
+          "name":"subject",
+          "label":"Gegenstand",
+          "inputType":"text",
+          "description":"Gegenstand bzw. Inhalt der Dokumentation, z.B. Fundzeichnung oder Arbeitsfoto"
         }
       ]
     }
+
   ],
-  "relations" :
-  [
+
+  "relations":[
     {
-      "name": "fatherOf",
-      "inverse": "sonOf",
-      "label": "Vater von",
-      "domain": ["jedi", "dude"],
-      "range": ["jedi", "dude"]
+      "name":"isBefore",
+      "inverse":"isAfter",
+      "label":"Zeitlich vor",
+      "domain":[
+        "object"
+      ],
+      "range":[
+        "object"
+      ]
     },
     {
-      "name": "sonOf",
-      "inverse": "fatherOf",
-      "label": "Sohn von",
-      "domain": ["jedi", "dude"],
-      "range": ["jedi", "dude"]
+      "name":"isLocatedIn",
+      "inverse":"embeds",
+      "label":"liegt in",
+      "domain":[
+        "object"
+      ],
+      "range":[
+        "section",
+        "plana",
+        "context"         ]
     },
     {
-      "name": "friendOf",
-      "inverse": "friendOf",
-      "label": "Freund von",
-      "domain": ["jedi", "dude"],
-      "range": ["jedi", "dude"]
+      "name":"isBelow",
+      "inverse":"isAbove",
+      "label":"liegt unter",
+      "domain":[
+        "context"
+      ],
+      "range":[
+        "context"
+      ]
     },
     {
-      "name": "enemyOf",
-      "inverse": "enemyOf",
-      "label": "Feind von",
-      "domain": ["jedi", "dude"],
-      "range": ["jedi", "dude"]
+      "name":"isAfter",
+      "inverse":"isBefore",
+      "label":"Zeitlich nach",
+      "domain":[
+        "object"
+      ],
+      "range":[
+        "object"
+      ]
     },
     {
-      "name": "belongsTo",
-      "inverse": "owns",
-      "label": "Gehört",
-      "domain": ["vessel"],
-      "range": ["jedi", "dude"]
+      "name":"isCoevalWith",
+      "inverse":"isCoevalWith",
+      "label":"Zeitgleich mit",
+      "domain":[
+        "object"
+      ],
+      "range":[
+        "object"
+      ]
     },
     {
-      "name": "owns",
-      "inverse": "belongsTo",
-      "label": "Besitzer von",
-      "domain": ["jedi","dude"],
-      "range": ["vessel"]
+      "name":"depicts",
+      "inverse":"isDepictedBy",
+      "label":"ist Abbildung von",
+      "domain":[
+        "image",
+        "photo",
+        "drawing"
+      ],
+      "range":[
+        "section",
+        "context",
+        "plana",
+        "object"
+      ]
     },
     {
-      "name": "origin",
-      "label": "Herkunft",
-      "domain": ["jedi","dude"],
-      "range": ["celestial_body"]
+      "name":"embeds",
+      "inverse":"isLocatedIn",
+      "label":"umschließt",
+      "domain":[
+        "plana",
+        "context"
+      ],
+      "range":[
+        "object"
+      ]
+    },
+    {
+      "name":"includes",
+      "inverse":"belongsTo",
+      "label":"enthält",
+      "domain":[
+        "trench"
+      ],
+      "range":[
+        "context"
+      ]
+    },
+    {
+      "name":"belongsTo",
+      "inverse":"includes",
+      "label":"gehört zu",
+      "domain":[
+        "context"
+      ],
+      "range":[
+        "trench"
+      ]
     }
+
   ]
+
 }

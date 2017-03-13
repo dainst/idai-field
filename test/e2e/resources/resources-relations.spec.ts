@@ -23,7 +23,7 @@ describe('relations', function() {
         expect(DocumentEditWrapperPage.getRelationButtonText(0, 0, 0)).toEqual('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
-        expect(DocumentEditWrapperPage.getRelationButtonText(1, 0, 0)).toEqual('2');
+        expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
     });
 
     it('should edit a resource that contains a relation', function() {

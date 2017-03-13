@@ -127,8 +127,8 @@ let ResourcesPage = function() {
 
 
     this.performCreateLink = function() {
-        this.performCreateResource('1');
-        this.performCreateResource('2');
+        this.performCreateResource('1', 2);
+        this.performCreateResource('2', 2);
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
         DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '1');

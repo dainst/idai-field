@@ -37,7 +37,7 @@ describe('document view tests --', function() {
     it('document view should show the relations present in the object', function () {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource("1");
-        expect(documentViewPage.getRelationName(0)).toBe('Sohn von'); // with the correct relation label
+        expect(documentViewPage.getRelationName(0)).toBe('Zeitlich nach'); // with the correct relation label
         expect(documentViewPage.getRelationValue(0)).toBe('2');
     });
 
@@ -56,9 +56,9 @@ describe('document view tests --', function() {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('fields view should show only relations present in the object', function () {
-        resourcesPage.performCreateResource('1');
-        resourcesPage.performCreateResource('2');
+    it('document view should show only relations present in the object', function () {
+        resourcesPage.performCreateResource('1', 2);
+        resourcesPage.performCreateResource('2', 2);
         resourcesPage.clickSelectResource("1");
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();

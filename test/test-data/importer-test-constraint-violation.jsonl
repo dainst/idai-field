@@ -1,4 +1,4 @@
-{ "type": "jedi", "identifier" : "obob1", "shortDescription" : "O.B. One" }
-{ "type": "jedi", "identifier" : "obob2", "shortDescription" : "O.B. Two" }
-{ "type": "jedi", "identifier" : "obob2", "shortDescription" : "O.B. Three"}
-{ "type": "jedi", "identifier" : "obob4", "shortDescription" : "O.B. Four" }
+{ "type": "object", "identifier" : "obob1", "shortDescription" : "O.B. One" }
+{ "type": "object", "identifier" : "obob2", "shortDescription" : "O.B. Two" }
+{ "type": "object", "identifier" : "obob2", "shortDescription" : "O.B. Three"}
+{ "type": "object", "identifier" : "obob4", "shortDescription" : "O.B. Four" }

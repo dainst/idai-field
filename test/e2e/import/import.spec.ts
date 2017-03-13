@@ -41,7 +41,7 @@ describe('import tests -- ', function() {
         NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickNavigateToResources();
 
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('ob1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');

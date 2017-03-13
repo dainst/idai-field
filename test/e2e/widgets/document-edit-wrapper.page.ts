@@ -74,6 +74,7 @@ export class DocumentEditWrapperPage {
     };
 
     public static getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
+        browser.wait(EC.visibilityOf(element(by.css('relation-picker-group relation-picker'))), delays.ECWaitTime);
         return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 

@@ -23,6 +23,7 @@
                 <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
                     <li *ngFor="let document of documents; let index=index"
                         (click)="select(document)"
+                        (dblclick)="open(document)"
                         class="list-group-item"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"

@@ -78,11 +78,11 @@
                                     (click)="startImport()">
                                 Import starten
                             </button>
-                            <button *ngIf="isReady()"
+                            <button *ngIf="!isReady()"
                                     class="btn btn-primary disabled">
                                 Import starten
                             </button>
-                            <div style="display:inline-block;" *ngIf="!running" class="spinner"></div>
+                            <div style="display:inline-block;" *ngIf="running" class="spinner"></div>
                         </div>
                     </div>
 

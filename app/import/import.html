@@ -12,7 +12,7 @@
 
     <main>
         <div class="row">
-            <div class="col-sm-6 offset-sm-3">
+            <div class="col-lg-6 offset-lg-3">
                 <div class="form-horizontal">
 
                     <div class="md-form">
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="md-form">
-                        <div class="col-sm-3">
+                        <div class="col-sm-12">
                             <button *ngIf="isReady()" id="importStartButton"
                                     class="btn btn-primary"
                                     (click)="startImport()">
@@ -82,9 +82,7 @@
                                     class="btn btn-primary disabled">
                                 Import starten
                             </button>
-                        </div>
-                        <div class="col-sm-9">
-                            <div *ngIf="running" class="spinner"></div>
+                            <div style="display:inline-block;" *ngIf="!running" class="spinner"></div>
                         </div>
                     </div>
 

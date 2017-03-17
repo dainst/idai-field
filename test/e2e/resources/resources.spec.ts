@@ -130,7 +130,10 @@ describe('resources', function() {
         resourcesPage.clickSaveInModal();
         resourcesPage.scrollUp();
         browser.wait(EC.presenceOf(element(by.css('#objectList .list-group-item .new'))), delays.ECWaitTime);
-        expect(element(by.css('#objectList .list-group-item .new')).getText()).toEqual('Neues Objekt');
+        element(by.css('#objectList .list-group-item .new')).getText().then(text => {
+            expect(text).toEqual('Neues Objekt');
+        });
+        
     });
 
     it ('should change the selection to existing when saving via modal', function() {

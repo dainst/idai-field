@@ -14,8 +14,11 @@ export class PouchdbServerDatastore extends PouchdbDatastore {
     protected setupDatabase(dbname:string): Promise<any> {
         return new Promise((resolve, reject) => {
             var app = express();
-            app.use('/db', expressPouchDB(PouchDB, {
-                mode: 'minimumForPouchDB'
+            app.use('/', expressPouchDB(PouchDB, {
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    include: ['routes/fauxton']
+                }
             }));
             app.listen(3000, function () {
                 console.log("PouchDB Server listening on port 3000", dbname);

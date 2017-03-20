@@ -189,7 +189,7 @@ export class ResourcesComponent {
 
         let document=this.selectedDocument;
         if (document==undefined) return Promise.resolve();
-        if (!document['id']) {
+        if (!document['_id']) { // TODO work with propely defined interface
             this.remove(document);
             this.selectedDocument=undefined;
             return Promise.resolve();

@@ -118,13 +118,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.proveThatDoesNotExist(document))
             .then(() => {
 
-                if (document['id'] || document['_id']) {
+                if (document['_id']) {
                     console.error(PouchdbDatastore.MSG_ID_EXISTS_IN_CREATE);
                     return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                 }
 
                 if (!document.resource.id) document.resource.id = IdGenerator.generateId();
-                document['id'] = document.resource.id;
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
@@ -168,7 +167,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private resetDocOnErrInCreate(originalResourceId: string) {
         return function(document: Document) {
-            document['id'] = undefined;
+            document['_id'] = undefined;
             document.resource.id = originalResourceId;
             document.created = undefined;
             document.modified = undefined;
@@ -194,8 +193,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery
             .then(()=> {
-                if (document['id'] == null) {
-                    console.error("Aborting update: No ID given. " +
+                if (document['_id'] == null) {
+                    console.error("Aborting update: No _id given. " +
                         "Maybe you wanted to create the object with create()?");
                     return Promise.reject(undefined);
                 }

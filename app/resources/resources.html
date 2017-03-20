@@ -27,7 +27,7 @@
                         class="list-group-item"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"
-                        [class.selected]="getSelected() && getSelected().resource.id === document.id"
+                        [class.selected]="getSelected() && getSelected().resource.id === document.resource.id"
                         [id]="'resource-' + document.resource.identifier">
 
                         <document-teaser [document]="document"></document-teaser>

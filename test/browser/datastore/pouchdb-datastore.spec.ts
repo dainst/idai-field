@@ -121,8 +121,8 @@ export function main() {
                             fail();
                             done();
                         },
-                        keyOfM => {
-                            expect(keyOfM).toBe(M.DATASTORE_RESOURCE_ID_EXISTS);
+                        msgWithParams => {
+                            expect(msgWithParams).toEqual([M.DATASTORE_RESOURCE_ID_EXISTS]);
                             done();
                         }
                     );
@@ -160,8 +160,8 @@ export function main() {
                             fail();
                             done();
                         },
-                        err => {
-                            expect(err).toBe(M.DATASTORE_NOT_FOUND);
+                        msgWithParams => {
+                            expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
                             done();
                         }
                     );
@@ -180,8 +180,8 @@ export function main() {
                             fail();
                             done();
                         },
-                        err => {
-                            expect(err).toBe(M.DATASTORE_NOT_FOUND);
+                        msgWithParams => {
+                            expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
                             done();
                         }
                     );
@@ -287,8 +287,8 @@ export function main() {
                         fail('should not find anything');
                         done();
                     },
-                    keyOfM => {
-                        expect(keyOfM).toBe(M.DATASTORE_NOT_FOUND);
+                    msgWithParams => {
+                        expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
                         done();
                     }
                 );

@@ -31,6 +31,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
     public static DATASTORE_RESOURCE_ID_EXISTS : string = 'datastore/resourceidexists';
     public static DATASTORE_NOT_FOUND : string = 'datastore/notfound';
+    public static DATASTORE_GENERIC_ERROR : string = 'datastore/genericerror';
 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';

@@ -148,7 +148,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             }).catch(keyOfM => {
 
                 reset(document);
-                return Promise.reject(keyOfM);
+                return Promise.reject([keyOfM]);
             })
     }
 
@@ -197,7 +197,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 if (document['id'] == null) {
                     console.error("Aborting update: No ID given. " +
                         "Maybe you wanted to create the object with create()?");
-                    return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                    return Promise.reject(undefined);
                 }
                 document.modified = new Date();
                 document.resource['_parentTypes'] = this.config
@@ -206,7 +206,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return this.db.put(document).catch(
                     err => {
                         console.error(err);
-                        return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                        return Promise.reject(undefined);
                     }
                 )
 
@@ -216,9 +216,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
-            }).catch(keyOfM => {
+            }).catch(() => {
                 // TODO reset modified date
-                return Promise.reject(keyOfM)
+                return Promise.reject([M.DATASTORE_GENERIC_SAVE_ERROR])
             })
     }
 
@@ -252,7 +252,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<undefined>}
      */
     public remove(doc: Document): Promise<undefined> {
-        return this.db.remove(doc);
+        return this.db.remove(doc)
+            .catch(err => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
     }
 
     private clear(): Promise<any> {
@@ -310,7 +311,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                if (result.rows.length > 0) {
                    return Promise.resolve(result.rows[0].doc);
                } else {
-                   return Promise.reject(M.DATASTORE_NOT_FOUND);
+                   return Promise.reject([M.DATASTORE_NOT_FOUND]);
                }
            });
         });
@@ -343,7 +344,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private fetchObject(id: string): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
-        return this.db.get(id).catch(err => Promise.reject(M.DATASTORE_NOT_FOUND))
+        return this.db.get(id).catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
     private docsFromResult(result: any[]): Document[] {

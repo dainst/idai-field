@@ -9,7 +9,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "relations": {},
             "geometry": {
                 "type": "Point",
-                "coordinates": [ 27.289327540154142, 39.4422354724396197 ],
+                "coordinates": [ 27.1892609283, 39.1411810096 ],
                 "crs": "local"
             },
             "type": "object"
@@ -19,17 +19,17 @@ export var DOCS: IdaiFieldDocument[] = [
     {
         "resource": {
             "id": "o25",
-            "identifier": "mapLayerTest1.png",
+            "identifier": "PE07-So-07_Z001.jpg",
             "shortDescription": "Test Layer 1",
             "type": "image",
             "relations": {},
-            "filename" : "mapLayerTest1.png",
-            "height" : 701,
-            "width" : 845,
+            "filename" : "PE07-So-07_Z001.jpg",
+            "height" : 2423,
+            "width" : 3513,
             "georeference": {
-                "topLeftCoordinates": [25, -25],
-                "topRightCoordinates": [25, 25],
-                "bottomLeftCoordinates": [-25, -25]
+                "bottomLeftCoordinates": [39.1411810096, 27.1892609283],
+                "topLeftCoordinates": [39.1412672328, 27.1892609283],
+                "topRightCoordinates": [39.1412672328, 27.1893859555]
             }
         },
         "synced": 0

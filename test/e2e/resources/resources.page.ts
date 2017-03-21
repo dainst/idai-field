@@ -116,11 +116,12 @@ let ResourcesPage = function() {
 
     // sequences
 
-    this.performCreateResource = function(identifier, typeIndex) {
+    this.performCreateResource = function(identifier, typeIndex, inputFieldText?: string) {
         this.clickCreateObject();
         this.clickSelectResourceType(typeIndex);
         this.clickSelectGeometryType();
-        DocumentEditWrapperPage.typeInIdentifier(identifier);
+        DocumentEditWrapperPage.typeInInputField(identifier);
+        if (inputFieldText) DocumentEditWrapperPage.typeInInputField(inputFieldText,2);
         this.scrollUp();
         DocumentEditWrapperPage.clickSaveDocument();
     };

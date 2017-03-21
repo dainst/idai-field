@@ -44,7 +44,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('1a');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('1b');
+        DocumentEditWrapperPage.typeInInputField('1b');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1b')), delays.ECWaitTime);
     });
 
@@ -57,7 +57,7 @@ describe('resources', function() {
      */
     it ('should reflect changes in overview after creating object - first scenario', function() {
         resourcesPage.performCreateResource('12');
-        DocumentEditWrapperPage.typeInIdentifier('34');
+        DocumentEditWrapperPage.typeInInputField('34');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('34')), delays.ECWaitTime);
     });
 
@@ -71,7 +71,7 @@ describe('resources', function() {
         resourcesPage.clickChooseTypeFilter(0); // calls find
         resourcesPage.clickSelectResource('12');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('56'); // same ...
+        DocumentEditWrapperPage.typeInInputField('56'); // same ...
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('56')), delays.ECWaitTime); // ... instance
     });
 
@@ -94,7 +94,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('old');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('new');
+        DocumentEditWrapperPage.typeInInputField('new');
         resourcesPage.clickSelectResource('2');
         resourcesPage.clickDiscardInModal();
         expect(resourcesPage.getListItemIdentifierText(1)).toEqual('old');
@@ -122,7 +122,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('2');
+        DocumentEditWrapperPage.typeInInputField('2');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
         resourcesPage.clickSelectGeometryType();
@@ -141,7 +141,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('2a');
+        DocumentEditWrapperPage.typeInInputField('2a');
         resourcesPage.clickSelectResource('1');
         resourcesPage.scrollUp();
         resourcesPage.clickSaveInModal();
@@ -154,7 +154,7 @@ describe('resources', function() {
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
         documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInIdentifier('2a');
+        DocumentEditWrapperPage.typeInInputField('2a');
         resourcesPage.clickSelectResource('1');
         resourcesPage.scrollUp();
         resourcesPage.clickCancelInModal();

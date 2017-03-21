@@ -17,17 +17,17 @@ describe('document view tests --', function() {
     });
 
     it('document view should show the fields present in the object', function () {
-        resourcesPage.performCreateResource('1', 0);
+        resourcesPage.performCreateResource('1', 2, 'no');
         resourcesPage.clickSelectResource("1");
-        expect(documentViewPage.getFieldName(0)).toBe('Identifier'); // with the correct field label
-        expect(documentViewPage.getFieldValue(0)).toBe('1');
+        expect(documentViewPage.getFieldName(0)).toBe('Nummer'); // with the correct field label
+        expect(documentViewPage.getFieldValue(0)).toBe('no');
     });
 
     /**
      * Addresses an issue where fields were shown double.
      */
     it('document view should show only the fields present in the object', function () {
-        resourcesPage.performCreateResource('1', 0);
+        resourcesPage.performCreateResource('1', 2, 'no');
         resourcesPage.clickSelectResource("1");
         documentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);

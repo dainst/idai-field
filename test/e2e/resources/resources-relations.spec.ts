@@ -30,7 +30,7 @@ describe('relations', function() {
         resourcesPage.performCreateLink();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         DocumentEditWrapperPage.clickFieldsTab();
-        DocumentEditWrapperPage.typeInIdentifier('123');
+        DocumentEditWrapperPage.typeInInputField('123');
         DocumentEditWrapperPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });

@@ -80,10 +80,20 @@ export class DocumentEditWrapperPage {
 
     // type in
 
-    public static typeInIdentifier = function(identifier) {
+    /**
+     * @param text
+     * @param inputFieldNr 0 for identifier,
+     *   1 for shortDescription, 2 - n for other fields
+     */
+    public static typeInInputField = function(text, inputFieldNr?: number) {
+
+        if (inputFieldNr == undefined) inputFieldNr = 0;
+
         // element-2, 0,1 and 2 are type, id, geometries
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-3 input'))), delays.ECWaitTime);
-        common.typeIn(element(by.css('#edit-form-element-3 input')), identifier);
+        inputFieldNr += 3;
+
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-'+inputFieldNr+' input'))), delays.ECWaitTime);
+        common.typeIn(element(by.css('#edit-form-element-'+inputFieldNr+' input')), text);
     };
 
     public static typeInRelationByIndices = function(groupIndex, pickerIndex, input) {

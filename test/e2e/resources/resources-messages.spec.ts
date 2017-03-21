@@ -15,7 +15,7 @@ describe('resources/messages', function() {
 
     it('should show the success msg also on route change', function() {
         resourcesPage.performCreateResource('12');
-        DocumentEditWrapperPage.typeInIdentifier('34');
+        DocumentEditWrapperPage.typeInInputField('34');
         resourcesPage.clickSelectResource('34');
         resourcesPage.clickSaveInModal();
         

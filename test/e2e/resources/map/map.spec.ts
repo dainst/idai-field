@@ -27,7 +27,7 @@ describe('resources/map', function() {
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
             function(){
                 mapPage.clickMapOption('ok');
-                DocumentEditWrapperPage.typeInIdentifier(identifier);
+                DocumentEditWrapperPage.typeInInputField(identifier);
                 resourcePage.scrollUp();
                 DocumentEditWrapperPage.clickSaveDocument();
             });

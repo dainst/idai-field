@@ -23,9 +23,10 @@ before_install:
 - export PATH="$HOME/.yarn/bin:$PATH"
 install:
 - nvm install 7
-- yarn install
+- yarn install --force
 - yarn add electron-builder@next --dev
 script:
+- npm rebuild node-sass
 - yarn run build
 - yarn run package-mac
 deploy:

@@ -27,9 +27,6 @@ install:
 - yarn add electron-builder@next --dev
 script:
 - yarn run package-mac
-branches:
-  except:
-  - "/^v\\d+\\.\\d+\\.\\d+$/"
 deploy:
   skip_cleanup: true
   provider: releases

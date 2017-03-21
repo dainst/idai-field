@@ -26,6 +26,7 @@ install:
 - yarn install
 - yarn add electron-builder@next --dev
 script:
+- yarn run build
 - yarn run package-mac
 deploy:
   skip_cleanup: true

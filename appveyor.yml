@@ -17,6 +17,7 @@ install:
   - yarn add electron-builder@next --dev # force install next version to test electron-builder
 
 build_script:
+  - yarn run build
   - yarn run package-win
 
 test: off

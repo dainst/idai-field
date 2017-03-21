@@ -39,4 +39,5 @@ deploy:
   file: release/*.dmg
   on:
     tags: true
+    all_branches: true
     repo: dainst/idai-field-client

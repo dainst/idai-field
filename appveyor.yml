@@ -21,11 +21,15 @@ build_script:
 
 test: off
 
+artifacts:
+  - path: release/*.zip
+    name: package
+
 deploy:
   provider: GitHub
   auth_token:
     secure: 3aQM4eQwpFvNNftJYWFOsF7jAl6svWY1xjFSxUR0npeVJl65TLmiTgrjw0iU5xtU
-  artifact: /.*\.exe/
+  artifact: package
   draft: false
   prerelease: false
   on:

@@ -94,7 +94,7 @@ export class IdaiFieldValidator extends Validator {
         if (coordinates.length == 0) return false;
 
         for (let i in coordinates) {
-            if (coordinates[i].length == 0) return false;
+            if (coordinates[i].length < 3) return false;
 
             for (let j in coordinates[i]) {
                 if (!IdaiFieldValidator.validatePointCoordinates(coordinates[i][j])) return false;

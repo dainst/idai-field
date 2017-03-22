@@ -43,8 +43,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/unsupportedexts';
 
     public static VALIDATION_ERROR_IDEXISTS: string = 'validation/error/idexists';
-    public static VALIDATION_ERROR_INVALIDCOORDINATES: string = 'validation/error/invalidcoordinates';
-    public static VALIDATION_ERROR_UNSUPPORTEDTYPE: string = 'validation/error/unsupportedtype';
+    public static VALIDATION_ERROR_MISSING_COORDINATES: string = 'validation/error/missingcoordinates';
+    public static VALIDATION_ERROR_INVALID_COORDINATES: string = 'validation/error/invalidcoordinates';
+    public static VALIDATION_ERROR_MISSING_GEOMETRYTYPE: string = 'validation/error/missinggeometrytype';
+    public static VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE: string = 'validation/error/unsupportedgeometrytype';
+    public static VALIDATION_ERROR_MISSING_CRS: string = 'validation/error/missingcrs';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -129,16 +132,34 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ "" ],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDCOORDINATES]={
-            content: 'Die Koordinaten der Geometrie vom Typ {0} sind nicht valide.',
+        this.msgs[M.VALIDATION_ERROR_MISSING_COORDINATES]={
+            content: 'Die Koordinaten einer Geometrie sind nicht definiert.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_INVALID_COORDINATES]={
+            content: 'Die Koordinaten einer Geometrie vom Typ {0} sind nicht valide.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_UNSUPPORTEDTYPE]={
+        this.msgs[M.VALIDATION_ERROR_MISSING_GEOMETRYTYPE]={
+            content: 'Der Typ einer Geometrie ist nicht definiert.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE]={
             content: 'Der Geometrietyp {0} wird von der Anwendung nicht unterstützt.',
             level: 'danger',
             params: [ "?" ],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_MISSING_CRS]={
+            content: 'Das Koordinatenreferenzsystem (CRS) einer Geometrie ist nicht definiert.',
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_GENERICDATASTOREERROR]={

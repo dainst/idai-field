@@ -58,19 +58,23 @@ export class IdaiFieldValidator extends Validator {
 
         if (!geometry) return null;
 
+        if (!geometry.type) return [ M.VALIDATION_ERROR_MISSING_GEOMETRYTYPE ];
+        if (!geometry.coordinates) return [ M.VALIDATION_ERROR_MISSING_COORDINATES ];
+        if (!geometry.crs) return [ M.VALIDATION_ERROR_MISSING_CRS ];
+
         switch(geometry.type) {
             case 'Point':
                 if (!IdaiFieldValidator.validatePointCoordinates(geometry.coordinates)) {
-                    return [ M.VALIDATION_ERROR_INVALIDCOORDINATES, 'Point' ];
+                    return [ M.VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
                 }
                 break;
             case 'Polygon':
                 if (!IdaiFieldValidator.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ M.VALIDATION_ERROR_INVALIDCOORDINATES, 'Polygon' ];
+                    return [ M.VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
                 }
                 break;
             default:
-                return [ M.VALIDATION_ERROR_UNSUPPORTEDTYPE, geometry.type ];
+                return [ M.VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE, geometry.type ];
         }
 
         return null;

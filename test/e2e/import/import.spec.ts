@@ -46,4 +46,22 @@ describe('import tests -- ', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
     });
+
+    it('importer should abort if an empty geometry is found', function() {
+
+        importIt("./test/test-data/importer-test-empty-geometry.jsonl");
+        NavbarPage.awaitAlert('nicht definiert', false);
+    });
+
+    it('importer should abort if a geometry with invalid coordinates is found', function() {
+
+        importIt("./test/test-data/importer-test-invalid-geometry-coordinates.jsonl");
+        NavbarPage.awaitAlert('sind nicht valide', false);
+    });
+
+    it('importer should abort if a geometry with an unsupported type is found', function() {
+
+        importIt("./test/test-data/importer-test-unsupported-geometry-type.jsonl");
+        NavbarPage.awaitAlert('nicht unterstützt', false);
+    });
 });

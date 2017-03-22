@@ -43,6 +43,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/unsupportedexts';
 
     public static VALIDATION_ERROR_IDEXISTS: string = 'validation/error/idexists';
+    public static VALIDATION_ERROR_INVALIDCOORDINATES: string = 'validation/error/invalidcoordinates';
+    public static VALIDATION_ERROR_UNSUPPORTEDTYPE: string = 'validation/error/unsupportedtype';
 
     public msgs : { [id: string]: Message } = {};
 
@@ -122,9 +124,21 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.VALIDATION_ERROR_IDEXISTS]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen-Identifier {0} existiert bereits.',
+            content: 'Der Ressourcen-Identifier {0} existiert bereits.',
             level: 'danger',
             params: [ "" ],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_INVALIDCOORDINATES]={
+            content: 'Die Koordinaten der Geometrie vom Typ {0} sind nicht valide.',
+            level: 'danger',
+            params: [ "?" ],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_UNSUPPORTEDTYPE]={
+            content: 'Der Geometrietyp {0} wird von der Anwendung nicht unterstützt.',
+            level: 'danger',
+            params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORTER_FAILURE_GENERICDATASTOREERROR]={

@@ -5,9 +5,6 @@ import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {Messages} from "idai-components-2/messages";
 import {Query, Datastore} from "idai-components-2/datastore";
 import {Imagestore} from "../imagestore/imagestore";
-import {DomSanitizer} from "@angular/platform-browser";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {FilterUtility} from "../util/filter-utility";
 import {ElementRef} from "@angular/core";
 
 @Component({

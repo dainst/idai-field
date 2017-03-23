@@ -178,12 +178,10 @@ export class ResourcesComponent {
      * any objects marked as changed which were not yet persisted,
      * they get deleted from the list.
      *
-     * @returns {Promise<Document> | Promise<string[]>} If the document was restored,
+     * @returns {Promise<Document>} If the document was restored,
      *   it resolves to <code>document</code>, if it was not restored
      *   because it was an unsaved object, it resolves to <code>undefined</code>.
-     *   If it could not get restored due to errors, it will resolve to
-     *   <code>string[]</code>, containing ids of M where possible,
-     *   and error messages where not.
+     *   If it could not get restored due to errors, it will reject with msgWithParams.
      */
     public restore(): Promise<any> {
 
@@ -197,16 +195,11 @@ export class ResourcesComponent {
 
         return this.datastore.refresh(document).then(
             restoredObject => {
-                this.replace(document,<Document>restoredObject);
-                this.selectedDocument=restoredObject;
+                this.replace(document, <Document>restoredObject);
+                this.selectedDocument = restoredObject;
                 return Promise.resolve(restoredObject);
             },
-            err => { return Promise.reject(this.toStringArray(err)); }
+            msgWithParams => Promise.reject(msgWithParams)
         );
-    }
-
-    private toStringArray(str : any) : string[] {
-
-        if ((typeof str)=="string") return [str]; else return str;
     }
 }

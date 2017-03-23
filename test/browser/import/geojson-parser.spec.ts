@@ -6,17 +6,30 @@ import {M} from "../../../app/m";
  * @author Daniel de Oliveira
  */
 export function main() {
+
+    function expectErr(fileContent,which,done) {
+
+        const parser = new GeojsonParser();
+        parser.parse(fileContent).subscribe(() => {
+            fail('should not emit next');
+        }, err => {
+            expect(err[0]).toBe(which);
+            done();
+        },()=>fail('should not complete'));
+    }
+
+
     describe('GeojsonParser', () => {
 
         it('should take a feature collection and make documents', (done) => {
 
-            let fileContent  = '{ "type": "FeatureCollection", "features": [' +
+            const fileContent  = '{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } }, ' +
                 '{ "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, "properties" : {"identifier":"123"} }' +
                 '] }';
 
-            let parser = new GeojsonParser();
-            let docs: Document[] = [];
+            const parser = new GeojsonParser();
+            const docs: Document[] = [];
             parser.parse(fileContent).subscribe(resultDocument => {
                 expect(resultDocument).not.toBe(undefined);
                 docs.push(resultDocument);
@@ -36,48 +49,43 @@ export function main() {
             });
         });
 
-        it('should emit an error on invalid jason', (done) => {
+        it('should emit an error on invalid json', (done) => {
 
-            let fileContent  = '{ "type": "FeatureCollection", "features": [' +
+            expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } }, ' +
                 '{ "type": "Feature", "geometry": { "type": "LineString", "coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, "properties" : {"identifier":"123"} }' +
-                '] '; // missing closing brace
-
-            let parser = new GeojsonParser();
-            parser.parse(fileContent).subscribe(() => {
-                fail('should not emit next');
-            }, err => {
-                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALIDJSON);
-                done();
-            },()=>fail('should not complete'));
+                '] ' // missing closing brace
+                , M.IMPORT_FAILURE_INVALIDJSON, done);
         });
 
         it('should emit an error on invalid structure', (done) => {
 
-            let fileContent  = '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } } ';
-
-            let parser = new GeojsonParser();
-            parser.parse(fileContent).subscribe(() => {
-                fail('should not emit next');
-            }, err => {
-                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
-                done();
-            },()=>fail('should not complete'));
+            expectErr('{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } } '
+                , M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, done);
         });
 
         it('should emit an error on unsupported type', (done) => {
 
-            let fileContent  = '{ "type": "FeatureCollection", "features": [' +
+            expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "LineString", "coordinates": [102.0, 0.5] }, "properties": { "identifier": "122" } } ' +
-                '] }';
+                '] }'
+                , M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, done);
+        });
 
-            let parser = new GeojsonParser();
-            parser.parse(fileContent).subscribe(() => {
-                fail('should not emit next');
-            }, err => {
-                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
-                done();
-            },()=>fail('should not complete'));
+        it('should emit an error missing identifier', (done) => {
+
+            expectErr('{ "type": "FeatureCollection", "features": [' +
+                '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { } } ' +
+                '] }'
+                , M.IMPORT_FAILURE_MISSING_IDENTIFIER, done);
+        });
+
+        it('should emit an error missing properties', (done) => {
+
+            expectErr('{ "type": "FeatureCollection", "features": [' +
+                '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }} ' +
+                '] }'
+                , M.IMPORT_FAILURE_MISSING_IDENTIFIER, done);
         });
 
     });

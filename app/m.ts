@@ -22,6 +22,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
     public static IMPORT_FAILURE_INVALIDJSONL : string = 'importer/failure/invalidjsonl';
     public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT : string = 'importer/failure/invalidgeojsonimportstruct';
+    public static IMPORT_FAILURE_MISSING_IDENTIFIER : string = 'importer/failure/missingidentifier';
     public static IMPORT_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORT_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
     public static IMPORT_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
@@ -122,6 +123,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT]={
             content: 'Fehlerhafte Geojson-Importstruktur. Grund: {0}.',
+            level: 'danger',
+            params: [ "?" ],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_MISSING_IDENTIFIER]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

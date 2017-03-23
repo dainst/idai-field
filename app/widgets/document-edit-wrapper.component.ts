@@ -8,7 +8,10 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-
+import {ImageGridBuilder} from "../common/image-grid-builder";
+import {Imagestore} from "../imagestore/imagestore";
+import {Datastore} from "idai-components-2/datastore";
+import {ElementRef} from "@angular/core";
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -36,6 +39,10 @@ export class DocumentEditWrapperComponent {
 
     private typeLabel: string;
     private relationDefinitions: Array<RelationDefinition>;
+    
+    private imageGridBuilder : ImageGridBuilder;
+    private rows = [];
+    private imageDocuments: IdaiFieldImageDocument[];
 
     constructor(
         private messages: Messages,
@@ -43,10 +50,13 @@ export class DocumentEditWrapperComponent {
         private validator: Validator,
         private documentEditChangeMonitor:DocumentEditChangeMonitor,
         private configLoader: ConfigLoader,
-        private modalService: NgbModal
-
+        private modalService: NgbModal,
+        private imagestore: Imagestore,
+        private datastore: Datastore,
+        private el: ElementRef
     ) {
         this.getProjectImageTypes();
+        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
     }
 
     ngOnChanges() {
@@ -58,8 +68,40 @@ export class DocumentEditWrapperComponent {
                 this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
                     'editable');
                 this.persistenceManager.setOldVersion(this.document);
+
+                if (this.document.resource.relations['depictedIn']) {
+                    this.loadImages();   
+                }
+
             }
         });
+    }
+    private calcGrid() {
+        this.rows = [];
+        this.imageGridBuilder.calcGrid(
+            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.rows = result['rows'];
+            for (var msgWithParams of result['msgsWithParams']) {
+                this.messages.add(msgWithParams);
+            }
+        });
+    }
+
+    private loadImages() {
+        var imageDocPromises = [];
+        this.imageDocuments = [];
+        this.document.resource.relations['depictedIn'].forEach(id => {
+            imageDocPromises.push(this.datastore.get(id));
+        });
+
+        Promise.all(imageDocPromises).then( docs =>{
+            this.imageDocuments = docs as IdaiFieldImageDocument[];
+            this.calcGrid();
+        });
+    }
+
+    public onResize() {
+        this.calcGrid();
     }
 
     private getProjectImageTypes() {
@@ -130,6 +172,8 @@ export class DocumentEditWrapperComponent {
         }
 
         this.document.resource.relations["depictedIn"] = relations;
+
+        this.loadImages();
     }
 
     public openDeleteModal(modal) {

@@ -7,9 +7,8 @@ import {Imagestore} from "../imagestore/imagestore";
 import {Messages} from "idai-components-2/messages";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
-import {DomSanitizer} from "@angular/platform-browser";
 import {ImageGridBuilder} from "../common/image-grid-builder";
-import {ImageTool} from "../common/image-tool";
+import {ImageTool} from "./image-tool";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {LinkModalComponent} from "./link-modal.component";
 import {ElementRef} from "@angular/core";
@@ -174,7 +173,7 @@ export class ImageGridComponent {
 
         return this.imagestore.remove(document.resource.identifier)
             .then(() => this.persistenceManager.remove(document, document),
-                err => Promise.reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]))
+                err => Promise.reject([M.IMAGESTORE_ERROR_DELETE, [document.resource.identifier]]))
             .then(() => {
                 if (documentIndex < documents.length - 1) {
                     return this.deleteImageDocuments(documents, ++documentIndex);

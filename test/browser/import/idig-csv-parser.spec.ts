@@ -56,7 +56,7 @@ export function main() {
             }, (msgWithParams) => {
                 expect(documents.length).toBe(1);
                 expect(documents[0].resource.id).toEqual('1');
-                expect(msgWithParams).toEqual([M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING, 2, 'IdentifierUUID']);
+                expect(msgWithParams).toEqual([M.IMPORT_FAILURE_MANDATORYCSVFIELDMISSING, 2, 'IdentifierUUID']);
                 done();
             });
 
@@ -103,7 +103,7 @@ export function main() {
             }, (err) => {
                 expect(documents.length).toBe(1);
                 expect(documents[0].resource.id).toEqual('1');
-                expect(err).toEqual([M.IMPORTER_FAILURE_INVALIDGEOMETRY, 2]);
+                expect(err).toEqual([M.IMPORT_FAILURE_INVALIDGEOMETRY, 2]);
                 done();
             });
 
@@ -126,7 +126,7 @@ export function main() {
             }, () => {
                 expect(documents.length).toBe(1);
                 expect(parser.getWarnings().length).toBe(1);
-                expect(parser.getWarnings()[0]).toEqual([M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT]);
+                expect(parser.getWarnings()[0]).toEqual([M.IMPORT_WARNING_NOMULTIPOLYGONSUPPORT]);
                 done();
             });
 

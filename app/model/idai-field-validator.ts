@@ -46,7 +46,7 @@ export class IdaiFieldValidator extends Validator {
             this.datastore.findByIdentifier(doc.resource.identifier).then(result => {
 
                 if (result && IdaiFieldValidator.isDuplicate(result, doc))
-                    return reject([M.VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
+                    return reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
                 resolve();
             }, () => {
                 resolve();
@@ -58,23 +58,23 @@ export class IdaiFieldValidator extends Validator {
 
         if (!geometry) return null;
 
-        if (!geometry.type) return [ M.VALIDATION_ERROR_MISSING_GEOMETRYTYPE ];
-        if (!geometry.coordinates) return [ M.VALIDATION_ERROR_MISSING_COORDINATES ];
-        if (!geometry.crs) return [ M.VALIDATION_ERROR_MISSING_CRS ];
+        if (!geometry.type) return [ M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE ];
+        if (!geometry.coordinates) return [ M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES ];
+        if (!geometry.crs) return [ M.MODEL_VALIDATION_ERROR_MISSING_CRS ];
 
         switch(geometry.type) {
             case 'Point':
                 if (!IdaiFieldValidator.validatePointCoordinates(geometry.coordinates)) {
-                    return [ M.VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
+                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
                 }
                 break;
             case 'Polygon':
                 if (!IdaiFieldValidator.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ M.VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
+                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
                 }
                 break;
             default:
-                return [ M.VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE, geometry.type ];
+                return [ M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE, geometry.type ];
         }
 
         return null;

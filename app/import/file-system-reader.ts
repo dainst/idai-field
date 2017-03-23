@@ -30,7 +30,7 @@ export class FileSystemReader implements Reader {
 
             reader.onerror = (event: any) => {
                 console.error(event.target.error);
-                reject([M.IMPORTER_FAILURE_FILEUNREADABLE, this.file.name]);
+                reject([M.IMPORT_FAILURE_FILEUNREADABLE, this.file.name]);
             };
 
             reader.readAsText(this.file);

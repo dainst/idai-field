@@ -109,7 +109,7 @@ describe('FileSystemImagestore', () => {
                                 done();
                             })
                             .catch(err => {
-                                expect(err[0]).toEqual(M.IMAGES_ERROR_MEDIASTORE_READ);
+                                expect(err[0]).toEqual(M.IMAGESTORE_ERROR_MEDIASTORE_READ);
 
                                 fs.readFile(storePath + 'test_remove', (err) => {
                                     expect(err).toBeTruthy();

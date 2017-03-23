@@ -62,10 +62,10 @@ export class ImportComponent {
 
         this.messages.clear();
         if (!reader || !parser || !importStrategy || !rollbackStrategy) {
-            return this.messages.add([M.IMPORTER_GENERIC_START_ERROR]);
+            return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
         }
 
-        this.messages.add([M.IMPORTER_START]);
+        this.messages.add([M.IMPORT_START]);
         this.running = true;
         this.importer.importResources(reader, parser, importStrategy)
             .then(importReport => this.finishImport(importReport, rollbackStrategy))
@@ -80,7 +80,7 @@ export class ImportComponent {
                     this.showMessages(importReport.errors);
                 }, err => {
                     this.showMessages(importReport.errors);
-                    this.messages.add([M.IMPORTER_FAILURE_ROLLBACKERROR]);
+                    this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
                     console.error(err);
                 }
             );
@@ -169,9 +169,9 @@ export class ImportComponent {
     private showSuccessMessage(importedResourcesIds: string[]) {
 
         if (importedResourcesIds.length == 1) {
-            this.messages.add([M.IMPORTER_SUCCESS_SINGLE]);
+            this.messages.add([M.IMPORT_SUCCESS_SINGLE]);
         } else if (importedResourcesIds.length > 1) {
-            this.messages.add([M.IMPORTER_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);
+            this.messages.add([M.IMPORT_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);
         }
     }
 

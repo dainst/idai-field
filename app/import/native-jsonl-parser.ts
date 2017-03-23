@@ -38,7 +38,7 @@ export class NativeJsonlParser extends AbstractParser {
 
             } catch (e) {
                 console.error('parse content error. reason: ',e);
-                observer.error([M.IMPORTER_FAILURE_INVALIDJSONL,i+1]);
+                observer.error([M.IMPORT_FAILURE_INVALIDJSONL,i+1]);
                 break;
             }
         }

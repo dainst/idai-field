@@ -47,7 +47,7 @@ export function main() {
             parser.parse(fileContent).subscribe(() => {
                 fail('should not emit next');
             }, err => {
-                expect(err[0]).toBe(M.IMPORTER_FAILURE_INVALIDJSON);
+                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALIDJSON);
                 done();
             },()=>fail('should not complete'));
         });
@@ -60,7 +60,7 @@ export function main() {
             parser.parse(fileContent).subscribe(() => {
                 fail('should not emit next');
             }, err => {
-                expect(err[0]).toBe(M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
+                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
                 done();
             },()=>fail('should not complete'));
         });
@@ -75,7 +75,7 @@ export function main() {
             parser.parse(fileContent).subscribe(() => {
                 fail('should not emit next');
             }, err => {
-                expect(err[0]).toBe(M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
+                expect(err[0]).toBe(M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT);
                 done();
             },()=>fail('should not complete'));
         });

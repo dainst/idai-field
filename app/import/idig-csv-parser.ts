@@ -49,7 +49,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return Observable.create(observer => {
 
-            let errorCallback = e => observer.error([M.IMPORTER_FAILURE_INVALIDCSV, e.row]);
+            let errorCallback = e => observer.error([M.IMPORT_FAILURE_INVALIDCSV, e.row]);
 
             let completeCallback = result => {
                 result.errors.forEach( e => errorCallback(e) );
@@ -75,7 +75,7 @@ export class IdigCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([M.IMPORTER_FAILURE_GENERICCSVERROR]);
+                observer.error([M.IMPORT_FAILURE_GENERICCSVERROR]);
             }
         });
 
@@ -90,7 +90,7 @@ export class IdigCsvParser extends AbstractParser {
         let msgWithParams = undefined;
         IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
-                if (!msgWithParams) msgWithParams = [M.IMPORTER_FAILURE_MANDATORYCSVFIELDMISSING,lineNumber,mandatoryField];
+                if (!msgWithParams) msgWithParams = [M.IMPORT_FAILURE_MANDATORYCSVFIELDMISSING,lineNumber,mandatoryField];
             }
         });
         return msgWithParams;
@@ -189,7 +189,7 @@ export class IdigCsvParser extends AbstractParser {
         } else if (geometryString.startsWith("polygon")) {
             geometry = this.parsePolygonGeometryString(geometryString, lineNumber);
         } else if (geometryString.startsWith("multipolygon")) {
-            this.addToWarnings(M.IMPORTER_WARNING_NOMULTIPOLYGONSUPPORT);
+            this.addToWarnings(M.IMPORT_WARNING_NOMULTIPOLYGONSUPPORT);
         }
 
         return geometry;
@@ -218,7 +218,7 @@ export class IdigCsvParser extends AbstractParser {
 
         let coordinates: Array<string> = geometryString.split(", ");
         if (coordinates.length < 3) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
+            throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         for (let pointCoordinates of coordinates) {
@@ -234,13 +234,13 @@ export class IdigCsvParser extends AbstractParser {
 
         let coordinates: Array<string> = coordinatesString.split(" ");
         if (coordinates.length != 2) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
+            throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         point[0] = parseFloat(coordinates[0].replace(",", "."));
         point[1] = parseFloat(coordinates[1].replace(",", "."));
         if (isNaN(point[0]) || isNaN(point[1])) {
-            throw [M.IMPORTER_FAILURE_INVALIDGEOMETRY, lineNumber];
+            throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         return point;

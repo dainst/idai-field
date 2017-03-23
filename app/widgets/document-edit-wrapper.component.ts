@@ -137,7 +137,7 @@ export class DocumentEditWrapperComponent {
                         this.onSaveSuccess.emit(viaSaveButton);
                         // this.navigate(this.document, proceed);
                         // show message after route change
-                        this.messages.add([M.OVERVIEW_SAVE_SUCCESS]);
+                        this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
                     },
                     keyOfM => {
                         this.messages.add([keyOfM]);
@@ -188,7 +188,7 @@ export class DocumentEditWrapperComponent {
         return this.persistenceManager.remove(this.document).then(
             () => {
                 this.onDeleteSuccess.emit();
-                this.messages.add([M.OVERVIEW_DELETE_SUCCESS]);
+                this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
             },
             keyOfM => this.messages.add([keyOfM]));
     }

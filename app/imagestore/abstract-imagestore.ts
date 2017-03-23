@@ -33,10 +33,10 @@ export abstract class AbstractImagestore implements Imagestore {
     public read(mediastoreFilename:string,sanitizeAfter:boolean = false): Promise<string> {
         return new Promise((resolve, reject) => {
             this._read(mediastoreFilename).then(data => {
-                if (data == undefined) reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
+                if (data == undefined) reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
                 resolve(this.blobMaker.makeBlob(data,sanitizeAfter));
             }).catch(() => {
-                reject([M.IMAGES_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
+                reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
             });
         });
     }

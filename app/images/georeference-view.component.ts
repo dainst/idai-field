@@ -69,7 +69,7 @@ export class GeoreferenceViewComponent {
                 () => this.messages.add([M.IMAGES_SUCCESS_WORLDFILE_UPLOADED]),
                 msgWithParams => this.messages.add(msgWithParams));
         } else {
-            this.messages.add([M.IMAGES_ERROR_INVALID_WORLDFILE, file.name]);
+            this.messages.add([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, file.name]);
         }
     }
 

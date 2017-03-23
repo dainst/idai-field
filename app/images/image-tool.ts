@@ -20,10 +20,10 @@ export class ImageTool {
         return new Promise((resolve,reject) => {
             imagestore.remove(document.resource.identifier).then(() => {
                 datastore.remove(document).then(() => resolve()).catch(err => {
-                    reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
+                    reject([M.IMAGESTORE_ERROR_DELETE, [document.resource.identifier]]);
                 });
             }).catch(err => {
-                reject([M.IMAGES_ERROR_DELETE, [document.resource.identifier]]);
+                reject([M.IMAGESTORE_ERROR_DELETE, [document.resource.identifier]]);
             });
         });
     }

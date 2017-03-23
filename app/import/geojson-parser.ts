@@ -24,7 +24,7 @@ export class GeojsonParser extends AbstractParser {
             try {
                 content_ = JSON.parse(content);
             } catch (e) {
-                return observer.error([M.IMPORTER_FAILURE_INVALIDJSON,e.toString()]);
+                return observer.error([M.IMPORT_FAILURE_INVALIDJSON,e.toString()]);
             }
 
             const msgWithParams = GeojsonParser.getStructErrors(content_);
@@ -43,7 +43,7 @@ export class GeojsonParser extends AbstractParser {
 
     private static getStructErrors(content) {
         function structErr(text) {
-            return [M.IMPORTER_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,text];
+            return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,text];
         }
 
         if (content['type'] != 'FeatureCollection') return structErr('"type":"FeatureCollection" not found at top level.');

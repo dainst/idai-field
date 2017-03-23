@@ -15,7 +15,7 @@ export class HttpReader implements Reader {
             this.http.get(this.url)
                 .subscribe(
                     data => resolve(data['_body']),
-                    err => reject([M.IMPORTER_FAILURE_FILEUNREADABLE, this.url]) // TODO test this and change the err msg
+                    err => reject([M.IMPORT_FAILURE_FILEUNREADABLE, this.url]) // TODO test this and change the err msg
                 );
         });
     }

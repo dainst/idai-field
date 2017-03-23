@@ -18,7 +18,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 existingIdaiFieldDoc.resource.geometry = idaiFieldDoc.resource.geometry;
                 return this.datastore.update(existingIdaiFieldDoc);
             }, () => {
-                return Promise.reject([M.IMPORTER_FAILURE_MISSING_RESOURCE,idaiFieldDoc.resource.identifier]);
+                return Promise.reject([M.IMPORT_FAILURE_MISSING_RESOURCE,idaiFieldDoc.resource.identifier]);
             })
     }
 }

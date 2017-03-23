@@ -64,7 +64,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES: string = 'validation/error/invalidcoordinates';
     public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE: string = 'validation/error/missinggeometrytype';
     public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE: string = 'validation/error/unsupportedgeometrytype';
-    public static MODEL_VALIDATION_ERROR_MISSING_CRS: string = 'validation/error/missingcrs';
 
     // Keys END /////////////////////////////////
 
@@ -179,12 +178,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: 'Der Geometrietyp {0} wird von der Anwendung nicht unterstützt.',
             level: 'danger',
             params: [ "?" ],
-            hidden: false
-        };
-        this.msgs[M.MODEL_VALIDATION_ERROR_MISSING_CRS]={
-            content: 'Das Koordinatenreferenzsystem (CRS) einer Geometrie ist nicht definiert.',
-            level: 'danger',
-            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_GENERICDATASTOREERROR]={

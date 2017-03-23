@@ -60,7 +60,6 @@ export class IdaiFieldValidator extends Validator {
 
         if (!geometry.type) return [ M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE ];
         if (!geometry.coordinates) return [ M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES ];
-        if (!geometry.crs) return [ M.MODEL_VALIDATION_ERROR_MISSING_CRS ];
 
         switch(geometry.type) {
             case 'Point':

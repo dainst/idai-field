@@ -128,7 +128,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_IDENTIFIER]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
+            content: 'Beim Import ist ein Fehler aufgetreten:   Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

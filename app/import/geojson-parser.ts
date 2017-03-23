@@ -3,6 +3,13 @@ import {Document} from "idai-components-2/core";
 import {M} from "../m";
 import {AbstractParser} from "./abstract-parser";
 
+export interface Geojson {
+    type: string,
+    features: Geojson[];
+    properties?: any;
+    geometry: { type: string };
+}
+
 /**
  * @author Daniel de Oliveira
  */
@@ -20,9 +27,9 @@ export class GeojsonParser extends AbstractParser {
 
         this.warnings = [];
         return Observable.create(observer => {
-            let content_;
+            let content_: Geojson;
             try {
-                content_ = JSON.parse(content);
+                content_ = JSON.parse(content) as Geojson;
             } catch (e) {
                 return observer.error([M.IMPORT_FAILURE_INVALIDJSON,e.toString()]);
             }
@@ -35,26 +42,26 @@ export class GeojsonParser extends AbstractParser {
         });
     }
 
-    private iterateDocs(content,observer) {
-        for (let i in content['features']) {
-            observer.next(this.makeDoc(content['features'][i]));
+    private iterateDocs(content: Geojson,observer) {
+        for (let i in content.features) {
+            observer.next(this.makeDoc(content.features[i]));
         }
     }
 
-    private static getStructErrors(content) {
+    private static getStructErrors(content: Geojson) {
         function structErr(text) {
             return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,text];
         }
 
-        if (content['type'] != 'FeatureCollection') return structErr('"type":"FeatureCollection" not found at top level.');
-        if (content['features'] == undefined) return structErr('Property "features" not found at top level.');
+        if (content.type != 'FeatureCollection') return structErr('"type":"FeatureCollection" not found at top level.');
+        if (content.features == undefined) return structErr('Property "features" not found at top level.');
 
         for (let i in content['features']) {
-            if (content['features'][i]['properties'] == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
-            if (content['features'][i]['properties']['identifier'] == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
-            if (content['features'][i]['type'] == undefined) return structErr('Property "type" not found for at least one feature.');
-            if (content['features'][i]['type'] != 'Feature') return structErr('Second level elements must be of type "Feature".');
-            if (['Polygon','Point'].indexOf(content['features'][i]['geometry']['type']) == -1) return structErr('geometry type "'+content['features'][i]['geometry']['type']+'" not supported.');
+            if (content.features[i].properties == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
+            if (content.features[i].properties['identifier'] == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
+            if (content.features[i].type == undefined) return structErr('Property "type" not found for at least one feature.');
+            if (content.features[i].type != 'Feature') return structErr('Second level elements must be of type "Feature".');
+            if (['Polygon','Point'].indexOf(content.features[i].geometry.type) == -1) return structErr('geometry type "'+content.features[i].geometry.type+'" not supported.');
         }
     }
 
@@ -64,8 +71,8 @@ export class GeojsonParser extends AbstractParser {
 
     private static makeResource(feature) {
         return {
-            identifier: feature['properties']['identifier'],
-            geometry: feature['geometry'],
+            identifier: feature.properties['identifier'],
+            geometry: feature.geometry,
             relations: {}
         };
     }

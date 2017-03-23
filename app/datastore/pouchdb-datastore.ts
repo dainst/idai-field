@@ -303,16 +303,19 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     public findByIdentifier(identifier: string): Promise<Document> {
 
         return this.readyForQuery.then(() => {
-           return this.db.query('identifier', {
+
+            if (identifier == undefined) return Promise.reject([M.DATASTORE_NOT_FOUND]);
+
+            return this.db.query('identifier', {
                key: identifier,
                include_docs: true
-           }).then(result => {
+            }).then(result => {
                if (result.rows.length > 0) {
                    return Promise.resolve(result.rows[0].doc);
                } else {
                    return Promise.reject([M.DATASTORE_NOT_FOUND]);
                }
-           });
+            });
         });
     }
 

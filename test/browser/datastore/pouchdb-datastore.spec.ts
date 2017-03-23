@@ -259,8 +259,8 @@ export function main() {
         });
 
         it('should find by identifier', function(done){
-            let doc1 = doc('bla','blub');
-            let doc2 = doc('blub','bla');
+            const doc1 = doc('bla','blub');
+            const doc2 = doc('blub','bla');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -278,13 +278,30 @@ export function main() {
         });
 
         it("should reject when can't find by identifier", function(done){
-            let doc1 = doc('bla','blub');
+            const doc1 = doc('bla','blub');
 
             datastore.create(doc1)
                 .then(() => datastore.findByIdentifier('abc'))
                 .then(
                     result => {
                         fail('should not find anything');
+                        done();
+                    },
+                    msgWithParams => {
+                        expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
+                        done();
+                    }
+                );
+        });
+
+        it("should reject when called with undefined", function(done){
+            const doc1 = doc('bla','blub');
+
+            datastore.create(doc1)
+                .then(() => datastore.findByIdentifier(undefined))
+                .then(
+                    result => {
+                        fail('should not find anything but found '+JSON.stringify(result));
                         done();
                     },
                     msgWithParams => {

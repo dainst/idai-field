@@ -55,12 +55,14 @@ export class IdigCsvParser extends AbstractParser {
                 result.errors.forEach( e => errorCallback(e) );
                 result.data.forEach( (object, i) => {
                     let msgWithParams = this.checkExistenceOfMandatoryFields(object, i + 1);
-                    if (msgWithParams != undefined) observer.error(msgWithParams);
-
-                    try {
-                        observer.next(this.documentFrom(object, i + 1));
-                    } catch (msgWithParams) {
+                    if (msgWithParams != undefined) {
                         observer.error(msgWithParams);
+                    } else {
+                        try {
+                            observer.next(this.documentFrom(object, i + 1));
+                        } catch (msgWithParams) {
+                            observer.error(msgWithParams);
+                        }
                     }
                 });
                 observer.complete();

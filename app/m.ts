@@ -23,6 +23,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_INVALIDJSONL : string = 'importer/failure/invalidjsonl';
     public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT : string = 'importer/failure/invalidgeojsonimportstruct';
     public static IMPORT_FAILURE_MISSING_IDENTIFIER : string = 'importer/failure/missingidentifier';
+    public static IMPORT_FAILURE_IDENTIFIER_FORMAT : string = 'importer/failure/identifierforma';
     public static IMPORT_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORT_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
     public static IMPORT_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
@@ -127,7 +128,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_IDENTIFIER]={
-            content: 'Beim Import ist ein Fehler aufgetreten:   Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
+            level: 'danger',
+            params: [ "?" ],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_IDENTIFIER_FORMAT]={
+            content: 'Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

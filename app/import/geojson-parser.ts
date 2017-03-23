@@ -56,9 +56,14 @@ export class GeojsonParser extends AbstractParser {
         if (content.type != 'FeatureCollection') return structErr('"type":"FeatureCollection" not found at top level.');
         if (content.features == undefined) return structErr('Property "features" not found at top level.');
 
-        for (let i in content['features']) {
-            if (content.features[i].properties == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
-            if (content.features[i].properties['identifier'] == undefined) return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
+        for (let i in content.features) {
+            if (content.features[i].properties == undefined
+                || content.features[i].properties['identifier'] == undefined)  {
+                return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
+            }
+            if (typeof content.features[i].properties['identifier'] != 'string')  {
+                return [M.IMPORT_FAILURE_IDENTIFIER_FORMAT];
+            }
             if (content.features[i].type == undefined) return structErr('Property "type" not found for at least one feature.');
             if (content.features[i].type != 'Feature') return structErr('Second level elements must be of type "Feature".');
             if (['Polygon','Point'].indexOf(content.features[i].geometry.type) == -1) return structErr('geometry type "'+content.features[i].geometry.type+'" not supported.');

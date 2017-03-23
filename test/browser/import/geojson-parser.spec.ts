@@ -88,5 +88,13 @@ export function main() {
                 , M.IMPORT_FAILURE_MISSING_IDENTIFIER, done);
         });
 
+        it('should emit on numerical identifier', (done) => {
+
+            expectErr('{ "type": "FeatureCollection", "features": [' +
+                '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, "properties": { "identifier": 122 } } ' +
+                '] }'
+                , M.IMPORT_FAILURE_IDENTIFIER_FORMAT, done);
+        });
+
     });
 }

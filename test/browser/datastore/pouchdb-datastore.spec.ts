@@ -61,13 +61,15 @@ export function main() {
             }
         );
 
+        // create
+
         it('should create a document and create a resource.id',
             function (done) {
 
                 datastore.create(doc('sd1'))
                     .then(
                     _createdDoc => {
-                        let createdDoc = _createdDoc as Document;
+                        const createdDoc = _createdDoc as Document;
                         expect(createdDoc.resource.id).not.toBe(undefined);
                         done();
                     },
@@ -82,7 +84,7 @@ export function main() {
         it('should create a document and take the existing resource.id',
             function (done) {
 
-                let docToCreate: Document = doc('sd1');
+                const docToCreate: Document = doc('sd1');
                 docToCreate.resource.id = 'a1';
 
                 datastore.create(docToCreate)
@@ -109,9 +111,9 @@ export function main() {
         it('should not create a document with the resource.id of an alredy existing doc',
             function (done) {
 
-                let docToCreate1: Document = doc('sd1');
+                const docToCreate1: Document = doc('sd1');
                 docToCreate1.resource.id = 'a1';
-                let docToCreate2: Document = doc('sd1');
+                const docToCreate2: Document = doc('sd1');
                 docToCreate2.resource.id = 'a1';
 
                 datastore.create(docToCreate1)
@@ -129,10 +131,12 @@ export function main() {
             }
         );
 
+        // update
+
         it('should update an existing document with no identifier conflict',
             function (done) {
 
-                let doc2 = doc('id2');
+                const doc2 = doc('id2');
 
                 datastore.create(doc('id1'))
                     .then(() => datastore.create(doc2))
@@ -149,6 +153,8 @@ export function main() {
                 );
             }
         );
+
+        // get
 
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
@@ -168,10 +174,12 @@ export function main() {
             }
         );
 
+        // refresh
+
         it('should reject with keyOfM in when trying to refresh a non existing document',
             function (done) {
 
-                let non = doc('sd2');
+                const non = doc('sd2');
 
                 datastore.create(doc('id1'))
                     .then(() => datastore.refresh(non))
@@ -188,8 +196,10 @@ export function main() {
             }
         );
 
+        // find
+
         it('should find with filterSet undefined', function(done){
-            let doc1 = doc('sd1');
+            const doc1 = doc('sd1');
 
             datastore.create(doc1)
                 .then(() => datastore.find({q: 'sd1'}))
@@ -206,7 +216,7 @@ export function main() {
         });
 
         it('should not find with query undefined', function(done){
-            let doc1 = doc('sd1');
+            const doc1 = doc('sd1');
 
             datastore.create(doc1)
                 .then(() => datastore.find(undefined))
@@ -223,7 +233,7 @@ export function main() {
         });
 
         it('should find with prefix query undefined', function(done){
-            let doc1 = doc('sd1');
+            const doc1 = doc('sd1');
 
             datastore.create(doc1)
                 .then(() => datastore.find({q: undefined, prefix: true}))
@@ -240,8 +250,8 @@ export function main() {
         });
 
         it('should match all fields', function(done){
-            let doc1 = doc('bla','blub');
-            let doc2 = doc('blub','bla');
+            const doc1 = doc('bla','blub');
+            const doc2 = doc('blub','bla');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -257,6 +267,141 @@ export function main() {
                     }
                 );
         });
+
+        it('should filter by one type in find', function(done){
+            const doc1 = doc('bla1','blub','type1');
+            const doc2 = doc('bla2','blub','type2');
+            const doc3 = doc('bla3','blub','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find({q: 'blub', type: 'type3'}))
+                .then(
+                    result => {
+                        expect(result.length).toBe(1);
+                        expect(result[0].resource['shortDescription']).toBe('bla3');
+                        expect(result[0].resource.type).toBe('type3');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter by parent type in find', function(done){
+            const doc1 = doc('blub','bla1','type1');
+            const doc2 = doc('blub','bla2','type2');
+            const doc3 = doc('blub','bla1.1','type1.1');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find({q: 'blub', type: 'type1'}))
+                .then(result => {
+                    expect(result.length).toBe(2);
+                    expect(result[0].resource['shortDescription']).not.toBe('bla2');
+                    expect(result[0].resource.type).not.toBe('type2');
+                    expect(result[1].resource['shortDescription']).not.toBe('bla2');
+                    expect(result[1].resource.type).not.toBe('type2');
+                })
+                .then(() => datastore.find({q: 'blub', type: 'root'}))
+                .then(result => {
+                    expect(result.length).toBe(3);
+                    done();
+                },
+                err => {
+                    fail(err);
+                    done();
+                }
+            );
+        });
+
+        it('should find by prefix query and filter', function(done){
+            const doc1 = doc('bla1','blub1','type1');
+            const doc2 = doc('bla2','blub2','type2');
+            const doc3 = doc('bla3','blub3','type2');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find({
+                    q: 'blub',
+                    type: 'type2',
+                    prefix: true
+                }))
+                .then(
+                    result => {
+                        expect(result.length).toBe(2);
+                        expect(result[0].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[0].resource.type).not.toBe('type1');
+                        expect(result[1].resource['shortDescription']).not.toBe('bla1');
+                        expect(result[1].resource.type).not.toBe('type1');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should show all sorted by lastModified', function(done){
+            const doc1 = doc('bla1','blub1','type1');
+            const doc2 = doc('bla2','blub2','type2');
+            const doc3 = doc('bla3','blub3','type3');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.all())
+                .then(
+                    result => {
+                        expect(result.length).toBe(3);
+                        expect(result[0].resource['shortDescription']).toBe('bla3');
+                        expect(result[1].resource['shortDescription']).toBe('bla2');
+                        expect(result[2].resource['shortDescription']).toBe('bla1');
+                        done();
+                    },
+                    err => {
+                        console.log(err);
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        // all
+
+        it('should filter by parent type in all', function(done){
+            const doc1 = doc('blub','bla1','type1');
+            const doc2 = doc('blub','bla2','type2');
+            const doc3 = doc('blub','bla1.1','type1.1');
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.all('type1'))
+                .then(
+                    result => {
+                        expect(result.length).toBe(2);
+                        expect(result[0].resource['identifier']).toBe('bla1.1');
+                        expect(result[1].resource['identifier']).toBe('bla1');
+                        done();
+                    },
+                    err => {
+                        console.log(err);
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        // idai-field-datastore specific
+
+        // findByIdentifier
 
         it('should find by identifier', function(done){
             const doc1 = doc('bla','blub');
@@ -306,136 +451,6 @@ export function main() {
                     },
                     msgWithParams => {
                         expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
-                        done();
-                    }
-                );
-        });
-
-
-        it('should filter by one type in find', function(done){
-            let doc1 = doc('bla1','blub','type1');
-            let doc2 = doc('bla2','blub','type2');
-            let doc3 = doc('bla3','blub','type3');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.find({q: 'blub', type: 'type3'}))
-                .then(
-                    result => {
-                        expect(result.length).toBe(1);
-                        expect(result[0].resource['shortDescription']).toBe('bla3');
-                        expect(result[0].resource.type).toBe('type3');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should filter by parent type in find', function(done){
-            let doc1 = doc('blub','bla1','type1');
-            let doc2 = doc('blub','bla2','type2');
-            let doc3 = doc('blub','bla1.1','type1.1');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.find({q: 'blub', type: 'type1'}))
-                .then(result => {
-                    expect(result.length).toBe(2);
-                    expect(result[0].resource['shortDescription']).not.toBe('bla2');
-                    expect(result[0].resource.type).not.toBe('type2');
-                    expect(result[1].resource['shortDescription']).not.toBe('bla2');
-                    expect(result[1].resource.type).not.toBe('type2');
-                })
-                .then(() => datastore.find({q: 'blub', type: 'root'}))
-                .then(result => {
-                    expect(result.length).toBe(3);
-                    done();
-                },
-                err => {
-                    fail(err);
-                    done();
-                }
-            );;
-        });
-
-        it('should find by prefix query and filter', function(done){
-            let doc1 = doc('bla1','blub1','type1');
-            let doc2 = doc('bla2','blub2','type2');
-            let doc3 = doc('bla3','blub3','type2');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.find({
-                    q: 'blub',
-                    type: 'type2',
-                    prefix: true
-                }))
-                .then(
-                    result => {
-                        expect(result.length).toBe(2);
-                        expect(result[0].resource['shortDescription']).not.toBe('bla1');
-                        expect(result[0].resource.type).not.toBe('type1');
-                        expect(result[1].resource['shortDescription']).not.toBe('bla1');
-                        expect(result[1].resource.type).not.toBe('type1');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should show all sorted by lastModified', function(done){
-            let doc1 = doc('bla1','blub1','type1');
-            let doc2 = doc('bla2','blub2','type2');
-            let doc3 = doc('bla3','blub3','type3');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.all())
-                .then(
-                    result => {
-                        expect(result.length).toBe(3);
-                        expect(result[0].resource['shortDescription']).toBe('bla3');
-                        expect(result[1].resource['shortDescription']).toBe('bla2');
-                        expect(result[2].resource['shortDescription']).toBe('bla1');
-                        done();
-                    },
-                    err => {
-                        console.log(err);
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should filter by parent type in all', function(done){
-            let doc1 = doc('blub','bla1','type1');
-            let doc2 = doc('blub','bla2','type2');
-            let doc3 = doc('blub','bla1.1','type1.1');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.all('type1'))
-                .then(
-                    result => {
-                        expect(result.length).toBe(2);
-                        expect(result[0].resource['identifier']).toBe('bla1.1');
-                        expect(result[1].resource['identifier']).toBe('bla1');
-                        done();
-                    },
-                    err => {
-                        console.log(err);
-                        fail(err);
                         done();
                     }
                 );

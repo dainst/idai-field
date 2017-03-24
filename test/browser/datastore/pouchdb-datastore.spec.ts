@@ -18,7 +18,7 @@ export function main() {
 
         let datastore : PouchdbDatastore;
 
-        let mockProjectConfiguration = jasmine.createSpyObj(
+        const mockProjectConfiguration = jasmine.createSpyObj(
             'mockProjectConfiguration',
             ['getParentTypes']
         );
@@ -29,7 +29,7 @@ export function main() {
            if (type == 'type2') return ['root'];
         });
 
-        let mockConfigLoader = jasmine.createSpyObj(
+        const mockConfigLoader = jasmine.createSpyObj(
             'mockConfigLoader',
             [ 'getProjectConfiguration' ]
         );
@@ -48,6 +48,20 @@ export function main() {
                 }
             }
         }
+
+        const expectErr = function(promise,msgWithParams,done) {
+            promise().then(
+                result => {
+                    fail('rejection with '+ msgWithParams
+                        + ' expected but resolved with ' + result);
+                    done();
+                },
+                msgWithParams => {
+                    expect(msgWithParams).toEqual(msgWithParams);
+                    done();
+                }
+            );
+        };
 
         beforeEach(
             function () {
@@ -116,18 +130,9 @@ export function main() {
                 const docToCreate2: Document = doc('sd1');
                 docToCreate2.resource.id = 'a1';
 
-                datastore.create(docToCreate1)
-                    .then(() => datastore.create(docToCreate2))
-                    .then(
-                        () => {
-                            fail();
-                            done();
-                        },
-                        msgWithParams => {
-                            expect(msgWithParams).toEqual([M.DATASTORE_RESOURCE_ID_EXISTS]);
-                            done();
-                        }
-                    );
+                expectErr(()=>{return datastore.create(docToCreate1)
+                    .then(() => datastore.create(docToCreate2))},
+                    [M.DATASTORE_RESOURCE_ID_EXISTS],done);
             }
         );
 
@@ -158,19 +163,9 @@ export function main() {
 
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
-
-                datastore.create(doc('id1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
-                    .then(() => datastore.get('nonexisting'))
-                    .then(
-                        () => {
-                            fail();
-                            done();
-                        },
-                        msgWithParams => {
-                            expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
-                            done();
-                        }
-                    );
+                expectErr(()=>{return datastore.create(doc('id1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
+                    .then(() => datastore.get('nonexisting'))}
+                    ,[M.DATASTORE_NOT_FOUND],done);
             }
         );
 
@@ -180,19 +175,9 @@ export function main() {
             function (done) {
 
                 const non = doc('sd2');
-
-                datastore.create(doc('id1'))
-                    .then(() => datastore.refresh(non))
-                    .then(
-                        () => {
-                            fail();
-                            done();
-                        },
-                        msgWithParams => {
-                            expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
-                            done();
-                        }
-                    );
+                expectErr(()=>{
+                    return datastore.create(doc('id1'))
+                    .then(() => datastore.refresh(non))},[M.DATASTORE_NOT_FOUND],done);
             }
         );
 
@@ -366,7 +351,6 @@ export function main() {
                         done();
                     },
                     err => {
-                        console.log(err);
                         fail(err);
                         done();
                     }
@@ -392,7 +376,6 @@ export function main() {
                         done();
                     },
                     err => {
-                        console.log(err);
                         fail(err);
                         done();
                     }
@@ -425,35 +408,17 @@ export function main() {
         it("should reject when can't find by identifier", function(done){
             const doc1 = doc('bla','blub');
 
-            datastore.create(doc1)
-                .then(() => datastore.findByIdentifier('abc'))
-                .then(
-                    result => {
-                        fail('should not find anything');
-                        done();
-                    },
-                    msgWithParams => {
-                        expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
-                        done();
-                    }
-                );
+            expectErr(()=>{return datastore.create(doc1)
+                .then(() => datastore.findByIdentifier('abc'))},
+                [M.DATASTORE_NOT_FOUND],done);
         });
 
         it("should reject when called with undefined", function(done){
             const doc1 = doc('bla','blub');
 
-            datastore.create(doc1)
-                .then(() => datastore.findByIdentifier(undefined))
-                .then(
-                    result => {
-                        fail('should not find anything but found '+JSON.stringify(result));
-                        done();
-                    },
-                    msgWithParams => {
-                        expect(msgWithParams).toEqual([M.DATASTORE_NOT_FOUND]);
-                        done();
-                    }
-                );
+            expectErr(()=>{return datastore.create(doc1)
+                .then(() => datastore.findByIdentifier(undefined))},
+                [M.DATASTORE_NOT_FOUND],done);
         });
 
     })

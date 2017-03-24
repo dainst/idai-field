@@ -1,11 +1,14 @@
-import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
+import {Component, EventEmitter, Input, Output, OnChanges, ViewChild} from "@angular/core";
 import {Query} from "idai-components-2/datastore";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
     selector: 'search-bar',
-    templateUrl: './search-bar.html'
+    templateUrl: './search-bar.html',
+    host: {
+        '(document:click)': 'handleClick($event)',
+    }
 })
 
 /**
@@ -21,6 +24,7 @@ export class SearchBarComponent implements OnChanges {
     @Input() defaultFilterSet: Array<string>;
     @Input() showFiltersMenu: boolean;
     @Output() onQueryChanged = new EventEmitter<Query>();
+    @ViewChild('p') private popover;
 
     constructor(private configLoader: ConfigLoader) {
         this.initializeFilterOptions();
@@ -70,6 +74,21 @@ export class SearchBarComponent implements OnChanges {
 
         if (this.filterOptions.indexOf(type) == -1) {
             this.filterOptions.push(type);
+        }
+    }
+
+    private handleClick(event) {
+        var target = event.target;
+        var inside = false;
+        do {
+            if (target.id === 'filter-button') {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+        if (!inside) {
+            this.popover.close();
         }
     }
     

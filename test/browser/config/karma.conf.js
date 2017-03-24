@@ -29,7 +29,8 @@ module.exports = function(config) {
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
             { pattern: 'test/browser/**/*.spec.js', included: false, watched: true },
-            'test/browser/main.js'
+            'systemjs-base.config.js',
+            'test/browser/config/main.js'
         ],
 
         exclude: [

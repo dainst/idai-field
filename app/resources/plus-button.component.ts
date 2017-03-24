@@ -46,6 +46,7 @@ export class PlusButtonComponent {
     }
 
     private handleClick(event) {
+        if (!this.popover) return;
         var target = event.target;
         var inside = false;
         do {

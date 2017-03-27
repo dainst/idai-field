@@ -111,7 +111,7 @@ export function main() {
                 headers.append('Authorization', 'Basic ' + btoa(config.backend.credentials));
 
                 idaiFieldBackend.save(document,"dataset1").then(obj => {
-                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + '/objects/' +document['resource']['id'],
+                    expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + '/object/' +document['resource']['id'],
                         JSON.stringify(documentWithDatasetIncorporated), { headers: headers });
                     done();
                 }).catch(err => {

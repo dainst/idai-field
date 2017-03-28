@@ -118,12 +118,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.proveThatDoesNotExist(document))
             .then(() => {
 
-                if (document.resource.id) {
-                    console.error(PouchdbDatastore.MSG_ID_EXISTS_IN_CREATE);
-                    return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                if (!document.resource.id) {
+                    document.resource.id = IdGenerator.generateId();
                 }
-
-                document.resource.id = IdGenerator.generateId();
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
@@ -136,7 +133,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                         console.error(err);
                         return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                     }
-                )
+                );
             })
             .then(result => {
 
@@ -200,7 +197,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                         console.error(err);
                         return Promise.reject(undefined);
                     }
-                )
+                );
 
             }).then(result => {
 

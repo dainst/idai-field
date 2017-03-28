@@ -14,29 +14,17 @@ export class RelationsCompleter {
                 private configLoader: ConfigLoader) {
     }
 
-    public completeRelations(resourceIds: string[], resourceIndex = 0): Promise<any> {
+    /**
+     * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
+     * @param resourceIds The ids of the resources whose relations are to be considered
+     */
+    public completeInverseRelations(resourceIds: string[], resourceIndex: number = 0): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            this.processRelationsForResource('create', resourceIds[resourceIndex]).then(
+            this.alterInverseRelationsForResource('create', resourceIds[resourceIndex]).then(
                 () => {
                     if (resourceIndex < resourceIds.length - 1) {
-                        this.completeRelations(resourceIds, ++resourceIndex).then(
-                            () => resolve(),
-                            err => reject(err)
-                        );
-                    } else resolve();
-                }, err => reject(err)
-            );
-        });
-    }
-
-    public resetRelations(resourceIds: string[], resourceIndex = 0): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-            this.processRelationsForResource('remove', resourceIds[resourceIndex]).then(
-                () => {
-                    if (resourceIndex < resourceIds.length - 1) {
-                        this.resetRelations(resourceIds, ++resourceIndex).then(
+                        this.completeInverseRelations(resourceIds, ++resourceIndex).then(
                             () => resolve(),
                             err => reject(err)
                         );
@@ -47,9 +35,31 @@ export class RelationsCompleter {
     }
 
     /**
+     * Iterates over all relations of the given resources and removes the corresponding inverse relations of the
+     * relation targets.
+     * @param resourceIds The ids of the resources whose relations are to be considered
+     */
+    public resetInverseRelations(resourceIds: string[], resourceIndex: number = 0): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+            this.alterInverseRelationsForResource('remove', resourceIds[resourceIndex]).then(
+                () => {
+                    if (resourceIndex < resourceIds.length - 1) {
+                        this.resetInverseRelations(resourceIds, ++resourceIndex).then(
+                            () => resolve(),
+                            err => reject(err)
+                        );
+                    } else resolve();
+                }, err => reject(err)
+            );
+        });
+    }
+
+    /**
+     * Creates/removes inverse relations for a single resource.
      * @param mode: Can be either 'create' or 'remove'
      */
-    private processRelationsForResource(mode: string, resourceId: string): Promise<any> {
+    private alterInverseRelationsForResource(mode: string, resourceId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
             this.datastore.get(resourceId).then(
@@ -57,7 +67,8 @@ export class RelationsCompleter {
                     this.getNamesOfExistingRelations(document.resource).then(
                         relationNames => {
                             if (relationNames.length > 0) {
-                                return this.processInverseRelations(mode, document.resource, relationNames);
+                                return this.alterInverseRelationsOfTypeForResource(mode, document.resource,
+                                    relationNames);
                             } else resolve();
                         }, err => reject(err)
                     ).then(
@@ -70,15 +81,20 @@ export class RelationsCompleter {
         });
     }
 
-    private processInverseRelations(mode: string, resource: Resource, relationNames: string[],
-                                    relationNameIndex: number = 0, targetIndex: number = 0): Promise<any> {
+    /**
+     * Creates/removes inverse relations for a single resource and a specific relation type.
+     * @param mode: Can be either 'create' or 'remove'
+     */
+    private alterInverseRelationsOfTypeForResource(mode: string, resource: Resource, relationNames: string[],
+                                                   relationNameIndex: number = 0,
+                                                   targetIndex: number = 0): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let relationName = relationNames[relationNameIndex];
             let targetId = resource.relations[relationName][targetIndex];
 
-            this.processInverseRelation(mode, resource, targetId, relationName).then(
+            this.alterInverseRelation(mode, resource, targetId, relationName).then(
                 () => {
                     if (targetIndex < resource.relations[relationName].length - 1) {
                         targetIndex++;
@@ -89,7 +105,8 @@ export class RelationsCompleter {
                         return resolve();
                     }
 
-                    this.processInverseRelations(mode, resource, relationNames, relationNameIndex, targetIndex).then(
+                    this.alterInverseRelationsOfTypeForResource(mode, resource, relationNames, relationNameIndex,
+                            targetIndex).then(
                         () => resolve(),
                         err => reject(err)
                     );
@@ -98,7 +115,11 @@ export class RelationsCompleter {
         });
     }
 
-    private processInverseRelation(mode: string, resource: Resource, targetId: string,
+    /**
+     * Either adds (in mode 'create') oder removes (in mode 'remove') an inverse relation.
+     * @param mode Can be either 'create' or 'remove'
+     */
+    private alterInverseRelation(mode: string, resource: Resource, targetId: string,
                                    relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -173,6 +194,9 @@ export class RelationsCompleter {
         });
     }
 
+    /**
+     * Returns an array containing the names of all relation types for which relations exist in the given resource.
+     */
     private getNamesOfExistingRelations(resource: Resource): Promise<string[]> {
 
         return new Promise<any>((resolve) => {

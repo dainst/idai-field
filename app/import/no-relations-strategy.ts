@@ -5,12 +5,12 @@ import {RelationsStrategy} from './relations-strategy'
  */
 export class NoRelationsStrategy implements RelationsStrategy {
 
-    public completeRelations(resourceIds: string[]): Promise<any> {
+    public completeInverseRelations(resourceIds: string[]): Promise<any> {
 
         return new Promise<any>((resolve) => { resolve(); });
     }
 
-    public resetRelations(resourceIds: string[]): Promise<any> {
+    public resetInverseRelations(resourceIds: string[]): Promise<any> {
 
         return new Promise<any>((resolve) => { resolve(); });
     }

@@ -87,14 +87,14 @@ export class ImportComponent {
             if (importReport.errors.length > 0) {
                 this.performRollback(importReport, rollbackStrategy).then(() => resolve());
             } else {
-                relationsStrategy.completeRelations(importReport.importedResourcesIds).then(
+                relationsStrategy.completeInverseRelations(importReport.importedResourcesIds).then(
                     () => {
                         this.showMessages(importReport.warnings);
                         this.showSuccessMessage(importReport.importedResourcesIds);
                         resolve();
                     }, msgWithParam => {
                         this.messages.add(msgWithParam);
-                        relationsStrategy.resetRelations(importReport.importedResourcesIds).then(
+                        relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
                             () => {
                                 this.performRollback(importReport, rollbackStrategy).then(() => resolve());
                             }, msgWithParam => {

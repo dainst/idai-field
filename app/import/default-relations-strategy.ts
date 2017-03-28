@@ -8,11 +8,11 @@ export class DefaultRelationsStrategy implements RelationsStrategy {
 
     constructor(private relationsCompleter: RelationsCompleter) { }
 
-    completeRelations(resourceIds: string[]): Promise<any> {
-        return this.relationsCompleter.completeRelations(resourceIds);
+    completeInverseRelations(resourceIds: string[]): Promise<any> {
+        return this.relationsCompleter.completeInverseRelations(resourceIds);
     }
 
-    resetRelations(resourceIds: string[]): Promise<any> {
-        return this.relationsCompleter.resetRelations(resourceIds);
+    resetInverseRelations(resourceIds: string[]): Promise<any> {
+        return this.relationsCompleter.resetInverseRelations(resourceIds);
     }
 }

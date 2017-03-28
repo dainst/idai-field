@@ -15,6 +15,9 @@ import {Validator} from "idai-components-2/persist";
 import {ImportStrategy} from "./import-strategy";
 import {DefaultImportStrategy} from "./default-import-strategy";
 import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
+import {RelationsStrategy} from "./relations-strategy";
+import {DefaultRelationsStrategy} from "./default-relations-strategy";
+import {NoRelationsStrategy} from "./no-relations-strategy";
 import {RollbackStrategy} from "./rollback-strategy";
 import {DefaultRollbackStrategy} from "./default-rollback-strategy";
 import {NoRollbackStrategy} from "./no-rollback-strategy";
@@ -59,6 +62,8 @@ export class ImportComponent {
         let parser: Parser = ImportComponent.createParser(this.format);
         let importStrategy: ImportStrategy
             = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
+        let relationsStrategy: RelationsStrategy
+            = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
         let rollbackStrategy: RollbackStrategy
             = ImportComponent.createRollbackStrategy(this.format, this.datastore);
 
@@ -70,25 +75,26 @@ export class ImportComponent {
         this.messages.add([M.IMPORT_START]);
         this.running = true;
         this.importer.importResources(reader, parser, importStrategy)
-            .then(importReport => this.finishImport(importReport, rollbackStrategy))
+            .then(importReport => this.finishImport(importReport, relationsStrategy, rollbackStrategy))
             .then(() => this.running = false);
     }
 
-    private finishImport(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<any> {
+    private finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy,
+                         rollbackStrategy: RollbackStrategy): Promise<any> {
 
         return new Promise<any>((resolve) => {
 
             if (importReport.errors.length > 0) {
                 this.performRollback(importReport, rollbackStrategy).then(() => resolve());
             } else {
-                this.relationsCompleter.completeRelations(importReport.importedResourcesIds).then(
+                relationsStrategy.completeRelations(importReport.importedResourcesIds).then(
                     () => {
                         this.showMessages(importReport.warnings);
                         this.showSuccessMessage(importReport.importedResourcesIds);
                         resolve();
                     }, msgWithParam => {
                         this.messages.add(msgWithParam);
-                        this.relationsCompleter.resetRelations(importReport.importedResourcesIds).then(
+                        relationsStrategy.resetRelations(importReport.importedResourcesIds).then(
                             () => {
                                 this.performRollback(importReport, rollbackStrategy).then(() => resolve());
                             }, msgWithParam => {
@@ -148,6 +154,18 @@ export class ImportComponent {
                 return new DefaultImportStrategy(validator, datastore);
             case "geojson":
                 return new MergeGeometriesImportStrategy(datastore);
+        }
+    }
+
+    private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy {
+
+        switch (format) {
+            case "native":
+                return new DefaultRelationsStrategy(relationsCompleter);
+            case "idig":
+                return new DefaultRelationsStrategy(relationsCompleter);
+            case "geojson":
+                return new NoRelationsStrategy();
         }
     }
 

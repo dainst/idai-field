@@ -79,17 +79,7 @@ export class ImportComponent {
         return new Promise<any>((resolve) => {
 
             if (importReport.errors.length > 0) {
-                rollbackStrategy.rollback(importReport.importedResourcesIds).then(
-                    () => {
-                        this.showMessages(importReport.errors);
-                        resolve();
-                    }, err => {
-                        this.showMessages(importReport.errors);
-                        this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
-                        console.error(err);
-                        resolve();
-                    }
-                );
+                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
             } else {
                 this.relationsCompleter.completeRelations(importReport.importedResourcesIds).then(
                     () => {
@@ -98,10 +88,35 @@ export class ImportComponent {
                         resolve();
                     }, msgWithParam => {
                         this.messages.add(msgWithParam);
-                        resolve();
+                        this.relationsCompleter.resetRelations(importReport.importedResourcesIds).then(
+                            () => {
+                                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
+                            }, msgWithParam => {
+                                this.messages.add(msgWithParam);
+                                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
+                            }
+                        );
                     }
                 );
             }
+        });
+    }
+
+    private performRollback(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<any> {
+
+        return new Promise<any>((resolve) => {
+
+            rollbackStrategy.rollback(importReport.importedResourcesIds).then(
+                () => {
+                    this.showMessages(importReport.errors);
+                    resolve();
+                }, err => {
+                    this.showMessages(importReport.errors);
+                    this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
+                    console.error(err);
+                    resolve();
+                }
+            );
         });
     }
 

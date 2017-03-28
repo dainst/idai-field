@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Datastore} from 'idai-components-2/datastore';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {Resource} from 'idai-components-2/core';
+import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../m';
 
 /**
@@ -17,7 +17,7 @@ export class RelationsCompleter {
     public completeRelations(resourceIds: string[], resourceIndex = 0): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            this.completeRelationsForResource(resourceIds[resourceIndex]).then(
+            this.processRelationsForResource('create', resourceIds[resourceIndex]).then(
                 () => {
                     if (resourceIndex < resourceIds.length - 1) {
                         this.completeRelations(resourceIds, ++resourceIndex).then(
@@ -30,7 +30,26 @@ export class RelationsCompleter {
         });
     }
 
-    private completeRelationsForResource(resourceId: string): Promise<any> {
+    public resetRelations(resourceIds: string[], resourceIndex = 0): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+            this.processRelationsForResource('remove', resourceIds[resourceIndex]).then(
+                () => {
+                    if (resourceIndex < resourceIds.length - 1) {
+                        this.resetRelations(resourceIds, ++resourceIndex).then(
+                            () => resolve(),
+                            err => reject(err)
+                        );
+                    } else resolve();
+                }, err => reject(err)
+            );
+        });
+    }
+
+    /**
+     * @param mode: Can be either 'create' or 'remove'
+     */
+    private processRelationsForResource(mode: string, resourceId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
             this.datastore.get(resourceId).then(
@@ -38,7 +57,7 @@ export class RelationsCompleter {
                     this.getNamesOfExistingRelations(document.resource).then(
                         relationNames => {
                             if (relationNames.length > 0) {
-                                return this.createInverseRelations(document.resource, relationNames);
+                                return this.processInverseRelations(mode, document.resource, relationNames);
                             } else resolve();
                         }, err => reject(err)
                     ).then(
@@ -51,15 +70,15 @@ export class RelationsCompleter {
         });
     }
 
-    private createInverseRelations(resource: Resource, relationNames: string[],
-                                   relationNameIndex: number = 0, targetIndex: number = 0): Promise<any> {
+    private processInverseRelations(mode: string, resource: Resource, relationNames: string[],
+                                    relationNameIndex: number = 0, targetIndex: number = 0): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let relationName = relationNames[relationNameIndex];
             let targetId = resource.relations[relationName][targetIndex];
 
-            this.createInverseRelationIfNotExisting(resource, targetId, relationName).then(
+            this.processInverseRelation(mode, resource, targetId, relationName).then(
                 () => {
                     if (targetIndex < resource.relations[relationName].length - 1) {
                         targetIndex++;
@@ -70,7 +89,7 @@ export class RelationsCompleter {
                         return resolve();
                     }
 
-                    this.createInverseRelations(resource, relationNames, relationNameIndex, targetIndex).then(
+                    this.processInverseRelations(mode, resource, relationNames, relationNameIndex, targetIndex).then(
                         () => resolve(),
                         err => reject(err)
                     );
@@ -79,8 +98,8 @@ export class RelationsCompleter {
         });
     }
 
-    private createInverseRelationIfNotExisting(resource: Resource, targetId: string,
-                                               relationName: string): Promise<any> {
+    private processInverseRelation(mode: string, resource: Resource, targetId: string,
+                                   relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -90,22 +109,67 @@ export class RelationsCompleter {
 
                 this.datastore.get(targetId).then(
                     targetDocument => {
-                        var relations = targetDocument.resource.relations[inverseRelationName];
-                        if (!relations) relations = [];
-                        if (relations.indexOf(resource.id) == -1) {
-                            relations.push(resource.id);
-                            targetDocument.resource.relations[inverseRelationName] = relations;
-                            this.datastore.update(targetDocument).then(
-                                doc => resolve(),
-                                err => reject(err)
-                            );
-                        } else resolve();
+                        let promise;
+                        switch(mode) {
+                            case 'create':
+                                promise = this.createRelation(resource, targetDocument, inverseRelationName);
+                                break;
+                            case 'remove':
+                                promise = this.removeRelation(resource, targetDocument, inverseRelationName);
+                                break;
+                        }
+                        promise.then(
+                            () => resolve(),
+                            err => reject(err)
+                        )
                     }, () => {
-                        reject([M.IMPORT_FAILURE_MISSING_RELATION_TARGET, targetId]);
+                        switch(mode) {
+                            case 'create':
+                                reject([M.IMPORT_FAILURE_MISSING_RELATION_TARGET, targetId]);
+                                break;
+                            case 'remove':
+                                resolve();
+                                break;
+                        }
                     }
                 );
 
             });
+        });
+    }
+
+    private createRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            let relations = targetDocument.resource.relations[relationName];
+            if (!relations) relations = [];
+            if (relations.indexOf(resource.id) == -1) {
+                relations.push(resource.id);
+                targetDocument.resource.relations[relationName] = relations;
+                this.datastore.update(targetDocument).then(
+                    doc => resolve(),
+                    err => reject(err)
+                );
+            } else resolve();
+        });
+    }
+
+    private removeRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            let relations = targetDocument.resource.relations[relationName];
+            if (!relations || relations.indexOf(resource.id) == -1) {
+                resolve();
+            } else {
+                relations.splice(relations.indexOf(resource.id), 1);
+                targetDocument.resource.relations[relationName] = relations;
+                this.datastore.update(targetDocument).then(
+                    doc => resolve(),
+                    err => reject(err)
+                );
+            }
         });
     }
 

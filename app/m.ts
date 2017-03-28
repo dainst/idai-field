@@ -214,8 +214,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_RELATION_TARGET] = {
-            content: "Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem "
-            + "Identifier {0} konnte nicht gefunden werden.",
+            content: "Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der "
+            + "ID {0} konnte nicht gefunden werden.",
             level: 'danger',
             params: ["?"],
             hidden: false

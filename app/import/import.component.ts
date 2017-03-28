@@ -18,6 +18,7 @@ import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy"
 import {RollbackStrategy} from "./rollback-strategy";
 import {DefaultRollbackStrategy} from "./default-rollback-strategy";
 import {NoRollbackStrategy} from "./no-rollback-strategy";
+import {RelationsCompleter} from "./relations-completer";
 
 
 @Component({
@@ -48,7 +49,8 @@ export class ImportComponent {
         private importer: Importer,
         private datastore: IdaiFieldDatastore,
         private validator: Validator,
-        private http: Http
+        private http: Http,
+        private relationsCompleter: RelationsCompleter
     ) {}
 
     public startImport() {
@@ -72,22 +74,35 @@ export class ImportComponent {
             .then(() => this.running = false);
     }
 
-    private finishImport(importReport: ImportReport, rollbackStrategy: RollbackStrategy) {
+    private finishImport(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<any> {
 
-        if (importReport.errors.length > 0) {
-            rollbackStrategy.rollback(importReport.importedResourcesIds).then(
-                () => {
-                    this.showMessages(importReport.errors);
-                }, err => {
-                    this.showMessages(importReport.errors);
-                    this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
-                    console.error(err);
-                }
-            );
-        } else {
-            this.showMessages(importReport.warnings);
-            this.showSuccessMessage(importReport.importedResourcesIds);
-        }
+        return new Promise<any>((resolve) => {
+
+            if (importReport.errors.length > 0) {
+                rollbackStrategy.rollback(importReport.importedResourcesIds).then(
+                    () => {
+                        this.showMessages(importReport.errors);
+                        resolve();
+                    }, err => {
+                        this.showMessages(importReport.errors);
+                        this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
+                        console.error(err);
+                        resolve();
+                    }
+                );
+            } else {
+                this.relationsCompleter.completeRelations(importReport.importedResourcesIds).then(
+                    () => {
+                        this.showMessages(importReport.warnings);
+                        this.showSuccessMessage(importReport.importedResourcesIds);
+                        resolve();
+                    }, msgWithParam => {
+                        this.messages.add(msgWithParam);
+                        resolve();
+                    }
+                );
+            }
+        });
     }
 
     public isReady(): boolean {

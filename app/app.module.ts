@@ -22,6 +22,7 @@ import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
 import {ImportComponent} from './import/import.component';
+import {RelationsCompleter} from './import/relations-completer';
 import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
@@ -114,6 +115,7 @@ import {BlobMaker} from "./imagestore/blob-maker";
         SyncMediator,
         { provide: MD, useClass: M},
         Importer,
+        RelationsCompleter,
         appRoutingProviders
     ],
     bootstrap: [ AppComponent ]

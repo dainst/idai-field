@@ -31,6 +31,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
     public static IMPORT_FAILURE_ROLLBACKERROR: string = 'importer/failure/rollbackerror';
     public static IMPORT_FAILURE_MISSING_RESOURCE: string = 'importer/failure/missingresource';
+    public static IMPORT_FAILURE_MISSING_RELATION_TARGET: string = 'importer/failure/missingrelationtarget';
 
     // Datastore Package
 
@@ -209,7 +210,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_FAILURE_MISSING_RESOURCE] = {
             content: "Die Zuordnung zu einer Resource mit dem Identifier {0} ist fehlgeschlagen. Die Resource wurde nicht gefunden.",
             level: 'danger',
-            params: [],
+            params: [ "?"],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_MISSING_RELATION_TARGET] = {
+            content: "Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem "
+            + "Identifier {0} konnte nicht gefunden werden.",
+            level: 'danger',
+            params: ["?"],
             hidden: false
         };
         this.msgs[M.WIDGETS_SAVE_SUCCESS]={

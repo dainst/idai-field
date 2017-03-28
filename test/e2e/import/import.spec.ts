@@ -3,6 +3,7 @@ import {browser, protractor} from 'protractor';
 let common = require("../common.js");
 let importPage = require('./import.page');
 let resourcesPage = require('../resources/resources.page');
+let documentViewPage = require('../widgets/document-view.page');
 import {NavbarPage} from '../navbar.page';
 let delays = require('../config/delays');
 
@@ -25,6 +26,7 @@ describe('import tests -- ', function() {
     };
 
     it('importer should import a valid iDAI.field JSONL file via HTTP', function() {
+
         importIt("./test/test-data/importer-test-ok.jsonl");
         browser.sleep(2000);
         NavbarPage.clickNavigateToResources();
@@ -64,4 +66,54 @@ describe('import tests -- ', function() {
         importIt("./test/test-data/importer-test-unsupported-geometry-type.jsonl");
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
+
+    it('importer should import a relation and add the corresponding inverse relation', function() {
+
+        importIt("./test/test-data/importer-test-relation-ok.jsonl");
+        browser.sleep(2000);
+        NavbarPage.clickNavigateToResources();
+
+        resourcesPage.clickSelectResource('obob1');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        documentViewPage.getRelationValue(0).then(function(relationValue) {
+            expect(relationValue).toContain('testf1');
+        });
+        documentViewPage.getRelationName(0).then(function(relationName) {
+            expect(relationName).toEqual('Zeitlich vor');
+        });
+
+        resourcesPage.clickSelectResource('testf1');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+        documentViewPage.getRelationValue(0).then(function(relationValue) {
+            expect(relationValue).toContain('obob1');
+        });
+        documentViewPage.getRelationName(0).then(function(relationName) {
+            expect(relationName).toEqual('Zeitlich nach');
+        });
+    });
+
+    it('importer should abort if a relation target cannot be found and remove all imported resources & already '
+            + 'created inverse relations', function() {
+
+        importIt("./test/test-data/importer-test-relation-error.jsonl");
+        NavbarPage.awaitAlert('konnte nicht gefunden werden', false);
+
+        NavbarPage.clickCloseMessage();
+        NavbarPage.clickNavigateToResources();
+
+        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
+        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
+
+        resourcesPage.clickSelectResource('testf1');
+        documentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(0);
+        });
+    });
+
 });

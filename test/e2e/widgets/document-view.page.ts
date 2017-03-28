@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 var common = require("../common.js");
@@ -26,7 +26,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getRelationValue = function (index) {
+    this.getRelationValue = function(index) {
         browser.wait(EC.visibilityOf(element(by.css('relations-view a'))), delays.ECWaitTime);
         return element.all(by.css('relations-view a')).get(index).getText();
     };
@@ -34,7 +34,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getRelationName = function (index) {
+    this.getRelationName = function(index) {
         browser.wait(EC.visibilityOf(element(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))), delays.ECWaitTime);
         return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
     };
@@ -42,7 +42,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getFieldValue = function (index) {
+    this.getFieldValue = function(index) {
         browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'))), delays.ECWaitTime);
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue')).getText();
     };
@@ -50,7 +50,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getFieldName = function (index) {
+    this.getFieldName = function(index) {
         browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname'))), delays.ECWaitTime);
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname')).getText();
     };
@@ -60,7 +60,7 @@ var DocumentViewPage = function() {
         return element.all(by.css('fields-view > div'))
     };
 
-    this.getRelations = function () {
+    this.getRelations = function() {
         return element.all(by.css('relations-view a'));
     };
 };

@@ -112,18 +112,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      */
     public create(document: Document, initial: boolean = false): Promise<Document> {
 
-        let reset = this.resetDocOnErrInCreate(document.resource.id);
+        let reset = this.resetDocOnErr(document);
 
         return this.updateReadyForQuery(initial)
             .then(() => this.proveThatDoesNotExist(document))
             .then(() => {
 
-                if (document['_id']) {
-                    console.error(PouchdbDatastore.MSG_ID_EXISTS_IN_CREATE);
-                    return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                if (!document.resource.id) {
+                    document.resource.id = IdGenerator.generateId();
                 }
-
-                if (!document.resource.id) document.resource.id = IdGenerator.generateId();
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
@@ -136,7 +133,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                         console.error(err);
                         return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
                     }
-                )
+                );
             })
             .then(result => {
 
@@ -165,16 +162,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
         'Maybe you wanted to update the object with update()?';
 
-    private resetDocOnErrInCreate(originalResourceId: string) {
-        return function(document: Document) {
-            document['_id'] = undefined;
-            document.resource.id = originalResourceId;
-            document.created = undefined;
-            document.modified = undefined;
-        }
-    }
-
-
     private updateReadyForQuery(skipCheck): Promise<any>{
         if (!skipCheck) {
             return this.readyForQuery;
@@ -191,13 +178,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      */
     public update(document: Document): Promise<Document> {
 
+        let reset = this.resetDocOnErr(document);
+
         return this.readyForQuery
             .then(()=> {
-                if (document['_id'] == null) {
+                if (document.resource.id == null) {
                     console.error("Aborting update: No _id given. " +
                         "Maybe you wanted to create the object with create()?");
                     return Promise.reject(undefined);
                 }
+                document['_id'] = document.resource.id;
                 document.modified = new Date();
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
@@ -207,7 +197,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                         console.error(err);
                         return Promise.reject(undefined);
                     }
-                )
+                );
 
             }).then(result => {
 
@@ -216,9 +206,23 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return Promise.resolve(this.cleanDoc(document));
 
             }).catch(() => {
-                // TODO reset modified date
+
+                reset(document);
                 return Promise.reject([M.DATASTORE_GENERIC_SAVE_ERROR])
             })
+    }
+
+    private resetDocOnErr(original: Document) {
+        let created = original.created;
+        let modified = original.modified;
+        let id = original.resource.id;
+        return function(document: Document) {
+            delete document['_id'];
+            delete document.resource['_parentTypes'];
+            document.resource.id = id;
+            document.created = created;
+            document.modified = modified;
+        }
     }
 
     /**

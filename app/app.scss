@@ -174,3 +174,101 @@ html [type="button"],
 relations-view .fieldvalue:hover {
   background-color: #ddd;
 }
+
+/* Cards */
+/* override ugly styling of list-group-items inside cards in bootstrap 4 */
+.card > .list-group {
+  > .list-group-item {
+    border-width: 1px 0 0;
+  }
+  > .list-group-item:first-child {
+    border-width: 0;
+  }
+}
+
+.card {
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: #eee !important;
+}
+
+.card-header {
+  border-radius: 0 !important;
+  padding: 5px 5px 2px 15px !important;
+}
+
+.card-title {
+  font-weight: normal !important;
+  font-size: 17px !important;
+  margin: 0 !important;
+  padding: 5px 0 7px 0 !important;
+}
+
+.card-block {
+  padding: 10px !important;
+}
+
+.card-block .form-control {
+  margin: 0 !important;
+}
+
+/* Buttons */
+$greenbgr: #1b9519;
+$redbgr: #e00000;
+$lightgraybgr: #eeeeee;
+
+.circular-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 4px 0 0 1px;
+  border-radius: 50%;
+  min-width: 35px;
+  height: 39px;
+  width: 39px;
+  z-index: 1;
+  font-size: 23px;
+  position: absolute;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  -webkit-appearance: inherit !important;
+}
+
+.circular-button:hover {
+  transition: background-color .3s ease;
+}
+
+.small-circular-button {
+  font-size: 17px;
+  cursor: pointer;
+  text-align: center;
+  padding: 8px 0 0 0;
+  border-radius: 50%;
+  min-width: 33px;
+  height: 33px;
+  width: 33px;
+  z-index: 1;
+  position: absolute;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  -webkit-appearance: inherit !important;
+}
+
+.small-circular-button:hover {
+  transition: background-color .3s ease;
+}
+
+.lightgray-button:hover {
+  background-color: $lightgraybgr;
+}
+
+.green-button {
+  background-color: $greenbgr;
+  color: #fff;
+  font-weight: normal;
+}
+
+.green-button:hover {
+  background-color: lighten($greenbgr, 5%);
+}
+
+.red-button:hover {
+  background-color: lighten($redbgr, 35%);
+}

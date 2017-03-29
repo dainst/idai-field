@@ -5,3 +5,4 @@ export const {desktopCapturer} = electron;
 export const {ipcRenderer} = electron;
 export const {remote} = electron;
 export const {webFrame} = electron;
+export const {nativeImage} = electron;

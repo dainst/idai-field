@@ -26,7 +26,7 @@ export class ImageComponentBase {
                 doc=>{
                     this.image.document = doc;
                     if (doc.resource.filename) {
-                        this.imagestore.read(doc.resource.filename).then(url=>{
+                        this.imagestore.read(doc.resource.filename,false,false).then(url=>{
                             this.image.imgSrc = url;
                         }).catch(msgWithParams=>{
                             this.image.imgSrc = BlobMaker.blackImg;

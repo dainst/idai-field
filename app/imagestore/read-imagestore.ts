@@ -11,5 +11,5 @@ export abstract class ReadImagestore {
      * @returns {Promise<ArrayBuffer>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    abstract read(key: string,sanitizeAfter?:boolean): Promise<string>;
+    abstract read(key: string,sanitizeAfter?:boolean, thumb?: boolean): Promise<string>;
 }

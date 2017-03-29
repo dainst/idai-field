@@ -241,7 +241,7 @@ export class MapComponent implements OnChanges {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
-            this.imagestore.read(document.resource['identifier'],true).then(
+            this.imagestore.read(document.resource['identifier'],true,false).then(
                 url => {
                     imgContainer.imgSrc = url;
                     resolve(imgContainer);

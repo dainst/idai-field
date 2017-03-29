@@ -2,6 +2,7 @@ import {AbstractImagestore} from './abstract-imagestore';
 
 import * as fs from 'fs';
 import {BlobMaker} from "./blob-maker";
+import {nativeImage} from '../desktop/electron';
 
 export class FileSystemImagestore extends AbstractImagestore {
 
@@ -9,6 +10,8 @@ export class FileSystemImagestore extends AbstractImagestore {
         super(blobMaker);
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
+        let thumbs_path = this.basePath + "thumbs/";
+        if (!fs.existsSync(thumbs_path)) fs.mkdirSync(thumbs_path);
         if (loadSampleData) this.loadSampleData();
     }
 
@@ -24,20 +27,30 @@ export class FileSystemImagestore extends AbstractImagestore {
 
             fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
                 if (err) reject(err);
-                else resolve();
+                else {
+                    let img = nativeImage.createFromBuffer(Buffer.from(data));
+                    img =  img.resize({height: 320});
+                    fs.writeFile(this.basePath + "thumbs/" + key, img.toJPEG(60), {flag: 'wx'}, (err) => {
+                        if (err) reject(err);
+                        else {
+                            resolve();
+                        }
+                    });
+                }
             });
         });
     }
 
     /**
      * @param key the identifier for the data
+     * @param boolean image will be loaded as thumb, default: true
      * @returns {Promise<any>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    protected _read(key: string): Promise<ArrayBuffer> {
-
+    protected _read(key: string, thumb: boolean): Promise<ArrayBuffer> {
+        let path = thumb ? this.basePath + "/thumbs/" + key : this.basePath + key;
         return new Promise((resolve, reject) => {
-            fs.readFile(this.basePath + key, (err, data) => {
+            fs.readFile(path, (err, data) => {
                 if (err) reject(err);
                 else resolve(data);
             });
@@ -75,15 +88,28 @@ export class FileSystemImagestore extends AbstractImagestore {
         });
     }
 
+
     private loadSampleData(): void {
 
-        let isPath = process.cwd() + '/imagestore/';
-        if (!fs.existsSync(isPath)) isPath = process.resourcesPath + '/imagestore/';
-        fs.readdir(isPath, (err, files) => {
+        let path = process.cwd() + '/imagestore/';
+        if (!fs.existsSync(path)) path = process.resourcesPath + '/imagestore/';
+        this.copyFilesOfDir(path, this.basePath);
+
+        path = process.cwd() + '/imagestore/thumbs/';
+        if (!fs.existsSync(path)) path = process.resourcesPath + '/imagestore/thumbs/';
+        this.copyFilesOfDir(path, this.basePath + 'thumbs/');
+
+
+    }
+
+    private copyFilesOfDir (path, dest):void {
+        fs.readdir(path, (err, files) => {
             files.forEach(file => {
-                fs.createReadStream(isPath + file).pipe(fs.createWriteStream(this.basePath + '/' + file));
+                if(!fs.statSync(path + file).isDirectory()) {
+                    fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + file));
+                }
             });
-            console.debug("Successfully put sample images to imagestore ("+this.basePath+")");
+            console.debug("Successfully put samples from " + path + " to " + dest );
         });
     }
 }

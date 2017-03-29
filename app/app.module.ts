@@ -35,6 +35,7 @@ import {NavbarComponent} from './navbar.component';
 import CONFIG = require("config/config.json!json");
 import {CachedDatastore} from "./datastore/cached-datastore";
 import {BlobMaker} from "./imagestore/blob-maker";
+import {Converter} from "./imagestore/converter";
 
 @NgModule({
     imports: [
@@ -68,7 +69,7 @@ import {BlobMaker} from "./imagestore/blob-maker";
                         const app = (<any>window).require('electron').remote.app;
                         path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
                     }
-                    return new FileSystemImagestore(blobMaker, path, CONFIG['environment'] == 'test');
+                    return new FileSystemImagestore(new Converter(), blobMaker, path, CONFIG['environment'] == 'test');
                 // running in browser
                 } else {
                     let path = CONFIG['imagestorepath'] ? CONFIG['imagestorepath'] : 'imagestore';

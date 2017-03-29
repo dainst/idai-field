@@ -40,9 +40,11 @@ describe('FileSystemImagestore', () => {
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
         mockBlobMaker.makeBlob.and.callFake((data)=>{return data});
+        const mockConverter = jasmine.createSpyObj('converter',['convert']);
+        mockConverter.convert.and.callFake((data)=>{return data});
 
         fs.mkdirSync(storePath);
-        store = new FileSystemImagestore(mockBlobMaker,storePath,false);
+        store = new FileSystemImagestore(mockConverter,mockBlobMaker,storePath,false);
     });
 
     afterEach(done => {
@@ -68,9 +70,8 @@ describe('FileSystemImagestore', () => {
     it('should read a file', (done) => {
 
         store.create('test_read', str2ab('qwer'))
-            .then(() => { return store.read('test_read'); })
+            .then(() => { return store.read('test_read',false,false); })
             .then((data) => {
-
                 expect(data.toString()).toEqual('qwer');
                 done();
             })
@@ -103,7 +104,7 @@ describe('FileSystemImagestore', () => {
             .then(() => {
                 return store.remove('test_remove')
                     .then(() => {
-                        store.read('test_remove')
+                        store.read('test_remove',false,false)
                             .then(() => {
                                 fail('reading removed file worked unexpectedly');
                                 done();

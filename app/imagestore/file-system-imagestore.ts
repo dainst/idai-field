@@ -1,12 +1,11 @@
 import {AbstractImagestore} from './abstract-imagestore';
-
 import * as fs from 'fs';
 import {BlobMaker} from "./blob-maker";
-import {nativeImage} from 'electron';
+import {Converter} from "./converter";
 
 export class FileSystemImagestore extends AbstractImagestore {
 
-    constructor(blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
+    constructor(private converter: Converter, blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
         super(blobMaker);
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
@@ -24,13 +23,12 @@ export class FileSystemImagestore extends AbstractImagestore {
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-
             fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
                 if (err) reject(err);
                 else {
-                    let img = nativeImage.createFromBuffer(Buffer.from(data));
-                    img = img.resize({height: 320});
-                    fs.writeFile(this.basePath + "thumbs/" + key, img.toJPEG(60), {flag: 'wx'}, (err) => {
+
+                    fs.writeFile(this.basePath + "thumbs/" + key,
+                        this.converter.convert(data), {flag: 'wx'}, (err) => {
                         if (err) reject(err);
                         else {
                             resolve();

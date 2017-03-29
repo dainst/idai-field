@@ -59,7 +59,9 @@ config.map = {
     'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
     'fs' : '@node/fs',
     'express': '@node/express',
-    'express-pouchdb': '@node/express-pouchdb'
+    'express-pouchdb': '@node/express-pouchdb',
+    'electron': 'app/desktop/electron'
+
 };
 
 config.meta=  {

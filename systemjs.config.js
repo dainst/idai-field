@@ -3,6 +3,7 @@
     if(typeof process != 'object') {
         console.log('Running in browser, disabling NodeJS functionality.');
         config.map['fs'] = '@empty';
+        config.map['electron'] = '@empty';
         config.map['express'] = '@empty';
         config.map['express-pouchdb'] = '@empty';
     } else {

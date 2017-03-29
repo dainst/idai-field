@@ -2,7 +2,7 @@ import {AbstractImagestore} from './abstract-imagestore';
 
 import * as fs from 'fs';
 import {BlobMaker} from "./blob-maker";
-import {nativeImage} from '../desktop/electron';
+import {nativeImage} from 'electron';
 
 export class FileSystemImagestore extends AbstractImagestore {
 
@@ -29,7 +29,7 @@ export class FileSystemImagestore extends AbstractImagestore {
                 if (err) reject(err);
                 else {
                     let img = nativeImage.createFromBuffer(Buffer.from(data));
-                    img =  img.resize({height: 320});
+                    img = img.resize({height: 320});
                     fs.writeFile(this.basePath + "thumbs/" + key, img.toJPEG(60), {flag: 'wx'}, (err) => {
                         if (err) reject(err);
                         else {

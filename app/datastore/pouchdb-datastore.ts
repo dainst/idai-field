@@ -383,7 +383,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             since: 'now'
         }).on('change', change => {
             this.observers.forEach( observer => {
-                observer.next(change.doc);
+                observer.next(this.cleanDoc(change.doc));
             });
         }).on('complete', info => {
             console.error("changes stream was canceled", info);

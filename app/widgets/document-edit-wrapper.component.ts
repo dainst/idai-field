@@ -7,6 +7,7 @@ import {Validator, PersistenceManager} from "idai-components-2/persist";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
+import {ConflictResolverComponent} from "./conflict-resolver.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {ImageGridBuilder} from "../common/image-grid-builder";
 import {Imagestore} from "../imagestore/imagestore";
@@ -143,6 +144,9 @@ export class DocumentEditWrapperComponent {
             })
             .catch(msgWithParams => {
 
+                if (msgWithParams[0] == M.DATASTORE_SAVE_CONFLICT) {
+                    this.handleConflict();
+                }
                 this.messages.add(msgWithParams);
             });
     }
@@ -155,6 +159,31 @@ export class DocumentEditWrapperComponent {
                 this.documentEditChangeMonitor.setChanged();
             }, (closeReason) => {}
         );
+    }
+
+    private handleConflict() {
+
+        this.modalService.open(
+            ConflictResolverComponent, {size: "lg"}
+        ).result.then(decision => {
+            if (decision == 'overwrite') this.overwriteLastRevision();
+            else this.reloadLastRevision();
+        }).catch(() => {});
+    }
+
+    private overwriteLastRevision() {
+
+        this.datastore.refresh(this.document).then(lastRevision => {
+            this.document['_rev'] = lastRevision['_rev'];
+            this.save(true);
+        }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
+    }
+
+    private reloadLastRevision() {
+
+        this.datastore.refresh(this.document).then(lastRevision => {
+            this.document = <IdaiFieldDocument> lastRevision;
+        }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
     }
 
     private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {

@@ -14,6 +14,7 @@ import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
+import {ConflictResolverComponent} from "./conflict-resolver.component";
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import {ImagePickerComponent} from './image-picker.component';
         ThumbnailViewComponent,
         DescriptionViewComponent,
         ImagePickerComponent,
+        ConflictResolverComponent
     ],
     exports : [
         SearchBarComponent,
@@ -47,7 +49,8 @@ import {ImagePickerComponent} from './image-picker.component';
         DescriptionViewComponent
     ],
     entryComponents: [
-        ImagePickerComponent
+        ImagePickerComponent,
+        ConflictResolverComponent
     ]
 })
 

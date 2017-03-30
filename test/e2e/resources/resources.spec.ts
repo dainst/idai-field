@@ -24,7 +24,7 @@ describe('resources', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')),delays.ECWaitTime);
     });
 
-    it ('should show only resources of the selected type', function() {
+    it('should show only resources of the selected type', function() {
         resourcesPage.performCreateResource('1', 0);
         resourcesPage.performCreateResource('2', 1);
         resourcesPage.clickChooseTypeFilter(2);
@@ -39,7 +39,7 @@ describe('resources', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime)
     });
 
-    it ('should reflect changes in overview in realtime', function() {
+    xit('should reflect changes in overview in realtime', function() {
         resourcesPage.performCreateResource('1a');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('1a');
@@ -55,7 +55,7 @@ describe('resources', function() {
      *
      * This however did not happen with an object already saved.
      */
-    it ('should reflect changes in overview after creating object - first scenario', function() {
+    xit ('should reflect changes in overview after creating object - first scenario', function() {
         resourcesPage.performCreateResource('12');
         DocumentEditWrapperPage.typeInInputField('34');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('34')), delays.ECWaitTime);
@@ -66,7 +66,7 @@ describe('resources', function() {
      * Addresses a bug where a call on datastore.find led to detached documents in the resource overview.
      * The instances didn't reflect the state of the db and vice versa because they were different instances.
      */
-    it ('should reflect changes in overview after creating object - second scenario', function() {
+    xit('should reflect changes in overview after creating object - second scenario', function() {
         resourcesPage.performCreateResource('12');
         resourcesPage.clickChooseTypeFilter(0); // calls find
         resourcesPage.clickSelectResource('12');
@@ -80,7 +80,7 @@ describe('resources', function() {
      * There has been a bug where this was not possible.
      * The attempt to do so got rejected with the duplicate identifier message.
      */
-    it ('should save a new object and then save it again', function() {
+    it('should save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
         DocumentEditWrapperPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
@@ -89,7 +89,7 @@ describe('resources', function() {
     /**
      * There has been a bug where this was not possible due to a faulty datastore implementation.
      */
-    it ('should restore a document properly', function() {
+    it('should restore a document properly', function() {
         resourcesPage.performCreateResource('old');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('old');
@@ -118,7 +118,7 @@ describe('resources', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
     });
 
-    it ('should change the selection to new when saving via modal', function() {
+    it('should change the selection to new when saving via modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
@@ -136,7 +136,7 @@ describe('resources', function() {
         
     });
 
-    it ('should change the selection to existing when saving via modal', function() {
+    it('should change the selection to existing when saving via modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
@@ -149,7 +149,7 @@ describe('resources', function() {
         expect(resourcesPage.clickSelectObjectByIndex(1).getAttribute('class')).toContain('selected')
     });
 
-    it ('should not change the selection to existing when cancelling in modal', function() {
+    it('should not change the selection to existing when cancelling in modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');

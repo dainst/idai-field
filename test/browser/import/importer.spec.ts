@@ -11,6 +11,8 @@ export function main() {
     let mockParser;
     let importer: Importer;
     let mockImportStrategy;
+    let mockRelationsStrategy;
+    let mockRollbackStrategy;
 
     beforeEach(()=>{
         mockReader = jasmine.createSpyObj('reader', ['go']);
@@ -18,6 +20,9 @@ export function main() {
         mockParser = jasmine.createSpyObj('parser', ['parse']);
 
         mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
+        mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy', ['completeInverseRelations',
+            'resetInverseRelations']);
+        mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
         importer = new Importer();
     });
 
@@ -30,7 +35,9 @@ export function main() {
                 })});
 
                 mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader, mockParser, mockImportStrategy)
+                mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
+                importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+                        mockRollbackStrategy)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
                         done();
@@ -52,7 +59,11 @@ export function main() {
 
                 mockImportStrategy.importDoc.and.returnValues(Promise.resolve(undefined),
                     Promise.reject(['constraintviolation']));
-                importer.importResources(mockReader, mockParser, mockImportStrategy)
+                mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
+                mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
+                mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
+                importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+                        mockRollbackStrategy)
                     .then(importReport => {
                         expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
                         expect(importReport.importedResourcesIds.length).toBe(1);

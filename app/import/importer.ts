@@ -3,6 +3,9 @@ import {Document} from "idai-components-2/core";
 import {Reader} from "./reader";
 import {Parser} from "./parser";
 import {ImportStrategy} from "./import-strategy";
+import {RelationsStrategy} from "./relations-strategy";
+import {RollbackStrategy} from "./rollback-strategy";
+import {M} from "../m";
 
 
 export interface ImportReport {
@@ -33,16 +36,28 @@ export class Importer {
     private importReport: ImportReport;
     private resolvePromise: (any) => any;
 
-    private initState() {
+    private importStrategy: ImportStrategy;
+    private relationsStrategy: RelationsStrategy;
+    private rollbackStrategy: RollbackStrategy;
+
+
+    private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
+                      rollbackStrategy: RollbackStrategy) {
+
         this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
         this.objectReaderFinished = false;
         this.currentImportWithError = false;
+
         this.importReport = {
             errors: [],
             warnings: [],
-            importedResourcesIds: [],
+            importedResourcesIds: []
         };
+
+        this.importStrategy = importStrategy;
+        this.relationsStrategy = relationsStrategy;
+        this.rollbackStrategy = rollbackStrategy;
     }
 
     constructor() { }
@@ -64,12 +79,14 @@ export class Importer {
      * @param importStrategy
      * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
-    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
+    public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
+                           relationsStrategy: RelationsStrategy,
+                           rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 
             this.resolvePromise = resolve;
-            this.initState();
+            this.initState(importStrategy, relationsStrategy, rollbackStrategy);
 
             reader.go().then(fileContent => {
 
@@ -77,7 +94,7 @@ export class Importer {
 
                     if (this.currentImportWithError) return;
 
-                    if (!this.inUpdateDocumentLoop) this.update(resultDocument, importStrategy);
+                    if (!this.inUpdateDocumentLoop) this.update(resultDocument);
                     else this.docsToUpdate.push(resultDocument);
 
                 }, msgWithParams => {
@@ -108,10 +125,10 @@ export class Importer {
      * @param doc
      * @param importStrategy
      */
-    private update(doc: Document, importStrategy: ImportStrategy) {
+    private update(doc: Document) {
         this.inUpdateDocumentLoop = true;
 
-        importStrategy.importDoc(doc)
+        this.importStrategy.importDoc(doc)
             .then(() => {
 
                 this.importReport.importedResourcesIds.push(doc.resource.id);
@@ -120,7 +137,7 @@ export class Importer {
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0], importStrategy);
+                    return this.update(this.docsToUpdate[0]);
                 } else {
                     this.finishImport();
                 }
@@ -131,8 +148,41 @@ export class Importer {
             });
     }
 
-    private finishImport() {
+    private finishImport(): Promise<any> {
+
         this.inUpdateDocumentLoop = false;
-        this.resolvePromise(this.importReport);
+
+        if (this.importReport.errors.length > 0) {
+            return this.performRollback();
+        } else {
+            return this.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
+                () => {
+                    this.resolvePromise(this.importReport);
+                }, msgWithParams => {
+                    this.importReport.errors.push(msgWithParams);
+                    return this.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
+                        () => {
+                            return this.performRollback();
+                        }, msgWithParams => {
+                            this.importReport.errors.push(msgWithParams);
+                            return this.performRollback();
+                        });
+                }
+            )
+        }
     }
+
+    private performRollback(): Promise<any> {
+
+        return this.rollbackStrategy.rollback(this.importReport.importedResourcesIds).then(
+            () => {
+                this.resolvePromise(this.importReport);
+            }, err => {
+                console.error(err);
+                this.importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
+                this.resolvePromise(this.importReport);
+            }
+        );
+    }
+
 }

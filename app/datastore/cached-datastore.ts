@@ -14,28 +14,33 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
 
-    constructor(private datastore:IdaiFieldDatastore) { }
+    constructor(private datastore:IdaiFieldDatastore) {
+        this.datastore.documentChangesNotifications()
+            .subscribe(doc => {
+                // explicitly assign by value in order for
+                // changes to be detected by angular
+                Object.assign(this.documentCache[doc.resource.id], doc);
+            });
+    }
 
     create(document: Document): Promise<Document> {
         return this.datastore.create(document).then(doc => {
             let d = doc as Document;
-            this.documentCache[d.resource.id] = d;
             return Promise.resolve(d);
-        })
+        });
     }
 
     update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
             let d = doc as Document;
-            this.documentCache[d.resource.id] = d;
             return Promise.resolve(d);
-        })
+        });
     }
 
     remove(doc: Document): Promise<any> {
         return this.datastore.remove(doc).then(() => {
             delete this.documentCache[doc.resource.id];
-        })
+        });
     }
 
     documentChangesNotifications(): Observable<Document> {
@@ -46,7 +51,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
         if (this.documentCache[id]) {
             return Promise.resolve(this.documentCache[id]);
         }
-        return this.datastore.get(id);
+        return this.datastore.get(id).then(doc => this.documentCache[id] = doc);
     }
 
     find(query: Query, offset?: number, limit?: number):Promise<Document[]> {

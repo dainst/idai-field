@@ -46,6 +46,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(config => this.config = config);
         if (loadSampleData)
             this.readyForQuery = this.readyForQuery.then(() => this.loadSampleData());
+        this.readyForQuery = this.readyForQuery.then(() => this.setupChangesEmitter());
 
     }
 
@@ -137,7 +138,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             })
             .then(result => {
 
-                this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
@@ -196,7 +196,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
             }).then(result => {
 
-                this.notifyObserversOfObjectToSync(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
@@ -376,11 +375,21 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return filtered;
     }
 
-    private notifyObserversOfObjectToSync(document: Document): void {
+    private setupChangesEmitter(): void {
 
-        this.observers.forEach( observer => {
-            observer.next(document);
-        } );
+        this.db.changes({
+            live: true,
+            include_docs: true,
+            since: 'now'
+        }).on('change', change => {
+            this.observers.forEach( observer => {
+                observer.next(change.doc);
+            });
+        }).on('complete', info => {
+            console.error("changes stream was canceled", info);
+        }).on('error', err => {
+            console.error("changes stream errored", err);
+        });
     }
 
     private loadSampleData(): Promise<any> {

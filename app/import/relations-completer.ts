@@ -18,20 +18,9 @@ export class RelationsCompleter {
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    public completeInverseRelations(resourceIds: string[], resourceIndex: number = 0): Promise<any> {
+    public completeInverseRelations(resourceIds: string[]): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-            this.alterInverseRelationsForResource('create', resourceIds[resourceIndex]).then(
-                () => {
-                    if (resourceIndex < resourceIds.length - 1) {
-                        this.completeInverseRelations(resourceIds, ++resourceIndex).then(
-                            () => resolve(),
-                            err => reject(err)
-                        );
-                    } else resolve();
-                }, err => reject(err)
-            );
-        });
+        return this.alterInverseRelations('create', resourceIds);
     }
 
     /**
@@ -39,18 +28,32 @@ export class RelationsCompleter {
      * relation targets.
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    public resetInverseRelations(resourceIds: string[], resourceIndex: number = 0): Promise<any> {
+    public resetInverseRelations(resourceIds: string[]): Promise<any> {
+
+        return this.alterInverseRelations('remove', resourceIds);
+    }
+
+    /**
+     * Iterates over all relations of the given resources and either creates or removes the corresponding inverse
+     * relations of the relation targets.
+     * @param mode: Can be either 'create' or 'remove'
+     */
+    private alterInverseRelations(mode: string, resourceIds: string[]): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            this.alterInverseRelationsForResource('remove', resourceIds[resourceIndex]).then(
-                () => {
-                    if (resourceIndex < resourceIds.length - 1) {
-                        this.resetInverseRelations(resourceIds, ++resourceIndex).then(
-                            () => resolve(),
-                            err => reject(err)
-                        );
-                    } else resolve();
-                }, err => reject(err)
+
+            let promise: Promise<any> = new Promise<any>((res) => res());
+
+            for (let resourceId of resourceIds) {
+                promise = promise.then(
+                    () => this.alterInverseRelationsForResource(mode, resourceId),
+                    err => reject(err)
+                );
+            }
+
+            promise.then(
+                () => resolve(),
+                err => reject(err)
             );
         });
     }
@@ -62,19 +65,30 @@ export class RelationsCompleter {
     private alterInverseRelationsForResource(mode: string, resourceId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
+
             this.datastore.get(resourceId).then(
                 document => {
-                    this.getNamesOfExistingRelations(document.resource).then(
-                        relationNames => {
-                            if (relationNames.length > 0) {
-                                return this.alterInverseRelationsOfTypeForResource(mode, document.resource,
-                                    relationNames);
-                            } else resolve();
-                        }, err => reject(err)
-                    ).then(
-                        () => resolve(),
-                        err => reject(err)
-                    );
+                    this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+
+                        let promise: Promise<any> = new Promise<any>((res) => res());
+
+                        for (let relationName in document.resource.relations) {
+                            if (projectConfiguration.isRelationProperty(relationName)) {
+                                for (let targetId of document.resource.relations[relationName]) {
+                                    promise = promise.then(
+                                        () => this.alterRelation(mode, document.resource, targetId,
+                                            projectConfiguration.getInverseRelations(relationName)),
+                                        err => reject(err)
+                                    );
+                                }
+                            }
+                        }
+
+                        promise.then(
+                            () => resolve(),
+                            err => reject(err)
+                        );
+                    });
                 },
                 err => reject(err)
             );
@@ -82,80 +96,40 @@ export class RelationsCompleter {
     }
 
     /**
-     * Creates/removes inverse relations for a single resource and a specific relation type.
-     * @param mode: Can be either 'create' or 'remove'
-     */
-    private alterInverseRelationsOfTypeForResource(mode: string, resource: Resource, relationNames: string[],
-                                                   relationNameIndex: number = 0,
-                                                   targetIndex: number = 0): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            let relationName = relationNames[relationNameIndex];
-            let targetId = resource.relations[relationName][targetIndex];
-
-            this.alterInverseRelation(mode, resource, targetId, relationName).then(
-                () => {
-                    if (targetIndex < resource.relations[relationName].length - 1) {
-                        targetIndex++;
-                    } else if (relationNameIndex < relationNames.length - 1) {
-                        relationNameIndex++;
-                        targetIndex = 0;
-                    } else {
-                        return resolve();
-                    }
-
-                    this.alterInverseRelationsOfTypeForResource(mode, resource, relationNames, relationNameIndex,
-                            targetIndex).then(
-                        () => resolve(),
-                        err => reject(err)
-                    );
-                }, err => reject(err)
-            )
-        });
-    }
-
-    /**
-     * Either adds (in mode 'create') oder removes (in mode 'remove') an inverse relation.
+     * Either adds (in mode 'create') oder removes (in mode 'remove') an relation.
      * @param mode Can be either 'create' or 'remove'
      */
-    private alterInverseRelation(mode: string, resource: Resource, targetId: string,
-                                   relationName: string): Promise<any> {
+    private alterRelation(mode: string, resource: Resource, targetId: string,
+                                 relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-
-                let inverseRelationName = projectConfiguration.getInverseRelations(relationName);
-
-                this.datastore.get(targetId).then(
-                    targetDocument => {
-                        let promise;
-                        switch(mode) {
-                            case 'create':
-                                promise = this.createRelation(resource, targetDocument, inverseRelationName);
-                                break;
-                            case 'remove':
-                                promise = this.removeRelation(resource, targetDocument, inverseRelationName);
-                                break;
-                        }
-                        promise.then(
-                            () => resolve(),
-                            err => reject(err)
-                        )
-                    }, () => {
-                        switch(mode) {
-                            case 'create':
-                                reject([M.IMPORT_FAILURE_MISSING_RELATION_TARGET, targetId]);
-                                break;
-                            case 'remove':
-                                resolve();
-                                break;
-                        }
+            this.datastore.get(targetId).then(
+                targetDocument => {
+                    let promise;
+                    switch (mode) {
+                        case 'create':
+                            promise = this.createRelation(resource, targetDocument, relationName);
+                            break;
+                        case 'remove':
+                            promise = this.removeRelation(resource, targetDocument, relationName);
+                            break;
                     }
-                );
-
-            });
+                    promise.then(
+                        () => resolve(),
+                        err => reject(err)
+                    )
+                }, () => {
+                    switch (mode) {
+                        case 'create':
+                            reject([M.IMPORT_FAILURE_MISSING_RELATION_TARGET, targetId]);
+                            break;
+                        case 'remove':
+                            resolve();
+                            break;
+                    }
+                }
+            );
         });
     }
 
@@ -191,28 +165,6 @@ export class RelationsCompleter {
                     err => reject(err)
                 );
             }
-        });
-    }
-
-    /**
-     * Returns an array containing the names of all relation types for which relations exist in the given resource.
-     */
-    private getNamesOfExistingRelations(resource: Resource): Promise<string[]> {
-
-        return new Promise<any>((resolve) => {
-
-            let relationNames: string[] = [];
-
-            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-
-                for (let relationName in resource.relations) {
-                    if (projectConfiguration.isRelationProperty(relationName)) {
-                        relationNames.push(relationName);
-                    }
-                }
-
-                resolve(relationNames);
-            });
         });
     }
 }

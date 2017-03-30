@@ -82,48 +82,38 @@ export class ImportComponent {
     private finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy,
                          rollbackStrategy: RollbackStrategy): Promise<any> {
 
-        return new Promise<any>((resolve) => {
-
-            if (importReport.errors.length > 0) {
-                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
-            } else {
-                relationsStrategy.completeInverseRelations(importReport.importedResourcesIds).then(
-                    () => {
-                        this.showMessages(importReport.warnings);
-                        this.showSuccessMessage(importReport.importedResourcesIds);
-                        resolve();
-                    }, msgWithParam => {
-                        this.messages.add(msgWithParam);
-                        relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
-                            () => {
-                                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
-                            }, msgWithParam => {
-                                this.messages.add(msgWithParam);
-                                this.performRollback(importReport, rollbackStrategy).then(() => resolve());
-                            }
-                        );
-                    }
-                );
-            }
-        });
+        if (importReport.errors.length > 0) {
+            return this.performRollback(importReport, rollbackStrategy);
+        } else {
+            return relationsStrategy.completeInverseRelations(importReport.importedResourcesIds).then(
+                () => {
+                    this.showMessages(importReport.warnings);
+                    this.showSuccessMessage(importReport.importedResourcesIds);
+                }, msgWithParam => {
+                    this.messages.add(msgWithParam);
+                    return relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
+                        () => {
+                            return this.performRollback(importReport, rollbackStrategy);
+                        }, msgWithParam => {
+                            this.messages.add(msgWithParam);
+                            return this.performRollback(importReport, rollbackStrategy);
+                        });
+                }
+            )
+        }
     }
 
     private performRollback(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<any> {
 
-        return new Promise<any>((resolve) => {
-
-            rollbackStrategy.rollback(importReport.importedResourcesIds).then(
-                () => {
-                    this.showMessages(importReport.errors);
-                    resolve();
-                }, err => {
-                    this.showMessages(importReport.errors);
-                    this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
-                    console.error(err);
-                    resolve();
-                }
-            );
-        });
+        return rollbackStrategy.rollback(importReport.importedResourcesIds).then(
+            () => {
+                this.showMessages(importReport.errors);
+            }, err => {
+                this.showMessages(importReport.errors);
+                this.messages.add([M.IMPORT_FAILURE_ROLLBACKERROR]);
+                console.error(err);
+            }
+        );
     }
 
     public isReady(): boolean {

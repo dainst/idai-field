@@ -55,7 +55,7 @@ export function main() {
         );
 
 
-        it('should return the cached instance on calling find',
+        xit('should return the cached instance on calling find',
             function (done) {
 
                 let doc1 = doc('sd1');

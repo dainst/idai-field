@@ -17,6 +17,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
     constructor(private datastore:IdaiFieldDatastore) {
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
+                console.log("change detected", doc);
                 // explicitly assign by value in order for
                 // changes to be detected by angular
                 Object.assign(this.documentCache[doc.resource.id], doc);

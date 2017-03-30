@@ -82,6 +82,11 @@
     font-style: italic;
   }
 
+  .conflicted {
+     border-right: 3px solid red !important;
+     transition: border-right 1s ease;
+   }
+
   .synced {
     border-right: 3px solid #657faa;
     transition: border-right 1s ease;

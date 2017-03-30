@@ -25,6 +25,7 @@
                         (click)="select(document)"
                         (dblclick)="open(document)"
                         class="list-group-item"
+                        [class.conflicted]="document['_conflicts']"
                         [class.synced]="document.synced"
                         [class.unsynced]="!document.synced"
                         [class.selected]="getSelected() && getSelected().resource.id === document.resource.id"

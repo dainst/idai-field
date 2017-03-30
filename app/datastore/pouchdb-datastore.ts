@@ -286,6 +286,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let opt = {
             reduce: false,
             include_docs: true,
+            conflicts: true,
         };
         opt['startkey'] = [type, q];
         let endKey = query.prefix ? q + '\uffff' : q;
@@ -308,8 +309,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             if (identifier == undefined) return Promise.reject([M.DATASTORE_NOT_FOUND]);
 
             return this.db.query('identifier', {
-               key: identifier,
-               include_docs: true
+                key: identifier,
+                include_docs: true,
+                conflicts: true,
             }).then(result => {
                if (result.rows.length > 0) {
                    return Promise.resolve(result.rows[0].doc);
@@ -331,7 +333,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             include_docs: true,
             startkey: [type, {}],
             endkey: [type],
-            descending: true
+            descending: true,
+            conflicts: true,
         };
         // performs poorly according to PouchDB documentation
         // could be replaced by using startKey instead
@@ -347,7 +350,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private fetchObject(id: string): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
-        return this.db.get(id).catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+        return this.db.get(id, { conflicts: true })
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
     private docsFromResult(result: any[]): Document[] {

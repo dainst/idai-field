@@ -130,24 +130,21 @@ export class DocumentEditWrapperComponent {
             .then(()=>{
 
                 this.document['synced'] = 0;
-                this.persistenceManager.persist(this.document).then(
-                    () => {
-                        this.documentEditChangeMonitor.reset();
-
-                        this.onSaveSuccess.emit(viaSaveButton);
-                        // this.navigate(this.document, proceed);
-                        // show message after route change
-                        this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    },
-                    keyOfM => {
-                        this.messages.add([keyOfM]);
-                    });
+                return this.persistenceManager.persist(this.document);
             })
+            .then(() => {
 
+                this.documentEditChangeMonitor.reset();
+
+                this.onSaveSuccess.emit(viaSaveButton);
+                // this.navigate(this.document, proceed);
+                // show message after route change
+                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+            })
             .catch(msgWithParams => {
-                this.messages.add(msgWithParams);
 
-            })
+                this.messages.add(msgWithParams);
+            });
     }
 
     public openImagePicker() {

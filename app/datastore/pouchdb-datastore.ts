@@ -192,12 +192,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
 
-                return this.db.put(document).catch(
-                    err => {
-                        console.error(err);
-                        return Promise.reject(undefined);
-                    }
-                );
+                return this.db.put(document);
 
             }).then(result => {
 
@@ -205,10 +200,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
-            }).catch(() => {
+            }).catch(err => {
 
+                let errType = M.DATASTORE_GENERIC_SAVE_ERROR;
+                if (err.name && err.name == 'conflict')
+                    errType = M.DATASTORE_SAVE_CONFLICT;
                 reset(document);
-                return Promise.reject([M.DATASTORE_GENERIC_SAVE_ERROR])
+                return Promise.reject([errType]);
             })
     }
 

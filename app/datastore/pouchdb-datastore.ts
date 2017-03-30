@@ -360,8 +360,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     // strips document of any properties that are only
     // used to simplify index creation
-    private cleanDoc(doc:Document): Document {
-        delete doc.resource['_parentTypes'];
+    private cleanDoc(doc: Document): Document {
+        if (doc && doc.resource) {
+            delete doc.resource['_parentTypes'];
+        }
         return doc;
     }
 

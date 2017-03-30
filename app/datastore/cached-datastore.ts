@@ -14,13 +14,13 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
 
-    constructor(private datastore:IdaiFieldDatastore) {
+    constructor(private datastore: IdaiFieldDatastore) {
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
                 console.log("change detected", doc);
                 // explicitly assign by value in order for
                 // changes to be detected by angular
-                if (this.documentCache[doc.resource.id]) {
+                if (doc && doc.resource && this.documentCache[doc.resource.id]) {
                     Object.assign(this.documentCache[doc.resource.id], doc);
                 }
             });

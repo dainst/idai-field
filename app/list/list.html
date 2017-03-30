@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-lg-8 col-md-8 col-sm-12"
+         id="objectOverview">
+		<ul class="list-group object-list" id="objectList" style="overflow: scroll;">
+		    <li *ngFor="let document of documents; let index=index"
+		        class="list-group-item"
+		        (click)="select(document)"
+		        [class.synced]="document.synced"
+		        [class.unsynced]="!document.synced"
+		        [id]="'resource-' + document.resource.identifier">
+
+                <document-teaser [document]="document"></document-teaser>
+		    </li>
+		</ul>
+	</div>
+	<div class="col-lg-4 col-md-4 col-sm-12">
+		<document-view *ngIf="selectedDocument" [(document)]="selectedDocument" [basePath]="'resources'">
+            <description-view [document]="selectedDocument"></description-view>
+            <thumbnail-view [imageIds]="selectedDocument.resource.relations['depictedIn']"
+                            *ngIf="selectedDocument && selectedDocument.resource.relations
+                            && selectedDocument.resource.relations['depictedIn']">
+            </thumbnail-view>
+            <geometry-view [document]="selectedDocument"></geometry-view>
+            <fields-view [doc]="selectedDocument"></fields-view>
+            <relations-view [doc]="selectedDocument" (relationClicked)="select($event)"></relations-view>
+        </document-view>
+	</div>
+</div>

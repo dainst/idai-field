@@ -28,6 +28,9 @@ import {IdaiDocumentsModule} from 'idai-components-2/documents';
         MapComponent,
         PlusButtonComponent
     ],
+    exports: [
+        GeometryViewComponent
+    ],
     providers: [
         MapState
     ]

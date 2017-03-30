@@ -31,6 +31,7 @@ import {HttpImagestore} from './imagestore/http-imagestore';
 import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
+import {ListModule} from './list/list.module';
 
 import CONFIG = require("config/config.json!json");
 import {CachedDatastore} from "./datastore/cached-datastore";
@@ -41,6 +42,7 @@ import {Converter} from "./imagestore/converter";
     imports: [
         ImagesModule,
         ResourcesModule,
+        ListModule,
         BrowserModule,
         FormsModule,
         HttpModule,

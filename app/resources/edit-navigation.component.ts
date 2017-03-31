@@ -56,21 +56,19 @@ export class EditNavigationComponent
 
     ngOnInit() {
         this.getRouteParams(
-            (type) => {
+            type => {
                 this.mode = 'new';
-                this.resourcesComponent.createNewDocument(type).then(doc=>{
-                    this.document = doc;
-                })
+                this.resourcesComponent.createNewDocument(type)
+                    .then(doc => this.document = doc);
             },
-            (id) => {
+            id => {
                 if (id == 'selected') {
                     this.mode = 'new';
                     this.document = this.resourcesComponent.getSelected();
-
                 } else {
                     this.mode = 'edit';
-                    this.resourcesComponent.loadDoc(id).then(
-                        document => this.document = document);
+                    this.resourcesComponent.loadDoc(id)
+                        .then(document => this.document = document);
                 }
             }
         );
@@ -112,19 +110,15 @@ export class EditNavigationComponent
      * According to the current mode or the value of savedViaSaveButton,
      * initiates an appropriate route change.
      */
-    public navigate(savedViaSaveButton:boolean = false) {
+    public navigate(event) {
 
-        if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
+        if (!event.viaSaveButton) return this.canDeactivateGuard.proceed();
 
-        if (this.mode=='new') {
-            this.router.navigate(['resources',this.document.resource.id,'edit']);
-
+        if (this.mode == 'new') {
+            Object.assign(this.document, event.document);
+            this.router.navigate(['resources', event.document.resource.id, 'edit']);
             // since ngOnInit will not get triggered
-            this.mode='edit';
-            // doc must be reloaded so instance of this.document is
-            // the same as the one in overviewComponent
-            this.resourcesComponent.loadDoc(this.document.resource.id).then(
-                document=>this.document=document);
+            this.mode = 'edit';
         }
     }
 }

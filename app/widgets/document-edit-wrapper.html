@@ -33,20 +33,20 @@
             </button>
             <span class="mdi mdi-blur"></span>
 
-            <span *ngIf="showBackButton && document">{{typeLabel}} bearbeiten</span>
+            <span *ngIf="showBackButton && clonedDoc">{{typeLabel}} bearbeiten</span>
             <span *ngIf="!showBackButton">Neue Ressource</span>
         </h1>
     </header>
     <main>
 
-        <div *ngIf="document" class="container">
+        <div *ngIf="clonedDoc" class="container">
             <div class="row">
                 <div class="col-md-12">
 
                     <ngb-tabset>
                         <ngb-tab title="Felder"  id="document-edit-fields-tab">
                             <template ngbTabContent>
-                                <edit-form *ngIf="projectConfiguration" [(document)]="document"
+                                <edit-form *ngIf="projectConfiguration" [(document)]="clonedDoc"
                                            [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
                             </template>
                         </ngb-tab>
@@ -54,12 +54,12 @@
                                  id="document-edit-relations-tab">
                             <template ngbTabContent>
                                 <relations-form
-                                        [(document)]="document"
+                                        [(document)]="clonedDoc"
                                         [primary]="'identifier'"
                                         [relationDefinitions]="relationDefinitions"></relations-form>
                             </template>
                         </ngb-tab>
-                        <ngb-tab *ngIf="!projectImageTypes[document.resource.type]" title="Bilder"
+                        <ngb-tab *ngIf="!projectImageTypes[clonedDoc.resource.type]" title="Bilder"
                                  id="document-edit-images-tab">
                             <template ngbTabContent>
                                 <div class="form-group card">

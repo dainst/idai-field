@@ -1,5 +1,5 @@
 <document-edit-wrapper #f
-                       [(document)]="document"
+                       [document]="document"
                         (onSaveSuccess)="navigate($event)"
                         [showDeleteButton]="(mode=='edit')"
                         (onDeleteSuccess)="goToOverview()"

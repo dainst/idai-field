@@ -75,9 +75,9 @@ export class ResourcesComponent {
     /**
      * @param documentToSelect
      */
-    public setSelected(documentToSelect: Document) {
+    public setSelected(documentToSelect: Document): Document {
 
-        this.selectedDocument = documentToSelect;
+        return this.selectedDocument = documentToSelect;
     }
 
     /**
@@ -110,14 +110,10 @@ export class ResourcesComponent {
         var newDocument = { "resource": { "relations": {}, "type": type } };
         this.selectedDocument = newDocument;
 
-
-        return new Promise<any>(resolve=>{
-            this.ready.then(()=>{
-                this.documents.unshift(<Document> newDocument);
-                this.notify();
-                resolve(newDocument);
-
-            }).catch(err=>console.error("ResourcesComponent.createNewDocument caught promise err",err));
+        return this.ready.then(() => {
+            this.documents.unshift(<Document> newDocument);
+            this.notify();
+            return newDocument;
         });
     }
 
@@ -127,13 +123,9 @@ export class ResourcesComponent {
      * @param query
      */
     public fetchDocuments(query: Query = this.query): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-            return this.datastore.find(query).then(documents => {
-                this.documents = documents as Document[];
-                this.notify();
-                resolve();
-            }).catch(err => { console.error(err); reject(); } );
+        return this.datastore.find(query).then(documents => {
+            this.documents = documents as Document[];
+            this.notify();
         });
     }
 
@@ -147,14 +139,8 @@ export class ResourcesComponent {
      */
     public loadDoc(resourceId) : Promise<Document> {
 
-        return new Promise<Document>((resolve,reject)=>{
-
-            this.datastore.get(resourceId).then(document=> {
-                resolve(document as Document);
-                this.setSelected(<Document>document);
-            })
-        });
-
+        return this.datastore.get(resourceId)
+            .then(document => this.setSelected(document));
     }
 
     public getDocuments() : Observable<Array<Document>> {

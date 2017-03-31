@@ -15,14 +15,13 @@ gulp.task('convert-sass', function () {
 
     return gulp.src([
         'app/app.scss',
-        'node_modules/mdbootstrap/css/bootstrap.css',
         'node_modules/leaflet/dist/leaflet.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'
     ])
         .pipe(sass({
             includePaths: [
                 'node_modules/idai-components-2/src/scss',
-                'node_modules/mdbootstrap/sass',
+                'node_modules/bootstrap/scss',
                 'node_modules/mdi/scss/'
             ], precision: 8
         }))

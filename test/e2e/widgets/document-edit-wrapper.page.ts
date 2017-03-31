@@ -78,6 +78,10 @@ export class DocumentEditWrapperPage {
         return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 
+    public static getConflictModal = function() {
+        return element(by.tagName('conflict-resolver'));
+    }
+
     // type in
 
     /**

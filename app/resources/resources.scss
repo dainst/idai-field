@@ -60,7 +60,7 @@
   }
 
   .list-group-item:hover {
-    background-color: $list-item-hover-colour;
+    background-color: darken($list-item-hover-colour, 5%);
     transition: background-color .65s ease;
   }
 
@@ -83,17 +83,17 @@
   }
 
   .conflicted {
-     border-right: 3px solid red !important;
+     border-right: 2px solid red !important;
      transition: border-right 1s ease;
    }
 
   .synced {
-    border-right: 3px solid #657faa;
+    border-right: 2px solid #657faa;
     transition: border-right 1s ease;
   }
 
   .unsynced {
-    border-right: 3px solid #ccc;
+    border-right: 2px solid #ccc;
     transition: border-right 1s ease;
   }
 }

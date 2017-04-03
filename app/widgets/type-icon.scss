@@ -1,14 +1,5 @@
-.document-teaser type-icon {
-  float: left;
-  margin: 2px 15px 0 5px;
-}
-
-.document-teaser type-icon img {
-  border-radius: 35px;
-}
-
 #document-view .card-header type-icon img {
-  border-radius: 25px;
+  border-radius: 35px;
 }
 
 #new-object-menu type-icon,
@@ -20,5 +11,5 @@ type-picker-modal type-icon {
 #new-object-menu type-icon img,
 .filtermenu type-icon img,
 type-picker-modal type-icon img {
-  border-radius: 30px;
+  border-radius: 40px;
 }

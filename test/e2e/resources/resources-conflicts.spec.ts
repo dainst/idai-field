@@ -35,7 +35,7 @@ xdescribe('resources/syncing', function() {
            .catch(err => { console.error(err) });
     });
 
-    it('should detect conflict on save', function(done) {
+    xit('should detect conflict on save', function(done) {
         testDocument.resource.identifier = 'test2';
         resourcesPage.clickSelectResource('test1')
             .then(() => documentViewPage.clickEditDocument())

@@ -9,6 +9,7 @@ import {M} from "../m";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
 
 import {DOCS} from "./sample-objects";
+import {SyncState} from "./sync-state";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -345,6 +346,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.readyForQuery
             .then(() => this.db.query('all', opt))
             .then(result => this.filterResult(this.docsFromResult(result)));
+    }
+
+    public setupSync(url: string): SyncState {
+        let sync = this.db.sync(url, { live: true, retry: true });
+        return {
+            url: url,
+            cancel: () => sync.cancel(),
+            onError: Observable.fromEventPattern(h => sync.on('error', h), null),
+            onPaused: Observable.fromEventPattern(h => sync.on('paused', h), null),
+            onActive: Observable.fromEventPattern(h => sync.on('active', h), null)
+        }
     }
 
     private fetchObject(id: string): Promise<Document> {

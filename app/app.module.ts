@@ -38,6 +38,8 @@ import {CachedDatastore} from "./datastore/cached-datastore";
 import {BlobMaker} from "./imagestore/blob-maker";
 import {Converter} from "./imagestore/converter";
 
+import {IdaiWidgetsModule} from "idai-components-2/widgets"
+
 @NgModule({
     imports: [
         ImagesModule,
@@ -49,7 +51,8 @@ import {Converter} from "./imagestore/converter";
         NgbModule.forRoot(),
         IdaiDocumentsModule,
         IdaiMessagesModule,
-        routing
+        routing,
+        IdaiWidgetsModule
     ],
     declarations: [
         AppComponent,

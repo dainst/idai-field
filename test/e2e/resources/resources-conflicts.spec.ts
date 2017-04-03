@@ -39,14 +39,14 @@ xdescribe('resources/syncing', function() {
         testDocument.resource.identifier = 'test2';
         resourcesPage.clickSelectResource('test1')
             .then(() => documentViewPage.clickEditDocument())
-            .then(() => db.put(testDocument)
+            .then(() => db.put(testDocument))
             .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(() => {
                 expect(DocumentEditWrapperPage.getConflictModal().isDisplayed())
                     .toBeTruthy();
             })
             .then(done)
-            .catch(err => { console.error(err); fail(); });
+            .catch(err => fail(err));
     });
 
 });

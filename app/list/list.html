@@ -1,28 +1,25 @@
 <div class="row">
-	<div class="col-lg-8 col-md-8 col-sm-12"
-         id="objectOverview">
-		<ul class="list-group object-list" id="objectList" style="overflow: scroll;">
-		    <li *ngFor="let document of documents; let index=index"
-		        class="list-group-item"
-		        (click)="select(document)"
-		        [class.synced]="document.synced"
-		        [class.unsynced]="!document.synced"
-		        [id]="'resource-' + document.resource.identifier">
+	<table class="col-md-12 table table-sm">
+		<tr>
+			<th>identifier</th>
+			<th>type</th>
+			<th>shortDescription</th>
+		</tr>
+	    <tr *ngFor="let document of documents; let index=index"
+	        (click)="select(document)"
+	        [class.synced]="document.synced"
+	        [class.unsynced]="!document.synced"
+	        [id]="'resource-' + document.resource.identifier">
 
-                <document-teaser [document]="document"></document-teaser>
-		    </li>
-		</ul>
-	</div>
-	<div class="col-lg-4 col-md-4 col-sm-12">
-		<document-view *ngIf="selectedDocument" [(document)]="selectedDocument" [basePath]="'resources'">
-            <description-view [document]="selectedDocument"></description-view>
-            <thumbnail-view [imageIds]="selectedDocument.resource.relations['depictedIn']"
-                            *ngIf="selectedDocument && selectedDocument.resource.relations
-                            && selectedDocument.resource.relations['depictedIn']">
-            </thumbnail-view>
-            <geometry-view [document]="selectedDocument"></geometry-view>
-            <fields-view [doc]="selectedDocument"></fields-view>
-            <relations-view [doc]="selectedDocument" (relationClicked)="select($event)"></relations-view>
-        </document-view>
-	</div>
+            <td>{{document.resource.identifier}}</td>
+            <td>
+            	<select class="form-control" [(ngModel)]="document.resource.type" (change)="update(document)">
+            		<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
+            	</select>
+            </td>
+            <td>
+            	<input [(ngModel)]="document.resource.shortDescription" (blur)="update(document)" class="form-control">
+            </td>  
+	    </tr>
+	</table>
 </div>

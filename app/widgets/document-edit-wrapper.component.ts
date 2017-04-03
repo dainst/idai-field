@@ -35,12 +35,12 @@ export class DocumentEditWrapperComponent {
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
     @Output() onDeleteSuccess = new EventEmitter<any>();
+
+    private clonedDoc: IdaiFieldDocument;
     private projectImageTypes: any = {};
     private projectConfiguration: ProjectConfiguration;
-
     private typeLabel: string;
     private relationDefinitions: Array<RelationDefinition>;
-    
     private imageGridBuilder : ImageGridBuilder;
     private rows = [];
     private imageDocuments: IdaiFieldImageDocument[];
@@ -65,6 +65,8 @@ export class DocumentEditWrapperComponent {
             this.projectConfiguration = projectConfiguration;
 
             if (this.document) {
+                this.clonedDoc = Object.assign({}, this.document);
+                this.clonedDoc.resource = Object.assign({}, this.document.resource);
                 this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
                 this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
                     'editable');
@@ -77,6 +79,7 @@ export class DocumentEditWrapperComponent {
             }
         });
     }
+
     private calcGrid() {
         this.rows = [];
         this.imageGridBuilder.calcGrid(
@@ -126,18 +129,21 @@ export class DocumentEditWrapperComponent {
 
     public save(viaSaveButton: boolean = false) {
 
-        var validationError = this.validator.validate(
-            <IdaiFieldDocument>this.document)
+        var validationError = this.validator
+            .validate(<IdaiFieldDocument> this.clonedDoc)
             .then(()=>{
 
-                this.document['synced'] = 0;
-                return this.persistenceManager.persist(this.document);
+                this.clonedDoc['synced'] = 0;
+                return this.persistenceManager.persist(this.clonedDoc);
             })
             .then(() => {
 
                 this.documentEditChangeMonitor.reset();
 
-                this.onSaveSuccess.emit(viaSaveButton);
+                this.onSaveSuccess.emit({
+                    document: this.clonedDoc,
+                    viaSaveButton: viaSaveButton
+                });
                 // this.navigate(this.document, proceed);
                 // show message after route change
                 this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
@@ -157,7 +163,7 @@ export class DocumentEditWrapperComponent {
             (selectedImages: IdaiFieldImageDocument[]) => {
                 this.addDepictedInRelations(selectedImages);
                 this.documentEditChangeMonitor.setChanged();
-            }, (closeReason) => {}
+            }
         );
     }
 
@@ -173,23 +179,23 @@ export class DocumentEditWrapperComponent {
 
     private overwriteLastRevision() {
 
-        this.datastore.refresh(this.document).then(lastRevision => {
-            this.document['_rev'] = lastRevision['_rev'];
+        this.datastore.refresh(this.clonedDoc).then(lastRevision => {
+            this.clonedDoc['_rev'] = lastRevision['_rev'];
             this.save(true);
         }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
     }
 
     private reloadLastRevision() {
 
-        this.datastore.refresh(this.document).then(lastRevision => {
-            this.document = <IdaiFieldDocument> lastRevision;
+        this.datastore.refresh(this.clonedDoc).then(lastRevision => {
+            this.clonedDoc = <IdaiFieldDocument> lastRevision;
         }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
     }
 
     private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        var relations = this.document.resource.relations["depictedIn"]
-            ? this.document.resource.relations["depictedIn"].slice() : [];
+        var relations = this.clonedDoc.resource.relations["depictedIn"]
+            ? this.clonedDoc.resource.relations["depictedIn"].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
@@ -197,7 +203,7 @@ export class DocumentEditWrapperComponent {
             }
         }
 
-        this.document.resource.relations["depictedIn"] = relations;
+        this.clonedDoc.resource.relations["depictedIn"] = relations;
 
         this.loadImages();
     }

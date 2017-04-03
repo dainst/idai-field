@@ -39,42 +39,13 @@ describe('resources', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime)
     });
 
-    xit('should reflect changes in overview in realtime', function() {
+    it('should not reflect changes in overview in realtime', function() {
         resourcesPage.performCreateResource('1a');
-        resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('1a');
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('1b');
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1b')), delays.ECWaitTime);
+        expect(resourcesPage.getListItemIdentifierText(0)).toBe('1a');
     });
-
-    /**
-     * Addresses a bug which caused that a freshly created object
-     * was not the same instance in the document edit and the overview component anymore
-     * so that changes made to one would not be reflected in the other.
-     *
-     * This however did not happen with an object already saved.
-     */
-    xit ('should reflect changes in overview after creating object - first scenario', function() {
-        resourcesPage.performCreateResource('12');
-        DocumentEditWrapperPage.typeInInputField('34');
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('34')), delays.ECWaitTime);
-    });
-
-
-    /**
-     * Addresses a bug where a call on datastore.find led to detached documents in the resource overview.
-     * The instances didn't reflect the state of the db and vice versa because they were different instances.
-     */
-    xit('should reflect changes in overview after creating object - second scenario', function() {
-        resourcesPage.performCreateResource('12');
-        resourcesPage.clickChooseTypeFilter(0); // calls find
-        resourcesPage.clickSelectResource('12');
-        documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('56'); // same ...
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('56')), delays.ECWaitTime); // ... instance
-    });
-
 
     /**
      * There has been a bug where this was not possible.

@@ -13,12 +13,12 @@ describe('resources/messages', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    xit('should show the success msg also on route change', function() {
+    it('should show the success msg also on route change', function() {
         resourcesPage.performCreateResource('12');
         DocumentEditWrapperPage.typeInInputField('34');
-        resourcesPage.clickSelectResource('34');
+        resourcesPage.clickSelectResource('12');
         resourcesPage.clickSaveInModal();
-        
+
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     

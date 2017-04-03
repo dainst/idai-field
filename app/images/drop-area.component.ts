@@ -130,7 +130,7 @@ export class DropAreaComponent {
 
     private ofUnsupportedExtension(file:File) {
         let ext = file.name.split('.').pop();
-        if (this.supportedFileTypes.indexOf(ext) == -1) return ext;
+        if (this.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
 
     /**

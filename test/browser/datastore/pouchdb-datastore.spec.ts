@@ -2,10 +2,6 @@ import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
 import {M} from "../../../app/m";
 
-import * as PouchDB from "pouchdb";
-import * as express from 'express';
-var expressPouchDB = require('express-pouchdb');
-
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -27,10 +23,10 @@ export function main() {
             ['getParentTypes']
         );
         mockProjectConfiguration.getParentTypes.and.callFake(type => {
-           if (type == 'root') return [];
-           if (type == 'type1') return ['root'];
-           if (type == 'type1.1') return ['type1','root'];
-           if (type == 'type2') return ['root'];
+            if (type == 'root') return [];
+            if (type == 'type1') return ['root'];
+            if (type == 'type1.1') return ['type1','root'];
+            if (type == 'type2') return ['root'];
         });
 
         const mockConfigLoader = jasmine.createSpyObj(
@@ -67,19 +63,6 @@ export function main() {
             );
         };
 
-        function setupPouchDbServer(dbname:string): Promise<any> {
-            return new Promise(resolve => {
-                var app = express();
-                app.use('/', expressPouchDB(PouchDB, {
-                    mode: 'fullCouchDB'
-                }));
-                app.listen(3000, function () {
-                    console.log("PouchDB Server listening on port 3000", dbname);
-                    resolve(new PouchDB(dbname));
-                });
-            });
-        }
-
         beforeEach(
             function () {
                 datastore = new PouchdbDatastore('testdb', mockConfigLoader);
@@ -99,16 +82,16 @@ export function main() {
 
                 datastore.create(doc('sd1'))
                     .then(
-                    _createdDoc => {
-                        const createdDoc = _createdDoc as Document;
-                        expect(createdDoc.resource.id).not.toBe(undefined);
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
+                        _createdDoc => {
+                            const createdDoc = _createdDoc as Document;
+                            expect(createdDoc.resource.id).not.toBe(undefined);
+                            done();
+                        },
+                        err => {
+                            fail();
+                            done();
+                        }
+                    );
             }
         );
 
@@ -119,9 +102,9 @@ export function main() {
                 docToCreate.resource.id = 'a1';
 
                 datastore.create(docToCreate)
-                    // this step was added to adress a problem where a document
-                    // with an existing resource.id was stored but could not
-                    // get refreshed later
+                // this step was added to adress a problem where a document
+                // with an existing resource.id was stored but could not
+                // get refreshed later
                     .then(() => datastore.refresh(docToCreate))
                     // and the same may occur on get
                     .then(() => datastore.get(docToCreate.resource.id))
@@ -148,7 +131,7 @@ export function main() {
                 docToCreate2.resource.id = 'a1';
 
                 expectErr(()=>{return datastore.create(docToCreate1)
-                    .then(() => datastore.create(docToCreate2))},
+                        .then(() => datastore.create(docToCreate2))},
                     [M.DATASTORE_RESOURCE_ID_EXISTS],done);
             }
         );
@@ -181,7 +164,7 @@ export function main() {
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
                 expectErr(()=>{return datastore.create(doc('id1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
-                    .then(() => datastore.get('nonexisting'))}
+                        .then(() => datastore.get('nonexisting'))}
                     ,[M.DATASTORE_NOT_FOUND],done);
             }
         );
@@ -194,7 +177,7 @@ export function main() {
                 const non = doc('sd2');
                 expectErr(()=>{
                     return datastore.create(doc('id1'))
-                    .then(() => datastore.refresh(non))},[M.DATASTORE_NOT_FOUND],done);
+                        .then(() => datastore.refresh(non))},[M.DATASTORE_NOT_FOUND],done);
             }
         );
 
@@ -311,14 +294,14 @@ export function main() {
                 })
                 .then(() => datastore.find({q: 'blub', type: 'root'}))
                 .then(result => {
-                    expect(result.length).toBe(3);
-                    done();
-                },
-                err => {
-                    fail(err);
-                    done();
-                }
-            );
+                        expect(result.length).toBe(3);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
         });
 
         it('should find by prefix query and filter', function(done){
@@ -426,7 +409,7 @@ export function main() {
             const doc1 = doc('bla','blub');
 
             expectErr(()=>{return datastore.create(doc1)
-                .then(() => datastore.findByIdentifier('abc'))},
+                    .then(() => datastore.findByIdentifier('abc'))},
                 [M.DATASTORE_NOT_FOUND],done);
         });
 
@@ -434,21 +417,8 @@ export function main() {
             const doc1 = doc('bla','blub');
 
             expectErr(()=>{return datastore.create(doc1)
-                .then(() => datastore.findByIdentifier(undefined))},
+                    .then(() => datastore.findByIdentifier(undefined))},
                 [M.DATASTORE_NOT_FOUND],done);
-        });
-
-        xit("should sync changes to target", function(done) {
-            console.log("asdf");
-            setupPouchDbServer('testdb')
-                .then(() => {
-                    let sync = datastore.setupSync('http://localhost:3000/testdb');
-                    sync.onError.subscribe(err => {
-                        console.error(err);
-                        fail(err);
-                    });
-                    sync.onActive.subscribe(() => done());
-                });
         });
 
     })

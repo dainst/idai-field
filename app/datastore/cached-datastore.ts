@@ -3,6 +3,7 @@ import {Document} from "idai-components-2/core";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
+import {SyncState} from "./sync-state";
 
 @Injectable()
 /**
@@ -92,6 +93,10 @@ export class CachedDatastore implements IdaiFieldDatastore {
             this.documentCache[doc.resource.id] = result as Document;
             return Promise.resolve(result);
         });
+    }
+
+    setupSync(url: string): SyncState {
+        return this.datastore.setupSync(url);
     }
 
 }

@@ -2,6 +2,10 @@ import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
 import {M} from "../../../app/m";
 
+import * as PouchDB from "pouchdb";
+import * as express from 'express';
+var expressPouchDB = require('express-pouchdb');
+
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -63,6 +67,19 @@ export function main() {
             );
         };
 
+        function setupPouchDbServer(dbname:string): Promise<any> {
+            return new Promise(resolve => {
+                var app = express();
+                app.use('/', expressPouchDB(PouchDB, {
+                    mode: 'fullCouchDB'
+                }));
+                app.listen(3000, function () {
+                    console.log("PouchDB Server listening on port 3000", dbname);
+                    resolve(new PouchDB(dbname));
+                });
+            });
+        }
+
         beforeEach(
             function () {
                 datastore = new PouchdbDatastore('testdb', mockConfigLoader);
@@ -88,7 +105,7 @@ export function main() {
                         done();
                     },
                     err => {
-                        fail();
+                        fail(err);
                         done();
                     }
                 );
@@ -419,6 +436,19 @@ export function main() {
             expectErr(()=>{return datastore.create(doc1)
                 .then(() => datastore.findByIdentifier(undefined))},
                 [M.DATASTORE_NOT_FOUND],done);
+        });
+
+        xit("should sync changes to target", function(done) {
+            console.log("asdf");
+            setupPouchDbServer('testdb')
+                .then(() => {
+                    let sync = datastore.setupSync('http://localhost:3000/testdb');
+                    sync.onError.subscribe(err => {
+                        console.error(err);
+                        fail(err);
+                    });
+                    sync.onActive.subscribe(() => done());
+                });
         });
 
     })

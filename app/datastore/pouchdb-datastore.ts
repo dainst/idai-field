@@ -7,6 +7,7 @@ import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
+import {ReadDatastore,Datastore} from 'idai-components-2/datastore';
 
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";

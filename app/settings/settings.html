@@ -1,3 +1,33 @@
-<div class="row">
-	Einstellungen ...
+<div id="settings"
+     (dragover)="false"
+     (dragleave)="false"
+     (drop)="false">
+
+    <header>
+        <h1>
+            <span class="mdi mdi-file-import"></span>
+            Einstellungen
+        </h1>
+    </header>
+
+    <main>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="md-form">
+                    <div class="col-sm-2">
+                        <label class="control-label col-sm-2">Projekt:</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <select id="importSourceSelect" class="form-control"
+                                [(ngModel)]="selectedProject"
+                                (ngModelChange)="selectProject()">
+                            <option value="pergamon">Pergamon</option>
+                            <option value="itg-test">ITG Test</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
+

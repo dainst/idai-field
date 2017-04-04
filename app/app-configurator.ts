@@ -11,8 +11,6 @@ export class AppConfigurator {
 
     constructor(private configLoader: ConfigLoader) { }
 
-    public static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
-
     private defaultTypes = [{
         "type": "image",
         "fields": [
@@ -60,10 +58,12 @@ export class AppConfigurator {
         {name: 'depictedIn', range: ['image:inherit'], inverse: 'depicts', visible: false, editable: false}
     ];
 
-    public go(reset: boolean = false) {
+    public go(projectConfigurationPath: string, reset: boolean = false) {
+
+        if (reset) this.configLoader.reset();
 
         this.configLoader.go(
-            AppConfigurator.PROJECT_CONFIGURATION_PATH,
+            projectConfigurationPath,
             new ConfigurationPreprocessor(
                 this.defaultTypes,
                 this.defaultFields,

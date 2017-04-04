@@ -16,6 +16,8 @@ import {AppConfigurator} from "./app-configurator";
  */
 export class AppComponent implements OnInit {
 
+    private static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
+
     constructor(@Inject('app.config') private config,
                 private appConfigurator: AppConfigurator,
                 private configLoader: ConfigLoader,
@@ -38,7 +40,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.appConfigurator.go();
+        this.appConfigurator.go(AppComponent.PROJECT_CONFIGURATION_PATH);
         this.configLoader.getProjectConfiguration().catch(msgWithParams => {
             this.messages.add(msgWithParams);
         });

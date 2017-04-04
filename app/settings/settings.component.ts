@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {AppConfigurator} from "../app-configurator";
 
 @Component({
     moduleId: module.id,
@@ -11,9 +12,9 @@ export class SettingsComponent {
 
     public selectedProject;
 
-    constructor() { }
+    constructor(private appConfigurator: AppConfigurator) { }
 
     public selectProject() {
-        console.log("select project",this.selectedProject);
+        this.appConfigurator.go(this.selectedProject,true);
     }
 }

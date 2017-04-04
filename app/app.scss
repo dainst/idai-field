@@ -273,3 +273,15 @@ $lightgraybgr: #eeeeee;
   background-color: lighten($redbgr, 35%);
 }
 
+/* Workaround for showing ngbootstraps modals in bootstrap v4 */
+.fade.in {
+  opacity: 1;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+}

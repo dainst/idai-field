@@ -2,7 +2,7 @@ plus-button {
 
   #object-overview-button-create-object {
     left: 45%;
-    margin: -33px auto auto auto;
+    margin: -25px auto auto auto;
     z-index: 100;
   }
 
@@ -12,6 +12,11 @@ plus-button {
   }
   .abstract-idai-type ul {
     font-style: normal;
+  }
+
+  .circular-button {
+    width: 41px;
+    height: 41px;
   }
 
 }

@@ -39,12 +39,14 @@ import {BlobMaker} from "./imagestore/blob-maker";
 import {Converter} from "./imagestore/converter";
 
 import {IdaiWidgetsModule} from "idai-components-2/widgets"
+import {SettingsModule} from "./settings/settings.module";
 
 @NgModule({
     imports: [
         ImagesModule,
         ResourcesModule,
         ListModule,
+        SettingsModule,
         BrowserModule,
         FormsModule,
         HttpModule,

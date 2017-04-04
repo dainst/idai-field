@@ -9,25 +9,16 @@
 
 #search-bar {
   margin-bottom: 10px;
-  margin-top: 15px;
 }
 
-#search-bar .input-group-btn {
-  padding: 1px;
+#search-bar #object-search {
+  width: 100%;
+  padding: 9px;
 }
 
-#search-bar .md-form {
-  margin-top: 15px;
-}
-
-#search-bar .form-control {
-  margin: 10px 0;
-  padding: 0 !important;
-  background-color: inherit !important;
-}
-
-.md-form label.active {
-  color: #37588e !important;
+#search-bar #filter-button {
+  position: absolute;
+  right: 7px;
 }
 
 input[type=text]:focus:not([readonly]),

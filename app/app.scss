@@ -278,6 +278,11 @@ $lightgraybgr: #eeeeee;
   cursor: pointer !important;
 }
 
+.nav-link {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
 /* Workaround for showing ngbootstraps modals in bootstrap v4 */
 .fade.in {
   opacity: 1;

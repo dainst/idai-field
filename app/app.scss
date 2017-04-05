@@ -274,6 +274,10 @@ $lightgraybgr: #eeeeee;
   background-color: lighten($redbgr, 35%);
 }
 
+.btn {
+  cursor: pointer !important;
+}
+
 /* Workaround for showing ngbootstraps modals in bootstrap v4 */
 .fade.in {
   opacity: 1;

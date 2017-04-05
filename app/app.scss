@@ -279,8 +279,8 @@ $lightgraybgr: #eeeeee;
 }
 
 .nav-link {
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
 }
 
 /* Workaround for showing ngbootstraps modals in bootstrap v4 */

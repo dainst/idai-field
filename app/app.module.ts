@@ -101,6 +101,8 @@ import {AppConfigurator} from "./app-configurator";
                 } else {
                     datastore = new PouchdbDatastore(dbname, configLoader, test);
                 }
+                // setup sync
+                if(CONFIG['sync']) CONFIG['sync'].forEach(uri => datastore.setupSync(uri));
                 return new CachedDatastore(datastore);
             },
             deps: [ConfigLoader]

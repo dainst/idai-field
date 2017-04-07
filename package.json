@@ -66,6 +66,7 @@
     "mdi": "1.8.36",
     "papaparse": "~4.1.4",
     "pouchdb": "~6.1.2",
+    "pouchdb-server": "^2.3.6",
     "reflect-metadata": "0.1.8",
     "roboto-fontface": "0.6.0",
     "rxjs": "5.0.0-beta.12",

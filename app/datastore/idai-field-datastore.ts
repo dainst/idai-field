@@ -21,6 +21,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
      */
-    abstract setupSync(url: string): SyncState;
+    abstract setupSync(url: string): Promise<SyncState>;
 
 }

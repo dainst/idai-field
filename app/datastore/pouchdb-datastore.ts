@@ -349,15 +349,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(result => this.filterResult(this.docsFromResult(result)));
     }
 
-    public setupSync(url: string): SyncState {
-        let sync = this.db.sync(url, { live: true, retry: true });
-        return {
-            url: url,
-            cancel: () => sync.cancel(),
-            onError: Observable.fromEventPattern(h => sync.on('error', h), null),
-            onPaused: Observable.fromEventPattern(h => sync.on('paused', h), null),
-            onActive: Observable.fromEventPattern(h => sync.on('active', h), null)
-        }
+    public setupSync(url: string): Promise<SyncState> {
+
+        return this.readyForQuery.then(() => {
+            let sync = this.db.sync(url, { live: true, retry: true });
+            return {
+                url: url,
+                cancel: () => sync.cancel(),
+                onError: Observable.create(obs => sync.on('error', err => obs.onNext(err))),
+                onPaused: Observable.create(obs => sync.on('paused', err => obs.onNext(err))),
+                onActive: Observable.create(obs => sync.on('active', () => obs.onNext()))
+            }
+        });
     }
 
     private fetchObject(id: string): Promise<Document> {

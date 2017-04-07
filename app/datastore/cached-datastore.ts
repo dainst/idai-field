@@ -95,7 +95,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
         });
     }
 
-    setupSync(url: string): SyncState {
+    setupSync(url: string): Promise<SyncState> {
         return this.datastore.setupSync(url);
     }
 

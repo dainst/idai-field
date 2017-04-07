@@ -16,7 +16,7 @@ let ResourcesPage = function() {
     this.refresh = function() {
         browser.driver.get('http://localhost:8081/#/import');
         browser.driver.get('http://localhost:8081/#/resources');
-        browser.waitForAngular();
+        return browser.waitForAngular();
     };
 
     // click

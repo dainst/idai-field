@@ -170,7 +170,7 @@ export class DocumentEditWrapperComponent {
     private handleConflict() {
 
         this.modalService.open(
-            ConflictResolverComponent, {size: "lg"}
+            ConflictResolverComponent, {size: "lg", windowClass: "conflict-resolver"}
         ).result.then(decision => {
             if (decision == 'overwrite') this.overwriteLastRevision();
             else this.reloadLastRevision();

@@ -38,6 +38,17 @@ export class ResourcesComponent {
         this.fetchDocuments().then(()=>{
            readyResolveFun();
         });
+
+        const self = this;
+        datastore.documentChangesNotifications().subscribe(result=>{
+            if (!self.documents) return;
+            for (let doc of self.documents) {
+                if (doc.resource.id == result.resource.id) {
+                    doc['synced'] = result['synced'];
+                }
+            }
+
+        });
     }
 
     /**

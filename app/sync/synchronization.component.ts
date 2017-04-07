@@ -57,11 +57,12 @@ export class SynchronizationComponent {
     }
 
     private sync(doc: any) {
-        
+
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.idaiFieldBackend.save(doc,projectConfiguration.getExcavationName()).then(
                 document => {
                     document['synced'] = 1;
+
                     this.datastore.update(document);
                     this.removeObjectId(document['resource']['id']);
                 },

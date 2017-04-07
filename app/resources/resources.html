@@ -26,13 +26,12 @@
                         (dblclick)="open(document)"
                         class="list-group-item"
                         [class.conflicted]="document['_conflicts']"
-                        [class.synced]="document.synced"
-                        [class.unsynced]="!document.synced"
+                        [class.synced]="document.synced == 1"
+                        [class.unsynced]="document.synced == 0"
                         [class.selected]="getSelected() && getSelected().resource.id === document.resource.id"
                         [id]="'resource-' + document.resource.identifier">
 
                         <document-teaser [document]="document"></document-teaser>
-
                     </li>
                 </ul>
 

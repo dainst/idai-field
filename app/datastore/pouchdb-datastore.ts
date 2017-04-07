@@ -43,6 +43,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         this.readyForQuery = this.readyForQuery
             .then(() => this.setupFulltextIndex())
             .then(() => this.setupIdentifierIndex())
+            .then(() => this.setupSyncedIndex())
             .then(() => this.setupAllIndex())
             .then(() => configLoader.getProjectConfiguration())
             .then(config => this.config = config);
@@ -70,6 +71,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             });
         };
         return this.setupIndex('fulltext', mapFun);
+    }
+
+    private setupSyncedIndex(): Promise<any> {
+        let mapFun = function(doc) {
+            emit(doc.synced);
+        };
+        return this.setupIndex('synced', mapFun);
     }
 
     private setupIdentifierIndex(): Promise<any> {
@@ -304,6 +312,19 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(result => this.filterResult(this.docsFromResult(result)));
     }
 
+    public findUnsynced(): Promise<Document[]> {
+
+        return this.readyForQuery.then(() => {
+            return this.db.query('synced', {
+                key: 0,
+                include_docs: true,
+                conflicts: true,
+            }).then(result => {
+                return Promise.resolve(result.rows.map(result=>result.doc));
+            });
+        });
+    }
+
     public findByIdentifier(identifier: string): Promise<Document> {
 
         return this.readyForQuery.then(() => {
@@ -404,6 +425,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             include_docs: true,
             since: 'now'
         }).on('change', change => {
+            
+            if (change['id'].indexOf('_design') == 0) return; // starts with
+
             this.observers.forEach( observer => {
                 observer.next(this.cleanDoc(change.doc));
             });

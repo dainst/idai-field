@@ -21,7 +21,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
                 // explicitly assign by value in order for
                 // changes to be detected by angular
                 if (doc && doc.resource && this.documentCache[doc.resource.id]) {
-                    console.log("change detected", doc);
+                    console.debug("change detected", doc);
                     Object.assign(this.documentCache[doc.resource.id], doc);
                 }
             });

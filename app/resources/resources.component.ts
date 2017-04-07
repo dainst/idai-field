@@ -43,6 +43,8 @@ export class ResourcesComponent {
         datastore.documentChangesNotifications().subscribe(result=>{
             if (!self.documents) return;
             for (let doc of self.documents) {
+                if (!doc.resource || !result.resource) continue;
+                if (!doc.resource.id || !result.resource.id) continue;
                 if (doc.resource.id == result.resource.id) {
                     doc['synced'] = result['synced'];
                 }

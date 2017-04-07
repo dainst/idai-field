@@ -420,16 +420,22 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private setupChangesEmitter(): void {
 
+        function isFunction(functionToCheck) {
+            var getType = {};
+            return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+        }
+
         this.db.changes({
             live: true,
             include_docs: true,
             since: 'now'
         }).on('change', change => {
-            
-            if (change['id'].indexOf('_design') == 0) return; // starts with
-
-            this.observers.forEach( observer => {
-                observer.next(this.cleanDoc(change.doc));
+            if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
+            if (!change || !change.doc) return;
+            if (this.observers && Array.isArray(this.observers)) this.observers.forEach( observer => {
+                if (observer && (observer.next != undefined) && isFunction(observer.next)) {
+                    observer.next(this.cleanDoc(change.doc));
+                }
             });
         }).on('complete', info => {
             console.error("changes stream was canceled", info);

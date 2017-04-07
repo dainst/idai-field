@@ -1,3 +1,18 @@
+<div class="row" style="background-color: #eee; padding-top:10px;">
+	<div class="col-md-4">
+		<select class="form-control" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
+			<option selected value>Alle Schnitte</option>
+			<option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
+		</select>
+	</div>
+	<div class="col-md-4">
+		<search-bar [showFiltersMenu]="true"
+					[defaultFilterSet]="defaultTypes"
+					(onQueryChanged)="queryChanged($event)">
+		</search-bar>
+	</div>
+</div>
+
 <div class="row">
 	<table class="col-md-12 table table-sm">
 		<tr>

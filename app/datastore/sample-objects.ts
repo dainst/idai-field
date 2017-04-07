@@ -52,4 +52,38 @@ export var DOCS: IdaiFieldDocument[] = [
         },
         "synced": 0
     },
+    {
+        "resource": {
+            "id": "t1",
+            "identifier": "trench1",
+            "shortDescription": "Goldener Schnitt",
+            "relations": {
+                "includes" : ["c1"]
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[27.189218354962215, 39.14132050335332], [27.189276375601313, 39.14133824217116], [27.18928181180254, 39.14132438323931], [27.189226035114622, 39.141306298358316], [27.189218354962215, 39.14132050335332]],
+                "crs": "local"
+            },
+            "type": "trench"
+        },
+        "synced": 0
+    },
+    {
+        "resource": {
+            "id": "c1",
+            "identifier": "context1",
+            "shortDescription": "Ein Befund",
+            "relations": {
+                "belongsTo" : ["t1"]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [ 27.2892609283, 39.1411810096 ],
+                "crs": "local"
+            },
+            "type": "context"
+        },
+        "synced": 0
+    }
 ];

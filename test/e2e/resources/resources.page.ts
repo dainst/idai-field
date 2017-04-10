@@ -13,12 +13,6 @@ let ResourcesPage = function() {
         return browser.get('/#/resources');
     };
 
-    this.refresh = function() {
-        browser.driver.get('http://localhost:8081/#/import');
-        browser.driver.get('http://localhost:8081/#/resources');
-        return browser.waitForAngular();
-    };
-
     // click
 
     // TODO create click function in common

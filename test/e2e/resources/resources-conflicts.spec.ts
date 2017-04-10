@@ -7,12 +7,11 @@ let expressPouchDB = require('express-pouchdb');
 
 let resourcesPage = require('./resources.page');
 let documentViewPage = require('../widgets/document-view.page');
-import {NavbarPage} from '../navbar.page';
 
 /**
  * @author Sebastian Cuy
  */
-xdescribe('resources/syncing', function() {
+describe('resources/syncing', function() {
 
     let db;
     let testResource =  {
@@ -69,10 +68,10 @@ xdescribe('resources/syncing', function() {
            .catch(err => { console.error("Error in afterEach", err) });
     });
 
-    xit('should detect conflict on save', function(done) {
+    it('should detect conflict on save', function(done) {
 
-        browser.waitForAngular();
-        resourcesPage.refresh()
+        browser.waitForAngular()
+            .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))
             .then(() => resourcesPage.clickSelectResource('test1'))
             .then(() => documentViewPage.clickEditDocument())
             .then(updateTestDoc)

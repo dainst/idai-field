@@ -11,7 +11,7 @@ let documentViewPage = require('../widgets/document-view.page');
 /**
  * @author Sebastian Cuy
  */
-describe('resources/syncing', function() {
+xdescribe('resources/syncing', function() {
 
     let db;
     let testResource =  {
@@ -68,7 +68,7 @@ describe('resources/syncing', function() {
            .catch(err => { console.error("Error in afterEach", err) });
     });
 
-    it('should detect conflict on save', function(done) {
+    xit('should detect conflict on save', function(done) {
 
         browser.waitForAngular()
             .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))

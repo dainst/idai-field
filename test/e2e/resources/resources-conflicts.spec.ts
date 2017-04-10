@@ -19,7 +19,8 @@ xdescribe('resources/syncing', function() {
         id: "td1",
         identifier:"test1",
         type: "object",
-        shortDescription: "Testobjekt"
+        shortDescription: "Testobjekt",
+        relations: []
     };
     let testDocument:any = { resource: testResource };
 
@@ -48,7 +49,11 @@ xdescribe('resources/syncing', function() {
     function updateTestDoc() {
         testDocument.resource.identifier = 'test2';
         return db.put(testDocument)
-            .then(result => console.log("updated test doc", result))
+            .then(result => {
+                console.log("updated test doc", result);
+                testDocument._id = result.id;
+                testDocument._rev = result.rev;
+            })
             .catch(err => console.log("failure while updating test doc", err));
     }
 
@@ -60,23 +65,21 @@ xdescribe('resources/syncing', function() {
     });
 
     afterEach(done => {
-       db.remove(testDocument).then(done)
-           .catch(err => { console.error(err) });
+       db.remove(testDocument._id, testDocument._rev).then(done)
+           .catch(err => { console.error("Error in afterEach", err) });
     });
 
-    xit('should detect conflict on save', function() {
+    xit('should detect conflict on save', function(done) {
 
-        updateTestDoc();
-
-        /*browser.waitForAngular();
+        browser.waitForAngular();
         resourcesPage.refresh()
-            //.then(() => resourcesPage.clickSelectResource('test1'))
-            //.then(() => documentViewPage.clickEditDocument())
+            .then(() => resourcesPage.clickSelectResource('test1'))
+            .then(() => documentViewPage.clickEditDocument())
             .then(updateTestDoc)
-            //.then(() => DocumentEditWrapperPage.clickSaveDocument())
+            .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(() => console.log("done"))
             .then(done)
-            .catch(err => fail(err));*/
+            .catch(err => fail(err));
     });
 
 });

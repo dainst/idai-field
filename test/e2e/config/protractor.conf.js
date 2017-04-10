@@ -27,7 +27,9 @@ exports.config = {
         failOnWarning: true,
         failOnError: true,
         logWarnings: true,
-        exclude: []
+        exclude: [
+            "http://localhost:3000/" // pouchdb issues ignorable errors when syncing
+        ]
     },{
         package: 'protractor-fail-fast'
     }],

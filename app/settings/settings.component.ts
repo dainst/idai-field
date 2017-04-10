@@ -15,9 +15,7 @@ export class SettingsComponent {
     constructor(
         private configLoader: ConfigLoader
     ) {
-
         this.configLoader.getProjectConfiguration().then(conf => {
-            console.log("conf",conf.getProjectIdentifier())
             this.selectedProject = conf.getProjectIdentifier();
         })
     }

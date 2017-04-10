@@ -29,8 +29,12 @@ export class SynchronizationComponent {
 
         if (config['backend']==undefined) return;
 
-        this.setupConnectionCheck();
-        this.subscribeForUnsyncedDocuments();
+        this.configLoader.getProjectConfiguration().then( conf => {
+          if (conf.getProjectIdentifier()) {
+            this.setupConnectionCheck();
+            this.subscribeForUnsyncedDocuments();
+          }
+        })
     }
 
     private subscribeForUnsyncedDocuments() {

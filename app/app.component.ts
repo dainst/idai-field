@@ -3,6 +3,7 @@ import {Router, Event, NavigationStart} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {AppConfigurator} from "./app-configurator";
+import {M} from "./m";
 
 @Component({
     moduleId: module.id,
@@ -41,7 +42,13 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.appConfigurator.go(AppComponent.PROJECT_CONFIGURATION_PATH);
-        this.configLoader.getProjectConfiguration().catch(msgWithParams => {
+        this.configLoader.getProjectConfiguration().then(
+            conf => {
+                if (!conf.getProjectIdentifier()) {
+                    this.messages.add([M.APP_NO_PROJECT_IDENTIFIER]);
+                }
+            }
+        ).catch(msgWithParams => {
             this.messages.add(msgWithParams);
         });
     }

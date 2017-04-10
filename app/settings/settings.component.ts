@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {AppConfigurator} from "../app-configurator";
+import {ConfigLoader} from 'idai-components-2/configuration';
 
 @Component({
     moduleId: module.id,
@@ -12,9 +12,13 @@ export class SettingsComponent {
 
     public selectedProject;
 
-    constructor(private appConfigurator: AppConfigurator) { }
+    constructor(
+        private configLoader: ConfigLoader
+    ) {
 
-    public selectProject() {
-        this.appConfigurator.go(this.selectedProject,true);
+        this.configLoader.getProjectConfiguration().then(conf => {
+            console.log("conf",conf.getProjectIdentifier())
+            this.selectedProject = conf.getProjectIdentifier();
+        })
     }
 }

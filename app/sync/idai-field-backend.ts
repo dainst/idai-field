@@ -86,7 +86,7 @@ export class IdaiFieldBackend {
 
     private performPut(resourceId:string,document:any) : Observable<Response> {
 
-        return this.http.put(this.configuration.uri + '/'+document['resource']['type']+'/'
+        return this.http.put(this.configuration.uri + '/' + document['resource']['type'] + '/'
             + resourceId,
             JSON.stringify(document), 
             {headers: this.createAuthorizationHeader()});
@@ -101,7 +101,8 @@ export class IdaiFieldBackend {
      *   error -> an error message or message key
      */
     public save(document:any,dataset:string):Promise<IdaiFieldDocument> {
-        if (dataset) document['dataset']=dataset;
+
+        if (dataset) document['dataset'] = dataset;
         
         return new Promise((resolve, reject) => {
             this.performPut(document['resource']['id'],document).subscribe(

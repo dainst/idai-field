@@ -11,30 +11,7 @@
     </header>
 
     <main>
-
-        <div class="form-group row">
-
-            <div class="col-lg-6 offset-lg-3">
-
-                <div class="form-group row">
-
-                    <div class="col-sm-1">
-                        <label class="control-label col-form-label"
-                               for="importSourceSelect">Projekt:</label>
-                    </div>
-                    <div class="col-sm-11">
-                        <select id="importSourceSelect" class="form-control"
-                                [(ngModel)]="selectedProject"
-                                (ngModelChange)="selectProject()">
-                            <option value="config/Configuration.json">Pergamon</option>
-                            <option value="config/Configuration-1.json">ITG Test</option>
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+        <b>Projekt: </b> {{selectedProject}}
     </main>
 </div>
 

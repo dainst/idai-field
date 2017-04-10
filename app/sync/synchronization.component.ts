@@ -45,7 +45,6 @@ export class SynchronizationComponent {
 
     private storeDocsResourceId(doc) {
         if (doc && doc.resource && doc.resource.id) {
-            console.log("store",doc)
             this.storeObjectId(doc.resource.id)
         } else {
             console.error("got no document id in storeDocsResourceId ", doc)

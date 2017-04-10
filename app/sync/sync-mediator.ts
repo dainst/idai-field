@@ -1,12 +1,15 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {Datastore} from "idai-components-2/datastore";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
+import {Document} from 'idai-components-2/core';
 
+@Injectable()
 /**
+ * The sync mediator acts as a proxy to the datastores documentChangesNotifications functionality,
+ * extending it by the ability to include previously unsynced documents when notifying its observers.
+ *
  * @author Daniel de Oliveira
  */
-@Injectable()
 export class SyncMediator {
 
     private observers = [];
@@ -15,38 +18,24 @@ export class SyncMediator {
         private datastore: IdaiFieldDatastore
     ){
         this.datastore.documentChangesNotifications().subscribe(
-            document=>{
-                for (let obs of this.observers) {
-                    if (document['synced']!==1)
-                        obs.next(document);
-                }
-            },
-            (err)=>console.log("err in syncmediator",err)
+            document => this.notify(document),
+            (err) => console.log("err in syncmediator",err)
         );
     };
+
+    private notify(document) {
+        for (let obs of this.observers) {
+            if (document['synced']!==1) obs.next(document);
+        }
+    }
 
     public getUnsyncedDocuments(): Observable<Document> {
         return Observable.create( observer => {
 
-            this.datastore.findUnsynced().then(result=>{
-               console.log("sync mediator got",result)
+            this.observers.push(observer);
+            this.datastore.findUnsynced().then(docs => {
+                for (let doc of docs) this.notify(doc);
             });
-            // this.db.then(db => {
-            //     var cursor = db.openCursor("idai-field-object","synced",IDBKeyRange.only(0));
-            //     cursor.onsuccess = (event) => {
-            //         var cursor = event.target.result;
-            //         if (cursor) {
-            //             this.datastore.get(cursor.value['resource']['id']).then(
-            //                 possiblyCachedDocFromDS=>{
-            //                     observer.next(possiblyCachedDocFromDS);
-            //             });
-            //             cursor.continue();
-            //         } else {
-                        this.observers.push(observer);
-                    // }
-                // };
-                // cursor.onerror = err => observer.onError(cursor.error);
-            // });
         });
     }
 }

@@ -37,13 +37,21 @@ export class SynchronizationComponent {
 
         this.syncMediator.getUnsyncedDocuments().subscribe(
             doc => {
-                if (this.connected)
-                    this.sync(doc);
-                else this.storeObjectId(doc['resource']['id']);
+                this.connected ? this.sync(doc) : this.storeDocsResourceId(doc);
             },
             err => console.error("Error in subscribeForUnsyncedDocuments(). ", err)
         );
     }
+
+    private storeDocsResourceId(doc) {
+        if (doc && doc.resource && doc.resource.id) {
+            console.log("store",doc)
+            this.storeObjectId(doc.resource.id)
+        } else {
+            console.error("got no document id in storeDocsResourceId ", doc)
+        }
+    }
+
 
     private setupConnectionCheck() {
         this.idaiFieldBackend.connectionStatus().subscribe(
@@ -59,7 +67,7 @@ export class SynchronizationComponent {
     private sync(doc: any) {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.idaiFieldBackend.save(doc,projectConfiguration.getExcavationName()).then(
+            this.idaiFieldBackend.save(doc,projectConfiguration.getProjectIdentifier()).then(
                 document => {
                     document['synced'] = 1;
 

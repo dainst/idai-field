@@ -47,3 +47,5 @@ fonts
 app/**/*.js
 app/**/*.js.map
 
+config.json
+idai-field-documents

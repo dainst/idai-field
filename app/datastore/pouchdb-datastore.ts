@@ -320,7 +320,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 include_docs: true,
                 conflicts: true,
             }).then(result => {
-                return Promise.resolve(result.rows.map(result=>result.doc));
+                return Promise.resolve(result.rows.map(result=>this.cleanDoc(result.doc)));
             });
         });
     }
@@ -337,7 +337,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 conflicts: true,
             }).then(result => {
                if (result.rows.length > 0) {
-                   return Promise.resolve(result.rows[0].doc);
+                   return Promise.resolve(this.cleanDoc(result.rows[0].doc));
                } else {
                    return Promise.reject([M.DATASTORE_NOT_FOUND]);
                }

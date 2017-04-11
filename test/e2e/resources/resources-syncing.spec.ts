@@ -1,5 +1,4 @@
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
-import {browser} from 'protractor';
 import * as PouchDB from 'pouchdb';
 import * as cors from 'pouchdb-server/lib/cors'
 import * as express from 'express';
@@ -13,13 +12,13 @@ const documentViewPage = require('../widgets/document-view.page');
 /**
  * @author Sebastian Cuy
  */
-describe('resources/syncing', function() {
+fdescribe('resources/syncing', function() {
 
     const defaultConf = path.resolve(__dirname, '../../../config/config.json');
     const tempConf = path.resolve(__dirname, './config.json.tmp');
     const syncConf = path.resolve(__dirname, './resources-syncing.config.json');
 
-    let db;
+    let db, server;
     let testResource =  {
         id: "td1",
         identifier:"test1",
@@ -30,56 +29,104 @@ describe('resources/syncing', function() {
     let testDocument:any = { resource: testResource };
 
     function setupTestDB() {
+
         return new Promise(resolve => {
             let app = express();
             let pouchDbApp = expressPouchDB(PouchDB);
             app.use(cors(pouchDbApp.couchConfig))
             app.use('/', pouchDbApp);
-            app.listen(3000, function () {
+            server = app.listen(3000, function () {
                 new PouchDB('idai-field-documents').destroy().then(() => {
                     resolve(new PouchDB('idai-field-documents'));
                 });
             });
-        })
-            .then(newDb => db = newDb)
-            .then(() => db.post(testDocument))
-            .then(result => {
-                testDocument._id = result.id;
-                testDocument._rev = result.rev;
-            });
+        }).then(newDb => db = newDb);
+    }
+
+    function tearDownTestDB() {
+
+        return db.destroy()
+            .then(() => server.close());
+    }
+
+    function createTestDoc() {
+
+        return db.post(testDocument).then(result => {
+            testDocument._id = result.id;
+            testDocument._rev = result.rev;
+        }).catch(err => console.log("failure while creating test doc", err));
+    }
+
+    function resetTestDoc() {
+
+        let id = testDocument._id;
+        let rev = testDocument._rev;
+        delete testDocument._id;
+        delete testDocument._rev;
+        testDocument.resource.identifier = 'test1';
+        return db.remove(id, rev)
+            .catch(err => console.log("failure while removing test doc", err));
     }
 
     function updateTestDoc() {
+
         testDocument.resource.identifier = 'test2';
-        return db.put(testDocument)
-            .then(result => {
-                testDocument._id = result.id;
-                testDocument._rev = result.rev;
-            })
-            .catch(err => console.log("failure while updating test doc", err));
+        return db.put(testDocument).then(result => {
+            testDocument._id = result.id;
+            testDocument._rev = result.rev;
+        }).catch(err => console.log("failure while updating test doc", err));
     }
 
-    beforeAll(() => {
+    beforeAll(done => {
+
         fs.copySync(defaultConf, tempConf);
         fs.copySync(syncConf, defaultConf);
+        setupTestDB().then(done);
     });
 
-    afterAll(() => {
+    afterAll(done => {
+
         fs.moveSync(tempConf, defaultConf, { overwrite: true });
+        tearDownTestDB().then(done);
     });
 
     beforeEach(done => {
-        setupTestDB()
-            .then(done)
-            .catch(err => { console.error(err) });
+
+        createTestDoc().then(done);
     });
 
     afterEach(done => {
-       db.remove(testDocument._id, testDocument._rev).then(done)
-           .catch(err => { console.error("Error in afterEach", err) });
+
+        resetTestDoc().then(done);
     });
 
-    it('should detect conflict on save', function(done) {
+    it('should show resource created in other db', () => {
+
+        resourcesPage.get();
+        resourcesPage.typeInIdentifierInSearchField('test1');
+        expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
+    });
+
+    it('should show changes made in other db', done => {
+
+        resourcesPage.get()
+            .then(updateTestDoc)
+            .then(() => resourcesPage.typeInIdentifierInSearchField('test2'))
+            .then(() => expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2'))
+            .then(done);
+    });
+
+    it('resource created in client should be synced to other db', done => {
+
+        resourcesPage.get();
+        db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {
+            if (change.doc.resource && change.doc.resource.identifier == 'test3')
+                done();
+        });
+        resourcesPage.performCreateResource('test3');
+    });
+
+    it('should detect conflict on save', done => {
 
         resourcesPage.get()
             .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))

@@ -13,7 +13,7 @@ const documentViewPage = require('../widgets/document-view.page');
 /**
  * @author Sebastian Cuy
  */
-describe('resources/syncing', function() {
+xdescribe('resources/syncing', function() {
 
     const defaultConf = path.resolve(__dirname, '../../../config/config.json');
     const tempConf = path.resolve(__dirname, './config.json.tmp');

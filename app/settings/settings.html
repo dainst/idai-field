@@ -7,11 +7,52 @@
         <h1>
             <span class="mdi mdi-file-import"></span>
             Einstellungen
+
         </h1>
     </header>
 
     <main>
-        <b>Projekt: </b> {{selectedProject}}
+        <div class="row">
+            <div class="col-md-9">
+                <b>Projekt </b> {{selectedProject}}<br><br><br>
+                <b>Benutzer </b> <input [ngModel]="userName" (ngModelChange)="userName = $event">
+            </div>
+            <div class="col-md-3">
+                <button class="pull-right" style="text-align:right" (click)="save()">Einstellungen übernehmen</button>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <hr>
+
+        <h5>Synchronisation</h5>
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <b>Serververbindung </b><br><br>
+                <table>
+                    <tr><td><b>Serveraddresse: </b></td><td><input [ngModel]="server.ipAddress" (ngModelChange)="server.ipAddress = $event" placeholder="x.x.x.x"></td></tr>
+                    <tr><td><b>Benutzer </b></td><td><input [ngModel]="server.userName" (ngModelChange)="server.userName = $event"></td></tr>
+                    <tr><td><b>Passwort </b></td><td><input [ngModel]="server.password" (ngModelChange)="server.password = $event"></td></tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <b>Teammitglieder: </b><br><br>
+                <ul>
+                    <li *ngFor="let remoteSite of remoteSites; let i = index;">
+                        <b>IP Addresse: </b>
+                        <input [ngModel]="remoteSite.ipAddress" (ngModelChange)="remoteSite.ipAddress = $event" placeholder="x.x.x.x">
+                        <button (click)="removeRemoteSite(i)">-</button>
+                    </li>
+                </ul>
+                <button (click)="addRemoteSite()">Client hinzufügen</button>
+            </div>
+        </div>
     </main>
 </div>
 

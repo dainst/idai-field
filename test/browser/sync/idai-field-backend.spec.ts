@@ -9,21 +9,21 @@ import {Headers} from "@angular/http";
 export function main() {
     describe('IdaiFieldBackend', () => {
 
-        var config = {
+        let config = {
             backend : {
                 uri : "uri",
                 credentials: "user:password",
             }
         };
 
-        var document = { "id": "id1", "resource" : {
+        let document = { "id": "id1", "resource" : {
             "id": "id1",
             "identifier": "ob1", 
             "title": "object1",
             "type": "object" },
             "synced" : 0 };
 
-        var documentWithDatasetIncorporated = { "id" : "id1", "resource" : {
+        let documentWithDatasetIncorporated = { "id" : "id1", "resource" : {
             "id" : "id1",
             "identifier": "ob1", 
             "title": "object1", 
@@ -33,7 +33,7 @@ export function main() {
         };
 
 
-        var successFunction = function() {
+        let successFunction = function() {
             return {
                 subscribe: function(suc,err) {
                     suc("ok");
@@ -41,7 +41,7 @@ export function main() {
             };
         };
 
-        var failFunction = function() {
+        let failFunction = function() {
             return {
                 subscribe: function(suc,err) {
                     err("fail");
@@ -49,7 +49,7 @@ export function main() {
             };
         };
 
-        var put = function(obj: IdaiFieldDocument) {
+        let put = function(obj: IdaiFieldDocument) {
             return {
                 subscribe: function(suc, err) {
                     suc(obj);
@@ -57,11 +57,13 @@ export function main() {
             };
         };
 
-        var mockHttp;
+        let mockHttp;
+        let mockSettingsService;
 
-        var mockDataModelConfiguration;
-        var idaiFieldBackend : IdaiFieldBackend;
-        var j;
+
+        let mockDataModelConfiguration;
+        let idaiFieldBackend : IdaiFieldBackend;
+        let j;
 
         beforeEach(function(){
 
@@ -69,7 +71,18 @@ export function main() {
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);
 
-            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config);
+            mockSettingsService = jasmine.createSpyObj('mockSettingsService',['changes']);
+            mockSettingsService.changes.and.returnValue({
+                subscribe: function(callback) {
+                    callback({server:{
+                        ipAddress: config.backend.uri,
+                        userName: 'user',
+                        password: 'password'
+                    }})
+                }
+            });
+
+            idaiFieldBackend = new IdaiFieldBackend(mockHttp, config, mockSettingsService);
             j=0;
         });
 
@@ -107,7 +120,7 @@ export function main() {
         it('should save a document to the backend',
             function(done) {
 
-                var headers: Headers = new Headers();
+                const headers: Headers = new Headers();
                 headers.append('Authorization', 'Basic ' + btoa(config.backend.credentials));
 
                 idaiFieldBackend.save(document,"dataset1").then(obj => {

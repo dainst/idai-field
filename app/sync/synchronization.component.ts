@@ -19,6 +19,7 @@ import {ConfigLoader} from "idai-components-2/configuration";
 export class SynchronizationComponent {
     
     private connected: boolean = false;
+    private on: boolean = false;
     private resourceIdsOfDocsToSync: string[] = [];
 
     constructor(private idaiFieldBackend: IdaiFieldBackend,

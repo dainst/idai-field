@@ -4,41 +4,41 @@ import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Response} from "@angular/http";
 import {IdaiFieldDocument} from '../model/idai-field-document'
+import {SettingsService} from "../settings/settings-service";
 
+@Injectable()
 /**
  * @author Jan G. Wieners
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-@Injectable()
 export class IdaiFieldBackend {
 
     private connected: boolean;
     private connectionStateObservers: Observer<boolean>[] = [];
-    private configuration: any;
+    private configuration: any = {};
 
     public constructor(private http: Http,
-        @Inject('app.config') private config) {
+        @Inject('app.config') private config,
+        settingsService: SettingsService) {
 
-        if (config['backend']==undefined) return;
+        this.configuration['connectionCheckInterval'] = 1000;
         
-        this.validateAndUse(config['backend']);
-        setTimeout(
-            this.checkConnection.bind(this),
-            this.configuration.connectionCheckInterval
-        );
+        settingsService.changes().subscribe(changes => {
+            this.configuration.uri = changes['server']['ipAddress'];
+            if (this.configuration.uri.endsWith('/')) {
+                this.configuration.uri=this.configuration.uri.replace(/\/$/, "");
+            }
+            this.configuration.credentials = changes['server']['userName'] + ':' + changes['server']['password'];
+
+            if (!this.configuration.uri || !this.configuration.credentials) return;
+            setTimeout(
+                this.checkConnection.bind(this),
+                this.configuration.connectionCheckInterval
+            );
+        });
     }
 
-    /**
-     * @param backendConfig backend Configuration object.
-     */
-    private validateAndUse(backendConfig) {
-
-        if ( backendConfig.uri.endsWith('/'))
-            backendConfig.uri=backendConfig.uri.replace(/\/$/, "");
-        this.configuration = backendConfig;
-    }
-    
     /**
      * @returns {any}
      */
@@ -53,11 +53,16 @@ export class IdaiFieldBackend {
      * @see also this#setConnectionStatus
      */
     public checkConnection(): void {
+
+        if (!this.configuration.uri || !this.configuration.credentials) {
+            return this.setConnectionStatus(false);
+        }
+
         this.http.get( this.configuration.uri )
-        .subscribe(
-            data => this.setConnectionStatus(true),
-            err => this.setConnectionStatus(false)
-        );
+            .subscribe(
+                data => this.setConnectionStatus(true),
+                err => this.setConnectionStatus(false)
+            );
     }
 
     /**
@@ -78,7 +83,7 @@ export class IdaiFieldBackend {
     }
 
     private createAuthorizationHeader() {
-        var headers = new Headers();
+        const headers = new Headers();
         headers.append('Authorization', 'Basic ' +
             btoa(this.configuration.credentials));
         return headers;
@@ -96,8 +101,9 @@ export class IdaiFieldBackend {
     /**
      * Saves or updates an object to the backend.
      *
-     * @param object, uniquely identified by object.id.
-     * @returns {Promise<T>} success -> an idai field document
+     * @param document
+     * @param dataset
+     * @returns {Promise<IdaiFieldDocument>} success -> an idai field document
      *   error -> an error message or message key
      */
     public save(document:any,dataset:string):Promise<IdaiFieldDocument> {

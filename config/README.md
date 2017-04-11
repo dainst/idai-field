@@ -36,27 +36,6 @@ The client uses one directory to store and manage all its media files.
 * test -> the db gets cleared on every reload
 * production -> for production use
 
-### backend
-
-If the backend property is set, syncing unsynced 
-project resources automatically to a remote server is enabled.
-
-Example:
-
-```
-"backend" : {
-    "uri": "server url",
-    "credentials": "username:password",
-    "connectionCheckInterval": 5000
-}
-```
-
-* server address -> url
-* username:password
-* backend.connectionCheckInterval -> value in ms. 
-
-If ommitted, syncing is disabled.
-
 ## Configuration.json
 
 In addition to the general rules for 

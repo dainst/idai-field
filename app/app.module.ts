@@ -41,6 +41,7 @@ import {Converter} from "./imagestore/converter";
 import {IdaiWidgetsModule} from "idai-components-2/widgets"
 import {SettingsModule} from "./settings/settings.module";
 import {AppConfigurator} from "./app-configurator";
+import {SettingsService} from "./settings/settings-service";
 
 @NgModule({
     imports: [
@@ -64,6 +65,7 @@ import {AppConfigurator} from "./app-configurator";
         SynchronizationComponent
     ],
     providers: [
+        SettingsService,
         {
             provide: Imagestore,
             useFactory: function(http: Http,blobMaker: BlobMaker): Imagestore {

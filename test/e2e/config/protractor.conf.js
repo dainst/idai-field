@@ -13,14 +13,11 @@ exports.config = {
     multiCapabilities: [{
         browserName: 'chrome'
     }],
-    allScriptsTimeout: 110000,
-    getPageTimeout: 100000,
     framework: 'jasmine2',
     jasmineNodeOpts: {
         isVerbose: false,
         showColors: true,
-        includeStackTrace: false,
-        defaultTimeoutInterval: 400000
+        includeStackTrace: false
     },
     plugins: [{
         package: 'protractor-console-plugin',

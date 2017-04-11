@@ -17,7 +17,8 @@ exports.config = {
     jasmineNodeOpts: {
         isVerbose: false,
         showColors: true,
-        includeStackTrace: false
+        includeStackTrace: false,
+        defaultTimeoutInterval: 400000
     },
     plugins: [{
         package: 'protractor-console-plugin',

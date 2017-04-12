@@ -11,6 +11,7 @@ import {ReadDatastore,Datastore} from 'idai-components-2/datastore';
 
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
+import {DatastoreErrors} from "idai-components-2/datastore";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -61,7 +62,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private setupFulltextIndex(): Promise<any> {
         this.db.on('error', err => console.error(err.toString()));
         let mapFun = function(doc) {
-            var types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
+            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
             types.forEach(function(type) {
                 if (doc.resource.shortDescription)
@@ -90,7 +91,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private setupAllIndex(): Promise<any> {
         let mapFun = function(doc) {
-            var types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
+            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
             types.forEach(type => emit([type, doc.modified]));
         };
@@ -143,7 +144,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 return this.db.put(document).catch(
                     err => {
                         console.error(err);
-                        return Promise.reject(M.DATASTORE_GENERIC_SAVE_ERROR);
+                        return Promise.reject(DatastoreErrors.GENERIC_SAVE_ERROR);
                     }
                 );
             })
@@ -212,9 +213,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
             }).catch(err => {
 
-                let errType = M.DATASTORE_GENERIC_SAVE_ERROR;
+                let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
                 if (err.name && err.name == 'conflict')
-                    errType = M.DATASTORE_SAVE_CONFLICT;
+                    errType = DatastoreErrors.SAVE_CONFLICT;
                 reset(document);
                 return Promise.reject([errType]);
             })
@@ -417,7 +418,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     // only return every doc once by using Set
     private filterResult(docs: Document[]): Document[] {
 
-        let set: Set<string> = new Set<string>();
+        const set: Set<string> = new Set<string>();
         let filtered = [];
         docs.forEach(doc => {
             if (!set.has(doc.resource.id)) {
@@ -430,11 +431,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private setupChangesEmitter(): void {
 
-        function isFunction(functionToCheck) {
-            var getType = {};
-            return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-        }
-
         this.db.changes({
             live: true,
             include_docs: true,
@@ -443,7 +439,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
             if (!change || !change.doc) return;
             if (this.observers && Array.isArray(this.observers)) this.observers.forEach( observer => {
-                if (observer && (observer.next != undefined) && isFunction(observer.next)) {
+                if (observer && (observer.next != undefined)) {
                     observer.next(this.cleanDoc(change.doc));
                 }
             });

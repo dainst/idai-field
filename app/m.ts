@@ -43,11 +43,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Datastore Package
 
-    public static DATASTORE_GENERIC_SAVE_ERROR : string = 'datastore/genericsaveerror';
     public static DATASTORE_RESOURCE_ID_EXISTS : string = 'datastore/resourceidexists';
     public static DATASTORE_NOT_FOUND : string = 'datastore/notfound';
     public static DATASTORE_GENERIC_ERROR : string = 'datastore/genericerror';
-    public static DATASTORE_SAVE_CONFLICT : string = 'datastore/saveconflict';
 
     // Widgets Package
 
@@ -253,12 +251,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.DATASTORE_GENERIC_SAVE_ERROR]={
-            content: 'Beim Speichern des Dokumentes ist ein Fehler aufgetreten.',
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.DATASTORE_RESOURCE_ID_EXISTS]={
             content: 'Die Ressourcen-Id eines zu speichernden Dokumentes besteht bereits.',
             level: 'danger',
@@ -268,12 +260,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DATASTORE_NOT_FOUND]={
             content: 'Die Ressource konnte nicht gefunden werden.',
             level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.DATASTORE_SAVE_CONFLICT]={
-            content: 'Beim Speichern des Dokumentes ist ein Konflikt aufgetreten.',
-            level: 'warning',
             params: [],
             hidden: false
         };

@@ -45,9 +45,9 @@ export function main() {
                 )
         });
 
-        it('should reject on err in validator', (done) => {
+        it('should reject on err in datastore', (done) => {
 
-            mockDatastore.create.and.callFake(function() {return Promise.reject('abc');});
+            mockDatastore.create.and.callFake(function() {return Promise.reject(['abc']);});
             importStrategy.importDoc({resource:{type:undefined,id:undefined,relations:undefined}})
                 .then(
                     () => done(),

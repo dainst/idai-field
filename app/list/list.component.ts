@@ -41,8 +41,9 @@ export class ListComponent {
             doc => {
                 this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
             })
-            .catch(msgWithParams => {
-                this.messages.add(msgWithParams);
+            .catch(errorWithParams => {
+                // TODO replace with msg from M
+                this.messages.add(errorWithParams);
             });
     }
 

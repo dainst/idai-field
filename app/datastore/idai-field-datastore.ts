@@ -26,4 +26,5 @@ export abstract class IdaiFieldDatastore extends Datastore {
      */
     abstract setupSync(url: string): Promise<SyncState>;
 
+    abstract stopSync();
 }

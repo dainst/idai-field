@@ -27,6 +27,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private observers = [];
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
+    private syncHandles = [];
 
     constructor(private dbname: string,
                 configLoader: ConfigLoader,
@@ -372,9 +373,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public setupSync(url: string): Promise<SyncState> {
 
-        console.log("set up sync to ",url)
         return this.readyForQuery.then(() => {
             let sync = this.db.sync(url, { live: true, retry: true });
+            this.syncHandles.push(sync);
             return {
                 url: url,
                 cancel: () => sync.cancel(),
@@ -383,6 +384,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 onActive: Observable.create(obs => sync.on('active', () => obs.onNext()))
             }
         });
+    }
+
+    public stopSync() {
+        for (let handle of this.syncHandles) {
+            console.log("stop sync",handle);
+            handle.cancel();
+        }
+        this.syncHandles = [];
     }
 
     private fetchObject(id: string): Promise<Document> {

@@ -21,15 +21,23 @@ export class SettingsService {
     ) { }
 
     public setRemoteSites(remoteSites) {
-        this.remoteSites = remoteSites;
-        // TODO also unset every sync to remote sites first
-        for (let remoteSite of remoteSites) {
-            console.log("remoteSite",remoteSite)
-            this.datastore.setupSync(remoteSite['ipAddress']).then(syncState => {
-                console.log("got syncState", syncState);
-            })
-        }
-        this.notify();
+
+        this.datastore.stopSync();
+        setTimeout(() => {
+
+            console.log("set up sync");
+
+            this.remoteSites = remoteSites;
+            // TODO also unset every sync to remote sites first
+            for (let remoteSite of remoteSites) {
+                console.log("remoteSite",remoteSite)
+                this.datastore.setupSync(remoteSite['ipAddress']).then(syncState => {
+                    console.log("got syncState", syncState);
+                })
+            }
+            this.notify();
+        },1000);
+
     }
 
     public getRemoteSites() {

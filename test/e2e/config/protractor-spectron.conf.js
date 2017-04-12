@@ -1,0 +1,47 @@
+var fs = require('fs');
+var path = require('path');
+var failFast = require('protractor-fail-fast');
+
+exports.config = {
+
+    seleniumAddress: 'http://localhost:9515/wd/hub',
+    baseUrl: 'file://' + path.resolve(__dirname, '../../..') + '/index.html',
+
+    specs: ['./delays.js', '../**/*.spec.js'],
+
+    framework: 'jasmine2',
+    jasmineNodeOpts: {
+        isVerbose: false,
+        showColors: true,
+        includeStackTrace: false
+    },
+    plugins: [{
+        package: 'protractor-console-plugin',
+        failOnWarning: true,
+        failOnError: true,
+        logWarnings: true,
+        exclude: [
+            "http://localhost:3000/" // pouchdb issues ignorable errors when syncing
+        ]
+    },{
+        package: 'protractor-fail-fast'
+    }],
+    onPrepare: function() {
+        if (browser.params.skip_fail_fast == 'noff') {
+            console.log("No fail fast.")
+        } else {
+            jasmine.getEnv().addReporter(failFast.init());
+        }
+    },
+    afterLaunch: function() {
+        failFast.clean();
+    },
+    /**
+     * ng2 related configuration
+     *
+     * useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on the page instead of just the one matching
+     * `rootEl`
+     *
+     */
+    useAllAngular2AppRoots: true
+};

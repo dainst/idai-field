@@ -1,6 +1,7 @@
 const Application = require('spectron').Application;
 const spawn = require('child_process').spawn;
 const http = require('http');
+const rimraf = require('rimraf');
 
 let app = new Application({
     path: './node_modules/.bin/electron',
@@ -36,5 +37,10 @@ app.start().then(() => {
     });
 
 }).then(code => {
-    app.stop().then(() => process.exit(code));
-});
+
+    return app.electron.remote.app.getPath('appData').then(path => {
+        console.log("appData", path);
+        return new Promise(resolve => rimraf(path + "/idai-field-client", () => resolve(code)));
+    });
+}).then(code => app.stop().then(() => process.exit(code)))
+.catch(err => console.log("error when removing app data", err));

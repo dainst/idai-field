@@ -29,9 +29,9 @@ app.start().then(() => {
             '--seleniumSessionId=' + sessionId
         ]);
         protractor.stdout.setEncoding('utf8');
-        protractor.stdout.on('data', data => console.log(data));
+        protractor.stdout.on('data', data => process.stdout.write(data));
         protractor.stderr.setEncoding('utf8');
-        protractor.stderr.on('data', data => console.error(data));
+        protractor.stderr.on('data', data => process.stderr.write(data));
         protractor.on('close', code => resolve(code));
     });
 

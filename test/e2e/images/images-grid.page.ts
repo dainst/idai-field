@@ -64,7 +64,7 @@ var ImagesGridPage = function() {
             .perform();
     };
     this.get = function() {
-        browser.get('/#/images');
+        browser.get('#/images');
         browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.')
     };
     this.chooseImageSubtype = function (index) {

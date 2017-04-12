@@ -10,7 +10,7 @@ import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 let ResourcesPage = function() {
 
     this.get = function() {
-        return browser.get('/#/resources');
+        return browser.get('#/resources');
     };
 
     // click

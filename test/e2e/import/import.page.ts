@@ -42,7 +42,7 @@ let ImportPage = function (){
         return element(by.id('importStartButton')).click();
     };
     this.get = function () {
-        return browser.get('/#/resources/');
+        return browser.get('#/resources/');
     };
 };
 

@@ -1,6 +1,5 @@
 const Application = require('spectron').Application;
 const spawn = require('child_process').spawn;
-const http = require('http');
 const rimraf = require('rimraf');
 
 let app = new Application({
@@ -8,19 +7,9 @@ let app = new Application({
     args: ['.']
 });
 
-app.start().then(() => {
+app.start().then(() => app.client.sessions()).then(sessions => {
 
-    return new Promise(resolve => {
-        http.get('http://localhost:9515/wd/hub/sessions', res => {
-            var body = '';
-            res.on('data', d => body += d);
-            res.on('end', () => resolve(JSON.parse(body)));
-        });
-    });
-
-}).then(res => {
-
-    const sessionId = res.value[0].id;
+    const sessionId = sessions.value[0].id;
     console.log("electron webdriver session id:", sessionId);
 
     return new Promise(resolve => {

@@ -1,8 +1,8 @@
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 import * as PouchDB from 'pouchdb';
 PouchDB.plugin(require('pouchdb-adapter-memory'));
-import * as cors from 'pouchdb-server/lib/cors'
-import * as express from 'express';
+const cors = require('pouchdb-server/lib/cors');
+const express = require('express');
 const expressPouchDB = require('express-pouchdb');
 const fs = require('fs-extra');
 const path = require('path');
@@ -36,7 +36,7 @@ xdescribe('resources/syncing', function() {
             let pouchDbApp = expressPouchDB(PouchDB);
             app.use(cors(pouchDbApp.couchConfig))
             app.use('/', pouchDbApp);
-            server = app.listen(3000, function () {
+            server = app.listen(3001, function () {
                 new PouchDB('idai-field-documents', { adapter: 'memory' })
                     .destroy().then(() => {
                         resolve(new PouchDB('idai-field-documents'));

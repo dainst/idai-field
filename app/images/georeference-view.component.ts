@@ -149,7 +149,7 @@ export class GeoreferenceViewComponent {
 
             this.persistenceManager.persist(this.document).then(
                 () => { resolve(); },
-                err => { console.error(err); reject([M.DATASTORE_GENERIC_SAVE_ERROR]); }
+                err => { console.error(err); reject([M.APP_GENERIC_SAVE_ERROR]); }
             );
         });
     }

@@ -11,7 +11,7 @@ import {ConflictResolverComponent} from "./conflict-resolver.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {ImageGridBuilder} from "../common/image-grid-builder";
 import {Imagestore} from "../imagestore/imagestore";
-import {Datastore} from "idai-components-2/datastore";
+import {Datastore, DatastoreErrors} from "idai-components-2/datastore";
 import {ElementRef} from "@angular/core";
 
 @Component({
@@ -150,7 +150,7 @@ export class DocumentEditWrapperComponent {
             })
             .catch(msgWithParams => {
 
-                if (msgWithParams[0] == M.DATASTORE_SAVE_CONFLICT) {
+                if (msgWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
                     this.handleConflict();
                 }
                 this.messages.add(msgWithParams);
@@ -182,14 +182,14 @@ export class DocumentEditWrapperComponent {
         this.datastore.refresh(this.clonedDoc).then(lastRevision => {
             this.clonedDoc['_rev'] = lastRevision['_rev'];
             this.save(true);
-        }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
+        }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
     private reloadLastRevision() {
 
         this.datastore.refresh(this.clonedDoc).then(lastRevision => {
             this.clonedDoc = <IdaiFieldDocument> lastRevision;
-        }).catch(() => this.messages.add([M.DATASTORE_GENERIC_ERROR]));
+        }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
     private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {

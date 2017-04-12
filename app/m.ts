@@ -14,6 +14,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // App Package
 
     public static APP_NO_PROJECT_IDENTIFIER : string = 'app/noprojectidentifier';
+    public static APP_GENERIC_SAVE_ERROR : string = 'app/genericsaveerror';
 
     // Settings Package
 
@@ -45,7 +46,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static DATASTORE_RESOURCE_ID_EXISTS : string = 'datastore/resourceidexists';
     public static DATASTORE_NOT_FOUND : string = 'datastore/notfound';
-    public static DATASTORE_GENERIC_ERROR : string = 'datastore/genericerror';
+    public static DATASTORE_GENERIC_ERROR: string = 'datastore/genericerr';
 
     // Widgets Package
 
@@ -83,6 +84,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.SETTINGS_ACTIVATED]={
             content: 'Die Einstellungen wurden erfolgreicht aktiviert.',
             level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.APP_GENERIC_SAVE_ERROR]={
+            content: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.',
+            level: 'error',
             params: [],
             hidden: false
         };
@@ -259,6 +266,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DATASTORE_NOT_FOUND]={
             content: 'Die Ressource konnte nicht gefunden werden.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DATASTORE_GENERIC_ERROR]={
+            content: 'Ein Fehler beim Zugriff auf die Datenbank ist aufgetreten.',
             level: 'danger',
             params: [],
             hidden: false

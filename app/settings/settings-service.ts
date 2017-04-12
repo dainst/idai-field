@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 @Injectable()
 /**
@@ -15,10 +16,19 @@ export class SettingsService {
     private userName = "";
     private observers : Observer<any>[] = [];
 
-    constructor() { }
+    constructor(
+        private datastore: IdaiFieldDatastore
+    ) { }
 
     public setRemoteSites(remoteSites) {
         this.remoteSites = remoteSites;
+        // TODO also unset every sync to remote sites first
+        for (let remoteSite of remoteSites) {
+            console.log("remoteSite",remoteSite)
+            this.datastore.setupSync(remoteSite['ipAddress']).then(syncState => {
+                console.log("got syncState", syncState);
+            })
+        }
         this.notify();
     }
 

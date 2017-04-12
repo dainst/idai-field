@@ -46,7 +46,7 @@
                 <ul>
                     <li *ngFor="let remoteSite of remoteSites; let i = index;">
                         <b>IP Addresse: </b>
-                        <input [ngModel]="remoteSite.ipAddress" (ngModelChange)="remoteSite.ipAddress = $event" placeholder="x.x.x.x">
+                        <input [ngModel]="remoteSite.ipAddress" (ngModelChange)="remoteSite.ipAddress = $event" placeholder="http://x.x.x.x(:port)/db_name">
                         <button (click)="removeRemoteSite(i)">-</button>
                     </li>
                 </ul>

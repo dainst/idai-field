@@ -26,12 +26,13 @@ export class IdaiFieldBackend {
         
         settingsService.changes().subscribe(changes => {
             this.configuration.uri = changes['server']['ipAddress'];
+            if (!this.configuration.uri) return;
             if (this.configuration.uri.endsWith('/')) {
                 this.configuration.uri=this.configuration.uri.replace(/\/$/, "");
             }
             this.configuration.credentials = changes['server']['userName'] + ':' + changes['server']['password'];
 
-            if (!this.configuration.uri || !this.configuration.credentials) return;
+            if (!this.configuration.credentials) return;
             setTimeout(
                 this.checkConnection.bind(this),
                 this.configuration.connectionCheckInterval

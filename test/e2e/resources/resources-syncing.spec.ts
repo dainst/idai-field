@@ -13,7 +13,7 @@ const documentViewPage = require('../widgets/document-view.page');
 /**
  * @author Sebastian Cuy
  */
-xdescribe('resources/syncing', function() {
+describe('resources/syncing', function() {
 
     const defaultConf = path.resolve(__dirname, '../../../config/config.json');
     const tempConf = path.resolve(__dirname, './config.json.tmp');
@@ -37,9 +37,9 @@ xdescribe('resources/syncing', function() {
             app.use(cors(pouchDbApp.couchConfig))
             app.use('/', pouchDbApp);
             server = app.listen(3001, function () {
-                new PouchDB('idai-field-documents', { adapter: 'memory' })
+                new PouchDB('idai-field-documents-test', { adapter: 'memory' })
                     .destroy().then(() => {
-                        resolve(new PouchDB('idai-field-documents'));
+                        resolve(new PouchDB('idai-field-documents-test'));
                     });
             });
         }).then(newDb => db = newDb);

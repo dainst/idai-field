@@ -15,6 +15,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static APP_NO_PROJECT_IDENTIFIER : string = 'app/noprojectidentifier';
 
+    // Settings Package
+
+    public static SETTINGS_ACTIVATED : string = 'settings/activated';
+
     // Import Package
 
     public static IMPORT_START : string = 'importer/start';
@@ -78,6 +82,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     constructor() {
         super();
+        this.msgs[M.SETTINGS_ACTIVATED]={
+            content: 'Die Einstellungen wurden erfolgreicht aktiviert.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.APP_NO_PROJECT_IDENTIFIER]={
             content: 'Server-Sync kann nicht aktiviert werden, wenn kein Projektidentifier in der Configuration.json hinterlegt ist.',
             level: 'danger',

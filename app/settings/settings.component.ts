@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
+import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {SettingsService} from "./settings-service";
+import {M} from "../m";
 
 @Component({
     moduleId: module.id,
@@ -18,7 +20,8 @@ export class SettingsComponent implements OnInit {
 
     constructor(
         private configLoader: ConfigLoader,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private messages: Messages
     ) {
         this.configLoader.getProjectConfiguration().then(conf => {
             this.selectedProject = conf.getProjectIdentifier();
@@ -42,8 +45,11 @@ export class SettingsComponent implements OnInit {
     }
 
     public save() {
-        this.settingsService.setServer(this.server);
         this.settingsService.setUserName(this.userName);
-        this.settingsService.setRemoteSites(this.remoteSites);
+        this.settingsService.setServer(this.server);
+        this.settingsService.setRemoteSites(this.remoteSites).then(()=>{
+            this.messages.add([M.SETTINGS_ACTIVATED]);
+        })
+
     }
 }

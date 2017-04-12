@@ -20,24 +20,20 @@ export class SettingsService {
         private datastore: IdaiFieldDatastore
     ) { }
 
-    public setRemoteSites(remoteSites) {
+    public setRemoteSites(remoteSites): Promise<any> {
 
-        this.datastore.stopSync();
-        setTimeout(() => {
-
-            console.log("set up sync");
-
-            this.remoteSites = remoteSites;
-            // TODO also unset every sync to remote sites first
-            for (let remoteSite of remoteSites) {
-                console.log("remoteSite",remoteSite)
-                this.datastore.setupSync(remoteSite['ipAddress']).then(syncState => {
-                    console.log("got syncState", syncState);
-                })
-            }
-            this.notify();
-        },1000);
-
+        return new Promise<any>((resolve)=>{
+            this.datastore.stopSync();
+            setTimeout(() => {
+                this.remoteSites = remoteSites;
+                const promises = [];
+                for (let remoteSite of remoteSites) {
+                    promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
+                }
+                this.notify();
+                Promise.all(promises).then(()=>resolve());
+            },1000);
+        })
     }
 
     public getRemoteSites() {
@@ -64,9 +60,9 @@ export class SettingsService {
 
     private notify() {
         for (let o of this.observers) {
-            o.next({
+            console.log(o.next({
                 server: this.getServer()
-            })
+            }))
         }
     }
 

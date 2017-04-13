@@ -5,7 +5,7 @@ let resourcePage = require('../../resources/resources.page');
 let delays = require('../../config/delays');
 import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
 
-describe('resources/map', function() {
+describe('resources/map tests', function() {
 
     function setPolygon() {
         return Promise.resolve()

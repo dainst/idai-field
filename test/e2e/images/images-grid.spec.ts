@@ -44,14 +44,14 @@ describe('image grid tests --', function(){
         });
     });
 
-    it('all images should become deselected by clicking the appropriate button.', function() {
+    it('all images should become deselected by clicking the appropriate button', function() {
         gridPage.clickCell(0);
         expect(gridPage.getCell(0).getAttribute('class')).toMatch(gridPage.selectedClass);
         gridPage.clickDeselectButton();
         expect(gridPage.getCell(0).getAttribute('class')).not.toMatch(gridPage.selectedClass);
     });
 
-    it('user should be able to delete an image in the grid view.', function () {
+    it('user should be able to delete an image in the grid view', function () {
         gridPage.getCellImageName(0)
             .then(function (filename) {
                 gridPage.getCell(0).click();
@@ -62,7 +62,7 @@ describe('image grid tests --', function(){
             });
     });
 
-    it('user should be able to delete two images in the grid view.', function () {
+    it('user should be able to delete two images in the grid view', function () {
         gridPage.getCellImageName(0)
             .then(function (image1filename) {
                 gridPage.getCellImageName(1)
@@ -105,7 +105,7 @@ describe('image grid tests --', function(){
             });
     });
 
-    it('user should be able to navigate from grid to view, and back to grid.', function() {
+    it('user should be able to navigate from grid to view, and back to grid', function() {
         var xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         gridPage.getCellImageName(0).then(function(imageName){
@@ -119,7 +119,7 @@ describe('image grid tests --', function(){
         });
     });
 
-    xit('image upload should create a JSON document, which in turn gets displayed in the grid.', function () {
+    xit('image upload should create a JSON document, which in turn gets displayed in the grid', function () {
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         var fileName = 'Aldrin_Apollo_11.jpg';
         var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';

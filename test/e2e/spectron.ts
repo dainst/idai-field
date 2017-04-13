@@ -24,7 +24,7 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         protractor.stdout.on('data', data => {
 
             if (data.indexOf("Failed")!=-1) {
-                console.log("taking screenshot")
+                console.log("taking screenshot "+i);
                 app.browserWindow.capturePage().then(function (png) {
                     let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
                     stream.write(new Buffer(png, 'base64'));

@@ -9,7 +9,7 @@ let delays = require('../config/delays');
 
 let EC = protractor.ExpectedConditions;
 
-describe('import tests -- ', function() {
+xdescribe('import tests -- ', function() {
 
     beforeEach(function() {
         importPage.get();

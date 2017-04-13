@@ -1,4 +1,4 @@
-import {browser, protractor} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 let common = require("../common.js");
 let importPage = require('./import.page');
@@ -9,10 +9,11 @@ let delays = require('../config/delays');
 
 let EC = protractor.ExpectedConditions;
 
-xdescribe('import tests -- ', function() {
+describe('import tests -- ', function() {
 
     beforeEach(function() {
         importPage.get();
+        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
     let importIt = function(url) {

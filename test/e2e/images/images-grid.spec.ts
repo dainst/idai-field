@@ -10,10 +10,11 @@ var viewPage = require('./images-view.page');
 
 
 
-xdescribe('image grid tests -- ', function(){
+describe('image grid tests -- ', function(){
 
     beforeEach(function () {
         gridPage.get();
+        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
     it('cells should be (de-)selectable.', function(){

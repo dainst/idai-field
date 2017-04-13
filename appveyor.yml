@@ -1,5 +1,7 @@
 version: b{build}
 
+os: unstable
+
 platform:
   - x64
 
@@ -20,7 +22,9 @@ build_script:
   - yarn run build
   - yarn run package-win
 
-test: off
+test_script:
+  - yarn test
+  - yarn run e2e
 
 artifacts:
   - path: release/*.exe

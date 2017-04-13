@@ -339,7 +339,9 @@ export function main() {
             const doc3 = doc('bla3','blub3','type3');
 
             datastore.create(doc1)
+                .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
                 .then(() => datastore.create(doc2))
+                .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.all())
                 .then(
@@ -355,7 +357,7 @@ export function main() {
                         done();
                     }
                 );
-        });
+        }, 10000);
 
         // all
 

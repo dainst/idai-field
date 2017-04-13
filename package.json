@@ -11,12 +11,13 @@
     "start": "electron .",
     "test": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json && karma start test/browser/config/karma.conf.js",
     "pree2e": "rimraf test/e2e-screenshots/*.png",
-    "e2e": "node test/e2e/spectron.js",
+    "e2e": "protractor test/e2e/config/protractor.conf.js --params.skip_fail_fast $1",
     "server": "gulp webserver-watch",
     "make-dist": "gulp versioning --build $1",
     "package": "build -mw --publish never",
     "package-mac": "build -m dmg --publish never",
-    "package-win": "build -w nsis --publish never"
+    "package-win": "build -w nsis --publish never",
+    "spectron": "node test/e2e/spectron.js"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",

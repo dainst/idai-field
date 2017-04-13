@@ -10,7 +10,7 @@ var viewPage = require('./images-view.page');
 
 
 
-describe('image grid tests -- ', function(){
+describe('image grid tests --', function(){
 
     beforeEach(function () {
         gridPage.get();

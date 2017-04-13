@@ -11,7 +11,7 @@ let delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('resources', function() {
+describe('resources tests --', function() {
 
 
     beforeEach(function(){

@@ -39,7 +39,7 @@ exports.config = {
         var FailureScreenshotReporter = function() {
 
             this.specDone = function(spec) {
-                console.log("<="+spec.fullName+'=>')
+                console.log("<= "+spec.fullName+' =>')
             }
         };
         jasmine.getEnv().addReporter(new FailureScreenshotReporter());

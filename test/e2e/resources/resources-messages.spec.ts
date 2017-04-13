@@ -2,7 +2,7 @@ let resourcesPage = require('./resources.page');
 import {NavbarPage} from '../navbar.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
-describe('resources/messages', function() {
+describe('resources/messages tests --', function() {
 
     beforeEach(function(){
         resourcesPage.get();

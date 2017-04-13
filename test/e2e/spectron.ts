@@ -1,6 +1,7 @@
 const Application = require('spectron').Application;
 const spawn = require('child_process').spawn;
 const rimraf = require('rimraf');
+var fs = require('fs');
 
 let app = new Application({
     path: './node_modules/.bin/electron',
@@ -9,6 +10,7 @@ let app = new Application({
 
 app.start().then(() => app.client.sessions()).then(sessions => {
 
+    let i = 0;
     const sessionId = sessions.value[0].id;
     console.log("electron webdriver session id:", sessionId);
 
@@ -21,7 +23,16 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         protractor.stdout.setEncoding('utf8');
         protractor.stdout.on('data', data => process.stdout.write(data));
         protractor.stderr.setEncoding('utf8');
-        protractor.stderr.on('data', data => process.stderr.write(data));
+        protractor.stderr.on('data', data => {
+
+            app.browserWindow.capturePage().then(function (png) {
+                let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
+                stream.write(new Buffer(png, 'base64'));
+                stream.end();
+                i++;
+            });
+            process.stderr.write(data)
+        });
         protractor.on('close', code => resolve(code));
     });
 

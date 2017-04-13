@@ -41,7 +41,9 @@ describe('import tests -- ', function() {
     it('importer should delete already imported iDAI.field documents if an error occurs', function() {
 
         importIt("./test/test-data/importer-test-constraint-violation.jsonl");
+
         NavbarPage.awaitAlert('existiert bereits', false);
+        element(by.css('.alert button')).click();
         NavbarPage.clickNavigateToResources();
 
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

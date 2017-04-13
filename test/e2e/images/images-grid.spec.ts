@@ -119,7 +119,7 @@ describe('image grid tests -- ', function(){
         });
     });
 
-    it('image upload should create a JSON document, which in turn gets displayed in the grid.', function () {
+    xit('image upload should create a JSON document, which in turn gets displayed in the grid.', function () {
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         var fileName = 'Aldrin_Apollo_11.jpg';
         var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';

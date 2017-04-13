@@ -62,7 +62,6 @@
     "leaflet": "1.0.1",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "leaflet.pm": "0.13.0",
-    "leveldown": "^1.6.0",
     "levelup": "^1.3.5",
     "mdi": "1.8.36",
     "papaparse": "~4.1.4",

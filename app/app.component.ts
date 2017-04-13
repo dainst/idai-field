@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
         });
 
         AppComponent.preventDefaultDragAndDropBehavior();
+
     }
 
     ngOnInit() {

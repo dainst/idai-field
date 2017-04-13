@@ -22,7 +22,6 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         ]);
         protractor.stdout.setEncoding('utf8');
         protractor.stdout.on('data', data => {
-            console.log("stdout:"+data+":stdout\n");
 
             if (data.indexOf("Failed")!=-1) {
                 console.log("taking screenshot")
@@ -34,11 +33,11 @@ app.start().then(() => app.client.sessions()).then(sessions => {
                 });
             }
 
-            // process.stdout.write(data)
+            // console.log("stdout:"+data+":stdout\n");
+            process.stdout.write(data)
         });
         protractor.stderr.setEncoding('utf8');
         protractor.stderr.on('data', data => {
-            console.log("stderr:"+data+":stderr\n");
 
             app.browserWindow.capturePage().then(function (png) {
                 let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
@@ -46,7 +45,9 @@ app.start().then(() => app.client.sessions()).then(sessions => {
                 stream.end();
                 i++;
             });
-            // process.stderr.write(data)
+
+            // console.log("stderr:"+data+":stderr\n");
+            process.stderr.write(data)
         });
         protractor.on('close', code => {
 

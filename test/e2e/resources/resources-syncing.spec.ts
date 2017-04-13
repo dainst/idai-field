@@ -102,14 +102,14 @@ describe('resources/syncing tests --', function() {
         resetTestDoc().then(done);
     });
 
-    xit('should show resource created in other db', () => {
+    it('should show resource created in other db', () => {
 
         resourcesPage.get();
         resourcesPage.typeInIdentifierInSearchField('test1');
         expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
     });
 
-    xit('should show changes made in other db', done => {
+    it('should show changes made in other db', done => {
 
         resourcesPage.get()
             .then(updateTestDoc)
@@ -118,7 +118,7 @@ describe('resources/syncing tests --', function() {
             .then(done);
     });
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         resourcesPage.get();
         db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {
@@ -128,7 +128,7 @@ describe('resources/syncing tests --', function() {
         resourcesPage.performCreateResource('test3');
     });
 
-    xit('should detect conflict on save', done => {
+    it('should detect conflict on save', done => {
 
         resourcesPage.get()
             .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))

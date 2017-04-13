@@ -14,6 +14,16 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     const sessionId = sessions.value[0].id;
     console.log("electron webdriver session id:", sessionId);
 
+    function takeShot(mode) {
+        console.log("taking screenshot "+i+" on "+mode);
+        app.browserWindow.capturePage().then(function (png) {
+            let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
+            stream.write(new Buffer(png, 'base64'));
+            stream.end();
+            i++;
+        });
+    }
+
     return new Promise(resolve => {
         const protractor = spawn('protractor', [
             'test/e2e/config/protractor-spectron.conf.js',
@@ -23,30 +33,18 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         protractor.stdout.setEncoding('utf8');
         protractor.stdout.on('data', data => {
 
-            if (data.indexOf("Failed")!=-1) {
-                console.log("taking screenshot "+i);
-                app.browserWindow.capturePage().then(function (png) {
-                    let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
-                    stream.write(new Buffer(png, 'base64'));
-                    stream.end();
-                    i++;
-                });
+            if (data.indexOf('.')==5) {
+                process.stdout.write(data.substring(10))
+            } else {
+                if(data.indexOf("Failed")!=-1) {
+                    takeShot('Failed in stdout');
+                }
+                process.stdout.write(data)
             }
-
-            // console.log("stdout:"+data+":stdout\n");
-            process.stdout.write(data)
         });
         protractor.stderr.setEncoding('utf8');
         protractor.stderr.on('data', data => {
-
-            app.browserWindow.capturePage().then(function (png) {
-                let stream = fs.createWriteStream('test/e2e-screenshots/'+i+'.png');
-                stream.write(new Buffer(png, 'base64'));
-                stream.end();
-                i++;
-            });
-
-            // console.log("stderr:"+data+":stderr\n");
+            takeShot("stderr event");
             process.stderr.write(data)
         });
         protractor.on('close', code => {

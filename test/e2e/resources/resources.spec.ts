@@ -16,6 +16,7 @@ describe('resources tests --', function() {
 
     beforeEach(function(){
         resourcesPage.get();
+        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
     it('should find it by its identifier', function() {

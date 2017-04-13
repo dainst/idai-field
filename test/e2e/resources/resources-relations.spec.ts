@@ -1,4 +1,5 @@
 import {NavbarPage} from '../navbar.page';
+import {browser,protractor,element,by} from 'protractor';
 
 let resourcesPage = require('./resources.page');
 let documentViewPage = require('../widgets/document-view.page');
@@ -8,6 +9,7 @@ describe('resources/relations tests --', function() {
 
     beforeEach(function() {
         resourcesPage.get();
+        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
     it ('should create links for relations', function() {

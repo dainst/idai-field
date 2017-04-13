@@ -25,9 +25,15 @@ install:
 - nvm install 7
 - yarn install --force
 - yarn add electron-builder@next --dev
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 script:
 - npm rebuild node-sass
 - yarn run build
+- yarn test
+- yarn run e2e
 - yarn run package-mac
 deploy:
   skip_cleanup: true

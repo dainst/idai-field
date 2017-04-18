@@ -1,10 +1,11 @@
 import {Component} from "@angular/core";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Query, Datastore} from "idai-components-2/datastore";
+import {Query} from "idai-components-2/datastore";
 import {ConfigLoader, IdaiType, ProjectConfiguration} from "idai-components-2/configuration";
 import {PersistenceManager} from "idai-components-2/persist";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 @Component({
     moduleId: module.id,
@@ -23,12 +24,12 @@ export class ListComponent {
 
     constructor(
         private messages: Messages,
-        private datastore: Datastore,
+        private datastore: IdaiFieldDatastore,
         configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
         this.fetchDocuments();
-        this.fetchTranches();
+        this.fetchTrenches();
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.initializeTypesTreeList(projectConfiguration);
         });
@@ -59,9 +60,8 @@ export class ListComponent {
         }).catch(err => { console.error(err); } );
     }
 
-    private fetchTranches() {
-        let tquery : Query = {q: '', type: 'trench', prefix: true};
-        this.datastore.find(tquery).then(documents => {
+    private fetchTrenches() {
+        this.datastore.findByType('trench').then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
         }).catch(err => { console.error(err); } );
     }

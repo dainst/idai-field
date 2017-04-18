@@ -12,6 +12,7 @@ import {ReadDatastore,Datastore} from 'idai-components-2/datastore';
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {DatastoreErrors} from "idai-components-2/datastore";
+import {IdaiFieldDocument} from "../model/idai-field-document";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -46,6 +47,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.setupFulltextIndex())
             .then(() => this.setupIdentifierIndex())
             .then(() => this.setupSyncedIndex())
+            .then(() => this.setupTypesIndex())
             .then(() => this.setupAllIndex())
             .then(() => configLoader.getProjectConfiguration())
             .then(config => this.config = config);
@@ -96,6 +98,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             types.forEach(type => emit([type, doc.modified]));
         };
         return this.setupIndex('all', mapFun);
+    }
+
+    private setupTypesIndex(): Promise<any> {
+        let mapFun = function(doc) {
+            emit(doc.resource.type);
+        };
+        return this.setupIndex('types', mapFun);
     }
 
 
@@ -320,6 +329,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.readyForQuery.then(() => {
             return this.db.query('synced', {
                 key: 0,
+                include_docs: true,
+                conflicts: true,
+            }).then(result => {
+                return Promise.resolve(result.rows.map(result=>this.cleanDoc(result.doc)));
+            });
+        });
+    }
+
+    public findByType(type: string): Promise<IdaiFieldDocument []> {
+        return this.readyForQuery.then(() => {
+            return this.db.query('types', {
+                key: type,
                 include_docs: true,
                 conflicts: true,
             }).then(result => {

@@ -282,6 +282,7 @@ export function main() {
             const doc3 = doc('blub','bla1.1','type1.1');
 
             datastore.create(doc1)
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.find({q: 'blub', type: 'type1'}))
@@ -339,9 +340,9 @@ export function main() {
             const doc3 = doc('bla3','blub3','type3');
 
             datastore.create(doc1)
-                .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc2))
-                .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.all())
                 .then(
@@ -357,7 +358,7 @@ export function main() {
                         done();
                     }
                 );
-        }, 10000);
+        }, 1000);
 
         // all
 
@@ -373,8 +374,10 @@ export function main() {
                 .then(
                     result => {
                         expect(result.length).toBe(2);
-                        expect(result[0].resource['identifier']).toBe('bla1.1');
-                        expect(result[1].resource['identifier']).toBe('bla1');
+                        expect(result[0].resource['shortDescription']).not.toBe('bla2');
+                        expect(result[0].resource.type).not.toBe('type2');
+                        expect(result[1].resource['shortDescription']).not.toBe('bla2');
+                        expect(result[1].resource.type).not.toBe('type2');
                         done();
                     },
                     err => {

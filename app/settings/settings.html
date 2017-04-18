@@ -20,7 +20,7 @@
                        class="form-control">
             </div>
             <div class="col-md-3">
-                <button class="pull-right btn btn-default"
+                <button id="save-settings-button" class="pull-right btn btn-default"
                         style="text-align:right"(click)="save()">
                     Einstellungen übernehmen
                 </button>
@@ -77,7 +77,7 @@
             <div class="col-md-6">
                 <b>Teammitglieder: </b><br><br>
                 <ul>
-                    <li *ngFor="let remoteSite of remoteSites; let i = index;">
+                    <li id="remote-sites-list" *ngFor="let remoteSite of remoteSites; let i = index;">
                         <b>IP Addresse: </b>
                         <input [ngModel]="remoteSite.ipAddress"
                                (ngModelChange)="remoteSite.ipAddress = $event"
@@ -87,7 +87,7 @@
                                 class="btn btn-default">-</button>
                     </li>
                 </ul>
-                <button (click)="addRemoteSite()" class="btn btn-default">
+                <button id="add-remote-site-button" (click)="addRemoteSite()" class="btn btn-default">
                     Client hinzufügen
                 </button>
             </div>

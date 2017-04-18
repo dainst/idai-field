@@ -9,7 +9,7 @@ export class NavbarPage {
 
     public static clickNavigateToResources() {
         browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(1)'))), delays.ECWaitTime);
-        element(by.css('navbar ul li:nth-child(1)')).click();
+        return element(by.css('navbar ul li:nth-child(1)')).click();
     };
 
     // unused?

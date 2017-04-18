@@ -1,4 +1,0 @@
-{
-  "environment": "test",
-  "sync": ["http://localhost:3001/idai-field-documents-test"]
-}

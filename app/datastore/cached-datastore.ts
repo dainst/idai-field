@@ -71,8 +71,8 @@ export class CachedDatastore implements IdaiFieldDatastore {
             .then(results => this.replaceAllWithCached(results))
     }
 
-    findByType(type: string): Promise<Document[]> {
-        return this.datastore.findByType(type)
+    findByBelongsTo(identifier: string): Promise<Document[]> {
+        return this.datastore.findByBelongsTo(identifier)
             .then(results => this.replaceAllWithCached(results))
     }
 

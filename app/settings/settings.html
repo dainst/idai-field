@@ -43,7 +43,7 @@
                 <table>
                     <tr>
                         <td>
-                            <b>Serveraddresse: </b>
+                            <b>Serveradresse: </b>
                         </td>
                         <td>
                             <input [ngModel]="server.ipAddress"
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <b>Benutzer </b>
+                            <b>Benutzer: </b>
                         </td>
                         <td>
                             <input [ngModel]="server.userName"
@@ -64,7 +64,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <b>Passwort </b>
+                            <b>Passwort: </b>
                         </td>
                         <td>
                             <input [ngModel]="server.password"
@@ -75,10 +75,10 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <b>Teammitglieder: </b><br><br>
+                <b>Teammitglieder </b><br><br>
                 <ul>
                     <li id="remote-sites-list" *ngFor="let remoteSite of remoteSites; let i = index;">
-                        <b>IP Addresse: </b>
+                        <b>IP-Adresse: </b>
                         <input [ngModel]="remoteSite.ipAddress"
                                (ngModelChange)="remoteSite.ipAddress = $event"
                                placeholder="http://x.x.x.x(:port)/db_name"

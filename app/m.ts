@@ -83,7 +83,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     constructor() {
         super();
         this.msgs[M.SETTINGS_ACTIVATED]={
-            content: 'Die Einstellungen wurden erfolgreicht aktiviert.',
+            content: 'Die Einstellungen wurden erfolgreich aktiviert.',
             level: 'success',
             params: [],
             hidden: false

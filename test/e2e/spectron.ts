@@ -25,11 +25,18 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     }
 
     return new Promise(resolve => {
-        const protractor = spawn('protractor', [
-            'test/e2e/config/protractor-spectron.conf.js',
-            //'--params.skip_fail_fast=noff',
-            '--seleniumSessionId=' + sessionId
-        ]);
+        let protractor;
+        if (/^win/.test(process.platform)) { // windows
+            protractor = spawn('cmd', ['/s', '/c', 'protractor',
+                'test/e2e/config/protractor-spectron.conf.js',
+                '--seleniumSessionId=' + sessionId
+            ]);
+        } else {
+            protractor = spawn('protractor', [
+                'test/e2e/config/protractor-spectron.conf.js',
+                '--seleniumSessionId=' + sessionId
+            ]);
+        }
         protractor.stdout.setEncoding('utf8');
         protractor.stdout.on('data', data => {
 

@@ -54,6 +54,7 @@ export class ListComponent {
      * @param query
      */
     public fetchDocuments(query: Query = this.query) {
+        this.selectedFilterTrenchId = ""
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldDocument[];
 
@@ -61,7 +62,8 @@ export class ListComponent {
     }
 
     private fetchTrenches() {
-        this.datastore.findByType('trench').then(documents => {
+        let tquery : Query = {q: '', type: 'trench', prefix: true};
+        this.datastore.find(tquery).then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
         }).catch(err => { console.error(err); } );
     }
@@ -70,15 +72,10 @@ export class ListComponent {
         if (this.selectedFilterTrenchId == "") {
             this.fetchDocuments();
         } else {
-            var filterby = this.selectedFilterTrenchId;
-            this.documents = this.documents.filter(function (doc: IdaiFieldDocument) {
-
-                if (doc.resource.relations['belongsTo'] != undefined) {
-                    if (doc.resource.relations['belongsTo'].indexOf(filterby) != -1) {
-                        return true;
-                    }
-                }
-            })
+            var filterById = this.selectedFilterTrenchId;
+            this.datastore.findByBelongsTo(filterById).then(documents => {
+                this.documents = documents as IdaiFieldDocument[];
+            }).catch(err => { console.error(err); } );
         }
     }
 

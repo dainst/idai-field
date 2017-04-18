@@ -4,7 +4,7 @@ const rimraf = require('rimraf');
 var fs = require('fs');
 
 let app = new Application({
-    path: './node_modules/.bin/electron',
+    path: require('electron'),
     args: ['.']
 });
 

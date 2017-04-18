@@ -13,6 +13,7 @@ import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {DatastoreErrors} from "idai-components-2/datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import {identifierToken} from "@angular/compiler/src/identifiers";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -47,7 +48,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.setupFulltextIndex())
             .then(() => this.setupIdentifierIndex())
             .then(() => this.setupSyncedIndex())
-            .then(() => this.setupTypesIndex())
+            .then(() => this.setupBelongsToIndex())
             .then(() => this.setupAllIndex())
             .then(() => configLoader.getProjectConfiguration())
             .then(config => this.config = config);
@@ -100,11 +101,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.setupIndex('all', mapFun);
     }
 
-    private setupTypesIndex(): Promise<any> {
+    private setupBelongsToIndex(): Promise<any> {
         let mapFun = function(doc) {
-            emit(doc.resource.type);
+            if (doc.resource.relations['belongsTo'] != undefined) {
+                doc.resource.relations['belongsTo'].forEach(identifier => emit(identifier));
+            }
         };
-        return this.setupIndex('types', mapFun);
+        return this.setupIndex('belongsTo', mapFun);
     }
 
 
@@ -337,10 +340,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         });
     }
 
-    public findByType(type: string): Promise<IdaiFieldDocument []> {
+    public findByBelongsTo(identifier: string): Promise<IdaiFieldDocument []> {
         return this.readyForQuery.then(() => {
-            return this.db.query('types', {
-                key: type,
+            return this.db.query('belongsTo', {
+                key: identifier,
                 include_docs: true,
                 conflicts: true,
             }).then(result => {

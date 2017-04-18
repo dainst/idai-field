@@ -129,7 +129,7 @@ export class DocumentEditWrapperComponent {
 
     public save(viaSaveButton: boolean = false) {
 
-        var validationError = this.validator
+        this.validator
             .validate(<IdaiFieldDocument> this.clonedDoc)
             .then(()=>{
 
@@ -151,9 +151,10 @@ export class DocumentEditWrapperComponent {
             .catch(msgWithParams => {
 
                 if (msgWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-                    this.handleConflict();
+                    this.handleSaveConflict();
+                } else {
+                    this.messages.add(msgWithParams);
                 }
-                this.messages.add(msgWithParams);
             });
     }
 
@@ -167,7 +168,7 @@ export class DocumentEditWrapperComponent {
         );
     }
 
-    private handleConflict() {
+    private handleSaveConflict() {
 
         this.modalService.open(
             ConflictResolverComponent, {size: "lg", windowClass: "conflict-resolver"}

@@ -132,30 +132,31 @@ export class DocumentEditWrapperComponent {
         this.validator
             .validate(<IdaiFieldDocument> this.clonedDoc)
             .then(()=>{
+                this.saveValidatedDocument(this.clonedDoc,viaSaveButton);
+            }, msgWithParams=>this.messages.add(msgWithParams));
+    }
 
-                this.clonedDoc['synced'] = 0;
-                return this.persistenceManager.persist(this.clonedDoc);
-            })
-            .then(() => {
+    private saveValidatedDocument(clonedDoc: IdaiFieldDocument,viaSaveButton: boolean) {
+        clonedDoc['synced'] = 0;
+        return this.persistenceManager.persist(clonedDoc).then(()=>{
 
-                this.documentEditChangeMonitor.reset();
+            this.documentEditChangeMonitor.reset();
 
-                this.onSaveSuccess.emit({
-                    document: this.clonedDoc,
-                    viaSaveButton: viaSaveButton
-                });
-                // this.navigate(this.document, proceed);
-                // show message after route change
-                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-            })
-            .catch(msgWithParams => {
-
-                if (msgWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-                    this.handleSaveConflict();
-                } else {
-                    this.messages.add(msgWithParams);
-                }
+            this.onSaveSuccess.emit({
+                document: clonedDoc,
+                viaSaveButton: viaSaveButton
             });
+            // this.navigate(this.document, proceed);
+            // show message after route change
+            this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+
+        }, errorWithParams => {
+            if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
+                this.handleSaveConflict();
+            } else {
+                this.messages.add([M.WIDGETS_SAVE_ERROR]);
+            }
+        })
     }
 
     public openImagePicker() {

@@ -52,6 +52,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static WIDGETS_SAVE_SUCCESS : string = 'overview/savesuccess';
     public static WIDGETS_DELETE_SUCCESS : string = 'overview/deletesuccess';
+    public static WIDGETS_SAVE_ERROR : string = 'widgets/saveerror';
 
     // Images Package
 
@@ -255,6 +256,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.WIDGETS_DELETE_SUCCESS]={
             content: 'Die Ressource wurde erfolgreich gelöscht.',
             level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.WIDGETS_SAVE_ERROR]={
+            content: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.',
+            level: 'danger',
             params: [],
             hidden: false
         };

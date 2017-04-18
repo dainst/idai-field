@@ -19,7 +19,7 @@ export abstract class IdaiFieldDatastore extends Datastore {
 
     abstract findUnsynced(): Promise<IdaiFieldDocument[]>;
 
-    abstract findByType(type: string): Promise<IdaiFieldDocument[]>;
+    abstract findByBelongsTo(identifier: string): Promise<IdaiFieldDocument[]>;
 
     /**
      * Setup peer-to-peer syncing between this datastore and target.

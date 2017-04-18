@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(config) {
-    config.set({
+    var configuration = {
 
         basePath: '../../../',
 
@@ -53,6 +53,19 @@ module.exports = function(config) {
             'Chrome'
         ],
 
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
         singleRun: true
-    });
+    };
+
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+
+    config.set(configuration);
 };

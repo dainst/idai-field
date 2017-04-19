@@ -121,7 +121,7 @@ describe('resources/syncing tests --', function() {
             .catch(err => { fail(err); done(); });
     });
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToResources();
         db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {

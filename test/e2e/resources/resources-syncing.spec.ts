@@ -18,7 +18,7 @@ const settingsPage = require('../settings.page');
 /**
  * @author Sebastian Cuy
  */
-fdescribe('resources/syncing tests --', function() {
+describe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001/idai-field-documents-test';
 

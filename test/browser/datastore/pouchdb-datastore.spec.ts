@@ -284,6 +284,7 @@ export function main() {
             datastore.create(doc1)
                 .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc2))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.find({q: 'blub', type: 'type1'}))
                 .then(result => {
@@ -303,7 +304,7 @@ export function main() {
                         done();
                     }
                 );
-        });
+        }, 1000);
 
         it('should find by prefix query and filter', function(done){
             const doc1 = doc('bla1','blub1','type1');

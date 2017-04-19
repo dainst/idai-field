@@ -1,3 +1,4 @@
+import {browser,protractor,element,by} from 'protractor';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
@@ -80,7 +81,7 @@ describe('resources/syncing tests --', function() {
     }
 
     beforeAll(done => {
-
+        browser.sleep(2000);
         setupTestDB().then(done);
     });
 

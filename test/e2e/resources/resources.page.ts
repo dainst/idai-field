@@ -92,7 +92,8 @@ let ResourcesPage = function() {
     // get text
 
     this.getListItemIdentifierText = function(itemNr) {
-        return element.all(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier')).first().getText();
+        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier'))), delays.ECWaitTime);
+        return element(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier')).getText();
     };
 
     this.getSelectedGeometryTypeText = function() {

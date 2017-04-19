@@ -27,7 +27,6 @@ import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
-import {HttpImagestore} from './imagestore/http-imagestore';
 import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
@@ -70,21 +69,15 @@ import {SettingsService} from "./settings/settings-service";
             provide: Imagestore,
             useFactory: function(http: Http,blobMaker: BlobMaker): Imagestore {
 
-                // running under node / electron
-                if (typeof process === 'object') {
-                    let path;
-                    if (CONFIG['imagestorepath']) {
-                        path = CONFIG['imagestorepath'];
-                    } else {
-                        const app = (<any>window).require('electron').remote.app;
-                        path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
-                    }
-                    return new FileSystemImagestore(new Converter(), blobMaker, path, CONFIG['environment'] == 'test');
-                // running in browser
+                let path;
+                if (CONFIG['imagestorepath']) {
+                    path = CONFIG['imagestorepath'];
                 } else {
-                    let path = CONFIG['imagestorepath'] ? CONFIG['imagestorepath'] : 'imagestore';
-                    return new HttpImagestore(blobMaker, http, path);
+                    const app = (<any>window).require('electron').remote.app;
+                    path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
                 }
+                return new FileSystemImagestore(new Converter(), blobMaker, path, CONFIG['environment'] == 'test');
+
             },
             deps: [Http, BlobMaker]
         },

@@ -73,22 +73,9 @@ since both of them will not lead to an exit code other than `0`.
 
 ## E2E - Testing
 
-The e2e tests are configured to work with the **chrome/chromium** browsers only, 
-so make sure there is a local installation of one of these. The *chrome/chromium* only policy
-is sufficient since the final app is supposed to run under chrome only, packaged as an electron app.
-
 **Note** that provision of config files (see [here](config)) is a precondition for being able to run and e2e test the application successfully.
 
-Asides from that, a prior build (`npm run build`) is necessary for the e2e tests to work. 
-For starting end to end testing, you need two terminals (marked as `1$` and `2$`).
-
-```
-1$ npm run server
-```
-
-This starts a webserver which serves the `./` directory on port `8081`
-which is from where it is loaded into the browser against which the tests are run.
-As the *start* command, it automatically converts scss files to css when they are changed.
+Test execution can be started
 
 ```
 2$ npm run e2e

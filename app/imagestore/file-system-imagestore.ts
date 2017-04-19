@@ -1,12 +1,12 @@
-import {AbstractImagestore} from './abstract-imagestore';
 import * as fs from 'fs';
 import {BlobMaker} from "./blob-maker";
 import {Converter} from "./converter";
+import {M} from "../m";
+import {Observable} from "rxjs/Observable";
 
-export class FileSystemImagestore extends AbstractImagestore {
+export class FileSystemImagestore {
 
-    constructor(private converter: Converter, blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
-        super(blobMaker);
+    constructor(private converter: Converter, private blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
         let thumbs_path = this.basePath + "thumbs/";
@@ -35,6 +35,25 @@ export class FileSystemImagestore extends AbstractImagestore {
                         }
                     });
                 }
+            });
+        });
+    }
+
+    /**
+     * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
+     * @param mediastoreFilename must be an identifier of an existing file in the mediastore.
+     * @param sanitizeAfter
+     * @param boolean image will be loaded as thumb, default: true
+     * @return {Promise<string>} Promise that returns the blob url.
+     *  In case of error the promise gets rejected with msgWithParams.
+     */
+    public read(mediastoreFilename:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this._read(mediastoreFilename, thumb).then(data => {
+                if (data == undefined) reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
+                resolve(this.blobMaker.makeBlob(data,sanitizeAfter));
+            }).catch(() => {
+                reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
             });
         });
     }
@@ -84,6 +103,10 @@ export class FileSystemImagestore extends AbstractImagestore {
                 else resolve();
             })
         });
+    }
+
+    public objectChangesNotifications(): Observable<File> {
+        return Observable.create( () => {});
     }
 
 

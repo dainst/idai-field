@@ -129,7 +129,7 @@ describe('resources/syncing tests --', function() {
                 done();
         });
         resourcesPage.performCreateResource('test3');
-    });
+    }, 100000);
 
     it('should detect conflict on save', done => {
 

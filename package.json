@@ -91,6 +91,7 @@
     "electron-packager": "8.4.0",
     "electron-rebuild": "^1.5.7",
     "file-api": "0.10.4",
+    "file-url": "^2.0.2",
     "fs-extra": "^2.1.2",
     "gulp": "3.9.0",
     "gulp-concat": "2.6.0",

@@ -1,11 +1,12 @@
 var fs = require('fs');
 var path = require('path');
+var fileUrl = require('file-url');
 var failFast = require('protractor-fail-fast');
 
 exports.config = {
 
     seleniumAddress: 'http://localhost:9515/wd/hub',
-    baseUrl: 'file://' + path.resolve(__dirname, '../../..') + '/index.html',
+    baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
     specs: ['./delays.js', '../**/*.spec.js'],
 

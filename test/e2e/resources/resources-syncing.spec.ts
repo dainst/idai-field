@@ -1,4 +1,6 @@
 import {browser,protractor,element,by} from 'protractor';
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
@@ -16,7 +18,7 @@ const settingsPage = require('../settings.page');
 /**
  * @author Sebastian Cuy
  */
-describe('resources/syncing tests --', function() {
+fdescribe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001/idai-field-documents-test';
 
@@ -105,22 +107,37 @@ describe('resources/syncing tests --', function() {
         resetTestDoc().then(done);
     });
 
+
+    function waitForIt(searchTerm,successCB) {
+        return browser.sleep(1000).then(()=>
+            resourcesPage.typeInIdentifierInSearchField(searchTerm)
+        ).then(()=>{
+            return browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
+                ()=>{
+                    return successCB();
+                },
+                ()=>{
+                    return waitForIt(searchTerm,successCB)
+                })
+        });
+    }
+
     it('should show resource created in other db', () => {
 
         NavbarPage.clickNavigateToResources();
-        resourcesPage.typeInIdentifierInSearchField('test1');
-        expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
-    });
+        waitForIt('test1',()=>{
+            expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
+        });
 
-    it('should show changes made in other db', done => {
+    }, 30000);
+
+    it('should show changes made in other db', () => {
 
         NavbarPage.clickNavigateToResources()
             .then(updateTestDoc)
-            .then(() => resourcesPage.typeInIdentifierInSearchField('test2'))
-            .then(() => expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2'))
-            .then(done)
-            .catch(err => { fail(err); done(); });
-    });
+            .then(() => waitForIt('test2',()=>expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2')));
+
+    }, 30000);
 
     it('resource created in client should be synced to other db', done => {
 

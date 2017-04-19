@@ -50,22 +50,11 @@ module.exports = function(config) {
         autoWatch: true,
 
         browsers: [
-            'Chrome'
+            'Electron'
         ],
-
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
-        },
 
         singleRun: true
     };
-
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
-    }
 
     config.set(configuration);
 };

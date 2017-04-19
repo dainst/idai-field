@@ -139,7 +139,7 @@ describe('resources/syncing tests --', function() {
 
     }, 30000);
 
-    it('resource created in client should be synced to other db', done => {
+    xit('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToResources();
         db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {

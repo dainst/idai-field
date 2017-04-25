@@ -60,18 +60,16 @@ export function main() {
         let mockHttp;
         let mockSettingsService;
 
-
-        let mockDataModelConfiguration;
         let idaiFieldBackend : IdaiFieldBackend;
         let j;
 
-        beforeEach(function(){
+        beforeEach(function() {
 
             mockHttp = jasmine.createSpyObj('mockHttp', [ 'get', 'put' ]);
             mockHttp.get.and.callFake(successFunction);
             mockHttp.put.and.callFake(put);
 
-            mockSettingsService = jasmine.createSpyObj('mockSettingsService',['changes']);
+            mockSettingsService = jasmine.createSpyObj('mockSettingsService', [ 'changes' ]);
             mockSettingsService.changes.and.returnValue({
                 subscribe: function(callback) {
                     callback({server:{
@@ -83,11 +81,11 @@ export function main() {
             });
 
             idaiFieldBackend = new IdaiFieldBackend(mockHttp, config, mockSettingsService);
-            j=0;
+            j = 0;
         });
 
         it('should report it is connected',
-            function(){
+            function() {
 
                 idaiFieldBackend.connectionStatus().subscribe(connected => {
                     if (j==1) expect(connected).toBeTruthy();
@@ -101,7 +99,7 @@ export function main() {
         );
 
         it('should report is not connected',
-            function(){
+            function() {
 
                 idaiFieldBackend.connectionStatus().subscribe(connected => {
                     if (j==1) expect(connected).toBeFalsy();
@@ -123,7 +121,7 @@ export function main() {
                 const headers: Headers = new Headers();
                 headers.append('Authorization', 'Basic ' + btoa(config.backend.credentials));
 
-                idaiFieldBackend.save(document,"dataset1").then(obj => {
+                idaiFieldBackend.save(document, "dataset1").then(obj => {
                     expect(mockHttp.put).toHaveBeenCalledWith(config.backend.uri + '/object/' +document['resource']['id'],
                         JSON.stringify(documentWithDatasetIncorporated), { headers: headers });
                     done();

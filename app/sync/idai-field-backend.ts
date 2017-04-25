@@ -6,6 +6,7 @@ import {Response} from "@angular/http";
 import {IdaiFieldDocument} from '../model/idai-field-document'
 import {SettingsService} from "../settings/settings-service";
 
+
 @Injectable()
 /**
  * @author Jan G. Wieners
@@ -84,7 +85,7 @@ export class IdaiFieldBackend {
     }
 
     private createAuthorizationHeader() {
-        const headers = new Headers();
+        const headers: Headers = new Headers();
         headers.append('Authorization', 'Basic ' +
             btoa(this.configuration.credentials));
         return headers;

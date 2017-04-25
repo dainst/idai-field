@@ -1,10 +1,10 @@
-import * as fs from 'fs';
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 const remote = require('electron').remote;
+const fs = remote.require('fs');
 
 
 @Injectable()

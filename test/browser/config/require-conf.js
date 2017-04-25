@@ -1,0 +1,1 @@
+require = window.require || window.parent.require;

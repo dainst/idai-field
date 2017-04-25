@@ -56,6 +56,7 @@ let ResourcesPage = function() {
     };
 
     this.clickCreateGeometry = function(type) {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-create-' + type))), delays.ECWaitTime);
         return element(by.id('document-view-button-create-' + type)).click();
     };
 

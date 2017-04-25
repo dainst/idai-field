@@ -126,7 +126,7 @@ export class SettingsService {
         if (this.remoteSites.length > 0) {
             for (let remoteSite of this.remoteSites) {
                 if (remoteSite['ipAddress'] && remoteSite['ipAddress'].length > 0) {
-                    updatedConfig['remoteSites'].push(remoteSite);
+                    remoteSites.push(remoteSite);
                 }
             }
         }

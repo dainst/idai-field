@@ -11,6 +11,7 @@ const expressPouchDB = require('express-pouchdb');
 const fs = require('fs');
 const path = require('path');
 
+const common = require('../common');
 const resourcesPage = require('./resources.page');
 const documentViewPage = require('../widgets/document-view.page');
 const settingsPage = require('../settings.page');
@@ -125,7 +126,7 @@ describe('resources/syncing tests --', function() {
 
         settingsPage.get();
         settingsPage.clickAddRemoteSiteButton();
-        settingsPage.typeInRemoteSiteAddress(remoteSiteAddress);
+        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         settingsPage.clickSaveSettingsButton();
 
         createTestDoc().then(done);
@@ -181,9 +182,18 @@ describe('resources/syncing tests --', function() {
 
         const expectedConfig = {
             'environment': 'test',
+            'userName': 'userName',
+            'server': {
+                'userName': 'serverUserName',
+                'password': 'serverPassword'
+            },
             'remoteSites': [ { 'ipAddress': remoteSiteAddress } ]
         };
 
+        common.typeIn(settingsPage.getUserNameInput(), 'userName');
+        common.typeIn(settingsPage.getServerUserNameInput(), 'serverUserName');
+        common.typeIn(settingsPage.getServerPasswordInput(), 'serverPassword');
+        settingsPage.clickSaveSettingsButton();
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
@@ -193,7 +203,7 @@ describe('resources/syncing tests --', function() {
             .then(address => {
                 expect(address).toEqual(remoteSiteAddress);
                 done();
-            });
+            }).catch(err => { fail(err); done(); })
     });
 
 });

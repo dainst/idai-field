@@ -2,7 +2,6 @@ import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 
-let common = require('./common.js');
 let EC = protractor.ExpectedConditions;
 let delays = require('./config/delays');
 
@@ -26,20 +25,30 @@ let SettingsPage = function() {
         element(by.id('add-remote-site-button')).click();
     };
 
-    this.getRemoteSiteInput = function() {
+    this.getRemoteSiteAddressInput = function() {
         browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('input')).get(0)),
             delays.ECWaitTime);
         return element(by.id('remote-sites-list')).all(by.css('input')).get(0);
     };
 
-    this.typeInRemoteSiteAddress = function(address) {
-        common.typeIn(this.getRemoteSiteInput(), address);
+    this.getRemoteSiteAddress = function() {
+        return this.getRemoteSiteAddressInput().getAttribute('value');
     };
 
-    this.getRemoteSiteAddress = function() {
-        return this.getRemoteSiteInput().getAttribute('value');
-    }
+    this.getUserNameInput = function() {
+        browser.wait(EC.visibilityOf(element(by.id('user-name-input'))), delays.ECWaitTime);
+        return element(by.id('user-name-input'));
+    };
 
+    this.getServerUserNameInput = function() {
+        browser.wait(EC.visibilityOf(element(by.id('server-user-name-input'))), delays.ECWaitTime);
+        return element(by.id('server-user-name-input'));
+    };
+
+    this.getServerPasswordInput = function() {
+        browser.wait(EC.visibilityOf(element(by.id('server-password-input'))), delays.ECWaitTime);
+        return element(by.id('server-password-input'));
+    };
 };
 
 module.exports = new SettingsPage();

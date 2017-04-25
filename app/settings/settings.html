@@ -16,7 +16,7 @@
             <div class="col-md-9">
                 <b>Projekt </b> {{selectedProject}}<br><br><br>
                 <b>Benutzer </b>
-                <input [ngModel]="userName" (ngModelChange)="userName = $event"
+                <input id="user-name-input" [ngModel]="userName" (ngModelChange)="userName = $event"
                        class="form-control">
             </div>
             <div class="col-md-3">
@@ -46,7 +46,7 @@
                             <b>Serveradresse: </b>
                         </td>
                         <td>
-                            <input [ngModel]="server.ipAddress"
+                            <input id="server-address-input" [ngModel]="server.ipAddress"
                                    (ngModelChange)="server.ipAddress = $event"
                                    placeholder="http(s)://x.x.x.x(:port)/"
                                    class="form-control">
@@ -57,7 +57,7 @@
                             <b>Benutzer: </b>
                         </td>
                         <td>
-                            <input [ngModel]="server.userName"
+                            <input id="server-user-name-input" [ngModel]="server.userName"
                                    (ngModelChange)="server.userName = $event"
                                    class="form-control">
                         </td>
@@ -67,7 +67,7 @@
                             <b>Passwort: </b>
                         </td>
                         <td>
-                            <input [ngModel]="server.password"
+                            <input id="server-password-input" [ngModel]="server.password"
                                    (ngModelChange)="server.password = $event"
                                    class="form-control">
                         </td>

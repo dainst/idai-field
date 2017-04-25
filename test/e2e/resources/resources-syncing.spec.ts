@@ -17,6 +17,7 @@ const settingsPage = require('../settings.page');
 
 /**
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 describe('resources/syncing tests --', function() {
 
@@ -174,6 +175,25 @@ describe('resources/syncing tests --', function() {
             .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(done)
             .catch(err => { fail(err); done(); });
+    });
+
+    it('should save syncing settings to config file and load them after restart', done => {
+
+        const expectedConfig = {
+            'environment': 'test',
+            'remoteSites': [ { 'ipAddress': remoteSiteAddress } ]
+        };
+
+        NavbarPage.clickNavigateToResources()
+            .then(() => {
+                const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+                expect(loadedConfig).toEqual(expectedConfig);
+                return settingsPage.get();
+            }).then(() => settingsPage.getRemoteSiteAddress())
+            .then(address => {
+                expect(address).toEqual(remoteSiteAddress);
+                done();
+            });
     });
 
 });

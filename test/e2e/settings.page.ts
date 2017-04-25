@@ -26,9 +26,19 @@ let SettingsPage = function() {
         element(by.id('add-remote-site-button')).click();
     };
 
-    this.typeInRemoteSiteAddress = function(address) {
-        common.typeIn(element(by.id('remote-sites-list')).all(by.css('input')).get(0), address);
+    this.getRemoteSiteInput = function() {
+        browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('input')).get(0)),
+            delays.ECWaitTime);
+        return element(by.id('remote-sites-list')).all(by.css('input')).get(0);
     };
+
+    this.typeInRemoteSiteAddress = function(address) {
+        common.typeIn(this.getRemoteSiteInput(), address);
+    };
+
+    this.getRemoteSiteAddress = function() {
+        return this.getRemoteSiteInput().getAttribute('value');
+    }
 
 };
 

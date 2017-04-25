@@ -91,6 +91,8 @@ export class SettingsService {
                 .then(
                     config => {
                         if (config['remoteSites']) this.remoteSites = config['remoteSites'];
+                        if (config['server']) this.server = config['server'];
+                        if (config['userName']) this.userName = config['userName'];
                         return this.setupSync();
                     }, err => reject(err)
                 ).then(
@@ -106,14 +108,47 @@ export class SettingsService {
             this.readConfigFile()
                 .then(
                     config => {
-                        config['remoteSites'] = this.remoteSites;
-                        return this.writeConfigFile(config);
+                        const updatedConfig = this.updateConfigValues(config);
+                        return this.writeConfigFile(updatedConfig);
                     }, err => reject(err)
                 ).then(
                     () => resolve(),
                     err => reject(err)
                 );
         });
+    }
+
+    private updateConfigValues(config: any): any {
+
+        let updatedConfig = JSON.parse(JSON.stringify(config));
+
+        let remoteSites = [];
+        if (this.remoteSites.length > 0) {
+            for (let remoteSite of this.remoteSites) {
+                if (remoteSite['ipAddress'] && remoteSite['ipAddress'].length > 0) {
+                    updatedConfig['remoteSites'].push(remoteSite);
+                }
+            }
+        }
+        if (remoteSites.length > 0) {
+            updatedConfig['remoteSites'] = remoteSites;
+        } else {
+            delete updatedConfig['remoteSites'];
+        }
+
+        if (this.server['userName'] || this.server['password'] || this.server['ipAddress']) {
+            updatedConfig['server'] = this.server;
+        } else {
+            delete updatedConfig['server'];
+        }
+
+        if (this.userName.length > 0) {
+            updatedConfig['userName'] = this.userName;
+        } else {
+            delete updatedConfig['userName'];
+        }
+
+        return updatedConfig;
     }
 
     private readConfigFile(): Promise<any> {

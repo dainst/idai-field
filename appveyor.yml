@@ -23,7 +23,6 @@ build_script:
   - yarn run package-win
 
 test_script:
-  - yarn test
   - yarn run e2e
 
 artifacts:

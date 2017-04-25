@@ -34,7 +34,6 @@ before_script:
 script:
 - npm rebuild node-sass
 - yarn run build
-- yarn test
 - yarn run e2e
 - yarn run package-mac
 deploy:

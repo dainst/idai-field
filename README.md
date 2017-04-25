@@ -81,14 +81,13 @@ Test execution can be started
 2$ npm run e2e
 ```
 
-This command runs the end to end tests once, until all tests pass or  the first error is found.
-To alter this behaviour, you can use the `noff` option (no fail fast)
+This command runs all end to end tests once. To alter this behaviour, you can use the `ff` option (fail fast)
 
 ```
-2$ npm run e2e noff
+2$ npm run e2e ff
 ```
 
-so that test execution continues regardless of errors. 
+so that test execution stops when the first error is found. 
 
 
 

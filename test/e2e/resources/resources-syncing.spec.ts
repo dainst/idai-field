@@ -111,6 +111,14 @@ describe('resources/syncing tests --', function() {
         });
     }
 
+    function configureRemoteSite() {
+
+        settingsPage.get();
+        settingsPage.clickAddRemoteSiteButton();
+        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
+        settingsPage.clickSaveSettingsButton();
+    }
+
     beforeAll(done => {
 
         browser.sleep(2000);
@@ -124,11 +132,6 @@ describe('resources/syncing tests --', function() {
 
     beforeEach(done => {
 
-        settingsPage.get();
-        settingsPage.clickAddRemoteSiteButton();
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        settingsPage.clickSaveSettingsButton();
-
         createTestDoc().then(done);
     });
 
@@ -141,6 +144,7 @@ describe('resources/syncing tests --', function() {
 
     it('should show resource created in other db', () => {
 
+        configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         waitForIt('test1', () => {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
@@ -150,6 +154,7 @@ describe('resources/syncing tests --', function() {
 
     it('should show changes made in other db', () => {
 
+        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(updateTestDoc)
             .then(() => waitForIt('test2', () => expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2')));
@@ -158,6 +163,7 @@ describe('resources/syncing tests --', function() {
 
     xit('resource created in client should be synced to other db', done => {
 
+        configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {
             if (change.doc.resource && change.doc.resource.identifier == 'test3')
@@ -168,6 +174,7 @@ describe('resources/syncing tests --', function() {
 
     it('should detect conflict on save', done => {
 
+        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))
             .then(() => resourcesPage.clickSelectResource('test1'))
@@ -190,10 +197,14 @@ describe('resources/syncing tests --', function() {
             'remoteSites': [ { 'ipAddress': remoteSiteAddress } ]
         };
 
+        settingsPage.get();
+        settingsPage.clickAddRemoteSiteButton();
+        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         common.typeIn(settingsPage.getUserNameInput(), 'userName');
         common.typeIn(settingsPage.getServerUserNameInput(), 'serverUserName');
         common.typeIn(settingsPage.getServerPasswordInput(), 'serverPassword');
         settingsPage.clickSaveSettingsButton();
+
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 browser.sleep(2000);

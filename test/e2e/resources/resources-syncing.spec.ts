@@ -196,6 +196,7 @@ describe('resources/syncing tests --', function() {
         settingsPage.clickSaveSettingsButton();
         NavbarPage.clickNavigateToResources()
             .then(() => {
+                browser.sleep(2000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 expect(loadedConfig).toEqual(expectedConfig);
                 return settingsPage.get();

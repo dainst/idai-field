@@ -1,11 +1,15 @@
 const Application = require('spectron').Application;
 const spawn = require('child_process').spawn;
 const rimraf = require('rimraf');
-var fs = require('fs');
+const fs = require('fs');
+
+const configPath = 'config/config.test.json';
+
+fs.writeFileSync(configPath, JSON.stringify({ 'environment': 'test' }));
 
 let app = new Application({
     path: require('electron'),
-    args: ['.']
+    args: ['.', configPath]
 });
 
 app.start().then(() => app.client.sessions()).then(sessions => {

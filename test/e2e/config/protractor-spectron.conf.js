@@ -27,9 +27,13 @@ exports.config = {
         exclude: [
             "http://localhost:3001/" // pouchdb issues ignorable errors when syncing
         ]
-    },{
+    }, {
         package: 'protractor-fail-fast'
     }],
+    params: {
+        configPath: 'config/config.test.json',
+        configTemplate: { 'environment': 'test' }
+    },
     onPrepare: function() {
         if (browser.params.skip_fail_fast == 'noff') {
             console.log("No fail fast.")

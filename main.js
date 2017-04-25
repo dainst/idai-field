@@ -3,6 +3,7 @@
 const electron = require('electron');
 const menuTemplate = require('./menu.js');
 const Menu = electron.Menu;
+const fs = require('fs');
 
 // Module to control application life.
 const app = electron.app;
@@ -13,6 +14,15 @@ const BrowserWindow = electron.BrowserWindow;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow;
+
+// Load configuration
+if (process.argv.length > 2) {
+  global.configPath = process.argv[2];
+} else {
+  global.configPath = 'config/config.json';
+}
+console.log(global.configPath);
+global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 
 function createWindow() {
   // Create the browser window.

@@ -39,17 +39,22 @@ export class SettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userName = this.settingsService.getUserName();
-        this.remoteSites = this.settingsService.getRemoteSites();
-        this.server = this.settingsService.getServer();
+        this.settingsService.ready.then(() => {
+            this.userName = this.settingsService.getUserName();
+            this.remoteSites = this.settingsService.getRemoteSites();
+            this.server = this.settingsService.getServer();
+        });
     }
 
     public save() {
         this.settingsService.setUserName(this.userName);
         this.settingsService.setServer(this.server);
-        this.settingsService.setRemoteSites(this.remoteSites).then(()=>{
-            this.messages.add([M.SETTINGS_ACTIVATED]);
-        })
-
+        this.settingsService.setRemoteSites(this.remoteSites)
+            .then(
+                () => { return this.settingsService.updateConfigFile(); }
+            ).then(
+                () => this.messages.add([M.SETTINGS_ACTIVATED]),
+                err => { console.error(err); }
+            );
     }
 }

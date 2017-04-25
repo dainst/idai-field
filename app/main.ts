@@ -4,7 +4,7 @@ import {enableProdMode} from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app.module';
 
-import CONFIG = require("config/config.json!json");
+const CONFIG = require('electron').remote.getGlobal('config');
 
 if (CONFIG['environment'] == 'production') enableProdMode();
 

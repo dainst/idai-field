@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
@@ -8,7 +8,7 @@ PouchDB.plugin(require('pouchdb-adapter-memory'));
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
 const expressPouchDB = require('express-pouchdb');
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 
 const resourcesPage = require('./resources.page');
@@ -21,6 +21,8 @@ const settingsPage = require('../settings.page');
 describe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001/idai-field-documents-test';
+    const configPath = browser.params.configPath;
+    const configTemplate = browser.params.configTemplate;
 
     let db, server;
     let testResource = {
@@ -40,7 +42,7 @@ describe('resources/syncing tests --', function() {
             app.use(cors(pouchDbApp.couchConfig));
             app.use('/', pouchDbApp);
             server = app.listen(3001, function () {
-                new PouchDB('idai-field-documents-test', { adapter: 'memory' })
+                new PouchDB('idai-field-documents-test')
                     .destroy().then(() => {
                         resolve(new PouchDB('idai-field-documents-test'));
                     });
@@ -59,7 +61,7 @@ describe('resources/syncing tests --', function() {
         return db.post(testDocument).then(result => {
             testDocument._id = result.id;
             testDocument._rev = result.rev;
-        }).catch(err => console.log("failure while creating test doc", err));
+        }).catch(err => console.error("Failure while creating test doc", err));
     }
 
     function resetTestDoc() {
@@ -70,7 +72,7 @@ describe('resources/syncing tests --', function() {
         delete testDocument._rev;
         testDocument.resource.identifier = 'test1';
         return db.remove(id, rev)
-            .catch(err => console.log("failure while removing test doc", err));
+            .catch(err => console.error("Failure while removing test doc", err));
     }
 
     function updateTestDoc() {
@@ -79,10 +81,36 @@ describe('resources/syncing tests --', function() {
         return db.put(testDocument).then(result => {
             testDocument._id = result.id;
             testDocument._rev = result.rev;
-        }).catch(err => console.log("failure while updating test doc", err));
+        }).catch(err => console.error("Failure while updating test doc", err));
+    }
+
+    function resetConfigJson(): Promise<any> {
+
+        return new Promise(resolve => {
+            fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
+                if (err) console.error('Failure while resetting config.json', err);
+                resolve();
+            });
+        });
+    }
+
+    function waitForIt(searchTerm, successCB) {
+
+        return browser.sleep(1000).then(() =>
+            resourcesPage.typeInIdentifierInSearchField(searchTerm)
+        ).then(() => {
+            return browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
+                () => {
+                    return successCB();
+                },
+                () => {
+                    return waitForIt(searchTerm, successCB);
+                });
+        });
     }
 
     beforeAll(done => {
+
         browser.sleep(2000);
         setupTestDB().then(done);
     });
@@ -104,28 +132,15 @@ describe('resources/syncing tests --', function() {
 
     afterEach(done => {
 
-        resetTestDoc().then(done);
+        resetTestDoc()
+            .then(() => resetConfigJson())
+            .then(() => done());
     });
-
-
-    function waitForIt(searchTerm,successCB) {
-        return browser.sleep(1000).then(()=>
-            resourcesPage.typeInIdentifierInSearchField(searchTerm)
-        ).then(()=>{
-            return browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
-                ()=>{
-                    return successCB();
-                },
-                ()=>{
-                    return waitForIt(searchTerm,successCB)
-                })
-        });
-    }
 
     it('should show resource created in other db', () => {
 
         NavbarPage.clickNavigateToResources();
-        waitForIt('test1',()=>{
+        waitForIt('test1', () => {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
         });
 
@@ -135,7 +150,7 @@ describe('resources/syncing tests --', function() {
 
         NavbarPage.clickNavigateToResources()
             .then(updateTestDoc)
-            .then(() => waitForIt('test2',()=>expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2')));
+            .then(() => waitForIt('test2', () => expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2')));
 
     }, 30000);
 

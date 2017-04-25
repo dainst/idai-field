@@ -32,7 +32,6 @@ import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
 import {ListModule} from './list/list.module';
 
-import CONFIG = require("config/config.json!json");
 import {CachedDatastore} from "./datastore/cached-datastore";
 import {BlobMaker} from "./imagestore/blob-maker";
 import {Converter} from "./imagestore/converter";
@@ -41,6 +40,8 @@ import {IdaiWidgetsModule} from "idai-components-2/widgets"
 import {SettingsModule} from "./settings/settings.module";
 import {AppConfigurator} from "./app-configurator";
 import {SettingsService} from "./settings/settings-service";
+
+const CONFIG = require('electron').remote.getGlobal('config');
 
 @NgModule({
     imports: [
@@ -96,8 +97,6 @@ import {SettingsService} from "./settings/settings-service";
                 } else {
                     datastore = new PouchdbDatastore(dbname, configLoader, test);
                 }
-                // setup sync
-                if(CONFIG['sync']) CONFIG['sync'].forEach(uri => datastore.setupSync(uri));
                 return new CachedDatastore(datastore);
             },
             deps: [ConfigLoader]

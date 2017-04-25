@@ -29,8 +29,6 @@ exports.config = {
         exclude: [
             "http://localhost:3001/" // pouchdb issues ignorable errors when syncing
         ]
-    }, {
-        package: 'protractor-fail-fast'
     }],
     params: {
         configPath: 'config/config.test.json',
@@ -64,3 +62,5 @@ exports.config = {
      */
     useAllAngular2AppRoots: true
 };
+
+if (failFastActive) exports.config.plugins.push({package: 'protractor-fail-fast'});

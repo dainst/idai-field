@@ -53,7 +53,7 @@ exports.config = {
         jasmine.getEnv().addReporter(new FailureScreenshotReporter());
     },
     afterLaunch: function() {
-        failFast.clean();
+        if (failFastActive) failFast.clean();
     },
     /**
      * ng2 related configuration

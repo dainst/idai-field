@@ -4,6 +4,7 @@ const rimraf = require('rimraf');
 const fs = require('fs');
 
 const configPath = 'config/config.test.json';
+const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
 
 fs.writeFileSync(configPath, JSON.stringify({ 'environment': 'test' }));
 
@@ -33,12 +34,14 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         if (/^win/.test(process.platform)) { // windows
             protractor = spawn('cmd', ['/s', '/c', 'protractor',
                 'test/e2e/config/protractor-spectron.conf.js',
-                '--seleniumSessionId=' + sessionId
+                '--seleniumSessionId=' + sessionId,
+                '--params=' + failFast
             ]);
         } else {
             protractor = spawn('protractor', [
                 'test/e2e/config/protractor-spectron.conf.js',
-                '--seleniumSessionId=' + sessionId
+                '--seleniumSessionId=' + sessionId,
+                '--params=' + failFast
             ]);
         }
         protractor.stdout.setEncoding('utf8');

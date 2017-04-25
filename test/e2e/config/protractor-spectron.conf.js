@@ -1,7 +1,9 @@
-var fs = require('fs');
-var path = require('path');
-var fileUrl = require('file-url');
-var failFast = require('protractor-fail-fast');
+const fs = require('fs');
+const path = require('path');
+const fileUrl = require('file-url');
+const failFast = require('protractor-fail-fast');
+
+const failFastActive = (process.argv.length > 4 && process.argv[4] == '--params=ff');
 
 exports.config = {
 
@@ -35,9 +37,8 @@ exports.config = {
         configTemplate: { 'environment': 'test' }
     },
     onPrepare: function() {
-        if (browser.params.skip_fail_fast == 'noff') {
-            console.log("No fail fast.")
-        } else {
+        if (failFastActive) {
+            console.log("Fail fast mode active");
             jasmine.getEnv().addReporter(failFast.init());
         }
 

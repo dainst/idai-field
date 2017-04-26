@@ -33,6 +33,9 @@ import {IdaiWidgetsModule} from "idai-components-2/widgets"
     ],
     providers: [
         MapState
+    ],
+    exports: [
+        GeometryViewComponent
     ]
 })
 

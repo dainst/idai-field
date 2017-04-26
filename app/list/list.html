@@ -1,5 +1,6 @@
 <div class="row" style="background-color: #eee; padding-top:10px;">
 	<div class="col-md-4">
+
 		<select class="form-control" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
 			<option selected value>Alle Schnitte</option>
 			<option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
@@ -11,10 +12,25 @@
 					(onQueryChanged)="queryChanged($event)">
 		</search-bar>
 	</div>
+	<div class="col-md-4" align="right">
+
+			<div *ngIf="selectedFilterTrenchId == ''" class="form-inline">
+				<small>neues Dokument<br>vom Typ:</small>
+				<select class="form-control ml-2" [(ngModel)]="new_doc_type">
+					<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
+				</select>
+				<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
+			</div>
+			<div *ngIf="selectedFilterTrenchId != ''">
+				<button class="btn btn-secondary ml-2" (click)="addDocument('context')">Diesem Schnitt neuen Befund unterordnen</button>
+			</div>
+
+	</div>
 </div>
 
 <div class="row">
-	<table class="col-md-12 table table-hover table-sm">
+	<div [class.col-sm-8]="detailedDocument" [class.col-sm-12]="!detailedDocument">
+	<table class=" table table-hover table-sm">
 		<tr>
 			<th>Identifier/Id</th>
 			<th>Typ</th>
@@ -27,24 +43,30 @@
 	        [id]="'resource-' + document.resource.identifier">
 			<td align="right">
 				<input [(ngModel)]="document.resource.identifier" (blur)="update(document)" class="form-control">
-				<small style="font-size: 10px;">{{document._id}}</small>
+				<small class="text-muted">{{document._id}}</small>
 			</td>
             <td>
             	<select class="form-control" [(ngModel)]="document.resource.type" (change)="update(document)">
             		<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
             	</select>
             </td>
-			<td>
+			<td align="right">
             	<input [(ngModel)]="document.resource.shortDescription" (blur)="update(document)" class="form-control">
+				<small><button (click)="detailedDocument = document" class="btn btn-sm btn-link">Details</button></small>
             </td>  
 	    </tr>
 	</table>
-</div>
-<div class="row">
-	<div class="col-md-12 form-inline">
-		<select class="form-control" [(ngModel)]="new_doc_type">
-			<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
-		</select>
-		<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
+	</div>
+	<div *ngIf="detailedDocument" class="col-sm-4 document-info">
+		<document-view [(document)]="detailedDocument" [basePath]="'list'">
+			<description-view [document]="detailedDocument"></description-view>
+			<thumbnail-view [imageIds]="currentDocument.resource.relations['depictedIn']"
+							*ngIf="detailedDocument && detailedDocument.resource.relations
+                            && detailedDocument.resource.relations['depictedIn']">
+			</thumbnail-view>
+			<geometry-view [document]="detailedDocument"></geometry-view>
+			<fields-view [doc]="detailedDocument"></fields-view>
+			<relations-view [doc]="detailedDocument" ></relations-view>
+		</document-view>
 	</div>
 </div>

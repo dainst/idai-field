@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {FormsModule} from '@angular/forms';
 import {IdaiWidgetsModule} from "idai-components-2/widgets"
+import {ResourcesModule} from "../resources/resources.module"
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import {IdaiWidgetsModule} from "idai-components-2/widgets"
         BrowserModule,
         IdaiDocumentsModule,
         FormsModule,
-        IdaiWidgetsModule
+        IdaiWidgetsModule,
+        ResourcesModule
     ],
     declarations: [
         ListComponent

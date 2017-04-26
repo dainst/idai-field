@@ -14,7 +14,7 @@ import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 export class ListComponent {
 
-    private current_document: IdaiFieldDocument;
+    private detailedDocument: IdaiFieldDocument;
     public documents: IdaiFieldDocument[];
     public trenches: IdaiFieldDocument[];
     public selectedFilterTrenchId = "";
@@ -36,33 +36,26 @@ export class ListComponent {
     }
 
     public update(document: IdaiFieldDocument): void {
-        this.current_document = document;
-
         if (document.resource.id) {
-
             this.datastore.update(document).then(
                 doc => {
                     this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+                    this.detailedDocument = <IdaiFieldDocument> doc;
                 })
                 .catch(errorWithParams => {
                     // TODO replace with msg from M
                     this.messages.add(errorWithParams);
                 });
         } else {
-
             this.datastore.create(document).then(
-
                 doc => {
-                    this.current_document = <IdaiFieldDocument> doc;
                     this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    //this.fetchDocuments()
-
+                    this.detailedDocument = <IdaiFieldDocument> doc;
                 })
                 .catch(errorWithParams => {
                     // TODO replace with msg from M
                     this.messages.add(errorWithParams);
                 });
-
         }
     }
 
@@ -73,6 +66,7 @@ export class ListComponent {
      */
     public fetchDocuments(query: Query = this.query) {
         this.selectedFilterTrenchId = ""
+        this.detailedDocument = null
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldDocument[];
 
@@ -90,6 +84,7 @@ export class ListComponent {
         if (this.selectedFilterTrenchId == "") {
             this.fetchDocuments();
         } else {
+            this.detailedDocument = null
             var filterById = this.selectedFilterTrenchId;
             this.datastore.findByBelongsTo(filterById).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
@@ -108,7 +103,7 @@ export class ListComponent {
     }
     public addDocument(new_doc_type) {
         let newDoc = { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
-
+        
         // Adding Context to selectedTrench
         if (this.selectedFilterTrenchId && new_doc_type == "context") {
             newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]

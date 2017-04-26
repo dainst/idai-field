@@ -36,16 +36,34 @@ export class ListComponent {
     }
 
     public update(document: IdaiFieldDocument): void {
-
         this.current_document = document;
-        this.datastore.update(document).then(
-            doc => {
-                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-            })
-            .catch(errorWithParams => {
-                // TODO replace with msg from M
-                this.messages.add(errorWithParams);
-            });
+
+        if (document.resource.id) {
+
+            this.datastore.update(document).then(
+                doc => {
+                    this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+                })
+                .catch(errorWithParams => {
+                    // TODO replace with msg from M
+                    this.messages.add(errorWithParams);
+                });
+        } else {
+
+            this.datastore.create(document).then(
+
+                doc => {
+                    this.current_document = <IdaiFieldDocument> doc;
+                    this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+                    //this.fetchDocuments()
+
+                })
+                .catch(errorWithParams => {
+                    // TODO replace with msg from M
+                    this.messages.add(errorWithParams);
+                });
+
+        }
     }
 
     /**
@@ -87,6 +105,15 @@ export class ListComponent {
                 this.typesList.push(type);
             }
         }
+    }
+    public addDocument(new_doc_type) {
+        let newDoc = { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
+
+        // Adding Context to selectedTrench
+        if (this.selectedFilterTrenchId && new_doc_type == "context") {
+            newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]
+        }
+        this.documents.push(<IdaiFieldDocument>newDoc);
     }
 
     public select(documentToSelect: IdaiFieldDocument) {

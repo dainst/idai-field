@@ -14,27 +14,37 @@
 </div>
 
 <div class="row">
-	<table class="col-md-12 table table-sm">
+	<table class="col-md-12 table table-hover table-sm">
 		<tr>
-			<th>identifier</th>
-			<th>type</th>
-			<th>shortDescription</th>
+			<th>Identifier/Id</th>
+			<th>Typ</th>
+			<th>Kurzbeschreibung</th>
 		</tr>
 	    <tr *ngFor="let document of documents; let index=index"
 	        (click)="select(document)"
 	        [class.synced]="document.synced"
 	        [class.unsynced]="!document.synced"
 	        [id]="'resource-' + document.resource.identifier">
-
-            <td>{{document.resource.identifier}}</td>
+			<td align="right">
+				<input [(ngModel)]="document.resource.identifier" (blur)="update(document)" class="form-control">
+				<small style="font-size: 10px;">{{document._id}}</small>
+			</td>
             <td>
             	<select class="form-control" [(ngModel)]="document.resource.type" (change)="update(document)">
             		<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
             	</select>
             </td>
-            <td>
+			<td>
             	<input [(ngModel)]="document.resource.shortDescription" (blur)="update(document)" class="form-control">
             </td>  
 	    </tr>
 	</table>
+</div>
+<div class="row">
+	<div class="col-md-12 form-inline">
+		<select class="form-control" [(ngModel)]="new_doc_type">
+			<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
+		</select>
+		<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
+	</div>
 </div>

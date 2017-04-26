@@ -38,3 +38,9 @@ deploy:
   prerelease: false
   on:
     appveyor_repo_tag: true
+
+notifications:
+  - provider: Slack
+    auth_token:
+      secure: 8igb/45j7jFO/0zlLOXgvxk6AQzx68GVkMrY17G8sDhMXkofJ3jnqF6qT204DLdI7RrL5rNUt9WspyagZrzL/Gt3SVaenCd6xx7S8VQz/sk=
+    channel: '#builds'

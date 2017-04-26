@@ -117,6 +117,7 @@ describe('resources/syncing tests --', function() {
         settingsPage.clickAddRemoteSiteButton();
         common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         settingsPage.clickSaveSettingsButton();
+        browser.sleep(5000);
     }
 
     beforeAll(done => {
@@ -176,8 +177,10 @@ describe('resources/syncing tests --', function() {
 
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
-            .then(() => resourcesPage.typeInIdentifierInSearchField('test1'))
-            .then(() => resourcesPage.clickSelectResource('test1'))
+            .then(() => {
+                browser.sleep(5000);
+                resourcesPage.typeInIdentifierInSearchField('test1');
+            }).then(() => resourcesPage.clickSelectResource('test1'))
             .then(() => documentViewPage.clickEditDocument())
             .then(updateTestDoc)
             .then(() => DocumentEditWrapperPage.clickSaveDocument())
@@ -207,7 +210,7 @@ describe('resources/syncing tests --', function() {
 
         NavbarPage.clickNavigateToResources()
             .then(() => {
-                browser.sleep(2000);
+                browser.sleep(5000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 expect(loadedConfig).toEqual(expectedConfig);
                 return settingsPage.get();

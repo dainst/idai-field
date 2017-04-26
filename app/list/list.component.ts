@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Query} from "idai-components-2/datastore";
 import {ConfigLoader, IdaiType, ProjectConfiguration} from "idai-components-2/configuration";
-import {Validator, PersistenceManager} from "idai-components-2/persist";
+import {PersistenceManager} from "idai-components-2/persist";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
@@ -25,7 +25,6 @@ export class ListComponent {
     constructor(
         private messages: Messages,
         private datastore: IdaiFieldDatastore,
-        private validator: Validator,
         configLoader: ConfigLoader,
         private persistenceManager: PersistenceManager
     ) {
@@ -103,22 +102,18 @@ export class ListComponent {
         }
     }
     public addDocument(new_doc_type) {
+        // TODO - Use Validator class
+        if (!new_doc_type || new_doc_type == '') {
+            return
+        }
+
         let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
-        this.validator
-            .validate(<IdaiFieldDocument> newDoc)
-            .then(()=>{
 
-                // Adding Context to selectedTrench
-                if (this.selectedFilterTrenchId && new_doc_type == "context") {
-                    newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]
-                }
-                this.documents.push(newDoc);
-
-            }, msgWithParams => {
-                // TODO - The validator returns an array with undefined if the resource-type is missing
-                this.messages.add([msgWithParams[0]])
-                }
-            );
+        // Adding Context to selectedTrench
+        if (this.selectedFilterTrenchId && new_doc_type == "context") {
+            newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]
+        }
+        this.documents.push(newDoc);
     }
 
     public select(documentToSelect: IdaiFieldDocument) {

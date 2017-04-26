@@ -17,7 +17,7 @@
 			<select class="form-control ml-2" [(ngModel)]="new_doc_type">
 				<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
 			</select>
-			<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
+			<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)" [disabled]="!new_doc_type">Hinzufügen</button>
 		</div>
 		<div *ngIf="selectedFilterTrenchId != ''">
 			<button class="btn btn-secondary ml-2" (click)="addDocument('context')">Diesem Schnitt neuen Befund unterordnen</button>

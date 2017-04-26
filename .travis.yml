@@ -27,10 +27,11 @@ install:
 - yarn install --force
 - yarn add electron-builder@next --dev
 before_script:
-  - sed -i ".bak" "s@^var promisesDelay.*@var promisesDelay = 50;@g" test/e2e/config/delays.js
-  - "export DISPLAY=:99.0"
-  - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
-  - sleep 3 # give xvfb some time to start
+- sed -i ".bak" "s@^var promisesDelay.*@var promisesDelay = 50;@g" test/e2e/config/delays.js
+- export DISPLAY=:99.0
+- if [ "${TRAVIS_OS_NAME}" = "osx" ]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8;
+  echo ok )& fi
+- sleep 3
 script:
 - npm rebuild node-sass
 - yarn run build
@@ -47,3 +48,6 @@ deploy:
     tags: true
     all_branches: true
     repo: dainst/idai-field-client
+notifications:
+  slack:
+    secure: Q0D81+i3XnRnhbVaudmv0Tn/WgzUsVyaJ9sbrgzs0S0yKbDZoNemKC21v/zzDFN5FxnhXafVdyinNwVr/nf0H/GBDHOJm/cBDVnojxADgGP4I/Wx9vyQ4vqFvaSVAy5MgMtTdgOj5mrm6fDEkQV6TYRkXaWC35iklhZj5p9XTldicQdw+bS5lg70YkEjD1hmCWIDyNbI0gy6MungKUD93nRT4LxNyGDmo3mYuAz5xWeMRZWZ6h+fobtRpThrsufqNF3FNRSf3ZPLQU5+8ayprhB8OQ/PsobVi0KJh6U80tbE17MwACe7Ok2l01h0YA4s2iXQ4RvA75ssXTcOTiaRXy2+gMI4YB3zJL2WFy+Y6sihH9ujCmaWKLwBqTYfc9UypWu1vlj2p3FEt6m3BcWmq2J/xqJo1wD49W/cSuXgoDMmVApe3VsoUiLX5JzU2AhQWGQlmahyeFE5IDg8dZGGmZ+w3XGF84tDQvmSfhEYHB4M1to2KCTjMHsGReomo0p5Ek/96k6AuQ2NalyGg5f3My0PGT6oWeJi44/jaXZSmMkeN6S2RtbWzPxYzVWzg5KDJKvsqygSOwtJP56hVXol7T8TJo7zCnFS+Cm5fHmiz+4WlwKonOY7xEpuhMFnMpcMW1FNBx0SlfTzIIImGsveYK8NerfclFlQ9HdSKN4yZnk=

@@ -117,7 +117,7 @@ export class ResourcesComponent {
 
     public createNewDocument(type: string): Promise<any> {
 
-        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
+            // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
         var newDocument = { "resource": { "relations": {}, "type": type } };

@@ -1,6 +1,5 @@
 <div class="row" style="background-color: #eee; padding-top:10px;">
 	<div class="col-md-4">
-
 		<select class="form-control" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
 			<option selected value>Alle Schnitte</option>
 			<option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
@@ -13,18 +12,16 @@
 		</search-bar>
 	</div>
 	<div class="col-md-4" align="right">
-
-			<div *ngIf="selectedFilterTrenchId == ''" class="form-inline">
-				<small>neues Dokument<br>vom Typ:</small>
-				<select class="form-control ml-2" [(ngModel)]="new_doc_type">
-					<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
-				</select>
-				<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
-			</div>
-			<div *ngIf="selectedFilterTrenchId != ''">
-				<button class="btn btn-secondary ml-2" (click)="addDocument('context')">Diesem Schnitt neuen Befund unterordnen</button>
-			</div>
-
+		<div *ngIf="selectedFilterTrenchId == ''" class="form-inline">
+			<small>neues Dokument<br>vom Typ:</small>
+			<select class="form-control ml-2" [(ngModel)]="new_doc_type">
+				<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
+			</select>
+			<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)">Hinzufügen</button>
+		</div>
+		<div *ngIf="selectedFilterTrenchId != ''">
+			<button class="btn btn-secondary ml-2" (click)="addDocument('context')">Diesem Schnitt neuen Befund unterordnen</button>
+		</div>
 	</div>
 </div>
 
@@ -42,22 +39,22 @@
 	        [class.unsynced]="!document.synced"
 	        [id]="'resource-' + document.resource.identifier">
 			<td align="right">
-				<input [(ngModel)]="document.resource.identifier" (blur)="update(document)" class="form-control">
+				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control">
 				<small class="text-muted">{{document._id}}</small>
 			</td>
             <td>
-            	<select class="form-control" [(ngModel)]="document.resource.type" (change)="update(document)">
+            	<select class="form-control" [(ngModel)]="document.resource.type" (change)="save(document)">
             		<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
             	</select>
             </td>
 			<td align="right">
-            	<input [(ngModel)]="document.resource.shortDescription" (blur)="update(document)" class="form-control">
+            	<input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control">
 				<small><button (click)="detailedDocument = document" class="btn btn-sm btn-link">Details</button></small>
             </td>  
 	    </tr>
 	</table>
 	</div>
-	<div *ngIf="detailedDocument" class="col-sm-4 document-info">
+	<div *ngIf="detailedDocument" class="col-sm-4 document-info px-0">
 		<document-view [(document)]="detailedDocument" [basePath]="'list'">
 			<description-view [document]="detailedDocument"></description-view>
 			<thumbnail-view [imageIds]="currentDocument.resource.relations['depictedIn']"

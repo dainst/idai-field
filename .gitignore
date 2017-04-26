@@ -53,3 +53,4 @@ app/**/*.js.map
 config.json
 idai-field-documents
 _replicator
+idai-field-documents-test

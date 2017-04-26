@@ -80,6 +80,9 @@ export class SettingsService {
         for (let remoteSite of this.remoteSites) {
             promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
         }
+        promises.push(this.datastore.setupSync(
+            'http://'+this.server['userName']+':'+this.server['password']+'@'+this.server['ipAddress']+':'+this.server['port']+'/'+this.server['dbName']));
+
         this.notify();
         return Promise.all(promises);
     }

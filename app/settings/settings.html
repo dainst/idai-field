@@ -43,18 +43,37 @@
                 <table>
                     <tr>
                         <td>
-                            <b>Serveradresse: </b>
+                            <b>Serveradresse </b>
                         </td>
                         <td>
                             <input id="server-address-input" [ngModel]="server.ipAddress"
                                    (ngModelChange)="server.ipAddress = $event"
-                                   placeholder="http(s)://x.x.x.x(:port)/"
                                    class="form-control">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <b>Benutzer: </b>
+                            <b>Port </b>
+                        </td>
+                        <td>
+                            <input id="server-port-input" [ngModel]="server.port"
+                                   (ngModelChange)="server.port = $event"
+                                   class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Datenbankname </b>
+                        </td>
+                        <td>
+                            <input id="server-db-name-input" [ngModel]="server.dbName"
+                                   (ngModelChange)="server.dbName = $event"
+                                   class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Benutzer </b>
                         </td>
                         <td>
                             <input id="server-user-name-input" [ngModel]="server.userName"
@@ -64,7 +83,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <b>Passwort: </b>
+                            <b>Passwort </b>
                         </td>
                         <td>
                             <input id="server-password-input" [ngModel]="server.password"

@@ -15,8 +15,6 @@ import {appRoutingProviders} from './app.routing';
 import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
 import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {PouchdbServerDatastore} from "./datastore/pouchdb-server-datastore";
-import {IdaiFieldBackend} from "./sync/idai-field-backend";
-import {SyncMediator} from "./sync/sync-mediator";
 import {Importer} from "./import/importer";
 import {M} from './m';
 import {AppComponent} from './app.component';
@@ -103,7 +101,6 @@ const CONFIG = require('electron').remote.getGlobal('config');
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },
-        IdaiFieldBackend,
         Messages,
         BlobMaker,
         { provide: 'app.config', useValue: CONFIG },
@@ -118,7 +115,6 @@ const CONFIG = require('electron').remote.getGlobal('config');
             },
             deps: [ConfigLoader, ReadDatastore]
         },
-        SyncMediator,
         { provide: MD, useClass: M},
         Importer,
         RelationsCompleter,

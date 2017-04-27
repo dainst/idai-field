@@ -152,7 +152,7 @@ describe('resources/syncing tests --', function() {
             done();
         });
 
-    }, 60000);
+    });
 
     it('should show changes made in other db', done => {
 
@@ -164,7 +164,7 @@ describe('resources/syncing tests --', function() {
                 done();
             }));
 
-    }, 60000);
+    });
 
     xit('resource created in client should be synced to other db', done => {
 
@@ -175,7 +175,7 @@ describe('resources/syncing tests --', function() {
                 done();
         });
         resourcesPage.performCreateResource('test3');
-    }, 100000);
+    });
 
     it('should detect conflict on save', done => {
 
@@ -190,7 +190,7 @@ describe('resources/syncing tests --', function() {
             .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(done)
             .catch(err => { fail(err); done(); });
-    }, 60000);
+    });
 
     it('should save syncing settings to config file and load them after restart', done => {
 

@@ -166,7 +166,7 @@ describe('resources/syncing tests --', function() {
 
     });
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         configureRemoteSite();
         NavbarPage.clickNavigateToResources();

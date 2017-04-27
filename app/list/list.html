@@ -1,8 +1,8 @@
 <div class="row" style="background-color: #eee; padding-top:10px;">
 	<div class="col-md-4">
-		<select class="form-control" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
+		<select class="form-control" id="trench-filter" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
 			<option selected value>Alle Schnitte</option>
-			<option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
+			<option *ngFor="let trench of trenches" [id]="'trench-' + trench.resource.identifier" [value]="trench._id">{{trench.resource.identifier}}</option>
 		</select>
 	</div>
 	<div class="col-md-4">
@@ -39,7 +39,7 @@
 	        [class.unsynced]="!document.synced"
 	        [id]="'resource-' + document.resource.identifier">
 			<td align="right">
-				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control">
+				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control identifier-input">
 				<small class="text-muted">{{document._id}}</small>
 			</td>
             <td>

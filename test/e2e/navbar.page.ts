@@ -12,6 +12,13 @@ export class NavbarPage {
         return element(by.css('navbar ul li:nth-child(1)')).click();
     };
 
+
+    public static clickNavigateToList() {
+        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(3)'))), delays.ECWaitTime);
+        return element(by.css('navbar ul li:nth-child(3)')).click();
+    };
+
+
     // unused?
     public static clickCloseMessage = function() {
         browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);

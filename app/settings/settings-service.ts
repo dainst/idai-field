@@ -80,8 +80,11 @@ export class SettingsService {
         for (let remoteSite of this.remoteSites) {
             promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
         }
-        promises.push(this.datastore.setupSync(
-            'http://'+this.server['userName']+':'+this.server['password']+'@'+this.server['ipAddress']+':'+this.server['port']+'/'+this.server['dbName']));
+        if (this.serverSettingsComplete()) {
+            promises.push(this.datastore.setupSync(
+                'http://' + this.server['userName'] + ':' + this.server['password'] + '@'
+                + this.server['ipAddress'] + ':' + this.server['port'] + '/' + this.server['dbName']));
+        }
 
         this.notify();
         return Promise.all(promises);
@@ -139,7 +142,8 @@ export class SettingsService {
             delete updatedConfig['remoteSites'];
         }
 
-        if (this.server['userName'] || this.server['password'] || this.server['ipAddress']) {
+        if (this.server['userName'] || this.server['password'] || this.server['ipAddress'] ||
+            this.server['port'] || this.server['dbname']) {
             updatedConfig['server'] = this.server;
         } else {
             delete updatedConfig['server'];
@@ -178,6 +182,15 @@ export class SettingsService {
                 }
             });
         });
+    }
+
+    private serverSettingsComplete(): boolean {
+
+        return (this.server['userName'] && this.server['userName'].length > 0 &&
+            this.server['password'] && this.server['password'].length > 0 &&
+            this.server['ipAddress'] && this.server['ipAddress'].length > 0 &&
+            this.server['port'] && this.server['port'].length > 0 &&
+            this.server['dbname'] && this.server['dbname'].length > 0);
     }
 
 }

@@ -98,7 +98,7 @@ describe('resources/syncing tests --', function() {
 
     function waitForIt(searchTerm, successCB) {
 
-        return browser.sleep(1000).then(() =>
+        return browser.sleep(3000).then(() =>
             resourcesPage.typeInIdentifierInSearchField(searchTerm)
         ).then(() => {
             return browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
@@ -143,24 +143,28 @@ describe('resources/syncing tests --', function() {
             .then(() => done());
     });
 
-    it('should show resource created in other db', () => {
+    it('should show resource created in other db', done => {
 
         configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         waitForIt('test1', () => {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
+            done();
         });
 
-    }, 30000);
+    }, 60000);
 
-    it('should show changes made in other db', () => {
+    it('should show changes made in other db', done => {
 
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(updateTestDoc)
-            .then(() => waitForIt('test2', () => expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2')));
+            .then(() => waitForIt('test2', () => {
+                expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2');
+                done();
+            }));
 
-    }, 30000);
+    }, 60000);
 
     xit('resource created in client should be synced to other db', done => {
 
@@ -186,7 +190,7 @@ describe('resources/syncing tests --', function() {
             .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(done)
             .catch(err => { fail(err); done(); });
-    });
+    }, 60000);
 
     it('should save syncing settings to config file and load them after restart', done => {
 

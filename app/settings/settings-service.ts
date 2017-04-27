@@ -23,7 +23,9 @@ export class SettingsService {
 
     constructor(
         private datastore: IdaiFieldDatastore
-    ) {
+    ) { }
+
+    public init() {
         this.ready = this.loadFromConfigFile();
     }
 

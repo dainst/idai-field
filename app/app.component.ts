@@ -2,7 +2,8 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {Router, Event, NavigationStart} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {AppConfigurator} from "idai-components-2/idai-field-model";
+import {AppConfigurator} from 'idai-components-2/idai-field-model';
+import {SettingsService} from './settings/settings-service';
 import {M} from "./m";
 
 @Component({
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
                 private appConfigurator: AppConfigurator,
                 private configLoader: ConfigLoader,
                 private router: Router,
-                private messages: Messages) {
+                private messages: Messages,
+                private settingsService: SettingsService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
 
         AppComponent.preventDefaultDragAndDropBehavior();
 
+        this.settingsService.init();
     }
 
     ngOnInit() {

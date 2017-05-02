@@ -7,7 +7,7 @@ import {Validator, PersistenceManager} from "idai-components-2/persist";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from "./image-picker.component";
-import {ConflictResolverComponent} from "./conflict-resolver.component";
+import {ConflictModalComponent} from "./conflict-modal.component";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {ImageGridBuilder} from "../common/image-grid-builder";
 import {Imagestore} from "../imagestore/imagestore";
@@ -172,7 +172,7 @@ export class DocumentEditWrapperComponent {
     private handleSaveConflict() {
 
         this.modalService.open(
-            ConflictResolverComponent, {size: "lg", windowClass: "conflict-resolver"}
+            ConflictModalComponent, {size: "lg", windowClass: "conflict-modal"}
         ).result.then(decision => {
             if (decision == 'overwrite') this.overwriteLastRevision();
             else this.reloadLastRevision();

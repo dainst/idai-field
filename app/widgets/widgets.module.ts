@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {SearchBarComponent} from 'idai-components-2/widgets';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
@@ -13,7 +12,7 @@ import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
-import {ConflictResolverComponent} from "./conflict-resolver.component";
+import {ConflictModalComponent} from "./conflict-modal.component";
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 
 @NgModule({
@@ -33,7 +32,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
         ThumbnailViewComponent,
         DescriptionViewComponent,
         ImagePickerComponent,
-        ConflictResolverComponent
+        ConflictModalComponent
     ],
     exports : [
         DocumentViewComponent,
@@ -46,7 +45,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
     ],
     entryComponents: [
         ImagePickerComponent,
-        ConflictResolverComponent
+        ConflictModalComponent
     ]
 })
 

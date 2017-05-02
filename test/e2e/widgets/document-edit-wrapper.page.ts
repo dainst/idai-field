@@ -78,8 +78,8 @@ export class DocumentEditWrapperPage {
         return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 
-    public static getConflictResolverFooter = function() {
-        var footer = element(by.css('.conflict-resolver-footer'));
+    public static getConflictModalFooter = function() {
+        var footer = element(by.css('.conflict-modal-footer'));
         browser.wait(EC.visibilityOf(footer), delays.ECWaitTime);
         return footer;
     }

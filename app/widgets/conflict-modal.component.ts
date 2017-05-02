@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'conflict-resolver',
+    selector: 'conflict-modal',
     moduleId: module.id,
-    templateUrl: './conflict-resolver.html'
+    templateUrl: './conflict-modal.html'
 })
-export class ConflictResolverComponent {
+export class ConflictModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {
 

@@ -181,15 +181,15 @@ describe('resources/syncing tests --', function() {
 
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
-            .then(() => {
-                browser.sleep(5000);
+            .then(() => waitForIt('test1', () => {
                 resourcesPage.typeInIdentifierInSearchField('test1');
-            }).then(() => resourcesPage.clickSelectResource('test1'))
-            .then(() => documentViewPage.clickEditDocument())
-            .then(updateTestDoc)
-            .then(() => DocumentEditWrapperPage.clickSaveDocument())
-            .then(done)
-            .catch(err => { fail(err); done(); });
+                resourcesPage.clickSelectResource('test1')
+                    .then(() => documentViewPage.clickEditDocument())
+                    .then(updateTestDoc)
+                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(done)
+                    .catch(err => { fail(err); done(); });
+            }));
     });
 
     it('should save syncing settings to config file and load them after restart', done => {

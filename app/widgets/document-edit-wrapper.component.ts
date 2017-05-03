@@ -203,23 +203,23 @@ export class DocumentEditWrapperComponent {
         this.modalService.open(
             ConflictModalComponent, {size: "lg", windowClass: "conflict-modal"}
         ).result.then(decision => {
-            if (decision == 'overwrite') this.overwriteLastRevision();
-            else this.reloadLastRevision();
+            if (decision == 'overwrite') this.overwriteLatestRevision();
+            else this.reloadLatestRevision();
         }).catch(() => {});
     }
 
-    private overwriteLastRevision() {
+    private overwriteLatestRevision() {
 
-        this.datastore.refresh(this.clonedDoc).then(lastRevision => {
-            this.clonedDoc['_rev'] = lastRevision['_rev'];
+        this.datastore.getLatestRevision(this.clonedDoc.resource.id).then(latestRevision => {
+            this.clonedDoc['_rev'] = latestRevision['_rev'];
             this.save(true);
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
-    private reloadLastRevision() {
+    private reloadLatestRevision() {
 
-        this.datastore.refresh(this.clonedDoc).then(lastRevision => {
-            this.clonedDoc = <IdaiFieldDocument> lastRevision;
+        this.datastore.getLatestRevision(this.clonedDoc.resource.id).then(latestRevision => {
+            this.clonedDoc = <IdaiFieldDocument> latestRevision;
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 

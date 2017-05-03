@@ -12,7 +12,8 @@ import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
-import {ConflictModalComponent} from "./conflict-modal.component";
+import {ConflictModalComponent} from './conflict-modal.component';
+import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 
 @NgModule({
@@ -32,9 +33,10 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
         ThumbnailViewComponent,
         DescriptionViewComponent,
         ImagePickerComponent,
-        ConflictModalComponent
+        ConflictModalComponent,
+        ConflictResolverComponent
     ],
-    exports : [
+    exports: [
         DocumentViewComponent,
         DocumentEditWrapperComponent,
         DocumentTeaserComponent,

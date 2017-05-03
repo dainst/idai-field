@@ -112,4 +112,12 @@ export class CachedDatastore implements IdaiFieldDatastore {
     stopSync() {
         return this.datastore.stopSync();
     }
+
+    getRevision(docId: string, revisionId: string): Promise<Document> {
+        return this.datastore.getRevision(docId, revisionId);
+    }
+
+    removeRevision(docId: string, revisionId: string): Promise<any> {
+        return this.datastore.removeRevision(docId, revisionId);
+    }
 }

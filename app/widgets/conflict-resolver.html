@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-header">
+        <h3 *ngIf="conflictedRevisions.length == 0" class="card-title">
+            Alle Konflikte wurden gelöst.
+        </h3>
+        <h3 *ngIf="conflictedRevisions.length == 1" class="card-title">
+            Es besteht <b>ein</b> Konflikt.
+        </h3>
+        <h3 *ngIf="conflictedRevisions.length > 1" class="card-title">
+            Es bestehen <b>{{document._conflicts.length}}</b> Konflikte.
+        </h3>
+    </div>
+    <div *ngIf="conflictedRevisions.length > 0">
+        <div class="row">
+            <div class="col-md-6">
+                <span>{{document.modified}}</span>
+            </div>
+            <div class="col-md-6">
+                <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
+                        class="form-control">
+                    <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
+                        {{revision.modified}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngFor="let field of differingFields">
+            <div>{{field.label}}</div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
+                    <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default"
+                            id="conflict-resolver-switch-winnig-side- button"
+                            (click)="field.rightSideWinning = !field.rightSideWinning">
+                        <span *ngIf="!field.rightSideWinning" class="mdi mdi-arrow-left-bold"></span>
+                        <span *ngIf="field.rightSideWinning" class="mdi mdi-arrow-right-bold"></span>
+                    </button>
+                </div>
+                <div class="col-md-5">
+                    <div *ngIf="selectedRevision.resource[field.name]">
+                        {{selectedRevision.resource[field.name]}}
+                    </div>
+                    <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-default"
+                id="conflict-resolver-solve-conflict-button" (click)="solveConflict()">
+            Konflikt lösen
+        </button>
+    </div>
+</div>
+
+

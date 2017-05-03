@@ -1,18 +1,19 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {DocumentEditChangeMonitor} from "idai-components-2/documents";
-import {Messages} from "idai-components-2/messages";
-import {ConfigLoader, ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
-import {M} from "../m";
-import {Validator, PersistenceManager} from "idai-components-2/persist";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2/messages';
+import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {M} from '../m';
+import {Validator, PersistenceManager} from 'idai-components-2/persist';
+import {IdaiFieldDocument} from '../model/idai-field-document';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImagePickerComponent} from "./image-picker.component";
-import {ConflictModalComponent} from "./conflict-modal.component";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {ImageGridBuilder} from "../common/image-grid-builder";
-import {Imagestore} from "../imagestore/imagestore";
-import {Datastore, DatastoreErrors} from "idai-components-2/datastore";
-import {ElementRef} from "@angular/core";
+import {ImagePickerComponent} from './image-picker.component';
+import {ConflictModalComponent} from './conflict-modal.component';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {ImageGridBuilder} from '../common/image-grid-builder';
+import {Imagestore} from '../imagestore/imagestore';
+import {DatastoreErrors} from 'idai-components-2/datastore';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {ElementRef} from '@angular/core';
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -26,6 +27,7 @@ import {ElementRef} from "@angular/core";
  * validate the document.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class DocumentEditWrapperComponent {
 
@@ -44,6 +46,7 @@ export class DocumentEditWrapperComponent {
     private imageGridBuilder : ImageGridBuilder;
     private rows = [];
     private imageDocuments: IdaiFieldImageDocument[];
+    private inspectedRevisionsIds: string[];
 
     constructor(
         private messages: Messages,
@@ -53,7 +56,7 @@ export class DocumentEditWrapperComponent {
         private configLoader: ConfigLoader,
         private modalService: NgbModal,
         private imagestore: Imagestore,
-        private datastore: Datastore,
+        private datastore: IdaiFieldDatastore,
         private el: ElementRef
     ) {
         this.getProjectImageTypes();
@@ -63,6 +66,8 @@ export class DocumentEditWrapperComponent {
     ngOnChanges() {
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
+
+            this.inspectedRevisionsIds = [];
 
             if (this.document) {
                 this.clonedDoc = Object.assign({}, this.document);
@@ -129,34 +134,59 @@ export class DocumentEditWrapperComponent {
 
     public save(viaSaveButton: boolean = false) {
 
-        this.validator
-            .validate(<IdaiFieldDocument> this.clonedDoc)
-            .then(()=>{
-                this.saveValidatedDocument(this.clonedDoc,viaSaveButton);
-            }, msgWithParams=>this.messages.add(msgWithParams));
+        this.validator.validate(<IdaiFieldDocument> this.clonedDoc)
+            .then(
+                () => this.saveValidatedDocument(this.clonedDoc, viaSaveButton),
+                msgWithParams => this.messages.add(msgWithParams)
+            ).then(
+                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS]),
+                msgWithParams => {
+                    if (msgWithParams) this.messages.add(msgWithParams);
+                }
+            );
     }
 
-    private saveValidatedDocument(clonedDoc: IdaiFieldDocument,viaSaveButton: boolean) {
+    private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
+
         clonedDoc['synced'] = 0;
-        return this.persistenceManager.persist(clonedDoc).then(()=>{
 
-            this.documentEditChangeMonitor.reset();
-
-            this.onSaveSuccess.emit({
-                document: clonedDoc,
-                viaSaveButton: viaSaveButton
-            });
-            // this.navigate(this.document, proceed);
-            // show message after route change
-            this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-
-        }, errorWithParams => {
-            if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-                this.handleSaveConflict();
-            } else {
-                this.messages.add([M.WIDGETS_SAVE_ERROR]);
+        return this.persistenceManager.persist(clonedDoc).then(
+            () => this.removeInspectedRevisions(),
+            errorWithParams => {
+                if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
+                    this.handleSaveConflict();
+                    return Promise.reject(undefined);
+                } else {
+                    return Promise.reject([M.WIDGETS_SAVE_ERROR]);
+                }
             }
-        })
+        ).then(
+            () => this.datastore.refresh(this.clonedDoc),
+            msgWithParams => { return Promise.reject(msgWithParams); }
+        ).then(
+            doc => {
+                this.clonedDoc = <IdaiFieldDocument> doc;
+                this.documentEditChangeMonitor.reset();
+
+                this.onSaveSuccess.emit({
+                    document: clonedDoc,
+                    viaSaveButton: viaSaveButton
+                });
+            }, msgWithParams => { return Promise.reject(msgWithParams); }
+        );
+    }
+    
+    private removeInspectedRevisions(): Promise<any> {
+        
+        let promises = [];
+        
+        for (let revisionId of this.inspectedRevisionsIds) {
+            promises.push(this.datastore.removeRevision(this.document.resource.id, revisionId));
+        }
+
+        this.inspectedRevisionsIds = [];
+
+        return Promise.all(promises);
     }
 
     public openImagePicker() {

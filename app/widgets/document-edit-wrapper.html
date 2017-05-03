@@ -111,6 +111,13 @@
                                 </div>
                             </template>
                         </ngb-tab>
+                        <ngb-tab *ngIf="clonedDoc._conflicts" id="document-edit-conflicts-tab">
+                            <template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte</template>
+                            <template ngbTabContent>
+                                <conflict-resolver [(document)]="clonedDoc"
+                                                   [(inspectedRevisionsIds)]="inspectedRevisionsIds"></conflict-resolver>
+                            </template>
+                        </ngb-tab>
                     </ngb-tabset>
 
                 </div>

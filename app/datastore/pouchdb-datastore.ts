@@ -13,7 +13,6 @@ import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {DatastoreErrors} from "idai-components-2/datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-import {identifierToken} from "@angular/compiler/src/identifiers";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -261,7 +260,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link ReadDatastore#get}.
      *
      * @param resourceId
-     * @returns {any}
+     * @returns {Promise<Document>}
      */
     public get(resourceId: string): Promise<Document> {
         return this.readyForQuery
@@ -278,6 +277,31 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     public remove(doc: Document): Promise<undefined> {
         return this.db.remove(doc)
             .catch(err => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
+    }
+
+    /**
+     * Implements {@link IdaiFieldDatastore#getRevision}.
+     *
+     * @param resourceId
+     * @param revisionId
+     * @returns {Promise<Document>}
+     */
+    public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
+        return this.readyForQuery
+            .then(() => this.fetchRevision(docId, revisionId))
+            .then(doc => this.cleanDoc(doc));
+    }
+
+    /**
+     * Implements {@link IdaiFieldDatastore#removeRevision}.
+     *
+     * @param resourceId
+     * @param revisionId
+     * @returns {Promise<any>}
+     */
+    public removeRevision(docId: string, revisionId: string): Promise<any> {
+        return this.db.remove(docId, revisionId)
+            .catch(err => { console.error(err); Promise.reject([M.DATASTORE_GENERIC_ERROR]); });
     }
 
     private clear(): Promise<any> {
@@ -424,6 +448,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(id, { conflicts: true })
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+    }
+
+    private fetchRevision(docId: string, revisionId: string): Promise<Document> {
+        return this.db.get(docId, { rev: revisionId })
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 

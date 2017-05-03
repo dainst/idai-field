@@ -160,7 +160,7 @@ export class DocumentEditWrapperComponent {
                 }
             }
         ).then(
-            () => this.datastore.getLatestRevision(this.document.resource.id),
+            () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
             msgWithParams => { return Promise.reject(msgWithParams); }
         ).then(
             doc => {

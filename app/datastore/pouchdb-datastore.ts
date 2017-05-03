@@ -280,6 +280,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     /**
+     * Implements {@link IdaiFieldDatastore#getLatestRevision}.
+     *
+     * @param id
+     * @returns {Promise<Document>}
+     */
+    getLatestRevision(id: string): Promise<IdaiFieldDocument> {
+        return this.get(id);
+    }
+
+    /**
      * Implements {@link IdaiFieldDatastore#getRevision}.
      *
      * @param resourceId
@@ -488,6 +498,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         this.db.changes({
             live: true,
             include_docs: true,
+            conflicts: true,
             since: 'now'
         }).on('change', change => {
             if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design

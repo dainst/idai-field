@@ -70,8 +70,7 @@ export class DocumentEditWrapperComponent {
             this.inspectedRevisionsIds = [];
 
             if (this.document) {
-                this.clonedDoc = Object.assign({}, this.document);
-                this.clonedDoc.resource = Object.assign({}, this.document.resource);
+                this.clonedDoc = this.cloneDoc(this.document);
                 this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
                 this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
                     'editable');
@@ -161,11 +160,11 @@ export class DocumentEditWrapperComponent {
                 }
             }
         ).then(
-            () => this.datastore.refresh(this.clonedDoc),
+            () => this.datastore.getLatestRevision(this.document.resource.id),
             msgWithParams => { return Promise.reject(msgWithParams); }
         ).then(
             doc => {
-                this.clonedDoc = <IdaiFieldDocument> doc;
+                this.clonedDoc = doc;
                 this.documentEditChangeMonitor.reset();
 
                 this.onSaveSuccess.emit({
@@ -255,5 +254,13 @@ export class DocumentEditWrapperComponent {
                 this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
             },
             keyOfM => this.messages.add([keyOfM]));
+    }
+
+    private cloneDoc(doc: IdaiFieldDocument): IdaiFieldDocument {
+
+        let clonedDoc = Object.assign({}, doc);
+        clonedDoc.resource = Object.assign({}, doc.resource);
+
+        return clonedDoc;
     }
 }

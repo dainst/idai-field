@@ -22,6 +22,7 @@ export class CachedDatastore implements IdaiFieldDatastore {
                 // changes to be detected by angular
                 if (doc && doc.resource && this.documentCache[doc.resource.id]) {
                     console.debug("change detected", doc);
+                    if (!doc['_conflicts']) delete this.documentCache[doc.resource.id]['_conflicts'];
                     Object.assign(this.documentCache[doc.resource.id], doc);
                 }
             });
@@ -111,6 +112,10 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     stopSync() {
         return this.datastore.stopSync();
+    }
+
+    getLatestRevision(id: string): Promise<Document> {
+        return this.datastore.get(id);
     }
 
     getRevision(docId: string, revisionId: string): Promise<Document> {

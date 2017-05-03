@@ -1,13 +1,13 @@
-<div class="card">
+<div *ngIf="ready" class="card">
     <div class="card-header">
-        <h3 *ngIf="conflictedRevisions.length == 0" class="card-title">
+        <h3 *ngIf="conflictedRevisions.length == 0 && inspectedRevisionsIds.length > 0" class="card-title">
             Alle Konflikte wurden gelöst.
         </h3>
         <h3 *ngIf="conflictedRevisions.length == 1" class="card-title">
             Es besteht <b>ein</b> Konflikt.
         </h3>
         <h3 *ngIf="conflictedRevisions.length > 1" class="card-title">
-            Es bestehen <b>{{document._conflicts.length}}</b> Konflikte.
+            Es bestehen <b>{{conflictedRevisions.length}}</b> Konflikte.
         </h3>
     </div>
     <div *ngIf="conflictedRevisions.length > 0">

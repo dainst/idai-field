@@ -22,6 +22,7 @@ export class ConflictResolverComponent implements OnChanges {
     private conflictedRevisions: Array<IdaiFieldDocument>;
     private selectedRevision: IdaiFieldDocument;
     private differingFields: any[];
+    private ready: boolean;
 
     constructor(
         private datastore: IdaiFieldDatastore,
@@ -30,19 +31,24 @@ export class ConflictResolverComponent implements OnChanges {
 
     ngOnChanges() {
 
+        this.ready = false;
         this.conflictedRevisions = [];
+        this.selectedRevision = undefined;
+        let promises: Array<Promise<any>> = [];
 
         for (let revisionId of this.document['_conflicts']) {
             if (this.inspectedRevisionsIds.indexOf(revisionId) > -1) continue;
 
-            this.datastore.getRevision(this.document.resource.id, revisionId).then(
+            promises.push(this.datastore.getRevision(this.document.resource.id, revisionId).then(
                 revision => {
                     this.conflictedRevisions.push(revision);
                     if (!this.selectedRevision) this.setSelectedRevision(revision);
                 },
-                err => { this.messages.add(err); }
-            );
+                msgWithParams => { this.messages.add(msgWithParams); }
+            ));
         }
+
+        Promise.all(promises).then(() => { this.ready = true; });
     }
 
     public setSelectedRevision(revision: IdaiFieldDocument) {

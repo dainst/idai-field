@@ -30,6 +30,8 @@ export abstract class IdaiFieldDatastore extends Datastore {
 
     abstract stopSync();
 
+    abstract getLatestRevision(id: string): Promise<IdaiFieldDocument>;
+
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
     abstract removeRevision(docId: string, revisionId: string): Promise<any>;

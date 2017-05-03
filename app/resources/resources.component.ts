@@ -1,11 +1,9 @@
-import {Component, Inject} from "@angular/core";
+import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Query, Datastore} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
-import {ConfigLoader} from "idai-components-2/configuration";
 import {Observable} from "rxjs/Observable";
-import {FilterUtility} from '../util/filter-utility';
 
 @Component({
 
@@ -40,7 +38,7 @@ export class ResourcesComponent {
         });
 
         const self = this;
-        datastore.documentChangesNotifications().subscribe(result=>{
+        datastore.documentChangesNotifications().subscribe(result => {
             if (!self.documents) return;
             for (let doc of self.documents) {
                 if (!doc.resource || !result.resource) continue;

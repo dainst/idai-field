@@ -28,15 +28,27 @@
             <div>{{field.label}}</div>
             <div class="row">
                 <div class="col-md-5">
-                    <div *ngIf="field.isRelationField">
+                    <div *ngIf="field.type == 'field'">
+                        <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
+                        <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'geometry'">
+                        <div *ngIf="document.resource.geometry">
+                            Geometrie vom Typ {{document.resource.geometry.type}}
+                        </div>
+                        <div *ngIf="!document.resource.geometry"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'georeference'">
+                        <div *ngIf="document.resource.georeference">
+                            Georeferenzdaten
+                        </div>
+                        <div *ngIf="!document.resource.georeference"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'relation'">
                         <div *ngIf="document.resource.relations[field.name]">
                             {{getTargetIdentifiers(document.resource.relations[field.name])}}
                         </div>
                         <div *ngIf="!document.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
-                    </div>
-                    <div *ngIf="!field.isRelationField">
-                        <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
-                        <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -48,17 +60,29 @@
                     </button>
                 </div>
                 <div class="col-md-5">
-                    <div *ngIf="field.isRelationField">
-                        <div *ngIf="selectedRevision.resource.relations[field.name]">
-                            {{getTargetIdentifiers(selectedRevision.resource.relations[field.name])}}
-                        </div>
-                        <div *ngIf="!selectedRevision.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
-                    </div>
-                    <div *ngIf="!field.isRelationField">
+                    <div *ngIf="field.type == 'field'">
                         <div *ngIf="selectedRevision.resource[field.name]">
                             {{selectedRevision.resource[field.name]}}
                         </div>
                         <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'geometry'">
+                        <div *ngIf="selectedRevision.resource.geometry">
+                            Geometrie vom Typ {{selectedRevision.resource.geometry.type}}
+                        </div>
+                        <div *ngIf="!selectedRevision.resource.geometry"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'georeference'">
+                        <div *ngIf="selectedRevision.resource.georeference">
+                            Georeferenzdaten
+                        </div>
+                        <div *ngIf="!selectedRevision.resource.georeference"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="field.type == 'relation'">
+                        <div *ngIf="selectedRevision.resource.relations[field.name]">
+                            {{getTargetIdentifiers(selectedRevision.resource.relations[field.name])}}
+                        </div>
+                        <div *ngIf="!selectedRevision.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
                     </div>
                 </div>
             </div>

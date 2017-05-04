@@ -15,6 +15,7 @@
 
     <div class="navbar navbar-light bg-faded">
         <search-bar *ngIf="!selected.length"
+                    [type]="'image'"
                     [showFiltersMenu]="false"
                     [defaultFilterSet]="types"
                     (onQueryChanged)="queryChanged($event)">

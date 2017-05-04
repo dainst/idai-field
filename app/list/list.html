@@ -43,13 +43,13 @@
 				<small class="text-muted">{{document._id}}</small>
 			</td>
             <td>
-            	<select class="form-control" [(ngModel)]="document.resource.type" (change)="save(document)">
-            		<option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
-            	</select>
+
+				<input value="{{typesMap[document.resource.type].label}}" disabled class="form-control">
+
             </td>
 			<td align="right">
             	<input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control">
-				<small><button (click)="detailedDocument = document" class="btn btn-sm btn-link">Details</button></small>
+				<small><button (click)="focusDocument(document)" class="btn btn-sm btn-link">Details</button></small>
             </td>  
 	    </tr>
 	</table>

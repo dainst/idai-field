@@ -6,6 +6,7 @@ import {PersistenceManager} from "idai-components-2/persist";
 import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
+import {Router, Event, NavigationStart} from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -19,10 +20,11 @@ export class ListComponent {
     public trenches: IdaiFieldDocument[];
     public selectedFilterTrenchId = "";
     public selectedDocument: IdaiFieldDocument;
-    private typesList: IdaiType[];
+    public typesMap: {};
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
     constructor(
+        private router: Router,
         private messages: Messages,
         private datastore: IdaiFieldDatastore,
         configLoader: ConfigLoader,
@@ -31,7 +33,13 @@ export class ListComponent {
         this.fetchDocuments();
         this.fetchTrenches();
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.initializeTypesTreeList(projectConfiguration);
+            this.typesMap = projectConfiguration.getTypesMap();
+        });
+
+        router.events.subscribe( (event:Event) => {
+            if(event instanceof NavigationStart) {
+                if(event.url == "/list") this.detailedDocument = null;
+            }
         });
     }
 
@@ -57,6 +65,11 @@ export class ListComponent {
                     this.messages.add(errorWithParams);
                 });
         }
+    }
+
+    public focusDocument(doc: IdaiFieldDocument) {
+        this.detailedDocument = doc
+        this.router.navigate(['./list', {focus: doc.resource.id}]);
     }
 
     /**
@@ -92,15 +105,6 @@ export class ListComponent {
         }
     }
 
-    private initializeTypesTreeList(projectConfiguration: ProjectConfiguration) {
-        this.typesList = [];
-
-        for (var type of projectConfiguration.getTypesList()) {
-            if (type.name != "image") {
-                this.typesList.push(type);
-            }
-        }
-    }
     public addDocument(new_doc_type) {
         // TODO - Use Validator class
         if (!new_doc_type || new_doc_type == '') {

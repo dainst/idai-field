@@ -60,8 +60,8 @@ config.map = {
     'fs' : '@node/fs',
     'express': '@node/express',
     'express-pouchdb': '@node/express-pouchdb',
-    'electron': 'app/desktop/electron'
-
+    'electron': 'app/desktop/electron',
+    'deep-equal': 'node_modules/deep-equal/index.js'
 };
 
 config.meta=  {

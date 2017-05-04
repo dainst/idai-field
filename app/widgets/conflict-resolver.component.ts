@@ -76,11 +76,24 @@ export class ConflictResolverComponent implements OnChanges {
         return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
             for (let fieldName of differingFieldsNames) {
+                let type: string;
+                let label: string;
+
+                if (fieldName == 'geometry') {
+                    type = 'geometry';
+                    label = 'Geometrie';
+                } else if (fieldName == 'georeference') {
+                    type = 'georeference';
+                    label = 'Georeferenz';
+                } else {
+                    type = 'field';
+                    label = projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName);
+                }
+
                 differingFields.push({
                     name: fieldName,
-                    label: projectConfiguration.getFieldDefinitionLabel(this.document.resource.type,
-                        fieldName),
-                    isRelationField: false,
+                    label: label,
+                    type: type,
                     rightSideWinning: false
                 });
             }
@@ -89,7 +102,7 @@ export class ConflictResolverComponent implements OnChanges {
                 differingFields.push({
                     name: relationName,
                     label: projectConfiguration.getRelationDefinitionLabel(relationName),
-                    isRelationField: true,
+                    type: 'relation',
                     rightSideWinning: false
                 });
             }
@@ -102,7 +115,7 @@ export class ConflictResolverComponent implements OnChanges {
         
         for (let field of this.differingFields) {
             if (field.rightSideWinning) {
-                if (field.isRelationField) {
+                if (field.type == 'relation') {
                     if (this.selectedRevision.resource.relations[field.name]) {
                         this.document.resource.relations[field.name]
                             = this.selectedRevision.resource.relations[field.name];
@@ -136,7 +149,7 @@ export class ConflictResolverComponent implements OnChanges {
         this.relationTargets = {};
 
         for (let field of this.differingFields) {
-            if (field.isRelationField) {
+            if (field.type == 'relation') {
                 this.fetchRelationTargetsOfField(this.document.resource, field.name);
                 this.fetchRelationTargetsOfField(this.selectedRevision.resource, field.name);
             }

@@ -1,5 +1,7 @@
 import {IdaiFieldResource} from '../model/idai-field-resource';
 
+const deepEqual = require('deep-equal');
+
 /**
  * @author Thomas Kleinke
  */
@@ -11,6 +13,14 @@ export class DiffUtility {
 
         let differingFieldsNames: string[] = this.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
             .concat(this.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
+
+        if (!this.compareObjects(resource1.geometry, resource2.geometry)) {
+            differingFieldsNames.push('geometry');
+        }
+
+        if (!this.compareObjects(resource1.georeference, resource2.georeference)) {
+            differingFieldsNames.push('georeference');
+        }
 
         return this.removeDuplicateValues(differingFieldsNames);
     }
@@ -42,7 +52,7 @@ export class DiffUtility {
 
     private static compareFields(field1: any, field2: any): boolean {
 
-        if (!field1 || !field2) return false;
+        if ((field1 && !field2) || (!field1 && field2)) return false;
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
         if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
@@ -64,6 +74,19 @@ export class DiffUtility {
         }
 
         return true;
+    }
+
+    private static compareObjects(object1: any, object2: any): boolean {
+
+        if (!object1 && !object2) return true;
+
+        if ((object1 && !object2) || (!object1 && object2)) return false;
+
+        if (deepEqual(object1, object2)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static removeDuplicateValues(array: any[]): any[] {

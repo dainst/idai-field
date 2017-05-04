@@ -20,7 +20,7 @@ import {EditNavigation} from '../common/edit-navigation';
  * @author Daniel de Oliveira
  */
 export class EditNavigationComponent
-    implements  EditNavigation, OnInit {
+    implements EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
     modalTemplate: TemplateRef<any>;
@@ -31,9 +31,9 @@ export class EditNavigationComponent
         private route: ActivatedRoute,
         private router: Router,
         private messages: Messages,
-        private modalService:NgbModal,
-        private canDeactivateGuard:EditCanDeactivateGuard,
-        private documentEditChangeMonitor:DocumentEditChangeMonitor
+        private modalService: NgbModal,
+        private canDeactivateGuard: EditCanDeactivateGuard,
+        private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
     }
 
@@ -88,13 +88,13 @@ export class EditNavigationComponent
      * object, it will either restore it or remove it from the list.
      */
     public discard() {
-        this.restore().then(()=>{
+        this.restore().then(() => {
             this.canDeactivateGuard.proceed();
         });
     }
 
-    public restore() : Promise<any> {
-        return new Promise<any>((resolve,reject)=>{
+    public restore(): Promise<any> {
+        return new Promise<any>((resolve,reject) => {
             this.resourcesComponent.restore().then(
                 () => {
                     this.documentEditChangeMonitor.reset();

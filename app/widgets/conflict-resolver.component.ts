@@ -5,6 +5,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
 import {DiffUtility} from '../util/diff-utility';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 /**
  * @author Thomas Kleinke
@@ -29,7 +30,8 @@ export class ConflictResolverComponent implements OnChanges {
     constructor(
         private datastore: IdaiFieldDatastore,
         private messages: Messages,
-        private configLoader: ConfigLoader) {}
+        private configLoader: ConfigLoader,
+        private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
 
     ngOnChanges() {
 
@@ -134,6 +136,8 @@ export class ConflictResolverComponent implements OnChanges {
         } else {
             this.selectedRevision = undefined;
         }
+
+        this.documentEditChangeMonitor.setChanged();
     }
 
     private markRevisionAsInspected(revision: IdaiFieldDocument) {

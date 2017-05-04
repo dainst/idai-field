@@ -192,7 +192,7 @@ export class SettingsService {
             this.server['password'] && this.server['password'].length > 0 &&
             this.server['ipAddress'] && this.server['ipAddress'].length > 0 &&
             this.server['port'] && this.server['port'].length > 0 &&
-            this.server['dbname'] && this.server['dbname'].length > 0);
+            this.server['dbName'] && this.server['dbName'].length > 0);
     }
 
 }

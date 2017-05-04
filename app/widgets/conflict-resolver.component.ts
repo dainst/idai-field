@@ -182,4 +182,32 @@ export class ConflictResolverComponent implements OnChanges {
         return result;
     }
 
+    public getWinningSide(): string {
+
+        if (this.differingFields.length == 0) return 'left';
+
+        let winningSide = '';
+
+        for (let field of this.differingFields) {
+            if (winningSide == '') {
+                winningSide = field.rightSideWinning ? 'right' : 'left';
+            } else if ((winningSide == 'left' && field.rightSideWinning)
+                    || (winningSide == 'right' && !field.rightSideWinning)) {
+                return 'mixed';
+            }
+        }
+
+        return winningSide;
+    }
+
+    public switchWinningSide() {
+
+        let winningSide: string = this.getWinningSide();
+        let newValue: boolean = (winningSide == 'left') ? true : false;
+
+        for (let field of this.differingFields) {
+            field.rightSideWinning = newValue;
+        }
+    }
+
 }

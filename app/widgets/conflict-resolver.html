@@ -12,10 +12,19 @@
     </div>
     <div *ngIf="conflictedRevisions.length > 0">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <span>{{document.modified}}</span>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <button class="btn btn-default"
+                        id="conflict-resolver-switch-winning-revision-button"
+                        (click)="switchWinningSide()">
+                    <span *ngIf="getWinningSide() == 'left'" class="mdi mdi-arrow-left-bold"></span>
+                    <span *ngIf="getWinningSide() == 'right'" class="mdi mdi-arrow-right-bold"></span>
+                    <span *ngIf="getWinningSide() == 'mixed'" class="mdi mdi-asterisk"></span>
+                </button>
+            </div>
+            <div class="col-md-5">
                 <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
                         class="form-control">
                     <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
@@ -52,9 +61,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-default"
-                            id="conflict-resolver-switch-winning-side-button"
-                            (click)="field.rightSideWinning = !field.rightSideWinning">
+                    <button class="btn btn-default" (click)="field.rightSideWinning = !field.rightSideWinning">
                         <span *ngIf="!field.rightSideWinning" class="mdi mdi-arrow-left-bold"></span>
                         <span *ngIf="field.rightSideWinning" class="mdi mdi-arrow-right-bold"></span>
                     </button>

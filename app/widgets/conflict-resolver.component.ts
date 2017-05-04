@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldResource} from '../model/idai-field-resource';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
 import {DiffUtility} from '../util/diff-utility';
 import {Messages} from 'idai-components-2/messages';
@@ -22,6 +23,7 @@ export class ConflictResolverComponent implements OnChanges {
     private conflictedRevisions: Array<IdaiFieldDocument>;
     private selectedRevision: IdaiFieldDocument;
     private differingFields: any[];
+    private relationTargets: { [targetId: string]: IdaiFieldDocument };
     private ready: boolean;
 
     constructor(
@@ -44,7 +46,7 @@ export class ConflictResolverComponent implements OnChanges {
                     this.conflictedRevisions.push(revision);
                     if (!this.selectedRevision) this.setSelectedRevision(revision);
                 },
-                msgWithParams => { this.messages.add(msgWithParams); }
+                msgWithParams => this.messages.add(msgWithParams)
             ));
         }
 
@@ -54,36 +56,62 @@ export class ConflictResolverComponent implements OnChanges {
     public setSelectedRevision(revision: IdaiFieldDocument) {
 
         this.selectedRevision = revision;
-        this.differingFields = this.createDiff(revision);
+        this.createDiff(revision).then(
+            differingFields => {
+                this.differingFields = differingFields;
+                this.fetchRelationTargets();
+            }
+        );
     }
 
-    private createDiff(revision: IdaiFieldDocument): any[] {
+    private createDiff(revision: IdaiFieldDocument): Promise<any[]> {
 
         let differingFields = [];
 
-        let differingFieldsNames
+        let differingFieldsNames: string[]
             = DiffUtility.findDifferingFields(this.document.resource, revision.resource);
+        let differingRelationsNames: string[]
+            = DiffUtility.findDifferingRelations(this.document.resource, revision.resource);
 
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
             for (let fieldName of differingFieldsNames) {
                 differingFields.push({
                     name: fieldName,
                     label: projectConfiguration.getFieldDefinitionLabel(this.document.resource.type,
                         fieldName),
+                    isRelationField: false,
                     rightSideWinning: false
                 });
             }
-        });
 
-        return differingFields;
+            for (let relationName of differingRelationsNames) {
+                differingFields.push({
+                    name: relationName,
+                    label: projectConfiguration.getRelationDefinitionLabel(relationName),
+                    isRelationField: true,
+                    rightSideWinning: false
+                });
+            }
+
+            return Promise.resolve(differingFields);
+        });
     }
     
     public solveConflict() {
         
         for (let field of this.differingFields) {
             if (field.rightSideWinning) {
-                this.document.resource[field.name] = this.selectedRevision.resource[field.name];
+                if (field.isRelationField) {
+                    if (this.selectedRevision.resource.relations[field.name]) {
+                        this.document.resource.relations[field.name]
+                            = this.selectedRevision.resource.relations[field.name];
+                    } else {
+                        delete this.document.resource.relations[field.name];
+                    }
+                } else {
+                    this.document.resource[field.name] = this.selectedRevision.resource[field.name];
+                }
             }
         }
 
@@ -101,6 +129,44 @@ export class ConflictResolverComponent implements OnChanges {
         this.conflictedRevisions.splice(index, 1);
 
         this.inspectedRevisionsIds.push(revision['_rev']);
+    }
+
+    private fetchRelationTargets() {
+
+        this.relationTargets = {};
+
+        for (let field of this.differingFields) {
+            if (field.isRelationField) {
+                this.fetchRelationTargetsOfField(this.document.resource, field.name);
+                this.fetchRelationTargetsOfField(this.selectedRevision.resource, field.name);
+            }
+        }
+    }
+
+    private fetchRelationTargetsOfField(resource: IdaiFieldResource, fieldName: string) {
+
+        if (resource.relations[fieldName]) {
+            for (let targetId of resource.relations[fieldName]) {
+                this.datastore.get(targetId).then(
+                    doc => { this.relationTargets[targetId] = <IdaiFieldDocument> doc; },
+                    msgWithParams => this.messages.add(msgWithParams)
+                );
+            }
+        }
+    }
+
+    public getTargetIdentifiers(targetIds: string[]): string {
+
+        let result: string = '';
+
+        for (let targetId of targetIds) {
+            if (this.relationTargets[targetId]) {
+                if (result.length > 0) result += ', ';
+                result += this.relationTargets[targetId].resource.identifier;
+            }
+        }
+
+        return result;
     }
 
 }

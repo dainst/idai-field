@@ -156,6 +156,7 @@ export class DocumentEditWrapperComponent {
                     this.handleSaveConflict();
                     return Promise.reject(undefined);
                 } else {
+                    console.error(errorWithParams);
                     return Promise.reject([M.WIDGETS_SAVE_ERROR]);
                 }
             }

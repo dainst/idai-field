@@ -28,22 +28,38 @@
             <div>{{field.label}}</div>
             <div class="row">
                 <div class="col-md-5">
-                    <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
-                    <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="field.isRelationField">
+                        <div *ngIf="document.resource.relations[field.name]">
+                            {{getTargetIdentifiers(document.resource.relations[field.name])}}
+                        </div>
+                        <div *ngIf="!document.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
+                    </div>
+                    <div *ngIf="!field.isRelationField">
+                        <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
+                        <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    </div>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-default"
-                            id="conflict-resolver-switch-winnig-side- button"
+                            id="conflict-resolver-switch-winning-side-button"
                             (click)="field.rightSideWinning = !field.rightSideWinning">
                         <span *ngIf="!field.rightSideWinning" class="mdi mdi-arrow-left-bold"></span>
                         <span *ngIf="field.rightSideWinning" class="mdi mdi-arrow-right-bold"></span>
                     </button>
                 </div>
                 <div class="col-md-5">
-                    <div *ngIf="selectedRevision.resource[field.name]">
-                        {{selectedRevision.resource[field.name]}}
+                    <div *ngIf="field.isRelationField">
+                        <div *ngIf="selectedRevision.resource.relations[field.name]">
+                            {{getTargetIdentifiers(selectedRevision.resource.relations[field.name])}}
+                        </div>
+                        <div *ngIf="!selectedRevision.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
                     </div>
-                    <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!field.isRelationField">
+                        <div *ngIf="selectedRevision.resource[field.name]">
+                            {{selectedRevision.resource[field.name]}}
+                        </div>
+                        <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    </div>
                 </div>
             </div>
         </div>

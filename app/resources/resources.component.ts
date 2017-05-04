@@ -140,7 +140,6 @@ export class ResourcesComponent {
         });
     }
 
-
     /**
      * Gets a document from the datastore and makes
      * it the current selection.

@@ -7,13 +7,31 @@ export class DiffUtility {
 
     public static findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
-        var differingFieldsNames = [];
+        let fieldsToIgnore: string[] = ['geometry', 'georeference', 'relations'];
 
-        for (let fieldName in resource1) {
-            if (resource1.hasOwnProperty(fieldName)) {
-                // TODO Include geometry, georeference & relations
-                if (fieldName == 'geometry' || fieldName == 'georeference' || fieldName == 'relations') continue;
-                if (!this.compareFields(resource1[fieldName], resource2[fieldName])) {
+        let differingFieldsNames: string[] = this.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
+            .concat(this.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
+
+        return this.removeDuplicateValues(differingFieldsNames);
+    }
+
+    public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
+
+        let differingRelationNames: string[]
+            = this.findDifferingFieldsInObject(resource1.relations, resource2.relations, [])
+                .concat(this.findDifferingFieldsInObject(resource2.relations, resource1.relations, []));
+
+        return this.removeDuplicateValues(differingRelationNames);
+    }
+
+    private static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {
+
+        let differingFieldsNames: string[] = [];
+
+        for (let fieldName in object1) {
+            if (object1.hasOwnProperty(fieldName)) {
+                if (fieldsToIgnore.indexOf(fieldName) > -1) continue;
+                if (!this.compareFields(object1[fieldName], object2[fieldName])) {
                     differingFieldsNames.push(fieldName);
                 }
             }
@@ -23,6 +41,10 @@ export class DiffUtility {
     }
 
     private static compareFields(field1: any, field2: any): boolean {
+
+        if (!field1 || !field2) return false;
+        if (field1 instanceof Array && !(field2 instanceof Array)) return false;
+        if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
         if (field1 instanceof Array) return this.compareArrays(field1, field2);
 
@@ -42,5 +64,16 @@ export class DiffUtility {
         }
 
         return true;
+    }
+
+    private static removeDuplicateValues(array: any[]): any[] {
+
+        let result: any[] = [];
+
+        for (let value of array) {
+            if (result.indexOf(value) == -1) result.push(value);
+        }
+
+        return result;
     }
 }

@@ -29,28 +29,36 @@
 	<div [class.col-sm-8]="detailedDocument" [class.col-sm-12]="!detailedDocument">
 	<table class=" table table-hover table-sm">
 		<tr>
-			<th>Identifier/Id</th>
 			<th>Typ</th>
+			<th>Identifier/Id</th>
 			<th>Kurzbeschreibung</th>
+			<th>Neue Resource anhängen</th>
 		</tr>
-	    <tr *ngFor="let document of documents; let index=index"
+	    <tr *ngFor="let document of documents; let index=index;"
 	        (click)="select(document)"
 	        [class.synced]="document.synced"
 	        [class.unsynced]="!document.synced"
+			[class.bg-info]="detailedDocument == document"
 	        [id]="'resource-' + document.resource.identifier">
+			<td>
+				{{typesMap[document.resource.type].label}}
+			</td>
 			<td align="right">
 				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control identifier-input">
 				<small class="text-muted">{{document._id}}</small>
 			</td>
-            <td>
-
-				<input value="{{typesMap[document.resource.type].label}}" disabled class="form-control">
-
-            </td>
 			<td align="right">
             	<input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control">
 				<small><button (click)="focusDocument(document)" class="btn btn-sm btn-link">Details</button></small>
-            </td>  
+            </td>
+			<td>
+				<div class="form-inline">
+					<select *ngIf="typesMap[document.resource.type].relations.length" class="form-control ml-2" autocomplete="off" [(ngModel)]="selectedRelation" (change)="addRelatedDocument(document, selectedRelation, $event)" >
+						<option selected value></option>
+						<option *ngFor="let relation of typesMap[document.resource.type].relations" [ngValue]="relation">{{relation.label}} ({{typesMap[relation.targetName].label}})</option>
+					</select>
+				</div>
+			</td>
 	    </tr>
 	</table>
 	</div>

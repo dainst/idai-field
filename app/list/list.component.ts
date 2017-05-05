@@ -7,6 +7,7 @@ import {Messages} from "idai-components-2/messages";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Router, Event, NavigationStart} from '@angular/router';
+import {document} from "@angular/platform-browser/src/facade/browser";
 
 @Component({
     moduleId: module.id,
@@ -20,7 +21,10 @@ export class ListComponent {
     public trenches: IdaiFieldDocument[];
     public selectedFilterTrenchId = "";
     public selectedDocument: IdaiFieldDocument;
-    public typesMap: {};
+    public typesMap: { [type: string]: IdaiType };
+    public typesList: IdaiType[];
+    private projectConfiguration: ProjectConfiguration;
+
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
     constructor(
@@ -33,7 +37,9 @@ export class ListComponent {
         this.fetchDocuments();
         this.fetchTrenches();
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.typesMap = projectConfiguration.getTypesMap();
+            this.projectConfiguration = projectConfiguration;
+            this.initializeTypesList();
+            this.addRelationsToTypesMap();
         });
 
         router.events.subscribe( (event:Event) => {
@@ -43,28 +49,58 @@ export class ListComponent {
         });
     }
 
-    public save(document: IdaiFieldDocument): void {
+    private initializeTypesList() {
+        let list = this.projectConfiguration.getTypesList();
+        this.typesList = [];
+        for (var type of list) {
+            if (type.name != "image") {
+                this.typesList.push(type);
+            }
+        }
+    }
+
+    public addRelationsToTypesMap() {
+        this.typesMap = this.projectConfiguration.getTypesMap();
+
+        for (let typeKey of Object.keys(this.typesMap)) {
+            var relations = []
+            let rawRelations = this.projectConfiguration.getRelationDefinitions(typeKey);
+            for(let rel of rawRelations) {
+                if (rel["visible"] != false) {
+                    for(let target of rel["range"]) {
+                        relations.push({name: rel["name"], targetName: target, label: rel["label"]})
+                    }
+                }
+            }
+            this.typesMap[typeKey]["relations"] = relations;
+        }
+    }
+
+    public save(document: IdaiFieldDocument) : Promise<any> {
         if (document.resource.id) {
-            this.datastore.update(document).then(
+            return this.datastore.update(document).then(
                 doc => {
                     this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    this.detailedDocument = <IdaiFieldDocument> doc;
+                    return Promise.resolve(<IdaiFieldDocument>doc);
                 })
                 .catch(errorWithParams => {
                     // TODO replace with msg from M
                     this.messages.add(errorWithParams);
+                    return Promise.reject([errorWithParams])
                 });
         } else {
-            this.datastore.create(document).then(
+            return this.datastore.create(document).then(
                 doc => {
                     this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    this.detailedDocument = <IdaiFieldDocument> doc;
+                    return Promise.resolve(doc);
                 })
                 .catch(errorWithParams => {
                     // TODO replace with msg from M
                     this.messages.add(errorWithParams);
+                    return Promise.reject([errorWithParams])
                 });
         }
+
     }
 
     public focusDocument(doc: IdaiFieldDocument) {
@@ -105,7 +141,7 @@ export class ListComponent {
         }
     }
 
-    public addDocument(new_doc_type) {
+    public addDocument(new_doc_type) : IdaiFieldDocument {
         // TODO - Use Validator class
         if (!new_doc_type || new_doc_type == '') {
             return
@@ -118,6 +154,31 @@ export class ListComponent {
             newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]
         }
         this.documents.push(newDoc);
+        return newDoc;
+    }
+
+    public addRelatedDocument(parentDocument: IdaiFieldDocument, relation, event) {
+        if (!parentDocument || !relation) {
+            return
+        }
+
+        event.target.value = "";
+
+        let newDoc = this.addDocument(relation["targetName"]);
+
+        this.save(newDoc).then( doc => {
+
+            if (!parentDocument.resource.relations[relation["name"]]) {
+                parentDocument.resource.relations[relation["name"]] = [];
+            }
+            parentDocument.resource.relations[relation["name"]].push(doc.resource.id);
+
+            var oldVersion = JSON.parse(JSON.stringify(parentDocument));
+            this.persistenceManager.persist(parentDocument, oldVersion).then( doc => {
+                this.detailedDocument = newDoc;
+            });
+        })
+
     }
 
     public select(documentToSelect: IdaiFieldDocument) {
@@ -128,6 +189,4 @@ export class ListComponent {
         this.query = query;
         this.fetchDocuments(query);
     }
-
-
 }

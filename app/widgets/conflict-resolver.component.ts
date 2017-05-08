@@ -44,15 +44,18 @@ export class ConflictResolverComponent implements OnChanges {
             if (this.inspectedRevisionsIds.indexOf(revisionId) > -1) continue;
 
             promises.push(this.datastore.getRevision(this.document.resource.id, revisionId).then(
-                revision => {
-                    this.conflictedRevisions.push(revision);
-                    if (!this.selectedRevision) this.setSelectedRevision(revision);
-                },
+                revision => this.conflictedRevisions.push(revision),
                 msgWithParams => this.messages.add(msgWithParams)
             ));
         }
 
-        Promise.all(promises).then(() => { this.ready = true; });
+        Promise.all(promises).then(() => {
+            if (this.conflictedRevisions.length > 0) {
+                this.sortRevisions(this.conflictedRevisions);
+                this.setSelectedRevision(this.conflictedRevisions[0]);
+            }
+            this.ready = true;
+        });
     }
 
     public setSelectedRevision(revision: IdaiFieldDocument) {
@@ -212,6 +215,21 @@ export class ConflictResolverComponent implements OnChanges {
         for (let field of this.differingFields) {
             field.rightSideWinning = newValue;
         }
+    }
+
+    private sortRevisions(revisions: Array<IdaiFieldDocument>) {
+
+        revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
+            const date1 = new Date(a.modified);
+            const date2 = new Date(b.modified);
+            if (date1 < date2) {
+                return -1;
+            } else if (date1 > date2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
     }
 
 }

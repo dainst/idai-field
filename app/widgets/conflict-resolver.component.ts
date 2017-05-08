@@ -135,9 +135,10 @@ export class ConflictResolverComponent implements OnChanges {
 
         this.markRevisionAsInspected(this.selectedRevision);
         if (this.conflictedRevisions.length > 0) {
-            this.selectedRevision = this.conflictedRevisions[0];
+            this.setSelectedRevision(this.conflictedRevisions[0]);
         } else {
             this.selectedRevision = undefined;
+            this.differingFields = [];
         }
 
         this.documentEditChangeMonitor.setChanged();

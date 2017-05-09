@@ -14,7 +14,8 @@
         <div *ngIf="conflictedRevisions.length > 0">
             <div class="row h-100">
                 <div class="col-md-5 my-auto conflict-resolver-field">
-                    <span>{{document.modified}}</span>
+                    <div>Aktuelle Revision:</div>
+                    <div>{{getRevisionLabel(document)}}</div>
                 </div>
                 <div class="col-md-2 my-auto text-center">
                     <button class="btn btn-primary" id="switch-winning-revision-button" (click)="switchWinningSide()">
@@ -23,11 +24,12 @@
                         <span *ngIf="getWinningSide() == 'mixed'" class="mdi mdi-18px mdi-asterisk"></span>
                     </button>
                 </div>
-                <div class="col-md-5 my-auto conflict-resolver-field">
+                <div class="col-md-5 my-auto revision-select-field">
+                    <div>Konkurrierende Revision:</div>
                     <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
                             class="form-control">
                         <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
-                            {{revision.modified}}
+                            {{getRevisionLabel(revision)}}
                         </option>
                     </select>
                 </div>

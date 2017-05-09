@@ -61,7 +61,8 @@ config.map = {
     'express': '@node/express',
     'express-pouchdb': '@node/express-pouchdb',
     'electron': 'app/desktop/electron',
-    'deep-equal': 'node_modules/deep-equal/index.js'
+    'deep-equal': 'node_modules/deep-equal/index.js',
+    'moment': 'node_modules/moment/min/moment-with-locales.js'
 };
 
 config.meta=  {

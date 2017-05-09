@@ -7,6 +7,8 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
+const moment = require('moment');
+
 /**
  * @author Thomas Kleinke
  */
@@ -221,8 +223,8 @@ export class ConflictResolverComponent implements OnChanges {
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
 
         revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
-            const date1 = new Date(a.modified);
-            const date2 = new Date(b.modified);
+            const date1: Date = new Date(a.modified);
+            const date2: Date = new Date(b.modified);
             if (date1 < date2) {
                 return -1;
             } else if (date1 > date2) {
@@ -233,4 +235,11 @@ export class ConflictResolverComponent implements OnChanges {
         });
     }
 
+    public getRevisionLabel(revision: IdaiFieldDocument): string {
+
+        const date: Date = new Date(revision['modified']);
+        moment.locale('de');
+
+        return moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
+    }
 }

@@ -34,7 +34,7 @@ describe('resources/syncing tests --', function() {
         shortDescription: "Testobjekt",
         relations: []
     };
-    let testDocument: any = { resource: testResource };
+    let testDocument: any = { _id: testResource.id, resource: testResource };
 
     function setupTestDB() {
 
@@ -61,27 +61,22 @@ describe('resources/syncing tests --', function() {
     function createTestDoc() {
 
         return db.post(testDocument).then(result => {
-            testDocument._id = result.id;
             testDocument._rev = result.rev;
         }).catch(err => console.error("Failure while creating test doc", err));
     }
 
     function resetTestDoc() {
 
-        let id = testDocument._id;
         let rev = testDocument._rev;
-        delete testDocument._id;
         delete testDocument._rev;
         testDocument.resource.identifier = 'test1';
-        return db.remove(id, rev)
+        return db.remove(testDocument._id, rev)
             .catch(err => console.error("Failure while removing test doc", err));
     }
 
     function updateTestDoc() {
 
-        testDocument.resource.identifier = 'test2';
         return db.put(testDocument).then(result => {
-            testDocument._id = result.id;
             testDocument._rev = result.rev;
         }).catch(err => console.error("Failure while updating test doc", err));
     }
@@ -101,7 +96,8 @@ describe('resources/syncing tests --', function() {
         return browser.sleep(3000).then(() =>
             resourcesPage.typeInIdentifierInSearchField(searchTerm)
         ).then(() => {
-            return browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
+            return browser.wait(EC.visibilityOf(
+                    element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
                 () => {
                     return successCB();
                 },
@@ -113,11 +109,35 @@ describe('resources/syncing tests --', function() {
 
     function configureRemoteSite() {
 
-        settingsPage.get();
         settingsPage.clickAddRemoteSiteButton();
         common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         settingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
+    }
+
+    function removeRemoteSiteConfiguration() {
+
+        settingsPage.clickRemoveRemoteSiteButton();
+        settingsPage.clickSaveSettingsButton();
+        browser.sleep(5000);
+    }
+
+    function createConflict(): Promise<any> {
+
+        return NavbarPage.clickNavigateToSettings()
+            .then(() => removeRemoteSiteConfiguration())
+            .then(() => NavbarPage.clickNavigateToResources())
+            .then(() => resourcesPage.clickSelectResource('test1'))
+            .then(documentViewPage.clickEditDocument)
+            .then(() => DocumentEditWrapperPage.typeInInputField('Test Local', 1))
+            .then(DocumentEditWrapperPage.clickSaveDocument)
+            .then(() => {
+                testDocument.resource.shortDescription = 'Test Remote';
+                updateTestDoc();
+            })
+            .then(() => NavbarPage.clickNavigateToSettings())
+            .then(() => configureRemoteSite())
+            .then(NavbarPage.clickNavigateToResources);
     }
 
     beforeAll(done => {
@@ -145,6 +165,7 @@ describe('resources/syncing tests --', function() {
 
     it('should show resource created in other db', done => {
 
+        settingsPage.get();
         configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         waitForIt('test1', () => {
@@ -156,10 +177,13 @@ describe('resources/syncing tests --', function() {
 
     it('should show changes made in other db', done => {
 
+        settingsPage.get();
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
-            .then(updateTestDoc)
-            .then(() => waitForIt('test2', () => {
+            .then(() => {
+                testDocument.resource.identifier = 'test2';
+                updateTestDoc();
+            }).then(() => waitForIt('test2', () => {
                 expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2');
                 done();
             }));
@@ -168,6 +192,7 @@ describe('resources/syncing tests --', function() {
 
     it('resource created in client should be synced to other db', done => {
 
+        settingsPage.get();
         configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {
@@ -179,14 +204,17 @@ describe('resources/syncing tests --', function() {
 
     it('should detect conflict on save', done => {
 
+        settingsPage.get();
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 resourcesPage.typeInIdentifierInSearchField('test1');
                 resourcesPage.clickSelectResource('test1')
                     .then(() => documentViewPage.clickEditDocument())
-                    .then(updateTestDoc)
-                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(() => {
+                        testDocument.resource.identifier = 'test2';
+                        updateTestDoc();
+                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
                     .then(done)
                     .catch(err => { fail(err); done(); });
             }));
@@ -223,6 +251,24 @@ describe('resources/syncing tests --', function() {
                 expect(address).toEqual(remoteSiteAddress);
                 done();
             }).catch(err => { fail(err); done(); })
+    });
+
+    it('should detect an eventual conflict and mark the corresponding resource list item', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        return NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                browser.wait(EC.visibilityOf(resourcesPage.getListItemEl('test1')), delays.ECWaitTime);
+                expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
+
+                createConflict()
+                    .then(() => {
+                        browser.wait(EC.visibilityOf(resourcesPage.getListItemEl('test1')), delays.ECWaitTime);
+                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
+                        done();
+                    }).catch(err => { fail(err); done(); });
+            }));
     });
 
 });

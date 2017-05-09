@@ -12,12 +12,15 @@ export class NavbarPage {
         return element(by.css('navbar ul li:nth-child(1)')).click();
     };
 
-
     public static clickNavigateToList() {
         browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(3)'))), delays.ECWaitTime);
         return element(by.css('navbar ul li:nth-child(3)')).click();
     };
 
+    public static clickNavigateToSettings() {
+        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(5)'))), delays.ECWaitTime);
+        return element(by.css('navbar ul li:nth-child(5)')).click();
+    };
 
     // unused?
     public static clickCloseMessage = function() {
@@ -27,7 +30,7 @@ export class NavbarPage {
 
     // await
 
-    public static awaitAlert (text,matchExactly=true) {
+    public static awaitAlert(text, matchExactly = true) {
         if (matchExactly) {
             browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
         }

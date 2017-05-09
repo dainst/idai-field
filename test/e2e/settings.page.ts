@@ -25,6 +25,12 @@ let SettingsPage = function() {
         element(by.id('add-remote-site-button')).click();
     };
 
+    this.clickRemoveRemoteSiteButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('button')).get(0)),
+            delays.ECWaitTime);
+        element(by.id('remote-sites-list')).all(by.css('button')).get(0).click();
+    };
+
     this.getRemoteSiteAddressInput = function() {
         browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('input')).get(0)),
             delays.ECWaitTime);

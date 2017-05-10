@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 let common = require("../common.js");
 let EC = protractor.ExpectedConditions;
@@ -6,6 +6,7 @@ let delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class DocumentEditWrapperPage {
 
@@ -13,7 +14,6 @@ export class DocumentEditWrapperPage {
         browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
         this.getRelationEl(groupIndex, pickerIndex)
             .all(by.css('.suggestion')).get(suggestionIndex).click();
-
     };
 
      public static clickBackToDocumentView() {
@@ -31,27 +31,41 @@ export class DocumentEditWrapperPage {
             .click();
     };
 
-    public static clickRelationsTab = function() {
-        element(by.id('document-edit-relations-tab')).click();
-    };
-
     public static clickFieldsTab = function() {
         element(by.id('document-edit-fields-tab')).click();
     };
 
+    public static clickRelationsTab = function() {
+        element(by.id('document-edit-relations-tab')).click();
+    };
+
+    public static clickConflictsTab = function() {
+        element(by.id('document-edit-conflicts-tab')).click();
+    };
+
     public static clickSaveDocument = function() {
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
-            .then(function(){
+            .then(function() {
                 element(by.id('document-edit-button-save-document')).click().then(
                     function() {
-                        return new Promise(function(resolve){
-                            setTimeout(function(){
+                        return new Promise(function(resolve) {
+                            setTimeout(function() {
                                 resolve();
-                            },delays.shortRest);
+                            }, delays.shortRest);
                         })
                     }
                 )
-            })
+            });
+    };
+
+    public static clickSwitchWinningRevisionButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('switch-winning-revision-button'))), delays.ECWaitTime);
+        element(by.id('switch-winning-revision-button')).click();
+    };
+
+    public static clickSolveConflictButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('solve-conflict-button'))), delays.ECWaitTime);
+        element(by.id('solve-conflict-button')).click();
     };
 
     // get text
@@ -62,7 +76,6 @@ export class DocumentEditWrapperPage {
     };
 
     // elements
-
 
     public static getRelationEl = function(groupIndex, pickerIndex) {
         return element.all(by.tagName('relation-picker-group')).get(groupIndex)
@@ -82,7 +95,7 @@ export class DocumentEditWrapperPage {
         var footer = element(by.css('.conflict-modal-footer'));
         browser.wait(EC.visibilityOf(footer), delays.ECWaitTime);
         return footer;
-    }
+    };
 
     // type in
 
@@ -95,11 +108,12 @@ export class DocumentEditWrapperPage {
 
         if (inputFieldNr == undefined) inputFieldNr = 0;
 
-        // element-2, 0,1 and 2 are type, id, geometries
+        // element-2, 0, 1 and 2 are type, id, geometries
         inputFieldNr += 3;
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-'+inputFieldNr+' input'))), delays.ECWaitTime);
-        common.typeIn(element(by.css('#edit-form-element-'+inputFieldNr+' input')), text);
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + inputFieldNr + ' input'))),
+            delays.ECWaitTime);
+        common.typeIn(element(by.css('#edit-form-element-' + inputFieldNr + ' input')), text);
     };
 
     public static typeInRelationByIndices = function(groupIndex, pickerIndex, input) {

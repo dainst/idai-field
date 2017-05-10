@@ -23,17 +23,20 @@ let ResourcesPage = function() {
     };
 
     this.clickSaveInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))),
+            delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-save-button')).click();
     };
 
     this.clickCancelInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))),
+            delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-cancel-button')).click();
     };
 
     this.clickDiscardInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-discard-button'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-discard-button'))),
+            delays.ECWaitTime);
         element(by.id('overview-save-confirmation-modal-discard-button')).click();
     };
 
@@ -76,13 +79,17 @@ let ResourcesPage = function() {
      * @deprecated use selectObjectByIdentifier instead
      */
     this.clickSelectObjectByIndex = function(listIndex) {
-        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)),
+            delays.ECWaitTime);
         return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
     };
 
     this.clickSelectResource = function(identifier) {
-        browser.wait(EC.visibilityOf(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']"))), delays.ECWaitTime);
-        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"+identifier+"']")).click();
+        browser.wait(EC.visibilityOf(
+            element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
+                 + identifier + "']"))), delays.ECWaitTime);
+        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
+            + identifier + "']")).click();
     };
 
     this.clickSelectResourceType = function(typeIndex) {
@@ -93,8 +100,9 @@ let ResourcesPage = function() {
     // get text
 
     this.getListItemIdentifierText = function(itemNr) {
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier'))), delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item:nth-child('+(itemNr+1)+') .identifier')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
+            + (itemNr + 1) + ') .identifier'))), delays.ECWaitTime);
+        return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .identifier')).getText();
     };
 
     this.getSelectedGeometryTypeText = function() {

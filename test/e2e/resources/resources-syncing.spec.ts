@@ -67,11 +67,22 @@ describe('resources/syncing tests --', function() {
 
     function resetTestDoc() {
 
-        let rev = testDocument._rev;
-        delete testDocument._rev;
         testDocument.resource.identifier = 'test1';
-        return db.remove(testDocument._id, rev)
-            .catch(err => console.error("Failure while removing test doc", err));
+        testDocument.resource.shortDescription = 'Testobjekt';
+
+        return db.get(testDocument._id, { conflicts: true })
+            .then(doc => {
+                testDocument._rev = doc._rev;
+
+                let promises = [];
+                if (doc._conflicts) {
+                    for (let revisionId of doc._conflicts) {
+                        promises.push(db.remove(doc._id, revisionId));
+                    }
+                }
+
+                return Promise.all(promises);
+            }).catch(err => console.error("Failure while resetting test doc", err));
     }
 
     function updateTestDoc() {
@@ -269,6 +280,37 @@ describe('resources/syncing tests --', function() {
                         expect(resourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
                         done();
                     }).catch(err => { fail(err); done(); });
+            }));
+    });
+
+    it('should solve an eventual conflict', done => {
+
+        let shortDescription = '';
+
+        settingsPage.get();
+        configureRemoteSite();
+        return NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                createConflict()
+                    .then(() => { return db.get(testDocument._id); })
+                    .then(doc => {
+                        shortDescription = doc.resource.shortDescription;
+                        expect(['Test Local', 'Test Remote']).toContain(shortDescription);
+                    }).then(() => resourcesPage.clickSelectResource('test1'))
+                    .then(documentViewPage.clickEditDocument)
+                    .then(DocumentEditWrapperPage.clickConflictsTab)
+                    .then(DocumentEditWrapperPage.clickSwitchWinningRevisionButton)
+                    .then(DocumentEditWrapperPage.clickSolveConflictButton)
+                    .then(DocumentEditWrapperPage.clickSaveDocument)
+                    .then(() => {
+                        browser.wait(EC.stalenessOf(element(by.id('document-edit-conflicts-tab'))), delays.ECWaitTime);
+                        return db.get(testDocument._id);
+                    }).then(doc => {
+                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
+                        expect(['Test Local', 'Test Remote']).toContain(doc.resource.shortDescription);
+                        expect(doc.resource.shortDescription).not.toEqual(shortDescription);
+                        done();
+                    });
             }));
     });
 

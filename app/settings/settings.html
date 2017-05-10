@@ -95,8 +95,8 @@
             </div>
             <div class="col-md-6">
                 <b>Teammitglieder </b><br><br>
-                <ul>
-                    <li id="remote-sites-list" *ngFor="let remoteSite of remoteSites; let i = index;">
+                <ul id="remote-sites-list">
+                    <li *ngFor="let remoteSite of remoteSites; let i = index;">
                         <b>IP-Adresse: </b>
                         <input [ngModel]="remoteSite.ipAddress"
                                (ngModelChange)="remoteSite.ipAddress = $event"

@@ -26,7 +26,7 @@ describe('resources/syncing tests --', function() {
     const configPath = browser.params.configPath;
     const configTemplate = browser.params.configTemplate;
 
-    let db, server;
+    let db, server, changes;
     let testResource = {
         id: "td1",
         identifier:"test1",
@@ -158,6 +158,8 @@ describe('resources/syncing tests --', function() {
 
     afterEach(done => {
 
+        if (changes) changes.cancel();
+
         resetTestDoc()
             .then(() => resetConfigJson())
             .then(() => done());
@@ -172,7 +174,6 @@ describe('resources/syncing tests --', function() {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
             done();
         });
-
     });
 
     it('should show changes made in other db', done => {
@@ -187,19 +188,20 @@ describe('resources/syncing tests --', function() {
                 expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2');
                 done();
             }));
-
     });
 
     it('resource created in client should be synced to other db', done => {
 
         settingsPage.get();
         configureRemoteSite();
-        NavbarPage.clickNavigateToResources();
-        db.changes({ since: 'now', live: true, include_docs: true }).on('change', change => {
-            if (change.doc.resource && change.doc.resource.identifier == 'test3')
-                done();
-        });
-        resourcesPage.performCreateResource('test3');
+        NavbarPage.clickNavigateToResources()
+            .then(() => {
+                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
+                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
+                        done();
+                });
+                resourcesPage.performCreateResource('test3');
+            }).catch(err => { fail(err); done(); });
     });
 
     it('should detect conflict on save', done => {
@@ -208,7 +210,6 @@ describe('resources/syncing tests --', function() {
         configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
-                resourcesPage.typeInIdentifierInSearchField('test1');
                 resourcesPage.clickSelectResource('test1')
                     .then(() => documentViewPage.clickEditDocument())
                     .then(() => {

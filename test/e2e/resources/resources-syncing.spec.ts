@@ -304,9 +304,9 @@ describe('resources/syncing tests --', function() {
                     .then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(() => {
                         browser.wait(EC.stalenessOf(element(by.id('document-edit-conflicts-tab'))), delays.ECWaitTime);
+                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
                         return db.get(testDocument._id);
                     }).then(doc => {
-                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
                         expect(['Test Local', 'Test Remote']).toContain(doc.resource.shortDescription);
                         expect(doc.resource.shortDescription).not.toEqual(shortDescription);
                         done();

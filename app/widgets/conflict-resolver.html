@@ -41,9 +41,9 @@
             <h3 class="card-title">{{field.label}}</h3>
         </div>
         <div class="row h-100">
-            <div class="col-md-5 my-auto conflict-resolver-field">
-                <div *ngIf="field.type == 'field'" [class.text-primary]="!field.rightSideWinning"
-                     [class.text-muted]="field.rightSideWinning">
+            <div class="col-md-5 my-auto conflict-resolver-field" [class.text-primary]="!field.rightSideWinning"
+                 [class.text-muted]="field.rightSideWinning">
+                <div *ngIf="field.type == 'field'" >
                     <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
                     <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
                 </div>

@@ -172,7 +172,7 @@ export class ImageGridComponent {
         let document = documents[documentIndex];
 
         return this.imagestore.remove(document.resource.identifier)
-            .then(() => this.persistenceManager.remove(document, document),
+            .then(() => this.persistenceManager.remove(document, [document]),
                 err => Promise.reject([M.IMAGESTORE_ERROR_DELETE, [document.resource.identifier]]))
             .then(() => {
                 if (documentIndex < documents.length - 1) {

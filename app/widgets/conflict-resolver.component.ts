@@ -6,6 +6,7 @@ import {DiffUtility} from '../util/diff-utility';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {PersistenceManager} from 'idai-components-2/persist';
 
 const moment = require('moment');
 
@@ -33,7 +34,8 @@ export class ConflictResolverComponent implements OnChanges {
         private datastore: IdaiFieldDatastore,
         private messages: Messages,
         private configLoader: ConfigLoader,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+        private documentEditChangeMonitor: DocumentEditChangeMonitor,
+        private persistenceManager: PersistenceManager) {}
 
     ngOnChanges() {
 
@@ -134,6 +136,8 @@ export class ConflictResolverComponent implements OnChanges {
                 }
             }
         }
+
+        this.persistenceManager.addOldVersion(this.selectedRevision);
 
         this.markRevisionAsInspected(this.selectedRevision);
         if (this.conflictedRevisions.length > 0) {

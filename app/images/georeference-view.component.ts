@@ -145,7 +145,7 @@ export class GeoreferenceViewComponent {
     private save(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            this.persistenceManager.setOldVersion(this.document);
+            this.persistenceManager.setOldVersions([this.document]);
 
             this.persistenceManager.persist(this.document).then(
                 () => { resolve(); },

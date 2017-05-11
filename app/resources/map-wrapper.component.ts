@@ -178,7 +178,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
     private save() {
 
-        this.persistenceManager.setOldVersion(this.resourcesComponent.getSelected());
+        this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
 
         this.persistenceManager.persist(this.resourcesComponent.getSelected()).then(
             () => {

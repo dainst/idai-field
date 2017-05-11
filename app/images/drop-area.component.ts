@@ -90,7 +90,7 @@ export class DropAreaComponent {
         let unsupportedExts: Array<string> = [];
         for (let file of files) {
             let ext;
-            if ((ext=this.ofUnsupportedExtension(file))!=undefined) unsupportedExts.push('"*.'+ext+'"');
+            if ((ext = this.ofUnsupportedExtension(file)) != undefined) unsupportedExts.push('"*.' + ext + '"');
         }
         return unsupportedExts;
     }
@@ -103,7 +103,7 @@ export class DropAreaComponent {
 
     private chooseType(): Promise<IdaiType> {
         return new Promise((resolve, reject) => {
-            this.configLoader.getProjectConfiguration().then( projectConfiguration => {
+            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
                 let imageType: IdaiType = projectConfiguration.getTypesTree()['image'];
                 if (imageType.children && imageType.children.length > 0) {
@@ -128,7 +128,7 @@ export class DropAreaComponent {
         }
     }
 
-    private ofUnsupportedExtension(file:File) {
+    private ofUnsupportedExtension(file: File) {
         let ext = file.name.split('.').pop();
         if (this.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
@@ -167,7 +167,6 @@ export class DropAreaComponent {
     private createImageDocument(file: File, type: IdaiType): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            this.configLoader.getProjectConfiguration().then( projectConfiguration => {
 
                 var img = new Image();
                 img.src = URL.createObjectURL(file);
@@ -182,11 +181,10 @@ export class DropAreaComponent {
                             "relations": {}
                         }
                     };
-                    this.persistenceManager.persist(doc, doc)
+                    this.persistenceManager.persist(doc, [doc])
                         .then(result => resolve(result))
                         .catch(error => reject(error));
                 };
-            })
         });
     }
 }

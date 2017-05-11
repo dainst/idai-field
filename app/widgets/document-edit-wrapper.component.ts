@@ -74,7 +74,7 @@ export class DocumentEditWrapperComponent {
                 this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
                 this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
                     'editable');
-                this.persistenceManager.setOldVersion(this.document);
+                this.persistenceManager.setOldVersions([this.document]);
 
                 if (this.document.resource.relations['depictedIn']) {
                     this.loadImages();   

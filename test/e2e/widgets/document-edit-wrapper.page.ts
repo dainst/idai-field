@@ -68,11 +68,26 @@ export class DocumentEditWrapperPage {
         element(by.id('solve-conflict-button')).click();
     };
 
+    public static clickConflictModalSaveButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('conflict-modal-save-button'))), delays.ECWaitTime);
+        element(by.id('conflict-modal-save-button')).click();
+    };
+
+    public static clickConflictModalReloadButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('conflict-modal-reload-button'))), delays.ECWaitTime);
+        element(by.id('conflict-modal-reload-button')).click();
+    };
+
     // get text
 
     public static getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
         this.clickRelationsTab();
         return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+    };
+
+    public static getInputFieldValue = function(index) {
+        browser.wait(EC.visibilityOf(element.all(by.css('dai-input input')).get(index)), delays.ECWaitTime);
+        return element.all(by.tagName('dai-input input')).get(index).getAttribute('value');
     };
 
     // elements

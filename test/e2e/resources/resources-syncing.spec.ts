@@ -215,23 +215,6 @@ describe('resources/syncing tests --', function() {
             }).catch(err => { fail(err); done(); });
     });
 
-    it('should detect conflict on save', done => {
-
-        settingsPage.get();
-        configureRemoteSite();
-        NavbarPage.clickNavigateToResources()
-            .then(() => waitForIt('test1', () => {
-                resourcesPage.clickSelectResource('test1')
-                    .then(() => documentViewPage.clickEditDocument())
-                    .then(() => {
-                        testDocument.resource.identifier = 'test2';
-                        updateTestDoc();
-                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(done)
-                    .catch(err => { fail(err); done(); });
-            }));
-    });
-
     it('should save syncing settings to config file and load them after restart', done => {
 
         const expectedConfig = {
@@ -264,6 +247,51 @@ describe('resources/syncing tests --', function() {
                 done();
             }).catch(err => { fail(err); done(); })
     });
+
+    it('should solve an immediate conflict by reloading the latest revision', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                resourcesPage.clickSelectResource('test1')
+                    .then(documentViewPage.clickEditDocument)
+                    .then(() => {
+                        testDocument.resource.identifier = 'test2';
+                        updateTestDoc();
+                    }).then(DocumentEditWrapperPage.clickSaveDocument)
+                    .then(DocumentEditWrapperPage.clickConflictModalReloadButton)
+                    .then(() => {
+                        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('test2');
+                        done();
+                    }).catch(err => { fail(err); done(); });
+            }));
+    });
+
+    it('should solve an immediate conflict by overwriting the latest revision', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                resourcesPage.clickSelectResource('test1')
+                    .then(documentViewPage.clickEditDocument)
+                    .then(() => {
+                        testDocument.resource.identifier = 'test2';
+                        updateTestDoc();
+                    }).then(DocumentEditWrapperPage.clickSaveDocument)
+                    .then(DocumentEditWrapperPage.clickConflictModalSaveButton)
+                    .then(() => {
+                        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('test1');
+                        DocumentEditWrapperPage.clickSaveDocument();
+                    }).then(() => { return db.get(testDocument._id); })
+                    .then(doc => {
+                        expect(doc.resource.identifier).toEqual('test1');
+                        done();
+                    }).catch(err => { fail(err); done(); });
+            }));
+    });
+
 
     it('should detect an eventual conflict and mark the corresponding resource list item', done => {
 

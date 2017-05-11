@@ -12,11 +12,11 @@
     <p>Wie möchten Sie fortfahren?</p>
 </div>
 <div class="modal-footer conflict-modal-footer">
-    <button type="button" class="btn btn-danger"
+    <button id="conflict-modal-save-button" type="button" class="btn btn-danger"
             (click)="activeModal.close('overwrite')">
         <span class="mdi mdi-content-save"></span> Trotzdem speichern
     </button>
-    <button type="button" class="btn btn-primary"
+    <button id="conflict-modal-reload-button" type="button" class="btn btn-primary"
             (click)="activeModal.close('reload')">
         <span class="mdi mdi-reload"></span> Neu laden
     </button>

@@ -21,6 +21,11 @@
   right: 7px;
 }
 
+#search-bar #filter-button img {
+  width: 20px;
+  height: 20px;
+}
+
 input[type=text]:focus:not([readonly]),
 input[type=password]:focus:not([readonly]),
 input[type=email]:focus:not([readonly]),

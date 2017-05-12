@@ -41,12 +41,14 @@
   }
 }
 
+ul#objectList {
+  height: calc(100vh - 200px);
+}
+
 #objectOverview .object-list {
 
-  height: calc(100vh - 225px);
-  overflow: auto;
-
   .list-group-item {
+    display: block;
     cursor: pointer;
     border: 0;
     border-radius: 0;
@@ -57,7 +59,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    min-height: 60px;
   }
 
   .list-group-item:hover {

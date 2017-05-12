@@ -1,14 +1,14 @@
 .document-teaser type-icon {
-  float: left;
-  display: inline-block;
-  margin: 2px 15px 0 5px;
+  position: absolute;
+  margin-top: 3px;
 }
 
 .document-teaser type-icon img {
   border-radius: 45px;
 }
 
-.document-teaser .teasercontent {
+.document-teaser .teasercontent,
+.document-teaser .new {
   display: inline-block;
-  float: right;
+  margin-left: 45px;
 }

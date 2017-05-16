@@ -78,12 +78,9 @@ export class MapComponent implements OnChanges {
         private mapState: MapState,
         private datastore: Datastore,
         private imagestore: Imagestore,
-        private sanitizer: DomSanitizer,
-        private messages: Messages,
-        private configLoader: ConfigLoader
+        private messages: Messages
     ) {
         this.bounds = [];
-
     }
 
     public ngAfterViewInit() {
@@ -98,7 +95,7 @@ export class MapComponent implements OnChanges {
         if (!this.documents) return;
 
         if (!this.map) {
-            this.initializeMap();
+            this.getMap();
         } else {
             this.clearMap();
         }
@@ -128,7 +125,7 @@ export class MapComponent implements OnChanges {
         }
 
         p.then(() => {
-            this.map.invalidateSize(true);
+            this.getMap().invalidateSize(true);
 
             if (this.selectedDocument) {
                 if (this.polygons[this.selectedDocument.resource.id]) {
@@ -137,7 +134,7 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             } else {
-                if (this.bounds.length > 1) this.map.fitBounds(L.latLngBounds(this.bounds));
+                if (this.bounds.length > 1) this.getMap().fitBounds(L.latLngBounds(this.bounds));
             }
         });
 
@@ -161,33 +158,44 @@ export class MapComponent implements OnChanges {
         }
     }
 
-    private initializeMap() {
+    private getMap(): L.Map {
 
-        this.map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false, minZoom: -1000 });
+        if (!this.map) {
+            this.map = this.createMap();
+        }
+
+        return this.map;
+    }
+
+    private createMap(): L.Map {
+
+        const map = L.map("map-container", { crs: L.CRS.Simple, attributionControl: false, minZoom: -1000 });
 
         var mapComponent = this;
-        this.map.on('click', function(event: L.MouseEvent) {
+        map.on('click', function(event: L.MouseEvent) {
             mapComponent.clickOnMap(event.latlng);
         });
 
-        this.initializeViewport();
-        this.initializeViewportMonitoring();
+        this.initializeViewport(map);
+        this.initializeViewportMonitoring(map);
+
+        return map;
     }
 
-    private initializeViewport() {
+    private initializeViewport(map: L.Map) {
 
         if (this.mapState.getCenter() && this.mapState.getZoom()) {
-            this.map.setView(this.mapState.getCenter(), this.mapState.getZoom());
+            map.setView(this.mapState.getCenter(), this.mapState.getZoom());
         } else {
-            this.map.setView([0, 0], 5);
+            map.setView([0, 0], 5);
         }
     }
 
-    private initializeViewportMonitoring() {
+    private initializeViewportMonitoring(map: L.Map) {
 
-        this.map.on('moveend', function () {
-            this.mapState.setCenter(this.map.getCenter());
-            this.mapState.setZoom(this.map.getZoom());;
+        map.on('moveend', function () {
+            this.mapState.setCenter(map.getCenter());
+            this.mapState.setZoom(map.getZoom());;
         }.bind(this));
     }
 
@@ -195,22 +203,19 @@ export class MapComponent implements OnChanges {
 
         return new Promise((resolve, reject) => {
 
-            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            let query: Query = {
+                q: '',
+                type: 'image',
+                prefix: true
+            };
 
-                let query: Query = {
-                    q: '',
-                    type: 'image',
-                    prefix: true
-                };
-
-                this.datastore.find(query).then(
-                    documents => {
-                        this.makeLayersForDocuments(documents as Document[], resolve);
-                    },
-                    error => {
-                        reject(error);
-                    });
-            });
+            this.datastore.find(query).then(
+                documents => {
+                    this.makeLayersForDocuments(documents as Document[], resolve);
+                },
+                error => {
+                    reject(error);
+                });
         });
     }
 
@@ -262,7 +267,7 @@ export class MapComponent implements OnChanges {
         for (var i in layers) {
             var id = layers[i].document.resource.id;
             if (!this.panes[id]) {
-                var pane = this.map.createPane(id);
+                var pane = this.getMap().createPane(id);
                 pane.style.zIndex = String(layers[i].zIndex);
                 this.panes[id] = pane;
             }
@@ -272,11 +277,11 @@ export class MapComponent implements OnChanges {
     private clearMap() {
 
         for (var i in this.polygons) {
-            this.map.removeLayer(this.polygons[i]);
+            this.getMap().removeLayer(this.polygons[i]);
         }
 
         for (var i in this.markers) {
-            this.map.removeLayer(this.markers[i]);
+            this.getMap().removeLayer(this.markers[i]);
         }
 
         this.polygons = {};
@@ -324,7 +329,7 @@ export class MapComponent implements OnChanges {
             mapComponent.select(this.document);
         });
 
-        marker.addTo(this.map);
+        marker.addTo(this.getMap());
         this.markers[document.resource.id] = marker;
 
         return marker;
@@ -348,7 +353,7 @@ export class MapComponent implements OnChanges {
             if (mapComponent.select(this.document)) L.DomEvent.stop(event);
         });
 
-        polygon.addTo(this.map);
+        polygon.addTo(this.getMap());
         this.polygons[document.resource.id] = polygon;
 
         return polygon;
@@ -361,7 +366,7 @@ export class MapComponent implements OnChanges {
             georef.topLeftCoordinates,
             georef.topRightCoordinates,
             georef.bottomLeftCoordinates,
-            { pane: layer.document.resource.id }).addTo(this.map);
+            { pane: layer.document.resource.id }).addTo(this.getMap());
         this.extendBounds(L.latLng(georef.topLeftCoordinates));
         this.extendBounds(L.latLng(georef.topRightCoordinates));
         this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
@@ -376,7 +381,7 @@ export class MapComponent implements OnChanges {
             this.addLayerToMap(layer);
         } else {
             this.activeLayers.splice(index, 1);
-            this.map.removeLayer(layer.object);
+            this.getMap().removeLayer(layer.object);
         }
 
         this.saveActiveLayersIdsInMapState();
@@ -413,12 +418,12 @@ export class MapComponent implements OnChanges {
 
     private focusMarker(marker: L.Marker) {
 
-        this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
+        this.getMap().panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
     }
 
     private focusPolygon(polygon: L.Polygon) {
 
-        this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+        this.getMap().fitBounds(polygon.getBounds(), { padding: [50, 50] });
     }
 
     public focusLayer(layer: ImageContainer) {
@@ -430,7 +435,7 @@ export class MapComponent implements OnChanges {
         bounds.push(L.latLng(georef.topRightCoordinates));
         bounds.push(L.latLng(georef.bottomLeftCoordinates));
 
-        this.map.fitBounds(bounds);
+        this.getMap().fitBounds(bounds);
     }
 
     private getShortDescription(resource: IdaiFieldResource) {
@@ -493,10 +498,10 @@ export class MapComponent implements OnChanges {
             hintlineStyle: { color: 'red' }
         };
 
-        this.map.pm.enableDraw('Poly', drawOptions);
+        this.getMap().pm.enableDraw('Poly', drawOptions);
 
         var mapComponent = this;
-        this.map.on('pm:create', function(event: L.LayerEvent) {
+        this.getMap().on('pm:create', function(event: L.LayerEvent) {
             mapComponent.editablePolygon = <L.Polygon> event.layer;
             mapComponent.setupEditablePolygon();
         });
@@ -524,7 +529,7 @@ export class MapComponent implements OnChanges {
 
     private startPointCreation() {
 
-        this.createEditableMarker(this.map.getCenter());
+        this.createEditableMarker(this.getMap().getCenter());
     }
 
     private startPointEditing() {
@@ -539,7 +544,7 @@ export class MapComponent implements OnChanges {
     private createEditableMarker(position: L.LatLng) {
 
         this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
-        this.editableMarker.addTo(this.map);
+        this.editableMarker.addTo(this.getMap());
     }
 
     private setEditableMarkerPosition(position: L.LatLng) {
@@ -618,16 +623,16 @@ export class MapComponent implements OnChanges {
 
         if (this.editablePolygon) {
             this.editablePolygon.pm.disable();
-            this.map.removeLayer(this.editablePolygon);
+            this.getMap().removeLayer(this.editablePolygon);
             this.editablePolygon = undefined;
         }
 
         if (this.editableMarker) {
-            this.map.removeLayer(this.editableMarker);
+            this.getMap().removeLayer(this.editableMarker);
             this.editableMarker = undefined;
         }
 
-        this.map.pm.disableDraw('Poly');
+        this.getMap().pm.disableDraw('Poly');
     }
 
     private getCoordinatesFromPolygon(polygon: L.Polygon): Array<any> {

@@ -18,13 +18,15 @@ import {EditNavigation} from '../common/edit-navigation';
  * form, a deactivate guard and a save options modal.
  * 
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class EditNavigationComponent
-    implements EditNavigation, OnInit {
+export class EditNavigationComponent implements EditNavigation, OnInit {
 
     @ViewChild('modalTemplate')
     modalTemplate: TemplateRef<any>;
     modal: NgbModalRef;
+
+    private activeTab: string;
 
     constructor(
         private resourcesComponent: ResourcesComponent,
@@ -45,16 +47,32 @@ export class EditNavigationComponent
     public mode: string; // new | edit
 
     private getRouteParams(callbackWithType, callbackWithId) {
+
         this.route.params.forEach((params: Params) => {
 
             if (params['id']) return callbackWithId(params['id']);
             if (params['type']) return callbackWithType(params['type']);
             
-            console.error("there should be either an id or a type")
+            console.error("there should be either an id or a type");
+        });
+    }
+
+    private setActiveTab() {
+
+        this.route.params.forEach((params: Params) => {
+
+            if (params['tab']) {
+                this.activeTab = params['tab'];
+            } else {
+                this.activeTab = 'fields';
+            }
         });
     }
 
     ngOnInit() {
+
+        this.setActiveTab();
+
         this.getRouteParams(
             type => {
                 this.mode = 'new';

@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild, TemplateRef} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Datastore} from "idai-components-2/datastore";
 import {Imagestore} from "../imagestore/imagestore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
-import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
 import {EditNavigation} from "../common/edit-navigation";
@@ -20,6 +19,7 @@ import {EditNavigation} from "../common/edit-navigation";
  * form, a deactivate guard and a save options modal.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class EditNavigationComponent
     extends ImageComponentBase 
@@ -29,27 +29,41 @@ export class EditNavigationComponent
     modalTemplate: TemplateRef<any>;
     modal: NgbModalRef;
 
+    private activeTab: string;
+
     constructor(
         private router: Router,
-        private modalService:NgbModal,
-        private canDeactivateGuard:EditCanDeactivateGuard,
+        private modalService: NgbModal,
+        private canDeactivateGuard: EditCanDeactivateGuard,
         route: ActivatedRoute,
         datastore: Datastore,
         imagestore: Imagestore,
-        sanitizer: DomSanitizer,
         messages: Messages
     ) {
-        super(route,datastore,imagestore,messages);
+        super(route, datastore, imagestore, messages);
     }
 
     ngOnInit() {
+        this.setActiveTab();
         this.fetchDocAndImage();
     }
 
-    public navigate(savedViaSaveButton:boolean = false) {
+    private setActiveTab() {
+
+        this.route.params.forEach((params: Params) => {
+
+            if (params['tab']) {
+                this.activeTab = params['tab'];
+            } else {
+                this.activeTab = 'fields';
+            }
+        });
+    }
+
+    public navigate(savedViaSaveButton: boolean = false) {
         if (!savedViaSaveButton) return this.canDeactivateGuard.proceed();
         
-        this.router.navigate(['images',this.image.document.resource.id,'show']);
+        this.router.navigate(['images', this.image.document.resource.id, 'show']);
     }
     
     public showModal() {

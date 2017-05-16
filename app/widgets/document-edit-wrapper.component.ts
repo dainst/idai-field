@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
@@ -13,7 +13,6 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {ElementRef} from '@angular/core';
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -34,6 +33,7 @@ export class DocumentEditWrapperComponent {
     @Input() document: IdaiFieldDocument;
     @Input() showBackButton: boolean = true;
     @Input() showDeleteButton: boolean = true;
+    @Input() activeTab: string;
     @Output() onSaveSuccess = new EventEmitter<any>();
     @Output() onBackButtonClicked = new EventEmitter<any>();
     @Output() onDeleteSuccess = new EventEmitter<any>();
@@ -52,7 +52,7 @@ export class DocumentEditWrapperComponent {
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private documentEditChangeMonitor:DocumentEditChangeMonitor,
+        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private configLoader: ConfigLoader,
         private modalService: NgbModal,
         private imagestore: Imagestore,
@@ -64,6 +64,7 @@ export class DocumentEditWrapperComponent {
     }
 
     ngOnChanges() {
+
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
 

@@ -42,9 +42,8 @@
         <div *ngIf="clonedDoc" class="container">
             <div class="row">
                 <div class="col-md-12">
-
-                    <ngb-tabset>
-                        <ngb-tab title="Felder"  id="document-edit-fields-tab">
+                    <ngb-tabset activeId="document-edit-{{activeTab}}-tab">
+                        <ngb-tab title="Felder" id="document-edit-fields-tab">
                             <template ngbTabContent>
                                 <edit-form *ngIf="projectConfiguration" [(document)]="clonedDoc"
                                            [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>

@@ -9,7 +9,8 @@
                 [(document)]="image.document"
                 (onSaveSuccess)="navigate($event);"
                 (onBackButtonClicked)="goBack();"
-                [showDeleteButton]="false">
+                [showDeleteButton]="false"
+                [activeTab]="activeTab">
         </document-edit-wrapper>
     </div>
 </div>

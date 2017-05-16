@@ -1,42 +1,38 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {HttpModule, Http} from '@angular/http';
-import {FormsModule} from '@angular/forms';
-import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
-import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
-import {IdaiDocumentsModule, DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {Validator} from 'idai-components-2/persist';
-import {IdaiFieldValidator} from './model/idai-field-validator';
-import {PersistenceManager} from 'idai-components-2/persist';
-import {ConfigLoader} from 'idai-components-2/configuration';
-import {routing} from './app.routing';
-import {appRoutingProviders} from './app.routing';
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {LocationStrategy, HashLocationStrategy} from "@angular/common";
+import {HttpModule, Http} from "@angular/http";
+import {FormsModule} from "@angular/forms";
+import {Datastore, ReadDatastore} from "idai-components-2/datastore";
+import {IdaiMessagesModule, Messages, MD} from "idai-components-2/messages";
+import {IdaiDocumentsModule, DocumentEditChangeMonitor} from "idai-components-2/documents";
+import {Validator, PersistenceManager} from "idai-components-2/persist";
+import {IdaiFieldValidator} from "./model/idai-field-validator";
+import {ConfigLoader} from "idai-components-2/configuration";
+import {routing, appRoutingProviders} from "./app.routing";
 import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
-import {PouchdbDatastore} from "./datastore/pouchdb-datastore";
 import {Importer} from "./import/importer";
-import {M} from './m';
-import {AppComponent} from './app.component';
-import {ResourcesModule} from './resources/resources.module';
-import {ImportComponent} from './import/import.component';
-import {RelationsCompleter} from './import/relations-completer';
-import {SynchronizationComponent} from './sync/synchronization.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Imagestore} from './imagestore/imagestore';
-import {ReadImagestore} from './imagestore/read-imagestore';
-import {FileSystemImagestore} from './imagestore/file-system-imagestore';
-import {ImagesModule} from './images/images.module';
-import {NavbarComponent} from './navbar.component';
-import {ListModule} from './list/list.module';
-
-import {CachedDatastore} from './datastore/cached-datastore';
-import {BlobMaker} from './imagestore/blob-maker';
-import {Converter} from './imagestore/converter';
-
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
-import {SettingsModule} from './settings/settings.module';
-import {AppConfigurator} from 'idai-components-2/idai-field-model';
-import {SettingsService} from './settings/settings-service';
+import {M} from "./m";
+import {AppComponent} from "./app.component";
+import {ResourcesModule} from "./resources/resources.module";
+import {ImportComponent} from "./import/import.component";
+import {RelationsCompleter} from "./import/relations-completer";
+import {SynchronizationComponent} from "./sync/synchronization.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {Imagestore} from "./imagestore/imagestore";
+import {ReadImagestore} from "./imagestore/read-imagestore";
+import {FileSystemImagestore} from "./imagestore/file-system-imagestore";
+import {ImagesModule} from "./images/images.module";
+import {NavbarComponent} from "./navbar.component";
+import {ListModule} from "./list/list.module";
+import {CachedDatastore} from "./datastore/cached-datastore";
+import {BlobMaker} from "./imagestore/blob-maker";
+import {Converter} from "./imagestore/converter";
+import {IdaiWidgetsModule} from "idai-components-2/widgets";
+import {SettingsModule} from "./settings/settings.module";
+import {AppConfigurator} from "idai-components-2/idai-field-model";
+import {SettingsService} from "./settings/settings-service";
+import {PouchdbServerDatastore} from "./datastore/pouchdb-server-datastore";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -86,7 +82,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
             useFactory: function(configLoader: ConfigLoader) : Datastore {
                 let test = CONFIG['environment'] == 'test';
                 let dbname = CONFIG['database'] ? CONFIG['database'] : 'idai-field-documents';
-                return new CachedDatastore(new PouchdbDatastore(dbname, configLoader, test));
+                return new CachedDatastore(new PouchdbServerDatastore(dbname, configLoader, test));
             },
             deps: [ConfigLoader]
         },

@@ -1,26 +1,18 @@
-import {Query} from "idai-components-2/datastore";
+import {Query, ReadDatastore, Datastore, DatastoreErrors} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
-import {Injectable} from "@angular/core";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
-import {ReadDatastore, Datastore} from 'idai-components-2/datastore';
-
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
-import {DatastoreErrors} from "idai-components-2/datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
-
 import * as PouchDB from "pouchdb";
-import * as express from 'express';
-const expressPouchDB = require('express-pouchdb');
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
 
-@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -49,27 +41,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         this.readyForQuery = this.loadDB(name,false);
     }
 
-    private setupServer(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            const app = express();
-            app.use('/', expressPouchDB(PouchDB, {
-                mode: 'fullCouchDB',
-                overrideMode: {
-                    include: ['routes/fauxton']
-                }
-            }));
-            app.listen(3000, function () {
-                console.log("PouchDB Server listening on port 3000");
-                resolve();
-            });
-        })
+    protected setupServer() {
+        return Promise.resolve();
     }
 
     private loadDB(dbname:string, loadSampleData) {
         return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
             this.dbname = dbname;
             this.db = db;
-            console.log("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
+            console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
         }).then(()=>{
             if (loadSampleData) return this.clear();
             else return Promise.resolve();

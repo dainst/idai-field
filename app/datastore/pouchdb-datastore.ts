@@ -40,10 +40,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         this.readyForQuery = configLoader.getProjectConfiguration()
                 .then(config => this.config = config)
+                .then(()=>this.setupServer())
                 .then(() => this.loadDB(dbname,loadSampleData));
     }
 
-    private setupDatabase(dbname:string): Promise<any> {
+    public select(name) {
+        console.log("will change db",name);
+        this.readyForQuery = this.loadDB(name,false);
+    }
+
+    private setupServer(): Promise<any> {
         return new Promise((resolve, reject) => {
             const app = express();
             app.use('/', expressPouchDB(PouchDB, {
@@ -53,18 +59,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 }
             }));
             app.listen(3000, function () {
-                console.log("PouchDB Server listening on port 3000", dbname);
-                resolve(new PouchDB(dbname));
+                console.log("PouchDB Server listening on port 3000");
+                resolve();
             });
         })
     }
 
     private loadDB(dbname:string, loadSampleData) {
-
-        return this.readyForQuery = this.setupDatabase(dbname).then(db=>{
+        return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
             this.dbname = dbname;
             this.db = db;
-            console.log("PouchDB uses adapter: " + this.db['adapter']);
+            console.log("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
         }).then(()=>{
             if (loadSampleData) return this.clear();
             else return Promise.resolve();

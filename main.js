@@ -17,12 +17,20 @@ var mainWindow;
 
 // Load configuration
 if (process.argv.length > 2) {
-  global.configPath = process.argv[2];
+    global.configPath = process.argv[2];
+    global.configurationPath = 'config/Configuration.json';
 } else {
-  global.configPath = 'config/config.json';
+    global.configurationPath = '../config/Configuration.json';
+    global.configPath = process.resourcesPath+'/config/config.json';
+    // global.configPath = electron.app.getPath('appData') + '/' + electron.app.getName() + '/config.json';
+    // if (!fs.existsSync(global.configPath)) {
+    //     fs.writeFileSync(global.configPath, '{"environment":"production"}','utf-8');
+    // }
 }
 console.log(global.configPath);
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
+
+console.log("e",process.cwd())
 
 function createWindow() {
   // Create the browser window.

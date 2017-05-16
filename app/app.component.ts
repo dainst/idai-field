@@ -5,6 +5,7 @@ import {ConfigLoader} from 'idai-components-2/configuration';
 import {AppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
 import {M} from "./m";
+const remote = require('electron').remote;
 
 @Component({
     moduleId: module.id,
@@ -18,7 +19,7 @@ import {M} from "./m";
  */
 export class AppComponent implements OnInit {
 
-    private static PROJECT_CONFIGURATION_PATH = 'config/Configuration.json';
+    private static PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
 
     constructor(@Inject('app.config') private config,
                 private appConfigurator: AppConfigurator,

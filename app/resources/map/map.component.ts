@@ -1,18 +1,16 @@
-import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
-import {IdaiFieldDocument} from "../../model/idai-field-document";
-import {IdaiFieldResource} from "../../model/idai-field-resource";
-import {IdaiFieldPolygon} from "./idai-field-polygon";
-import {IdaiFieldMarker} from "./idai-field-marker";
-import {IdaiFieldGeometry} from "../../model/idai-field-geometry";
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {IdaiFieldDocument} from '../../model/idai-field-document';
+import {IdaiFieldResource} from '../../model/idai-field-resource';
+import {IdaiFieldPolygon} from './idai-field-polygon';
+import {IdaiFieldMarker} from './idai-field-marker';
+import {IdaiFieldGeometry} from '../../model/idai-field-geometry';
 import {MapState} from './map-state';
-import {Datastore, Query} from "idai-components-2/datastore";
-import {Imagestore} from "../../imagestore/imagestore";
-import {Messages} from "idai-components-2/messages";
-import {Document} from "idai-components-2/core";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {ImageContainer} from "../../imagestore/image-container";
-import {IdaiFieldImageDocument} from "../../model/idai-field-image-document";
+import {Datastore, Query} from 'idai-components-2/datastore';
+import {Imagestore} from '../../imagestore/imagestore';
+import {Messages} from 'idai-components-2/messages';
+import {Document} from 'idai-components-2/core';
+import {ImageContainer} from '../../imagestore/image-container';
+import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 
 @Component({
@@ -37,7 +35,7 @@ export class MapComponent implements OnChanges {
     private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
     private markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
-    private bounds: any[]; // in fact L.LatLng[], but leaflet typing are incomplete
+    private bounds: any[]; // in fact L.LatLng[], but leaflet typings are incomplete
 
     private editablePolygon: L.Polygon;
     private editableMarker: L.Marker;
@@ -107,7 +105,7 @@ export class MapComponent implements OnChanges {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
                     var layers = this.getLayersAsList();
-                    if (this.activeLayers.length == 0 && layers.length > 0) {
+                    if (this.activeLayers.length == 0 && layers.length > 0 && !this.mapState.getActiveLayersIds()) {
                         this.addLayerToMap(layers[0]);
                         this.saveActiveLayersIdsInMapState();
                    }
@@ -133,8 +131,8 @@ export class MapComponent implements OnChanges {
                 } else if (this.markers[this.selectedDocument.resource.id]) {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
-            } else {
-                if (this.bounds.length > 1) this.getMap().fitBounds(L.latLngBounds(this.bounds));
+            } else if (!this.mapState.getCenter() && this.bounds.length > 1) {
+                this.getMap().fitBounds(L.latLngBounds(this.bounds));
             }
         });
 
@@ -184,7 +182,7 @@ export class MapComponent implements OnChanges {
 
     private initializeViewport(map: L.Map) {
 
-        if (this.mapState.getCenter() && this.mapState.getZoom()) {
+        if (this.mapState.getCenter()) {
             map.setView(this.mapState.getCenter(), this.mapState.getZoom());
         } else {
             map.setView([0, 0], 5);
@@ -195,7 +193,7 @@ export class MapComponent implements OnChanges {
 
         map.on('moveend', function () {
             this.mapState.setCenter(map.getCenter());
-            this.mapState.setZoom(map.getZoom());;
+            this.mapState.setZoom(map.getZoom());
         }.bind(this));
     }
 

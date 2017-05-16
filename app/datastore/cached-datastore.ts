@@ -125,4 +125,8 @@ export class CachedDatastore implements IdaiFieldDatastore {
     removeRevision(docId: string, revisionId: string): Promise<any> {
         return this.datastore.removeRevision(docId, revisionId);
     }
+
+    select(name) {
+        return this.datastore.select(name);
+    }
 }

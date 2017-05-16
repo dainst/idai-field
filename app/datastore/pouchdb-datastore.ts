@@ -1,23 +1,18 @@
-import {Query} from "idai-components-2/datastore";
+import {Query, ReadDatastore, Datastore, DatastoreErrors} from "idai-components-2/datastore";
 import {Document} from "idai-components-2/core";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
-import {Injectable} from "@angular/core";
-import * as PouchDB from "pouchdb";
 import {IdGenerator} from "./id-generator";
 import {Observable} from "rxjs/Observable";
 import {M} from "../m";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
-import {ReadDatastore, Datastore} from 'idai-components-2/datastore';
-
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
-import {DatastoreErrors} from "idai-components-2/datastore";
 import {IdaiFieldDocument} from "../model/idai-field-document";
+import * as PouchDB from "pouchdb";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
 
-@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -35,30 +30,42 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 configLoader: ConfigLoader,
                 loadSampleData: boolean = false) {
 
-        this.dbname = dbname;
-        this.readyForQuery = this.setupDatabase(dbname)
-            .then(db => {
-                console.debug("PouchDB uses adapter: " + db.adapter);
-                this.db = db;
-            });
-        if (loadSampleData)
-            this.readyForQuery = this.readyForQuery.then(() => this.clear());
-        this.readyForQuery = this.readyForQuery
-            .then(() => this.setupFulltextIndex())
+        this.readyForQuery = configLoader.getProjectConfiguration()
+                .then(config => this.config = config)
+                .then(()=>this.setupServer())
+                .then(() => this.loadDB(dbname,loadSampleData));
+    }
+
+    public select(name) {
+        console.log("will change db",name);
+        this.readyForQuery = this.loadDB(name,false);
+    }
+
+    protected setupServer() {
+        return Promise.resolve();
+    }
+
+    private loadDB(dbname:string, loadSampleData) {
+        return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
+            this.dbname = dbname;
+            this.db = db;
+            console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
+        }).then(()=>{
+            if (loadSampleData) return this.clear();
+            else return Promise.resolve();
+        }).then(() => this.setupIndicies())
+            .then(() => {
+                if (loadSampleData) return this.loadSampleData();
+                else return Promise.resolve();
+            }).then(() => this.setupChangesEmitter());
+    }
+
+    private setupIndicies() {
+        return this.setupFulltextIndex()
             .then(() => this.setupIdentifierIndex())
             .then(() => this.setupSyncedIndex())
             .then(() => this.setupBelongsToIndex())
-            .then(() => this.setupAllIndex())
-            .then(() => configLoader.getProjectConfiguration())
-            .then(config => this.config = config);
-        if (loadSampleData)
-            this.readyForQuery = this.readyForQuery.then(() => this.loadSampleData());
-        this.readyForQuery = this.readyForQuery.then(() => this.setupChangesEmitter());
-
-    }
-
-    protected setupDatabase(dbname:string): Promise<any> {
-        return Promise.resolve(new PouchDB(dbname));
+            .then(() => this.setupAllIndex());
     }
 
     private setupFulltextIndex(): Promise<any> {

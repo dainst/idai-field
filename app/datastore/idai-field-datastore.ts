@@ -35,4 +35,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
     abstract removeRevision(docId: string, revisionId: string): Promise<any>;
+
+    abstract select(name: string): any;
 }

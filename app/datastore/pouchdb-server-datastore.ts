@@ -1,19 +1,24 @@
-import {Injectable} from "@angular/core";
-import {PouchdbDatastore} from "./pouchdb-datastore";
 import * as PouchDB from "pouchdb";
-
 import * as express from 'express';
-var expressPouchDB = require('express-pouchdb');
+import {PouchdbDatastore} from "./pouchdb-datastore";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
+const expressPouchDB = require('express-pouchdb');
+import {Injectable} from "@angular/core";
+
+// suppress compile errors for PouchDB view functions
+declare function emit(key:any, value?:any):void;
 
 @Injectable()
 /**
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class PouchdbServerDatastore extends PouchdbDatastore {
+export class PouchdbServerDatastore extends PouchdbDatastore implements IdaiFieldDatastore {
 
-    protected setupDatabase(dbname:string): Promise<any> {
+    protected setupServer(): Promise<any> {
         return new Promise((resolve, reject) => {
-            var app = express();
+            const app = express();
             app.use('/', expressPouchDB(PouchDB, {
                 mode: 'fullCouchDB',
                 overrideMode: {
@@ -21,10 +26,9 @@ export class PouchdbServerDatastore extends PouchdbDatastore {
                 }
             }));
             app.listen(3000, function () {
-                console.log("PouchDB Server listening on port 3000", dbname);
-                resolve(new PouchDB(dbname));
+                console.log("PouchDB Server listening on port 3000");
+                resolve();
             });
         })
     }
-
 }

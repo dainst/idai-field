@@ -3,6 +3,7 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {SettingsService} from "./settings-service";
 import {M} from "../m";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 @Component({
     moduleId: module.id,
@@ -21,11 +22,20 @@ export class SettingsComponent implements OnInit {
     constructor(
         private configLoader: ConfigLoader,
         private settingsService: SettingsService,
-        private messages: Messages
+        private messages: Messages,
+        private datastore: IdaiFieldDatastore
     ) {
         this.configLoader.getProjectConfiguration().then(conf => {
             this.selectedProject = conf.getProjectIdentifier();
         })
+    }
+
+    public changeProject() {
+        this.datastore.select("pergamon");
+    }
+
+    public changeBack() {
+        this.datastore.select("idai-field-documents");
     }
 
     public addRemoteSite() {

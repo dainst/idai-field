@@ -34,7 +34,7 @@ describe('resources/map tests', function() {
     }
     
     
-    function createDoc(identifier,geometryType, mapClickCallback) {
+    function createDoc(identifier, geometryType, mapClickCallback) {
         if (geometryType) {
             createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
@@ -42,14 +42,15 @@ describe('resources/map tests', function() {
         }
     }
     
-    function createDocThenReedit(identifier,geometryType, mapClickCallback) {
+    function createDocThenReedit(identifier, geometryType, mapClickCallback) {
         createDoc(identifier, geometryType, mapClickCallback);
         DocumentEditWrapperPage.clickBackToDocumentView();
         resourcePage.clickReeditGeometry();
     }
     
-    beforeEach(function(){
+    beforeEach(function() {
         resourcePage.get();
+        browser.sleep(3000);
     });
 
     it('should create a new item with point geometry ', function() {
@@ -95,7 +96,6 @@ describe('resources/map tests', function() {
         expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
-
     it('should cancel deleting a point geometry', function() {
         createDocThenReedit('40','point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('delete');
@@ -109,7 +109,6 @@ describe('resources/map tests', function() {
         mapPage.clickMapOption('abort');
         expect(resourcePage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
-    
     
     it('should abort item creation completely when aborting geometry editing', function() {
         beginCreateDocWithGeometry('point', function(){return mapPage.setMarker(100, 100)});

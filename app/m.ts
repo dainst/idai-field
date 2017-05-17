@@ -13,26 +13,26 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // App Package
 
-    public static APP_NO_PROJECT_IDENTIFIER : string = 'app/noprojectidentifier';
-    public static APP_GENERIC_SAVE_ERROR : string = 'app/genericsaveerror';
+    public static APP_NO_PROJECT_IDENTIFIER: string = 'app/noprojectidentifier';
+    public static APP_GENERIC_SAVE_ERROR: string = 'app/genericsaveerror';
 
     // Settings Package
 
-    public static SETTINGS_ACTIVATED : string = 'settings/activated';
+    public static SETTINGS_ACTIVATED: string = 'settings/activated';
 
     // Import Package
 
-    public static IMPORT_START : string = 'importer/start';
+    public static IMPORT_START: string = 'importer/start';
     public static IMPORT_GENERIC_START_ERROR: string = 'importer/genericstarterror';
-    public static IMPORT_SUCCESS_SINGLE : string = 'importer/success/single';
-    public static IMPORT_SUCCESS_MULTIPLE : string = 'importer/success/multiple';
+    public static IMPORT_SUCCESS_SINGLE: string = 'importer/success/single';
+    public static IMPORT_SUCCESS_MULTIPLE: string = 'importer/success/multiple';
     public static IMPORT_WARNING_NOMULTIPOLYGONSUPPORT: string = 'importer/warning/nomultipolygonsupport';
-    public static IMPORT_FAILURE_FILEUNREADABLE : string = 'importer/failure/fileunreadable';
-    public static IMPORT_FAILURE_INVALIDJSON : string = 'importer/failure/invalidjson';
-    public static IMPORT_FAILURE_INVALIDJSONL : string = 'importer/failure/invalidjsonl';
-    public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT : string = 'importer/failure/invalidgeojsonimportstruct';
-    public static IMPORT_FAILURE_MISSING_IDENTIFIER : string = 'importer/failure/missingidentifier';
-    public static IMPORT_FAILURE_IDENTIFIER_FORMAT : string = 'importer/failure/identifierforma';
+    public static IMPORT_FAILURE_FILEUNREADABLE: string = 'importer/failure/fileunreadable';
+    public static IMPORT_FAILURE_INVALIDJSON: string = 'importer/failure/invalidjson';
+    public static IMPORT_FAILURE_INVALIDJSONL: string = 'importer/failure/invalidjsonl';
+    public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT: string = 'importer/failure/invalidgeojsonimportstruct';
+    public static IMPORT_FAILURE_MISSING_IDENTIFIER: string = 'importer/failure/missingidentifier';
+    public static IMPORT_FAILURE_IDENTIFIER_FORMAT: string = 'importer/failure/identifierforma';
     public static IMPORT_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
     public static IMPORT_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
     public static IMPORT_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
@@ -42,17 +42,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_MISSING_RESOURCE: string = 'importer/failure/missingresource';
     public static IMPORT_FAILURE_MISSING_RELATION_TARGET: string = 'importer/failure/missingrelationtarget';
 
+    // Export Package
+    public static EXPORT_START: string = 'exporter/start';
+    public static EXPORT_SUCCESS: string = 'exporter/success';
+    public static EXPORT_WRITE_ERROR: string = 'exporter/writeerror';
+
     // Datastore Package
 
-    public static DATASTORE_RESOURCE_ID_EXISTS : string = 'datastore/resourceidexists';
-    public static DATASTORE_NOT_FOUND : string = 'datastore/notfound';
+    public static DATASTORE_RESOURCE_ID_EXISTS: string = 'datastore/resourceidexists';
+    public static DATASTORE_NOT_FOUND: string = 'datastore/notfound';
     public static DATASTORE_GENERIC_ERROR: string = 'datastore/genericerr';
 
     // Widgets Package
 
-    public static WIDGETS_SAVE_SUCCESS : string = 'overview/savesuccess';
-    public static WIDGETS_DELETE_SUCCESS : string = 'overview/deletesuccess';
-    public static WIDGETS_SAVE_ERROR : string = 'widgets/saveerror';
+    public static WIDGETS_SAVE_SUCCESS: string = 'overview/savesuccess';
+    public static WIDGETS_DELETE_SUCCESS: string = 'overview/deletesuccess';
+    public static WIDGETS_SAVE_ERROR: string = 'widgets/saveerror';
 
     // Images Package
 
@@ -183,6 +188,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: 'Beim Import ist ein Fehler aufgetreten: In Zeile {0} fehlt das Pflichtfeld \"{1}\".',
             level: 'danger',
             params: [ "?", "?" ],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_START]={
+            content: 'Starte Export...',
+            level: 'info',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SUCCESS]={
+            content: 'Die Ressourcen wurden erfolgreich exportiert.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_WRITE_ERROR]={
+            content: 'Beim Export ist ein Fehler aufgetreten: Die Datei {0} konnte nicht geschrieben werden.',
+            level: 'error',
+            params: [ '' ],
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_IDEXISTS]={

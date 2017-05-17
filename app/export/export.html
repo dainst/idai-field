@@ -1,0 +1,49 @@
+<div id="export">
+
+    <header>
+        <h1>
+            <span class="mdi mdi-file-export"></span>
+            Export
+        </h1>
+    </header>
+
+    <main>
+        <div class="form-group row">
+
+            <div class="col-lg-6 offset-lg-3">
+
+                <div class="form-group row">
+
+                    <div class="col-sm-1">
+                        <label class="control-label col-form-label"
+                               for="exportFormatSelect">Format:</label>
+                    </div>
+                    <div class="col-sm-11">
+                        <select id="exportFormatSelect" class="form-control"
+                                [(ngModel)]="format"
+                                [class.disabled]="running">
+                            <option value="native">iDAI.field</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-12">
+                        <button *ngIf="!running" id="exportStartButton"
+                                class="btn btn-primary"
+                                (click)="startExport()">
+                            Export starten
+                        </button>
+                        <button *ngIf="running"
+                                class="btn btn-primary disabled">
+                            Export starten
+                        </button>
+                        <div style="display: inline-block;" *ngIf="running" class="spinner"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

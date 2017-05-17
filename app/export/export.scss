@@ -1,0 +1,45 @@
+/**
+ * @author: Jan G. Wieners
+ * @author: Thomas Kleinke
+ */
+
+#export {
+
+  padding: 0 !important;
+  background-color: #eee;
+
+  header {
+    background-color: #eee;
+    padding: 7px;
+    color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+
+  header .mdi {
+    display: inline-block;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: #294b83;
+    padding: 10px 10px 10px 11px;
+    margin-right: 5px;
+  }
+
+  header h1 {
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    background-color: #657faa;
+  }
+
+  main {
+    padding: 7px;
+    margin-top: 25px;
+  }
+
+  .spinner {
+    position: relative;
+    top: 7px;
+    left: 5px;
+  }
+
+}

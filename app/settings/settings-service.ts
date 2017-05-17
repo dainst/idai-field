@@ -9,6 +9,10 @@ const fs = remote.require('fs');
 
 @Injectable()
 /**
+ * The settings service provides access to the
+ * properties of the config.json file. It can
+ * be serialized to and from config.json files.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -19,6 +23,7 @@ export class SettingsService {
     private userName = "";
     private observers: Observer<any>[] = [];
     private selectedProject;
+    private environment;
 
 
     public ready: Promise<any>;
@@ -37,8 +42,8 @@ export class SettingsService {
     }
 
     public init() {
-        this.ready = this.loadSettings().then((inTestMode)=>{
-            if (inTestMode == true) {
+        this.ready = this.loadSettings().then(()=>{
+            if (this.environment == 'test') {
                 this.selectProject('test');
                 this.datastore.select('test');
             } else if (this.getProjects().length > 0) {
@@ -49,17 +54,20 @@ export class SettingsService {
         })
     }
 
-    public setRemoteSitesAndSetupSync(remoteSites): Promise<any> {
 
+    public restartSync() {
         this.datastore.select(this.selectedProject);
-
         return new Promise<any>((resolve)=>{
             this.datastore.stopSync();
             setTimeout(() => {
-                this.remoteSites = remoteSites;
                 this.setupSync().then(() => resolve());
             }, 1000);
         })
+    }
+
+    public setRemoteSites(remoteSites) {
+        this.remoteSites = remoteSites;
+        this.notify();
     }
 
     public getRemoteSites() {
@@ -117,37 +125,19 @@ export class SettingsService {
 
     private loadSettings(): Promise<any> {
 
-        return this.readConfigFile()
-                .then(
-                    config => {
-                        if (config['remoteSites']) this.remoteSites = config['remoteSites'];
-                        if (config['server']) this.server = config['server'];
-                        if (config['userName']) this.userName = config['userName'];
-                        return Promise.resolve(config['environment'] == 'test');
-                    }
-                )
+        return new Promise((resolve) => {
 
+            this.userName = remote.getGlobal('config')['userName'];
+            this.remoteSites = remote.getGlobal('config')['remoteSites'];
+            this.environment = remote.getGlobal('config')['environment'];
+            this.server = remote.getGlobal('config')['server'];
+            resolve();
+        });
     }
 
     public storeSettings(): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            this.readConfigFile()
-                .then(
-                    config => {
-                        const updatedConfig = this.updateConfigValues(config);
-                        return this.writeConfigFile(updatedConfig);
-                    }, err => reject(err)
-                ).then(
-                    () => resolve(),
-                    err => reject(err)
-                );
-        });
-    }
-
-    private updateConfigValues(config: any): any {
-
-        let updatedConfig = JSON.parse(JSON.stringify(config));
+        let configToWrite = {};
 
         let remoteSites = [];
         if (this.remoteSites.length > 0) {
@@ -158,38 +148,23 @@ export class SettingsService {
             }
         }
         if (remoteSites.length > 0) {
-            updatedConfig['remoteSites'] = remoteSites;
-        } else {
-            delete updatedConfig['remoteSites'];
+            configToWrite['remoteSites'] = remoteSites;
         }
 
         if (this.server['userName'] || this.server['password'] || this.server['ipAddress'] ||
             this.server['port']) {
-            updatedConfig['server'] = this.server;
-        } else {
-            delete updatedConfig['server'];
+            configToWrite['server'] = this.server;
         }
 
         if (this.userName.length > 0) {
-            updatedConfig['userName'] = this.userName;
-        } else {
-            delete updatedConfig['userName'];
+            configToWrite['userName'] = this.userName;
         }
 
-        return updatedConfig;
-    }
+        if (this.environment) {
+            configToWrite['environment'] = this.environment;
+        }
 
-    private readConfigFile(): Promise<any> {
-
-        return new Promise((resolve, reject) => {
-            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err, content) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(JSON.parse(content));
-                }
-            });
-        });
+        return this.writeConfigFile(configToWrite);
     }
 
     private writeConfigFile(config: any): Promise<any> {
@@ -212,5 +187,4 @@ export class SettingsService {
             this.server['ipAddress'] && this.server['ipAddress'].length > 0 &&
             this.server['port'] && this.server['port'].length > 0);
     }
-
 }

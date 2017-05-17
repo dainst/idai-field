@@ -103,7 +103,9 @@
                             <b>Passwort </b>
                         </td>
                         <td>
-                            <input id="server-password-input" [ngModel]="server.password"
+                            <input id="server-password-input"
+                                   type="password"
+                                   [ngModel]="server.password"
                                    (ngModelChange)="server.password = $event"
                                    class="form-control">
                         </td>

@@ -27,10 +27,7 @@ if (process.argv.length > 2) {
     //     fs.writeFileSync(global.configPath, '{"environment":"production"}','utf-8');
     // }
 }
-console.log(global.configPath);
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
-
-console.log("e",process.cwd())
 
 function createWindow() {
   // Create the browser window.

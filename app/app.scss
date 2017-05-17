@@ -157,13 +157,9 @@ html [type="button"],
   background-color: transparent;
 }
 
-#relation-picker .delete-relation {
-  font-size: 18px !important;
-
-}
-
-.small-circular-button {
-  padding: 5px;
+.delete-relation {
+  margin-top: 1px !important;
+  padding-top: 5px !important;
 }
 
 .relation-link:before {

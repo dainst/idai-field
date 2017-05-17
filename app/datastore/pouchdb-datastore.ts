@@ -9,9 +9,7 @@ import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import * as PouchDB from "pouchdb";
-
-// suppress compile errors for PouchDB view functions
-declare function emit(key:any, value?:any):void;
+import {IndexCreator} from "./index-creator";
 
 /**
  * @author Sebastian Cuy
@@ -25,113 +23,49 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
     private syncHandles = [];
+    private resolve = undefined;
+    private dbname = undefined;
+    private indexCreator = new IndexCreator();
 
-    constructor(private dbname: string,
-                configLoader: ConfigLoader,
-                loadSampleData: boolean = false) {
+    constructor(configLoader: ConfigLoader) {
 
-        this.readyForQuery = configLoader.getProjectConfiguration()
-                .then(config => this.config = config)
-                .then(()=>this.setupServer())
-                .then(() => this.loadDB(dbname,loadSampleData));
+        this.readyForQuery = new Promise<any>((resolve)=>{
+
+                configLoader.getProjectConfiguration()
+                    .then(config => this.config = config)
+                    .then(()=>this.setupServer())
+                    .then(() => { this.resolve = resolve; })
+            })
     }
 
+
     public select(name) {
-        console.log("will change db",name);
-        this.readyForQuery = this.loadDB(name,false);
+        console.debug("will change db",name);
+        this.readyForQuery = this.loadDB(name).then(()=>{
+            if (this.resolve) {
+                this.resolve();
+                this.resolve = undefined;
+            }
+        })
     }
 
     protected setupServer() {
         return Promise.resolve();
     }
 
-    private loadDB(dbname:string, loadSampleData) {
+    private loadDB(dbname:string) {
         return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
             this.dbname = dbname;
             this.db = db;
             console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
         }).then(()=>{
-            if (loadSampleData) return this.clear();
+            if (this.dbname == 'test') return this.clear();
             else return Promise.resolve();
-        }).then(() => this.setupIndicies())
+        }).then(() => this.indexCreator.go(this.db))
             .then(() => {
-                if (loadSampleData) return this.loadSampleData();
+                if (this.dbname == 'test') return this.loadSampleData();
                 else return Promise.resolve();
             }).then(() => this.setupChangesEmitter());
-    }
-
-    private setupIndicies() {
-        return this.setupFulltextIndex()
-            .then(() => this.setupIdentifierIndex())
-            .then(() => this.setupSyncedIndex())
-            .then(() => this.setupBelongsToIndex())
-            .then(() => this.setupAllIndex());
-    }
-
-    private setupFulltextIndex(): Promise<any> {
-        this.db.on('error', err => console.error(err.toString()));
-        let mapFun = function(doc) {
-            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
-            if (types.indexOf('image') == -1) types.push('resource');
-            types.forEach(function(type) {
-                if (doc.resource.shortDescription)
-                    doc.resource.shortDescription.split(/[.;,\- ]+/)
-                        .forEach(token => emit([type, token.toLowerCase()]));
-                if (doc.resource.identifier)
-                    emit([type, doc.resource.identifier.toLowerCase()]);
-            });
-        };
-        return this.setupIndex('fulltext', mapFun);
-    }
-
-    private setupSyncedIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            emit(doc.synced);
-        };
-        return this.setupIndex('synced', mapFun);
-    }
-
-    private setupIdentifierIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            emit(doc.resource.identifier);
-        };
-        return this.setupIndex('identifier', mapFun);
-    }
-
-    private setupAllIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
-            if (types.indexOf('image') == -1) types.push('resource');
-            types.forEach(type => emit([type, doc.modified]));
-        };
-        return this.setupIndex('all', mapFun);
-    }
-
-    private setupBelongsToIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            if (doc.resource.relations['belongsTo'] != undefined) {
-                doc.resource.relations['belongsTo'].forEach(identifier => emit(identifier));
-            }
-        };
-        return this.setupIndex('belongsTo', mapFun);
-    }
-
-    private setupIndex(id, mapFun) {
-
-        let ddoc = {
-            _id: '_design/' + id,
-            views: { }
-        };
-        ddoc.views[id] = { map: mapFun.toString() };
-
-        return this.db.put(ddoc).then(
-            () => {},
-            err => {
-                if (err.name !== 'conflict') {
-                    throw err;
-                }
-            }
-        );
     }
 
     /**
@@ -154,9 +88,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
-
-                document.created = new Date();
-                document.modified = document.created;
 
                 return this.db.put(document).catch(
                     err => {
@@ -217,7 +148,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     return Promise.reject(undefined);
                 }
                 document['_id'] = document.resource.id;
-                document.modified = new Date();
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
 
@@ -363,7 +293,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (limit > -1) opt['limit'] = limit;
 
         return this.readyForQuery
-            .then(() => this.db.query('fulltext', opt))
+            .then(() => this.db.query('fulltext', opt),()=>Promise.reject(undefined))
             .then(result => this.filterResult(this.docsFromResult(result)));
     }
 
@@ -439,7 +369,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public setupSync(url: string): Promise<SyncState> {
 
+
         return this.readyForQuery.then(() => {
+
+            url = url + '/' + this.dbname;
+            console.log("start syncing with "+url);
+
             let sync = this.db.sync(url, { live: true, retry: true });
             this.syncHandles.push(sync);
             return {
@@ -454,7 +389,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public stopSync() {
         for (let handle of this.syncHandles) {
-            console.log("stop sync",handle);
+            console.debug("stop sync",handle);
             handle.cancel();
         }
         this.syncHandles = [];

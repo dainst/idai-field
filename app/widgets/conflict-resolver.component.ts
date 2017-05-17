@@ -241,9 +241,10 @@ export class ConflictResolverComponent implements OnChanges {
 
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
-        const date: Date = new Date(revision['modified']);
+        const lastModified = revision['modified'][revision['modified'].length-1];
+        const date: Date = new Date(lastModified.date);
         moment.locale('de');
 
-        return moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
+        return lastModified.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
 }

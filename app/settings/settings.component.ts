@@ -20,22 +20,12 @@ export class SettingsComponent implements OnInit {
     public server = {};
 
     constructor(
-        private configLoader: ConfigLoader,
         private settingsService: SettingsService,
-        private messages: Messages,
-        private datastore: IdaiFieldDatastore
-    ) {
-        this.configLoader.getProjectConfiguration().then(conf => {
-            this.selectedProject = conf.getProjectIdentifier();
-        })
-    }
+        private messages: Messages
+    ) { }
 
-    public changeProject() {
-        this.datastore.select("pergamon");
-    }
-
-    public changeBack() {
-        this.datastore.select("idai-field-documents");
+    public selectProject() {
+        this.settingsService.selectProject(this.selectedProject);
     }
 
     public addRemoteSite() {
@@ -59,11 +49,12 @@ export class SettingsComponent implements OnInit {
     public save() {
         this.settingsService.setUserName(this.userName);
         this.settingsService.setServer(this.server);
-        this.settingsService.setRemoteSites(this.remoteSites)
-            .then(
-                () => { return this.settingsService.updateConfigFile(); }
-            ).then(
-                () => this.messages.add([M.SETTINGS_ACTIVATED]),
+        this.settingsService.setRemoteSites(this.remoteSites);
+        this.settingsService.storeSettings();
+
+        this.settingsService.restartSync()
+            .then(()=>this.settingsService.storeSettings()).then(
+            () => this.messages.add([M.SETTINGS_ACTIVATED]),
                 err => { console.error(err); }
             );
     }

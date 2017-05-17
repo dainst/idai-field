@@ -83,9 +83,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
         {
             provide: Datastore,
             useFactory: function(configLoader: ConfigLoader) : Datastore {
-                let test = CONFIG['environment'] == 'test';
-                let dbname = CONFIG['database'] ? CONFIG['database'] : 'idai-field-documents';
-                return new CachedDatastore(new PouchdbServerDatastore(dbname, configLoader, test));
+                return new CachedDatastore(new PouchdbServerDatastore(configLoader));
             },
             deps: [ConfigLoader]
         },

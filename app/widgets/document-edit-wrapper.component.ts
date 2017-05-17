@@ -13,6 +13,7 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {SettingsService} from "../settings/settings-service";
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -54,6 +55,7 @@ export class DocumentEditWrapperComponent {
         private validator: Validator,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private configLoader: ConfigLoader,
+        private settingsService: SettingsService,
         private modalService: NgbModal,
         private imagestore: Imagestore,
         private datastore: IdaiFieldDatastore,
@@ -148,9 +150,7 @@ export class DocumentEditWrapperComponent {
 
     private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
-        clonedDoc['synced'] = 0;
-
-        return this.persistenceManager.persist(clonedDoc).then(
+        return this.persistenceManager.persist(clonedDoc, this.settingsService.getUserName()).then(
             () => this.removeInspectedRevisions(),
             errorWithParams => {
                 if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {

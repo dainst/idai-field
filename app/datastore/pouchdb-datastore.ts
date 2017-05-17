@@ -9,6 +9,7 @@ import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import * as PouchDB from "pouchdb";
+import {SettingsService} from "../settings/settings-service";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -155,9 +156,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
 
-                document.created = new Date();
-                document.modified = document.created;
-
                 return this.db.put(document).catch(
                     err => {
                         console.error(err);
@@ -217,7 +215,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     return Promise.reject(undefined);
                 }
                 document['_id'] = document.resource.id;
-                document.modified = new Date();
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
 

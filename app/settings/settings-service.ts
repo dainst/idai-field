@@ -59,7 +59,8 @@ export class SettingsService {
     }
 
     public getUserName() {
-        return JSON.parse(JSON.stringify(this.userName));
+        let userName = JSON.parse(JSON.stringify(this.userName));
+        return userName ? userName : 'anonymous';
     }
 
     private notify() {

@@ -31,21 +31,31 @@ export class SettingsService {
 
 
     public getProjects() {
-        return ['pergamon','fzavodnik','pgerth','doliveira','scuy','tkleinke','jwieners'];
+        return this.settings.dbs;
     }
 
     public selectProject(name) {
         this.selectedProject = name;
+
+        const index = this.settings.dbs.indexOf(name);
+        if (index != -1) {
+            this.settings.dbs.splice(index, 1);
+            this.settings.dbs.unshift(name);
+        }
+
     }
 
     public init() {
         this.ready = this.settingsSerializer.load().then((settings)=>{
             this.settings = settings;
 
-            if (this.settings.environment == 'test') {
-                this.selectProject('test');
+            if (this.settings.dbs && this.settings.dbs.length > 0 && this.settings.dbs[0] == 'test') {
+
+                this.selectedProject = 'test';
                 this.datastore.select('test');
+
             } else if (this.getProjects().length > 0) {
+
                 this.datastore.select(this.getProjects()[0]);
                 this.selectProject(this.getProjects()[0]);
                 this.setupSync();

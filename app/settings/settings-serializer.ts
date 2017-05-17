@@ -16,8 +16,8 @@ export class SettingsSerializer {
             resolve({
                 userName: remote.getGlobal('config')['userName'],
                 remoteSites: remote.getGlobal('config')['remoteSites'],
-                environment: remote.getGlobal('config')['environment'],
-                server: remote.getGlobal('config')['server']
+                server: remote.getGlobal('config')['server'],
+                dbs: remote.getGlobal('config')['dbs']
             });
         });
     }
@@ -47,8 +47,8 @@ export class SettingsSerializer {
             configToWrite['userName'] = settings.userName;
         }
 
-        if (settings.environment) {
-            configToWrite['environment'] = settings.environment;
+        if (settings.dbs) {
+            configToWrite['dbs'] = settings.dbs;
         }
 
         return this.writeConfigFile(configToWrite);

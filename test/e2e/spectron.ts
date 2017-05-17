@@ -6,7 +6,7 @@ const fs = require('fs');
 const configPath = 'config/config.test.json';
 const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
 
-fs.writeFileSync(configPath, JSON.stringify({ 'environment': 'test' }));
+fs.writeFileSync(configPath, JSON.stringify({ 'dbs': ['test'] }));
 
 let app = new Application({
     path: require('electron'),

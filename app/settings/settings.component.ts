@@ -1,9 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from 'idai-components-2/configuration';
 import {SettingsService} from "./settings-service";
 import {M} from "../m";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 
 @Component({
     moduleId: module.id,

@@ -26,20 +26,35 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
     private syncHandles = [];
+    private resolve = undefined;
+    private dbname = undefined;
 
-    constructor(private dbname: string,
-                configLoader: ConfigLoader,
+    constructor(configLoader: ConfigLoader,
                 loadSampleData: boolean = false) {
 
-        this.readyForQuery = configLoader.getProjectConfiguration()
-                .then(config => this.config = config)
-                .then(()=>this.setupServer())
-                .then(() => this.loadDB(dbname,loadSampleData));
+        this.readyForQuery = new Promise<any>((resolve)=>{
+
+                configLoader.getProjectConfiguration()
+                    .then(config => this.config = config)
+                    .then(()=>this.setupServer())
+                    .then(() => {
+                        if (loadSampleData) {
+                            this.loadDB('test',loadSampleData).then(()=>resolve());
+                        }
+                        else this.resolve = resolve;
+                    })
+            })
     }
 
+
     public select(name) {
-        console.log("will change db",name);
-        this.readyForQuery = this.loadDB(name,false);
+        console.debug("will change db",name);
+        this.readyForQuery = this.loadDB(name,false).then(()=>{
+            if (this.resolve) {
+                this.resolve();
+                this.resolve = undefined;
+            }
+        })
     }
 
     protected setupServer() {
@@ -360,7 +375,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (limit > -1) opt['limit'] = limit;
 
         return this.readyForQuery
-            .then(() => this.db.query('fulltext', opt))
+            .then(() => this.db.query('fulltext', opt),()=>Promise.reject(undefined))
             .then(result => this.filterResult(this.docsFromResult(result)));
     }
 

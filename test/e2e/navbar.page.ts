@@ -18,8 +18,8 @@ export class NavbarPage {
     };
 
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(5)'))), delays.ECWaitTime);
-        return element(by.css('navbar ul li:nth-child(5)')).click();
+        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(6)'))), delays.ECWaitTime);
+        return element(by.css('navbar ul li:nth-child(6)')).click();
     };
 
     // unused?

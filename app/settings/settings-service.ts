@@ -2,9 +2,8 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-
-const remote = require('electron').remote;
-const fs = remote.require('fs');
+import {Settings} from "./settings";
+import {SettingsSerializer} from "./settings-serializer";
 
 
 @Injectable()
@@ -18,13 +17,11 @@ const fs = remote.require('fs');
  */
 export class SettingsService {
 
-    private remoteSites = [];
-    private server = {};
-    private userName = "";
     private observers: Observer<any>[] = [];
     private selectedProject;
-    private environment;
+    private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
+    private settings: Settings;
 
     public ready: Promise<any>;
 
@@ -42,8 +39,10 @@ export class SettingsService {
     }
 
     public init() {
-        this.ready = this.loadSettings().then(()=>{
-            if (this.environment == 'test') {
+        this.ready = this.settingsSerializer.load().then((settings)=>{
+            this.settings = settings;
+
+            if (this.settings.environment == 'test') {
                 this.selectProject('test');
                 this.datastore.select('test');
             } else if (this.getProjects().length > 0) {
@@ -66,30 +65,30 @@ export class SettingsService {
     }
 
     public setRemoteSites(remoteSites) {
-        this.remoteSites = remoteSites;
+        this.settings.remoteSites = remoteSites;
         this.notify();
     }
 
     public getRemoteSites() {
-        return JSON.parse(JSON.stringify(this.remoteSites));
+        return JSON.parse(JSON.stringify(this.settings.remoteSites));
     }
 
     public setServer(server) {
-        this.server = server;
+        this.settings.server = server;
         this.notify();
     }
 
     public getServer() {
-        return JSON.parse(JSON.stringify(this.server));
+        return JSON.parse(JSON.stringify(this.settings.server));
     }
 
     public setUserName(userName) {
-        this.userName = userName;
+        this.settings.userName = userName;
         this.notify();
     }
 
     public getUserName() {
-        let userName = JSON.parse(JSON.stringify(this.userName));
+        let userName = JSON.parse(JSON.stringify(this.settings.userName));
         return userName ? userName : 'anonymous';
     }
 
@@ -110,81 +109,28 @@ export class SettingsService {
     private setupSync(): Promise<any> {
 
         const promises = [];
-        for (let remoteSite of this.remoteSites) {
+        for (let remoteSite of this.settings.remoteSites) {
             promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
         }
         if (this.serverSettingsComplete()) {
             promises.push(this.datastore.setupSync(
-                'http://' + this.server['userName'] + ':' + this.server['password'] + '@'
-                + this.server['ipAddress'] + ':' + this.server['port']));
+                'http://' + this.settings.server['userName'] + ':' + this.settings.server['password'] + '@'
+                + this.settings.server['ipAddress'] + ':' + this.settings.server['port']));
         }
 
         this.notify();
         return Promise.all(promises);
     }
 
-    private loadSettings(): Promise<any> {
-
-        return new Promise((resolve) => {
-
-            this.userName = remote.getGlobal('config')['userName'];
-            this.remoteSites = remote.getGlobal('config')['remoteSites'];
-            this.environment = remote.getGlobal('config')['environment'];
-            this.server = remote.getGlobal('config')['server'];
-            resolve();
-        });
-    }
-
     public storeSettings(): Promise<any> {
-
-        let configToWrite = {};
-
-        let remoteSites = [];
-        if (this.remoteSites.length > 0) {
-            for (let remoteSite of this.remoteSites) {
-                if (remoteSite['ipAddress'] && remoteSite['ipAddress'].length > 0) {
-                    remoteSites.push(remoteSite);
-                }
-            }
-        }
-        if (remoteSites.length > 0) {
-            configToWrite['remoteSites'] = remoteSites;
-        }
-
-        if (this.server['userName'] || this.server['password'] || this.server['ipAddress'] ||
-            this.server['port']) {
-            configToWrite['server'] = this.server;
-        }
-
-        if (this.userName.length > 0) {
-            configToWrite['userName'] = this.userName;
-        }
-
-        if (this.environment) {
-            configToWrite['environment'] = this.environment;
-        }
-
-        return this.writeConfigFile(configToWrite);
-    }
-
-    private writeConfigFile(config: any): Promise<any> {
-
-        return new Promise((resolve, reject) => {
-            fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config), err => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        return this.settingsSerializer.store(this.settings);
     }
 
     private serverSettingsComplete(): boolean {
 
-        return (this.server['userName'] && this.server['userName'].length > 0 &&
-            this.server['password'] && this.server['password'].length > 0 &&
-            this.server['ipAddress'] && this.server['ipAddress'].length > 0 &&
-            this.server['port'] && this.server['port'].length > 0);
+        return (this.settings.server['userName'] && this.settings.server['userName'].length > 0 &&
+            this.settings.server['password'] && this.settings.server['password'].length > 0 &&
+            this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0 &&
+            this.settings.server['port'] && this.settings.server['port'].length > 0);
     }
 }

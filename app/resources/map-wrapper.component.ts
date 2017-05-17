@@ -1,11 +1,12 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
-import {Router, ActivatedRoute, Params} from "@angular/router";
-import {ResourcesComponent} from "./resources.component";
-import {ReadDatastore} from "idai-components-2/datastore";
-import {PersistenceManager} from "idai-components-2/persist";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IdaiFieldGeometry} from "../model/idai-field-geometry";
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ResourcesComponent} from './resources.component';
+import {ReadDatastore} from 'idai-components-2/datastore';
+import {PersistenceManager} from 'idai-components-2/persist';
+import {ConfigLoader} from 'idai-components-2/configuration';
+import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldGeometry} from '../model/idai-field-geometry';
+import {SettingsService} from '../settings/settings-service';
 
 @Component({
     moduleId: module.id,
@@ -32,7 +33,8 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         private datastore: ReadDatastore,
         private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
-        private persistenceManager: PersistenceManager
+        private persistenceManager: PersistenceManager,
+        private settingsService: SettingsService
     ) {
     }
 
@@ -180,7 +182,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
 
-        this.persistenceManager.persist(this.resourcesComponent.getSelected()).then(
+        this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUserName()).then(
             () => {
                 this.resourcesComponent.getSelected()['synced'] = 0;
             },

@@ -1,11 +1,12 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Output, EventEmitter} from '@angular/core';
 import {Imagestore} from '../imagestore/imagestore';
-import {M} from "../m";
+import {M} from '../m';
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component";
+import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
+import {SettingsService} from '../settings/settings-service';
 
 @Component({
     selector: 'drop-area',
@@ -31,7 +32,8 @@ export class DropAreaComponent {
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
         private configLoader: ConfigLoader,
-        private messages: Messages
+        private messages: Messages,
+        private settingsService: SettingsService
     ) {
     }
 
@@ -181,7 +183,7 @@ export class DropAreaComponent {
                             "relations": {}
                         }
                     };
-                    this.persistenceManager.persist(doc, [doc])
+                    this.persistenceManager.persist(doc, this.settingsService.getUserName(), [doc])
                         .then(result => resolve(result))
                         .catch(error => reject(error));
                 };

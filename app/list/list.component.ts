@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {Query} from "idai-components-2/datastore";
-import {ConfigLoader, IdaiType, ProjectConfiguration} from "idai-components-2/configuration";
-import {PersistenceManager} from "idai-components-2/persist";
-import {Messages} from "idai-components-2/messages";
-import {M} from "../m";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
+import {Component} from '@angular/core';
+import {IdaiFieldDocument} from '../model/idai-field-document';
+import {Query} from 'idai-components-2/datastore';
+import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
+import {PersistenceManager} from 'idai-components-2/persist';
+import {Messages} from 'idai-components-2/messages';
+import {M} from '../m';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Router, Event, NavigationStart} from '@angular/router';
-import {document} from "@angular/platform-browser/src/facade/browser";
+import {SettingsService} from '../settings/settings-service';
 
 @Component({
     moduleId: module.id,
@@ -31,8 +31,9 @@ export class ListComponent {
         private router: Router,
         private messages: Messages,
         private datastore: IdaiFieldDatastore,
-        configLoader: ConfigLoader,
-        private persistenceManager: PersistenceManager
+        private persistenceManager: PersistenceManager,
+        private settingsService: SettingsService,
+        configLoader: ConfigLoader
     ) {
         this.fetchDocuments();
         this.fetchTrenches();
@@ -104,7 +105,7 @@ export class ListComponent {
     }
 
     public focusDocument(doc: IdaiFieldDocument) {
-        this.detailedDocument = doc
+        this.detailedDocument = doc;
         this.router.navigate(['./list', {focus: doc.resource.id}]);
     }
 
@@ -114,8 +115,8 @@ export class ListComponent {
      * @param query
      */
     public fetchDocuments(query: Query = this.query) {
-        this.selectedFilterTrenchId = ""
-        this.detailedDocument = null
+        this.selectedFilterTrenchId = "";
+        this.detailedDocument = null;
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldDocument[];
 
@@ -123,7 +124,7 @@ export class ListComponent {
     }
 
     private fetchTrenches() {
-        let tquery : Query = {q: '', type: 'trench', prefix: true};
+        let tquery: Query = {q: '', type: 'trench', prefix: true};
         this.datastore.find(tquery).then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
         }).catch(err => { console.error(err); } );
@@ -133,7 +134,7 @@ export class ListComponent {
         if (this.selectedFilterTrenchId == "") {
             this.fetchDocuments();
         } else {
-            this.detailedDocument = null
+            this.detailedDocument = null;
             var filterById = this.selectedFilterTrenchId;
             this.datastore.findByBelongsTo(filterById).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
@@ -141,7 +142,7 @@ export class ListComponent {
         }
     }
 
-    public addDocument(new_doc_type) : IdaiFieldDocument {
+    public addDocument(new_doc_type): IdaiFieldDocument {
         // TODO - Use Validator class
         if (!new_doc_type || new_doc_type == '') {
             return
@@ -166,7 +167,7 @@ export class ListComponent {
 
         let newDoc = this.addDocument(relation["targetName"]);
 
-        this.save(newDoc).then( doc => {
+        this.save(newDoc).then(doc => {
 
             if (!parentDocument.resource.relations[relation["name"]]) {
                 parentDocument.resource.relations[relation["name"]] = [];
@@ -174,7 +175,8 @@ export class ListComponent {
             parentDocument.resource.relations[relation["name"]].push(doc.resource.id);
 
             var oldVersion = JSON.parse(JSON.stringify(parentDocument));
-            this.persistenceManager.persist(parentDocument, oldVersion).then( doc => {
+            this.persistenceManager.persist(parentDocument, this.settingsService.getUserName(),
+                    [oldVersion]).then(doc => {
                 this.detailedDocument = newDoc;
             });
         })

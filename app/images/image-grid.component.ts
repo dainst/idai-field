@@ -1,17 +1,17 @@
-import {Component} from "@angular/core";
-import {Router} from "@angular/router";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {Datastore, Query} from "idai-components-2/datastore";
-import {Imagestore} from "../imagestore/imagestore";
-import {Messages} from "idai-components-2/messages";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {PersistenceManager} from "idai-components-2/persist";
-import {ImageGridBuilder} from "../common/image-grid-builder";
-import {ImageTool} from "./image-tool";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {LinkModalComponent} from "./link-modal.component";
-import {ElementRef} from "@angular/core";
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {Datastore, Query} from 'idai-components-2/datastore';
+import {Imagestore} from '../imagestore/imagestore';
+import {Messages} from 'idai-components-2/messages';
+import {PersistenceManager} from 'idai-components-2/persist';
+import {ImageGridBuilder} from '../common/image-grid-builder';
+import {ImageTool} from './image-tool';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LinkModalComponent} from './link-modal.component';
+import {ElementRef} from '@angular/core';
+import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
 
 @Component({
@@ -48,7 +48,7 @@ export class ImageGridComponent {
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
-        configLoader: ConfigLoader
+        private settingsService: SettingsService
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
@@ -197,7 +197,8 @@ export class ImageGridComponent {
                 imageDocument.resource.relations["depicts"].push(targetDocument.resource.id);
             }
 
-            return this.persistenceManager.persist(imageDocument, oldVersion).then(
+            return this.persistenceManager.persist(imageDocument, this.settingsService.getUserName(),
+                    [oldVersion]).then(
                 () => {
                     if (imageDocumentIndex < imageDocuments.length - 1) {
                         return this.updateAndPersistDepictsRelations(imageDocuments, targetDocument,

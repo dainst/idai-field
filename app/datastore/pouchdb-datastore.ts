@@ -461,7 +461,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return new Promise<any>((resolve, reject)=>{
 
             let promises = [];
-            for (let doc of DOCS) promises.push(this.create(doc,  true));
+            for (let doc of DOCS) {
+                doc.created = { user: 'anonymous', date: new Date() };
+                doc.modified = [];
+                promises.push(this.create(doc, true));
+            }
 
             Promise.all(promises)
                 .then(() => {

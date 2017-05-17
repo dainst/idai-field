@@ -1,9 +1,10 @@
-import {Component, Input, ViewChild, ElementRef} from "@angular/core";
-import {PersistenceManager} from "idai-components-2/persist";
-import {Messages} from "idai-components-2/messages";
-import {M} from "../m";
-import {IdaiFieldGeoreference} from "../model/idai-field-georeference";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Component, Input, ViewChild, ElementRef} from '@angular/core';
+import {PersistenceManager} from 'idai-components-2/persist';
+import {Messages} from 'idai-components-2/messages';
+import {M} from '../m';
+import {IdaiFieldGeoreference} from '../model/idai-field-georeference';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SettingsService} from '../settings/settings-service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class GeoreferenceViewComponent {
     constructor(
         private persistenceManager: PersistenceManager,
         private messages: Messages,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private settingsService: SettingsService
     ) {}
 
     public onSelectFile(event) {
@@ -53,7 +55,7 @@ export class GeoreferenceViewComponent {
             }
         })(this);
         reader.onerror = (that => {
-            return err => {
+            return () => {
                 that.messages.add([M.IMAGES_ERROR_FILEREADER, file.name]);
             }
         })(this);
@@ -147,7 +149,7 @@ export class GeoreferenceViewComponent {
         return new Promise<any>((resolve, reject) => {
             this.persistenceManager.setOldVersions([this.document]);
 
-            this.persistenceManager.persist(this.document).then(
+            this.persistenceManager.persist(this.document, this.settingsService.getUserName()).then(
                 () => { resolve(); },
                 err => { console.error(err); reject([M.APP_GENERIC_SAVE_ERROR]); }
             );

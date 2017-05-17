@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit {
     }
 
     public changeBack() {
-        this.datastore.select("idai-field-documents");
+        this.datastore.select("test");
     }
 
     public addRemoteSite() {

@@ -58,7 +58,7 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb": "2.3.6",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/628/.git",
+    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/629/.git",
     "identicon.js": "github:dainst/identicon.js",
     "leaflet": "1.0.1",
     "leaflet-imageoverlay-rotated": "0.1.1",

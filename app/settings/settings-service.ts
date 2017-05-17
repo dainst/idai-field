@@ -26,7 +26,12 @@ export class SettingsService {
     ) { }
 
     public init() {
-        this.ready = this.loadFromConfigFile();
+        this.ready = this.loadSettingsFromConfigFile().then((inTestMode)=>{
+            if (inTestMode != true) {
+                this.datastore.select('pergamon');
+                this.setupSync();
+            }
+        })
     }
 
     public setRemoteSites(remoteSites): Promise<any> {
@@ -59,7 +64,8 @@ export class SettingsService {
     }
 
     public getUserName() {
-        return JSON.parse(JSON.stringify(this.userName));
+        let userName = JSON.parse(JSON.stringify(this.userName));
+        return userName ? userName : 'anonymous';
     }
 
     private notify() {
@@ -92,22 +98,18 @@ export class SettingsService {
         return Promise.all(promises);
     }
 
-    private loadFromConfigFile(): Promise<any> {
+    private loadSettingsFromConfigFile(): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-            this.readConfigFile()
+        return this.readConfigFile()
                 .then(
                     config => {
                         if (config['remoteSites']) this.remoteSites = config['remoteSites'];
                         if (config['server']) this.server = config['server'];
                         if (config['userName']) this.userName = config['userName'];
-                        return this.setupSync();
-                    }, err => reject(err)
-                ).then(
-                    () => resolve(),
-                    err => reject(err)
+                        return Promise.resolve(config['environment'] == 'test');
+                    }
                 )
-        });
+
     }
 
     public updateConfigFile(): Promise<any> {

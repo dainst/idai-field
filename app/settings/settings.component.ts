@@ -49,9 +49,9 @@ export class SettingsComponent implements OnInit {
     public save() {
         this.settingsService.setUserName(this.userName);
         this.settingsService.setServer(this.server);
-        this.settingsService.setRemoteSites(this.remoteSites)
+        this.settingsService.setRemoteSitesAndSetupSync(this.remoteSites)
             .then(
-                () => { return this.settingsService.updateConfigFile(); }
+                () => { return this.settingsService.storeSettings(); }
             ).then(
                 () => this.messages.add([M.SETTINGS_ACTIVATED]),
                 err => { console.error(err); }

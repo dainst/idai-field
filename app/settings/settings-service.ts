@@ -18,6 +18,8 @@ export class SettingsService {
     private server = {};
     private userName = "";
     private observers: Observer<any>[] = [];
+    private selectedProject;
+
 
     public ready: Promise<any>;
 
@@ -31,22 +33,25 @@ export class SettingsService {
     }
 
     public selectProject(name) {
-        this.datastore.select(name);
-        this.setupSync();
+        this.selectedProject = name;
     }
 
     public init() {
-        this.ready = this.loadSettingsFromConfigFile().then((inTestMode)=>{
+        this.ready = this.loadSettings().then((inTestMode)=>{
             if (inTestMode == true) {
+                this.selectProject('test');
                 this.datastore.select('test');
             } else if (this.getProjects().length > 0) {
                 this.datastore.select(this.getProjects()[0]);
+                this.selectProject(this.getProjects()[0]);
                 this.setupSync();
             }
         })
     }
 
-    public setRemoteSites(remoteSites): Promise<any> {
+    public setRemoteSitesAndSetupSync(remoteSites): Promise<any> {
+
+        this.datastore.select(this.selectedProject);
 
         return new Promise<any>((resolve)=>{
             this.datastore.stopSync();
@@ -110,7 +115,7 @@ export class SettingsService {
         return Promise.all(promises);
     }
 
-    private loadSettingsFromConfigFile(): Promise<any> {
+    private loadSettings(): Promise<any> {
 
         return this.readConfigFile()
                 .then(
@@ -124,7 +129,7 @@ export class SettingsService {
 
     }
 
-    public updateConfigFile(): Promise<any> {
+    public storeSettings(): Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.readConfigFile()

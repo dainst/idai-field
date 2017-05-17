@@ -11,24 +11,6 @@
         </h1>
     </header>
 
-    <div class="row" id="project-switch">
-        <div class="col-md-3">
-            <label for="projectselect" id="project-label">Projekt:</label>
-        </div>
-        <div class="col-md-9">
-            <select class="form-control"
-                    id="projectselect"
-                    [(ngModel)]="selectedProject"
-                    (ngModelChange)="selectProject()">
-
-                <option *ngFor="let project of settingsService.getProjects()"
-                        [ngValue]="project">
-                    {{project}}
-                </option>
-            </select>
-        </div>
-    </div>
-
     <main>
         <div class="row">
             <div class="col-md-9">
@@ -45,6 +27,26 @@
         </div>
         <br>
         <br>
+
+        <hr>
+
+        <div class="row" id="project-switch">
+            <div class="col-md-3">
+                <label for="projectselect" id="project-label">Projekt:</label>
+            </div>
+            <div class="col-md-9">
+                <select class="form-control"
+                        id="projectselect"
+                        [(ngModel)]="selectedProject"
+                        (ngModelChange)="selectProject()">
+
+                    <option *ngFor="let project of settingsService.getProjects()"
+                            [ngValue]="project">
+                        {{project}}
+                    </option>
+                </select>
+            </div>
+        </div>
 
         <hr>
 

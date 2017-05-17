@@ -9,8 +9,8 @@ import {SettingsSerializer} from "./settings-serializer";
 @Injectable()
 /**
  * The settings service provides access to the
- * properties of the config.json file. It can
- * be serialized to and from config.json files.
+ * properties of the config.json file. It can be
+ * serialized to and from config.json files.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -18,7 +18,6 @@ import {SettingsSerializer} from "./settings-serializer";
 export class SettingsService {
 
     private observers: Observer<any>[] = [];
-    private selectedProject;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
     private settings: Settings;
@@ -34,42 +33,26 @@ export class SettingsService {
         return this.settings.dbs;
     }
 
-    public selectProject(name) {
-        this.selectedProject = name;
-
-        const index = this.settings.dbs.indexOf(name);
-        if (index != -1) {
-            this.settings.dbs.splice(index, 1);
-            this.settings.dbs.unshift(name);
-        }
-
-    }
-
     public init() {
         this.ready = this.settingsSerializer.load().then((settings)=>{
             this.settings = settings;
 
-            if (this.settings.dbs && this.settings.dbs.length > 0 && this.settings.dbs[0] == 'test') {
-
-                this.selectedProject = 'test';
-                this.datastore.select('test');
-
-            } else if (this.getProjects().length > 0) {
-
-                this.datastore.select(this.getProjects()[0]);
-                this.selectProject(this.getProjects()[0]);
-                this.setupSync();
+            if (this.settings.dbs && this.settings.dbs.length > 0) {
+                this.datastore.select(this.settings.dbs[0]);
+                this.selectProject(this.settings.dbs[0]);
+                this.startSync();
             }
         })
     }
 
-
     public restartSync() {
-        this.datastore.select(this.selectedProject);
-        return new Promise<any>((resolve)=>{
+        if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
+
+        this.datastore.select(this.settings.dbs[0]);
+        return new Promise<any>((resolve) => {
             this.datastore.stopSync();
             setTimeout(() => {
-                this.setupSync().then(() => resolve());
+                this.startSync().then(() => resolve());
             }, 1000);
         })
     }
@@ -116,7 +99,15 @@ export class SettingsService {
         });
     }
 
-    private setupSync(): Promise<any> {
+    public selectProject(name) {
+        const index = this.settings.dbs.indexOf(name);
+        if (index != -1) {
+            this.settings.dbs.splice(index, 1);
+            this.settings.dbs.unshift(name);
+        }
+    }
+
+    private startSync(): Promise<any> {
 
         const promises = [];
         for (let remoteSite of this.settings.remoteSites) {

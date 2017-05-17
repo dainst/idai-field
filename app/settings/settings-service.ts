@@ -37,8 +37,10 @@ export class SettingsService {
 
     public init() {
         this.ready = this.loadSettingsFromConfigFile().then((inTestMode)=>{
-            if (inTestMode != true) {
-                this.datastore.select('pergamon');
+            if (inTestMode == true) {
+                this.datastore.select('test');
+            } else if (this.getProjects().length > 0) {
+                this.datastore.select(this.getProjects()[0]);
                 this.setupSync();
             }
         })

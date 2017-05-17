@@ -11,9 +11,6 @@ import {IdaiFieldDocument} from "../model/idai-field-document";
 import * as PouchDB from "pouchdb";
 import {IndexCreator} from "./index-creator";
 
-// suppress compile errors for PouchDB view functions
-declare function emit(key:any, value?:any):void;
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -30,27 +27,21 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private dbname = undefined;
     private indexCreator = new IndexCreator();
 
-    constructor(configLoader: ConfigLoader,
-                loadSampleData: boolean = false) {
+    constructor(configLoader: ConfigLoader) {
 
         this.readyForQuery = new Promise<any>((resolve)=>{
 
                 configLoader.getProjectConfiguration()
                     .then(config => this.config = config)
                     .then(()=>this.setupServer())
-                    .then(() => {
-                        if (loadSampleData) {
-                            this.loadDB('test',loadSampleData).then(()=>resolve());
-                        }
-                        else this.resolve = resolve;
-                    })
+                    .then(() => { this.resolve = resolve; })
             })
     }
 
 
     public select(name) {
         console.debug("will change db",name);
-        this.readyForQuery = this.loadDB(name,false).then(()=>{
+        this.readyForQuery = this.loadDB(name).then(()=>{
             if (this.resolve) {
                 this.resolve();
                 this.resolve = undefined;
@@ -62,17 +53,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return Promise.resolve();
     }
 
-    private loadDB(dbname:string, loadSampleData) {
+    private loadDB(dbname:string) {
         return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
             this.dbname = dbname;
             this.db = db;
             console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
         }).then(()=>{
-            if (loadSampleData) return this.clear();
+            if (this.dbname == 'test') return this.clear();
             else return Promise.resolve();
         }).then(() => this.indexCreator.go(this.db))
             .then(() => {
-                if (loadSampleData) return this.loadSampleData();
+                if (this.dbname == 'test') return this.loadSampleData();
                 else return Promise.resolve();
             }).then(() => this.setupChangesEmitter());
     }

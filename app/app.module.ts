@@ -80,9 +80,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
         {
             provide: Datastore,
             useFactory: function(configLoader: ConfigLoader) : Datastore {
-                return new CachedDatastore(
-                    new PouchdbServerDatastore(configLoader, CONFIG['environment'] == 'test')
-                );
+                return new CachedDatastore(new PouchdbServerDatastore(configLoader));
             },
             deps: [ConfigLoader]
         },

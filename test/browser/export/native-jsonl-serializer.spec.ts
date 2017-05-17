@@ -8,8 +8,8 @@ export function main() {
 
     const testDocuments: Array<Document> = [
         {
-            'created': new Date(),
-            'modified': new Date(),
+            'created': { 'user': 'testuser', 'date': new Date() },
+            'modified': [ { 'user': 'testuser', 'date': new Date() } ],
             'resource': {
                 'id': 'id1',
                 'type': 'object',
@@ -19,8 +19,8 @@ export function main() {
             }
         },
         {
-            'created': new Date(),
-            'modified': new Date(),
+            'created': { 'user': 'testuser', 'date': new Date() },
+            'modified': [ { 'user': 'testuser', 'date': new Date() } ],
             'resource': {
                 'id': 'id2',
                 'type': 'object',

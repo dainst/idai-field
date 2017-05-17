@@ -49,7 +49,10 @@ export class IndexCreator {
         let mapFun = function(doc) {
             const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
-            types.forEach(type => emit([type, doc.modified]));
+            let lastModified = doc.created.date;
+            if (doc.modified && doc.modified.length > 0)
+                lastModified = doc.modified[doc.modified.length-1].date;
+            types.forEach(type => emit([type, lastModified]));
         };
         return this.setupIndex(db,'all', mapFun);
     }

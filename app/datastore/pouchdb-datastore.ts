@@ -9,7 +9,6 @@ import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import * as PouchDB from "pouchdb";
-import {SettingsService} from "../settings/settings-service";
 import {IndexCreator} from "./index-creator";
 
 // suppress compile errors for PouchDB view functions
@@ -77,8 +76,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 else return Promise.resolve();
             }).then(() => this.setupChangesEmitter());
     }
-
-
 
     /**
      * Implements {@link Datastore#create}.

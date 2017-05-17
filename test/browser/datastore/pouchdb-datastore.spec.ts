@@ -45,6 +45,10 @@ export function main() {
                     title: 'title',
                     type: type,
                     relations : undefined
+                },
+                created: {
+                    user: 'anonymous',
+                    date: new Date()
                 }
             }
         }
@@ -337,15 +341,11 @@ export function main() {
         });
 
         it('should show all sorted by lastModified', function(done){
-            const doc1 = doc('bla1','blub1','type1');
-            const doc2 = doc('bla2','blub2','type2');
-            const doc3 = doc('bla3','blub3','type3');
-
-            datastore.create(doc1)
+            datastore.create(doc('bla1','blub1','type1'))
                 .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc('bla2','blub2','type2')))
                 .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc3))
+                .then(() => datastore.create(doc('bla3','blub3','type3')))
                 .then(() => datastore.all())
                 .then(
                     result => {

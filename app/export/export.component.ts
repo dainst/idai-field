@@ -51,7 +51,7 @@ export class ExportComponent {
 
         return new Promise<string>((resolve) => {
 
-            dialog.showSaveDialog({}, filePath => {
+            dialog.showSaveDialog({ filters: this.getFileFilters() }, filePath => {
                 resolve(filePath);
             });
         });
@@ -62,6 +62,14 @@ export class ExportComponent {
         switch (this.format) {
             case 'native':
                 return new NativeJsonlSerializer();
+        }
+    }
+
+    private getFileFilters(): Array<any> {
+
+        switch (this.format) {
+            case 'native':
+                return [ { name: 'JSON Lines', extensions: [ 'jsonl' ] } ];
         }
     }
 }

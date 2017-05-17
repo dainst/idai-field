@@ -25,6 +25,15 @@ export class SettingsService {
         private datastore: IdaiFieldDatastore
     ) { }
 
+
+    public getProjects() {
+        return ['pergamon','fzavodnik','pgerth','doliveira','scuy','tkleinke','jwieners'];
+    }
+
+    public selectProject(name) {
+        this.datastore.select(name);
+    }
+
     public init() {
         this.ready = this.loadSettingsFromConfigFile().then((inTestMode)=>{
             if (inTestMode != true) {

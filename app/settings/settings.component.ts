@@ -20,22 +20,12 @@ export class SettingsComponent implements OnInit {
     public server = {};
 
     constructor(
-        private configLoader: ConfigLoader,
         private settingsService: SettingsService,
-        private messages: Messages,
-        private datastore: IdaiFieldDatastore
-    ) {
-        this.configLoader.getProjectConfiguration().then(conf => {
-            this.selectedProject = conf.getProjectIdentifier();
-        })
-    }
+        private messages: Messages
+    ) { }
 
-    public changeProject() {
-        this.datastore.select("pergamon");
-    }
-
-    public changeBack() {
-        this.datastore.select("test");
+    public selectProject() {
+        this.settingsService.selectProject(this.selectedProject);
     }
 
     public addRemoteSite() {

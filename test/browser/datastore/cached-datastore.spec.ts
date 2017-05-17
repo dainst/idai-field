@@ -43,7 +43,8 @@ export function main() {
 
         beforeEach(
             function () {
-                pouchdb = new PouchdbDatastore('testdb', mockConfigLoader);
+                pouchdb = new PouchdbDatastore(mockConfigLoader);
+                pouchdb.select('testdb');
                 datastore = new CachedDatastore(pouchdb);
             }
         );

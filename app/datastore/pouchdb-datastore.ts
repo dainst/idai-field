@@ -10,6 +10,7 @@ import {SyncState} from "./sync-state";
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import * as PouchDB from "pouchdb";
 import {SettingsService} from "../settings/settings-service";
+import {IndexCreator} from "./index-creator";
 
 // suppress compile errors for PouchDB view functions
 declare function emit(key:any, value?:any):void;
@@ -28,6 +29,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private syncHandles = [];
     private resolve = undefined;
     private dbname = undefined;
+    private indexCreator = new IndexCreator();
 
     constructor(configLoader: ConfigLoader,
                 loadSampleData: boolean = false) {
@@ -69,86 +71,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         }).then(()=>{
             if (loadSampleData) return this.clear();
             else return Promise.resolve();
-        }).then(() => this.setupIndicies())
+        }).then(() => this.indexCreator.go(this.db))
             .then(() => {
                 if (loadSampleData) return this.loadSampleData();
                 else return Promise.resolve();
             }).then(() => this.setupChangesEmitter());
     }
 
-    private setupIndicies() {
-        return this.setupFulltextIndex()
-            .then(() => this.setupIdentifierIndex())
-            .then(() => this.setupSyncedIndex())
-            .then(() => this.setupBelongsToIndex())
-            .then(() => this.setupAllIndex());
-    }
 
-    private setupFulltextIndex(): Promise<any> {
-        this.db.on('error', err => console.error(err.toString()));
-        let mapFun = function(doc) {
-            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
-            if (types.indexOf('image') == -1) types.push('resource');
-            types.forEach(function(type) {
-                if (doc.resource.shortDescription)
-                    doc.resource.shortDescription.split(/[.;,\- ]+/)
-                        .forEach(token => emit([type, token.toLowerCase()]));
-                if (doc.resource.identifier)
-                    emit([type, doc.resource.identifier.toLowerCase()]);
-            });
-        };
-        return this.setupIndex('fulltext', mapFun);
-    }
-
-    private setupSyncedIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            emit(doc.synced);
-        };
-        return this.setupIndex('synced', mapFun);
-    }
-
-    private setupIdentifierIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            emit(doc.resource.identifier);
-        };
-        return this.setupIndex('identifier', mapFun);
-    }
-
-    private setupAllIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
-            if (types.indexOf('image') == -1) types.push('resource');
-            types.forEach(type => emit([type, doc.modified]));
-        };
-        return this.setupIndex('all', mapFun);
-    }
-
-    private setupBelongsToIndex(): Promise<any> {
-        let mapFun = function(doc) {
-            if (doc.resource.relations['belongsTo'] != undefined) {
-                doc.resource.relations['belongsTo'].forEach(identifier => emit(identifier));
-            }
-        };
-        return this.setupIndex('belongsTo', mapFun);
-    }
-
-    private setupIndex(id, mapFun) {
-
-        let ddoc = {
-            _id: '_design/' + id,
-            views: { }
-        };
-        ddoc.views[id] = { map: mapFun.toString() };
-
-        return this.db.put(ddoc).then(
-            () => {},
-            err => {
-                if (err.name !== 'conflict') {
-                    throw err;
-                }
-            }
-        );
-    }
 
     /**
      * Implements {@link Datastore#create}.

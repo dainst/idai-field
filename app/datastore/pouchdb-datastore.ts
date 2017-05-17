@@ -381,7 +381,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public setupSync(url: string): Promise<SyncState> {
 
+
         return this.readyForQuery.then(() => {
+
+            url = url + '/' + this.dbname;
+            console.log("start syncing with "+url);
+
             let sync = this.db.sync(url, { live: true, retry: true });
             this.syncHandles.push(sync);
             return {
@@ -396,7 +401,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public stopSync() {
         for (let handle of this.syncHandles) {
-            console.log("stop sync",handle);
+            console.debug("stop sync",handle);
             handle.cancel();
         }
         this.syncHandles = [];

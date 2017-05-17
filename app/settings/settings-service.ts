@@ -32,6 +32,7 @@ export class SettingsService {
 
     public selectProject(name) {
         this.datastore.select(name);
+        this.setupSync();
     }
 
     public init() {
@@ -100,7 +101,7 @@ export class SettingsService {
         if (this.serverSettingsComplete()) {
             promises.push(this.datastore.setupSync(
                 'http://' + this.server['userName'] + ':' + this.server['password'] + '@'
-                + this.server['ipAddress'] + ':' + this.server['port'] + '/' + this.server['dbName']));
+                + this.server['ipAddress'] + ':' + this.server['port']));
         }
 
         this.notify();
@@ -156,7 +157,7 @@ export class SettingsService {
         }
 
         if (this.server['userName'] || this.server['password'] || this.server['ipAddress'] ||
-            this.server['port'] || this.server['dbname']) {
+            this.server['port']) {
             updatedConfig['server'] = this.server;
         } else {
             delete updatedConfig['server'];
@@ -202,8 +203,7 @@ export class SettingsService {
         return (this.server['userName'] && this.server['userName'].length > 0 &&
             this.server['password'] && this.server['password'].length > 0 &&
             this.server['ipAddress'] && this.server['ipAddress'].length > 0 &&
-            this.server['port'] && this.server['port'].length > 0 &&
-            this.server['dbName'] && this.server['dbName'].length > 0);
+            this.server['port'] && this.server['port'].length > 0);
     }
 
 }

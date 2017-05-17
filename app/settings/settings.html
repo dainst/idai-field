@@ -80,16 +80,6 @@
                     </tr>
                     <tr>
                         <td>
-                            <b>Datenbankname </b>
-                        </td>
-                        <td>
-                            <input id="server-db-name-input" [ngModel]="server.dbName"
-                                   (ngModelChange)="server.dbName = $event"
-                                   class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <b>Benutzer </b>
                         </td>
                         <td>
@@ -119,7 +109,7 @@
                         <b>IP-Adresse: </b>
                         <input [ngModel]="remoteSite.ipAddress"
                                (ngModelChange)="remoteSite.ipAddress = $event"
-                               placeholder="http://x.x.x.x(:port)/db_name"
+                               placeholder="http://x.x.x.x(:port)"
                                class="form-control">
                         <button (click)="removeRemoteSite(i)"
                                 class="btn btn-default">-</button>

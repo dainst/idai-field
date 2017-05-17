@@ -22,7 +22,7 @@ const settingsPage = require('../settings.page');
  */
 describe('resources/syncing tests --', function() {
 
-    const remoteSiteAddress = 'http://localhost:3001/idai-field-documents-test';
+    const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
     const configTemplate = browser.params.configTemplate;
 
@@ -44,9 +44,9 @@ describe('resources/syncing tests --', function() {
             app.use(cors(pouchDbApp.couchConfig));
             app.use('/', pouchDbApp);
             server = app.listen(3001, function () {
-                new PouchDB('idai-field-documents-test')
+                new PouchDB('test')
                     .destroy().then(() => {
-                        resolve(new PouchDB('idai-field-documents-test'));
+                        resolve(new PouchDB('test'));
                     });
             });
         }).then(newDb => db = newDb);

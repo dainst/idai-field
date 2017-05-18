@@ -59,8 +59,8 @@ export class DocumentEditWrapperPage {
     };
 
     public static clickChooseRightRevision = function() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.conflict-resolver-field')).get(1)), delays.ECWaitTime);
-        element.all(by.css('.conflict-resolver-field')).get(1).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('input[type=radio]')).get(1)), delays.ECWaitTime);
+        element.all(by.css('input[type=radio]')).get(1).click();
     };
 
     public static clickSolveConflictButton = function() {

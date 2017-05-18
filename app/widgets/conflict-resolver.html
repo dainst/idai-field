@@ -17,14 +17,14 @@
                     <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'left'" />
                 </div>
                 <div class="col-md-5 my-auto conflict-resolver-field" (click)="setWinningSide(false)">
-                    <div>Aktuelle Revision:</div>
+                    <div>Aktuelle Version:</div>
                     <div>{{getRevisionLabel(document)}}</div>
                 </div>
                 <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(true)">
                     <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'right'" />
                 </div>
                 <div class="col-md-5 my-auto conflict-resolver-field">
-                    <div (click)="setWinningSide(true)"> Konkurrierende Revision:</div>
+                    <div (click)="setWinningSide(true)"> Konkurrierende Version:</div>
                     <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
                             class="form-control">
                         <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">

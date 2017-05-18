@@ -17,7 +17,10 @@ export class SettingsSerializer {
                     reject(err);
                 } else {
                     console.log("content",JSON.parse(content));
-                    resolve(JSON.parse(content));
+                    let settings = JSON.parse(content);
+                    if (!settings.server) settings.server = {};
+                    if (!settings.remoteSites) settings.remoteSites = [];
+                    resolve(settings);
                 }
             });
         });

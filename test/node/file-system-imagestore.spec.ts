@@ -35,7 +35,7 @@ describe('FileSystemImagestore', () => {
 
 
     let store: FileSystemImagestore;
-    const storePath = 'store/';
+    const storeProjectPath = 'store/unittest/';
 
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
@@ -43,12 +43,13 @@ describe('FileSystemImagestore', () => {
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
         mockConverter.convert.and.callFake((data)=>{return data});
 
-        fs.mkdirSync(storePath);
-        store = new FileSystemImagestore(mockConverter,mockBlobMaker,storePath,false);
+        fs.mkdirSync(storeProjectPath);
+        store = new FileSystemImagestore(mockConverter,mockBlobMaker,'store/');
+        store.select('unittest')
     });
 
     afterEach(done => {
-        rimraf(storePath, () => {
+        rimraf(storeProjectPath, () => {
             done();
         });
     });
@@ -56,7 +57,7 @@ describe('FileSystemImagestore', () => {
     it('should create a file', (done) => {
 
         store.create('test_create', str2ab('asdf')).then(() => {
-            fs.readFile(storePath + 'test_create', (err, data) => {
+            fs.readFile(storeProjectPath + 'test_create', (err, data) => {
                 if (err) fail(err);
                 expect(data.toString()).toEqual('asdf');
                 done();
@@ -86,7 +87,7 @@ describe('FileSystemImagestore', () => {
         store.create('test_update', str2ab('yxcv'))
             .then(() => { return store.update('test_update', str2ab('yxcvb')); })
             .then(() => {
-                fs.readFile(storePath + 'test_update', (err, data) => {
+                fs.readFile(storeProjectPath + 'test_update', (err, data) => {
                     expect(err).toBe(null);
                     expect(data.toString()).toEqual('yxcvb');
                     done();
@@ -112,7 +113,7 @@ describe('FileSystemImagestore', () => {
                             .catch(err => {
                                 expect(err[0]).toEqual(M.IMAGESTORE_ERROR_MEDIASTORE_READ);
 
-                                fs.readFile(storePath + 'test_remove', (err) => {
+                                fs.readFile(storeProjectPath + 'test_remove', (err) => {
                                     expect(err).toBeTruthy();
                                     expect(err.code).toEqual('ENOENT');
                                     done();

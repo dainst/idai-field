@@ -21,7 +21,6 @@ export class FileSystemImagestore {
     public select(projectName: string): void {
         this.projectName = projectName;
         this.projectPath = this.basePath + projectName + '/';
-        console.log("projectpath",this.projectPath);
 
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
         const thumbs_path = this.projectPath + "thumbs/";

@@ -18,8 +18,6 @@ import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
  */
 export class SettingsService {
 
-    private observers: Observer<any>[] = [];
-
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
@@ -58,7 +56,6 @@ export class SettingsService {
 
     public setRemoteSites(remoteSites) {
         this.settings.remoteSites = remoteSites;
-        this.notify();
     }
 
     public getRemoteSites() {
@@ -67,7 +64,6 @@ export class SettingsService {
 
     public setServer(server) {
         this.settings.server = server;
-        this.notify();
     }
 
     public getServer() {
@@ -76,7 +72,6 @@ export class SettingsService {
 
     public setUserName(userName) {
         this.settings.userName = userName;
-        this.notify();
     }
 
     public getUserName() {
@@ -104,20 +99,6 @@ export class SettingsService {
         this.fileSystemImagestore.select(name);
     }
 
-    private notify() {
-        for (let o of this.observers) {
-            console.log(o.next({
-                server: this.getServer()
-            }))
-        }
-    }
-
-    public changes(): Observable<Document> {
-        return Observable.create( observer => {
-            this.observers.push(observer);
-        });
-    }
-
     private startSync(): Promise<any> {
 
         const promises = [];
@@ -129,7 +110,6 @@ export class SettingsService {
 
         }
 
-        this.notify();
         return Promise.all(promises);
     }
 

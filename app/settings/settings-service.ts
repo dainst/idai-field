@@ -90,13 +90,20 @@ export class SettingsService {
         }
     }
 
-    public selectProject(name) {
+    public selectProject(name,restart = false) {
         const index = this.settings.dbs.indexOf(name);
         if (index != -1) {
             this.settings.dbs.splice(index, 1);
             this.settings.dbs.unshift(name);
         }
         this.fileSystemImagestore.select(name);
+        this.storeSettings();
+
+        if (restart) {
+            return this.restartSync();
+        } else {
+            return this.startSync();
+        }
     }
 
     private startSync(): Promise<any> {
@@ -107,7 +114,6 @@ export class SettingsService {
         }
         if (this.serverSettingsComplete()) {
             promises.push(this.datastore.setupSync(this.convert(this.settings.server)));
-
         }
 
         return Promise.all(promises);
@@ -120,7 +126,7 @@ export class SettingsService {
         return converted;
     }
 
-    public storeSettings(): Promise<any> {
+    private storeSettings(): Promise<any> {
         return this.settingsSerializer.store(this.settings);
     }
 

@@ -49,10 +49,8 @@ export class SettingsComponent implements OnInit {
         this.settingsService.setUserName(this.userName);
         this.settingsService.setServer(this.server);
         this.settingsService.setRemoteSites(this.remoteSites);
-        this.settingsService.selectProject(this.selectedProject);
-        this.settingsService.storeSettings();
-        this.settingsService.restartSync()
-            .then(
+
+        this.settingsService.selectProject(this.selectedProject,true).then(
             () => this.messages.add([M.SETTINGS_ACTIVATED]),
                 err => { console.error(err); }
             );

@@ -24,7 +24,7 @@ exports.config = {
     plugins: [{
         package: 'protractor-console-plugin',
         failOnWarning: true,
-        failOnError: true,
+        failOnError: false,
         logWarnings: true,
         exclude: [
             "http://localhost:3001/" // pouchdb issues ignorable errors when syncing

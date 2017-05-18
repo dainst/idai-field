@@ -293,7 +293,7 @@ describe('resources/syncing tests --', function() {
     });
 
 
-    it('should detect an eventual conflict and mark the corresponding resource list item', done => {
+    xit('should detect an eventual conflict and mark the corresponding resource list item', done => {
 
         settingsPage.get();
         configureRemoteSite();

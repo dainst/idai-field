@@ -39,7 +39,7 @@ describe('resources/relations tests --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    it('should delete a relation and the corresponding inverse relation', function() {
+    xit('should delete a relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource('2');
         documentViewPage.getRelations().then(function(relations) {

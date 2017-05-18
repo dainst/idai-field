@@ -25,16 +25,6 @@ describe('listpage tests --', function() {
     });
 
 
-    it('should find trench in filter-select', function() {
-        resourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
-        resourcesPage.performCreateResource('t', 0);
-
-        NavbarPage.clickNavigateToList();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(listPage.getListItemEl('t')),delays.ECWaitTime);
-    });
-
     it('should change an identifier of a resource', function() {
         resourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);

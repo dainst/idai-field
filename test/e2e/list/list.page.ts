@@ -16,10 +16,6 @@ let ListPage = function() {
         return element(by.id('resource-' + identifier));
     };
 
-    this.getTrenchFilterItem = function(identifier) {
-        return element(by.id('trench-' + identifier));
-    };
-
     this.typeIntoIdentifierInputForResource = function(identifier, text) {
         common.typeIn(element(by.css('#resource-'+ identifier+' .identifier-input')), text);
 

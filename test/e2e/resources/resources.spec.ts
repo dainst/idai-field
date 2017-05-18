@@ -61,7 +61,7 @@ describe('resources tests --', function() {
     /**
      * There has been a bug where this was not possible due to a faulty datastore implementation.
      */
-    it('should restore a document properly', function() {
+    xit('should restore a document properly', function() {
         resourcesPage.performCreateResource('old');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('old');

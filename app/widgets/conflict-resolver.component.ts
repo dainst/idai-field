@@ -57,6 +57,8 @@ export class ConflictResolverComponent implements OnChanges {
             if (this.conflictedRevisions.length > 0) {
                 this.sortRevisions(this.conflictedRevisions);
                 this.setSelectedRevision(this.conflictedRevisions[0]);
+            } else {
+                this.differingFields = [];
             }
             this.ready = true;
         });

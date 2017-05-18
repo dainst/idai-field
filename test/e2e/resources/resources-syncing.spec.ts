@@ -311,7 +311,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    xit('should solve an eventual conflict', done => {
+    it('should solve an eventual conflict', done => {
 
         let shortDescription = '';
 
@@ -327,7 +327,7 @@ describe('resources/syncing tests --', function() {
                     }).then(() => resourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickEditDocument)
                     .then(DocumentEditWrapperPage.clickConflictsTab)
-                    // .then(DocumentEditWrapperPage.clickSwitchWinningRevisionButton) TODO where is this function?
+                    .then(DocumentEditWrapperPage.clickChooseRightRevision)
                     .then(DocumentEditWrapperPage.clickSolveConflictButton)
                     .then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(() => {

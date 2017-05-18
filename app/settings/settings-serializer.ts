@@ -47,7 +47,7 @@ export class SettingsSerializer {
             configToWrite['server'] = settings.server;
         }
 
-        if (settings.userName.length > 0) {
+        if (settings.userName && settings.userName.length > 0) {
             configToWrite['userName'] = settings.userName;
         }
 

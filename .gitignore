@@ -54,3 +54,8 @@ config.json
 idai-field-documents
 _replicator
 idai-field-documents-test
+
+test/LOCK
+test/LOG
+test/CURRENT
+test/MANIFEST*

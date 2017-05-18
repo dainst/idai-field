@@ -54,16 +54,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private loadDB(dbname:string) {
+        let previousDBName = this.dbname;
         return this.readyForQuery = Promise.resolve(new PouchDB(dbname)).then(db=>{
             this.dbname = dbname;
             this.db = db;
             console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
         }).then(()=>{
-            if (this.dbname == 'test') return this.clear();
+            if (this.dbname == 'test' && previousDBName != 'test') return this.clear();
             else return Promise.resolve();
         }).then(() => this.indexCreator.go(this.db))
             .then(() => {
-                if (this.dbname == 'test') return this.loadSampleData();
+                if (this.dbname == 'test' && previousDBName != 'test') return this.loadSampleData();
                 else return Promise.resolve();
             }).then(() => this.setupChangesEmitter());
     }

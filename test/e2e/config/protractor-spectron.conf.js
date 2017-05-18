@@ -32,7 +32,7 @@ exports.config = {
     }],
     params: {
         configPath: 'config/config.test.json',
-        configTemplate: { 'environment': 'test' }
+        configTemplate: { 'dbs' : ['test'] }
     },
     onPrepare: function() {
         if (failFastActive) {

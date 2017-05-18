@@ -218,13 +218,13 @@ describe('resources/syncing tests --', function() {
     it('should save syncing settings to config file and load them after restart', done => {
 
         const expectedConfig = {
-            'environment': 'test',
             'userName': 'userName',
             'server': {
                 'userName': 'serverUserName',
                 'password': 'serverPassword'
             },
-            'remoteSites': [ { 'ipAddress': remoteSiteAddress } ]
+            'remoteSites': [ { 'ipAddress': remoteSiteAddress } ],
+            'dbs' : ['test']
         };
 
         settingsPage.get();
@@ -311,7 +311,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('should solve an eventual conflict', done => {
+    xit('should solve an eventual conflict', done => {
 
         let shortDescription = '';
 

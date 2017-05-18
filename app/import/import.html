@@ -14,81 +14,65 @@
         <div class="form-group row">
 
             <div class="col-lg-6 offset-lg-3">
-                <div class="form-group row">
+                <div class="form-group">
 
-                    <div class="col-sm-1">
-                        <label class="control-label col-form-label"
-                               for="importSourceSelect">Quelle:</label>
-                    </div>
-                    <div class="col-sm-11">
-                        <select id="importSourceSelect" class="form-control"
-                                [(ngModel)]="sourceType"
-                                (ngModelChange)="reset()"
-                                [class.disabled]="running">
-                            <option value="file">Datei</option>
-                            <option value="http">HTTP</option>
-                        </select>
-                    </div>
-                </div>
+                    <label class="control-label col-form-label"
+                           for="importSourceSelect">Quelle</label>
 
-                <div class="form-group row" *ngIf="sourceType == 'file'">
-
-                    <div class="col-sm-1">
-                        <label class="control-label col-form-label">Pfad:</label>
-                    </div>
-                    <div class="col-sm-11">
-                        <input id="importFileInput" type="file"
-                               class="form-control-file"
-                               [class.disabled]="running"
-                               (change)="selectFile($event)">
-                    </div>
-                </div>
-
-                <div class="form-group row" *ngIf="sourceType == 'http'">
-
-                    <div class="col-sm-1">
-                        <label class="control-label col-form-label">URL:</label>
-                    </div>
-                    <div class="col-sm-11">
-                        <input class="form-control" id="importUrlInput"
-                               type="text"
-                               [(ngModel)]="url"
-                               [class.disabled]="running">
-                    </div>
+                    <select id="importSourceSelect" class="form-control"
+                            [(ngModel)]="sourceType"
+                            (ngModelChange)="reset()"
+                            [class.disabled]="running">
+                        <option value="file">Datei</option>
+                        <option value="http">HTTP</option>
+                    </select>
 
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group" *ngIf="sourceType == 'file'">
 
-                    <div class="col-sm-1">
-                        <label class="control-label col-form-label"
-                               for="importFormatSelect">Format:</label>
-                    </div>
-                    <div class="col-sm-11">
-                        <select id="importFormatSelect" class="form-control"
-                                [(ngModel)]="format"
-                                [class.disabled]="running">
-                            <option value="native">iDAI.field</option>
-                            <option value="idig">iDig</option>
-                            <option value="geojson">GeoJSON</option>
-                        </select>
-                    </div>
+                    <label class="control-label col-form-label">Pfad</label>
+                    <input id="importFileInput" type="file"
+                           class="form-control-file"
+                           [class.disabled]="running"
+                           (change)="selectFile($event)">
+
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group" *ngIf="sourceType == 'http'">
 
-                    <div class="col-sm-12">
-                        <button *ngIf="isReady()" id="importStartButton"
-                                class="btn btn-primary"
-                                (click)="startImport()">
-                            Import starten
-                        </button>
-                        <button *ngIf="!isReady()"
-                                class="btn btn-primary disabled">
-                            Import starten
-                        </button>
-                        <div style="display:inline-block;" *ngIf="running" class="spinner"></div>
-                    </div>
+                    <label class="control-label col-form-label">URL</label>
+                    <input class="form-control" id="importUrlInput"
+                           type="text"
+                           [(ngModel)]="url"
+                           [class.disabled]="running">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-form-label"
+                           for="importFormatSelect">Format</label>
+                    <select id="importFormatSelect" class="form-control"
+                            [(ngModel)]="format"
+                            [class.disabled]="running">
+                        <option value="native">iDAI.field</option>
+                        <option value="idig">iDig</option>
+                        <option value="geojson">GeoJSON</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <button id="importStartButton"
+                            class="btn btn-primary"
+                            [ngClass]="{ 'disabled': !isReady() || running }"
+                            (click)="!isReady() || running || startImport()">
+                        Import starten
+                    </button>
+
+                    <div style="display:inline-block;" *ngIf="running" class="spinner"></div>
 
                 </div>
             </div>

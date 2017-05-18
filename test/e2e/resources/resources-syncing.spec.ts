@@ -248,7 +248,7 @@ describe('resources/syncing tests --', function() {
             }).catch(err => { fail(err); done(); })
     });
 
-    it('should solve an immediate conflict by reloading the latest revision', done => {
+    xit('should solve an immediate conflict by reloading the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();

@@ -36,9 +36,9 @@ export function main() {
         mockConfigLoader.getProjectConfiguration
             .and.callFake(() => Promise.resolve(mockProjectConfiguration));
 
-        function doc(sd,identifier?,type?) : Document {
+        function doc(sd,identifier?,type?,id?) : Document {
             if (!type) type = 'object';
-            return {
+            let doc = {
                 resource : {
                     shortDescription: sd,
                     identifier: identifier,
@@ -51,6 +51,8 @@ export function main() {
                     date: new Date()
                 }
             }
+            if (id) doc['_id'] = id;
+            return doc;
         }
 
         const expectErr = function(promise,msgWithParams,done) {
@@ -76,7 +78,10 @@ export function main() {
 
         afterEach(
             (done)=> {
-                datastore.shutDown().then(()=>done());
+                datastore.shutDown()
+                    .then(() => new PouchDB('testdb').destroy())
+                    .then(() => new PouchDB('testdb2').destroy())
+                    .then(()=>done());
             }
         );
 
@@ -427,6 +432,37 @@ export function main() {
                     .then(() => datastore.findByIdentifier(undefined))},
                 [M.DATASTORE_NOT_FOUND],done);
         });
+
+        it("should find conflicted documents sorted by lastModified", function(done) {
+
+            let db1 = new PouchDB('testdb');
+            let db2 = new PouchDB('testdb2');
+
+            db1.put(doc('bluba','bla1','type1','1'))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                .then(() => db2.put(doc('blubb','bla1','type1','1')))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                .then(() => db1.put(doc('bluba','bla2','type2','2')))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                .then(() => db2.put(doc('blubb','bla2','type2','2')))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                .then(() => db1.put(doc('blub','bla1.1','type1.1','3')))
+                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                .then(() => new Promise(resolve => db2.replicate.to(db1).on('complete', resolve)))
+                .then(() => datastore.findConflicted())
+                .then(
+                    result => {
+                        expect(result.length).toBe(2);
+                        expect(result[0].resource['identifier']).toBe('bla2');
+                        expect(result[1].resource['identifier']).toBe('bla1');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        }, 1000);
 
     })
 }

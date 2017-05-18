@@ -1,11 +1,5 @@
 <div class="row" style="background-color: #eee; padding-top:10px;">
 	<div class="col-md-4">
-		<select class="form-control" id="trench-filter" [(ngModel)]="selectedFilterTrenchId" (change)="filterByTrench()">
-			<option selected value>Alle Schnitte</option>
-			<option *ngFor="let trench of trenches" [id]="'trench-' + trench.resource.identifier" [value]="trench._id">{{trench.resource.identifier}}</option>
-		</select>
-	</div>
-	<div class="col-md-4">
 		<search-bar [showFiltersMenu]="true"
 					[defaultFilterSet]="defaultTypes"
 					(onQueryChanged)="queryChanged($event)">
@@ -19,15 +13,12 @@
 			</select>
 			<button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)" [disabled]="!new_doc_type">Hinzufügen</button>
 		</div>
-		<div *ngIf="selectedFilterTrenchId != ''">
-			<button class="btn btn-secondary ml-2" (click)="addDocument('context')">Diesem Schnitt neuen Befund unterordnen</button>
-		</div>
 	</div>
 </div>
 
 <div class="row">
-	<div [class.col-sm-8]="detailedDocument" [class.col-sm-12]="!detailedDocument">
-	<table class=" table table-hover table-sm">
+	<div class="col-md-12 px-0">
+	<table class=" table table-hover table-striped table-sm">
 		<tr>
 			<th>Typ</th>
 			<th>Identifier/Id</th>
@@ -40,20 +31,20 @@
 	        [class.unsynced]="!document.synced"
 			[class.bg-info]="detailedDocument == document"
 	        [id]="'resource-' + document.resource.identifier">
-			<td>
+			<td class="small">
 				{{typesMap[document.resource.type].label}}
 			</td>
 			<td align="right">
-				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control identifier-input">
+				<input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control form-control-sm identifier-input">
 				<small class="text-muted">{{document._id}}</small>
 			</td>
 			<td align="right">
-            	<input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control">
-				<small><button (click)="focusDocument(document)" class="btn btn-sm btn-link">Details</button></small>
+            	<input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control form-control-sm">
+				<small><button (click)="focusDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button></small>
             </td>
 			<td>
 				<div class="form-inline">
-					<select *ngIf="typesMap[document.resource.type].relations.length" class="form-control ml-2" autocomplete="off" [(ngModel)]="selectedRelation" (change)="addRelatedDocument(document, selectedRelation, $event)" >
+					<select *ngIf="typesMap[document.resource.type].relations.length" class="form-control form-control-sm ml-2" autocomplete="off" [(ngModel)]="selectedRelation" (change)="addRelatedDocument(document, selectedRelation, $event)" >
 						<option selected value></option>
 						<option *ngFor="let relation of typesMap[document.resource.type].relations" [ngValue]="relation">{{relation.label}} ({{typesMap[relation.targetName].label}})</option>
 					</select>
@@ -61,17 +52,5 @@
 			</td>
 	    </tr>
 	</table>
-	</div>
-	<div *ngIf="detailedDocument" class="col-sm-4 document-info px-0">
-		<document-view [(document)]="detailedDocument" [basePath]="'list'">
-			<description-view [document]="detailedDocument"></description-view>
-			<thumbnail-view [imageIds]="currentDocument.resource.relations['depictedIn']"
-							*ngIf="detailedDocument && detailedDocument.resource.relations
-                            && detailedDocument.resource.relations['depictedIn']">
-			</thumbnail-view>
-			<geometry-view [document]="detailedDocument"></geometry-view>
-			<fields-view [doc]="detailedDocument"></fields-view>
-			<relations-view [doc]="detailedDocument" ></relations-view>
-		</document-view>
 	</div>
 </div>

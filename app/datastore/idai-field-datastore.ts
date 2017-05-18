@@ -37,4 +37,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
     abstract removeRevision(docId: string, revisionId: string): Promise<any>;
 
     abstract select(name: string): any;
+
+    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
 }

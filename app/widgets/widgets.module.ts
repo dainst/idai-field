@@ -15,6 +15,7 @@ import {ImagePickerComponent} from './image-picker.component';
 import {ConflictModalComponent} from './conflict-modal.component';
 import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {EditModalComponent} from './edit-modal.component'
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
         DescriptionViewComponent,
         ImagePickerComponent,
         ConflictModalComponent,
-        ConflictResolverComponent
+        ConflictResolverComponent,
+        EditModalComponent
     ],
     exports: [
         DocumentViewComponent,
@@ -47,7 +49,8 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
     ],
     entryComponents: [
         ImagePickerComponent,
-        ConflictModalComponent
+        ConflictModalComponent,
+        EditModalComponent
     ]
 })
 

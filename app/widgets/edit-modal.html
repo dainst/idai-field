@@ -1,0 +1,18 @@
+<div class="modal-body p-0">
+    <document-edit-wrapper #f
+                            [document]="doc"
+                           (onSaveSuccess)="activeModal.close('saved')"
+                           [showDeleteButton]="false"
+                           [showBackButton]="true"
+                           (onBackButtonClicked)="cancel()"
+                           >
+    </document-edit-wrapper>
+</div>
+<template #modalTemplate>
+    <edit-save-dialog
+            (onSave)="f.save();  dialog.close();"
+            (onDiscard)="activeModal.dismiss('discard'); dialog.close();"
+            (onCancel)="dialog.close();">
+    </edit-save-dialog>
+</template>
+

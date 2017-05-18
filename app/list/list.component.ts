@@ -6,8 +6,9 @@ import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {M} from '../m';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {Router, Event, NavigationStart} from '@angular/router';
 import {SettingsService} from '../settings/settings-service';
+import {EditModalComponent} from '../widgets/edit-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     moduleId: module.id,
@@ -19,7 +20,6 @@ export class ListComponent {
     private detailedDocument: IdaiFieldDocument;
     public documents: IdaiFieldDocument[];
     public trenches: IdaiFieldDocument[];
-    public selectedFilterTrenchId = "";
     public selectedDocument: IdaiFieldDocument;
     public typesMap: { [type: string]: IdaiType };
     public typesList: IdaiType[];
@@ -28,11 +28,11 @@ export class ListComponent {
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
     constructor(
-        private router: Router,
         private messages: Messages,
         private datastore: IdaiFieldDatastore,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
+        private modalService: NgbModal,
         configLoader: ConfigLoader
     ) {
         this.fetchDocuments();
@@ -43,11 +43,6 @@ export class ListComponent {
             this.addRelationsToTypesMap();
         });
 
-        router.events.subscribe( (event:Event) => {
-            if(event instanceof NavigationStart) {
-                if(event.url == "/list") this.detailedDocument = null;
-            }
-        });
     }
 
     private initializeTypesList() {
@@ -106,7 +101,9 @@ export class ListComponent {
 
     public focusDocument(doc: IdaiFieldDocument) {
         this.detailedDocument = doc;
-        this.router.navigate(['./list', {focus: doc.resource.id}]);
+
+        var detailModal = this.modalService.open(EditModalComponent,{size: "lg", backdrop: "static"}).componentInstance
+        detailModal.setDocument(doc);
     }
 
     /**
@@ -115,7 +112,6 @@ export class ListComponent {
      * @param query
      */
     public fetchDocuments(query: Query = this.query) {
-        this.selectedFilterTrenchId = "";
         this.detailedDocument = null;
         this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldDocument[];
@@ -130,18 +126,6 @@ export class ListComponent {
         }).catch(err => { console.error(err); } );
     }
 
-    public filterByTrench() {
-        if (this.selectedFilterTrenchId == "") {
-            this.fetchDocuments();
-        } else {
-            this.detailedDocument = null;
-            var filterById = this.selectedFilterTrenchId;
-            this.datastore.findByBelongsTo(filterById).then(documents => {
-                this.documents = documents as IdaiFieldDocument[];
-            }).catch(err => { console.error(err); } );
-        }
-    }
-
     public addDocument(new_doc_type): IdaiFieldDocument {
         // TODO - Use Validator class
         if (!new_doc_type || new_doc_type == '') {
@@ -150,10 +134,7 @@ export class ListComponent {
 
         let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
 
-        // Adding Context to selectedTrench
-        if (this.selectedFilterTrenchId && new_doc_type == "context") {
-            newDoc.resource.relations["belongsTo"] = [this.selectedFilterTrenchId]
-        }
+
         this.documents.push(newDoc);
         return newDoc;
     }

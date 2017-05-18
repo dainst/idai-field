@@ -12,7 +12,8 @@ export class IndexCreator {
             .then(() => this.setupIdentifierIndex(db))
             .then(() => this.setupSyncedIndex(db))
             .then(() => this.setupBelongsToIndex(db))
-            .then(() => this.setupAllIndex(db));
+            .then(() => this.setupAllIndex(db))
+            .then(() => this.setupConflictedIndex(db));
     }
 
     private setupFulltextIndex(db): Promise<any> {
@@ -64,6 +65,18 @@ export class IndexCreator {
             }
         };
         return this.setupIndex(db,'belongsTo', mapFun);
+    }
+
+    private setupConflictedIndex(db): Promise<any> {
+        let mapFun = function(doc) {
+            if (doc['_conflicts']) {
+                let lastModified = doc.created.date;
+                if (doc.modified && doc.modified.length > 0)
+                    lastModified = doc.modified[doc.modified.length-1].date;
+                emit(lastModified);
+            }
+        };
+        return this.setupIndex(db,'conflicted', mapFun);
     }
 
     private setupIndex(db, id, mapFun) {

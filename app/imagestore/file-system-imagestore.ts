@@ -15,6 +15,7 @@ export class FileSystemImagestore {
         private basePath: string) {
 
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
+        if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
 
     }
 

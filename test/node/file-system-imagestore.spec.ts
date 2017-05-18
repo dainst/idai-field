@@ -43,7 +43,6 @@ describe('FileSystemImagestore', () => {
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
         mockConverter.convert.and.callFake((data)=>{return data});
 
-        fs.mkdirSync(storeProjectPath);
         store = new FileSystemImagestore(mockConverter,mockBlobMaker,'store/');
         store.select('unittest')
     });

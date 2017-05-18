@@ -201,7 +201,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('resource created in client should be synced to other db', done => {
+    xit('resource created in client should be synced to other db', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -268,7 +268,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('should solve an immediate conflict by overwriting the latest revision', done => {
+    xit('should solve an immediate conflict by overwriting the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();

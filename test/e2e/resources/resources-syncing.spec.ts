@@ -327,7 +327,7 @@ describe('resources/syncing tests --', function() {
                     }).then(() => resourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickEditDocument)
                     .then(DocumentEditWrapperPage.clickConflictsTab)
-                    .then(DocumentEditWrapperPage.clickSwitchWinningRevisionButton)
+                    // .then(DocumentEditWrapperPage.clickSwitchWinningRevisionButton) TODO where is this function?
                     .then(DocumentEditWrapperPage.clickSolveConflictButton)
                     .then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(() => {

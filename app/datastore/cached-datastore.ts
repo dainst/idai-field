@@ -28,6 +28,10 @@ export class CachedDatastore implements IdaiFieldDatastore {
             });
     }
 
+    findConflicted() {
+        return this.datastore.findConflicted();
+    }
+
     create(document: Document): Promise<Document> {
         return this.datastore.create(document)
             .then(doc => this.documentCache[doc.resource.id] = doc);

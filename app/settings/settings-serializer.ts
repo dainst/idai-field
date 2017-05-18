@@ -1,5 +1,4 @@
 import {Settings} from "./settings";
-
 const remote = require('electron').remote;
 const fs = remote.require('fs');
 
@@ -11,13 +10,15 @@ export class SettingsSerializer {
 
     public load(): Promise<Settings> {
 
-        return new Promise((resolve) => {
+        return new Promise((resolve,reject) => {
 
-            resolve({
-                userName: remote.getGlobal('config')['userName'],
-                remoteSites: remote.getGlobal('config')['remoteSites'],
-                server: remote.getGlobal('config')['server'],
-                dbs: remote.getGlobal('config')['dbs']
+            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err, content) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log("content",JSON.parse(content));
+                    resolve(JSON.parse(content));
+                }
             });
         });
     }

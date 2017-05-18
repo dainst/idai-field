@@ -18,9 +18,9 @@ import {SettingsSerializer} from "./settings-serializer";
 export class SettingsService {
 
     private observers: Observer<any>[] = [];
-    private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
     private settings: Settings;
+    private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
     public ready: Promise<any>;
 
@@ -36,6 +36,8 @@ export class SettingsService {
     public init() {
         this.ready = this.settingsSerializer.load().then((settings)=>{
             this.settings = settings;
+
+            console.log("settings",settings)
 
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.datastore.select(this.settings.dbs[0]);

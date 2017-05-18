@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
     public userName;
     public remoteSites = [];
     public server = {};
+    public ready = undefined;
 
     constructor(
         private settingsService: SettingsService,
@@ -34,6 +35,9 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
         this.settingsService.ready.then(() => {
+
+            this.ready = true;
+
             this.userName = this.settingsService.getUserName();
             this.remoteSites = this.settingsService.getRemoteSites();
             this.server = this.settingsService.getServer();

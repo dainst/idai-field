@@ -28,11 +28,6 @@ export class SettingsService {
         private datastore: IdaiFieldDatastore
     ) { }
 
-
-    public getProjects() {
-        return this.settings.dbs;
-    }
-
     public init() {
         this.ready = this.settingsSerializer.load().then((settings)=>{
             this.settings = settings;
@@ -87,6 +82,26 @@ export class SettingsService {
         return userName ? userName : 'anonymous';
     }
 
+    public getProjects() {
+        return this.settings.dbs;
+    }
+
+    public getSelectedProject() {
+        if (!this.settings.dbs || this.settings.dbs.length == 0) {
+            return undefined;
+        } else {
+            return this.settings.dbs[0];
+        }
+    }
+
+    public selectProject(name) {
+        const index = this.settings.dbs.indexOf(name);
+        if (index != -1) {
+            this.settings.dbs.splice(index, 1);
+            this.settings.dbs.unshift(name);
+        }
+    }
+
     private notify() {
         for (let o of this.observers) {
             console.log(o.next({
@@ -99,14 +114,6 @@ export class SettingsService {
         return Observable.create( observer => {
             this.observers.push(observer);
         });
-    }
-
-    public selectProject(name) {
-        const index = this.settings.dbs.indexOf(name);
-        if (index != -1) {
-            this.settings.dbs.splice(index, 1);
-            this.settings.dbs.unshift(name);
-        }
     }
 
     private startSync(): Promise<any> {

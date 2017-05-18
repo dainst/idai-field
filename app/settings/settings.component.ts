@@ -41,6 +41,7 @@ export class SettingsComponent implements OnInit {
             this.userName = this.settingsService.getUserName();
             this.remoteSites = this.settingsService.getRemoteSites();
             this.server = this.settingsService.getServer();
+            this.selectedProject = this.settingsService.getSelectedProject();
         });
     }
 

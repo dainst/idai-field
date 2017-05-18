@@ -23,7 +23,7 @@ exports.config = {
     },
     plugins: [{
         package: 'protractor-console-plugin',
-        failOnWarning: true,
+        failOnWarning: false,
         failOnError: false,
         logWarnings: true,
         exclude: [

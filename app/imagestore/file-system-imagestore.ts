@@ -6,12 +6,29 @@ import {Observable} from "rxjs/Observable";
 
 export class FileSystemImagestore {
 
-    constructor(private converter: Converter, private blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean = true) {
+    private projectName = 'test';
+    private projectPath = undefined;
+
+    constructor(
+        private converter: Converter,
+        private blobMaker: BlobMaker,
+        private basePath: string) {
+
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
-        if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
-        let thumbs_path = this.basePath + "thumbs/";
+
+    }
+
+    public select(projectName: string): void {
+        this.projectName = projectName;
+        this.projectPath = this.basePath + projectName + '/';
+        console.log("projectpath",this.projectPath);
+
+        if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
+        const thumbs_path = this.projectPath + "thumbs/";
         if (!fs.existsSync(thumbs_path)) fs.mkdirSync(thumbs_path);
-        if (loadSampleData) this.loadSampleData();
+
+
+        if (projectName == 'test') this.loadSampleData();
     }
 
     /**
@@ -23,11 +40,11 @@ export class FileSystemImagestore {
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
+            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
                 if (err) reject(err);
                 else {
 
-                    fs.writeFile(this.basePath + "thumbs/" + key,
+                    fs.writeFile(this.projectPath + "thumbs/" + key,
                         this.converter.convert(data), {flag: 'wx'}, (err) => {
                         if (err) reject(err);
                         else {
@@ -65,7 +82,7 @@ export class FileSystemImagestore {
      *  reject -> the error message
      */
     protected _read(key: string, thumb: boolean): Promise<ArrayBuffer> {
-        let path = thumb ? this.basePath + "/thumbs/" + key : this.basePath + key;
+        let path = thumb ? this.projectPath + "/thumbs/" + key : this.projectPath + key;
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) reject(err);
@@ -83,7 +100,7 @@ export class FileSystemImagestore {
     public update(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.basePath + key, Buffer.from(data), {flag: 'w'}, (err) => {
+            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'w'}, (err) => {
                 if (err) reject(err);
                 else resolve();
             });
@@ -98,7 +115,7 @@ export class FileSystemImagestore {
     public remove(key: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.unlink(this.basePath + key, (err) => {
+            fs.unlink(this.projectPath + key, (err) => {
                 if (err) reject(err);
                 else resolve();
             })
@@ -112,17 +129,15 @@ export class FileSystemImagestore {
 
     private loadSampleData(): void {
 
-        console.log("load sample data")
-
         const base = "/test/test-data/imagestore-samples/";
 
         let path = process.cwd() + base;
         if (!fs.existsSync(path)) path = process.resourcesPath + base;
-        this.copyFilesOfDir(path, this.basePath);
+        this.copyFilesOfDir(path, this.projectPath);
 
         path = process.cwd() + base + 'thumbs/';
         if (!fs.existsSync(path)) path = process.resourcesPath + base + 'thumbs/';
-        this.copyFilesOfDir(path, this.basePath + 'thumbs/');
+        this.copyFilesOfDir(path, this.projectPath + 'thumbs/');
     }
 
     private copyFilesOfDir (path, dest):void {

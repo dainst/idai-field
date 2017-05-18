@@ -63,8 +63,8 @@ const CONFIG = require('electron').remote.getGlobal('config');
     providers: [
         SettingsService,
         {
-            provide: Imagestore,
-            useFactory: function(http: Http,blobMaker: BlobMaker): Imagestore {
+            provide: FileSystemImagestore,
+            useFactory: function(http: Http,blobMaker: BlobMaker): FileSystemImagestore {
 
                 let path;
                 if (CONFIG['imagestorepath']) {
@@ -78,6 +78,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
             },
             deps: [Http, BlobMaker]
         },
+        { provide: Imagestore, useExisting: FileSystemImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {

@@ -4,6 +4,7 @@ import {Observer} from "rxjs/Observer";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Settings} from "./settings";
 import {SettingsSerializer} from "./settings-serializer";
+import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
 
 
 @Injectable()
@@ -25,14 +26,15 @@ export class SettingsService {
     public ready: Promise<any>;
 
     constructor(
-        private datastore: IdaiFieldDatastore
-    ) { }
+        private datastore: IdaiFieldDatastore,
+        private fileSystemImagestore: FileSystemImagestore
+    ) {
+        fileSystemImagestore.select('test');
+    }
 
     public init() {
         this.ready = this.settingsSerializer.load().then((settings)=>{
             this.settings = settings;
-
-            console.log("settings",settings)
 
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.datastore.select(this.settings.dbs[0]);
@@ -99,6 +101,7 @@ export class SettingsService {
             this.settings.dbs.splice(index, 1);
             this.settings.dbs.unshift(name);
         }
+        this.fileSystemImagestore.select(name);
     }
 
     private notify() {

@@ -6,7 +6,7 @@ import {Observable} from "rxjs/Observable";
 
 export class FileSystemImagestore {
 
-    constructor(private converter: Converter, private blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean) {
+    constructor(private converter: Converter, private blobMaker: BlobMaker, private basePath: string, loadSampleData: boolean = true) {
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
         let thumbs_path = this.basePath + "thumbs/";
@@ -112,15 +112,17 @@ export class FileSystemImagestore {
 
     private loadSampleData(): void {
 
-        let path = process.cwd() + '/imagestore/';
-        if (!fs.existsSync(path)) path = process.resourcesPath + '/imagestore/';
+        console.log("load sample data")
+
+        const base = "/test/test-data/imagestore-samples/";
+
+        let path = process.cwd() + base;
+        if (!fs.existsSync(path)) path = process.resourcesPath + base;
         this.copyFilesOfDir(path, this.basePath);
 
-        path = process.cwd() + '/imagestore/thumbs/';
-        if (!fs.existsSync(path)) path = process.resourcesPath + '/imagestore/thumbs/';
+        path = process.cwd() + base + 'thumbs/';
+        if (!fs.existsSync(path)) path = process.resourcesPath + base + 'thumbs/';
         this.copyFilesOfDir(path, this.basePath + 'thumbs/');
-
-
     }
 
     private copyFilesOfDir (path, dest):void {

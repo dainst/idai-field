@@ -73,7 +73,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
                     const app = (<any>window).require('electron').remote.app;
                     path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
                 }
-                return new FileSystemImagestore(new Converter(), blobMaker, path, CONFIG['environment'] == 'test');
+                return new FileSystemImagestore(new Converter(), blobMaker, path);
 
             },
             deps: [Http, BlobMaker]

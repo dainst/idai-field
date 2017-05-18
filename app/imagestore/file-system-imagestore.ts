@@ -20,13 +20,13 @@ export class FileSystemImagestore {
     }
 
     public select(projectName: string): void {
+
         this.projectName = projectName;
         this.projectPath = this.basePath + projectName + '/';
 
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
         const thumbs_path = this.projectPath + "thumbs/";
         if (!fs.existsSync(thumbs_path)) fs.mkdirSync(thumbs_path);
-
 
         if (projectName == 'test') this.loadSampleData();
     }
@@ -123,6 +123,7 @@ export class FileSystemImagestore {
     }
 
     public objectChangesNotifications(): Observable<File> {
+
         return Observable.create( () => {});
     }
 

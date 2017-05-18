@@ -78,8 +78,7 @@ export class SettingsService {
     }
 
     public getUserName() {
-        let userName = JSON.parse(JSON.stringify(this.settings.userName));
-        return userName ? userName : 'anonymous';
+        return this.settings.userName ? JSON.parse(JSON.stringify(this.settings.userName)) : 'anonymous';
     }
 
     public getProjects() {

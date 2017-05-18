@@ -114,13 +114,19 @@ export class SettingsService {
             promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
         }
         if (this.serverSettingsComplete()) {
-            promises.push(this.datastore.setupSync(
-                'http://' + this.settings.server['userName'] + ':' + this.settings.server['password'] + '@'
-                + this.settings.server['ipAddress'] + ':' + this.settings.server['port']));
+            promises.push(this.datastore.setupSync(this.convert(this.settings.server)));
+
         }
 
         this.notify();
         return Promise.all(promises);
+    }
+
+    private convert(serverSetting) {
+        let converted = serverSetting['ipAddress'];
+        converted = converted.replace('http://','http://'+
+            serverSetting['userName'] + ':' + serverSetting['password'] + '@');
+        return converted;
     }
 
     public storeSettings(): Promise<any> {
@@ -131,7 +137,6 @@ export class SettingsService {
 
         return (this.settings.server['userName'] && this.settings.server['userName'].length > 0 &&
             this.settings.server['password'] && this.settings.server['password'].length > 0 &&
-            this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0 &&
-            this.settings.server['port'] && this.settings.server['port'].length > 0);
+            this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0);
     }
 }

@@ -61,22 +61,14 @@
                 <table>
                     <tr>
                         <td>
-                            <b>Serveradresse </b>
+                            <b>Adresse </b>
                         </td>
                         <td>
                             <input id="server-address-input" [ngModel]="server.ipAddress"
                                    (ngModelChange)="server.ipAddress = $event"
-                                   class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Port </b>
-                        </td>
-                        <td>
-                            <input id="server-port-input" [ngModel]="server.port"
-                                   (ngModelChange)="server.port = $event"
-                                   class="form-control">
+                                   class="form-control"
+                                   placeholder="http://x.x.x.x(:port)"
+                            >
                         </td>
                     </tr>
                     <tr>
@@ -107,7 +99,7 @@
                 <b>Teammitglieder </b><br><br>
                 <ul id="remote-sites-list">
                     <li *ngFor="let remoteSite of remoteSites; let i = index;">
-                        <b>IP-Adresse: </b>
+                        <b>Adresse: </b>
                         <input [ngModel]="remoteSite.ipAddress"
                                (ngModelChange)="remoteSite.ipAddress = $event"
                                placeholder="http://x.x.x.x(:port)"

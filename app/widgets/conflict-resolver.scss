@@ -1,9 +1,20 @@
 .conflict-resolver-field {
-  padding-left: 30px;
+  padding: 10px 30px;
+  cursor: pointer;
 }
 
-.revision-select-field {
-  padding: 10px 30px;
+.radio-button-field {
+  padding-bottom: 5px;
+  padding-left: 50px;
+  cursor: pointer;
+}
+
+.winning-side {
+  color: #1b9519;
+}
+
+.losing-side {
+  color: #e00000;
 }
 
 #solve-conflict-button {

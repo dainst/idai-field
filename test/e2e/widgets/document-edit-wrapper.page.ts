@@ -58,9 +58,9 @@ export class DocumentEditWrapperPage {
             });
     };
 
-    public static clickSwitchWinningRevisionButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('switch-winning-revision-button'))), delays.ECWaitTime);
-        element(by.id('switch-winning-revision-button')).click();
+    public static clickChooseRightRevision = function() {
+        browser.wait(EC.visibilityOf(element.all(by.css('.conflict-resolver-field')).get(1)), delays.ECWaitTime);
+        element.all(by.css('.conflict-resolver-field')).get(1).click();
     };
 
     public static clickSolveConflictButton = function() {

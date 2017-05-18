@@ -13,19 +13,18 @@
         </div>
         <div *ngIf="conflictedRevisions.length > 0">
             <div class="row h-100">
-                <div class="col-md-5 my-auto conflict-resolver-field">
+                <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(false)">
+                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'left'" />
+                </div>
+                <div class="col-md-5 my-auto conflict-resolver-field" (click)="setWinningSide(false)">
                     <div>Aktuelle Revision:</div>
                     <div>{{getRevisionLabel(document)}}</div>
                 </div>
-                <div class="col-md-2 my-auto text-center">
-                    <button class="btn btn-primary" id="switch-winning-revision-button" (click)="switchWinningSide()">
-                        <span *ngIf="getWinningSide() == 'left'" class="mdi mdi-18px mdi-arrow-left-bold"></span>
-                        <span *ngIf="getWinningSide() == 'right'" class="mdi mdi-18px mdi-arrow-right-bold"></span>
-                        <span *ngIf="getWinningSide() == 'mixed'" class="mdi mdi-18px mdi-asterisk"></span>
-                    </button>
+                <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(true)">
+                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'right'" />
                 </div>
-                <div class="col-md-5 my-auto revision-select-field">
-                    <div>Konkurrierende Revision:</div>
+                <div class="col-md-5 my-auto conflict-resolver-field">
+                    <div (click)="setWinningSide(true)"> Konkurrierende Revision:</div>
                     <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
                             class="form-control">
                         <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
@@ -41,8 +40,11 @@
             <h3 class="card-title">{{field.label}}</h3>
         </div>
         <div class="row h-100">
-            <div class="col-md-5 my-auto conflict-resolver-field" [class.text-primary]="!field.rightSideWinning"
-                 [class.text-muted]="field.rightSideWinning">
+            <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSideForField(field, false)">
+                <input type="radio" name="radiobutton-{{field.name}}" [checked]="!field.rightSideWinning" />
+            </div>
+            <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="!field.rightSideWinning"
+                 [class.losing-side]="field.rightSideWinning" (click)="setWinningSideForField(field, false)">
                 <div *ngIf="field.type == 'field'" >
                     <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
                     <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
@@ -66,14 +68,11 @@
                     <div *ngIf="!document.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
                 </div>
             </div>
-            <div class="col-md-2 my-auto text-center">
-                <button class="btn btn-primary" (click)="field.rightSideWinning = !field.rightSideWinning">
-                    <span *ngIf="!field.rightSideWinning" class="mdi mdi-18px mdi-arrow-left-bold"></span>
-                    <span *ngIf="field.rightSideWinning" class="mdi mdi-18px mdi-arrow-right-bold"></span>
-                </button>
+            <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSideForField(field, true)">
+                <input type="radio" name="radiobutton-{{field.name}}" [checked]="field.rightSideWinning"/>
             </div>
-            <div class="col-md-5 my-auto conflict-resolver-field" [class.text-primary]="field.rightSideWinning"
-                 [class.text-muted]="!field.rightSideWinning">
+            <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="field.rightSideWinning"
+                 [class.losing-side]="!field.rightSideWinning" (click)="setWinningSideForField(field, true)">
                 <div *ngIf="field.type == 'field'">
                     <div *ngIf="selectedRevision.resource[field.name]">
                         {{selectedRevision.resource[field.name]}}

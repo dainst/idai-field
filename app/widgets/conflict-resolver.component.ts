@@ -214,14 +214,16 @@ export class ConflictResolverComponent implements OnChanges {
         return winningSide;
     }
 
-    public switchWinningSide() {
-
-        let winningSide: string = this.getWinningSide();
-        let newValue: boolean = (winningSide == 'left') ? true : false;
+    public setWinningSide(rightSideWinning: boolean) {
 
         for (let field of this.differingFields) {
-            field.rightSideWinning = newValue;
+            field.rightSideWinning = rightSideWinning;
         }
+    }
+
+    public setWinningSideForField(field: any, rightSideWinning: boolean) {
+
+        field.rightSideWinning = rightSideWinning;
     }
 
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
@@ -241,7 +243,7 @@ export class ConflictResolverComponent implements OnChanges {
 
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
-        const lastModified = revision['modified'][revision['modified'].length-1];
+        const lastModified = revision['modified'][revision['modified'].length - 1];
         const date: Date = new Date(lastModified.date);
         moment.locale('de');
 

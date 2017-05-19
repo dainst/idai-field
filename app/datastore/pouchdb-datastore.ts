@@ -385,17 +385,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.readyForQuery.then(() => {
 
-            url = url + '/' + this.dbname;
-            console.log("start syncing with "+url);
+            let fullUrl = url + '/' + this.dbname;
+            console.log("start syncing with " + fullUrl);
 
-            let sync = this.db.sync(url, { live: true, retry: true });
+            let sync = this.db.sync(fullUrl, { live: true, retry: false });
             this.syncHandles.push(sync);
             return {
                 url: url,
                 cancel: () => sync.cancel(),
-                onError: Observable.create(obs => sync.on('error', err => obs.onNext(err))),
-                onPaused: Observable.create(obs => sync.on('paused', err => obs.onNext(err))),
-                onActive: Observable.create(obs => sync.on('active', () => obs.onNext()))
+                onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
+                onPaused: Observable.create(obs => sync.on('paused', err => obs.next(err))),
+                onActive: Observable.create(obs => sync.on('active', () => obs.next()))
             }
         });
     }

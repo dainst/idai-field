@@ -16,6 +16,7 @@ import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
  */
 export class SettingsService {
 
+    private observers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
 
@@ -45,6 +46,7 @@ export class SettingsService {
 
         this.datastore.select(this.settings.dbs[0]);
         return new Promise<any>((resolve) => {
+            this.observers.forEach(o => o.next(false))
             this.datastore.stopSync();
             setTimeout(() => {
                 this.startSync().then(() => resolve());
@@ -104,6 +106,13 @@ export class SettingsService {
         }
     }
 
+    public syncStatusChanges(): Observable<boolean> {
+
+        return Observable.create(observer => {
+            this.observers.push(observer);
+        });
+    }
+
     private startSync(): Promise<any> {
 
         const promises = [];
@@ -111,10 +120,23 @@ export class SettingsService {
             promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
         }
         if (this.serverSettingsComplete()) {
-            promises.push(this.datastore.setupSync(this.convert(this.settings.server)));
+            promises.push(this.startServerSync());
         }
 
         return Promise.all(promises);
+    }
+
+    private startServerSync(): Promise<any> {
+        return this.datastore.setupSync(this.convert(this.settings.server))
+            .then(syncState => {
+                const msg = setTimeout(() => this.observers.forEach(o => o.next(true)), 500); // avoid issuing 'connected' too early
+                syncState.onError.subscribe(() => {
+                    clearTimeout(msg); // stop 'connected' msg if error
+                    syncState.cancel();
+                    this.observers.forEach(o => o.next(false));
+                    setTimeout(() => this.startServerSync(), 5000); // retry
+                });
+            });
     }
 
     private convert(serverSetting) {

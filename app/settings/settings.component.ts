@@ -17,11 +17,11 @@ export class SettingsComponent implements OnInit {
     public remoteSites = [];
     public server = {};
     public ready = undefined;
+    public saving = false;
 
-    constructor(
-        private settingsService: SettingsService,
-        private messages: Messages
-    ) { }
+    constructor(private settingsService: SettingsService,
+                private messages: Messages) {
+    }
 
     public addRemoteSite() {
         this.remoteSites.push({
@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
     }
 
     public removeRemoteSite(i) {
-        this.remoteSites.splice(i,1);
+        this.remoteSites.splice(i, 1);
     }
 
     ngOnInit() {
@@ -46,13 +46,22 @@ export class SettingsComponent implements OnInit {
     }
 
     public save() {
+
+        this.saving = true;
+
         this.settingsService.setUserName(this.userName);
         this.settingsService.setServer(this.server);
         this.settingsService.setRemoteSites(this.remoteSites);
 
-        this.settingsService.selectProject(this.selectedProject,true).then(
-            () => this.messages.add([M.SETTINGS_ACTIVATED]),
-                err => { console.error(err); }
-            );
+        this.settingsService.selectProject(this.selectedProject, true).then(
+            () => {
+                this.saving = false;
+                this.messages.add([M.SETTINGS_ACTIVATED])
+            },
+            err => {
+                this.saving = false;
+                console.error(err);
+            }
+        );
     }
 }

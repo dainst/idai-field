@@ -7,112 +7,110 @@
         <h1>
             <span class="mdi mdi-file-import"></span>
             Einstellungen
-
         </h1>
     </header>
 
     <main>
-        <div class="row">
-            <div class="col-md-9">
-                <b>Benutzer </b>
-                <input id="user-name-input" [ngModel]="userName" (ngModelChange)="userName = $event"
-                       class="form-control">
-            </div>
-            <div class="col-md-3">
-                <button id="save-settings-button" class="pull-right btn btn-default"
-                        style="text-align:right"(click)="save()">
-                    Einstellungen übernehmen
-                </button>
-            </div>
-        </div>
-        <br>
-        <br>
+        <div class="form-group row">
 
-        <hr>
+            <div class="col-lg-6 offset-lg-3">
 
-        <div class="row" id="project-switch">
-            <div class="col-md-3">
-                <label for="projectselect" id="project-label">Projekt:</label>
-            </div>
-            <div class="col-md-9">
-                <select class="form-control"
-                        id="projectselect"
-                        [(ngModel)]="selectedProject">
+                <h4>
+                    Projekt- und Benutzereinstellungen
+                </h4>
+                <div class="form-group" style="margin-bottom: 0;">
 
-                    <option *ngFor="let project of settingsService.getProjects()"
-                            [ngValue]="project">
-                        {{project}}
-                    </option>
-                </select>
-            </div>
-        </div>
+                    <label for="projectselect"
+                           class="control-label col-form-label">Projekt</label>
+                    <select class="form-control"
+                            id="projectselect"
+                            [(ngModel)]="selectedProject">
 
-        <hr>
+                        <option *ngFor="let project of settingsService.getProjects()"
+                                [ngValue]="project">
+                            {{project}}
+                        </option>
+                    </select>
 
-        <h5>Synchronisation</h5>
-        <br>
-        <br>
-        <br>
+                    <label class="control-label col-form-label"
+                           for="user-name-input">Benutzer</label>
+                    <input id="user-name-input"
+                           [ngModel]="userName"
+                           (ngModelChange)="userName = $event"
+                           class="form-control">
+                </div>
 
-        <div class="row">
+                <div class="form-group">
 
-            <div class="col-md-6">
-                <b>Serververbindung </b><br><br>
-                <table>
-                    <tr>
-                        <td>
-                            <b>Adresse </b>
-                        </td>
-                        <td>
-                            <input id="server-address-input" [ngModel]="server.ipAddress"
-                                   (ngModelChange)="server.ipAddress = $event"
-                                   class="form-control"
+                    <button id="save-settings-button" class="btn-primary pull-right btn btn-default"
+                            style="text-align:right; margin-top: 35px;"
+                            [ngClass]="{ 'disabled': saving }"
+                            (click)="saving || save()">
+                        Einstellungen übernehmen
+                    </button>
+
+                    <div *ngIf="saving" class="spinner"></div>
+
+                </div>
+
+                <h4 style="margin-top: 35px;">Synchronisierungseinstellungen</h4>
+
+                <h5>Serververbindung </h5>
+
+                <div class="form-group">
+
+                    <label for="server-address-input"
+                           class="control-label col-form-label">Adresse</label>
+                    <input id="server-address-input" [ngModel]="server.ipAddress"
+                           (ngModelChange)="server.ipAddress = $event"
+                           class="form-control"
+                           placeholder="http://x.x.x.x(:port)">
+
+                    <label for="server-user-name-input"
+                           class="control-label col-form-label">Benutzer</label>
+                    <input id="server-user-name-input" [ngModel]="server.userName"
+                           (ngModelChange)="server.userName = $event"
+                           class="form-control">
+
+                    <label for="server-password-input"
+                           class="control-label col-form-label">Passwort</label>
+                    <input id="server-password-input"
+                           type="password"
+                           [ngModel]="server.password"
+                           (ngModelChange)="server.password = $event"
+                           class="form-control">
+                </div>
+
+                <h4 style="margin-top: 35px;">Teammitglieder </h4>
+                <ul id="remote-sites-list" style="padding: 0; margin: 0 0 15px 0;">
+                    <li *ngFor="let remoteSite of remoteSites; let i = index;"
+                        style="list-style-type: none; padding: 5px 0;">
+
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button (click)="removeRemoteSite(i)"
+                                        class="btn-danger btn btn-default">
+                                    <span class="mdi mdi-delete"></span>
+                                </button>
+                            </span>
+                            <input [ngModel]="remoteSite.ipAddress"
+                                   (ngModelChange)="remoteSite.ipAddress = $event"
                                    placeholder="http://x.x.x.x(:port)"
-                            >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Benutzer </b>
-                        </td>
-                        <td>
-                            <input id="server-user-name-input" [ngModel]="server.userName"
-                                   (ngModelChange)="server.userName = $event"
                                    class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Passwort </b>
-                        </td>
-                        <td>
-                            <input id="server-password-input"
-                                   type="password"
-                                   [ngModel]="server.password"
-                                   (ngModelChange)="server.password = $event"
-                                   class="form-control">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <b>Teammitglieder </b><br><br>
-                <ul id="remote-sites-list">
-                    <li *ngFor="let remoteSite of remoteSites; let i = index;">
-                        <b>Adresse: </b>
-                        <input [ngModel]="remoteSite.ipAddress"
-                               (ngModelChange)="remoteSite.ipAddress = $event"
-                               placeholder="http://x.x.x.x(:port)"
-                               class="form-control">
-                        <button (click)="removeRemoteSite(i)"
-                                class="btn btn-default">-</button>
+                        </div>
+
                     </li>
                 </ul>
-                <button id="add-remote-site-button" (click)="addRemoteSite()" class="btn btn-default">
+                <button id="add-remote-site-button"
+                        (click)="addRemoteSite()"
+                        class="btn-primary btn btn-default">
                     Client hinzufügen
                 </button>
+
             </div>
+
         </div>
     </main>
+
 </div>
 

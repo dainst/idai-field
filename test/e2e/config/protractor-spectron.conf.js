@@ -10,7 +10,15 @@ exports.config = {
     seleniumAddress: 'http://localhost:9515/wd/hub',
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
-    specs: ['./delays.js', '../**/*.spec.js'],
+    specs: ['./delays.js',
+        '../syncing/*.spec.js',
+        '../images/*.spec.js',
+        '../import/*.spec.js',
+        '../list/*.spec.js',
+        '../resources/*.spec.js',
+        '../resources/map/*.spec.js',
+        '../widgets/*.spec.js'
+    ],
 
     allScriptsTimeout: 110000,
     getPageTimeout: 100000,

@@ -1,5 +1,5 @@
 import {Routes,RouterModule} from '@angular/router';
-import {ListComponent} from './list/list.component';
+import {ListWrapperComponent} from './list/list-wrapper.component';
 import {ImportComponent} from './import/import.component';
 import {ExportComponent} from'./export/export.component';
 import {EditCanDeactivateGuard as guard1}  from './resources/edit-can-deactivate-guard';
@@ -10,7 +10,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'resources', pathMatch: 'full' },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },
-    { path: 'list', component: ListComponent },
+    { path: 'list', component: ListWrapperComponent },
     { path: 'settings', component: SettingsComponent }
 ];
 

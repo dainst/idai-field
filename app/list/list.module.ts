@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {ListComponent} from './list.component';
+import {ListWrapperComponent} from './list-wrapper.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
@@ -17,7 +17,7 @@ import {ResourcesModule} from "../resources/resources.module"
         ResourcesModule
     ],
     declarations: [
-        ListComponent
+        ListWrapperComponent
     ],
     providers: [
         

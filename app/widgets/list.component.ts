@@ -1,31 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from '../model/idai-field-document';
-import {Query} from 'idai-components-2/datastore';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {M} from '../m';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
-import {EditModalComponent} from '../widgets/edit-modal.component';
+import {EditModalComponent} from './edit-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+    selector: 'list',
     moduleId: module.id,
     templateUrl: './list.html'
 })
 
 export class ListComponent {
+    @Input() documents: IdaiFieldDocument[];
 
     private detailedDocument: IdaiFieldDocument;
-    public documents: IdaiFieldDocument[];
-    public trenches: IdaiFieldDocument[];
-    public selectedDocument: IdaiFieldDocument;
+
     public typesMap: { [type: string]: IdaiType };
     public typesList: IdaiType[];
+
     private projectConfiguration: ProjectConfiguration;
 
-    protected query: Query = {q: '', type: 'resource', prefix: true};
 
     constructor(
         private messages: Messages,
@@ -35,8 +34,7 @@ export class ListComponent {
         private modalService: NgbModal,
         configLoader: ConfigLoader
     ) {
-        this.fetchDocuments();
-        this.fetchTrenches();
+
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
             this.initializeTypesList();
@@ -49,9 +47,7 @@ export class ListComponent {
         let list = this.projectConfiguration.getTypesList();
         this.typesList = [];
         for (var type of list) {
-            if (type.name != "image") {
-                this.typesList.push(type);
-            }
+            this.typesList.push(type);
         }
     }
 
@@ -106,25 +102,6 @@ export class ListComponent {
         detailModal.setDocument(doc);
     }
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     * @param query
-     */
-    public fetchDocuments(query: Query = this.query) {
-        this.detailedDocument = null;
-        this.datastore.find(query).then(documents => {
-            this.documents = documents as IdaiFieldDocument[];
-
-        }).catch(err => { console.error(err); } );
-    }
-
-    private fetchTrenches() {
-        let tquery: Query = {q: '', type: 'trench', prefix: true};
-        this.datastore.find(tquery).then(documents => {
-            this.trenches = documents as IdaiFieldDocument[];
-        }).catch(err => { console.error(err); } );
-    }
 
     public addDocument(new_doc_type): IdaiFieldDocument {
         // TODO - Use Validator class
@@ -133,7 +110,6 @@ export class ListComponent {
         }
 
         let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
-
 
         this.documents.push(newDoc);
         return newDoc;
@@ -157,19 +133,11 @@ export class ListComponent {
 
             var oldVersion = JSON.parse(JSON.stringify(parentDocument));
             this.persistenceManager.persist(parentDocument, this.settingsService.getUserName(),
-                    [oldVersion]).then(doc => {
+                [oldVersion]).then(doc => {
                 this.detailedDocument = newDoc;
             });
         })
 
     }
 
-    public select(documentToSelect: IdaiFieldDocument) {
-       this.selectedDocument = documentToSelect;
-    }
-
-    public queryChanged(query: Query) {
-        this.query = query;
-        this.fetchDocuments(query);
-    }
 }

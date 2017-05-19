@@ -1,6 +1,7 @@
 import {IdaiFieldDocument} from "../model/idai-field-document";
 import {Datastore} from "idai-components-2/datastore";
 import {SyncState} from "./sync-state";
+import {Observable} from "rxjs/Observable";
 
 /**
  * The interface for datastores supporting
@@ -39,4 +40,5 @@ export abstract class IdaiFieldDatastore extends Datastore {
     abstract select(name: string): any;
 
     abstract findConflicted(): Promise<IdaiFieldDocument[]>;
+
 }

@@ -14,7 +14,7 @@ export function main() {
         }
     );
 
-    xdescribe('PouchdbDatastore', () => {
+    describe('PouchdbDatastore', () => {
 
         let datastore : PouchdbDatastore;
 

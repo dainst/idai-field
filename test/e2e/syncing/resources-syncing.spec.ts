@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const common = require('../common');
-const resourcesPage = require('./resources.page');
+const resourcesPage = require('../resources/resources.page');
 const documentViewPage = require('../widgets/document-view.page');
 const settingsPage = require('../settings.page');
 

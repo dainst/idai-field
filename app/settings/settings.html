@@ -18,7 +18,7 @@
                 <h4>
                     Projekt- und Benutzereinstellungen
                 </h4>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 0;">
 
                     <label for="projectselect"
                            class="control-label col-form-label">Projekt</label>
@@ -40,12 +40,18 @@
                            class="form-control">
                 </div>
 
-                <button id="save-settings-button" class="btn-primary pull-right btn btn-default"
-                        style="text-align:right"
-                        (click)="save()">
-                    Einstellungen übernehmen
-                </button>
+                <div class="form-group">
 
+                    <button id="save-settings-button" class="btn-primary pull-right btn btn-default"
+                            style="text-align:right; margin-top: 35px;"
+                            [ngClass]="{ 'disabled': saving }"
+                            (click)="saving || save()">
+                        Einstellungen übernehmen
+                    </button>
+
+                    <div *ngIf="saving" class="spinner"></div>
+
+                </div>
 
                 <h4 style="margin-top: 35px;">Synchronisierungseinstellungen</h4>
 

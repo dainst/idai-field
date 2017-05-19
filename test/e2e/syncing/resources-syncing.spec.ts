@@ -130,7 +130,7 @@ describe('resources/syncing tests --', function() {
 
         settingsPage.clickRemoveRemoteSiteButton();
         settingsPage.clickSaveSettingsButton();
-        browser.sleep(5000);
+        return browser.sleep(5000);
     }
 
     function createConflict(): Promise<any> {
@@ -176,7 +176,7 @@ describe('resources/syncing tests --', function() {
             .then(() => done());
     });
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         settingsPage.get();
         configureRemoteSite();

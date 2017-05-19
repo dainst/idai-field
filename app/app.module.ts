@@ -19,6 +19,7 @@ import {ExportComponent} from './export/export.component';
 import {Importer} from './import/importer';
 import {Exporter} from './export/exporter';
 import {RelationsCompleter} from './import/relations-completer';
+import {SynchronizationComponent} from './sync/synchronization.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
@@ -34,8 +35,6 @@ import {SettingsModule} from './settings/settings.module';
 import {AppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
 import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
-import {TaskbarComponent} from "./taskbar.component";
-import {WidgetsModule} from "./widgets/widgets.module";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -52,15 +51,14 @@ const CONFIG = require('electron').remote.getGlobal('config');
         IdaiDocumentsModule,
         IdaiMessagesModule,
         routing,
-        IdaiWidgetsModule,
-        WidgetsModule
+        IdaiWidgetsModule
     ],
     declarations: [
         AppComponent,
         NavbarComponent,
-        TaskbarComponent,
         ImportComponent,
-        ExportComponent
+        ExportComponent,
+        SynchronizationComponent
     ],
     providers: [
         SettingsService,

@@ -4,7 +4,6 @@
 
 @import "variables";
 @import "navbar";
-@import "taskbar";
 @import "desktop/info-window";
 @import "spinner";
 @import "resources/resources";
@@ -13,6 +12,7 @@
 @import "settings/settings";
 @import "images/images";
 @import 'widgets/widgets';
+@import "sync/synchronization";
 
 html {
   position: relative;

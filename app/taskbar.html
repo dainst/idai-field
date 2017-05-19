@@ -3,7 +3,7 @@
         <template #popContent>
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
-                    [routerLink]="['resources', document.resource.id, 'edit', { tab: 'conflicts' }]"
+                    [routerLink]="['resources', document.resource.id, 'edit']"
                     (click)="p.close()">
                     <document-teaser [document]="document"></document-teaser>
                 </li>

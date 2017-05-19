@@ -130,7 +130,7 @@ describe('resources/syncing tests --', function() {
 
         settingsPage.clickRemoveRemoteSiteButton();
         settingsPage.clickSaveSettingsButton();
-        browser.sleep(5000);
+        return browser.sleep(5000);
     }
 
     function createConflict(): Promise<any> {
@@ -183,11 +183,13 @@ describe('resources/syncing tests --', function() {
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
-                    console.log("change",change);
-                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
-                        done();
+                    if (change.doc.resource && change.doc.resource.identifier == 'test3') {
+                        console.log("change",change)
+                        NavbarPage.clickNavigateToSettings().then(()=>
+                            removeRemoteSiteConfiguration()
+                        ).then(()=>done());
+                    }
                 });
-                browser.sleep(1000);
                 resourcesPage.performCreateResource('test3');
             }).catch(err => { fail(err); done(); });
     });

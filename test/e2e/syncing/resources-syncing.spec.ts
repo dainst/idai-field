@@ -176,6 +176,22 @@ describe('resources/syncing tests --', function() {
             .then(() => done());
     });
 
+    it('resource created in client should be synced to other db', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        NavbarPage.clickNavigateToResources()
+            .then(() => {
+                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
+                    console.log("change",change);
+                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
+                        done();
+                });
+                browser.sleep(1000);
+                resourcesPage.performCreateResource('test3');
+            }).catch(err => { fail(err); done(); });
+    });
+
     it('should show resource created in other db', done => {
 
         settingsPage.get();
@@ -199,20 +215,6 @@ describe('resources/syncing tests --', function() {
                 expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2');
                 done();
             }));
-    });
-
-    xit('resource created in client should be synced to other db', done => {
-
-        settingsPage.get();
-        configureRemoteSite();
-        NavbarPage.clickNavigateToResources()
-            .then(() => {
-                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
-                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
-                        done();
-                });
-                resourcesPage.performCreateResource('test3');
-            }).catch(err => { fail(err); done(); });
     });
 
     it('should save syncing settings to config file and load them after restart', done => {

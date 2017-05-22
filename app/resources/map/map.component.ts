@@ -3,7 +3,6 @@ import {IdaiFieldDocument} from '../../model/idai-field-document';
 import {IdaiFieldResource} from '../../model/idai-field-resource';
 import {IdaiFieldPolygon} from './idai-field-polygon';
 import {IdaiFieldMarker} from './idai-field-marker';
-import {IdaiFieldGeometry} from '../../model/idai-field-geometry';
 import {MapState} from './map-state';
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
@@ -23,7 +22,6 @@ export class MapComponent implements OnChanges {
     @Input() selectedDocument: IdaiFieldDocument;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
     protected map: L.Map;
     protected polygons: { [resourceId: string]: IdaiFieldPolygon } = {};

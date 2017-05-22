@@ -19,3 +19,9 @@
         <span class="layer-menu-label">{{layer.document.resource.shortDescription}}</span>
     </div>
 </div>
+
+<div *ngIf="editMode != 'none'">
+    <div id="map-editor-button-delete" class="btn btn-danger mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>
+    <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">OK</div>
+    <div id="map-editor-button-abort" class="btn btn-primary" (click)="abortEditing()">Abbrechen</div>
+</div>

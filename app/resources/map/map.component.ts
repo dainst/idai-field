@@ -26,25 +26,21 @@ export class MapComponent implements OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
-    @Input() editMode: string; // polygon | point | none
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
-    private map: L.Map;
-    private polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
-    private markers: { [resourceId: string]: IdaiFieldMarker } = {};
+    protected map: L.Map;
+    protected polygons: { [resourceId: string]: IdaiFieldPolygon } = {};
+    protected markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
-    private bounds: any[]; // in fact L.LatLng[], but leaflet typings are incomplete
+    protected bounds: any[]; // in fact L.LatLng[], but leaflet typings are incomplete
 
-    private editablePolygon: L.Polygon;
-    private editableMarker: L.Marker;
+    protected layers: { [id: string]: ImageContainer } = {};
+    protected activeLayers: Array<ImageContainer> = [];
+    protected panes: { [id: string]: any } = {};
 
-    private layers: { [id: string]: ImageContainer } = {};
-    private activeLayers: Array<ImageContainer> = [];
-    private panes: { [id: string]: any } = {};
-
-    private markerIcons = {
+    protected markerIcons = {
         'blue': L.icon({
             iconUrl: 'img/marker-icons/marker-icon-blue.png',
             shadowUrl: 'img/marker-icons/marker-shadow.png',
@@ -71,12 +67,11 @@ export class MapComponent implements OnChanges {
         })
     };
 
-
     constructor(
-        private mapState: MapState,
-        private datastore: Datastore,
-        private imagestore: Imagestore,
-        private messages: Messages
+        protected mapState: MapState,
+        protected datastore: Datastore,
+        protected imagestore: Imagestore,
+        protected messages: Messages
     ) {
         this.bounds = [];
     }
@@ -90,17 +85,15 @@ export class MapComponent implements OnChanges {
 
     public ngOnChanges(changes: SimpleChanges) {
 
-        if (!this.documents) return;
-
         if (!this.map) {
-            this.getMap();
+            this.map = this.createMap();
         } else {
             this.clearMap();
         }
 
-        let p;
+        let promise;
         if (changes['documents']) {
-            p = this.initializeLayers().then(
+            promise = this.initializeLayers().then(
                 () => {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
@@ -112,7 +105,7 @@ export class MapComponent implements OnChanges {
                 }
             );
         } else {
-            p = Promise.resolve();
+            promise = Promise.resolve();
         }
 
         this.bounds = [];
@@ -122,8 +115,8 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        p.then(() => {
-            this.getMap().invalidateSize(true);
+        promise.then(() => {
+            this.map.invalidateSize(true);
 
             if (this.selectedDocument) {
                 if (this.polygons[this.selectedDocument.resource.id]) {
@@ -132,37 +125,9 @@ export class MapComponent implements OnChanges {
                     this.focusMarker(this.markers[this.selectedDocument.resource.id]);
                 }
             } else if (!this.mapState.getCenter() && this.bounds.length > 1) {
-                this.getMap().fitBounds(L.latLngBounds(this.bounds));
+                this.map.fitBounds(L.latLngBounds(this.bounds));
             }
         });
-
-        this.resetEditing();
-
-        switch (this.editMode) {
-            case 'none':
-                break;
-            case 'polygon':
-                this.fadeOutMapElements();
-                this.startPolygonCreation();
-                break;
-            case 'point':
-                this.fadeOutMapElements();
-                this.startPointCreation();
-                break;
-            case 'existing':
-                this.fadeOutMapElements();
-                this.editExistingGeometry();
-                break;
-        }
-    }
-
-    private getMap(): L.Map {
-
-        if (!this.map) {
-            this.map = this.createMap();
-        }
-
-        return this.map;
     }
 
     private createMap(): L.Map {
@@ -265,7 +230,7 @@ export class MapComponent implements OnChanges {
         for (var i in layers) {
             var id = layers[i].document.resource.id;
             if (!this.panes[id]) {
-                var pane = this.getMap().createPane(id);
+                var pane = this.map.createPane(id);
                 pane.style.zIndex = String(layers[i].zIndex);
                 this.panes[id] = pane;
             }
@@ -275,11 +240,11 @@ export class MapComponent implements OnChanges {
     private clearMap() {
 
         for (var i in this.polygons) {
-            this.getMap().removeLayer(this.polygons[i]);
+            this.map.removeLayer(this.polygons[i]);
         }
 
         for (var i in this.markers) {
-            this.getMap().removeLayer(this.markers[i]);
+            this.map.removeLayer(this.markers[i]);
         }
 
         this.polygons = {};
@@ -327,7 +292,7 @@ export class MapComponent implements OnChanges {
             mapComponent.select(this.document);
         });
 
-        marker.addTo(this.getMap());
+        marker.addTo(this.map);
         this.markers[document.resource.id] = marker;
 
         return marker;
@@ -351,7 +316,7 @@ export class MapComponent implements OnChanges {
             if (mapComponent.select(this.document)) L.DomEvent.stop(event);
         });
 
-        polygon.addTo(this.getMap());
+        polygon.addTo(this.map);
         this.polygons[document.resource.id] = polygon;
 
         return polygon;
@@ -364,7 +329,7 @@ export class MapComponent implements OnChanges {
             georef.topLeftCoordinates,
             georef.topRightCoordinates,
             georef.bottomLeftCoordinates,
-            { pane: layer.document.resource.id }).addTo(this.getMap());
+            { pane: layer.document.resource.id }).addTo(this.map);
         this.extendBounds(L.latLng(georef.topLeftCoordinates));
         this.extendBounds(L.latLng(georef.topRightCoordinates));
         this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
@@ -379,7 +344,7 @@ export class MapComponent implements OnChanges {
             this.addLayerToMap(layer);
         } else {
             this.activeLayers.splice(index, 1);
-            this.getMap().removeLayer(layer.object);
+            this.map.removeLayer(layer.object);
         }
 
         this.saveActiveLayersIdsInMapState();
@@ -416,12 +381,12 @@ export class MapComponent implements OnChanges {
 
     private focusMarker(marker: L.Marker) {
 
-        this.getMap().panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
+        this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
     }
 
     private focusPolygon(polygon: L.Polygon) {
 
-        this.getMap().fitBounds(polygon.getBounds(), { padding: [50, 50] });
+        this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
     }
 
     public focusLayer(layer: ImageContainer) {
@@ -433,7 +398,7 @@ export class MapComponent implements OnChanges {
         bounds.push(L.latLng(georef.topRightCoordinates));
         bounds.push(L.latLng(georef.bottomLeftCoordinates));
 
-        this.getMap().fitBounds(bounds);
+        this.map.fitBounds(bounds);
     }
 
     private getShortDescription(resource: IdaiFieldResource) {
@@ -446,206 +411,20 @@ export class MapComponent implements OnChanges {
         return shortDescription;
     }
 
-    private clickOnMap(clickPosition: L.LatLng) {
+    protected clickOnMap(clickPosition: L.LatLng) {
 
-        switch(this.editMode) {
-            case "point":
-                this.setEditableMarkerPosition(clickPosition);
-                break;
-            case "none":
-                this.deselect();
-                break;
-        }
+        this.deselect();
     }
 
-    private select(document: IdaiFieldDocument): boolean {
+    protected select(document: IdaiFieldDocument): boolean {
 
-        if (this.editMode == "none") {
-            this.onSelectDocument.emit(document);
-            return true;
-        } else {
-            return false;
-        }
+        this.onSelectDocument.emit(document);
+        return true;
     }
 
-    private deselect() {
+    protected deselect() {
 
-        if (this.editMode == "none") {
-            this.onSelectDocument.emit(null);
-        }
-    }
-
-    private editExistingGeometry() {
-
-        switch (this.selectedDocument.resource.geometry.type) {
-            case 'Polygon':
-                this.editMode = "polygon";
-                this.startPolygonEditing();
-                break;
-            case 'Point':
-                this.editMode = "point";
-                this.startPointEditing();
-                break;
-        }
-    }
-
-    private startPolygonCreation() {
-
-        var drawOptions = {
-            templineStyle: { color: 'red' },
-            hintlineStyle: { color: 'red' }
-        };
-
-        this.getMap().pm.enableDraw('Poly', drawOptions);
-
-        var mapComponent = this;
-        this.getMap().on('pm:create', function(event: L.LayerEvent) {
-            mapComponent.editablePolygon = <L.Polygon> event.layer;
-            mapComponent.setupEditablePolygon();
-        });
-    }
-
-    private startPolygonEditing() {
-
-        this.editablePolygon = this.polygons[this.selectedDocument.resource.id];
-        this.editablePolygon.unbindTooltip();
-        this.setupEditablePolygon();
-    }
-
-    private setupEditablePolygon() {
-
-        this.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
-        this.editablePolygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
-
-        var mapComponent = this;
-        this.editablePolygon.on('pm:edit', function() {
-            if (this._latlngs[0].length < 2) {
-                mapComponent.deleteGeometry();
-            }
-        });
-    }
-
-    private startPointCreation() {
-
-        this.createEditableMarker(this.getMap().getCenter());
-    }
-
-    private startPointEditing() {
-
-        this.editableMarker = this.markers[this.selectedDocument.resource.id];
-        this.editableMarker.unbindTooltip();
-        this.editableMarker.setIcon(this.markerIcons.red);
-        this.editableMarker.dragging.enable();
-        this.editableMarker.setZIndexOffset(1000);
-    }
-
-    private createEditableMarker(position: L.LatLng) {
-
-        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
-        this.editableMarker.addTo(this.getMap());
-    }
-
-    private setEditableMarkerPosition(position: L.LatLng) {
-
-        if (!this.editableMarker) {
-            this.createEditableMarker(position);
-        } else {
-            this.editableMarker.setLatLng(position);
-        }
-    }
-
-    private fadeOutMapElements() {
-
-        for (var i in this.polygons) {
-            if (this.polygons[i].document != this.selectedDocument) {
-                this.polygons[i].setStyle({ opacity: 0.25, fillOpacity: 0.1 });
-            }
-        }
-
-        for (var i in this.markers) {
-            if (this.markers[i].document != this.selectedDocument) {
-                this.markers[i].setOpacity(0.5);
-            }
-        }
-    }
-
-    private fadeInMapElements() {
-
-        for (var i in this.polygons) {
-            this.polygons[i].setStyle({ opacity: 0.5, fillOpacity: 0.2 });
-        }
-
-        for (var i in this.markers) {
-            this.markers[i].setOpacity(1);
-        }
-    }
-
-    public deleteGeometry() {
-
-        this.resetEditing();
-
-        if (this.editMode == 'polygon') {
-            this.startPolygonCreation();
-        }
-    }
-
-    public finishEditing() {
-
-        var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
-
-        if (this.editablePolygon) {
-            geometry.type = "Polygon";
-            geometry.coordinates = this.getCoordinatesFromPolygon(this.editablePolygon);
-        } else if (this.editableMarker) {
-            geometry.type = "Point";
-            geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
-        } else {
-            geometry = null;
-        }
-
-        this.fadeInMapElements();
-        this.resetEditing();
-
-        this.onQuitEditing.emit(geometry);
-    }
-
-    public abortEditing() {
-
-        this.fadeInMapElements();
-        this.resetEditing();
-
-        this.onQuitEditing.emit(undefined);
-    }
-
-    private resetEditing() {
-
-        if (this.editablePolygon) {
-            this.editablePolygon.pm.disable();
-            this.getMap().removeLayer(this.editablePolygon);
-            this.editablePolygon = undefined;
-        }
-
-        if (this.editableMarker) {
-            this.getMap().removeLayer(this.editableMarker);
-            this.editableMarker = undefined;
-        }
-
-        this.getMap().pm.disableDraw('Poly');
-    }
-
-    private getCoordinatesFromPolygon(polygon: L.Polygon): Array<any> {
-
-        var coordinates = [];
-        var latLngs = polygon.getLatLngs();
-
-        for (var i in latLngs) {
-            coordinates.push([]);
-            for (var j in latLngs[i]) {
-                coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
-            }
-        }
-
-        return coordinates;
+        this.onSelectDocument.emit(null);
     }
 
     private getPolygonFromCoordinates(coordinates: Array<any>): L.Polygon {

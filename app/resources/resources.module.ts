@@ -6,7 +6,7 @@ import {GeometryViewComponent} from './geometry-view.component';
 import {EditNavigationComponent} from './edit-navigation.component';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MapComponent} from './map/map.component';
+import {EditableMapComponent} from './map/editable-map.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {MapState} from './map/map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
@@ -28,7 +28,7 @@ import {IdaiWidgetsModule} from "idai-components-2/widgets"
         GeometryViewComponent,
         EditNavigationComponent,
         MapWrapperComponent,
-        MapComponent,
+        EditableMapComponent,
         PlusButtonComponent
     ],
     providers: [

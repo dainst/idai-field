@@ -1,5 +1,5 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter} from '@angular/core';
-import {MapComponent} from './map.component';
+import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldGeometry} from '../../model/idai-field-geometry';
 import {IdaiFieldDocument} from '../../model/idai-field-document';
 
@@ -12,7 +12,7 @@ import {IdaiFieldDocument} from '../../model/idai-field-document';
 /**
  * @author Thomas Kleinke
  */
-export class EditableMapComponent extends MapComponent {
+export class EditableMapComponent extends LayerMapComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;

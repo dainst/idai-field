@@ -5,18 +5,13 @@ import {IdaiFieldPolygon} from './idai-field-polygon';
 import {IdaiFieldMarker} from './idai-field-marker';
 import {IdaiFieldGeometry} from '../../model/idai-field-geometry';
 import {MapState} from './map-state';
-import {Datastore, Query} from 'idai-components-2/datastore';
-import {Imagestore} from '../../imagestore/imagestore';
+import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {Document} from 'idai-components-2/core';
-import {ImageContainer} from '../../imagestore/image-container';
-import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
-import {BlobMaker} from '../../imagestore/blob-maker';
 
 @Component({
     moduleId: module.id,
     selector: 'map',
-    templateUrl: './map.html'
+    template: '<div id="map-container"></div>'
 })
 
 /**
@@ -35,10 +30,6 @@ export class MapComponent implements OnChanges {
     protected markers: { [resourceId: string]: IdaiFieldMarker } = {};
 
     protected bounds: any[]; // in fact L.LatLng[], but leaflet typings are incomplete
-
-    protected layers: { [id: string]: ImageContainer } = {};
-    protected activeLayers: Array<ImageContainer> = [];
-    protected panes: { [id: string]: any } = {};
 
     protected markerIcons = {
         'blue': L.icon({
@@ -70,7 +61,6 @@ export class MapComponent implements OnChanges {
     constructor(
         protected mapState: MapState,
         protected datastore: Datastore,
-        protected imagestore: Imagestore,
         protected messages: Messages
     ) {
         this.bounds = [];
@@ -91,23 +81,6 @@ export class MapComponent implements OnChanges {
             this.clearMap();
         }
 
-        let promise;
-        if (changes['documents']) {
-            promise = this.initializeLayers().then(
-                () => {
-                    this.initializePanes();
-                    this.addActiveLayersFromMapState();
-                    var layers = this.getLayersAsList();
-                    if (this.activeLayers.length == 0 && layers.length > 0 && !this.mapState.getActiveLayersIds()) {
-                        this.addLayerToMap(layers[0]);
-                        this.saveActiveLayersIdsInMapState();
-                   }
-                }
-            );
-        } else {
-            promise = Promise.resolve();
-        }
-
         this.bounds = [];
         for (var i in this.documents) {
             if (this.documents[i].resource.geometry) {
@@ -115,19 +88,7 @@ export class MapComponent implements OnChanges {
             }
         }
 
-        promise.then(() => {
-            this.map.invalidateSize(true);
-
-            if (this.selectedDocument) {
-                if (this.polygons[this.selectedDocument.resource.id]) {
-                    this.focusPolygon(this.polygons[this.selectedDocument.resource.id]);
-                } else if (this.markers[this.selectedDocument.resource.id]) {
-                    this.focusMarker(this.markers[this.selectedDocument.resource.id]);
-                }
-            } else if (!this.mapState.getCenter() && this.bounds.length > 1) {
-                this.map.fitBounds(L.latLngBounds(this.bounds));
-            }
-        });
+        this.setView();
     }
 
     private createMap(): L.Map {
@@ -162,78 +123,18 @@ export class MapComponent implements OnChanges {
         }.bind(this));
     }
 
-    private initializeLayers(): Promise<any> {
+    protected setView() {
 
-        return new Promise((resolve, reject) => {
+        this.map.invalidateSize(true);
 
-            let query: Query = {
-                q: '',
-                type: 'image',
-                prefix: true
-            };
-
-            this.datastore.find(query).then(
-                documents => {
-                    this.makeLayersForDocuments(documents as Document[], resolve);
-                },
-                error => {
-                    reject(error);
-                });
-        });
-    }
-
-    private makeLayersForDocuments(documents: Array<Document>, resolve: any) {
-
-        var zIndex: number = 0;
-        var promises: Array<Promise<any>> = [];
-        for (var doc of documents) {
-            if (doc.resource['georeference']
-                && !this.layers[doc.resource.id]
-            ) {
-                var promise = this.makeLayerForImageResource(doc, zIndex++);
-                promises.push(promise);
+        if (this.selectedDocument) {
+            if (this.polygons[this.selectedDocument.resource.id]) {
+                this.focusPolygon(this.polygons[this.selectedDocument.resource.id]);
+            } else if (this.markers[this.selectedDocument.resource.id]) {
+                this.focusMarker(this.markers[this.selectedDocument.resource.id]);
             }
-        }
-        Promise.all(promises).then((imgContainers) => {
-            for (var imgContainer of imgContainers) {
-                this.layers[imgContainer.document.resource.id] = imgContainer;
-            }
-            resolve();
-        });
-    }
-
-    private makeLayerForImageResource(document: Document, zIndex: number) {
-
-        return new Promise<any>((resolve,reject)=> {
-            var imgContainer : ImageContainer = {
-                document: (<IdaiFieldImageDocument>document),
-                zIndex: zIndex
-            };
-            this.imagestore.read(document.resource['identifier'],true,false).then(
-                url => {
-                    imgContainer.imgSrc = url;
-                    resolve(imgContainer);
-                }
-            ).catch(
-                msgWithParams => {
-                    imgContainer.imgSrc = BlobMaker.blackImg;
-                    this.messages.add(msgWithParams);
-                    reject();
-                }
-            );
-        });
-    }
-
-    private initializePanes() {
-
-        var layers = this.getLayersAsList();
-        for (var i in layers) {
-            var id = layers[i].document.resource.id;
-            if (!this.panes[id]) {
-                var pane = this.map.createPane(id);
-                pane.style.zIndex = String(layers[i].zIndex);
-                this.panes[id] = pane;
-            }
+        } else if (!this.mapState.getCenter() && this.bounds.length > 1) {
+            this.map.fitBounds(L.latLngBounds(this.bounds));
         }
     }
 
@@ -251,7 +152,7 @@ export class MapComponent implements OnChanges {
         this.markers = {};
     }
 
-    private extendBounds(latLng: L.LatLng) {
+    protected extendBounds(latLng: L.LatLng) {
         this.bounds.push(latLng);
     }
 
@@ -322,63 +223,6 @@ export class MapComponent implements OnChanges {
         return polygon;
     }
 
-    private addLayerToMap(layer: ImageContainer) {
-
-        let georef = layer.document.resource.georeference;
-        layer.object = L.imageOverlay.rotated(layer.imgSrc,
-            georef.topLeftCoordinates,
-            georef.topRightCoordinates,
-            georef.bottomLeftCoordinates,
-            { pane: layer.document.resource.id }).addTo(this.map);
-        this.extendBounds(L.latLng(georef.topLeftCoordinates));
-        this.extendBounds(L.latLng(georef.topRightCoordinates));
-        this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
-
-        this.activeLayers.push(layer);
-    }
-
-    public toggleLayer(layer: ImageContainer) {
-
-        var index = this.activeLayers.indexOf(layer);
-        if (index == -1) {
-            this.addLayerToMap(layer);
-        } else {
-            this.activeLayers.splice(index, 1);
-            this.map.removeLayer(layer.object);
-        }
-
-        this.saveActiveLayersIdsInMapState();
-    }
-
-    public isActiveLayer(layer: ImageContainer) {
-
-        return this.activeLayers.indexOf(layer) > -1;
-    }
-
-    private saveActiveLayersIdsInMapState() {
-
-        var activeLayersIds: Array<string> = [];
-
-        for (var i in this.activeLayers) {
-            activeLayersIds.push(this.activeLayers[i].document.resource.id);
-        }
-
-        this.mapState.setActiveLayersIds(activeLayersIds);
-    }
-
-    private addActiveLayersFromMapState() {
-
-        var activeLayersIds: Array<string> = this.mapState.getActiveLayersIds();
-
-        for (var i in activeLayersIds) {
-            var layerId = activeLayersIds[i];
-            var layer = this.layers[layerId];
-            if (layer && this.activeLayers.indexOf(layer) == -1) {
-                this.addLayerToMap(layer);
-            }
-        }
-    }
-
     private focusMarker(marker: L.Marker) {
 
         this.map.panTo(marker.getLatLng(), { animate: true, easeLinearity: 0.3 });
@@ -387,18 +231,6 @@ export class MapComponent implements OnChanges {
     private focusPolygon(polygon: L.Polygon) {
 
         this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
-    }
-
-    public focusLayer(layer: ImageContainer) {
-
-        let georef = layer.document.resource.georeference;
-        let bounds = [];
-
-        bounds.push(L.latLng(georef.topLeftCoordinates));
-        bounds.push(L.latLng(georef.topRightCoordinates));
-        bounds.push(L.latLng(georef.bottomLeftCoordinates));
-
-        this.map.fitBounds(bounds);
     }
 
     private getShortDescription(resource: IdaiFieldResource) {
@@ -432,20 +264,4 @@ export class MapComponent implements OnChanges {
         var feature = L.polygon(coordinates).toGeoJSON();
         return L.polygon(<any> feature.geometry.coordinates[0]);
     }
-
-    private getLayersAsList(): Array<ImageContainer> {
-
-        var layersList: Array<ImageContainer> = [];
-
-        for (var i in this.layers) {
-            if (this.layers.hasOwnProperty(i)) {
-                layersList.push(this.layers[i]);
-            }
-        }
-
-        return layersList.sort((layer1, layer2) => layer1.zIndex - layer2.zIndex);
-    }
 }
-
-
-

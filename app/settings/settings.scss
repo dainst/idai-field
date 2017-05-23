@@ -15,7 +15,7 @@
     border-bottom: 1px solid #ccc;
   }
 
-  header .mdi {
+  header .mdi-file-import {
     display: inline-block;
     font-size: 1.1em;
     color: #fff;
@@ -36,10 +36,16 @@
     margin-top: 25px;
   }
 
-  .spinner {
-    position: relative;
-    display: inline-block;
-    top: 30px;
-    left: 5px;
+  #save-settings-button:active,
+  #save-settings-button:focus {
+    outline: none;
+  }
+
+  #save-settings-button {
+    margin-right: 7px;
+    margin-top: 7px;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
   }
 }

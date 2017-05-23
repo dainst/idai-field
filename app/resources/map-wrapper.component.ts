@@ -130,8 +130,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         }.bind(this)).catch(err=>console.log("MapWrapperComponent.ngOnInit caught err after calling getRouteParams: ",err));
     }
-    
-
 
     private selectedDocIsNew() : boolean {
         return (this.resourcesComponent.getSelected().resource.id == undefined);

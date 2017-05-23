@@ -24,7 +24,7 @@ export class EditCanDeactivateGuard
             
             if (this.documentEditChangeMonitor.isChanged()) return false;
                 
-            if (component.mode ==' new') {
+            if (component.mode == 'new') {
                 component.restore().then(() => {
                     return true;
                 }).catch(() => {

@@ -1,4 +1,3 @@
-import {Injectable} from "@angular/core";
 import {Parser} from "./parser";
 import {Observable} from "rxjs/Observable";
 import {Document} from "idai-components-2/core";

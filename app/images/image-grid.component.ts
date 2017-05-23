@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {Imagestore} from '../imagestore/imagestore';

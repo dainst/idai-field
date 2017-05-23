@@ -1,8 +1,8 @@
-import {Document} from "idai-components-2/core";
-import {ImportStrategy} from "./import-strategy";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {M} from "../m";
+import {Document} from 'idai-components-2/core';
+import {ImportStrategy} from './import-strategy';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {M} from '../m';
 
 /**
  * @author Daniel de Oliveira

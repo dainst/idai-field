@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Datastore} from "idai-components-2/datastore";
 import {SyncState} from "./sync-state";
 

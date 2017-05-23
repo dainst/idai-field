@@ -4,7 +4,6 @@ import {Datastore} from "idai-components-2/datastore";
 import {ImageComponentBase} from "./image-component-base";
 import {Messages} from "idai-components-2/messages";
 import {Imagestore} from "../imagestore/imagestore";
-import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     moduleId: module.id,

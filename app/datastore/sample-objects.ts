@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 export var DOCS: IdaiFieldDocument[] = [
     {

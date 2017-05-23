@@ -1,10 +1,8 @@
-import { Injectable }           from '@angular/core';
-import { CanDeactivate,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot }  from '@angular/router';
-import {DocumentEditChangeMonitor} from "idai-components-2/documents";
-import { EditNavigationComponent } from './edit-navigation.component';
-import { CanDeactivateGuardBase} from '../common/can-deactivate-guard-base';
+import {Injectable} from '@angular/core';
+import {CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {EditNavigationComponent} from './edit-navigation.component';
+import {CanDeactivateGuardBase} from '../common/can-deactivate-guard-base';
 
 /**
  * @author Daniel de Oliveira
@@ -14,7 +12,7 @@ export class EditCanDeactivateGuard
     extends CanDeactivateGuardBase
     implements CanDeactivate<EditNavigationComponent> {
 
-    constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) {super();}
+    constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) { super(); }
     
     canDeactivate(
         component: EditNavigationComponent,
@@ -22,7 +20,7 @@ export class EditCanDeactivateGuard
         state: RouterStateSnapshot
     ): Promise<boolean> | boolean {
         
-        return this.resolveOrShowModal(component,function() {
+        return this.resolveOrShowModal(component, function() {
             return (!this.documentEditChangeMonitor.isChanged());
         }.bind(this));
     }

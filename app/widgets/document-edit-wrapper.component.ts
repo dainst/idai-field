@@ -1,17 +1,17 @@
 import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
+import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
-import {M} from '../m';
 import {Validator, PersistenceManager} from 'idai-components-2/persist';
-import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {M} from '../m';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from './image-picker.component';
 import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageGridBuilder} from '../common/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
-import {DatastoreErrors} from 'idai-components-2/datastore';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from "../settings/settings-service";
 

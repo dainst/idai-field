@@ -1,13 +1,13 @@
 import {Component, SimpleChanges} from '@angular/core';
-import {MapComponent} from './map.component';
+import {MapComponent} from 'idai-components-2/idai-field-map';
+import {Datastore, Query} from 'idai-components-2/datastore';
+import {Messages} from 'idai-components-2/messages';
+import {Document} from 'idai-components-2/core';
+import {LayerMapState} from './layer-map-state';
 import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
-import {MapState} from './map-state';
-import {Datastore, Query} from 'idai-components-2/datastore';
-import {Messages} from 'idai-components-2/messages';
-import {Document} from 'idai-components-2/core';
 
 @Component({
     moduleId: module.id,
@@ -20,13 +20,16 @@ import {Document} from 'idai-components-2/core';
  */
 export class LayerMapComponent extends MapComponent {
 
+    protected mapState: LayerMapState;
+
     protected layers: { [id: string]: ImageContainer } = {};
     protected activeLayers: Array<ImageContainer> = [];
     protected panes: { [id: string]: any } = {};
 
     private layersReady: Promise<any>;
 
-    constructor(mapState: MapState,
+
+    constructor(mapState: LayerMapState,
                 datastore: Datastore,
                 messages: Messages,
                 protected imagestore: Imagestore) {

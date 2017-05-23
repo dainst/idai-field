@@ -1,6 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {Observer} from "rxjs/Observer";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Settings} from "./settings";
 import {SettingsSerializer} from "./settings-serializer";

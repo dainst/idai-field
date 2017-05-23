@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IdaiFieldDocument} from '../model/idai-field-document';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';

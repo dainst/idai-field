@@ -1,7 +1,6 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter} from '@angular/core';
 import {LayerMapComponent} from './layer-map.component';
-import {IdaiFieldGeometry} from '../../model/idai-field-geometry';
-import {IdaiFieldDocument} from '../../model/idai-field-document';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 
 @Component({
     moduleId: module.id,

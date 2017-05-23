@@ -1,8 +1,6 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {Datastore, Query} from "idai-components-2/datastore";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {FilterUtility} from "../util/filter-utility";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 @Component({
     selector: 'document-picker',

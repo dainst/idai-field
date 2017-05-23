@@ -7,7 +7,7 @@ import {M} from "../m";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
 import {DOCS} from "./sample-objects";
 import {SyncState} from "./sync-state";
-import {IdaiFieldDocument} from "../model/idai-field-document";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import * as PouchDB from "pouchdb";
 import {IndexCreator} from "./index-creator";
 

@@ -1,4 +1,4 @@
-import {IdaiFieldResource} from '../model/idai-field-resource';
+import {IdaiFieldResource} from 'idai-components-2/idai-field-model';
 
 const deepEqual = require('deep-equal');
 

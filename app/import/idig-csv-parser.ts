@@ -1,9 +1,8 @@
-import {Observable} from "rxjs/Observable";
-import {IdaiFieldDocument} from "../model/idai-field-document";
-import {IdaiFieldGeometry} from "../model/idai-field-geometry";
-import {M} from "../m";
-import {Document} from "idai-components-2/core";
-import {AbstractParser} from "./abstract-parser";
+import {Observable} from 'rxjs/Observable';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {M} from '../m';
+import {Document} from 'idai-components-2/core';
+import {AbstractParser} from './abstract-parser';
 
 /**
  * @author Sebastian Cuy

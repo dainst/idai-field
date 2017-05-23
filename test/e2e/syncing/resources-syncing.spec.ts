@@ -20,7 +20,7 @@ const settingsPage = require('../settings.page');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-describe('resources/syncing tests --', function() {
+xdescribe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;

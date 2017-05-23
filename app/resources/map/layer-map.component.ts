@@ -1,6 +1,6 @@
 import {Component, SimpleChanges} from '@angular/core';
 import {MapComponent} from 'idai-components-2/idai-field-map';
-import {Datastore, Query} from 'idai-components-2/datastore';
+import {ReadDatastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Document} from 'idai-components-2/core';
 import {LayerMapState} from './layer-map-state';
@@ -30,11 +30,11 @@ export class LayerMapComponent extends MapComponent {
 
 
     constructor(mapState: LayerMapState,
-                datastore: Datastore,
-                messages: Messages,
+                protected datastore: ReadDatastore,
+                protected messages: Messages,
                 protected imagestore: Imagestore) {
 
-        super(mapState, datastore, messages);
+        super(mapState);
     }
 
     public ngOnChanges(changes: SimpleChanges) {

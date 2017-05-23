@@ -83,32 +83,6 @@
                            class="form-control">
                 </div>
 
-                <h4 style="margin-top: 35px;">Teammitglieder </h4>
-                <ul id="remote-sites-list" style="padding: 0; margin: 0 0 15px 0;">
-                    <li *ngFor="let remoteSite of remoteSites; let i = index;"
-                        style="list-style-type: none; padding: 5px 0;">
-
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button (click)="removeRemoteSite(i)"
-                                        class="btn-danger btn btn-default">
-                                    <span class="mdi mdi-delete"></span>
-                                </button>
-                            </span>
-                            <input [ngModel]="remoteSite.ipAddress"
-                                   (ngModelChange)="remoteSite.ipAddress = $event"
-                                   placeholder="http://x.x.x.x(:port)"
-                                   class="form-control">
-                        </div>
-
-                    </li>
-                </ul>
-                <button id="add-remote-site-button"
-                        (click)="addRemoteSite()"
-                        class="btn-primary btn btn-default">
-                    Client hinzufügen
-                </button>
-
             </div>
 
         </div>

@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
 import {Document} from "idai-components-2/core";
-import {Observable} from "rxjs/Rx";
 import {SettingsService} from "./settings/settings-service";
 
 @Component({

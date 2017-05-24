@@ -3,6 +3,7 @@ import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Settings} from "./settings";
 import {SettingsSerializer} from "./settings-serializer";
 import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
+import {Observable} from "rxjs/Rx";
 
 
 @Injectable()

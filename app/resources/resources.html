@@ -25,6 +25,7 @@
                         (click)="select(document)"
                         (dblclick)="open(document)"
                         class="list-group-item"
+                        [class.new-from-remote]="isNewDocumentFromRemote(document)"
                         [class.conflicted]="document['_conflicts']"
                         [class.selected]="getSelected() && getSelected().resource.id === document.resource.id"
                         [id]="'resource-' + document.resource.identifier">

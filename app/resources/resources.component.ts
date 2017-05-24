@@ -23,7 +23,8 @@ export class ResourcesComponent {
     protected observers: Array<any> = [];
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
-    public documents: Document[];
+    public documents: Array<Document>;
+    private newDocumentsFromRemote: Array<Document> = [];
     private ready: Promise<any>;
 
     constructor(private router: Router,
@@ -39,16 +40,35 @@ export class ResourcesComponent {
 
         const self = this;
         datastore.documentChangesNotifications().subscribe(result => {
-            if (!self.documents) return;
-            for (let doc of self.documents) {
-                if (!doc.resource || !result.resource) continue;
-                if (!doc.resource.id || !result.resource.id) continue;
-                if (doc.resource.id == result.resource.id) {
-                    doc['synced'] = result['synced'];
-                }
-            }
-
+            self.handleChange(result);
         });
+    }
+
+    private handleChange(changedDocument: Document) {
+
+        if (!this.documents) return;
+
+        let existingDoc = false;
+
+        for (let doc of this.documents) {
+            if (!doc.resource || !changedDocument.resource) continue;
+            if (!doc.resource.id || !changedDocument.resource.id) continue;
+            if (doc.resource.id == changedDocument.resource.id) {
+                doc['synced'] = changedDocument['synced'];
+                existingDoc = true;
+            }
+        }
+
+        if (!existingDoc) {
+            let oldDocuments = this.documents;
+            this.fetchDocuments().then(() => {
+                for (let doc of this.documents) {
+                    if (oldDocuments.indexOf(doc) == -1) {
+                        this.newDocumentsFromRemote.push(doc);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -56,6 +76,10 @@ export class ResourcesComponent {
      *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
+
+        if (this.isNewDocumentFromRemote(documentToSelect)) {
+            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
+        }
 
         this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
@@ -134,6 +158,9 @@ export class ResourcesComponent {
      * @param query
      */
     public fetchDocuments(query: Query = this.query): Promise<any> {
+
+        this.newDocumentsFromRemote = [];
+
         return this.datastore.find(query).then(documents => {
             this.documents = documents as Document[];
             this.notify();
@@ -197,5 +224,16 @@ export class ResourcesComponent {
             },
             msgWithParams => Promise.reject(msgWithParams)
         );
+    }
+
+    public isNewDocumentFromRemote(document: Document) {
+
+        return this.newDocumentsFromRemote.indexOf(document) > -1;
+    }
+
+    public removeFromListOfNewDocumentsFromRemote(document: Document) {
+
+        let index = this.newDocumentsFromRemote.indexOf(document);
+        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
     }
 }

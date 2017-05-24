@@ -1,9 +1,10 @@
-import {Component} from "@angular/core";
-import {Router} from "@angular/router";
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Query, Datastore} from "idai-components-2/datastore";
-import {Document} from "idai-components-2/core";
-import {Observable} from "rxjs/Observable";
+import {Query, Datastore} from 'idai-components-2/datastore';
+import {Document, Action} from 'idai-components-2/core';
+import {Observable} from 'rxjs/Observable';
+import {SettingsService} from '../settings/settings-service';
 
 @Component({
 
@@ -28,7 +29,8 @@ export class ResourcesComponent {
     private ready: Promise<any>;
 
     constructor(private router: Router,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private settingsService: SettingsService) {
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{
@@ -46,7 +48,7 @@ export class ResourcesComponent {
 
     private handleChange(changedDocument: Document) {
 
-        if (!this.documents) return;
+        if (!this.documents || !this.isRemoteChange(changedDocument)) return;
 
         let existingDoc = false;
 
@@ -63,7 +65,7 @@ export class ResourcesComponent {
             let oldDocuments = this.documents;
             this.fetchDocuments().then(() => {
                 for (let doc of this.documents) {
-                    if (oldDocuments.indexOf(doc) == -1) {
+                    if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
                         this.newDocumentsFromRemote.push(doc);
                     }
                 }
@@ -235,5 +237,18 @@ export class ResourcesComponent {
 
         let index = this.newDocumentsFromRemote.indexOf(document);
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
+    }
+
+    private isRemoteChange(changedDocument: Document) {
+
+        let latestAction: Action;
+
+        if (changedDocument.modified && changedDocument.modified.length > 0) {
+            latestAction = changedDocument.modified[changedDocument.modified.length - 1];
+        } else {
+            latestAction = changedDocument.created;
+        }
+
+        return latestAction.user != this.settingsService.getUserName();
     }
 }

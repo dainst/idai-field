@@ -382,7 +382,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public setupSync(url: string): Promise<SyncState> {
 
-
         return this.readyForQuery.then(() => {
 
             let fullUrl = url + '/' + this.dbname;

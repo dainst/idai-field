@@ -37,7 +37,6 @@ export class SettingsService {
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.datastore.select(this.settings.dbs[0]);
                 this.selectProject(this.settings.dbs[0]);
-                this.startSync();
             }
         })
     }

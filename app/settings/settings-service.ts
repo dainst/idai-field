@@ -54,14 +54,6 @@ export class SettingsService {
         })
     }
 
-    public setRemoteSites(remoteSites) {
-        this.settings.remoteSites = remoteSites;
-    }
-
-    public getRemoteSites() {
-        return JSON.parse(JSON.stringify(this.settings.remoteSites));
-    }
-
     public setServer(server) {
         this.settings.server = server;
     }
@@ -122,19 +114,6 @@ export class SettingsService {
     }
 
     private startSync(): Promise<any> {
-
-        const promises = [];
-        for (let remoteSite of this.settings.remoteSites) {
-            promises.push(this.datastore.setupSync(remoteSite['ipAddress']));
-        }
-        if (this.serverSettingsComplete()) {
-            promises.push(this.startServerSync());
-        }
-
-        return Promise.all(promises);
-    }
-
-    private startServerSync(): Promise<any> {
         return this.datastore.setupSync(this.convert(this.settings.server))
             .then(syncState => {
                 const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
@@ -142,7 +121,7 @@ export class SettingsService {
                     clearTimeout(msg); // stop 'connected' msg if error
                     syncState.cancel();
                     this.observers.forEach(o => o.next('disconnected'));
-                    setTimeout(() => this.startServerSync(), 5000); // retry
+                    setTimeout(() => this.startSync(), 5000); // retry
                 });
                 syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
             });

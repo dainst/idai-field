@@ -394,8 +394,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 url: url,
                 cancel: () => sync.cancel(),
                 onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
-                onPaused: Observable.create(obs => sync.on('paused', err => obs.next(err))),
-                onActive: Observable.create(obs => sync.on('active', () => obs.next()))
+                onChange: Observable.create(obs => sync.on('change', () => obs.next()))
             }
         });
     }

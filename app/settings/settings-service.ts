@@ -106,7 +106,15 @@ export class SettingsService {
         }
     }
 
-    public syncStatusChanges(): Observable<boolean> {
+    /**
+     * Observe synchronization status changes. The following states can be
+     * subscribed to:
+     * * 'connected': The connection to the server has been established
+     * * 'disconnected': The connection to the server has been lost
+     * * 'changed': A changed document has been transmitted
+     * @returns Observable<string>
+     */
+    public syncStatusChanges(): Observable<string> {
 
         return Observable.create(observer => {
             this.observers.push(observer);
@@ -129,13 +137,14 @@ export class SettingsService {
     private startServerSync(): Promise<any> {
         return this.datastore.setupSync(this.convert(this.settings.server))
             .then(syncState => {
-                const msg = setTimeout(() => this.observers.forEach(o => o.next(true)), 500); // avoid issuing 'connected' too early
+                const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
                 syncState.onError.subscribe(() => {
                     clearTimeout(msg); // stop 'connected' msg if error
                     syncState.cancel();
-                    this.observers.forEach(o => o.next(false));
+                    this.observers.forEach(o => o.next('disconnected'));
                     setTimeout(() => this.startServerSync(), 5000); // retry
                 });
+                syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
             });
     }
 

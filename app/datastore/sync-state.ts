@@ -8,8 +8,6 @@ export interface SyncState {
 
     onError: Observable<any>;
 
-    onPaused: Observable<any>;
-
-    onActive: Observable<any>;
+    onChange: Observable<any>;
 
 }

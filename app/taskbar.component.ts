@@ -16,17 +16,18 @@ import {SettingsService} from "./settings/settings-service";
  */
 export class TaskbarComponent {
 
-    private static CHECK_INTERVAL = 2000;
-
     private connected = false;
     private conflicts: Document[] = [];
 
     constructor(private datastore: IdaiFieldDatastore,
             private settings: SettingsService) {
-        const int = TaskbarComponent.CHECK_INTERVAL;
-        Observable.timer(0, int).subscribe(() => this.checkConflicts());
+        this.checkConflicts();
         settings.syncStatusChanges().subscribe(c => {
-            this.connected = c;
+            if (c == 'disconnected')
+                this.connected = false;
+            else if (c == 'connected')
+                this.connected = true;
+            else if (c == 'changed') this.checkConflicts();
         });
     }
 

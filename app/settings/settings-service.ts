@@ -23,15 +23,13 @@ export class SettingsService {
 
     public ready: Promise<any>;
 
-    constructor(
-        private datastore: IdaiFieldDatastore,
-        private fileSystemImagestore: FileSystemImagestore
-    ) {
+    constructor(private datastore: IdaiFieldDatastore,
+                private fileSystemImagestore: FileSystemImagestore) {
         fileSystemImagestore.select('test');
     }
 
     public init() {
-        this.ready = this.settingsSerializer.load().then((settings)=>{
+        this.ready = this.settingsSerializer.load().then((settings) => {
             this.settings = settings;
 
             if (this.settings.dbs && this.settings.dbs.length > 0) {
@@ -82,7 +80,7 @@ export class SettingsService {
         }
     }
 
-    public selectProject(name,restart = false) {
+    public selectProject(name, restart = false) {
         const index = this.settings.dbs.indexOf(name);
         if (index != -1) {
             this.settings.dbs.splice(index, 1);
@@ -129,8 +127,12 @@ export class SettingsService {
 
     private convert(serverSetting) {
         let converted = serverSetting['ipAddress'];
-        converted = converted.replace('http://','http://'+
+
+        if (!converted) return false;
+
+        converted = converted.replace('http://', 'http://' +
             serverSetting['userName'] + ':' + serverSetting['password'] + '@');
+
         return converted;
     }
 
@@ -141,7 +143,7 @@ export class SettingsService {
     private serverSettingsComplete(): boolean {
 
         return (this.settings.server['userName'] && this.settings.server['userName'].length > 0 &&
-            this.settings.server['password'] && this.settings.server['password'].length > 0 &&
-            this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0);
+        this.settings.server['password'] && this.settings.server['password'].length > 0 &&
+        this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0);
     }
 }

@@ -249,6 +249,6 @@ export class ResourcesComponent {
             latestAction = changedDocument.created;
         }
 
-        return latestAction.user != this.settingsService.getUserName();
+        return latestAction && latestAction.user != this.settingsService.getUserName();
     }
 }

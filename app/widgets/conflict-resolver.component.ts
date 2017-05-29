@@ -4,6 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
+import {Action} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
 import {DiffUtility} from '../util/diff-utility';
 
@@ -244,10 +245,15 @@ export class ConflictResolverComponent implements OnChanges {
 
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
-        const lastModified = revision['modified'][revision['modified'].length - 1];
-        const date: Date = new Date(lastModified.date);
+        let latestAction: Action;
+        if (revision['modified'] && revision['modified'].length > 0) {
+            latestAction = revision['modified'][revision['modified'].length - 1];
+        } else {
+            latestAction = revision['created'];
+        }
+        const date: Date = new Date(latestAction.date);
         moment.locale('de');
 
-        return lastModified.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
+        return latestAction.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
 }

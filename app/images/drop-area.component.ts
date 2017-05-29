@@ -183,7 +183,7 @@ export class DropAreaComponent {
                             "relations": {}
                         }
                     };
-                    this.persistenceManager.persist(doc, this.settingsService.getUserName(), [doc])
+                    this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
                         .then(result => resolve(result))
                         .catch(error => reject(error));
                 };

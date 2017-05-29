@@ -179,7 +179,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
         this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
 
-        this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUserName()).then(
+        this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUsername()).then(
             () => {
                 this.resourcesComponent.getSelected()['synced'] = 0;
             },

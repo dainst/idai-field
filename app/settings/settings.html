@@ -50,8 +50,8 @@
                     <label class="control-label col-form-label"
                            for="user-name-input">Benutzer</label>
                     <input id="user-name-input"
-                           [ngModel]="userName"
-                           (ngModelChange)="userName = $event"
+                           [ngModel]="username"
+                           (ngModelChange)="username = $event"
                            class="form-control">
                 </div>
 
@@ -63,15 +63,15 @@
 
                     <label for="server-address-input"
                            class="control-label col-form-label">Adresse</label>
-                    <input id="server-address-input" [ngModel]="server.ipAddress"
-                           (ngModelChange)="server.ipAddress = $event"
+                    <input id="server-address-input" [ngModel]="server.address"
+                           (ngModelChange)="server.address = $event"
                            class="form-control"
                            placeholder="http://x.x.x.x(:port)">
 
                     <label for="server-user-name-input"
                            class="control-label col-form-label">Benutzer</label>
-                    <input id="server-user-name-input" [ngModel]="server.userName"
-                           (ngModelChange)="server.userName = $event"
+                    <input id="server-user-name-input" [ngModel]="server.username"
+                           (ngModelChange)="server.username = $event"
                            class="form-control">
 
                     <label for="server-password-input"

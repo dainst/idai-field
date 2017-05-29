@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {Settings} from "./settings";
+import {Settings, SyncTarget} from "./settings";
 import {SettingsSerializer} from "./settings-serializer";
 import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
 import {Observable} from "rxjs/Rx";
@@ -11,6 +11,10 @@ import {Observable} from "rxjs/Rx";
  * The settings service provides access to the
  * properties of the config.json file. It can be
  * serialized to and from config.json files.
+ *
+ * It is connected to the imagestore and datastore
+ * subsystems which are controlled based on the settings.
+ *
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -25,47 +29,29 @@ export class SettingsService {
 
     constructor(private datastore: IdaiFieldDatastore,
                 private fileSystemImagestore: FileSystemImagestore) {
+
         fileSystemImagestore.select('test');
     }
 
     public init() {
         this.ready = this.settingsSerializer.load().then((settings) => {
             this.settings = settings;
-
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.datastore.select(this.settings.dbs[0]);
-                this.selectProject(this.settings.dbs[0]);
+                this.activateProject(
+                    this.settings.dbs[0],
+                    this.settings.username,
+                    this.settings.syncTarget);
             }
         })
     }
 
-    public restartSync() {
-        if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
-
-        this.datastore.select(this.settings.dbs[0]);
-        return new Promise<any>((resolve) => {
-            this.observers.forEach(o => o.next(false));
-            this.datastore.stopSync();
-            setTimeout(() => {
-                this.startSync().then(() => resolve());
-            }, 1000);
-        })
+    public getSyncTarget() {
+        return JSON.parse(JSON.stringify(this.settings.syncTarget));
     }
 
-    public setServer(server) {
-        this.settings.server = server;
-    }
-
-    public getServer() {
-        return JSON.parse(JSON.stringify(this.settings.server));
-    }
-
-    public setUserName(userName) {
-        this.settings.userName = userName;
-    }
-
-    public getUserName() {
-        return this.settings.userName ? JSON.parse(JSON.stringify(this.settings.userName)) : 'anonymous';
+    public getUsername() {
+        return this.settings.username ? JSON.parse(JSON.stringify(this.settings.username)) : 'anonymous';
     }
 
     public getProjects() {
@@ -80,19 +66,75 @@ export class SettingsService {
         }
     }
 
-    public selectProject(name, restart = false) {
-        const index = this.settings.dbs.indexOf(name);
-        if (index != -1) {
-            this.settings.dbs.splice(index, 1);
-            this.settings.dbs.unshift(name);
-        }
-        this.fileSystemImagestore.select(name);
+    /**
+     * Selects a project and triggers a (re-)start of
+     * syncing of the corresponding db.
+     *
+     * @param projectName
+     * @param username
+     * @param syncTarget
+     * @param restart
+     * @returns {any}
+     */
+    public activateProject(
+        projectName: string,
+        username: string,
+        syncTarget: SyncTarget,
+        restart = false) {
+
+        this.settings.username = username;
+        this.settings.syncTarget = syncTarget;
+
+        this.makeFirstIfExists(projectName);
+        this.fileSystemImagestore.select(projectName);
         this.storeSettings();
 
         if (restart) {
             return this.restartSync();
         } else {
             return this.startSync();
+        }
+    }
+
+    private startSync(): Promise<any> {
+
+        let address = SettingsService.makeAddressFromSyncTarget(this.settings.syncTarget);
+        if (!address) return Promise.resolve();
+
+        return this.datastore.setupSync(address)
+            .then(syncState => {
+                const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
+                syncState.onError.subscribe(() => {
+                    clearTimeout(msg); // stop 'connected' msg if error
+                    syncState.cancel();
+                    this.observers.forEach(o => o.next('disconnected'));
+                    setTimeout(() => this.startSync(), 5000); // retry
+                });
+                syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
+                }
+            );
+
+    }
+
+    private restartSync() {
+        if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
+
+        this.datastore.select(this.settings.dbs[0]);
+        return new Promise<any>((resolve) => {
+            this.observers.forEach(o => o.next(false));
+            this.datastore.stopSync();
+            setTimeout(() => {
+                this.startSync().then(() => resolve());
+            }, 1000);
+        })
+    }
+
+    private makeFirstIfExists(projectName: string) {
+
+        const index = this.settings.dbs.indexOf(projectName);
+        if (index != -1) {
+            this.settings.dbs.splice(index, 1);
+            this.settings.dbs.unshift(projectName);
         }
     }
 
@@ -111,34 +153,14 @@ export class SettingsService {
         });
     }
 
-    private startSync(): Promise<any> {
+    private static makeAddressFromSyncTarget(serverSetting) {
 
-        let address = this.convert(this.settings.server);
-        if (!address) {
-            return Promise.resolve();
-        } else {
-            return this.datastore.setupSync(address)
-                .then(syncState => {
-                    const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
-                    syncState.onError.subscribe(() => {
-                        clearTimeout(msg); // stop 'connected' msg if error
-                        syncState.cancel();
-                        this.observers.forEach(o => o.next('disconnected'));
-                        setTimeout(() => this.startSync(), 5000); // retry
-                    });
-                    syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
-                });
-        }
-    }
-
-    private convert(serverSetting) {
-
-        let converted = serverSetting['ipAddress'];
+        let converted = serverSetting['address'];
 
         if (!converted) return false;
 
         converted = converted.replace('http://', 'http://' +
-            serverSetting['userName'] + ':' + serverSetting['password'] + '@');
+            serverSetting['username'] + ':' + serverSetting['password'] + '@');
 
         return converted;
     }
@@ -149,8 +171,8 @@ export class SettingsService {
 
     private serverSettingsComplete(): boolean {
 
-        return (this.settings.server['userName'] && this.settings.server['userName'].length > 0 &&
-        this.settings.server['password'] && this.settings.server['password'].length > 0 &&
-        this.settings.server['ipAddress'] && this.settings.server['ipAddress'].length > 0);
+        return (this.settings.syncTarget['username'] && this.settings.syncTarget['username'].length > 0 &&
+        this.settings.syncTarget['password'] && this.settings.syncTarget['password'].length > 0 &&
+        this.settings.syncTarget['address'] && this.settings.syncTarget['address'].length > 0);
     }
 }

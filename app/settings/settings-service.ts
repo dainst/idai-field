@@ -155,14 +155,12 @@ export class SettingsService {
 
     private static makeAddressFromSyncTarget(serverSetting) {
 
-        let converted = serverSetting['address'];
+        let address = serverSetting['address'];
 
-        if (!converted) return false;
+        if (!address || !serverSetting['username'] || !serverSetting['password']) return address;
 
-        converted = converted.replace('http://', 'http://' +
+        return address.replace('http://', 'http://' +
             serverSetting['username'] + ':' + serverSetting['password'] + '@');
-
-        return converted;
     }
 
     private storeSettings(): Promise<any> {

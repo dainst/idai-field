@@ -20,7 +20,7 @@ const settingsPage = require('../settings.page');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-xdescribe('resources/syncing tests --', function() {
+describe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -43,7 +43,7 @@ xdescribe('resources/syncing tests --', function() {
             let pouchDbApp = expressPouchDB(PouchDB);
             app.use(cors(pouchDbApp.couchConfig));
             app.use('/', pouchDbApp);
-            server = app.listen(3001, function () {
+            server = app.listen(3001, function() {
                 new PouchDB('test')
                     .destroy().then(() => {
                         resolve(new PouchDB('test'));
@@ -120,7 +120,6 @@ xdescribe('resources/syncing tests --', function() {
 
     function configureRemoteSite() {
 
-        settingsPage.clickAddRemoteSiteButton();
         common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         settingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
@@ -128,7 +127,7 @@ xdescribe('resources/syncing tests --', function() {
 
     function removeRemoteSiteConfiguration() {
 
-        settingsPage.clickRemoveRemoteSiteButton();
+        common.typeIn(settingsPage.getRemoteSiteAddressInput(), '');
         settingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
     }
@@ -218,21 +217,14 @@ xdescribe('resources/syncing tests --', function() {
     it('should save syncing settings to config file and load them after restart', done => {
 
         const expectedConfig = {
-            'userName': 'userName',
-            'server': {
-                'userName': 'serverUserName',
-                'password': 'serverPassword'
-            },
-            'remoteSites': [ { 'ipAddress': remoteSiteAddress } ],
+            'username': 'username',
+            'syncTarget': { 'address': remoteSiteAddress },
             'dbs' : ['test']
         };
 
         settingsPage.get();
-        settingsPage.clickAddRemoteSiteButton();
         common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        common.typeIn(settingsPage.getUserNameInput(), 'userName');
-        common.typeIn(settingsPage.getServerUserNameInput(), 'serverUserName');
-        common.typeIn(settingsPage.getServerPasswordInput(), 'serverPassword');
+        common.typeIn(settingsPage.getUserNameInput(), 'username');
         settingsPage.clickSaveSettingsButton();
 
         NavbarPage.clickNavigateToResources()

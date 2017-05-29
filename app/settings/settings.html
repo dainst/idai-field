@@ -48,8 +48,8 @@
                     </select>
 
                     <label class="control-label col-form-label"
-                           for="user-name-input">Benutzer</label>
-                    <input id="user-name-input"
+                           for="username-input">Benutzer</label>
+                    <input id="username-input"
                            [ngModel]="username"
                            (ngModelChange)="username = $event"
                            class="form-control">
@@ -61,22 +61,22 @@
 
                 <div class="form-group">
 
-                    <label for="server-address-input"
+                    <label for="sync-target-address-input"
                            class="control-label col-form-label">Adresse</label>
-                    <input id="server-address-input" [ngModel]="server.address"
+                    <input id="sync-target-address-input" [ngModel]="server.address"
                            (ngModelChange)="server.address = $event"
                            class="form-control"
                            placeholder="http://x.x.x.x(:port)">
 
-                    <label for="server-user-name-input"
+                    <label for="sync-target-username-input"
                            class="control-label col-form-label">Benutzer</label>
-                    <input id="server-user-name-input" [ngModel]="server.username"
+                    <input id="sync-target-username-input" [ngModel]="server.username"
                            (ngModelChange)="server.username = $event"
                            class="form-control">
 
-                    <label for="server-password-input"
+                    <label for="sync-target-password-input"
                            class="control-label col-form-label">Passwort</label>
-                    <input id="server-password-input"
+                    <input id="sync-target-password-input"
                            type="password"
                            [ngModel]="server.password"
                            (ngModelChange)="server.password = $event"

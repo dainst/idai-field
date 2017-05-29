@@ -44,7 +44,7 @@ export class SettingsService {
 
         this.datastore.select(this.settings.dbs[0]);
         return new Promise<any>((resolve) => {
-            this.observers.forEach(o => o.next(false))
+            this.observers.forEach(o => o.next(false));
             this.datastore.stopSync();
             setTimeout(() => {
                 this.startSync().then(() => resolve());
@@ -112,20 +112,27 @@ export class SettingsService {
     }
 
     private startSync(): Promise<any> {
-        return this.datastore.setupSync(this.convert(this.settings.server))
-            .then(syncState => {
-                const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
-                syncState.onError.subscribe(() => {
-                    clearTimeout(msg); // stop 'connected' msg if error
-                    syncState.cancel();
-                    this.observers.forEach(o => o.next('disconnected'));
-                    setTimeout(() => this.startSync(), 5000); // retry
+
+        let address = this.convert(this.settings.server);
+        if (!address) {
+            return Promise.resolve();
+        } else {
+            return this.datastore.setupSync(address)
+                .then(syncState => {
+                    const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
+                    syncState.onError.subscribe(() => {
+                        clearTimeout(msg); // stop 'connected' msg if error
+                        syncState.cancel();
+                        this.observers.forEach(o => o.next('disconnected'));
+                        setTimeout(() => this.startSync(), 5000); // retry
+                    });
+                    syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
                 });
-                syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
-            });
+        }
     }
 
     private convert(serverSetting) {
+
         let converted = serverSetting['ipAddress'];
 
         if (!converted) return false;

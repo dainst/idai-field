@@ -27,6 +27,7 @@ export class ResourcesComponent {
     public documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
     private ready: Promise<any>;
+    private mode = "map"
 
     constructor(private router: Router,
                 private datastore: Datastore,

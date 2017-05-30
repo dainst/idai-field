@@ -185,4 +185,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             },
             err => { console.log(err); });
     }
+
+
 }

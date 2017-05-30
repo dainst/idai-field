@@ -1,10 +1,31 @@
 <div class="row map-wrapper">
-    <div [class.col-sm-12]="!activeDoc || menuMode != 'view'" [class.col-sm-8]="activeDoc && menuMode == 'view'" class="px-0">
+    <div class="col-lg-3 col-md-3 col-sm-3"
+         id="objectOverview">
+
+                <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
+                    <li *ngFor="let document of docs; let index=index"
+                        (click)="resourcesComponent.select(document)"
+                        (dblclick)="resourcesComponent.open(document)"
+                        class="list-group-item"
+                        [class.new-from-remote]="resourcesComponent.isNewDocumentFromRemote(document)"
+                        [class.conflicted]="document['_conflicts']"
+                        [class.selected]="resourcesComponent.getSelected() && resourcesComponent.getSelected().resource.id === document.resource.id"
+                        [id]="'resource-' + document.resource.identifier">
+
+                        <document-teaser [document]="document"></document-teaser>
+                    </li>
+                </ul>
+
+
+
+    </div>
+
+    <div [class.col-sm-9]="!activeDoc || menuMode != 'view'" [class.col-sm-6]="activeDoc && menuMode == 'view'" class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="selectDocument($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
-    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-4 document-info px-0">
+    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-3 document-info px-0">
         <document-view [(document)]="activeDoc" [basePath]="'resources'">
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"

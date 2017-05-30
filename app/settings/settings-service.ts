@@ -38,10 +38,11 @@ export class SettingsService {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.datastore.select(this.settings.dbs[0]);
-                this.activateProject(
+                this.setSettings(
                     this.settings.dbs[0],
                     this.settings.username,
                     this.settings.syncTarget);
+                this.activateSettings();
             }
         })
     }
@@ -67,28 +68,33 @@ export class SettingsService {
     }
 
     /**
-     * Selects a project and triggers a (re-)start of
-     * syncing of the corresponding db.
+     * Sets, validates and persists the settings state.
      *
      * @param projectName
      * @param username
      * @param syncTarget
-     * @param restart
-     * @returns {any}
      */
-    public activateProject(
+    public setSettings(
         projectName: string,
         username: string,
-        syncTarget: SyncTarget,
-        restart = false) {
+        syncTarget: SyncTarget) {
 
         this.settings.username = username;
         this.settings.syncTarget = syncTarget;
-
         this.makeFirstIfExists(projectName);
-        this.fileSystemImagestore.select(projectName);
         this.storeSettings();
+    }
 
+    /**
+     * Activates the current settings state set by {@link #setSettings}
+     * by triggering (re-)start of syncing of the corresponding db
+     * and selecting the imagestore.
+     *
+     * @param restart
+     * @returns {any}
+     */
+    public activateSettings(restart = false): Promise<any> {
+        this.fileSystemImagestore.select(this.getSelectedProject());
         if (restart) {
             return this.restartSync();
         } else {

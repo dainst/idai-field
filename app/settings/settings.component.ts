@@ -38,11 +38,13 @@ export class SettingsComponent implements OnInit {
 
         this.saving = true;
 
-        this.settingsService.activateProject(
+        this.settingsService.setSettings(
             this.selectedProject,
             this.username,
-            this.server,
-            true).then(
+            this.server
+        );
+
+        this.settingsService.activateSettings(true).then(
             () => {
                 this.saving = false;
                 this.messages.add([M.SETTINGS_ACTIVATED])

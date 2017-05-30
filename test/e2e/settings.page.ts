@@ -20,21 +20,10 @@ let SettingsPage = function() {
         element(by.id('save-settings-button')).click();
     };
 
-    this.clickAddRemoteSiteButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('add-remote-site-button'))), delays.ECWaitTime);
-        element(by.id('add-remote-site-button')).click();
-    };
-
-    this.clickRemoveRemoteSiteButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('button')).get(0)),
-            delays.ECWaitTime);
-        element(by.id('remote-sites-list')).all(by.css('button')).get(0).click();
-    };
-
     this.getRemoteSiteAddressInput = function() {
-        browser.wait(EC.visibilityOf(element(by.id('remote-sites-list')).all(by.css('input')).get(0)),
+        browser.wait(EC.visibilityOf(element(by.id('sync-target-address-input'))),
             delays.ECWaitTime);
-        return element(by.id('remote-sites-list')).all(by.css('input')).get(0);
+        return element(by.id('sync-target-address-input'));
     };
 
     this.getRemoteSiteAddress = function() {
@@ -42,18 +31,8 @@ let SettingsPage = function() {
     };
 
     this.getUserNameInput = function() {
-        browser.wait(EC.visibilityOf(element(by.id('user-name-input'))), delays.ECWaitTime);
-        return element(by.id('user-name-input'));
-    };
-
-    this.getServerUserNameInput = function() {
-        browser.wait(EC.visibilityOf(element(by.id('server-user-name-input'))), delays.ECWaitTime);
-        return element(by.id('server-user-name-input'));
-    };
-
-    this.getServerPasswordInput = function() {
-        browser.wait(EC.visibilityOf(element(by.id('server-password-input'))), delays.ECWaitTime);
-        return element(by.id('server-password-input'));
+        browser.wait(EC.visibilityOf(element(by.id('username-input'))), delays.ECWaitTime);
+        return element(by.id('username-input'));
     };
 };
 

@@ -16,9 +16,8 @@ export class SettingsSerializer {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log("content",JSON.parse(content));
                     let settings = JSON.parse(content);
-                    if (!settings.server) settings.server = {};
+                    if (!settings.syncTarget) settings.syncTarget = {};
                     if (!settings.remoteSites) settings.remoteSites = [];
                     resolve(settings);
                 }
@@ -27,28 +26,16 @@ export class SettingsSerializer {
     }
 
     public store(settings: Settings): Promise<any> {
+        if (!settings) return Promise.resolve(undefined);
 
         let configToWrite = {};
 
-        let remoteSites = [];
-        if (settings.remoteSites.length > 0) {
-            for (let remoteSite of settings.remoteSites) {
-                if (remoteSite['ipAddress'] && remoteSite['ipAddress'].length > 0) {
-                    remoteSites.push(remoteSite);
-                }
-            }
-        }
-        if (remoteSites.length > 0) {
-            configToWrite['remoteSites'] = remoteSites;
+        if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password'] || settings.syncTarget['address'])) {
+            configToWrite['syncTarget'] = settings.syncTarget;
         }
 
-        if (settings.server['userName'] || settings.server['password'] || settings.server['ipAddress'] ||
-            settings.server['port']) {
-            configToWrite['server'] = settings.server;
-        }
-
-        if (settings.userName && settings.userName.length > 0) {
-            configToWrite['userName'] = settings.userName;
+        if (settings.username && settings.username.length > 0) {
+            configToWrite['username'] = settings.username;
         }
 
         if (settings.dbs) {

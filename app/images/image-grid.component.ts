@@ -197,7 +197,7 @@ export class ImageGridComponent {
                 imageDocument.resource.relations["depicts"].push(targetDocument.resource.id);
             }
 
-            return this.persistenceManager.persist(imageDocument, this.settingsService.getUserName(),
+            return this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
                     [oldVersion]).then(
                 () => {
                     if (imageDocumentIndex < imageDocuments.length - 1) {

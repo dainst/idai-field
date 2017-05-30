@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from "./settings-service";
 import {M} from "../m";
+import {SyncTarget} from "./settings";
 
 @Component({
     moduleId: module.id,
@@ -13,8 +14,8 @@ import {M} from "../m";
 export class SettingsComponent implements OnInit {
 
     public selectedProject;
-    public userName;
-    public server = {};
+    public username;
+    public server : SyncTarget = { address: undefined, username: undefined, password: undefined};
     public ready = undefined;
     public saving = false;
 
@@ -27,8 +28,8 @@ export class SettingsComponent implements OnInit {
 
             this.ready = true;
 
-            this.userName = this.settingsService.getUserName();
-            this.server = this.settingsService.getServer();
+            this.username = this.settingsService.getUsername();
+            this.server = this.settingsService.getSyncTarget();
             this.selectedProject = this.settingsService.getSelectedProject();
         });
     }
@@ -37,10 +38,13 @@ export class SettingsComponent implements OnInit {
 
         this.saving = true;
 
-        this.settingsService.setUserName(this.userName);
-        this.settingsService.setServer(this.server);
+        this.settingsService.setSettings(
+            this.selectedProject,
+            this.username,
+            this.server
+        );
 
-        this.settingsService.selectProject(this.selectedProject, true).then(
+        this.settingsService.activateSettings(true).then(
             () => {
                 this.saving = false;
                 this.messages.add([M.SETTINGS_ACTIVATED])

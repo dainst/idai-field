@@ -150,7 +150,7 @@ export class DocumentEditWrapperComponent {
 
     private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
-        return this.persistenceManager.persist(clonedDoc, this.settingsService.getUserName()).then(
+        return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
             () => this.removeInspectedRevisions(),
             errorWithParams => {
                 if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {

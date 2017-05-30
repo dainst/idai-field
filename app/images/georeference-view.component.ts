@@ -149,7 +149,7 @@ export class GeoreferenceViewComponent {
         return new Promise<any>((resolve, reject) => {
             this.persistenceManager.setOldVersions([this.document]);
 
-            this.persistenceManager.persist(this.document, this.settingsService.getUserName()).then(
+            this.persistenceManager.persist(this.document, this.settingsService.getUsername()).then(
                 () => { resolve(); },
                 err => { console.error(err); reject([M.APP_GENERIC_SAVE_ERROR]); }
             );

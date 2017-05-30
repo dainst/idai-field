@@ -132,7 +132,7 @@ export class ListComponent {
             parentDocument.resource.relations[relation["name"]].push(doc.resource.id);
 
             var oldVersion = JSON.parse(JSON.stringify(parentDocument));
-            this.persistenceManager.persist(parentDocument, this.settingsService.getUserName(),
+            this.persistenceManager.persist(parentDocument, this.settingsService.getUsername(),
                 [oldVersion]).then(doc => {
                 this.detailedDocument = newDoc;
             });

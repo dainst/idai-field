@@ -73,16 +73,23 @@ export class SettingsService {
      * @param projectName
      * @param username
      * @param syncTarget
+     * @return error encoding string
+     *   'malformed_address'
      */
-    public setSettings(
+    public setSettings (
         projectName: string,
         username: string,
-        syncTarget: SyncTarget) {
+        syncTarget: SyncTarget): string {
 
         this.settings.username = username;
+
+        if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
+
         this.settings.syncTarget = syncTarget;
-        this.makeFirstIfExists(projectName);
+        this.makeFirstOfDbsArray(projectName);
         this.storeSettings();
+
+        return undefined;
     }
 
     /**
@@ -135,7 +142,12 @@ export class SettingsService {
         })
     }
 
-    private makeFirstIfExists(projectName: string) {
+    private static validateAddress(address) {
+        const re = new RegExp("^http:\/\/[0-9a-z.]+:[0-9]+$");
+        return re.test(address);
+    }
+
+    private makeFirstOfDbsArray(projectName: string) {
 
         const index = this.settings.dbs.indexOf(projectName);
         if (index != -1) {
@@ -175,8 +187,8 @@ export class SettingsService {
 
     private serverSettingsComplete(): boolean {
 
-        return (this.settings.syncTarget['username'] && this.settings.syncTarget['username'].length > 0 &&
-        this.settings.syncTarget['password'] && this.settings.syncTarget['password'].length > 0 &&
-        this.settings.syncTarget['address'] && this.settings.syncTarget['address'].length > 0);
+        return (this.settings.syncTarget.username && this.settings.syncTarget.username.length > 0 &&
+        this.settings.syncTarget.password && this.settings.syncTarget.password.length > 0 &&
+        this.settings.syncTarget.address && this.settings.syncTarget.address.length > 0);
     }
 }

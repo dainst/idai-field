@@ -1,6 +1,8 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
 import {ConfigLoader, IdaiType, ProjectConfiguration} from "idai-components-2/configuration";
+import {ResourcesComponent} from './resources.component';
+
 
 @Component({
     selector: 'plus-button',
@@ -24,6 +26,8 @@ export class PlusButtonComponent {
     constructor(
         private elementRef: ElementRef,
         private router: Router,
+        private resourcesComponent: ResourcesComponent,
+
         configLoader: ConfigLoader)
     {
         configLoader.getProjectConfiguration().then(projectConfiguration => {
@@ -33,11 +37,13 @@ export class PlusButtonComponent {
 
     public startDocumentCreation(geometryType: string) {
 
-        if (geometryType == "none") {
+        /*if (geometryType == "none") {
             this.router.navigate(['resources/new', { type: this.type }]);
         } else {
             this.router.navigate(['resources/editGeometry', 'new:' + this.type, geometryType]);
-        }
+        }*/
+
+        this.resourcesComponent.createNewDocument(this.type, geometryType);
     }
 
     public reset() {

@@ -15,7 +15,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
-    @Input() editMode: string; // polygon | point | none
+    @Input() editMode: boolean;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
@@ -29,21 +29,26 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.resetEditing();
 
-        switch (this.editMode) {
-            case 'none':
-                break;
-            case 'polygon':
-                this.fadeOutMapElements();
-                this.startPolygonCreation();
-                break;
-            case 'point':
-                this.fadeOutMapElements();
-                this.startPointCreation();
-                break;
-            case 'existing':
+
+
+        if (this.editMode == true) {
+            if (this.selectedDocument.resource.geometry.coordinates) {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
-                break;
+            } else {
+                switch (this.selectedDocument.resource.geometry.type) {
+                    case 'none':
+                        break;
+                    case 'polygon':
+                        this.fadeOutMapElements();
+                        this.startPolygonCreation();
+                        break;
+                    case 'point':
+                        this.fadeOutMapElements();
+                        this.startPointCreation();
+                        break;
+                }
+            }
         }
     }
 
@@ -51,11 +56,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
         switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
-                this.editMode = "polygon";
                 this.startPolygonEditing();
                 break;
             case 'Point':
-                this.editMode = "point";
                 this.startPointEditing();
                 break;
         }
@@ -130,7 +133,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.resetEditing();
 
-        if (this.editMode == 'polygon') {
+        if (this.selectedDocument.resource.geometry.type == 'polygon') {
             this.startPolygonCreation();
         }
     }
@@ -222,7 +225,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected clickOnMap(clickPosition: L.LatLng) {
 
-        switch(this.editMode) {
+        switch(this.selectedDocument.resource.geometry.type) {
             case "point":
                 this.setEditableMarkerPosition(clickPosition);
                 break;
@@ -234,7 +237,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected select(document: IdaiFieldDocument): boolean {
 
-        if (this.editMode == "none") {
+        if (this.selectedDocument.resource.geometry.type == "none") {
             this.onSelectDocument.emit(document);
             return true;
         } else {
@@ -244,7 +247,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected deselect() {
 
-        if (this.editMode == "none") {
+        if (this.selectedDocument.resource.geometry.type == "none") {
             this.onSelectDocument.emit(null);
         }
     }

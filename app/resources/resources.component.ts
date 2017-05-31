@@ -5,7 +5,8 @@ import {Query, Datastore} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {EditModalComponent} from '../widgets/edit-modal.component';
 @Component({
 
     moduleId: module.id,
@@ -28,10 +29,13 @@ export class ResourcesComponent {
     private newDocumentsFromRemote: Array<Document> = [];
     private ready: Promise<any>;
     private mode = "map"
+    private editGeometry = false
 
     constructor(private router: Router,
                 private datastore: Datastore,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                private modalService: NgbModal,
+    ) {
 
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve=>{
@@ -84,7 +88,9 @@ export class ResourcesComponent {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
+        this.setSelected(documentToSelect);
+
+        //this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
     /**
@@ -92,7 +98,7 @@ export class ResourcesComponent {
      */
     public open(document: IdaiFieldDocument) {
 
-        this.router.navigate(['resources', document.resource.id, 'edit']);
+        //this.router.navigate(['resources', document.resource.id, 'edit']);
     }
 
     public queryChanged(query: Query): Promise<any> {
@@ -102,7 +108,7 @@ export class ResourcesComponent {
             this.fetchDocuments(query).then(
                 () => {
                     if (this.selectedDocument && this.documents.indexOf(this.selectedDocument) == -1) {
-                        this.router.navigate(['resources']);
+                        //this.router.navigate(['resources']);
                     }
                     resolve();
                 }
@@ -114,8 +120,9 @@ export class ResourcesComponent {
      * @param documentToSelect
      */
     public setSelected(documentToSelect: Document): Document {
-
-        return this.selectedDocument = documentToSelect;
+        this.selectedDocument = documentToSelect;
+        this.notify();
+        return this.selectedDocument
     }
 
     /**
@@ -140,13 +147,23 @@ export class ResourcesComponent {
         this.notify();
     }
 
-    public createNewDocument(type: string): Promise<any> {
+    public createNewDocument(type: string, geometryType: string): Promise<any> {
 
-            // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
+        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
-        var newDocument = { "resource": { "relations": {}, "type": type } };
+
+        var newDocument = { "resource": { "relations": {}, "type": type,  } };
         this.selectedDocument = newDocument;
+
+        if(geometryType != "none") {
+            newDocument.resource["geometry"] = { "type": geometryType };
+            this.editGeometry = true;
+        } else {
+            this.editDocument();
+        }
+
+
 
         return this.ready.then(() => {
             this.documents.unshift(<Document> newDocument);
@@ -170,6 +187,26 @@ export class ResourcesComponent {
         });
     }
 
+    public editDocument (doc?: IdaiFieldDocument) {
+        this.editGeometry = false;
+        if(doc) {
+            this.setSelected(doc)
+        }
+        var detailModalRef = this.modalService.open(EditModalComponent,{size: "lg", backdrop: "static"})
+        var detailModal = detailModalRef.componentInstance
+        detailModalRef.result.then( (result) => {
+            this.fetchDocuments();
+            if(result == "deleted") {
+                this.selectedDocument = null;
+            }
+        }, (closeReason) => {
+
+        })
+        detailModal.showDeleteButton();
+        detailModal.setDocument(this.selectedDocument);
+
+    }
+
     /**
      * Gets a document from the datastore and makes
      * it the current selection.
@@ -184,12 +221,12 @@ export class ResourcesComponent {
     }
 
     public getDocuments() : Observable<Array<Document>> {
-
         return Observable.create( observer => {
             this.observers.push(observer);
             this.notify();
         });
     }
+
 
     private notify() {
 

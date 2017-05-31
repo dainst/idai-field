@@ -5,7 +5,7 @@
                 <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
                     <li *ngFor="let document of docs; let index=index"
                         (click)="resourcesComponent.select(document)"
-                        (dblclick)="resourcesComponent.open(document)"
+                        (dblclick)="resourcesComponent.editDocument(document)"
                         class="list-group-item"
                         [class.new-from-remote]="resourcesComponent.isNewDocumentFromRemote(document)"
                         [class.conflicted]="document['_conflicts']"
@@ -15,17 +15,13 @@
                         <document-teaser [document]="document"></document-teaser>
                     </li>
                 </ul>
-
-
-
     </div>
-
-    <div [class.col-sm-9]="!activeDoc || menuMode != 'view'" [class.col-sm-6]="activeDoc && menuMode == 'view'" class="px-0">
+    <div [class.col-sm-9]="!activeDoc" [class.col-sm-6]="activeDoc" class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="selectDocument($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
-    <div *ngIf="activeDoc && menuMode == 'view'" class="col-sm-3 document-info px-0">
+    <div *ngIf="activeDoc" class="col-sm-3 document-info px-0">
         <document-view [(document)]="activeDoc" [basePath]="'resources'">
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {resourcesRouting} from './resources.routing';
+//import {resourcesRouting} from './resources.routing';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
 import {EditNavigationComponent} from './edit-navigation.component';
@@ -15,7 +15,7 @@ import {IdaiWidgetsModule} from "idai-components-2/widgets"
 
 @NgModule({
     imports: [
-        resourcesRouting,
+        //resourcesRouting,
         BrowserModule,
         NgbModule,
         IdaiDocumentsModule,

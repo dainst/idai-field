@@ -18,6 +18,8 @@ export class EditModalComponent {
     modalTemplate: TemplateRef<any>;
     dialog: NgbModalRef;
 
+    private deleteButtonShown = false;
+
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor
@@ -26,6 +28,10 @@ export class EditModalComponent {
 
     public showModal() {
         this.dialog = this.modalService.open(this.modalTemplate);
+    }
+
+    public showDeleteButton() {
+        this.deleteButtonShown = true
     }
 
     public setDocument(document: IdaiFieldDocument) {

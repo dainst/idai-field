@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+//import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ResourcesComponent} from './resources.component';
 import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
@@ -8,6 +8,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {SettingsService} from '../settings/settings-service';
 
 @Component({
+    selector: 'map-wrapper',
     moduleId: module.id,
     templateUrl: './map-wrapper.html'
 })
@@ -19,16 +20,16 @@ import {SettingsService} from '../settings/settings-service';
  */
 export class MapWrapperComponent implements OnInit, OnDestroy {
 
-    private activeDoc: IdaiFieldDocument;
+    @Input() activeDoc: IdaiFieldDocument;
     private activeType: string;
     private activeTypeLabel: string;
     private docs: IdaiFieldDocument[];
-    private menuMode: string; // view | geometryEdit
-    private editMode: string; // polygon | point | none
+
+    @Input() editMode: boolean = false;
 
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
+        //private router: Router,
+        //private route: ActivatedRoute,
         private datastore: ReadDatastore,
         private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
@@ -38,21 +39,20 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     }
 
     public selectDocument(documentToJumpTo: IdaiFieldDocument) {
-
         if (documentToJumpTo) {
             if (this.docs.indexOf(documentToJumpTo) == -1) {
                 this.resourcesComponent.queryChanged({q: '', type: 'resource', prefix: true}).then(
                     () => {
                         this.scrollToDocument(documentToJumpTo);
-                        this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
+                        //this.router.navigate(['resources', { id: documentToJumpTo.resource.id }]);
                     }
                 )
             } else {
                 this.scrollToDocument(documentToJumpTo);
-                this.router.navigate(['resources', {id: documentToJumpTo.resource.id}]);
+                //this.router.navigate(['resources', {id: documentToJumpTo.resource.id}]);
             }
         } else {
-            this.router.navigate(['resources']);
+            //this.router.navigate(['resources']);
         }
     }
 
@@ -61,7 +61,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         let element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
-
+    /*
     private getRouteParams(callback): Promise<any> {
 
         return this.route.params.forEach((params: Params) => {
@@ -78,7 +78,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         })
     }
 
-    private setMenuMode(menuMode) {
+    public setMenuMode(menuMode) {
         if (menuMode) {
             this.menuMode = menuMode;
         } else {
@@ -86,7 +86,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         }
     }
 
-    private setEditMode(editMode) {
+    public setEditMode(editMode) {
         if (editMode) {
             this.editMode = editMode;
             this.removeEmptyDocument();
@@ -94,7 +94,8 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
             this.editMode = "none";
         }
     }
-    
+     */
+
     private setActiveDoc(id) {
         if (id) {
             this.datastore.get(id).then(document=> {
@@ -117,7 +118,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
            this.docs = result as IdaiFieldDocument[];
         });
 
-        this.getRouteParams(function(menuMode, editMode, id, type){
+        /*this.getRouteParams(function(menuMode, editMode, id, type){
 
             this.setMenuMode(menuMode);
             this.setEditMode(editMode);
@@ -128,7 +129,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
                 this.setActiveDoc(id);
             }
 
-        }.bind(this)).catch(err=>console.log("MapWrapperComponent.ngOnInit caught err after calling getRouteParams: ",err));
+        }.bind(this)).catch(err=>console.log("MapWrapperComponent.ngOnInit caught err after calling getRouteParams: ",err));*/
     }
 
     private selectedDocIsNew() : boolean {
@@ -150,15 +151,16 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         if (this.selectedDocIsNew()) {
             
             if (geometry === undefined) {
-                this.router.navigate(['resources'])
+                //this.router.navigate(['resources'])
             } else {
-                this.router.navigate(['resources', 'selected', 'edit']);
+                //this.router.navigate(['resources', 'selected', 'edit']);
+                this.resourcesComponent.editDocument();
             }
             
         } else {
             
             if (geometry !== undefined) this.save();
-            this.router.navigate(['resources', {id: this.resourcesComponent.getSelected().resource.id}]);
+            //this.router.navigate(['resources', {id: this.resourcesComponent.getSelected().resource.id}]);
         }
     }
     

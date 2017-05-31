@@ -8,33 +8,46 @@ import {M} from "../../../app/m";
  */
 export function main() {
 
+    let datastore : PouchdbDatastore;
+
+    const mockConfigLoader = jasmine.createSpyObj(
+        'mockConfigLoader',
+        [ 'getProjectConfiguration' ]
+    );
+
+    const mockProjectConfiguration = jasmine.createSpyObj(
+        'mockProjectConfiguration',
+        ['getParentTypes']
+    );
+
+    mockProjectConfiguration.getParentTypes.and.callFake(type => {
+        if (type == 'root') return [];
+        if (type == 'type1') return ['root'];
+        if (type == 'type1.1') return ['type1','root'];
+        if (type == 'type2') return ['root'];
+    });
+
+    mockConfigLoader.getProjectConfiguration
+        .and.callFake(() => Promise.resolve(mockProjectConfiguration));
+
     beforeEach(
-        function(){
+        (done) => {
             spyOn(console, 'debug'); // to suppress console.error output
-        }
+            datastore = new PouchdbDatastore(mockConfigLoader);
+            datastore.select('testdb').then(()=>done());
+        }, 5000
+    );
+
+    afterEach(
+        (done)=> {
+            datastore.shutDown()
+                .then(() => new PouchDB('testdb').destroy())
+                .then(() => new PouchDB('testdb2').destroy())
+                .then(()=>done());
+        }, 5000
     );
 
     describe('PouchdbDatastore', () => {
-
-        let datastore : PouchdbDatastore;
-
-        const mockProjectConfiguration = jasmine.createSpyObj(
-            'mockProjectConfiguration',
-            ['getParentTypes']
-        );
-        mockProjectConfiguration.getParentTypes.and.callFake(type => {
-            if (type == 'root') return [];
-            if (type == 'type1') return ['root'];
-            if (type == 'type1.1') return ['type1','root'];
-            if (type == 'type2') return ['root'];
-        });
-
-        const mockConfigLoader = jasmine.createSpyObj(
-            'mockConfigLoader',
-            [ 'getProjectConfiguration' ]
-        );
-        mockConfigLoader.getProjectConfiguration
-            .and.callFake(() => Promise.resolve(mockProjectConfiguration));
 
         function doc(sd,identifier?,type?,id?) : Document {
             if (!type) type = 'object';
@@ -50,7 +63,7 @@ export function main() {
                     user: 'anonymous',
                     date: new Date()
                 }
-            }
+            };
             if (id) doc['_id'] = id;
             return doc;
         }
@@ -69,21 +82,7 @@ export function main() {
             );
         };
 
-        beforeEach(
-            function () {
-                datastore = new PouchdbDatastore(mockConfigLoader);
-                datastore.select('testdb');
-            }
-        );
 
-        afterEach(
-            (done)=> {
-                datastore.shutDown()
-                    .then(() => new PouchDB('testdb').destroy())
-                    .then(() => new PouchDB('testdb2').destroy())
-                    .then(()=>done());
-            }
-        );
 
         // create
 
@@ -292,9 +291,7 @@ export function main() {
             const doc3 = doc('blub','bla1.1','type1.1');
 
             datastore.create(doc1)
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc2))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.find({q: 'blub', type: 'type1'}))
                 .then(result => {
@@ -314,7 +311,7 @@ export function main() {
                         done();
                     }
                 );
-        }, 1000);
+        }, 2000);
 
         it('should find by prefix query and filter', function(done){
             const doc1 = doc('bla1','blub1','type1');
@@ -347,9 +344,9 @@ export function main() {
 
         it('should show all sorted by lastModified', function(done){
             datastore.create(doc('bla1','blub1','type1'))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc('bla2','blub2','type2')))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc('bla3','blub3','type3')))
                 .then(() => datastore.all())
                 .then(
@@ -365,7 +362,7 @@ export function main() {
                         done();
                     }
                 );
-        }, 1000);
+        }, 2000);
 
         // all
 
@@ -439,15 +436,10 @@ export function main() {
             let db2 = new PouchDB('testdb2');
 
             db1.put(doc('bluba','bla1','type1','1'))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => db2.put(doc('blubb','bla1','type1','1')))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => db1.put(doc('bluba','bla2','type2','2')))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => db2.put(doc('blubb','bla2','type2','2')))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => db1.put(doc('blub','bla1.1','type1.1','3')))
-                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => new Promise(resolve => db2.replicate.to(db1).on('complete', resolve)))
                 .then(() => datastore.findConflicted())
                 .then(
@@ -462,7 +454,7 @@ export function main() {
                         done();
                     }
                 );
-        }, 1000);
+        }, 2000);
 
     })
 }

@@ -23,27 +23,27 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
     private syncHandles = [];
-    private reject = undefined;
+    private resolve = undefined;
     private dbname = undefined;
     private indexCreator = new IndexCreator();
 
     constructor(configLoader: ConfigLoader) {
 
-        this.readyForQuery = new Promise<any>((resolve,reject)=>{
+        this.readyForQuery = new Promise<any>((resolve)=>{
 
                 configLoader.getProjectConfiguration()
                     .then(config => this.config = config)
                     .then(()=>this.setupServer())
-                    .then(() => { this.reject = reject; }); // cause it to wait for a call on select
+                    .then(() => { this.resolve = resolve; }); // cause it to wait for a call on select
             })
     }
 
 
     public select(name): Promise<void> {
         this.readyForQuery = this.loadDB(name).then(()=>{
-            if (this.reject) { // reject the old promise, which only got used to wait for select
-                this.reject();
-                this.reject = undefined;
+            if (this.resolve) { // resolve the old promise which got used to wait for select
+                this.resolve();
+                this.resolve = undefined;
             }
         });
         return this.readyForQuery;
@@ -253,7 +253,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private clear(): Promise<any> {
-        return this.readyForQuery.then(()=>this.db.destroy())
+        return this.db.destroy()
             .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 

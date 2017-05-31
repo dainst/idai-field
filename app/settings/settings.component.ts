@@ -34,15 +34,23 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    public save() {
-
-        this.saving = true;
-
-        this.settingsService.setSettings(
+    private validateSettings(): boolean {
+        const validationError = this.settingsService.setSettings(
             this.selectedProject,
             this.username,
             this.server
         );
+        if (validationError) {
+            this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);
+            return false;
+        }
+        return true;
+    }
+
+    public save() {
+        if (!this.validateSettings()) return;
+
+        this.saving = true;
 
         this.settingsService.activateSettings(true).then(
             () => {

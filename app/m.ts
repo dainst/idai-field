@@ -19,6 +19,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Settings Package
 
     public static SETTINGS_ACTIVATED: string = 'settings/activated';
+    public static SETTINGS_MALFORMED_ADDRESS: string = 'settings/malformed_address';
 
     // Import Package
 
@@ -93,9 +94,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.SETTINGS_MALFORMED_ADDRESS]={
+            content: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.APP_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.',
-            level: 'error',
+            level: 'error', // TODO this should be danger
             params: [],
             hidden: false
         };

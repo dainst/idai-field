@@ -9,14 +9,13 @@
         <plus-button *ngIf="query.q == ''"></plus-button>
     </div>
     <div class="col-md-4" align="right">
-        <div ngbRadioGroup>
-            <label class="btn btn-primary m-0">
-                <input (click)="mode='map'" type="radio"[checked]="mode === 'map'"> Karte
-            </label>
-            <label class="btn btn-primary m-0">
-                <input (click)="mode='list'"  type="radio" [checked]="mode === 'list'" value="list"> Liste
-            </label>
-
+        <div class="btn-group">
+            <button (click)="mode='map'" class="btn btn-primary m-0" [disabled]="mode == 'map'">
+                Karte
+            </button>
+            <button (click)="mode='list'" class="btn btn-primary m-0"  [disabled]="mode == 'list'">
+                Liste
+            </button>
         </div>
     </div>
 </div>
@@ -27,7 +26,8 @@
 
 
     <div class="col-lg-12 col-md-12 col-sm-12" id="document-edit-wrapper">
-        <map-wrapper [activeDoc]="selectedDocument" [editMode]="editGeometry"></map-wrapper>
+        <map-wrapper *ngIf="mode == 'map'" [activeDoc]="selectedDocument" [editMode]="editGeometry"></map-wrapper>
+        <list *ngIf="mode == 'list'" [documents]="documents"></list>
     </div>
 
 </div>

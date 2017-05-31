@@ -90,16 +90,8 @@ export class ResourcesComponent {
 
         this.setSelected(documentToSelect);
 
-        //this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
-    /**
-     * @param document the object that should get opened
-     */
-    public open(document: IdaiFieldDocument) {
-
-        //this.router.navigate(['resources', document.resource.id, 'edit']);
-    }
 
     public queryChanged(query: Query): Promise<any> {
 
@@ -252,7 +244,6 @@ export class ResourcesComponent {
 
 
     private notify() {
-
         this.observers.forEach(observer => {
             observer.next(this.documents);
         });

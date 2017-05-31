@@ -76,7 +76,7 @@ export class EditNavigationComponent implements EditNavigation, OnInit {
         this.getRouteParams(
             type => {
                 this.mode = 'new';
-                this.resourcesComponent.createNewDocument(type)
+                this.resourcesComponent.createNewDocument(type, "none")
                     .then(doc => this.document = doc);
             },
             id => {

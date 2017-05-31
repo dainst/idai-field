@@ -2,7 +2,7 @@
          class="circular-button green-button"
          [ngbPopover]="newObjectMenu" #p="ngbPopover"
          triggers="manual" (click)="reset(); p.toggle();"
-         onclick="window.scrollTo(0, 0)">
+         onclick="window.scrollTo(0, 0)" placement="bottom">
         <!-- Enable when finally implemented in Chromium
        onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
        -->

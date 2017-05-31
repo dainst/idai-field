@@ -2,9 +2,10 @@
     <document-edit-wrapper #f
                             [document]="doc"
                            (onSaveSuccess)="activeModal.close('saved')"
-                           [showDeleteButton]="false"
+                           [showDeleteButton]="deleteButtonShown"
                            [showBackButton]="true"
                            (onBackButtonClicked)="cancel()"
+                           (onDeleteSuccess)="activeModal.close('deleted')"
                            >
     </document-edit-wrapper>
 </div>

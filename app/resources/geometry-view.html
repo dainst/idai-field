@@ -4,18 +4,18 @@
         <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue">Polygon</span>
         <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue">Punkt</span>
         <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
-                [routerLink]="['/resources/editGeometry', document.resource.id, 'existing', {menuMode:'geometryEdit'}]">
+               (click)="onEditGeometry.emit(document)" >
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
     </div>
     <div *ngIf="!document.resource.geometry">
         <span class="fieldvalue">Keine</span>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
-                [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
+                (click)="onCreatePolygon.emit(document)" >
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-point"
-                [routerLink]="['/resources/editGeometry', document.resource.id, 'point', {menuMode:'geometryEdit'}]">
+                (click)="onCreatePoint.emit(document)" >
             <span class="mdi mdi-map-marker-plus mdi-18px"></span>
         </button>
     </div>

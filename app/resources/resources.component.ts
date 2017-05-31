@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditModalComponent} from '../widgets/edit-modal.component';
+import {isUndefined} from "util";
 @Component({
 
     moduleId: module.id,
@@ -140,7 +141,6 @@ export class ResourcesComponent {
     }
 
     public createNewDocument(type: string, geometryType: string): Promise<any> {
-
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
@@ -154,8 +154,6 @@ export class ResourcesComponent {
         } else {
             this.editDocument();
         }
-
-
 
         return this.ready.then(() => {
             this.documents.unshift(<Document> newDocument);
@@ -193,7 +191,8 @@ export class ResourcesComponent {
             }
         }, (closeReason) => {
         })
-        detailModal.showDeleteButton();
+
+        if(this.selectedDocument.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
     }

@@ -23,29 +23,30 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private readyForQuery: Promise<any>;
     private config: ProjectConfiguration;
     private syncHandles = [];
-    private resolve = undefined;
+    private reject = undefined;
     private dbname = undefined;
     private indexCreator = new IndexCreator();
 
     constructor(configLoader: ConfigLoader) {
 
-        this.readyForQuery = new Promise<any>((resolve)=>{
+        this.readyForQuery = new Promise<any>((resolve,reject)=>{
 
                 configLoader.getProjectConfiguration()
                     .then(config => this.config = config)
                     .then(()=>this.setupServer())
-                    .then(() => { this.resolve = resolve; })
+                    .then(() => { this.reject = reject; }); // cause it to wait for a call on select
             })
     }
 
 
-    public select(name) {
+    public select(name): Promise<void> {
         this.readyForQuery = this.loadDB(name).then(()=>{
-            if (this.resolve) {
-                this.resolve();
-                this.resolve = undefined;
+            if (this.reject) { // reject the old promise, which only got used to wait for select
+                this.reject();
+                this.reject = undefined;
             }
-        })
+        });
+        return this.readyForQuery;
     }
 
     protected setupServer() {
@@ -247,17 +248,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<any>}
      */
     public removeRevision(docId: string, revisionId: string): Promise<any> {
-        return this.db.remove(docId, revisionId)
+        return this.readyForQuery.then(()=>this.db.remove(docId, revisionId))
             .catch(err => { console.error(err); Promise.reject([M.DATASTORE_GENERIC_ERROR]); });
     }
 
     private clear(): Promise<any> {
-        return this.db.destroy()
+        return this.readyForQuery.then(()=>this.db.destroy())
             .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 
-    public shutDown(): Promise<any> {
-        return this.db.destroy();
+    public shutDown(): Promise<void> {
+        return this.readyForQuery.then(()=> this.db.destroy());
     }
 
     public documentChangesNotifications(): Observable<Document> {

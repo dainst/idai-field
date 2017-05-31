@@ -31,11 +31,6 @@ The client uses one directory to store and manage all its media files.
  * ~/Library/Application Support on macOS
 * this can be overwritten by setting the imagestorepath to an absolute path in the config
 
-### environment
-
-* test -> the db gets cleared on every reload
-* production -> for production use
-
 ## Configuration.json
 
 In addition to the general rules for 

@@ -29,7 +29,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     constructor(configLoader: ConfigLoader) {
 
-        this.readyForQuery = new Promise<any>((resolve,reject)=>{
+        this.readyForQuery = new Promise<any>((resolve)=>{
 
                 configLoader.getProjectConfiguration()
                     .then(config => this.config = config)

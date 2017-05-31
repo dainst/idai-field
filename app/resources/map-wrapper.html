@@ -18,19 +18,25 @@
     </div>
     <div [class.col-sm-9]="!activeDoc" [class.col-sm-6]="activeDoc" class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
-             [editMode]="editMode" (onSelectDocument)="selectDocument($event)"
+             [editMode]="editMode" (onSelectDocument)="resourcesComponent.select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
     <div *ngIf="activeDoc" class="col-sm-3 document-info px-0">
-        <document-view [(document)]="activeDoc" [basePath]="'resources'">
+        <div>
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"
                             *ngIf="activeDoc && activeDoc.resource.relations
                             && activeDoc.resource.relations['depictedIn']">
             </thumbnail-view>
-            <geometry-view [document]="activeDoc"></geometry-view>
+            <geometry-view [document]="activeDoc"
+                           (onEditGeometry)="resourcesComponent.startEditGeometry()"
+                           (onCreatePoint)="resourcesComponent.createPoint()"
+                           (onCreatePolygon)="resourcesComponent.createPolygon()"
+                    >
+
+            </geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="selectDocument($event)"></relations-view>
-        </document-view>
+        </div>
     </div>
 </div>

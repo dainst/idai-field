@@ -236,8 +236,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     protected select(document: IdaiFieldDocument): boolean {
-
-        if (this.selectedDocument.resource.geometry.type == "none") {
+        if (!this.editMode) {
             this.onSelectDocument.emit(document);
             return true;
         } else {
@@ -247,7 +246,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected deselect() {
 
-        if (this.selectedDocument.resource.geometry.type == "none") {
+        if (!this.editMode) {
             this.onSelectDocument.emit(null);
         }
     }

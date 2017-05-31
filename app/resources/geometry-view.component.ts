@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input} from "@angular/core";
+import {Component, OnChanges, Input, Output, EventEmitter} from "@angular/core";
 import {Router} from "@angular/router";
 import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field-model';
 
@@ -16,6 +16,9 @@ import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field
 export class GeometryViewComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
+    @Output() onEditGeometry: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onCreatePoint: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onCreatePolygon: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     constructor(
         private router: Router

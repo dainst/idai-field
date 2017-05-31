@@ -200,12 +200,36 @@ export class ResourcesComponent {
                 this.selectedDocument = null;
             }
         }, (closeReason) => {
-
         })
         detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
     }
+
+    public startEditGeometry() {
+        this.editGeometry = true
+    }
+    public endEditGeometry() {
+        this.editGeometry = false
+    }
+
+    public createPolygon(doc?: IdaiFieldDocument) {
+        if(doc) {
+            this.setSelected(doc)
+        }
+        this.selectedDocument.resource["geometry"] = { "type": "polygon" };
+        this.startEditGeometry();
+    }
+
+    public createPoint(doc?: IdaiFieldDocument) {
+        if(doc) {
+            this.setSelected(doc)
+        }
+        this.selectedDocument.resource["geometry"] = { "type": "point" };
+        this.startEditGeometry();
+    }
+
+
 
     /**
      * Gets a document from the datastore and makes
@@ -215,7 +239,6 @@ export class ResourcesComponent {
      * @returns {Promise<Document>}
      */
     public loadDoc(resourceId) : Promise<Document> {
-
         return this.datastore.get(resourceId)
             .then(document => this.setSelected(document));
     }
@@ -252,7 +275,7 @@ export class ResourcesComponent {
         if (document==undefined) return Promise.resolve();
         if (!document['_id']) { // TODO work with propely defined interface
             this.remove(document);
-            this.selectedDocument=undefined;
+            this.selectedDocument = undefined;
             return Promise.resolve();
         }
 

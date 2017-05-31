@@ -141,31 +141,23 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
      *   should get deleted, <code>undefined</code> indicates editing operation aborted.
      */
     public quitEditing(geometry: IdaiFieldGeometry) {
-
+        let selectedDoc = this.resourcesComponent.getSelected();
         if (geometry) {
-            this.resourcesComponent.getSelected().resource.geometry = geometry;
+            selectedDoc.resource.geometry = geometry;
         } else if (geometry === null) { 
-            delete this.resourcesComponent.getSelected().resource.geometry;
+            delete selectedDoc.resource.geometry;
         }
 
         if (this.selectedDocIsNew()) {
-            
-            if (geometry === undefined) {
-                //this.router.navigate(['resources'])
-            } else {
-                //this.router.navigate(['resources', 'selected', 'edit']);
-                this.resourcesComponent.editDocument();
-            }
-            
+            this.resourcesComponent.editDocument();
         } else {
-            
+            this.resourcesComponent.endEditGeometry();
             if (geometry !== undefined) this.save();
-            //this.router.navigate(['resources', {id: this.resourcesComponent.getSelected().resource.id}]);
+
         }
     }
     
     ngOnDestroy(): void {
-
         this.removeEmptyDocument();
     }
 

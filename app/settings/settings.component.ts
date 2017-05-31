@@ -1,8 +1,10 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
-import {SettingsService} from "./settings-service";
-import {M} from "../m";
-import {SyncTarget} from "./settings";
+import {SettingsService} from './settings-service';
+import {M} from '../m';
+import {SyncTarget} from './settings';
+
+const ip = require('ip');
 
 @Component({
     moduleId: module.id,
@@ -15,9 +17,10 @@ export class SettingsComponent implements OnInit {
 
     public selectedProject;
     public username;
-    public server : SyncTarget = { address: undefined, username: undefined, password: undefined};
+    public server: SyncTarget = { address: undefined, username: undefined, password: undefined };
     public ready = undefined;
     public saving = false;
+    public ipAddress = ip.address();
 
     constructor(private settingsService: SettingsService,
                 private messages: Messages) {

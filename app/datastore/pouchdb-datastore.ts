@@ -253,7 +253,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private clear(): Promise<any> {
-        return this.readyForQuery.then(()=>this.db.destroy())
+        return this.db.destroy()
             .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 

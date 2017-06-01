@@ -22,6 +22,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private editablePolygons: Array<L.Polygon>;
     private editableMarker: L.Marker;
+    private selectedPolygon: L.Polygon;
 
     public ngOnChanges(changes: SimpleChanges) {
 
@@ -52,11 +53,11 @@ export class EditableMapComponent extends LayerMapComponent {
         switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
             case 'MultiPolygon':
-                this.editMode = "polygon";
+                this.editMode = 'polygon';
                 this.startPolygonEditing();
                 break;
             case 'Point':
-                this.editMode = "point";
+                this.editMode = 'point';
                 this.startPointEditing();
                 break;
         }
@@ -64,42 +65,67 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPolygonCreation() {
 
-        var drawOptions = {
-            templineStyle: { color: 'red' },
-            hintlineStyle: { color: 'red' }
-        };
-
-        this.map.pm.enableDraw('Poly', drawOptions);
-
-        var mapComponent = this;
-        this.map.on('pm:create', function(event: L.LayerEvent) {
-            let polygon: L.Polygon = <L.Polygon> event.layer;
-            mapComponent.editablePolygons.push(polygon);
-            mapComponent.setupEditablePolygon(polygon);
-        });
+        this.setupPolygonCreation();
+        this.addPolygon();
     }
 
-    private startPolygonEditing() {
+    private startPolygonEditing() {  
+
+        this.setupPolygonCreation();
 
         this.editablePolygons = this.polygons[this.selectedDocument.resource.id];
 
-        for (let polygon of this.editablePolygons) {
+        for (let polygon of this.editablePolygons) { 
             polygon.unbindTooltip();
             this.setupEditablePolygon(polygon);
+        } 
+
+        if (this.editablePolygons.length > 0) {
+            this.setSelectedPolygon(this.editablePolygons[0]);
         }
+    }  
+
+    private setupPolygonCreation() {  
+
+        var mapComponent = this;
+        this.map.on('pm:create', function(event: L.LayerEvent) { 
+            let polygon: L.Polygon = <L.Polygon> event.layer; 
+            mapComponent.editablePolygons.push(polygon); 
+            mapComponent.setupEditablePolygon(polygon); 
+            mapComponent.setSelectedPolygon(polygon);
+        });
     }
 
     private setupEditablePolygon(polygon: L.Polygon) {
 
         polygon.setStyle({ color: 'red', fillColor: 'red' });
-        polygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         var mapComponent = this;
-        polygon.on('pm:edit', function() {
-            if (this._latlngs[0].length < 2) {
-                mapComponent.deleteGeometry();
-            }
+        polygon.on('click', function() {
+            mapComponent.setSelectedPolygon(this);
         });
+    }
+
+    private setSelectedPolygon(polygon: L.Polygon) {
+
+        if (this.selectedPolygon) {
+            this.selectedPolygon.pm.disable();
+        }
+
+        polygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        this.selectedPolygon = polygon;
+    }
+
+    private removePolygon(polygon: L.Polygon) {
+
+        polygon.pm.disable();
+        this.map.removeLayer(polygon);  
+
+        for (let editablePolygon of this.editablePolygons) { 
+            if (editablePolygon == polygon) { 
+                this.editablePolygons.splice(this.editablePolygons.indexOf(editablePolygon), 1); 
+            } 
+        } 
     }
 
     private startPointCreation() {
@@ -131,12 +157,27 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+    public addPolygon() {
+
+        const drawOptions = {
+            templineStyle: { color: 'red' },
+            hintlineStyle: { color: 'red' }
+        };
+
+        this.map.pm.enableDraw('Poly', drawOptions);
+    }
+
     public deleteGeometry() {
 
-        this.resetEditing();
-
-        if (this.editMode == 'polygon') {
-            this.startPolygonCreation();
+        if (this.editMode == 'polygon' && this.selectedPolygon) {
+            this.removePolygon(this.selectedPolygon);
+            if (this.editablePolygons.length > 0) {
+                this.setSelectedPolygon(this.editablePolygons[0]);
+            } else {
+                this.addPolygon();
+            }
+        } else {
+            this.resetEditing();
         }
     }
 

@@ -52,6 +52,13 @@ $layer-menu-button-inactive-color: grey;
   left: 25px;
 }
 
+#map-editor-button-add-polygon {
+  position: absolute;
+  z-index: 1000;
+  bottom: 20px;
+  left: 100px;
+}
+
 .layer-entry {
   -webkit-user-select: none;
   -moz-user-select: none;

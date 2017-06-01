@@ -177,7 +177,7 @@ export class ResourcesComponent {
         });
     }
 
-    public editDocument (doc?: IdaiFieldDocument) {
+    public editDocument (doc?: IdaiFieldDocument, activeTabName?: string) {
         this.editGeometry = false;
         if(doc) {
             this.setSelected(doc)
@@ -195,6 +195,9 @@ export class ResourcesComponent {
         if(this.selectedDocument.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
+        if(activeTabName) {
+            detailModal.setActiveTab(activeTabName);
+        }
     }
 
     public startEditGeometry() {
@@ -303,15 +306,13 @@ export class ResourcesComponent {
         return latestAction && latestAction.user != this.settingsService.getUsername();
     }
 
-    private solveConflicts(doc) {
-
+    private solveConflicts(doc: IdaiFieldDocument) {
+        this.editDocument(doc, "conflicts");
     }
     private deselect() {
         this.selectedDocument = undefined;
-
     }
     private startEdit(doc: IdaiFieldDocument) {
-        this.editDocument(doc)
-
+        this.editDocument(doc);
     }
 }

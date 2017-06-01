@@ -13,6 +13,8 @@ export class EditModalComponent {
 
     doc:IdaiFieldDocument;
 
+    private activeTab: string;
+
     @ViewChild('modalTemplate')
 
     modalTemplate: TemplateRef<any>;
@@ -36,6 +38,11 @@ export class EditModalComponent {
 
     public setDocument(document: IdaiFieldDocument) {
         this.doc = document;
+    }
+
+
+    public setActiveTab(activeTabName: string) {
+        this.activeTab = activeTabName;
     }
 
     public cancel() {

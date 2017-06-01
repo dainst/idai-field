@@ -20,7 +20,7 @@ export class EditableMapComponent extends LayerMapComponent {
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
-    private editablePolygon: L.Polygon;
+    private editablePolygons: Array<L.Polygon>;
     private editableMarker: L.Marker;
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -51,6 +51,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
+            case 'MultiPolygon':
                 this.editMode = "polygon";
                 this.startPolygonEditing();
                 break;
@@ -72,25 +73,29 @@ export class EditableMapComponent extends LayerMapComponent {
 
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
-            mapComponent.editablePolygon = <L.Polygon> event.layer;
-            mapComponent.setupEditablePolygon();
+            let polygon: L.Polygon = <L.Polygon> event.layer;
+            mapComponent.editablePolygons.push(polygon);
+            mapComponent.setupEditablePolygon(polygon);
         });
     }
 
     private startPolygonEditing() {
 
-        this.editablePolygon = this.polygons[this.selectedDocument.resource.id];
-        this.editablePolygon.unbindTooltip();
-        this.setupEditablePolygon();
+        this.editablePolygons = this.polygons[this.selectedDocument.resource.id];
+
+        for (let polygon of this.editablePolygons) {
+            polygon.unbindTooltip();
+            this.setupEditablePolygon(polygon);
+        }
     }
 
-    private setupEditablePolygon() {
+    private setupEditablePolygon(polygon: L.Polygon) {
 
-        this.editablePolygon.setStyle({ color: 'red', fillColor: 'red' });
-        this.editablePolygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        polygon.setStyle({ color: 'red', fillColor: 'red' });
+        polygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         var mapComponent = this;
-        this.editablePolygon.on('pm:edit', function() {
+        polygon.on('pm:edit', function() {
             if (this._latlngs[0].length < 2) {
                 mapComponent.deleteGeometry();
             }
@@ -137,13 +142,16 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public finishEditing() {
 
-        var geometry: IdaiFieldGeometry = { type: "", coordinates: [], crs: "local" };
+        var geometry: IdaiFieldGeometry = { type: '', coordinates: [], crs: 'local' };
 
-        if (this.editablePolygon) {
-            geometry.type = "Polygon";
-            geometry.coordinates = this.getCoordinatesFromPolygon(this.editablePolygon);
+        if (this.editablePolygons.length == 1) {
+            geometry.type = 'Polygon';
+            geometry.coordinates = this.getCoordinatesFromPolygon(this.editablePolygons[0]);
+        } else if (this.editablePolygons.length > 1) {
+            geometry.type = 'MultiPolygon';
+            geometry.coordinates = this.getCoordinatesFromPolygons(this.editablePolygons);
         } else if (this.editableMarker) {
-            geometry.type = "Point";
+            geometry.type = 'Point';
             geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
         } else {
             geometry = null;
@@ -165,30 +173,35 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private resetEditing() {
 
-        if (this.editablePolygon) {
-            this.editablePolygon.pm.disable();
-            this.map.removeLayer(this.editablePolygon);
-            this.editablePolygon = undefined;
+        if (this.editablePolygons) {
+            for (let polygon of this.editablePolygons) {
+                polygon.pm.disable();
+                this.map.removeLayer(polygon);
+            }
         }
 
         if (this.editableMarker) {
             this.map.removeLayer(this.editableMarker);
-            this.editableMarker = undefined;
         }
+
+        this.editablePolygons = [];
+        this.editableMarker = undefined;
 
         this.map.pm.disableDraw('Poly');
     }
 
     private fadeOutMapElements() {
 
-        for (var i in this.polygons) {
-            if (this.polygons[i].document != this.selectedDocument) {
-                this.polygons[i].setStyle({ opacity: 0.25, fillOpacity: 0.1 });
+        for (let i in this.polygons) {
+            for (let polygon of this.polygons[i]) {
+                if (polygon.document.resource.id != this.selectedDocument.resource.id) {
+                    polygon.setStyle({opacity: 0.25, fillOpacity: 0.1});
+                }
             }
         }
 
-        for (var i in this.markers) {
-            if (this.markers[i].document != this.selectedDocument) {
+        for (let i in this.markers) {
+            if (this.markers[i].document.resource.id != this.selectedDocument.resource.id) {
                 this.markers[i].setOpacity(0.5);
             }
         }
@@ -196,16 +209,29 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private fadeInMapElements() {
 
-        for (var i in this.polygons) {
-            this.polygons[i].setStyle({ opacity: 0.5, fillOpacity: 0.2 });
+        for (let i in this.polygons) {
+            for (let polygon of this.polygons[i]) {
+                polygon.setStyle({opacity: 0.5, fillOpacity: 0.2});
+            }
         }
 
-        for (var i in this.markers) {
+        for (let i in this.markers) {
             this.markers[i].setOpacity(1);
         }
     }
 
-    private getCoordinatesFromPolygon(polygon: L.Polygon): Array<any> {
+    private getCoordinatesFromPolygons(polygons: Array<L.Polygon>): number[][][][] {
+
+        let coordinates = [];
+
+        for (let polygon of polygons) {
+            coordinates.push(this.getCoordinatesFromPolygon(polygon));
+        }
+
+        return coordinates;
+    }
+
+    private getCoordinatesFromPolygon(polygon: L.Polygon): number[][][] {
 
         var coordinates = [];
         var latLngs = polygon.getLatLngs();
@@ -223,10 +249,10 @@ export class EditableMapComponent extends LayerMapComponent {
     protected clickOnMap(clickPosition: L.LatLng) {
 
         switch(this.editMode) {
-            case "point":
+            case 'point':
                 this.setEditableMarkerPosition(clickPosition);
                 break;
-            case "none":
+            case 'none':
                 this.deselect();
                 break;
         }
@@ -234,7 +260,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected select(document: IdaiFieldDocument): boolean {
 
-        if (this.editMode == "none") {
+        if (this.editMode == 'none') {
             this.onSelectDocument.emit(document);
             return true;
         } else {
@@ -244,7 +270,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected deselect() {
 
-        if (this.editMode == "none") {
+        if (this.editMode == 'none') {
             this.onSelectDocument.emit(null);
         }
     }

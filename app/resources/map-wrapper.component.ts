@@ -1,5 +1,4 @@
 import {Component, OnInit, OnDestroy, Input} from '@angular/core';
-//import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ResourcesComponent} from './resources.component';
 import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
@@ -28,8 +27,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     @Input() editMode: boolean = false;
 
     constructor(
-        //private router: Router,
-        //private route: ActivatedRoute,
         private datastore: ReadDatastore,
         private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
@@ -61,40 +58,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         let element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
-    /*
-    private getRouteParams(callback): Promise<any> {
-
-        return this.route.params.forEach((params: Params) => {
-            var type = undefined;
-            var id = undefined;
-            if (params['id'] && params['id'].indexOf('new') == 0) {
-                type = params['id'].substring(4);
-                console.debug("new doc of type:",type);
-            } else {
-                id = params['id'];
-            }
-            callback(params['menuMode'], params['editMode'], id, type);
-
-        })
-    }
-
-    public setMenuMode(menuMode) {
-        if (menuMode) {
-            this.menuMode = menuMode;
-        } else {
-            this.menuMode = "view";
-        }
-    }
-
-    public setEditMode(editMode) {
-        if (editMode) {
-            this.editMode = editMode;
-            this.removeEmptyDocument();
-        } else {
-            this.editMode = "none";
-        }
-    }
-     */
 
     private setActiveDoc(id) {
         if (id) {
@@ -118,18 +81,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
            this.docs = result as IdaiFieldDocument[];
         });
 
-        /*this.getRouteParams(function(menuMode, editMode, id, type){
-
-            this.setMenuMode(menuMode);
-            this.setEditMode(editMode);
-
-            if (type) {
-                this.resourcesComponent.createNewDocument(type);
-            } else {
-                this.setActiveDoc(id);
-            }
-
-        }.bind(this)).catch(err=>console.log("MapWrapperComponent.ngOnInit caught err after calling getRouteParams: ",err));*/
     }
 
     private selectedDocIsNew() : boolean {

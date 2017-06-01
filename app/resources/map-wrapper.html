@@ -22,7 +22,7 @@
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
     <div *ngIf="activeDoc" class="col-sm-3 document-info px-0">
-        <div>
+        <document-view [document]="activeDoc" (onSolveConflict)="resourcesComponent.solveConflicts($event)" (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"
                             *ngIf="activeDoc && activeDoc.resource.relations
@@ -37,6 +37,6 @@
             </geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="selectDocument($event)"></relations-view>
-        </div>
+        </document-view>
     </div>
 </div>

@@ -302,4 +302,16 @@ export class ResourcesComponent {
 
         return latestAction && latestAction.user != this.settingsService.getUsername();
     }
+
+    private solveConflicts(doc) {
+
+    }
+    private deselect() {
+        this.selectedDocument = undefined;
+
+    }
+    private startEdit(doc: IdaiFieldDocument) {
+        this.editDocument(doc)
+
+    }
 }

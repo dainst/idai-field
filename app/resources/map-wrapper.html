@@ -36,7 +36,7 @@
 
             </geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
-            <relations-view [doc]="activeDoc" (relationClicked)="selectDocument($event)"></relations-view>
+            <relations-view [doc]="activeDoc" (relationClicked)="resourcesComponent.select($event)"></relations-view>
         </document-view>
     </div>
 </div>

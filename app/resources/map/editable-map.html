@@ -21,8 +21,8 @@
 </div>
 
 <div *ngIf="editMode != 'none'">
-    <div *ngIf="editMode == 'polygon'" id="map-editor-button-add-polygon" class="btn btn-success mdi mdi-plus mdi-24px"
-         (click)="addPolygon()"></div>
+    <div *ngIf="editMode == 'polygon'" id="map-editor-button-add-polygon"
+         class="btn btn-success mdi mdi-shape-polygon-plus mdi-24px" (click)="addPolygon()"></div>
     <div id="map-editor-button-delete" class="btn btn-danger mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>
     <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">OK</div>
     <div id="map-editor-button-abort" class="btn btn-primary" (click)="abortEditing()">Abbrechen</div>

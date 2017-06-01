@@ -21,6 +21,16 @@ var DocumentViewPage = function() {
         element(by.id('document-view-button-edit-document')).click();
     };
 
+    this.clickCreateGeometry = function(type) {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-create-' + type))), delays.ECWaitTime);
+        return element(by.id('document-view-button-create-' + type)).click();
+    };
+
+    this.clickReeditGeometry = function() {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
+        element(by.id('document-view-button-edit-geometry')).click();
+    };
+
     // get text
 
     /**
@@ -62,6 +72,11 @@ var DocumentViewPage = function() {
 
     this.getRelations = function() {
         return element.all(by.css('relations-view a'));
+    };
+
+    this.getSelectedGeometryTypeText = function() {
+        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
+        return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 };
 

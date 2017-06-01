@@ -11,52 +11,50 @@ $layer-menu-button-inactive-color: grey;
 }
 
 #layer-button,
+#layer-menu,
+#map-editor-button-ok,
+#map-editor-button-abort,
+#map-editor-button-delete,
+#map-editor-button-add-polygon {
+  position: absolute;
+  z-index: 1000;
+}
+
+#layer-button,
 #layer-menu {
   border: none;
   border-radius: 0;
 }
 
 #layer-button {
-  position: absolute;
-  z-index: 1000;
   top: 10px;
   right: 25px;
 }
 
 #layer-menu {
-  position: absolute;
-  z-index: 1000;
   top: 10px;
   right: 25px;
   padding-bottom: 10px;
 }
 
 #map-editor-button-ok {
-  position: absolute;
-  z-index: 1000;
-  bottom: 20px;
   right: 150px;
+  bottom: 20px;
 }
 
 #map-editor-button-abort {
-  position: absolute;
-  z-index: 1000;
-  bottom: 20px;
   right: 25px;
+  bottom: 20px;
 }
 
 #map-editor-button-delete {
-  position: absolute;
-  z-index: 1000;
-  bottom: 20px;
   left: 25px;
+  bottom: 20px;
 }
 
 #map-editor-button-add-polygon {
-  position: absolute;
-  z-index: 1000;
-  bottom: 20px;
   left: 100px;
+  bottom: 20px;
 }
 
 .layer-entry {

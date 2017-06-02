@@ -1,4 +1,5 @@
 <div class="modal-body p-0">
+    <div class="px-2"><messages></messages></div>
     <document-edit-wrapper #f
                             [document]="doc"
                            (onSaveSuccess)="activeModal.close('saved')"
@@ -6,6 +7,7 @@
                            [showBackButton]="true"
                            (onBackButtonClicked)="cancel()"
                            (onDeleteSuccess)="activeModal.close('deleted')"
+                           [activeTab]="activeTab"
                            >
     </document-edit-wrapper>
 </div>

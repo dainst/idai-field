@@ -103,18 +103,6 @@ export class ListComponent {
     }
 
 
-    public addDocument(new_doc_type): IdaiFieldDocument {
-        // TODO - Use Validator class
-        if (!new_doc_type || new_doc_type == '') {
-            return
-        }
-
-        let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": new_doc_type }, synced: 0 };
-
-        this.documents.push(newDoc);
-        return newDoc;
-    }
-
     public addRelatedDocument(parentDocument: IdaiFieldDocument, relation, event) {
         if (!parentDocument || !relation) {
             return
@@ -122,7 +110,7 @@ export class ListComponent {
 
         event.target.value = "";
 
-        let newDoc = this.addDocument(relation["targetName"]);
+        let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": relation["targetName"] }, synced: 0 };
 
         this.save(newDoc).then(doc => {
 
@@ -136,6 +124,9 @@ export class ListComponent {
                 [oldVersion]).then(doc => {
                 this.detailedDocument = newDoc;
             });
+
+            this.documents.push(newDoc);
+
         })
 
     }

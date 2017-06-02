@@ -71,6 +71,11 @@ export class IdaiFieldValidator extends Validator {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
                 }
                 break;
+            case 'MultiPolygon':
+                if (!IdaiFieldValidator.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiPolygon' ];
+                }
+                break;
             default:
                 return [ M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE, geometry.type ];
         }
@@ -97,6 +102,17 @@ export class IdaiFieldValidator extends Validator {
             for (let j in coordinates[i]) {
                 if (!IdaiFieldValidator.validatePointCoordinates(coordinates[i][j])) return false;
             }
+        }
+
+        return true;
+    }
+
+    private static validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
+
+        if (coordinates.length == 0) return false;
+
+        for (let i in coordinates) {
+            if (!IdaiFieldValidator.validatePolygonCoordinates(coordinates[i])) return false;
         }
 
         return true;

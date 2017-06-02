@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditModalComponent} from '../widgets/edit-modal.component';
+import {isUndefined} from "util";
 @Component({
 
     moduleId: module.id,
@@ -90,16 +91,8 @@ export class ResourcesComponent {
 
         this.setSelected(documentToSelect);
 
-        //this.router.navigate(['resources', { id: documentToSelect.resource.id }]);
     }
 
-    /**
-     * @param document the object that should get opened
-     */
-    public open(document: IdaiFieldDocument) {
-
-        //this.router.navigate(['resources', document.resource.id, 'edit']);
-    }
 
     public queryChanged(query: Query): Promise<any> {
 
@@ -148,7 +141,6 @@ export class ResourcesComponent {
     }
 
     public createNewDocument(type: string, geometryType: string): Promise<any> {
-
         // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
         //     { "synced" : 1, "resource" :
         //     { "type" : undefined, "identifier":"hallo","title":undefined}};
@@ -162,8 +154,6 @@ export class ResourcesComponent {
         } else {
             this.editDocument();
         }
-
-
 
         return this.ready.then(() => {
             this.documents.unshift(<Document> newDocument);
@@ -187,7 +177,7 @@ export class ResourcesComponent {
         });
     }
 
-    public editDocument (doc?: IdaiFieldDocument) {
+    public editDocument (doc?: IdaiFieldDocument, activeTabName?: string) {
         this.editGeometry = false;
         if(doc) {
             this.setSelected(doc)
@@ -201,9 +191,13 @@ export class ResourcesComponent {
             }
         }, (closeReason) => {
         })
-        detailModal.showDeleteButton();
+
+        if(this.selectedDocument.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
+        if(activeTabName) {
+            detailModal.setActiveTab(activeTabName);
+        }
     }
 
     public startEditGeometry() {
@@ -252,7 +246,6 @@ export class ResourcesComponent {
 
 
     private notify() {
-
         this.observers.forEach(observer => {
             observer.next(this.documents);
         });
@@ -311,5 +304,15 @@ export class ResourcesComponent {
         }
 
         return latestAction && latestAction.user != this.settingsService.getUsername();
+    }
+
+    private solveConflicts(doc: IdaiFieldDocument) {
+        this.editDocument(doc, "conflicts");
+    }
+    private deselect() {
+        this.selectedDocument = undefined;
+    }
+    private startEdit(doc: IdaiFieldDocument) {
+        this.editDocument(doc);
     }
 }

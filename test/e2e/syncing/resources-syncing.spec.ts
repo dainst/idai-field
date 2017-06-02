@@ -20,7 +20,7 @@ const settingsPage = require('../settings.page');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-describe('resources/syncing tests --', function() {
+xdescribe('resources/syncing tests --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -34,7 +34,14 @@ describe('resources/syncing tests --', function() {
         shortDescription: "Testobjekt",
         relations: []
     };
-    let testDocument: any = { _id: testResource.id, resource: testResource };
+    let testDocument: any = {
+        _id: testResource.id,
+        resource: testResource,
+        created: {
+            date: new Date(),
+            user: 'testuser'
+        }
+    };
 
     function setupTestDB() {
 
@@ -127,7 +134,7 @@ describe('resources/syncing tests --', function() {
 
     function removeRemoteSiteConfiguration() {
 
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), '');
+        common.typeIn(settingsPage.getRemoteSiteAddressInput(), ' ');
         settingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
     }
@@ -283,7 +290,6 @@ describe('resources/syncing tests --', function() {
                     }).catch(err => { fail(err); done(); });
             }));
     });
-
 
     xit('should detect an eventual conflict and mark the corresponding resource list item', done => {
 

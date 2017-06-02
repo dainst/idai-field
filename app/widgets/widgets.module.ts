@@ -17,6 +17,8 @@ import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {EditModalComponent} from './edit-modal.component';
 import {ListComponent} from './list.component';
+import {IdaiMessagesModule} from 'idai-components-2/messages';
+
 
 @NgModule({
     imports: [
@@ -25,7 +27,8 @@ import {ListComponent} from './list.component';
         FormsModule,
         IdaiWidgetsModule,
         IdaiDocumentsModule,
-        RouterModule
+        RouterModule,
+        IdaiMessagesModule
     ],
     declarations: [
         DocumentEditWrapperComponent,

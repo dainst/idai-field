@@ -79,10 +79,16 @@
                            [ngModel]="server.password"
                            (ngModelChange)="server.password = $event"
                            class="form-control">
+
+                    <label class="control-label col-form-label">
+                        Eigene Adresse: http://{{ipAddress}}:3000
+                    </label>
+                    <div class="settings-info">
+                        Diese Adresse kann in anderen iDAI.field-Clients eingetragen werden, um
+                        eine Synchronisationsverbindung zu diesem Client herzustellen.
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </main>
 

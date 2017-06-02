@@ -1,5 +1,4 @@
 import {Routes,RouterModule} from '@angular/router';
-import {ListWrapperComponent} from './list/list-wrapper.component';
 import {ResourcesComponent} from './resources/resources.component';
 import {ImportComponent} from './import/import.component';
 import {ExportComponent} from'./export/export.component';
@@ -11,7 +10,6 @@ const routes: Routes = [
     { path: '', component: ResourcesComponent },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },
-    { path: 'list', component: ListWrapperComponent },
     { path: 'settings', component: SettingsComponent }
 ];
 

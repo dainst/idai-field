@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="typesMap && typesList">
     <div class="col-md-12 px-0">
         <table class=" table table-hover table-striped table-sm">
             <tr>
@@ -34,17 +34,5 @@
             </tr>
         </table>
 
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4 offset-md-4 px-0">
-        <div class="form-inline pt-3">
-            <small>Neues Dokument<br>vom Typ:</small>
-            <select class="form-control ml-2" [(ngModel)]="new_doc_type">
-                <option *ngFor="let type of typesList" [value]="type.name">{{type.label}}</option>
-            </select>
-            <button class="btn btn-secondary ml-2" (click)="addDocument(new_doc_type)" [disabled]="!new_doc_type">hinzufügen</button>
-        </div>
     </div>
 </div>

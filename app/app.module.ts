@@ -25,7 +25,6 @@ import {ReadImagestore} from './imagestore/read-imagestore';
 import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
-import {ListModule} from './list/list.module';
 import {CachedDatastore} from './datastore/cached-datastore';
 import {BlobMaker} from './imagestore/blob-maker';
 import {Converter} from './imagestore/converter';
@@ -43,7 +42,6 @@ const CONFIG = require('electron').remote.getGlobal('config');
     imports: [
         ImagesModule,
         ResourcesModule,
-        ListModule,
         SettingsModule,
         BrowserModule,
         FormsModule,

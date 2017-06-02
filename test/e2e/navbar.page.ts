@@ -8,18 +8,18 @@ export class NavbarPage {
     // click
 
     public static clickNavigateToResources() {
-        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(1)'))), delays.ECWaitTime);
-        return element(by.css('navbar ul li:nth-child(1)')).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(0)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(0).click();
     };
 
     public static clickNavigateToList() {
-        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(3)'))), delays.ECWaitTime);
-        return element(by.css('navbar ul li:nth-child(3)')).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(2)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(2).click();
     };
 
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element(by.css('navbar ul li:nth-child(6)'))), delays.ECWaitTime);
-        return element(by.css('navbar ul li:nth-child(6)')).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(5)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(5).click();
     };
 
     // unused?

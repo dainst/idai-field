@@ -2,6 +2,7 @@
     <div class="fieldname">Geometrie</div>
     <div *ngIf="document.resource.geometry">
         <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue">Polygon</span>
+        <span *ngIf="document.resource.geometry.type == 'MultiPolygon'" class="fieldvalue">Multipolygon</span>
         <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue">Punkt</span>
         <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
                (click)="onEditGeometry.emit(document)" >

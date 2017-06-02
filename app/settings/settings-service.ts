@@ -83,7 +83,10 @@ export class SettingsService {
 
         this.settings.username = username;
 
-        if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
+        if (syncTarget.address) {
+            syncTarget.address = syncTarget.address.trim();
+            if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
+        }
 
         this.settings.syncTarget = syncTarget;
         this.makeFirstOfDbsArray(projectName);
@@ -143,6 +146,9 @@ export class SettingsService {
     }
 
     private static validateAddress(address) {
+
+        if (address == '') return true;
+
         const re = new RegExp("^http:\/\/[0-9a-z.]+:[0-9]+$");
         return re.test(address);
     }

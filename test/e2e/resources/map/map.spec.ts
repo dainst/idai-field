@@ -6,7 +6,7 @@ let delays = require('../../config/delays');
 let documentViewPage = require('../../widgets/document-view.page');
 import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
 
-describe('resources/map tests', function() {
+describe('resources/map', function() {
 
     function setPolygon() {
         return Promise.resolve()
@@ -69,39 +69,39 @@ describe('resources/map tests', function() {
         browser.sleep(3000);
     });
 
-    it('should create a new item with point geometry ', function() {
+    it('create a new item with point geometry ', function() {
         createDoc('33','point', function(){return mapPage.setMarker(100, 100)});
         DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
-    it('should create a new item with polygon geometry ', function() {
+    it('create a new item with polygon geometry ', function() {
         createDoc('34', 'polygon', setPolygon);
         DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
-    it('should create a new item with multipolygon geometry ', function() {
+    it('create a new item with multipolygon geometry ', function() {
         createDoc('43', 'polygon', setMultiPolygon);
         DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolygon');
     });
 
-    it('should delete a point geometry ', function() {
+    it('delete a point geometry ', function() {
         createDocThenReedit('37', 'point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Keine');
     });
 
-    it('should delete a polygon geometry ', function() {
+    it('delete a polygon geometry ', function() {
         createDocThenReedit('36' ,'polygon', setPolygon);
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Keine');
     });
 
-    it('should delete single polygons of a multipolygon', function() {
+    it('delete single polygons of a multipolygon', function() {
         createDocThenReedit('44' ,'polygon', setMultiPolygon);
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('ok');
@@ -112,7 +112,7 @@ describe('resources/map tests', function() {
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Keine');
     });
 
-    it('should create a point geometry later', function() {
+    it('create a point geometry later', function() {
         resourcePage.performCreateResource('39');
         DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('point');
@@ -121,7 +121,7 @@ describe('resources/map tests', function() {
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
-    it('should create a polygon geometry later', function() {
+    it('create a polygon geometry later', function() {
         resourcePage.performCreateResource('38');
         DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polygon').then(setPolygon);
@@ -129,7 +129,7 @@ describe('resources/map tests', function() {
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
-    it('should create a multipolygon geometry later', function() {
+    it('create a multipolygon geometry later', function() {
         resourcePage.performCreateResource('42');
         DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polygon').then(setMultiPolygon);
@@ -137,21 +137,21 @@ describe('resources/map tests', function() {
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolygon');
     });
 
-    it('should cancel deleting a point geometry', function() {
+    it('cancel deleting a point geometry', function() {
         createDocThenReedit('40','point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('abort');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
-    it('should cancel deleting a polygon geometry', function() {
+    it('cancel deleting a polygon geometry', function() {
         createDocThenReedit('41','polygon', setPolygon);
         mapPage.clickMapOption('delete');
         mapPage.clickMapOption('abort');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
     
-    it('should abort item creation completely when aborting geometry editing', function() {
+    it('abort item creation completely when aborting geometry editing', function() {
         beginCreateDocWithGeometry('point', function(){return mapPage.setMarker(100, 100)});
         mapPage.clickMapOption('abort');
         expect(browser.getCurrentUrl()).toContain('resources');

@@ -239,7 +239,7 @@ describe('resources/syncing tests --', function() {
                 browser.sleep(5000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 expect(loadedConfig).toEqual(expectedConfig);
-                return settingsPage.get();
+                return settingsPage.get().then(()=>browser.sleep(2000))
             }).then(() => settingsPage.getRemoteSiteAddress())
             .then(address => {
                 expect(address).toEqual(remoteSiteAddress);

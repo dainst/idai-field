@@ -75,24 +75,25 @@ since both of them will not lead to an exit code other than `0`.
 
 ## E2E - Testing
 
-**Note** that provision of config files (see [here](config)) is a precondition for being able to run and e2e test the application successfully.
-
 Test execution can be started
 
 ```
-2$ npm run e2e
+$ npm run e2e
 ```
 
 This command runs all end to end tests once. To alter this behaviour, you can use the `ff` option (fail fast)
 
 ```
-2$ npm run e2e ff
+$ npm run e2e ff
 ```
 
 so that test execution stops when the first error is found. 
 
+Additionally, there is a (not yet) stable syncing test suite, which can be started with
 
-
+```
+$ npm run e2e (no)ff syncing
+```
 
 ## Packaging
 

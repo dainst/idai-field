@@ -7,14 +7,14 @@ let resourcesPage = require('./resources.page');
 let documentViewPage = require('../widgets/document-view.page');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
-describe('resources/relations tests --', function() {
+describe('resources/relations --', function() {
 
     beforeEach(function() {
         resourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
-    it ('should create links for relations', function() {
+    it ('create links for relations', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource('1');
         expect(documentViewPage.getRelationValue(0)).toEqual('2');
@@ -22,7 +22,7 @@ describe('resources/relations tests --', function() {
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
-    it('should create a new relation and the corresponding inverse relation', function() {
+    it('create a new relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         expect(DocumentEditWrapperPage.getRelationButtonText(0, 0, 0)).toEqual('1');
         resourcesPage.clickSelectResource('1');
@@ -30,7 +30,7 @@ describe('resources/relations tests --', function() {
         expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
     });
 
-    it('should edit a resource that contains a relation', function() {
+    it('edit a resource that contains a relation', function() {
         resourcesPage.performCreateLink();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         DocumentEditWrapperPage.clickFieldsTab();
@@ -39,7 +39,7 @@ describe('resources/relations tests --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    xit('should delete a relation and the corresponding inverse relation', function() {
+    xit('delete a relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource('2');
         documentViewPage.getRelations().then(function(relations) {
@@ -64,7 +64,7 @@ describe('resources/relations tests --', function() {
         });
     });
 
-    it('should delete inverse relations when deleting a resource', function() {
+    it('delete inverse relations when deleting a resource', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickDeleteDocument();
         resourcesPage.clickDeleteInModal();

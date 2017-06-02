@@ -20,7 +20,7 @@ const settingsPage = require('../settings.page');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-describe('resources/syncing tests --', function() {
+describe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -182,7 +182,7 @@ describe('resources/syncing tests --', function() {
             .then(() => done());
     });
 
-    it('should show resource created in other db', done => {
+    it('show resource created in other db', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -193,7 +193,7 @@ describe('resources/syncing tests --', function() {
         });
     });
 
-    it('should show changes made in other db', done => {
+    it('show changes made in other db', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -221,7 +221,7 @@ describe('resources/syncing tests --', function() {
             }).catch(err => { fail(err); done(); });
     });
 
-    it('should save syncing settings to config file and load them after restart', done => {
+    it('save syncing settings to config file and load them after restart', done => {
 
         const expectedConfig = {
             'username': 'username',
@@ -247,7 +247,7 @@ describe('resources/syncing tests --', function() {
             }).catch(err => { fail(err); done(); })
     });
 
-    it('should solve an immediate conflict by reloading the latest revision', done => {
+    it('solve an immediate conflict by reloading the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -267,7 +267,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('should solve an immediate conflict by overwriting the latest revision', done => {
+    it('solve an immediate conflict by overwriting the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -291,7 +291,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('should detect an eventual conflict and mark the corresponding resource list item', done => {
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -309,7 +309,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    it('should solve an eventual conflict', done => {
+    it('solve an eventual conflict', done => {
 
         let shortDescription = '';
 

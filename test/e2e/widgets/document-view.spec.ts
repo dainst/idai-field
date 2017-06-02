@@ -10,13 +10,13 @@ let delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('document view tests --', function() {
+describe('document view --', function() {
 
     beforeEach(function () {
         resourcesPage.get();
     });
 
-    it('document view should show the fields present in the object', function () {
+    it('show the fields present in the object', function () {
         resourcesPage.performCreateResource('1', 2, 'no');
         resourcesPage.clickSelectResource("1");
         expect(documentViewPage.getFieldName(0)).toBe('Nummer'); // with the correct field label
@@ -26,7 +26,7 @@ describe('document view tests --', function() {
     /**
      * Addresses an issue where fields were shown double.
      */
-    it('document view should show only the fields present in the object', function () {
+    it('show only the fields present in the object', function () {
         resourcesPage.performCreateResource('1', 2, 'no');
         resourcesPage.clickSelectResource("1");
         documentViewPage.getFields().then(function(items) {
@@ -34,7 +34,7 @@ describe('document view tests --', function() {
         });
     });
 
-    it('document view should show the relations present in the object', function () {
+    it('show the relations present in the object', function () {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource("1");
         expect(documentViewPage.getRelationName(0)).toBe('Zeitlich nach'); // with the correct relation label
@@ -44,7 +44,7 @@ describe('document view tests --', function() {
     /**
      * Addresses an issue where relations were shown double.
      */
-    it('document view should show only relations present in the object', function () {
+    it('show only relations present in the object', function () {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource("1");
         documentViewPage.getRelations().then(function(relations) {
@@ -56,7 +56,7 @@ describe('document view tests --', function() {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('document view should show only relations present in the object', function () {
+    it('show only relations present in the object', function () {
         resourcesPage.performCreateResource('1', 2);
         resourcesPage.performCreateResource('2', 2);
         resourcesPage.clickSelectResource("1");

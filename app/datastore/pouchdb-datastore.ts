@@ -140,34 +140,38 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      */
     public update(document: Document): Promise<Document> {
 
-        let reset = this.resetDocOnErr(document);
+        if (document.resource.id == null) {
+            return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
+        }
 
+        const reset = this.resetDocOnErr(document);
         return this.readyForQuery
-            .then(()=> {
-                if (document.resource.id == null) {
-                    console.error("Aborting update: No _id given. " +
-                        "Maybe you wanted to create the object with create()?");
-                    return Promise.reject(undefined);
+            .then(()=>this.get(document.resource.id)).then(
+
+                ()=> {
+                    document['_id'] = document.resource.id;
+                    document.resource['_parentTypes'] = this.config
+                        .getParentTypes(document.resource.type);
+
+                    return this.db.put(document).then(result => {
+
+                        document['_rev'] = result['rev'];
+                        return Promise.resolve(this.cleanDoc(document));
+
+                    }).catch(err => {
+
+                        let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
+                        if (err.name && err.name == 'conflict')
+                            errType = DatastoreErrors.SAVE_CONFLICT;
+                        reset(document);
+                        return Promise.reject([errType]);
+
+                    })
+                },
+                documentDoesNotExistError => {
+                    return Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]);
                 }
-                document['_id'] = document.resource.id;
-                document.resource['_parentTypes'] = this.config
-                    .getParentTypes(document.resource.type);
-
-                return this.db.put(document);
-
-            }).then(result => {
-
-                document['_rev'] = result['rev'];
-                return Promise.resolve(this.cleanDoc(document));
-
-            }).catch(err => {
-
-                let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
-                if (err.name && err.name == 'conflict')
-                    errType = DatastoreErrors.SAVE_CONFLICT;
-                reset(document);
-                return Promise.reject([errType]);
-            })
+            )
     }
 
     private resetDocOnErr(original: Document) {

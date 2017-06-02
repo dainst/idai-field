@@ -100,11 +100,23 @@ $ npm run e2e (no)ff syncing
 To create binaries run 
 
 ```
-$ npm run dist 
+$ npm run package
 ```
 
 This will create packages for MacOs and Windows 32/64 bit.
 Linux is possible with electron but here this is yet untested and not enabled.
+
+To package only for mac, use
+
+```
+$ npm run package-mac
+```
+
+To package only for windows, use
+
+```
+$ npm run package-win
+```
 
 Please note that when using windows, that due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
@@ -116,12 +128,10 @@ The recommended way for building and testing
 the iDAI.field 2 Client application on a developer machine is as follows
 
 ```
-1$ npm run build
-1$ npm test
-2$ npm run server
-1$ npm run e2e
-1$ npm run make-dist 
-1$ npm run package
+$ npm run build
+$ npm test
+$ npm run e2e
+$ npm run package(-mac,-win)
 ```
 
 After building you find packages of the application for different operating systems

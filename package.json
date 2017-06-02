@@ -58,7 +58,7 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb": "2.3.6",
-    "idai-components-2": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-2-builds/654/.git",
+    "idai-components-2": "git+http://oneeyedjacks02.dai-cloud.uni-koeln.de/idai-components-2-builds/7/.git",
     "identicon.js": "github:dainst/identicon.js",
     "ip": "1.1.5",
     "leaflet": "1.0.2",
@@ -78,6 +78,7 @@
     "zone.js": "0.6.21"
   },
   "devDependencies": {
+
     "@types/electron": "~1.4.31",
     "@types/es6-shim": "~0.31.32",
     "@types/geojson": "0.0.32",

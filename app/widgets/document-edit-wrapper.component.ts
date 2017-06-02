@@ -14,7 +14,6 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from "../settings/settings-service";
-import {ConflictDeletedModalComponent} from "./conflict-deleted-modal.component";
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -139,52 +138,43 @@ export class DocumentEditWrapperComponent {
 
         this.validator.validate(<IdaiFieldDocument> this.clonedDoc)
             .then(
-                () => this.saveValidatedDocument(this.clonedDoc)
+                () => this.saveValidatedDocument(this.clonedDoc, viaSaveButton),
+                msgWithParams => this.messages.add(msgWithParams)
             ).then(
-                doc => {
-                    this.clonedDoc = doc;
-                    this.onSaveSuccess.emit({
-                        document: doc,
-                        viaSaveButton: viaSaveButton
-                    });
-                    this.documentEditChangeMonitor.reset();
-                    this.messages.add([M.WIDGETS_SAVE_SUCCESS])
-                },
-            ).catch(msgWithParams => {
-                if (msgWithParams) this.messages.add(msgWithParams);
-            })
+                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS]),
+                msgWithParams => {
+                    if (msgWithParams) this.messages.add(msgWithParams);
+                }
+            );
     }
 
-    /**
-     * @param clonedDoc
-     * @returns {Promise<R>} rejects with msgWithParams or undefined in case of error
-     */
-    private saveValidatedDocument(
-        clonedDoc: IdaiFieldDocument): Promise<any> {
+    private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
         return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
             () => this.removeInspectedRevisions(),
             errorWithParams => {
-                return Promise.reject(this.handleSaveError(errorWithParams));
+                if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
+                    this.handleSaveConflict();
+                    return Promise.reject(undefined);
+                } else {
+                    console.error(errorWithParams);
+                    return Promise.reject([M.WIDGETS_SAVE_ERROR]);
+                }
             }
         ).then(
-            () => this.datastore.getLatestRevision(clonedDoc.resource.id),
-        );
-    }
+            () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
+            msgWithParams => { return Promise.reject(msgWithParams); }
+        ).then(
+            doc => {
+                this.clonedDoc = doc;
+                this.documentEditChangeMonitor.reset();
 
-    /**
-     * @param errorWithParams
-     * @returns {Promise<void>} msgWithParams
-     */
-    private handleSaveError(errorWithParams) {
-        if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-            this.handleSaveConflict();
-        } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
-            this.handleDeletedConflict();
-        } else {
-            return [M.WIDGETS_SAVE_ERROR];
-        }
-        return undefined;
+                this.onSaveSuccess.emit({
+                    document: clonedDoc,
+                    viaSaveButton: viaSaveButton
+                });
+            }, msgWithParams => { return Promise.reject(msgWithParams); }
+        );
     }
     
     private removeInspectedRevisions(): Promise<any> {
@@ -217,15 +207,6 @@ export class DocumentEditWrapperComponent {
         ).result.then(decision => {
             if (decision == 'overwrite') this.overwriteLatestRevision();
             else this.reloadLatestRevision();
-        }).catch(() => {});
-    }
-
-    private handleDeletedConflict() {
-
-        this.modalService.open(
-            ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
-        ).result.then(decision => {
-            // TODO handle
         }).catch(() => {});
     }
 

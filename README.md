@@ -122,17 +122,5 @@ Please note that when using windows, that due to nested node_modules and the
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
-## Deployment
-
-The recommended way for building and testing
-the iDAI.field 2 Client application on a developer machine is as follows
-
-```
-$ npm run build
-$ npm test
-$ npm run e2e
-$ npm run package(-mac,-win)
-```
-
-After building you find packages of the application for different operating systems
+Afterwards you find packages of the application for different operating systems
 in the `release`-directory.

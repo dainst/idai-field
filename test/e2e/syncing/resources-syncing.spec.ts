@@ -207,7 +207,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -247,7 +247,7 @@ describe('resources/syncing tests --', function() {
             }).catch(err => { fail(err); done(); })
     });
 
-    xit('should solve an immediate conflict by reloading the latest revision', done => {
+    it('should solve an immediate conflict by reloading the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -267,7 +267,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    xit('should solve an immediate conflict by overwriting the latest revision', done => {
+    it('should solve an immediate conflict by overwriting the latest revision', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -291,7 +291,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    xit('should detect an eventual conflict and mark the corresponding resource list item', done => {
+    it('should detect an eventual conflict and mark the corresponding resource list item', done => {
 
         settingsPage.get();
         configureRemoteSite();
@@ -309,7 +309,7 @@ describe('resources/syncing tests --', function() {
             }));
     });
 
-    xit('should solve an eventual conflict', done => {
+    it('should solve an eventual conflict', done => {
 
         let shortDescription = '';
 

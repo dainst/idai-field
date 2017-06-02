@@ -5,6 +5,11 @@ const fs = require('fs');
 
 const configPath = 'config/config.test.json';
 const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
+const suite = (process.argv.length > 3 && process.argv[3] == 'syncing') ? 'syncing' : 'default';
+
+console.log("Running test suite:",suite);
+console.log("Fail fast mode:",failFast);
+console.log("\n");
 
 fs.writeFileSync(configPath, JSON.stringify({ 'dbs': ['test'] }));
 
@@ -35,13 +40,15 @@ app.start().then(() => app.client.sessions()).then(sessions => {
             protractor = spawn('cmd', ['/s', '/c', 'protractor',
                 'test/e2e/config/protractor-spectron.conf.js',
                 '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast
+                '--params=' + failFast,
+                '--suite=' + suite
             ]);
         } else {
             protractor = spawn('protractor', [
                 'test/e2e/config/protractor-spectron.conf.js',
                 '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast
+                '--params=' + failFast,
+                '--suite=' + suite
             ]);
         }
         protractor.stdout.setEncoding('utf8');

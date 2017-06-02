@@ -1,5 +1,12 @@
 // use higher values to slow down tests for debugging
-var promisesDelay = 0; // 0 should work perfectly fine on a dev machine. the build script will overwrite this automatically.
+var promisesDelay;
+
+const syncingTestsActive = (process.argv.length > 5 && process.argv[5] == '--suite=syncing');
+if (syncingTestsActive) {
+    promisesDelay = 50;
+} else {
+    promisesDelay = 0;
+}
 
 
 function delayPromises(milliseconds) {

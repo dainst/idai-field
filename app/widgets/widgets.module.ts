@@ -13,7 +13,6 @@ import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
 import {ConflictModalComponent} from './conflict-modal.component';
-import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {EditModalComponent} from './edit-modal.component';
@@ -37,7 +36,6 @@ import {ListComponent} from './list.component';
         DescriptionViewComponent,
         ImagePickerComponent,
         ConflictModalComponent,
-        ConflictDeletedModalComponent,
         ConflictResolverComponent,
         EditModalComponent,
         ListComponent
@@ -55,7 +53,6 @@ import {ListComponent} from './list.component';
     entryComponents: [
         ImagePickerComponent,
         ConflictModalComponent,
-        ConflictDeletedModalComponent,
         EditModalComponent
     ]
 })

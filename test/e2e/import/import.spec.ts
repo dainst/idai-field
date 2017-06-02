@@ -9,7 +9,7 @@ let delays = require('../config/delays');
 
 let EC = protractor.ExpectedConditions;
 
-describe('import tests --', function() {
+describe('import --', function() {
 
     beforeEach(function() {
         importPage.get();
@@ -26,7 +26,7 @@ describe('import tests --', function() {
         importPage.clickStartImportButton();
     };
 
-    it('importer should import a valid iDAI.field JSONL file via HTTP', function() {
+    it('iimport a valid iDAI.field JSONL file via HTTP', function() {
 
         importIt("./test/test-data/importer-test-ok.jsonl");
         browser.sleep(2000);
@@ -38,7 +38,7 @@ describe('import tests --', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
 
-    it('importer should delete already imported iDAI.field documents if an error occurs', function() {
+    it('delete already imported iDAI.field documents if an error occurs', function() {
 
         importIt("./test/test-data/importer-test-constraint-violation.jsonl");
 
@@ -52,25 +52,25 @@ describe('import tests --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
     });
 
-    it('importer should abort if an empty geometry is found', function() {
+    it('abort if an empty geometry is found', function() {
 
         importIt("./test/test-data/importer-test-empty-geometry.jsonl");
         NavbarPage.awaitAlert('nicht definiert', false);
     });
 
-    it('importer should abort if a geometry with invalid coordinates is found', function() {
+    it('abort if a geometry with invalid coordinates is found', function() {
 
         importIt("./test/test-data/importer-test-invalid-geometry-coordinates.jsonl");
         NavbarPage.awaitAlert('sind nicht valide', false);
     });
 
-    it('importer should abort if a geometry with an unsupported type is found', function() {
+    it('abort if a geometry with an unsupported type is found', function() {
 
         importIt("./test/test-data/importer-test-unsupported-geometry-type.jsonl");
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
-    it('importer should import a relation and add the corresponding inverse relation', function() {
+    it('import a relation and add the corresponding inverse relation', function() {
 
         importIt("./test/test-data/importer-test-relation-ok.jsonl");
         browser.sleep(2000);
@@ -99,7 +99,7 @@ describe('import tests --', function() {
         });
     });
 
-    it('importer should abort if a relation target cannot be found and remove all imported resources & already '
+    it('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', function() {
 
         importIt("./test/test-data/importer-test-relation-error.jsonl");

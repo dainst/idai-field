@@ -75,53 +75,52 @@ since both of them will not lead to an exit code other than `0`.
 
 ## E2E - Testing
 
-**Note** that provision of config files (see [here](config)) is a precondition for being able to run and e2e test the application successfully.
-
 Test execution can be started
 
 ```
-2$ npm run e2e
+$ npm run e2e
 ```
 
 This command runs all end to end tests once. To alter this behaviour, you can use the `ff` option (fail fast)
 
 ```
-2$ npm run e2e ff
+$ npm run e2e ff
 ```
 
 so that test execution stops when the first error is found. 
 
+Additionally, there is a (not yet) stable syncing test suite, which can be started with
 
-
+```
+$ npm run e2e (no)ff syncing
+```
 
 ## Packaging
 
 To create binaries run 
 
 ```
-$ npm run dist 
+$ npm run package
 ```
 
 This will create packages for MacOs and Windows 32/64 bit.
 Linux is possible with electron but here this is yet untested and not enabled.
 
+To package only for mac, use
+
+```
+$ npm run package-mac
+```
+
+To package only for windows, use
+
+```
+$ npm run package-win
+```
+
 Please note that when using windows, that due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
-## Deployment
-
-The recommended way for building and testing
-the iDAI.field 2 Client application on a developer machine is as follows
-
-```
-1$ npm run build
-1$ npm test
-2$ npm run server
-1$ npm run e2e
-1$ npm run make-dist 
-1$ npm run package
-```
-
-After building you find packages of the application for different operating systems
+Afterwards you find packages of the application for different operating systems
 in the `release`-directory.

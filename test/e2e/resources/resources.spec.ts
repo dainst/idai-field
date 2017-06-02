@@ -11,7 +11,7 @@ let delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('resources tests --', function() {
+describe('resources --', function() {
 
 
     beforeEach(function(){
@@ -19,13 +19,13 @@ describe('resources tests --', function() {
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
-    it('should find it by its identifier', function() {
+    it('find it by its identifier', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.typeInIdentifierInSearchField('1');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')),delays.ECWaitTime);
     });
 
-    it('should show only resources of the selected type', function() {
+    it('show only resources of the selected type', function() {
         resourcesPage.performCreateResource('1', 0);
         resourcesPage.performCreateResource('2', 1);
         resourcesPage.clickChooseTypeFilter(2);
@@ -40,7 +40,7 @@ describe('resources tests --', function() {
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime)
     });
 
-    it('should not reflect changes in overview in realtime', function() {
+    it('not reflect changes in overview in realtime', function() {
         resourcesPage.performCreateResource('1a');
         resourcesPage.clickSelectResource('1a');
         documentViewPage.clickEditDocument();
@@ -52,7 +52,7 @@ describe('resources tests --', function() {
      * There has been a bug where this was not possible.
      * The attempt to do so got rejected with the duplicate identifier message.
      */
-    it('should save a new object and then save it again', function() {
+    it('save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
         DocumentEditWrapperPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
@@ -61,7 +61,7 @@ describe('resources tests --', function() {
     /**
      * There has been a bug where this was not possible due to a faulty datastore implementation.
      */
-    xit('should restore a document properly', function() {
+    xit('restore a document properly', function() {
         resourcesPage.performCreateResource('old');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('old');
@@ -76,7 +76,7 @@ describe('resources tests --', function() {
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
-    it('should remove a new object from the list if it has not been saved', function() {
+    it('remove a new object from the list if it has not been saved', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
@@ -90,7 +90,7 @@ describe('resources tests --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
     });
 
-    it('should change the selection to new when saving via modal', function() {
+    it('change the selection to new when saving via modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();

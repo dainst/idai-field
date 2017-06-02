@@ -1,5 +1,6 @@
 import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
+import {DatastoreErrors} from "idai-components-2/datastore";
 import {M} from "../../../app/m";
 
 /**
@@ -51,7 +52,7 @@ export function main() {
 
         function doc(sd,identifier?,type?,id?) : Document {
             if (!type) type = 'object';
-            let doc = {
+            const doc = {
                 resource : {
                     shortDescription: sd,
                     identifier: identifier,
@@ -64,7 +65,10 @@ export function main() {
                     date: new Date()
                 }
             };
-            if (id) doc['_id'] = id;
+            if (id) {
+                doc['_id'] = id;
+                doc.resource['id'] = id;
+            }
             return doc;
         }
 
@@ -168,11 +172,44 @@ export function main() {
             }
         );
 
+        it('should not update if resource id not present',
+            function (done) {
+
+                datastore.update(doc('sd1')).then(
+                    () => {
+                        fail();
+                        done();
+                    },
+                    expectedErr=>{
+                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+                        done();
+                    }
+                );
+            }
+        );
+
+        it('should not update if not existent',
+            function (done) {
+
+                datastore.update(doc('sd1','identifier1','object','id1')).then(
+                    () => {
+                        fail();
+                        done();
+                    },
+                    expectedErr=>{
+                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR);
+                        done();
+                    }
+                );
+            }
+        );
+
+
         // get
 
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
-                expectErr(()=>{return datastore.create(doc('id1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
+                expectErr(()=>{return datastore.create(doc('sd1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
                         .then(() => datastore.get('nonexisting'))}
                     ,[M.DATASTORE_NOT_FOUND],done);
             }

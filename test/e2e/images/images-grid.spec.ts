@@ -10,14 +10,14 @@ var viewPage = require('./images-view.page');
 
 
 
-describe('image grid tests --', function(){
+describe('image grid --', function(){
 
     beforeEach(function () {
         gridPage.get();
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
     });
 
-    it('cells should be (de-)selectable.', function(){
+    it('deselect cells', function(){
         gridPage.getAllCells().then(function(cells){
             var first = 0;
             var last = cells.length - 1;
@@ -44,14 +44,14 @@ describe('image grid tests --', function(){
         });
     });
 
-    it('all images should become deselected by clicking the appropriate button', function() {
+    it('deselect images by clicking the corresponding button', function() {
         gridPage.clickCell(0);
         expect(gridPage.getCell(0).getAttribute('class')).toMatch(gridPage.selectedClass);
         gridPage.clickDeselectButton();
         expect(gridPage.getCell(0).getAttribute('class')).not.toMatch(gridPage.selectedClass);
     });
 
-    it('user should be able to delete an image in the grid view', function () {
+    it('delete an image in the grid view', function () {
         gridPage.getCellImageName(0)
             .then(function (filename) {
                 gridPage.getCell(0).click();
@@ -62,7 +62,7 @@ describe('image grid tests --', function(){
             });
     });
 
-    it('user should be able to delete two images in the grid view', function () {
+    it('delete two images in the grid view', function () {
         gridPage.getCellImageName(0)
             .then(function (image1filename) {
                 gridPage.getCellImageName(1)
@@ -78,7 +78,7 @@ describe('image grid tests --', function(){
             });
     });
 
-    it('user should be able to connect a resource with an image in the grid view', function () {
+    it('connect a resource with an image in the grid view', function () {
         var imageToConnect = gridPage.getCell(0);
         var resourceId = "tf1";
         var resourceIdentifier = "testf1";
@@ -91,7 +91,7 @@ describe('image grid tests --', function(){
         expect(imageToConnect.all(by.id('related-resource-'+resourceId)).first().isPresent()).toBeTruthy();
     });
 
-    it('user should be able to cancel an image delete in the modal.', function () {
+    it('cancel an image delete in the modal.', function () {
         var elementToDelete = gridPage.getCell(0);
 
         gridPage.getCellImageName(0)
@@ -105,7 +105,7 @@ describe('image grid tests --', function(){
             });
     });
 
-    it('user should be able to navigate from grid to view, and back to grid', function() {
+    it('navigate from grid to view, and back to grid', function() {
         var xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         gridPage.getCellImageName(0).then(function(imageName){

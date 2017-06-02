@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 let common = require("../common.js");
@@ -58,16 +58,6 @@ let ResourcesPage = function() {
         element(by.id('choose-type-filter-option-' + typeIndex)).click();
     };
 
-    this.clickCreateGeometry = function(type) {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-create-' + type))), delays.ECWaitTime);
-        return element(by.id('document-view-button-create-' + type)).click();
-    };
-
-    this.clickReeditGeometry = function() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
-        element(by.id('document-view-button-edit-geometry')).click();
-    };
-
     this.clickSelectGeometryType = function(type) {
         var geom = 'none';
         if (type) geom = type;
@@ -103,11 +93,6 @@ let ResourcesPage = function() {
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
             + (itemNr + 1) + ') .identifier'))), delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .identifier')).getText();
-    };
-
-    this.getSelectedGeometryTypeText = function() {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
-        return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 
     // elements

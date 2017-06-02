@@ -11,9 +11,9 @@ let delays = require('../config/delays');
 /**
  * @author Fabian Z
  */
-describe('listpage tests --', function() {
+describe('listpage --', function() {
 
-    it('should find resource by its identifier', function() {
+    it('find resource by its identifier', function() {
         resourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
         resourcesPage.performCreateResource('1');
@@ -25,7 +25,7 @@ describe('listpage tests --', function() {
     });
 
 
-    it('should change an identifier of a resource', function() {
+    it('change an identifier of a resource', function() {
         resourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
         resourcesPage.performCreateResource('1');

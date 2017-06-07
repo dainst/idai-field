@@ -36,6 +36,11 @@
                     <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
                     Polygon
                 </li>
+                <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
+                    (click)="p.close(); startDocumentCreation('polyline');">
+                    <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
+                    Polyline
+                </li>
                 <li id="choose-geometry-option-point" class="list-group-item popover-item"
                     (click)="p.close(); startDocumentCreation('point');">
                     <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>

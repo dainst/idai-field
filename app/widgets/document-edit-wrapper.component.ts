@@ -140,15 +140,22 @@ export class DocumentEditWrapperComponent {
         this.validator.validate(<IdaiFieldDocument> this.clonedDoc)
             .then(
                 () => this.saveValidatedDocument(this.clonedDoc, viaSaveButton),
-                msgWithParams => this.messages.add(msgWithParams)
             ).then(
-                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS]),
+                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS])
+            ).catch(
                 msgWithParams => {
-                    if (msgWithParams) this.messages.add(msgWithParams);
-                }
+                        if (msgWithParams) this.messages.add(msgWithParams);
+                    }
             );
     }
 
+    /**
+     * @param clonedDoc
+     * @param viaSaveButton
+     * @returns {Promise<TResult>} in case of error, rejects with
+     *   either with <code>msgWithParams</code> or with <code>undefined</code>,
+     *   depending on whether the error get handled within the method.
+     */
     private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
         return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
@@ -156,7 +163,6 @@ export class DocumentEditWrapperComponent {
             errorWithParams => this.handlePersistError(errorWithParams)
         ).then(
             () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
-            msgWithParams => { return Promise.reject(msgWithParams); }
         ).then(
             doc => {
                 this.clonedDoc = doc;
@@ -166,11 +172,11 @@ export class DocumentEditWrapperComponent {
                     document: clonedDoc,
                     viaSaveButton: viaSaveButton
                 });
-            }, msgWithParams => { return Promise.reject(msgWithParams); }
-        );
+            }
+        ).catch(msgWithParams => { return Promise.reject(msgWithParams); })
     }
 
-    handlePersistError(errorWithParams) {
+    private handlePersistError(errorWithParams) {
         if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
             this.handleSaveConflict();
         } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {

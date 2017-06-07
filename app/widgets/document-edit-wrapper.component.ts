@@ -153,18 +153,7 @@ export class DocumentEditWrapperComponent {
 
         return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
             () => this.removeInspectedRevisions(),
-            errorWithParams => {
-                if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-                    this.handleSaveConflict();
-                    return Promise.reject(undefined);
-                } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
-                    this.handleDeletedConflict();
-                    return Promise.reject(undefined);
-                } else {
-                    console.error(errorWithParams);
-                    return Promise.reject([M.WIDGETS_SAVE_ERROR]);
-                }
-            }
+            errorWithParams => this.handlePersistError(errorWithParams)
         ).then(
             () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
             msgWithParams => { return Promise.reject(msgWithParams); }
@@ -180,6 +169,19 @@ export class DocumentEditWrapperComponent {
             }, msgWithParams => { return Promise.reject(msgWithParams); }
         );
     }
+
+    handlePersistError(errorWithParams) {
+        if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
+            this.handleSaveConflict();
+        } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+            this.handleDeletedConflict();
+        } else {
+            console.error(errorWithParams);
+            return Promise.reject([M.WIDGETS_SAVE_ERROR]);
+        }
+        return Promise.reject(undefined);
+    }
+
     
     private removeInspectedRevisions(): Promise<any> {
         

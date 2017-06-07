@@ -176,7 +176,7 @@ export class DocumentEditWrapperComponent {
         ).catch(msgWithParams => { return Promise.reject(msgWithParams); })
     }
 
-    handlePersistError(errorWithParams) {
+    private handlePersistError(errorWithParams) {
         if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
             this.handleSaveConflict();
         } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {

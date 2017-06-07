@@ -3,6 +3,8 @@
     <div *ngIf="document.resource.geometry">
         <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue">Polygon</span>
         <span *ngIf="document.resource.geometry.type == 'MultiPolygon'" class="fieldvalue">Multipolygon</span>
+        <span *ngIf="document.resource.geometry.type == 'LineString'" class="fieldvalue">Polyline</span>
+        <span *ngIf="document.resource.geometry.type == 'MultiLineString'" class="fieldvalue">Multipolyline</span>
         <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue">Punkt</span>
         <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
                 [routerLink]="['/resources/editGeometry', document.resource.id, 'existing', {menuMode:'geometryEdit'}]">
@@ -14,6 +16,10 @@
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
                 [routerLink]="['/resources/editGeometry', document.resource.id, 'polygon', {menuMode:'geometryEdit'}]">
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
+        </button>
+        <button class="btn btn-link btn-sm" id="document-view-button-create-polyline"
+                [routerLink]="['/resources/editGeometry', document.resource.id, 'polyline', {menuMode:'geometryEdit'}]">
+            <span class="mdi mdi-vector-polyline mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-point"
                 [routerLink]="['/resources/editGeometry', document.resource.id, 'point', {menuMode:'geometryEdit'}]">

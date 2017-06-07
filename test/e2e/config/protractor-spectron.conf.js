@@ -63,9 +63,7 @@ exports.config = {
             };
 
             this.specDone = function(spec) {
-                if (spec.status != 'disabled') {
-                    console.log(spec.status.toUpperCase())
-                }
+                console.log(spec.status.toUpperCase())
             }
         };
         jasmine.getEnv().addReporter(new FailureScreenshotReporter());

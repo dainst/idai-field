@@ -15,13 +15,18 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
+
     @Input() editMode;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
-    private editablePolygons: Array<L.Polygon>;
     private editableMarker: L.Marker;
+
+    private editablePolylines: Array<L.Polyline>;
+    private selectedPolyline: L.Polyline;
+
+    private editablePolygons: Array<L.Polygon>;
     private selectedPolygon: L.Polygon;
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -29,8 +34,6 @@ export class EditableMapComponent extends LayerMapComponent {
         super.ngOnChanges(changes);
 
         this.resetEditing();
-
-
 
         if (this.editMode == true) {
             if (this.selectedDocument.resource.geometry.coordinates) {
@@ -60,6 +63,11 @@ export class EditableMapComponent extends LayerMapComponent {
             case 'MultiPolygon':
                 this.editMode = 'polygon';
                 this.startPolygonEditing();
+                break;
+            case 'LineString':
+            case 'MultiLineString':
+                this.editMode = 'polyline';
+                this.startPolylineEditing();
                 break;
             case 'Point':
                 this.editMode = 'point';
@@ -133,6 +141,71 @@ export class EditableMapComponent extends LayerMapComponent {
         } 
     }
 
+    private startPolylineCreation() {
+
+        this.setupPolylineCreation();
+        this.addPolyline();
+    }
+
+    private startPolylineEditing() {
+
+        this.setupPolylineCreation();
+
+        this.editablePolylines = this.polylines[this.selectedDocument.resource.id];
+
+        for (let polyline of this.editablePolylines) {
+            polyline.unbindTooltip();
+            this.setupEditablePolyline(polyline);
+        }
+
+        if (this.editablePolylines.length > 0) {
+            this.setSelectedPolyline(this.editablePolylines[0]);
+        }
+    }
+
+    private setupPolylineCreation() {
+
+        var mapComponent = this;
+        this.map.on('pm:create', function(event: L.LayerEvent) {
+            let polyline: L.Polyline = <L.Polyline> event.layer;
+            mapComponent.editablePolylines.push(polyline);
+            mapComponent.setupEditablePolyline(polyline);
+            mapComponent.setSelectedPolyline(polyline);
+        });
+    }
+
+    private setupEditablePolyline(polyline: L.Polyline) {
+
+        polyline.setStyle({ color: 'red' });
+
+        var mapComponent = this;
+        polyline.on('click', function() {
+            mapComponent.setSelectedPolyline(this);
+        });
+    }
+
+    private setSelectedPolyline(polyline: L.Polyline) {
+
+        if (this.selectedPolyline) {
+            this.selectedPolyline.pm.disable();
+        }
+
+        polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        this.selectedPolyline = polyline;
+    }
+
+    private removePolyline(polyline: L.Polyline) {
+
+        polyline.pm.disable();
+        this.map.removeLayer(polyline);
+
+        for (let editablePolyline of this.editablePolylines) {
+            if (editablePolyline == polyline) {
+                this.editablePolylines.splice(this.editablePolylines.indexOf(editablePolyline), 1);
+            }
+        }
+    }
+
     private startPointCreation() {
 
         this.createEditableMarker(this.map.getCenter());
@@ -164,12 +237,22 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public addPolygon() {
 
+        this.addPolyLayer('Poly');
+    }
+
+    public addPolyline() {
+
+        this.addPolyLayer('Line');
+    }
+
+    private addPolyLayer(drawMode: string) {
+
         const drawOptions = {
             templineStyle: { color: 'red' },
             hintlineStyle: { color: 'red' }
         };
 
-        this.map.pm.enableDraw('Poly', drawOptions);
+        this.map.pm.enableDraw(drawMode, drawOptions);
     }
 
     public deleteGeometry() {
@@ -180,6 +263,13 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.setSelectedPolygon(this.editablePolygons[0]);
             } else {
                 this.addPolygon();
+            }
+        } else if (this.editMode == 'polyline' && this.selectedPolyline) {
+            this.removePolyline(this.selectedPolyline);
+            if (this.editablePolylines.length > 0) {
+                this.setSelectedPolyline(this.editablePolylines[0]);
+            } else {
+                this.addPolyline();
             }
         } else {
             this.resetEditing();
@@ -196,6 +286,12 @@ export class EditableMapComponent extends LayerMapComponent {
         } else if (this.editablePolygons.length > 1) {
             geometry.type = 'MultiPolygon';
             geometry.coordinates = this.getCoordinatesFromPolygons(this.editablePolygons);
+        } else if (this.editablePolylines.length == 1) {
+            geometry.type = 'LineString';
+            geometry.coordinates = this.getCoordinatesFromPolyline(this.editablePolylines[0]);
+        } else if (this.editablePolylines.length > 1) {
+            geometry.type = 'MultiLineString';
+            geometry.coordinates = this.getCoordinatesFromPolylines(this.editablePolylines);
         } else if (this.editableMarker) {
             geometry.type = 'Point';
             geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
@@ -226,14 +322,23 @@ export class EditableMapComponent extends LayerMapComponent {
             }
         }
 
+        if (this.editablePolylines) {
+            for (let polyline of this.editablePolylines) {
+                polyline.pm.disable();
+                this.map.removeLayer(polyline);
+            }
+        }
+
         if (this.editableMarker) {
             this.map.removeLayer(this.editableMarker);
         }
 
         this.editablePolygons = [];
+        this.editablePolylines = [];
         this.editableMarker = undefined;
 
         this.map.pm.disableDraw('Poly');
+        this.map.pm.disableDraw('Line');
     }
 
     private fadeOutMapElements() {
@@ -242,6 +347,14 @@ export class EditableMapComponent extends LayerMapComponent {
             for (let polygon of this.polygons[i]) {
                 if (polygon.document.resource.id != this.selectedDocument.resource.id) {
                     polygon.setStyle({opacity: 0.25, fillOpacity: 0.1});
+                }
+            }
+        }
+
+        for (let i in this.polylines) {
+            for (let polyline of this.polylines[i]) {
+                if (polyline.document.resource.id != this.selectedDocument.resource.id) {
+                    polyline.setStyle({opacity: 0.25});
                 }
             }
         }
@@ -258,6 +371,12 @@ export class EditableMapComponent extends LayerMapComponent {
         for (let i in this.polygons) {
             for (let polygon of this.polygons[i]) {
                 polygon.setStyle({opacity: 0.5, fillOpacity: 0.2});
+            }
+        }
+
+        for (let i in this.polylines) {
+            for (let polyline of this.polylines[i]) {
+                polyline.setStyle({opacity: 0.5});
             }
         }
 
@@ -287,6 +406,29 @@ export class EditableMapComponent extends LayerMapComponent {
             for (var j in latLngs[i]) {
                 coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
             }
+        }
+
+        return coordinates;
+    }
+
+    private getCoordinatesFromPolylines(polylines: Array<L.Polyline>): number[][][] {
+
+        let coordinates = [];
+
+        for (let polyline of polylines) {
+            coordinates.push(this.getCoordinatesFromPolyline(polyline));
+        }
+
+        return coordinates;
+    }
+
+    private getCoordinatesFromPolyline(polyline: L.Polyline): number[][] {
+
+        var coordinates = [];
+        var latLngs = polyline.getLatLngs();
+
+        for (var i in latLngs) {
+            coordinates.push([ latLngs[i].lng , latLngs[i].lat ]);
         }
 
         return coordinates;

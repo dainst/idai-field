@@ -8,6 +8,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../m';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from './image-picker.component';
+import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageGridBuilder} from '../common/image-grid-builder';
@@ -139,31 +140,29 @@ export class DocumentEditWrapperComponent {
         this.validator.validate(<IdaiFieldDocument> this.clonedDoc)
             .then(
                 () => this.saveValidatedDocument(this.clonedDoc, viaSaveButton),
-                msgWithParams => this.messages.add(msgWithParams)
             ).then(
-                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS]),
+                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS])
+            ).catch(
                 msgWithParams => {
-                    if (msgWithParams) this.messages.add(msgWithParams);
-                }
+                        if (msgWithParams) this.messages.add(msgWithParams);
+                    }
             );
     }
 
+    /**
+     * @param clonedDoc
+     * @param viaSaveButton
+     * @returns {Promise<TResult>} in case of error, rejects with
+     *   either with <code>msgWithParams</code> or with <code>undefined</code>,
+     *   depending on whether the error get handled within the method.
+     */
     private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
         return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
             () => this.removeInspectedRevisions(),
-            errorWithParams => {
-                if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-                    this.handleSaveConflict();
-                    return Promise.reject(undefined);
-                } else {
-                    console.error(errorWithParams);
-                    return Promise.reject([M.WIDGETS_SAVE_ERROR]);
-                }
-            }
+            errorWithParams => this.handlePersistError(errorWithParams)
         ).then(
             () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
-            msgWithParams => { return Promise.reject(msgWithParams); }
         ).then(
             doc => {
                 this.clonedDoc = doc;
@@ -173,9 +172,22 @@ export class DocumentEditWrapperComponent {
                     document: clonedDoc,
                     viaSaveButton: viaSaveButton
                 });
-            }, msgWithParams => { return Promise.reject(msgWithParams); }
-        );
+            }
+        ).catch(msgWithParams => { return Promise.reject(msgWithParams); })
     }
+
+    private handlePersistError(errorWithParams) {
+        if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
+            this.handleSaveConflict();
+        } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+            this.handleDeletedConflict();
+        } else {
+            console.error(errorWithParams);
+            return Promise.reject([M.WIDGETS_SAVE_ERROR]);
+        }
+        return Promise.reject(undefined);
+    }
+
     
     private removeInspectedRevisions(): Promise<any> {
         
@@ -198,6 +210,15 @@ export class DocumentEditWrapperComponent {
                 this.documentEditChangeMonitor.setChanged();
             }
         );
+    }
+
+    private handleDeletedConflict() {
+
+        this.modalService.open(
+            ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
+        ).result.then(decision => {
+            console.log("decision on deleted conflict",decision);
+        }).catch(() => {});
     }
 
     private handleSaveConflict() {

@@ -11,35 +11,35 @@ import {AbstractParser} from './abstract-parser';
  */
 export class IdigCsvParser extends AbstractParser {
 
-    private static MANDATORY_FIELDS: string[] = ["IdentifierUUID", "Type"];
-    private static MANUALLY_MAPPED_FIELDS: string[] = ["Identifier", "Title"];
-    private static IGNORED_FIELDS: string[] = ["Contributor", "Coverage", "CoverageSpatial",
-        "CoverageSpatialAreaCartesian_double", "CoverageSpatialBoundsCartesian_bbox", "CoverageSpatialCRS",
-        "CoverageSpatialCartesian_rpt", "CoverageSpatialElevations_rpt", "CoverageSpatialPoints_rpt",
-        "CoverageTemporal", "CoverageTemporalStart", "CoverageTemporal_range", "Creator", "Date", "DateTimeZone",
-        "Date_range", "Description", "Format", "FormatDiameter", "FormatDiameter_double", "FormatDimensions",
-        "FormatDimensions_double", "FormatHeight", "FormatHeight_double", "FormatLength", "FormatLength_double",
-        "FormatLocked", "FormatMaximumDimension", "FormatMaximumDimension_double", "FormatPreservedHeight",
-        "FormatPreservedHeight_double", "FormatSidelined", "FormatStatus", "FormatThickness", "FormatThickness_double",
-        "FormatTrashed", "FormatWidth", "FormatWidth_double", "Language", "Publisher",
-        "Rights", "Source", "Subject", "Buckets", "Category", "Contents", "Context", "CoverageAltitude",
-        "CoverageArea", "CoverageCoordinates", "CoverageEarliest", "CoverageEnvelope", "CoverageGeometry",
-        "CoverageJSON", "CoverageLatest", "CoveragePosition", "CoverageSerialized", "CoverageTransform",
-        "CoverageUTC", "DateEarliest", "DateEarliestISO8601", "DateLatest", "DateLatestISO8601",
-        "DateModified", "DateUTC", "Deposit", "FormatImage", "FormatImageHeight", "FormatImageWidth", "Looking",
-        "LotContexts", "LotDates", "LotGrid", "LotLevels", "Material", "NotebookPage", "Period", "Phase",
-        "RelationAttachments", "RelationIsAfter", "RelationIsAfterUUID", "RelationIsBefore",
-        "RelationIsBeforeUUID", "RightsDeleted", "RightsLocked", "RightsSidelined", "RightsStatus",
-        "RightsTrashed", "SectionNumber", "Storage"
+    private static MANDATORY_FIELDS: string[] = ['IdentifierUUID', 'Type'];
+    private static MANUALLY_MAPPED_FIELDS: string[] = ['Identifier', 'Title'];
+    private static IGNORED_FIELDS: string[] = ['Contributor', 'Coverage', 'CoverageSpatial',
+        'CoverageSpatialAreaCartesian_double', 'CoverageSpatialBoundsCartesian_bbox', 'CoverageSpatialCRS',
+        'CoverageSpatialCartesian_rpt', 'CoverageSpatialElevations_rpt', 'CoverageSpatialPoints_rpt',
+        'CoverageTemporal', 'CoverageTemporalStart', 'CoverageTemporal_range', 'Creator', 'Date', 'DateTimeZone',
+        'Date_range', 'Description', 'Format', 'FormatDiameter', 'FormatDiameter_double', 'FormatDimensions',
+        'FormatDimensions_double', 'FormatHeight', 'FormatHeight_double', 'FormatLength', 'FormatLength_double',
+        'FormatLocked', 'FormatMaximumDimension', 'FormatMaximumDimension_double', 'FormatPreservedHeight',
+        'FormatPreservedHeight_double', 'FormatSidelined', 'FormatStatus', 'FormatThickness', 'FormatThickness_double',
+        'FormatTrashed', 'FormatWidth', 'FormatWidth_double', 'Language', 'Publisher',
+        'Rights', 'Source', 'Subject', 'Buckets', 'Category', 'Contents', 'Context', 'CoverageAltitude',
+        'CoverageArea', 'CoverageCoordinates', 'CoverageEarliest', 'CoverageEnvelope', 'CoverageGeometry',
+        'CoverageJSON', 'CoverageLatest', 'CoveragePosition', 'CoverageSerialized', 'CoverageTransform',
+        'CoverageUTC', 'DateEarliest', 'DateEarliestISO8601', 'DateLatest', 'DateLatestISO8601',
+        'DateModified', 'DateUTC', 'Deposit', 'FormatImage', 'FormatImageHeight', 'FormatImageWidth', 'Looking',
+        'LotContexts', 'LotDates', 'LotGrid', 'LotLevels', 'Material', 'NotebookPage', 'Period', 'Phase',
+        'RelationAttachments', 'RelationIsAfter', 'RelationIsAfterUUID', 'RelationIsBefore',
+        'RelationIsBeforeUUID', 'RightsDeleted', 'RightsLocked', 'RightsSidelined', 'RightsStatus',
+        'RightsTrashed', 'SectionNumber', 'Storage'
 
     ];
     private static RELATION_FIELDS: string[] = [
-        "Relation", "Relation_uuid",
-        "RelationBelongsTo", "RelationBelongsToUUID", "RelationIncludes", "RelationIncludesUUID",
-        "RelationIsAbove", "RelationIsAboveUUID", "RelationIsBelow", "RelationIsBelowUUID", "RelationIsCoevalWith",
-        "RelationIsCoevalWithUUID"
+        'Relation', 'Relation_uuid',
+        'RelationBelongsTo', 'RelationBelongsToUUID', 'RelationIncludes', 'RelationIncludesUUID',
+        'RelationIsAbove', 'RelationIsAboveUUID', 'RelationIsBelow', 'RelationIsBelowUUID', 'RelationIsCoevalWith',
+        'RelationIsCoevalWithUUID'
     ];
-    private static GEOMETRY_FIELD: string = "CoverageUnion";
+    private static GEOMETRY_FIELD: string = 'CoverageUnion';
 
 
     public parse(content: string): Observable<Document> {
@@ -112,7 +112,7 @@ export class IdigCsvParser extends AbstractParser {
                 // We suffix the identifier with some autogenerated text
                 // this is because our testdata from the idai-field-configs
                 // repo has records with duplicate identifiers.
-                identifier: "" + this.identifier(object) + " (imported item nr. " + lineNumber + ")",
+                identifier: '' + this.identifier(object) + ' (imported item nr. ' + lineNumber + ')',
                 type: object['Type'],
                 shortDescription: object['Title'],
                 relations: {}
@@ -120,7 +120,7 @@ export class IdigCsvParser extends AbstractParser {
             synced: 0
         };
 
-        // After this initial setup, the rest of the fields is mapped "automatically".
+        // After this initial setup, the rest of the fields is mapped 'automatically'.
         return this.map(object, doc, lineNumber);
     }
 
@@ -147,25 +147,25 @@ export class IdigCsvParser extends AbstractParser {
     }
 
     private hasContent(object, field) {
-        return (object[field] != undefined && object[field] != "");
+        return (object[field] != undefined && object[field] != '');
     }
 
     private relationName(relation) {
-        var relN = relation.substring(0, relation.indexOf("UUID"));
-        var relN = relN.replace("Relation", "");
-        if (relN == "") return "Relation";
+        var relN = relation.substring(0, relation.indexOf('UUID'));
+        var relN = relN.replace('Relation', '');
+        if (relN == '') return 'Relation';
         else return relN;
     }
 
     private isMappableRelation(relation) {
-        return (relation.indexOf("UUID") != -1) && (this.relationName(relation) != "Relation");
+        return (relation.indexOf('UUID') != -1) && (this.relationName(relation) != 'Relation');
     }
 
     private mapRelationField(object, resource, relation) {
 
         if (this.hasContent(object, relation)) {
             if (this.isMappableRelation(relation)) {
-                resource["relations"][this.relationName(relation)] =
+                resource['relations'][this.relationName(relation)] =
                     object[relation].split(/[\n\s\t]/g);
             }
         }
@@ -185,66 +185,92 @@ export class IdigCsvParser extends AbstractParser {
         geometryString = geometryString.toLowerCase();
         let geometry: IdaiFieldGeometry = null;
 
-        if (geometryString.startsWith("point")) {
+        if (geometryString.startsWith('point')) {
             geometry = this.parsePointGeometryString(geometryString, lineNumber);
-        } else if (geometryString.startsWith("polygon")) {
+        } else if (geometryString.startsWith('polygon')) {
             geometry = this.parsePolygonGeometryString(geometryString, lineNumber);
-        } else if (geometryString.startsWith("multipolygon")) {
-            this.addToWarnings(M.IMPORT_WARNING_NOMULTIPOLYGONSUPPORT);
+        } else if (geometryString.startsWith('multipolygon')) {
+            geometry = this.parseMultiPolygonGeometryString(geometryString, lineNumber);
         }
 
         return geometry;
     }
 
-    private parsePointGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
+    private parsePointGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
-        let geometry: IdaiFieldGeometry = {type: "Point", coordinates: [], crs: "local"};
+        let geometry: IdaiFieldGeometry = {type: 'Point', coordinates: [], crs: 'local'};
 
         geometryString = geometryString
-            .replace("point ((", "")
-            .replace("))", "");
+            .replace('point ((', '')
+            .replace('))', '');
 
         geometry.coordinates = this.parsePoint(geometryString, lineNumber);
 
         return geometry;
     }
 
-    private parsePolygonGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
+    private parsePolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
-        let geometry: IdaiFieldGeometry = {type: "Polygon", coordinates: [[]], crs: "local"};
+        let geometry: IdaiFieldGeometry = {type: 'Polygon', coordinates: [], crs: 'local'};
 
         geometryString = geometryString
-            .replace("polygon ((", "")
-            .replace("))", "");
+            .replace('polygon ((', '')
+            .replace('))', '');
 
-        let coordinates: Array<string> = geometryString.split(", ");
-        if (coordinates.length < 3) {
-            throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
-        }
+        geometry.coordinates = this.parsePolygon(geometryString, lineNumber);
 
-        for (let pointCoordinates of coordinates) {
-            geometry.coordinates[0].push(this.parsePoint(pointCoordinates, lineNumber));
+        return geometry;
+    }
+
+    private parseMultiPolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
+
+        let geometry: IdaiFieldGeometry = {type: 'MultiPolygon', coordinates: [], crs: 'local'};
+
+        geometryString = geometryString
+            .replace('multipolygon ((', '')
+            .replace('))', '');
+
+        let coordinates: Array<string> = geometryString.split('), (');
+
+        for (let polygonCoordinates of coordinates) {
+            geometry.coordinates.push(this.parsePolygon(polygonCoordinates, lineNumber));
         }
 
         return geometry;
     }
 
-    private parsePoint(coordinatesString, lineNumber: number): Array<number> {
+    private parsePoint(coordinatesString: string, lineNumber: number): number[] {
 
-        let point: Array<number> = [];
+        let point: number[] = [];
 
-        let coordinates: Array<string> = coordinatesString.split(" ");
+        let coordinates: Array<string> = coordinatesString.split(' ');
         if (coordinates.length != 2) {
             throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
-        point[0] = parseFloat(coordinates[0].replace(",", "."));
-        point[1] = parseFloat(coordinates[1].replace(",", "."));
+        point[0] = parseFloat(coordinates[0].replace(',', '.'));
+        point[1] = parseFloat(coordinates[1].replace(',', '.'));
         if (isNaN(point[0]) || isNaN(point[1])) {
             throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
         }
 
         return point;
+    }
+
+    private parsePolygon(coordinatesString: string, lineNumber: number): number[][][] {
+
+        let polygon: number[][][] = [[]];
+
+        let coordinates: Array<string> = coordinatesString.split(', ');
+        if (coordinates.length < 3) {
+            throw [M.IMPORT_FAILURE_INVALIDGEOMETRY, lineNumber];
+        }
+
+        for (let pointCoordinates of coordinates) {
+            polygon[0].push(this.parsePoint(pointCoordinates, lineNumber));
+        }
+
+        return polygon;
     }
 
     /**

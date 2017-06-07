@@ -66,6 +66,16 @@ export class IdaiFieldValidator extends Validator {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
                 }
                 break;
+            case 'LineString':
+                if (!IdaiFieldValidator.validatePolylineCoordinates(geometry.coordinates)) {
+                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'LineString' ];
+                }
+                break;
+            case 'MultiLineString':
+                if (!IdaiFieldValidator.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiLineString' ];
+                }
+                break;
             case 'Polygon':
                 if (!IdaiFieldValidator.validatePolygonCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
@@ -88,6 +98,28 @@ export class IdaiFieldValidator extends Validator {
         if (coordinates.length != 2) return false;
         if (isNaN(coordinates[0])) return false;
         if (isNaN(coordinates[1])) return false;
+
+        return true;
+    }
+
+    private static validatePolylineCoordinates(coordinates: number[][]): boolean {
+
+        if (coordinates.length < 2) return false;
+
+        for (let i in coordinates) {
+            if (!IdaiFieldValidator.validatePointCoordinates(coordinates[i])) return false;
+        }
+
+        return true;
+    }
+
+    private static validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
+
+        if (coordinates.length == 0) return false;
+
+        for (let i in coordinates) {
+            if (!IdaiFieldValidator.validatePolylineCoordinates(coordinates[i])) return false;
+        }
 
         return true;
     }

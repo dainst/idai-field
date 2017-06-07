@@ -8,6 +8,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../m';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ImagePickerComponent} from './image-picker.component';
+import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageGridBuilder} from '../common/image-grid-builder';
@@ -156,6 +157,9 @@ export class DocumentEditWrapperComponent {
                 if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
                     this.handleSaveConflict();
                     return Promise.reject(undefined);
+                } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+                    this.handleDeletedConflict();
+                    return Promise.reject(undefined);
                 } else {
                     console.error(errorWithParams);
                     return Promise.reject([M.WIDGETS_SAVE_ERROR]);
@@ -198,6 +202,15 @@ export class DocumentEditWrapperComponent {
                 this.documentEditChangeMonitor.setChanged();
             }
         );
+    }
+
+    private handleDeletedConflict() {
+
+        this.modalService.open(
+            ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
+        ).result.then(decision => {
+            console.log("decision on deleted conflict",decision);
+        }).catch(() => {});
     }
 
     private handleSaveConflict() {

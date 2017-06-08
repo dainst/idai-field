@@ -90,6 +90,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         for (let polygon of this.editablePolygons) { 
             polygon.unbindTooltip();
+            polygon.bringToFront();
             this.setupEditablePolygon(polygon);
         } 
 
@@ -155,6 +156,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         for (let polyline of this.editablePolylines) {
             polyline.unbindTooltip();
+            polyline.bringToFront();
             this.setupEditablePolyline(polyline);
         }
 

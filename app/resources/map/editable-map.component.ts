@@ -15,8 +15,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
-
-    @Input() editMode; //boolean
+    @Input() editMode: boolean;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
@@ -40,7 +39,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
             } else {
-                switch (this.selectedDocument.resource.geometry.type) {
+                switch (this.getEditorType()) {
                     case 'none':
                         break;
                     case 'polygon':
@@ -62,16 +61,14 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private editExistingGeometry() {
 
-        switch (this.selectedDocument.resource.geometry.type) {
-            case 'Polygon':
-            case 'MultiPolygon':
+        switch (this.getEditorType()) {
+            case 'polygon':
                 this.startPolygonEditing();
                 break;
-            case 'LineString':
-            case 'MultiLineString':
+            case 'polyline':
                 this.startPolylineEditing();
                 break;
-            case 'Point':
+            case 'point':
                 this.startPointEditing();
                 break;
         }
@@ -461,5 +458,22 @@ export class EditableMapComponent extends LayerMapComponent {
                 list.splice(list.indexOf(element), 1);
             }
         }
+    }
+
+    public getEditorType(): string {
+
+        if (!this.selectedDocument || !this.selectedDocument.resource || !this.selectedDocument.resource.geometry)
+            return 'none';
+
+        if (this.selectedDocument.resource.geometry.type == 'Polygon' ||
+            this.selectedDocument.resource.geometry.type == 'MultiPolygon')
+            return 'polygon';
+
+        if (this.selectedDocument.resource.geometry.type == 'LineString' ||
+            this.selectedDocument.resource.geometry.type == 'MultiLineString')
+            return 'polyline';
+
+        if (this.selectedDocument.resource.geometry.type == 'Point')
+            return 'point';
     }
 }

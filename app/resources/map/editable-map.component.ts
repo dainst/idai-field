@@ -425,9 +425,11 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     protected clickOnMap(clickPosition: L.LatLng) {
-        if(!this.selectedDocument) return;
-        switch(this.selectedDocument.resource.geometry.type) {
-            case "point":
+
+        if (!this.selectedDocument) return;
+
+        switch(this.getEditorType()) {
+            case 'point':
                 this.setEditableMarkerPosition(clickPosition);
                 break;
             case 'none':
@@ -437,6 +439,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     protected select(document: IdaiFieldDocument): boolean {
+
         if (!this.editMode) {
             this.onSelectDocument.emit(document);
             return true;
@@ -446,6 +449,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     protected deselect() {
+
         if (!this.editMode) {
             this.onSelectDocument.emit(null);
         }
@@ -462,7 +466,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public getEditorType(): string {
 
-        if (!this.selectedDocument || !this.selectedDocument.resource || !this.selectedDocument.resource.geometry)
+        if (!this.editMode || !this.selectedDocument || !this.selectedDocument.resource
+                || !this.selectedDocument.resource.geometry)
             return 'none';
 
         if (this.selectedDocument.resource.geometry.type == 'Polygon' ||

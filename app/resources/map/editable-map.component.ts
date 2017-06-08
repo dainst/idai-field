@@ -90,6 +90,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         for (let polygon of this.editablePolygons) { 
             polygon.unbindTooltip();
+            polygon.bringToFront();
             this.setupEditablePolygon(polygon);
         } 
 
@@ -133,12 +134,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polygon.pm.disable();
         this.map.removeLayer(polygon);  
-
-        for (let editablePolygon of this.editablePolygons) { 
-            if (editablePolygon == polygon) { 
-                this.editablePolygons.splice(this.editablePolygons.indexOf(editablePolygon), 1); 
-            } 
-        } 
+        this.removeElement(polygon, this.editablePolygons);
     }
 
     private startPolylineCreation() {
@@ -155,6 +151,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         for (let polyline of this.editablePolylines) {
             polyline.unbindTooltip();
+            polyline.bringToFront();
             this.setupEditablePolyline(polyline);
         }
 
@@ -198,12 +195,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polyline.pm.disable();
         this.map.removeLayer(polyline);
-
-        for (let editablePolyline of this.editablePolylines) {
-            if (editablePolyline == polyline) {
-                this.editablePolylines.splice(this.editablePolylines.indexOf(editablePolyline), 1);
-            }
-        }
+        this.removeElement(polyline, this.editablePolylines);
     }
 
     private startPointCreation() {
@@ -457,6 +449,15 @@ export class EditableMapComponent extends LayerMapComponent {
     protected deselect() {
         if (!this.editMode) {
             this.onSelectDocument.emit(null);
+        }
+    }
+
+    private removeElement(element: any, list: Array<any>) {
+
+        for (let listElement of list) {
+            if (element == listElement) {
+                list.splice(list.indexOf(element), 1);
+            }
         }
     }
 }

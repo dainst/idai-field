@@ -245,14 +245,14 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public deleteGeometry() {
 
-        if (this.selectedDocument.resource.geometry.type == 'polygon' && this.selectedPolygon) {
+        if (this.getEditorType() == 'polygon' && this.selectedPolygon) {
             this.removePolygon(this.selectedPolygon);
             if (this.editablePolygons.length > 0) {
                 this.setSelectedPolygon(this.editablePolygons[0]);
             } else {
                 this.addPolygon();
             }
-        } else if (this.selectedDocument.resource.geometry.type == 'polyline' && this.selectedPolyline) {
+        } else if (this.getEditorType() == 'polyline' && this.selectedPolyline) {
             this.removePolyline(this.selectedPolyline);
             if (this.editablePolylines.length > 0) {
                 this.setSelectedPolyline(this.editablePolylines[0]);

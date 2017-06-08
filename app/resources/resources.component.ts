@@ -151,6 +151,7 @@ export class ResourcesComponent {
         if(geometryType != "none") {
             newDocument.resource["geometry"] = { "type": geometryType };
             this.editGeometry = true;
+            this.mode = "map";
         } else {
             this.editDocument();
         }

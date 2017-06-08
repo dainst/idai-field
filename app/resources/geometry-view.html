@@ -18,7 +18,7 @@
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polyline"
-                [routerLink]="['/resources/editGeometry', document.resource.id, 'polyline', {menuMode:'geometryEdit'}]">
+                (click)="onCreatePolyline.emit(document)">
             <span class="mdi mdi-vector-polyline mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-point"

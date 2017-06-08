@@ -19,6 +19,7 @@ export class GeometryViewComponent implements OnChanges {
     @Output() onEditGeometry: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onCreatePoint: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onCreatePolygon: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onCreatePolyline: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     constructor(
         private router: Router

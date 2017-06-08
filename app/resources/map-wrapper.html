@@ -16,12 +16,12 @@
                     </li>
                 </ul>
     </div>
-    <div [class.col-sm-9]="!activeDoc" [class.col-sm-6]="activeDoc" class="px-0">
+    <div [class.col-sm-9]="!activeDoc || !activeDoc.resource.id" [class.col-sm-6]="activeDoc && activeDoc.resource.id" class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="resourcesComponent.select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
-    <div *ngIf="activeDoc" class="col-sm-3 document-info px-0">
+    <div *ngIf="activeDoc && activeDoc.resource.id" class="col-sm-3 document-info px-0">
         <document-view [document]="activeDoc" (onSolveConflict)="resourcesComponent.solveConflicts($event)" (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"

@@ -29,8 +29,8 @@ export class ResourcesComponent {
     public documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
     private ready: Promise<any>;
-    private mode = "map"
-    private editGeometry = false
+    private mode = "map";
+    private editGeometry = false;
 
     constructor(private router: Router,
                 private datastore: Datastore,
@@ -53,7 +53,6 @@ export class ResourcesComponent {
     }
 
     private handleChange(changedDocument: Document) {
-
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
 
         let existingDoc = false;
@@ -122,7 +121,6 @@ export class ResourcesComponent {
      * @returns {Document}
      */
     public getSelected(): IdaiFieldDocument {
-
         return this.selectedDocument;
     }
 

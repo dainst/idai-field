@@ -34,14 +34,12 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.resetEditing();
 
-        if (this.editMode == true) {
+        if (this.editMode) {
             if (this.selectedDocument.resource.geometry.coordinates) {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
             } else {
                 switch (this.getEditorType()) {
-                    case 'none':
-                        break;
                     case 'polygon':
                         this.fadeOutMapElements();
                         this.startPolygonCreation();
@@ -329,6 +327,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.map.pm.disableDraw('Poly');
         this.map.pm.disableDraw('Line');
+
+        this.map.off('pm:create');
     }
 
     private fadeOutMapElements() {

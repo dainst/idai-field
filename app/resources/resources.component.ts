@@ -186,13 +186,13 @@ export class ResourcesComponent {
         var detailModal = detailModalRef.componentInstance;
         detailModalRef.result.then( (result) => {
             this.fetchDocuments();
-            if (result == "deleted") {
-                this.selectedDocument = null;
-            }
+            if (result.document) this.selectedDocument = result.document;
         }, (closeReason) => {
+            this.fetchDocuments();
+            if (closeReason == "deleted") this.selectedDocument = undefined;
         });
 
-        if (this.selectedDocument.id) detailModal.showDeleteButton();
+        if (this.selectedDocument.resource.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
         if (activeTabName) {

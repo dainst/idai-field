@@ -2,11 +2,11 @@
     <div class="px-2"><messages></messages></div>
     <document-edit-wrapper #f
                             [document]="doc"
-                           (onSaveSuccess)="activeModal.close('saved')"
+                           (onSaveSuccess)="activeModal.close($event)"
                            [showDeleteButton]="deleteButtonShown"
                            [showBackButton]="true"
                            (onBackButtonClicked)="cancel()"
-                           (onDeleteSuccess)="activeModal.close('deleted')"
+                           (onDeleteSuccess)="activeModal.dismiss('deleted')"
                            [activeTab]="activeTab"
                            >
     </document-edit-wrapper>

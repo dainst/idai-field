@@ -223,6 +223,14 @@ export class ResourcesComponent {
         this.startEditGeometry();
     }
 
+    public createPolyline(doc?: IdaiFieldDocument) {
+        if(doc) {
+            this.setSelected(doc)
+        }
+        this.selectedDocument.resource["geometry"] = { "type": "polyline" };
+        this.startEditGeometry();
+    }
+
 
 
     /**

@@ -428,6 +428,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     protected clickOnMap(clickPosition: L.LatLng) {
+        if(!this.selectedDocument) return;
         switch(this.selectedDocument.resource.geometry.type) {
             case "point":
                 this.setEditableMarkerPosition(clickPosition);

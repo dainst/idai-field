@@ -16,7 +16,7 @@ export class EditableMapComponent extends LayerMapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
 
-    @Input() editMode;
+    @Input() editMode; //boolean
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
@@ -47,6 +47,10 @@ export class EditableMapComponent extends LayerMapComponent {
                         this.fadeOutMapElements();
                         this.startPolygonCreation();
                         break;
+                    case 'polyline':
+                        this.fadeOutMapElements();
+                        this.startPolylineCreation();
+                        break;
                     case 'point':
                         this.fadeOutMapElements();
                         this.startPointCreation();
@@ -61,16 +65,13 @@ export class EditableMapComponent extends LayerMapComponent {
         switch (this.selectedDocument.resource.geometry.type) {
             case 'Polygon':
             case 'MultiPolygon':
-                this.editMode = 'polygon';
                 this.startPolygonEditing();
                 break;
             case 'LineString':
             case 'MultiLineString':
-                this.editMode = 'polyline';
                 this.startPolylineEditing();
                 break;
             case 'Point':
-                this.editMode = 'point';
                 this.startPointEditing();
                 break;
         }
@@ -249,14 +250,14 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public deleteGeometry() {
 
-        if (this.editMode == 'polygon' && this.selectedPolygon) {
+        if (this.selectedDocument.resource.geometry.type == 'polygon' && this.selectedPolygon) {
             this.removePolygon(this.selectedPolygon);
             if (this.editablePolygons.length > 0) {
                 this.setSelectedPolygon(this.editablePolygons[0]);
             } else {
                 this.addPolygon();
             }
-        } else if (this.editMode == 'polyline' && this.selectedPolyline) {
+        } else if (this.selectedDocument.resource.geometry.type == 'polyline' && this.selectedPolyline) {
             this.removePolyline(this.selectedPolyline);
             if (this.editablePolylines.length > 0) {
                 this.setSelectedPolyline(this.editablePolylines[0]);

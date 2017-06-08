@@ -134,12 +134,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polygon.pm.disable();
         this.map.removeLayer(polygon);  
-
-        for (let editablePolygon of this.editablePolygons) { 
-            if (editablePolygon == polygon) { 
-                this.editablePolygons.splice(this.editablePolygons.indexOf(editablePolygon), 1); 
-            } 
-        } 
+        this.removeElement(polygon, this.editablePolygons);
     }
 
     private startPolylineCreation() {
@@ -200,12 +195,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polyline.pm.disable();
         this.map.removeLayer(polyline);
-
-        for (let editablePolyline of this.editablePolylines) {
-            if (editablePolyline == polyline) {
-                this.editablePolylines.splice(this.editablePolylines.indexOf(editablePolyline), 1);
-            }
-        }
+        this.removeElement(polyline, this.editablePolylines);
     }
 
     private startPointCreation() {
@@ -462,6 +452,15 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.editMode == 'none') {
             this.onSelectDocument.emit(null);
+        }
+    }
+
+    private removeElement(element: any, list: Array<any>) {
+
+        for (let listElement of list) {
+            if (element == listElement) {
+                list.splice(list.indexOf(element), 1);
+            }
         }
     }
 }

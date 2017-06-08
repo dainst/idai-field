@@ -177,60 +177,57 @@ export class ResourcesComponent {
     }
 
     public editDocument (doc?: IdaiFieldDocument, activeTabName?: string) {
+
         this.editGeometry = false;
-        if(doc) {
+        if (doc) {
             this.setSelected(doc)
         }
-        var detailModalRef = this.modalService.open(EditModalComponent,{size: "lg", backdrop: "static"})
-        var detailModal = detailModalRef.componentInstance
+        var detailModalRef = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'});
+        var detailModal = detailModalRef.componentInstance;
         detailModalRef.result.then( (result) => {
             this.fetchDocuments();
-            if(result == "deleted") {
+            if (result == "deleted") {
                 this.selectedDocument = null;
             }
         }, (closeReason) => {
-        })
+        });
 
-        if(this.selectedDocument.id) detailModal.showDeleteButton();
+        if (this.selectedDocument.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
-        if(activeTabName) {
+        if (activeTabName) {
             detailModal.setActiveTab(activeTabName);
         }
     }
 
     public startEditGeometry() {
-        this.editGeometry = true
+        this.editGeometry = true;
     }
+
     public endEditGeometry() {
-        this.editGeometry = false
+        this.editGeometry = false;
     }
 
     public createPolygon(doc?: IdaiFieldDocument) {
-        if(doc) {
-            this.setSelected(doc)
-        }
-        this.selectedDocument.resource["geometry"] = { "type": "polygon" };
+
+        if (doc) this.setSelected(doc);
+        this.selectedDocument.resource['geometry'] = { 'type': 'Polygon' };
         this.startEditGeometry();
     }
 
     public createPoint(doc?: IdaiFieldDocument) {
-        if(doc) {
-            this.setSelected(doc)
-        }
-        this.selectedDocument.resource["geometry"] = { "type": "point" };
+
+        if (doc) this.setSelected(doc);
+        this.selectedDocument.resource['geometry'] = { 'type': 'Point' };
         this.startEditGeometry();
     }
 
     public createPolyline(doc?: IdaiFieldDocument) {
-        if(doc) {
-            this.setSelected(doc)
-        }
-        this.selectedDocument.resource["geometry"] = { "type": "polyline" };
+
+        if (doc) this.setSelected(doc);
+        this.selectedDocument.resource['geometry'] = { 'type': 'LineString' };
         this.startEditGeometry();
     }
-
-
 
     /**
      * Gets a document from the datastore and makes

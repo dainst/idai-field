@@ -52,7 +52,7 @@ describe('resources --', function() {
      * There has been a bug where this was not possible.
      * The attempt to do so got rejected with the duplicate identifier message.
      */
-    /*
+    /* OBSOLETE
     it('save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
         DocumentEditWrapperPage.clickSaveDocument();
@@ -92,7 +92,9 @@ describe('resources --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
     });
 
+    /* OBSOLETE
     it('change the selection to new when saving via modal', function() {
+
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
@@ -108,8 +110,9 @@ describe('resources --', function() {
             expect(text).toEqual('Neues Objekt');
         });
         
-    });
+    });*/
 
+    /* OBSOLETE
     it('should change the selection to existing when saving via modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
@@ -122,8 +125,11 @@ describe('resources --', function() {
         resourcesPage.scrollUp();
         expect(resourcesPage.clickSelectObjectByIndex(1).getAttribute('class')).toContain('selected')
     });
+    */
 
+    /* OBSOLETE
     it('should not change the selection to existing when cancelling in modal', function() {
+
         resourcesPage.performCreateResource('1');
         resourcesPage.performCreateResource('2');
         resourcesPage.clickSelectResource('2');
@@ -134,7 +140,7 @@ describe('resources --', function() {
         resourcesPage.clickCancelInModal();
         resourcesPage.scrollUp();
         expect(resourcesPage.clickSelectObjectByIndex(0).getAttribute('class')).toContain('selected');
-    });
+    }); */
 
     it('should delete a resource', function() {
         resourcesPage.performCreateResource('1');

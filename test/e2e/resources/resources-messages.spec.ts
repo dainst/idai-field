@@ -13,7 +13,7 @@ describe('resources/messages --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    fit('show the success msg also on route change', function() {
+    it('show the success msg also on route change', function() {
         resourcesPage.performCreateResource('12');
         resourcesPage.openEditByDoubleClickResource('12');
         DocumentEditWrapperPage.typeInInputField('34');

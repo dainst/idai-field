@@ -24,7 +24,9 @@ describe('resources/relations --', function() {
 
     it('create a new relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
+        resourcesPage.doubleClickSelectResource('2');
         expect(DocumentEditWrapperPage.getRelationButtonText(0, 0, 0)).toEqual('1');
+        DocumentEditWrapperPage.clickBackToDocumentView();
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
         expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');

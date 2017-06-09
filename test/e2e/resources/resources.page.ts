@@ -82,6 +82,14 @@ let ResourcesPage = function() {
             + identifier + "']")).click();
     };
 
+    this.doubleClickSelectResource = function(identifier) {
+        browser.wait(EC.visibilityOf(
+            element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
+                + identifier + "']"))), delays.ECWaitTime);
+        return browser.actions().doubleClick(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
+            + identifier + "']"))).perform();
+    };
+
     this.clickSelectResourceType = function(typeIndex) {
         if (!typeIndex) typeIndex = 0;
         return element(by.id('choose-type-option-' + typeIndex)).click();
@@ -125,6 +133,7 @@ let ResourcesPage = function() {
     this.performCreateLink = function() {
         this.performCreateResource('1', 2);
         this.performCreateResource('2', 2);
+        this.doubleClickSelectResource('2');
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
         DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '1');

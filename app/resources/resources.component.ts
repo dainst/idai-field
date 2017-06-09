@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query, Datastore} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
@@ -32,7 +32,7 @@ export class ResourcesComponent {
     private mode = "map";
     private editGeometry = false;
 
-    constructor(private router: Router,
+    constructor(private route: ActivatedRoute,
                 private datastore: Datastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
@@ -50,6 +50,13 @@ export class ResourcesComponent {
         datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
         });
+    }
+
+    ngOnInit(): void {
+        console.log(this.route);
+        if (this.route.params["value"]["id"]) {
+            this.loadDoc(this.route.params["value"]["id"])
+        }
     }
 
     private handleChange(changedDocument: Document) {

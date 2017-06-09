@@ -7,7 +7,8 @@ import {EditCanDeactivateGuard as guard2}  from './images/edit-can-deactivate-gu
 import {SettingsComponent} from "./settings/settings.component";
 
 const routes: Routes = [
-    { path: '', component: ResourcesComponent },
+    { path: '', redirectTo: 'resources', pathMatch: 'full' },
+    { path: 'resources', component: ResourcesComponent },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },
     { path: 'settings', component: SettingsComponent }

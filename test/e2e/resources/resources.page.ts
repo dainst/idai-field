@@ -82,7 +82,7 @@ let ResourcesPage = function() {
             + identifier + "']")).click();
     };
 
-    this.doubleClickSelectResource = function(identifier) {
+    this.openEditByDoubleClickResource = function(identifier) {
         browser.wait(EC.visibilityOf(
             element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
                 + identifier + "']"))), delays.ECWaitTime);
@@ -133,7 +133,7 @@ let ResourcesPage = function() {
     this.performCreateLink = function() {
         this.performCreateResource('1', 2);
         this.performCreateResource('2', 2);
-        this.doubleClickSelectResource('2');
+        this.openEditByDoubleClickResource('2');
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
         DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '1');

@@ -88,7 +88,6 @@ describe('resources/map --', function() {
     
     function createDocThenReedit(identifier, geometryType, mapClickCallback) {
         createDoc(identifier, geometryType, mapClickCallback);
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickReeditGeometry();
     }
     
@@ -99,31 +98,26 @@ describe('resources/map --', function() {
 
     it('create a new item with point geometry', function() {
         createDoc('33','point', function() {return mapPage.setMarker(100, 100)});
-        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Punkt');
     });
 
     it('create a new item with polyline geometry', function() {
         createDoc('45', 'polyline', setPolyline);
-        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polyline');
     });
 
     it('create a new item with multipolyline geometry', function() {
         createDoc('46', 'polyline', setMultiPolyline);
-        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolyline');
     });
 
     it('create a new item with polygon geometry', function() {
         createDoc('34', 'polygon', setPolygon);
-        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polygon');
     });
 
     it('create a new item with multipolygon geometry', function() {
         createDoc('43', 'polygon', setMultiPolygon);
-        DocumentEditWrapperPage.clickBackToDocumentView();
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolygon');
     });
 
@@ -172,7 +166,6 @@ describe('resources/map --', function() {
 
     it('create a point geometry later', function() {
         resourcePage.performCreateResource('39');
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('point');
         mapPage.setMarker(100, 100);
         mapPage.clickMapOption('ok');
@@ -181,7 +174,6 @@ describe('resources/map --', function() {
 
     it('create a polyline geometry later', function() {
         resourcePage.performCreateResource('49');
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polyline').then(setPolyline);
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polyline');
@@ -189,7 +181,6 @@ describe('resources/map --', function() {
 
     it('create a multipolyline geometry later', function() {
         resourcePage.performCreateResource('50');
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polyline').then(setMultiPolyline);
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolyline');
@@ -197,7 +188,6 @@ describe('resources/map --', function() {
 
     it('create a polygon geometry later', function() {
         resourcePage.performCreateResource('38');
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polygon').then(setPolygon);
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Polygon');
@@ -205,7 +195,6 @@ describe('resources/map --', function() {
 
     it('create a multipolygon geometry later', function() {
         resourcePage.performCreateResource('42');
-        DocumentEditWrapperPage.clickBackToDocumentView();
         documentViewPage.clickCreateGeometry('polygon').then(setMultiPolygon);
         mapPage.clickMapOption('ok');
         expect(documentViewPage.getSelectedGeometryTypeText()).toEqual('Multipolygon');

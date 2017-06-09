@@ -75,7 +75,7 @@ var DocumentViewPage = function() {
     };
 
     this.getSelectedGeometryTypeText = function() {
-        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
+        //browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 };

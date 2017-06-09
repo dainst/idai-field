@@ -83,6 +83,7 @@ export class ResourcesComponent {
      *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
+        if (this.editGeometry) this.endEditGeometry();
 
         if (this.isNewDocumentFromRemote(documentToSelect)) {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
@@ -206,6 +207,7 @@ export class ResourcesComponent {
 
     public endEditGeometry() {
         this.editGeometry = false;
+        this.fetchDocuments();
     }
 
     public createPolygon(doc?: IdaiFieldDocument) {

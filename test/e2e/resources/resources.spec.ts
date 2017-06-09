@@ -52,11 +52,13 @@ describe('resources --', function() {
      * There has been a bug where this was not possible.
      * The attempt to do so got rejected with the duplicate identifier message.
      */
+    /*
     it('save a new object and then save it again', function() {
         resourcesPage.performCreateResource('1');
         DocumentEditWrapperPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
+    */
 
     /**
      * There has been a bug where this was not possible due to a faulty datastore implementation.
@@ -80,10 +82,10 @@ describe('resources --', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
-        resourcesPage.clickSelectGeometryType();
+        resourcesPage.clickSelectGeometryType("point");
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
-        resourcesPage.clickSelectGeometryType();
+        resourcesPage.clickSelectGeometryType("point");
         browser.wait(EC.presenceOf(resourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
         resourcesPage.scrollUp();
         resourcesPage.clickSelectResource('1');

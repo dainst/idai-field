@@ -12,7 +12,7 @@ export class EditCanDeactivateGuard
     extends CanDeactivateGuardBase
     implements CanDeactivate<EditNavigationComponent> {
     
-    constructor (private documentEditChangeMonitor:DocumentEditChangeMonitor) { super(); }
+    constructor (private documentEditChangeMonitor: DocumentEditChangeMonitor) { super(); }
 
     canDeactivate(
         component: EditNavigationComponent,

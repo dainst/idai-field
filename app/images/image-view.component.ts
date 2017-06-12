@@ -7,6 +7,7 @@ import {Imagestore} from "../imagestore/imagestore";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditModalComponent} from '../widgets/edit-modal.component';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 @Component({
     moduleId: module.id,
@@ -24,9 +25,10 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         imagestore: Imagestore,
         messages: Messages,
         private router: Router,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
-        super(route,datastore,imagestore,messages);
+        super(route, datastore, imagestore, messages);
     }
 
     ngOnInit() {
@@ -35,19 +37,23 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     }
 
     public selectRelatedDocument(documentToJumpTo) {
-        this.router.navigate(['resources',{ id: documentToJumpTo.resource.id }])
+        this.router.navigate(['resources', { id: documentToJumpTo.resource.id }])
     }
 
-    private deselect() {
+    public deselect() {
         this.router.navigate(['images']);
     }
-    private startEdit(doc: IdaiFieldDocument) {
+
+    public startEdit(doc: IdaiFieldDocument) {
+
         var detailModalRef = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'});
         var detailModal = detailModalRef.componentInstance;
-        detailModalRef.result.then( (result) => {
+
+        detailModalRef.result.then(result => {
             if (result.document) this.image.document = result.document;
-        }, (closeReason) => {
-            if (closeReason == "deleted") this.deselect();
+        }, closeReason => {
+            this.documentEditChangeMonitor.reset();
+            if (closeReason == 'deleted') this.deselect();
         });
 
         if (doc.resource.id) detailModal.showDeleteButton();

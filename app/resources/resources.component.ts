@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query, Datastore} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditModalComponent} from '../widgets/edit-modal.component';
-import {isUndefined} from "util";
-@Component({
 
+@Component({
     moduleId: module.id,
     templateUrl: './resources.html'
 })
@@ -36,6 +36,7 @@ export class ResourcesComponent {
                 private datastore: Datastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
+                private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
 
         let readyResolveFun: Function;
@@ -97,9 +98,7 @@ export class ResourcesComponent {
         }
 
         this.setSelected(documentToSelect);
-
     }
-
 
     public queryChanged(query: Query): Promise<any> {
 
@@ -184,20 +183,21 @@ export class ResourcesComponent {
         });
     }
 
-    public editDocument (doc?: IdaiFieldDocument, activeTabName?: string) {
+    public editDocument(doc?: IdaiFieldDocument, activeTabName?: string) {
 
         this.editGeometry = false;
-        if (doc) {
-            this.setSelected(doc)
-        }
+        if (doc) this.setSelected(doc);
+
         var detailModalRef = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'});
         var detailModal = detailModalRef.componentInstance;
-        detailModalRef.result.then( (result) => {
+
+        detailModalRef.result.then(result => {
             this.fetchDocuments();
             if (result.document) this.selectedDocument = result.document;
-        }, (closeReason) => {
+        }, closeReason => {
             this.fetchDocuments();
-            if (closeReason == "deleted") this.selectedDocument = undefined;
+            this.documentEditChangeMonitor.reset();
+            if (closeReason == 'deleted') this.selectedDocument = undefined;
         });
 
         if (this.selectedDocument.resource.id) detailModal.showDeleteButton();
@@ -277,8 +277,8 @@ export class ResourcesComponent {
      */
     public restore(): Promise<any> {
 
-        let document=this.selectedDocument;
-        if (document==undefined) return Promise.resolve();
+        let document = this.selectedDocument;
+        if (document == undefined) return Promise.resolve();
         if (!document['_id']) { // TODO work with propely defined interface
             this.remove(document);
             this.selectedDocument = undefined;
@@ -287,7 +287,7 @@ export class ResourcesComponent {
 
         return this.datastore.refresh(document).then(
             restoredObject => {
-                this.replace(document, <Document>restoredObject);
+                this.replace(document, <Document> restoredObject);
                 this.selectedDocument = restoredObject;
                 return Promise.resolve(restoredObject);
             },

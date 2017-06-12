@@ -1,5 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
-import {NavbarPage} from '../navbar.page';
+import {browser, protractor, element, by} from 'protractor';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 let resourcesPage = require('./resources.page');
@@ -10,13 +9,14 @@ let delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('resources --', function() {
 
 
-    beforeEach(function(){
+    beforeEach(function() {
         resourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     it('find it by its identifier', function() {
@@ -47,18 +47,6 @@ describe('resources --', function() {
         DocumentEditWrapperPage.typeInInputField('1b');
         expect(resourcesPage.getListItemIdentifierText(0)).toBe('1a');
     });
-
-    /**
-     * There has been a bug where this was not possible.
-     * The attempt to do so got rejected with the duplicate identifier message.
-     */
-    /* OBSOLETE
-    it('save a new object and then save it again', function() {
-        resourcesPage.performCreateResource('1');
-        DocumentEditWrapperPage.clickSaveDocument();
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-    });
-    */
 
     /**
      * There has been a bug where this was not possible due to a faulty datastore implementation.
@@ -92,55 +80,35 @@ describe('resources --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
     });
 
-    /* OBSOLETE
-    it('change the selection to new when saving via modal', function() {
-
+    it('should save changes via dialog modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('2');
-        resourcesPage.clickCreateObject();
-        resourcesPage.clickSelectResourceType();
-        resourcesPage.clickSelectGeometryType();
-        resourcesPage.scrollUp();
+        DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
-        resourcesPage.scrollUp();
-        browser.wait(EC.presenceOf(element(by.css('#objectList .list-group-item .new'))), delays.ECWaitTime);
-        element(by.css('#objectList .list-group-item .new')).getText().then(text => {
-            expect(text).toEqual('Neues Objekt');
-        });
-        
-    });*/
-
-    /* OBSOLETE
-    it('should change the selection to existing when saving via modal', function() {
-        resourcesPage.performCreateResource('1');
-        resourcesPage.performCreateResource('2');
-        resourcesPage.clickSelectResource('2');
-        documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('2a');
-        resourcesPage.clickSelectResource('1');
-        resourcesPage.scrollUp();
-        resourcesPage.clickSaveInModal();
-        resourcesPage.scrollUp();
-        expect(resourcesPage.clickSelectObjectByIndex(1).getAttribute('class')).toContain('selected')
+        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('2');
     });
-    */
 
-    /* OBSOLETE
-    it('should not change the selection to existing when cancelling in modal', function() {
-
+    it('should discard changes via dialog modal', function() {
         resourcesPage.performCreateResource('1');
-        resourcesPage.performCreateResource('2');
-        resourcesPage.clickSelectResource('2');
-        documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('2a');
         resourcesPage.clickSelectResource('1');
-        resourcesPage.scrollUp();
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInInputField('2');
+        DocumentEditWrapperPage.clickCloseEdit();
+        resourcesPage.clickDiscardInModal();
+        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
+    });
+
+    it('should cancel dialog modal', function() {
+        resourcesPage.performCreateResource('1');
+        resourcesPage.clickSelectResource('1');
+        documentViewPage.clickEditDocument();
+        DocumentEditWrapperPage.typeInInputField('2');
+        DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickCancelInModal();
-        resourcesPage.scrollUp();
-        expect(resourcesPage.clickSelectObjectByIndex(0).getAttribute('class')).toContain('selected');
-    }); */
+        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('2');
+    });
 
     it('should delete a resource', function() {
         resourcesPage.performCreateResource('1');

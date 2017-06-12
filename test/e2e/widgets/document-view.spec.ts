@@ -56,7 +56,7 @@ describe('document view --', function() {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('show only relations present in the object', function () {
+    it('show no relations after cancelling edit', function () {
         resourcesPage.performCreateResource('1', 2);
         resourcesPage.performCreateResource('2', 2);
         resourcesPage.clickSelectResource("1");
@@ -65,7 +65,7 @@ describe('document view --', function() {
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
         DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '2');
         DocumentEditWrapperPage.clickChooseRelationSuggestion(0, 0, 0);
-        resourcesPage.clickSelectResource("1");
+        DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickDiscardInModal();
 
         browser.wait(EC.visibilityOf(element(by.tagName('document-view'))), delays.ECWaitTime); // to prove document view is visible

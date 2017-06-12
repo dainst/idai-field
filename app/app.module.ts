@@ -9,7 +9,7 @@ import {IdaiDocumentsModule, DocumentEditChangeMonitor} from 'idai-components-2/
 import {Validator, PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './model/idai-field-validator';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {routing, appRoutingProviders} from './app.routing';
+import {routing} from './app.routing';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {M} from './m';
 import {AppComponent} from './app.component';
@@ -33,8 +33,8 @@ import {SettingsModule} from './settings/settings.module';
 import {AppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
 import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
-import {TaskbarComponent} from "./taskbar.component";
-import {WidgetsModule} from "./widgets/widgets.module";
+import {TaskbarComponent} from './taskbar.component';
+import {WidgetsModule} from './widgets/widgets.module';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -107,8 +107,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
         { provide: MD, useClass: M},
         Importer,
         Exporter,
-        RelationsCompleter,
-        appRoutingProviders
+        RelationsCompleter
     ],
     bootstrap: [ AppComponent ]
 })

@@ -18,24 +18,20 @@ import {SettingsService} from '../settings/settings-service';
 export class MapWrapperComponent implements OnInit, OnDestroy {
 
     @Input() activeDoc: IdaiFieldDocument;
-
+    @Input() editMode: boolean = false;
 
     private docs: IdaiFieldDocument[];
-
-    @Input() editMode: boolean = false;
 
     constructor(
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService
-    ) {
-    }
+    ) { }
 
     ngOnInit(): void {
         this.resourcesComponent.getDocuments().subscribe(result => {
            this.docs = result as IdaiFieldDocument[];
         });
-
     }
 
     private selectedDocIsNew(): boolean {
@@ -48,6 +44,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
      *   <code>undefined</code> indicates editing operation aborted.
      */
     public quitEditing(geometry: IdaiFieldGeometry) {
+
         let selectedDoc = this.resourcesComponent.getSelected();
         if (geometry) {
             selectedDoc.resource.geometry = geometry;
@@ -73,6 +70,7 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     }
 
     private removeEmptyDocument() {
+
         var selectedDocument = this.resourcesComponent.getSelected();
         if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometry) {
             this.resourcesComponent.remove(selectedDocument);
@@ -80,13 +78,12 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
     }
 
     private save() {
+
         this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
         this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUsername()).then(
             () => {
                 this.resourcesComponent.getSelected()['synced'] = 0;
-            },
-            err => { console.log(err); });
+            }, err => { console.log(err); });
     }
-
 
 }

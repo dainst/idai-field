@@ -1,10 +1,8 @@
-import {ModuleWithProviders} from "@angular/core";
-import {Routes, RouterModule} from "@angular/router";
-import {ImagesComponent} from "./images.component";
-import {ImageGridComponent} from "./image-grid.component";
-import {ImageViewComponent} from "./image-view.component";
-import {EditNavigationComponent} from "./edit-navigation.component";
-import {EditCanDeactivateGuard} from "./edit-can-deactivate-guard";
+import {ModuleWithProviders} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {ImagesComponent} from './images.component';
+import {ImageGridComponent} from './image-grid.component';
+import {ImageViewComponent} from './image-view.component';
 
 const routes: Routes = [
     {
@@ -18,11 +16,6 @@ const routes: Routes = [
             {
                 path: ':id/show',
                 component: ImageViewComponent
-            },
-            {
-                path: ':id/edit',
-                component: EditNavigationComponent,
-                canDeactivate: [EditCanDeactivateGuard]
             }
         ]
     }

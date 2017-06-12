@@ -292,3 +292,10 @@ $lightgraybgr: #eeeeee;
 .modal-backdrop.in {
   opacity: 0.5;
 }
+
+/* wider modals */
+
+  .modal-lg {
+    min-width: 86%;
+  }
+

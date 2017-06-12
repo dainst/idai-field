@@ -38,13 +38,14 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
 
     }
 
-    private selectedDocIsNew() : boolean {
+    private selectedDocIsNew(): boolean {
         return (this.resourcesComponent.getSelected().resource.id == undefined);
     }
 
     /**
-     * @param geometry <coce>null</code> indicates geometry 
-     *   should get deleted, <code>undefined</code> indicates editing operation aborted.
+     * @param geometry
+     *   <code>null</code> indicates geometry should get deleted.
+     *   <code>undefined</code> indicates editing operation aborted.
      */
     public quitEditing(geometry: IdaiFieldGeometry) {
         let selectedDoc = this.resourcesComponent.getSelected();
@@ -55,11 +56,15 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         }
 
         if (this.selectedDocIsNew()) {
-            this.resourcesComponent.editDocument();
+            if (geometry !== undefined) {
+                this.resourcesComponent.editDocument();
+            } else {
+                this.resourcesComponent.endEditGeometry();
+                this.removeEmptyDocument();
+            }
         } else {
             this.resourcesComponent.endEditGeometry();
             if (geometry !== undefined) this.save();
-
         }
     }
     

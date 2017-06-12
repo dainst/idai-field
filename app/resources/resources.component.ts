@@ -322,9 +322,11 @@ export class ResourcesComponent {
     private solveConflicts(doc: IdaiFieldDocument) {
         this.editDocument(doc, "conflicts");
     }
+
     private deselect() {
         this.selectedDocument = undefined;
     }
+
     private startEdit(doc: IdaiFieldDocument) {
         this.editDocument(doc);
     }

@@ -42,9 +42,9 @@ describe('resources/relations --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    xit('delete a relation and the corresponding inverse relation', function() {
+    it('delete a relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
-        resourcesPage.clickSelectResource('2');
+        resourcesPage.clickSelectResource('1');
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -55,9 +55,7 @@ describe('resources/relations --', function() {
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickRelationDeleteButtonByIndices(0, 0, 0);
-
         DocumentEditWrapperPage.clickSaveDocument();
-        DocumentEditWrapperPage.clickCloseEdit();
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

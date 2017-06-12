@@ -49,20 +49,6 @@ describe('resources --', function() {
     });
 
     /**
-     * There has been a bug where this was not possible due to a faulty datastore implementation.
-     */
-    xit('restore a document properly', function() {
-        resourcesPage.performCreateResource('old');
-        resourcesPage.performCreateResource('2');
-        resourcesPage.clickSelectResource('old');
-        documentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('new');
-        resourcesPage.clickSelectResource('2');
-        resourcesPage.clickDiscardInModal();
-        expect(resourcesPage.getListItemIdentifierText(1)).toEqual('old');
-    });
-
-    /**
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */

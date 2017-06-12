@@ -3,7 +3,7 @@ var promisesDelay;
 
 const syncingTestsActive = (process.argv.length > 5 && process.argv[5] == '--suite=syncing');
 if (syncingTestsActive) {
-    promisesDelay = 100;
+    promisesDelay = 200;
 } else {
     promisesDelay = 0;
 }

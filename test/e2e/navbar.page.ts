@@ -12,14 +12,9 @@ export class NavbarPage {
         return element.all(by.css('.nav-link')).get(0).click();
     };
 
-    public static clickNavigateToList() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(2)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(2).click();
-    };
-
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(5)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(5).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(4)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(4).click();
     };
 
     // unused?

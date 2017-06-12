@@ -280,6 +280,7 @@ describe('resources/syncing --', function() {
                         updateTestDoc();
                     }).then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(DocumentEditWrapperPage.clickConflictModalSaveButton)
+                    .then(documentViewPage.clickEditDocument)
                     .then(() => {
                         expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('test1');
                         DocumentEditWrapperPage.clickSaveDocument();
@@ -297,7 +298,6 @@ describe('resources/syncing --', function() {
         configureRemoteSite();
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
-                browser.wait(EC.visibilityOf(resourcesPage.getListItemEl('test1')), delays.ECWaitTime);
                 expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
 
                 createConflict()
@@ -329,7 +329,6 @@ describe('resources/syncing --', function() {
                     .then(DocumentEditWrapperPage.clickSolveConflictButton)
                     .then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(() => {
-                        browser.wait(EC.stalenessOf(element(by.id('document-edit-conflicts-tab'))), delays.ECWaitTime);
                         expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
                         return db.get(testDocument._id);
                     }).then(doc => {

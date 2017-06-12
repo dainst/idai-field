@@ -86,7 +86,7 @@ export class DocumentEditWrapperPage {
     };
 
     public static getInputFieldValue = function(index) {
-        browser.wait(EC.visibilityOf(element.all(by.css('dai-input input')).get(index)), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.tagName('dai-input input')).get(index)), delays.ECWaitTime);
         return element.all(by.tagName('dai-input input')).get(index).getAttribute('value');
     };
 

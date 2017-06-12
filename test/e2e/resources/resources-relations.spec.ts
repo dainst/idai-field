@@ -26,7 +26,7 @@ describe('resources/relations --', function() {
         resourcesPage.performCreateLink();
         resourcesPage.openEditByDoubleClickResource('2');
         expect(DocumentEditWrapperPage.getRelationButtonText(0, 0, 0)).toEqual('1');
-        DocumentEditWrapperPage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
         expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
@@ -57,7 +57,7 @@ describe('resources/relations --', function() {
         DocumentEditWrapperPage.clickRelationDeleteButtonByIndices(0, 0, 0);
 
         DocumentEditWrapperPage.clickSaveDocument();
-        DocumentEditWrapperPage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickCloseEdit();
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

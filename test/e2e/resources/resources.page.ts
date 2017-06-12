@@ -138,7 +138,7 @@ let ResourcesPage = function() {
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
         DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '1');
         DocumentEditWrapperPage.clickChooseRelationSuggestion(0, 0, 0);
-        this.scrollUp();
+        //this.scrollUp();
         DocumentEditWrapperPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };

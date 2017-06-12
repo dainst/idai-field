@@ -16,7 +16,7 @@ export class DocumentEditWrapperPage {
             .all(by.css('.suggestion')).get(suggestionIndex).click();
     };
 
-     public static clickBackToDocumentView() {
+     public static clickCloseEdit() {
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
     };

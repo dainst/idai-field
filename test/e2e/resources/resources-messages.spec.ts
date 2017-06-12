@@ -17,7 +17,7 @@ describe('resources/messages --', function() {
         resourcesPage.performCreateResource('12');
         resourcesPage.openEditByDoubleClickResource('12');
         DocumentEditWrapperPage.typeInInputField('34');
-        DocumentEditWrapperPage.clickBackToDocumentView();
+        DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');

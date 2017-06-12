@@ -26,7 +26,7 @@ describe('import --', function() {
         importPage.clickStartImportButton();
     };
 
-    it('iimport a valid iDAI.field JSONL file via HTTP', function() {
+    it('import a valid iDAI.field JSONL file via HTTP', function() {
 
         importIt("./test/test-data/importer-test-ok.jsonl");
         browser.sleep(2000);

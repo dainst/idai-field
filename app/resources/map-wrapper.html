@@ -9,20 +9,23 @@
                         class="list-group-item"
                         [class.new-from-remote]="resourcesComponent.isNewDocumentFromRemote(document)"
                         [class.conflicted]="document['_conflicts']"
-                        [class.selected]="resourcesComponent.getSelected() && resourcesComponent.getSelected().resource.id === document.resource.id"
+                        [class.selected]="resourcesComponent.getSelected()
+                            && resourcesComponent.getSelected().resource.id === document.resource.id"
                         [id]="'resource-' + document.resource.identifier">
 
                         <document-teaser [document]="document"></document-teaser>
                     </li>
                 </ul>
     </div>
-    <div [class.col-sm-9]="!activeDoc || !activeDoc.resource.id" [class.col-sm-6]="activeDoc && activeDoc.resource.id" class="px-0">
+    <div [class.col-sm-9]="!activeDoc || !activeDoc.resource.id" [class.col-sm-6]="activeDoc && activeDoc.resource.id"
+         class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="resourcesComponent.select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
     <div *ngIf="activeDoc && activeDoc.resource.id" class="col-sm-3 document-info px-0">
-        <document-view [document]="activeDoc" (onSolveConflict)="resourcesComponent.solveConflicts($event)" (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
+        <document-view [document]="activeDoc" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
+                       (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <description-view [document]="activeDoc"></description-view>
             <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"
                             *ngIf="activeDoc && activeDoc.resource.relations
@@ -32,9 +35,7 @@
                            (onEditGeometry)="resourcesComponent.startEditGeometry()"
                            (onCreatePoint)="resourcesComponent.createPoint()"
                            (onCreatePolygon)="resourcesComponent.createPolygon()"
-                           (onCreatePolyline)="resourcesComponent.createPolyline()"
-                    >
-
+                           (onCreatePolyline)="resourcesComponent.createPolyline()">
             </geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="resourcesComponent.select($event)"></relations-view>

@@ -257,7 +257,6 @@ export class ResourcesComponent {
         });
     }
 
-
     private notify() {
         this.observers.forEach(observer => {
             observer.next(this.documents);
@@ -319,15 +318,15 @@ export class ResourcesComponent {
         return latestAction && latestAction.user != this.settingsService.getUsername();
     }
 
-    private solveConflicts(doc: IdaiFieldDocument) {
+    public solveConflicts(doc: IdaiFieldDocument) {
         this.editDocument(doc, "conflicts");
     }
 
-    private deselect() {
+    public deselect() {
         this.selectedDocument = undefined;
     }
 
-    private startEdit(doc: IdaiFieldDocument) {
+    public startEdit(doc: IdaiFieldDocument) {
         this.editDocument(doc);
     }
 }

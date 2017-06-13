@@ -179,7 +179,7 @@ describe('resources/syncing --', function() {
 
         resetTestDoc()
             .then(() => resetConfigJson())
-            .then(() => done());
+            .then(done);
     });
 
     it('show resource created in other db', done => {

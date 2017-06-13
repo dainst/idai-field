@@ -29,18 +29,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     constructor(configLoader: ConfigLoader) {
 
-        this.readyForQuery = new Promise<any>((resolve)=>{
+        this.readyForQuery = new Promise<any>(resolve => {
 
                 configLoader.getProjectConfiguration()
                     .then(config => this.config = config)
-                    .then(()=>this.setupServer())
+                    .then(() => this.setupServer())
                     .then(() => { this.resolve = resolve; }); // cause it to wait for a call on select
             })
     }
 
 
     public select(name): Promise<void> {
-        this.readyForQuery = this.loadDB(name).then(()=>{
+        this.readyForQuery = this.loadDB(name).then(() => {
             if (this.resolve) { // resolve the old promise which got used to wait for select
                 this.resolve();
                 this.resolve = undefined;
@@ -53,14 +53,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return Promise.resolve();
     }
 
-    private loadDB(dbname:string) {
+    private loadDB(dbname: string) {
         let previousDBName = this.dbname;
 
-        return Promise.resolve(new PouchDB(dbname)).then(db=>{
+        return Promise.resolve(new PouchDB(dbname)).then(db => {
             this.dbname = dbname;
             this.db = db;
             console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
-        }).then(()=>{
+        }).then(() => {
             if (this.dbname == 'test' && previousDBName != 'test') return this.clear();
             else return Promise.resolve();
         }).then(() => this.indexCreator.go(this.db))
@@ -146,9 +146,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         const reset = this.resetDocOnErr(document);
         return this.readyForQuery
-            .then(()=>this.get(document.resource.id)).then(
+            .then(() => this.get(document.resource.id)).then(
 
-                ()=> {
+                () => {
                     document['_id'] = document.resource.id;
                     document.resource['_parentTypes'] = this.config
                         .getParentTypes(document.resource.type);
@@ -257,12 +257,16 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private clear(): Promise<any> {
+        console.log('clear db...');
+        console.log('dbname: ', this.dbname);
         return this.db.destroy()
             .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 
     public shutDown(): Promise<void> {
-        return this.readyForQuery.then(()=> this.db.destroy());
+        console.log('shut down db...');
+        console.log('dbname: ', this.dbname);
+        return this.readyForQuery.then(() => this.db.destroy());
     }
 
     public documentChangesNotifications(): Observable<Document> {
@@ -317,6 +321,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     public findConflicted(): Promise<IdaiFieldDocument[]> {
+
         return this.readyForQuery.then(() => {
             return this.db.query('conflicted', {
                 include_docs: true,
@@ -329,6 +334,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     public findByBelongsTo(identifier: string): Promise<IdaiFieldDocument []> {
+
         return this.readyForQuery.then(() => {
             return this.db.query('belongsTo', {
                 key: identifier,
@@ -404,6 +410,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     public stopSync() {
+
         for (let handle of this.syncHandles) {
             console.debug("stop sync",handle);
             handle.cancel();
@@ -474,7 +481,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private loadSampleData(): Promise<any> {
 
-        return new Promise<any>((resolve, reject)=>{
+        return new Promise<any>((resolve, reject) => {
 
             let promises = [];
             for (let doc of DOCS) {

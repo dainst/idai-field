@@ -14,13 +14,14 @@ import {SyncState} from "./sync-state";
 export class CachedDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
+    private autoCacheUpdate: boolean = true;
 
     constructor(private datastore: IdaiFieldDatastore) {
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
                 // explicitly assign by value in order for
                 // changes to be detected by angular
-                if (doc && doc.resource && this.documentCache[doc.resource.id]) {
+                if (this.autoCacheUpdate && doc && doc.resource && this.documentCache[doc.resource.id]) {
                     console.debug("change detected", doc);
                     if (!doc['_conflicts']) delete this.documentCache[doc.resource.id]['_conflicts'];
                     Object.assign(this.documentCache[doc.resource.id], doc);
@@ -132,5 +133,9 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     select(name) {
         return this.datastore.select(name);
+    }
+
+    setAutoCacheUpdate(autoCacheUpdate: boolean) {
+        this.autoCacheUpdate = autoCacheUpdate;
     }
 }

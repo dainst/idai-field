@@ -5,7 +5,5 @@ import {Document} from 'idai-components-2/core'
  */
 export interface ImportStrategy {
 
-    /**
-     */
     importDoc(doc: Document): Promise<any>;
 }

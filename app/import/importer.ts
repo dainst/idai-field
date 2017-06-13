@@ -1,11 +1,12 @@
-import {Injectable} from "@angular/core";
-import {Document} from "idai-components-2/core";
-import {Reader} from "./reader";
-import {Parser} from "./parser";
-import {ImportStrategy} from "./import-strategy";
-import {RelationsStrategy} from "./relations-strategy";
-import {RollbackStrategy} from "./rollback-strategy";
-import {M} from "../m";
+import {Injectable} from '@angular/core';
+import {Document} from 'idai-components-2/core';
+import {Reader} from './reader';
+import {Parser} from './parser';
+import {ImportStrategy} from './import-strategy';
+import {RelationsStrategy} from './relations-strategy';
+import {RollbackStrategy} from './rollback-strategy';
+import {CachedDatastore} from '../datastore/cached-datastore';
+import {M} from '../m';
 
 
 export interface ImportReport {
@@ -39,6 +40,8 @@ export class Importer {
     private importStrategy: ImportStrategy;
     private relationsStrategy: RelationsStrategy;
     private rollbackStrategy: RollbackStrategy;
+
+    private datastore: CachedDatastore;
 
 
     private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
@@ -81,12 +84,15 @@ export class Importer {
      */
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
                            relationsStrategy: RelationsStrategy,
-                           rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
+                           rollbackStrategy: RollbackStrategy, datastore: CachedDatastore): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 
             this.resolvePromise = resolve;
             this.initState(importStrategy, relationsStrategy, rollbackStrategy);
+
+            this.datastore = datastore;
+            this.datastore.setAutoCacheUpdate(false);
 
             reader.go().then(fileContent => {
 
@@ -126,6 +132,7 @@ export class Importer {
      * @param importStrategy
      */
     private update(doc: Document) {
+
         this.inUpdateDocumentLoop = true;
 
         this.importStrategy.importDoc(doc)
@@ -153,19 +160,26 @@ export class Importer {
         this.inUpdateDocumentLoop = false;
 
         if (this.importReport.errors.length > 0) {
-            return this.performRollback();
+            return this.performRollback().then(
+                () => { this.datastore.setAutoCacheUpdate(true); }
+            );
         } else {
             return this.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
                 () => {
+                    this.datastore.setAutoCacheUpdate(true);
                     this.resolvePromise(this.importReport);
                 }, msgWithParams => {
                     this.importReport.errors.push(msgWithParams);
                     return this.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
                         () => {
-                            return this.performRollback();
+                            return this.performRollback().then(
+                                () => { this.datastore.setAutoCacheUpdate(true); }
+                            );
                         }, msgWithParams => {
                             this.importReport.errors.push(msgWithParams);
-                            return this.performRollback();
+                            return this.performRollback().then(
+                                () => { this.datastore.setAutoCacheUpdate(true); }
+                            );
                         });
                 }
             )

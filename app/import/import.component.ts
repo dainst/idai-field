@@ -1,27 +1,27 @@
-import {Component} from "@angular/core";
-import {Messages} from "idai-components-2/messages";
-import {Importer, ImportReport} from "./importer";
-import {Reader} from "./reader";
-import {FileSystemReader} from "./file-system-reader";
-import {HttpReader} from "./http-reader";
-import {Parser} from "./parser";
-import {NativeJsonlParser} from "./native-jsonl-parser";
-import {IdigCsvParser} from "./idig-csv-parser";
-import {GeojsonParser} from "./geojson-parser";
-import {M} from "../m";
-import {Http} from "@angular/http";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {Validator} from "idai-components-2/persist";
-import {ImportStrategy} from "./import-strategy";
-import {DefaultImportStrategy} from "./default-import-strategy";
-import {MergeGeometriesImportStrategy} from "./merge-geometries-import-strategy";
-import {RelationsStrategy} from "./relations-strategy";
-import {DefaultRelationsStrategy} from "./default-relations-strategy";
-import {NoRelationsStrategy} from "./no-relations-strategy";
-import {RollbackStrategy} from "./rollback-strategy";
-import {DefaultRollbackStrategy} from "./default-rollback-strategy";
-import {NoRollbackStrategy} from "./no-rollback-strategy";
-import {RelationsCompleter} from "./relations-completer";
+import {Component} from '@angular/core';
+import {Messages} from 'idai-components-2/messages';
+import {Importer, ImportReport} from './importer';
+import {Reader} from './reader';
+import {FileSystemReader} from './file-system-reader';
+import {HttpReader} from './http-reader';
+import {Parser} from './parser';
+import {NativeJsonlParser} from './native-jsonl-parser';
+import {IdigCsvParser} from './idig-csv-parser';
+import {GeojsonParser} from './geojson-parser';
+import {M} from '../m';
+import {Http} from '@angular/http';
+import {CachedDatastore} from '../datastore/cached-datastore';
+import {Validator} from 'idai-components-2/persist';
+import {ImportStrategy} from './import-strategy';
+import {DefaultImportStrategy} from './default-import-strategy';
+import {MergeGeometriesImportStrategy} from './merge-geometries-import-strategy';
+import {RelationsStrategy} from './relations-strategy';
+import {DefaultRelationsStrategy} from './default-relations-strategy';
+import {NoRelationsStrategy} from './no-relations-strategy';
+import {RollbackStrategy} from './rollback-strategy';
+import {DefaultRollbackStrategy} from './default-rollback-strategy';
+import {NoRollbackStrategy} from './no-rollback-strategy';
+import {RelationsCompleter} from './relations-completer';
 
 
 @Component({
@@ -41,8 +41,8 @@ import {RelationsCompleter} from "./relations-completer";
 
 export class ImportComponent {
 
-    private sourceType: string = "file";
-    private format: string = "native";
+    private sourceType: string = 'file';
+    private format: string = 'native';
     private file: File;
     private url: string;
     private running: boolean = false;
@@ -50,7 +50,7 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private datastore: IdaiFieldDatastore,
+        private datastore: CachedDatastore,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter
@@ -74,17 +74,18 @@ export class ImportComponent {
 
         this.messages.add([M.IMPORT_START]);
         this.running = true;
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy, rollbackStrategy)
+        this.importer.importResources(reader, parser, importStrategy, relationsStrategy, rollbackStrategy,
+                this.datastore)
             .then(importReport => this.showImportResult(importReport))
-            .then(() => this.running = false);
+            .then(() => { this.running = false; });
     }
 
     public isReady(): boolean {
 
         switch (this.sourceType) {
-            case "file":
+            case 'file':
                 return (this.file != undefined);
-            case "http":
+            case 'http':
                 return (this.url != undefined);
         }
     }
@@ -98,14 +99,14 @@ export class ImportComponent {
     }
 
     private static createImportStrategy(format: string, validator: Validator,
-                                        datastore: IdaiFieldDatastore): ImportStrategy {
+                                        datastore: CachedDatastore): ImportStrategy {
 
         switch (format) {
-            case "native":
+            case 'native':
                 return new DefaultImportStrategy(validator, datastore);
-            case "idig":
+            case 'idig':
                 return new DefaultImportStrategy(validator, datastore);
-            case "geojson":
+            case 'geojson':
                 return new MergeGeometriesImportStrategy(datastore);
         }
     }
@@ -113,23 +114,23 @@ export class ImportComponent {
     private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy {
 
         switch (format) {
-            case "native":
+            case 'native':
                 return new DefaultRelationsStrategy(relationsCompleter);
-            case "idig":
+            case 'idig':
                 return new DefaultRelationsStrategy(relationsCompleter);
-            case "geojson":
+            case 'geojson':
                 return new NoRelationsStrategy();
         }
     }
 
-    private static createRollbackStrategy(format: string, datastore: IdaiFieldDatastore): RollbackStrategy {
+    private static createRollbackStrategy(format: string, datastore: CachedDatastore): RollbackStrategy {
 
         switch (format) {
-            case "native":
+            case 'native':
                 return new DefaultRollbackStrategy(datastore);
-            case "idig":
+            case 'idig':
                 return new DefaultRollbackStrategy(datastore);
-            case "geojson":
+            case 'geojson':
                 return new NoRollbackStrategy();
         }
     }
@@ -137,9 +138,9 @@ export class ImportComponent {
     private static createReader(sourceType: string, file: File, url: string, http: Http): Reader {
 
         switch (sourceType) {
-            case "file":
+            case 'file':
                 return new FileSystemReader(file);
-            case "http":
+            case 'http':
                 return new HttpReader(url, http);
         }
     }
@@ -147,11 +148,11 @@ export class ImportComponent {
     private static createParser(format: string): Parser {
 
         switch (format) {
-            case "native":
+            case 'native':
                 return new NativeJsonlParser();
-            case "idig":
+            case 'idig':
                 return new IdigCsvParser();
-            case "geojson":
+            case 'geojson':
                 return new GeojsonParser();
         }
     }

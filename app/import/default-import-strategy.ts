@@ -1,7 +1,7 @@
-import {Document} from "idai-components-2/core";
-import {ImportStrategy} from "./import-strategy";
-import {Validator} from "idai-components-2/persist";
-import {Datastore} from "idai-components-2/datastore";
+import {Document} from 'idai-components-2/core';
+import {ImportStrategy} from './import-strategy';
+import {Validator} from 'idai-components-2/persist';
+import {Datastore} from 'idai-components-2/datastore';
 
 /**
  * @author Daniel de Oliveira

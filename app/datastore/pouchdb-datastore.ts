@@ -257,15 +257,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private clear(): Promise<any> {
-        console.log('clear db...');
-        console.log('dbname: ', this.dbname);
         return this.db.destroy()
             .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
     }
 
     public shutDown(): Promise<void> {
-        console.log('shut down db...');
-        console.log('dbname: ', this.dbname);
         return this.readyForQuery.then(() => this.db.destroy());
     }
 
@@ -437,6 +433,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     // strips document of any properties that are only
     // used to simplify index creation
     private cleanDoc(doc: Document): Document {
+
         if (doc && doc.resource) {
             delete doc.resource['_parentTypes'];
         }

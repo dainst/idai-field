@@ -1,5 +1,5 @@
-import {Importer} from "../../../app/import/importer";
-import {Observable} from "rxjs/Observable";
+import {Importer} from '../../../app/import/importer';
+import {Observable} from 'rxjs/Observable';
 
 
 /**
@@ -13,6 +13,7 @@ export function main() {
     let mockImportStrategy;
     let mockRelationsStrategy;
     let mockRollbackStrategy;
+    let mockDatastore;
 
     beforeEach(()=>{
         mockReader = jasmine.createSpyObj('reader', ['go']);
@@ -23,6 +24,7 @@ export function main() {
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy', ['completeInverseRelations',
             'resetInverseRelations']);
         mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
+        mockDatastore = jasmine.createSpyObj('datastore', ['setAutoCacheUpdate']);
         importer = new Importer();
     });
 
@@ -37,7 +39,7 @@ export function main() {
                 mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
                 mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
                 importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                        mockRollbackStrategy)
+                        mockRollbackStrategy, mockDatastore)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
                         done();
@@ -63,7 +65,7 @@ export function main() {
                 mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
                 mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
                 importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                        mockRollbackStrategy)
+                        mockRollbackStrategy, mockDatastore)
                     .then(importReport => {
                         expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
                         expect(importReport.importedResourcesIds.length).toBe(1);

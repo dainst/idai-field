@@ -90,6 +90,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },
+        { provide: CachedDatastore, useExisting: Datastore },
         Messages,
         BlobMaker,
         { provide: 'app.config', useValue: CONFIG },

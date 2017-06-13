@@ -1,6 +1,6 @@
 import {browser, protractor, element, by} from 'protractor';
 
-let common = require("../common.js");
+let common = require('../common.js');
 let importPage = require('./import.page');
 let resourcesPage = require('../resources/resources.page');
 let documentViewPage = require('../widgets/document-view.page');
@@ -13,14 +13,14 @@ describe('import --', function() {
 
     beforeEach(function() {
         importPage.get();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     let importIt = function(url) {
         importPage.clickImportButton();
-        expect(importPage.getSourceOptionValue(1)).toEqual("http");
+        expect(importPage.getSourceOptionValue(1)).toEqual('http');
         importPage.clickSourceOption(1);
-        expect(importPage.getFormatOptionValue(0)).toEqual("native");
+        expect(importPage.getFormatOptionValue(0)).toEqual('native');
         importPage.clickFormatOption(0);
         common.typeIn(importPage.getImportURLInput(), url);
         importPage.clickStartImportButton();
@@ -28,7 +28,7 @@ describe('import --', function() {
 
     it('import a valid iDAI.field JSONL file via HTTP', function() {
 
-        importIt("./test/test-data/importer-test-ok.jsonl");
+        importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToResources();
 
@@ -40,7 +40,7 @@ describe('import --', function() {
 
     it('delete already imported iDAI.field documents if an error occurs', function() {
 
-        importIt("./test/test-data/importer-test-constraint-violation.jsonl");
+        importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
@@ -54,25 +54,25 @@ describe('import --', function() {
 
     it('abort if an empty geometry is found', function() {
 
-        importIt("./test/test-data/importer-test-empty-geometry.jsonl");
+        importIt('./test/test-data/importer-test-empty-geometry.jsonl');
         NavbarPage.awaitAlert('nicht definiert', false);
     });
 
     it('abort if a geometry with invalid coordinates is found', function() {
 
-        importIt("./test/test-data/importer-test-invalid-geometry-coordinates.jsonl");
+        importIt('./test/test-data/importer-test-invalid-geometry-coordinates.jsonl');
         NavbarPage.awaitAlert('sind nicht valide', false);
     });
 
     it('abort if a geometry with an unsupported type is found', function() {
 
-        importIt("./test/test-data/importer-test-unsupported-geometry-type.jsonl");
+        importIt('./test/test-data/importer-test-unsupported-geometry-type.jsonl');
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
     it('import a relation and add the corresponding inverse relation', function() {
 
-        importIt("./test/test-data/importer-test-relation-ok.jsonl");
+        importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToResources();
 
@@ -102,7 +102,7 @@ describe('import --', function() {
     it('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', function() {
 
-        importIt("./test/test-data/importer-test-relation-error.jsonl");
+        importIt('./test/test-data/importer-test-relation-error.jsonl');
         NavbarPage.awaitAlert('konnte nicht gefunden werden', false);
 
         NavbarPage.clickCloseMessage();

@@ -30,7 +30,8 @@
 
 
     <div class="col-lg-12 col-md-12 col-sm-12" id="document-edit-wrapper">
-        <map-wrapper *ngIf="mode == 'map'" [activeDoc]="selectedDocument" [editMode]="editGeometry"></map-wrapper>
+        <map-wrapper *ngIf="mode == 'map'" [activeDoc]="selectedDocument" [editMode]="editGeometry"
+                     [scrollTarget]="scrollTarget"></map-wrapper>
         <list *ngIf="mode == 'list'" [documents]="documents"></list>
     </div>
 

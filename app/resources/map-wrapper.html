@@ -20,7 +20,7 @@
     <div [class.col-sm-9]="!activeDoc || !activeDoc.resource.id" [class.col-sm-6]="activeDoc && activeDoc.resource.id"
          class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
-             [editMode]="editMode" (onSelectDocument)="resourcesComponent.select($event)"
+             [editMode]="editMode" (onSelectDocument)="select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
     <div *ngIf="activeDoc && activeDoc.resource.id" class="col-sm-3 document-info px-0">

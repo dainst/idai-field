@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -24,7 +24,7 @@ import {EditModalComponent} from '../widgets/edit-modal.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent {
+export class ResourcesComponent implements OnInit {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
@@ -36,6 +36,7 @@ export class ResourcesComponent {
     private ready: Promise<any>;
     private mode = 'map';
     private editGeometry = false;
+    private scrollTarget: IdaiFieldDocument;
 
     constructor(private route: ActivatedRoute,
                 private location: Location,
@@ -62,7 +63,7 @@ export class ResourcesComponent {
         this.fetchTrenches();
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
 
         this.route.params.subscribe(params => {
             this.parseParams(params);
@@ -125,12 +126,11 @@ export class ResourcesComponent {
     }
 
     /**
-     * @param documentToSelect the object that should get selected if the preconditions
-     *   to change the selection are met.
+     * @param documentToSelect the object that should get selected
      */
     public select(documentToSelect: IdaiFieldDocument) {
 
-        if (this.editGeometry) this.endEditGeometry();
+        if (this.editGeometry && documentToSelect != this.selectedDocument) this.endEditGeometry();
 
         if (this.isNewDocumentFromRemote(documentToSelect)) {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
@@ -152,7 +152,7 @@ export class ResourcesComponent {
 
         this.selectedDocument = documentToSelect;
         this.notify();
-        return this.selectedDocument
+        return this.selectedDocument;
     }
 
     /**
@@ -220,9 +220,15 @@ export class ResourcesComponent {
         var detailModal = detailModalRef.componentInstance;
 
         detailModalRef.result.then(result => {
-            this.fetchDocuments();
-            this.fetchTrenches();
-            if (result.document) this.selectedDocument = result.document;
+            this.fetchDocuments().then(
+                () => {
+                    this.fetchTrenches();
+                    if (result.document) {
+                        this.selectedDocument = result.document;
+                        this.scrollTarget = result.document;
+                    }
+                }
+            );
         }, closeReason => {
             this.fetchDocuments();
             this.documentEditChangeMonitor.reset();

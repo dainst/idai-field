@@ -16,23 +16,31 @@
                     {{typesMap[document.resource.type].label}}
                 </td>
                 <td align="right">
-                    <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" class="form-control form-control-sm identifier-input">
+                    <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"
+                           class="form-control form-control-sm identifier-input">
                     <small class="text-muted">{{document._id}}</small>
                 </td>
                 <td align="right">
-                    <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)" class="form-control form-control-sm">
-                    <small><button (click)="focusDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button></small>
+                    <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)"
+                           (keyup)="markAsChanged()" class="form-control form-control-sm">
+                    <small>
+                        <button (click)="focusDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
+                    </small>
                 </td>
                 <td>
                     <div class="form-inline">
-                        <select *ngIf="typesMap[document.resource.type].relations.length" class="form-control form-control-sm ml-2" autocomplete="off" [(ngModel)]="selectedRelation" (change)="addRelatedDocument(document, selectedRelation, $event)" >
+                        <select *ngIf="typesMap[document.resource.type].relations.length"
+                                class="form-control form-control-sm ml-2" autocomplete="off"
+                                [(ngModel)]="selectedRelation"
+                                (change)="addRelatedDocument(document, selectedRelation, $event)" >
                             <option selected value></option>
-                            <option *ngFor="let relation of typesMap[document.resource.type].relations" [ngValue]="relation">{{relation.label}} ({{typesMap[relation.targetName].label}})</option>
+                            <option *ngFor="let relation of typesMap[document.resource.type].relations"
+                                    [ngValue]="relation">{{relation.label}} ({{typesMap[relation.targetName].label}})
+                            </option>
                         </select>
                     </div>
                 </td>
             </tr>
         </table>
-
     </div>
 </div>

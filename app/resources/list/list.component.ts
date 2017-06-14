@@ -3,10 +3,10 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
-import {M} from '../m';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {SettingsService} from '../settings/settings-service';
-import {EditModalComponent} from './edit-modal.component';
+import {M} from '../../m';
+import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
+import {SettingsService} from '../../settings/settings-service';
+import {EditModalComponent} from '../../widgets/edit-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,6 +16,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class ListComponent {
+
     @Input() documents: IdaiFieldDocument[];
 
     private detailedDocument: IdaiFieldDocument;

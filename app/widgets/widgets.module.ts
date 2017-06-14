@@ -17,7 +17,6 @@ import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component'
 import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {EditModalComponent} from './edit-modal.component';
-import {ListComponent} from './list.component';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 
 
@@ -42,8 +41,7 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
         ConflictModalComponent,
         ConflictDeletedModalComponent,
         ConflictResolverComponent,
-        EditModalComponent,
-        ListComponent
+        EditModalComponent
     ],
     exports: [
         DocumentViewComponent,
@@ -52,8 +50,7 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
         EditSaveDialogComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
-        DescriptionViewComponent,
-        ListComponent
+        DescriptionViewComponent
     ],
     entryComponents: [
         ImagePickerComponent,

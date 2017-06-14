@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
@@ -47,10 +47,10 @@ export class ResourcesComponent {
     ) {
 
         let readyResolveFun: Function;
-        this.ready = new Promise<any>(resolve=>{
+        this.ready = new Promise<any>(resolve => {
             readyResolveFun = resolve;
         });
-        this.fetchDocuments().then(()=>{
+        this.fetchDocuments().then(() => {
            readyResolveFun();
         });
 
@@ -141,17 +141,8 @@ export class ResourcesComponent {
 
     public queryChanged(query: Query): Promise<any> {
 
-        return new Promise<any>((resolve) => {
-            this.query = query;
-            this.fetchDocuments(query).then(
-                () => {
-                    if (this.selectedDocument && this.documents.indexOf(this.selectedDocument) == -1) {
-                        //this.router.navigate(['resources']);
-                    }
-                    resolve();
-                }
-            );
-        });
+        this.query = query;
+        return this.fetchDocuments(query);
     }
 
     /**
@@ -187,15 +178,11 @@ export class ResourcesComponent {
 
     public createNewDocument(type: string, geometryType: string): Promise<any> {
 
-        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
-        //     { 'synced' : 1, 'resource' :
-        //     { 'type' : undefined, 'identifier':'hallo','title':undefined}};
-
-        var newDocument = { 'resource': { 'relations': {}, 'type': type,  } };
+        var newDocument: IdaiFieldDocument = <IdaiFieldDocument> { 'resource': { 'relations': {}, 'type': type } };
         this.selectedDocument = newDocument;
 
-        if(geometryType != 'none') {
-            newDocument.resource['geometry'] = { 'type': geometryType };
+        if (geometryType != 'none') {
+            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.editGeometry = true;
             this.mode = 'map';
         } else {
@@ -255,6 +242,7 @@ export class ResourcesComponent {
     }
 
     public endEditGeometry() {
+
         this.editGeometry = false;
         this.fetchDocuments();
     }
@@ -275,7 +263,7 @@ export class ResourcesComponent {
 
     public getDocuments(): Observable<Array<Document>> {
 
-        return Observable.create( observer => {
+        return Observable.create(observer => {
             this.observers.push(observer);
             this.notify();
         });

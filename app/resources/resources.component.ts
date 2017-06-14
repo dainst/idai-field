@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Location} from '@angular/common';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Document, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2/messages';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -32,14 +34,16 @@ export class ResourcesComponent {
     private newDocumentsFromRemote: Array<Document> = [];
     private trenches: Array<IdaiFieldDocument>;
     private ready: Promise<any>;
-    private mode = "map";
+    private mode = 'map';
     private editGeometry = false;
 
     constructor(private route: ActivatedRoute,
+                private location: Location,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private documentEditChangeMonitor: DocumentEditChangeMonitor
+                private documentEditChangeMonitor: DocumentEditChangeMonitor,
+                private messages: Messages
     ) {
 
         let readyResolveFun: Function;
@@ -59,13 +63,30 @@ export class ResourcesComponent {
     }
 
     ngOnInit(): void {
-        if (this.route.params["value"]["id"]) {
-            this.loadDoc(this.route.params["value"]["id"])
-        }
+
+        this.route.params.subscribe(params => {
+            this.parseParams(params);
+        });
+    }
+
+    private parseParams(params: Params) {
+
+        let tab = params['tab'];
+        let id = params['id'];
+
+        if (!tab || !id) return;
+
+        this.location.replaceState('resources');
+
+        this.datastore.get(id).then(
+            document => this.editDocument(document, tab),
+            msgWithParams => this.messages.add(msgWithParams)
+        );
     }
 
     public filterByTrench(a) {
-        if (a.target.value == "") {
+
+        if (a.target.value == '') {
             this.fetchDocuments();
         } else {
             var filterById = a.target.value;
@@ -77,6 +98,7 @@ export class ResourcesComponent {
     }
 
     private handleChange(changedDocument: Document) {
+
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
 
         let existingDoc = false;
@@ -107,6 +129,7 @@ export class ResourcesComponent {
      *   to change the selection are met.
      */
     public select(documentToSelect: IdaiFieldDocument) {
+
         if (this.editGeometry) this.endEditGeometry();
 
         if (this.isNewDocumentFromRemote(documentToSelect)) {
@@ -135,6 +158,7 @@ export class ResourcesComponent {
      * @param documentToSelect
      */
     public setSelected(documentToSelect: Document): Document {
+
         this.selectedDocument = documentToSelect;
         this.notify();
         return this.selectedDocument
@@ -162,17 +186,18 @@ export class ResourcesComponent {
     }
 
     public createNewDocument(type: string, geometryType: string): Promise<any> {
-        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
-        //     { "synced" : 1, "resource" :
-        //     { "type" : undefined, "identifier":"hallo","title":undefined}};
 
-        var newDocument = { "resource": { "relations": {}, "type": type,  } };
+        // var newDocument : IdaiFieldDocument = TODO this does not work for some reason.
+        //     { 'synced' : 1, 'resource' :
+        //     { 'type' : undefined, 'identifier':'hallo','title':undefined}};
+
+        var newDocument = { 'resource': { 'relations': {}, 'type': type,  } };
         this.selectedDocument = newDocument;
 
-        if(geometryType != "none") {
-            newDocument.resource["geometry"] = { "type": geometryType };
+        if(geometryType != 'none') {
+            newDocument.resource['geometry'] = { 'type': geometryType };
             this.editGeometry = true;
-            this.mode = "map";
+            this.mode = 'map';
         } else {
             this.editDocument();
         }
@@ -199,7 +224,7 @@ export class ResourcesComponent {
         });
     }
 
-    public editDocument(doc?: IdaiFieldDocument, activeTabName?: string) {
+    public editDocument(doc?: Document, activeTabName?: string) {
 
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
@@ -241,9 +266,9 @@ export class ResourcesComponent {
         this.startEditGeometry();
     }
 
-
     private fetchTrenches() {
-        let tquery : Query = {q: '', type: 'trench', prefix: true};
+
+        let tquery: Query = {q: '', type: 'trench', prefix: true};
         this.datastore.find(tquery).then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
         }).catch(err => { console.error(err); } );
@@ -261,18 +286,6 @@ export class ResourcesComponent {
         if (doc) this.setSelected(doc);
         this.selectedDocument.resource['geometry'] = { 'type': 'LineString' };
         this.startEditGeometry();
-    }
-
-    /**
-     * Gets a document from the datastore and makes
-     * it the current selection.
-     *
-     * @param resourceId
-     * @returns {Promise<Document>}
-     */
-    public loadDoc(resourceId) : Promise<Document> {
-        return this.datastore.get(resourceId)
-            .then(document => this.setSelected(document));
     }
 
     public getDocuments() : Observable<Array<Document>> {
@@ -344,7 +357,7 @@ export class ResourcesComponent {
     }
 
     public solveConflicts(doc: IdaiFieldDocument) {
-        this.editDocument(doc, "conflicts");
+        this.editDocument(doc, 'conflicts');
     }
 
     public deselect() {

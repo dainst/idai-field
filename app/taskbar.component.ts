@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
-import {IdaiFieldDatastore} from "./datastore/idai-field-datastore";
-import {Document} from "idai-components-2/core";
-import {SettingsService} from "./settings/settings-service";
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
+import {Document} from 'idai-components-2/core';
+import {SettingsService} from './settings/settings-service';
 
 @Component({
     moduleId: module.id,
@@ -15,11 +16,13 @@ import {SettingsService} from "./settings/settings-service";
  */
 export class TaskbarComponent {
 
-    private connected = false;
-    private conflicts: Document[] = [];
+    public connected = false;
+    public conflicts: Document[] = [];
 
     constructor(private datastore: IdaiFieldDatastore,
-            private settings: SettingsService) {
+                private settings: SettingsService,
+                private router: Router) {
+
         this.checkConflicts();
         settings.syncStatusChanges().subscribe(c => {
             if (c == 'disconnected')
@@ -31,9 +34,17 @@ export class TaskbarComponent {
     }
 
     private checkConflicts(): void {
+
         this.datastore.findConflicted().then(result => {
             this.conflicts = result;
         });
+    }
+
+    public openConflictResolver(resourceId: string) {
+        
+        this.router.navigate(['resources']).then(
+            () => this.router.navigate(['resources', 'edit', 'conflicts', resourceId])
+        );
     }
 
 }

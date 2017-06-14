@@ -1,7 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
-let common = require("../common.js");
+let common = require('../common.js');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
@@ -76,18 +76,18 @@ let ResourcesPage = function() {
 
     this.clickSelectResource = function(identifier) {
         browser.wait(EC.visibilityOf(
-            element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
-                 + identifier + "']"))), delays.ECWaitTime);
-        return element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
-            + identifier + "']")).click();
+            element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+                 + identifier + '"]'))), delays.ECWaitTime);
+        return element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+            + identifier + '"]')).click();
     };
 
     this.openEditByDoubleClickResource = function(identifier) {
         browser.wait(EC.visibilityOf(
-            element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
-                + identifier + "']"))), delays.ECWaitTime);
-        return browser.actions().doubleClick(element(by.xpath("//*[@id='objectList']//div[@class='identifier' and normalize-space(text())='"
-            + identifier + "']"))).perform();
+            element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+                + identifier + '"]'))), delays.ECWaitTime);
+        return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and ' +
+            'normalize-space(text())="' + identifier + '"]'))).perform();
     };
 
     this.clickSelectResourceType = function(typeIndex) {
@@ -124,9 +124,10 @@ let ResourcesPage = function() {
         this.clickSelectResourceType(typeIndex);
         this.clickSelectGeometryType();
         DocumentEditWrapperPage.typeInInputField(identifier);
-        if (inputFieldText) DocumentEditWrapperPage.typeInInputField(inputFieldText,2);
+        if (inputFieldText) DocumentEditWrapperPage.typeInInputField(inputFieldText, 2);
         this.scrollUp();
         DocumentEditWrapperPage.clickSaveDocument();
+        browser.sleep(delays.shortRest);
     };
 
 

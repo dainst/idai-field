@@ -11,7 +11,7 @@ describe('resources/relations --', function() {
 
     beforeEach(function() {
         resourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     it ('create links for relations', function() {

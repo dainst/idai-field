@@ -10,7 +10,7 @@
             <tr *ngFor="let document of documents; let index=index;"
                 [class.synced]="document.synced"
                 [class.unsynced]="!document.synced"
-                [class.bg-info]="detailedDocument == document"
+                [class.bg-info]="selectedDocument == document"
                 [id]="'resource-' + document.resource.identifier">
                 <td class="small">
                     {{typesMap[document.resource.type].label}}

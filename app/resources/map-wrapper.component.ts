@@ -17,7 +17,7 @@ import {SettingsService} from '../settings/settings-service';
  */
 export class MapWrapperComponent implements OnInit, AfterViewChecked, OnDestroy {
 
-    @Input() activeDoc: IdaiFieldDocument;
+    @Input() selectedDocument: IdaiFieldDocument;
     @Input() editMode: boolean = false;
     @Input() scrollTarget: IdaiFieldDocument;
 

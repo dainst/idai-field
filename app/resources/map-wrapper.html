@@ -1,42 +1,42 @@
 <div class="row map-wrapper">
-    <div class="col-lg-3 col-md-3 col-sm-3"
-         id="objectOverview">
+    <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
+        <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
+            <li *ngFor="let document of docs; let index=index"
+                (click)="resourcesComponent.select(document)"
+                (dblclick)="resourcesComponent.editDocument(document)"
+                class="list-group-item"
+                [class.new-from-remote]="resourcesComponent.isNewDocumentFromRemote(document)"
+                [class.conflicted]="document['_conflicts']"
+                [class.selected]="resourcesComponent.getSelected()
+                    && resourcesComponent.getSelected().resource.id === document.resource.id"
+                [id]="'resource-' + document.resource.identifier">
 
-                <ul class="list-group object-list" id="objectList" style="overflow: scroll;">
-                    <li *ngFor="let document of docs; let index=index"
-                        (click)="resourcesComponent.select(document)"
-                        (dblclick)="resourcesComponent.editDocument(document)"
-                        class="list-group-item"
-                        [class.new-from-remote]="resourcesComponent.isNewDocumentFromRemote(document)"
-                        [class.conflicted]="document['_conflicts']"
-                        [class.selected]="resourcesComponent.getSelected()
-                            && resourcesComponent.getSelected().resource.id === document.resource.id"
-                        [id]="'resource-' + document.resource.identifier">
-
-                        <document-teaser [document]="document"></document-teaser>
-                    </li>
-                </ul>
+                <document-teaser [document]="document"></document-teaser>
+            </li>
+        </ul>
     </div>
-    <div [class.col-sm-9]="!activeDoc || !activeDoc.resource.id" [class.col-sm-6]="activeDoc && activeDoc.resource.id"
+
+    <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id" [class.col-sm-6]="selectedDocument && selectedDocument.resource.id"
          class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
-    <div *ngIf="activeDoc && activeDoc.resource.id" class="col-sm-3 document-info px-0">
-        <document-view [document]="activeDoc" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
+
+    <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
+        <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
-            <description-view [document]="activeDoc"></description-view>
-            <thumbnail-view [imageIds]="activeDoc.resource.relations['depictedIn']"
-                            *ngIf="activeDoc && activeDoc.resource.relations
-                            && activeDoc.resource.relations['depictedIn']">
+            <description-view [document]="selectedDocument"></description-view>
+            <thumbnail-view [imageIds]="selectedDocument.resource.relations['depictedIn']"
+                            *ngIf="selectedDocument && selectedDocument.resource.relations
+                            && selectedDocument.resource.relations['depictedIn']">
             </thumbnail-view>
-            <geometry-view [document]="activeDoc"
+            <geometry-view [document]="selectedDocument"
                            (onEditGeometry)="resourcesComponent.startEditGeometry()"
                            (onCreateGeometry)="resourcesComponent.createGeometry($event)">
             </geometry-view>
-            <fields-view [doc]="activeDoc"></fields-view>
-            <relations-view [doc]="activeDoc" (relationClicked)="resourcesComponent.select($event)"></relations-view>
+            <fields-view [doc]="selectedDocument"></fields-view>
+            <relations-view [doc]="selectedDocument" (relationClicked)="resourcesComponent.select($event)"></relations-view>
         </document-view>
     </div>
 </div>

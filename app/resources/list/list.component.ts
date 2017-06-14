@@ -22,8 +22,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class ListComponent {
 
     @Input() documents: IdaiFieldDocument[];
-
-    private detailedDocument: IdaiFieldDocument;
+    @Input() selectedDocument: IdaiFieldDocument;
 
     public typesMap: { [type: string]: IdaiType };
     public typesList: IdaiType[];
@@ -89,7 +88,7 @@ export class ListComponent {
 
     public focusDocument(doc: IdaiFieldDocument) {
 
-        this.detailedDocument = doc;
+        this.selectedDocument = doc;
 
         let detailModal
             = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'}).componentInstance;
@@ -111,7 +110,7 @@ export class ListComponent {
         this.persistenceManager.persist(newDoc, this.settingsService.getUsername(), []).then(
             () => {
                 this.documents.push(newDoc);
-                this.detailedDocument = newDoc;
+                this.selectedDocument = newDoc;
                 this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
             }, msgWithParams => this.messages.add(msgWithParams)
         );

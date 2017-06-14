@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager} from 'idai-components-2/persist';
@@ -23,6 +23,8 @@ export class ListComponent {
 
     @Input() documents: IdaiFieldDocument[];
     @Input() selectedDocument: IdaiFieldDocument;
+
+    @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public typesMap: { [type: string]: IdaiType };
     public typesList: IdaiType[];
@@ -111,6 +113,7 @@ export class ListComponent {
             () => {
                 this.documents.push(newDoc);
                 this.selectedDocument = newDoc;
+                this.onDocumentCreation.emit(newDoc);
                 this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
             }, msgWithParams => this.messages.add(msgWithParams)
         );

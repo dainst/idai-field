@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewChecked} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -24,7 +24,7 @@ import {EditModalComponent} from '../widgets/edit-modal.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent implements OnInit, AfterViewChecked {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
@@ -68,6 +68,14 @@ export class ResourcesComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.parseParams(params);
         });
+    }
+
+    ngAfterViewChecked() {
+
+        if (this.scrollTarget) {
+            this.scrollToDocument(this.scrollTarget);
+            this.scrollTarget = undefined;
+        }
     }
 
     private parseParams(params: Params) {
@@ -347,5 +355,15 @@ export class ResourcesComponent implements OnInit {
 
     public startEdit(doc: IdaiFieldDocument) {
         this.editDocument(doc);
+    }
+
+    public setScrollTarget(doc: IdaiFieldDocument) {
+        this.scrollTarget = doc;
+    }
+
+    private scrollToDocument(doc: IdaiFieldDocument) {
+
+        let element = document.getElementById('resource-' + doc.resource.identifier);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 }

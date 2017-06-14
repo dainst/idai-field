@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewChecked, OnDestroy, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {ResourcesComponent} from './resources.component';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -15,11 +15,10 @@ import {SettingsService} from '../settings/settings-service';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class MapWrapperComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class MapWrapperComponent implements OnInit, OnDestroy {
 
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() editMode: boolean = false;
-    @Input() scrollTarget: IdaiFieldDocument;
 
     private docs: IdaiFieldDocument[];
 
@@ -36,14 +35,6 @@ export class MapWrapperComponent implements OnInit, AfterViewChecked, OnDestroy 
         });
     }
 
-    ngAfterViewChecked() {
-
-        if (this.scrollTarget) {
-            this.scrollToDocument(this.scrollTarget);
-            this.scrollTarget = undefined;
-        }
-    }
-
     ngOnDestroy(): void {
         this.removeEmptyDocument();
     }
@@ -55,7 +46,7 @@ export class MapWrapperComponent implements OnInit, AfterViewChecked, OnDestroy 
     public select(document: IdaiFieldDocument) {
 
         this.resourcesComponent.select(document);
-        this.scrollTarget = document;
+        this.resourcesComponent.setScrollTarget(document);
     }
 
     /**
@@ -101,11 +92,4 @@ export class MapWrapperComponent implements OnInit, AfterViewChecked, OnDestroy 
                 this.resourcesComponent.getSelected()['synced'] = 0;
             }, err => { console.log(err); });
     }
-
-    private scrollToDocument(doc: IdaiFieldDocument) {
-
-        let element = document.getElementById('resource-' + doc.resource.identifier);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
-    }
-
 }

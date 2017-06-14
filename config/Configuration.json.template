@@ -727,12 +727,24 @@
       "range":[
         "section",
         "plana",
-        "context"         ]
+        "context"
+      ]
     },
     {
       "name":"isBelow",
       "inverse":"isAbove",
       "label":"liegt unter",
+      "domain":[
+        "context"
+      ],
+      "range":[
+        "context"
+      ]
+    },
+    {
+      "name":"isAbove",
+      "inverse":"isBelow",
+      "label":"liegt über",
       "domain":[
         "context"
       ],

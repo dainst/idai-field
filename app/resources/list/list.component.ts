@@ -4,7 +4,6 @@ import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/co
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {M} from '../../m';
-import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {SettingsService} from '../../settings/settings-service';
 import {EditModalComponent} from '../../widgets/edit-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -25,11 +24,9 @@ export class ListComponent {
     public typesList: IdaiType[];
 
     private projectConfiguration: ProjectConfiguration;
-
-
+    
     constructor(
         private messages: Messages,
-        private datastore: IdaiFieldDatastore,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private modalService: NgbModal,
@@ -41,10 +38,10 @@ export class ListComponent {
             this.initializeTypesList();
             this.addRelationsToTypesMap();
         });
-
     }
 
     private initializeTypesList() {
+        
         let list = this.projectConfiguration.getTypesList();
         this.typesList = [];
         for (var type of list) {
@@ -53,83 +50,60 @@ export class ListComponent {
     }
 
     public addRelationsToTypesMap() {
+        
         this.typesMap = this.projectConfiguration.getTypesMap();
 
         for (let typeKey of Object.keys(this.typesMap)) {
-            var relations = []
+            let relations = [];
             let rawRelations = this.projectConfiguration.getRelationDefinitions(typeKey);
             for(let rel of rawRelations) {
-                if (rel["visible"] != false) {
-                    for(let target of rel["range"]) {
-                        relations.push({name: rel["name"], targetName: target, label: rel["label"]})
+                if (rel['visible'] != false) {
+                    for(let target of rel['range']) {
+                        relations.push({name: rel['name'], targetName: target, label: rel['label']});
                     }
                 }
             }
-            this.typesMap[typeKey]["relations"] = relations;
+            this.typesMap[typeKey]['relations'] = relations;
         }
     }
 
-    public save(document: IdaiFieldDocument) : Promise<any> {
-        if (document.resource.id) {
-            return this.datastore.update(document).then(
-                doc => {
-                    this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    return Promise.resolve(<IdaiFieldDocument>doc);
-                })
-                .catch(errorWithParams => {
-                    // TODO replace with msg from M
-                    this.messages.add(errorWithParams);
-                    return Promise.reject([errorWithParams])
-                });
-        } else {
-            return this.datastore.create(document).then(
-                doc => {
-                    this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-                    return Promise.resolve(doc);
-                })
-                .catch(errorWithParams => {
-                    // TODO replace with msg from M
-                    this.messages.add(errorWithParams);
-                    return Promise.reject([errorWithParams])
-                });
-        }
+    public save(document: IdaiFieldDocument){
 
+        const oldVersion = JSON.parse(JSON.stringify(document));
+
+        this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]).then(
+            doc => this.messages.add([M.WIDGETS_SAVE_SUCCESS]),
+            msgWithParams => this.messages.add(msgWithParams)
+        );
     }
 
     public focusDocument(doc: IdaiFieldDocument) {
+
         this.detailedDocument = doc;
 
-        var detailModal = this.modalService.open(EditModalComponent,{size: "lg", backdrop: "static"}).componentInstance
+        let detailModal
+            = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'}).componentInstance;
         detailModal.setDocument(doc);
     }
 
-
     public addRelatedDocument(parentDocument: IdaiFieldDocument, relation, event) {
-        if (!parentDocument || !relation) {
-            return
-        }
 
-        event.target.value = "";
+        if (!parentDocument || !relation) return;
 
-        let newDoc = <IdaiFieldDocument> { "resource": { "relations": {}, "type": relation["targetName"] }, synced: 0 };
+        event.target.value = '';
 
-        this.save(newDoc).then(doc => {
+        let newDoc: IdaiFieldDocument
+            = <IdaiFieldDocument> {'resource': { 'relations': {}, 'type': relation['targetName'] }, synced: 0 };
 
-            if (!parentDocument.resource.relations[relation["name"]]) {
-                parentDocument.resource.relations[relation["name"]] = [];
-            }
-            parentDocument.resource.relations[relation["name"]].push(doc.resource.id);
+        let inverseRelationName = this.projectConfiguration.getInverseRelations(relation['name']);
+        newDoc.resource.relations[inverseRelationName] = [parentDocument.resource.id];
 
-            var oldVersion = JSON.parse(JSON.stringify(parentDocument));
-            this.persistenceManager.persist(parentDocument, this.settingsService.getUsername(),
-                [oldVersion]).then(doc => {
+        this.persistenceManager.persist(newDoc, this.settingsService.getUsername(), []).then(
+            () => {
+                this.documents.push(newDoc);
                 this.detailedDocument = newDoc;
-            });
-
-            this.documents.push(newDoc);
-
-        })
-
+                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+            }, msgWithParams => this.messages.add(msgWithParams)
+        );
     }
-
 }

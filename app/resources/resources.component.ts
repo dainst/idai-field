@@ -259,13 +259,6 @@ export class ResourcesComponent {
         this.fetchDocuments();
     }
 
-    public createPolygon(doc?: IdaiFieldDocument) {
-
-        if (doc) this.setSelected(doc);
-        this.selectedDocument.resource['geometry'] = { 'type': 'Polygon' };
-        this.startEditGeometry();
-    }
-
     private fetchTrenches() {
 
         let tquery: Query = {q: '', type: 'trench', prefix: true};
@@ -274,21 +267,14 @@ export class ResourcesComponent {
         }).catch(err => { console.error(err); } );
     }
 
-    public createPoint(doc?: IdaiFieldDocument) {
+    public createGeometry(geometryType: string) {
 
-        if (doc) this.setSelected(doc);
-        this.selectedDocument.resource['geometry'] = { 'type': 'Point' };
+        this.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
     }
 
-    public createPolyline(doc?: IdaiFieldDocument) {
+    public getDocuments(): Observable<Array<Document>> {
 
-        if (doc) this.setSelected(doc);
-        this.selectedDocument.resource['geometry'] = { 'type': 'LineString' };
-        this.startEditGeometry();
-    }
-
-    public getDocuments() : Observable<Array<Document>> {
         return Observable.create( observer => {
             this.observers.push(observer);
             this.notify();
@@ -296,6 +282,7 @@ export class ResourcesComponent {
     }
 
     private notify() {
+
         this.observers.forEach(observer => {
             observer.next(this.documents);
         });

@@ -14,15 +14,15 @@
     <div *ngIf="!document.resource.geometry">
         <span class="fieldvalue">Keine</span>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
-                (click)="onCreatePolygon.emit(document)" >
+                (click)="onCreateGeometry.emit('Polygon')" >
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polyline"
-                (click)="onCreatePolyline.emit(document)">
+                (click)="onCreateGeometry.emit('LineString')">
             <span class="mdi mdi-vector-polyline mdi-18px"></span>
         </button>
         <button class="btn btn-link btn-sm" id="document-view-button-create-point"
-                (click)="onCreatePoint.emit(document)" >
+                (click)="onCreateGeometry.emit('Point')" >
             <span class="mdi mdi-map-marker-plus mdi-18px"></span>
         </button>
     </div>

@@ -33,9 +33,7 @@
             </thumbnail-view>
             <geometry-view [document]="activeDoc"
                            (onEditGeometry)="resourcesComponent.startEditGeometry()"
-                           (onCreatePoint)="resourcesComponent.createPoint()"
-                           (onCreatePolygon)="resourcesComponent.createPolygon()"
-                           (onCreatePolyline)="resourcesComponent.createPolyline()">
+                           (onCreateGeometry)="resourcesComponent.createGeometry($event)">
             </geometry-view>
             <fields-view [doc]="activeDoc"></fields-view>
             <relations-view [doc]="activeDoc" (relationClicked)="resourcesComponent.select($event)"></relations-view>

@@ -5,10 +5,14 @@
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <plus-button *ngIf="query.q == ''"></plus-button>
     </div>
-    <div class="col-md-4" align="right">
+    <div class="col-md-6" align="right">
+        <select class="form-control w-50" style="display:inline"  (change)="filterByTrench($event)">
+            <option selected value>Alle Schnitte</option>
+            <option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
+        </select>
         <div class="btn-group">
             <button (click)="mode='map'" class="btn btn-primary m-0" [disabled]="mode == 'map'">
                 Karte

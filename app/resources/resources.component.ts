@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Query, Datastore} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Document, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditModalComponent} from '../widgets/edit-modal.component';
+
 
 @Component({
     moduleId: module.id,
@@ -28,12 +30,13 @@ export class ResourcesComponent {
 
     public documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
+    private trenches: Array<IdaiFieldDocument>;
     private ready: Promise<any>;
     private mode = "map";
     private editGeometry = false;
 
     constructor(private route: ActivatedRoute,
-                private datastore: Datastore,
+                private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor
@@ -51,12 +54,25 @@ export class ResourcesComponent {
         datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
         });
+
+        this.fetchTrenches();
     }
 
     ngOnInit(): void {
-        console.log(this.route);
         if (this.route.params["value"]["id"]) {
             this.loadDoc(this.route.params["value"]["id"])
+        }
+    }
+
+    public filterByTrench(a) {
+        if (a.target.value == "") {
+            this.fetchDocuments();
+        } else {
+            var filterById = a.target.value;
+            this.datastore.findByBelongsTo(filterById).then(documents => {
+                this.documents = documents as IdaiFieldDocument[];
+                this.notify();
+            }).catch(err => { console.error(err); } );
         }
     }
 
@@ -193,6 +209,7 @@ export class ResourcesComponent {
 
         detailModalRef.result.then(result => {
             this.fetchDocuments();
+            this.fetchTrenches();
             if (result.document) this.selectedDocument = result.document;
         }, closeReason => {
             this.fetchDocuments();
@@ -222,6 +239,14 @@ export class ResourcesComponent {
         if (doc) this.setSelected(doc);
         this.selectedDocument.resource['geometry'] = { 'type': 'Polygon' };
         this.startEditGeometry();
+    }
+
+
+    private fetchTrenches() {
+        let tquery : Query = {q: '', type: 'trench', prefix: true};
+        this.datastore.find(tquery).then(documents => {
+            this.trenches = documents as IdaiFieldDocument[];
+        }).catch(err => { console.error(err); } );
     }
 
     public createPoint(doc?: IdaiFieldDocument) {

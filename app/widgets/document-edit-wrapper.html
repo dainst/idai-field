@@ -1,10 +1,10 @@
-<template #deleteModal let-c="close">
+<ng-template #deleteModal let-c="close">
     <div class="modal-body">Möchten Sie die Ressource wirklich löschen?</div>
     <div class="modal-footer">
         <button type="button" id="delete-resource-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
         <button type="button" id="delete-resource-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
     </div>
-</template>
+</ng-template>
 
 <section id="document-edit-wrapper">
     <header>
@@ -43,23 +43,23 @@
                 <div class="col-md-12">
                     <ngb-tabset activeId="document-edit-{{activeTab}}-tab">
                         <ngb-tab title="Felder" id="document-edit-fields-tab">
-                            <template ngbTabContent>
+                            <ng-template ngbTabContent>
                                 <edit-form *ngIf="projectConfiguration" [(document)]="clonedDoc"
                                            [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
-                            </template>
+                            </ng-template>
                         </ngb-tab>
                         <ngb-tab *ngIf="relationDefinitions && relationDefinitions.length > 0" title="Relationen"
                                  id="document-edit-relations-tab">
-                            <template ngbTabContent>
+                            <ng-template ngbTabContent>
                                 <relations-form
                                         [(document)]="clonedDoc"
                                         [primary]="'identifier'"
                                         [relationDefinitions]="relationDefinitions"></relations-form>
-                            </template>
+                            </ng-template>
                         </ngb-tab>
                         <ngb-tab *ngIf="!projectImageTypes[clonedDoc.resource.type]" title="Bilder"
                                  id="document-edit-images-tab">
-                            <template ngbTabContent>
+                            <ng-template ngbTabContent>
                                 <div class="form-group card">
                                     <div class="card-header">
                                         <h3 class="card-title">
@@ -107,14 +107,14 @@
                                         </button>
                                     </div>
                                 </div>
-                            </template>
+                            </ng-template>
                         </ngb-tab>
                         <ngb-tab *ngIf="clonedDoc._conflicts" id="document-edit-conflicts-tab">
-                            <template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte</template>
-                            <template ngbTabContent>
+                            <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte</ng-template>
+                            <ng-template ngbTabContent>
                                 <conflict-resolver [(document)]="clonedDoc"
                                                    [(inspectedRevisionsIds)]="inspectedRevisionsIds"></conflict-resolver>
-                            </template>
+                            </ng-template>
                         </ngb-tab>
                     </ngb-tabset>
 

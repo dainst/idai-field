@@ -1,13 +1,13 @@
 <ul class="nav navbar-nav taskbar" style="margin-top: 2px;">
     <li class="nav-item conflicts" *ngIf="conflicts.length">
-        <template #popContent>
+        <ng-template #popContent>
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
                     (click)="openConflictResolver(document.resource.id); p.close();">
                     <document-teaser [document]="document"></document-teaser>
                 </li>
             </ul>
-        </template>
+        </ng-template>
         <a [ngbPopover]="popContent" popoverTitle="Konflikte"
            #p="ngbPopover" placement="bottom">
             <span class="mdi mdi-alert-outline"></span>

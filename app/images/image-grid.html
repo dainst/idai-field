@@ -1,4 +1,4 @@
-<template #deleteModal let-c="close">
+<ng-template #deleteModal let-c="close">
     <div class="modal-body">
         <p *ngIf="selected.length > 1">Möchten Sie die {{selected.length}} markierten Bilder wirklich löschen?</p>
         <p *ngIf="selected.length == 1">Möchten Sie das markierte Bild wirklich löschen?</p>
@@ -7,7 +7,7 @@
         <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
         <button type="button" id="delete-images-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
     </div>
-</template>
+</ng-template>
 
 <div (dragover)="false"
      (dragleave)="false"

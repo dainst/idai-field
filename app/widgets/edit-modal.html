@@ -11,11 +11,11 @@
                            >
     </document-edit-wrapper>
 </div>
-<template #modalTemplate>
+<ng-template #modalTemplate>
     <edit-save-dialog
             (onSave)="f.save();  dialog.close();"
             (onDiscard)="activeModal.dismiss('discard'); dialog.close();"
             (onCancel)="dialog.close();">
     </edit-save-dialog>
-</template>
+</ng-template>
 

@@ -342,7 +342,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         });
     }
 
-    public findByIdentifier(identifier: string): Promise<Document> {
+    public findByIdentifier(identifier: string): Promise<IdaiFieldDocument> {
 
         return this.readyForQuery.then(() => {
 

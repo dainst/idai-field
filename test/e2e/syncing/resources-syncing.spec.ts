@@ -139,7 +139,7 @@ describe('resources/syncing --', function() {
         browser.sleep(5000);
     }
 
-    function createConflict(): Promise<any> {
+    function createConflict() {
 
         return NavbarPage.clickNavigateToSettings()
             .then(() => removeRemoteSiteConfiguration())
@@ -153,8 +153,7 @@ describe('resources/syncing --', function() {
                 updateTestDoc();
             })
             .then(() => NavbarPage.clickNavigateToSettings())
-            .then(() => configureRemoteSite())
-            .then(NavbarPage.clickNavigateToResources);
+            .then(() => configureRemoteSite());
     }
 
     beforeAll(done => {

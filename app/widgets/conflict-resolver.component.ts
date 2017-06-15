@@ -231,8 +231,8 @@ export class ConflictResolverComponent implements OnChanges {
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
 
         revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
-            const date1: Date = new Date(a.modified);
-            const date2: Date = new Date(b.modified);
+            const date1: Date = new Date(a.modified[a.modified.length-1].date);
+            const date2: Date = new Date(b.modified[b.modified.length-1].date);
             if (date1 < date2) {
                 return -1;
             } else if (date1 > date2) {

@@ -58,7 +58,7 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb": "2.3.6",
-    "idai-components-2": "file:../idai-components-2",
+    "idai-components-2": "file:///Users/scuy/Development/idai-components-2",
     "identicon.js": "github:dainst/identicon.js",
     "ip": "1.1.5",
     "leaflet": "1.0.2",

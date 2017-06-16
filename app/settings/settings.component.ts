@@ -16,6 +16,7 @@ const ip = require('ip');
 export class SettingsComponent implements OnInit {
 
     public selectedProject;
+    public newProject;
     public username;
     public server: SyncTarget = { address: undefined, username: undefined, password: undefined };
     public ready = undefined;
@@ -65,5 +66,11 @@ export class SettingsComponent implements OnInit {
                 console.error(err);
             }
         );
+    }
+
+    public createProject() {
+        this.settingsService.getProjects().push(this.newProject);
+        this.selectedProject = this.newProject;
+        this.newProject = null;
     }
 }

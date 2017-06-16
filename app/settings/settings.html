@@ -47,6 +47,17 @@
                         </option>
                     </select>
 
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Neues Projekt anlegen ..."
+                               [(ngModel)]="newProject">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success" (click)="createProject()">
+                                <span class="mdi mdi-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+
                     <label class="control-label col-form-label"
                            for="username-input">Benutzer</label>
                     <input id="username-input"

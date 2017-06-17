@@ -3,13 +3,14 @@
         <ng-template #popContent>
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
+                    [id]="'taskbar-conflict-' + document.resource.identifier"
                     (click)="openConflictResolver(document.resource.id); p.close();">
                     <document-teaser [document]="document"></document-teaser>
                 </li>
             </ul>
         </ng-template>
         <a [ngbPopover]="popContent" popoverTitle="Konflikte"
-           #p="ngbPopover" placement="bottom">
+           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button">
             <span class="mdi mdi-alert-outline"></span>
         </a>
     </li>

@@ -338,4 +338,37 @@ describe('resources/syncing --', function() {
             }));
     });
 
+    it('open conflict resolver via taskbar', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        return NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                createConflict()
+                    .then(NavbarPage.clickConflictsButton)
+                    .then(() => NavbarPage.clickConflictResolverLink('test1'))
+                    .then(() => {
+                        browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+                        done();
+                    });
+            }));
+    });
+
+    it('open conflict resolver via conflict button in document view', done => {
+
+        settingsPage.get();
+        configureRemoteSite();
+        return NavbarPage.clickNavigateToResources()
+            .then(() => waitForIt('test1', () => {
+                createConflict()
+                    .then(NavbarPage.clickNavigateToResources)
+                    .then(() => resourcesPage.clickSelectResource('test1'))
+                    .then(documentViewPage.clickSolveConflicts)
+                    .then(() => {
+                        browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+                        done();
+                    });
+            }));
+    });
+
 });

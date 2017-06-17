@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 let EC = protractor.ExpectedConditions;
 let delays = require('./config/delays');
 
@@ -17,8 +17,18 @@ export class NavbarPage {
         return element.all(by.css('.nav-link')).get(4).click();
     };
 
+    public static clickConflictsButton() {
+        browser.wait(EC.visibilityOf(element(by.id('taskbar-conflicts-button'))), delays.ECWaitTime);
+        return element(by.id('taskbar-conflicts-button')).click();
+    };
+
+    public static clickConflictResolverLink(identifier) {
+        browser.wait(EC.visibilityOf(element(by.id('taskbar-conflict-' + identifier))), delays.ECWaitTime);
+        return element(by.id('taskbar-conflict-' + identifier)).click();
+    };
+
     // unused?
-    public static clickCloseMessage = function() {
+    public static clickCloseMessage() {
         browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);
         element(by.css('#message-0 button')).click();
     };

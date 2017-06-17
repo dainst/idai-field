@@ -31,6 +31,11 @@ var DocumentViewPage = function() {
         element(by.id('document-view-button-edit-geometry')).click();
     };
 
+    this.clickSolveConflicts = function() {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-button-solve-conflicts'))), delays.ECWaitTime);
+        element(by.id('document-view-button-solve-conflicts')).click();
+    };
+
     // get text
 
     /**

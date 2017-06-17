@@ -35,6 +35,8 @@ export class EditableMapComponent extends LayerMapComponent {
         this.resetEditing();
 
         if (this.editMode) {
+            this.map.doubleClickZoom.disable();
+
             if (this.selectedDocument.resource.geometry.coordinates) {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
@@ -54,6 +56,8 @@ export class EditableMapComponent extends LayerMapComponent {
                         break;
                 }
             }
+        } else {
+            this.map.doubleClickZoom.enable();
         }
     }
 

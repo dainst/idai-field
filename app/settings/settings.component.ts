@@ -69,7 +69,7 @@ export class SettingsComponent implements OnInit {
     }
 
     public createProject() {
-        if (this.newProject && this.settingsService.getProjects().indexOf(this.newProject) != -1) {
+        if (this.newProject && this.settingsService.getProjects().indexOf(this.newProject) == -1) {
             this.settingsService.getProjects().push(this.newProject);
             this.selectedProject = this.newProject;
             this.newProject = null;

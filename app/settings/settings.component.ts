@@ -15,9 +15,10 @@ const ip = require('ip');
  */
 export class SettingsComponent implements OnInit {
 
-    public selectedProject;
-    public newProject;
-    public username;
+    public selectedProject:string;
+    public newProject:string;
+    public projects:string[];
+    public username:string;
     public server: SyncTarget = { address: undefined, username: undefined, password: undefined };
     public ready = undefined;
     public saving = false;
@@ -35,12 +36,14 @@ export class SettingsComponent implements OnInit {
             this.username = this.settingsService.getUsername();
             this.server = this.settingsService.getSyncTarget();
             this.selectedProject = this.settingsService.getSelectedProject();
+            this.projects = this.settingsService.getProjects().slice(0); // copy
         });
     }
 
     private validateSettings(): boolean {
         const validationError = this.settingsService.setSettings(
             this.selectedProject,
+            this.projects,
             this.username,
             this.server
         );
@@ -69,8 +72,8 @@ export class SettingsComponent implements OnInit {
     }
 
     public createProject() {
-        if (this.newProject && this.settingsService.getProjects().indexOf(this.newProject) == -1) {
-            this.settingsService.getProjects().push(this.newProject);
+        if (this.newProject && this.projects.indexOf(this.newProject) == -1) {
+            this.projects.push(this.newProject);
             this.selectedProject = this.newProject;
             this.newProject = null;
         }

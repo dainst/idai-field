@@ -41,7 +41,7 @@
                             id="projectselect"
                             [(ngModel)]="selectedProject">
 
-                        <option *ngFor="let project of settingsService.getProjects()"
+                        <option *ngFor="let project of projects"
                                 [ngValue]="project">
                             {{project}}
                         </option>
@@ -54,7 +54,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-success"
                                     (click)="createProject()"
-                                    [attr.disabled]="(!newProject || settingsService.getProjects().indexOf(newProject) != -1) ? 'true' : null">
+                                    [attr.disabled]="(!newProject || projects.indexOf(newProject) != -1) ? 'true' : null">
                                 <span class="mdi mdi-plus"></span>
                             </button>
                         </span>

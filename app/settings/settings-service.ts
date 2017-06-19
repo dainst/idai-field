@@ -40,6 +40,7 @@ export class SettingsService {
                 this.datastore.select(this.settings.dbs[0]);
                 this.setSettings(
                     this.settings.dbs[0],
+                    this.settings.dbs,
                     this.settings.username,
                     this.settings.syncTarget);
                 this.activateSettings();
@@ -78,10 +79,12 @@ export class SettingsService {
      */
     public setSettings (
         projectName: string,
+        projects: string[],
         username: string,
         syncTarget: SyncTarget): string {
 
         this.settings.username = username;
+        this.settings.dbs = projects.slice(0); // copy
 
         if (syncTarget.address) {
             syncTarget.address = syncTarget.address.trim();

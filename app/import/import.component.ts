@@ -22,6 +22,7 @@ import {RollbackStrategy} from './rollback-strategy';
 import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {RelationsCompleter} from './relations-completer';
+import {SettingsService} from '../settings/settings-service';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class ImportComponent {
         private datastore: CachedDatastore,
         private validator: Validator,
         private http: Http,
-        private relationsCompleter: RelationsCompleter
+        private relationsCompleter: RelationsCompleter,
+        private settingsService: SettingsService
     ) {}
 
     public startImport() {
@@ -61,7 +63,7 @@ export class ImportComponent {
         let reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
         let parser: Parser = ImportComponent.createParser(this.format);
         let importStrategy: ImportStrategy
-            = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore);
+            = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore, this.settingsService);
         let relationsStrategy: RelationsStrategy
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
         let rollbackStrategy: RollbackStrategy
@@ -99,15 +101,15 @@ export class ImportComponent {
     }
 
     private static createImportStrategy(format: string, validator: Validator,
-                                        datastore: CachedDatastore): ImportStrategy {
+                                        datastore: CachedDatastore, settingsService: SettingsService): ImportStrategy {
 
         switch (format) {
             case 'native':
-                return new DefaultImportStrategy(validator, datastore);
+                return new DefaultImportStrategy(validator, datastore, settingsService);
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore);
+                return new DefaultImportStrategy(validator, datastore, settingsService);
             case 'geojson':
-                return new MergeGeometriesImportStrategy(datastore);
+                return new MergeGeometriesImportStrategy(datastore, settingsService);
         }
     }
 

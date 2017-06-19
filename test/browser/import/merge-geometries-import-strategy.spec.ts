@@ -1,58 +1,63 @@
-import {Importer} from "../../../app/import/importer";
-import {Observable} from "rxjs/Observable";
-import {MergeGeometriesImportStrategy} from "../../../app/import/merge-geometries-import-strategy";
-import {ImportStrategy} from "../../../app/import/import-strategy";
-import {IdaiFieldDatastore} from "../../../app/datastore/idai-field-datastore";
+import {MergeGeometriesImportStrategy} from '../../../app/import/merge-geometries-import-strategy';
+import {ImportStrategy} from '../../../app/import/import-strategy';
 
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function main() {
 
     let strategy: ImportStrategy;
-    let datastore;
+    let mockDatastore;
+    let mockSettingsService;
     let originalDoc;
     let docToMerge;
 
-    beforeEach(()=>{
+    beforeEach(() => {
         originalDoc = {
             resource: {
-                id: "1",
-                identifier: "i1",
-                shortDescription: "sd1"
+                id: '1',
+                identifier: 'i1',
+                shortDescription: 'sd1'
             }
         };
 
         docToMerge = {
             resource: {
-                geometry: {a:"b"}
+                geometry: { a: 'b' }
             }
         };
 
-        datastore = jasmine.createSpyObj('datastore', ['findByIdentifier','update']);
-        datastore.findByIdentifier.and.callFake(()=>Promise.resolve(originalDoc));
-        datastore.update.and.callFake(()=>Promise.resolve(undefined));
+        mockDatastore = jasmine.createSpyObj('datastore', ['findByIdentifier','update']);
+        mockDatastore.findByIdentifier.and.callFake(() => Promise.resolve(originalDoc));
+        mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
 
-        strategy = new MergeGeometriesImportStrategy(datastore);
+        mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);
+        mockSettingsService.getUsername.and.callFake(function() { return 'testuser'; });
+
+        strategy = new MergeGeometriesImportStrategy(mockDatastore, mockSettingsService);
     });
 
     describe('MergeGeometriesImportStrategy Tests ---', () => {
         it('should merge geometry',
-            function (done) {
+            function(done) {
                 strategy.importDoc(docToMerge)
-                    .then(()=>{
-                        expect(datastore.update).toHaveBeenCalledWith({
-                            resource: {
-                                id: "1",
-                                identifier: "i1",
-                                shortDescription: "sd1",
-                                geometry: {a:"b"}
-                            }
+                    .then(() => {
+                        let importedDoc = mockDatastore.update.calls.mostRecent().args[0];
+                        expect(importedDoc.resource).toEqual({
+                            id: '1',
+                            identifier: 'i1',
+                            shortDescription: 'sd1',
+                            geometry: { a: 'b' }
                         });
+                        expect(importedDoc.modified).toBeDefined();
+                        expect(importedDoc.modified.length).toBe(1);
+                        expect(importedDoc.modified[0].user).toEqual('testuser');
+                        expect(importedDoc.modified[0].date).toBeDefined();
                         done();
-                    },err=>{
-                        fail('should not fail '+err);
+                    }, err => {
+                        fail('should not fail ' + err);
                         done();
                     })
             }

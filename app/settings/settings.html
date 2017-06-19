@@ -52,7 +52,9 @@
                                placeholder="Neues Projekt anlegen ..."
                                [(ngModel)]="newProject">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-success" (click)="createProject()">
+                            <button type="button" class="btn btn-success"
+                                    (click)="createProject()"
+                                    [attr.disabled]="(!newProject || settingsService.getProjects().indexOf(newProject) != -1) ? 'true' : null">
                                 <span class="mdi mdi-plus"></span>
                             </button>
                         </span>

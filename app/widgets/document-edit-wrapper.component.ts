@@ -217,7 +217,11 @@ export class DocumentEditWrapperComponent {
         this.modalService.open(
             ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
         ).result.then(decision => {
-            console.log("decision on deleted conflict",decision);
+            console.log("clean cloned doc")
+
+            delete this.clonedDoc.resource.id;
+            delete this.clonedDoc['_id'];
+            delete this.clonedDoc['_rev'];
         }).catch(() => {});
     }
 

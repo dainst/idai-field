@@ -76,6 +76,7 @@ var DocumentViewPage = function() {
     };
 
     this.getRelations = function() {
+        browser.sleep(delays.shortRest);
         return element.all(by.css('relations-view a'));
     };
 

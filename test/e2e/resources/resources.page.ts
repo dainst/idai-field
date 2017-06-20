@@ -95,12 +95,21 @@ let ResourcesPage = function() {
         return element(by.id('choose-type-option-' + typeIndex)).click();
     };
 
+    this.clickListModeButton = function() {
+        browser.wait(EC.visibilityOf(element(by.id('list-mode-button'))), delays.ECWaitTime);
+        element(by.id('list-mode-button')).click();
+    };
+
     // get text
 
     this.getListItemIdentifierText = function(itemNr) {
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
             + (itemNr + 1) + ') .identifier'))), delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .identifier')).getText();
+    };
+
+    this.getListModeInputFieldValue = function(identifier, index) {
+        return this.getListModeInputField(identifier, index).getAttribute('value');
     };
 
     // elements
@@ -113,23 +122,25 @@ let ResourcesPage = function() {
         return element(by.id('resource-' + identifier));
     };
 
-    this.getListItemEls = function() {
-        return element.all(by.css('#objectList .list-group-item'));
+    this.getListModeInputField = function(identifier, index) {
+        browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)));
+        return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
     // sequences
 
-    this.performCreateResource = function(identifier, typeIndex, inputFieldText?: string) {
+    this.performCreateResource = function(identifier, typeIndex, inputFieldText?: string, inputFieldIndex?: number) {
         this.clickCreateObject();
         this.clickSelectResourceType(typeIndex);
         this.clickSelectGeometryType();
         DocumentEditWrapperPage.typeInInputField(identifier);
-        if (inputFieldText) DocumentEditWrapperPage.typeInInputField(inputFieldText, 2);
+        if (inputFieldText && inputFieldIndex) {
+            DocumentEditWrapperPage.typeInInputField(inputFieldText, inputFieldIndex);
+        }
         this.scrollUp();
         DocumentEditWrapperPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };
-
 
     this.performCreateLink = function() {
         this.performCreateResource('1', 2);
@@ -158,6 +169,10 @@ let ResourcesPage = function() {
 
     this.typeInIdentifierInSearchField = function(identifier) {
         return common.typeIn(element(by.id('object-search')), identifier);
+    };
+
+    this.typeInListModeInputField = function(identifier, index, inputText) {
+        return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     };
 };
 

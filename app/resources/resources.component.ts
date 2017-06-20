@@ -377,6 +377,8 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
 
     private removeEmptyDocuments() {
 
+        if (!this.documents) return;
+
         for (let document of this.documents) {
             if (!document.resource.id) this.remove(document);
         }

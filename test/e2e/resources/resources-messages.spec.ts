@@ -4,7 +4,7 @@ import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 describe('resources/messages --', function() {
 
-    beforeEach(function(){
+    beforeEach(function() {
         resourcesPage.get();
     });
 
@@ -23,7 +23,7 @@ describe('resources/messages --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     
-    it('warn if identifier is missing', function () {
+    it('warn if identifier is missing', function() {
         resourcesPage.performCreateResource('');
 
         NavbarPage.awaitAlert('identifier',false)

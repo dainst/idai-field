@@ -56,10 +56,10 @@ describe('resources --', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
-        resourcesPage.clickSelectGeometryType("point");
+        resourcesPage.clickSelectGeometryType('point');
         resourcesPage.clickCreateObject();
         resourcesPage.clickSelectResourceType();
-        resourcesPage.clickSelectGeometryType("point");
+        resourcesPage.clickSelectGeometryType('point');
         browser.wait(EC.presenceOf(resourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
         resourcesPage.scrollUp();
         resourcesPage.clickSelectResource('1');

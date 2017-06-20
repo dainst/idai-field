@@ -14,10 +14,12 @@
             <option *ngFor="let trench of trenches" [value]="trench._id">{{trench.resource.identifier}}</option>
         </select>
         <div class="btn-group">
-            <button (click)="setMode('map')" class="btn btn-primary m-0" [disabled]="mode == 'map'">
+            <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
+                    [disabled]="mode == 'map'">
                 Karte
             </button>
-            <button (click)="setMode('list')" class="btn btn-primary m-0"  [disabled]="mode == 'list'">
+            <button id="list-mode-button" (click)="setMode('list')" class="btn btn-primary m-0"
+                    [disabled]="mode == 'list'">
                 Liste
             </button>
         </div>

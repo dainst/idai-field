@@ -1,5 +1,5 @@
 import {NavbarPage} from '../navbar.page';
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
@@ -11,6 +11,7 @@ import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component'
 import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
+import {ImageTypeUtility} from '../util/image-type-utility';
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -43,13 +44,11 @@ export class DocumentEditWrapperComponent {
     @Output() onBackButtonClicked = new EventEmitter<any>();
     @Output() onDeleteSuccess = new EventEmitter<any>();
 
-    private projectConfiguration: ProjectConfiguration;
-    private typeLabel: string;
-    private relationDefinitions: Array<RelationDefinition>;
-
-    private projectImageTypes: any = {};
-
-    private inspectedRevisionsIds: string[];
+    public projectConfiguration: ProjectConfiguration;
+    public typeLabel: string;
+    public relationDefinitions: Array<RelationDefinition>;
+    public projectImageTypes: any = {};
+    public inspectedRevisionsIds: string[];
 
     constructor(
         private messages: Messages,
@@ -60,9 +59,11 @@ export class DocumentEditWrapperComponent {
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDatastore,
-        private el: ElementRef
+        private imageTypeUtility: ImageTypeUtility
     ) {
-        this.getProjectImageTypes();
+        this.imageTypeUtility.getProjectImageTypes().then(
+            projectImageTypes => this.projectImageTypes = projectImageTypes
+        );
     }
 
     ngOnChanges() {
@@ -215,23 +216,4 @@ export class DocumentEditWrapperComponent {
         return clonedDoc;
     }
 
-
-    // TODO move this code to service type class
-    private getProjectImageTypes() {
-
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-
-            const projectTypesTree = projectConfiguration.getTypesTree();
-
-            if (projectTypesTree['image']) {
-                this.projectImageTypes['image'] = projectTypesTree['image'];
-
-                if(projectTypesTree['image'].children) {
-                    for (let i = projectTypesTree['image'].children.length - 1; i >= 0; i--) {
-                        this.projectImageTypes[projectTypesTree['image'].children[i].name] = projectTypesTree['image'].children[i];
-                    }
-                }
-            }
-        })
-    }
 }

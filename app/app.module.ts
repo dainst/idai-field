@@ -35,6 +35,7 @@ import {SettingsService} from './settings/settings-service';
 import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
+import {ImageTypeUtility} from './util/image-type-utility';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -108,7 +109,14 @@ const CONFIG = require('electron').remote.getGlobal('config');
         { provide: MD, useClass: M},
         Importer,
         Exporter,
-        RelationsCompleter
+        RelationsCompleter,
+        {
+            provide: ImageTypeUtility,
+            useFactory: function(configLoader: ConfigLoader) {
+                return new ImageTypeUtility(configLoader);
+            },
+            deps: [ConfigLoader]
+        }
     ],
     bootstrap: [ AppComponent ]
 })

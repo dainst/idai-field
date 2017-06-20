@@ -12,6 +12,7 @@ import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
+import {Imagestore} from '../imagestore/imagestore';
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -65,6 +66,7 @@ export class DocumentEditWrapperComponent {
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDatastore,
+        private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility
     ) {
         this.imageTypeUtility.getProjectImageTypes().then(
@@ -206,12 +208,22 @@ export class DocumentEditWrapperComponent {
 
     private deleteDoc() {
 
-        return this.persistenceManager.remove(this.document).then(
-            () => {
+        this.imageTypeUtility.isImageType(this.document.resource.type)
+            .then(isImageType => {
+                if (isImageType) {
+                    return this.imagestore.remove(this.document.resource.identifier);
+                } else {
+                    return Promise.resolve();
+                }
+            }).then(() => { return this.persistenceManager.remove(this.document); }
+            ).then(() => {
                 this.onDeleteSuccess.emit();
                 this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
-            },
-            keyOfM => this.messages.add([keyOfM]));
+            }).catch(err => {
+                // TODO persistence manager should throw msgWithParams array
+                if (err instanceof Array) this.messages.add(err);
+                else this.messages.add([err]);
+            });
     }
 
     private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {

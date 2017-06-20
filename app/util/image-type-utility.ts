@@ -10,8 +10,13 @@ export class ImageTypeUtility {
 
     constructor(private configLoader: ConfigLoader) {}
 
-    public static isImageType(type: IdaiType) {
-        return (type.name == 'image' || (type.parentType && type.parentType.name == 'image'));
+    public isImageType(typeName: string): Promise<boolean> {
+
+        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            const type = projectConfiguration.getTypesMap()[typeName];
+
+            return Promise.resolve(type.name == 'image' || (type.parentType && type.parentType.name == 'image'));
+        });
     }
 
     public getProjectImageTypes(): Promise<any> {

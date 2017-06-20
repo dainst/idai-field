@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {ResourcesComponent} from './resources.component';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -15,7 +15,7 @@ import {SettingsService} from '../settings/settings-service';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class MapWrapperComponent implements OnInit, OnDestroy {
+export class MapWrapperComponent implements OnInit {
 
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() editMode: boolean = false;
@@ -33,10 +33,6 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
         this.resourcesComponent.getDocuments().subscribe(result => {
            this.docs = result as IdaiFieldDocument[];
         });
-    }
-
-    ngOnDestroy(): void {
-        this.removeEmptyDocument();
     }
 
     private selectedDocIsNew(): boolean {
@@ -68,19 +64,11 @@ export class MapWrapperComponent implements OnInit, OnDestroy {
                 this.resourcesComponent.editDocument();
             } else {
                 this.resourcesComponent.endEditGeometry();
-                this.removeEmptyDocument();
+                this.resourcesComponent.remove(selectedDoc);
             }
         } else {
             this.resourcesComponent.endEditGeometry();
             if (geometry !== undefined) this.save();
-        }
-    }
-
-    private removeEmptyDocument() {
-
-        var selectedDocument = this.resourcesComponent.getSelected();
-        if (selectedDocument && !selectedDocument.resource.id && !selectedDocument.resource.geometry) {
-            this.resourcesComponent.remove(selectedDocument);
         }
     }
 

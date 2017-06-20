@@ -1,16 +1,16 @@
-import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
-import {DocumentEditChangeMonitor} from "idai-components-2/documents";
-import {Messages} from "idai-components-2/messages";
-import {DatastoreErrors} from "idai-components-2/datastore";
-import {ConfigLoader, ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
-import {PersistenceManager, Validator} from "idai-components-2/persist";
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {M} from "../m";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ConflictDeletedModalComponent} from "./conflict-deleted-modal.component";
-import {ConflictModalComponent} from "./conflict-modal.component";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {SettingsService} from "../settings/settings-service";
+import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2/messages';
+import {DatastoreErrors} from 'idai-components-2/datastore';
+import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {PersistenceManager, Validator} from 'idai-components-2/persist';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {M} from '../m';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
+import {ConflictModalComponent} from './conflict-modal.component';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {SettingsService} from '../settings/settings-service';
 
 @Component({
     selector: 'document-edit-wrapper',
@@ -91,8 +91,8 @@ export class DocumentEditWrapperComponent {
                 () => this.messages.add([M.WIDGETS_SAVE_SUCCESS])
             ).catch(
                 msgWithParams => {
-                        if (msgWithParams) this.messages.add(msgWithParams);
-                    }
+                    if (msgWithParams) this.messages.add(msgWithParams);
+                }
             );
     }
 
@@ -124,6 +124,7 @@ export class DocumentEditWrapperComponent {
     }
 
     private handlePersistError(errorWithParams) {
+        
         if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
             this.handleSaveConflict();
         } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
@@ -134,7 +135,6 @@ export class DocumentEditWrapperComponent {
         }
         return Promise.reject(undefined);
     }
-
     
     private removeInspectedRevisions(): Promise<any> {
         
@@ -149,12 +149,10 @@ export class DocumentEditWrapperComponent {
         return Promise.all(promises);
     }
 
-
-
     private handleDeletedConflict() {
 
         this.modalService.open(
-            ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
+            ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(decision => {
 
             // make the doc appear 'new' ...
@@ -170,7 +168,7 @@ export class DocumentEditWrapperComponent {
     private handleSaveConflict() {
 
         this.modalService.open(
-            ConflictModalComponent, {size: "lg", windowClass: "conflict-modal"}
+            ConflictModalComponent, {size: 'lg', windowClass: 'conflict-modal'}
         ).result.then(decision => {
             if (decision == 'overwrite') this.overwriteLatestRevision();
             else this.reloadLatestRevision();
@@ -191,9 +189,7 @@ export class DocumentEditWrapperComponent {
             this.clonedDocument = <IdaiFieldDocument> latestRevision;
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
-
-
-
+    
     public openDeleteModal(modal) {
 
         this.modalService.open(modal).result.then(result => {
@@ -227,12 +223,12 @@ export class DocumentEditWrapperComponent {
 
             const projectTypesTree = projectConfiguration.getTypesTree();
 
-            if (projectTypesTree["image"]) {
-                this.projectImageTypes["image"] = projectTypesTree["image"];
+            if (projectTypesTree['image']) {
+                this.projectImageTypes['image'] = projectTypesTree['image'];
 
-                if(projectTypesTree["image"].children) {
-                    for (let i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
-                        this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+                if(projectTypesTree['image'].children) {
+                    for (let i = projectTypesTree['image'].children.length - 1; i >= 0; i--) {
+                        this.projectImageTypes[projectTypesTree['image'].children[i].name] = projectTypesTree['image'].children[i];
                     }
                 }
             }

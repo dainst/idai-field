@@ -30,12 +30,13 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     protected observers: Array<any> = [];
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
+    public mode = 'map';
+    public editGeometry = false;
     public documents: Array<Document>;
-    private newDocumentsFromRemote: Array<Document> = [];
-    private trenches: Array<IdaiFieldDocument>;
+    public trenches: Array<IdaiFieldDocument>;
+
     private ready: Promise<any>;
-    private mode = 'map';
-    private editGeometry = false;
+    private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
 
     constructor(private route: ActivatedRoute,
@@ -365,5 +366,19 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
 
         let element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    public setMode(mode: string) {
+
+        this.removeEmptyDocuments();
+        this.editGeometry = false;
+        this.mode = mode;
+    }
+
+    private removeEmptyDocuments() {
+
+        for (let document of this.documents) {
+            if (!document.resource.id) this.remove(document);
+        }
     }
 }

@@ -10,7 +10,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {EditModalComponent} from '../widgets/edit-modal.component';
+import {EditModalComponent} from '../docedit/edit-modal.component';
 
 
 @Component({

@@ -6,7 +6,7 @@ import {Messages} from "idai-components-2/messages";
 import {Imagestore} from "../imagestore/imagestore";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {EditModalComponent} from '../widgets/edit-modal.component';
+import {EditModalComponent} from '../docedit/edit-modal.component';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 @Component({

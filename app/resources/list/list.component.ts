@@ -6,7 +6,7 @@ import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {M} from '../../m';
 import {SettingsService} from '../../settings/settings-service';
-import {EditModalComponent} from '../../widgets/edit-modal.component';
+import {EditModalComponent} from '../../docedit/edit-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

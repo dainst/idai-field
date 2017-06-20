@@ -12,6 +12,7 @@ import {LayerMapState} from './map/layer-map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
+import {DoceditModule} from "../docedit/docedit.module";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets'
         NgbModule,
         IdaiDocumentsModule,
         WidgetsModule,
-        IdaiWidgetsModule
+        IdaiWidgetsModule,
+        DoceditModule,
     ],
     declarations: [
         ResourcesComponent,

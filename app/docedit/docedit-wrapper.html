@@ -32,7 +32,9 @@
             </button>
             <span class="mdi mdi-blur"></span>
 
-            <span *ngIf="showBackButton && clonedDocument">{{projectConfiguration.getLabelForType(this.document.resource.type)}} bearbeiten</span>
+            <span *ngIf="projectConfiguration && showBackButton && clonedDocument">
+                {{projectConfiguration.getLabelForType(this.document.resource.type)}} bearbeiten
+            </span>
             <span *ngIf="!showBackButton">Neue Ressource</span>
         </h1>
     </header>

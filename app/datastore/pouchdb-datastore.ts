@@ -18,6 +18,9 @@ import {IndexCreator} from "./index-creator";
  */
 export class PouchdbDatastore implements IdaiFieldDatastore {
 
+    private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
+        'Maybe you wanted to update the object with update()?';
+
     protected db: any;
     private observers = [];
     private readyForQuery: Promise<any>;
@@ -49,26 +52,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.readyForQuery;
     }
 
-    protected setupServer() {
-        return Promise.resolve();
-    }
 
-    private loadDB(dbname: string) {
-        let previousDBName = this.dbname;
 
-        return Promise.resolve(new PouchDB(dbname)).then(db => {
-            this.dbname = dbname;
-            this.db = db;
-            console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
-        }).then(() => {
-            if (this.dbname == 'test' && previousDBName != 'test') return this.clear();
-            else return Promise.resolve();
-        }).then(() => this.indexCreator.go(this.db))
-            .then(() => {
-                if (this.dbname == 'test' && previousDBName != 'test') return this.loadSampleData();
-                else return Promise.resolve();
-            }).then(() => this.setupChangesEmitter());
-    }
+
 
     /**
      * Implements {@link Datastore#create}.
@@ -110,28 +96,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             })
     }
 
-    /**
-     * @param doc
-     * @return resolve when document with the given resource id does not exist already, reject otherwise
-     */
-    private proveThatDoesNotExist(doc:Document): Promise<any> {
-        if (doc.resource.id) {
-            return this.fetchObject(doc.resource.id)
-                .then(result => Promise.reject(M.DATASTORE_RESOURCE_ID_EXISTS), () => Promise.resolve())
-        } else return Promise.resolve();
-    }
 
-    private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
-        'Maybe you wanted to update the object with update()?';
 
-    private updateReadyForQuery(skipCheck): Promise<any>{
-        if (!skipCheck) {
-            return this.readyForQuery;
-        }
-        else {
-            return new Promise<any>((resolve) => {resolve();})
-        }
-    }
+
 
     /**
      * Implements {@link Datastore#update}.
@@ -174,18 +141,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             )
     }
 
-    private resetDocOnErr(original: Document) {
-        let created = original.created;
-        let modified = original.modified;
-        let id = original.resource.id;
-        return function(document: Document) {
-            delete document['_id'];
-            delete document.resource['_parentTypes'];
-            document.resource.id = id;
-            document.created = created;
-            document.modified = modified;
-        }
-    }
+
 
     /**
      * Implements {@link ReadDatastore#refresh}.
@@ -256,10 +212,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .catch(err => { console.error(err); Promise.reject([M.DATASTORE_GENERIC_ERROR]); });
     }
 
-    private clear(): Promise<any> {
-        return this.db.destroy()
-            .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
-    }
+
 
     public shutDown(): Promise<void> {
         return this.readyForQuery.then(() => this.db.destroy());
@@ -412,6 +365,67 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             handle.cancel();
         }
         this.syncHandles = [];
+    }
+
+    protected setupServer() {
+        return Promise.resolve();
+    }
+
+
+
+    private updateReadyForQuery(skipCheck): Promise<any>{
+        if (!skipCheck) {
+            return this.readyForQuery;
+        }
+        else {
+            return new Promise<any>((resolve) => {resolve();})
+        }
+    }
+
+    private resetDocOnErr(original: Document) {
+        let created = original.created;
+        let modified = original.modified;
+        let id = original.resource.id;
+        return function(document: Document) {
+            delete document['_id'];
+            delete document.resource['_parentTypes'];
+            document.resource.id = id;
+            document.created = created;
+            document.modified = modified;
+        }
+    }
+
+    private clear(): Promise<any> {
+        return this.db.destroy()
+            .then(() => this.db = new PouchDB(this.dbname)); // TODO indices are not recreated
+    }
+
+    /**
+     * @param doc
+     * @return resolve when document with the given resource id does not exist already, reject otherwise
+     */
+    private proveThatDoesNotExist(doc:Document): Promise<any> {
+        if (doc.resource.id) {
+            return this.fetchObject(doc.resource.id)
+                .then(result => Promise.reject(M.DATASTORE_RESOURCE_ID_EXISTS), () => Promise.resolve())
+        } else return Promise.resolve();
+    }
+
+    private loadDB(dbname: string) {
+        let previousDBName = this.dbname;
+
+        return Promise.resolve(new PouchDB(dbname)).then(db => {
+            this.dbname = dbname;
+            this.db = db;
+            console.debug("PouchDB ("+dbname+") uses adapter: " + this.db['adapter']);
+        }).then(() => {
+            if (this.dbname == 'test' && previousDBName != 'test') return this.clear();
+            else return Promise.resolve();
+        }).then(() => this.indexCreator.go(this.db))
+            .then(() => {
+                if (this.dbname == 'test' && previousDBName != 'test') return this.loadSampleData();
+                else return Promise.resolve();
+            }).then(() => this.setupChangesEmitter());
     }
 
     private fetchObject(id: string): Promise<Document> {

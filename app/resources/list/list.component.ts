@@ -117,14 +117,9 @@ export class ListComponent {
         let inverseRelationName = this.projectConfiguration.getInverseRelations(relation['name']);
         newDoc.resource.relations[inverseRelationName] = [parentDocument.resource.id];
 
-        this.persistenceManager.persist(newDoc, this.settingsService.getUsername(), []).then(
-            () => {
-                this.documents.push(newDoc);
-                this.selectedDocument = newDoc;
-                this.onDocumentCreation.emit(newDoc);
-                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-            }, msgWithParams => this.messages.add(msgWithParams)
-        );
+        this.documents.push(newDoc);
+        this.selectedDocument = newDoc;
+        this.onDocumentCreation.emit(newDoc);
     }
 
     public markAsChanged() {

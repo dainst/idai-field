@@ -217,11 +217,14 @@ export class DocumentEditWrapperComponent {
         this.modalService.open(
             ConflictDeletedModalComponent, {size: "lg", windowClass: "conflict-deleted-modal"}
         ).result.then(decision => {
-            console.log("clean cloned doc")
 
-            delete this.clonedDoc.resource.id;
-            delete this.clonedDoc['_id'];
-            delete this.clonedDoc['_rev'];
+            // make the doc appear 'new' ...
+            delete this.clonedDoc.resource.id; // ... for persistenceManager
+            delete this.clonedDoc['_id'];      // ... for pouchdbdatastore
+            delete this.clonedDoc['_rev'];     //
+
+            this.showDeleteButton = false;
+
         }).catch(() => {});
     }
 

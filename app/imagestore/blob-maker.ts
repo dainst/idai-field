@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
-import {SecurityContext} from "@angular/core";
+import {Injectable} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {SecurityContext} from '@angular/core';
 
 @Injectable()
 /**
@@ -17,7 +17,7 @@ export class BlobMaker {
 
     constructor(private sanitizer:DomSanitizer) { };
 
-    public makeBlob(data,sanitizeAfter) {
+    public makeBlob(data, sanitizeAfter) {
         const url = URL.createObjectURL(new Blob([data]));
         const safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         if (sanitizeAfter) {

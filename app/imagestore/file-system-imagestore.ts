@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import {BlobMaker} from "./blob-maker";
-import {Converter} from "./converter";
-import {M} from "../m";
-import {Observable} from "rxjs/Observable";
+import {BlobMaker} from './blob-maker';
+import {Converter} from './converter';
+import {M} from '../m';
+import {Observable} from 'rxjs/Observable';
 
 export class FileSystemImagestore {
 
@@ -16,7 +16,6 @@ export class FileSystemImagestore {
 
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
-
     }
 
     public select(projectName: string): void {
@@ -25,7 +24,7 @@ export class FileSystemImagestore {
         this.projectPath = this.basePath + projectName + '/';
 
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
-        const thumbs_path = this.projectPath + "thumbs/";
+        const thumbs_path = this.projectPath + 'thumbs/';
         if (!fs.existsSync(thumbs_path)) fs.mkdirSync(thumbs_path);
 
         if (projectName == 'test') this.loadSampleData();
@@ -40,16 +39,13 @@ export class FileSystemImagestore {
     public create(key: string, data: ArrayBuffer): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'wx'}, (err) => {
+            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'wx'}, err => {
                 if (err) reject(err);
                 else {
-
-                    fs.writeFile(this.projectPath + "thumbs/" + key,
-                        this.converter.convert(data), {flag: 'wx'}, (err) => {
+                    fs.writeFile(this.projectPath + 'thumbs/' + key,
+                        this.converter.convert(data), {flag: 'wx'}, err => {
                         if (err) reject(err);
-                        else {
-                            resolve();
-                        }
+                        else resolve();
                     });
                 }
             });
@@ -64,7 +60,7 @@ export class FileSystemImagestore {
      * @return {Promise<string>} Promise that returns the blob url.
      *  In case of error the promise gets rejected with msgWithParams.
      */
-    public read(mediastoreFilename:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
+    public read(mediastoreFilename: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string> {
         return new Promise((resolve, reject) => {
             this._read(mediastoreFilename, thumb).then(data => {
                 if (data == undefined) reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ].concat([mediastoreFilename]));
@@ -82,7 +78,7 @@ export class FileSystemImagestore {
      *  reject -> the error message
      */
     protected _read(key: string, thumb: boolean): Promise<ArrayBuffer> {
-        let path = thumb ? this.projectPath + "/thumbs/" + key : this.projectPath + key;
+        let path = thumb ? this.projectPath + '/thumbs/' + key : this.projectPath + key;
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) reject(err);
@@ -115,22 +111,26 @@ export class FileSystemImagestore {
     public remove(key: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.unlink(this.projectPath + key, (err) => {
+            fs.unlink(this.projectPath + key, err => {
                 if (err) reject(err);
-                else resolve();
-            })
+                else {
+                    fs.unlink(this.projectPath + 'thumbs/' + key, err => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                }
+            });
         });
     }
 
     public objectChangesNotifications(): Observable<File> {
 
-        return Observable.create( () => {});
+        return Observable.create(() => {});
     }
-
 
     private loadSampleData(): void {
 
-        const base = "/test/test-data/imagestore-samples/";
+        const base = '/test/test-data/imagestore-samples/';
 
         let path = process.cwd() + base;
         if (!fs.existsSync(path)) path = process.resourcesPath + base;
@@ -141,14 +141,15 @@ export class FileSystemImagestore {
         this.copyFilesOfDir(path, this.projectPath + 'thumbs/');
     }
 
-    private copyFilesOfDir (path, dest):void {
+    private copyFilesOfDir(path, dest): void {
+
         fs.readdir(path, (err, files) => {
             files.forEach(file => {
-                if(!fs.statSync(path + file).isDirectory()) {
+                if (!fs.statSync(path + file).isDirectory()) {
                     fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + file));
                 }
             });
-            console.debug("Successfully put samples from " + path + " to " + dest );
+            console.debug('Successfully put samples from ' + path + ' to ' + dest );
         });
     }
 }

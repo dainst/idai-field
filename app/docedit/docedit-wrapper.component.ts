@@ -17,7 +17,7 @@ import {Imagestore} from '../imagestore/imagestore';
 @Component({
     selector: 'document-edit-wrapper',
     moduleId: module.id,
-    templateUrl: './document-edit-wrapper.html'
+    templateUrl: './docedit-wrapper.html'
 })
 
 /**
@@ -29,7 +29,7 @@ import {Imagestore} from '../imagestore/imagestore';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DocumentEditWrapperComponent {
+export class DoceditWrapperComponent {
 
     /**
      * Holds a cloned version of the <code>document</code> field,
@@ -75,15 +75,15 @@ export class DocumentEditWrapperComponent {
     }
 
     ngOnChanges() {
-
+        
         if (!this.document) return;
+
+        this.inspectedRevisionsIds = [];
+        this.clonedDocument = DoceditWrapperComponent.cloneDocument(this.document);
+        this.persistenceManager.setOldVersions([this.document]);
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
-            this.inspectedRevisionsIds = [];
-
-            this.clonedDocument = DocumentEditWrapperComponent.cloneDocument(this.document);
-            this.persistenceManager.setOldVersions([this.document]);
         });
     }
 

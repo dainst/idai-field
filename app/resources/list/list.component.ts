@@ -1,9 +1,10 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
-import {PersistenceManager} from 'idai-components-2/persist';
+import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {M} from '../../m';
 import {SettingsService} from '../../settings/settings-service';
 import {EditModalComponent} from '../../docedit/edit-modal.component';
@@ -37,6 +38,8 @@ export class ListComponent {
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
+        private validator: Validator,
+        private datastore: IdaiFieldDatastore,
         configLoader: ConfigLoader
     ) {
 
@@ -78,14 +81,19 @@ export class ListComponent {
 
         if (!this.documentEditChangeMonitor.isChanged()) return;
 
+        this.documentEditChangeMonitor.reset();
+
         const oldVersion = JSON.parse(JSON.stringify(document));
 
-        this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]).then(
+        this.validator.validate(document).then(
             () => {
-                this.documentEditChangeMonitor.reset();
+                return this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]);
+            }).then(() => {
                 this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
-            }, msgWithParams => this.messages.add(msgWithParams)
-        );
+            }).catch(msgWithParams => {
+                this.messages.add(msgWithParams);
+                return this.restoreIdentifier(document);
+            }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
     public focusDocument(doc: IdaiFieldDocument) {
@@ -122,5 +130,14 @@ export class ListComponent {
     public markAsChanged() {
 
         this.documentEditChangeMonitor.setChanged();
+    }
+
+    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+
+        return this.datastore.getLatestRevision(document.resource.id).then(
+            latestRevision => {
+                document.resource.identifier = latestRevision.resource.identifier;
+            }
+        );
     }
 }

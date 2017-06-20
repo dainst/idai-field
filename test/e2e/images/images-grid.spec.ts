@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 var path = require('path');
 
@@ -9,16 +9,15 @@ var gridPage = require('./images-grid.page');
 var viewPage = require('./images-view.page');
 
 
-
-describe('image grid --', function(){
+describe('image grid --', function() {
 
     beforeEach(function () {
         gridPage.get();
-        browser.wait(EC.visibilityOf(element(by.id("idai-field-brand"))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
-    it('deselect cells', function(){
-        gridPage.getAllCells().then(function(cells){
+    it('deselect cells', function() {
+        gridPage.getAllCells().then(function(cells) {
             var first = 0;
             var last = cells.length - 1;
 
@@ -26,8 +25,7 @@ describe('image grid --', function(){
             expect(cells[first].getAttribute('class')).toMatch(gridPage.selectedClass);
             cells[first].click();
             expect(cells[first].getAttribute('class')).not.toMatch(gridPage.selectedClass);
-            if (last != first)
-            {
+            if (last != first) {
                 cells[last].click();
                 expect(cells[last].getAttribute('class')).toMatch(gridPage.selectedClass);
                 cells[last].click();
@@ -51,7 +49,7 @@ describe('image grid --', function(){
         expect(gridPage.getCell(0).getAttribute('class')).not.toMatch(gridPage.selectedClass);
     });
 
-    it('delete an image in the grid view', function () {
+    it('delete an image in the grid view', function() {
         gridPage.getCellImageName(0)
             .then(function (filename) {
                 gridPage.getCell(0).click();
@@ -62,7 +60,7 @@ describe('image grid --', function(){
             });
     });
 
-    it('delete two images in the grid view', function () {
+    it('delete two images in the grid view', function() {
         gridPage.getCellImageName(0)
             .then(function (image1filename) {
                 gridPage.getCellImageName(1)
@@ -72,16 +70,18 @@ describe('image grid --', function(){
                         gridPage.clickDeleteButton();
                         gridPage.clickConfirmDeleteButton();
                         browser.wait(EC.stalenessOf(gridPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image1filename)), delays.ECWaitTime);
-                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image2filename)), delays.ECWaitTime);
+                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image1filename)),
+                            delays.ECWaitTime);
+                        browser.wait(EC.stalenessOf(gridPage.getCellFilenameElement(image2filename)),
+                            delays.ECWaitTime);
                     })
             });
     });
 
-    it('connect a resource with an image in the grid view', function () {
+    it('connect a resource with an image in the grid view', function() {
         var imageToConnect = gridPage.getCell(0);
-        var resourceId = "tf1";
-        var resourceIdentifier = "testf1";
+        var resourceId = 'tf1';
+        var resourceIdentifier = 'testf1';
 
         imageToConnect.click();
         expect(imageToConnect.getAttribute('class')).toMatch(gridPage.selectedClass);
@@ -91,7 +91,7 @@ describe('image grid --', function(){
         expect(imageToConnect.all(by.id('related-resource-'+resourceId)).first().isPresent()).toBeTruthy();
     });
 
-    it('cancel an image delete in the modal.', function () {
+    it('cancel an image delete in the modal.', function() {
         var elementToDelete = gridPage.getCell(0);
 
         gridPage.getCellImageName(0)
@@ -110,7 +110,7 @@ describe('image grid --', function(){
 
         gridPage.getCellImageName(0).then(function(imageName){
             gridPage.doubleClickCell(0);
-            browser.wait(EC.presenceOf(viewPage.getDocumentCard()),delays.ECWaitTime);
+            browser.wait(EC.presenceOf(viewPage.getDocumentCard()), delays.ECWaitTime);
             expect(element(by.xpath(xpath)).getText()).toEqual(imageName);
 
             viewPage.clickBackToGridButton();
@@ -119,7 +119,7 @@ describe('image grid --', function(){
         });
     });
 
-    it('image upload should create a JSON document, which in turn gets displayed in the grid', function () {
+    it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         var fileName = 'Aldrin_Apollo_11.jpg';
         var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';

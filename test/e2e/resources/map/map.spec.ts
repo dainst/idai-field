@@ -6,6 +6,7 @@ let delays = require('../../config/delays');
 let documentViewPage = require('../../widgets/document-view.page');
 import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
 
+
 describe('resources/map --', function() {
 
     function setPolygon() {

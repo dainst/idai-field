@@ -16,6 +16,7 @@ const resourcesPage = require('../resources/resources.page');
 const documentViewPage = require('../widgets/document-view.page');
 const settingsPage = require('../settings.page');
 
+
 /**
  * @author Sebastian Cuy
  * @author Thomas Kleinke

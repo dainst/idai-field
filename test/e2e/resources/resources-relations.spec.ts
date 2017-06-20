@@ -7,6 +7,7 @@ let resourcesPage = require('./resources.page');
 let documentViewPage = require('../widgets/document-view.page');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
+
 describe('resources/relations --', function() {
 
     beforeEach(function() {

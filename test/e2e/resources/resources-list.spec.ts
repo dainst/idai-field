@@ -23,7 +23,7 @@ describe('resources/list --', function() {
         );
     });
 
-    it('save changes on input blur', function() {
+    it('save changes on input field blur', function() {
         resourcesPage.performCreateResource('1', 0, 'Resource 1', 1);
         resourcesPage.performCreateResource('2', 0, 'Resource 2', 1);
 

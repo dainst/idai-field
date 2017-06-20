@@ -18,14 +18,13 @@
                 <td align="right">
                     <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"
                            class="form-control form-control-sm identifier-input">
-                    <small class="text-muted">{{document._id}}</small>
+                    <small>
+                        <button (click)="editDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
+                    </small>
                 </td>
                 <td align="right">
                     <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)"
                            (keyup)="markAsChanged()" class="form-control form-control-sm">
-                    <small>
-                        <button (click)="focusDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
-                    </small>
                 </td>
                 <td>
                     <div class="form-inline">

@@ -96,7 +96,7 @@ export class ListComponent {
             }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
-    public focusDocument(doc: IdaiFieldDocument) {
+    public editDocument(doc: IdaiFieldDocument) {
 
         this.selectedDocument = doc;
 

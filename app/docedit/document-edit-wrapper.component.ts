@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
-import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../m';
@@ -20,9 +20,10 @@ import {ImageTypeUtility} from '../util/image-type-utility';
 })
 
 /**
- * Uses the document edit form of idai-components-2 and adds styling
- * and save and back buttons. The save button is used to save and
- * validate the document.
+ * Uses the document edit forms of idai-components-2 and adds styling
+ * and navigation items like save and back buttons and modals
+ * including the relevant functionality like validation,
+ * persistence handling, conflict resolution etc.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -44,11 +45,16 @@ export class DocumentEditWrapperComponent {
     @Output() onBackButtonClicked = new EventEmitter<any>();
     @Output() onDeleteSuccess = new EventEmitter<any>();
 
-    public projectConfiguration: ProjectConfiguration;
-    public typeLabel: string;
-    public relationDefinitions: Array<RelationDefinition>;
-    public projectImageTypes: any = {};
-    public inspectedRevisionsIds: string[];
+    private projectConfiguration: ProjectConfiguration;
+
+    private projectImageTypes: any = {};
+
+    /**
+     * These are the revisions (of the cloned document as long as not saved)
+     * that are conflict resolved. They will be be removed from document
+     * as soon as it gets saved.
+     */
+    private inspectedRevisionsIds: string[];
 
     constructor(
         private messages: Messages,
@@ -68,21 +74,21 @@ export class DocumentEditWrapperComponent {
 
     ngOnChanges() {
 
+        if (!this.document) return;
+
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-
-            if (!this.document) return;
-
             this.projectConfiguration = projectConfiguration;
             this.inspectedRevisionsIds = [];
 
             this.clonedDocument = DocumentEditWrapperComponent.cloneDocument(this.document);
-            this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
-            this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
-                'editable');
             this.persistenceManager.setOldVersions([this.document]);
         });
     }
 
+    /**
+     * @param viaSaveButton if true, it is assumed the call for save came directly
+     *   via a user interaction.
+     */
     public save(viaSaveButton: boolean = false) {
 
         this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
@@ -193,12 +199,12 @@ export class DocumentEditWrapperComponent {
     
     public openDeleteModal(modal) {
 
-        this.modalService.open(modal).result.then(result => {
-            if (result == 'delete') this.delete();
+        this.modalService.open(modal).result.then(decision => {
+            if (decision == 'delete') this.deleteDoc();
         });
     }
 
-    private delete() {
+    private deleteDoc() {
 
         return this.persistenceManager.remove(this.document).then(
             () => {
@@ -216,4 +222,9 @@ export class DocumentEditWrapperComponent {
         return clonedDoc;
     }
 
+    private relDefs() {
+        if (!this.projectConfiguration) return undefined;
+        return this.projectConfiguration.getRelationDefinitions(
+            this.document.resource.type, 'editable');
+    }
 }

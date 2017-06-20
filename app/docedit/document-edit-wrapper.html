@@ -32,7 +32,7 @@
             </button>
             <span class="mdi mdi-blur"></span>
 
-            <span *ngIf="showBackButton && clonedDocument">{{typeLabel}} bearbeiten</span>
+            <span *ngIf="showBackButton && clonedDocument">{{projectConfiguration.getLabelForType(this.document.resource.type)}} bearbeiten</span>
             <span *ngIf="!showBackButton">Neue Ressource</span>
         </h1>
     </header>
@@ -48,13 +48,13 @@
                                            [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
                             </ng-template>
                         </ngb-tab>
-                        <ngb-tab *ngIf="relationDefinitions && relationDefinitions.length > 0" title="Relationen"
+                        <ngb-tab *ngIf="relDefs() && relDefs().length > 0" title="Relationen"
                                  id="document-edit-relations-tab">
                             <ng-template ngbTabContent>
                                 <relations-form
                                         [(document)]="clonedDocument"
                                         [primary]="'identifier'"
-                                        [relationDefinitions]="relationDefinitions"></relations-form>
+                                        [relationDefinitions]="relDefs()"></relations-form>
                             </ng-template>
                         </ngb-tab>
 

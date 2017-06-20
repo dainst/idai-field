@@ -16,7 +16,7 @@ import {ImageTypeUtility} from '../util/image-type-utility';
 @Component({
     selector: 'document-edit-wrapper',
     moduleId: module.id,
-    templateUrl: './document-edit-wrapper.html'
+    templateUrl: './docedit-wrapper.html'
 })
 
 /**
@@ -28,7 +28,7 @@ import {ImageTypeUtility} from '../util/image-type-utility';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DocumentEditWrapperComponent {
+export class DoceditWrapperComponent {
 
     /**
      * Holds a cloned version of the <code>document</code> field,
@@ -80,7 +80,7 @@ export class DocumentEditWrapperComponent {
             this.projectConfiguration = projectConfiguration;
             this.inspectedRevisionsIds = [];
 
-            this.clonedDocument = DocumentEditWrapperComponent.cloneDocument(this.document);
+            this.clonedDocument = DoceditWrapperComponent.cloneDocument(this.document);
             this.persistenceManager.setOldVersions([this.document]);
         });
     }

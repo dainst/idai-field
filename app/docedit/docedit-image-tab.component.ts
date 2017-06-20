@@ -13,14 +13,14 @@ import {DocumentEditChangeMonitor} from "idai-components-2/documents";
 @Component({
     selector: 'document-edit-image-tab',
     moduleId: module.id,
-    templateUrl: './document-edit-image-tab.html'
+    templateUrl: './docedit-image-tab.html'
 })
 
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class DocumentEditImageTabComponent {
+export class DoceditImageTabComponent {
 
     @Input() document: IdaiFieldDocument;
     @Input() clonedDocument: IdaiFieldDocument;

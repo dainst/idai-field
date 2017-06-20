@@ -40,7 +40,12 @@ export class DocumentEditWrapperComponent {
     @Output() onBackButtonClicked = new EventEmitter<any>();
     @Output() onDeleteSuccess = new EventEmitter<any>();
 
-    private clonedDoc: IdaiFieldDocument;
+    /**
+     * Holds a cloned version of the <code>document</code> field,
+     * on which changes can be made which can be either saved or discarded later.
+     */
+    private clonedDocument: IdaiFieldDocument;
+
     private projectImageTypes: any = {};
     private projectConfiguration: ProjectConfiguration;
     private typeLabel: string;
@@ -69,21 +74,20 @@ export class DocumentEditWrapperComponent {
     ngOnChanges() {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.projectConfiguration = projectConfiguration;
 
+            if (!this.document) return;
+
+            this.projectConfiguration = projectConfiguration;
             this.inspectedRevisionsIds = [];
 
-            if (this.document) {
-                this.clonedDoc = this.cloneDoc(this.document);
-                this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
-                this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
-                    'editable');
-                this.persistenceManager.setOldVersions([this.document]);
+            this.clonedDocument = DocumentEditWrapperComponent.cloneDocument(this.document);
+            this.typeLabel = projectConfiguration.getLabelForType(this.document.resource.type);
+            this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
+                'editable');
+            this.persistenceManager.setOldVersions([this.document]);
 
-                if (this.document.resource.relations['depictedIn']) {
-                    this.loadImages();   
-                }
-
+            if (this.document.resource.relations['depictedIn']) {
+                this.loadImages();
             }
         });
     }
@@ -100,7 +104,7 @@ export class DocumentEditWrapperComponent {
     }
 
     private loadImages() {
-        var imageDocPromises = [];
+        const imageDocPromises = [];
         this.imageDocuments = [];
         this.document.resource.relations['depictedIn'].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
@@ -120,13 +124,13 @@ export class DocumentEditWrapperComponent {
         
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             
-            var projectTypesTree = projectConfiguration.getTypesTree();
+            const projectTypesTree = projectConfiguration.getTypesTree();
     
             if (projectTypesTree["image"]) {
                 this.projectImageTypes["image"] = projectTypesTree["image"];
     
                 if(projectTypesTree["image"].children) {
-                    for (var i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
+                    for (let i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
                         this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
                     }
                 }
@@ -137,9 +141,9 @@ export class DocumentEditWrapperComponent {
 
     public save(viaSaveButton: boolean = false) {
 
-        this.validator.validate(<IdaiFieldDocument> this.clonedDoc)
+        this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
             .then(
-                () => this.saveValidatedDocument(this.clonedDoc, viaSaveButton),
+                () => this.saveValidatedDocument(this.clonedDocument, viaSaveButton),
             ).then(
                 () => this.messages.add([M.WIDGETS_SAVE_SUCCESS])
             ).catch(
@@ -150,26 +154,26 @@ export class DocumentEditWrapperComponent {
     }
 
     /**
-     * @param clonedDoc
+     * @param clonedDocument
      * @param viaSaveButton
      * @returns {Promise<TResult>} in case of error, rejects with
      *   either with <code>msgWithParams</code> or with <code>undefined</code>,
      *   depending on whether the error get handled within the method.
      */
-    private saveValidatedDocument(clonedDoc: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
+    private saveValidatedDocument(clonedDocument: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 
-        return this.persistenceManager.persist(clonedDoc, this.settingsService.getUsername()).then(
+        return this.persistenceManager.persist(clonedDocument, this.settingsService.getUsername()).then(
             () => this.removeInspectedRevisions(),
             errorWithParams => this.handlePersistError(errorWithParams)
         ).then(
-            () => this.datastore.getLatestRevision(this.clonedDoc.resource.id),
+            () => this.datastore.getLatestRevision(this.clonedDocument.resource.id),
         ).then(
             doc => {
-                this.clonedDoc = doc;
+                this.clonedDocument = doc;
                 this.documentEditChangeMonitor.reset();
 
                 this.onSaveSuccess.emit({
-                    document: clonedDoc,
+                    document: clonedDocument,
                     viaSaveButton: viaSaveButton
                 });
             }
@@ -219,9 +223,9 @@ export class DocumentEditWrapperComponent {
         ).result.then(decision => {
 
             // make the doc appear 'new' ...
-            delete this.clonedDoc.resource.id; // ... for persistenceManager
-            delete this.clonedDoc['_id'];      // ... for pouchdbdatastore
-            delete this.clonedDoc['_rev'];     //
+            delete this.clonedDocument.resource.id; // ... for persistenceManager
+            delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
+            delete this.clonedDocument['_rev'];     //
 
             this.showDeleteButton = false;
 
@@ -240,23 +244,23 @@ export class DocumentEditWrapperComponent {
 
     private overwriteLatestRevision() {
 
-        this.datastore.getLatestRevision(this.clonedDoc.resource.id).then(latestRevision => {
-            this.clonedDoc['_rev'] = latestRevision['_rev'];
+        this.datastore.getLatestRevision(this.clonedDocument.resource.id).then(latestRevision => {
+            this.clonedDocument['_rev'] = latestRevision['_rev'];
             this.save(true);
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
     private reloadLatestRevision() {
 
-        this.datastore.getLatestRevision(this.clonedDoc.resource.id).then(latestRevision => {
-            this.clonedDoc = <IdaiFieldDocument> latestRevision;
+        this.datastore.getLatestRevision(this.clonedDocument.resource.id).then(latestRevision => {
+            this.clonedDocument = <IdaiFieldDocument> latestRevision;
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
     private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        var relations = this.clonedDoc.resource.relations["depictedIn"]
-            ? this.clonedDoc.resource.relations["depictedIn"].slice() : [];
+        var relations = this.clonedDocument.resource.relations["depictedIn"]
+            ? this.clonedDocument.resource.relations["depictedIn"].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
@@ -264,7 +268,7 @@ export class DocumentEditWrapperComponent {
             }
         }
 
-        this.clonedDoc.resource.relations["depictedIn"] = relations;
+        this.clonedDocument.resource.relations["depictedIn"] = relations;
 
         this.loadImages();
     }
@@ -286,10 +290,10 @@ export class DocumentEditWrapperComponent {
             keyOfM => this.messages.add([keyOfM]));
     }
 
-    private cloneDoc(doc: IdaiFieldDocument): IdaiFieldDocument {
+    private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {
 
-        let clonedDoc = Object.assign({}, doc);
-        clonedDoc.resource = Object.assign({}, doc.resource);
+        const clonedDoc = Object.assign({}, document);
+        clonedDoc.resource = Object.assign({}, document.resource);
 
         return clonedDoc;
     }

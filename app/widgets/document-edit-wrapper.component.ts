@@ -1,19 +1,15 @@
-import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {Messages} from 'idai-components-2/messages';
-import {DatastoreErrors} from 'idai-components-2/datastore';
-import {ConfigLoader, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
-import {Validator, PersistenceManager} from 'idai-components-2/persist';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {M} from '../m';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImagePickerComponent} from './image-picker.component';
-import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {ConflictModalComponent} from './conflict-modal.component';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridBuilder} from '../common/image-grid-builder';
-import {Imagestore} from '../imagestore/imagestore';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
+import {DocumentEditChangeMonitor} from "idai-components-2/documents";
+import {Messages} from "idai-components-2/messages";
+import {DatastoreErrors} from "idai-components-2/datastore";
+import {ConfigLoader, ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
+import {PersistenceManager, Validator} from "idai-components-2/persist";
+import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
+import {M} from "../m";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConflictDeletedModalComponent} from "./conflict-deleted-modal.component";
+import {ConflictModalComponent} from "./conflict-modal.component";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {SettingsService} from "../settings/settings-service";
 
 @Component({
@@ -32,27 +28,27 @@ import {SettingsService} from "../settings/settings-service";
  */
 export class DocumentEditWrapperComponent {
 
-    @Input() document: IdaiFieldDocument;
-    @Input() showBackButton: boolean = true;
-    @Input() showDeleteButton: boolean = true;
-    @Input() activeTab: string;
-    @Output() onSaveSuccess = new EventEmitter<any>();
-    @Output() onBackButtonClicked = new EventEmitter<any>();
-    @Output() onDeleteSuccess = new EventEmitter<any>();
-
     /**
      * Holds a cloned version of the <code>document</code> field,
      * on which changes can be made which can be either saved or discarded later.
      */
     private clonedDocument: IdaiFieldDocument;
 
-    private projectImageTypes: any = {};
+    @Input() document: IdaiFieldDocument;
+    @Input() showBackButton: boolean = true;
+    @Input() showDeleteButton: boolean = true;
+    @Input() activeTab: string;
+
+    @Output() onSaveSuccess = new EventEmitter<any>();
+    @Output() onBackButtonClicked = new EventEmitter<any>();
+    @Output() onDeleteSuccess = new EventEmitter<any>();
+
     private projectConfiguration: ProjectConfiguration;
     private typeLabel: string;
     private relationDefinitions: Array<RelationDefinition>;
-    private imageGridBuilder : ImageGridBuilder;
-    private rows = [];
-    private imageDocuments: IdaiFieldImageDocument[];
+
+    private projectImageTypes: any = {};
+
     private inspectedRevisionsIds: string[];
 
     constructor(
@@ -63,12 +59,10 @@ export class DocumentEditWrapperComponent {
         private configLoader: ConfigLoader,
         private settingsService: SettingsService,
         private modalService: NgbModal,
-        private imagestore: Imagestore,
         private datastore: IdaiFieldDatastore,
         private el: ElementRef
     ) {
         this.getProjectImageTypes();
-        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
     }
 
     ngOnChanges() {
@@ -85,58 +79,7 @@ export class DocumentEditWrapperComponent {
             this.relationDefinitions = projectConfiguration.getRelationDefinitions(this.document.resource.type,
                 'editable');
             this.persistenceManager.setOldVersions([this.document]);
-
-            if (this.document.resource.relations['depictedIn']) {
-                this.loadImages();
-            }
         });
-    }
-
-    private calcGrid() {
-        this.rows = [];
-        this.imageGridBuilder.calcGrid(
-            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result=>{
-            this.rows = result['rows'];
-            for (var msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
-            }
-        });
-    }
-
-    private loadImages() {
-        const imageDocPromises = [];
-        this.imageDocuments = [];
-        this.document.resource.relations['depictedIn'].forEach(id => {
-            imageDocPromises.push(this.datastore.get(id));
-        });
-
-        Promise.all(imageDocPromises).then( docs =>{
-            this.imageDocuments = docs as IdaiFieldImageDocument[];
-            this.calcGrid();
-        });
-    }
-
-    public onResize() {
-        this.calcGrid();
-    }
-
-    private getProjectImageTypes() {
-        
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            
-            const projectTypesTree = projectConfiguration.getTypesTree();
-    
-            if (projectTypesTree["image"]) {
-                this.projectImageTypes["image"] = projectTypesTree["image"];
-    
-                if(projectTypesTree["image"].children) {
-                    for (let i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
-                        this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
-                    }
-                }
-            }
-        })
-        
     }
 
     public save(viaSaveButton: boolean = false) {
@@ -206,15 +149,7 @@ export class DocumentEditWrapperComponent {
         return Promise.all(promises);
     }
 
-    public openImagePicker() {
 
-        this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then(
-            (selectedImages: IdaiFieldImageDocument[]) => {
-                this.addDepictedInRelations(selectedImages);
-                this.documentEditChangeMonitor.setChanged();
-            }
-        );
-    }
 
     private handleDeletedConflict() {
 
@@ -257,21 +192,7 @@ export class DocumentEditWrapperComponent {
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
-    private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        var relations = this.clonedDocument.resource.relations["depictedIn"]
-            ? this.clonedDocument.resource.relations["depictedIn"].slice() : [];
-
-        for (let i in imageDocuments) {
-            if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
-                relations.push(imageDocuments[i].resource.id);
-            }
-        }
-
-        this.clonedDocument.resource.relations["depictedIn"] = relations;
-
-        this.loadImages();
-    }
 
     public openDeleteModal(modal) {
 
@@ -296,5 +217,25 @@ export class DocumentEditWrapperComponent {
         clonedDoc.resource = Object.assign({}, document.resource);
 
         return clonedDoc;
+    }
+
+
+    // TODO move this code to service type class
+    private getProjectImageTypes() {
+
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+
+            const projectTypesTree = projectConfiguration.getTypesTree();
+
+            if (projectTypesTree["image"]) {
+                this.projectImageTypes["image"] = projectTypesTree["image"];
+
+                if(projectTypesTree["image"].children) {
+                    for (let i = projectTypesTree["image"].children.length - 1; i >= 0; i--) {
+                        this.projectImageTypes[projectTypesTree["image"].children[i].name] = projectTypesTree["image"].children[i];
+                    }
+                }
+            }
+        })
     }
 }

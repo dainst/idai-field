@@ -1,0 +1,47 @@
+<div class="form-group card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Verknüpfte Bilder
+        </h3>
+    </div>
+    <div class="card-block">
+
+        <div class="image-grid" (window:resize)="onResize($event)">
+            <div *ngFor="let row of rows; let index = index">
+
+                <div *ngFor="let cell of row; let ind = ind"
+                     class="cell-container"
+                     [style.width.px]="cell['calculatedWidth'] + 1"
+                     [style.height.px]="cell['calculatedHeight'] + 30">
+
+                    <div [id]="'resource-' + cell['document'].resource.identifier" class="cell">
+                        <div class="identifier"
+                             *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
+                             [style.maxWidth.px]="cell['calculatedWidth']-15">
+                            <span class="tag tag-default">{{cell['document'].resource.identifier}}</span>
+                            <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']" id="related-resource-{{resourceId}}" class="tag tag-info">
+                                                                             <span class="mdi mdi-link"></span> {{resourceId}}
+                                                                        </span>
+                        </div>
+
+                        <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
+                             [style.width.px]="cell['calculatedWidth']"
+                             [style.height.px]="cell['calculatedHeight']">
+
+                        <div class="title" [style.width.px]="cell['calculatedWidth']">
+                            {{cell['document'].resource.shortDescription}}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="button" id="create-depicts-relations-btn"
+                    class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild
+                einfügen
+            </button>
+        </div>
+
+    </div>
+</div>

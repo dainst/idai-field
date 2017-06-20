@@ -18,6 +18,7 @@ import {ConflictResolverComponent} from './conflict-resolver.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {EditModalComponent} from './edit-modal.component';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
+import {DocumentEditImageTabComponent} from "./document-edit-image-tab.component";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
     ],
     declarations: [
         DocumentEditWrapperComponent,
+        DocumentEditImageTabComponent,
         DocumentTeaserComponent,
         EditSaveDialogComponent,
         DocumentPickerComponent,

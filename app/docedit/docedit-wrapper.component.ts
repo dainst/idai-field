@@ -73,15 +73,15 @@ export class DoceditWrapperComponent {
     }
 
     ngOnChanges() {
-
+        
         if (!this.document) return;
+
+        this.inspectedRevisionsIds = [];
+        this.clonedDocument = DoceditWrapperComponent.cloneDocument(this.document);
+        this.persistenceManager.setOldVersions([this.document]);
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
-            this.inspectedRevisionsIds = [];
-
-            this.clonedDocument = DoceditWrapperComponent.cloneDocument(this.document);
-            this.persistenceManager.setOldVersions([this.document]);
         });
     }
 

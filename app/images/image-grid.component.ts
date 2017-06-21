@@ -148,8 +148,8 @@ export class ImageGridComponent {
                 this.updateAndPersistDepictsRelations(this.selected, targetDoc)
                     .then(() => {
                         this.clearSelection();
-                    }).catch(keyOfM => {
-                        this.messages.add([keyOfM]);
+                    }).catch(msgWithParams => {
+                        this.messages.add(msgWithParams);
                     });
             }
         }, (closeReason) => {
@@ -189,12 +189,12 @@ export class ImageGridComponent {
             var imageDocument = imageDocuments[imageDocumentIndex];
             var oldVersion = JSON.parse(JSON.stringify(imageDocument));
 
-            if (!imageDocument.resource.relations["depicts"]) {
-                imageDocument.resource.relations["depicts"] = [];
+            if (!imageDocument.resource.relations['depicts']) {
+                imageDocument.resource.relations['depicts'] = [];
             }
 
-            if (imageDocument.resource.relations["depicts"].indexOf(targetDocument.resource.id) == -1) {
-                imageDocument.resource.relations["depicts"].push(targetDocument.resource.id);
+            if (imageDocument.resource.relations['depicts'].indexOf(targetDocument.resource.id) == -1) {
+                imageDocument.resource.relations['depicts'].push(targetDocument.resource.id);
             }
 
             return this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
@@ -206,7 +206,7 @@ export class ImageGridComponent {
                     } else {
                         resolve();
                     }
-                }, err => reject(err));
+                }, msgWithParams => reject(msgWithParams));
         });
     }
 }

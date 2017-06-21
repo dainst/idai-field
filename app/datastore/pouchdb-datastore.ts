@@ -41,7 +41,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             })
     }
 
-
     public select(name): Promise<void> {
         this.readyForQuery = this.loadDB(name).then(() => {
             if (this.resolve) { // resolve the old promise which got used to wait for select
@@ -51,10 +50,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         });
         return this.readyForQuery;
     }
-
-
-
-
 
     /**
      * Implements {@link Datastore#create}.
@@ -96,10 +91,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             })
     }
 
-
-
-
-
     /**
      * Implements {@link Datastore#update}.
      * @param document
@@ -140,8 +131,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 }
             )
     }
-
-
 
     /**
      * Implements {@link ReadDatastore#refresh}.
@@ -211,8 +200,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.readyForQuery.then(()=>this.db.remove(docId, revisionId))
             .catch(err => { console.error(err); Promise.reject([M.DATASTORE_GENERIC_ERROR]); });
     }
-
-
 
     public shutDown(): Promise<void> {
         return this.readyForQuery.then(() => this.db.destroy());
@@ -370,8 +357,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     protected setupServer() {
         return Promise.resolve();
     }
-
-
 
     private updateReadyForQuery(skipCheck): Promise<any>{
         if (!skipCheck) {

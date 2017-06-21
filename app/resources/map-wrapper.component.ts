@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {ResourcesComponent} from './resources.component';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 
 @Component({
@@ -25,7 +26,8 @@ export class MapWrapperComponent implements OnInit {
     constructor(
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private messages: Messages
     ) { }
 
     ngOnInit(): void {
@@ -78,6 +80,6 @@ export class MapWrapperComponent implements OnInit {
         this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUsername()).then(
             () => {
                 this.resourcesComponent.getSelected()['synced'] = 0;
-            }, err => { console.log(err); });
+            }, msgWithParams => this.messages.add(msgWithParams));
     }
 }

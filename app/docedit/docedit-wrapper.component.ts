@@ -219,11 +219,7 @@ export class DoceditWrapperComponent {
             ).then(() => {
                 this.onDeleteSuccess.emit();
                 this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
-            }).catch(err => {
-                // TODO persistence manager should throw msgWithParams array
-                if (err instanceof Array) this.messages.add(err);
-                else this.messages.add([err]);
-            });
+            }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
     private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {

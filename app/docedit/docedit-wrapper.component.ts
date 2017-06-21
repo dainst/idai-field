@@ -228,6 +228,7 @@ export class DoceditWrapperComponent {
     }
 
     private removeWithPersistenceManager(document) {
+
         return this.persistenceManager.remove(document)
             .catch(removeError => {
                 if (removeError == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
@@ -247,6 +248,7 @@ export class DoceditWrapperComponent {
     }
 
     private relDefs() {
+
         if (!this.projectConfiguration) return undefined;
         return this.projectConfiguration.getRelationDefinitions(
             this.document.resource.type, 'editable');

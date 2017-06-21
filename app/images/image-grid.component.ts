@@ -167,46 +167,58 @@ export class ImageGridComponent {
             });
     }
 
-    private deleteImageDocuments(documents: IdaiFieldImageDocument[], documentIndex: number = 0): Promise<any> {
-
-        let document = documents[documentIndex];
-
-        return this.imagestore.remove(document.resource.identifier)
-            .then(() => this.persistenceManager.remove(document, [document]),
-                err => Promise.reject([M.IMAGESTORE_ERROR_DELETE, [document.resource.identifier]]))
-            .then(() => {
-                if (documentIndex < documents.length - 1) {
-                    return this.deleteImageDocuments(documents, ++documentIndex);
-                }
-                return Promise.resolve();
-            })
-    }
-
-    private updateAndPersistDepictsRelations(imageDocuments: IdaiFieldImageDocument[],
-                 targetDocument: IdaiFieldDocument, imageDocumentIndex: number = 0): Promise<any> {
+    private deleteImageDocuments(documents: Array<IdaiFieldImageDocument>): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            var imageDocument = imageDocuments[imageDocumentIndex];
-            var oldVersion = JSON.parse(JSON.stringify(imageDocument));
 
-            if (!imageDocument.resource.relations['depicts']) {
-                imageDocument.resource.relations['depicts'] = [];
+            let promise: Promise<any> = new Promise<any>((res) => res());
+
+            for (let document of documents) {
+                promise = promise.then(
+                    () => this.imagestore.remove(document.resource.identifier),
+                    msgWithParams => reject(msgWithParams)
+                ).then(
+                    () => this.persistenceManager.remove(document, [document]),
+                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
+                )
             }
 
-            if (imageDocument.resource.relations['depicts'].indexOf(targetDocument.resource.id) == -1) {
-                imageDocument.resource.relations['depicts'].push(targetDocument.resource.id);
+            promise.then(
+                () => resolve(),
+                msgWithParams => reject(msgWithParams)
+            );
+        });
+    }
+
+    private updateAndPersistDepictsRelations(imageDocuments: Array<IdaiFieldImageDocument>,
+                 targetDocument: IdaiFieldDocument): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            let promise: Promise<any> = new Promise<any>((res) => res());
+
+            for (let imageDocument of imageDocuments) {
+                const oldVersion = JSON.parse(JSON.stringify(imageDocument));
+
+                if (!imageDocument.resource.relations['depicts']) {
+                    imageDocument.resource.relations['depicts'] = [];
+                }
+
+                if (imageDocument.resource.relations['depicts'].indexOf(targetDocument.resource.id) == -1) {
+                    imageDocument.resource.relations['depicts'].push(targetDocument.resource.id);
+                }
+
+                promise = promise.then(
+                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
+                            [oldVersion]),
+                    msgWithParams => reject(msgWithParams)
+                );
             }
 
-            return this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
-                    [oldVersion]).then(
-                () => {
-                    if (imageDocumentIndex < imageDocuments.length - 1) {
-                        return this.updateAndPersistDepictsRelations(imageDocuments, targetDocument,
-                            ++imageDocumentIndex);
-                    } else {
-                        resolve();
-                    }
-                }, msgWithParams => reject(msgWithParams));
+            promise.then(
+                () => resolve(),
+                msgWithParams => reject(msgWithParams)
+            );
         });
     }
 }

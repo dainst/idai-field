@@ -215,11 +215,27 @@ export class DoceditWrapperComponent {
                 } else {
                     return Promise.resolve();
                 }
-            }).then(() => { return this.persistenceManager.remove(this.document); }
-            ).then(() => {
+            })
+            .then(() => this.removeWithPersistenceManager(this.document))
+            .then(() => {
                 this.onDeleteSuccess.emit();
                 this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
-            }).catch(msgWithParams => this.messages.add(msgWithParams));
+            })
+            .catch(err => {
+                if (err instanceof Array) this.messages.add(err);
+                else this.messages.add([err]);
+            });
+    }
+
+    private removeWithPersistenceManager(document) {
+        return this.persistenceManager.remove(document)
+            .catch(removeError => {
+                if (removeError == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+                    return Promise.resolve();
+                } else {
+                    return Promise.reject(removeError);
+                }
+            });
     }
 
     private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {

@@ -72,21 +72,19 @@ export function main() {
             return doc;
         }
 
-        const expectErr = function(promise,msgWithParams,done) {
+        const expectErr = function(promise,expectedMsgWithParams,done) {
             promise().then(
                 result => {
-                    fail('rejection with '+ msgWithParams
+                    fail('rejection with '+ expectedMsgWithParams
                         + ' expected but resolved with ' + result);
                     done();
                 },
                 msgWithParams => {
-                    expect(msgWithParams).toEqual(msgWithParams);
+                    expect(msgWithParams).toEqual(expectedMsgWithParams);
                     done();
                 }
             );
         };
-
-
 
         // create
 
@@ -204,8 +202,20 @@ export function main() {
             }
         );
 
-
         // get
+
+        it('should get if existent',
+            function (done) {
+                var d = doc('sd1');
+                datastore.create(d)
+                    .then(() => datastore.get(d['resource']['id']))
+                    .then(doc => {
+                        expect(doc['resource']['shortDescription']).toBe('sd1');
+                        done();
+                    });
+
+            }
+        );
 
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
@@ -224,6 +234,37 @@ export function main() {
                 expectErr(()=>{
                     return datastore.create(doc('id1'))
                         .then(() => datastore.refresh(non))},[M.DATASTORE_NOT_FOUND],done);
+            }
+        );
+
+        // remove
+
+        it('should remove if existent',
+            function (done) {
+                var d = doc('sd1');
+                expectErr(()=>{
+                    return datastore.create(d)
+                        .then(() => datastore.remove(d))
+                        .then(() => datastore.get(d['resource']['id']))
+                    },
+                    [M.DATASTORE_NOT_FOUND],done);
+
+            }
+        );
+
+        it('should throw error when no resource id',
+            function (done) {
+                expectErr(()=>{return datastore.remove(doc('sd2'))}
+                    ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID],done);
+            }
+        );
+
+        it('should throw error when trying to remove and not existent',
+            function (done) {
+                var d = doc('sd1');
+                d['resource']['id'] = 'hoax';
+                expectErr(()=>{return datastore.remove(d)}
+                    ,[DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR],done);
             }
         );
 

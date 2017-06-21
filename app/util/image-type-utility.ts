@@ -4,7 +4,7 @@ import {ConfigLoader, IdaiType} from 'idai-components-2/configuration'
 @Injectable()
 /**
  * @author Thomas Kleinke
- * @author Daniel de Oliveira
+ * @author F.Z.
  */
 export class ImageTypeUtility {
 

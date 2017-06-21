@@ -162,8 +162,21 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<undefined>}
      */
     public remove(doc: Document): Promise<undefined> {
-        return this.db.remove(doc)
-            .catch(err => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
+
+        if (doc.resource.id == null) {
+            return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
+        }
+
+        return this.readyForQuery
+            .then(() => this.get(doc.resource.id)).then(
+                () => {
+                    this.db.remove(doc)
+                        .catch(err => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
+                },
+                documentDoesNotExistError => {
+                    return Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]);
+                }
+            );
     }
 
     /**

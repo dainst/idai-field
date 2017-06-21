@@ -53,11 +53,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DATASTORE_NOT_FOUND: string = 'datastore/notfound';
     public static DATASTORE_GENERIC_ERROR: string = 'datastore/genericerr';
 
-    // Widgets Package
+    // Docedit Package
 
-    public static WIDGETS_SAVE_SUCCESS: string = 'overview/savesuccess';
-    public static WIDGETS_DELETE_SUCCESS: string = 'overview/deletesuccess';
-    public static WIDGETS_SAVE_ERROR: string = 'widgets/saveerror';
+    public static DOCEDIT_SAVE_SUCCESS: string = 'docedit/savesuccess';
+    public static DOCEDIT_DELETE_SUCCESS: string = 'docedit/deletesuccess';
+    public static DOCEDIT_SAVE_ERROR: string = 'docedit/saveerror';
+    public static DOCEDIT_DELETE_ERROR: string = 'docedit/deleteerror';
 
     // Images Package
 
@@ -269,20 +270,26 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ["?"],
             hidden: false
         };
-        this.msgs[M.WIDGETS_SAVE_SUCCESS]={
+        this.msgs[M.DOCEDIT_SAVE_SUCCESS]={
             content: 'Die Ressource wurde erfolgreich gespeichert.',
             level: 'success',
             params: [],
             hidden: false
         };
-        this.msgs[M.WIDGETS_DELETE_SUCCESS]={
+        this.msgs[M.DOCEDIT_DELETE_SUCCESS]={
             content: 'Die Ressource wurde erfolgreich gelöscht.',
             level: 'success',
             params: [],
             hidden: false
         };
-        this.msgs[M.WIDGETS_SAVE_ERROR]={
+        this.msgs[M.DOCEDIT_SAVE_ERROR]={
             content: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_DELETE_ERROR]={
+            content: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.',
             level: 'danger',
             params: [],
             hidden: false

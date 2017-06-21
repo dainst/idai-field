@@ -89,7 +89,7 @@ export class ListComponent {
             () => {
                 return this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]);
             }).then(() => {
-                this.messages.add([M.WIDGETS_SAVE_SUCCESS]);
+                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
             }).catch(msgWithParams => {
                 this.messages.add(msgWithParams);
                 return this.restoreIdentifier(document);

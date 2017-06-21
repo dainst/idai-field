@@ -97,7 +97,7 @@ export class DoceditWrapperComponent {
             .then(
                 () => this.saveValidatedDocument(this.clonedDocument, viaSaveButton),
             ).then(
-                () => this.messages.add([M.WIDGETS_SAVE_SUCCESS])
+                () => this.messages.add([M.DOCEDIT_SAVE_SUCCESS])
             ).catch(
                 msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams);
@@ -140,7 +140,7 @@ export class DoceditWrapperComponent {
             this.handleDeletedConflict();
         } else {
             console.error(errorWithParams);
-            return Promise.reject([M.WIDGETS_SAVE_ERROR]);
+            return Promise.reject([M.DOCEDIT_SAVE_ERROR]);
         }
         return Promise.reject(undefined);
     }
@@ -219,9 +219,10 @@ export class DoceditWrapperComponent {
             .then(() => this.removeWithPersistenceManager(this.document))
             .then(() => {
                 this.onDeleteSuccess.emit();
-                this.messages.add([M.WIDGETS_DELETE_SUCCESS]);
+                this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
             })
             .catch(err => {
+                // TODO this should be simplified to just this.messages.add(err) as soon as imagestore.remove rejects with well defined error
                 if (err instanceof Array) this.messages.add(err);
                 else this.messages.add([err]);
             });
@@ -234,7 +235,7 @@ export class DoceditWrapperComponent {
                 if (removeError == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
                     return Promise.resolve();
                 } else {
-                    return Promise.reject(removeError);
+                    return Promise.reject([M.DOCEDIT_DELETE_ERROR]);
                 }
             });
     }

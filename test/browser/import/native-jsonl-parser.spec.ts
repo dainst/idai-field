@@ -1,13 +1,18 @@
-import {NativeJsonlParser} from "../../../app/import/native-jsonl-parser";
-import {M} from "../../../app/m"
+import {NativeJsonlParser} from '../../../app/import/native-jsonl-parser';
+import {M} from '../../../app/m';
 
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
 export function main() {
-
     describe('NativeJsonlParser', () => {
+
+        beforeEach(
+            function() {
+                spyOn(console, 'error'); // to suppress console.error output
+            }
+        );
 
        it('should create objects from file content', (done) => {
 

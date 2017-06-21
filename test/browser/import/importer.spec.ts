@@ -7,28 +7,29 @@ import {Observable} from 'rxjs/Observable';
  */
 export function main() {
 
-    let mockReader;
-    let mockParser;
-    let importer: Importer;
-    let mockImportStrategy;
-    let mockRelationsStrategy;
-    let mockRollbackStrategy;
-    let mockDatastore;
-
-    beforeEach(()=>{
-        mockReader = jasmine.createSpyObj('reader', ['go']);
-        mockReader.go.and.callFake(function() {return Promise.resolve();});
-        mockParser = jasmine.createSpyObj('parser', ['parse']);
-
-        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
-        mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy', ['completeInverseRelations',
-            'resetInverseRelations']);
-        mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
-        mockDatastore = jasmine.createSpyObj('datastore', ['setAutoCacheUpdate']);
-        importer = new Importer();
-    });
-
     describe('Importer', () => {
+
+        let mockReader;
+        let mockParser;
+        let importer: Importer;
+        let mockImportStrategy;
+        let mockRelationsStrategy;
+        let mockRollbackStrategy;
+        let mockDatastore;
+
+        beforeEach(() => {
+            mockReader = jasmine.createSpyObj('reader', ['go']);
+            mockReader.go.and.callFake(function() {return Promise.resolve();});
+            mockParser = jasmine.createSpyObj('parser', ['parse']);
+
+            mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
+            mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy', ['completeInverseRelations',
+                'resetInverseRelations']);
+            mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
+            mockDatastore = jasmine.createSpyObj('datastore', ['setAutoCacheUpdate']);
+            importer = new Importer();
+        });
+
         it('should import until constraint violation is detected',
             function (done) {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {

@@ -1,22 +1,23 @@
-import {ImageGridBuilder} from "../../../app/common/image-grid-builder";
+import {ImageGridBuilder} from '../../../app/common/image-grid-builder';
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
+
     describe('ImageGridBuilder', () => {
 
         let imageGridBuilder;
 
         const documents = [{
-            id: "o1",
+            id: 'o1',
             resource: {
-                id: "o1",
-                identifier:"ob1",
-                shortDescription:"name",
-                height: "1",
-                width: "2",
-                filename: "abc"
+                id: 'o1',
+                identifier:'ob1',
+                shortDescription:'name',
+                height: '1',
+                width: '2',
+                filename: 'abc'
             }
         }];
 
@@ -25,10 +26,10 @@ export function main() {
                 read: function() {
                     return {
                         then: function(callback) {
-                            callback("url");
+                            callback('url');
                             return {
                                 catch: function(callback) {
-                                    callback("err")
+                                    callback('err')
                                 }
                             }
                         }

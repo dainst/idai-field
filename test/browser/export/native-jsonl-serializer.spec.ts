@@ -6,32 +6,32 @@ import {Document} from 'idai-components-2/core';
  */
 export function main() {
 
-    const testDocuments: Array<Document> = [
-        {
-            'created': { 'user': 'testuser', 'date': new Date() },
-            'modified': [ { 'user': 'testuser', 'date': new Date() } ],
-            'resource': {
-                'id': 'id1',
-                'type': 'object',
-                'identifier': 'test1',
-                'shortDescription': 'Test 1',
-                'relations': {}
-            }
-        },
-        {
-            'created': { 'user': 'testuser', 'date': new Date() },
-            'modified': [ { 'user': 'testuser', 'date': new Date() } ],
-            'resource': {
-                'id': 'id2',
-                'type': 'object',
-                'identifier': 'test2',
-                'shortDescription': 'Test 2',
-                'relations': {}
-            }
-        }
-    ];
-
     describe('NativeJsonlSerializer', () => {
+
+        const testDocuments: Array<Document> = [
+            {
+                'created': { 'user': 'testuser', 'date': new Date() },
+                'modified': [ { 'user': 'testuser', 'date': new Date() } ],
+                'resource': {
+                    'id': 'id1',
+                    'type': 'object',
+                    'identifier': 'test1',
+                    'shortDescription': 'Test 1',
+                    'relations': {}
+                }
+            },
+            {
+                'created': { 'user': 'testuser', 'date': new Date() },
+                'modified': [ { 'user': 'testuser', 'date': new Date() } ],
+                'resource': {
+                    'id': 'id2',
+                    'type': 'object',
+                    'identifier': 'test2',
+                    'shortDescription': 'Test 2',
+                    'relations': {}
+                }
+            }
+        ];
 
         it('should serialize resources to the native jsonl format', () => {
 

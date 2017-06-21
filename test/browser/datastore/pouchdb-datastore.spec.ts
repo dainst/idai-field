@@ -1,7 +1,7 @@
-import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
-import {Document} from "idai-components-2/core";
-import {DatastoreErrors} from "idai-components-2/datastore";
-import {M} from "../../../app/m";
+import {PouchdbDatastore} from '../../../app/datastore/pouchdb-datastore';
+import {Document} from 'idai-components-2/core';
+import {DatastoreErrors} from 'idai-components-2/datastore';
+import {M} from '../../../app/m';
 
 /**
  * @author Daniel de Oliveira
@@ -9,46 +9,47 @@ import {M} from "../../../app/m";
  */
 export function main() {
 
-    let datastore : PouchdbDatastore;
-
-    const mockConfigLoader = jasmine.createSpyObj(
-        'mockConfigLoader',
-        [ 'getProjectConfiguration' ]
-    );
-
-    const mockProjectConfiguration = jasmine.createSpyObj(
-        'mockProjectConfiguration',
-        ['getParentTypes']
-    );
-
-    mockProjectConfiguration.getParentTypes.and.callFake(type => {
-        if (type == 'root') return [];
-        if (type == 'type1') return ['root'];
-        if (type == 'type1.1') return ['type1','root'];
-        if (type == 'type2') return ['root'];
-    });
-
-    mockConfigLoader.getProjectConfiguration
-        .and.callFake(() => Promise.resolve(mockProjectConfiguration));
-
-    beforeEach(
-        (done) => {
-            spyOn(console, 'debug'); // to suppress console.error output
-            datastore = new PouchdbDatastore(mockConfigLoader);
-            datastore.select('testdb').then(()=>done());
-        }, 5000
-    );
-
-    afterEach(
-        (done)=> {
-            datastore.shutDown()
-                .then(() => new PouchDB('testdb').destroy())
-                .then(() => new PouchDB('testdb2').destroy())
-                .then(()=>done());
-        }, 5000
-    );
-
     describe('PouchdbDatastore', () => {
+
+        let datastore : PouchdbDatastore;
+
+        const mockConfigLoader = jasmine.createSpyObj(
+            'mockConfigLoader',
+            [ 'getProjectConfiguration' ]
+        );
+
+        const mockProjectConfiguration = jasmine.createSpyObj(
+            'mockProjectConfiguration',
+            ['getParentTypes']
+        );
+
+        mockProjectConfiguration.getParentTypes.and.callFake(type => {
+            if (type == 'root') return [];
+            if (type == 'type1') return ['root'];
+            if (type == 'type1.1') return ['type1','root'];
+            if (type == 'type2') return ['root'];
+        });
+
+        mockConfigLoader.getProjectConfiguration
+            .and.callFake(() => Promise.resolve(mockProjectConfiguration));
+
+        beforeEach(
+            (done) => {
+                spyOn(console, 'debug'); // to suppress console.debug output
+                spyOn(console, 'error'); // to suppress console.error output
+                datastore = new PouchdbDatastore(mockConfigLoader);
+                datastore.select('testdb').then(()=>done());
+            }, 5000
+        );
+
+        afterEach(
+            (done)=> {
+                datastore.shutDown()
+                    .then(() => new PouchDB('testdb').destroy())
+                    .then(() => new PouchDB('testdb2').destroy())
+                    .then(()=>done());
+            }, 5000
+        );
 
         function doc(sd,identifier?,type?,id?) : Document {
             if (!type) type = 'object';
@@ -341,9 +342,9 @@ export function main() {
         });
 
         it('should filter by one type in find', function(done){
-            const doc1 = doc('bla1','blub','type1');
-            const doc2 = doc('bla2','blub','type2');
-            const doc3 = doc('bla3','blub','type3');
+            const doc1 = doc('bla1', 'blub', 'type1');
+            const doc2 = doc('bla2', 'blub', 'type2');
+            const doc3 = doc('bla3', 'blub', 'type3');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -364,9 +365,9 @@ export function main() {
         });
 
         it('should filter by parent type in find', function(done){
-            const doc1 = doc('blub','bla1','type1');
-            const doc2 = doc('blub','bla2','type2');
-            const doc3 = doc('blub','bla1.1','type1.1');
+            const doc1 = doc('blub', 'bla1', 'type1');
+            const doc2 = doc('blub', 'bla2', 'type2');
+            const doc3 = doc('blub', 'bla1.1', 'type1.1');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -391,10 +392,10 @@ export function main() {
                 );
         }, 2000);
 
-        it('should find by prefix query and filter', function(done){
-            const doc1 = doc('bla1','blub1','type1');
-            const doc2 = doc('bla2','blub2','type2');
-            const doc3 = doc('bla3','blub3','type2');
+        it('should find by prefix query and filter', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1');
+            const doc2 = doc('bla2', 'blub2', 'type2');
+            const doc3 = doc('bla3', 'blub3', 'type2');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -420,12 +421,12 @@ export function main() {
                 );
         });
 
-        it('should show all sorted by lastModified', function(done){
+        it('should show all sorted by lastModified', function(done) {
             datastore.create(doc('bla1','blub1','type1'))
                 // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc('bla2','blub2','type2')))
+                .then(() => datastore.create(doc('bla2', 'blub2', 'type2')))
                 // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc('bla3','blub3','type3')))
+                .then(() => datastore.create(doc('bla3', 'blub3', 'type3')))
                 .then(() => datastore.all())
                 .then(
                     result => {
@@ -444,7 +445,7 @@ export function main() {
 
         // all
 
-        it('should filter by parent type in all', function(done){
+        it('should filter by parent type in all', function(done) {
             const doc1 = doc('blub','bla1','type1');
             const doc2 = doc('blub','bla2','type2');
             const doc3 = doc('blub','bla1.1','type1.1');
@@ -473,7 +474,7 @@ export function main() {
 
         // findByIdentifier
 
-        it('should find by identifier', function(done){
+        it('should find by identifier', function(done) {
             const doc1 = doc('bla','blub');
             const doc2 = doc('blub','bla');
 
@@ -492,7 +493,7 @@ export function main() {
                 );
         });
 
-        it("should reject when can't find by identifier", function(done){
+        it('should reject when cannot find by identifier', function(done) {
             const doc1 = doc('bla','blub');
 
             expectErr(()=>{return datastore.create(doc1)
@@ -500,7 +501,7 @@ export function main() {
                 [M.DATASTORE_NOT_FOUND],done);
         });
 
-        it("should reject when called with undefined", function(done){
+        it('should reject when called with undefined', function(done) {
             const doc1 = doc('bla','blub');
 
             expectErr(()=>{return datastore.create(doc1)
@@ -508,16 +509,16 @@ export function main() {
                 [M.DATASTORE_NOT_FOUND],done);
         });
 
-        it("should find conflicted documents sorted by lastModified", function(done) {
+        it('should find conflicted documents sorted by lastModified', function(done) {
 
             let db1 = new PouchDB('testdb');
             let db2 = new PouchDB('testdb2');
 
-            db1.put(doc('bluba','bla1','type1','1'))
-                .then(() => db2.put(doc('blubb','bla1','type1','1')))
-                .then(() => db1.put(doc('bluba','bla2','type2','2')))
-                .then(() => db2.put(doc('blubb','bla2','type2','2')))
-                .then(() => db1.put(doc('blub','bla1.1','type1.1','3')))
+            db1.put(doc('bluba', 'bla1', 'type1', '1'))
+                .then(() => db2.put(doc('blubb', 'bla1', 'type1', '1')))
+                .then(() => db1.put(doc('bluba', 'bla2', 'type2', '2')))
+                .then(() => db2.put(doc('blubb', 'bla2', 'type2', '2')))
+                .then(() => db1.put(doc('blub', 'bla1.1', 'type1.1', '3')))
                 .then(() => new Promise(resolve => db2.replicate.to(db1).on('complete', resolve)))
                 .then(() => datastore.findConflicted())
                 .then(
@@ -534,5 +535,5 @@ export function main() {
                 );
         }, 2000);
 
-    })
+    });
 }

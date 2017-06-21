@@ -7,24 +7,24 @@ import {ImportStrategy} from '../../../app/import/import-strategy';
  */
 export function main() {
 
-    let mockDatastore;
-    let mockValidator;
-    let mockSettingsService;
-    let importStrategy: ImportStrategy;
-
-    beforeEach(() => {
-        mockDatastore = jasmine.createSpyObj('datastore', ['create']);
-        mockValidator = jasmine.createSpyObj('validator', ['validate']);
-        mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);
-
-        mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
-        mockDatastore.create.and.callFake(function(a) { return Promise.resolve(a); });
-        mockSettingsService.getUsername.and.callFake(function() { return 'testuser'; });
-
-        importStrategy = new DefaultImportStrategy(mockValidator, mockDatastore, mockSettingsService);
-    });
-
     describe('DefaultImportStrategy', () => {
+
+        let mockDatastore;
+        let mockValidator;
+        let mockSettingsService;
+        let importStrategy: ImportStrategy;
+
+        beforeEach(() => {
+            mockDatastore = jasmine.createSpyObj('datastore', ['create']);
+            mockValidator = jasmine.createSpyObj('validator', ['validate']);
+            mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);
+
+            mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
+            mockDatastore.create.and.callFake(function(a) { return Promise.resolve(a); });
+            mockSettingsService.getUsername.and.callFake(function() { return 'testuser'; });
+
+            importStrategy = new DefaultImportStrategy(mockValidator, mockDatastore, mockSettingsService);
+        });
 
         it('should resolve on success', (done) => {
 

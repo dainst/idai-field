@@ -108,9 +108,12 @@ export class DoceditWrapperComponent {
     /**
      * @param clonedDocument
      * @param viaSaveButton
-     * @returns {Promise<TResult>} in case of error, rejects with
-     *   either with <code>msgWithParams</code> or with <code>undefined</code>,
-     *   depending on whether the error get handled within the method.
+     * @returns {Promise<TResult>}
+     *   Resolves with
+     *     <code>undefined</code>
+     *   Rejects with
+     *     <code>msgWithParams</code>
+     *     <code>undefined</code> - if the error get handled within the method body
      */
     private saveValidatedDocument(clonedDocument: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
 

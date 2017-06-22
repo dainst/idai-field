@@ -26,4 +26,16 @@ export class PouchdbProxy {
         return this.rdy.then(db => db.changes(opts));
     }
 
+    public putAttachment(docId, attachmentId, rev, attachment, type): Promise<any> {
+        return this.rdy.then(db => db.putAttachment(docId, attachmentId, rev, attachment, type));
+    }
+
+    public getAttachment(docId, attachmentId): Promise<any> {
+        return this.rdy.then(db => db.getAttachment(docId, attachmentId));
+    }
+
+    public removeAttachment(docId, attachmentId, rev): Promise<any> {
+        return this.rdy.then(db => db.removeAttachment(docId, attachmentId, rev));
+    }
+
 }

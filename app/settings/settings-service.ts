@@ -2,8 +2,9 @@ import {Injectable} from "@angular/core";
 import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
 import {Settings, SyncTarget} from "./settings";
 import {SettingsSerializer} from "./settings-serializer";
-import {FileSystemImagestore} from "../imagestore/file-system-imagestore";
+import {Imagestore} from "../imagestore/imagestore";
 import {Observable} from "rxjs/Rx";
+import {PouchdbManager} from "../datastore/pouchdb-manager";
 
 
 @Injectable()
@@ -28,22 +29,24 @@ export class SettingsService {
     public ready: Promise<any>;
 
     constructor(private datastore: IdaiFieldDatastore,
-                private fileSystemImagestore: FileSystemImagestore) {
+                private imagestore: Imagestore,
+                private pouchdbManager: PouchdbManager) {
 
-        fileSystemImagestore.select('test');
     }
 
     public init() {
         this.ready = this.settingsSerializer.load().then((settings) => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.datastore.select(this.settings.dbs[0]);
+                let project = this.getSelectedProject();
+                this.pouchdbManager.select(project);
+                this.imagestore.select(project);
                 this.setSettings(
-                    this.settings.dbs[0],
+                    project,
                     this.settings.dbs,
                     this.settings.username,
                     this.settings.syncTarget);
-                this.activateSettings();
+                return this.activateSettings();
             }
         })
     }
@@ -107,7 +110,7 @@ export class SettingsService {
      * @returns {any}
      */
     public activateSettings(restart = false): Promise<any> {
-        this.fileSystemImagestore.select(this.getSelectedProject());
+        this.imagestore.select(this.getSelectedProject());
         if (restart) {
             return this.restartSync();
         } else {
@@ -138,7 +141,7 @@ export class SettingsService {
     private restartSync() {
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
-        this.datastore.select(this.settings.dbs[0]);
+        this.pouchdbManager.select(this.settings.dbs[0]);
         return new Promise<any>((resolve) => {
             this.observers.forEach(o => o.next(false));
             this.datastore.stopSync();

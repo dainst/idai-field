@@ -1,7 +1,8 @@
-import {PouchdbDatastore} from '../../../app/datastore/pouchdb-datastore';
-import {Document} from 'idai-components-2/core';
-import {DatastoreErrors} from 'idai-components-2/datastore';
-import {M} from '../../../app/m';
+import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
+import {Document} from "idai-components-2/core";
+import {DatastoreErrors} from "idai-components-2/datastore";
+import {M} from "../../../app/m";
+import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
 
 /**
  * @author Daniel de Oliveira
@@ -11,7 +12,8 @@ export function main() {
 
     describe('PouchdbDatastore', () => {
 
-        let datastore : PouchdbDatastore;
+        let datastore: PouchdbDatastore;
+        let pouchdbManager: PouchdbManager;
 
         const mockConfigLoader = jasmine.createSpyObj(
             'mockConfigLoader',
@@ -33,19 +35,20 @@ export function main() {
         mockConfigLoader.getProjectConfiguration
             .and.callFake(() => Promise.resolve(mockProjectConfiguration));
 
+
         beforeEach(
-            (done) => {
+            () => {
                 spyOn(console, 'debug'); // to suppress console.debug output
                 spyOn(console, 'error'); // to suppress console.error output
-                datastore = new PouchdbDatastore(mockConfigLoader);
-                datastore.select('testdb').then(()=>done());
-            }, 5000
+                pouchdbManager = new PouchdbManager(mockConfigLoader);
+                datastore = new PouchdbDatastore(mockConfigLoader, pouchdbManager);
+                pouchdbManager.select('testdb');
+            }
         );
 
         afterEach(
             (done)=> {
-                datastore.shutDown()
-                    .then(() => new PouchDB('testdb').destroy())
+                pouchdbManager.destroy()
                     .then(() => new PouchDB('testdb2').destroy())
                     .then(()=>done());
             }, 5000

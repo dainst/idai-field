@@ -1,6 +1,7 @@
 import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
 import {CachedDatastore} from "../../../app/datastore/cached-datastore";
+import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
 
 /**
  * @author Daniel de Oliveira
@@ -11,6 +12,7 @@ export function main() {
 
         let datastore: CachedDatastore;
         let pouchdb: PouchdbDatastore;
+        let pouchdbManager: PouchdbManager;
 
         let mockProjectConfiguration = jasmine.createSpyObj(
             'mockProjectConfiguration',
@@ -43,18 +45,18 @@ export function main() {
         }
 
         beforeEach(
-            function() {
+            function () {
                 spyOn(console, 'debug'); // to suppress console.debug output
                 spyOn(console, 'error'); // to suppress console.error output
-
-                pouchdb = new PouchdbDatastore(mockConfigLoader);
-                pouchdb.select('testdb');
+                pouchdbManager = new PouchdbManager(mockConfigLoader);
+                pouchdb = new PouchdbDatastore(mockConfigLoader, pouchdbManager);
+                pouchdbManager.select('testdb');
                 datastore = new CachedDatastore(pouchdb);
             }
         );
 
        afterEach(function(done) {
-            pouchdb.shutDown().then(() => done());
+           pouchdbManager.destroy().then(() => done());
         });
 
        it('should return the cached instance on calling find', function(done) {

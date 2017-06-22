@@ -131,10 +131,6 @@ export class CachedDatastore implements IdaiFieldDatastore {
         return this.datastore.removeRevision(docId, revisionId);
     }
 
-    select(name) {
-        return this.datastore.select(name);
-    }
-
     setAutoCacheUpdate(autoCacheUpdate: boolean) {
         this.autoCacheUpdate = autoCacheUpdate;
     }

@@ -36,6 +36,7 @@ import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {ImageTypeUtility} from './util/image-type-utility';
+import {PouchdbManager} from "./datastore/pouchdb-manager";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -82,12 +83,13 @@ const CONFIG = require('electron').remote.getGlobal('config');
         { provide: Imagestore, useExisting: FileSystemImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: PouchdbManager, useClass: PouchdbManager},
         {
             provide: Datastore,
-            useFactory: function(configLoader: ConfigLoader) : Datastore {
-                return new CachedDatastore(new PouchdbServerDatastore(configLoader));
+            useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager) : Datastore {
+                return new CachedDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager));
             },
-            deps: [ConfigLoader]
+            deps: [ConfigLoader, PouchdbManager]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

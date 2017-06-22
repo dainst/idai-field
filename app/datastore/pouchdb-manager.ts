@@ -59,6 +59,10 @@ export class PouchdbManager {
         return this.dbProxy;
     }
 
+    public getName(): string {
+        return this.name;
+    }
+
     public destroy(): Promise<any> {
         return this.db.destroy();
     }

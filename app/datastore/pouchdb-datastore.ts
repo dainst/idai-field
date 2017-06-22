@@ -23,9 +23,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private observers = [];
     private config: ProjectConfiguration;
     private syncHandles = [];
-    private dbname = undefined;
 
-    constructor(configLoader: ConfigLoader, pouchdbManager: PouchdbManager) {
+    constructor(configLoader: ConfigLoader, private pouchdbManager: PouchdbManager) {
 
         this.db = pouchdbManager.getDb();
         configLoader.getProjectConfiguration()
@@ -317,16 +316,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public setupSync(url: string): Promise<SyncState> {
 
-            let fullUrl = url + '/' + this.dbname;
+            let fullUrl = url + '/' + this.pouchdbManager.getName();
             console.log("start syncing with " + fullUrl);
 
-            let sync = this.db.sync(fullUrl, { live: true, retry: false });
-            this.syncHandles.push(sync);
-            return Promise.resolve({
-                url: url,
-                cancel: () => sync.cancel(),
-                onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
-                onChange: Observable.create(obs => sync.on('change', () => obs.next()))
+            return this.db.rdy.then(db => {
+                let sync = db.sync(fullUrl, { live: true, retry: false });
+                this.syncHandles.push(sync);
+                return {
+                    url: url,
+                    cancel: () => sync.cancel(),
+                    onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
+                    onChange: Observable.create(obs => sync.on('change', () => obs.next()))
+                };
             });
     }
 

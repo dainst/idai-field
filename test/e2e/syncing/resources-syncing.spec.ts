@@ -221,32 +221,6 @@ describe('resources/syncing --', function() {
             }).catch(err => { fail(err); done(); });
     });
 
-    it('save syncing settings to config file and load them after restart', done => {
-
-        const expectedConfig = {
-            'username': 'username',
-            'syncTarget': { 'address': remoteSiteAddress },
-            'dbs' : ['test']
-        };
-
-        settingsPage.get();
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        common.typeIn(settingsPage.getUserNameInput(), 'username');
-        settingsPage.clickSaveSettingsButton();
-
-        NavbarPage.clickNavigateToResources()
-            .then(() => {
-                browser.sleep(5000);
-                const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-                expect(loadedConfig).toEqual(expectedConfig);
-                return settingsPage.get().then(()=>browser.sleep(2000))
-            }).then(() => settingsPage.getRemoteSiteAddress())
-            .then(address => {
-                expect(address).toEqual(remoteSiteAddress);
-                done();
-            }).catch(err => { fail(err); done(); })
-    });
-
     it('solve an immediate conflict by reloading the latest revision', done => {
 
         settingsPage.get();

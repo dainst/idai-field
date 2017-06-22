@@ -20,7 +20,7 @@ const settingsPage = require('../settings.page');
 /**
  * @author Thomas Kleinke
  */
-fdescribe('settings --', function() {
+describe('settings --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;

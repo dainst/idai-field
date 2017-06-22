@@ -95,48 +95,37 @@ export class DoceditWrapperComponent {
 
         this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
             .then(
-                () => this.saveValidatedDocument(this.clonedDocument, viaSaveButton),
-            ).then(
-                () => this.messages.add([M.DOCEDIT_SAVE_SUCCESS])
-            ).catch(
-                msgWithParams => {
-                    if (msgWithParams) this.messages.add(msgWithParams);
+                () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
+                    .then(
+                        () => this.handleSaveSuccess(this.clonedDocument, viaSaveButton),
+                        errorWithParams => this.handleSaveError(errorWithParams)),
+
+                msgWithParams => this.messages.add(msgWithParams))
+    }
+
+    private handleSaveSuccess(clonedDocument, viaSaveButton) {
+        this.removeInspectedRevisions()
+            .then(
+                ()=>this.datastore.getLatestRevision(clonedDocument.resource.id)) // TODO resolve with latest revision as output of removeInspectedRevisions
+            .then(
+                doc => {
+                    clonedDocument = doc;
+                    this.documentEditChangeMonitor.reset();
+
+                    this.onSaveSuccess.emit({
+                        document: clonedDocument,
+                        viaSaveButton: viaSaveButton
+                    });
+
+                    this.messages.add([M.DOCEDIT_SAVE_SUCCESS])
                 }
-            );
+            ).catch(msgWithParams => {
+                this.messages.add(msgWithParams);
+            })
     }
 
-    /**
-     * @param clonedDocument
-     * @param viaSaveButton
-     * @returns {Promise<TResult>}
-     *   Resolves with
-     *     <code>undefined</code>
-     *   Rejects with
-     *     <code>msgWithParams</code>
-     *     <code>undefined</code> - if the error get handled within the method body
-     */
-    private saveValidatedDocument(clonedDocument: IdaiFieldDocument, viaSaveButton: boolean): Promise<any> {
+    private handleSaveError(errorWithParams) {
 
-        return this.persistenceManager.persist(clonedDocument, this.settingsService.getUsername()).then(
-            () => this.removeInspectedRevisions(),
-            errorWithParams => this.handlePersistError(errorWithParams)
-        ).then(
-            () => this.datastore.getLatestRevision(this.clonedDocument.resource.id),
-        ).then(
-            doc => {
-                this.clonedDocument = doc;
-                this.documentEditChangeMonitor.reset();
-
-                this.onSaveSuccess.emit({
-                    document: clonedDocument,
-                    viaSaveButton: viaSaveButton
-                });
-            }
-        ).catch(msgWithParams => { return Promise.reject(msgWithParams); })
-    }
-
-    private handlePersistError(errorWithParams) {
-        
         if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
             this.handleSaveConflict();
         } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
@@ -145,7 +134,7 @@ export class DoceditWrapperComponent {
             console.error(errorWithParams);
             return Promise.reject([M.DOCEDIT_SAVE_ERROR]);
         }
-        return Promise.reject(undefined);
+        return Promise.resolve(undefined);
     }
     
     private removeInspectedRevisions(): Promise<any> {
@@ -167,7 +156,7 @@ export class DoceditWrapperComponent {
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(decision => {
 
-            // make the doc appear 'new' ...
+            // make the doc appear 'new' ... TODO extract method
             delete this.clonedDocument.resource.id; // ... for persistenceManager
             delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
             delete this.clonedDocument['_rev'];     //

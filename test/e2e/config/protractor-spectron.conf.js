@@ -13,13 +13,13 @@ exports.config = {
 
     suites: {
         default: [
-            '../settings/*.spec.js',
             '../images/*.spec.js',
             '../import/*.spec.js',
             '../list/*.spec.js',
             '../resources/*.spec.js',
             '../resources/map/*.spec.js',
-            '../widgets/*.spec.js'
+            '../widgets/*.spec.js',
+            '../settings/*.spec.js'
         ],
         syncing: [
             '../syncing/*.spec.js'

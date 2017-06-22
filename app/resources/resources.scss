@@ -7,6 +7,7 @@
 @import "map-wrapper";
 @import "plus-button";
 @import "geometry-view";
+@import "list/list";
 
 #objectOverview,
 #imageOverview {
@@ -42,7 +43,7 @@
 }
 
 ul#objectList {
-  height: calc(100vh - 178px);
+  height: calc(100vh - 113px);
 }
 
 #objectOverview .object-list {

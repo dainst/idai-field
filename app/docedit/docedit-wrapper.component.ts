@@ -104,9 +104,7 @@ export class DoceditWrapperComponent {
     }
 
     private handleSaveSuccess(clonedDocument, viaSaveButton) {
-        this.removeInspectedRevisions()
-            .then(
-                ()=>this.datastore.getLatestRevision(clonedDocument.resource.id)) // TODO resolve with latest revision as output of removeInspectedRevisions
+        this.removeInspectedRevisions(clonedDocument.resource.id)
             .then(
                 doc => {
                     clonedDocument = doc;
@@ -136,34 +134,42 @@ export class DoceditWrapperComponent {
         }
         return Promise.resolve(undefined);
     }
-    
-    private removeInspectedRevisions(): Promise<any> {
+
+    /**
+     * @param resourceId
+     * @return {Promise<IdaiFieldDocument>} latest revision
+     */
+    private removeInspectedRevisions(resourceId): Promise<IdaiFieldDocument> {
         
         let promises = [];
-        
         for (let revisionId of this.inspectedRevisionsIds) {
-            promises.push(this.datastore.removeRevision(this.document.resource.id, revisionId));
+            promises.push(this.datastore.removeRevision(
+                resourceId,
+                revisionId));
         }
-
         this.inspectedRevisionsIds = [];
 
-        return Promise.all(promises);
+        return Promise.all(promises).then(()=>
+            this.datastore.getLatestRevision(
+                resourceId
+            ))
     }
 
     private handleDeletedConflict() {
 
         this.modalService.open(
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
-        ).result.then(decision => {
-
-            // make the doc appear 'new' ... TODO extract method
-            delete this.clonedDocument.resource.id; // ... for persistenceManager
-            delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
-            delete this.clonedDocument['_rev'];     //
-
+        ).result.then(() => {
+            this.makeClonedDocAppearNew();
             this.showDeleteButton = false;
-
         }).catch(() => {});
+    }
+
+    private makeClonedDocAppearNew() {
+        // make the doc appear 'new' ...
+        delete this.clonedDocument.resource.id; // ... for persistenceManager
+        delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
+        delete this.clonedDocument['_rev'];
     }
 
     private handleSaveConflict() {
@@ -200,14 +206,7 @@ export class DoceditWrapperComponent {
 
     private deleteDoc() {
 
-        this.imageTypeUtility.isImageType(this.document.resource.type)
-            .then(isImageType => {
-                if (isImageType) {
-                    return this.imagestore.remove(this.document.resource.identifier);
-                } else {
-                    return Promise.resolve();
-                }
-            })
+        this.removeImageTypeWithImageStore(this.document)
             .then(() => this.removeWithPersistenceManager(this.document))
             .then(() => {
                 this.onDeleteSuccess.emit();
@@ -218,6 +217,17 @@ export class DoceditWrapperComponent {
                 if (err instanceof Array) this.messages.add(err);
                 else this.messages.add([err]);
             });
+    }
+
+    private removeImageTypeWithImageStore(document) {
+        return this.imageTypeUtility.isImageType(document.resource.type)
+            .then(isImageType => {
+                if (isImageType) {
+                    return this.imagestore.remove(document.resource.identifier);
+                } else {
+                    return Promise.resolve();
+                }
+            })
     }
 
     private removeWithPersistenceManager(document) {
@@ -240,7 +250,7 @@ export class DoceditWrapperComponent {
         return clonedDoc;
     }
 
-    private relDefs() {
+    public relDefs() {
 
         if (!this.projectConfiguration) return undefined;
         return this.projectConfiguration.getRelationDefinitions(

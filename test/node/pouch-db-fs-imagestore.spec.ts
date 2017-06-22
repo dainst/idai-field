@@ -17,6 +17,7 @@ import {PouchDbFsImagestore} from "../../app/imagestore/pouch-db-fs-imagestore";
 
 import fs = require('fs');
 import rimraf = require('rimraf');
+import {PouchdbManager} from "../../app/datastore/pouchdb-manager";
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
@@ -32,10 +33,11 @@ function ab2str(buf: ArrayBuffer): string {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
-describe('FileSystemImagestore', () => {
+describe('PouchDbFsImagestore', () => {
 
 
     let store: PouchDbFsImagestore;
+    let manager: PouchdbManager;
     const storeProjectPath = 'store/unittest/';
 
     beforeEach(() => {
@@ -43,14 +45,19 @@ describe('FileSystemImagestore', () => {
         mockBlobMaker.makeBlob.and.callFake((data)=>{return data});
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
         mockConverter.convert.and.callFake((data)=>{return data});
+        const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
+        mockConfigProvider.getProjectConfiguration.and.callFake(()=>{return {}});
 
-        store = new PouchDbFsImagestore(mockConverter,mockBlobMaker,'store/');
+        manager = new PouchdbManager(mockConfigProvider);
+        manager.select('unittest');
+
+        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, 'store/', manager);
         store.select('unittest');
     });
 
     afterEach(done => {
         rimraf(storeProjectPath, () => {
-            new PouchDB('unittest').destroy().then(() => done());
+            manager.destroy().then(done);
         });
 
     });

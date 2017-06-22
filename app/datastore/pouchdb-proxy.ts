@@ -18,7 +18,7 @@ export class PouchdbProxy {
         return this.rdy.then(db => db.sync(url, opts));
     }
 
-    public get(id, opts): Promise<any> {
+    public get(id, opts={}): Promise<any> {
         return this.rdy.then(db => db.get(id, opts));
     }
 

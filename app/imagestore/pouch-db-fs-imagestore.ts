@@ -4,6 +4,7 @@ import {Converter} from "./converter";
 import {M} from "../m";
 import {Imagestore} from "./imagestore";
 import * as PouchDB from "pouchdb";
+import {PouchdbManager} from "../datastore/pouchdb-manager";
 
 /**
  * A hybrid image store that uses the file system to store the original images
@@ -11,21 +12,25 @@ import * as PouchDB from "pouchdb";
  */
 export class PouchDbFsImagestore implements Imagestore {
 
-    private projectName = 'test';
+    private projectName;
     private projectPath = undefined;
     private db = undefined;
 
     constructor(
         private converter: Converter,
         private blobMaker: BlobMaker,
-        private basePath: string) {
+        private basePath: string,
+        pouchdbManager: PouchdbManager) {
 
         if (this.basePath.substr(-1) != '/') this.basePath += '/';
         if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
-        console.log("constructor");
+
+        this.db = pouchdbManager.getDb();
     }
 
     public select(projectName: string): void {
+
+        if (this.projectName == projectName) return;
 
         this.projectName = projectName;
         this.projectPath = this.basePath + projectName + '/';
@@ -33,8 +38,6 @@ export class PouchDbFsImagestore implements Imagestore {
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
 
         if (projectName == 'test') this.loadSampleData();
-
-        this.db = new PouchDB(projectName);
     }
 
     /**
@@ -56,7 +59,7 @@ export class PouchDbFsImagestore implements Imagestore {
                     let blob = this.converter.convert(data);
                     let getRev = Promise.resolve(null);
                     if (update) getRev = this.db.get(key).then(result => result._rev);
-                    getRev.then(rev => this.db.putAttachment(key, "thumb", rev, Buffer.from(blob), "image/jpeg")
+                    getRev.then(rev => this.db.putAttachment(key, "thumb", rev, Buffer.from(blob), "image/jpeg"))
                         .then(() => resolve())
                         .catch(err => {
                             console.error(err);
@@ -76,6 +79,8 @@ export class PouchDbFsImagestore implements Imagestore {
      *  In case of error the promise gets rejected with msgWithParams.
      */
     public read(key:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
+
+        console.log('read', this.projectName, key, 'thumb:', thumb);
 
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);

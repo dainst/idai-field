@@ -140,7 +140,7 @@ describe('resources/syncing --', function() {
         browser.sleep(5000);
     }
 
-    function createConflict() {
+    function createEventualConflict() {
 
         return NavbarPage.clickNavigateToSettings()
             .then(() => removeRemoteSiteConfiguration())
@@ -154,7 +154,8 @@ describe('resources/syncing --', function() {
                 updateTestDoc();
             })
             .then(() => NavbarPage.clickNavigateToSettings())
-            .then(() => configureRemoteSite());
+            .then(() => configureRemoteSite())
+            .then(() => NavbarPage.clickNavigateToResources());
     }
 
     beforeAll(done => {
@@ -268,7 +269,7 @@ describe('resources/syncing --', function() {
             .then(() => waitForIt('test1', () => {
                 expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
 
-                createConflict()
+                createEventualConflict()
                     .then(() => {
                         browser.wait(EC.visibilityOf(resourcesPage.getListItemEl('test1')), delays.ECWaitTime);
                         expect(resourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
@@ -283,12 +284,14 @@ describe('resources/syncing --', function() {
 
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
-                createConflict()
+                createEventualConflict()
                     .then(() => { return db.get(testDocument._id); })
                     .then(doc => {
                         shortDescription = doc.resource.shortDescription;
                         expect(['Test Local', 'Test Remote']).toContain(shortDescription);
-                    }).then(() => resourcesPage.clickSelectResource('test1'))
+                    })
+                    .then(() => resourcesPage.clickSelectResource('test1'))
+                    .then(() => resourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickEditDocument)
                     .then(DocumentEditWrapperPage.clickConflictsTab)
                     .then(DocumentEditWrapperPage.clickChooseRightRevision)
@@ -309,7 +312,7 @@ describe('resources/syncing --', function() {
 
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
-                createConflict()
+                createEventualConflict()
                     .then(NavbarPage.clickConflictsButton)
                     .then(() => NavbarPage.clickConflictResolverLink('test1'))
                     .then(() => {
@@ -323,7 +326,7 @@ describe('resources/syncing --', function() {
 
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
-                createConflict()
+                createEventualConflict()
                     .then(NavbarPage.clickNavigateToResources)
                     .then(() => resourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickSolveConflicts)

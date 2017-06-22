@@ -103,6 +103,20 @@ export class DoceditWrapperComponent {
                 msgWithParams => this.messages.add(msgWithParams))
     }
 
+    public openDeleteModal(modal) {
+
+        this.modalService.open(modal).result.then(decision => {
+            if (decision == 'delete') this.deleteDoc();
+        });
+    }
+
+    public relDefs() {
+
+        if (!this.projectConfiguration) return undefined;
+        return this.projectConfiguration.getRelationDefinitions(
+            this.document.resource.type, 'editable');
+    }
+
     private handleSaveSuccess(clonedDocument, viaSaveButton) {
         this.removeInspectedRevisions(clonedDocument.resource.id)
             .then(
@@ -196,13 +210,6 @@ export class DoceditWrapperComponent {
             this.clonedDocument = <IdaiFieldDocument> latestRevision;
         }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
-    
-    public openDeleteModal(modal) {
-
-        this.modalService.open(modal).result.then(decision => {
-            if (decision == 'delete') this.deleteDoc();
-        });
-    }
 
     private deleteDoc() {
 
@@ -248,12 +255,5 @@ export class DoceditWrapperComponent {
         clonedDoc.resource = Object.assign({}, document.resource);
 
         return clonedDoc;
-    }
-
-    public relDefs() {
-
-        if (!this.projectConfiguration) return undefined;
-        return this.projectConfiguration.getRelationDefinitions(
-            this.document.resource.type, 'editable');
     }
 }

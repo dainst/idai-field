@@ -1,9 +1,9 @@
 import * as PouchDB from "pouchdb";
-import {DOCS} from "./sample-objects";
 import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 import {IndexCreator} from "./index-creator";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
+import {SampleDataLoader} from "./sample-data-loader";
 
 /**
  * Manages the creation of PouchDB instances.
@@ -20,7 +20,7 @@ export class PouchdbManager {
 
     private resolveDbReady = undefined;
 
-    constructor(private configLoader: ConfigLoader) {
+    constructor(private sampleDataLoader: SampleDataLoader) {
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
     }
@@ -35,18 +35,20 @@ export class PouchdbManager {
         // same db selected, no need for action
         if (this.name == name) return;
 
-        let rdy = Promise.resolve();
+        let rdy: Promise<any> = Promise.resolve();
 
         if (this.db) rdy = rdy.then(() => this.db.close());
 
         this.name = name;
 
         rdy = rdy.then(() => this.createDb());
-        if (name == 'test')
+        if (name == 'test') {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.createDb());
+        }
         rdy = rdy.then(() => this.indexCreator.go(this.db));
-        if (name == 'test')
-            rdy = rdy.then(() => this.loadSampleData());
+        if (name == 'test') {
+            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
+        }
         rdy.then(() => this.resolveDbReady(this.db));
     }
 
@@ -70,32 +72,6 @@ export class PouchdbManager {
     private createDb(): Promise<any> {
         this.db = new PouchDB(this.name);
         return Promise.resolve(this.db);
-    }
-
-    private loadSampleData(): Promise<any> {
-
-        return this.configLoader.getProjectConfiguration().then(config => {
-
-            let promises = [];
-            for (let doc of DOCS) {
-                doc.created = { user: 'sample_data', date: new Date() };
-                doc.modified = [];
-                doc['_id'] = doc.resource.id;
-                doc.resource['_parentTypes'] = config
-                    .getParentTypes(doc.resource.type);
-                promises.push(this.db.put(doc));
-            }
-
-            return Promise.all(promises)
-                .then(() => {
-                    console.debug("Successfully stored sample documents");
-                    return Promise.resolve(this.db);
-                })
-                .catch(err => {
-                    console.error("Problem when storing sample data", err);
-                    return Promise.reject(err);
-                });
-        });
     }
 
 }

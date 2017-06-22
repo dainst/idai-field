@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {HttpModule, Http} from '@angular/http';
+import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
 import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
@@ -22,7 +22,6 @@ import {RelationsCompleter} from './import/relations-completer';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
-import {FileSystemImagestore} from './imagestore/file-system-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
 import {CachedDatastore} from './datastore/cached-datastore';
@@ -37,8 +36,19 @@ import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {ImageTypeUtility} from './util/image-type-utility';
 import {PouchdbManager} from "./datastore/pouchdb-manager";
+import {PouchDbFsImagestore} from "./imagestore/pouch-db-fs-imagestore";
+import {SampleDataLoader} from "./datastore/sample-data-loader";
 
 const CONFIG = require('electron').remote.getGlobal('config');
+
+
+let IMG_PATH;
+if (CONFIG['imagestorepath']) {
+    IMG_PATH = CONFIG['imagestorepath'];
+} else {
+    const app = (<any>window).require('electron').remote.app;
+    IMG_PATH = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
+}
 
 @NgModule({
     imports: [
@@ -63,27 +73,14 @@ const CONFIG = require('electron').remote.getGlobal('config');
         ExportComponent
     ],
     providers: [
+        { provide: 'app.config', useValue: CONFIG },
+        { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
-        {
-            provide: FileSystemImagestore,
-            useFactory: function(http: Http,blobMaker: BlobMaker): FileSystemImagestore {
-
-                let path;
-                if (CONFIG['imagestorepath']) {
-                    path = CONFIG['imagestorepath'];
-                } else {
-                    const app = (<any>window).require('electron').remote.app;
-                    path = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
-                }
-                return new FileSystemImagestore(new Converter(), blobMaker, path);
-
-            },
-            deps: [Http, BlobMaker]
-        },
-        { provide: Imagestore, useExisting: FileSystemImagestore },
+        SampleDataLoader,
+        { provide: PouchdbManager, useClass: PouchdbManager },
+        { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: PouchdbManager, useClass: PouchdbManager},
         {
             provide: Datastore,
             useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager) : Datastore {
@@ -96,7 +93,7 @@ const CONFIG = require('electron').remote.getGlobal('config');
         { provide: CachedDatastore, useExisting: Datastore },
         Messages,
         BlobMaker,
-        { provide: 'app.config', useValue: CONFIG },
+        Converter,
         ConfigLoader,
         PersistenceManager,
         AppConfigurator,

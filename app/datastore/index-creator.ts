@@ -19,6 +19,7 @@ export class IndexCreator {
     private setupFulltextIndex(db): Promise<any> {
         db.on('error', err => console.error(err.toString()));
         let mapFun = function(doc) {
+            if (!doc.resource || !doc.resource.type) return;
             const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
             types.forEach(function(type) {
@@ -34,6 +35,7 @@ export class IndexCreator {
 
     private setupSyncedIndex(db): Promise<any> {
         let mapFun = function(doc) {
+            if (!doc.resource) return;
             emit(doc.synced);
         };
         return this.setupIndex(db,'synced', mapFun);
@@ -41,6 +43,7 @@ export class IndexCreator {
 
     private setupIdentifierIndex(db): Promise<any> {
         let mapFun = function(doc) {
+            if (!doc.resource || !doc.resource.identifier) return;
             emit(doc.resource.identifier);
         };
         return this.setupIndex(db,'identifier', mapFun);
@@ -48,6 +51,7 @@ export class IndexCreator {
 
     private setupAllIndex(db): Promise<any> {
         let mapFun = function(doc) {
+            if (!doc.resource || !doc.resource.type) return;
             const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
             let lastModified = doc.created.date;
@@ -60,6 +64,7 @@ export class IndexCreator {
 
     private setupBelongsToIndex(db): Promise<any> {
         let mapFun = function(doc) {
+            if (!doc.resource) return;
             if (doc.resource.relations['belongsTo'] != undefined) {
                 doc.resource.relations['belongsTo'].forEach(identifier => emit(identifier));
             }
@@ -69,6 +74,7 @@ export class IndexCreator {
 
     private setupConflictedIndex(db): Promise<any> {
         let mapFun = function(doc) {
+            if (!doc.resource) return;
             if (doc['_conflicts']) {
                 let lastModified = doc.created.date;
                 if (doc.modified && doc.modified.length > 0)

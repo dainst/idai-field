@@ -1,4 +1,5 @@
 import {nativeImage} from 'electron';
+import {Injectable} from "@angular/core";
 // suppress compile errors TODO remove when typings are there
 interface NI { createFromBuffer(key:any):any; }
 
@@ -6,6 +7,7 @@ interface NI { createFromBuffer(key:any):any; }
  * @author F.Z.
  * @author Daniel de Oliveira
  */
+@Injectable()
 export class Converter {
 
     public convert(data) {

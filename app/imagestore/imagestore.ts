@@ -32,10 +32,6 @@ export abstract class Imagestore extends ReadImagestore {
      */
     abstract remove(key: string): Promise<any>;
 
-    /**
-     * Subscription enables clients to get notified
-     * when files get modified via one of the accessor
-     * methods defined here.
-     */
-    abstract objectChangesNotifications(): Observable<File>;
+    abstract select(projectName: string): void;
+
 }

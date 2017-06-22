@@ -3,10 +3,11 @@ import {BlobMaker} from './blob-maker';
 import {Converter} from './converter';
 import {M} from '../m';
 import {Observable} from 'rxjs/Observable';
+import {Imagestore} from "./imagestore";
 
-export class FileSystemImagestore {
+export class FileSystemImagestore implements Imagestore {
 
-    private projectName = 'test';
+    private projectName = undefined;
     private projectPath = undefined;
 
     constructor(
@@ -19,6 +20,8 @@ export class FileSystemImagestore {
     }
 
     public select(projectName: string): void {
+
+        if (this.projectName == projectName) return;
 
         this.projectName = projectName;
         this.projectPath = this.basePath + projectName + '/';
@@ -77,8 +80,8 @@ export class FileSystemImagestore {
      * @returns {Promise<any>} resolve -> (data), the data read with the key,
      *  reject -> the error message
      */
-    protected _read(key: string, thumb: boolean): Promise<ArrayBuffer> {
-        let path = thumb ? this.projectPath + '/thumbs/' + key : this.projectPath + key;
+    private _read(key: string, thumb: boolean): Promise<ArrayBuffer> {
+        let path = thumb ? this.projectPath + "/thumbs/" + key : this.projectPath + key;
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) reject(err);
@@ -121,11 +124,6 @@ export class FileSystemImagestore {
                 }
             });
         });
-    }
-
-    public objectChangesNotifications(): Observable<File> {
-
-        return Observable.create(() => {});
     }
 
     private loadSampleData(): void {

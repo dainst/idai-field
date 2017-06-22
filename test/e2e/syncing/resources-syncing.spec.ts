@@ -170,7 +170,13 @@ describe('resources/syncing --', function() {
 
     beforeEach(done => {
 
-        createTestDoc().then(done);
+        createTestDoc()
+            .then(
+                ()=> {
+                    settingsPage.get();
+                    configureRemoteSite();
+                })
+            .then(done);
     });
 
     afterEach(done => {
@@ -184,8 +190,6 @@ describe('resources/syncing --', function() {
 
     it('show resource created in other db', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         NavbarPage.clickNavigateToResources();
         waitForIt('test1', () => {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
@@ -195,8 +199,6 @@ describe('resources/syncing --', function() {
 
     it('show changes made in other db', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 testDocument.resource.identifier = 'test2';
@@ -209,8 +211,6 @@ describe('resources/syncing --', function() {
 
     it('resource created in client should be synced to other db', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
@@ -223,8 +223,6 @@ describe('resources/syncing --', function() {
 
     it('solve an immediate conflict by reloading the latest revision', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 resourcesPage.clickSelectResource('test1')
@@ -243,8 +241,6 @@ describe('resources/syncing --', function() {
 
     it('solve an immediate conflict by overwriting the latest revision', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 resourcesPage.clickSelectResource('test1')
@@ -268,8 +264,6 @@ describe('resources/syncing --', function() {
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
@@ -287,8 +281,6 @@ describe('resources/syncing --', function() {
 
         let shortDescription = '';
 
-        settingsPage.get();
-        configureRemoteSite();
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 createConflict()
@@ -315,8 +307,6 @@ describe('resources/syncing --', function() {
 
     it('open conflict resolver via taskbar', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 createConflict()
@@ -331,8 +321,6 @@ describe('resources/syncing --', function() {
 
     it('open conflict resolver via conflict button in document view', done => {
 
-        settingsPage.get();
-        configureRemoteSite();
         return NavbarPage.clickNavigateToResources()
             .then(() => waitForIt('test1', () => {
                 createConflict()

@@ -24,9 +24,21 @@ describe('settings --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
+    const configTemplate = browser.params.configTemplate;
 
     let db, server;
 
+    function resetConfigJson(): Promise<any> {
+
+        return new Promise(resolve => {
+            fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
+                if (err) console.error('Failure while resetting config.json', err);
+                resolve();
+            });
+        });
+    }
+
+    // -- this code should not be necessary but for some reason the spec hangs without it
     function setupTestDB() {
 
         return new Promise(resolve => {
@@ -48,7 +60,11 @@ describe('settings --', function() {
         browser.sleep(2000);
         setupTestDB().then(done);
     });
+    // --
 
+    afterEach(done => {
+        resetConfigJson().then(done);
+    });
 
     it('save syncing settings to config file and load them after restart', done => {
 

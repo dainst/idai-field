@@ -6,7 +6,7 @@ import {Messages} from "idai-components-2/messages";
 import {Imagestore} from "../imagestore/imagestore";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {EditModalComponent} from '../docedit/edit-modal.component';
+import {DoceditComponent} from '../docedit/docedit.component';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 @Component({
@@ -46,7 +46,7 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
 
     public startEdit(doc: IdaiFieldDocument) {
 
-        var detailModalRef = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'});
+        var detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         var detailModal = detailModalRef.componentInstance;
 
         detailModalRef.result.then(result => {

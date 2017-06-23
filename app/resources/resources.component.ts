@@ -10,7 +10,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {EditModalComponent} from '../docedit/edit-modal.component';
+import {DoceditComponent} from '../docedit/docedit.component';
 
 
 @Component({
@@ -225,7 +225,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
 
-        var detailModalRef = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'});
+        var detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         var detailModal = detailModalRef.componentInstance;
 
         detailModalRef.result.then(result => {

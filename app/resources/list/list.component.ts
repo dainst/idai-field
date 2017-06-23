@@ -7,7 +7,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {M} from '../../m';
 import {SettingsService} from '../../settings/settings-service';
-import {EditModalComponent} from '../../docedit/edit-modal.component';
+import {DoceditComponent} from '../../docedit/docedit.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -101,7 +101,7 @@ export class ListComponent {
         this.selectedDocument = doc;
 
         let detailModal
-            = this.modalService.open(EditModalComponent, {size: 'lg', backdrop: 'static'}).componentInstance;
+            = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'}).componentInstance;
         detailModal.setDocument(doc);
     }
 

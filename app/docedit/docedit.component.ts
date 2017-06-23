@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
@@ -6,7 +6,7 @@ import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuratio
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../m';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
@@ -15,9 +15,9 @@ import {ImageTypeUtility} from '../util/image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
 
 @Component({
-    selector: 'document-edit-wrapper',
+    selector: 'detail-modal',
     moduleId: module.id,
-    templateUrl: './docedit-wrapper.html'
+    templateUrl: './docedit.html'
 })
 
 /**
@@ -29,7 +29,12 @@ import {Imagestore} from '../imagestore/imagestore';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DoceditWrapperComponent {
+export class DoceditComponent {
+
+    /**
+     * The original unmodified version of the document
+     */
+    public document: IdaiFieldDocument;
 
     /**
      * Holds a cloned version of the <code>document</code> field,
@@ -37,14 +42,15 @@ export class DoceditWrapperComponent {
      */
     private clonedDocument: IdaiFieldDocument;
 
-    @Input() document: IdaiFieldDocument;
-    @Input() showBackButton: boolean = true;
-    @Input() showDeleteButton: boolean = true;
-    @Input() activeTab: string;
+    public activeTab: string;
 
-    @Output() onSaveSuccess = new EventEmitter<any>();
-    @Output() onBackButtonClicked = new EventEmitter<any>();
-    @Output() onDeleteSuccess = new EventEmitter<any>();
+    @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
+    public dialog: NgbModalRef;
+
+    // used in template
+    public showBackButton: boolean = true;
+
+    public deleteButtonShown = true;
 
     private projectConfiguration: ProjectConfiguration;
 
@@ -58,11 +64,12 @@ export class DoceditWrapperComponent {
     private inspectedRevisionsIds: string[];
 
     constructor(
+        public activeModal: NgbActiveModal,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private configLoader: ConfigLoader,
+        configLoader: ConfigLoader,
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDatastore,
@@ -72,19 +79,29 @@ export class DoceditWrapperComponent {
         this.imageTypeUtility.getProjectImageTypes().then(
             projectImageTypes => this.projectImageTypes = projectImageTypes
         );
-    }
 
-    ngOnChanges() {
-        
-        if (!this.document) return;
-
-        this.inspectedRevisionsIds = [];
-        this.clonedDocument = DoceditWrapperComponent.cloneDocument(this.document);
-        this.persistenceManager.setOldVersions([this.document]);
-
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+        configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
         });
+    }
+
+
+    public showDeleteButton() {
+        this.deleteButtonShown = true;
+    }
+
+    public setDocument(document: IdaiFieldDocument) {
+        if (!document) return;
+
+        this.document = document;
+
+        this.inspectedRevisionsIds = [];
+        this.clonedDocument = DoceditComponent.cloneDocument(this.document);
+        this.persistenceManager.setOldVersions([this.document]);
+    }
+
+    public setActiveTab(activeTabName: string) {
+        this.activeTab = activeTabName;
     }
 
     /**
@@ -104,6 +121,10 @@ export class DoceditWrapperComponent {
             .catch(msgWithParams => this.messages.add(msgWithParams))
     }
 
+    public showModal() {
+        this.dialog = this.modalService.open(this.modalTemplate);
+    }
+
     public openDeleteModal(modal) {
 
         this.modalService.open(modal).result.then(decision => {
@@ -118,6 +139,14 @@ export class DoceditWrapperComponent {
             this.document.resource.type, 'editable');
     }
 
+    public cancel() {
+        if (this.documentEditChangeMonitor.isChanged()) {
+            this.showModal();
+        } else {
+            this.activeModal.dismiss('cancel');
+        }
+    }
+
     private handleSaveSuccess(clonedDocument, viaSaveButton) {
         this.removeInspectedRevisions(clonedDocument.resource.id)
             .then(
@@ -125,7 +154,7 @@ export class DoceditWrapperComponent {
                     clonedDocument = doc;
                     this.documentEditChangeMonitor.reset();
 
-                    this.onSaveSuccess.emit({
+                    this.activeModal.close({
                         document: clonedDocument,
                         viaSaveButton: viaSaveButton
                     });
@@ -176,7 +205,7 @@ export class DoceditWrapperComponent {
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(() => {
             this.makeClonedDocAppearNew();
-            this.showDeleteButton = false;
+            this.deleteButtonShown = false;
         }).catch(() => {});
     }
 
@@ -217,7 +246,7 @@ export class DoceditWrapperComponent {
         this.removeImageTypeWithImageStore(this.document)
             .then(() => this.removeWithPersistenceManager(this.document))
             .then(() => {
-                this.onDeleteSuccess.emit();
+                this.activeModal.dismiss('deleted');
                 this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
             })
             .catch(err => {

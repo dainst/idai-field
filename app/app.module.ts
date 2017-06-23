@@ -77,7 +77,11 @@ if (CONFIG['imagestorepath']) {
         { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
         SampleDataLoader,
-        { provide: PouchdbManager, useClass: PouchdbManager },
+        { provide: PouchdbManager, useFactory: function(sampleDataLoader: SampleDataLoader){
+                return new PouchdbManager(sampleDataLoader);
+            },
+            deps: [SampleDataLoader]
+        },
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },

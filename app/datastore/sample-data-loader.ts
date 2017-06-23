@@ -3,9 +3,10 @@ import {DOCS} from "./sample-objects";
 import {ConfigLoader} from "idai-components-2/configuration";
 import {Converter} from "../imagestore/converter";
 import {Inject, Injectable} from "@angular/core";
+import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 
 @Injectable()
-export class SampleDataLoader {
+export class SampleDataLoader implements AbstractSampleDataLoader {
 
     constructor(private converter: Converter,
                 private configLoader: ConfigLoader,

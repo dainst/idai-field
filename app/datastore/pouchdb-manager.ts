@@ -2,7 +2,7 @@ import * as PouchDB from "pouchdb";
 import {IndexCreator} from "./index-creator";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
-import {SampleDataLoader} from "./sample-data-loader";
+import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 
 /**
  * Manages the creation of PouchDB instances.
@@ -19,7 +19,7 @@ export class PouchdbManager {
 
     private resolveDbReady = undefined;
 
-    constructor(private sampleDataLoader: SampleDataLoader) {
+    constructor(private sampleDataLoader: AbstractSampleDataLoader) {
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
     }

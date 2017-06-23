@@ -98,9 +98,10 @@ export class DoceditWrapperComponent {
                 () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
                     .then(
                         () => this.handleSaveSuccess(this.clonedDocument, viaSaveButton),
-                        errorWithParams => this.handleSaveError(errorWithParams)),
-
-                msgWithParams => this.messages.add(msgWithParams))
+                        errorWithParams => this.handleSaveError(errorWithParams)
+                    )
+            )
+            .catch(msgWithParams => this.messages.add(msgWithParams))
     }
 
     public openDeleteModal(modal) {

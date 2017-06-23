@@ -237,7 +237,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (limit > -1) opt['limit'] = limit;
 
         return this.db.query('fulltext', opt)
-            .then(result => this.filterResult(this.docsFromResult(result)));
+            .then(result => this.filterResult(this.docsFromResult(result)))
+            .catch(err => {
+                console.error(err);
+                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+            });
     }
 
     public findUnsynced(): Promise<Document[]> {

@@ -217,7 +217,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         return this.datastore.find(query).then(documents => {
             this.documents = documents as Document[];
             this.notify();
-        });
+        }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {
@@ -267,7 +267,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         let tquery: Query = {q: '', type: 'trench', prefix: true};
         this.datastore.find(tquery).then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
-        }).catch(err => { console.error(err); } );
+        }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
     public createGeometry(geometryType: string) {

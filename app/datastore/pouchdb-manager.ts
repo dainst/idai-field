@@ -1,5 +1,4 @@
 import * as PouchDB from "pouchdb";
-import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
 import {IndexCreator} from "./index-creator";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
@@ -37,7 +36,11 @@ export class PouchdbManager {
 
         let rdy: Promise<any> = Promise.resolve();
 
-        if (this.db) rdy = rdy.then(() => this.db.close());
+        if (this.db) {
+            let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
+            this.dbProxy.switchDb(dbReady);
+            rdy = rdy.then(() => this.db.close());
+        }
 
         this.name = name;
 

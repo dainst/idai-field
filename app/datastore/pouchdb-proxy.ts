@@ -2,6 +2,10 @@ export class PouchdbProxy {
 
     constructor(public rdy: Promise<any>) { }
 
+    public switchDb(rdy: Promise<any>) {
+        this.rdy = rdy;
+    }
+
     public put(document): Promise<any> {
         return this.rdy.then(db => db.put(document));
     }

@@ -221,9 +221,7 @@ export class DoceditWrapperComponent {
                 this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
             })
             .catch(err => {
-                // TODO this should be simplified to just this.messages.add(err) as soon as imagestore.remove rejects with well defined error
-                if (err instanceof Array) this.messages.add(err);
-                else this.messages.add([err]);
+                this.messages.add(err);
             });
     }
 

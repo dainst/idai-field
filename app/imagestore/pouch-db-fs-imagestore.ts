@@ -95,7 +95,10 @@ export class PouchDbFsImagestore implements Imagestore {
 
         return new Promise((resolve, reject) => {
             fs.unlink(this.projectPath + key, (err) => {
-                if (err) reject(err);
+                if (err) {
+                    console.error(err);
+                    reject([M.IMAGESTORE_ERROR_DELETE, key]);
+                }
                 else {
                     this.db.get(key)
                         .then(result => result._rev)
@@ -120,9 +123,13 @@ export class PouchDbFsImagestore implements Imagestore {
                 }
                 else {
                     let blob = this.converter.convert(data);
+                    // TODO: remove when tests run with electron
+                    // convert to buffer or blob depending on whether we run in node or browser
+                    if (typeof Blob !== 'undefined') blob = new Blob([blob]);
+                    else blob = Buffer.from(blob);
                     let getRev = Promise.resolve(null);
                     if (update) getRev = this.db.get(key).then(result => result._rev);
-                    getRev.then(rev => this.db.putAttachment(key, "thumb", rev, new Blob([blob]), "image/jpeg"))
+                    getRev.then(rev => this.db.putAttachment(key, "thumb", rev, blob, "image/jpeg"))
                         .then(() => resolve())
                         .catch(err => {
                             console.error(err);

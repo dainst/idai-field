@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import {BlobMaker} from './blob-maker';
 import {Converter} from './converter';
 import {M} from '../m';
-import {Observable} from 'rxjs/Observable';
 import {Imagestore} from "./imagestore";
 
 export class FileSystemImagestore implements Imagestore {
@@ -43,11 +42,17 @@ export class FileSystemImagestore implements Imagestore {
 
         return new Promise((resolve, reject) => {
             fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'wx'}, err => {
-                if (err) reject(err);
+                if (err) {
+                    console.error(err);
+                    reject([M.IMAGES_ERROR_MEDIASTORE_WRITE]);
+                }
                 else {
                     fs.writeFile(this.projectPath + 'thumbs/' + key,
                         this.converter.convert(data), {flag: 'wx'}, err => {
-                        if (err) reject(err);
+                        if (err) {
+                            console.error(err);
+                            reject([M.IMAGES_ERROR_MEDIASTORE_WRITE]);
+                        }
                         else resolve();
                     });
                 }
@@ -84,7 +89,10 @@ export class FileSystemImagestore implements Imagestore {
         let path = thumb ? this.projectPath + "/thumbs/" + key : this.projectPath + key;
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
-                if (err) reject(err);
+                if (err) {
+                    console.error(err);
+                    reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ]);
+                }
                 else resolve(data);
             });
         });
@@ -100,7 +108,10 @@ export class FileSystemImagestore implements Imagestore {
 
         return new Promise((resolve, reject) => {
             fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: 'w'}, (err) => {
-                if (err) reject(err);
+                if (err) {
+                    console.error(err);
+                    reject([M.IMAGES_ERROR_MEDIASTORE_WRITE]);
+                }
                 else resolve();
             });
         });
@@ -115,10 +126,16 @@ export class FileSystemImagestore implements Imagestore {
 
         return new Promise((resolve, reject) => {
             fs.unlink(this.projectPath + key, err => {
-                if (err) reject(err);
+                if (err) {
+                    console.error(err);
+                    reject([M.IMAGESTORE_ERROR_DELETE]);
+                }
                 else {
                     fs.unlink(this.projectPath + 'thumbs/' + key, err => {
-                        if (err) reject(err);
+                        if (err) {
+                            console.error(err);
+                            reject([M.IMAGESTORE_ERROR_DELETE]);
+                        }
                         else resolve();
                     });
                 }

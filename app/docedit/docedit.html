@@ -35,7 +35,7 @@
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
-                <button *ngIf="deleteButtonShown" class="btn btn-danger pull-right"
+                <button *ngIf="clonedDocument && clonedDocument.resource.id" class="btn btn-danger pull-right"
                         id="document-edit-button-delete-document"
                         style="float: right;"
                         (click)="openDeleteModal(deleteModal);">

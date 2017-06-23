@@ -50,8 +50,6 @@ export class DoceditComponent {
     // used in template
     public showBackButton: boolean = true;
 
-    public deleteButtonShown = true;
-
     private projectConfiguration: ProjectConfiguration;
 
     private projectImageTypes: any = {};
@@ -85,10 +83,6 @@ export class DoceditComponent {
         });
     }
 
-
-    public showDeleteButton() {
-        this.deleteButtonShown = true;
-    }
 
     public setDocument(document: IdaiFieldDocument) {
         if (!document) return;

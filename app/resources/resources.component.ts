@@ -244,7 +244,6 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
             if (closeReason == 'deleted') this.selectedDocument = undefined;
         });
 
-        if (this.selectedDocument.resource.id) detailModal.showDeleteButton();
         detailModal.setDocument(this.selectedDocument);
 
         if (activeTabName) {

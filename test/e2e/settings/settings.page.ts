@@ -3,37 +3,35 @@ import {browser, protractor, element, by} from 'protractor';
 'use strict';
 
 let EC = protractor.ExpectedConditions;
-let delays = require('./config/delays');
+let delays = require('../config/delays');
 
 
 /**
  * @author Thomas Kleinke
  */
-let SettingsPage = function() {
+export class SettingsPage {
 
-    this.get = function() {
+    public static get = function() {
         return browser.get('#/settings');
     };
 
-    this.clickSaveSettingsButton = function() {
+    public static clickSaveSettingsButton = function() {
         browser.wait(EC.visibilityOf(element(by.id('save-settings-button'))), delays.ECWaitTime);
         element(by.id('save-settings-button')).click();
     };
 
-    this.getRemoteSiteAddressInput = function() {
+    public static getRemoteSiteAddressInput = function() {
         browser.wait(EC.visibilityOf(element(by.id('sync-target-address-input'))),
             delays.ECWaitTime);
         return element(by.id('sync-target-address-input'));
     };
 
-    this.getRemoteSiteAddress = function() {
+    public static getRemoteSiteAddress = function() {
         return this.getRemoteSiteAddressInput().getAttribute('value');
     };
 
-    this.getUserNameInput = function() {
+    public static getUserNameInput = function() {
         browser.wait(EC.visibilityOf(element(by.id('username-input'))), delays.ECWaitTime);
         return element(by.id('username-input'));
     };
-};
-
-module.exports = new SettingsPage();
+}

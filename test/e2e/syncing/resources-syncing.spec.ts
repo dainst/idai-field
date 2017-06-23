@@ -14,7 +14,7 @@ const path = require('path');
 const common = require('../common');
 const resourcesPage = require('../resources/resources.page');
 const documentViewPage = require('../widgets/document-view.page');
-const settingsPage = require('../settings.page');
+import {SettingsPage} from '../settings/settings.page';
 
 
 /**
@@ -128,15 +128,15 @@ describe('resources/syncing --', function() {
 
     function configureRemoteSite() {
 
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        settingsPage.clickSaveSettingsButton();
+        common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
+        SettingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
     }
 
     function removeRemoteSiteConfiguration() {
 
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), ' ');
-        settingsPage.clickSaveSettingsButton();
+        common.typeIn(SettingsPage.getRemoteSiteAddressInput(), ' ');
+        SettingsPage.clickSaveSettingsButton();
         browser.sleep(5000);
     }
 
@@ -174,7 +174,7 @@ describe('resources/syncing --', function() {
         createTestDoc()
             .then(
                 ()=> {
-                    settingsPage.get();
+                    SettingsPage.get();
                     configureRemoteSite();
                 })
             .then(done);

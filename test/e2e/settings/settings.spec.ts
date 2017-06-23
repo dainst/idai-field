@@ -1,9 +1,9 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor} from "protractor";
+import {NavbarPage} from "../navbar.page";
+import * as PouchDB from "pouchdb";
+import {SettingsPage} from "./settings.page";
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
-import {NavbarPage} from '../navbar.page';
-import * as PouchDB from 'pouchdb';
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
@@ -12,9 +12,6 @@ const fs = require('fs');
 const path = require('path');
 
 const common = require('../common');
-const resourcesPage = require('../resources/resources.page');
-const documentViewPage = require('../widgets/document-view.page');
-const settingsPage = require('../settings.page');
 
 
 /**
@@ -74,18 +71,18 @@ describe('settings --', function() {
             'dbs': ['test']
         };
 
-        settingsPage.get();
-        common.typeIn(settingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        common.typeIn(settingsPage.getUserNameInput(), 'username');
-        settingsPage.clickSaveSettingsButton();
+        SettingsPage.get();
+        common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
+        common.typeIn(SettingsPage.getUserNameInput(), 'username');
+        SettingsPage.clickSaveSettingsButton();
 
         NavbarPage.clickNavigateToResources()
             .then(() => {
                 browser.sleep(5000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 expect(loadedConfig).toEqual(expectedConfig);
-                return settingsPage.get().then(() => browser.sleep(2000))
-            }).then(() => settingsPage.getRemoteSiteAddress())
+                return SettingsPage.get().then(() => browser.sleep(2000))
+            }).then(() => SettingsPage.getRemoteSiteAddress())
             .then(address => {
                 expect(address).toEqual(remoteSiteAddress);
                 done();

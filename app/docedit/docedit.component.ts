@@ -199,7 +199,6 @@ export class DoceditComponent {
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(() => {
             this.makeClonedDocAppearNew();
-            this.deleteButtonShown = false;
         }).catch(() => {});
     }
 

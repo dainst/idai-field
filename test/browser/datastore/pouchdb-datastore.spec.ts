@@ -94,7 +94,7 @@ export function main() {
 
         it('should create a document and create a resource.id',
             function (done) {
-                
+
                 datastore.create(doc('sd1'))
                     .then(
                         _createdDoc => {

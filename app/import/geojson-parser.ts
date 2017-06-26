@@ -1,7 +1,7 @@
-import {Observable} from "rxjs/Observable";
-import {Document} from "idai-components-2/core";
-import {M} from "../m";
-import {AbstractParser} from "./abstract-parser";
+import {Observable} from 'rxjs/Observable';
+import {Document} from 'idai-components-2/core';
+import {M} from '../m';
+import {AbstractParser} from './abstract-parser';
 
 export interface Geojson {
     type: string,
@@ -31,13 +31,13 @@ export class GeojsonParser extends AbstractParser {
             try {
                 content_ = JSON.parse(content) as Geojson;
             } catch (e) {
-                return observer.error([M.IMPORT_FAILURE_INVALIDJSON,e.toString()]);
+                return observer.error([M.IMPORT_FAILURE_INVALIDJSON, e.toString()]);
             }
 
             const msgWithParams = GeojsonParser.validate(content_);
             if (msgWithParams != undefined) return observer.error(msgWithParams);
 
-            this.iterateDocs(content_,observer);
+            this.iterateDocs(content_, observer);
             observer.complete();
         });
     }
@@ -49,11 +49,14 @@ export class GeojsonParser extends AbstractParser {
     }
 
     private static validate(content: Geojson) {
+
+        const supportedGeometryTypes = ['Point', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'];
+
         function structErr(text) {
-            return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT,text];
+            return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, text];
         }
         if (content.type != 'FeatureCollection') {
-            return structErr('"type":"FeatureCollection" not found at top level.');
+            return structErr('"type": "FeatureCollection" not found at top level.');
         }
         if (content.features == undefined) {
             return structErr('Property "features" not found at top level.');
@@ -72,8 +75,8 @@ export class GeojsonParser extends AbstractParser {
             if (feature.type != 'Feature') {
                 return structErr('Second level elements must be of type "Feature".');
             }
-            if (['Polygon','Point'].indexOf(feature.geometry.type) == -1) {
-                return structErr('geometry type "'+feature.geometry.type+'" not supported.');
+            if (supportedGeometryTypes.indexOf(feature.geometry.type) == -1) {
+                return structErr('geometry type "' + feature.geometry.type + '" not supported.');
             }
         }
     }

@@ -17,19 +17,33 @@ var mainWindow;
 
 // Load configuration
 if (process.argv.length > 2) {
-    global.configPath = process.argv[2];
-    global.configurationPath = 'config/Configuration.json';
+  global.configurationPath = 'config/Configuration.json';
+  global.configPath = process.argv[2];
 } else {
-    global.configurationPath = '../config/Configuration.json';
-    global.configPath = process.resourcesPath+'/config/config.json';
-    // global.configPath = electron.app.getPath('appData') + '/' + electron.app.getName() + '/config.json';
-    // if (!fs.existsSync(global.configPath)) {
-    //     fs.writeFileSync(global.configPath, '{"environment":"production"}','utf-8');
-    // }
+  global.configurationPath = '../config/Configuration.json';
+  global.configPath = process.resourcesPath + '/config/config.json';
 }
+
+if (global.configPath.indexOf('config.test.json') == -1) {
+  var appDataConfigPath = electron.app.getPath('appData') + '/' + electron.app.getName() + '/config.json';
+  copyConfigFile(global.configPath, appDataConfigPath);
+  global.configPath = appDataConfigPath;
+}
+
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 
+
+// Copy config file to appData if no config file exists in appData
+function copyConfigFile(srcPath, destPath) {
+
+  if (!fs.existsSync(destPath)) {
+    var config = fs.readFileSync(srcPath, 'utf-8');
+    fs.writeFileSync(destPath, config);
+  }
+}
+
 function createWindow() {
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1200,

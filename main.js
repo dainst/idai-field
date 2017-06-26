@@ -31,6 +31,7 @@ if (global.configPath.indexOf('config.test.json') == -1) {
 }
 
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
+console.log('Using config file: ' + global.configPath);
 
 
 // Copy config file to appData if no config file exists in appData

@@ -1,20 +1,15 @@
 <div class="modal-body p-0">
     <div class="px-2"><messages></messages></div>
-    <!--<document-edit-wrapper #f-->
-                           <!--[document]="doc"-->
-                           <!--(onSaveSuccess)="activeModal.close($event)"-->
-                           <!--[showDeleteButton]="deleteButtonShown"-->
-                           <!--[showBackButton]="true"-->
-                           <!--(onBackButtonClicked)="cancel()"-->
-                           <!--(onDeleteSuccess)="activeModal.dismiss('deleted')"-->
-                           <!--[activeTab]="activeTab"-->
-                           <!--&gt;-->
-    <!--</document-edit-wrapper>-->
+
     <ng-template #deleteModal let-c="close">
         <div class="modal-body">Möchten Sie die Ressource wirklich löschen?</div>
         <div class="modal-footer">
-            <button type="button" id="delete-resource-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
-            <button type="button" id="delete-resource-cancel" class="btn btn-default" (click)="c('cancel')">Abbrechen</button>
+            <button type="button" id="delete-resource-confirm" class="btn btn-danger" (click)="c('delete')">
+                Löschen
+            </button>
+            <button type="button" id="delete-resource-cancel" class="btn btn-default" (click)="c('cancel')">
+                Abbrechen
+            </button>
         </div>
     </ng-template>
 
@@ -59,7 +54,8 @@
                             <ngb-tab title="Felder" id="document-edit-fields-tab">
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
-                                               [fieldDefinitions]="projectConfiguration.getFieldDefinitions(document.resource.type)"></edit-form>
+                                               [fieldDefinitions]="projectConfiguration.getFieldDefinitions
+                                                    (document.resource.type)"></edit-form>
                                 </ng-template>
                             </ngb-tab>
                             <ngb-tab *ngIf="relDefs() && relDefs().length > 0" title="Relationen"
@@ -83,10 +79,12 @@
                             </ngb-tab>
 
                             <ngb-tab *ngIf="clonedDocument._conflicts" id="document-edit-conflicts-tab">
-                                <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte</ng-template>
+                                <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte
+                                </ng-template>
                                 <ng-template ngbTabContent>
                                     <conflict-resolver [(document)]="clonedDocument"
-                                                       [(inspectedRevisionsIds)]="inspectedRevisionsIds"></conflict-resolver>
+                                                       [(inspectedRevisionsIds)]="inspectedRevisionsIds">
+                                    </conflict-resolver>
                                 </ng-template>
                             </ngb-tab>
                         </ngb-tabset>

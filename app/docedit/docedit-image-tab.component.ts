@@ -1,14 +1,14 @@
-import {Component, ElementRef, Input} from "@angular/core";
-import {ConfigLoader} from "idai-components-2/configuration";
-import {ImageGridBuilder} from "../common/image-grid-builder";
-import {Imagestore} from "../imagestore/imagestore";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {Messages} from "idai-components-2/messages";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {ImagePickerComponent} from "../widgets/image-picker.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DocumentEditChangeMonitor} from "idai-components-2/documents";
+import {Component, ElementRef, Input} from '@angular/core';
+import {ConfigLoader} from 'idai-components-2/configuration';
+import {ImageGridBuilder} from '../common/image-grid-builder';
+import {Imagestore} from '../imagestore/imagestore';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Messages} from 'idai-components-2/messages';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {ImagePickerComponent} from '../widgets/image-picker.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 @Component({
     selector: 'document-edit-image-tab',
@@ -27,7 +27,7 @@ export class DoceditImageTabComponent {
 
     private imageDocuments: IdaiFieldImageDocument[];
 
-    private imageGridBuilder : ImageGridBuilder;
+    private imageGridBuilder: ImageGridBuilder;
     private rows = [];
 
     constructor(
@@ -37,10 +37,9 @@ export class DoceditImageTabComponent {
         private messages: Messages,
         private datastore: IdaiFieldDatastore,
         private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
+        private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(imagestore, true)
-
+        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
     }
 
     ngOnChanges() {
@@ -57,7 +56,7 @@ export class DoceditImageTabComponent {
     private calcGrid() {
         this.rows = [];
         this.imageGridBuilder.calcGrid(
-            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result => {
             this.rows = result['rows'];
             for (let msgWithParams of result['msgsWithParams']) {
                 this.messages.add(msgWithParams);
@@ -80,8 +79,8 @@ export class DoceditImageTabComponent {
 
     private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        const relations = this.clonedDocument.resource.relations["depictedIn"]
-            ? this.clonedDocument.resource.relations["depictedIn"].slice() : [];
+        const relations = this.clonedDocument.resource.relations['depictedIn']
+            ? this.clonedDocument.resource.relations['depictedIn'].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
@@ -89,7 +88,7 @@ export class DoceditImageTabComponent {
             }
         }
 
-        this.clonedDocument.resource.relations["depictedIn"] = relations;
+        this.clonedDocument.resource.relations['depictedIn'] = relations;
 
         this.loadImages();
     }
@@ -100,7 +99,7 @@ export class DoceditImageTabComponent {
 
     public openImagePicker() {
 
-        this.modalService.open(ImagePickerComponent, {size: "lg"}).result.then(
+        this.modalService.open(ImagePickerComponent, {size: 'lg'}).result.then(
             (selectedImages: IdaiFieldImageDocument[]) => {
                 this.addDepictedInRelations(selectedImages);
                 this.documentEditChangeMonitor.setChanged();

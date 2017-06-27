@@ -32,7 +32,7 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div class="col-lg-12 col-md-12 col-sm-12" id="document-edit-wrapper">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [selectedDocument]="selectedDocument"
                      [editMode]="editGeometry"></map-wrapper>
         <list *ngIf="mode == 'list'" [documents]="documents" [selectedDocument]="selectedDocument"

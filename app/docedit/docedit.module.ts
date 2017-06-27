@@ -7,12 +7,12 @@ import {DoceditComponent} from './docedit.component';
 import {RouterModule} from '@angular/router';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
-import {WidgetsModule} from "../widgets/widgets.module";
-import {DoceditImageTabComponent} from "./docedit-image-tab.component";
-import {ConflictResolverComponent} from "./conflict-resolver.component";
-import {ConflictModalComponent} from "./conflict-modal.component";
-import {ConflictDeletedModalComponent} from "./conflict-deleted-modal.component";
-import {EditSaveDialogComponent} from "./edit-save-dialog.component";
+import {WidgetsModule} from '../widgets/widgets.module';
+import {DoceditImageTabComponent} from './docedit-image-tab.component';
+import {ConflictResolverComponent} from './conflict-resolver.component';
+import {ConflictModalComponent} from './conflict-modal.component';
+import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
+import {EditSaveDialogComponent} from './edit-save-dialog.component';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import {EditSaveDialogComponent} from "./edit-save-dialog.component";
         IdaiDocumentsModule,
         RouterModule,
         IdaiMessagesModule,
-        WidgetsModule,
+        WidgetsModule
     ],
     declarations: [
         ConflictModalComponent,

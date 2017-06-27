@@ -60,8 +60,6 @@ export class PouchDbFsImagestore implements Imagestore {
      */
     public read(key:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
 
-        console.log('read', this.projectName, key, 'thumb:', thumb);
-
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
         return readFun(key).then(data => {

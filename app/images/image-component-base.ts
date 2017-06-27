@@ -26,12 +26,16 @@ export class ImageComponentBase {
                 doc => {
                     this.image.document = doc;
                     if (doc.resource.filename) {
-                        this.imagestore.read(doc.resource.filename, false, false).then(url => {
-                            this.image.imgSrc = url;
-                        }).catch(msgWithParams => {
-                            this.image.imgSrc = BlobMaker.blackImg;
-                            this.messages.add(msgWithParams);
-                        });
+                        // read original (empty if not present)
+                        this.imagestore.read(doc.resource.filename, false, false)
+                            .then(url => this.image.imgSrc = url)
+                            // read thumb
+                            .then(() => this.imagestore.read(doc.resource.filename, false, true))
+                            .then(url => this.image.thumbSrc = url)
+                            .catch(msgWithParams => {
+                                this.image.imgSrc = BlobMaker.blackImg;
+                                this.messages.add(msgWithParams);
+                            });
                     }
                 },
                 () => {

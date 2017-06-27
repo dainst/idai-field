@@ -331,13 +331,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_MEDIASTORE_READ]={
-            content: "Datei '{0}' konnte nicht aus dem MediaStore gelesen werden.",
+            content: "Datei '{0}' konnte nicht aus dem Bilderverzeichnis gelesen werden.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGES_ERROR_MEDIASTORE_WRITE]={
-            content: "Datei '{0}' konnte nicht im MediaStore gespeichert werden.",
+            content: "Datei '{0}' konnte nicht im Bilderverzeichnis gespeichert werden.",
             level: 'danger',
             params: [],
             hidden: false

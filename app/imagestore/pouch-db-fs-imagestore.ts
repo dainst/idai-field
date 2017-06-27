@@ -57,6 +57,9 @@ export class PouchDbFsImagestore implements Imagestore {
      * @param boolean image will be loaded as thumb, default: true
      * @return {Promise<string>} Promise that returns the blob url.
      *  In case of error the promise gets rejected with msgWithParams.
+     *  File not found errors are not thrown when an original is requested
+     *  (thumb == false) because missing files in the filesystem can be a
+     *  normal result of syncing.
      */
     public read(key:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
 
@@ -69,6 +72,8 @@ export class PouchDbFsImagestore implements Imagestore {
             }
             return this.blobMaker.makeBlob(data,sanitizeAfter);
         }).catch(err => {
+            // missing file is ok for originals
+            if (err.code == "ENOENT" && !thumb) return Promise.resolve('');
             console.error(err);
             return Promise.reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ, key]);
         });

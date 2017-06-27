@@ -27,9 +27,9 @@
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <description-view [document]="selectedDocument"></description-view>
-            <thumbnail-view [imageIds]="selectedDocument.resource.relations['depictedIn']"
+            <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
                             *ngIf="selectedDocument && selectedDocument.resource.relations
-                            && selectedDocument.resource.relations['depictedIn']">
+                            && selectedDocument.resource.relations['isDepictedIn']">
             </thumbnail-view>
             <geometry-view [document]="selectedDocument"
                            (onEditGeometry)="resourcesComponent.startEditGeometry()"

@@ -2,15 +2,6 @@
 
   "identifier" : "development",
 
-  "views": [
-      {
-          "label": "Ausgrabung",
-          "mainType": "trench",
-          "relation": "includes",
-          "types": ["context", "object", "section", "plana"]
-      }
-  ],
-
   "types":[
 
     {
@@ -403,7 +394,7 @@
     },
 
     {
-      "type":"plana",
+      "type":"planum",
       "label":"Planum",
       "fields":[
         {
@@ -707,77 +698,9 @@
 
   "relations":[
     {
-      "name":"isBefore",
-      "inverse":"isAfter",
-      "label":"Zeitlich vor",
-      "domain":[
-        "object"
-      ],
-      "range":[
-        "object"
-      ]
-    },
-    {
-      "name":"isLocatedIn",
-      "inverse":"embeds",
-      "label":"liegt in",
-      "domain":[
-        "object"
-      ],
-      "range":[
-        "section",
-        "plana",
-        "context"
-      ]
-    },
-    {
-      "name":"isBelow",
-      "inverse":"isAbove",
-      "label":"liegt unter",
-      "domain":[
-        "context"
-      ],
-      "range":[
-        "context"
-      ]
-    },
-    {
-      "name":"isAbove",
-      "inverse":"isBelow",
-      "label":"liegt über",
-      "domain":[
-        "context"
-      ],
-      "range":[
-        "context"
-      ]
-    },
-    {
-      "name":"isAfter",
-      "inverse":"isBefore",
-      "label":"Zeitlich nach",
-      "domain":[
-        "object"
-      ],
-      "range":[
-        "object"
-      ]
-    },
-    {
-      "name":"isCoevalWith",
-      "inverse":"isCoevalWith",
-      "label":"Zeitgleich mit",
-      "domain":[
-        "object"
-      ],
-      "range":[
-        "object"
-      ]
-    },
-    {
       "name":"depicts",
-      "inverse":"depictedIn",
-      "label":"ist Abbildung von",
+      "inverse":"isDepictedIn",
+      "label":"Ist Abbildung von",
       "domain":[
         "image",
         "photo",
@@ -786,16 +709,54 @@
       "range":[
         "section",
         "context",
-        "plana",
+        "planum",
         "object"
       ]
     },
     {
-      "name":"embeds",
-      "inverse":"isLocatedIn",
-      "label":"umschließt",
+      "name":"isRecordedIn",
+      "inverse":"records",
+      "label":"Gehört zu",
       "domain":[
-        "plana",
+        "context",
+        "object",
+        "section",
+        "planum"
+      ],
+      "range":[
+        "trench"
+      ]
+    },
+    {
+      "name":"records",
+      "inverse":"isRecordedIn",
+      "label":"Beinhaltet",
+      "domain":[
+        "trench"
+      ],
+      "range":[
+        "context",
+        "object",
+        "section",
+        "planum"
+      ]
+    },
+    {
+      "name":"liesWithin",
+      "inverse":"includes",
+      "label":"Liegt in",
+      "domain":[
+        "object"
+      ],
+      "range":[
+        "context"
+      ]
+    },
+    {
+      "name":"includes",
+      "inverse":"liesWithin",
+      "label":"Enthält",
+      "domain":[
         "context"
       ],
       "range":[
@@ -803,31 +764,90 @@
       ]
     },
     {
-      "name":"includes",
-      "inverse":"belongsTo",
-      "label":"enthält",
+      "name":"isAbove",
+      "inverse":"isBelow",
+      "label":"Liegt über",
       "domain":[
-        "trench"
+        "context",
+        "planum"
       ],
       "range":[
         "context",
-        "object",
-        "section",
-        "plana"
+        "planum"
       ]
     },
     {
-      "name":"belongsTo",
-      "inverse":"includes",
-      "label":"gehört zu",
+      "name":"isBelow",
+      "inverse":"isAbove",
+      "label":"Liegt unter",
       "domain":[
         "context",
-        "object",
-        "section",
-        "plana"
+        "planum"
       ],
       "range":[
-        "trench"
+        "context",
+        "planum"
+      ]
+    },
+    {
+      "name":"cuts",
+      "inverse":"isCutBy",
+      "label":"Schneidet",
+      "domain":[
+        "context"
+      ],
+      "range":[
+        "context"
+      ]
+    },
+    {
+      "name":"isCutBy",
+      "inverse":"cuts",
+      "label":"Wird geschnitten von",
+      "domain":[
+        "context"
+      ],
+      "range":[
+        "context"
+      ]
+    },
+    {
+      "name":"isBefore",
+      "inverse":"isAfter",
+      "label":"Zeitlich vor",
+      "domain":[
+        "context",
+        "object"
+      ],
+      "range":[
+        "context",
+        "object"
+      ]
+    },
+    {
+      "name":"isAfter",
+      "inverse":"isBefore",
+      "label":"Zeitlich nach",
+      "domain":[
+        "context",
+        "object"
+      ],
+      "range":[
+        "context",
+        "object"
+      ]
+    },
+    {
+      "name":"isContemporaryWith",
+      "inverse":"isContemporaryWith",
+      "label":"Zeitgleich mit",
+      "domain":[
+        "context",
+        "object"
+      ],
+      "range":[
+        "context",
+        "object"
       ]
     }
 

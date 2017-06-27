@@ -62,9 +62,9 @@ describe('document view --', function() {
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(0);
-        DocumentEditWrapperPage.typeInRelationByIndices(0, 0, '2');
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(0, 0, 0);
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(2);
+        DocumentEditWrapperPage.typeInRelationByIndices(2, 0, '2');
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(2, 0, 0);
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickDiscardInModal();
 

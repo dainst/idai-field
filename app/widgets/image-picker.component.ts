@@ -34,8 +34,9 @@ export class ImagePickerComponent {
     }
 
     public queryChanged(query: Query) {
-        this.query = query;
-        this.fetchDocuments(query);
+
+        this.query.q = query.q;
+        this.fetchDocuments(this.query);
     }
 
     public onResize() {

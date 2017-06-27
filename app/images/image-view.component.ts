@@ -56,7 +56,6 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
             if (closeReason == 'deleted') this.deselect();
         });
 
-        if (doc.resource.id) detailModal.showDeleteButton();
         detailModal.setDocument(doc);
     }
 

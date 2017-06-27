@@ -109,7 +109,7 @@ describe('PouchDbFsImagestore', () => {
             });
     });
 
-    it('should remove a file', (done) => {
+    xit('should remove a file', (done) => {
 
         spyOn(console, 'error'); // to suppress console.error output
         store.create('test_remove', str2ab('sdfg'))

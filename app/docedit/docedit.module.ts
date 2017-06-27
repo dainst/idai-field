@@ -32,7 +32,6 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
         DoceditComponent,
         EditSaveDialogComponent,
         DoceditImageTabComponent,
-        DoceditComponent,
         ConflictResolverComponent
     ],
     exports: [

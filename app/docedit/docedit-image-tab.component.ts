@@ -26,7 +26,6 @@ export class DoceditImageTabComponent {
     @Input() clonedDocument: IdaiFieldDocument;
 
     private imageDocuments: IdaiFieldImageDocument[];
-
     private imageGridBuilder: ImageGridBuilder;
     private rows = [];
 
@@ -47,7 +46,7 @@ export class DoceditImageTabComponent {
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
             if (!this.document) return;
-            if (this.document.resource.relations['depictedIn']) {
+            if (this.document.resource.relations['isDepictedIn']) {
                 this.loadImages();
             }
         });
@@ -67,7 +66,7 @@ export class DoceditImageTabComponent {
     private loadImages() {
         const imageDocPromises = [];
         this.imageDocuments = [];
-        this.document.resource.relations['depictedIn'].forEach(id => {
+        this.document.resource.relations['isDepictedIn'].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
@@ -77,10 +76,10 @@ export class DoceditImageTabComponent {
         });
     }
 
-    private addDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
+    private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        const relations = this.clonedDocument.resource.relations['depictedIn']
-            ? this.clonedDocument.resource.relations['depictedIn'].slice() : [];
+        const relations = this.clonedDocument.resource.relations['isDepictedIn']
+            ? this.clonedDocument.resource.relations['isDepictedIn'].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
@@ -88,7 +87,7 @@ export class DoceditImageTabComponent {
             }
         }
 
-        this.clonedDocument.resource.relations['depictedIn'] = relations;
+        this.clonedDocument.resource.relations['isDepictedIn'] = relations;
 
         this.loadImages();
     }
@@ -99,11 +98,16 @@ export class DoceditImageTabComponent {
 
     public openImagePicker() {
 
-        this.modalService.open(ImagePickerComponent, {size: 'lg'}).result.then(
-            (selectedImages: IdaiFieldImageDocument[]) => {
-                this.addDepictedInRelations(selectedImages);
+        let imagePickerModal = this.modalService.open(ImagePickerComponent, {size: 'lg'});
+        imagePickerModal.componentInstance.setDocument(this.document);
+
+        imagePickerModal.result.then(
+            (selectedImages: Array<IdaiFieldImageDocument>) => {
+                this.addIsDepictedInRelations(selectedImages);
                 this.documentEditChangeMonitor.setChanged();
             }
-        );
+        ).catch(() => {
+            // Cancel
+        });
     }
 }

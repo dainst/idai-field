@@ -28,8 +28,7 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,
-        ImagePickerComponent,
-
+        ImagePickerComponent
     ],
     exports: [
         DocumentViewComponent,

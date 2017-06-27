@@ -1,9 +1,14 @@
 <div class="modal-header">
-    <button *ngIf="selected.length > 0" (click)="activeModal.close(selected)" class="btn btn-primary">{{selected.length}} Bilder hinzufügen</button>
+    <button *ngIf="selectedDocuments.length == 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+        Bild hinzufügen
+    </button>
+    <button *ngIf="selectedDocuments.length > 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+        {{selectedDocuments.length}} Bilder hinzufügen
+    </button>
 </div>
 
 <div class="modal-body" id="image-picker-modal">
-    <search-bar *ngIf="!selected.length"
+    <search-bar *ngIf="!selectedDocuments.length"
                 [showFiltersMenu]="false"
                 [defaultFilterSet]="defaultTypes"
                 (onQueryChanged)="queryChanged($event)">
@@ -21,7 +26,7 @@
                 <div (click)="select(cell['document'])"
                      [id]="'resource-' + cell['document'].resource.identifier"
                      class="cell"
-                     [class.selected]="selected.includes(cell['document'])">
+                     [class.selected]="selectedDocuments.includes(cell['document'])">
 
                     <div class="identifier"
                          *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"

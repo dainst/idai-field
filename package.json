@@ -34,8 +34,8 @@
     },
     "npmRebuild": false,
     "extraResources": [
-      "imagestore",
-      "config"
+      "config",
+      "test/test-data/imagestore-samples"
     ]
   },
   "repository": {

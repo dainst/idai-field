@@ -97,21 +97,16 @@ export class PouchDbFsImagestore implements Imagestore {
     public remove(key: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.unlink(this.projectPath + key, (err) => {
-                if (err) {
-                    console.error(err);
-                    reject([M.IMAGESTORE_ERROR_DELETE, key]);
-                }
-                else {
-                    this.db.get(key)
-                        .then(result => result._rev)
-                        .then(rev => this.db.removeAttachment(key, "thumb", rev))
-                        .then(() => resolve())
-                        .catch(err => {
-                            console.error(err);
-                            return reject([M.IMAGESTORE_ERROR_DELETE, key])
-                        });
-                }
+            fs.unlink(this.projectPath + key, () => {
+                // errors are ignored on purpose, original file may be missing due to syncing
+                this.db.get(key)
+                    .then(result => result._rev)
+                    .then(rev => this.db.removeAttachment(key, "thumb", rev))
+                    .then(() => resolve())
+                    .catch(err => {
+                        console.error(err);
+                        return reject([M.IMAGESTORE_ERROR_DELETE, key])
+                    });
             })
         });
     }

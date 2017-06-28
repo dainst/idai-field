@@ -47,7 +47,7 @@ export class ThumbnailViewComponent implements OnChanges {
                         document: <IdaiFieldImageDocument> doc
                     };
                     this.imagestore.read(
-                        imgContainer.document.resource.filename).
+                        imgContainer.document.resource.id).
                         then(url=> {
                             imgContainer.imgSrc = url;
                             this.images.push(imgContainer);

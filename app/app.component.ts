@@ -48,8 +48,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.appConfigurator.go(AppComponent.PROJECT_CONFIGURATION_PATH);
         this.configLoader.getProjectConfiguration().then(
-            conf => {
-                if (!conf.getProjectIdentifier()) {
+            projectConfiguration => {
+                if (!projectConfiguration.getProjectIdentifier()) {
                     this.messages.add([M.APP_NO_PROJECT_IDENTIFIER]);
                 }
             }

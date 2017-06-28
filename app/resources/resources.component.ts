@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewChecked} from '@angular/core';
+import {Component, AfterViewChecked} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -6,6 +6,7 @@ import {Query} from 'idai-components-2/datastore';
 import {Document, Relations, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
+import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
@@ -24,18 +25,19 @@ import {DoceditComponent} from '../docedit/docedit.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent implements OnInit, AfterViewChecked {
+export class ResourcesComponent implements AfterViewChecked {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
-    public mode = 'map';
-    public editGeometry = false;
+    public view: ViewDefinition;
+    public mode: string = 'map';
+    public editGeometry: boolean = false;
     public documents: Array<Document>;
 
-    public trenches: Array<IdaiFieldDocument>;
-    public selectedTrench: IdaiFieldDocument;
+    public mainTypeDocuments: Array<IdaiFieldDocument>;
+    public selectedMainTypeDocument: IdaiFieldDocument;
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -47,29 +49,25 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor,
-                private messages: Messages
+                private messages: Messages,
+                private configLoader: ConfigLoader
     ) {
-
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve => {
             readyResolveFun = resolve;
         });
-        this.fetchDocuments().then(() => {
-           readyResolveFun();
+
+        this.route.params.subscribe(params => {
+
+            this.parseParams(params)
+                .then(() => this.fetchMainTypeDocuments())
+                .then(() => this.fetchDocuments())
+                .then(() => readyResolveFun());
         });
 
         const self = this;
         datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
-        });
-
-        this.fetchTrenches();
-    }
-
-    ngOnInit() {
-
-        this.route.params.subscribe(params => {
-            this.parseParams(params);
         });
     }
 
@@ -81,12 +79,32 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    private parseParams(params: Params) {
+    private parseParams(params: Params): Promise<any> {
 
-        let tab = params['tab'];
-        let id = params['id'];
+        let viewName: string = params['view'];
+        let tab: string = params['tab'];
+        let resourceId: string = params['id'];
 
-        if (!tab || !id) return;
+        if (tab && resourceId) this.openEditTab(tab, resourceId);
+
+        if (!this.view || viewName != this.view.name) {
+            return this.initializeView(viewName);
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    private initializeView(viewName: string): Promise<any> {
+
+        return this.configLoader.getProjectConfiguration().then(
+            projectConfiguration => {
+                this.view = projectConfiguration.getView(viewName);
+                Promise.resolve();
+            }
+        );
+    }
+
+    private openEditTab(tab: string, id: string) {
 
         this.location.replaceState('resources');
 
@@ -96,20 +114,20 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         );
     }
 
-    public filterByTrench(event) {
+    public filterByMainTypeDocument(event) {
 
-        const trenchId: string = event.target.value;
+        const documentId: string = event.target.value;
 
-        if (!trenchId || trenchId == '') {
-            this.selectedTrench = undefined;
+        if (!documentId || documentId == '') {
+            this.selectedMainTypeDocument = undefined;
             this.fetchDocuments();
         } else {
-            this.datastore.get(trenchId)
-                .then(trench => {
-                    this.selectedTrench = <IdaiFieldDocument> trench;
-                    return this.datastore.findIsRecordedIn(trench.resource.id);
+            this.datastore.get(documentId)
+                .then(document => {
+                    this.selectedMainTypeDocument = <IdaiFieldDocument> document;
+                    return this.datastore.findIsRecordedIn(document.resource.id);
                 }).then(documents => {
-                    this.documents = documents as IdaiFieldDocument[];
+                    this.documents = documents as Array<IdaiFieldDocument>;
                     this.notify();
                 }).catch(err => { console.error(err); } );
         }
@@ -245,7 +263,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         doceditRef.result.then(result => {
             this.fetchDocuments().then(
                 () => {
-                    this.fetchTrenches();
+                    this.fetchMainTypeDocuments();
                     if (result.document) {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
@@ -275,11 +293,12 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         this.fetchDocuments();
     }
 
-    private fetchTrenches(): Promise<any> {
+    private fetchMainTypeDocuments(): Promise <any> {
 
-        let tquery: Query = {q: '', type: 'trench', prefix: true};
-        return this.datastore.find(tquery).then(documents => {
-            this.trenches = documents as IdaiFieldDocument[];
+        let query: Query = {q: '', type: this.view.mainType, prefix: true};
+
+        return this.datastore.find(query).then(documents => {
+            this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
@@ -384,17 +403,12 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     public setMode(mode: string) {
         this.removeEmptyDocuments();
         if (mode == "list") {
-            this.documents = [];
-            this.fetchTrenches().then( () => {
-                this.documents = this.trenches;
-                this.notify();
-            })
+            this.fetchMainTypeDocuments().then( () => this.documents = this.mainTypeDocuments );
         } else {
             this.fetchDocuments();
         }
-
-        this.editGeometry = false;
         this.mode = mode;
+        this.editGeometry = false;
     }
 
     private removeEmptyDocuments() {

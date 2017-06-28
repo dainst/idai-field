@@ -147,14 +147,13 @@ export class DropAreaComponent {
         let reader = new FileReader();
         reader.onloadend = (that => {
             return () => {
-                that.imagestore.create(file.name, reader.result).then(() => {
-                    return that.createImageDocument(file, type);
-                }).then(() => {
-                    that.onImageUploaded.emit();
-                }).catch(error => {
-                    that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
-                    console.error(error);
-                });
+                that.createImageDocument(file, type)
+                    .then(doc => that.imagestore.create(doc.resource.id, reader.result))
+                    .then(() => that.onImageUploaded.emit())
+                    .catch(error => {
+                        that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
+                        console.error(error);
+                    });
             }
         })(this);
         reader.onerror = (that => {

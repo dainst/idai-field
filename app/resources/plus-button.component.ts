@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, OnChanges, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
 import {ConfigLoader, IdaiType, ProjectConfiguration} from "idai-components-2/configuration";
 import {ResourcesComponent} from './resources.component';
@@ -17,20 +17,28 @@ import {ResourcesComponent} from './resources.component';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class PlusButtonComponent {
+export class PlusButtonComponent implements OnChanges {
 
     private typesTreeList: IdaiType[];
     private type: string;
     @ViewChild('p') private popover;
+
+    @Input() excludedTypes: Array<string>;
 
     constructor(
         private elementRef: ElementRef,
         private router: Router,
         private resourcesComponent: ResourcesComponent,
 
-        configLoader: ConfigLoader)
+        private configLoader: ConfigLoader)
     {
         configLoader.getProjectConfiguration().then(projectConfiguration => {
+            this.initializeTypesTreeList(projectConfiguration);
+        });
+    }
+
+    ngOnChanges() {
+        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.initializeTypesTreeList(projectConfiguration);
         });
     }
@@ -47,8 +55,8 @@ export class PlusButtonComponent {
 
     private handleClick(event) {
         if (!this.popover) return;
-        var target = event.target;
-        var inside = false;
+        let target = event.target;
+        let inside = false;
         do {
             if (target === this.elementRef.nativeElement
                 || target.id === 'new-object-menu'
@@ -67,8 +75,10 @@ export class PlusButtonComponent {
 
         this.typesTreeList = [];
 
-        for (var type of projectConfiguration.getTypesTreeList()) {
-            if (type.name != "image") {
+        for (let type of projectConfiguration.getTypesTreeList()) {
+
+            if (type.name != "image" &&
+                (!this.excludedTypes || this.excludedTypes.indexOf(type.name)==-1)) {
                 this.typesTreeList.push(type);
             }
         }

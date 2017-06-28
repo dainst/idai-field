@@ -38,7 +38,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     public trenches: Array<IdaiFieldDocument>;
     public selectedTrenchId: string;
 
-
+    public excludedTypes: Array<String>;
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -103,10 +103,13 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
 
         if (a.target.value == '') {
             this.fetchDocuments();
+            this.selectedTrenchId = undefined;
+            this.excludedTypes = [];
         } else {
-            const filterById = a.target.value; {
-                this.selectedTrenchId = a.target.value;
-            }
+            const filterById = a.target.value;
+            this.selectedTrenchId = a.target.value;
+            this.excludedTypes = ['trench'];
+
             this.datastore.findIsRecordedIn(filterById).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
                 this.notify();

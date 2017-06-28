@@ -97,7 +97,6 @@ export class DoceditComponent {
         this.inspectedRevisionsIds = [];
         this.clonedDocument = DoceditComponent.cloneDocument(this.document);
         if (recordingContext) {
-            console.log("is recorded in ",recordingContext)
             this.clonedDocument.resource.relations['isRecordedIn'] = [recordingContext];
         }
         this.persistenceManager.setOldVersions([this.document]);

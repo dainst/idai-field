@@ -109,15 +109,21 @@ describe('PouchDbFsImagestore', () => {
             });
     });
 
-    xit('should remove a file', (done) => {
+    it('should remove a file', (done) => {
 
         spyOn(console, 'error'); // to suppress console.error output
         store.create('test_remove', str2ab('sdfg'))
             .then(() => {
                 return store.remove('test_remove')
                     .then(() => {
-                        store.read('test_remove',false,false)
+                        store.read('test_remove', false, false)
+                            .then(result => {
+                                // missing original is ok
+                                expect(result).toEqual('');
+                                return store.read('test_remove', false, true);
+                            })
                             .then(() => {
+                                // missing thumb is not ok
                                 fail('reading removed file worked unexpectedly');
                                 done();
                             })

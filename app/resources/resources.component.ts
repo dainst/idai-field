@@ -299,6 +299,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return this.datastore.find(query).then(documents => {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
+            if (this.mainTypeDocuments.length == 0) this.selectedMainTypeDocument = undefined;
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
@@ -401,9 +402,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
+
         this.removeEmptyDocuments();
-        if (mode == "list") {
-            this.fetchMainTypeDocuments().then( () => this.documents = this.mainTypeDocuments );
+        if (mode == 'list') {
+            this.fetchMainTypeDocuments().then(() => this.documents = this.mainTypeDocuments );
         } else {
             this.fetchDocuments();
         }

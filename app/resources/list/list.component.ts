@@ -45,36 +45,8 @@ export class ListComponent {
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
-            this.initializeTypesList();
-            this.addRelationsToTypesMap();
+            this.typesMap = projectConfiguration.getTypesMap();
         });
-    }
-
-    private initializeTypesList() {
-        
-        let list = this.projectConfiguration.getTypesList();
-        this.typesList = [];
-        for (var type of list) {
-            this.typesList.push(type);
-        }
-    }
-
-    public addRelationsToTypesMap() {
-        
-        this.typesMap = this.projectConfiguration.getTypesMap();
-
-        for (let typeKey of Object.keys(this.typesMap)) {
-            let relations = [];
-            let rawRelations = this.projectConfiguration.getRelationDefinitions(typeKey);
-            for(let rel of rawRelations) {
-                if (rel['visible'] != false) {
-                    for(let target of rel['range']) {
-                        relations.push({name: rel['name'], targetName: target, label: rel['label']});
-                    }
-                }
-            }
-            this.typesMap[typeKey]['relations'] = relations;
-        }
     }
 
     public save(document: IdaiFieldDocument) {
@@ -134,5 +106,15 @@ export class ListComponent {
                 document.resource.identifier = latestRevision.resource.identifier;
             }
         );
+    }
+
+    private loadChildrenFor(doc: IdaiFieldDocument, ev) {
+        let parentListIndex = this.documents.indexOf(doc);
+        doc.resource.relations['records'].forEach( id => {
+            this.datastore.get(id).then( doc => {
+
+                this.documents.splice(parentListIndex+1,0, <IdaiFieldDocument>doc)
+            }, msgWithParams => Promise.reject(msgWithParams))
+        });
     }
 }

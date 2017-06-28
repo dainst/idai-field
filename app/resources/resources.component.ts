@@ -275,10 +275,10 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         this.fetchDocuments();
     }
 
-    private fetchTrenches() {
+    private fetchTrenches(): Promise<any> {
 
         let tquery: Query = {q: '', type: 'trench', prefix: true};
-        this.datastore.find(tquery).then(documents => {
+        return this.datastore.find(tquery).then(documents => {
             this.trenches = documents as IdaiFieldDocument[];
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
@@ -382,8 +382,17 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     }
 
     public setMode(mode: string) {
-
         this.removeEmptyDocuments();
+        if (mode == "list") {
+            this.documents = [];
+            this.fetchTrenches().then( () => {
+                this.documents = this.trenches;
+                this.notify();
+            })
+        } else {
+            this.fetchDocuments();
+        }
+
         this.editGeometry = false;
         this.mode = mode;
     }

@@ -293,11 +293,11 @@ export class ResourcesComponent implements AfterViewChecked {
         this.fetchDocuments();
     }
 
-    private fetchMainTypeDocuments() {
+    private fetchMainTypeDocuments(): Promise <any> {
 
         let query: Query = {q: '', type: this.view.mainType, prefix: true};
 
-        this.datastore.find(query).then(documents => {
+        return this.datastore.find(query).then(documents => {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
@@ -401,10 +401,14 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
-
         this.removeEmptyDocuments();
-        this.editGeometry = false;
+        if (mode == "list") {
+            this.fetchMainTypeDocuments().then( () => this.documents = this.mainTypeDocuments );
+        } else {
+            this.fetchDocuments();
+        }
         this.mode = mode;
+        this.editGeometry = false;
     }
 
     private removeEmptyDocuments() {

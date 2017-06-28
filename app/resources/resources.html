@@ -7,12 +7,14 @@
         </search-bar>
     </div>
     <div class="col-md-2">
-        <plus-button *ngIf="query.q == ''" [isRecordedIn]="selectedTrench"></plus-button>
+        <plus-button *ngIf="query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
     </div>
     <div class="col-md-6" align="right">
-        <select class="form-control w-50" style="display:inline" (change)="filterByTrench($event)">
+        <select class="form-control w-50" style="display:inline" (change)="filterByMainTypeDocument($event)">
             <option selected value>Alle Schnitte</option>
-            <option *ngFor="let trench of trenches" [value]="trench.resource.id">{{trench.resource.identifier}}</option>
+            <option *ngFor="let document of mainTypeDocuments" [value]="document.resource.id">
+                {{document.resource.identifier}}
+            </option>
         </select>
         <div class="btn-group">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"

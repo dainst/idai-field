@@ -2,8 +2,15 @@
 
   "identifier" : "development",
 
-  "types":[
+  "views": [
+     {
+        "name": "excavation",
+        "label": "Ausgrabung",
+        "mainType": "trench"
+     }
+  ],
 
+  "types": [
     {
       "type":"trench",
       "label":"Schnitt",

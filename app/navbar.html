@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-toggleable-xl navbar-dark bg-primary"
+<nav *ngIf="views.length > 0" class="navbar fixed-top navbar-toggleable-xl navbar-dark bg-primary"
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
@@ -19,8 +19,8 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav" style="margin-top: 2px;">
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/">Ausgrabung</a>
+            <li *ngFor="let view of views" class="nav-item">
+                <a class="nav-link" href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" routerLink="/images">Bilder</a>

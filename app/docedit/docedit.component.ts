@@ -87,18 +87,14 @@ export class DoceditComponent {
 
     /**
      * @param document
-     * @param recordingContext a resource id of the recording contexts resource.
      */
-    public setDocument(document: IdaiFieldDocument, recordingContext: string = undefined) {
+    public setDocument(document: IdaiFieldDocument) {
         if (!document) return;
 
         this.document = document;
-
         this.inspectedRevisionsIds = [];
         this.clonedDocument = DoceditComponent.cloneDocument(this.document);
-        if (recordingContext) {
-            this.clonedDocument.resource.relations['isRecordedIn'] = [recordingContext];
-        }
+
         this.persistenceManager.setOldVersions([this.document]);
     }
 

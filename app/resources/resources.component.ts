@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
-import {Document, Action} from 'idai-components-2/core';
+import {Document, Relations, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
@@ -34,11 +34,8 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     public editGeometry = false;
     public documents: Array<Document>;
 
-
     public trenches: Array<IdaiFieldDocument>;
-    public selectedTrenchId: string;
-
-    public excludedTypes: Array<String>;
+    public selectedTrench: IdaiFieldDocument;
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -99,21 +96,22 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         );
     }
 
-    public filterByTrench(a) {
+    public filterByTrench(event) {
 
-        if (a.target.value == '') {
+        const trenchId: string = event.target.value;
+
+        if (!trenchId || trenchId == '') {
+            this.selectedTrench = undefined;
             this.fetchDocuments();
-            this.selectedTrenchId = undefined;
-            this.excludedTypes = [];
         } else {
-            const filterById = a.target.value;
-            this.selectedTrenchId = a.target.value;
-            this.excludedTypes = ['trench'];
-
-            this.datastore.findIsRecordedIn(filterById).then(documents => {
-                this.documents = documents as IdaiFieldDocument[];
-                this.notify();
-            }).catch(err => { console.error(err); } );
+            this.datastore.get(trenchId)
+                .then(trench => {
+                    this.selectedTrench = <IdaiFieldDocument> trench;
+                    return this.datastore.findIsRecordedIn(trench.resource.id);
+                }).then(documents => {
+                    this.documents = documents as IdaiFieldDocument[];
+                    this.notify();
+                }).catch(err => { console.error(err); } );
         }
     }
 
@@ -195,9 +193,15 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         this.notify();
     }
 
-    public createNewDocument(type: string, geometryType: string): Promise<any> {
+    public createNewDocument(type: string, geometryType: string, relations: Relations = {}): Promise<any> {
 
-        const newDocument: IdaiFieldDocument = <IdaiFieldDocument> { 'resource': { 'relations': {}, 'type': type } };
+        const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
+            'resource': {
+                'relations': relations,
+                'type': type
+            }
+        };
+
         this.selectedDocument = newDocument;
 
         if (geometryType != 'none') {
@@ -254,7 +258,7 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
             if (closeReason == 'deleted') this.selectedDocument = undefined;
         });
 
-        docedit.setDocument(this.selectedDocument,this.selectedTrenchId);
+        docedit.setDocument(this.selectedDocument);
 
         if (activeTabName) {
             docedit.setActiveTab(activeTabName);

@@ -6,7 +6,9 @@ export var DOCS: IdaiFieldDocument[] = [
             "id": "tf1",
             "identifier": "testf1",
             "shortDescription": "Testfund",
-            "relations": {},
+            "relations": {
+                "isRecordedIn" : ["t1"]
+            },
             "geometry": {
                 "type": "Point",
                 "coordinates": [ 27.1892609283, 39.1411810096 ],
@@ -58,7 +60,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "trench1",
             "shortDescription": "Goldener Schnitt",
             "relations": {
-                "includes" : ["c1"]
+                "includes" : ["c1"],
+                "records" : ["c1","tf1"]
             },
             "geometry": {
                 "type": "Polygon",
@@ -75,7 +78,8 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "context1",
             "shortDescription": "Ein Befund",
             "relations": {
-                "belongsTo" : ["t1"]
+                "belongsTo" : ["t1"],
+                "isRecordedIn" : ["t1"]
             },
             "geometry": {
                 "type": "Point",

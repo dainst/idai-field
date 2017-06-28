@@ -116,7 +116,7 @@ export class ImageGridBuilder {
             if (document.id == 'droparea') return resolve({cell: cell});
 
             if (!this.showAllAtOnce) resolve({cell: cell});
-            this.imagestore.read(document.resource.filename).then(url => {
+            this.imagestore.read(document.resource.id).then(url => {
                 if (this.showAllAtOnce) resolve({cell: cell});
                 cell.imgSrc = url;
             }).catch(msgWithParams => {

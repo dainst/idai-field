@@ -11,7 +11,7 @@ export class IndexCreator {
         return this.setupFulltextIndex(db)
             .then(() => this.setupIdentifierIndex(db))
             .then(() => this.setupSyncedIndex(db))
-            .then(() => this.setupBelongsToIndex(db))
+            .then(() => this.setupIsRecordedInIndex(db))
             .then(() => this.setupAllIndex(db))
             .then(() => this.setupConflictedIndex(db));
     }
@@ -62,14 +62,14 @@ export class IndexCreator {
         return this.setupIndex(db,'all', mapFun);
     }
 
-    private setupBelongsToIndex(db): Promise<any> {
+    private setupIsRecordedInIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource) return;
-            if (doc.resource.relations['belongsTo'] != undefined) {
-                doc.resource.relations['belongsTo'].forEach(identifier => emit(identifier));
+            if (doc.resource.relations['isRecordedIn'] != undefined) {
+                doc.resource.relations['isRecordedIn'].forEach(identifier => emit(identifier));
             }
         };
-        return this.setupIndex(db,'belongsTo', mapFun);
+        return this.setupIndex(db,'isRecordedIn', mapFun);
     }
 
     private setupConflictedIndex(db): Promise<any> {

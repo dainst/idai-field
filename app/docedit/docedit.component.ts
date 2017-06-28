@@ -42,6 +42,8 @@ export class DoceditComponent {
      */
     private clonedDocument: IdaiFieldDocument;
 
+    public recordingContext: String;
+
     public activeTab: string;
 
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
@@ -83,14 +85,21 @@ export class DoceditComponent {
         });
     }
 
-
-    public setDocument(document: IdaiFieldDocument) {
+    /**
+     * @param document
+     * @param recordingContext a resource id of the recording contexts resource.
+     */
+    public setDocument(document: IdaiFieldDocument, recordingContext: string = undefined) {
         if (!document) return;
 
         this.document = document;
 
         this.inspectedRevisionsIds = [];
         this.clonedDocument = DoceditComponent.cloneDocument(this.document);
+        if (recordingContext) {
+            console.log("is recorded in ",recordingContext)
+            this.clonedDocument.resource.relations['isRecordedIn'] = [recordingContext];
+        }
         this.persistenceManager.setOldVersions([this.document]);
     }
 
@@ -138,6 +147,12 @@ export class DoceditComponent {
             this.showModal();
         } else {
             this.activeModal.dismiss('cancel');
+        }
+    }
+
+    private setRecordingContextOf(doc:IdaiFieldDocument) {
+        if (this.recordingContext) {
+            doc.resource.relations['isRecordedIn'] = ['abc'];
         }
     }
 

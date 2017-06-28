@@ -33,7 +33,12 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
     public mode = 'map';
     public editGeometry = false;
     public documents: Array<Document>;
+
+
     public trenches: Array<IdaiFieldDocument>;
+    public selectedTrenchId: string;
+
+
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -99,8 +104,10 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         if (a.target.value == '') {
             this.fetchDocuments();
         } else {
-            var filterById = a.target.value;
-            this.datastore.findByBelongsTo(filterById).then(documents => {
+            const filterById = a.target.value; {
+                this.selectedTrenchId = a.target.value;
+            }
+            this.datastore.findIsRecordedIn(filterById).then(documents => {
                 this.documents = documents as IdaiFieldDocument[];
                 this.notify();
             }).catch(err => { console.error(err); } );
@@ -180,14 +187,14 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
 
     public remove(document: Document) {
 
-        var index = this.documents.indexOf(document);
+        const index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
         this.notify();
     }
 
     public createNewDocument(type: string, geometryType: string): Promise<any> {
 
-        var newDocument: IdaiFieldDocument = <IdaiFieldDocument> { 'resource': { 'relations': {}, 'type': type } };
+        const newDocument: IdaiFieldDocument = <IdaiFieldDocument> { 'resource': { 'relations': {}, 'type': type } };
         this.selectedDocument = newDocument;
 
         if (geometryType != 'none') {
@@ -225,10 +232,10 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
 
-        var detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
-        var detailModal = detailModalRef.componentInstance;
+        const doceditRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const docedit = doceditRef.componentInstance;
 
-        detailModalRef.result.then(result => {
+        doceditRef.result.then(result => {
             this.fetchDocuments().then(
                 () => {
                     this.fetchTrenches();
@@ -244,10 +251,10 @@ export class ResourcesComponent implements OnInit, AfterViewChecked {
             if (closeReason == 'deleted') this.selectedDocument = undefined;
         });
 
-        detailModal.setDocument(this.selectedDocument);
+        docedit.setDocument(this.selectedDocument,this.selectedTrenchId);
 
         if (activeTabName) {
-            detailModal.setActiveTab(activeTabName);
+            docedit.setActiveTab(activeTabName);
         }
     }
 

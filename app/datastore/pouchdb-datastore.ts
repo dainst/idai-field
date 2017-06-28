@@ -266,9 +266,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         });
     }
 
-    public findByBelongsTo(identifier: string): Promise<IdaiFieldDocument []> {
+    public findIsRecordedIn(identifier: string): Promise<IdaiFieldDocument []> {
 
-        return this.db.query('belongsTo', {
+        return this.db.query('isRecordedIn', {
             key: identifier,
             include_docs: true,
             conflicts: true,

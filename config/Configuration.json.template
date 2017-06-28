@@ -7,6 +7,12 @@
         "name": "excavation",
         "label": "Ausgrabung",
         "mainType": "trench"
+     },
+
+     {
+        "name": "building",
+        "label": "Bauforschung",
+        "mainType": "building"
      }
   ],
 
@@ -49,6 +55,19 @@
           "name":"description",
           "inputType":"text"
         }
+      ]
+    },
+
+    {
+      "type":"building",
+      "label":"Bauwerk",
+      "fields":[
+        {
+          "name":"longDescription",
+          "label":"Beschreibung",
+          "inputType":"text",
+          "description":"ausführliche Beschreibung des Sachverhalts"
+         }
       ]
     },
 
@@ -726,7 +745,18 @@
       "label":"Gehört zu",
       "domain":[
         "context",
-        "object",
+        "object"
+      ],
+      "range":[
+        "trench",
+        "building"
+      ]
+    },
+    {
+      "name":"isRecordedIn",
+      "inverse":"records",
+      "label":"Gehört zu",
+      "domain":[
         "section",
         "planum"
       ],
@@ -746,6 +776,18 @@
         "object",
         "section",
         "planum"
+      ]
+    },
+    {
+      "name":"records",
+      "inverse":"isRecordedIn",
+      "label":"Beinhaltet",
+      "domain":[
+        "building"
+      ],
+      "range":[
+        "context",
+        "object"
       ]
     },
     {

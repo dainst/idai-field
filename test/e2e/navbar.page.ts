@@ -13,7 +13,7 @@ export class NavbarPage {
     };
 
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(4)), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(5)), delays.ECWaitTime);
         return element.all(by.css('.nav-link')).get(4).click();
     };
 

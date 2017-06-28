@@ -15,6 +15,7 @@ import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 export class NavbarComponent implements OnInit {
 
     public views: Array<ViewDefinition> = [];
+    public activeNavLink: string;
 
     constructor(private messages: Messages,
                 private configLoader: ConfigLoader) {}
@@ -22,7 +23,14 @@ export class NavbarComponent implements OnInit {
     public ngOnInit() {
 
         this.configLoader.getProjectConfiguration().then(
-            projectConfiguration => this.views = projectConfiguration.getViewsList()
+            projectConfiguration => {
+                this.views = projectConfiguration.getViewsList();
+                if (this.views.length > 0) {
+                    this.activeNavLink = 'resources-' + this.views[0].name;
+                } else {
+                    this.activeNavLink = 'images';
+                }
+            }
         ).catch(msgWithParams => {
             this.messages.add(msgWithParams);
         });

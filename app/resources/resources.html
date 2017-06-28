@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-6" align="right">
         <select class="form-control w-50" style="display:inline" (change)="filterByMainTypeDocument($event)">
-            <option selected value>Alle Schnitte</option>
+            <option selected value>Keine Auswahl</option>
             <option *ngFor="let document of mainTypeDocuments" [value]="document.resource.id">
                 {{document.resource.identifier}}
             </option>

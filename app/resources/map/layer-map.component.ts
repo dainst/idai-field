@@ -112,7 +112,7 @@ export class LayerMapComponent extends MapComponent {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
-            this.imagestore.read(document.resource['identifier'], true, false).then(
+            this.imagestore.read(document.resource.id, true, false).then(
                 url => {
                     imgContainer.imgSrc = url;
                     resolve(imgContainer);

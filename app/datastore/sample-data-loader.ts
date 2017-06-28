@@ -59,7 +59,9 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                         fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
                         fs.readFile(path + file, (err, data) => {
                             let blob = this.converter.convert(data);
-                            promises.push(db.putAttachment(file, "thumb", new Blob([blob]), "image/jpeg"));
+                            db.get(file).then(doc => {
+                                promises.push(db.putAttachment(file, "thumb", doc._rev, new Blob([blob]), "image/jpeg"));
+                            });
                         });
                     }
                 });

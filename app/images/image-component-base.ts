@@ -27,10 +27,10 @@ export class ImageComponentBase {
                     this.image.document = doc;
                     if (doc.resource.filename) {
                         // read original (empty if not present)
-                        this.imagestore.read(doc.resource.filename, false, false)
+                        this.imagestore.read(doc.resource.id, false, false)
                             .then(url => this.image.imgSrc = url)
                             // read thumb
-                            .then(() => this.imagestore.read(doc.resource.filename, false, true))
+                            .then(() => this.imagestore.read(doc.resource.id, false, true))
                             .then(url => this.image.thumbSrc = url)
                             .catch(msgWithParams => {
                                 this.image.imgSrc = BlobMaker.blackImg;

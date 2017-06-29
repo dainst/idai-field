@@ -59,7 +59,7 @@ export var DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Goldener Schnitt",
             "relations": {
                 "includes" : ["c1"],
-                "isRecordedBy" : ["pr1"]
+                "isRecordedIn" : ["test"]
             },
             "geometry": {
                 "type": "Polygon",

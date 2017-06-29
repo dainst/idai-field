@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
+import {M} from "../m";
 
 
 @Component({
@@ -66,7 +67,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     this.showPlusButton = true;
                     readyResolveFun()
-                });
+                }).catch(msgWithParams => this.messages.add(msgWithParams));
         });
 
         const self = this;
@@ -253,10 +254,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.datastore.find(query).then(documents => {
             let docs = documents as Document[];
 
-            console.log("this",this.selectedMainTypeDocument);
-
             for (let i = docs.length; i--;) {
-                console.log("this.documents",docs[i])
                 if (docs[i].resource.relations['isRecordedIn'] == undefined
                         || (docs[i].resource.relations['isRecordedIn'][0] !=
                     this.selectedMainTypeDocument.resource.id)) {
@@ -318,10 +316,11 @@ export class ResourcesComponent implements AfterViewChecked {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
             if (this.mainTypeDocuments.length == 0) {
                 this.selectedMainTypeDocument = undefined;
+                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE,this.view.mainType]);
             } else {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
-        }).catch(msgWithParams => this.messages.add(msgWithParams));
+        })
     }
 
     public createGeometry(geometryType: string) {

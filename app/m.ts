@@ -82,6 +82,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE: string = 'validation/error/missinggeometrytype';
     public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE: string = 'validation/error/unsupportedgeometrytype';
 
+    // resources package
+    public static NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE: string = 'resources/warn/notoplevelresourcesformaintype';
+
     // Keys END /////////////////////////////////
 
     public msgs : { [id: string]: Message } = {};
@@ -357,6 +360,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS] = {
             content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE] = {
+            content: "Keine Resourcen vom Typ ({0}) gefunden. Legen Sie diese zuerst in der Projektansicht an.",
+            level: 'warning',
             params: [],
             hidden: false
         };

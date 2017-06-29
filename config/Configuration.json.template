@@ -5,6 +5,12 @@
   "views": [
 
      {
+        "name": "project",
+        "label": "Projekt",
+        "mainType": "project"
+     },
+
+     {
         "name": "excavation",
         "label": "Ausgrabung",
         "mainType": "trench"
@@ -14,12 +20,7 @@
         "name": "building",
         "label": "Bauforschung",
         "mainType": "building"
-     },
-     {
-             "name": "project",
-             "label": "Projekt",
-             "mainType": "project"
-          }
+     }
   ],
 
   "types": [

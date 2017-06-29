@@ -8,13 +8,13 @@ export class NavbarPage {
     // click
 
     public static clickNavigateToResources() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(0)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(0).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(1)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(1).click();
     };
 
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(5)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(4).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(6)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(6).click();
     };
 
     public static clickConflictsButton() {

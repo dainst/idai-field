@@ -723,11 +723,6 @@
           "description":"Gegenstand bzw. Inhalt der Dokumentation, z.B. Fundzeichnung oder Arbeitsfoto"
         }
       ]
-    },
-    {
-      "type" : "project",
-      "label": "Projekt",
-      "fields" : []
     }
   ],
 

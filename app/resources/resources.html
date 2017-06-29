@@ -7,7 +7,7 @@
         </search-bar>
     </div>
     <div class="col-md-2">
-        <plus-button *ngIf="query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
+        <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
     </div>
     <div class="col-md-6" align="right">
         <select class="form-control w-50" style="display:inline" (change)="filterByMainTypeDocument($event)">

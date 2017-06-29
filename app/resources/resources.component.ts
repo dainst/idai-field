@@ -42,6 +42,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
+    private showPlusButton: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private location: Location,
@@ -62,7 +63,10 @@ export class ResourcesComponent implements AfterViewChecked {
             this.parseParams(params)
                 .then(() => this.fetchMainTypeDocuments())
                 .then(() => this.fetchDocuments())
-                .then(() => readyResolveFun());
+                .then(() => {
+                    this.showPlusButton = true;
+                    readyResolveFun()
+                });
         });
 
         const self = this;

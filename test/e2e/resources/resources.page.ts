@@ -147,9 +147,9 @@ let ResourcesPage = function() {
         this.performCreateResource('2', 1); // Fund
         this.openEditByDoubleClickResource('2');
         DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(2);
-        DocumentEditWrapperPage.typeInRelationByIndices(2, 0, '1');
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(2, 0, 0);
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(1);
+        DocumentEditWrapperPage.typeInRelationByIndices(1, 0, '1');
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(1, 0, 0);
         DocumentEditWrapperPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };

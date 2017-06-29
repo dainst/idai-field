@@ -23,14 +23,14 @@ describe('resources/relations --', function() {
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
-    xit('create a new relation and the corresponding inverse relation', function() {
+    it('create a new relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         resourcesPage.openEditByDoubleClickResource('2');
-        expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('1');
+        expect(DocumentEditWrapperPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
-        expect(DocumentEditWrapperPage.getRelationButtonText(3, 0, 0)).toEqual('2');
+        expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
     });
 
     it('edit a resource that contains a relation', function() {
@@ -66,7 +66,7 @@ describe('resources/relations --', function() {
         });
     });
 
-    xit('delete inverse relations when deleting a resource', function() {
+    it('delete inverse relations when deleting a resource', function() {
         resourcesPage.performCreateLink();
         resourcesPage.openEditByDoubleClickResource('2');
         resourcesPage.clickDeleteDocument();

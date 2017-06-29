@@ -57,14 +57,14 @@ describe('document view --', function() {
      * (they were not saved though).
      */
     it('show no relations after cancelling edit', function() {
-        resourcesPage.performCreateResource('1', 3);
-        resourcesPage.performCreateResource('2', 3);
+        resourcesPage.performCreateResource('1', 0);
+        resourcesPage.performCreateResource('2', 0);
         resourcesPage.clickSelectResource('1');
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(2);
-        DocumentEditWrapperPage.typeInRelationByIndices(2, 0, '2');
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(2, 0, 0);
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(1);
+        DocumentEditWrapperPage.typeInRelationByIndices(1, 0, '2');
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(1, 0, 0);
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickDiscardInModal();
 

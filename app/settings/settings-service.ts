@@ -31,14 +31,27 @@ export class SettingsService {
     constructor(private datastore: IdaiFieldDatastore,
                 private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager) {
-
     }
 
     public init() {
         this.ready = this.settingsSerializer.load().then((settings) => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                let project = this.getSelectedProject();
+
+                const project = this.getSelectedProject();
+
+                // if project object does not exist, create it
+                this.datastore.get(project).catch(()=>{
+                    this.datastore.create({
+                        "resource" : {
+                            "type" : "project",
+                            "identifier" : project,
+                            "id" : project,
+                            relations: {}
+                        }
+                    })
+                });
+
                 this.pouchdbManager.select(project);
                 this.imagestore.select(project);
                 this.setSettings(

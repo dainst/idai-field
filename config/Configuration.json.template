@@ -4,6 +4,11 @@
 
   "views": [
      {
+        "name": "project",
+        "label": "Projekt",
+        "mainType": "project"
+     },
+     {
         "name": "excavation",
         "label": "Ausgrabung",
         "mainType": "trench"
@@ -718,8 +723,12 @@
           "description":"Gegenstand bzw. Inhalt der Dokumentation, z.B. Fundzeichnung oder Arbeitsfoto"
         }
       ]
+    },
+    {
+      "type" : "project",
+      "label": "Projekt",
+      "fields" : []
     }
-
   ],
 
   "relations":[
@@ -765,6 +774,18 @@
       ]
     },
     {
+      "name":"isRecordedIn",
+      "inverse":"records",
+      "label":"Gehört zu",
+      "domain":[
+        "trench",
+        "building"
+      ],
+      "range":[
+        "project"
+      ]
+    },
+    {
       "name":"records",
       "inverse":"isRecordedIn",
       "label":"Beinhaltet",
@@ -776,6 +797,18 @@
         "object",
         "section",
         "planum"
+      ]
+    },
+    {
+      "name":"records",
+      "inverse":"isRecordedIn",
+      "label":"Beinhaltet",
+      "domain":[
+        "project"
+      ],
+      "range":[
+        "trench",
+        "building"
       ]
     },
     {

@@ -3,11 +3,13 @@
   "identifier" : "development",
 
   "views": [
+
      {
         "name": "project",
         "label": "Projekt",
         "mainType": "project"
      },
+
      {
         "name": "excavation",
         "label": "Ausgrabung",
@@ -754,7 +756,9 @@
       "range":[
         "trench",
         "building"
-      ]
+      ],
+      "visible" : false,
+      "editable" : false
     },
     {
       "name":"isRecordedIn",
@@ -766,7 +770,9 @@
       ],
       "range":[
         "trench"
-      ]
+      ],
+	  "visible" : false,
+	  "editable" : false
     },
     {
       "name":"isRecordedIn",
@@ -778,7 +784,9 @@
       ],
       "range":[
         "project"
-      ]
+      ],
+      "visible" : false,
+      "editable" : false
     },
     {
       "name":"records",

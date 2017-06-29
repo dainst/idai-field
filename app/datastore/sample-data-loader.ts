@@ -54,17 +54,19 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
         return new Promise(resolve => {
             let promises = [];
             fs.readdir(path, (err, files) => {
-                files.forEach(file => {
-                    if(!fs.statSync(path + file).isDirectory()) {
-                        fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
-                        fs.readFile(path + file, (err, data) => {
-                            let blob = this.converter.convert(data);
-                            db.get(file).then(doc => {
-                                promises.push(db.putAttachment(file, "thumb", doc._rev, new Blob([blob]), "image/jpeg"));
+                if (files) {
+                    files.forEach(file => {
+                        if (!fs.statSync(path + file).isDirectory()) {
+                            fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+                            fs.readFile(path + file, (err, data) => {
+                                let blob = this.converter.convert(data);
+                                db.get(file).then(doc => {
+                                    promises.push(db.putAttachment(file, "thumb", doc._rev, new Blob([blob]), "image/jpeg"));
+                                });
                             });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
                 console.debug("Successfully put samples from " + path + " to " + dest );
             });
             Promise.all(promises).then(resolve).catch(err => {

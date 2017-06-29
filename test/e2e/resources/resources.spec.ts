@@ -28,11 +28,10 @@ describe('resources --', function() {
     it('show only resources of the selected type', function() {
         resourcesPage.performCreateResource('1', 0);
         resourcesPage.performCreateResource('2', 1);
-        resourcesPage.clickChooseTypeFilter(2);
-        resourcesPage.clickChooseTypeFilter(1);
+        resourcesPage.clickChooseTypeFilter(3);
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        resourcesPage.clickChooseTypeFilter(0);
+        resourcesPage.clickChooseTypeFilter(2);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime);
         resourcesPage.clickChooseTypeFilter('all');
@@ -73,6 +72,7 @@ describe('resources --', function() {
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
+        browser.sleep(1000);
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('2');
     });
 

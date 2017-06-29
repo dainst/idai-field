@@ -1,10 +1,10 @@
 import * as fs from 'fs';
-import {BlobMaker} from "./blob-maker";
-import {Converter} from "./converter";
-import {M} from "../m";
-import {Imagestore} from "./imagestore";
-import {PouchdbManager} from "../datastore/pouchdb-manager";
-import {Inject, Injectable} from "@angular/core";
+import {BlobMaker} from './blob-maker';
+import {Converter} from './converter';
+import {M} from '../m';
+import {Imagestore} from './imagestore';
+import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {Inject, Injectable} from '@angular/core';
 
 /**
  * A hybrid image store that uses the file system to store the original images
@@ -37,7 +37,6 @@ export class PouchDbFsImagestore implements Imagestore {
         this.projectPath = this.basePath + projectName + '/';
 
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
-
     }
 
     /**
@@ -61,19 +60,19 @@ export class PouchDbFsImagestore implements Imagestore {
      *  (thumb == false) because missing files in the filesystem can be a
      *  normal result of syncing.
      */
-    public read(key:string, sanitizeAfter:boolean = false, thumb:boolean = true): Promise<string> {
+    public read(key:string, sanitizeAfter: boolean = false, thumb:boolean = true): Promise<string> {
 
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
         return readFun(key).then(data => {
             if (data == undefined) {
-                console.error("data read was undefined for", key, "thumbnails was", thumb);
+                console.error('data read was undefined for', key, 'thumbnails was', thumb);
                 return Promise.reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ, key]);
             }
-            return this.blobMaker.makeBlob(data,sanitizeAfter);
+            return this.blobMaker.makeBlob(data, sanitizeAfter);
         }).catch(err => {
             // missing file is ok for originals
-            if (err.code == "ENOENT" && !thumb) return Promise.resolve('');
+            if (err.code == 'ENOENT' && !thumb) return Promise.resolve('');
             console.error(err);
             return Promise.reject([M.IMAGESTORE_ERROR_MEDIASTORE_READ, key]);
         });
@@ -101,7 +100,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 // errors are ignored on purpose, original file may be missing due to syncing
                 this.db.get(key)
                     .then(result => result._rev)
-                    .then(rev => this.db.removeAttachment(key, "thumb", rev))
+                    .then(rev => this.db.removeAttachment(key, 'thumb', rev))
                     .then(() => resolve())
                     .catch(err => {
                         console.error(err);
@@ -112,6 +111,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     private write(key, data, update = false): Promise<any> {
+
         let flag = update ? 'w' : 'wx';
         return new Promise((resolve, reject) => {
             fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: flag}, (err) => {
@@ -125,20 +125,20 @@ export class PouchDbFsImagestore implements Imagestore {
                     // convert to buffer or blob depending on whether we run in node or browser
                     if (typeof Blob !== 'undefined') blob = new Blob([blob]);
                     else blob = Buffer.from(blob);
-                    let getRev = Promise.resolve(null);
-                    if (update) getRev = this.db.get(key).then(result => result._rev);
-                    getRev.then(rev => this.db.putAttachment(key, "thumb", rev, blob, "image/jpeg"))
-                        .then(() => resolve())
-                        .catch(err => {
-                            console.error(err);
-                            reject([M.IMAGES_ERROR_MEDIASTORE_WRITE, key])
-                        });
+                    this.db.get(key).then(result => {
+                        return this.db.putAttachment(key, 'thumb', result._rev, blob, 'image/jpeg')
+                    }).then(() => resolve()
+                    ).catch(err => {
+                        console.error(err);
+                        reject([M.IMAGES_ERROR_MEDIASTORE_WRITE, key])
+                    });
                 }
             });
         });
     }
 
     private readOriginal(key: string): Promise<ArrayBuffer> {
+
         let path = this.projectPath + key;
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
@@ -149,6 +149,6 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     private readThumb(key: string): Promise<ArrayBuffer> {
-        return this.db.getAttachment(key, "thumb");
+        return this.db.getAttachment(key, 'thumb');
     }
 }

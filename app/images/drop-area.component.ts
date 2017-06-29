@@ -169,23 +169,23 @@ export class DropAreaComponent {
 
         return new Promise((resolve, reject) => {
 
-                var img = new Image();
-                img.src = URL.createObjectURL(file);
-                img.onload = () => {
-                    var doc = {
-                        "resource": {
-                            "identifier": file.name,
-                            "type": type.name,
-                            "filename": file.name,
-                            "width": img.width,
-                            "height": img.height,
-                            "relations": {}
-                        }
-                    };
-                    this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
-                        .then(result => resolve(result))
-                        .catch(error => reject(error));
+            var img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                var doc = {
+                    "resource": {
+                        "identifier": file.name,
+                        "type": type.name,
+                        "filename": file.name,
+                        "width": img.width,
+                        "height": img.height,
+                        "relations": {}
+                    }
                 };
+                this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
+                    .then(result => resolve(result))
+                    .catch(error => reject(error));
+            };
         });
     }
 }

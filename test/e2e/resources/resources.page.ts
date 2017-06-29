@@ -143,8 +143,8 @@ let ResourcesPage = function() {
     };
 
     this.performCreateLink = function() {
-        this.performCreateResource('1', 3);
-        this.performCreateResource('2', 3);
+        this.performCreateResource('1', 1); // Fund
+        this.performCreateResource('2', 1); // Fund
         this.openEditByDoubleClickResource('2');
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(2);

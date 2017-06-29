@@ -11,8 +11,7 @@
     </div>
     <div class="col-md-6" align="right">
         <select class="form-control w-50" style="display:inline" (change)="filterByMainTypeDocument($event)">
-            <option selected value>Keine Auswahl</option>
-            <option *ngFor="let document of mainTypeDocuments" [value]="document.resource.id">
+            <option *ngFor="let document of mainTypeDocuments; let i = index" [value]="document.resource.id" [attr.selected]="i == 0 ? true : null">
                 {{document.resource.identifier}}
             </option>
         </select>

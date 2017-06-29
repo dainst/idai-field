@@ -23,7 +23,7 @@ describe('resources/relations --', function() {
         expect(documentViewPage.getRelationValue(0)).toEqual('1');
     });
 
-    it('create a new relation and the corresponding inverse relation', function() {
+    xit('create a new relation and the corresponding inverse relation', function() {
         resourcesPage.performCreateLink();
         resourcesPage.openEditByDoubleClickResource('2');
         expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('1');
@@ -66,7 +66,7 @@ describe('resources/relations --', function() {
         });
     });
 
-    it('delete inverse relations when deleting a resource', function() {
+    xit('delete inverse relations when deleting a resource', function() {
         resourcesPage.performCreateLink();
         resourcesPage.openEditByDoubleClickResource('2');
         resourcesPage.clickDeleteDocument();

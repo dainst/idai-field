@@ -11,7 +11,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', function() {
+fdescribe('resources --', function() {
 
 
     beforeEach(function() {
@@ -73,6 +73,7 @@ describe('resources --', function() {
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
+        browser.sleep(1000);
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('2');
     });
 

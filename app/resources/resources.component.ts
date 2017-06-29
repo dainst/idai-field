@@ -247,7 +247,20 @@ export class ResourcesComponent implements AfterViewChecked {
         this.newDocumentsFromRemote = [];
 
         return this.datastore.find(query).then(documents => {
-            this.documents = documents as Document[];
+            let docs = documents as Document[];
+
+            console.log("this",this.selectedMainTypeDocument);
+
+            for (let i = docs.length; i--;) {
+                console.log("this.documents",docs[i])
+                if (docs[i].resource.relations['isRecordedIn'] == undefined
+                        || (docs[i].resource.relations['isRecordedIn'][0] !=
+                    this.selectedMainTypeDocument.resource.id)) {
+                    docs.splice(i, 1);
+                }
+            }
+            this.documents = docs;
+
             this.notify();
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
@@ -299,7 +312,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return this.datastore.find(query).then(documents => {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-            if (this.mainTypeDocuments.length == 0) this.selectedMainTypeDocument = undefined;
+            if (this.mainTypeDocuments.length == 0) {
+                this.selectedMainTypeDocument = undefined;
+            } else {
+                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            }
         }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 

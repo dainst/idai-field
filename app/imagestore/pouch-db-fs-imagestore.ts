@@ -45,8 +45,8 @@ export class PouchDbFsImagestore implements Imagestore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    public create(key: string, data: ArrayBuffer): Promise<any> {
-        return this.write(key, data);
+    public create(key: string, data: ArrayBuffer, documentExists: boolean = false): Promise<any> {
+        return this.write(key, data, false, documentExists);
     }
 
     /**
@@ -60,7 +60,7 @@ export class PouchDbFsImagestore implements Imagestore {
      *  (thumb == false) because missing files in the filesystem can be a
      *  normal result of syncing.
      */
-    public read(key:string, sanitizeAfter: boolean = false, thumb:boolean = true): Promise<string> {
+    public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string> {
 
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
@@ -85,7 +85,7 @@ export class PouchDbFsImagestore implements Imagestore {
      *   reject -> the error message
      */
     public update(key: string, data: ArrayBuffer): Promise<any> {
-        return this.write(key, data, true);
+        return this.write(key, data, true, true);
     }
 
     /**
@@ -110,7 +110,7 @@ export class PouchDbFsImagestore implements Imagestore {
         });
     }
 
-    private write(key, data, update = false): Promise<any> {
+    private write(key, data, update, documentExists): Promise<any> {
 
         let flag = update ? 'w' : 'wx';
         return new Promise((resolve, reject) => {
@@ -123,10 +123,21 @@ export class PouchDbFsImagestore implements Imagestore {
                     let blob = this.converter.convert(data);
                     // TODO: remove when tests run with electron
                     // convert to buffer or blob depending on whether we run in node or browser
-                    if (typeof Blob !== 'undefined') blob = new Blob([blob]);
-                    else blob = Buffer.from(blob);
-                    this.db.get(key).then(result => {
-                        return this.db.putAttachment(key, 'thumb', result._rev, blob, 'image/jpeg')
+                    if (typeof Blob !== 'undefined') {
+                        blob = new Blob([blob]);
+                    } else {
+                        blob = Buffer.from(blob);
+                    }
+
+                    let promise;
+                    if (documentExists) {
+                        promise = this.db.get(key).then(doc => doc._rev);
+                    } else {
+                        promise = Promise.resolve();
+                    }
+
+                    promise.then(rev => {
+                        return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg')
                     }).then(() => resolve()
                     ).catch(err => {
                         console.error(err);

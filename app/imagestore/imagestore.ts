@@ -1,4 +1,3 @@
-import {Observable} from 'rxjs/Observable';
 import {ReadImagestore} from './read-imagestore';
 
 /**
@@ -15,7 +14,7 @@ export abstract class Imagestore extends ReadImagestore {
      * @returns {Promise<any>} resolve -> (),
      *   reject -> the error message
      */
-    abstract create(key: string, data: ArrayBuffer): Promise<any>;
+    abstract create(key: string, data: ArrayBuffer, documentExists?: boolean): Promise<any>;
 
     /**
      * @param key the identifier for the data

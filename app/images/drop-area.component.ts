@@ -148,7 +148,7 @@ export class DropAreaComponent {
         reader.onloadend = (that => {
             return () => {
                 that.createImageDocument(file, type)
-                    .then(doc => that.imagestore.create(doc.resource.id, reader.result))
+                    .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
                     .then(() => that.onImageUploaded.emit())
                     .catch(error => {
                         that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);

@@ -175,7 +175,7 @@ export class ImageGridComponent {
 
             for (let document of documents) {
                 promise = promise.then(
-                    () => this.imagestore.remove(document.resource.identifier),
+                    () => this.imagestore.remove(document.resource.id),
                     msgWithParams => reject(msgWithParams)
                 ).then(
                     () => this.persistenceManager.remove(document, [document]),

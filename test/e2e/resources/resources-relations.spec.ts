@@ -55,7 +55,7 @@ describe('resources/relations --', function() {
         });
         documentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickRelationDeleteButtonByIndices(2, 0, 0);
+        DocumentEditWrapperPage.clickRelationDeleteButtonByIndices(1, 0, 0);
         DocumentEditWrapperPage.clickSaveDocument();
         documentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);

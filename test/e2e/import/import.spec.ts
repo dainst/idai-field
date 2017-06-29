@@ -13,12 +13,13 @@ let EC = protractor.ExpectedConditions;
 describe('import --', function() {
 
     beforeEach(function() {
+
         importPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     let importIt = function(url) {
-        importPage.clickImportButton();
+
         expect(importPage.getSourceOptionValue(1)).toEqual('http');
         importPage.clickSourceOption(1);
         expect(importPage.getFormatOptionValue(0)).toEqual('native');

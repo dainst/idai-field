@@ -23,9 +23,9 @@
                     >
                         {{typesMap[document.resource.type].label}}
 
-                        <br><button class="btn btn-sm btn-link text-muted"
+                        <br><button class="btn btn-sm btn-link"
                                     *ngIf="document.resource.type == 'trench' && document.resource.relations.records"
-                                    (click)="toggleChildrenFor(document, $event);">Beinhaltene Objekte zeigen</button>
+                                    (click)="resourcesComponent.expandMainTypeDocument(document);"> {{document.resource.relations.records.length}} Unterobjekte</button>
                     </td>
                     <td align="right">
                         <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"

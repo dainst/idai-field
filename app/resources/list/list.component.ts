@@ -9,6 +9,9 @@ import {M} from '../../m';
 import {SettingsService} from '../../settings/settings-service';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ResourcesComponent} from '../resources.component';
+
+import {isUndefined} from "util";
 
 @Component({
     selector: 'list',
@@ -24,6 +27,7 @@ export class ListComponent {
 
     @Input() documents: IdaiFieldDocument[];
     @Input() selectedDocument: IdaiFieldDocument;
+    @Input() expandedDocument: IdaiFieldDocument;
 
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
@@ -40,6 +44,7 @@ export class ListComponent {
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private validator: Validator,
         private datastore: IdaiFieldDatastore,
+        private resourcesComponent: ResourcesComponent,
         configLoader: ConfigLoader
     ) {
 
@@ -106,27 +111,5 @@ export class ListComponent {
                 document.resource.identifier = latestRevision.resource.identifier;
             }
         );
-    }
-
-    private toggleChildrenFor(doc: IdaiFieldDocument, ev) {
-        if (ev.target.getAttribute('children') != 'loaded') {
-            let parentListIndex = this.documents.indexOf(doc);
-            doc.resource.relations['records'].forEach(id => {
-                this.datastore.get(id).then(childDoc => {
-                    childDoc.resource.listedAsChildFor = doc.resource.id;
-                    this.documents.splice(parentListIndex + 1, 0, <IdaiFieldDocument> childDoc)
-                }, msgWithParams => Promise.reject(msgWithParams))
-            });
-            ev.target.setAttribute('children', 'loaded');
-        } else {
-            this.documents.forEach( (listedDoc, index) => {
-                if (listedDoc.resource.listedAsChildFor == doc.resource.id) {
-                    this.documents = this.documents.filter( d => {
-                      return d.resource.listedAsChildFor != doc.resource.id;
-                    })
-                }
-            });
-            ev.target.removeAttribute('children');
-        }
     }
 }

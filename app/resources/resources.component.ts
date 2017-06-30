@@ -39,6 +39,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
+    public expandedMainTypeDocument: IdaiFieldDocument;
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -279,9 +280,7 @@ export class ResourcesComponent implements AfterViewChecked {
         doceditRef.result.then(result => {
             this.fetchDocuments().then(
                 () => {
-                    this.fetchMainTypeDocuments().then( () => {
-                        console.log(this.mainTypeDocuments);
-                    });
+                    this.fetchMainTypeDocuments();
                     if (result.document) {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
@@ -327,6 +326,9 @@ export class ResourcesComponent implements AfterViewChecked {
             } else {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
+            if (this.expandedMainTypeDocument) {
+                this.loadRecordsRelatedDocumentsFor(this.expandedMainTypeDocument);
+            }
         })
     }
 
@@ -337,7 +339,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public getDocuments(): Observable<Array<Document>> {
-
         return Observable.create(observer => {
             this.observers.push(observer);
             this.notify();
@@ -345,7 +346,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private notify() {
-
         this.observers.forEach(observer => {
             observer.next(this.documents);
         });
@@ -398,7 +398,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
-
+        this.expandedMainTypeDocument = undefined;
         this.removeEmptyDocuments();
         if (mode == 'list') {
             this.fetchMainTypeDocuments();
@@ -410,11 +410,35 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private removeEmptyDocuments() {
-
         if (!this.documents) return;
 
         for (let document of this.documents) {
             if (!document.resource.id) this.remove(document);
         }
+    }
+
+    public expandMainTypeDocument(doc: IdaiFieldDocument) {
+        this.mainTypeDocuments.forEach((listedDoc, index) => {
+            this.mainTypeDocuments = this.mainTypeDocuments.filter(d => {
+                return d.resource.listedAsChildFor == undefined;
+            })
+        });
+
+        if (doc != this.expandedMainTypeDocument) {
+            this.loadRecordsRelatedDocumentsFor(doc);
+            this.expandedMainTypeDocument = doc;
+        } else {
+            this.expandedMainTypeDocument = undefined;
+        }
+    }
+
+    private loadRecordsRelatedDocumentsFor(doc: IdaiFieldDocument) {
+        let parentListIndex = this.mainTypeDocuments.indexOf(doc);
+        doc.resource.relations['records'].forEach(id => {
+            this.datastore.get(id).then(childDoc => {
+                childDoc.resource.listedAsChildFor = doc.resource.id;
+                this.mainTypeDocuments.splice(parentListIndex + 1, 0, <IdaiFieldDocument> childDoc)
+            }, msgWithParams => Promise.reject(msgWithParams))
+        });
     }
 }

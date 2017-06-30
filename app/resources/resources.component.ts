@@ -66,7 +66,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => this.fetchDocuments())
                 .then(() => {
                     this.showPlusButton = true;
-                    readyResolveFun()
+                    readyResolveFun();
                 }).catch(msgWithParams => this.messages.add(msgWithParams));
         });
 
@@ -342,37 +342,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.observers.forEach(observer => {
             observer.next(this.documents);
         });
-    }
-
-    /**
-     * Restores the selected document by resetting it
-     * back to the persisted state. In case there are
-     * any objects marked as changed which were not yet persisted,
-     * they get deleted from the list.
-     *
-     * @returns {Promise<Document>} If the document was restored,
-     *   it resolves to <code>document</code>, if it was not restored
-     *   because it was an unsaved object, it resolves to <code>undefined</code>.
-     *   If it could not get restored due to errors, it will reject with msgWithParams.
-     */
-    public restore(): Promise<any> {
-
-        let document = this.selectedDocument;
-        if (document == undefined) return Promise.resolve();
-        if (!document['_id']) { // TODO work with propely defined interface
-            this.remove(document);
-            this.selectedDocument = undefined;
-            return Promise.resolve();
-        }
-
-        return this.datastore.refresh(document).then(
-            restoredObject => {
-                this.replace(document, <Document> restoredObject);
-                this.selectedDocument = restoredObject;
-                return Promise.resolve(restoredObject);
-            },
-            msgWithParams => Promise.reject(msgWithParams)
-        );
     }
 
     public isNewDocumentFromRemote(document: Document) {

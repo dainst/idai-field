@@ -40,8 +40,13 @@ export class PlusButtonComponent implements OnChanges {
     }
 
     public startDocumentCreation(geometryType: string) {
-
-        this.resourcesComponent.createNewDocument(this.type, geometryType, this.createRelations());
+        const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
+            'resource': {
+                'relations': this.createRelations(),
+                'type': this.type
+            }
+        };
+        this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
     }
 
     public reset() {

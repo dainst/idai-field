@@ -216,14 +216,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.notify();
     }
 
-    public createNewDocument(type: string, geometryType: string, relations: Relations = {}): Promise<any> {
-
-        const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
-            'resource': {
-                'relations': relations,
-                'type': type
-            }
-        };
+    public startEditNewDocument(newDocument: Document, geometryType: string): Promise<any> {
 
         this.selectedDocument = newDocument;
 

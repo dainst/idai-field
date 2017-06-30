@@ -40,8 +40,13 @@ export class PlusButtonComponent implements OnChanges {
     }
 
     public startDocumentCreation(geometryType: string) {
-
-        this.resourcesComponent.createNewDocument(this.type, geometryType, this.createRelations());
+        const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
+            'resource': {
+                'relations': this.createRelations(),
+                'type': this.type
+            }
+        };
+        this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
     }
 
     public reset() {
@@ -100,7 +105,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'image') return false;
 
-        if (this.isRecordedIn && this.isRecordedIn.resource.type == 'project') {
+        if (!this.isRecordedIn) {
             if (type.name == 'building') return true;
             if (type.name == 'trench') return true;
             return false;

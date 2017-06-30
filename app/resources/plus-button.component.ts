@@ -105,7 +105,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'image') return false;
 
-        if (this.isRecordedIn && this.isRecordedIn.resource.type == 'project') {
+        if (!this.isRecordedIn) {
             if (type.name == 'building') return true;
             if (type.name == 'trench') return true;
             return false;

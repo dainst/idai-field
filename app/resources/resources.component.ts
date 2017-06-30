@@ -249,7 +249,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             for (let i = docs.length; i--;) {
 
-                if (this.selectedMainTypeDocument.resource.type == 'project') {
+                if (this.view.mainType == 'project') {
                     if (['building','trench'].indexOf(docs[i].resource.type) == -1) {
                         docs.splice(i, 1);
                     }
@@ -311,19 +311,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private fetchMainTypeDocuments(): Promise <any> {
         if (this.view.mainType == 'project') {
-            this.selectedMainTypeDocument = {
-                "resource" : {
-                    "id" : "project",
-                    "identifier" : "Projekt",
-                    "shortDescription" : "",
-                    "type" : "project",
-                    "relations" : {}
-                }, "synced" : 0
-            }
+            this.selectedMainTypeDocument = undefined;
             return;
         }
 
-        let query: Query = {q: '', type: this.view.mainType, prefix: true};
+        const query: Query = {q: '', type: this.view.mainType, prefix: true};
 
         return this.datastore.find(query).then(documents => {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;

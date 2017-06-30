@@ -6,6 +6,7 @@
                 <th>Typ</th>
                 <th>Identifier</th>
                 <th>Kurzbeschreibung</th>
+                <th>Optionen</th>
             </tr>
             </thead>
 
@@ -22,7 +23,9 @@
                     >
                         {{typesMap[document.resource.type].label}}
 
-                        <br><button class="btn btn-sm btn-link text-muted" *ngIf="document.resource.type == 'trench' && document.resource.relations.records" (click)="loadChildrenFor(document); $event.target.remove();">Beinhaltene Objekte zeigen</button>
+                        <br><button class="btn btn-sm btn-link text-muted"
+                                    *ngIf="document.resource.type == 'trench' && document.resource.relations.records"
+                                    (click)="toggleChildrenFor(document, $event);">Beinhaltene Objekte zeigen</button>
                     </td>
                     <td align="right">
                         <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"
@@ -34,6 +37,9 @@
                     <td align="right">
                         <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)"
                                (keyup)="markAsChanged()" class="form-control form-control-sm">
+                    </td>
+                    <td>
+                        <plus-button *ngIf="document.resource.type == 'trench'" [isRecordedIn]="document"></plus-button>
                     </td>
                 </tr>
             </tbody>

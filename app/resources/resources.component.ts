@@ -286,7 +286,9 @@ export class ResourcesComponent implements AfterViewChecked {
         doceditRef.result.then(result => {
             this.fetchDocuments().then(
                 () => {
-                    this.fetchMainTypeDocuments();
+                    this.fetchMainTypeDocuments().then( () => {
+                        console.log(this.mainTypeDocuments);
+                    });
                     if (result.document) {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
@@ -414,7 +416,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.removeEmptyDocuments();
         if (mode == 'list') {
-            this.fetchMainTypeDocuments().then(() => this.documents = this.mainTypeDocuments );
+            this.fetchMainTypeDocuments();
         } else {
             this.fetchDocuments();
         }

@@ -108,13 +108,25 @@ export class ListComponent {
         );
     }
 
-    private loadChildrenFor(doc: IdaiFieldDocument, ev) {
-        let parentListIndex = this.documents.indexOf(doc);
-        doc.resource.relations['records'].forEach( id => {
-            this.datastore.get(id).then( doc => {
-
-                this.documents.splice(parentListIndex+1,0, <IdaiFieldDocument>doc)
-            }, msgWithParams => Promise.reject(msgWithParams))
-        });
+    private toggleChildrenFor(doc: IdaiFieldDocument, ev) {
+        if (ev.target.getAttribute('children') != 'loaded') {
+            let parentListIndex = this.documents.indexOf(doc);
+            doc.resource.relations['records'].forEach(id => {
+                this.datastore.get(id).then(childDoc => {
+                    childDoc.resource.listedAsChildFor = doc.resource.id;
+                    this.documents.splice(parentListIndex + 1, 0, <IdaiFieldDocument> childDoc)
+                }, msgWithParams => Promise.reject(msgWithParams))
+            });
+            ev.target.setAttribute('children', 'loaded');
+        } else {
+            this.documents.forEach( (listedDoc, index) => {
+                if (listedDoc.resource.listedAsChildFor == doc.resource.id) {
+                    this.documents = this.documents.filter( d => {
+                      return d.resource.listedAsChildFor != doc.resource.id;
+                    })
+                }
+            });
+            ev.target.removeAttribute('children');
+        }
     }
 }

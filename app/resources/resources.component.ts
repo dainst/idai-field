@@ -255,10 +255,18 @@ export class ResourcesComponent implements AfterViewChecked {
             let docs = documents as Document[];
 
             for (let i = docs.length; i--;) {
-                if (docs[i].resource.relations['isRecordedIn'] == undefined
-                        || (docs[i].resource.relations['isRecordedIn'][0] !=
-                    this.selectedMainTypeDocument.resource.id)) {
-                    docs.splice(i, 1);
+
+                if (this.selectedMainTypeDocument.resource.type == 'project') {
+                    if (['building','trench'].indexOf(docs[i].resource.type) == -1) {
+                        docs.splice(i, 1);
+                    }
+                } else {
+
+                    if (docs[i].resource.relations['isRecordedIn'] == undefined
+                            || (docs[i].resource.relations['isRecordedIn'][0] !=
+                        this.selectedMainTypeDocument.resource.id)) {
+                        docs.splice(i, 1);
+                    }
                 }
             }
             this.documents = docs;
@@ -309,6 +317,18 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
+        if (this.view.mainType == 'project') {
+            this.selectedMainTypeDocument = {
+                "resource" : {
+                    "id" : "project",
+                    "identifier" : "Projekt",
+                    "shortDescription" : "",
+                    "type" : "project",
+                    "relations" : {}
+                }, "synced" : 0
+            }
+            return;
+        }
 
         let query: Query = {q: '', type: this.view.mainType, prefix: true};
 

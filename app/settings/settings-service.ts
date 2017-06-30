@@ -41,16 +41,16 @@ export class SettingsService {
                 const project = this.getSelectedProject();
 
                 // if project object does not exist, create it
-                this.datastore.get(project).catch(()=>{
-                    this.datastore.create({
-                        "resource" : {
-                            "type" : "project",
-                            "identifier" : project,
-                            "id" : project,
-                            relations: {}
-                        }
-                    })
-                });
+                // this.datastore.get(project).catch(()=>{
+                //     this.datastore.create({
+                //         "resource" : {
+                //             "type" : "project",
+                //             "identifier" : project,
+                //             "id" : project,
+                //             relations: {}
+                //         }
+                //     })
+                // });
 
                 this.pouchdbManager.select(project);
                 this.imagestore.select(project);

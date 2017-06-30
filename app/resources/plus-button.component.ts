@@ -96,26 +96,15 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'image') return false;
 
-        if (this.liesWithin && !this.isAllowedRelationTargetType(type, this.liesWithin,
-                projectConfiguration.getInverseRelations('liesWithin'), projectConfiguration)) return false;
-        if (this.isRecordedIn && !this.isAllowedRelationTargetType(type, this.isRecordedIn,
-                projectConfiguration.getInverseRelations('isRecordedIn'), projectConfiguration)) return false;
-
-        return true;
-    }
-
-    private isAllowedRelationTargetType(type: IdaiType, parent: IdaiFieldDocument, relationName: string,
-                               projectConfiguration: ProjectConfiguration): boolean {
-
-        const relationDefinitions: Array<RelationDefinition>
-            = projectConfiguration.getRelationDefinitions(parent.resource.type);
-
-        for (let relationDefinition of relationDefinitions) {
-            if (relationName == relationDefinition.name
-                && relationDefinition.range.indexOf(type.name) > -1) return true;
+        if (this.isRecordedIn.resource.type == 'project') {
+            if (type.name == 'building') return true;
+            if (type.name == 'trench') return true;
+            return false;
+        } else {
+            if (type.name == 'trench') return false;
+            if (type.name == 'building') return false;
+            if (type.name == 'project') return false;
+            return true;
         }
-
-        return false;
     }
-
 }

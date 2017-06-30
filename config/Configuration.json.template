@@ -4,23 +4,23 @@
 
   "views": [
 
-     {
-        "name": "project",
-        "label": "Projekt",
-        "mainType": "project"
-     },
+    {
+      "name": "project",
+      "label": "Projekt",
+      "mainType": "project"
+    },
 
-     {
-        "name": "excavation",
-        "label": "Ausgrabung",
-        "mainType": "trench"
-     },
+    {
+      "name": "excavation",
+      "label": "Ausgrabung",
+      "mainType": "trench"
+    },
 
-     {
-        "name": "building",
-        "label": "Bauforschung",
-        "mainType": "building"
-     }
+    {
+      "name": "building",
+      "label": "Bauforschung",
+      "mainType": "building"
+    }
   ],
 
   "types": [
@@ -74,7 +74,7 @@
           "label":"Beschreibung",
           "inputType":"text",
           "description":"ausführliche Beschreibung des Sachverhalts"
-         }
+        }
       ]
     },
 
@@ -747,84 +747,34 @@
     },
     {
       "name":"isRecordedIn",
-      "inverse":"records",
+      "inverse":"NO-INVERSE",
       "label":"Gehört zu",
       "domain":[
-        "context",
-        "object"
-      ],
-      "range":[
-        "trench",
-        "building"
-      ],
-      "visible" : false,
-      "editable" : false
-    },
-    {
-      "name":"isRecordedIn",
-      "inverse":"records",
-      "label":"Gehört zu",
-      "domain":[
-        "section",
-        "planum"
-      ],
-      "range":[
-        "trench"
-      ],
-	  "visible" : false,
-	  "editable" : false
-    },
-    {
-      "name":"isRecordedIn",
-      "inverse":"records",
-      "label":"Gehört zu",
-      "domain":[
-        "trench",
-        "building"
-      ],
-      "range":[
-        "project"
-      ],
-      "visible" : false,
-      "editable" : false
-    },
-    {
-      "name":"records",
-      "inverse":"isRecordedIn",
-      "label":"Beinhaltet",
-      "domain":[
-        "trench"
-      ],
-      "range":[
         "context",
         "object",
         "section",
         "planum"
-      ]
-    },
-    {
-      "name":"records",
-      "inverse":"isRecordedIn",
-      "label":"Beinhaltet",
-      "domain":[
-        "project"
       ],
       "range":[
         "trench",
         "building"
-      ]
+      ],
+      "visible" : false,
+      "editable" : false
     },
     {
-      "name":"records",
-      "inverse":"isRecordedIn",
-      "label":"Beinhaltet",
+      "name":"isRecordedIn",
+      "inverse":"NO-INVERSE",
+      "label":"Gehört zu",
       "domain":[
+        "trench",
         "building"
       ],
       "range":[
-        "context",
-        "object"
-      ]
+        "project"
+      ],
+      "visible" : false,
+      "editable" : false
     },
     {
       "name":"liesWithin",

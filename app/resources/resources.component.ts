@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
-import {Document, Relations, Action} from 'idai-components-2/core';
+import {Document, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
@@ -12,7 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {M} from "../m";
+import {M} from '../m';
 
 
 @Component({
@@ -245,28 +245,40 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.newDocumentsFromRemote = [];
 
-        return this.datastore.find(query).then(documents => {
-            let docs = documents as Document[];
+        return this.datastore.find(query)
+            .then(documents => {
+                return this.filterDocuments(documents);
+            }).then(filteredDocuments => {
+                this.documents = filteredDocuments;
+                this.notify();
+            }).catch(msgWithParams => this.messages.add(msgWithParams));
+    }
 
-            for (let i = docs.length; i--;) {
+    private filterDocuments(documents: Array<Document>): Promise<Array<Document>> {
 
-                if (this.view.mainType == 'project') {
-                    if (['building','trench'].indexOf(docs[i].resource.type) == -1) {
-                        docs.splice(i, 1);
+        return this.configLoader.getProjectConfiguration()
+            .then(projectConfiguration => {
+
+                let result: Array<Document> = [];
+
+                for (let document of documents) {
+
+                    if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type, this.view.mainType,
+                            'isRecordedIn')) {
+                        continue;
                     }
-                } else {
 
-                    if (docs[i].resource.relations['isRecordedIn'] == undefined
-                            || (docs[i].resource.relations['isRecordedIn'][0] !=
-                        this.selectedMainTypeDocument.resource.id)) {
-                        docs.splice(i, 1);
+                    if (this.selectedMainTypeDocument && (!document.resource.relations['isRecordedIn']
+                        || (document.resource.relations['isRecordedIn']
+                            .indexOf(this.selectedMainTypeDocument.resource.id) == -1))) {
+                        continue;
                     }
+
+                    result.push(document);
                 }
-            }
-            this.documents = docs;
 
-            this.notify();
-        }).catch(msgWithParams => this.messages.add(msgWithParams));
+                return Promise.resolve(result);
+            }).catch(msgWithParams => Promise.reject(msgWithParams));
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {
@@ -311,6 +323,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
+
         if (this.view.mainType == 'project') {
             this.selectedMainTypeDocument = undefined;
             return;
@@ -322,14 +335,14 @@ export class ResourcesComponent implements AfterViewChecked {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
             if (this.mainTypeDocuments.length == 0) {
                 this.selectedMainTypeDocument = undefined;
-                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE,this.view.mainType]);
+                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE, this.view.mainType]);
             } else {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
             if (this.expandedMainTypeDocument) {
                 this.loadRecordsRelatedDocumentsFor(this.expandedMainTypeDocument);
             }
-        })
+        });
     }
 
     public createGeometry(geometryType: string) {

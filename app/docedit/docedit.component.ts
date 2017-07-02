@@ -134,7 +134,7 @@ export class DoceditComponent {
 
         if (!this.projectConfiguration) return undefined;
         return this.projectConfiguration.getRelationDefinitions(
-            this.document.resource.type, 'editable');
+            this.document.resource.type, false, 'editable');
     }
 
     public cancel() {

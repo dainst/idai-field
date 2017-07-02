@@ -40,12 +40,14 @@ export class PlusButtonComponent implements OnChanges {
     }
 
     public startDocumentCreation(geometryType: string) {
+
         const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
             'resource': {
                 'relations': this.createRelations(),
                 'type': this.type
             }
         };
+
         this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
     }
 
@@ -105,15 +107,30 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'image') return false;
 
-        if (!this.isRecordedIn) {
-            if (type.name == 'building') return true;
-            if (type.name == 'trench') return true;
+        let isRecordedInType = this.isRecordedIn ? this.isRecordedIn.resource.type : 'project';
+        if (!this.isAllowedRelationDomainType(type, isRecordedInType, 'isRecordedIn', projectConfiguration)) {
             return false;
-        } else {
-            if (type.name == 'trench') return false;
-            if (type.name == 'building') return false;
-            if (type.name == 'project') return false;
-            return true;
         }
+
+        if (this.liesWithin && !this.isAllowedRelationDomainType(type, this.liesWithin.resource.type, 'liesWithin',
+                projectConfiguration)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private isAllowedRelationDomainType(domainType: IdaiType, rangeType: string, relationName: string,
+                                        projectConfiguration: ProjectConfiguration): boolean {
+
+        const relationDefinitions: Array<RelationDefinition>
+            = projectConfiguration.getRelationDefinitions(rangeType, true);
+
+        for (let relationDefinition of relationDefinitions) {
+            if (relationName == relationDefinition.name
+                && relationDefinition.domain.indexOf(domainType.name) > -1) return true;
+        }
+
+        return false;
     }
 }

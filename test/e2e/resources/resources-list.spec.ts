@@ -4,7 +4,7 @@ let delays = require('../config/delays');
 let resourcesPage = require('./resources.page');
 
 
-describe('resources/list --', function() {
+xdescribe('resources/list --', function() {
 
     beforeEach(function () {
         resourcesPage.get();

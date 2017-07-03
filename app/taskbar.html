@@ -4,7 +4,7 @@
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
                     [id]="'taskbar-conflict-' + document.resource.identifier"
-                    (click)="openConflictResolver(document.resource.id); p.close();">
+                    (click)="openConflictResolver(document); p.close();">
                     <document-teaser [document]="document"></document-teaser>
                 </li>
             </ul>

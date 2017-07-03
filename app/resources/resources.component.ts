@@ -62,12 +62,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.route.params.subscribe(params => {
 
+            this.selectedDocument = undefined;
+
             this.parseParams(params)
                 .then(() => this.fetchMainTypeDocuments())
                 .then(() => this.fetchDocuments())
                 .then(() => {
                     this.showPlusButton = true;
-                    this.selectedDocument = undefined;
                     readyResolveFun();
                 }).catch(msgWithParams => this.messages.add(msgWithParams));
         });
@@ -92,7 +93,7 @@ export class ResourcesComponent implements AfterViewChecked {
         let tab: string = params['tab'];
         let resourceId: string = params['id'];
 
-        if (tab && resourceId) this.openEditTab(tab, resourceId);
+        if (tab && resourceId) this.openEditTab(tab, resourceId, viewName);
 
         if (!this.view || viewName != this.view.name) {
             return this.initializeView(viewName);
@@ -111,9 +112,9 @@ export class ResourcesComponent implements AfterViewChecked {
         );
     }
 
-    private openEditTab(tab: string, id: string) {
+    private openEditTab(tab: string, id: string, viewName: string) {
 
-        this.location.replaceState('resources');
+        this.location.replaceState('resources/' + viewName);
 
         this.datastore.get(id).then(
             document => this.editDocument(document, tab),

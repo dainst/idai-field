@@ -122,23 +122,15 @@ export class ResourcesComponent implements AfterViewChecked {
         );
     }
 
-    public filterByMainTypeDocument(event) {
+    public filterByMainTypeDocument(document: IdaiFieldDocument) {
 
-        const documentId: string = event.target.value;
+        this.selectedMainTypeDocument = document;
 
-        if (!documentId || documentId == '') {
-            this.selectedMainTypeDocument = undefined;
-            this.fetchDocuments();
-        } else {
-            this.datastore.get(documentId)
-                .then(document => {
-                    this.selectedMainTypeDocument = <IdaiFieldDocument> document;
-                    return this.datastore.findIsRecordedIn(document.resource.id);
-                }).then(documents => {
-                    this.documents = documents as Array<IdaiFieldDocument>;
-                    this.notify();
-                }).catch(err => { console.error(err); } );
-        }
+        this.datastore.findIsRecordedIn(document.resource.id)
+            .then(documents => {
+                this.documents = documents as Array<IdaiFieldDocument>;
+                this.notify();
+            }).catch(err => { console.error(err); } );
     }
 
     private handleChange(changedDocument: Document) {
@@ -338,13 +330,30 @@ export class ResourcesComponent implements AfterViewChecked {
             if (this.mainTypeDocuments.length == 0) {
                 this.selectedMainTypeDocument = undefined;
                 return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE, this.view.mainType]);
+            } else if (this.selectedDocument) {
+                this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+                if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             } else {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
+
             if (this.expandedMainTypeDocument) {
                 this.loadRecordsRelatedDocumentsFor(this.expandedMainTypeDocument);
             }
         });
+    }
+
+    private getMainTypeDocumentForDocument(document: IdaiFieldDocument): IdaiFieldDocument {
+
+        if (!document.resource.relations['isRecordedIn']) return undefined;
+
+        for (let documentId of document.resource.relations['isRecordedIn']) {
+            for (let mainTypeDocument of this.mainTypeDocuments) {
+                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
+            }
+        }
+
+        return undefined;
     }
 
     public createGeometry(geometryType: string) {

@@ -31,7 +31,7 @@ describe('resources/syncing --', function() {
     let testResource = {
         id: "td1",
         identifier:"test1",
-        type: "object",
+        type: "trench",
         shortDescription: "Testobjekt",
         relations: []
     };
@@ -144,7 +144,7 @@ describe('resources/syncing --', function() {
 
         return NavbarPage.clickNavigateToSettings()
             .then(() => removeRemoteSiteConfiguration())
-            .then(() => NavbarPage.clickNavigateToResources())
+            .then(() => NavbarPage.clickNavigateToProject())
             .then(() => resourcesPage.clickSelectResource('test1'))
             .then(documentViewPage.clickEditDocument)
             .then(() => DocumentEditWrapperPage.typeInInputField('Test Local', 1))
@@ -155,7 +155,7 @@ describe('resources/syncing --', function() {
             })
             .then(() => NavbarPage.clickNavigateToSettings())
             .then(() => configureRemoteSite())
-            .then(() => NavbarPage.clickNavigateToResources());
+            .then(() => NavbarPage.clickNavigateToProject());
     }
 
     beforeAll(done => {
@@ -191,7 +191,7 @@ describe('resources/syncing --', function() {
 
     it('show resource created in other db', done => {
 
-        NavbarPage.clickNavigateToResources();
+        NavbarPage.clickNavigateToProject();
         waitForIt('test1', () => {
             expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
             done();
@@ -200,7 +200,7 @@ describe('resources/syncing --', function() {
 
     it('show changes made in other db', done => {
 
-        NavbarPage.clickNavigateToResources()
+        NavbarPage.clickNavigateToProject()
             .then(() => {
                 testDocument.resource.identifier = 'test2';
                 updateTestDoc();
@@ -212,7 +212,7 @@ describe('resources/syncing --', function() {
 
     it('resource created in client should be synced to other db', done => {
 
-        NavbarPage.clickNavigateToResources()
+        NavbarPage.clickNavigateToProject()
             .then(() => {
                 changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
                     if (change.doc.resource && change.doc.resource.identifier == 'test3')
@@ -224,7 +224,7 @@ describe('resources/syncing --', function() {
 
     it('solve an immediate conflict by reloading the latest revision', done => {
 
-        NavbarPage.clickNavigateToResources()
+        NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 resourcesPage.clickSelectResource('test1')
                     .then(documentViewPage.clickEditDocument)
@@ -242,7 +242,7 @@ describe('resources/syncing --', function() {
 
     it('solve an immediate conflict by overwriting the latest revision', done => {
 
-        NavbarPage.clickNavigateToResources()
+        NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 resourcesPage.clickSelectResource('test1')
                     .then(documentViewPage.clickEditDocument)
@@ -265,7 +265,7 @@ describe('resources/syncing --', function() {
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {
 
-        return NavbarPage.clickNavigateToResources()
+        return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
 
@@ -282,7 +282,7 @@ describe('resources/syncing --', function() {
 
         let shortDescription = '';
 
-        return NavbarPage.clickNavigateToResources()
+        return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
                     .then(() => { return db.get(testDocument._id); })
@@ -310,7 +310,7 @@ describe('resources/syncing --', function() {
 
     it('open conflict resolver via taskbar', done => {
 
-        return NavbarPage.clickNavigateToResources()
+        return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
                     .then(NavbarPage.clickConflictsButton)
@@ -324,10 +324,10 @@ describe('resources/syncing --', function() {
 
     it('open conflict resolver via conflict button in document view', done => {
 
-        return NavbarPage.clickNavigateToResources()
+        return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
-                    .then(NavbarPage.clickNavigateToResources)
+                    .then(NavbarPage.clickNavigateToProject)
                     .then(() => resourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickSolveConflicts)
                     .then(() => {

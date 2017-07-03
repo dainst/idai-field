@@ -7,6 +7,11 @@ export class NavbarPage {
 
     // click
 
+    public static clickNavigateToProject() {
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(0)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(0).click();
+    }
+
     public static clickNavigateToResources() {
         browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(1)), delays.ECWaitTime);
         return element.all(by.css('.nav-link')).get(1).click();

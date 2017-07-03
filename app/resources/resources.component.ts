@@ -67,6 +67,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => this.fetchDocuments())
                 .then(() => {
                     this.showPlusButton = true;
+                    this.selectedDocument = undefined;
                     readyResolveFun();
                 }).catch(msgWithParams => this.messages.add(msgWithParams));
         });

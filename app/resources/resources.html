@@ -10,7 +10,7 @@
         <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
     </div>
     <div class="col-md-6" align="right">
-        <select *ngIf="this.view && this.view.mainType != 'project'" class="form-control w-50" style="display:inline"
+        <select *ngIf="this.view && this.view.mainType != 'project' && mode == 'map'" class="form-control w-50" style="display:inline"
                 (change)="filterByMainTypeDocument($event)">
             <option *ngFor="let document of mainTypeDocuments; let i = index" [value]="document.resource.id"
                     [attr.selected]="i == 0 ? true : null">

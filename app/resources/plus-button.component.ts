@@ -1,5 +1,5 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
-import {ConfigLoader, IdaiType, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Relations} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
@@ -22,6 +22,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() isRecordedIn: IdaiFieldDocument;
     @Input() liesWithin: IdaiFieldDocument;
+    @Input() geometryType: string;
 
     private typesTreeList: Array<IdaiType>;
     private type: string;
@@ -39,7 +40,9 @@ export class PlusButtonComponent implements OnChanges {
         });
     }
 
-    public startDocumentCreation(geometryType: string) {
+    public startDocumentCreation(geometryType: string = this.geometryType) {
+
+        this.popover.close();
 
         const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
             'resource': {
@@ -54,6 +57,14 @@ export class PlusButtonComponent implements OnChanges {
     public reset() {
 
         this.type = undefined;
+    }
+
+    public chooseType(type: IdaiType) {
+
+        if (type.isAbstract) return;
+
+        this.type = type.name;
+        if (this.geometryType) this.startDocumentCreation();
     }
 
     private handleClick(event) {

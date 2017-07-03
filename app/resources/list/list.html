@@ -39,7 +39,8 @@
                                (keyup)="markAsChanged()" class="form-control form-control-sm">
                     </td>
                     <td>
-                        <plus-button *ngIf="document.resource.type == 'trench'" [isRecordedIn]="document"></plus-button>
+                        <plus-button *ngIf="document.resource.type == 'trench'" [isRecordedIn]="document"
+                                     [geometryType]="'none'"></plus-button>
                     </td>
                 </tr>
             </tbody>

@@ -195,8 +195,12 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * @returns {Promise<any>}
      */
     public removeRevision(docId: string, revisionId: string): Promise<any> {
+
         return this.db.remove(docId, revisionId)
-            .catch(err => { console.error(err); Promise.reject([M.DATASTORE_GENERIC_ERROR]); });
+            .catch(err => {
+                console.error(err);
+                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+            });
     }
 
     public shutDown(): Promise<void> {

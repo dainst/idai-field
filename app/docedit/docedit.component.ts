@@ -42,8 +42,6 @@ export class DoceditComponent {
      */
     private clonedDocument: IdaiFieldDocument;
 
-    public recordingContext: String;
-
     public activeTab: string;
 
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
@@ -138,6 +136,7 @@ export class DoceditComponent {
     }
 
     public cancel() {
+
         if (this.documentEditChangeMonitor.isChanged()) {
             this.showModal();
         } else {
@@ -145,13 +144,8 @@ export class DoceditComponent {
         }
     }
 
-    private setRecordingContextOf(doc:IdaiFieldDocument) {
-        if (this.recordingContext) {
-            doc.resource.relations['isRecordedIn'] = ['abc'];
-        }
-    }
-
     private handleSaveSuccess(clonedDocument, viaSaveButton) {
+
         this.removeInspectedRevisions(clonedDocument.resource.id)
             .then(
                 doc => {
@@ -163,7 +157,7 @@ export class DoceditComponent {
                         viaSaveButton: viaSaveButton
                     });
 
-                    this.messages.add([M.DOCEDIT_SAVE_SUCCESS])
+                    this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
                 }
             ).catch(msgWithParams => {
                 this.messages.add(msgWithParams);
@@ -187,20 +181,17 @@ export class DoceditComponent {
      * @param resourceId
      * @return {Promise<IdaiFieldDocument>} latest revision
      */
-    private removeInspectedRevisions(resourceId): Promise<IdaiFieldDocument> {
-        
+    private removeInspectedRevisions(resourceId: string): Promise<IdaiFieldDocument> {
+
         let promises = [];
         for (let revisionId of this.inspectedRevisionsIds) {
-            promises.push(this.datastore.removeRevision(
-                resourceId,
-                revisionId));
+            promises.push(this.datastore.removeRevision(resourceId, revisionId));
         }
         this.inspectedRevisionsIds = [];
 
-        return Promise.all(promises).then(()=>
-            this.datastore.getLatestRevision(
-                resourceId
-            ))
+        return Promise.all(promises).then(
+            () => this.datastore.getLatestRevision(resourceId)
+        );
     }
 
     private handleDeletedConflict() {
@@ -213,6 +204,7 @@ export class DoceditComponent {
     }
 
     private makeClonedDocAppearNew() {
+
         // make the doc appear 'new' ...
         delete this.clonedDocument.resource.id; // ... for persistenceManager
         delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
@@ -246,7 +238,7 @@ export class DoceditComponent {
 
     private deleteDoc() {
 
-        this.removeImageTypeWithImageStore(this.document)
+        this.removeImageWithImageStore(this.document)
             .then(() => this.removeWithPersistenceManager(this.document))
             .then(() => {
                 this.activeModal.dismiss('deleted');
@@ -257,7 +249,8 @@ export class DoceditComponent {
             });
     }
 
-    private removeImageTypeWithImageStore(document) {
+    private removeImageWithImageStore(document) {
+
         return this.imageTypeUtility.isImageType(document.resource.type)
             .then(isImageType => {
                 if (isImageType) {
@@ -265,7 +258,7 @@ export class DoceditComponent {
                 } else {
                     return Promise.resolve();
                 }
-            })
+            });
     }
 
     private removeWithPersistenceManager(document) {

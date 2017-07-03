@@ -10,8 +10,8 @@ export class PouchdbProxy {
         return this.rdy.then(db => db.put(document));
     }
 
-    public remove(document): Promise<any> {
-        return this.rdy.then(db => db.remove(document));
+    public remove(document, revisionId?): Promise<any> {
+        return this.rdy.then(db => db.remove(document, revisionId));
     }
 
     public query(index, opts): Promise<any> {

@@ -15,54 +15,40 @@ let ResourcesPage = function() {
 
     // click
 
-    // TODO create click function in common
-
     this.clickCreateObject = function() {
-        browser.wait(EC.visibilityOf(element(by.id('object-overview-button-create-object'))), delays.ECWaitTime);
-        element(by.id('object-overview-button-create-object')).click();
+        common.click(by.id('object-overview-button-create-object'));
     };
 
     this.clickSaveInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))),
-            delays.ECWaitTime);
-        element(by.id('overview-save-confirmation-modal-save-button')).click();
+        common.click(by.id('overview-save-confirmation-modal-save-button'));
     };
 
     this.clickCancelInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))),
-            delays.ECWaitTime);
-        element(by.id('overview-save-confirmation-modal-cancel-button')).click();
+        common.click(by.id('overview-save-confirmation-modal-cancel-button'));
     };
 
     this.clickDiscardInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-discard-button'))),
-            delays.ECWaitTime);
-        element(by.id('overview-save-confirmation-modal-discard-button')).click();
+        common.click(by.id('overview-save-confirmation-modal-discard-button'));
     };
 
     this.clickDeleteDocument = function() {
-        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-delete-document'))), delays.ECWaitTime);
-        element(by.id('document-edit-button-delete-document')).click();
+        common.click(by.id('document-edit-button-delete-document'));
     };
 
     this.clickDeleteInModal = function() {
-        browser.wait(EC.visibilityOf(element(by.id('delete-resource-confirm'))), delays.ECWaitTime);
-        element(by.id('delete-resource-confirm')).click();
+        common.click(by.id('delete-resource-confirm'));
     };
 
     this.clickChooseTypeFilter = function(typeIndex) {
 
-        browser.wait(EC.visibilityOf(element(by.id('searchfilter'))), delays.ECWaitTime);
-        element(by.id('searchfilter')).click();
-        browser.wait(EC.visibilityOf(element(by.id('choose-type-filter-option-' + typeIndex))), delays.ECWaitTime);
-        element(by.id('choose-type-filter-option-' + typeIndex)).click();
+        common.click(by.id('searchfilter'));
+        common.click(by.id('choose-type-filter-option-' + typeIndex));
     };
 
     this.clickSelectGeometryType = function(type) {
-        var geom = 'none';
+        let geom = 'none';
         if (type) geom = type;
-        browser.wait(EC.visibilityOf(element(by.id('geometry-type-selection'))), delays.ECWaitTime);
-        return element(by.id('choose-geometry-option-' + geom)).click();
+        common.click(by.id('choose-geometry-option-' + geom));
     };
 
     /**
@@ -75,11 +61,12 @@ let ResourcesPage = function() {
     };
 
     this.clickSelectResource = function(identifier) {
-        browser.wait(EC.visibilityOf(
-            element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
-                 + identifier + '"]'))), delays.ECWaitTime);
-        return element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
-            + identifier + '"]')).click();
+        common.click(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+            + identifier + '"]'));
+    };
+
+    this.clickListModeButton = function() {
+        common.click(by.id('list-mode-button'));
     };
 
     this.openEditByDoubleClickResource = function(identifier) {
@@ -93,11 +80,6 @@ let ResourcesPage = function() {
     this.clickSelectResourceType = function(typeIndex) {
         if (!typeIndex) typeIndex = 0;
         return element(by.id('choose-type-option-' + typeIndex)).click();
-    };
-
-    this.clickListModeButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('list-mode-button'))), delays.ECWaitTime);
-        element(by.id('list-mode-button')).click();
     };
 
     // get text

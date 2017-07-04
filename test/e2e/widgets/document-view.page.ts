@@ -1,37 +1,37 @@
 import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
-var common = require("../common.js");
-var EC = protractor.ExpectedConditions;
-var delays = require('../config/delays');
+const common = require("../common.js");
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira
  */
-var DocumentViewPage = function() {
+export class DocumentViewPage {
 
     // click
 
-    this.clickRelation = function(relationIndex) {
+    public static clickRelation(relationIndex) {
         return element.all(by.css('#document-view a')).get(relationIndex).click();
     };
 
-    this.clickEditDocument = function() {
+    public static clickEditDocument() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-document')).click();
     };
 
-    this.clickCreateGeometry = function(type) {
+    public static clickCreateGeometry(type) {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-create-' + type))), delays.ECWaitTime);
         return element(by.id('document-view-button-create-' + type)).click();
     };
 
-    this.clickReeditGeometry = function() {
+    public static clickReeditGeometry() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
         element(by.id('document-view-button-edit-geometry')).click();
     };
 
-    this.clickSolveConflicts = function() {
+    public static clickSolveConflicts() {
         browser.wait(EC.visibilityOf(element(by.id('document-view-button-solve-conflicts'))), delays.ECWaitTime);
         element(by.id('document-view-button-solve-conflicts')).click();
     };
@@ -41,7 +41,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getRelationValue = function(index) {
+    public static getRelationValue(index) {
         browser.wait(EC.visibilityOf(element(by.css('relations-view a'))), delays.ECWaitTime);
         return element.all(by.css('relations-view a')).get(index).getText();
     };
@@ -49,7 +49,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getRelationName = function(index) {
+    public static getRelationName(index) {
         browser.wait(EC.visibilityOf(element(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))), delays.ECWaitTime);
         return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
     };
@@ -57,7 +57,7 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getFieldValue = function(index) {
+    public static getFieldValue(index) {
         browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'))), delays.ECWaitTime);
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue')).getText();
     };
@@ -65,25 +65,23 @@ var DocumentViewPage = function() {
     /**
      * @param index counting from 0 for the first field
      */
-    this.getFieldName = function(index) {
+    public static getFieldName(index) {
         browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname'))), delays.ECWaitTime);
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname')).getText();
     };
 
-    this.getFields = function() {
+    public static getFields() {
         browser.wait(EC.visibilityOf(element(by.css('fields-view > div'))), delays.ECWaitTime);
         return element.all(by.css('fields-view > div'))
     };
 
-    this.getRelations = function() {
+    public static getRelations() {
         browser.sleep(delays.shortRest);
         return element.all(by.css('relations-view a'));
     };
 
-    this.getSelectedGeometryTypeText = function() {
+    public static getSelectedGeometryTypeText() {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
-};
-
-module.exports = new DocumentViewPage();
+}

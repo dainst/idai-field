@@ -1,7 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 
 let common = require('../common.js');
-let importPage = require('./import.page');
+import {ImportPage} from './import.page';
 let resourcesPage = require('../resources/resources.page');
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
@@ -14,18 +14,18 @@ describe('import --', function() {
 
     beforeEach(function() {
 
-        importPage.get();
+        ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     let importIt = function(url) {
 
-        expect(importPage.getSourceOptionValue(1)).toEqual('http');
-        importPage.clickSourceOption(1);
-        expect(importPage.getFormatOptionValue(0)).toEqual('native');
-        importPage.clickFormatOption(0);
-        common.typeIn(importPage.getImportURLInput(), url);
-        importPage.clickStartImportButton();
+        expect(ImportPage.getSourceOptionValue(1)).toEqual('http');
+        ImportPage.clickSourceOption(1);
+        expect(ImportPage.getFormatOptionValue(0)).toEqual('native');
+        ImportPage.clickFormatOption(0);
+        common.typeIn(ImportPage.getImportURLInput(), url);
+        ImportPage.clickStartImportButton();
     };
 
     xit('import a valid iDAI.field JSONL file via HTTP', function() {

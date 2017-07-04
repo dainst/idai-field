@@ -15,7 +15,7 @@ function typeIn(inputField, text) {
 
 function click(elSel) {
     browser.wait(EC.visibilityOf(element(elSel)), delays.ECWaitTime);
-    element(elSel).click();
+    return element(elSel).click();
 }
 
 module.exports = {

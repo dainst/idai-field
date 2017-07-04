@@ -48,7 +48,7 @@ let ResourcesPage = function() {
     this.clickSelectGeometryType = function(type) {
         let geom = 'none';
         if (type) geom = type;
-        common.click(by.id('choose-geometry-option-' + geom));
+        return common.click(by.id('choose-geometry-option-' + geom));
     };
 
     /**

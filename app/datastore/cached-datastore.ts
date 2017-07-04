@@ -40,8 +40,10 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
-            let d = doc as Document;
-            return Promise.resolve(d);
+            document['_rev'] = doc['_rev'];
+            document['_conflicts'] = doc['_conflicts'];
+            this.documentCache[doc.resource.id] = document;
+            return Promise.resolve(doc as Document);
         });
     }
 

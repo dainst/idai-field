@@ -6,7 +6,7 @@ import {CachedDatastore} from "../../../app/datastore/cached-datastore";
  */
 export function main() {
 
-    fdescribe('CachedDatastore', () => {
+    describe('CachedDatastore', () => {
 
         let datastore: CachedDatastore;
 
@@ -24,7 +24,13 @@ export function main() {
 
         beforeEach(
             function () {
-                const mockdb = jasmine.createSpyObj('mockdb', ['find','documentChangesNotifications','create']);
+                const mockdb = jasmine.createSpyObj('mockdb', ['find','documentChangesNotifications','create','update']);
+                mockdb.update.and.callFake(function() { return { then: function(cb){
+                    const d = doc('sd1');
+                    d.resource.id = '1';
+                    d['_rev'] = '2';
+                    cb(d);
+                }}});
                 mockdb.find.and.callFake(function() {
                     const d = doc('sd1');
                     d.resource.id = '1';
@@ -56,5 +62,28 @@ export function main() {
                     done();
                 });
         });
+
+       it ('should return cached instance of update', (done)=>{
+           let doc1 = doc('sd1','identifier1');
+           let doc2;
+
+           datastore.create(doc1)
+               .then(() => {
+                    doc2 = doc('sd1','identifier_');
+                    doc2.resource.id = '1';
+                    return datastore.update(doc2);
+               })
+               .then(() => datastore.find({q: 'sd1'})) // mockdb returns other instance
+               .then(result => {
+                   expect((result[0] as Document)['_rev']).toBe('2');
+                   expect((result[0] as Document).resource['identifier']).toBe('identifier_');
+                   doc2.resource['shortDescription'] = 's4';
+                   expect((result[0] as Document).resource['shortDescription']).toBe('s4');
+                   done();
+               }).catch(err => {
+               fail(err);
+               done();
+           });
+       });
     });
 }

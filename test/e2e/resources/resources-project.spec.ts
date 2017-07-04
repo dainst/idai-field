@@ -13,7 +13,7 @@ describe('resources/project --', function() {
         return browser.get('#/resources/project');
     });
 
-    fit('basic stuff',()=>{
+    it('basic stuff',()=>{
         resourcesPage.performCreateResource('trench2',0);
 
         NavbarPage.clickNavigateToResources();

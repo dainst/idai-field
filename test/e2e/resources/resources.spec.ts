@@ -1,8 +1,8 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
+import {DocumentViewPage} from '../widgets/document-view.page';
 let resourcesPage = require('./resources.page');
-let documentViewPage = require('../widgets/document-view.page');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
@@ -42,7 +42,7 @@ describe('resources --', function() {
     it('not reflect changes in overview in realtime', function() {
         resourcesPage.performCreateResource('1a');
         resourcesPage.clickSelectResource('1a');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('1b');
         expect(resourcesPage.getListItemIdentifierText(0)).toBe('1a');
     });
@@ -68,7 +68,7 @@ describe('resources --', function() {
     it('should save changes via dialog modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
@@ -79,7 +79,7 @@ describe('resources --', function() {
     it('should discard changes via dialog modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickDiscardInModal();
@@ -89,7 +89,7 @@ describe('resources --', function() {
     it('should cancel dialog modal', function() {
         resourcesPage.performCreateResource('1');
         resourcesPage.clickSelectResource('1');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickCancelInModal();
@@ -100,7 +100,7 @@ describe('resources --', function() {
         resourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         resourcesPage.clickSelectResource('1');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         resourcesPage.clickDeleteDocument();
         resourcesPage.clickDeleteInModal();
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);

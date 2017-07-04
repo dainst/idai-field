@@ -1,10 +1,10 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DocumentEditWrapperPage} from './document-edit-wrapper.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
 
-let resourcesPage = require('../resources/resources.page');
-let documentViewPage = require('./document-view.page');
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const resourcesPage = require('../resources/resources.page');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 /**
@@ -19,8 +19,12 @@ describe('document view --', function() {
     it('show the fields present in the object', function() {
         resourcesPage.performCreateResource('1', 1, 'no', 2);
         resourcesPage.clickSelectResource('1');
-        expect(documentViewPage.getFieldName(0)).toBe('Nummer'); // with the correct field label
-        expect(documentViewPage.getFieldValue(0)).toBe('no');
+        DocumentViewPage.getFieldName(0).then(val=>{
+            expect(val).toBe('Nummer'); // with the correct field label
+        });
+        DocumentViewPage.getFieldValue(0).then(val=>{
+            expect(val).toBe('no');
+        });
     });
 
     /**
@@ -29,7 +33,7 @@ describe('document view --', function() {
     it('show only the fields present in the object', function() {
         resourcesPage.performCreateResource('1', 1, 'no', 2);
         resourcesPage.clickSelectResource('1');
-        documentViewPage.getFields().then(function(items) {
+        DocumentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
         });
     });
@@ -37,8 +41,12 @@ describe('document view --', function() {
     it('show the relations present in the object', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource('1');
-        expect(documentViewPage.getRelationName(0)).toBe('Zeitlich nach'); // with the correct relation label
-        expect(documentViewPage.getRelationValue(0)).toBe('2');
+        DocumentViewPage.getRelationName(0).then(val=>{
+            expect(val).toBe('Zeitlich nach'); // with the correct relation label
+        });
+        DocumentViewPage.getRelationValue(0).then(val=>{
+            expect(val).toBe('2');
+        });
     });
 
     /**
@@ -47,7 +55,7 @@ describe('document view --', function() {
     it('show only relations present in the object', function() {
         resourcesPage.performCreateLink();
         resourcesPage.clickSelectResource('1');
-        documentViewPage.getRelations().then(function(relations) {
+        DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
     });
@@ -60,7 +68,7 @@ describe('document view --', function() {
         resourcesPage.performCreateResource('1', 0);
         resourcesPage.performCreateResource('2', 0);
         resourcesPage.clickSelectResource('1');
-        documentViewPage.clickEditDocument();
+        DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(1);
         DocumentEditWrapperPage.typeInRelationByIndices(1, 0, '2');
@@ -69,7 +77,7 @@ describe('document view --', function() {
         resourcesPage.clickDiscardInModal();
 
         browser.wait(EC.visibilityOf(element(by.tagName('document-view'))), delays.ECWaitTime);
-        documentViewPage.getRelations().then(function(relations) {
+        DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

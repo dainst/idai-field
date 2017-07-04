@@ -3,14 +3,14 @@ import {browser, protractor, element, by} from 'protractor';
 let common = require('../common.js');
 let importPage = require('./import.page');
 let resourcesPage = require('../resources/resources.page');
-let documentViewPage = require('../widgets/document-view.page');
 import {NavbarPage} from '../navbar.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
 let delays = require('../config/delays');
 
 let EC = protractor.ExpectedConditions;
 
 
-xdescribe('import --', function() {
+describe('import --', function() {
 
     beforeEach(function() {
 
@@ -28,7 +28,7 @@ xdescribe('import --', function() {
         importPage.clickStartImportButton();
     };
 
-    it('import a valid iDAI.field JSONL file via HTTP', function() {
+    xit('import a valid iDAI.field JSONL file via HTTP', function() {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(2000);
@@ -72,36 +72,36 @@ xdescribe('import --', function() {
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
-    it('import a relation and add the corresponding inverse relation', function() {
+    xit('import a relation and add the corresponding inverse relation', function() {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToResources();
 
         resourcesPage.clickSelectResource('obob1');
-        documentViewPage.getRelations().then(function(relations) {
+        DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
-        documentViewPage.getRelationValue(0).then(function(relationValue) {
+        DocumentViewPage.getRelationValue(0).then(function(relationValue) {
             expect(relationValue).toContain('testf1');
         });
-        documentViewPage.getRelationName(0).then(function(relationName) {
+        DocumentViewPage.getRelationName(0).then(function(relationName) {
             expect(relationName).toEqual('Zeitlich vor');
         });
 
         resourcesPage.clickSelectResource('testf1');
-        documentViewPage.getRelations().then(function(relations) {
+        DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
-        documentViewPage.getRelationValue(0).then(function(relationValue) {
+        DocumentViewPage.getRelationValue(0).then(function(relationValue) {
             expect(relationValue).toContain('obob1');
         });
-        documentViewPage.getRelationName(0).then(function(relationName) {
+        DocumentViewPage.getRelationName(0).then(function(relationName) {
             expect(relationName).toEqual('Zeitlich nach');
         });
     });
 
-    it('abort if a relation target cannot be found and remove all imported resources & already '
+    xit('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', function() {
 
         importIt('./test/test-data/importer-test-relation-error.jsonl');
@@ -116,7 +116,7 @@ xdescribe('import --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
 
         resourcesPage.clickSelectResource('testf1');
-        documentViewPage.getRelations().then(function(relations) {
+        DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

@@ -10,7 +10,7 @@
         <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
     </div>
     <div class="col-md-6" align="right">
-        <select *ngIf="this.view && selectedMainTypeDocument && mode == 'map'"
+        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument && mode == 'map'"
                 class="form-control w-50" style="display: inline" [(ngModel)]="selectedMainTypeDocument"
                 (ngModelChange)="filterByMainTypeDocument($event)">
             <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">

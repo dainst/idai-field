@@ -127,6 +127,14 @@ let ResourcesPage = function() {
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
+    this.selectMainType = function(option) {
+        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
+        const options = element.all(by.css('#mainTypeSelectBox option'))
+            .then(function(options){
+                options[option].click();
+            });
+    };
+
     // sequences
 
     this.performCreateResource = function(identifier, typeIndex, inputFieldText?: string, inputFieldIndex?: number) {

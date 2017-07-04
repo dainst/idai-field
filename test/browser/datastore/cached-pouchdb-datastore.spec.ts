@@ -25,20 +25,21 @@ export function main() {
         beforeEach(
             function () {
                 const mockdb = jasmine.createSpyObj('mockdb', ['find','documentChangesNotifications','create','update']);
-                mockdb.update.and.callFake(function() { return { then: function(cb){
-                    const d = doc('sd1');
-                    d.resource.id = '1';
-                    d['_rev'] = '2';
-                    cb(d);
-                }}});
+                mockdb.update.and.callFake(function(dd){
+                    // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
+                    dd.resource.id = '1';
+                    dd['_rev'] = '2';
+                    return Promise.resolve(dd);
+                });
                 mockdb.find.and.callFake(function() {
                     const d = doc('sd1');
                     d.resource.id = '1';
                     return Promise.resolve([d]);
                 });
                 mockdb.create.and.callFake(function(dd) {
+                    // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
                     dd.resource.id = '1';
-                    return Promise.resolve(dd); // TODO this actually isn't as it should be. The cached instance should be the one given as a param to CachedDatastore.create, not the one returned by the inner datastore.
+                    return Promise.resolve(dd);
                 });
                 mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
 

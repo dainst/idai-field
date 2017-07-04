@@ -5,10 +5,10 @@ let path = require('path');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
-let viewPage = require('./images-view.page');
 import {ImagesGridPage} from './images-grid.page';
+import {ImagesViewPage} from './images-view.page';
 
-describe('image grid --', function() {
+fdescribe('image grid --', function() {
 
     beforeEach(function () {
         ImagesGridPage.get();
@@ -91,11 +91,11 @@ describe('image grid --', function() {
     });
 
     it('cancel an image delete in the modal.', function() {
-        var elementToDelete = ImagesGridPage.getCell(0);
+        const elementToDelete = ImagesGridPage.getCell(0);
 
         ImagesGridPage.getCellImageName(0)
             .then(function (imageName) {
-                var xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
+                const xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
                 elementToDelete.click();
                 ImagesGridPage.clickDeleteButton();
                 ImagesGridPage.clickCancelDeleteButton();
@@ -105,14 +105,14 @@ describe('image grid --', function() {
     });
 
     it('navigate from grid to view, and back to grid', function() {
-        var xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
+        const xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         ImagesGridPage.getCellImageName(0).then(function(imageName){
             ImagesGridPage.doubleClickCell(0);
-            browser.wait(EC.presenceOf(viewPage.getDocumentCard()), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ImagesViewPage.getDocumentCard()), delays.ECWaitTime);
             element(by.xpath(xpath)).getText().then(imageName=>{expect(imageName).toEqual(imageName)});
 
-            viewPage.clickBackToGridButton();
+            ImagesViewPage.clickBackToGridButton();
             browser.wait(EC.presenceOf(ImagesGridPage.getCell(0)), delays.ECWaitTime);
             ImagesGridPage.getCellImageName(0).then(imageName=>{expect(imageName).toEqual(imageName)});
         });
@@ -120,8 +120,8 @@ describe('image grid --', function() {
 
     it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
-        var fileName = 'Aldrin_Apollo_11.jpg';
-        var xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
+        const fileName = 'Aldrin_Apollo_11.jpg';
+        const xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
 
         ImagesGridPage.clickUploadArea();
         ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));

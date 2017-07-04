@@ -746,6 +746,23 @@
       ]
     },
     {
+      "name":"isDepictedIn",
+      "inverse":"depicts",
+      "domain":[
+        "section",
+        "context",
+        "planum",
+        "object"
+      ],
+      "range":[
+        "image",
+        "photo",
+        "drawing"
+      ],
+      "visible": false,
+      "editable": false
+    },
+    {
       "name":"isRecordedIn",
       "inverse":"NO-INVERSE",
       "label":"Gehört zu",

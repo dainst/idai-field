@@ -2,7 +2,8 @@
      class="row bg-faded py-2">
     <div class="col-md-4">
         <search-bar *ngIf="view" [showFiltersMenu]="true"
-                    [mainType]="view.mainType"
+                    [relationName]="'isRecordedIn'"
+                    [relationRangeType]="view.mainType"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>
     </div>

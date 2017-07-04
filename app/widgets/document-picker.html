@@ -1,6 +1,9 @@
 <div class="resource-picker">
 
-    <search-bar [showFiltersMenu]="true" (onQueryChanged)="queryChanged($event)"></search-bar>
+    <search-bar [showFiltersMenu]="true"
+                [relationName]="relationName"
+                [relationRangeType]="relationRangeType"
+                (onQueryChanged)="queryChanged($event)"></search-bar>
 
     <ul class="list-group object-list" id="objectList">
         <li *ngFor="let document of documents; let index=index"

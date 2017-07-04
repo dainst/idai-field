@@ -6,15 +6,18 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     template: `
     <div class="modal-body" id="link-modal">
         <p>Zu verknüpfende Ressource wählen:</p>
-        <document-picker (documentSelected)="activeModal.close($event)"></document-picker>
+        <document-picker [relationName]="'isDepictedIn'"
+                         [relationRangeType]="'image'"
+                         (documentSelected)="activeModal.close($event)"></document-picker>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="activeModal.dismiss('dismissedByCancel')">Abbrechen</button>
+        <button type="button" class="btn btn-default" (click)="activeModal.dismiss('dismissedByCancel')">
+            Abbrechen
+        </button>
     </div>
   `
 })
 export class LinkModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
-
 }

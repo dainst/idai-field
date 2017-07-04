@@ -10,7 +10,7 @@ import {IdigCsvParser} from './idig-csv-parser';
 import {GeojsonParser} from './geojson-parser';
 import {M} from '../m';
 import {Http} from '@angular/http';
-import {CachedDatastore} from '../datastore/cached-datastore';
+import {CachedPouchdbDatastore} from '../datastore/cached-pouchdb-datastore';
 import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
@@ -51,7 +51,7 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private datastore: CachedDatastore,
+        private datastore: CachedPouchdbDatastore,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
@@ -101,7 +101,7 @@ export class ImportComponent {
     }
 
     private static createImportStrategy(format: string, validator: Validator,
-                                        datastore: CachedDatastore, settingsService: SettingsService): ImportStrategy {
+                                        datastore: CachedPouchdbDatastore, settingsService: SettingsService): ImportStrategy {
 
         switch (format) {
             case 'native':
@@ -125,7 +125,7 @@ export class ImportComponent {
         }
     }
 
-    private static createRollbackStrategy(format: string, datastore: CachedDatastore): RollbackStrategy {
+    private static createRollbackStrategy(format: string, datastore: CachedPouchdbDatastore): RollbackStrategy {
 
         switch (format) {
             case 'native':

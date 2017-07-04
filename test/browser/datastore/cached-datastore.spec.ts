@@ -1,14 +1,14 @@
 import {Document} from "idai-components-2/core";
-import {CachedDatastore} from "../../../app/datastore/cached-datastore";
+import {CachedPouchdbDatastore} from "../../../app/datastore/cached-pouchdb-datastore";
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('CachedDatastore', () => {
+    describe('CachedPouchdbDatastore', () => {
 
-        let datastore: CachedDatastore;
+        let datastore: CachedPouchdbDatastore;
 
         function doc(sd, identifier?): Document {
             return {
@@ -42,7 +42,7 @@ export function main() {
                 });
                 mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
 
-                datastore = new CachedDatastore(mockdb);
+                datastore = new CachedPouchdbDatastore(mockdb);
             }
         );
 

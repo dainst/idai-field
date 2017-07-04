@@ -28,10 +28,10 @@ describe('resources --', function() {
     it('show only resources of the selected type', function() {
         resourcesPage.performCreateResource('1', 0);
         resourcesPage.performCreateResource('2', 1);
-        resourcesPage.clickChooseTypeFilter(3);
+        resourcesPage.clickChooseTypeFilter(1);
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        resourcesPage.clickChooseTypeFilter(2);
+        resourcesPage.clickChooseTypeFilter(0);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(resourcesPage.getListItemEl('2')), delays.ECWaitTime);
         resourcesPage.clickChooseTypeFilter('all');

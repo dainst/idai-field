@@ -8,7 +8,7 @@ let delays = require('../config/delays');
 import {ImagesGridPage} from './images-grid.page';
 import {ImagesViewPage} from './images-view.page';
 
-fdescribe('image grid --', function() {
+describe('image grid --', function() {
 
     beforeEach(function () {
         ImagesGridPage.get();

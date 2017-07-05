@@ -42,7 +42,7 @@ export class PlusButtonComponent implements OnChanges {
 
     public startDocumentCreation(geometryType: string = this.geometryType) {
 
-        this.popover.close();
+        if (this.popover) this.popover.close();
 
         const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
             'resource': {

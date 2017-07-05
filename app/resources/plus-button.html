@@ -1,4 +1,13 @@
-<div *ngIf="typesTreeList && typesTreeList.length > 0" id="object-overview-button-create-object"
+<div *ngIf="typesTreeList && typesTreeList.length == 1 && geometryType == 'none'"
+        class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
+    <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
+    <div class="plus-sign-circle">
+        <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+    </div>
+</div>
+
+<div *ngIf="typesTreeList && (typesTreeList.length > 1 || typesTreeList == 1 && geometryType != 'none')"
+         id="object-overview-button-create-object"
          class="circular-button green-button"
          [ngbPopover]="newObjectMenu" #p="ngbPopover"
          triggers="manual" (click)="reset(); p.toggle();"

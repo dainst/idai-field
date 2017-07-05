@@ -17,6 +17,35 @@ plus-button {
     height: 41px;
   }
 
+  .type-button {
+    background-color: rgb(240, 240, 240);
+  }
+
+  .plus-sign-circle {
+    position: relative;
+    top: -12px;
+    left: 28px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: $greenbgr;
+  }
+
+  .plus-sign-circle:hover,
+  .type-button:hover .plus-sign-circle {
+    background-color: lighten($greenbgr, 5%);
+  }
+
+  .plus-sign {
+    position: relative;
+    top: -9px;
+    color: white;
+  }
+
+  type-icon img {
+    border-radius: 25px;
+    margin-bottom: 5px;
+  }
 }
 
 #new-object-menu ul li.list-group-item {

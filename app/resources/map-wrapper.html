@@ -16,8 +16,8 @@
         </ul>
     </div>
 
-    <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id" [class.col-sm-6]="selectedDocument && selectedDocument.resource.id"
-         class="px-0">
+    <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id"
+         [class.col-sm-6]="selectedDocument && selectedDocument.resource.id" class="px-0">
         <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
              [editMode]="editMode" (onSelectDocument)="select($event)"
              (onQuitEditing)="quitEditing($event)"></editable-map>
@@ -36,7 +36,8 @@
                            (onCreateGeometry)="resourcesComponent.createGeometry($event)">
             </geometry-view>
             <fields-view [doc]="selectedDocument"></fields-view>
-            <relations-view [doc]="selectedDocument" (relationClicked)="resourcesComponent.select($event)"></relations-view>
+            <relations-view [doc]="selectedDocument"
+                            (relationClicked)="resourcesComponent.select($event)"></relations-view>
         </document-view>
     </div>
 </div>

@@ -30,7 +30,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
-    protected mainTypeObservers :Array<any> = [];
+    protected mainTypeObservers: Array<any> = [];
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
     public view: ViewDefinition;
@@ -125,16 +125,15 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public filterByMainTypeDocument(document: IdaiFieldDocument) {
+
         this.selectedMainTypeDocument = document;
         this.notifyMainTypeObservers();
         if (this.mode != 'list') {
-            this.datastore.findIsRecordedIn(document.resource.id)
-                .then(documents => {
-                    this.documents = documents as Array<IdaiFieldDocument>;
-                    this.notify();
-                }).catch(err => {
-                console.error(err);
-            });
+            if (this.selectedDocument
+                    && this.getMainTypeDocumentForDocument(this.selectedDocument) != this.selectedMainTypeDocument) {
+                this.setSelected(undefined);
+            }
+            this.fetchDocuments();
         }
     }
 
@@ -192,6 +191,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.selectedDocument = documentToSelect;
         this.notify();
+
+        if (this.selectedDocument) this.selectLinkedMainTypeDocumentForSelectedDocument();
+
         return this.selectedDocument;
     }
 
@@ -281,6 +283,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {
+
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
 
@@ -321,6 +324,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
+
         if (!this.view) return Promise.resolve();
 
         if (this.view.mainType == 'project') {
@@ -342,7 +346,20 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
 
+
         });
+    }
+
+    private selectLinkedMainTypeDocumentForSelectedDocument() {
+
+        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return;
+
+        let mainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+
+        if (mainTypeDocument != this.selectedMainTypeDocument) {
+            this.selectedMainTypeDocument = mainTypeDocument;
+            this.fetchDocuments();
+        }
     }
 
     private getMainTypeDocumentForDocument(document: IdaiFieldDocument): IdaiFieldDocument {

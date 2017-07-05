@@ -235,46 +235,72 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         })
     }
 
+    private buildKVQueries(query) {
+        let queries = [];
+        for (let i in query['kv']) {
+            let startkey = 'UNKOWN';
+            let endkey = 'UNKOWN'+'\uffff';
+            if (query['kv'][i] != undefined) {
+                startkey = query['kv'][i];
+                endkey = query['kv'][i]+'\uffff';
+            }
+            const opt = {
+                reduce: false,
+                include_docs: false,
+                conflicts: true,
+                startkey: startkey,
+                endkey: endkey
+            };
+            queries.push(this.db.query(i, opt))
+        }
+        return queries;
+    }
+
+    private intersectResults(results) {
+        let rows = [];
+        for (let result of results) {
+            let row = [];
+            for (let column of result['rows']) {
+                row.push(column['id'])
+            }
+            rows.push(row)
+        }
+        return rows.reduce((p,c) => p.filter(e => c.includes(e)))
+    }
+
+    private matchInnerAndOuter(innerResults,outerResults) {
+        const results = [];
+        for (let outerResult of outerResults) {
+            let existsAsInnerResult = false;
+            for (let innerResult of innerResults['rows']) {
+                if (!outerResult) continue;
+                if (innerResult.id == outerResult) {
+                    existsAsInnerResult = true;
+                }
+            }
+            if (existsAsInnerResult) {
+                results.push(outerResult);
+            }
+        }
+        return results;
+    }
+
     private otherImpl(query,offset,limit) {
-        const opt = {
-            reduce: false,
-            include_docs: true,
-            conflicts: true,
-            startKey: query['kv']['resource.relations.isRecordedIn'],
-            endKey: query['kv']['resource.relations.isRecordedIn']
-        };
 
-        return this.db.query('isRecordedIn', opt)
-            .then(result => this.filterResult(this.docsFromResult(result)))
+        return Promise.all(this.buildKVQueries(query))
+            .then(results => this.intersectResults(results))
             .then(outerResults => {
-
-                // das sind die results z.b. eines schnittes.
-                // ich mache diese anfrage zuerst, weil diese
-                // weniger objekte gibt. die reguläre anfrage kann ja * sein.
 
                 return this.defaultImpl(query,undefined,undefined,false)
                     .then(innerResults => {
-
-                        // das sind die results der regulären anfrage,
-                        // ohne die angehängten dokumente
-
-                        const results = [];
-                        for (let outerResult of outerResults) {
-                            let existsAsInnerResult = false;
-                            for (let innerResult of innerResults['rows']) {
-                                if (!outerResult.resource.id) continue;
-                                if (innerResult.id == outerResult.resource.id) {
-                                    existsAsInnerResult = true;
-                                }
-                            }
-                            if (existsAsInnerResult) {
-                                // die schnittmenge ergibt das resultset
-                                results.push(outerResult);
-                            }
+                        
+                        let proms = [];
+                        for (let r of this.matchInnerAndOuter(innerResults,outerResults)) {
+                            proms.push(this.fetchObject(r));
                         }
-
                         // TODO respect offset and limit
-                        return results;
+                        // TODO filter innerResults
+                        return Promise.all(proms);
                     })
             });
     }

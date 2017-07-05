@@ -15,7 +15,7 @@ import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
  */
 export class NavbarComponent implements OnInit {
 
-    public views: Array<ViewDefinition> = [];
+    public views: Array<ViewDefinition>;
     public activeRoute: string;
 
     constructor(private messages: Messages,
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
         this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => this.views = projectConfiguration.getViewsList())
-            .catch(msgWithParams => this.messages.add(msgWithParams));
+            .catch(() => { this.views = []; });
     }
 
     public isActiveRoute(route: string) {

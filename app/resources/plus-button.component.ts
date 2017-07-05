@@ -37,7 +37,7 @@ export class PlusButtonComponent implements OnChanges {
 
         this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.initializeTypesTreeList(projectConfiguration);
-        });
+        }).catch(() => {});
     }
 
     public startDocumentCreation(geometryType: string = this.geometryType) {

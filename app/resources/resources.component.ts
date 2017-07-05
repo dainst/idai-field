@@ -70,7 +70,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     this.showPlusButton = true;
                     readyResolveFun();
-                }).catch(msgWithParams => this.messages.add(msgWithParams));
+                }).catch(msgWithParams => {
+                    if (msgWithParams) this.messages.add(msgWithParams)
+                });
         });
 
         const self = this;
@@ -109,7 +111,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.view = projectConfiguration.getView(viewName);
                 Promise.resolve();
             }
-        );
+        ).catch(() => { return Promise.reject(null); });
     }
 
     private openEditTab(tab: string, id: string, viewName: string) {
@@ -319,6 +321,8 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
+        if (!this.view) return Promise.resolve();
+
         if (this.view.mainType == 'project') {
             this.selectedMainTypeDocument = undefined;
             return;

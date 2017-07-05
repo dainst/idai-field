@@ -28,9 +28,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         this.db = pouchdbManager.getDb();
         configLoader.getProjectConfiguration()
-            .then(config => this.config = config)
+            .then(config => this.config = config, () => {})
             .then(() => this.setupServer())
-            .then(() => this.setupChangesEmitter());
+            .then(() => this.setupChangesEmitter())
 
     }
 

@@ -81,7 +81,7 @@ export class TaskbarComponent {
                 }
 
                 return Promise.resolve(viewName);
-            });
+            }).catch(() => {});
     }
 
 }

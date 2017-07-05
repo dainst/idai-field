@@ -1,4 +1,4 @@
-<div id="object-overview-button-create-object"
+<div *ngIf="typesTreeList && typesTreeList.length > 0" id="object-overview-button-create-object"
          class="circular-button green-button"
          [ngbPopover]="newObjectMenu" #p="ngbPopover"
          triggers="manual" (click)="reset(); p.toggle();"

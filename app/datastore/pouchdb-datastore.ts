@@ -223,14 +223,72 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         if (!query) return Promise.resolve([]);
 
-        let q = query.q ? query.q.toLowerCase() : '';
-        let type = query.type ? query.type : '';
+        let impl: Promise<Document[]>;
+        if (!query['kv']) {
+            impl = this.defaultImpl(query,offset,limit);
+        } else {
+            impl = this.otherImpl(query,offset,limit);
+        }
+        return impl.catch(err=>{
+            console.error(err);
+            return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+        })
+    }
 
-        let opt = {
+    private otherImpl(query,offset,limit) {
+        const opt = {
             reduce: false,
             include_docs: true,
             conflicts: true,
+            startKey: query['kv']['resource.relations.isRecordedIn'],
+            endKey: query['kv']['resource.relations.isRecordedIn']
         };
+
+        return this.db.query('isRecordedIn', opt)
+            .then(result => this.filterResult(this.docsFromResult(result)))
+            .then(outerResults => {
+
+                // das sind die results z.b. eines schnittes.
+                // ich mache diese anfrage zuerst, weil diese
+                // weniger objekte gibt. die reguläre anfrage kann ja * sein.
+
+                return this.defaultImpl(query,undefined,undefined,false)
+                    .then(innerResults => {
+
+                        // das sind die results der regulären anfrage,
+                        // ohne die angehängten dokumente
+
+                        const results = [];
+                        for (let outerResult of outerResults) {
+                            let existsAsInnerResult = false;
+                            for (let innerResult of innerResults['rows']) {
+                                if (!outerResult.resource.id) continue;
+                                if (innerResult.id == outerResult.resource.id) {
+                                    existsAsInnerResult = true;
+                                }
+                            }
+                            if (existsAsInnerResult) {
+                                // die schnittmenge ergibt das resultset
+                                results.push(outerResult);
+                            }
+                        }
+
+                        // TODO respect offset and limit
+                        return results;
+                    })
+            });
+    }
+
+    private defaultImpl(query,offset,limit,include_docs = true) {
+        const opt = {
+            reduce: false,
+            include_docs: include_docs,
+            conflicts: true,
+        };
+
+        let q = query.q ? query.q.toLowerCase() : '';
+        let type = query.type ? query.type : '';
+
         opt['startkey'] = [type, q];
         let endKey = query.prefix ? q + '\uffff' : q;
         opt['endkey'] = [type, endKey];
@@ -241,12 +299,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (limit > -1) opt['limit'] = limit;
 
         return this.db.query('fulltext', opt)
-            .then(result => this.filterResult(this.docsFromResult(result)))
-            .catch(err => {
-                console.error(err);
-                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+            .then(result => {
+                if (include_docs) {
+                    return this.filterResult(this.docsFromResult(result))
+                } else {
+                    return result;
+                }
             });
     }
+
 
     public findUnsynced(): Promise<Document[]> {
 

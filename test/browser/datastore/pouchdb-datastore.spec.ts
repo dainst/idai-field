@@ -3,6 +3,7 @@ import {Document} from "idai-components-2/core";
 import {DatastoreErrors} from "idai-components-2/datastore";
 import {M} from "../../../app/m";
 import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
+import {Query} from "idai-components-2/src/app/datastore/query";
 
 /**
  * @author Daniel de Oliveira
@@ -62,7 +63,7 @@ export function main() {
                     identifier: identifier,
                     title: 'title',
                     type: type,
-                    relations : undefined
+                    relations : {}
                 },
                 created: {
                     user: 'anonymous',
@@ -102,7 +103,7 @@ export function main() {
                             expect(createdDoc.resource.id).not.toBe(undefined);
                             done();
                         },
-                        err => {
+                        () => {
                             fail();
                             done();
                         }
@@ -129,7 +130,7 @@ export function main() {
                             expect(createdDoc.resource.id).toBe('a1');
                             done();
                         },
-                        err => {
+                        () => {
                             fail();
                             done();
                         }
@@ -166,7 +167,7 @@ export function main() {
                     () => {
                         done();
                     },
-                    err => {
+                    () => {
                         fail();
                         done();
                     }
@@ -210,7 +211,7 @@ export function main() {
 
         it('should get if existent',
             function (done) {
-                var d = doc('sd1');
+                const d = doc('sd1');
                 datastore.create(d)
                     .then(() => datastore.get(d['resource']['id']))
                     .then(doc => {
@@ -223,7 +224,7 @@ export function main() {
 
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
-                expectErr(()=>{return datastore.create(doc('sd1')) // TODO omit this to reproduce the closing db bug, remove this after fixing it
+                expectErr(()=>{return datastore.create(doc('sd1'))
                         .then(() => datastore.get('nonexisting'))}
                     ,[M.DATASTORE_NOT_FOUND],done);
             }
@@ -245,7 +246,7 @@ export function main() {
 
         it('should remove if existent',
             function (done) {
-                var d = doc('sd1');
+                const d = doc('sd1');
                 expectErr(()=>{
                     return datastore.create(d)
                         .then(() => datastore.remove(d))
@@ -265,7 +266,7 @@ export function main() {
 
         it('should throw error when trying to remove and not existent',
             function (done) {
-                var d = doc('sd1');
+                const d = doc('sd1');
                 d['resource']['id'] = 'hoax';
                 expectErr(()=>{return datastore.remove(d)}
                     ,[DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR],done);
@@ -423,6 +424,41 @@ export function main() {
                     }
                 );
         });
+
+        /////// TODO
+        it('should filter with key value pair', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+
+            const doc2 = doc('bla2', 'blub2', 'type2','id2');
+            const doc3 = doc('bla3', 'blub3', 'type2','id3');
+            doc2.resource.relations['isRecordedIn'] = ['id1']
+            doc3.resource.relations['isRecordedIn'] = ['id1']
+
+            const q: Query = {
+                q: 'blub',
+                prefix: true,
+            };
+            q['kv'] = { 'resource.relations.isRecordedIn' : 'id1' };
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find(q))
+                .then(
+                    result => {
+                        expect(result[0].resource['shortDescription']).toBe('bla2');
+                        expect(result[1].resource['shortDescription']).toBe('bla3');
+                        expect(result.length).toBe(2);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+
 
         it('should show all sorted by lastModified', function(done) {
             datastore.create(doc('bla1','blub1','type1'))

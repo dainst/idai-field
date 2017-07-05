@@ -4,53 +4,51 @@ let delays = require('../config/delays');
 
 'use strict';
 
-let ImportPage = function() {
+export class ImportPage {
 
-    this.getSourceOptions = function() {
+    public static getSourceOptions = function() {
         return element(by.id('importSourceSelect')).all(by.css('select option'));
     };
 
-    this.clickSourceOption = function(index) {
+    public static clickSourceOption = function(index) {
         return this.getSourceOptions().get(index).click();
     };
 
-    this.getSourceOptionValue = function(index) {
+    public static getSourceOptionValue = function(index) {
         return this.getSourceOptions().get(index).getAttribute("value");
     };
 
-    this.getFormatOptions = function() {
+    public static getFormatOptions = function() {
         return element(by.id('importFormatSelect')).all(by.css('select option'));
     };
 
-    this.clickFormatOption = function(index) {
+    public static clickFormatOption = function(index) {
         return this.getFormatOptions().get(index).click();
     };
 
-    this.getFormatOptionValue = function(index) {
+    public static getFormatOptionValue = function(index) {
         return this.getFormatOptions().get(index).getAttribute("value");
     };
 
-    this.getImportURLInput = function() {
+    public static getImportURLInput = function() {
         return element(by.id('importUrlInput'));
     };
 
-    this.getMessageEl = function(index) {
+    public static getMessageEl = function(index) {
         return element(by.id('message-' + index));
     };
 
-    this.getMessageText = function(index) {
+    public static getMessageText = function(index) {
         browser.wait(EC.presenceOf(this.getMessageEl(index)), delays.ECWaitTime);
         return this.getMessageEl(index).getText();
     };
 
-    this.clickStartImportButton = function() {
+    public static clickStartImportButton = function() {
         browser.wait(EC.visibilityOf(element(by.id('importStartButton'))), delays.ECWaitTime);
         return element(by.id('importStartButton')).click();
     };
 
-    this.get = function() {
+    public static get = function() {
         return browser.get('#/import/');
     };
-};
-
-module.exports = new ImportPage();
+}

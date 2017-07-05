@@ -1,6 +1,8 @@
 <div class="resource-picker">
 
-    <search-bar [showFiltersMenu]="true" [defaultFilterSet]="filterSet"
+    <search-bar [showFiltersMenu]="true"
+                [relationName]="relationName"
+                [relationRangeType]="relationRangeType"
                 (onQueryChanged)="queryChanged($event)"></search-bar>
 
     <ul class="list-group object-list" id="objectList">

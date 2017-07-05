@@ -20,24 +20,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav" style="margin-top: 2px;">
             <li *ngFor="let view of views" class="nav-item">
-                <a class="nav-link" [class.active]="activeNavLink == 'resources-' + view.name"
-                   (click)="activeNavLink = 'resources-' + view.name"
+                <a class="nav-link" [class.active]="isActiveRoute('/resources/' + view.name)"
                    href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="activeNavLink == 'images'" (click)="activeNavLink = 'images'"
+                <a class="nav-link" [class.active]="isActiveRoute('/images')"
                    href="#" routerLink="/images">Bilder</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="activeNavLink == 'import'" (click)="activeNavLink = 'import'"
+                <a class="nav-link" [class.active]="isActiveRoute('/import')"
                    href="#" routerLink="/import" id="importButton">Import</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="activeNavLink == 'export'" (click)="activeNavLink = 'export'"
+                <a class="nav-link" [class.active]="isActiveRoute('/export')"
                    href="#" routerLink="/export">Export</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="activeNavLink == 'settings'" (click)="activeNavLink = 'settings'"
+                <a class="nav-link" [class.active]="isActiveRoute('/settings')"
                    href="#" routerLink="/settings">Einstellungen</a>
             </li>
         </ul>

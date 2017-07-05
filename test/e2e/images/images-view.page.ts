@@ -2,13 +2,11 @@ import {browser,protractor,element,by} from 'protractor';
 
 'use strict';
 
-var ImagesViewPage = function (){
-    this.getDocumentCard = function () {
+export class ImagesViewPage {
+    public static getDocumentCard = function () {
         return element(by.id('document-view'));
     };
-    this.clickBackToGridButton = function () {
+    public static clickBackToGridButton = function () {
         return element(by.id('document-view-button-back-to-map')).click();
     };
-};
-
-module.exports = new ImagesViewPage();
+}

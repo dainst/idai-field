@@ -4,6 +4,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {IdaiFieldDatastore} from "./idai-field-datastore";
 import {SyncState} from "./sync-state";
+import {PouchdbDatastore} from "./pouchdb-datastore";
 
 @Injectable()
 /**
@@ -11,12 +12,12 @@ import {SyncState} from "./sync-state";
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CachedDatastore implements IdaiFieldDatastore {
+export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
     private documentCache: { [resourceId: string]: Document } = {};
     private autoCacheUpdate: boolean = true;
 
-    constructor(private datastore: IdaiFieldDatastore) {
+    constructor(private datastore: PouchdbDatastore) {
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
                 // explicitly assign by value in order for
@@ -35,13 +36,16 @@ export class CachedDatastore implements IdaiFieldDatastore {
 
     create(document: Document): Promise<Document> {
         return this.datastore.create(document)
-            .then(doc => this.documentCache[doc.resource.id] = doc);
+            .then(doc => {
+                // working with the assumption that create returns the same instance of document as doc
+                return this.documentCache[doc.resource.id] = doc
+            });
     }
 
     update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
-            let d = doc as Document;
-            return Promise.resolve(d);
+            // working with the assumption that update returns the same instance of document as doc
+            return this.documentCache[doc.resource.id] = doc;
         });
     }
 

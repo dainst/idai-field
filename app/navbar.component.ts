@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 
@@ -15,28 +16,29 @@ import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 export class NavbarComponent implements OnInit {
 
     public views: Array<ViewDefinition> = [];
-    public activeNavLink: string;
+    public activeRoute: string;
 
     constructor(private messages: Messages,
-                private configLoader: ConfigLoader) {}
+                private configLoader: ConfigLoader,
+                router: Router) {
+
+        router.events.subscribe(() => this.activeRoute = router.url);
+    }
 
     public ngOnInit() {
 
-        this.configLoader.getProjectConfiguration().then(
-            projectConfiguration => {
-                this.views = projectConfiguration.getViewsList();
-                if (this.views.length > 0) {
-                    this.activeNavLink = 'resources-' + this.views[0].name;
-                } else {
-                    this.activeNavLink = 'images';
-                }
-            }
-        ).catch(msgWithParams => {
-            this.messages.add(msgWithParams);
-        });
+        this.configLoader.getProjectConfiguration()
+            .then(projectConfiguration => this.views = projectConfiguration.getViewsList())
+            .catch(msgWithParams => this.messages.add(msgWithParams));
+    }
+
+    public isActiveRoute(route: string) {
+
+        return this.activeRoute.startsWith(route);
     }
 
     public setMessagesHidden(shown) {
+
         this.messages.setHidden(!shown);
     }
 }

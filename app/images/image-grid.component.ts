@@ -34,7 +34,6 @@ export class ImageGridComponent {
 
     private query : Query = {q: '', type: 'image', prefix: true};
     private documents: IdaiFieldImageDocument[];
-    private types: Array<string>;
 
     private nrOfColumns = 4;
     private rows = [];

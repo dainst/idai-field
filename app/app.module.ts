@@ -24,7 +24,7 @@ import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
 import {ImagesModule} from './images/images.module';
 import {NavbarComponent} from './navbar.component';
-import {CachedDatastore} from './datastore/cached-datastore';
+import {CachedPouchdbDatastore} from './datastore/cached-pouchdb-datastore';
 import {BlobMaker} from './imagestore/blob-maker';
 import {Converter} from './imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
@@ -88,13 +88,13 @@ if (CONFIG['imagestorepath']) {
         {
             provide: Datastore,
             useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager) : Datastore {
-                return new CachedDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager));
+                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager));
             },
             deps: [ConfigLoader, PouchdbManager]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },
-        { provide: CachedDatastore, useExisting: Datastore },
+        { provide: CachedPouchdbDatastore, useExisting: Datastore },
         Messages,
         BlobMaker,
         Converter,

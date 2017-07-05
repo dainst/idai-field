@@ -236,12 +236,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private otherImpl(query,offset,limit) {
+        let startkey = 'UNKOWN';
+        let endkey = 'UNKOWN'+'\uffff';
+        if ((typeof query['kv']['resource.relations.isRecordedIn']) != 'undefined') {
+            startkey = query['kv']['resource.relations.isRecordedIn'];
+            endkey = query['kv']['resource.relations.isRecordedIn']+'\uffff';
+        }
         const opt = {
             reduce: false,
             include_docs: true,
             conflicts: true,
-            startKey: query['kv']['resource.relations.isRecordedIn'],
-            endKey: query['kv']['resource.relations.isRecordedIn']
+            startkey: startkey,
+            endkey: endkey
         };
 
         return this.db.query('isRecordedIn', opt)

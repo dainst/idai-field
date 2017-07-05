@@ -66,7 +66,9 @@ export class IndexCreator {
         let mapFun = function(doc) {
             if (!doc.resource) return;
             if (doc.resource.relations['isRecordedIn'] != undefined) {
-                doc.resource.relations['isRecordedIn'].forEach(identifier => emit(identifier));
+                doc.resource.relations['isRecordedIn'].forEach(resourceId => emit(resourceId));
+            } else {
+                emit("UNKOWN");
             }
         };
         return this.setupIndex(db,'isRecordedIn', mapFun);

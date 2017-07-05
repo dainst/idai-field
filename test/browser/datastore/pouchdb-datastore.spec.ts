@@ -431,8 +431,10 @@ export function main() {
 
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
             const doc3 = doc('bla3', 'blub3', 'type2','id3');
-            doc2.resource.relations['isRecordedIn'] = ['id1']
-            doc3.resource.relations['isRecordedIn'] = ['id1']
+            const doc4 = doc('bla4', 'blub4', 'type2','id4');
+            doc2.resource.relations['isRecordedIn'] = ['id1'];
+            doc3.resource.relations['isRecordedIn'] = ['id1'];
+            doc4.resource.relations['isRecordedIn'] = ['id2'];
 
             const q: Query = {
                 q: 'blub',
@@ -443,12 +445,44 @@ export function main() {
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
+                .then(() => datastore.create(doc4))
                 .then(() => datastore.find(q))
                 .then(
-                    result => {
-                        expect(result[0].resource['shortDescription']).toBe('bla2');
-                        expect(result[1].resource['shortDescription']).toBe('bla3');
-                        expect(result.length).toBe(2);
+                    results => {
+                        expect(results[0].resource['shortDescription']).toBe('bla2');
+                        expect(results[1].resource['shortDescription']).toBe('bla3');
+                        expect(results.length).toBe(2);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter with key value pair undefined', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+            const doc2 = doc('bla2', 'blub2', 'type2','id2');
+
+            const doc3 = doc('bla3', 'blub3', 'type2','id3');
+            doc3.resource.relations['isRecordedIn'] = ['id5'];
+
+            const q: Query = {
+                q: 'blub',
+                prefix: true,
+            };
+            q['kv'] = { 'resource.relations.isRecordedIn' : undefined };
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find(q))
+                .then(
+                    results => {
+                        expect(results[0].resource['shortDescription']).toBe('bla1');
+                        expect(results[1].resource['shortDescription']).toBe('bla2');
+                        expect(results.length).toBe(2);
                         done();
                     },
                     err => {

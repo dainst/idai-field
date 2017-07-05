@@ -1,17 +1,9 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
-import {PersistenceManager, Validator} from 'idai-components-2/persist';
-import {Messages} from 'idai-components-2/messages';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
-import {M} from '../../m';
-import {SettingsService} from '../../settings/settings-service';
-import {DoceditComponent} from '../../docedit/docedit.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ResourcesComponent} from '../resources.component';
 
-import {isUndefined} from "util";
 
 @Component({
     selector: 'list',
@@ -23,26 +15,26 @@ import {isUndefined} from "util";
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ListComponent {
+export class ListComponent implements OnInit {
 
-    @Input() documents: IdaiFieldDocument[];
-    @Input() selectedDocument: IdaiFieldDocument;
+
+
     @Input() expandedDocument: IdaiFieldDocument;
+    private selectedMainTypeDocument: IdaiFieldDocument;
+
+    private documents: {[type: string]: IdaiFieldDocument};
+    private topDocuments: IdaiFieldDocument[];
 
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public typesMap: { [type: string]: IdaiType };
-    public typesList: IdaiType[];
 
     private projectConfiguration: ProjectConfiguration;
+
+    private childrenShownForIds: string[] = [];
     
     constructor(
-        private messages: Messages,
-        private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
-        private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private validator: Validator,
+
         private datastore: IdaiFieldDatastore,
         private resourcesComponent: ResourcesComponent,
         configLoader: ConfigLoader
@@ -52,64 +44,55 @@ export class ListComponent {
             this.projectConfiguration = projectConfiguration;
             this.typesMap = projectConfiguration.getTypesMap();
         });
+
+        const self = this;
+        datastore.documentChangesNotifications().subscribe(result => {
+            self.handleChange(<IdaiFieldDocument>result);
+        });
     }
 
-    public save(document: IdaiFieldDocument) {
-
-        if (!this.documentEditChangeMonitor.isChanged()) return;
-
-        this.documentEditChangeMonitor.reset();
-
-        const oldVersion = JSON.parse(JSON.stringify(document));
-
-        this.validator.validate(document).then(
-            () => {
-                return this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]);
-            }).then(() => {
-                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-            }).catch(msgWithParams => {
-                this.messages.add(msgWithParams);
-                return this.restoreIdentifier(document);
-            }).catch(msgWithParams => this.messages.add(msgWithParams));
+    ngOnInit() {
+        this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
+            this.selectedMainTypeDocument = result as IdaiFieldDocument;
+            this.populateMainType(this.selectedMainTypeDocument);
+        });
     }
 
-    public editDocument(doc: IdaiFieldDocument) {
-
-        this.selectedDocument = doc;
-
-        let detailModal
-            = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'}).componentInstance;
-        detailModal.setDocument(doc);
+    public toggleChildrenForId(id:string) {
+        let index = this.childrenShownForIds.indexOf(id);
+        if (index != -1) {
+            this.childrenShownForIds.splice(index, 1);
+        } else {
+            this.childrenShownForIds.push(id);
+        }
     }
 
-    public addRelatedDocument(parentDocument: IdaiFieldDocument, relation, event) {
-
-        if (!parentDocument || !relation) return;
-
-        event.target.value = '';
-
-        let newDoc: IdaiFieldDocument
-            = <IdaiFieldDocument> {'resource': { 'relations': {}, 'type': relation['targetName'] }, synced: 0 };
-
-        let inverseRelationName = this.projectConfiguration.getInverseRelations(relation['name']);
-        newDoc.resource.relations[inverseRelationName] = [parentDocument.resource.id];
-
-        this.documents.push(newDoc);
-        this.selectedDocument = newDoc;
-        this.onDocumentCreation.emit(newDoc);
+    public childrenHiddenFor(id: string) {
+        return this.childrenShownForIds.indexOf(id) == -1
     }
 
-    public markAsChanged() {
+    private populateMainType(mainTypeDoc: IdaiFieldDocument) {
+        this.topDocuments = [];
+        this.documents = {};
 
-        this.documentEditChangeMonitor.setChanged();
+        this.datastore.findIsRecordedIn(mainTypeDoc.resource.id).then( docs => {
+            docs.forEach((doc, i) => {
+                this.documents[doc.resource.id] = doc;
+
+
+                if (!doc.resource.relations["liesWithin"]) {
+                    this.topDocuments.push(doc);
+                }
+            });
+        });
     }
 
-    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+    private handleChange(result: any) {
+        // reload only after changes topDocuments or deletions
+        if (result._deleted){
+            this.populateMainType(this.selectedMainTypeDocument);
+        } else if (!result.resource.relations["liesWithin"]) this.populateMainType(this.selectedMainTypeDocument);
 
-        return this.datastore.getLatestRevision(document.resource.id).then(
-            latestRevision => {
-                document.resource.identifier = latestRevision.resource.identifier;
-            }
-        );
     }
+
 }

@@ -30,6 +30,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     protected selectedDocument;
     protected observers: Array<any> = [];
+    protected mainTypeObservers :Array<any> = [];
     protected query: Query = {q: '', type: 'resource', prefix: true};
 
     public view: ViewDefinition;
@@ -39,7 +40,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
-    public expandedMainTypeDocument: IdaiFieldDocument;
 
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -123,14 +123,17 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public filterByMainTypeDocument(document: IdaiFieldDocument) {
-
         this.selectedMainTypeDocument = document;
-
-        this.datastore.findIsRecordedIn(document.resource.id)
-            .then(documents => {
-                this.documents = documents as Array<IdaiFieldDocument>;
-                this.notify();
-            }).catch(err => { console.error(err); } );
+        this.notifyMainTypeObservers();
+        if (this.mode != 'list') {
+            this.datastore.findIsRecordedIn(document.resource.id)
+                .then(documents => {
+                    this.documents = documents as Array<IdaiFieldDocument>;
+                    this.notify();
+                }).catch(err => {
+                console.error(err);
+            });
+        }
     }
 
     private handleChange(changedDocument: Document) {
@@ -276,7 +279,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {
-
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
 
@@ -317,7 +319,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
-
         if (this.view.mainType == 'project') {
             this.selectedMainTypeDocument = undefined;
             return;
@@ -337,9 +338,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
 
-            if (this.expandedMainTypeDocument) {
-                this.loadRecordsRelatedDocumentsFor(this.expandedMainTypeDocument);
-            }
         });
     }
 
@@ -369,9 +367,22 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
+    public getSelectedMainTypeDocument(): Observable<IdaiFieldDocument> {
+        return Observable.create(observer => {
+            this.mainTypeObservers.push(observer);
+            this.notifyMainTypeObservers();
+        });
+    }
+
     private notify() {
         this.observers.forEach(observer => {
             observer.next(this.documents);
+        });
+    }
+
+    private notifyMainTypeObservers() {
+        this.mainTypeObservers.forEach(observer => {
+            observer.next(this.selectedMainTypeDocument);
         });
     }
 
@@ -422,10 +433,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
-        this.expandedMainTypeDocument = undefined;
         this.removeEmptyDocuments();
         if (mode == 'list') {
-            this.fetchMainTypeDocuments();
+            //this.fetchMainTypeDocuments();
         } else {
             this.fetchDocuments();
         }
@@ -441,28 +451,4 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    public expandMainTypeDocument(doc: IdaiFieldDocument) {
-        this.mainTypeDocuments.forEach((listedDoc, index) => {
-            this.mainTypeDocuments = this.mainTypeDocuments.filter(d => {
-                return d.resource.listedAsChildFor == undefined;
-            })
-        });
-
-        if (doc != this.expandedMainTypeDocument) {
-            this.loadRecordsRelatedDocumentsFor(doc);
-            this.expandedMainTypeDocument = doc;
-        } else {
-            this.expandedMainTypeDocument = undefined;
-        }
-    }
-
-    private loadRecordsRelatedDocumentsFor(doc: IdaiFieldDocument) {
-        let parentListIndex = this.mainTypeDocuments.indexOf(doc);
-        doc.resource.relations['records'].forEach(id => {
-            this.datastore.get(id).then(childDoc => {
-                childDoc.resource.listedAsChildFor = doc.resource.id;
-                this.mainTypeDocuments.splice(parentListIndex + 1, 0, <IdaiFieldDocument> childDoc)
-            }, msgWithParams => Promise.reject(msgWithParams))
-        });
-    }
 }

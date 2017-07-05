@@ -3,6 +3,7 @@
     <div class="col-md-4">
         <search-bar [showFiltersMenu]="true"
                     [defaultFilterSet]="defaultTypes"
+                    *ngIf="mode != 'list'"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>
     </div>
@@ -10,7 +11,7 @@
         <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
     </div>
     <div class="col-md-6" align="right">
-        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument && mode == 'map'"
+        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
                 class="form-control w-50" style="display: inline" [(ngModel)]="selectedMainTypeDocument"
                 (ngModelChange)="filterByMainTypeDocument($event)">
             <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
@@ -38,8 +39,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [selectedDocument]="selectedDocument"
                      [editMode]="editGeometry"></map-wrapper>
-        <list *ngIf="mode == 'list'" [documents]="mainTypeDocuments" [selectedDocument]="selectedDocument"
-              (onDocumentCreation)="setScrollTarget($event)"></list>
+        <list *ngIf="mode == 'list'" (onDocumentCreation)="setScrollTarget($event)"></list>
     </div>
 
 </div>

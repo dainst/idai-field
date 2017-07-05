@@ -1,49 +1,11 @@
-<div class="row" *ngIf="typesMap">
-    <div class="col-md-12 px-0">
-        <table class="table table-hover table-sm fixed_headers">
-            <thead>
-            <tr>
-                <th>Typ</th>
-                <th>Identifier</th>
-                <th>Kurzbeschreibung</th>
-                <th>Optionen</th>
-            </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let document of documents; let index=index;"
-                    [class.synced]="document.synced"
-                    [class.unsynced]="!document.synced"
-                    [class.bg-faded]="document.resource.type == 'trench'"
-                    [id]="'resource-' + document.resource.identifier">
-                    <td
-                        [class.text-right]="document.resource.type != 'trench'"
-                        [class.small]="document.resource.type != 'trench'"
-                        [class.font-weight-bold]="document.resource.type == 'trench'"
-                    >
-                        {{typesMap[document.resource.type].label}}
-
-                        <br><button class="btn btn-sm btn-link"
-                                    *ngIf="document.resource.type == 'trench' && document.resource.relations.records"
-                                    (click)="resourcesComponent.expandMainTypeDocument(document);"> {{document.resource.relations.records.length}} Unterobjekte</button>
-                    </td>
-                    <td align="right">
-                        <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"
-                               class="form-control form-control-sm identifier-input">
-                        <small>
-                            <button (click)="editDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
-                        </small>
-                    </td>
-                    <td align="right">
-                        <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)"
-                               (keyup)="markAsChanged()" class="form-control form-control-sm">
-                    </td>
-                    <td>
-                        <plus-button *ngIf="document.resource.type == 'trench'" [isRecordedIn]="document"
-                                     [geometryType]="'none'"></plus-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div *ngIf="typesMap">
+    <div class="row py-2 font-weight-bold">
+        <div class="col-md-3">Identifier/Typ</div>
+        <div class="col-md-3">Identifier</div>
+        <div class="col-md-3">Kurzbeschreibung</div>
+        <div class="col-md-3">Optionen</div>
+    </div>
+    <div *ngFor="let doc of topDocuments; let index=index;">
+        <row [document]="doc" [documents]="documents" [depth]=0 [typesMap]="typesMap"></row>
     </div>
 </div>

@@ -440,7 +440,8 @@ export function main() {
                 q: 'blub',
                 prefix: true,
             };
-            q['kv'] = { 'resource.relations.isRecordedIn' : 'id1' };
+            q['kv'] = {};
+            q['kv']['isRecordedIn'] = 'id1';
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -472,7 +473,8 @@ export function main() {
                 q: 'blub',
                 prefix: true,
             };
-            q['kv'] = { 'resource.relations.isRecordedIn' : undefined };
+            q['kv'] = {};
+            q['kv']['isRecordedIn'] = undefined;
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -483,6 +485,40 @@ export function main() {
                         expect(results[0].resource['shortDescription']).toBe('bla1');
                         expect(results[1].resource['shortDescription']).toBe('bla2');
                         expect(results.length).toBe(2);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter with key value pair multiquery', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+
+            const doc2 = doc('bla2', 'blub2', 'type2','id2');
+            doc2.resource.relations['isRecordedIn'] = ['id1'];
+            const doc3 = doc('bla3', 'blub3', 'type2','id3');
+            doc3.resource.relations['isRecordedIn'] = ['id1'];
+            doc3.resource.relations['liesWithin'] = ['id2'];
+
+            const q: Query = {
+                q: 'blub',
+                prefix: true,
+            };
+            q['kv'] = {};
+            q['kv']['isRecordedIn'] = 'id1' ;
+            q['kv']['liesWithin'] = undefined ;
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.find(q))
+                .then(
+                    results => {
+                        expect(results[0].resource['shortDescription']).toBe('bla2');
+                        expect(results.length).toBe(1);
                         done();
                     },
                     err => {

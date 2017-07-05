@@ -12,6 +12,7 @@ export class IndexCreator {
             .then(() => this.setupIdentifierIndex(db))
             .then(() => this.setupSyncedIndex(db))
             .then(() => this.setupIsRecordedInIndex(db))
+            .then(() => this.setupLiesWithinIndex(db))
             .then(() => this.setupAllIndex(db))
             .then(() => this.setupConflictedIndex(db));
     }
@@ -72,6 +73,18 @@ export class IndexCreator {
             }
         };
         return this.setupIndex(db,'isRecordedIn', mapFun);
+    }
+
+    private setupLiesWithinIndex(db): Promise<any> {
+        let mapFun = function(doc) {
+            if (!doc.resource) return;
+            if (doc.resource.relations['liesWithin'] != undefined) {
+                doc.resource.relations['liesWithin'].forEach(resourceId => emit(resourceId));
+            } else {
+                emit("UNKOWN");
+            }
+        };
+        return this.setupIndex(db,'liesWithin', mapFun);
     }
 
     private setupConflictedIndex(db): Promise<any> {

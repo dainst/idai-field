@@ -225,9 +225,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         let impl: Promise<Document[]>;
         if (!query['kv']) {
-            impl = this.defaultImpl(query,offset,limit);
+            impl = this.simpleFind(query,offset,limit);
         } else {
-            impl = this.otherImpl(query,offset,limit);
+            impl = this.findWithConstraints(query,offset,limit);
         }
         return impl.catch(err=>{
             console.error(err);
@@ -235,14 +235,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         })
     }
 
-    private buildKVQueries(query) {
+    private buildConstraintQueries(query) {
         let queries = [];
-        for (let i in query['kv']) {
+        for (let constraint in query['kv']) {
             let startkey = 'UNKOWN';
             let endkey = 'UNKOWN'+'\uffff';
-            if (query['kv'][i] != undefined) {
-                startkey = query['kv'][i];
-                endkey = query['kv'][i]+'\uffff';
+            if (query['kv'][constraint] != undefined) {
+                startkey = query['kv'][constraint];
+                endkey = query['kv'][constraint]+'\uffff';
             }
             const opt = {
                 reduce: false,
@@ -251,17 +251,23 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 startkey: startkey,
                 endkey: endkey
             };
-            queries.push(this.db.query(i, opt))
+            queries.push(this.db.query(constraint, opt))
         }
-        return queries;
+        return Promise.all(queries)
+            .then(results => {
+                for (let i in results) {
+                    results[i] = results[i].rows.map(r => r.id)
+                }
+                return results;
+            });
     }
 
     private intersectResults(results) {
         let rows = [];
         for (let result of results) {
             let row = [];
-            for (let column of result['rows']) {
-                row.push(column['id'])
+            for (let column of result) {
+                row.push(column)
             }
             rows.push(row)
         }
@@ -272,9 +278,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         const results = [];
         for (let outerResult of outerResults) {
             let existsAsInnerResult = false;
-            for (let innerResult of innerResults['rows']) {
+            for (let innerResult of innerResults) {
                 if (!outerResult) continue;
-                if (innerResult.id == outerResult) {
+                if (innerResult == outerResult) {
                     existsAsInnerResult = true;
                 }
             }
@@ -285,15 +291,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return results;
     }
 
-    private otherImpl(query,offset,limit) {
+    private findWithConstraints(query, offset, limit) {
 
-        return Promise.all(this.buildKVQueries(query))
+        return this.buildConstraintQueries(query)
             .then(results => this.intersectResults(results))
             .then(outerResults => {
 
-                return this.defaultImpl(query,undefined,undefined,false)
+                return this.simpleFind(query,undefined,undefined,false)
                     .then(innerResults => {
-                        
+
                         let proms = [];
                         for (let r of this.matchInnerAndOuter(innerResults,outerResults)) {
                             proms.push(this.fetchObject(r));
@@ -305,7 +311,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             });
     }
 
-    private defaultImpl(query,offset,limit,include_docs = true) {
+    private simpleFind(query, offset, limit, include_docs = true) {
         const opt = {
             reduce: false,
             include_docs: include_docs,
@@ -329,7 +335,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 if (include_docs) {
                     return this.filterResult(this.docsFromResult(result))
                 } else {
-                    return result;
+                    return result.rows.map(r => r.id);
                 }
             });
     }

@@ -224,7 +224,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (!query) return Promise.resolve([]);
 
         let impl: Promise<Document[]>;
-        if (!query['kv']) {
+        if (!query.constraints) {
             impl = this.simpleFind(query,offset,limit);
         } else {
             impl = this.findWithConstraints(query,offset,limit);
@@ -237,7 +237,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     private buildConstraintQueries(query) {
         const queries = [];
-        for (let constraint in query['kv']) {
+        for (let constraint in query.constraints) {
             const opt = {
                 reduce: false,
                 include_docs: false,
@@ -245,9 +245,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 startkey: 'UNKOWN',
                 endkey: 'UNKOWN'+'\uffff'
             };
-            if (query['kv'][constraint] != undefined) {
-                opt['startkey'] = query['kv'][constraint];
-                opt['endkey'] = query['kv'][constraint]+'\uffff';
+            if (query.constraints[constraint] != undefined) {
+                opt['startkey'] = query.constraints[constraint];
+                opt['endkey'] = query.constraints[constraint]+'\uffff';
             }
             queries.push(this.db.query(constraint, opt))
         }

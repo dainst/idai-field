@@ -77,11 +77,12 @@ export class ListComponent implements OnInit {
 
         const query: Query = {
             q: '',
-            prefix: true
+            prefix: true,
+            constraints: {
+                'isRecordedIn' : mainTypeDoc.resource.id,
+                'liesWithin' : undefined
+            }
         };
-        query['kv'] = {};
-        query['kv']['isRecordedIn'] = mainTypeDoc.resource.id;
-        query['kv']['liesWithin'] = undefined;
 
         this.datastore.find(query).then( docs => {
             docs.forEach((doc, i) => {

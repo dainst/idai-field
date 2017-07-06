@@ -246,11 +246,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.newDocumentsFromRemote = [];
 
-        query['kv'] = {};
+        query.constraints = {};
         if (this.view.mainType != 'project') {
-            query['kv']['isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
+            query.constraints['isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
-            query['kv']['isRecordedIn'] = undefined;
+            query.constraints['isRecordedIn'] = undefined;
             query.type = '';
         }
 

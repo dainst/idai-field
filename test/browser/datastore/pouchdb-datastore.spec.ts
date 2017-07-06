@@ -439,9 +439,10 @@ export function main() {
             const q: Query = {
                 q: 'blub',
                 prefix: true,
+                constraints: {
+                    'isRecordedIn' : 'id1'
+                }
             };
-            q['kv'] = {};
-            q['kv']['isRecordedIn'] = 'id1';
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -472,9 +473,10 @@ export function main() {
             const q: Query = {
                 q: 'blub',
                 prefix: true,
+                constraints: {
+                    'isRecordedIn' : undefined
+                }
             };
-            q['kv'] = {};
-            q['kv']['isRecordedIn'] = undefined;
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -506,10 +508,11 @@ export function main() {
             const q: Query = {
                 q: 'blub',
                 prefix: true,
+                constraints: {
+                    'isRecordedIn' : 'id1',
+                    'liesWithin' : undefined
+                }
             };
-            q['kv'] = {};
-            q['kv']['isRecordedIn'] = 'id1' ;
-            q['kv']['liesWithin'] = undefined ;
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))

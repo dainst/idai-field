@@ -272,40 +272,26 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return rows.reduce((p,c) => p.filter(e => c.includes(e)))
     }
 
-    private matchInnerAndOuter(innerResults,outerResults) {
-        const results = [];
-        for (let outerResult of outerResults) {
-            let existsAsInnerResult = false;
-            for (let innerResult of innerResults) {
-                if (!outerResult) continue;
-                if (innerResult == outerResult) {
-                    existsAsInnerResult = true;
-                }
-            }
-            if (existsAsInnerResult) {
-                results.push(outerResult);
-            }
-        }
-        return results;
-    }
-
+    // TODO respect offset and limit
     private findWithConstraints(query, offset, limit) {
 
+        let tmp;
         return this.buildConstraintQueries(query)
-            .then(results => this.intersectResults(results))
-            .then(outerResults => {
-
+            .then(results => {
+                tmp = results;
                 return this.simpleFind(query,undefined,undefined,false)
-                    .then(innerResults => {
+            })
+            .then(results => {
+                tmp.push(results);
+                return this.intersectResults(tmp)
+            })
+            .then(results => {
 
-                        let proms = [];
-                        for (let r of this.matchInnerAndOuter(innerResults,outerResults)) {
-                            proms.push(this.fetchObject(r));
-                        }
-                        // TODO respect offset and limit
-                        // TODO filter innerResults
-                        return Promise.all(proms);
-                    })
+                let proms = [];
+                for (let r of results) {
+                    proms.push(this.fetchObject(r));
+                }
+                return Promise.all(proms);
             });
     }
 

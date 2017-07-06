@@ -7,7 +7,7 @@ let resourcesPage = require('./resources.page');
 /**
  * @author Daniel de Oliveira
  */
-fdescribe('resources/project --', function() {
+describe('resources/project --', function() {
 
     beforeEach(function() {
         return browser.get('#/resources/project');

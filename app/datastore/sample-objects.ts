@@ -61,7 +61,6 @@ export var DOCS: IdaiFieldDocument[] = [
             "identifier": "trench1",
             "shortDescription": "Goldener Schnitt",
             "relations": {
-                "isRecordedIn": ["test"],
                 "records": ["c1", "tf1"]
             },
             "geometry": {
@@ -88,18 +87,6 @@ export var DOCS: IdaiFieldDocument[] = [
                 "crs": "local"
             },
             "type": "context"
-        },
-        "synced": 0
-    },
-    {
-        "resource": {
-            "id": "test",
-            "identifier": "test",
-            "shortDescription": "Test",
-            "relations": {
-                "records": ["t1"]
-            },
-            "type": "project"
         },
         "synced": 0
     }

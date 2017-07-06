@@ -61,8 +61,9 @@ describe('resources --', function() {
         resourcesPage.clickSelectGeometryType('point');
         browser.wait(EC.presenceOf(resourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
         resourcesPage.scrollUp();
+        resourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         resourcesPage.clickSelectResource('1');
-        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
+        resourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 
     it('should save changes via dialog modal', function() {

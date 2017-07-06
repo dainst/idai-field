@@ -100,6 +100,10 @@ let ResourcesPage = function() {
         return element(by.css('#objectList .list-group-item .new'));
     };
 
+    this.getListItemMarkedNewEls = function() {
+        return element.all(by.css('#objectList .list-group-item .new'));
+    };
+
     this.getListItemEl = function(identifier) {
         return element(by.id('resource-' + identifier));
     };

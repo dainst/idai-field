@@ -102,7 +102,7 @@ describe('import --', function() {
         });
     });
 
-    xit('abort if a relation target cannot be found and remove all imported resources & already '
+    it('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', function() {
 
         importIt('./test/test-data/importer-test-relation-error.jsonl');
@@ -118,7 +118,7 @@ describe('import --', function() {
 
         ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 

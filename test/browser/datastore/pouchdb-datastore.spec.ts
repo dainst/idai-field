@@ -440,7 +440,7 @@ export function main() {
                 q: 'blub',
                 prefix: true,
                 constraints: {
-                    'isRecordedIn' : 'id1'
+                    'resource.relations.isRecordedIn' : 'id1'
                 }
             };
 
@@ -474,7 +474,7 @@ export function main() {
                 q: 'blub',
                 prefix: true,
                 constraints: {
-                    'isRecordedIn' : undefined
+                    'resource.relations.isRecordedIn' : undefined
                 }
             };
 
@@ -509,8 +509,8 @@ export function main() {
                 q: 'blub',
                 prefix: true,
                 constraints: {
-                    'isRecordedIn' : 'id1',
-                    'liesWithin' : undefined
+                    'resource.relations.isRecordedIn' : 'id1',
+                    'resource.relations.liesWithin' : undefined
                 }
             };
 

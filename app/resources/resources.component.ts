@@ -248,9 +248,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         query.constraints = {};
         if (this.view.mainType != 'project') {
-            query.constraints['isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
+            query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
-            query.constraints['isRecordedIn'] = undefined;
+            query.constraints['resource.relations.isRecordedIn'] = undefined;
             query.type = '';
         }
 

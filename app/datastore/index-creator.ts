@@ -72,7 +72,7 @@ export class IndexCreator {
                 emit("UNKOWN");
             }
         };
-        return this.setupIndex(db,'isRecordedIn', mapFun);
+        return this.setupIndex(db,'resource.relations.isRecordedIn', mapFun);
     }
 
     private setupLiesWithinIndex(db): Promise<any> {
@@ -84,7 +84,7 @@ export class IndexCreator {
                 emit("UNKOWN");
             }
         };
-        return this.setupIndex(db,'liesWithin', mapFun);
+        return this.setupIndex(db,'resource.relations.liesWithin', mapFun);
     }
 
     private setupConflictedIndex(db): Promise<any> {

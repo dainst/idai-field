@@ -79,7 +79,7 @@ export class ListComponent implements OnInit {
             q: '',
             prefix: true,
             constraints: {
-                'isRecordedIn' : mainTypeDoc.resource.id,
+                'resource.relations.isRecordedIn' : mainTypeDoc.resource.id,
             }
         };
 

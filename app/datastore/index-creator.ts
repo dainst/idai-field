@@ -16,6 +16,16 @@ export class IndexCreator {
             .then(() => this.setupConflictedIndex(db));
     }
 
+    public hasIndex(iname) {
+        return (([
+            'identifier',
+            'resource.relations.isRecordedIn',
+            'resource.relations.liesWithin',
+            'conflicted',
+            'fulltext',
+            ]).indexOf(iname) != -1);
+    }
+
     private setupFulltextIndex(db): Promise<any> {
         db.on('error', err => console.error(err.toString()));
         let mapFun = function(doc) {

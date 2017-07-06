@@ -41,6 +41,7 @@ export function main() {
             () => {
                 spyOn(console, 'debug'); // to suppress console.debug output
                 spyOn(console, 'error'); // to suppress console.error output
+                spyOn(console, 'warn');
                 pouchdbManager = new PouchdbManager(mockConfigLoader);
                 datastore = new PouchdbDatastore(mockConfigLoader, pouchdbManager);
                 pouchdbManager.select('testdb');
@@ -426,7 +427,7 @@ export function main() {
         });
 
         /////// TODO
-        it('should filter with key value pair', function(done) {
+        it('should filter with constraint', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
 
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
@@ -463,7 +464,7 @@ export function main() {
                 );
         });
 
-        it('should filter with key value pair undefined', function(done) {
+        it('should filter with constraint undefined', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
 
@@ -496,7 +497,7 @@ export function main() {
                 );
         });
 
-        it('should filter with key value pair multiquery', function(done) {
+        it('should filter with multiple constraints', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
 
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
@@ -522,6 +523,67 @@ export function main() {
                     results => {
                         expect(results[0].resource['shortDescription']).toBe('bla2');
                         expect(results.length).toBe(1);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter with unkown constraint ', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+            const doc2 = doc('bla2', 'blub2', 'type2','id2');
+
+            const q: Query = {
+                q: 'blub',
+                prefix: true,
+                constraints: {
+                    'unknown' : 'id1',
+                }
+            };
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.find(q))
+                .then(
+                    results => {
+                        expect(results[0].resource['shortDescription']).toBe('bla1');
+                        expect(results[1].resource['shortDescription']).toBe('bla2');
+                        expect(results.length).toBe(2);
+                        expect(console.warn).toHaveBeenCalled();
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should filter with one known and one unkown constraint ', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+            const doc2 = doc('bla2', 'blub2', 'type2','id2');
+            doc2.resource.relations['liesWithin'] = ['id1'];
+
+            const q: Query = {
+                q: 'blub',
+                prefix: true,
+                constraints: {
+                    'unknown' : 'id1',
+                    'resource.relations.liesWithin' : 'id1'
+                }
+            };
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.find(q))
+                .then(
+                    results => {
+                        expect(results[0].resource['shortDescription']).toBe('bla2');
+                        expect(results.length).toBe(1);
+                        expect(console.warn).toHaveBeenCalled();
                         done();
                     },
                     err => {

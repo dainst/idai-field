@@ -6,7 +6,12 @@ import {SyncState} from "./sync-state";
  * The interface for datastores supporting
  * the idai-field document model.
  *
+ * The find method accepts the following constraints:
+ *   resource.relations.isRecordedIn
+ *   resource.relations.liesWithin
+ *
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export abstract class IdaiFieldDatastore extends Datastore {
 

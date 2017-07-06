@@ -224,7 +224,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         if (!query) return Promise.resolve([]);
 
         let impl: Promise<Document[]>;
-        if (!query.constraints) {
+        if (!this.hasValidConstraints(query)) {
             impl = this.simpleFind(query,offset,limit);
         } else {
             impl = this.findWithConstraints(query,offset,limit);
@@ -235,7 +235,20 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         })
     }
 
-    private buildConstraintQueries(query) {
+    private hasValidConstraints(query) {
+        if (!query.constraints) return false;
+
+        let validConstraints = 0;
+        for (let constraint in query.constraints) {
+            if (!this.pouchdbManager.getIndexCreator().hasIndex(constraint)) {
+                console.warn("unkown constraint",constraint);
+                delete query.constraints[constraint];
+            } else validConstraints++;
+        }
+        return (validConstraints > 0);
+    }
+
+    private performConstraintQueries(query) {
         const queries = [];
         for (let constraint in query.constraints) {
             const opt = {
@@ -276,9 +289,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     private findWithConstraints(query, offset, limit) {
 
         let tmp;
-        return this.buildConstraintQueries(query)
+        return this.performConstraintQueries(query)
             .then(results => {
                 tmp = results;
+                // simpleFind could be skipped if no type and q == *
                 return this.simpleFind(query,undefined,undefined,false)
             })
             .then(results => {

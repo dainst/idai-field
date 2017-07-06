@@ -55,6 +55,10 @@ export class PouchdbManager {
         rdy.then(() => this.resolveDbReady(this.db));
     }
 
+    public getIndexCreator() {
+        return this.indexCreator;
+    }
+
     /**
      * Gets the database object.
      * @returns {PouchdbProxy} a proxy that automatically hands over method

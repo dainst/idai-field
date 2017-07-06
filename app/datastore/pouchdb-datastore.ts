@@ -303,7 +303,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
                 let proms = [];
                 for (let r of results) {
-                    proms.push(this.fetchObject(r));
+                    proms.push(this.get(r));
                 }
                 return Promise.all(proms);
             });

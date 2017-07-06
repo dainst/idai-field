@@ -50,6 +50,11 @@ export class RowComponent {
         );
     }
 
+    public markAsChanged() {
+        this.documentEditChangeMonitor.setChanged();
+    }
+
+
     public save(document: IdaiFieldDocument) {
 
         if (!this.documentEditChangeMonitor.isChanged()) return;

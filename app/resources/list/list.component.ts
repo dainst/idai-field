@@ -27,6 +27,8 @@ export class ListComponent implements OnInit {
     public typesMap: { [type: string]: IdaiType };
 
     private childrenShownForIds: string[] = [];
+
+    private awaitsReload:boolean = false;
     
     constructor(
 
@@ -85,14 +87,14 @@ export class ListComponent implements OnInit {
                     this.topDocuments.push(doc as IdaiFieldDocument);
                 }
             });
+            this.awaitsReload = false;
         });
     }
 
     private handleChange(result: any) {
-        // reload only after changes topDocuments or deletions
-        if (result._deleted){
-            this.populateFirstLevel(this.selectedMainTypeDocument);
-        } else if (!result.resource.relations["liesWithin"]) this.populateFirstLevel(this.selectedMainTypeDocument);
-
+        if (!this.awaitsReload) {
+            this.awaitsReload = true;
+            setTimeout(() => {this.populateFirstLevel(this.selectedMainTypeDocument)}, 200);
+        }
     }
 }

@@ -246,6 +246,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.newDocumentsFromRemote = [];
 
+        query['kv'] = {};
+        if (this.view.mainType != 'project') {
+            query['kv']['isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
+        } else {
+            query['kv']['isRecordedIn'] = undefined;
+            query.type = '';
+        }
+
         return this.datastore.find(query)
             .then(documents => {
                 return this.filterDocuments(documents);
@@ -257,29 +265,20 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private filterDocuments(documents: Array<Document>): Promise<Array<Document>> {
 
+        if (this.view.mainType == 'project') return Promise.resolve(documents);
+
         return this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => {
-
                 let result: Array<Document> = [];
-
                 for (let document of documents) {
-
                     if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type, this.view.mainType,
                             'isRecordedIn')) {
                         continue;
                     }
-
-                    if (this.selectedMainTypeDocument && (!document.resource.relations['isRecordedIn']
-                        || (document.resource.relations['isRecordedIn']
-                            .indexOf(this.selectedMainTypeDocument.resource.id) == -1))) {
-                        continue;
-                    }
-
                     result.push(document);
                 }
-
                 return Promise.resolve(result);
-            }).catch(msgWithParams => Promise.reject(msgWithParams));
+            });
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {

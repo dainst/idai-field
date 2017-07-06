@@ -105,6 +105,11 @@ let ResourcesPage = function() {
         return this.getListModeInputField(identifier, index).getAttribute('value');
     };
 
+    this.getSelectedMainTypeDocumentOption = function() {
+        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
+        return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
+    };
+
     // elements
 
     this.getListItemMarkedNewEl = function() {
@@ -120,16 +125,13 @@ let ResourcesPage = function() {
     };
 
     this.getListModeInputField = function(identifier, index) {
-        browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)));
-        return element.all(by.css('#resource-' + identifier + ' input')).get(index);
+        browser.wait(EC.visibilityOf(element.all(by.id('resource-' + identifier + ' input')).get(index)));
+        return element.all(by.id('resource-' + identifier + ' input')).get(index);
     };
 
     this.selectMainType = function(option) {
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
-        const options = element.all(by.css('#mainTypeSelectBox option'))
-            .then(function(options){
-                options[option].click();
-            });
+        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
+        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };
 
     // sequences
@@ -147,16 +149,20 @@ let ResourcesPage = function() {
         browser.sleep(delays.shortRest);
     };
 
+    this.performCreateRelation = function(identifier, targetIdentifier, relationGroupIndex) {
+        this.openEditByDoubleClickResource(identifier);
+        DocumentEditWrapperPage.clickRelationsTab();
+        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
+        DocumentEditWrapperPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
+        DocumentEditWrapperPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
+        DocumentEditWrapperPage.clickSaveDocument();
+        browser.sleep(delays.shortRest);
+    };
+
     this.performCreateLink = function() {
         this.performCreateResource('1', 1); // Fund
         this.performCreateResource('2', 1); // Fund
-        this.openEditByDoubleClickResource('2');
-        DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(1);
-        DocumentEditWrapperPage.typeInRelationByIndices(1, 0, '1');
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(1, 0, 0);
-        DocumentEditWrapperPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
+        this.performCreateRelation('2', '1', 1);
     };
 
     // script

@@ -76,7 +76,7 @@ describe('settings --', function() {
         common.typeIn(SettingsPage.getUserNameInput(), 'username');
         SettingsPage.clickSaveSettingsButton();
 
-        NavbarPage.clickNavigateToResources()
+        NavbarPage.clickNavigateToExcavation()
             .then(() => {
                 browser.sleep(5000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));

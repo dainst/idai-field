@@ -1,1 +1,1 @@
-{ "type": "object", "identifier" : "obob1", "shortDescription" : "O.B. One", "relations": { "isBefore": [ "tf1" ] } }
+{ "type": "object", "identifier" : "obob1", "shortDescription" : "O.B. One", "relations": { "isBefore": [ "tf1" ], "isRecordedIn" : ["t1"] } }

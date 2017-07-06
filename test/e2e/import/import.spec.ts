@@ -73,7 +73,7 @@ describe('import --', function() {
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
-    xit('import a relation and add the corresponding inverse relation', function() {
+    it('import a relation and add the corresponding inverse relation', function() {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);
@@ -92,12 +92,12 @@ describe('import --', function() {
 
         ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
-        DocumentViewPage.getRelationValue(0).then(function(relationValue) {
+        DocumentViewPage.getRelationValue(1).then(function(relationValue) {
             expect(relationValue).toContain('obob1');
         });
-        DocumentViewPage.getRelationName(0).then(function(relationName) {
+        DocumentViewPage.getRelationName(1).then(function(relationName) {
             expect(relationName).toEqual('Zeitlich nach');
         });
     });

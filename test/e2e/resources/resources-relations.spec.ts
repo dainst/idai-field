@@ -3,7 +3,7 @@ import {browser, protractor, element, by} from 'protractor';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-const resourcesPage = require('./resources.page');
+import {ResourcesPage} from './resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
@@ -11,13 +11,13 @@ import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 describe('resources/relations --', function() {
 
     beforeEach(function() {
-        resourcesPage.get();
+        ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
     it ('create links for relations', function() {
-        resourcesPage.performCreateLink();
-        resourcesPage.clickSelectResource('1');
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelationValue(0).then(relVal=>{
             expect(relVal).toEqual('2')
         });
@@ -28,19 +28,19 @@ describe('resources/relations --', function() {
     });
 
     it('create a new relation and the corresponding inverse relation', function() {
-        resourcesPage.performCreateLink();
-        resourcesPage.openEditByDoubleClickResource('2');
+        ResourcesPage.performCreateLink();
+        ResourcesPage.openEditByDoubleClickResource('2');
         expect(DocumentEditWrapperPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DocumentEditWrapperPage.clickCloseEdit();
-        resourcesPage.clickSelectResource('1');
+        ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
         expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
     });
 
     it('edit a resource that contains a relation', function() {
-        resourcesPage.performCreateLink();
+        ResourcesPage.performCreateLink();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        resourcesPage.openEditByDoubleClickResource('2');
+        ResourcesPage.openEditByDoubleClickResource('2');
         DocumentEditWrapperPage.clickFieldsTab();
         DocumentEditWrapperPage.typeInInputField('123');
         DocumentEditWrapperPage.clickSaveDocument();
@@ -48,12 +48,12 @@ describe('resources/relations --', function() {
     });
 
     it('delete a relation and the corresponding inverse relation', function() {
-        resourcesPage.performCreateLink();
-        resourcesPage.clickSelectResource('1');
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
-        resourcesPage.clickSelectResource('2');
+        ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -64,18 +64,18 @@ describe('resources/relations --', function() {
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
-        resourcesPage.clickSelectResource('1');
+        ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });
 
     it('delete inverse relations when deleting a resource', function() {
-        resourcesPage.performCreateLink();
-        resourcesPage.openEditByDoubleClickResource('2');
-        resourcesPage.clickDeleteDocument();
-        resourcesPage.clickDeleteInModal();
-        resourcesPage.clickSelectResource('1');
+        ResourcesPage.performCreateLink();
+        ResourcesPage.openEditByDoubleClickResource('2');
+        ResourcesPage.clickDeleteDocument();
+        ResourcesPage.clickDeleteInModal();
+        ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

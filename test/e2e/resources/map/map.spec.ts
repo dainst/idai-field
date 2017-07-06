@@ -1,7 +1,7 @@
 import {browser} from 'protractor';
 
 import {MapPage} from './map.page';
-let resourcePage = require('../../resources/resources.page');
+import {ResourcesPage} from '../resources.page';
 let delays = require('../../config/delays');
 import {DocumentViewPage} from '../../widgets/document-view.page';
 import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
@@ -63,9 +63,9 @@ describe('resources/map --', function() {
     }
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
-        resourcePage.clickCreateObject();
-        resourcePage.clickSelectResourceType();
-        return resourcePage.clickSelectGeometryType(geometry)
+        ResourcesPage.clickCreateObject();
+        ResourcesPage.clickSelectResourceType();
+        return ResourcesPage.clickSelectGeometryType(geometry)
             .then(function() { return mapClickCallback(); });
     }
     
@@ -74,7 +74,7 @@ describe('resources/map --', function() {
             function() {
                 MapPage.clickMapOption('ok');
                 DocumentEditWrapperPage.typeInInputField(identifier);
-                resourcePage.scrollUp();
+                ResourcesPage.scrollUp();
                 DocumentEditWrapperPage.clickSaveDocument();
             });
     }
@@ -83,7 +83,7 @@ describe('resources/map --', function() {
         if (geometryType) {
             createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
-            resourcePage.performCreateResource(identifier);
+            ResourcesPage.performCreateResource(identifier);
         }
     }
     
@@ -93,7 +93,7 @@ describe('resources/map --', function() {
     }
     
     beforeEach(function() {
-        resourcePage.get();
+        ResourcesPage.get();
         browser.sleep(3000);
     });
 
@@ -192,7 +192,7 @@ describe('resources/map --', function() {
     });
 
     it('create a point geometry later', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('point');
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('ok');
@@ -202,7 +202,7 @@ describe('resources/map --', function() {
     });
 
     it('create a polyline geometry later', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polyline').then(setPolyline);
         MapPage.clickMapOption('ok');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
@@ -211,7 +211,7 @@ describe('resources/map --', function() {
     });
 
     it('create a multipolyline geometry later', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polyline').then(setMultiPolyline);
         MapPage.clickMapOption('ok');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
@@ -220,7 +220,7 @@ describe('resources/map --', function() {
     });
 
     it('create a polygon geometry later', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polygon').then(setPolygon);
         MapPage.clickMapOption('ok');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
@@ -229,7 +229,7 @@ describe('resources/map --', function() {
     });
 
     it('create a multipolygon geometry later', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polygon').then(setMultiPolygon);
         MapPage.clickMapOption('ok');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
@@ -238,7 +238,7 @@ describe('resources/map --', function() {
     });
 
     it('cancel creating a point geometry', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('point');
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('abort');
@@ -248,7 +248,7 @@ describe('resources/map --', function() {
     });
 
     it('cancel creating a polyline geometry', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polyline').then(setPolyline);
         MapPage.clickMapOption('abort');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
@@ -257,7 +257,7 @@ describe('resources/map --', function() {
     });
 
     it('cancel creating a polygon geometry', function() {
-        resourcePage.performCreateResource('doc');
+        ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polygon').then(setPolygon);
         MapPage.clickMapOption('abort');
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {

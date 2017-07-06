@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 
 let common = require('../common.js');
 import {ImportPage} from './import.page';
-let resourcesPage = require('../resources/resources.page');
+import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 let delays = require('../config/delays');
@@ -28,16 +28,17 @@ describe('import --', function() {
         ImportPage.clickStartImportButton();
     };
 
-    xit('import a valid iDAI.field JSONL file via HTTP', function() {
+    it('import a valid iDAI.field JSONL file via HTTP', function() {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.selectMainType(1);
 
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
 
     it('delete already imported iDAI.field documents if an error occurs', function() {
@@ -48,10 +49,10 @@ describe('import --', function() {
         element(by.css('.alert button')).click();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
-        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
+        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob1')});
+        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob2')});
     });
 
     it('abort if an empty geometry is found', function() {
@@ -78,7 +79,7 @@ describe('import --', function() {
         browser.sleep(2000);
         NavbarPage.clickNavigateToExcavation();
 
-        resourcesPage.clickSelectResource('obob1');
+        ResourcesPage.clickSelectResource('obob1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -89,7 +90,7 @@ describe('import --', function() {
             expect(relationName).toEqual('Zeitlich vor');
         });
 
-        resourcesPage.clickSelectResource('testf1');
+        ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
@@ -110,12 +111,12 @@ describe('import --', function() {
         NavbarPage.clickCloseMessage();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob1');
-        expect(resourcesPage.getListItemIdentifierText(0)).not.toEqual('obob2');
+        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob1')});
+        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob2')});
 
-        resourcesPage.clickSelectResource('testf1');
+        ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

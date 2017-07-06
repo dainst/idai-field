@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const common = require('../common');
-const resourcesPage = require('../resources/resources.page');
+import {ResourcesPage} from '../resources/resources.page';
 const documentViewPage = require('../widgets/document-view.page');
 import {SettingsPage} from '../settings/settings.page';
 
@@ -113,7 +113,7 @@ describe('resources/syncing --', function() {
     function waitForIt(searchTerm, successCB) {
 
         return browser.sleep(3000).then(() =>
-            resourcesPage.typeInIdentifierInSearchField(searchTerm)
+            ResourcesPage.typeInIdentifierInSearchField(searchTerm)
         ).then(() => {
             return browser.wait(EC.visibilityOf(
                     element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
@@ -145,7 +145,7 @@ describe('resources/syncing --', function() {
         return NavbarPage.clickNavigateToSettings()
             .then(() => removeRemoteSiteConfiguration())
             .then(() => NavbarPage.clickNavigateToProject())
-            .then(() => resourcesPage.clickSelectResource('test1'))
+            .then(() => ResourcesPage.clickSelectResource('test1'))
             .then(documentViewPage.clickEditDocument)
             .then(() => DocumentEditWrapperPage.typeInInputField('Test Local', 1))
             .then(DocumentEditWrapperPage.clickSaveDocument)
@@ -193,7 +193,7 @@ describe('resources/syncing --', function() {
 
         NavbarPage.clickNavigateToProject();
         waitForIt('test1', () => {
-            expect(resourcesPage.getListItemIdentifierText(0)).toBe('test1');
+            ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).toBe('test1')});
             done();
         });
     });
@@ -205,7 +205,7 @@ describe('resources/syncing --', function() {
                 testDocument.resource.identifier = 'test2';
                 updateTestDoc();
             }).then(() => waitForIt('test2', () => {
-                expect(resourcesPage.getListItemIdentifierText(0)).toBe('test2');
+                ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).toBe('test2')});
                 done();
             }));
     });
@@ -218,7 +218,7 @@ describe('resources/syncing --', function() {
                     if (change.doc.resource && change.doc.resource.identifier == 'test3')
                         done();
                 });
-                resourcesPage.performCreateResource('test3');
+                ResourcesPage.performCreateResource('test3');
             }).catch(err => { fail(err); done(); });
     });
 
@@ -226,7 +226,7 @@ describe('resources/syncing --', function() {
 
         NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
-                resourcesPage.clickSelectResource('test1')
+                ResourcesPage.clickSelectResource('test1')
                     .then(documentViewPage.clickEditDocument)
                     .then(() => {
                         testDocument.resource.identifier = 'test2';
@@ -244,7 +244,7 @@ describe('resources/syncing --', function() {
 
         NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
-                resourcesPage.clickSelectResource('test1')
+                ResourcesPage.clickSelectResource('test1')
                     .then(documentViewPage.clickEditDocument)
                     .then(() => {
                         testDocument.resource.identifier = 'test2';
@@ -267,12 +267,12 @@ describe('resources/syncing --', function() {
 
         return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
-                expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
+                expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
 
                 createEventualConflict()
                     .then(() => {
-                        browser.wait(EC.visibilityOf(resourcesPage.getListItemEl('test1')), delays.ECWaitTime);
-                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
+                        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('test1')), delays.ECWaitTime);
+                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
                         done();
                     }).catch(err => { fail(err); done(); });
             }));
@@ -290,15 +290,15 @@ describe('resources/syncing --', function() {
                         shortDescription = doc.resource.shortDescription;
                         expect(['Test Local', 'Test Remote']).toContain(shortDescription);
                     })
-                    .then(() => resourcesPage.clickSelectResource('test1'))
-                    .then(() => resourcesPage.clickSelectResource('test1'))
+                    .then(() => ResourcesPage.clickSelectResource('test1'))
+                    .then(() => ResourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickEditDocument)
                     .then(DocumentEditWrapperPage.clickConflictsTab)
                     .then(DocumentEditWrapperPage.clickChooseRightRevision)
                     .then(DocumentEditWrapperPage.clickSolveConflictButton)
                     .then(DocumentEditWrapperPage.clickSaveDocument)
                     .then(() => {
-                        expect(resourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
+                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
                         return db.get(testDocument._id);
                     }).then(doc => {
                         expect(['Test Local', 'Test Remote']).toContain(doc.resource.shortDescription);
@@ -328,7 +328,7 @@ describe('resources/syncing --', function() {
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
                     .then(NavbarPage.clickNavigateToProject)
-                    .then(() => resourcesPage.clickSelectResource('test1'))
+                    .then(() => ResourcesPage.clickSelectResource('test1'))
                     .then(documentViewPage.clickSolveConflicts)
                     .then(() => {
                         browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);

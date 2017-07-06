@@ -1,4 +1,4 @@
-let resourcesPage = require('./resources.page');
+import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
@@ -6,33 +6,33 @@ import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 describe('resources/messages --', function() {
 
     beforeEach(function() {
-        resourcesPage.get();
+        ResourcesPage.get();
     });
 
     it('create a new object of first listed type ', function() {
-        resourcesPage.performCreateResource('12');    
+        ResourcesPage.performCreateResource('12');
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('show the success msg also on route change', function() {
-        resourcesPage.performCreateResource('12');
-        resourcesPage.openEditByDoubleClickResource('12');
+        ResourcesPage.performCreateResource('12');
+        ResourcesPage.openEditByDoubleClickResource('12');
         DocumentEditWrapperPage.typeInInputField('34');
         DocumentEditWrapperPage.clickCloseEdit();
-        resourcesPage.clickSaveInModal();
+        ResourcesPage.clickSaveInModal();
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     
     it('warn if identifier is missing', function() {
-        resourcesPage.performCreateResource('');
+        ResourcesPage.performCreateResource('');
 
         NavbarPage.awaitAlert('identifier',false)
     });
 
     it('warn if an existing id is used', function() {
-        resourcesPage.performCreateResource('12');
-        resourcesPage.performCreateResource('12');
+        ResourcesPage.performCreateResource('12');
+        ResourcesPage.performCreateResource('12');
 
         NavbarPage.awaitAlert('existiert bereits',false);
     });

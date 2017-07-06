@@ -4,6 +4,7 @@ import {browser, protractor, element, by} from 'protractor';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
+let common = require('../common.js');
 
 
 /**
@@ -16,8 +17,7 @@ export class SettingsPage {
     };
 
     public static clickSaveSettingsButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('save-settings-button'))), delays.ECWaitTime);
-        element(by.id('save-settings-button')).click();
+        common.click(by.id('save-settings-button'));
     };
 
     public static getRemoteSiteAddressInput = function() {

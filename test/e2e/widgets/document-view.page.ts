@@ -17,23 +17,19 @@ export class DocumentViewPage {
     };
 
     public static clickEditDocument() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-document'))), delays.ECWaitTime);
-        element(by.id('document-view-button-edit-document')).click();
+        common.click(by.id('document-view-button-edit-document'));
     };
 
     public static clickCreateGeometry(type) {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-create-' + type))), delays.ECWaitTime);
-        return element(by.id('document-view-button-create-' + type)).click();
+        return common.click(by.id('document-view-button-create-' + type));
     };
 
     public static clickReeditGeometry() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-edit-geometry'))), delays.ECWaitTime);
-        element(by.id('document-view-button-edit-geometry')).click();
+        common.click(by.id('document-view-button-edit-geometry'));
     };
 
     public static clickSolveConflicts() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-button-solve-conflicts'))), delays.ECWaitTime);
-        element(by.id('document-view-button-solve-conflicts')).click();
+        common.click(by.id('document-view-button-solve-conflicts'));
     };
 
     // get text

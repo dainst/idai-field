@@ -80,14 +80,16 @@ export class ListComponent implements OnInit {
             prefix: true,
             constraints: {
                 'isRecordedIn' : mainTypeDoc.resource.id,
-                'liesWithin' : undefined
             }
         };
 
         this.datastore.find(query).then( docs => {
             docs.forEach((doc, i) => {
                 this.documents[doc.resource.id] = doc as IdaiFieldDocument;
-                this.topDocuments.push(doc as IdaiFieldDocument);
+
+                if (!doc.resource.relations["liesWithin"]) {
+                    this.topDocuments.push(doc as IdaiFieldDocument);
+                }
             });
         });
     }

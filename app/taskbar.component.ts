@@ -51,7 +51,7 @@ export class TaskbarComponent {
                 viewName = name;
                 return this.router.navigate(['resources', viewName]);
             }).then(() => {
-                this.router.navigate(['resources', viewName, 'edit', 'conflicts', document.resource.id])
+                this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts'])
             });
     }
 }

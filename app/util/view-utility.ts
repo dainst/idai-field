@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {ConfigLoader, RelationDefinition, ViewDefinition} from 'idai-components-2/configuration';
+import {ReadDatastore} from 'idai-components-2/datastore';
 
 @Injectable()
 /**
@@ -8,11 +9,15 @@ import {ConfigLoader, RelationDefinition, ViewDefinition} from 'idai-components-
  */
 export class ViewUtility {
 
-    constructor(private configLoader: ConfigLoader) {}
+    constructor(private configLoader: ConfigLoader,
+                private datastore: ReadDatastore) {}
 
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
-        return this.configLoader.getProjectConfiguration()
+        const relations = document.resource.relations['isRecordedIn'];
+        if (relations && relations.length > 0) {
+            return this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type);
+        } else return this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => {
 
                 let relationDefinitions: Array<RelationDefinition>

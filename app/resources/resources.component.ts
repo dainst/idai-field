@@ -1,5 +1,5 @@
 import {Component, AfterViewChecked} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
+import {ViewUtility} from '../util/view-utility';
 import {M} from '../m';
 
 
@@ -47,13 +48,15 @@ export class ResourcesComponent implements AfterViewChecked {
     private showPlusButton: boolean = false;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private location: Location,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor,
                 private messages: Messages,
-                private configLoader: ConfigLoader
+                private configLoader: ConfigLoader,
+                private viewUtility: ViewUtility
     ) {
         let readyResolveFun: Function;
         this.ready = new Promise<any>(resolve => {
@@ -92,10 +95,12 @@ export class ResourcesComponent implements AfterViewChecked {
     private parseParams(params: Params): Promise<any> {
 
         let viewName: string = params['view'];
-        let tab: string = params['tab'];
         let resourceId: string = params['id'];
+        let tab: string = params['tab'];
 
-        if (tab && resourceId) this.openEditTab(tab, resourceId, viewName);
+        if (resourceId) this.openEditTab(resourceId, tab);
+
+        this.location.replaceState('resources/' + viewName);
 
         if (!this.view || viewName != this.view.name) {
             return this.initializeView(viewName);
@@ -114,13 +119,16 @@ export class ResourcesComponent implements AfterViewChecked {
         ).catch(() => { return Promise.reject(null); });
     }
 
-    private openEditTab(tab: string, id: string, viewName: string) {
-
-        this.location.replaceState('resources/' + viewName);
+    private openEditTab(id: string, tab: string) {
 
         this.datastore.get(id).then(
-            document => this.editDocument(document, tab),
-            msgWithParams => this.messages.add(msgWithParams)
+            document => {
+                if (tab) {
+                    this.editDocument(document, tab);
+                } else {
+                    this.setSelected(document);
+                }
+            }, msgWithParams => this.messages.add(msgWithParams)
         );
     }
 
@@ -175,6 +183,18 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         this.setSelected(documentToSelect);
+    }
+
+    public selectRelationTarget(documentToSelect: IdaiFieldDocument) {
+
+        this.viewUtility.getViewNameForDocument(documentToSelect)
+            .then(viewName => {
+                if (viewName != this.view.name) {
+                    return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
+                } else {
+                    this.select(documentToSelect);
+                }
+            });
     }
 
     public queryChanged(query: Query): Promise<any> {

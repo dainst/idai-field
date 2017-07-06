@@ -7,7 +7,7 @@ let resourcesPage = require('./resources.page');
 /**
  * @author Daniel de Oliveira
  */
-describe('resources/project --', function() {
+fdescribe('resources/project --', function() {
 
     beforeEach(function() {
         return browser.get('#/resources/project');
@@ -29,6 +29,6 @@ describe('resources/project --', function() {
         expect(resourcesPage.getListItemIdentifierText(0)).toEqual('befund1');
 
         NavbarPage.clickNavigateToProject();
-        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('trench1');
+        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('trench2');
     })
 });

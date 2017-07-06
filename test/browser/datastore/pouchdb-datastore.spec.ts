@@ -426,7 +426,6 @@ export function main() {
                 );
         });
 
-        /////// TODO
         it('should filter with constraint', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
 

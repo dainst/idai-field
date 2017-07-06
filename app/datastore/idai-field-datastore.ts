@@ -18,8 +18,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
 
     abstract findUnsynced(): Promise<IdaiFieldDocument[]>;
 
-    abstract findIsRecordedIn(identifier: string): Promise<IdaiFieldDocument[]>;
-
     /**
      * Setup peer-to-peer syncing between this datastore and target.
      * Changes to sync state will be published via the onSync*-Methods.

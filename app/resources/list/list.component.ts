@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {ResourcesComponent} from '../resources.component';
-
+import {Query} from 'idai-components-2/datastore';
 
 @Component({
     selector: 'list',
@@ -54,7 +54,7 @@ export class ListComponent implements OnInit {
     ngOnInit() {
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
             this.selectedMainTypeDocument = result as IdaiFieldDocument;
-            this.populateMainType(this.selectedMainTypeDocument);
+            this.populateFirstLevel(this.selectedMainTypeDocument);
         });
     }
 
@@ -71,18 +71,22 @@ export class ListComponent implements OnInit {
         return this.childrenShownForIds.indexOf(id) == -1
     }
 
-    private populateMainType(mainTypeDoc: IdaiFieldDocument) {
+    private populateFirstLevel(mainTypeDoc: IdaiFieldDocument) {
         this.topDocuments = [];
         this.documents = {};
 
-        this.datastore.findIsRecordedIn(mainTypeDoc.resource.id).then( docs => {
+        const query: Query = {
+            q: '',
+            prefix: true
+        };
+        query['kv'] = {};
+        query['kv']['isRecordedIn'] = mainTypeDoc.resource.id;
+        query['kv']['liesWithin'] = undefined;
+
+        this.datastore.find(query).then( docs => {
             docs.forEach((doc, i) => {
-                this.documents[doc.resource.id] = doc;
-
-
-                if (!doc.resource.relations["liesWithin"]) {
-                    this.topDocuments.push(doc);
-                }
+                this.documents[doc.resource.id] = doc as IdaiFieldDocument;
+                this.topDocuments.push(doc as IdaiFieldDocument);
             });
         });
     }
@@ -90,8 +94,8 @@ export class ListComponent implements OnInit {
     private handleChange(result: any) {
         // reload only after changes topDocuments or deletions
         if (result._deleted){
-            this.populateMainType(this.selectedMainTypeDocument);
-        } else if (!result.resource.relations["liesWithin"]) this.populateMainType(this.selectedMainTypeDocument);
+            this.populateFirstLevel(this.selectedMainTypeDocument);
+        } else if (!result.resource.relations["liesWithin"]) this.populateFirstLevel(this.selectedMainTypeDocument);
 
     }
 

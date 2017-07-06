@@ -76,11 +76,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(result => this.replaceWithCached(result));
     }
 
-    findUnsynced(): Promise<Document[]> {
-        return this.datastore.findUnsynced()
-            .then(results => this.replaceAllWithCached(results))
-    }
-
     all(type?:string, offset?:number, limit?:number): Promise<Document[]> {
         return this.datastore.all(type, offset, limit)
             .then(result => this.replaceAllWithCached(result));

@@ -324,18 +324,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             });
     }
 
-
-    public findUnsynced(): Promise<Document[]> {
-
-        return this.db.query('synced', {
-            key: 0,
-            include_docs: true,
-            conflicts: true,
-        }).then(result => {
-            return Promise.resolve(result.rows.map(result=>this.cleanDoc(result.doc)));
-        });
-    }
-
     public findConflicted(): Promise<IdaiFieldDocument[]> {
 
         return this.db.query('conflicted', {

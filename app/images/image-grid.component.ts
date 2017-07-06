@@ -83,8 +83,7 @@ export class ImageGridComponent {
             this.documents.unshift(<IdaiFieldImageDocument>{
                 id: 'droparea',
                 resource: { identifier: '', shortDescription:'', type: '',
-                    width: 1, height: 1, filename: '', relations: {} },
-                synced: 0
+                    width: 1, height: 1, filename: '', relations: {} }
             });
 
             this.calcGrid();

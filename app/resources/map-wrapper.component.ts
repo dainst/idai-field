@@ -79,7 +79,7 @@ export class MapWrapperComponent implements OnInit {
         this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
         this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUsername()).then(
             () => {
-                this.resourcesComponent.getSelected()['synced'] = 0;
+                //
             }, msgWithParams => this.messages.add(msgWithParams));
     }
 }

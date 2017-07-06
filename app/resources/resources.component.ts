@@ -147,7 +147,6 @@ export class ResourcesComponent implements AfterViewChecked {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
             if (doc.resource.id == changedDocument.resource.id) {
-                doc['synced'] = changedDocument['synced'];
                 existingDoc = true;
             }
         }

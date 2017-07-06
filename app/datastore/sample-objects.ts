@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
-export var DOCS: IdaiFieldDocument[] = [
+export const DOCS: IdaiFieldDocument[] = [
     {
         "resource": {
             "id": "tf1",
@@ -16,8 +16,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 "crs": "local"
             },
             "type": "object"
-        },
-        "synced": 0
+        }
     },
     {
         "resource": {
@@ -34,8 +33,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 "topLeftCoordinates": [39.1412672328, 27.1892609283],
                 "topRightCoordinates": [39.1412672328, 27.1893859555]
             }
-        },
-        "synced": 0
+        }
     },
     {
         "resource": {
@@ -52,8 +50,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 "topRightCoordinates": [25, -25],
                 "bottomLeftCoordinates": [-25, -75]
             }
-        },
-        "synced": 0
+        }
     },
     {
         "resource": {
@@ -69,8 +66,7 @@ export var DOCS: IdaiFieldDocument[] = [
                 "crs": "local"
             },
             "type": "trench"
-        },
-        "synced": 0
+        }
     },
     {
         "resource": {
@@ -87,7 +83,6 @@ export var DOCS: IdaiFieldDocument[] = [
                 "crs": "local"
             },
             "type": "context"
-        },
-        "synced": 0
+        }
     }
 ];

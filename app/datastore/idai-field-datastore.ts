@@ -16,7 +16,7 @@ export abstract class IdaiFieldDatastore extends Datastore {
      */
     abstract findByIdentifier(identifier: string): Promise<IdaiFieldDocument>;
 
-    abstract findUnsynced(): Promise<IdaiFieldDocument[]>;
+    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
 
     /**
      * Setup peer-to-peer syncing between this datastore and target.
@@ -32,7 +32,4 @@ export abstract class IdaiFieldDatastore extends Datastore {
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
     abstract removeRevision(docId: string, revisionId: string): Promise<any>;
-
-    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
-
 }

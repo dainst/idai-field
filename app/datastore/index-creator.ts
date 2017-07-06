@@ -10,7 +10,6 @@ export class IndexCreator {
     public go(db) {
         return this.setupFulltextIndex(db)
             .then(() => this.setupIdentifierIndex(db))
-            .then(() => this.setupSyncedIndex(db))
             .then(() => this.setupIsRecordedInIndex(db))
             .then(() => this.setupLiesWithinIndex(db))
             .then(() => this.setupAllIndex(db))
@@ -32,14 +31,6 @@ export class IndexCreator {
             });
         };
         return this.setupIndex(db,'fulltext', mapFun);
-    }
-
-    private setupSyncedIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource) return;
-            emit(doc.synced);
-        };
-        return this.setupIndex(db,'synced', mapFun);
     }
 
     private setupIdentifierIndex(db): Promise<any> {

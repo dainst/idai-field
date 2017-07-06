@@ -116,8 +116,7 @@ export class IdigCsvParser extends AbstractParser {
                 type: object['Type'],
                 shortDescription: object['Title'],
                 relations: {}
-            },
-            synced: 0
+            }
         };
 
         // After this initial setup, the rest of the fields is mapped 'automatically'.

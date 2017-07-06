@@ -7,6 +7,7 @@ let resourcesPage = require('./resources.page');
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('resources/project --', function() {
 

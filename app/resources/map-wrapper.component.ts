@@ -37,8 +37,8 @@ export class MapWrapperComponent implements OnInit {
         });
     }
 
-    private selectedDocIsNew(): boolean {
-        return (this.resourcesComponent.getSelected().resource.id == undefined);
+    private selectedDocumentIsNew(): boolean {
+        return !this.selectedDocument.resource.id;
     }
 
     public select(document: IdaiFieldDocument) {
@@ -54,19 +54,19 @@ export class MapWrapperComponent implements OnInit {
      */
     public quitEditing(geometry: IdaiFieldGeometry) {
 
-        let selectedDoc = this.resourcesComponent.getSelected();
         if (geometry) {
-            selectedDoc.resource.geometry = geometry;
-        } else if (geometry === null) { 
-            delete selectedDoc.resource.geometry;
+            this.selectedDocument.resource.geometry = geometry;
+        } else if (geometry === null || !this.selectedDocument.resource.geometry.coordinates
+                || this.selectedDocument.resource.geometry.coordinates.length == 0) {
+            delete this.selectedDocument.resource.geometry;
         }
 
-        if (this.selectedDocIsNew()) {
+        if (this.selectedDocumentIsNew()) {
             if (geometry !== undefined) {
                 this.resourcesComponent.editDocument();
             } else {
                 this.resourcesComponent.endEditGeometry();
-                this.resourcesComponent.remove(selectedDoc);
+                this.resourcesComponent.remove(this.selectedDocument);
             }
         } else {
             this.resourcesComponent.endEditGeometry();
@@ -76,8 +76,8 @@ export class MapWrapperComponent implements OnInit {
 
     private save() {
 
-        this.persistenceManager.setOldVersions([this.resourcesComponent.getSelected()]);
-        this.persistenceManager.persist(this.resourcesComponent.getSelected(), this.settingsService.getUsername()).then(
+        this.persistenceManager.setOldVersions([this.selectedDocument]);
+        this.persistenceManager.persist(this.selectedDocument, this.settingsService.getUsername()).then(
             () => {
                 //
             }, msgWithParams => this.messages.add(msgWithParams));

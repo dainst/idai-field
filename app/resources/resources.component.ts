@@ -265,7 +265,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private filterDocuments(documents: Array<Document>): Promise<Array<Document>> {
 
-        if (this.view.mainType == 'project') return Promise.resolve(documents);
+        if (this.view.mainType != 'project') return Promise.resolve(documents);
 
         return this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => {

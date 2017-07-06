@@ -98,7 +98,7 @@ export class ResourcesComponent implements AfterViewChecked {
         let resourceId: string = params['id'];
         let tab: string = params['tab'];
 
-        if (resourceId) this.openEditTab(resourceId, tab);
+        if (resourceId) this.selectDocumentFromParams(resourceId, tab);
 
         this.location.replaceState('resources/' + viewName);
 
@@ -119,7 +119,7 @@ export class ResourcesComponent implements AfterViewChecked {
         ).catch(() => { return Promise.reject(null); });
     }
 
-    private openEditTab(id: string, tab: string) {
+    private selectDocumentFromParams(id: string, tab: string) {
 
         this.datastore.get(id).then(
             document => {
@@ -197,12 +197,6 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    public queryChanged(query: Query): Promise<any> {
-
-        this.query = query;
-        return this.fetchDocuments(query);
-    }
-
     /**
      * @param documentToSelect
      */
@@ -221,6 +215,45 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     public getSelected(): IdaiFieldDocument {
         return this.selectedDocument;
+    }
+
+    public getSelectedMainTypeDocument(): Observable<IdaiFieldDocument> {
+
+        return Observable.create(observer => {
+            this.mainTypeObservers.push(observer);
+            this.notifyMainTypeObservers();
+        });
+    }
+
+    private selectLinkedMainTypeDocumentForSelectedDocument() {
+
+        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return;
+
+        let mainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+
+        if (mainTypeDocument != this.selectedMainTypeDocument) {
+            this.selectedMainTypeDocument = mainTypeDocument;
+            this.fetchDocuments();
+        }
+    }
+
+    private getMainTypeDocumentForDocument(document: IdaiFieldDocument): IdaiFieldDocument {
+
+        if (!document.resource.relations['isRecordedIn']) return undefined;
+
+        for (let documentId of document.resource.relations['isRecordedIn']) {
+            for (let mainTypeDocument of this.mainTypeDocuments) {
+                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
+            }
+        }
+
+        return undefined;
+    }
+
+    public queryChanged(query: Query): Promise<any> {
+
+        this.query = query;
+        return this.fetchDocuments(query);
     }
 
     public replace(document: Document,restoredObject: Document) {
@@ -302,6 +335,33 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
+    private fetchMainTypeDocuments(): Promise <any> {
+
+        if (!this.view) return Promise.resolve();
+
+        if (this.view.mainType == 'project') {
+            this.selectedMainTypeDocument = undefined;
+            return;
+        }
+
+        const query: Query = {q: '', type: this.view.mainType, prefix: true};
+
+        return this.datastore.find(query).then(documents => {
+            this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
+            if (this.mainTypeDocuments.length == 0) {
+                this.selectedMainTypeDocument = undefined;
+                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE, this.view.mainType]);
+            } else if (this.selectedDocument) {
+                this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+                if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            } else {
+                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            }
+
+
+        });
+    }
+
     public editDocument(doc?: Document, activeTabName?: string) {
 
         this.editGeometry = false;
@@ -343,58 +403,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.fetchDocuments();
     }
 
-    private fetchMainTypeDocuments(): Promise <any> {
-
-        if (!this.view) return Promise.resolve();
-
-        if (this.view.mainType == 'project') {
-            this.selectedMainTypeDocument = undefined;
-            return;
-        }
-
-        const query: Query = {q: '', type: this.view.mainType, prefix: true};
-
-        return this.datastore.find(query).then(documents => {
-            this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-            if (this.mainTypeDocuments.length == 0) {
-                this.selectedMainTypeDocument = undefined;
-                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE, this.view.mainType]);
-            } else if (this.selectedDocument) {
-                this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
-                if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            } else {
-                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            }
-
-
-        });
-    }
-
-    private selectLinkedMainTypeDocumentForSelectedDocument() {
-
-        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return;
-
-        let mainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
-
-        if (mainTypeDocument != this.selectedMainTypeDocument) {
-            this.selectedMainTypeDocument = mainTypeDocument;
-            this.fetchDocuments();
-        }
-    }
-
-    private getMainTypeDocumentForDocument(document: IdaiFieldDocument): IdaiFieldDocument {
-
-        if (!document.resource.relations['isRecordedIn']) return undefined;
-
-        for (let documentId of document.resource.relations['isRecordedIn']) {
-            for (let mainTypeDocument of this.mainTypeDocuments) {
-                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
-            }
-        }
-
-        return undefined;
-    }
-
     public createGeometry(geometryType: string) {
 
         this.selectedDocument.resource['geometry'] = { 'type': geometryType };
@@ -405,13 +413,6 @@ export class ResourcesComponent implements AfterViewChecked {
         return Observable.create(observer => {
             this.observers.push(observer);
             this.notify();
-        });
-    }
-
-    public getSelectedMainTypeDocument(): Observable<IdaiFieldDocument> {
-        return Observable.create(observer => {
-            this.mainTypeObservers.push(observer);
-            this.notifyMainTypeObservers();
         });
     }
 

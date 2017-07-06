@@ -12,9 +12,14 @@ export class NavbarPage {
         return element.all(by.css('.nav-link')).get(0).click();
     }
 
-    public static clickNavigateToResources() {
+    public static clickNavigateToExcavation() {
         browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(1)), delays.ECWaitTime);
         return element.all(by.css('.nav-link')).get(1).click();
+    };
+
+    public static clickNavigateToBuilding() {
+        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(2)), delays.ECWaitTime);
+        return element.all(by.css('.nav-link')).get(2).click();
     };
 
     public static clickNavigateToSettings() {
@@ -58,4 +63,9 @@ export class NavbarPage {
         browser.ignoreSynchronization = false;
         return text;
     };
+
+    public static getActiveNavLinkLabel() {
+        browser.wait(EC.visibilityOf(element(by.css('.nav-link.active'))), delays.ECWaitTime);
+        return element(by.css('.nav-link.active')).getText();
+    }
 }

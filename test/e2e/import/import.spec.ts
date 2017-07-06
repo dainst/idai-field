@@ -32,7 +32,7 @@ describe('import --', function() {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(2000);
-        NavbarPage.clickNavigateToResources();
+        NavbarPage.clickNavigateToExcavation();
 
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
@@ -46,7 +46,7 @@ describe('import --', function() {
 
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
-        NavbarPage.clickNavigateToResources();
+        NavbarPage.clickNavigateToExcavation();
 
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
@@ -76,7 +76,7 @@ describe('import --', function() {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);
-        NavbarPage.clickNavigateToResources();
+        NavbarPage.clickNavigateToExcavation();
 
         resourcesPage.clickSelectResource('obob1');
         DocumentViewPage.getRelations().then(function(relations) {
@@ -108,7 +108,7 @@ describe('import --', function() {
         NavbarPage.awaitAlert('konnte nicht gefunden werden', false);
 
         NavbarPage.clickCloseMessage();
-        NavbarPage.clickNavigateToResources();
+        NavbarPage.clickNavigateToExcavation();
 
         browser.wait(EC.presenceOf(resourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 

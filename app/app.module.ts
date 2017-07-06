@@ -35,6 +35,7 @@ import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {ImageTypeUtility} from './util/image-type-utility';
+import {ViewUtility} from './util/view-utility';
 import {PouchdbManager} from "./datastore/pouchdb-manager";
 import {PouchDbFsImagestore} from "./imagestore/pouch-db-fs-imagestore";
 import {SampleDataLoader} from "./datastore/sample-data-loader";
@@ -113,13 +114,8 @@ if (CONFIG['imagestorepath']) {
         Importer,
         Exporter,
         RelationsCompleter,
-        {
-            provide: ImageTypeUtility,
-            useFactory: function(configLoader: ConfigLoader) {
-                return new ImageTypeUtility(configLoader);
-            },
-            deps: [ConfigLoader]
-        }
+        ImageTypeUtility,
+        ViewUtility
     ],
     bootstrap: [ AppComponent ]
 })

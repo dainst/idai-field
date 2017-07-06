@@ -275,18 +275,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     // TODO respect offset and limit
     private findWithConstraints(query, offset, limit) {
 
+        let tmp;
         return this.buildConstraintQueries(query)
             .then(results => {
-                if (query.type || (query.q && (query.q != ''))) {
-                    this.simpleFind(query,undefined,undefined,false)
-                        .then(results_ => {
-                            results.push(results_);
-                        })
-                }
-                return results;
+                tmp = results;
+                return this.simpleFind(query,undefined,undefined,false)
             })
             .then(results => {
-                return this.intersectResults(results)
+                tmp.push(results);
+                return this.intersectResults(tmp)
             })
             .then(results => {
 

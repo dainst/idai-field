@@ -44,7 +44,7 @@ describe('resources --', function() {
         resourcesPage.clickSelectResource('1a');
         DocumentViewPage.clickEditDocument();
         DocumentEditWrapperPage.typeInInputField('1b');
-        expect(resourcesPage.getListItemIdentifierText(0)).toBe('1a');
+        expect(resourcesPage.getSelectedListItemIdentifierText()).toBe('1a');
     });
 
     /**
@@ -74,7 +74,7 @@ describe('resources --', function() {
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickSaveInModal();
         browser.sleep(1000);
-        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('2');
+        expect(resourcesPage.getSelectedListItemIdentifierText()).toEqual('2');
     });
 
     it('should discard changes via dialog modal', function() {
@@ -84,7 +84,7 @@ describe('resources --', function() {
         DocumentEditWrapperPage.typeInInputField('2');
         DocumentEditWrapperPage.clickCloseEdit();
         resourcesPage.clickDiscardInModal();
-        expect(resourcesPage.getListItemIdentifierText(0)).toEqual('1');
+        expect(resourcesPage.getSelectedListItemIdentifierText()).toEqual('1');
     });
 
     it('should cancel dialog modal', function() {

@@ -90,6 +90,12 @@ let ResourcesPage = function() {
         return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .identifier')).getText();
     };
 
+    this.getSelectedListItemIdentifierText = function() {
+        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .identifier'))),
+            delays.ECWaitTime);
+        return element(by.css('#objectList .list-group-item.selected .identifier')).getText();
+    };
+
     this.getListModeInputFieldValue = function(identifier, index) {
         return this.getListModeInputField(identifier, index).getAttribute('value');
     };
@@ -107,7 +113,6 @@ let ResourcesPage = function() {
     this.getListItemEl = function(identifier) {
         return element(by.id('resource-' + identifier));
     };
-
     this.getListModeInputField = function(identifier, index) {
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)));
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);

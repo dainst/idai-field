@@ -17,8 +17,6 @@ import {Query} from 'idai-components-2/datastore';
  */
 export class ListComponent implements OnInit {
 
-
-
     @Input() expandedDocument: IdaiFieldDocument;
     private selectedMainTypeDocument: IdaiFieldDocument;
 
@@ -28,8 +26,6 @@ export class ListComponent implements OnInit {
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public typesMap: { [type: string]: IdaiType };
-
-    private projectConfiguration: ProjectConfiguration;
 
     private childrenShownForIds: string[] = [];
     
@@ -41,7 +37,6 @@ export class ListComponent implements OnInit {
     ) {
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.projectConfiguration = projectConfiguration;
             this.typesMap = projectConfiguration.getTypesMap();
         });
 
@@ -101,5 +96,4 @@ export class ListComponent implements OnInit {
         } else if (!result.resource.relations["liesWithin"]) this.populateFirstLevel(this.selectedMainTypeDocument);
 
     }
-
 }

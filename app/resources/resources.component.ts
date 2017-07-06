@@ -239,6 +239,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public startEditNewDocument(newDocument: Document, geometryType: string): Promise<any> {
 
+        this.removeEmptyDocuments();
+
         this.selectedDocument = newDocument;
 
         if (geometryType != 'none') {

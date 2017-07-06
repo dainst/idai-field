@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 import {DocumentViewPage} from '../widgets/document-view.page';
-let ResourcesPage = require('./resources.page');
+import {ResourcesPage} from './resources.page';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 

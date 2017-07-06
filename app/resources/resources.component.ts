@@ -66,6 +66,8 @@ export class ResourcesComponent implements AfterViewChecked {
         this.route.params.subscribe(params => {
 
             this.selectedDocument = undefined;
+            this.selectedMainTypeDocument = undefined;
+            this.mainTypeDocuments = undefined;
 
             this.parseParams(params)
                 .then(() => this.fetchMainTypeDocuments())

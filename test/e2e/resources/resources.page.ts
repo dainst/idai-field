@@ -118,6 +118,7 @@ let ResourcesPage = function() {
     this.getListItemEl = function(identifier) {
         return element(by.id('resource-' + identifier));
     };
+
     this.getListModeInputField = function(identifier, index) {
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)));
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);

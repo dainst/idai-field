@@ -42,12 +42,18 @@ export class IdaiFieldValidator extends Validator {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.datastore.findByIdentifier(doc.resource.identifier).then(result => {
+            console.log("oc",doc.resource.identifier)
+            this.datastore.find({
+                q: undefined,
+                prefix: true,
+                constraints: {
+                    'resource.identifier' : doc.resource.identifier
+                }
+            }).then(result => {
+                console.log(result)
 
-                if (result && IdaiFieldValidator.isDuplicate(result, doc))
+                if (result && (result.length > 0) && IdaiFieldValidator.isDuplicate(result[0], doc))
                     return reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
-                resolve();
-            }, () => {
                 resolve();
             });
         });

@@ -71,11 +71,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(result => this.replaceAllWithCached(result));
     }
 
-    findByIdentifier(identifier: string): Promise<Document> {
-        return this.datastore.findByIdentifier(identifier)
-            .then(result => this.replaceWithCached(result));
-    }
-
     all(type?:string, offset?:number, limit?:number): Promise<Document[]> {
         return this.datastore.all(type, offset, limit)
             .then(result => this.replaceAllWithCached(result));

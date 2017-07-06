@@ -645,43 +645,6 @@ export function main() {
 
         // idai-field-datastore specific
 
-        // findByIdentifier
-
-        it('should find by identifier', function(done) {
-            const doc1 = doc('bla','blub');
-            const doc2 = doc('blub','bla');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.findByIdentifier('bla'))
-                .then(
-                    result => {
-                        expect(result.resource['shortDescription']).toBe('blub');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        it('should reject when cannot find by identifier', function(done) {
-            const doc1 = doc('bla','blub');
-
-            expectErr(()=>{return datastore.create(doc1)
-                    .then(() => datastore.findByIdentifier('abc'))},
-                [M.DATASTORE_NOT_FOUND],done);
-        });
-
-        it('should reject when called with undefined', function(done) {
-            const doc1 = doc('bla','blub');
-
-            expectErr(()=>{return datastore.create(doc1)
-                    .then(() => datastore.findByIdentifier(undefined))},
-                [M.DATASTORE_NOT_FOUND],done);
-        });
-
         it('should find conflicted documents sorted by lastModified', function(done) {
 
             let db1 = new PouchDB('testdb');

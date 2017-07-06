@@ -31,8 +31,8 @@ export function main() {
                 }
             };
 
-            mockDatastore = jasmine.createSpyObj('datastore', ['findByIdentifier','update']);
-            mockDatastore.findByIdentifier.and.callFake(() => Promise.resolve(originalDoc));
+            mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
+            mockDatastore.find.and.callFake(() => Promise.resolve([originalDoc]));
             mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
 
             mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);

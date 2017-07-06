@@ -15,12 +15,6 @@ import {SyncState} from "./sync-state";
  */
 export abstract class IdaiFieldDatastore extends Datastore {
 
-    /**
-     * @param identifier
-     * @returns {Promise<Document|string>} the document with the given identifier
-     */
-    abstract findByIdentifier(identifier: string): Promise<IdaiFieldDocument>;
-
     abstract findConflicted(): Promise<IdaiFieldDocument[]>;
 
     /**

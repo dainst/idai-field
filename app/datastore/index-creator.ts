@@ -18,7 +18,7 @@ export class IndexCreator {
 
     public hasIndex(iname) {
         return (([
-            'identifier',
+            'resource.identifier',
             'resource.relations.isRecordedIn',
             'resource.relations.liesWithin',
             'conflicted',
@@ -43,14 +43,6 @@ export class IndexCreator {
         return this.setupIndex(db,'fulltext', mapFun);
     }
 
-    private setupIdentifierIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource || !doc.resource.identifier) return;
-            emit(doc.resource.identifier);
-        };
-        return this.setupIndex(db,'identifier', mapFun);
-    }
-
     private setupAllIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource || !doc.resource.type) return;
@@ -62,6 +54,14 @@ export class IndexCreator {
             types.forEach(type => emit([type, lastModified]));
         };
         return this.setupIndex(db,'all', mapFun);
+    }
+
+    private setupIdentifierIndex(db): Promise<any> {
+        let mapFun = function(doc) {
+            if (!doc.resource || !doc.resource.identifier) return;
+            emit(doc.resource.identifier);
+        };
+        return this.setupIndex(db,'resource.identifier', mapFun);
     }
 
     private setupIsRecordedInIndex(db): Promise<any> {

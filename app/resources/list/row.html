@@ -1,4 +1,4 @@
-<div class="row py-3" [class.bg-faded]="depth == 0" style="border-top: 1px solid rgba(0, 0, 0, 0.125)">
+<div (dblclick)="resourcesComponent.editDocument(document)" class="row py-3" [class.bg-faded]="depth == 0" style="border-top: 1px solid rgba(0, 0, 0, 0.125)">
     <div class="col-md-3" [style.padding-left]="(1+depth*2) + 'rem'" [class.font-weight-bold]="depth == 0">
         <div class="row">
             <div class="col-6">{{document.resource.identifier}}</div>

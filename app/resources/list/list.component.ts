@@ -17,7 +17,6 @@ import {Query} from 'idai-components-2/datastore';
  */
 export class ListComponent implements OnInit {
 
-    @Input() expandedDocument: IdaiFieldDocument;
     private selectedMainTypeDocument: IdaiFieldDocument;
 
     private documents: {[type: string]: IdaiFieldDocument};

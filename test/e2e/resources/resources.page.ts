@@ -20,22 +20,27 @@ let ResourcesPage = function() {
     };
 
     this.clickSaveInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-save-button'))), delays.ECWaitTime);
         common.click(by.id('overview-save-confirmation-modal-save-button'));
     };
 
     this.clickCancelInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-cancel-button'))), delays.ECWaitTime);
         common.click(by.id('overview-save-confirmation-modal-cancel-button'));
     };
 
     this.clickDiscardInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('overview-save-confirmation-modal-discard-button'))), delays.ECWaitTime);
         common.click(by.id('overview-save-confirmation-modal-discard-button'));
     };
 
     this.clickDeleteDocument = function() {
+        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-delete-document'))), delays.ECWaitTime);
         common.click(by.id('document-edit-button-delete-document'));
     };
 
     this.clickDeleteInModal = function() {
+        browser.wait(EC.visibilityOf(element(by.id('delete-resource-confirm'))), delays.ECWaitTime);
         common.click(by.id('delete-resource-confirm'));
     };
 

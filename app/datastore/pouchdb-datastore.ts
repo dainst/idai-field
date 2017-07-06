@@ -241,7 +241,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let validConstraints = 0;
         for (let constraint in query.constraints) {
             if (!this.pouchdbManager.getIndexCreator().hasIndex(constraint)) {
-                console.warn("unkown constraint",constraint);
+                console.warn("ignoring unkown constraint",constraint);
                 delete query.constraints[constraint];
             } else validConstraints++;
         }

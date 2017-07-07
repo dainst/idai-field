@@ -327,7 +327,7 @@ export function main() {
                 );
         });
 
-        fit('should find with missing q', function(done){
+        it('should find with missing q', function(done){
             const doc1 = doc('sd1');
 
             datastore.create(doc1)

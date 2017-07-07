@@ -9,6 +9,7 @@ import {SyncState} from "./sync-state";
  * The find method accepts the following constraints:
  *   resource.relations.isRecordedIn
  *   resource.relations.liesWithin
+ *   resource.identifier
  *
  * @author Sebastian Cuy
  * @author Daniel de Oliveira

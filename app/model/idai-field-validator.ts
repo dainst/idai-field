@@ -40,9 +40,7 @@ export class IdaiFieldValidator extends Validator {
 
     private validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-
-            this.datastore.find({
+        return this.datastore.find({
                 q: undefined,
                 prefix: true,
                 constraints: {
@@ -51,10 +49,12 @@ export class IdaiFieldValidator extends Validator {
             }).then(result => {
 
                 if (result && (result.length > 0) && IdaiFieldValidator.isDuplicate(result[0], doc))
-                    return reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
-                resolve();
+                    return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
+                return Promise.resolve();
+
+            },() => {
+                return Promise.reject([M.ALL_FIND_ERROR]);
             });
-        });
     }
 
     private static validateGeometry(geometry: IdaiFieldGeometry): Array<string> {

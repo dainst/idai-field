@@ -11,6 +11,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Keys BEGIN /////////////////////
 
+    // all packages
+
+    public static ALL_FIND_ERROR: string = 'all/finderror';
+
     // App Package
 
     public static APP_NO_PROJECT_IDENTIFIER: string = 'app/noprojectidentifier';
@@ -91,6 +95,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     constructor() {
         super();
+        this.msgs[M.ALL_FIND_ERROR]={
+            content: 'Beim Laden von Ressourcen ist ein Fehler aufgetreten.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.SETTINGS_ACTIVATED]={
             content: 'Die Einstellungen wurden erfolgreich aktiviert.',
             level: 'success',

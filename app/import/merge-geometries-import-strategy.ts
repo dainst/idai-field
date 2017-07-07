@@ -10,7 +10,9 @@ import {M} from '../m';
  */
 export class MergeGeometriesImportStrategy implements ImportStrategy {
 
-    constructor(private datastore: IdaiFieldDatastore, private settingsService: SettingsService) { }
+    constructor(
+        private datastore: IdaiFieldDatastore,
+        private settingsService: SettingsService) { }
 
     importDoc(doc: Document): Promise<any> {
         let idaiFieldDoc = doc as IdaiFieldDocument;
@@ -37,6 +39,9 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 existingIdaiFieldDoc.modified.push({ user: this.settingsService.getUsername(), date: new Date() });
 
                 return this.datastore.update(existingIdaiFieldDoc);
+            })
+            .catch(() => {
+                return Promise.reject([M.ALL_FIND_ERROR]);
             })
     }
 }

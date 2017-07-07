@@ -74,6 +74,10 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => this.fetchDocuments())
                 .then(() => {
                     this.showPlusButton = true;
+
+                    if (this.view.mainType == 'project') {
+                        this.setMode('map');
+                    }
                     readyResolveFun();
                 }).catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)

@@ -24,7 +24,7 @@
                     [disabled]="mode == 'map'">
                 Karte
             </button>
-            <button id="list-mode-button" (click)="setMode('list')" class="btn btn-primary m-0"
+            <button *ngIf="(!view||(view.mainType != 'project'))" id="list-mode-button" (click)="setMode('list')" class="btn btn-primary m-0"
                     [disabled]="mode == 'list'">
                 Liste
             </button>

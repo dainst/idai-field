@@ -38,7 +38,7 @@ export class DocumentViewPage {
      * @param index counting from 0 for the first field
      */
     public static getRelationValue(index) {
-        browser.wait(EC.visibilityOf(element(by.css('relations-view a'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view a')).get(index)), delays.ECWaitTime);
         return element.all(by.css('relations-view a')).get(index).getText();
     };
 
@@ -46,7 +46,7 @@ export class DocumentViewPage {
      * @param index counting from 0 for the first field
      */
     public static getRelationName(index) {
-        browser.wait(EC.visibilityOf(element(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index)), delays.ECWaitTime);
         return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
     };
 

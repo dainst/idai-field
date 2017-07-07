@@ -24,7 +24,7 @@ export class ImagePickerComponent {
     public rows = [];
 
     private imageGridBuilder: ImageGridBuilder;
-    private query: Query = { q: '', type: 'image', prefix: true };
+    private query: Query = { type: 'image', prefix: true };
     private imageDocuments: Array<IdaiFieldImageDocument>;
     private numberOfColumns: number = 3;
 

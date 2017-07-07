@@ -32,7 +32,7 @@ export class ImageGridComponent {
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;
 
-    private query : Query = {q: '', type: 'image', prefix: true};
+    private query : Query = {type: 'image', prefix: true};
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;

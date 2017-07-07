@@ -26,7 +26,7 @@ export class DocumentPickerComponent {
     constructor(private datastore: Datastore,
                 private configLoader: ConfigLoader) {
 
-        this.query = {q: '', type: 'resource', prefix: true};
+        this.query = {type: 'resource', prefix: true};
         this.fetchDocuments(this.query);
     }
 

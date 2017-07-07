@@ -327,6 +327,23 @@ export function main() {
                 );
         });
 
+        fit('should find with missing q', function(done){
+            const doc1 = doc('sd1');
+
+            datastore.create(doc1)
+                .then(() => datastore.find({prefix: true}))
+                .then(
+                    result => {
+                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
         it('should match all fields', function(done){
             const doc1 = doc('bla','blub');
             const doc2 = doc('blub','bla');

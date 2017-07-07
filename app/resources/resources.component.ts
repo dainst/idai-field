@@ -350,7 +350,7 @@ export class ResourcesComponent implements AfterViewChecked {
             return;
         }
 
-        const query: Query = {q: '', type: this.view.mainType, prefix: true};
+        const query: Query = {type: this.view.mainType, prefix: true};
 
         return this.datastore.find(query).then(documents => {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;

@@ -70,7 +70,6 @@ export class LayerMapComponent extends MapComponent {
         return new Promise((resolve, reject) => {
 
             let query: Query = {
-                q: '',
                 type: 'image',
                 prefix: true
             };

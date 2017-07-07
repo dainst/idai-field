@@ -72,7 +72,6 @@ export class ListComponent implements OnInit {
         this.documents = {};
 
         const query: Query = {
-            prefix: true,
             constraints: {
                 'resource.relations.isRecordedIn' : mainTypeDoc.resource.id,
             }

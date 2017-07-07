@@ -41,7 +41,6 @@ export class IdaiFieldValidator extends Validator {
     private validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
 
         return this.datastore.find({
-                prefix: true,
                 constraints: {
                     'resource.identifier' : doc.resource.identifier
                 }

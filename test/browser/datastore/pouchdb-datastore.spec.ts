@@ -327,11 +327,28 @@ export function main() {
                 );
         });
 
-        it('should find with missing q', function(done){
+        it('should find with omitted q', function(done){
             const doc1 = doc('sd1');
 
             datastore.create(doc1)
                 .then(() => datastore.find({prefix: true}))
+                .then(
+                    result => {
+                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+        it('should find with omitted q and ommitted prefix', function(done){
+            const doc1 = doc('sd1');
+
+            datastore.create(doc1)
+                .then(() => datastore.find({}))
                 .then(
                     result => {
                         expect(result[0].resource['shortDescription']).toBe('sd1');

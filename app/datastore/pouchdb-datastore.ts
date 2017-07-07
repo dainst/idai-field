@@ -320,6 +320,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let type = query.type ? query.type : '';
 
         opt['startkey'] = [type, q];
+
+        if (!query.prefix && q == '') query.prefix = true;
         let endKey = query.prefix ? q + '\uffff' : q;
         opt['endkey'] = [type, endKey];
         // performs poorly according to PouchDB documentation

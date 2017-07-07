@@ -19,7 +19,6 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
 
 
         return this.datastore.find({
-                prefix: true,
                 constraints: {
                     'resource.identifier' : idaiFieldDoc.resource.identifier
                 }

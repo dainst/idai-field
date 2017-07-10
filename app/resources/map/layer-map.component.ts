@@ -20,8 +20,11 @@ import {BlobMaker} from '../../imagestore/blob-maker';
  */
 export class LayerMapComponent extends MapComponent {
 
-    protected layers: { [id: string]: ImageContainer } = {};
+    public layersList: Array<ImageContainer> = [];
+    protected layersMap: { [id: string]: ImageContainer } = {};
+
     protected activeLayers: Array<ImageContainer> = [];
+
     protected panes: { [id: string]: any } = {};
 
     private layersReady: Promise<any>;
@@ -37,14 +40,14 @@ export class LayerMapComponent extends MapComponent {
 
     public ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['documents']) {
+        if (changes['documents'] && changes['documents'].currentValue) {
             this.layersReady = this.initializeLayers().then(
                 () => {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
-                    var layers = this.getLayersAsList();
-                    if (this.activeLayers.length == 0 && layers.length > 0 && !this.mapState.getActiveLayersIds()) {
-                        this.addLayerToMap(layers[0]);
+                    if (this.activeLayers.length == 0 && this.layersList.length > 0
+                            && !this.mapState.getActiveLayersIds()) {
+                        this.addLayerToMap(this.layersList[0]);
                         this.saveActiveLayersIdsInMapState();
                     }
                 }
@@ -58,80 +61,69 @@ export class LayerMapComponent extends MapComponent {
 
     protected setView() {
 
-        this.layersReady.then(() => {
-            super.setView();
-        });
+        this.layersReady.then(() => super.setView());
     }
 
     private initializeLayers(): Promise<any> {
 
-        return new Promise((resolve, reject) => {
+        let query: Query = {
+            type: 'image',
+            prefix: true
+        };
 
-            let query: Query = {
-                type: 'image',
-                prefix: true
-            };
-
-            this.datastore.find(query).then(
-                documents => {
-                    this.makeLayersForDocuments(documents as Document[], resolve);
-                },
-                error => {
-                    reject(error);
-                });
-        });
+        return this.datastore.find(query)
+            .then(documents => this.makeLayersForDocuments(documents as Array<Document>))
+            .then(() => {
+                this.layersList = this.getLayersAsList(this.layersMap);
+            }).catch(msgWithParams => Promise.reject(msgWithParams));
     }
 
-    private makeLayersForDocuments(documents: Array<Document>, resolve: any) {
+    private makeLayersForDocuments(documents: Array<Document>): Promise<any> {
 
-        var zIndex: number = 0;
-        var promises: Array<Promise<any>> = [];
+        let zIndex: number = 0;
+        let promises: Array<Promise<ImageContainer>> = [];
+
         for (var doc of documents) {
-            if (doc.resource['georeference']
-                && !this.layers[doc.resource.id]
-            ) {
-                var promise = this.makeLayerForImageResource(doc, zIndex++);
+            if (doc.resource['georeference'] && !this.layersMap[doc.resource.id]) {
+                let promise = this.makeLayerForImageResource(doc, zIndex++);
                 promises.push(promise);
             }
         }
-        Promise.all(promises).then((imgContainers) => {
-            for (var imgContainer of imgContainers) {
-                this.layers[imgContainer.document.resource.id] = imgContainer;
+
+        return Promise.all(promises).then(imgContainers => {
+            for (let imgContainer of imgContainers) {
+                this.layersMap[imgContainer.document.resource.id] = imgContainer;
             }
-            resolve();
+            return Promise.resolve();
         });
     }
 
-    private makeLayerForImageResource(document: Document, zIndex: number) {
+    private makeLayerForImageResource(document: Document, zIndex: number): Promise<ImageContainer> {
 
-        return new Promise<any>((resolve, reject)=> {
-            var imgContainer : ImageContainer = {
+        return new Promise<ImageContainer>((resolve, reject) => {
+            let imgContainer: ImageContainer = {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
-            this.imagestore.read(document.resource.id, true, false).then(
-                url => {
+            this.imagestore.read(document.resource.id, true, false)
+                .then(url => {
                     imgContainer.imgSrc = url;
                     resolve(imgContainer);
-                }
-            ).catch(
-                msgWithParams => {
+                }).catch(msgWithParams => {
                     imgContainer.imgSrc = BlobMaker.blackImg;
                     this.messages.add(msgWithParams);
                     reject();
-                }
-            );
+                });
         });
     }
 
     private initializePanes() {
 
-        var layers = this.getLayersAsList();
-        for (var i in layers) {
-            var id = layers[i].document.resource.id;
+        for (let layer of this.layersList) {
+            var id = layer.document.resource.id;
             if (!this.panes[id]) {
                 var pane = this.map.createPane(id);
-                pane.style.zIndex = String(layers[i].zIndex);
+                pane.style.zIndex = String(layer.zIndex);
                 this.panes[id] = pane;
             }
         }
@@ -145,10 +137,8 @@ export class LayerMapComponent extends MapComponent {
             georef.topRightCoordinates,
             georef.bottomLeftCoordinates,
             { pane: layer.document.resource.id }).addTo(this.map);
-        this.extendBounds(L.latLng(georef.topLeftCoordinates));
-        this.extendBounds(L.latLng(georef.topRightCoordinates));
-        this.extendBounds(L.latLng(georef.bottomLeftCoordinates));
 
+        this.addLayerCoordinatesToBounds(layer);
         this.activeLayers.push(layer);
     }
 
@@ -186,33 +176,46 @@ export class LayerMapComponent extends MapComponent {
         var activeLayersIds: Array<string> = this.mapState.getActiveLayersIds();
 
         for (var i in activeLayersIds) {
-            var layerId = activeLayersIds[i];
-            var layer = this.layers[layerId];
-            if (layer && this.activeLayers.indexOf(layer) == -1) {
+            let layerId = activeLayersIds[i];
+            let layer = this.layersMap[layerId];
+            if (!layer) continue;
+
+            if (this.activeLayers.indexOf(layer) == -1) {
                 this.addLayerToMap(layer);
+            } else {
+                this.addLayerCoordinatesToBounds(layer);
             }
         }
     }
 
     public focusLayer(layer: ImageContainer) {
 
-        let georef = layer.document.resource.georeference;
+        let georeference = layer.document.resource.georeference;
         let bounds = [];
 
-        bounds.push(L.latLng(georef.topLeftCoordinates));
-        bounds.push(L.latLng(georef.topRightCoordinates));
-        bounds.push(L.latLng(georef.bottomLeftCoordinates));
+        bounds.push(L.latLng(georeference.topLeftCoordinates));
+        bounds.push(L.latLng(georeference.topRightCoordinates));
+        bounds.push(L.latLng(georeference.bottomLeftCoordinates));
 
         this.map.fitBounds(bounds);
     }
 
-    private getLayersAsList(): Array<ImageContainer> {
+    private addLayerCoordinatesToBounds(layer: ImageContainer) {
 
-        var layersList: Array<ImageContainer> = [];
+        let georeference = layer.document.resource.georeference;
 
-        for (var i in this.layers) {
-            if (this.layers.hasOwnProperty(i)) {
-                layersList.push(this.layers[i]);
+        this.extendBounds(L.latLng(georeference.topLeftCoordinates));
+        this.extendBounds(L.latLng(georeference.topRightCoordinates));
+        this.extendBounds(L.latLng(georeference.bottomLeftCoordinates));
+    }
+
+    public getLayersAsList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {
+
+        let layersList: Array<ImageContainer> = [];
+
+        for (let i in layersMap) {
+            if (layersMap.hasOwnProperty(i)) {
+                layersList.push(layersMap[i]);
             }
         }
 

@@ -1,10 +1,10 @@
 <div id="map-container"></div>
 
-<div *ngIf="!layerMenuVisible && getLayersAsList().length > 0" id="layer-button" class="btn btn-primary"
+<div *ngIf="!layerMenuVisible && layersList.length > 0" id="layer-button" class="btn btn-primary"
         (mouseenter)="layerMenuVisible = true;">Karten</div>
-<div *ngIf="layerMenuVisible && getLayersAsList().length > 0" id="layer-menu" class="card card-block form-group"
+<div *ngIf="layerMenuVisible && layersList.length > 0" id="layer-menu" class="card card-block form-group"
         (mouseleave)="layerMenuVisible = false;">
-    <div *ngFor="let layer of getLayersAsList()" class="layer-entry">
+    <div *ngFor="let layer of layersList" class="layer-entry">
         <span *ngIf="isActiveLayer(layer)">
             <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
                   data-toggle="tooltip" title="Karte ausblenden"></span>

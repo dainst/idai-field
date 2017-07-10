@@ -311,7 +311,6 @@ export class ResourcesComponent implements AfterViewChecked {
             query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
             query.constraints['resource.relations.isRecordedIn'] = undefined;
-            query.type = '';
         }
 
         return this.datastore.find(query)

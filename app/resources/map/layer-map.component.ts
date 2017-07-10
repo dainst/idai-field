@@ -20,8 +20,6 @@ import {BlobMaker} from '../../imagestore/blob-maker';
  */
 export class LayerMapComponent extends MapComponent {
 
-    protected mapState: LayerMapState;
-
     protected layers: { [id: string]: ImageContainer } = {};
     protected activeLayers: Array<ImageContainer> = [];
     protected panes: { [id: string]: any } = {};
@@ -29,12 +27,12 @@ export class LayerMapComponent extends MapComponent {
     private layersReady: Promise<any>;
 
 
-    constructor(mapState: LayerMapState,
+    constructor(protected mapState: LayerMapState,
                 protected datastore: ReadDatastore,
                 protected messages: Messages,
                 protected imagestore: Imagestore) {
 
-        super(mapState);
+        super();
     }
 
     public ngOnChanges(changes: SimpleChanges) {

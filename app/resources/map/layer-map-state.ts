@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {MapState} from 'idai-components-2/idai-field-map';
 
 @Injectable()
-export class LayerMapState extends MapState {
+export class LayerMapState {
 
     private activeLayersIds: Array<string>;
 

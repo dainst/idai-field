@@ -1,31 +1,35 @@
 <div style="position: fixed; width: 100%; z-index: 1001;"
      class="row bg-faded py-2">
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
+                class="form-control" [(ngModel)]="selectedMainTypeDocument"
+                (ngModelChange)="filterByMainTypeDocument($event)">
+            <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
+                {{document.resource.identifier}}
+            </option>
+        </select>
+    </div>
 
+    <div class="col-md-1">
+        <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
+    </div>
+
+    <div class="col-md-6">
         <search-bar *ngIf="view && mode != 'list'" [showFiltersMenu]="true"
                     [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>
     </div>
-    <div class="col-md-2">
-        <plus-button *ngIf="showPlusButton && query.q == ''" [isRecordedIn]="selectedMainTypeDocument"></plus-button>
-    </div>
-    <div class="col-md-6" align="right">
-        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
-                class="form-control w-50" style="display: inline" [(ngModel)]="selectedMainTypeDocument"
-                (ngModelChange)="filterByMainTypeDocument($event)">
-            <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                {{document.resource.identifier}}
-            </option>
-        </select>
+
+    <div class="col-md-2" align="right">
         <div class="btn-group">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">
                 Karte
             </button>
-            <button *ngIf="(!view||(view.mainType != 'project'))" id="list-mode-button" (click)="setMode('list')" class="btn btn-primary m-0"
-                    [disabled]="mode == 'list'">
+            <button *ngIf="(!view||(view.mainType != 'project'))" id="list-mode-button" (click)="setMode('list')"
+                    class="btn btn-primary m-0" [disabled]="mode == 'list'">
                 Liste
             </button>
         </div>

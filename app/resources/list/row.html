@@ -1,4 +1,5 @@
-<div (dblclick)="resourcesComponent.editDocument(document)" class="row py-3" [class.bg-faded]="depth == 0" style="border-top: 1px solid rgba(0, 0, 0, 0.125)">
+<div (dblclick)="resourcesComponent.editDocument(document)" class="row py-3" [class.bg-faded]="depth == 0"
+     style="border-top: 1px solid rgba(0, 0, 0, 0.125)">
     <div class="col-md-3" [style.padding-left]="(1+depth*2) + 'rem'" [class.font-weight-bold]="depth == 0">
         <div class="row">
             <div class="col-6">{{document.resource.identifier}}</div>
@@ -6,7 +7,9 @@
                 {{typesMap[document.resource.type].label}}<br>
                 <button *ngIf="document.resource.relations['includes']"
                         (click)="listComponent.toggleChildrenForId(document.resource.id)"
-                        class="btn btn-sm btn-link pr-0">{{document.resource.relations['includes'].length}} untergeordnete</button>
+                        class="btn btn-sm btn-link pr-0">
+                    {{document.resource.relations['includes'].length}} untergeordnete
+                </button>
             </div>
         </div>
     </div>
@@ -21,7 +24,8 @@
     </div>
     <div class="col-md-3">
         <div style="margin-top: -7px; display:inline-block; height: 24px; width:40px;">
-        <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="document" [geometryType]="'none'"></plus-button>
+        <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="document"
+                     [preselectedGeometryType]="'none'"></plus-button>
         </div>
         <small>
             <button (click)="resourcesComponent.editDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
@@ -29,6 +33,8 @@
     </div>
 </div>
 
-<div *ngFor="let childId of document.resource.relations['includes'];" [hidden]="listComponent.childrenHiddenFor(document.resource.id)">
-    <row *ngIf="documents[childId]" [document]="documents[childId]" [documents]="documents" [depth]=depth+1 [typesMap]="typesMap"></row>
+<div *ngFor="let childId of document.resource.relations['includes'];"
+     [hidden]="listComponent.childrenHiddenFor(document.resource.id)">
+    <row *ngIf="documents[childId]" [document]="documents[childId]" [documents]="documents" [depth]=depth+1
+         [typesMap]="typesMap"></row>
 </div>

@@ -1,68 +1,83 @@
-<div *ngIf="typesTreeList && typesTreeList.length == 1 && geometryType == 'none'"
-        class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
-    <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
-    <div class="plus-sign-circle">
-        <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+<div *ngIf="typesTreeList" id="object-overview-button-create-object">
+    <div *ngIf="typesTreeList.length > 1"
+             class="circular-button green-button"
+             [ngbPopover]="newObjectMenu" #p="ngbPopover"
+             triggers="manual" (click)="reset(); p.toggle();"
+             onclick="window.scrollTo(0, 0)" placement="bottom">
+             <!-- Enable when finally implemented in Chromium
+             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+             -->
+        <span class="mdi mdi-plus"></span>
+    </div>
+
+    <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType != 'none'"
+             class="circular-button type-button"
+             [ngbPopover]="newObjectMenu" #p="ngbPopover"
+             triggers="manual" (click)="reset(); p.toggle();"
+             onclick="window.scrollTo(0, 0)" placement="bottom">
+             <!-- Enable when finally implemented in Chromium
+             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
+             -->
+        <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
+        <div class="plus-sign-circle">
+            <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+        </div>
+    </div>
+
+    <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType == 'none'"
+         class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
+        <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
+        <div class="plus-sign-circle">
+            <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+        </div>
     </div>
 </div>
 
-<div *ngIf="typesTreeList && (typesTreeList.length > 1 || typesTreeList == 1 && geometryType != 'none')"
-         id="object-overview-button-create-object"
-         class="circular-button green-button"
-         [ngbPopover]="newObjectMenu" #p="ngbPopover"
-         triggers="manual" (click)="reset(); p.toggle();"
-         onclick="window.scrollTo(0, 0)" placement="bottom">
-        <!-- Enable when finally implemented in Chromium
-       onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-       -->
-    <span class="mdi mdi-plus"></span>
+<ng-template #newObjectMenu>
 
-    <ng-template #newObjectMenu>
+    <div *ngIf="!type" id="new-object-menu">
+        <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
+        <ul class="list-group">
+            <li *ngFor="let type of typesTreeList; let index = index"
+                id="choose-type-option-{{index}}" [ngClass]="{'abstract-idai-type': type.isAbstract}"
+                class="list-group-item popover-item"
+                (click)="chooseType(type)">
+                <type-icon [type]="type.name" size="30"></type-icon> {{type.label}}
+                <ul *ngIf="type.children" style="padding: 0;">
+                    <li *ngFor="let childType of type.children; let childIndex = index"
+                        id="choose-type-option-{{index}}-{{childIndex}}" class="list-group-item popover-item"
+                        (click)="chooseType(childType)">
+                        <type-icon [type]="childType.name" size="30"></type-icon> {{childType['label']}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
-        <div *ngIf="!type" id="new-object-menu">
-            <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
-            <ul class="list-group">
-                <li *ngFor="let type of typesTreeList; let index = index"
-                    id="choose-type-option-{{index}}" [ngClass]="{'abstract-idai-type': type.isAbstract}"
-                    class="list-group-item popover-item"
-                    (click)="chooseType(type)">
-                    <type-icon [type]="type.name" size="30"></type-icon> {{type.label}}
-                    <ul *ngIf="type.children" style="padding: 0;">
-                        <li *ngFor="let childType of type.children; let childIndex = index"
-                            id="choose-type-option-{{index}}-{{childIndex}}" class="list-group-item popover-item"
-                            (click)="chooseType(childType)">
-                            <type-icon [type]="childType.name" size="30"></type-icon> {{childType['label']}}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+    <div *ngIf="type" id="geometry-type-selection">
+        <div class="popover-custom-title">Bitte wählen Sie einen Geometrietyp aus.</div>
+        <ul class="list-group">
+            <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
+                (click)="startDocumentCreation('Polygon');">
+                <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
+                Polygon
+            </li>
+            <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
+                (click)="startDocumentCreation('LineString');">
+                <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
+                Polyline
+            </li>
+            <li id="choose-geometry-option-point" class="list-group-item popover-item"
+                (click)="startDocumentCreation('Point');">
+                <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
+                Punkt
+            </li>
+            <li id="choose-geometry-option-none" class="list-group-item popover-item"
+                (click)="startDocumentCreation('none');">
+                <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
+                Keine Geometriedaten
+            </li>
+        </ul>
+    </div>
 
-        <div *ngIf="type && !geometryType" id="geometry-type-selection">
-            <div class="popover-custom-title">Bitte wählen Sie einen Geometrietyp aus.</div>
-            <ul class="list-group">
-                <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
-                    (click)="startDocumentCreation('Polygon');">
-                    <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
-                    Polygon
-                </li>
-                <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
-                    (click)="startDocumentCreation('LineString');">
-                    <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
-                    Polyline
-                </li>
-                <li id="choose-geometry-option-point" class="list-group-item popover-item"
-                    (click)="startDocumentCreation('Point');">
-                    <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
-                    Punkt
-                </li>
-                <li id="choose-geometry-option-none" class="list-group-item popover-item"
-                    (click)="startDocumentCreation('none');">
-                    <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
-                    Keine Geometriedaten
-                </li>
-            </ul>
-        </div>
-
-    </ng-template>
-</div>
+</ng-template>

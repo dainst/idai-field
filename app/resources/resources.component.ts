@@ -276,7 +276,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.notify();
     }
 
-    public startEditNewDocument(newDocument: Document, geometryType: string): Promise<any> {
+    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string): Promise<any> {
 
         this.removeEmptyDocuments();
 
@@ -291,8 +291,10 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         return this.ready.then(() => {
-            this.documents.unshift(<Document> newDocument);
-            this.notify();
+            if (newDocument.resource.type != this.view.mainType) {
+                this.documents.unshift(<Document> newDocument);
+                this.notify();
+            }
             return newDocument;
         });
     }
@@ -363,7 +365,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
 
-
         });
     }
 
@@ -372,19 +373,20 @@ export class ResourcesComponent implements AfterViewChecked {
         this.editGeometry = false;
         if (doc) this.setSelected(doc);
 
-        const doceditRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         const docedit = doceditRef.componentInstance;
 
         doceditRef.result.then(result => {
-            this.fetchDocuments().then(
+            this.fetchMainTypeDocuments().then(
                 () => {
-                    this.fetchMainTypeDocuments();
-                    if (result.document) {
+                    if (result.document && result.document.resource.type == this.view.mainType) {
+                        this.selectedMainTypeDocument = result.document;
+                    } else {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
                     }
-                }
-            );
+                    this.fetchDocuments();
+                });
         }, closeReason => {
             this.fetchDocuments();
             this.documentEditChangeMonitor.reset();

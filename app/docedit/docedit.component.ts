@@ -147,21 +147,19 @@ export class DoceditComponent {
     private handleSaveSuccess(clonedDocument, viaSaveButton) {
 
         this.removeInspectedRevisions(clonedDocument.resource.id)
-            .then(
-                doc => {
-                    clonedDocument = doc;
-                    this.documentEditChangeMonitor.reset();
-
-                    this.activeModal.close({
-                        document: clonedDocument,
-                        viaSaveButton: viaSaveButton
-                    });
-
-                    this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-                }
-            ).catch(msgWithParams => {
+            .then(latestRevision => {
+                clonedDocument = latestRevision;
+                this.documentEditChangeMonitor.reset();
+                return this.datastore.get(latestRevision.resource.id);
+            }).then(document => {
+                this.activeModal.close({
+                    document: document,
+                    viaSaveButton: viaSaveButton
+                });
+                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+            }).catch(msgWithParams => {
                 this.messages.add(msgWithParams);
-            })
+            });
     }
 
     private handleSaveError(errorWithParams) {

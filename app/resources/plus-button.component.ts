@@ -22,7 +22,8 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() isRecordedIn: IdaiFieldDocument;
     @Input() liesWithin: IdaiFieldDocument;
-    @Input() geometryType: string;
+    @Input() preselectedType: string;
+    @Input() preselectedGeometryType: string;
 
     private typesTreeList: Array<IdaiType>;
     private type: string;
@@ -40,11 +41,11 @@ export class PlusButtonComponent implements OnChanges {
         }).catch(() => {});
     }
 
-    public startDocumentCreation(geometryType: string = this.geometryType) {
+    public startDocumentCreation(geometryType: string = this.preselectedGeometryType) {
 
         if (this.popover) this.popover.close();
 
-        const newDocument: IdaiFieldDocument= <IdaiFieldDocument> {
+        const newDocument: IdaiFieldDocument = <IdaiFieldDocument> {
             'resource': {
                 'relations': this.createRelations(),
                 'type': this.type
@@ -56,7 +57,7 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        this.type = undefined;
+        this.type = this.preselectedType;
     }
 
     public chooseType(type: IdaiType) {
@@ -64,7 +65,7 @@ export class PlusButtonComponent implements OnChanges {
         if (type.isAbstract) return;
 
         this.type = type.name;
-        if (this.geometryType) this.startDocumentCreation();
+        if (this.preselectedGeometryType) this.startDocumentCreation();
     }
 
     private handleClick(event) {
@@ -93,9 +94,13 @@ export class PlusButtonComponent implements OnChanges {
 
         this.typesTreeList = [];
 
-        for (let type of projectConfiguration.getTypesTreeList()) {
-            if (this.isAllowedType(type, projectConfiguration)) {
-                this.typesTreeList.push(type);
+        if (this.preselectedType) {
+            this.typesTreeList.push(projectConfiguration.getTypesMap()[this.preselectedType]);
+        } else {
+            for (let type of projectConfiguration.getTypesTreeList()) {
+                if (this.isAllowedType(type, projectConfiguration)) {
+                    this.typesTreeList.push(type);
+                }
             }
         }
     }

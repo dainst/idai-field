@@ -31,10 +31,14 @@ plus-button {
     background-color: $greenbgr;
   }
 
-  .plus-sign-circle:hover,
-  .type-button:hover .plus-sign-circle {
-    background-color: lighten($greenbgr, 5%);
-    transition: background-color .3s ease;
+  .type-button:hover {
+    filter: brightness(1.05);
+    transition: filter .3s ease;
+
+    .plus-sign-circle {
+      filter: brightness(1.2);
+      transition: filter .3s ease;
+    }
   }
 
   .plus-sign {

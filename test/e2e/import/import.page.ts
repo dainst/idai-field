@@ -1,4 +1,4 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
@@ -28,6 +28,16 @@ export class ImportPage {
 
     public static getFormatOptionValue = function(index) {
         return this.getFormatOptions().get(index).getAttribute("value");
+    };
+
+    public static getMainTypeDocumentOptions = function() {
+        browser.wait(EC.presenceOf(element(by.id('mainTypeDocumentSelect'))), delays.ECWaitTime);
+        return element(by.id('mainTypeDocumentSelect')).all(by.css('select option'));
+    };
+
+    public static clickMainTypeDocumentOption = function(index) {
+        browser.wait(EC.presenceOf(this.getMainTypeDocumentOptions().get(index)), delays.ECWaitTime);
+        return this.getMainTypeDocumentOptions().get(index).click();
     };
 
     public static getImportURLInput = function() {

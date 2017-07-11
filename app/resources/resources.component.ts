@@ -311,7 +311,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
         query.constraints = {};
         if (this.view.mainType != 'project') {
-            query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
+            if (this.selectedMainTypeDocument) {
+                query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
+            } else {
+                this.documents = [];
+                this.notify();
+                return Promise.resolve();
+            }
         } else {
             query.constraints['resource.relations.isRecordedIn'] = undefined;
         }
@@ -358,7 +364,6 @@ export class ResourcesComponent implements AfterViewChecked {
             this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
             if (this.mainTypeDocuments.length == 0) {
                 this.selectedMainTypeDocument = undefined;
-                return Promise.reject([M.NO_TOP_LEVEL_RESOURCES_FOR_MAIN_TYPE, this.view.mainType]);
             } else if (this.selectedDocument) {
                 this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
                 if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];

@@ -20,6 +20,7 @@ import {ResourcesComponent} from './resources.component';
  */
 export class PlusButtonComponent implements OnChanges {
 
+    @Input() placement: string = 'bottom'; // top | bottom | left | right
     @Input() isRecordedIn: IdaiFieldDocument;
     @Input() liesWithin: IdaiFieldDocument;
     @Input() preselectedType: string;

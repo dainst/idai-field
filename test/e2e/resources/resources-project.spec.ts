@@ -24,13 +24,13 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('befund1', 0);
 
         ResourcesPage.selectMainType(0);
-        ResourcesPage.getListItemIdentifierText(0).then(x => expect(x).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         ResourcesPage.selectMainType(1);
-        ResourcesPage.getListItemIdentifierText(0).then(x => expect(x).toEqual('befund1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(x => expect(x).toEqual('trench2'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench2'));
     });
 
     it('switch views after click on relation link', () => {

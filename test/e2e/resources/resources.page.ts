@@ -16,7 +16,7 @@ export class ResourcesPage {
     // click
 
     public static clickCreateObject = function() {
-        common.click(by.id('object-overview-button-create-object'));
+        common.click(by.css('#create-document-button .circular-button'));
     };
 
     public static clickSaveInModal = function() {

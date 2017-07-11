@@ -29,15 +29,13 @@ import {M} from '../m';
  */
 export class ResourcesComponent implements AfterViewChecked {
 
-    protected selectedDocument;
-    protected observers: Array<any> = [];
-    protected mainTypeObservers: Array<any> = [];
-    protected query: Query = {q: '', type: 'resource', prefix: true};
-
     public view: ViewDefinition;
     public mode: string = 'map';
     public editGeometry: boolean = false;
+    public query: Query = {q: '', type: 'resource', prefix: true};
+
     public documents: Array<Document>;
+    public selectedDocument: Document;
 
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
@@ -46,6 +44,9 @@ export class ResourcesComponent implements AfterViewChecked {
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
     private showPlusButton: boolean = false;
+    private observers: Array<any> = [];
+    private mainTypeObservers: Array<any> = [];
+
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -219,7 +220,7 @@ export class ResourcesComponent implements AfterViewChecked {
     /**
      * @returns {Document}
      */
-    public getSelected(): IdaiFieldDocument {
+    public getSelected(): Document {
         return this.selectedDocument;
     }
 
@@ -243,7 +244,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    private getMainTypeDocumentForDocument(document: IdaiFieldDocument): IdaiFieldDocument {
+    private getMainTypeDocumentForDocument(document: Document): IdaiFieldDocument {
 
         if (!document.resource.relations['isRecordedIn']) return undefined;
 
@@ -348,7 +349,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (this.view.mainType == 'project') {
             this.selectedMainTypeDocument = undefined;
-            return;
+            return Promise.resolve();
         }
 
         const query: Query = {type: this.view.mainType, prefix: true};

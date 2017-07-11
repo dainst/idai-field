@@ -14,6 +14,10 @@
                 <document-teaser [document]="document"></document-teaser>
             </li>
         </ul>
+
+        <plus-button *ngIf="resourcesComponent.showPlusButton && resourcesComponent.query.q == ''"
+                     id="create-document-button" [placement]="'top'"
+                     [isRecordedIn]="resourcesComponent.selectedMainTypeDocument"></plus-button>
     </div>
 
     <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id"

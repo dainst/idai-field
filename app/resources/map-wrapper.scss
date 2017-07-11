@@ -10,4 +10,64 @@
     height: calc(100vh - 186px);
   }
 
+  #create-document-button div div {
+    left: 45%;
+    margin: -50px auto auto auto;
+    z-index: 100;
+  }
+
+  ul#objectList {
+    height: calc(100vh - 113px);
+  }
+
+  #objectOverview .object-list {
+
+    .list-group-item {
+      display: block;
+      cursor: pointer;
+      border: 0;
+      border-radius: 0;
+      margin: 1px 0;
+      font-size: 1em;
+      padding: 10px 5px 10px 10px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      min-height: 62px;
+    }
+
+    .list-group-item:hover {
+      background-color: darken($list-item-hover-colour, 5%);
+      transition: background-color .65s ease;
+    }
+
+    .selected {
+      background-color: darken($list-item-hover-colour, 5%);
+    }
+
+    .title {
+      color: #111;
+    }
+
+    .identifier {
+      font-size: 0.7em;
+      color: #999;
+    }
+
+    .new {
+      color: #111;
+      font-style: italic;
+    }
+
+    .conflicted {
+      border-right: 2px solid red !important;
+      transition: border-right 1s ease;
+    }
+
+    .new-from-remote {
+      background-color: #d7ffd9;
+    }
+  }
+
 }

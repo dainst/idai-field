@@ -1,9 +1,9 @@
-<div *ngIf="typesTreeList" id="object-overview-button-create-object">
+<div *ngIf="typesTreeList">
     <div *ngIf="typesTreeList.length > 1"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #p="ngbPopover"
              triggers="manual" (click)="reset(); p.toggle();"
-             onclick="window.scrollTo(0, 0)" placement="bottom">
+             onclick="window.scrollTo(0, 0)" placement="{{placement}}">
              <!-- Enable when finally implemented in Chromium
              onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
              -->
@@ -14,7 +14,7 @@
              class="circular-button type-button"
              [ngbPopover]="newObjectMenu" #p="ngbPopover"
              triggers="manual" (click)="reset(); p.toggle();"
-             onclick="window.scrollTo(0, 0)" placement="bottom">
+             onclick="window.scrollTo(0, 0)" placement="{{placement}}">
              <!-- Enable when finally implemented in Chromium
              onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
              -->

@@ -62,9 +62,9 @@ export class ImportComponent {
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private configLoader: ConfigLoader,
-        private viewUtility: ViewUtility
+        viewUtility: ViewUtility
     ) {
-        this.viewUtility.getMainTypeDocuments().then(
+        viewUtility.getMainTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );

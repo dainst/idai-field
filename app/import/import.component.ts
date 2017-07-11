@@ -1,5 +1,9 @@
 import {Component} from '@angular/core';
+import {Http} from '@angular/http';
+import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
+import {Validator} from 'idai-components-2/persist';
+import {ConfigLoader} from 'idai-components-2/configuration';
 import {Importer, ImportReport} from './importer';
 import {Reader} from './reader';
 import {FileSystemReader} from './file-system-reader';
@@ -9,9 +13,7 @@ import {NativeJsonlParser} from './native-jsonl-parser';
 import {IdigCsvParser} from './idig-csv-parser';
 import {GeojsonParser} from './geojson-parser';
 import {M} from '../m';
-import {Http} from '@angular/http';
 import {CachedPouchdbDatastore} from '../datastore/cached-pouchdb-datastore';
-import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
 import {MergeGeometriesImportStrategy} from './merge-geometries-import-strategy';
@@ -23,6 +25,7 @@ import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {RelationsCompleter} from './relations-completer';
 import {SettingsService} from '../settings/settings-service';
+import {ViewUtility} from '../util/view-utility';
 
 
 @Component({
@@ -42,11 +45,13 @@ import {SettingsService} from '../settings/settings-service';
 
 export class ImportComponent {
 
-    private sourceType: string = 'file';
-    private format: string = 'native';
-    private file: File;
-    private url: string;
-    private running: boolean = false;
+    public sourceType: string = 'file';
+    public format: string = 'native';
+    public file: File;
+    public url: string;
+    public running: boolean = false;
+    public mainTypeDocuments: Array<Document> = [];
+    public mainTypeDocumentId: string = '';
 
     constructor(
         private messages: Messages,
@@ -55,15 +60,22 @@ export class ImportComponent {
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
-        private settingsService: SettingsService
-    ) {}
+        private settingsService: SettingsService,
+        private configLoader: ConfigLoader,
+        private viewUtility: ViewUtility
+    ) {
+        this.viewUtility.getMainTypeDocuments().then(
+            documents => this.mainTypeDocuments = documents,
+            msgWithParams => messages.add(msgWithParams)
+        );
+    }
 
     public startImport() {
 
         let reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
         let parser: Parser = ImportComponent.createParser(this.format);
-        let importStrategy: ImportStrategy
-            = ImportComponent.createImportStrategy(this.format, this.validator, this.datastore, this.settingsService);
+        let importStrategy: ImportStrategy = ImportComponent.createImportStrategy(this.format, this.validator,
+            this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
         let relationsStrategy: RelationsStrategy
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
         let rollbackStrategy: RollbackStrategy
@@ -100,14 +112,16 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private static createImportStrategy(format: string, validator: Validator,
-                                        datastore: CachedPouchdbDatastore, settingsService: SettingsService): ImportStrategy {
+    private static createImportStrategy(format: string, validator: Validator, datastore: CachedPouchdbDatastore,
+                                        settingsService: SettingsService, configLoader: ConfigLoader,
+                                        mainTypeDocumentId: string): ImportStrategy {
 
         switch (format) {
             case 'native':
-                return new DefaultImportStrategy(validator, datastore, settingsService);
+                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader,
+                    mainTypeDocumentId);
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore, settingsService);
+                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader);
             case 'geojson':
                 return new MergeGeometriesImportStrategy(datastore, settingsService);
         }
@@ -193,6 +207,15 @@ export class ImportComponent {
 
         for (let msgWithParams of messages) {
             this.messages.add(msgWithParams);
+        }
+    }
+
+    public getMainTypeDocumentLabel(document: Document): string {
+
+        if (document.resource.shortDescription) {
+            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
+        } else {
+            return document.resource.identifier;
         }
     }
 }

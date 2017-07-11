@@ -63,6 +63,21 @@
 
                 </div>
 
+                <div class="form-group" *ngIf="format == 'native'">
+
+                    <label class="control-label col-form-label"
+                           for="mainTypeDocumentSelect">Daten einer Maßnahme zuordnen</label>
+                    <select id="mainTypeDocumentSelect" class="form-control"
+                            [(ngModel)]="mainTypeDocumentId"
+                            [class.disabled]="running">
+                        <option value="">Keine Zuordnung</option>
+                        <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
+                            {{getMainTypeDocumentLabel(document)}}
+                        </option>
+                    </select>
+
+                </div>
+
                 <div class="form-group">
 
                     <button id="importStartButton"

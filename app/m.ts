@@ -45,6 +45,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_ROLLBACKERROR: string = 'importer/failure/rollbackerror';
     public static IMPORT_FAILURE_MISSING_RESOURCE: string = 'importer/failure/missingresource';
     public static IMPORT_FAILURE_MISSING_RELATION_TARGET: string = 'importer/failure/missingrelationtarget';
+    public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT: string = 'importer/failure/invalidmaintypedocument';
 
     // Export Package
     public static EXPORT_START: string = 'exporter/start';
@@ -201,6 +202,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: 'Beim Import ist ein Fehler aufgetreten: In Zeile {0} fehlt das Pflichtfeld \"{1}\".',
             level: 'danger',
             params: [ "?", "?" ],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT]={
+            content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ {0} können der gewählten Maßnahme ' +
+                'vom Typ {1} nicht zugeordnet werden.',
+            level: 'danger',
+            params: [ '?', '?' ],
             hidden: false
         };
         this.msgs[M.EXPORT_START]={

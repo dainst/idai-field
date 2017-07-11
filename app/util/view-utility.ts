@@ -57,4 +57,24 @@ export class ViewUtility {
                 return Promise.resolve(viewName);
              }).catch(() => {});
     }
+
+    public getMainTypeDocuments(): Promise<Array<Document>> {
+
+        let mainTypeDocuments: Array<Document> = [];
+        let promises: Array<Promise<Array<Document>>> = [];
+
+        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+
+            for (let view of projectConfiguration.getViewsList()) {
+                let promise = this.datastore.find({ q: '', type: view.mainType })
+                    .then(documents => mainTypeDocuments = mainTypeDocuments.concat(documents));
+                promises.push(promise);
+            }
+
+            return Promise.all(promises).then(
+                () => Promise.resolve(mainTypeDocuments),
+                msgWithParams => Promise.reject(msgWithParams)
+            );
+        });
+    }
 }

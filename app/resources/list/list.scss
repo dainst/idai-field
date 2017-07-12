@@ -1,0 +1,19 @@
+#list {
+
+  #list-header {
+    position: static;
+    height: 35px;
+  }
+
+  #list-body {
+    height: calc(100vh - 175px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  #create-document-button div div {
+    left: calc(50% - 20px);
+    margin: -20px auto auto auto;
+    z-index: 100;
+  }
+}

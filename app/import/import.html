@@ -72,7 +72,7 @@
                             [class.disabled]="running">
                         <option value="">Keine Zuordnung</option>
                         <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
-                            {{getMainTypeDocumentLabel(document)}}
+                            {{viewUtility.getMainTypeDocumentLabel(document)}}
                         </option>
                     </select>
 

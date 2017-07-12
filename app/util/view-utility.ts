@@ -77,4 +77,13 @@ export class ViewUtility {
             );
         });
     }
+
+    public getMainTypeDocumentLabel(document: Document): string {
+
+        if (document.resource.shortDescription) {
+            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
+        } else {
+            return document.resource.identifier;
+        }
+    }
 }

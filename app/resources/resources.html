@@ -5,7 +5,7 @@
                 class="form-control" [(ngModel)]="selectedMainTypeDocument"
                 (ngModelChange)="filterByMainTypeDocument($event)">
             <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                {{document.resource.identifier}}
+                {{viewUtility.getMainTypeDocumentLabel(document)}}
             </option>
         </select>
     </div>

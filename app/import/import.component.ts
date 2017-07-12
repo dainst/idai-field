@@ -62,9 +62,9 @@ export class ImportComponent {
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private configLoader: ConfigLoader,
-        viewUtility: ViewUtility
+        private viewUtility: ViewUtility
     ) {
-        viewUtility.getMainTypeDocuments().then(
+        this.viewUtility.getMainTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );
@@ -207,15 +207,6 @@ export class ImportComponent {
 
         for (let msgWithParams of messages) {
             this.messages.add(msgWithParams);
-        }
-    }
-
-    public getMainTypeDocumentLabel(document: Document): string {
-
-        if (document.resource.shortDescription) {
-            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
-        } else {
-            return document.resource.identifier;
         }
     }
 }

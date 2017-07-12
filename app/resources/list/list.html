@@ -1,12 +1,12 @@
 <div id="list" *ngIf="typesMap">
-    <div id="resources-list">
-        <div class="row py-2 font-weight-bold">
-            <div class="col-md-3">Identifier/Typ</div>
-            <div class="col-md-3">Identifier</div>
-            <div class="col-md-3">Kurzbeschreibung</div>
-            <div class="col-md-3">Optionen</div>
-        </div>
-        <div *ngFor="let doc of topDocuments; let index=index;">
+    <div id="list-header" class="row py-2 font-weight-bold">
+        <div class="col-md-3">Identifier/Typ</div>
+        <div class="col-md-3">Identifier</div>
+        <div class="col-md-3">Kurzbeschreibung</div>
+        <div class="col-md-3">Optionen</div>
+    </div>
+    <div id="list-body">
+        <div *ngFor="let doc of topDocuments">
             <row [document]="doc" [documents]="documents" [depth]=0 [typesMap]="typesMap"></row>
         </div>
     </div>

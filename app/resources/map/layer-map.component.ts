@@ -67,7 +67,12 @@ export class LayerMapComponent extends MapComponent {
 
     protected setView() {
 
-        this.layersReady.then(() => super.setView());
+        this.layersReady.then(() => {
+            for (let layer of this.activeLayers) {
+                this.addLayerCoordinatesToBounds(layer);
+            }
+            super.setView();
+        });
     }
 
     private initializeLayers(): Promise<any> {
@@ -188,8 +193,6 @@ export class LayerMapComponent extends MapComponent {
 
             if (this.activeLayers.indexOf(layer) == -1) {
                 this.addLayerToMap(layer);
-            } else {
-                this.addLayerCoordinatesToBounds(layer);
             }
         }
     }

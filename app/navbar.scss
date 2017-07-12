@@ -38,6 +38,11 @@
   }
 }
 
-.nav-link.active {
+.nav-link.active,
+.nav-link:hover {
   text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
+}
+
+.nav-link {
+  transition: text-shadow .15s ease-in-out;
 }

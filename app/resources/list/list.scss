@@ -1,0 +1,13 @@
+#list {
+
+  #resources-list {
+    height: calc(100vh - 140px);
+    overflow: scroll;
+  }
+
+  #create-document-button div div {
+    left: calc(50% - 20px);
+    margin: -20px auto auto auto;
+    z-index: 100;
+  }
+}

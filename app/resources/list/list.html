@@ -1,11 +1,17 @@
-<div *ngIf="typesMap">
-    <div class="row py-2 font-weight-bold">
-        <div class="col-md-3">Identifier/Typ</div>
-        <div class="col-md-3">Identifier</div>
-        <div class="col-md-3">Kurzbeschreibung</div>
-        <div class="col-md-3">Optionen</div>
+<div id="list" *ngIf="typesMap">
+    <div id="resources-list">
+        <div class="row py-2 font-weight-bold">
+            <div class="col-md-3">Identifier/Typ</div>
+            <div class="col-md-3">Identifier</div>
+            <div class="col-md-3">Kurzbeschreibung</div>
+            <div class="col-md-3">Optionen</div>
+        </div>
+        <div *ngFor="let doc of topDocuments; let index=index;">
+            <row [document]="doc" [documents]="documents" [depth]=0 [typesMap]="typesMap"></row>
+        </div>
     </div>
-    <div *ngFor="let doc of topDocuments; let index=index;">
-        <row [document]="doc" [documents]="documents" [depth]=0 [typesMap]="typesMap"></row>
-    </div>
+    <plus-button *ngIf="resourcesComponent.showPlusButton && (resourcesComponent.selectedMainTypeDocument
+                        || resourcesComponent.view.name == 'project')"
+                 id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
+                 [isRecordedIn]="resourcesComponent.selectedMainTypeDocument"></plus-button>
 </div>

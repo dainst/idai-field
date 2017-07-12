@@ -21,9 +21,9 @@ export class ListComponent implements OnInit {
 
     private documents: {[type: string]: IdaiFieldDocument};
     private topDocuments: IdaiFieldDocument[];
-    private searchResults: IdaiFieldDocument[];
 
-    private query: string = '';
+    private searchResults: IdaiFieldDocument[];
+    private queryQ: string = '';
 
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
@@ -57,15 +57,15 @@ export class ListComponent implements OnInit {
         });
 
         this.resourcesComponent.getDocuments().subscribe(result => {
-            if (this.resourcesComponent.query.q != "" && this.query != this.resourcesComponent.query.q) {
+            if (this.resourcesComponent.query.q != '' && this.queryQ != this.resourcesComponent.query.q) {
                 this.searchResults = <IdaiFieldDocument[]>result;
                 this.decorateSearchResults();
-                this.query = this.resourcesComponent.query.q;
+                this.queryQ = this.resourcesComponent.query.q;
             } else {
-                if (this.resourcesComponent.query.q == '' && this.query != '') {
-                    this.query = '';
+                if (this.resourcesComponent.query.q == '' && this.queryQ != '') {
+                    this.queryQ = '';
                     this.childrenShownForIds = [];
-                    this.handleChange("");
+                    this.handleChange('');
                 }
             }
         });
@@ -94,7 +94,8 @@ export class ListComponent implements OnInit {
         this.searchResults.forEach((doc, i) => {
             this.documents[doc.resource.id] = doc as IdaiFieldDocument;
 
-            if (!doc.resource.relations["liesWithin"]) {
+
+            if (!doc.resource.relations['liesWithin']) {
                 this.topDocuments.push(doc as IdaiFieldDocument);
             } else {
                 this.datastore.get(doc.resource.relations['liesWithin'][0]).then(pdoc => { // only first parent for simplification
@@ -119,7 +120,7 @@ export class ListComponent implements OnInit {
             docs.forEach((doc, i) => {
                 this.documents[doc.resource.id] = doc as IdaiFieldDocument;
 
-                if (!doc.resource.relations["liesWithin"]) {
+                if (!doc.resource.relations['liesWithin']) {
                     this.topDocuments.push(doc as IdaiFieldDocument);
                 }
             });

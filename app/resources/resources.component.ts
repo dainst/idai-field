@@ -489,9 +489,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
         this.removeEmptyDocuments();
-        if (mode == 'list') {
-            //this.fetchMainTypeDocuments();
-        } else {
+        if (mode != 'list') {
             this.fetchDocuments();
         }
         this.mode = mode;

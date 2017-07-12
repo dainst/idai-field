@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-md-6">
-        <search-bar *ngIf="view && mode != 'list'" [showFiltersMenu]="true"
+        <search-bar *ngIf="view" [showFiltersMenu]="mode != 'list'"
                     [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
                     (onQueryChanged)="queryChanged($event)">

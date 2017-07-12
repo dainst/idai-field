@@ -15,8 +15,12 @@ export class ResourcesPage {
 
     // click
 
-    public static clickCreateObject = function() {
+    public static clickCreateResource = function() {
         common.click(by.css('#create-document-button .circular-button'));
+    };
+
+    public static clickCreateMainTypeResource = function() {
+        common.click(by.css('#create-main-type-document-button .circular-button'));
     };
 
     public static clickSaveInModal = function() {
@@ -107,16 +111,20 @@ export class ResourcesPage {
 
     // elements
 
+    public static getListItemEl = function(identifier) {
+        return element(by.id('resource-' + identifier));
+    };
+
+    public static getListItemEls = function() {
+        return element.all(by.css('.list-group-item'));
+    };
+
     public static getListItemMarkedNewEl = function() {
         return element(by.css('#objectList .list-group-item .new'));
     };
 
     public static getListItemMarkedNewEls = function() {
         return element.all(by.css('#objectList .list-group-item .new'));
-    };
-
-    public static getListItemEl = function(identifier) {
-        return element(by.id('resource-' + identifier));
     };
 
     public static getListModeInputField = function(identifier, index) {
@@ -131,8 +139,9 @@ export class ResourcesPage {
 
     // sequences
 
-    public static performCreateResource = function(identifier, typeIndex?, inputFieldText?: string, inputFieldIndex?: number) {
-        ResourcesPage.clickCreateObject();
+    public static performCreateResource = function(identifier: string, typeIndex?: number, inputFieldText?: string,
+                                                   inputFieldIndex?: number) {
+        ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeIndex);
         ResourcesPage.clickSelectGeometryType();
         DocumentEditWrapperPage.typeInInputField(identifier);
@@ -144,7 +153,17 @@ export class ResourcesPage {
         browser.sleep(delays.shortRest);
     };
 
-    public static performCreateRelation = function(identifier, targetIdentifier, relationGroupIndex) {
+    public static performCreateMainTypeResource = function(identifier: string) {
+        ResourcesPage.clickCreateMainTypeResource();
+        ResourcesPage.clickSelectGeometryType();
+        DocumentEditWrapperPage.typeInInputField(identifier);
+        ResourcesPage.scrollUp();
+        DocumentEditWrapperPage.clickSaveDocument();
+        browser.sleep(delays.shortRest);
+    };
+
+    public static performCreateRelation = function(identifier: string, targetIdentifier: string,
+                                                   relationGroupIndex: number) {
         ResourcesPage.openEditByDoubleClickResource(identifier);
         DocumentEditWrapperPage.clickRelationsTab();
         DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(relationGroupIndex);

@@ -15,7 +15,7 @@
             </li>
         </ul>
 
-        <plus-button *ngIf="resourcesComponent.showPlusButton && resourcesComponent.query.q == ''
+        <plus-button *ngIf="resourcesComponent.showPlusButtons && resourcesComponent.query.q == ''
                             && (resourcesComponent.selectedMainTypeDocument
                             || resourcesComponent.view.name == 'project')"
                      id="create-document-button" [placement]="'top'"

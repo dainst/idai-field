@@ -63,7 +63,7 @@ describe('resources/map --', function() {
     }
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
-        ResourcesPage.clickCreateObject();
+        ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
         return ResourcesPage.clickSelectGeometryType(geometry)
             .then(function() { return mapClickCallback(); });

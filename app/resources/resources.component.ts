@@ -43,7 +43,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private ready: Promise<any>;
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
-    private showPlusButton: boolean = false;
+    private showPlusButtons: boolean = false;
     private observers: Array<any> = [];
     private mainTypeObservers: Array<any> = [];
 
@@ -74,7 +74,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => this.fetchMainTypeDocuments())
                 .then(() => this.fetchDocuments())
                 .then(() => {
-                    this.showPlusButton = true;
+                    this.showPlusButtons = true;
 
                     if (this.view.mainType == 'project') {
                         this.setMode('map');

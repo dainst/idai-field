@@ -24,9 +24,9 @@
 
     <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id"
          [class.col-sm-6]="selectedDocument && selectedDocument.resource.id" class="px-0">
-        <editable-map [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
-             [editMode]="editMode" (onSelectDocument)="select($event)"
-             (onQuitEditing)="quitEditing($event)"></editable-map>
+        <editable-map *ngIf="docs" [documents]="docs" [selectedDocument]="resourcesComponent.getSelected()"
+                      [editMode]="editMode" (onSelectDocument)="select($event)"
+                      (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 
     <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">

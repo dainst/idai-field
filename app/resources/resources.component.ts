@@ -504,4 +504,9 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+    public documentsInclude(doc: IdaiFieldDocument): boolean {
+        return this.documents.some(d => d.resource.id == doc.resource.id );
+
+    }
+
 }

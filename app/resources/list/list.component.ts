@@ -23,6 +23,7 @@ export class ListComponent implements OnInit {
     private topDocuments: IdaiFieldDocument[];
 
     private searchResults: IdaiFieldDocument[];
+    private searchResultsIds: string[] = [];
     private queryQ: string = '';
 
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
@@ -65,6 +66,7 @@ export class ListComponent implements OnInit {
                 if (this.resourcesComponent.query.q == '' && this.queryQ != '') {
                     this.queryQ = '';
                     this.childrenShownForIds = [];
+                    this.searchResultsIds = [];
                     this.handleChange('');
                 }
             }
@@ -86,17 +88,21 @@ export class ListComponent implements OnInit {
         return this.childrenShownForIds.indexOf(id) == -1
     }
 
-
     private decorateSearchResults() {
         this.topDocuments = [];
         this.documents = {};
 
         this.searchResults.forEach((doc, i) => {
             this.documents[doc.resource.id] = doc as IdaiFieldDocument;
-
+            this.searchResultsIds.push(doc.resource.id);
 
             if (!doc.resource.relations['liesWithin']) {
                 this.topDocuments.push(doc as IdaiFieldDocument);
+                doc.resource.relations['includes'].forEach(includedId => {
+                    this.datastore.get(includedId).then(idoc => {
+                        this.documents[includedId] = idoc as IdaiFieldDocument;
+                    });
+                });
             } else {
                 this.datastore.get(doc.resource.relations['liesWithin'][0]).then(pdoc => { // only first parent for simplification
                     this.topDocuments.push(<IdaiFieldDocument>pdoc);

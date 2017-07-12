@@ -28,7 +28,7 @@ export class LayerMapComponent extends MapComponent {
     protected panes: { [id: string]: any } = {};
 
     private layersReady: Promise<any>;
-
+    private updateLayers: boolean = false;
 
     constructor(protected mapState: LayerMapState,
                 protected datastore: ReadDatastore,
@@ -40,13 +40,19 @@ export class LayerMapComponent extends MapComponent {
 
     public ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['documents'] && changes['documents'].currentValue) {
+        if (changes['documents'] && changes['documents'].currentValue) this.updateLayers = true;
+
+        if (!this.update) return;
+
+        if (this.updateLayers) {
+            this.updateLayers = false;
+
             this.layersReady = this.initializeLayers().then(
                 () => {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
                     if (this.activeLayers.length == 0 && this.layersList.length > 0
-                            && !this.mapState.getActiveLayersIds()) {
+                        && !this.mapState.getActiveLayersIds()) {
                         this.addLayerToMap(this.layersList[0]);
                         this.saveActiveLayersIdsInMapState();
                     }

@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-1">
-        <plus-button *ngIf="showPlusButtons && query.q == '' && view.mainType != 'project'"
+        <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
                      id="create-main-type-document-button" [preselectedType]="view.mainType"></plus-button>
     </div>
 

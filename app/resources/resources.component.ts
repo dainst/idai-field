@@ -40,13 +40,11 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
 
-    private ready: Promise<any>;
+    private ready: boolean = false;
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
-    private showPlusButtons: boolean = false;
     private observers: Array<any> = [];
     private mainTypeObservers: Array<any> = [];
-
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -59,27 +57,19 @@ export class ResourcesComponent implements AfterViewChecked {
                 private configLoader: ConfigLoader,
                 private viewUtility: ViewUtility
     ) {
-        let readyResolveFun: Function;
-        this.ready = new Promise<any>(resolve => {
-            readyResolveFun = resolve;
-        });
-
         this.route.params.subscribe(params => {
 
             this.selectedDocument = undefined;
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
+            this.ready = false;
 
             this.parseParams(params)
                 .then(() => this.fetchMainTypeDocuments())
                 .then(() => this.fetchDocuments())
                 .then(() => {
-                    this.showPlusButtons = true;
-
-                    if (this.view.mainType == 'project') {
-                        this.setMode('map');
-                    }
-                    readyResolveFun();
+                    this.ready = true;
+                    if (this.view.mainType == 'project') this.setMode('map');
                 }).catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)
                 });
@@ -277,7 +267,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.notify();
     }
 
-    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string): Promise<any> {
+    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
         this.removeEmptyDocuments();
 
@@ -291,13 +281,10 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editDocument();
         }
 
-        return this.ready.then(() => {
-            if (newDocument.resource.type != this.view.mainType) {
-                this.documents.unshift(<Document> newDocument);
-                this.notify();
-            }
-            return newDocument;
-        });
+        if (newDocument.resource.type != this.view.mainType) {
+            this.documents.unshift(<Document> newDocument);
+            this.notify();
+        }
     }
 
     /**

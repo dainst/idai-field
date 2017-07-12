@@ -15,6 +15,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
+    @Input() mainTypeDocument: IdaiFieldDocument;
+    @Input() update: boolean;
     @Input() editMode: boolean;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
@@ -29,6 +31,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private selectedPolygon: L.Polygon;
 
     public ngOnChanges(changes: SimpleChanges) {
+
+        if (!this.update) return;
 
         super.ngOnChanges(changes);
 

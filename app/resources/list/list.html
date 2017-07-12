@@ -10,7 +10,7 @@
             <row [document]="doc" [documents]="documents" [depth]=0 [typesMap]="typesMap"></row>
         </div>
     </div>
-    <plus-button *ngIf="resourcesComponent.showPlusButtons && resourcesComponent.query.q == ''
+    <plus-button *ngIf="resourcesComponent.ready && resourcesComponent.query.q == ''
                         && (resourcesComponent.selectedMainTypeDocument
                         || resourcesComponent.view.name == 'project')"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"

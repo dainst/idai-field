@@ -23,7 +23,7 @@ import {DoceditModule} from "../docedit/docedit.module";
         IdaiDocumentsModule,
         WidgetsModule,
         IdaiWidgetsModule,
-        DoceditModule,
+        DoceditModule
     ],
     declarations: [
         ResourcesComponent,

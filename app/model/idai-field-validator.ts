@@ -97,9 +97,10 @@ export class IdaiFieldValidator extends Validator {
 
     private static validatePointCoordinates(coordinates: number[]): boolean {
 
-        if (coordinates.length != 2) return false;
+        if (coordinates.length < 2 || coordinates.length > 3) return false;
         if (isNaN(coordinates[0])) return false;
         if (isNaN(coordinates[1])) return false;
+        if (coordinates.length == 3 && isNaN(coordinates[2])) return false;
 
         return true;
     }

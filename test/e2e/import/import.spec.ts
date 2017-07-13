@@ -51,8 +51,8 @@ describe('import --', function() {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob1')});
-        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob2')});
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
     });
 
     it('abort if an empty geometry is found', () => {
@@ -80,26 +80,19 @@ describe('import --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
-        DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
-        });
-        DocumentViewPage.getRelationValue(0).then(function(relationValue) {
-            expect(relationValue).toContain('testf1');
-        });
-        DocumentViewPage.getRelationName(0).then(function(relationName) {
-            expect(relationName).toEqual('Zeitlich vor');
-        });
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('testf1'));
+        DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
 
         ResourcesPage.clickSelectResource('testf1');
-        DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(2);
-        });
-        DocumentViewPage.getRelationValue(1).then(function(relationValue) {
-            expect(relationValue).toContain('obob1');
-        });
-        DocumentViewPage.getRelationName(1).then(function(relationName) {
-            expect(relationName).toEqual('Zeitlich nach');
-        });
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
+        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toContain('obob1'));
+        DocumentViewPage.getRelationName(1).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
+
+        NavbarPage.clickNavigateToProject();
+
+        ResourcesPage.clickSelectResource('trench1');
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
     it('abort if a relation target cannot be found and remove all imported resources & already '
@@ -113,8 +106,8 @@ describe('import --', function() {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob1')});
-        ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).not.toEqual('obob2')});
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
 
         ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {

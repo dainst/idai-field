@@ -137,6 +137,8 @@ export class RelationsCompleter {
 
         return new Promise<any>((resolve, reject) => {
 
+            if (relationName == 'NO-INVERSE') return resolve();
+
             let relations = targetDocument.resource.relations[relationName];
             if (!relations) relations = [];
             if (relations.indexOf(resource.id) == -1) {

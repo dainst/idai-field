@@ -176,7 +176,7 @@ export class ImageGridComponent {
                     () => this.imagestore.remove(document.resource.id),
                     msgWithParams => reject(msgWithParams)
                 ).then(
-                    () => this.persistenceManager.remove(document, [document]),
+                    () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
                 )
             }

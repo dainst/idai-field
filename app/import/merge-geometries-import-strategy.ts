@@ -1,5 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
@@ -7,39 +8,39 @@ import {M} from '../m';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class MergeGeometriesImportStrategy implements ImportStrategy {
 
-    constructor(
-        private datastore: IdaiFieldDatastore,
-        private settingsService: SettingsService) { }
+    constructor(private validator: Validator,
+                private datastore: IdaiFieldDatastore,
+                private settingsService: SettingsService) { }
 
     importDoc(doc: Document): Promise<any> {
-        let idaiFieldDoc = doc as IdaiFieldDocument;
 
+        let document: IdaiFieldDocument = doc as IdaiFieldDocument;
+        let existingDocument: IdaiFieldDocument;
 
         return this.datastore.find({
                 constraints: {
-                    'resource.identifier' : idaiFieldDoc.resource.identifier
+                    'resource.identifier' : document.resource.identifier
                 }
-            })
-            .then(existingIdaiFieldDocs => {
-                let existingIdaiFieldDoc;
-                if (existingIdaiFieldDocs.length > 0) {
-                    existingIdaiFieldDoc = existingIdaiFieldDocs[0];
+            }).then(existingDocuments => {
+                if (existingDocuments.length > 0) {
+                    existingDocument = existingDocuments[0] as IdaiFieldDocument;
                 } else {
-                    return Promise.reject([M.IMPORT_FAILURE_MISSING_RESOURCE,idaiFieldDoc.resource.identifier]);
+                    return Promise.reject([M.IMPORT_FAILURE_MISSING_RESOURCE, document.resource.identifier]);
                 }
 
-                existingIdaiFieldDoc.resource.geometry = idaiFieldDoc.resource.geometry;
+                existingDocument.resource.geometry = document.resource.geometry;
 
-                if (!existingIdaiFieldDoc.modified) existingIdaiFieldDoc.modified = [];
-                existingIdaiFieldDoc.modified.push({ user: this.settingsService.getUsername(), date: new Date() });
+                if (!existingDocument.modified) existingDocument.modified = [];
+                existingDocument.modified.push({ user: this.settingsService.getUsername(), date: new Date() });
 
-                return this.datastore.update(existingIdaiFieldDoc);
-            })
-            .catch(() => {
+                return this.validator.validate(existingDocument);
+            }, () => {
                 return Promise.reject([M.ALL_FIND_ERROR]);
-            })
+            }).then(() => this.datastore.update(existingDocument),
+                msgWithParams => Promise.reject(msgWithParams));
     }
 }

@@ -123,7 +123,7 @@ export class ImportComponent {
             case 'idig':
                 return new DefaultImportStrategy(validator, datastore, settingsService, configLoader);
             case 'geojson':
-                return new MergeGeometriesImportStrategy(datastore, settingsService);
+                return new MergeGeometriesImportStrategy(validator, datastore, settingsService);
         }
     }
 

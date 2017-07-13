@@ -57,9 +57,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "t1",
             "identifier": "trench1",
             "shortDescription": "Goldener Schnitt",
-            "relations": {
-                "records": ["c1", "tf1"]
-            },
+            "relations": {},
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [[[27.189218354962215, 39.14132050335332], [27.189276375601313, 39.14133824217116],

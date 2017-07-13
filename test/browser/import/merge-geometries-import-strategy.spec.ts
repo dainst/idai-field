@@ -11,6 +11,7 @@ export function main() {
     describe('MergeGeometriesImportStrategy Tests ---', () => {
 
         let strategy: ImportStrategy;
+        let mockValidator;
         let mockDatastore;
         let mockSettingsService;
         let originalDoc;
@@ -31,6 +32,9 @@ export function main() {
                 }
             };
 
+            mockValidator = jasmine.createSpyObj('validator', ['validate']);
+            mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
+
             mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
             mockDatastore.find.and.callFake(() => Promise.resolve([originalDoc]));
             mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
@@ -38,7 +42,7 @@ export function main() {
             mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);
             mockSettingsService.getUsername.and.callFake(function() { return 'testuser'; });
 
-            strategy = new MergeGeometriesImportStrategy(mockDatastore, mockSettingsService);
+            strategy = new MergeGeometriesImportStrategy(mockValidator, mockDatastore, mockSettingsService);
         });
 
         it('should merge geometry',

@@ -118,7 +118,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.APP_NO_PROJECT_IDENTIFIER]={
-            content: 'Server-Sync kann nicht aktiviert werden, wenn kein Projektidentifier in der Configuration.json hinterlegt ist.',
+            content: 'Server-Sync kann nicht aktiviert werden, wenn kein Projektidentifier in der Configuration.json ' +
+                'hinterlegt ist.',
             level: 'danger',
             params: [],
             hidden: false
@@ -154,7 +155,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALIDJSON]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: {0}.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche ' +
+                'Fehlermeldung lautet: {0}.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
@@ -172,13 +174,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_IDENTIFIER]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier ' +
+                'wurden gefunden.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_IDENTIFIER_FORMAT]={
-            content: 'Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.',
+            content: 'Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, ' +
+                'keine Zahl.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
@@ -276,7 +280,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_RESOURCE] = {
-            content: "Die Zuordnung zu einer Resource mit dem Identifier {0} ist fehlgeschlagen. Die Resource wurde nicht gefunden.",
+                content: 'Die Zuordnung zu einer Ressource mit dem Identifier {0} ist fehlgeschlagen. Die Ressource ' +
+                'wurde nicht gefunden.',
             level: 'danger',
             params: [ "?"],
             hidden: false

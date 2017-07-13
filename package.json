@@ -109,7 +109,7 @@
     "karma-chrome-launcher": "2.0.0",
     "karma-electron-launcher": "^0.2.0",
     "karma-jasmine": "1.1.0",
-    "pouchdb-adapter-memory": "^6.1.2",
+    "pouchdb-adapter-memory": "6.1.2",
     "protractor": "5.1.2",
     "protractor-console-plugin": "0.1.1",
     "protractor-fail-fast": "2.0.0",

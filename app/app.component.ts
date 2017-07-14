@@ -53,8 +53,10 @@ export class AppComponent implements OnInit {
                     this.messages.add([M.APP_NO_PROJECT_IDENTIFIER]);
                 }
             }
-        ).catch(msgWithParams => {
-            this.messages.add(msgWithParams);
+        ).catch(msgsWithParams => {
+            let count = msgsWithParams.length;
+            msgsWithParams.forEach(msg => this.messages.add(msg));
+            if (count > 1) this.messages.add([M.APP_ERRORS_IN_CONFIG, count]);
         });
     }
 

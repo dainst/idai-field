@@ -19,6 +19,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static APP_NO_PROJECT_IDENTIFIER: string = 'app/noprojectidentifier';
     public static APP_GENERIC_SAVE_ERROR: string = 'app/genericsaveerror';
+    public static APP_ERRORS_IN_CONFIG: string = 'app/errorsinconfig';
 
     // Settings Package
 
@@ -123,7 +124,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.APP_NO_PROJECT_IDENTIFIER]={
             content: 'Server-Sync kann nicht aktiviert werden, wenn kein Projektidentifier in der Configuration.json ' +
-                'hinterlegt ist.',
+            'hinterlegt ist.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.APP_ERRORS_IN_CONFIG]={
+            content: 'Insgesamt {0} Fehler in Configuration.json:',
             level: 'danger',
             params: [],
             hidden: false

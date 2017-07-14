@@ -87,6 +87,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE: string = 'validation/error/missinggeometrytype';
     public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE: string = 'validation/error/unsupportedgeometrytype';
 
+    // Resources Package
+
+    public static RESOURCES_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
+
     // Keys END /////////////////////////////////
 
     public msgs : { [id: string]: Message } = {};
@@ -383,5 +387,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.RESOURCES_TYPE_NOT_FOUND] = {
+            content: "Typdefinition für \'{0}\' fehlt in Configuration.json.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        }
     }
 }

@@ -3,6 +3,8 @@ import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/co
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Relations} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
+import {Messages} from "idai-components-2/messages";
+import {M} from "../m";
 
 
 @Component({
@@ -33,7 +35,8 @@ export class PlusButtonComponent implements OnChanges {
     constructor(
         private elementRef: ElementRef,
         private resourcesComponent: ResourcesComponent,
-        private configLoader: ConfigLoader) {}
+        private configLoader: ConfigLoader,
+        private messages: Messages) {}
 
     ngOnChanges() {
 
@@ -96,7 +99,9 @@ export class PlusButtonComponent implements OnChanges {
         this.typesTreeList = [];
 
         if (this.preselectedType) {
-            this.typesTreeList.push(projectConfiguration.getTypesMap()[this.preselectedType]);
+            const type = projectConfiguration.getTypesMap()[this.preselectedType];
+            if (type) this.typesTreeList.push();
+            else this.messages.add([M.RESOURCES_TYPE_NOT_FOUND, this.preselectedType]);
         } else {
             for (let type of projectConfiguration.getTypesTreeList()) {
                 if (this.isAllowedType(type, projectConfiguration)) {

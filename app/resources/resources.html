@@ -52,15 +52,17 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="(view && view.mainType == 'project') || selectedMainTypeDocument" class="col-lg-12 col-md-12 col-sm-12">
+    <div *ngIf="(view && view.mainType != 'project') && !selectedMainTypeDocument && !editGeometry"
+         class="col-sm-8 offset-sm-2 text-center alert alert-warning" style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 5000;">
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
+    </div>
+
+    <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->
+    <!--<div *ngIf="(view && view.mainType == 'project') || selectedMainTypeDocument || editGeometry" class="col-lg-12 col-md-12 col-sm-12">-->
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [selectedDocument]="selectedDocument"
                      [editMode]="editGeometry"></map-wrapper>
         <list *ngIf="mode == 'list'" (onDocumentCreation)="setScrollTarget($event)"></list>
-    </div>
-
-    <div *ngIf="(view && view.mainType != 'project') && !selectedMainTypeDocument"
-         class="col-sm-6 offset-sm-3 text-center text-muted" style="padding: 10px; margin-top: 50px;">
-        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
     </div>
 
 </div>

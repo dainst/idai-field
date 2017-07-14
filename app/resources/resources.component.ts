@@ -30,6 +30,7 @@ import {M} from '../m';
 export class ResourcesComponent implements AfterViewChecked {
 
     public view: ViewDefinition;
+    public mainTypeLabel: string;
     public mode: string = 'map';
     public editGeometry: boolean = false;
     public query: Query = {q: '', type: 'resource', prefix: true};
@@ -111,6 +112,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.configLoader.getProjectConfiguration().then(
             projectConfiguration => {
                 this.view = projectConfiguration.getView(viewName);
+                this.mainTypeLabel = projectConfiguration.getLabelForType(this.view.mainType);
                 Promise.resolve();
             }
         ).catch(() => { return Promise.reject(null); });

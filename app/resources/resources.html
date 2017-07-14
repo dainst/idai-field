@@ -1,18 +1,28 @@
 <div style="position: fixed; width: 100%; z-index: 1001;"
      class="row bg-faded py-2">
-    <div class="col-md-3">
-        <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
-                class="form-control" [(ngModel)]="selectedMainTypeDocument"
-                (ngModelChange)="filterByMainTypeDocument($event)">
-            <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                {{viewUtility.getMainTypeDocumentLabel(document)}}
-            </option>
-        </select>
-    </div>
 
-    <div class="col-md-1">
-        <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
-                     id="create-main-type-document-button" [preselectedType]="view.mainType"></plus-button>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-10">
+                <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
+                        class="form-control" [(ngModel)]="selectedMainTypeDocument"
+                        (ngModelChange)="filterByMainTypeDocument($event)">
+                    <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
+                        {{viewUtility.getMainTypeDocumentLabel(document)}}
+                    </option>
+                </select>
+                <select *ngIf="this.view && !selectedMainTypeDocument && view.mainType != 'project'"
+                        class="form-control" disabled>
+                    <option>
+                        {{mainTypeLabel}} anlegen ➔
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
+                             id="create-main-type-document-button" [preselectedType]="view.mainType"></plus-button>
+            </div>
+        </div>
     </div>
 
     <div class="col-md-6">
@@ -23,7 +33,7 @@
         </search-bar>
     </div>
 
-    <div class="col-md-2" align="right">
+    <div class="col-md-3" align="right">
         <div class="btn-group">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">
@@ -42,10 +52,15 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div *ngIf="(view && view.mainType == 'project') || selectedMainTypeDocument" class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [selectedDocument]="selectedDocument"
                      [editMode]="editGeometry"></map-wrapper>
         <list *ngIf="mode == 'list'" (onDocumentCreation)="setScrollTarget($event)"></list>
+    </div>
+
+    <div *ngIf="(view && view.mainType != 'project') && !selectedMainTypeDocument"
+         class="col-sm-6 offset-sm-3 text-center text-muted" style="padding: 10px; margin-top: 50px;">
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
     </div>
 
 </div>

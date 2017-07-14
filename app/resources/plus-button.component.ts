@@ -103,7 +103,7 @@ export class PlusButtonComponent implements OnChanges {
             if (type) this.typesTreeList.push(type);
             else this.messages.add([M.RESOURCES_TYPE_NOT_FOUND, this.preselectedType]);
         } else {
-            for (let type of projectConfiguration.getTypesTreeList()) {
+            for (let type of projectConfiguration.getTypesList()) {
                 if (this.isAllowedType(type, projectConfiguration)) {
                     this.typesTreeList.push(type);
                 }

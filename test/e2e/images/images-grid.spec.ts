@@ -95,7 +95,7 @@ describe('image grid --', function() {
 
         ImagesGridPage.getCellImageName(0)
             .then(function (imageName) {
-                const xpath = '//span[@class="tag tag-default"][text()="'+ imageName + '"]';
+                const xpath = '//span[@class="badge badge-default"][text()="'+ imageName + '"]';
                 elementToDelete.click();
                 ImagesGridPage.clickDeleteButton();
                 ImagesGridPage.clickCancelDeleteButton();
@@ -121,7 +121,7 @@ describe('image grid --', function() {
     it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         const fileName = 'Aldrin_Apollo_11.jpg';
-        const xpath = '//span[@class="tag tag-default"][text()="' + fileName + '"]';
+        const xpath = '//span[@class="badge badge-default"][text()="' + fileName + '"]';
 
         ImagesGridPage.clickUploadArea();
         ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));

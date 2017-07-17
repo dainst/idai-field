@@ -30,35 +30,9 @@
 
             <div class="col-lg-6 offset-lg-3">
 
-                <h4>
-                    Projekt- und Benutzereinstellungen
-                </h4>
+                <h4>Benutzereinstellungen</h4>
+
                 <div class="form-group" style="margin-bottom: 0;">
-
-                    <label for="projectselect"
-                           class="control-label col-form-label">Projekt</label>
-                    <select class="form-control"
-                            id="projectselect"
-                            [(ngModel)]="selectedProject">
-
-                        <option *ngFor="let project of projects"
-                                [ngValue]="project">
-                            {{project}}
-                        </option>
-                    </select>
-
-                    <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="Neues Projekt anlegen ..."
-                               [(ngModel)]="newProject">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-success"
-                                    (click)="createProject()"
-                                    [attr.disabled]="(!newProject || projects.indexOf(newProject) != -1) ? 'true' : null">
-                                <span class="mdi mdi-plus"></span>
-                            </button>
-                        </span>
-                    </div>
 
                     <label class="control-label col-form-label"
                            for="username-input">Benutzer</label>

@@ -13,7 +13,6 @@ import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
-import {M} from '../m';
 
 
 @Component({
@@ -63,16 +62,10 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
             this.ready = false;
-            
 
             this.parseParams(params)
-                .then(() => this.fetchMainTypeDocuments())
-                .then(() => this.fetchDocuments())
-                .then(() => {
-                    this.ready = true;
-                    if (this.view.mainType == 'project') this.setMode('map');
-                    this.notifyMainTypeObservers();
-                }).catch(msgWithParams => {
+                .then(() => this.initialize())
+                .catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)
                 });
         });
@@ -106,6 +99,17 @@ export class ResourcesComponent implements AfterViewChecked {
         } else {
             return Promise.resolve();
         }
+    }
+
+    public initialize(): Promise<any> {
+
+        return this.fetchMainTypeDocuments()
+            .then(() => this.fetchDocuments())
+            .then(() => {
+                this.ready = true;
+                if (this.view.mainType == 'project') this.setMode('map');
+                this.notifyMainTypeObservers();
+            });
     }
 
     private initializeView(viewName: string): Promise<any> {

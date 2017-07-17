@@ -90,7 +90,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Resources Package
 
-    public static RESOURCES_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
+    public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
+    public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
+    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS: string = 'resources/error/projectnamexists';
 
     // Keys END /////////////////////////////////
 
@@ -394,11 +396,23 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.RESOURCES_TYPE_NOT_FOUND] = {
+        this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
             content: "Typdefinition für \'{0}\' fehlt in Configuration.json.",
             level: 'danger',
             params: [],
             hidden: false
-        }
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_PROJECT_NAME] = {
+            content: 'Bitte geben Sie einen Namen für das neue Projekt ein.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_EXISTS] = {
+            content: 'Ein Projekt mit dem Namen \'{0}\' existiert bereits.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
     }
 }

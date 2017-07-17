@@ -3,8 +3,8 @@ import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/co
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Relations} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
-import {Messages} from "idai-components-2/messages";
-import {M} from "../m";
+import {Messages} from 'idai-components-2/messages';
+import {M} from '../m';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class PlusButtonComponent implements OnChanges {
 
     private typesTreeList: Array<IdaiType>;
     private type: string;
-    @ViewChild('p') private popover;
+    @ViewChild('popover') private popover;
 
     constructor(
         private elementRef: ElementRef,
@@ -101,7 +101,7 @@ export class PlusButtonComponent implements OnChanges {
         if (this.preselectedType) {
             const type = projectConfiguration.getTypesMap()[this.preselectedType];
             if (type) this.typesTreeList.push(type);
-            else this.messages.add([M.RESOURCES_TYPE_NOT_FOUND, this.preselectedType]);
+            else this.messages.add([M.RESOURCES_ERROR_TYPE_NOT_FOUND, this.preselectedType]);
         } else {
             for (let type of projectConfiguration.getTypesList()) {
                 if (this.isAllowedType(type, projectConfiguration)) {

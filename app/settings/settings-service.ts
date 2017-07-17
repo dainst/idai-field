@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {Settings, SyncTarget} from "./settings";
-import {SettingsSerializer} from "./settings-serializer";
-import {Imagestore} from "../imagestore/imagestore";
-import {Observable} from "rxjs/Rx";
-import {PouchdbManager} from "../datastore/pouchdb-manager";
+import {Injectable} from '@angular/core';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {Settings, SyncTarget} from './settings';
+import {SettingsSerializer} from './settings-serializer';
+import {Imagestore} from '../imagestore/imagestore';
+import {Observable} from 'rxjs/Rx';
+import {PouchdbManager} from '../datastore/pouchdb-manager';
 
 
 @Injectable()
@@ -34,7 +34,8 @@ export class SettingsService {
     }
 
     public init() {
-        this.ready = this.settingsSerializer.load().then((settings) => {
+
+        this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
 
@@ -43,10 +44,10 @@ export class SettingsService {
                 // if project object does not exist, create it
                 // this.datastore.get(project).catch(()=>{
                 //     this.datastore.create({
-                //         "resource" : {
-                //             "type" : "project",
-                //             "identifier" : project,
-                //             "id" : project,
+                //         'resource' : {
+                //             'type' : 'project',
+                //             'identifier' : project,
+                //             'id' : project,
                 //             relations: {}
                 //         }
                 //     })
@@ -54,12 +55,10 @@ export class SettingsService {
 
                 this.pouchdbManager.select(project);
                 this.imagestore.select(project);
-                this.setSettings(
-                    project,
-                    this.settings.dbs,
-                    this.settings.username,
-                    this.settings.syncTarget);
-                return this.activateSettings();
+
+                return this.setProjectSettings(this.settings.dbs, project, false)
+                    .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
+                    .then(() => this.activateSettings());
             }
         })
     }
@@ -77,6 +76,7 @@ export class SettingsService {
     }
 
     public getSelectedProject() {
+        
         if (!this.settings.dbs || this.settings.dbs.length == 0) {
             return undefined;
         } else {
@@ -86,21 +86,16 @@ export class SettingsService {
 
     /**
      * Sets, validates and persists the settings state.
+     * Project settings have to be set separately.
      *
-     * @param projectName
      * @param username
      * @param syncTarget
      * @return error encoding string
      *   'malformed_address'
      */
-    public setSettings (
-        projectName: string,
-        projects: string[],
-        username: string,
-        syncTarget: SyncTarget): string {
+    public setSettings(username: string, syncTarget: SyncTarget): string {
 
         this.settings.username = username;
-        this.settings.dbs = projects.slice(0); // copy
 
         if (syncTarget.address) {
             syncTarget.address = syncTarget.address.trim();
@@ -108,10 +103,22 @@ export class SettingsService {
         }
 
         this.settings.syncTarget = syncTarget;
-        this.makeFirstOfDbsArray(projectName);
         this.storeSettings();
 
         return undefined;
+    }
+
+    public setProjectSettings(projects: string[], selectedProject: string,
+                              storeSettings: boolean = true): Promise<any> {
+
+        this.settings.dbs = projects.slice(0);
+        this.makeFirstOfDbsArray(selectedProject);
+
+        if (storeSettings) {
+            return this.storeSettings();
+        } else {
+            return Promise.resolve();
+        }
     }
 
     /**
@@ -123,6 +130,7 @@ export class SettingsService {
      * @returns {any}
      */
     public activateSettings(restart = false): Promise<any> {
+
         this.imagestore.select(this.getSelectedProject());
         if (restart) {
             return this.restartSync();
@@ -136,22 +144,25 @@ export class SettingsService {
         let address = SettingsService.makeAddressFromSyncTarget(this.settings.syncTarget);
         if (!address) return Promise.resolve();
 
-        return this.datastore.setupSync(address)
-            .then(syncState => {
-                const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500); // avoid issuing 'connected' too early
-                syncState.onError.subscribe(() => {
-                    clearTimeout(msg); // stop 'connected' msg if error
-                    syncState.cancel();
-                    this.observers.forEach(o => o.next('disconnected'));
-                    setTimeout(() => this.startSync(), 5000); // retry
-                });
-                syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
-                }
-            );
+        return this.datastore.setupSync(address).then(syncState => {
+
+            // avoid issuing 'connected' too early
+            const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500);
+
+            syncState.onError.subscribe(() => {
+                clearTimeout(msg); // stop 'connected' msg if error
+                syncState.cancel();
+                this.observers.forEach(o => o.next('disconnected'));
+                setTimeout(() => this.startSync(), 5000); // retry
+            });
+            syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
+            }
+        );
 
     }
 
     private restartSync() {
+
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         this.pouchdbManager.select(this.settings.dbs[0]);
@@ -168,7 +179,7 @@ export class SettingsService {
 
         if (address == '') return true;
 
-        const re = new RegExp("^http:\/\/[0-9a-z.]+:[0-9]+$");
+        const re = new RegExp('^http:\/\/[0-9a-z.]+:[0-9]+$');
         return re.test(address);
     }
 
@@ -208,12 +219,5 @@ export class SettingsService {
 
     private storeSettings(): Promise<any> {
         return this.settingsSerializer.store(this.settings);
-    }
-
-    private serverSettingsComplete(): boolean {
-
-        return (this.settings.syncTarget.username && this.settings.syncTarget.username.length > 0 &&
-        this.settings.syncTarget.password && this.settings.syncTarget.password.length > 0 &&
-        this.settings.syncTarget.address && this.settings.syncTarget.address.length > 0);
     }
 }

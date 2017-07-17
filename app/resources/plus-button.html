@@ -1,8 +1,8 @@
 <div *ngIf="typesTreeList">
     <div *ngIf="typesTreeList.length > 1"
              class="circular-button green-button"
-             [ngbPopover]="newObjectMenu" #p="ngbPopover"
-             triggers="manual" (click)="reset(); p.toggle();"
+             [ngbPopover]="newObjectMenu" #popover="ngbPopover"
+             triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">
              <!-- Enable when finally implemented in Chromium
              onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
@@ -12,15 +12,15 @@
 
     <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType != 'none'"
              class="circular-button type-button"
-             [ngbPopover]="newObjectMenu" #p="ngbPopover"
-             triggers="manual" (click)="reset(); p.toggle();"
+             [ngbPopover]="newObjectMenu" #popover="ngbPopover"
+             triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">
              <!-- Enable when finally implemented in Chromium
              onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
              -->
         <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
         <div class="plus-sign-circle">
-            <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+            <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
 
@@ -28,7 +28,7 @@
          class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
         <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
         <div class="plus-sign-circle">
-            <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+            <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
 </div>

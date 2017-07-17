@@ -1,13 +1,10 @@
 plus-button {
 
-  #object-overview-button-create-object {
-    z-index: 100;
-  }
-
   .abstract-idai-type {
     cursor: not-allowed;
     font-style: italic;
   }
+
   .abstract-idai-type ul {
     font-style: normal;
   }
@@ -16,10 +13,10 @@ plus-button {
     width: 41px;
     height: 41px;
   }
+}
 
-  .type-button {
-    background-color: rgb(240, 240, 240);
-  }
+.type-button {
+  background-color: rgb(240, 240, 240);
 
   .plus-sign-circle {
     position: relative;
@@ -29,27 +26,27 @@ plus-button {
     width: 18px;
     height: 18px;
     background-color: $greenbgr;
-  }
 
-  .type-button:hover {
-    filter: brightness(1.05);
-    transition: filter .3s ease;
-
-    .plus-sign-circle {
-      filter: brightness(1.2);
-      transition: filter .3s ease;
+    .mdi-plus {
+      position: relative;
+      top: -9px;
+      color: white;
     }
-  }
-
-  .plus-sign {
-    position: relative;
-    top: -9px;
-    color: white;
   }
 
   type-icon img {
     border-radius: 25px;
     margin-bottom: 5px;
+  }
+}
+
+.type-button:hover {
+  filter: brightness(1.05);
+  transition: filter .3s ease;
+
+  .plus-sign-circle {
+    filter: brightness(1.2);
+    transition: filter .3s ease;
   }
 }
 

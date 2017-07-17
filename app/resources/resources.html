@@ -2,16 +2,16 @@
      class="row bg-faded py-2">
 
     <div class="col-md-3">
-        <div class="row">
+        <div *ngIf="view && view.mainType != 'project'" class="row">
             <div class="col-md-10">
-                <select id="mainTypeSelectBox" *ngIf="this.view && selectedMainTypeDocument"
+                <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                         class="form-control" [(ngModel)]="selectedMainTypeDocument"
                         (ngModelChange)="filterByMainTypeDocument($event)">
                     <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
                         {{viewUtility.getMainTypeDocumentLabel(document)}}
                     </option>
                 </select>
-                <select *ngIf="this.view && !selectedMainTypeDocument && view.mainType != 'project'"
+                <select *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
                         class="form-control" disabled>
                     <option>
                         {{mainTypeLabel}} anlegen ➔
@@ -23,6 +23,8 @@
                              id="create-main-type-document-button" [preselectedType]="view.mainType"></plus-button>
             </div>
         </div>
+
+        <projects *ngIf="view && view.mainType == 'project'"></projects>
     </div>
 
     <div class="col-md-6">

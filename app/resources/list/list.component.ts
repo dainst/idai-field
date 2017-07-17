@@ -54,7 +54,12 @@ export class ListComponent implements OnInit {
     ngOnInit() {
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
             this.selectedMainTypeDocument = result as IdaiFieldDocument;
-            this.populateFirstLevel(this.selectedMainTypeDocument);
+
+            if (this.selectedMainTypeDocument) {
+                this.populateFirstLevel(this.selectedMainTypeDocument);
+            } else {
+                this.reset();
+            }
         });
 
         this.resourcesComponent.getDocuments().subscribe(result => {
@@ -73,8 +78,6 @@ export class ListComponent implements OnInit {
         });
     }
 
-
-
     public toggleChildrenForId(id:string) {
         let index = this.childrenShownForIds.indexOf(id);
         if (index != -1) {
@@ -82,6 +85,14 @@ export class ListComponent implements OnInit {
         } else {
             this.childrenShownForIds.push(id);
         }
+    }
+
+    private reset() {
+        this.documents = {};
+        this.topDocuments = [];
+        this.searchResults = [];
+        this.searchResultsIds = [];
+        this.queryQ = "";
     }
 
     public childrenHiddenFor(id: string) {

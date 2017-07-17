@@ -59,11 +59,11 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewUtility: ViewUtility
     ) {
         this.route.params.subscribe(params => {
-
             this.selectedDocument = undefined;
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
             this.ready = false;
+            
 
             this.parseParams(params)
                 .then(() => this.fetchMainTypeDocuments())
@@ -71,6 +71,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     this.ready = true;
                     if (this.view.mainType == 'project') this.setMode('map');
+                    this.notifyMainTypeObservers();
                 }).catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)
                 });

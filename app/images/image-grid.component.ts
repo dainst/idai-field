@@ -38,6 +38,7 @@ export class ImageGridComponent {
     private nrOfColumns = 4;
     private rows = [];
     private selected: IdaiFieldImageDocument[] = [];
+    private resourceIdentifiers: string[] = [];
 
     public constructor(
         private router: Router,
@@ -86,6 +87,16 @@ export class ImageGridComponent {
                     width: 1, height: 1, filename: '', relations: {} }
             });
 
+            // cache ids of connected resources
+            for (let doc of documents) {
+                if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
+                    for (let resourceId of doc.resource.relations['depicts']) {
+                        this.datastore.get(resourceId).then(result => {
+                            this.resourceIdentifiers[resourceId] = result.resource.identifier;
+                        });
+                    }
+            }
+
             this.calcGrid();
 
         }).catch(err => console.error(err));
@@ -99,6 +110,10 @@ export class ImageGridComponent {
 
     public onResize() {
         this.calcGrid();
+    }
+
+    public getIdentifier(id: string): string {
+        return this.resourceIdentifiers[id];
     }
 
     private calcGrid() {
@@ -190,6 +205,9 @@ export class ImageGridComponent {
 
     private updateAndPersistDepictsRelations(imageDocuments: Array<IdaiFieldImageDocument>,
                  targetDocument: IdaiFieldDocument): Promise<any> {
+
+        this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
+        console.log("asdf", this.resourceIdentifiers);
 
         return new Promise<any>((resolve, reject) => {
 

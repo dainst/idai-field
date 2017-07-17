@@ -207,7 +207,6 @@ export class ImageGridComponent {
                  targetDocument: IdaiFieldDocument): Promise<any> {
 
         this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
-        console.log("asdf", this.resourceIdentifiers);
 
         return new Promise<any>((resolve, reject) => {
 

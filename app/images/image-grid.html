@@ -65,8 +65,10 @@
                     <div class="identifier"
                          *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                          [style.maxWidth.px]="cell['calculatedWidth']-15">
-                        <span class="tag tag-default">{{cell['document'].resource.identifier}}</span>
-                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']" id="related-resource-{{resourceId}}" class="tag tag-info">
+                        <span class="badge badge-default">{{cell['document'].resource.identifier}}</span>
+                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
+                              id="related-resource-{{resourceId}}"
+                              class="badge badge-info">
                              <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
                         </span>
                     </div>

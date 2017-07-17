@@ -65,7 +65,7 @@ export class ResourcesPage {
     };
 
     public static clickSelectResource = function(identifier) {
-        return common.click(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+        return common.click(by.xpath('//*[@id="objectList"]//div[@class="subtitle" and normalize-space(text())="'
             + identifier + '"]'));
     };
 
@@ -75,9 +75,9 @@ export class ResourcesPage {
 
     public static openEditByDoubleClickResource = function(identifier) {
         browser.wait(EC.visibilityOf(
-            element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and normalize-space(text())="'
+            element(by.xpath('//*[@id="objectList"]//div[@class="subtitle" and normalize-space(text())="'
                 + identifier + '"]'))), delays.ECWaitTime);
-        return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="identifier" and ' +
+        return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="subtitle" and ' +
             'normalize-space(text())="' + identifier + '"]'))).perform();
     };
 
@@ -90,14 +90,14 @@ export class ResourcesPage {
 
     public static getListItemIdentifierText = function(itemNr) {
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
-            + (itemNr + 1) + ') .identifier'))), delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .identifier')).getText();
+            + (itemNr + 1) + ') .subtitle'))), delays.ECWaitTime);
+        return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .subtitle')).getText();
     };
 
     public static getSelectedListItemIdentifierText = function() {
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .identifier'))),
+        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .subtitle'))),
             delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item.selected .identifier')).getText();
+        return element(by.css('#objectList .list-group-item.selected .subtitle')).getText();
     };
 
     public static getListModeInputFieldValue = function(identifier, index) {

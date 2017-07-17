@@ -1,10 +1,10 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
-let common = require("../common.js");
+let common = require('../common.js');
 
 export class ImagesGridPage {
 
@@ -23,10 +23,10 @@ export class ImagesGridPage {
         return browser.actions().doubleClick(ImagesGridPage.getCell(index)).perform();
     };
     public static getCellImageName = function(index) {
-        return ImagesGridPage.getCell(index).element(by.css('.tag.tag-default')).getText();
+        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-default')).getText();
     };
     public static getCellFilenameElement = function(filename) {
-        return element(by.xpath('//span[@class="tag tag-default"][text()="' + filename + '"]'));
+        return element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]'));
     };
     public static clickDeselectButton = function () {
         return element(by.id('deselect-images')).click();
@@ -60,7 +60,7 @@ export class ImagesGridPage {
     };
     public static clickUploadArea = function() {
         return browser.actions()
-            .mouseMove(element(by.css(".droparea")), {x: 10, y: 10})
+            .mouseMove(element(by.css('.droparea')), {x: 10, y: 10})
             .click()
             .perform();
     };

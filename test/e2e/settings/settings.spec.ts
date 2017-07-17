@@ -1,18 +1,17 @@
-import {browser, protractor} from "protractor";
-import {NavbarPage} from "../navbar.page";
-import * as PouchDB from "pouchdb";
-import {SettingsPage} from "./settings.page";
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+import {browser} from 'protractor';
+import {NavbarPage} from '../navbar.page';
+import * as PouchDB from 'pouchdb';
+import {SettingsPage} from './settings.page';
+
 PouchDB.plugin(require('pouchdb-adapter-memory'));
+
+const delays = require('../config/delays');
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
 const expressPouchDB = require('express-pouchdb');
 const fs = require('fs');
 const path = require('path');
-
 const common = require('../common');
-
 
 /**
  * @author Thomas Kleinke
@@ -81,15 +80,15 @@ describe('settings --', function() {
                 browser.sleep(5000);
                 const loadedConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 expect(loadedConfig).toEqual(expectedConfig);
-                return SettingsPage.get().then(() => browser.sleep(2000))
+                return SettingsPage.get().then(() => browser.sleep(2000));
             }).then(() => SettingsPage.getRemoteSiteAddress())
             .then(address => {
                 expect(address).toEqual(remoteSiteAddress);
                 done();
             }).catch(err => {
-            fail(err);
-            done();
-        })
+                fail(err);
+                done();
+            });
     });
 });
 

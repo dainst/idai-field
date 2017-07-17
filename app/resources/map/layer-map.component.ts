@@ -51,11 +51,6 @@ export class LayerMapComponent extends MapComponent {
                 () => {
                     this.initializePanes();
                     this.addActiveLayersFromMapState();
-                    if (this.activeLayers.length == 0 && this.layersList.length > 0
-                        && !this.mapState.getActiveLayersIds()) {
-                        this.addLayerToMap(this.layersList[0]);
-                        this.saveActiveLayersIdsInMapState();
-                    }
                 }
             );
         } else {
@@ -84,28 +79,36 @@ export class LayerMapComponent extends MapComponent {
 
         return this.datastore.find(query)
             .then(documents => this.makeLayersForDocuments(documents as Array<Document>))
-            .then(() => {
-                this.layersList = this.getLayersAsList(this.layersMap);
+            .then(layersMap => {
+                this.removeOldLayersFromMap(layersMap);
+                this.layersMap = layersMap;
+                this.layersList = this.getLayersAsList(layersMap);
             }).catch(msgWithParams => Promise.reject(msgWithParams));
     }
 
-    private makeLayersForDocuments(documents: Array<Document>): Promise<any> {
+    private makeLayersForDocuments(documents: Array<Document>): Promise<{ [id: string]: ImageContainer }> {
+
+        let layersMap: { [id: string]: ImageContainer } = {};
 
         let zIndex: number = 0;
         let promises: Array<Promise<ImageContainer>> = [];
 
-        for (var doc of documents) {
-            if (doc.resource['georeference'] && !this.layersMap[doc.resource.id]) {
-                let promise = this.makeLayerForImageResource(doc, zIndex++);
-                promises.push(promise);
+        for (let doc of documents) {
+            if (doc.resource['georeference']) {
+                if (this.layersMap[doc.resource.id]) {
+                    layersMap[doc.resource.id] = this.layersMap[doc.resource.id];
+                } else {
+                    let promise = this.makeLayerForImageResource(doc, zIndex++);
+                    promises.push(promise);
+                }
             }
         }
 
         return Promise.all(promises).then(imgContainers => {
             for (let imgContainer of imgContainers) {
-                this.layersMap[imgContainer.document.resource.id] = imgContainer;
+                layersMap[imgContainer.document.resource.id] = imgContainer;
             }
-            return Promise.resolve();
+            return Promise.resolve(layersMap);
         });
     }
 
@@ -126,6 +129,20 @@ export class LayerMapComponent extends MapComponent {
                     reject();
                 });
         });
+    }
+
+    private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
+
+        for (let layer of this.getLayersAsList(this.layersMap)) {
+            if (!newLayersMap[layer.document.resource.id]) {
+                let index = this.activeLayers.indexOf(layer);
+                if (index > -1) {
+                    this.activeLayers.splice(index, 1);
+                    this.map.removeLayer(layer.object);
+                    this.mapState.removeFromActiveLayersIds(layer.document.resource.id);
+                }
+            }
+        }
     }
 
     private initializePanes() {

@@ -52,7 +52,7 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="(view && view.mainType != 'project') && !selectedMainTypeDocument && !editGeometry"
+    <div *ngIf="ready && view && view.mainType != 'project' && !selectedMainTypeDocument && !editGeometry"
          class="col-sm-8 offset-sm-2 text-center alert alert-warning" style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 900;">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
     </div>

@@ -3,18 +3,18 @@ import {NavbarPage} from '../navbar.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 
-describe('resources/messages --', function() {
+describe('resources/messages --', () => {
 
-    beforeEach(function() {
+    beforeEach(() => {
         ResourcesPage.get();
     });
 
-    it('create a new object of first listed type ', function() {
+    it('create a new object of first listed type ', () => {
         ResourcesPage.performCreateResource('12');
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    it('show the success msg also on route change', function() {
+    it('show the success msg also on route change', () => {
         ResourcesPage.performCreateResource('12');
         ResourcesPage.openEditByDoubleClickResource('12');
         DocumentEditWrapperPage.typeInInputField('34');
@@ -24,16 +24,23 @@ describe('resources/messages --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     
-    it('warn if identifier is missing', function() {
+    it('warn if identifier is missing', () => {
         ResourcesPage.performCreateResource('');
 
-        NavbarPage.awaitAlert('identifier',false)
+        NavbarPage.awaitAlert('identifier', false)
     });
 
-    it('warn if an existing id is used', function() {
+    it('warn if an existing identifier is used', () => {
         ResourcesPage.performCreateResource('12');
         ResourcesPage.performCreateResource('12');
 
-        NavbarPage.awaitAlert('existiert bereits',false);
+        NavbarPage.awaitAlert('existiert bereits', false);
+    });
+
+    it('do not warn if two different identifiers start with the same string', () => {
+        ResourcesPage.performCreateResource('120');
+        ResourcesPage.performCreateResource('12');
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 });

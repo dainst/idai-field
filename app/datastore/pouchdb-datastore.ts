@@ -236,6 +236,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private hasValidConstraints(query) {
+
         if (!query.constraints) return false;
 
         let validConstraints = 0;
@@ -249,6 +250,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private performConstraintQueries(query) {
+
         const queries = [];
         for (let constraint in query.constraints) {
             const opt = {
@@ -256,11 +258,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 include_docs: false,
                 conflicts: true,
                 startkey: 'UNKOWN',
-                endkey: 'UNKOWN'+'\uffff'
+                endkey: 'UNKOWN'
             };
             if (query.constraints[constraint] != undefined) {
                 opt['startkey'] = query.constraints[constraint];
-                opt['endkey'] = query.constraints[constraint]+'\uffff';
+                opt['endkey'] = query.constraints[constraint];
             }
             queries.push(this.db.query(constraint, opt))
         }
@@ -274,6 +276,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private intersectResults(results) {
+
         let rows = [];
         for (let result of results) {
             let row = [];
@@ -310,6 +313,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private simpleFind(query, offset, limit, include_docs = true) {
+
         const opt = {
             reduce: false,
             include_docs: include_docs,

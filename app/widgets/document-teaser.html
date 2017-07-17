@@ -3,11 +3,11 @@
     <div *ngIf="document['resource'].identifier || document['resource'].shortDescription"
          class="teasercontent">
         <div class="title">
-            {{document['resource'].shortDescription}}
+            {{document['resource'].identifier}}
         </div>
 
-        <div class="identifier">
-            {{document['resource'].identifier}}
+        <div class="subtitle">
+            {{document['resource'].shortDescription}}
         </div>
     </div>
     <div *ngIf="!(document['resource'].identifier || document['resource'].shortDescription)"

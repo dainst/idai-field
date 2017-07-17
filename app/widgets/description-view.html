@@ -2,10 +2,9 @@
         In one project we have this assumption that there is always a shortDescription,
         while in another there is only the identifier.
     -->
-<div *ngIf="document.resource.shortDescription">
-    <h1 class="document-view-title">{{document.resource.shortDescription}}</h1>
-    <h2 class="document-view-identifier">{{document.resource.identifier}}</h2>
-</div>
-<div *ngIf="!document.resource.shortDescription">
-    <h1 class="document-view-no-title">{{document.resource.identifier}}</h1>
+<div>
+    <h1>{{document.resource.identifier}}</h1>
+    <h2 *ngIf="document.resource.shortDescription" class="document-view-identifier">
+        {{document.resource.shortDescription}}
+    </h2>
 </div>

@@ -3,12 +3,56 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 export const DOCS: IdaiFieldDocument[] = [
     {
         "resource": {
+            "id": "test",
+            "identifier": "test",
+            "shortDescription": "Testprojekt",
+            "relations": {},
+            "type": "project"
+        }
+    },
+    {
+        "resource": {
+            "id": "t1",
+            "identifier": "trench1",
+            "shortDescription": "Goldener Schnitt",
+            "relations": {
+                "isRecordedIn": [ "test" ]
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[27.189218354962215, 39.14132050335332], [27.189276375601313, 39.14133824217116],
+                    [27.18928181180254, 39.14132438323931], [27.189226035114622, 39.141306298358316],
+                    [27.189218354962215, 39.14132050335332]]],
+                "crs": "local"
+            },
+            "type": "trench"
+        }
+    },
+    {
+        "resource": {
+            "id": "c1",
+            "identifier": "context1",
+            "shortDescription": "Ein Befund",
+            "relations": {
+                "isRecordedIn": [ "t1" ],
+                "includes": [ "tf1" ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [ 27.1892209283, 39.1411510096 ],
+                "crs": "local"
+            },
+            "type": "context"
+        }
+    },
+    {
+        "resource": {
             "id": "tf1",
             "identifier": "testf1",
             "shortDescription": "Testfund",
             "relations": {
-                "isRecordedIn": ["t1"],
-                "liesWithin": ["c1"]
+                "isRecordedIn": [ "t1" ],
+                "liesWithin": [ "c1" ]
             },
             "geometry": {
                 "type": "Point",
@@ -50,39 +94,6 @@ export const DOCS: IdaiFieldDocument[] = [
                 "topLeftCoordinates": [39.1413672328, 27.1893609283],
                 "topRightCoordinates": [39.1413672328, 27.1894859555]
             }
-        }
-    },
-    {
-        "resource": {
-            "id": "t1",
-            "identifier": "trench1",
-            "shortDescription": "Goldener Schnitt",
-            "relations": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [[[27.189218354962215, 39.14132050335332], [27.189276375601313, 39.14133824217116],
-                    [27.18928181180254, 39.14132438323931], [27.189226035114622, 39.141306298358316],
-                    [27.189218354962215, 39.14132050335332]]],
-                "crs": "local"
-            },
-            "type": "trench"
-        }
-    },
-    {
-        "resource": {
-            "id": "c1",
-            "identifier": "context1",
-            "shortDescription": "Ein Befund",
-            "relations": {
-                "isRecordedIn": ["t1"],
-                "includes": ["tf1"]
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [ 27.1892209283, 39.1411510096 ],
-                "crs": "local"
-            },
-            "type": "context"
         }
     }
 ];

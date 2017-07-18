@@ -252,7 +252,7 @@ export class DoceditComponent {
         return this.imageTypeUtility.isImageType(document.resource.type)
             .then(isImageType => {
                 if (isImageType) {
-                    return this.imagestore.remove(document.resource.identifier);
+                    return this.imagestore.remove(document.resource.id);
                 } else {
                     return Promise.resolve();
                 }

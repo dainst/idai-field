@@ -565,7 +565,7 @@ export function main() {
                 );
         });
 
-        it('should filter with unkown constraint ', function(done) {
+        it('should filter with unknown constraint ', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
 
@@ -595,7 +595,7 @@ export function main() {
                 );
         });
 
-        it('should filter with one known and one unkown constraint ', function(done) {
+        it('should filter with one known and one unknown constraint ', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
             doc2.resource.relations['liesWithin'] = ['id1'];

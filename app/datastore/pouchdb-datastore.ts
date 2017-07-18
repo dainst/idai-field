@@ -242,7 +242,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let validConstraints = 0;
         for (let constraint in query.constraints) {
             if (!this.pouchdbManager.getIndexCreator().hasIndex(constraint)) {
-                console.warn("ignoring unkown constraint",constraint);
+                console.warn("ignoring unknown constraint",constraint);
                 delete query.constraints[constraint];
             } else validConstraints++;
         }
@@ -257,8 +257,8 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 reduce: false,
                 include_docs: false,
                 conflicts: true,
-                startkey: 'UNKOWN',
-                endkey: 'UNKOWN'
+                startkey: 'UNKNOWN',
+                endkey: 'UNKNOWN'
             };
             if (query.constraints[constraint] != undefined) {
                 opt['startkey'] = query.constraints[constraint];

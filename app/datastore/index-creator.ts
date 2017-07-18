@@ -1,4 +1,4 @@
-declare function emit(key:any, value?:any):void;
+declare function emit(key: any, value?: any): void;
 
 /**
  * @author Daniel de Oliveira
@@ -61,7 +61,7 @@ export class IndexCreator {
             if (!doc.resource || !doc.resource.identifier) return;
             emit(doc.resource.identifier);
         };
-        return this.setupIndex(db,'resource.identifier', mapFun);
+        return this.setupIndex(db, 'resource.identifier', mapFun);
     }
 
     private setupIsRecordedInIndex(db): Promise<any> {
@@ -70,10 +70,10 @@ export class IndexCreator {
             if (doc.resource.relations['isRecordedIn'] != undefined) {
                 doc.resource.relations['isRecordedIn'].forEach(resourceId => emit(resourceId));
             } else {
-                emit("UNKOWN");
+                emit('UNKNOWN');
             }
         };
-        return this.setupIndex(db,'resource.relations.isRecordedIn', mapFun);
+        return this.setupIndex(db, 'resource.relations.isRecordedIn', mapFun);
     }
 
     private setupLiesWithinIndex(db): Promise<any> {
@@ -82,7 +82,7 @@ export class IndexCreator {
             if (doc.resource.relations['liesWithin'] != undefined) {
                 doc.resource.relations['liesWithin'].forEach(resourceId => emit(resourceId));
             } else {
-                emit("UNKOWN");
+                emit('UNKNOWN');
             }
         };
         return this.setupIndex(db,'resource.relations.liesWithin', mapFun);
@@ -94,11 +94,11 @@ export class IndexCreator {
             if (doc['_conflicts']) {
                 let lastModified = doc.created.date;
                 if (doc.modified && doc.modified.length > 0)
-                    lastModified = doc.modified[doc.modified.length-1].date;
+                    lastModified = doc.modified[doc.modified.length - 1].date;
                 emit(lastModified);
             }
         };
-        return this.setupIndex(db,'conflicted', mapFun);
+        return this.setupIndex(db, 'conflicted', mapFun);
     }
 
     private setupIndex(db, id, mapFun) {

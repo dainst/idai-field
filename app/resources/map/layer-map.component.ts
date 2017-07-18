@@ -8,6 +8,7 @@ import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
+import {ConfigLoader} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -33,9 +34,10 @@ export class LayerMapComponent extends MapComponent {
     constructor(protected mapState: LayerMapState,
                 protected datastore: ReadDatastore,
                 protected messages: Messages,
-                protected imagestore: Imagestore) {
+                protected imagestore: Imagestore,
+                configLoader: ConfigLoader) {
 
-        super();
+        super(configLoader);
     }
 
     public ngOnChanges(changes: SimpleChanges) {

@@ -16,6 +16,7 @@ gulp.task('convert-sass', function () {
     return gulp.src([
         'app/app.scss',
         'node_modules/leaflet/dist/leaflet.css',
+        'node_modules/Leaflet.vector-markers/dist/leaflet-vector-markers.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'
     ])
         .pipe(sass({

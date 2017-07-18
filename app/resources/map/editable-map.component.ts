@@ -211,14 +211,18 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.editableMarker = this.markers[this.selectedDocument.resource.id];
         this.editableMarker.unbindTooltip();
-        this.editableMarker.setIcon(this.markerIcons.red);
+        this.editableMarker.setIcon(this.generateMarkerIcon('red'));
         this.editableMarker.dragging.enable();
         this.editableMarker.setZIndexOffset(1000);
     }
 
     private createEditableMarker(position: L.LatLng) {
 
-        this.editableMarker = L.marker(position, { icon: this.markerIcons.red, draggable: true, zIndexOffset: 1000 });
+        this.editableMarker = L.marker(position, {
+            icon: this.generateMarkerIcon('red'),
+            draggable: true,
+            zIndexOffset: 1000
+        });
         this.editableMarker.addTo(this.map);
     }
 

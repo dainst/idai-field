@@ -20,7 +20,8 @@
             </div>
             <div class="col-md-2">
                 <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
-                             id="create-main-type-document-button" [preselectedType]="view.mainType"></plus-button>
+                             id="create-main-type-document-button" [preselectedType]="view.mainType"
+                             [isRecordedIn]="projectDocument"></plus-button>
             </div>
         </div>
 

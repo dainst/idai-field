@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Settings, SyncTarget} from './settings';
 import {SettingsSerializer} from './settings-serializer';
@@ -38,23 +39,9 @@ export class SettingsService {
         this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
+                this.useSelectedDatabase();
 
                 const project = this.getSelectedProject();
-
-                // if project object does not exist, create it
-                // this.datastore.get(project).catch(()=>{
-                //     this.datastore.create({
-                //         'resource' : {
-                //             'type' : 'project',
-                //             'identifier' : project,
-                //             'id' : project,
-                //             relations: {}
-                //         }
-                //     })
-                // });
-
-                this.pouchdbManager.select(project);
-                this.imagestore.select(project);
 
                 return this.setProjectSettings(this.settings.dbs, project, false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
@@ -131,7 +118,6 @@ export class SettingsService {
      */
     public activateSettings(restart = false): Promise<any> {
 
-        this.imagestore.select(this.getSelectedProject());
         if (restart) {
             return this.restartSync();
         } else {
@@ -165,14 +151,50 @@ export class SettingsService {
 
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
-        this.pouchdbManager.select(this.settings.dbs[0]);
         return new Promise<any>((resolve) => {
-            this.observers.forEach(o => o.next(false));
-            this.datastore.stopSync();
-            setTimeout(() => {
-                this.startSync().then(() => resolve());
-            }, 1000);
-        })
+            this.useSelectedDatabase().then(
+                () => {
+                    this.observers.forEach(o => o.next(false));
+                    this.datastore.stopSync();
+                    setTimeout(() => {
+                        this.startSync().then(() => resolve());
+                    }, 1000);
+                });
+            });
+    }
+
+    private useSelectedDatabase(): Promise<any> {
+
+        const project = this.getSelectedProject();
+
+        this.pouchdbManager.select(project);
+        this.imagestore.select(project);
+
+        return this.datastore.find({
+            constraints: { 'resource.identifier' : project }
+        }).then(result => {
+            if (!result || result.length == 0) {
+                return this.createProjectDocument(project);
+            } else {
+                return Promise.resolve();
+            }
+        }, msgWithParams => Promise.reject(msgWithParams));
+    }
+
+    private createProjectDocument(project: string): Promise<any> {
+
+        const projectDocument: Document = {
+            resource: {
+                type: 'project',
+                identifier: project,
+                id: project,
+                relations: {}
+            },
+            created: { user: this.getUsername(), date: new Date() },
+            modified: []
+        };
+
+        return this.datastore.create(projectDocument);
     }
 
     private static validateAddress(address) {

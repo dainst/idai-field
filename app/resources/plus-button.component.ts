@@ -115,10 +115,6 @@ export class PlusButtonComponent implements OnChanges {
 
         let relations: Relations = {};
 
-        if (this.isRecordedIn && this.isRecordedIn.resource.type == 'project') {
-            return relations;
-        }
-
         if (this.isRecordedIn) relations['isRecordedIn'] = [this.isRecordedIn.resource.id];
         if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id];
 
@@ -129,8 +125,8 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'image') return false;
 
-        let isRecordedInType = this.isRecordedIn ? this.isRecordedIn.resource.type : 'project';
-        if (!projectConfiguration.isAllowedRelationDomainType(type.name, isRecordedInType, 'isRecordedIn')) {
+        if (this.isRecordedIn && !projectConfiguration.isAllowedRelationDomainType(type.name,
+                this.isRecordedIn.resource.type, 'isRecordedIn')) {
             return false;
         }
 

@@ -40,6 +40,8 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
 
+    public projectDocument: IdaiFieldDocument;
+
     private ready: boolean = false;
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
@@ -103,7 +105,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
-        return this.fetchMainTypeDocuments()
+        return this.fetchProjectDocument()
+            .then(() => this.fetchMainTypeDocuments())
             .then(() => this.fetchDocuments())
             .then(() => {
                 this.ready = true;
@@ -294,6 +297,15 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+    public fetchProjectDocument(): Promise<any> {
+
+        const project: string = this.settingsService.getSelectedProject();
+
+        return this.datastore.get(project).then(
+            document => this.projectDocument = document as IdaiFieldDocument
+        );
+    }
+
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
@@ -304,53 +316,24 @@ export class ResourcesComponent implements AfterViewChecked {
         this.newDocumentsFromRemote = [];
 
         query.constraints = {};
-        if (this.view.mainType != 'project') {
-            if (this.selectedMainTypeDocument) {
-                query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
-            } else {
-                this.documents = [];
-                this.notify();
-                return Promise.resolve();
-            }
+        if (this.selectedMainTypeDocument) {
+            query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
-            query.constraints['resource.relations.isRecordedIn'] = undefined;
+            this.documents = [];
+            this.notify();
+            return Promise.resolve();
         }
 
         return this.datastore.find(query)
             .then(documents => {
-                return this.filterDocuments(documents);
-            }).then(filteredDocuments => {
-                this.documents = filteredDocuments;
+                this.documents = documents;
                 this.notify();
             }).catch(msgWithParams => this.messages.add(msgWithParams));
-    }
-
-    private filterDocuments(documents: Array<Document>): Promise<Array<Document>> {
-
-        if (this.view.mainType != 'project') return Promise.resolve(documents);
-
-        return this.configLoader.getProjectConfiguration()
-            .then(projectConfiguration => {
-                let result: Array<Document> = [];
-                for (let document of documents) {
-                    if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type, this.view.mainType,
-                            'isRecordedIn')) {
-                        continue;
-                    }
-                    result.push(document);
-                }
-                return Promise.resolve(result);
-            });
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
 
         if (!this.view) return Promise.resolve();
-
-        if (this.view.mainType == 'project') {
-            this.selectedMainTypeDocument = undefined;
-            return Promise.resolve();
-        }
 
         const query: Query = {type: this.view.mainType, prefix: true};
 

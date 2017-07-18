@@ -34,7 +34,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.update) return;
 
-        super.ngOnChanges(changes);
+        if (changes['documents'] || changes['selectedDocument'] || changes['mainTypeDocument'] || changes['update']) {
+            super.ngOnChanges(changes);
+        }
 
         this.resetEditing();
 

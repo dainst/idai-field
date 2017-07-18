@@ -20,6 +20,7 @@ gulp.task('convert-sass', function () {
     ])
         .pipe(sass({
             includePaths: [
+                'node_modules/roboto-fontface/css/roboto/sass',
                 'node_modules/idai-components-2/src/scss',
                 'node_modules/bootstrap/scss',
                 'node_modules/mdi/scss/'

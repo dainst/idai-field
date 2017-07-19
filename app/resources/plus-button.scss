@@ -37,11 +37,6 @@ plus-button {
       color: white;
     }
   }
-
-  type-icon img {
-    border-radius: 25px;
-    margin-bottom: 5px;
-  }
 }
 
 .type-button:hover {
@@ -56,6 +51,18 @@ plus-button {
 
 #new-object-menu ul li.list-group-item {
   border: 1px solid #eee !important;
+  display: block;
+
+  type-icon {
+    position: absolute;
+  }
+
+  .type-label {
+    display: inline-block;
+    margin-left: 40px;
+    font-size: 17px;
+    margin-top: 3px;
+  }
 }
 
 #new-object-menu ul li ul {

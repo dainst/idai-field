@@ -42,12 +42,18 @@
                 id="choose-type-option-{{index}}" [ngClass]="{'abstract-idai-type': type.isAbstract}"
                 class="list-group-item popover-item"
                 (click)="chooseType(type)">
-                <type-icon [type]="type.name" size="30"></type-icon> {{type.label}}
+                <div>
+                    <type-icon [type]="type.name" size="30"></type-icon>
+                    <div class="type-label">{{type.label}}</div>
+                </div>
                 <ul *ngIf="type.children" style="padding: 0;">
                     <li *ngFor="let childType of type.children; let childIndex = index"
                         id="choose-type-option-{{index}}-{{childIndex}}" class="list-group-item popover-item"
                         (click)="chooseType(childType)">
-                        <type-icon [type]="childType.name" size="30"></type-icon> {{childType['label']}}
+                        <div>
+                            <type-icon [type]="childType.name" size="30"></type-icon>
+                            <div class="type-label">{{childType['label']}}</div>
+                        </div>
                     </li>
                 </ul>
             </li>

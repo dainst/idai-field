@@ -21,24 +21,17 @@ describe('resources/map --', function() {
 
     function setMultiPolygon() {
         return Promise.resolve()
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, 2000);
-            })}).then(() => { return MapPage.clickMap(100, 100); })
-            .then(() => { return MapPage.clickMap(200, 200); })
+            .then(() => {
+                browser.sleep(3000);
+                return MapPage.clickMap(100, 100);
+            }).then(() => { return MapPage.clickMap(200, 200); })
             .then(() => { return MapPage.clickMap(100, 200); })
             .then(() => { return MapPage.clickMap(100, 100); })
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, 2000)
-            })}).then(() => { return MapPage.clickMapOption('add-polygon'); })
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, 2000)
-            })}).then(() => { return MapPage.clickMap(300, 300); })
+            .then(() => { return MapPage.clickMapOption('add-polygon'); })
+            .then(() => { return MapPage.clickMap(300, 300); })
             .then(() => { return MapPage.clickMap(500, 400); })
             .then(() => { return MapPage.clickMap(300, 400); })
-            .then(() => { return MapPage.clickMap(300, 300); })
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, 2000)
-            })});
+            .then(() => { return MapPage.clickMap(300, 300); });
     }
 
     function setPolyline() {
@@ -54,10 +47,10 @@ describe('resources/map --', function() {
 
     function setMultiPolyline() {
         return Promise.resolve()
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, delays.shortRest)
-            })}).then(() => { return MapPage.clickMap(100,100); })
-            .then(() => { return MapPage.clickMap(200,200); })
+            .then(() => {
+                browser.sleep(1000);
+                return MapPage.clickMap(100,100);
+            }).then(() => { return MapPage.clickMap(200,200); })
             .then(() => { return MapPage.clickMap(300,100); })
             .then(() => { return MapPage.clickMap(400,200); })
             .then(() => { return MapPage.clickMap(400,200); })

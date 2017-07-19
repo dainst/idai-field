@@ -118,7 +118,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupEditablePolygon(polygon: L.Polygon) {
 
-        polygon.setStyle({ color: 'red', fillColor: 'red' });
+        polygon.setStyle({ className: 'editable' });
 
         var mapComponent = this;
         polygon.on('click', function() {
@@ -179,7 +179,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupEditablePolyline(polyline: L.Polyline) {
 
-        polyline.setStyle({ color: 'red' });
+        polyline.setStyle({ className: 'editable' });
 
         var mapComponent = this;
         polyline.on('click', function() {
@@ -211,21 +211,27 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.editableMarker = this.markers[this.selectedDocument.resource.id];
-        this.editableMarker.unbindTooltip();
-        this.editableMarker.setIcon(this.generateMarkerIcon('red'));
-        this.editableMarker.dragging.enable();
-        this.editableMarker.setZIndexOffset(1000);
+        this.configLoader.getProjectConfiguration().then(config => {
+            this.editableMarker = this.markers[this.selectedDocument.resource.id];
+            this.editableMarker.unbindTooltip();
+            let color = config.getColorForType(this.selectedDocument.resource.type);
+            this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
+            this.editableMarker.dragging.enable();
+            this.editableMarker.setZIndexOffset(1000);
+        });
     }
 
     private createEditableMarker(position: L.LatLng) {
 
-        this.editableMarker = L.marker(position, {
-            icon: this.generateMarkerIcon('red'),
-            draggable: true,
-            zIndexOffset: 1000
+        this.configLoader.getProjectConfiguration().then(config => {
+            let color = config.getColorForType(this.selectedDocument.resource.type);
+            this.editableMarker = L.marker(position, {
+                icon: this.generateMarkerIcon(color, 'active'),
+                draggable: true,
+                zIndexOffset: 1000
+            });
+            this.editableMarker.addTo(this.map);
         });
-        this.editableMarker.addTo(this.map);
     }
 
     private setEditableMarkerPosition(position: L.LatLng) {
@@ -250,8 +256,9 @@ export class EditableMapComponent extends LayerMapComponent {
     private addPolyLayer(drawMode: string) {
 
         const drawOptions = {
-            templineStyle: { color: 'red' },
-            hintlineStyle: { color: 'red' }
+            templineStyle: { className: 'templine' },
+            hintlineStyle: { className: 'hintline' },
+            pathOptions: { className: 'editable' }
         };
 
         this.map.pm.enableDraw(drawMode, drawOptions);

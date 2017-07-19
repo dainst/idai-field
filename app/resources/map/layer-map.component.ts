@@ -28,8 +28,7 @@ export class LayerMapComponent extends MapComponent {
 
     protected panes: { [id: string]: any } = {};
 
-    private layersReady: Promise<any>;
-    private updateLayers: boolean = false;
+    private layersUpdate: boolean = false;
 
     constructor(protected mapState: LayerMapState,
                 protected datastore: ReadDatastore,
@@ -42,38 +41,41 @@ export class LayerMapComponent extends MapComponent {
 
     protected updateMap(changes: SimpleChanges) {
 
-        if (changes['documents'] && changes['documents'].currentValue) this.updateLayers = true;
+        if (changes['documents'] && changes['documents'].currentValue) this.layersUpdate = true;
 
         if (!this.update) return;
-
-        if (this.updateLayers) {
-            this.updateLayers = false;
-
-            this.layersReady = this.initializeLayers().then(
-                () => {
-                    this.initializePanes();
-                    this.addActiveLayersFromMapState();
-                    if (this.activeLayers.length == 0 && this.layersList.length > 0
-                        && !this.mapState.getActiveLayersIds()) {
-                        this.addLayerToMap(this.layersList[0]);
-                        this.saveActiveLayersIdsInMapState();
-                    }
-                }
-            );
-        } else {
-            this.layersReady = Promise.resolve();
-        }
 
         super.updateMap(changes);
     }
 
     protected setView() {
 
-        this.layersReady.then(() => {
+        let promise: Promise<any>;
+        if (this.layersUpdate) {
+            promise = this.updateLayers();
+        } else {
+            promise = Promise.resolve();
+        }
+
+        promise.then(() => super.setView());
+    }
+
+    private updateLayers(): Promise<any> {
+
+        return this.initializeLayers().then(
+            () => {
+                this.initializePanes();
+                this.addActiveLayersFromMapState();
+                if (this.activeLayers.length == 0 && this.layersList.length > 0
+                    && !this.mapState.getActiveLayersIds()) {
+                    this.addLayerToMap(this.layersList[0]);
+                    this.saveActiveLayersIdsInMapState();
+                }
+            }
+        ).then(() => {
             for (let layer of this.activeLayers) {
                 this.addLayerCoordinatesToBounds(layer);
             }
-            super.setView();
         });
     }
 

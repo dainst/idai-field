@@ -108,7 +108,8 @@ export class EditableMapComponent extends LayerMapComponent {
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) { 
             let polygon: L.Polygon = <L.Polygon> event.layer; 
-            if (polygon.getLatLngs().length == 1 && polygon.getLatLngs()[0].length >= 3) {
+            let latLngs: Array<any> = polygon.getLatLngs();
+            if (latLngs.length == 1 && latLngs[0].length >= 3) {
                 mapComponent.editablePolygons.push(polygon);
                 mapComponent.setupEditablePolygon(polygon);
                 mapComponent.setSelectedPolygon(polygon);

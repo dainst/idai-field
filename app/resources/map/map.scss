@@ -8,6 +8,25 @@ $layer-menu-button-inactive-color: grey;
 #map-container {
   width: 100%;
   height: calc(100vh - 113px);
+
+  .leaflet-overlay-pane path {
+
+      &.editable {
+        stroke: blue;
+        stroke-width: 1px;
+      }
+
+      &.templine {
+        stroke: blue;
+        stroke-width: 1px;
+      }
+
+      &.hintline {
+        stroke: blue;
+        stroke-width: 1px;
+        stroke-dasharray: 5;
+      }
+    }
 }
 
 #layer-button,

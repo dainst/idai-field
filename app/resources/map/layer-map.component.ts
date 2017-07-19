@@ -52,6 +52,7 @@ export class LayerMapComponent extends MapComponent {
 
         let promise: Promise<any>;
         if (this.layersUpdate) {
+            this.layersUpdate = false;
             promise = this.updateLayers();
         } else {
             promise = Promise.resolve();

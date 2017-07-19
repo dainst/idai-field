@@ -22,16 +22,23 @@ describe('resources/map --', function() {
     function setMultiPolygon() {
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, delays.shortRest);
+                setTimeout(function() { resolve(); }, 2000);
             })}).then(() => { return MapPage.clickMap(100, 100); })
             .then(() => { return MapPage.clickMap(200, 200); })
             .then(() => { return MapPage.clickMap(100, 200); })
             .then(() => { return MapPage.clickMap(100, 100); })
-            .then(() => { return MapPage.clickMapOption('add-polygon'); })
-            .then(() => { return MapPage.clickMap(300, 300); })
+            .then(() => { return new Promise(function(resolve) {
+                setTimeout(function() { resolve(); }, 2000)
+            })}).then(() => { return MapPage.clickMapOption('add-polygon'); })
+            .then(() => { return new Promise(function(resolve) {
+                setTimeout(function() { resolve(); }, 2000)
+            })}).then(() => { return MapPage.clickMap(300, 300); })
             .then(() => { return MapPage.clickMap(500, 400); })
             .then(() => { return MapPage.clickMap(300, 400); })
-            .then(() => { return MapPage.clickMap(300, 300); });
+            .then(() => { return MapPage.clickMap(300, 300); })
+            .then(() => { return new Promise(function(resolve) {
+                setTimeout(function() { resolve(); }, 2000)
+            })});
     }
 
     function setPolyline() {

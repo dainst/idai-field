@@ -1,9 +1,7 @@
-import {browser,protractor,element,by} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 
 let delays = require('../../config/delays');
 let EC = protractor.ExpectedConditions;
-
-
 
 export class MapPage {
 
@@ -37,8 +35,12 @@ export class MapPage {
         }
     };
 
+    public static getMapOption = function(optionName) {
+        return element(by.id('map-editor-button-' + optionName));
+    };
+
     public static clickMapOption = function(optionName) {
-        browser.wait(EC.presenceOf(element(by.id('map-editor-button-'+optionName))), delays.ECWaitTime);
-        return element(by.id('map-editor-button-'+optionName)).click();
+        browser.wait(EC.presenceOf(MapPage.getMapOption(optionName)), delays.ECWaitTime);
+        return MapPage.getMapOption(optionName).click();
     };
 }

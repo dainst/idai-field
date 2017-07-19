@@ -26,11 +26,8 @@ app.start().then(() => app.client.sessions()).then(sessions => {
 
     function takeShot(mode) {
         console.log('taking screenshot ' + i + ' on ' + mode);
-        app.browserWindow.capturePage().then(function(png) {
-            let stream = fs.createWriteStream('test/e2e-screenshots/' + i + '.png');
-            stream.write(new Buffer(png, 'base64'));
-            stream.end();
-            i++;
+        app.browserWindow.capturePage().then(function(imageBuffer) {
+            fs.writeFile('test/e2e-screenshots/' + i + '.png', imageBuffer);
         });
     }
 
@@ -57,7 +54,7 @@ app.start().then(() => app.client.sessions()).then(sessions => {
             if (data.indexOf('.') == 5) {
                 process.stdout.write(data.substring(10))
             } else {
-                if(data.indexOf('Failed') != -1) {
+                if (data.indexOf('FAILED') != -1) {
                     takeShot('Failed in stdout');
                 }
                 process.stdout.write(data);

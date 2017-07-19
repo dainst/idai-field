@@ -28,6 +28,7 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         console.log('taking screenshot ' + i + ' on ' + mode);
         app.browserWindow.capturePage().then(function(imageBuffer) {
             fs.writeFile('test/e2e-screenshots/' + i + '.png', imageBuffer);
+            i++;
         });
     }
 
@@ -67,11 +68,8 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         });
         protractor.on('close', code => {
 
-            app.browserWindow.capturePage().then(function(png) {
-                let stream = fs.createWriteStream('test/e2e-screenshots/close.png');
-                stream.write(new Buffer(png, 'base64'));
-                stream.end();
-                i++;
+            app.browserWindow.capturePage().then(function(imageBuffer) {
+                fs.writeFile('test/e2e-screenshots/close.png', imageBuffer);
             });
             resolve(code);
         });

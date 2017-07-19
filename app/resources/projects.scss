@@ -2,6 +2,10 @@ projects {
     .circular-button {
         width: 41px;
         height: 41px;
+
+        &.type-button {
+            padding: 0;
+        }
     }
 }
 

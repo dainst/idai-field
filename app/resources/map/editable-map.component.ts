@@ -108,9 +108,14 @@ export class EditableMapComponent extends LayerMapComponent {
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) { 
             let polygon: L.Polygon = <L.Polygon> event.layer; 
-            mapComponent.editablePolygons.push(polygon); 
-            mapComponent.setupEditablePolygon(polygon); 
-            mapComponent.setSelectedPolygon(polygon);
+            if (polygon.getLatLngs().length == 1 && polygon.getLatLngs()[0].length >= 3) {
+                mapComponent.editablePolygons.push(polygon);
+                mapComponent.setupEditablePolygon(polygon);
+                mapComponent.setSelectedPolygon(polygon);
+            } else {
+                mapComponent.map.removeLayer(polygon);
+                mapComponent.addPolygon();
+            }
         });
     }
 
@@ -169,9 +174,14 @@ export class EditableMapComponent extends LayerMapComponent {
         var mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             let polyline: L.Polyline = <L.Polyline> event.layer;
-            mapComponent.editablePolylines.push(polyline);
-            mapComponent.setupEditablePolyline(polyline);
-            mapComponent.setSelectedPolyline(polyline);
+            if (polyline.getLatLngs().length >= 2) {
+                mapComponent.editablePolylines.push(polyline);
+                mapComponent.setupEditablePolyline(polyline);
+                mapComponent.setSelectedPolyline(polyline);
+            } else {
+                mapComponent.map.removeLayer(polyline);
+                mapComponent.addPolyline();
+            }
         });
     }
 

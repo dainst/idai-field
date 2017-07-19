@@ -26,11 +26,15 @@ describe('resources/map --', function() {
                 return MapPage.clickMap(100, 100);
             }).then(() => { return MapPage.clickMap(200, 200); })
             .then(() => { return MapPage.clickMap(100, 200); })
+            .then(() => { return MapPage.clickMap(100, 175); })
+            .then(() => { return MapPage.clickMap(100, 150); })
             .then(() => { return MapPage.clickMap(100, 100); })
             .then(() => { return MapPage.clickMapOption('add-polygon'); })
             .then(() => { return MapPage.clickMap(300, 300); })
             .then(() => { return MapPage.clickMap(500, 400); })
             .then(() => { return MapPage.clickMap(300, 400); })
+            .then(() => { return MapPage.clickMap(300, 350); })
+            .then(() => { return MapPage.clickMap(300, 325); })
             .then(() => { return MapPage.clickMap(300, 300); });
     }
 
@@ -125,7 +129,7 @@ describe('resources/map --', function() {
         });
     });
 
-    it('create a new item with multipolygon geometry', function() {
+    fit('create a new item with multipolygon geometry', function() {
         createDoc('doc', 'polygon', setMultiPolygon);
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
             expect(text).toEqual('Multipolygon');

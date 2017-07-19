@@ -63,6 +63,7 @@ describe('resources --', () => {
         ResourcesPage.scrollUp();
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
+        browser.wait(EC.presenceOf(element(by.id('document-view'))), delays.ECWaitTime);
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 

@@ -11,14 +11,14 @@
     </div>
 
     <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType != 'none'"
-             class="circular-button type-button"
+             class="circular-button single-type type-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">
              <!-- Enable when finally implemented in Chromium
              onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
              -->
-        <type-icon [type]="typesTreeList[0].name" size="25"></type-icon>
+        <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>

@@ -12,6 +12,10 @@ plus-button {
   .circular-button {
     width: 41px;
     height: 41px;
+
+    &.single-type {
+      padding: 0;
+    }
   }
 }
 
@@ -20,8 +24,8 @@ plus-button {
 
   .plus-sign-circle {
     position: relative;
-    top: -12px;
-    left: 28px;
+    top: -26px;
+    left: 26px;
     border-radius: 50%;
     width: 18px;
     height: 18px;

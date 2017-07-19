@@ -30,39 +30,39 @@ export class EditableMapComponent extends LayerMapComponent {
     private editablePolygons: Array<L.Polygon>;
     private selectedPolygon: L.Polygon;
 
-    protected updateMap(changes: SimpleChanges) {
+    protected updateMap(changes: SimpleChanges): Promise<any> {
 
-        if (!this.update) return;
+        if (!this.update) return Promise.resolve();
 
-        super.updateMap(changes);
+        super.updateMap(changes).then(() => {
+            this.resetEditing();
 
-        this.resetEditing();
+            if (this.editMode) {
+                this.map.doubleClickZoom.disable();
 
-        if (this.editMode) {
-            this.map.doubleClickZoom.disable();
-
-            if (this.selectedDocument.resource.geometry.coordinates) {
-                this.fadeOutMapElements();
-                this.editExistingGeometry();
-            } else {
-                switch (this.getEditorType()) {
-                    case 'polygon':
-                        this.fadeOutMapElements();
-                        this.startPolygonCreation();
-                        break;
-                    case 'polyline':
-                        this.fadeOutMapElements();
-                        this.startPolylineCreation();
-                        break;
-                    case 'point':
-                        this.fadeOutMapElements();
-                        this.startPointCreation();
-                        break;
+                if (this.selectedDocument.resource.geometry.coordinates) {
+                    this.fadeOutMapElements();
+                    this.editExistingGeometry();
+                } else {
+                    switch (this.getEditorType()) {
+                        case 'polygon':
+                            this.fadeOutMapElements();
+                            this.startPolygonCreation();
+                            break;
+                        case 'polyline':
+                            this.fadeOutMapElements();
+                            this.startPolylineCreation();
+                            break;
+                        case 'point':
+                            this.fadeOutMapElements();
+                            this.startPointCreation();
+                            break;
+                    }
                 }
+            } else {
+                this.map.doubleClickZoom.enable();
             }
-        } else {
-            this.map.doubleClickZoom.enable();
-        }
+        });
     }
 
     private editExistingGeometry() {

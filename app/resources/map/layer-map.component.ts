@@ -39,16 +39,16 @@ export class LayerMapComponent extends MapComponent {
         super(configLoader);
     }
 
-    protected updateMap(changes: SimpleChanges) {
+    protected updateMap(changes: SimpleChanges): Promise<any> {
 
         if (changes['documents'] && changes['documents'].currentValue) this.layersUpdate = true;
 
-        if (!this.update) return;
+        if (!this.update) return Promise.resolve();
 
-        super.updateMap(changes);
+        return super.updateMap(changes);
     }
 
-    protected setView() {
+    protected setView(): Promise<any> {
 
         let promise: Promise<any>;
         if (this.layersUpdate) {
@@ -57,7 +57,7 @@ export class LayerMapComponent extends MapComponent {
             promise = Promise.resolve();
         }
 
-        promise.then(() => super.setView());
+        return promise.then(() => super.setView());
     }
 
     private updateLayers(): Promise<any> {

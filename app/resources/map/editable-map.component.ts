@@ -30,12 +30,12 @@ export class EditableMapComponent extends LayerMapComponent {
     private editablePolygons: Array<L.Polygon>;
     private selectedPolygon: L.Polygon;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    protected updateMap(changes: SimpleChanges) {
 
         if (!this.update) return;
 
         if (changes['documents'] || changes['selectedDocument'] || changes['mainTypeDocument'] || changes['update']) {
-            super.ngOnChanges(changes);
+            super.updateMap(changes);
         }
 
         this.resetEditing();
@@ -211,27 +211,23 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.configLoader.getProjectConfiguration().then(config => {
-            this.editableMarker = this.markers[this.selectedDocument.resource.id];
-            this.editableMarker.unbindTooltip();
-            let color = config.getColorForType(this.selectedDocument.resource.type);
-            this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
-            this.editableMarker.dragging.enable();
-            this.editableMarker.setZIndexOffset(1000);
-        });
+        this.editableMarker = this.markers[this.selectedDocument.resource.id];
+        this.editableMarker.unbindTooltip();
+        let color = this.typeColors[this.selectedDocument.resource.type];
+        this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
+        this.editableMarker.dragging.enable();
+        this.editableMarker.setZIndexOffset(1000);
     }
 
     private createEditableMarker(position: L.LatLng) {
 
-        this.configLoader.getProjectConfiguration().then(config => {
-            let color = config.getColorForType(this.selectedDocument.resource.type);
-            this.editableMarker = L.marker(position, {
-                icon: this.generateMarkerIcon(color, 'active'),
-                draggable: true,
-                zIndexOffset: 1000
-            });
-            this.editableMarker.addTo(this.map);
+        let color = this.typeColors[this.selectedDocument.resource.type];
+        this.editableMarker = L.marker(position, {
+            icon: this.generateMarkerIcon(color, 'active'),
+            draggable: true,
+            zIndexOffset: 1000
         });
+        this.editableMarker.addTo(this.map);
     }
 
     private setEditableMarkerPosition(position: L.LatLng) {

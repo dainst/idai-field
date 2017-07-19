@@ -1,10 +1,10 @@
 import {browser} from 'protractor';
-
 import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources.page';
-let delays = require('../../config/delays');
 import {DocumentViewPage} from '../../widgets/document-view.page';
 import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
+
+let delays = require('../../config/delays');
 
 
 describe('resources/map --', function() {

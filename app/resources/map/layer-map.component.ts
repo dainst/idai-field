@@ -3,12 +3,12 @@ import {MapComponent} from 'idai-components-2/idai-field-map';
 import {ReadDatastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Document} from 'idai-components-2/core';
+import {ConfigLoader} from 'idai-components-2/configuration';
 import {LayerMapState} from './layer-map-state';
 import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
-import {ConfigLoader} from "idai-components-2/configuration";
 
 @Component({
     moduleId: module.id,
@@ -40,7 +40,7 @@ export class LayerMapComponent extends MapComponent {
         super(configLoader);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    protected updateMap(changes: SimpleChanges) {
 
         if (changes['documents'] && changes['documents'].currentValue) this.updateLayers = true;
 
@@ -64,7 +64,7 @@ export class LayerMapComponent extends MapComponent {
             this.layersReady = Promise.resolve();
         }
 
-        super.ngOnChanges(changes);
+        super.updateMap(changes);
     }
 
     protected setView() {

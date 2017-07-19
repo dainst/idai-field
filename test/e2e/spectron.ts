@@ -27,7 +27,7 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     function takeShot(mode) {
         console.log('taking screenshot ' + i + ' on ' + mode);
         app.browserWindow.capturePage().then(function(imageBuffer) {
-            fs.writeFile('test/e2e-screenshots/' + i + '.png', imageBuffer);
+            fs.writeFileSync('test/e2e-screenshots/' + i + '.png', imageBuffer);
             i++;
         });
     }
@@ -69,7 +69,7 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         protractor.on('close', code => {
 
             app.browserWindow.capturePage().then(function(imageBuffer) {
-                fs.writeFile('test/e2e-screenshots/close.png', imageBuffer);
+                fs.writeFileSync('test/e2e-screenshots/close.png', imageBuffer);
             });
             resolve(code);
         });

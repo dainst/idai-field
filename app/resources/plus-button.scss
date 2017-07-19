@@ -40,11 +40,14 @@ plus-button {
 }
 
 .type-button:hover {
-  filter: brightness(1.05);
-  transition: filter .3s ease;
+
+  type-icon {
+    filter: brightness(1.3);
+    transition: filter .3s ease;
+  }
 
   .plus-sign-circle {
-    filter: brightness(1.2);
+    filter: brightness(1.18);
     transition: filter .3s ease;
   }
 }

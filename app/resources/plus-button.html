@@ -11,7 +11,7 @@
     </div>
 
     <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType != 'none'"
-             class="circular-button single-type type-button"
+             class="circular-button type-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">

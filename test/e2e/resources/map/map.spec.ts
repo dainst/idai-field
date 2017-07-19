@@ -129,7 +129,7 @@ describe('resources/map --', function() {
         });
     });
 
-    fit('create a new item with multipolygon geometry', function() {
+    it('create a new item with multipolygon geometry', function() {
         createDoc('doc', 'polygon', setMultiPolygon);
         DocumentViewPage.getSelectedGeometryTypeText().then(text => {
             expect(text).toEqual('Multipolygon');

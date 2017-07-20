@@ -1,8 +1,7 @@
 import {NavbarPage} from '../navbar.page';
-
+import {ResourcesPage} from './resources.page';
 
 let delays = require('../config/delays');
-import {ResourcesPage} from './resources.page';
 
 describe('resources/list --', function() {
 

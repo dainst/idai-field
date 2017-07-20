@@ -105,6 +105,11 @@ export class ListComponent implements OnInit {
         this.docRefTree = [];
         this.docRefMap = {};
 
+        if (!this.selectedMainTypeDocument) {
+            this.awaitsReload = false;
+            return;
+        }
+
         const query: Query = {
             constraints: {
                 'resource.relations.isRecordedIn' : this.selectedMainTypeDocument.resource.id,

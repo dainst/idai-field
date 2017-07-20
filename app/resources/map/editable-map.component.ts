@@ -122,8 +122,6 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupEditablePolygon(polygon: L.Polygon) {
 
-        polygon.setStyle({ className: 'editable' });
-
         var mapComponent = this;
         polygon.on('click', function() {
             mapComponent.setSelectedPolygon(this);
@@ -187,8 +185,6 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     private setupEditablePolyline(polyline: L.Polyline) {
-
-        polyline.setStyle({ className: 'editable' });
 
         var mapComponent = this;
         polyline.on('click', function() {
@@ -260,10 +256,13 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private addPolyLayer(drawMode: string) {
 
+        const className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        className += ' active';
+
         const drawOptions = {
             templineStyle: { className: 'templine' },
             hintlineStyle: { className: 'hintline' },
-            pathOptions: { className: 'editable' }
+            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
         };
 
         this.map.pm.enableDraw(drawMode, drawOptions);

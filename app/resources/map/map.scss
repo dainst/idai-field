@@ -11,11 +11,6 @@ $layer-menu-button-inactive-color: grey;
 
   .leaflet-overlay-pane path {
 
-      &.editable {
-        stroke: blue;
-        stroke-width: 1px;
-      }
-
       &.templine {
         stroke: blue;
         stroke-width: 1px;

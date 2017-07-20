@@ -257,14 +257,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 reduce: false,
                 include_docs: false,
                 conflicts: true,
-                startkey: 'UNKNOWN',
-                endkey: 'UNKNOWN'
+                startkey: ['UNKNOWN'],
+                endkey: ['UNKNOWN', {}]
             };
             if (query.constraints[constraint] != undefined) {
-                opt['startkey'] = query.constraints[constraint];
-                opt['endkey'] = query.constraints[constraint];
+                opt['startkey'] = [query.constraints[constraint]];
+                opt['endkey'] = [query.constraints[constraint], {}];
             }
-            queries.push(this.db.query(constraint, opt))
+            queries.push(this.db.query(constraint, opt));
         }
         return Promise.all(queries)
             .then(results => {

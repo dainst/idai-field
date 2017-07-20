@@ -59,7 +59,7 @@ export class IndexCreator {
     private setupIdentifierIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource || !doc.resource.identifier) return;
-            emit(doc.resource.identifier);
+            emit([doc.resource.identifier]);
         };
         return this.setupIndex(db, 'resource.identifier', mapFun);
     }
@@ -68,9 +68,10 @@ export class IndexCreator {
         let mapFun = function(doc) {
             if (!doc.resource) return;
             if (doc.resource.relations['isRecordedIn'] != undefined) {
-                doc.resource.relations['isRecordedIn'].forEach(resourceId => emit(resourceId));
+                doc.resource.relations['isRecordedIn'].forEach(resourceId =>
+                    emit([resourceId, doc.resource.type, doc.resource.identifier]));
             } else {
-                emit('UNKNOWN');
+                emit(['UNKNOWN', doc.resource.type, doc.resource.identifier]);
             }
         };
         return this.setupIndex(db, 'resource.relations.isRecordedIn', mapFun);
@@ -80,9 +81,10 @@ export class IndexCreator {
         let mapFun = function(doc) {
             if (!doc.resource) return;
             if (doc.resource.relations['liesWithin'] != undefined) {
-                doc.resource.relations['liesWithin'].forEach(resourceId => emit(resourceId));
+                doc.resource.relations['liesWithin'].forEach(resourceId =>
+                    emit([resourceId, doc.resource.type, doc.resource.identifier]));
             } else {
-                emit('UNKNOWN');
+                emit(['UNKNOWN', doc.resource.type, doc.resource.identifier]);
             }
         };
         return this.setupIndex(db,'resource.relations.liesWithin', mapFun);

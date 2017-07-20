@@ -48,6 +48,8 @@ export class ResourcesComponent implements AfterViewChecked {
     private observers: Array<any> = [];
     private mainTypeObservers: Array<any> = [];
 
+    private mainTypeHistory = {};
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
@@ -60,6 +62,10 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewUtility: ViewUtility
     ) {
         this.route.params.subscribe(params => {
+            if (this.selectedMainTypeDocument != undefined && this.view != undefined) {
+                this.mainTypeHistory[this.view.name] = this.selectedMainTypeDocument;
+            }
+
             this.selectedDocument = undefined;
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
@@ -271,7 +277,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public remove(document: Document) {
-
         const index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
         this.notify();
@@ -298,7 +303,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public fetchProjectDocument(): Promise<any> {
-
         const project: string = this.settingsService.getSelectedProject();
 
         return this.datastore.get(project).then(
@@ -345,7 +349,11 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
                 if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             } else {
-                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                if (this.mainTypeHistory[this.view.name]) {
+                    this.selectedMainTypeDocument = this.mainTypeHistory[this.view.name];
+                } else {
+                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                }
             }
 
         });

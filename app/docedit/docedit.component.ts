@@ -11,7 +11,6 @@ import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component'
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
-import {DiffUtility} from '../util/diff-utility';
 import {Imagestore} from '../imagestore/imagestore';
 
 @Component({
@@ -275,6 +274,12 @@ export class DoceditComponent {
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
 
-        return !DiffUtility.compareArrays(conflictsBeforeSave, conflictsAfterSave);
+        for (let conflict of conflictsAfterSave) {
+            if (conflictsBeforeSave.indexOf(conflict) == -1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

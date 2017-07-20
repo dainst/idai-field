@@ -128,8 +128,9 @@ export class ResourcesPage {
     };
 
     public static getListModeInputField = function(identifier, index) {
-        browser.wait(EC.visibilityOf(element.all(by.id('resource-' + identifier + ' input')).get(index)));
-        return element.all(by.id('resource-' + identifier + ' input')).get(index);
+        browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
+            delays.ECWaitTime);
+        return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
     public static selectMainType = function(option) {
@@ -140,10 +141,10 @@ export class ResourcesPage {
     // sequences
 
     public static performCreateResource = function(identifier: string, typeIndex?: number, inputFieldText?: string,
-                                                   inputFieldIndex?: number) {
+                                                   inputFieldIndex?: number, skipGeometry?: boolean) {
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeIndex);
-        ResourcesPage.clickSelectGeometryType();
+        if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
         DocumentEditWrapperPage.typeInInputField(identifier);
         if (inputFieldText && inputFieldIndex) {
             DocumentEditWrapperPage.typeInInputField(inputFieldText, inputFieldIndex);

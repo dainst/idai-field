@@ -256,7 +256,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private addPolyLayer(drawMode: string) {
 
-        const className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
         className += ' active';
 
         const drawOptions = {

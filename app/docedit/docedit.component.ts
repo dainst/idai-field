@@ -8,10 +8,10 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../m';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {ConflictModalComponent} from './conflict-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
+import {DiffUtility} from '../util/diff-utility';
 import {Imagestore} from '../imagestore/imagestore';
 
 @Component({
@@ -67,12 +67,12 @@ export class DoceditComponent {
         private persistenceManager: PersistenceManager,
         private validator: Validator,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        configLoader: ConfigLoader,
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDatastore,
         private imagestore: Imagestore,
-        private imageTypeUtility: ImageTypeUtility
+        private imageTypeUtility: ImageTypeUtility,
+        configLoader: ConfigLoader
     ) {
         this.imageTypeUtility.getProjectImageTypes().then(
             projectImageTypes => this.projectImageTypes = projectImageTypes
@@ -106,11 +106,13 @@ export class DoceditComponent {
      */
     public save(viaSaveButton: boolean = false) {
 
+        const documentBeforeSave: IdaiFieldDocument = DoceditComponent.cloneDocument(this.clonedDocument);
+
         this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
             .then(
                 () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
                     .then(
-                        () => this.handleSaveSuccess(this.clonedDocument, viaSaveButton),
+                        () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
                         errorWithParams => this.handleSaveError(errorWithParams)
                     )
             )
@@ -144,19 +146,19 @@ export class DoceditComponent {
         }
     }
 
-    private handleSaveSuccess(clonedDocument, viaSaveButton) {
+    private handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
 
-        this.removeInspectedRevisions(clonedDocument.resource.id)
+        this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
-                clonedDocument = latestRevision;
+                this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
-                return this.datastore.get(latestRevision.resource.id);
-            }).then(document => {
-                this.activeModal.close({
-                    document: document,
-                    viaSaveButton: viaSaveButton
-                });
-                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+
+                if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
+                    this.activeTab = 'conflicts';
+                    this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+                } else {
+                    return this.closeModalAfterSave(latestRevision.resource.id, viaSaveButton);
+                }
             }).catch(msgWithParams => {
                 this.messages.add(msgWithParams);
             });
@@ -164,15 +166,25 @@ export class DoceditComponent {
 
     private handleSaveError(errorWithParams) {
 
-        if (errorWithParams[0] == DatastoreErrors.SAVE_CONFLICT) {
-            this.handleSaveConflict();
-        } else if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
             this.handleDeletedConflict();
         } else {
             console.error(errorWithParams);
             return Promise.reject([M.DOCEDIT_SAVE_ERROR]);
         }
         return Promise.resolve(undefined);
+    }
+
+    private closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
+
+        return this.datastore.get(resourceId)
+            .then(document => {
+                this.activeModal.close({
+                    document: document,
+                    viaSaveButton: viaSaveButton
+                });
+                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+            });
     }
 
     /**
@@ -207,31 +219,6 @@ export class DoceditComponent {
         delete this.clonedDocument.resource.id; // ... for persistenceManager
         delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
         delete this.clonedDocument['_rev'];
-    }
-
-    private handleSaveConflict() {
-
-        this.modalService.open(
-            ConflictModalComponent, {size: 'lg', windowClass: 'conflict-modal'}
-        ).result.then(decision => {
-            if (decision == 'overwrite') this.overwriteLatestRevision();
-            else this.reloadLatestRevision();
-        }).catch(() => {});
-    }
-
-    private overwriteLatestRevision() {
-
-        this.datastore.getLatestRevision(this.clonedDocument.resource.id).then(latestRevision => {
-            this.clonedDocument['_rev'] = latestRevision['_rev'];
-            this.save(true);
-        }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
-    }
-
-    private reloadLatestRevision() {
-
-        this.datastore.getLatestRevision(this.clonedDocument.resource.id).then(latestRevision => {
-            this.clonedDocument = <IdaiFieldDocument> latestRevision;
-        }).catch(() => this.messages.add([M.APP_GENERIC_SAVE_ERROR]));
     }
 
     private deleteDoc() {
@@ -277,5 +264,17 @@ export class DoceditComponent {
         clonedDoc.resource = Object.assign({}, document.resource);
 
         return clonedDoc;
+    }
+
+    private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,
+                                       documentAfterSave: IdaiFieldDocument): boolean {
+
+        const conflictsBeforeSave: string[] = documentBeforeSave['_conflicts'];
+        const conflictsAfterSave: string[] =  documentAfterSave['_conflicts'];
+
+        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
+        if (!conflictsAfterSave) return false;
+
+        return !DiffUtility.compareArrays(conflictsBeforeSave, conflictsAfterSave);
     }
 }

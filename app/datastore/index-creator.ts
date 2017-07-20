@@ -16,14 +16,14 @@ export class IndexCreator {
             .then(() => this.setupConflictedIndex(db));
     }
 
-    public hasIndex(iname) {
+    public hasIndex(indexName: string) {
         return (([
             'resource.identifier',
             'resource.relations.isRecordedIn',
             'resource.relations.liesWithin',
             'conflicted',
             'fulltext',
-            ]).indexOf(iname) != -1);
+            ]).indexOf(indexName) != -1);
     }
 
     private setupFulltextIndex(db): Promise<any> {
@@ -111,13 +111,13 @@ export class IndexCreator {
 
     private setupIndex(db, id, mapFun) {
 
-        let ddoc = {
+        let designDocument = {
             _id: '_design/' + id,
             views: { }
         };
-        ddoc.views[id] = { map: mapFun.toString() };
+        designDocument.views[id] = { map: mapFun.toString() };
 
-        return db.put(ddoc).then(
+        return db.put(designDocument).then(
             () => {},
             err => {
                 if (err.name !== 'conflict') {

@@ -34,7 +34,7 @@ export class DiffUtility {
         return this.removeDuplicateValues(differingRelationNames);
     }
 
-    private static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {
+    public static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {
 
         let differingFieldsNames: string[] = [];
 
@@ -50,7 +50,7 @@ export class DiffUtility {
         return differingFieldsNames;
     }
 
-    private static compareFields(field1: any, field2: any): boolean {
+    public static compareFields(field1: any, field2: any): boolean {
 
         if ((field1 && !field2) || (!field1 && field2)) return false;
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
@@ -61,7 +61,7 @@ export class DiffUtility {
         return field1 === field2;
     }
 
-    private static compareArrays(array1: any[], array2: any[]): boolean {
+    public static compareArrays(array1: any[], array2: any[]): boolean {
 
         if (array1.length != array2.length) return false;
 
@@ -76,7 +76,7 @@ export class DiffUtility {
         return true;
     }
 
-    private static compareObjects(object1: any, object2: any): boolean {
+    public static compareObjects(object1: any, object2: any): boolean {
 
         if (!object1 && !object2) return true;
 

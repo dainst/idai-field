@@ -6,8 +6,8 @@ export class PouchdbProxy {
         this.rdy = rdy;
     }
 
-    public put(document): Promise<any> {
-        return this.rdy.then(db => db.put(document));
+    public put(document, options?): Promise<any> {
+        return this.rdy.then(db => db.put(document, options));
     }
 
     public remove(document, revisionId?): Promise<any> {

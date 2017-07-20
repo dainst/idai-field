@@ -65,6 +65,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_DELETE_SUCCESS: string = 'docedit/deletesuccess';
     public static DOCEDIT_SAVE_ERROR: string = 'docedit/saveerror';
     public static DOCEDIT_DELETE_ERROR: string = 'docedit/deleteerror';
+    public static DOCEDIT_SAVE_CONFLICT: string = 'docedit/saveconflict';
 
     // Images Package
 
@@ -327,6 +328,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_DELETE_ERROR]={
             content: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.',
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_SAVE_CONFLICT]={
+            content: 'Beim Speichern der Ressource ist ein Konflikt aufgetreten.',
+            level: 'warning',
             params: [],
             hidden: false
         };

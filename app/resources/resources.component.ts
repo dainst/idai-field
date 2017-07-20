@@ -277,26 +277,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.notify();
     }
 
-    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
-
-        this.removeEmptyDocuments();
-
-        this.selectedDocument = newDocument;
-
-        if (geometryType != 'none') {
-            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
-            this.editGeometry = true;
-            this.mode = 'map';
-        } else {
-            this.editDocument();
-        }
-
-        if (newDocument.resource.type != this.view.mainType) {
-            this.documents.unshift(<Document> newDocument);
-            this.notify();
-        }
-    }
-
     public fetchProjectDocument(): Promise<any> {
 
         const project: string = this.settingsService.getSelectedProject();
@@ -349,6 +329,26 @@ export class ResourcesComponent implements AfterViewChecked {
             }
 
         });
+    }
+
+    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
+
+        this.removeEmptyDocuments();
+
+        this.selectedDocument = newDocument;
+
+        if (geometryType != 'none') {
+            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
+            this.editGeometry = true;
+            this.mode = 'map';
+        } else {
+            this.editDocument();
+        }
+
+        if (newDocument.resource.type != this.view.mainType) {
+            this.documents.unshift(<Document> newDocument);
+            this.notify();
+        }
     }
 
     public editDocument(doc?: Document, activeTabName?: string) {

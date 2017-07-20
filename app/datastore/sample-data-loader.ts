@@ -26,7 +26,7 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
             doc['_id'] = doc.resource.id;
             doc.resource['_parentTypes'] = config
                 .getParentTypes(doc.resource.type);
-            promises.push(db.put(doc));
+            promises.push(db.put(doc, { force: true }));
         }
 
         return Promise.all(promises)

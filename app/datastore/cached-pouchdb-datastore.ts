@@ -1,10 +1,10 @@
-import {Query} from "idai-components-2/datastore";
-import {Document} from "idai-components-2/core";
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {IdaiFieldDatastore} from "./idai-field-datastore";
-import {SyncState} from "./sync-state";
-import {PouchdbDatastore} from "./pouchdb-datastore";
+import {Query} from 'idai-components-2/datastore';
+import {Document} from 'idai-components-2/core';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {IdaiFieldDatastore} from './idai-field-datastore';
+import {SyncState} from './sync-state';
+import {PouchdbDatastore} from './pouchdb-datastore';
 
 @Injectable()
 /**
@@ -23,7 +23,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
                 // explicitly assign by value in order for
                 // changes to be detected by angular
                 if (this.autoCacheUpdate && doc && doc.resource && this.documentCache[doc.resource.id]) {
-                    console.debug("change detected", doc);
+                    console.debug('change detected', doc);
                     if (!doc['_conflicts']) delete this.documentCache[doc.resource.id]['_conflicts'];
                     Object.assign(this.documentCache[doc.resource.id], doc);
                 }

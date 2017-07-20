@@ -30,7 +30,8 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench2'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
     it('switch views after click on relation link', () => {

@@ -116,7 +116,6 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => this.fetchDocuments())
             .then(() => {
                 this.ready = true;
-                if (this.view.mainType == 'project') this.setMode('map');
                 this.notifyMainTypeObservers();
             });
     }

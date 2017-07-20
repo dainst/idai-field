@@ -1,35 +1,35 @@
-<div id="resource-{{document.resource.identifier}}" (dblclick)="resourcesComponent.editDocument(document)" class="row py-3" [class.bg-faded]="depth == 0"
-     style="border-top: 1px solid rgba(0, 0, 0, 0.125)" [class.no-search-result]="resourcesComponent.query.q != '' && !resourcesComponent.documentsInclude(document)">
+<div *ngIf="resourcesComponent.query.q == '' ||  listComponent.showRow(docRef)"
+        id="resource-{{docRef.doc.resource.identifier}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)" class="row py-3" [class.bg-faded]="depth == 0"
+        style="border-top: 1px solid rgba(0, 0, 0, 0.125)" [class.no-search-result]="resourcesComponent.query.q != '' && !resourcesComponent.documentsInclude(docRef.doc)">
     <div class="col-md-3" [style.padding-left]="(1+depth*2) + 'rem'" [class.font-weight-bold]="depth == 0">
-        {{typesMap[document.resource.type].label}}<br>
-        <button *ngIf="document.resource.relations['includes']"
-                (click)="listComponent.toggleChildrenForId(document.resource.id)"
+        {{typesMap[docRef.doc.resource.type].label}}<br>
+        <button *ngIf="docRef.doc.resource.relations['includes']"
+                (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
                 class="btn btn-sm btn-link pr-0">
-            {{document.resource.relations['includes'].length}} untergeordnete
+            {{docRef.doc.resource.relations['includes'].length}} untergeordnete
         </button>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="document.resource.identifier" (blur)="save(document)" (keyup)="markAsChanged()"
+        <input [(ngModel)]="docRef.doc.resource.identifier" (blur)="save(docRef.doc)" (keyup)="markAsChanged()"
                class="form-control form-control-sm identifier-input">
 
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="document.resource.shortDescription" (blur)="save(document)"
+        <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)"
                                  (keyup)="markAsChanged()" class="form-control form-control-sm">
     </div>
     <div class="col-md-3">
         <div style="margin-top: -7px; display:inline-block; height: 24px; width:40px;">
-        <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="document"
+        <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="docRef.doc"
                      [preselectedGeometryType]="'none'"></plus-button>
         </div>
         <small>
-            <button (click)="resourcesComponent.editDocument(document)" class="btn btn-sm btn-link">Bearbeiten</button>
+            <button (click)="resourcesComponent.editDocument(docRef.doc)" class="btn btn-sm btn-link">Bearbeiten</button>
         </small>
     </div>
 </div>
 
-<div *ngFor="let childId of document.resource.relations['includes'];"
-     [hidden]="listComponent.childrenHiddenFor(document.resource.id)">
-    <row *ngIf="documents[childId]" [document]="documents[childId]" [documents]="documents" [depth]=depth+1
-         [typesMap]="typesMap"></row>
+<div *ngFor="let childDoc of docRef['children']"
+     [hidden]="listComponent.childrenHiddenFor(docRef.doc.resource.id)">
+    <row [docRef]="childDoc" [depth]=depth+1 [typesMap]="typesMap"></row>
 </div>

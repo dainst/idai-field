@@ -47,6 +47,10 @@
                 Liste
             </button>
         </div>
+        <div *ngIf="!ready" class="btn-group">
+            <button class="btn btn-primary m-0" [disabled]="mode == 'map'">Karte</button>
+            <button class="btn btn-primary m-0" [disabled]="mode == 'list'">Liste</button>
+        </div>
     </div>
 </div>
 <div style="padding-top: 56px;"

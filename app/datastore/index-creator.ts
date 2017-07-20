@@ -83,11 +83,14 @@ export class IndexCreator {
     private setupLiesWithinIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource) return;
+            // split identifier and convert numbers to achieve desired order
+            var identifier = doc.resource.identifier.split(/(\d+)/);
+            identifier = identifier.map(s => /^\d+$/.test(s) ? parseInt(s) : s);
             if (doc.resource.relations['liesWithin'] != undefined) {
                 doc.resource.relations['liesWithin'].forEach(resourceId =>
-                    emit([resourceId, doc.resource.type, doc.resource.identifier]));
+                    emit([resourceId, doc.resource.type].concat(identifier)));
             } else {
-                emit(['UNKNOWN', doc.resource.type, doc.resource.identifier]);
+                emit(['UNKNOWN', doc.resource.type].concat(identifier));
             }
         };
         return this.setupIndex(db,'resource.relations.liesWithin', mapFun);

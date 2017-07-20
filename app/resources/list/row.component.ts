@@ -9,9 +9,8 @@ import {SettingsService} from '../../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ResourcesComponent} from '../resources.component';
 import {IdaiType} from 'idai-components-2/configuration';
-
-import {isUndefined} from "util";
 import {ListComponent} from "./list.component";
+import {DocumentReference} from "./document-reference";
 
 @Component({
     selector: 'row',
@@ -23,8 +22,7 @@ import {ListComponent} from "./list.component";
  * @author Fabian Z.
  */
 export class RowComponent {
-    @Input() document: IdaiFieldDocument;
-    @Input() documents: IdaiFieldDocument[];
+    @Input() docRef: DocumentReference;
     @Input() depth: number;
     @Input() typesMap: { [type: string]: IdaiType };
 

@@ -3,6 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore,} from '../../datastore/idai-field-datastore';
 import {ResourcesComponent} from '../resources.component';
+import {DocumentReference} from './document-reference';
 import {Query} from 'idai-components-2/datastore';
 
 @Component({
@@ -19,12 +20,8 @@ export class ListComponent implements OnInit {
 
     private selectedMainTypeDocument: IdaiFieldDocument;
 
-    private documents: {[type: string]: IdaiFieldDocument};
-    private topDocuments: IdaiFieldDocument[];
-
-    private searchResults: IdaiFieldDocument[];
-    private searchResultsIds: string[] = [];
-    private queryQ: string = '';
+    private docRefMap: {[type: string]: DocumentReference};
+    private docRefTree: DocumentReference[];
 
     @Output() onDocumentCreation: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
@@ -45,37 +42,17 @@ export class ListComponent implements OnInit {
             this.typesMap = projectConfiguration.getTypesMap();
         });
 
-        const self = this;
-        datastore.documentChangesNotifications().subscribe(result => {
-            self.handleChange(<IdaiFieldDocument>result);
+        datastore.documentChangesNotifications().subscribe(() => {
+            this.handleChange();
         });
     }
 
     ngOnInit() {
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
             this.selectedMainTypeDocument = result as IdaiFieldDocument;
-
-            if (this.selectedMainTypeDocument) {
-                this.populateFirstLevel(this.selectedMainTypeDocument);
-            } else {
-                this.reset();
-            }
+            this.populateTree();
         });
 
-        this.resourcesComponent.getDocuments().subscribe(result => {
-            if (this.resourcesComponent.query.q != '' && this.queryQ != this.resourcesComponent.query.q) {
-                this.searchResults = <IdaiFieldDocument[]>result;
-                this.decorateSearchResults();
-                this.queryQ = this.resourcesComponent.query.q;
-            } else {
-                if (this.resourcesComponent.query.q == '' && this.queryQ != '') {
-                    this.queryQ = '';
-                    this.childrenShownForIds = [];
-                    this.searchResultsIds = [];
-                    this.handleChange('');
-                }
-            }
-        });
     }
 
     public toggleChildrenForId(id:string) {
@@ -87,68 +64,80 @@ export class ListComponent implements OnInit {
         }
     }
 
-    private reset() {
-        this.documents = {};
-        this.topDocuments = [];
-        this.searchResults = [];
-        this.searchResultsIds = [];
-        this.queryQ = "";
-    }
-
     public childrenHiddenFor(id: string) {
         return this.childrenShownForIds.indexOf(id) == -1
     }
 
-    private decorateSearchResults() {
-        this.topDocuments = [];
-        this.documents = {};
+    public showRow(docRef: DocumentReference): boolean {
 
-        this.searchResults.forEach((doc, i) => {
-            this.documents[doc.resource.id] = doc as IdaiFieldDocument;
-            this.searchResultsIds.push(doc.resource.id);
-
-            if (!doc.resource.relations['liesWithin']) {
-                this.topDocuments.push(doc as IdaiFieldDocument);
-                doc.resource.relations['includes'].forEach(includedId => {
-                    this.datastore.get(includedId).then(idoc => {
-                        this.documents[includedId] = idoc as IdaiFieldDocument;
-                    });
-                });
-            } else {
-                this.datastore.get(doc.resource.relations['liesWithin'][0]).then(pdoc => { // only first parent for simplification
-                    this.topDocuments.push(<IdaiFieldDocument>pdoc);
-                    this.childrenShownForIds.push(pdoc.resource.id);
-                });
-            }
-        });
+        if (docRef['parent']
+                && !this.childrenHiddenFor(docRef['parent'].doc.resource.id)
+                && this.isAscendantPartOfResult(docRef))
+            return true;
+        return this.isDescendantPartOfResult(docRef);
     }
 
-    private populateFirstLevel(mainTypeDoc: IdaiFieldDocument) {
-        this.topDocuments = [];
-        this.documents = {};
+    private isAscendantPartOfResult(docRef: DocumentReference): boolean {
+        let parent = docRef['parent'];
+        while (parent) {
+            if (this.resourcesComponent.documentsInclude(parent.doc as IdaiFieldDocument))
+                return true;
+            parent = parent['parent'];
+        }
+        return false;
+    }
+
+    private isDescendantPartOfResult(docRef: DocumentReference): boolean {
+        if (this.resourcesComponent.documentsInclude(docRef.doc as IdaiFieldDocument))
+            return true;
+        else
+            for (let child of docRef['children'])
+                if(this.isDescendantPartOfResult(child)) {
+                    if (this.childrenHiddenFor(docRef.doc.resource.id))
+                        this.toggleChildrenForId(docRef.doc.resource.id);
+                    return true;
+                }
+        return false;
+    }
+
+    private populateTree() {
+
+        this.docRefTree = [];
+        this.docRefMap = {};
 
         const query: Query = {
             constraints: {
-                'resource.relations.isRecordedIn' : mainTypeDoc.resource.id,
+                'resource.relations.isRecordedIn' : this.selectedMainTypeDocument.resource.id,
             }
         };
 
         this.datastore.find(query).then( docs => {
-            docs.forEach((doc, i) => {
-                this.documents[doc.resource.id] = doc as IdaiFieldDocument;
-
+            // initialize docRefMap to make sure it is fully populated before building the tree
+            docs.forEach(doc => {
+                let docRef: DocumentReference = { doc: doc, children: [] };
+                this.docRefMap[doc.resource.id] = docRef;
+            });
+            // build tree from liesWithin relations
+            docs.forEach(doc => {
+                let docRef = this.docRefMap[doc.resource.id];
                 if (!doc.resource.relations['liesWithin']) {
-                    this.topDocuments.push(doc as IdaiFieldDocument);
+                    this.docRefTree.push(docRef);
+                } else {
+                    doc.resource.relations['liesWithin'].forEach(parentId => {
+                        this.docRefMap[parentId]['children'].push(docRef);
+                        docRef['parent'] = this.docRefMap[parentId];
+                    });
                 }
             });
             this.awaitsReload = false;
         });
     }
 
-    private handleChange(result: any) {
+    private handleChange() {
         if (!this.awaitsReload) {
             this.awaitsReload = true;
-            setTimeout(() => {this.populateFirstLevel(this.selectedMainTypeDocument)}, 200);
+            setTimeout(this.populateTree.bind(this), 200);
         }
     }
+
 }

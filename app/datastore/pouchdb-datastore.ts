@@ -264,13 +264,11 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 opt['startkey'] = [query.constraints[constraint]];
                 opt['endkey'] = [query.constraints[constraint], {}];
             }
-            console.log("constraint", constraint);
             queries.push(this.db.query(constraint, opt));
         }
         return Promise.all(queries)
             .then(results => {
                 for (let i in results) {
-                    console.log(results[i]);
                     results[i] = results[i].rows.map(r => r.id)
                 }
                 return results;

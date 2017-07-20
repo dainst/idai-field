@@ -37,12 +37,12 @@
     </div>
 
     <div class="col-md-3" align="right">
-        <div class="btn-group">
+        <div *ngIf="ready" class="btn-group">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">
                 Karte
             </button>
-            <button *ngIf="(!view||(view.mainType != 'project'))" id="list-mode-button" (click)="setMode('list')"
+            <button id="list-mode-button" (click)="setMode('list')"
                     class="btn btn-primary m-0" [disabled]="mode == 'list'">
                 Liste
             </button>

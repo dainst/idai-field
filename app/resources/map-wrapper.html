@@ -16,8 +16,7 @@
         </ul>
 
         <plus-button *ngIf="resourcesComponent.ready && resourcesComponent.query.q == ''
-                            && (resourcesComponent.selectedMainTypeDocument
-                            || resourcesComponent.view.name == 'project')"
+                            && resourcesComponent.selectedMainTypeDocument"
                      id="create-document-button" [placement]="'top'"
                      [isRecordedIn]="resourcesComponent.selectedMainTypeDocument"></plus-button>
     </div>

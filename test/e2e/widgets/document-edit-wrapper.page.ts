@@ -68,16 +68,6 @@ export class DocumentEditWrapperPage {
         element(by.id('solve-conflict-button')).click();
     };
 
-    public static clickConflictModalSaveButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('conflict-modal-save-button'))), delays.ECWaitTime);
-        element(by.id('conflict-modal-save-button')).click();
-    };
-
-    public static clickConflictModalReloadButton = function() {
-        browser.wait(EC.visibilityOf(element(by.id('conflict-modal-reload-button'))), delays.ECWaitTime);
-        element(by.id('conflict-modal-reload-button')).click();
-    };
-
     // get text
 
     public static getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
@@ -104,12 +94,6 @@ export class DocumentEditWrapperPage {
     public static getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
         browser.wait(EC.visibilityOf(element(by.css('relation-picker-group relation-picker'))), delays.ECWaitTime);
         return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
-    };
-
-    public static getConflictModalFooter = function() {
-        var footer = element(by.css('.conflict-modal-footer'));
-        browser.wait(EC.visibilityOf(footer), delays.ECWaitTime);
-        return footer;
     };
 
     // type in

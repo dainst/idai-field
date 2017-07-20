@@ -1,21 +1,20 @@
 import {browser, protractor, element, by} from 'protractor';
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
+import {ResourcesPage} from '../resources/resources.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
+import {SettingsPage} from '../settings/settings.page';
+
 PouchDB.plugin(require('pouchdb-adapter-memory'));
+let EC = protractor.ExpectedConditions;
+let delays = require('../config/delays');
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
 const expressPouchDB = require('express-pouchdb');
 const fs = require('fs');
 const path = require('path');
-
 const common = require('../common');
-import {ResourcesPage} from '../resources/resources.page';
-const documentViewPage = require('../widgets/document-view.page');
-import {SettingsPage} from '../settings/settings.page';
-
 
 /**
  * @author Sebastian Cuy
@@ -29,11 +28,11 @@ describe('resources/syncing --', function() {
 
     let db, server, changes;
     let testResource = {
-        id: "td1",
-        identifier:"test1",
-        type: "trench",
-        shortDescription: "Testobjekt",
-        relations: []
+        id: 'td1',
+        identifier:'test1',
+        type: 'trench',
+        shortDescription: 'Testobjekt',
+        relations: { 'isRecordedIn': [ 'test' ] }
     };
     let testDocument: any = {
         _id: testResource.id,
@@ -70,7 +69,7 @@ describe('resources/syncing --', function() {
 
         return db.post(testDocument).then(result => {
             testDocument._rev = result.rev;
-        }).catch(err => console.error("Failure while creating test doc", err));
+        }).catch(err => console.error('Failure while creating test doc', err));
     }
 
     function resetTestDoc() {
@@ -90,14 +89,14 @@ describe('resources/syncing --', function() {
                 }
 
                 return Promise.all(promises);
-            }).catch(err => console.error("Failure while resetting test doc", err));
+            }).catch(err => console.error('Failure while resetting test doc', err));
     }
 
     function updateTestDoc() {
 
         return db.put(testDocument).then(result => {
             testDocument._rev = result.rev;
-        }).catch(err => console.error("Failure while updating test doc", err));
+        }).catch(err => console.error('Failure while updating test doc', err));
     }
 
     function resetConfigJson(): Promise<any> {
@@ -116,7 +115,7 @@ describe('resources/syncing --', function() {
             ResourcesPage.typeInIdentifierInSearchField(searchTerm)
         ).then(() => {
             return browser.wait(EC.visibilityOf(
-                    element(by.css('#objectList .list-group-item:nth-child(1) .identifier'))), 500).then(
+                    element(by.css('#objectList .list-group-item:nth-child(1) .title'))), 500).then(
                 () => {
                     return successCB();
                 },
@@ -146,9 +145,9 @@ describe('resources/syncing --', function() {
             .then(() => removeRemoteSiteConfiguration())
             .then(() => NavbarPage.clickNavigateToProject())
             .then(() => ResourcesPage.clickSelectResource('test1'))
-            .then(documentViewPage.clickEditDocument)
+            .then(() => DocumentViewPage.clickEditDocument())
             .then(() => DocumentEditWrapperPage.typeInInputField('Test Local', 1))
-            .then(DocumentEditWrapperPage.clickSaveDocument)
+            .then(() => DocumentEditWrapperPage.clickSaveDocument())
             .then(() => {
                 testDocument.resource.shortDescription = 'Test Remote';
                 updateTestDoc();
@@ -222,47 +221,6 @@ describe('resources/syncing --', function() {
             }).catch(err => { fail(err); done(); });
     });
 
-    it('solve an immediate conflict by reloading the latest revision', done => {
-
-        NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                ResourcesPage.clickSelectResource('test1')
-                    .then(documentViewPage.clickEditDocument)
-                    .then(() => {
-                        testDocument.resource.identifier = 'test2';
-                        updateTestDoc();
-                    }).then(DocumentEditWrapperPage.clickSaveDocument)
-                    .then(DocumentEditWrapperPage.clickConflictModalReloadButton)
-                    .then(() => {
-                        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('test2');
-                        done();
-                    }).catch(err => { fail(err); done(); });
-            }));
-    });
-
-    it('solve an immediate conflict by overwriting the latest revision', done => {
-
-        NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                ResourcesPage.clickSelectResource('test1')
-                    .then(documentViewPage.clickEditDocument)
-                    .then(() => {
-                        testDocument.resource.identifier = 'test2';
-                        updateTestDoc();
-                    }).then(DocumentEditWrapperPage.clickSaveDocument)
-                    .then(DocumentEditWrapperPage.clickConflictModalSaveButton)
-                    .then(documentViewPage.clickEditDocument)
-                    .then(() => {
-                        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('test1');
-                        DocumentEditWrapperPage.clickSaveDocument();
-                    }).then(() => { return db.get(testDocument._id); })
-                    .then(doc => {
-                        expect(doc.resource.identifier).toEqual('test1');
-                        done();
-                    }).catch(err => { fail(err); done(); });
-            }));
-    });
-
     it('detect an eventual conflict and mark the corresponding resource list item', done => {
 
         return NavbarPage.clickNavigateToProject()
@@ -292,11 +250,11 @@ describe('resources/syncing --', function() {
                     })
                     .then(() => ResourcesPage.clickSelectResource('test1'))
                     .then(() => ResourcesPage.clickSelectResource('test1'))
-                    .then(documentViewPage.clickEditDocument)
-                    .then(DocumentEditWrapperPage.clickConflictsTab)
-                    .then(DocumentEditWrapperPage.clickChooseRightRevision)
-                    .then(DocumentEditWrapperPage.clickSolveConflictButton)
-                    .then(DocumentEditWrapperPage.clickSaveDocument)
+                    .then(() => DocumentViewPage.clickEditDocument())
+                    .then(() => DocumentEditWrapperPage.clickConflictsTab())
+                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
+                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
+                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
                     .then(() => {
                         expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
                         return db.get(testDocument._id);
@@ -308,12 +266,32 @@ describe('resources/syncing --', function() {
             }));
     });
 
+    it('solve a save conflict', done => {
+
+        NavbarPage.clickNavigateToProject()
+            .then(() => waitForIt('test1', () => {
+                ResourcesPage.clickSelectResource('test1')
+                    .then(() => DocumentViewPage.clickEditDocument())
+                    .then(() => {
+                        testDocument.resource.shortDescription = 'Testobjekt 2';
+                        updateTestDoc();
+                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
+                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
+                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(() => {
+                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
+                        done();
+                    }).catch(err => { fail(err); done(); });
+            }));
+    });
+
     it('open conflict resolver via taskbar', done => {
 
         return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
-                    .then(NavbarPage.clickConflictsButton)
+                    .then(() => NavbarPage.clickConflictsButton())
                     .then(() => NavbarPage.clickConflictResolverLink('test1'))
                     .then(() => {
                         browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
@@ -327,9 +305,9 @@ describe('resources/syncing --', function() {
         return NavbarPage.clickNavigateToProject()
             .then(() => waitForIt('test1', () => {
                 createEventualConflict()
-                    .then(NavbarPage.clickNavigateToProject)
+                    .then(() => NavbarPage.clickNavigateToProject())
                     .then(() => ResourcesPage.clickSelectResource('test1'))
-                    .then(documentViewPage.clickSolveConflicts)
+                    .then(() => DocumentViewPage.clickSolveConflicts())
                     .then(() => {
                         browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
                         done();

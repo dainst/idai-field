@@ -49,6 +49,16 @@ describe('resources/map --', function() {
             .then(() => { return MapPage.clickMap(400,200); });
     }
 
+    function setUnfinishedPolyline() {
+        return Promise.resolve()
+            .then(() => { return new Promise(function(resolve) {
+                setTimeout(function() { resolve(); }, delays.shortRest);
+            })}).then(() => { return MapPage.clickMap(100,100); })
+            .then(() => { return MapPage.clickMap(200,200); })
+            .then(() => { return MapPage.clickMap(300,100); })
+            .then(() => { return MapPage.clickMap(400,200); })
+    }
+
     function setMultiPolyline() {
         return Promise.resolve()
             .then(() => {
@@ -64,6 +74,21 @@ describe('resources/map --', function() {
             .then(() => { return MapPage.clickMap(400,300); })
             .then(() => { return MapPage.clickMap(400,400); })
             .then(() => { return MapPage.clickMap(400,400); });
+    }
+
+    function setUnfinishedMultiPolyline() {
+        return Promise.resolve()
+            .then(() => {
+                browser.sleep(1000);
+                return MapPage.clickMap(100,100);
+            }).then(() => { return MapPage.clickMap(200,200); })
+            .then(() => { return MapPage.clickMap(300,100); })
+            .then(() => { return MapPage.clickMap(400,200); })
+            .then(() => { return MapPage.clickMapOption('add-polyline'); })
+            .then(() => { return MapPage.clickMap(500,200); })
+            .then(() => { return MapPage.clickMap(500,100); })
+            .then(() => { return MapPage.clickMap(400,300); })
+            .then(() => { return MapPage.clickMap(400,400); })
     }
 
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
@@ -301,5 +326,19 @@ describe('resources/map --', function() {
         MapPage.clickMapOption('abort');
         expect(browser.getCurrentUrl()).toContain('resources');
         expect(browser.getCurrentUrl()).not.toContain('edit');
+    });
+
+    it('autofinish polyline geometry', function() {
+        createDoc('doc', 'polyline', setUnfinishedPolyline);
+        DocumentViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Polyline');
+        });
+    });
+
+    it('autofinish multipolyline geometry', function() {
+        createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
+        DocumentViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Multipolyline');
+        });
     });
 });

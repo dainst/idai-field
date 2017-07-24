@@ -1,6 +1,8 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor, element} from 'protractor';
+
 let EC = protractor.ExpectedConditions;
 let delays = require('./config/delays');
+
 /**
  * Common functions to be used in multiple e2e tests.
  */

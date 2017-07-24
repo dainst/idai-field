@@ -1,6 +1,23 @@
-import {Component, SimpleChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+
+declare global {
+    namespace L {
+        namespace PM {
+            namespace Draw {
+                interface Line {
+                    _finishShape(): void
+                    _layer: any
+                }
+            }
+
+            interface Draw {
+                Line: L.PM.Draw.Line
+            }
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -29,6 +46,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private editablePolygons: Array<L.Polygon>;
     private selectedPolygon: L.Polygon;
+
+    private drawMode: string = 'None';
 
     protected updateMap(changes: SimpleChanges): Promise<any> {
 
@@ -63,6 +82,12 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.map.doubleClickZoom.enable();
             }
         });
+    }
+
+    @HostListener('document:keyup', ['$event'])
+    public handleKeyEvent(event: KeyboardEvent) {
+
+        if (event.key == 'Escape') this.finishDrawing();
     }
 
     private editExistingGeometry() {
@@ -117,6 +142,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 mapComponent.map.removeLayer(polygon);
                 mapComponent.addPolygon();
             }
+            mapComponent.drawMode = 'None';
         });
     }
 
@@ -181,6 +207,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 mapComponent.map.removeLayer(polyline);
                 mapComponent.addPolyline();
             }
+            mapComponent.drawMode = 'None';
         });
     }
 
@@ -266,6 +293,18 @@ export class EditableMapComponent extends LayerMapComponent {
         };
 
         this.map.pm.enableDraw(drawMode, drawOptions);
+        this.drawMode = drawMode;
+    }
+
+    private finishDrawing() {
+
+        if (this.drawMode == 'Line' && this.map.pm.Draw.Line._layer.getLatLngs().length >= 2) {
+            this.map.pm.Draw.Line._finishShape();
+        } else if (this.drawMode != 'None') {
+            this.map.pm.disableDraw(this.drawMode);
+        }
+
+        this.drawMode = 'None';
     }
 
     public deleteGeometry() {
@@ -290,6 +329,8 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
     public finishEditing() {
+
+        if (this.drawMode != 'None') this.finishDrawing();
 
         var geometry: IdaiFieldGeometry = { type: '', coordinates: [], crs: 'local' };
 
@@ -350,8 +391,8 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editablePolylines = [];
         this.editableMarker = undefined;
 
-        this.map.pm.disableDraw('Poly');
-        this.map.pm.disableDraw('Line');
+        if (this.drawMode != 'None') this.map.pm.disableDraw(this.drawMode);
+        this.drawMode = 'None';
 
         this.map.off('pm:create');
     }

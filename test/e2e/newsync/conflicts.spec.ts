@@ -91,7 +91,7 @@ describe('resources/conflicts --', function() {
 
         common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         SettingsPage.clickSaveSettingsButton();
-        browser.sleep(5000);
+        return browser.sleep(5000);
     }
 
     beforeAll(done => {
@@ -105,14 +105,14 @@ describe('resources/conflicts --', function() {
         tearDownTestDB().then(done);
     });
 
-    beforeEach(() => {
+    beforeEach(done => {
         SettingsPage.get();
-        configureRemoteSite();
+        configureRemoteSite().then(done);
     });
 
-    afterEach(() => {
+    afterEach(done => {
         if (changes) changes.cancel();
-        resetConfigJson();
+        resetConfigJson().then(done);
     });
 
 
@@ -121,15 +121,32 @@ describe('resources/conflicts --', function() {
         const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
         testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
 
-        return NavbarPage.clickNavigateToProject()
-            .then(() => {
-                return db.put(testDocument)
-                    .then(() => db.put(testDocumentAlternative,{force:true}))}).then(()=>{
-
+        return db.put(testDocument)
+            .then(() => db.put(testDocumentAlternative,{force:true}))
+            .then(()=>{
                 return NavbarPage.clickNavigateToExcavation().then(()=>browser.sleep(2000));
             })
     }
 
+
+    it('open conflict resolver via taskbar', done => {
+
+        createEventualConflict('3').then(() => {
+
+            NavbarPage.clickConflictsButton();
+            NavbarPage.clickConflictResolverLink('testf3');
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
+        });
+    });
+
+    it('open conflict resolver via conflict button in document view', done => {
+
+        createEventualConflict('4').then(() => {
+            ResourcesPage.clickSelectResource('testf4');
+            DocumentViewPage.clickSolveConflicts();
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
+        });
+    });
 
     it('resolve an eventual conflict', done => {
 
@@ -156,25 +173,6 @@ describe('resources/conflicts --', function() {
         }).catch(err => {
             console.error('Failure while creating test doc', err);
             fail(); done()
-        });
-    });
-
-    it('open conflict resolver via taskbar', done => {
-
-        createEventualConflict('3').then(() => {
-
-            NavbarPage.clickConflictsButton();
-            NavbarPage.clickConflictResolverLink('testf3');
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
-        });
-    });
-
-    it('open conflict resolver via conflict button in document view', done => {
-
-        createEventualConflict('4').then(() => {
-            ResourcesPage.clickSelectResource('testf4');
-            DocumentViewPage.clickSolveConflicts();
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 });

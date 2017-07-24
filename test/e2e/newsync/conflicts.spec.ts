@@ -165,8 +165,7 @@ describe('resources/conflicts --', function() {
 
             NavbarPage.clickConflictsButton();
             NavbarPage.clickConflictResolverLink('testf3');
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
-            done();
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 
@@ -175,8 +174,7 @@ describe('resources/conflicts --', function() {
         createEventualConflict('4').then(() => {
             ResourcesPage.clickSelectResource('testf4');
             DocumentViewPage.clickSolveConflicts();
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
-            done();
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 });

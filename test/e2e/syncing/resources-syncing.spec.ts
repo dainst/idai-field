@@ -236,36 +236,6 @@ describe('resources/syncing --', function() {
             }));
     });
 
-    it('solve an eventual conflict', done => {
-
-        let shortDescription = '';
-
-        return NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                createEventualConflict()
-                    .then(() => { return db.get(testDocument._id); })
-                    .then(doc => {
-                        shortDescription = doc.resource.shortDescription;
-                        expect(['Test Local', 'Test Remote']).toContain(shortDescription);
-                    })
-                    .then(() => ResourcesPage.clickSelectResource('test1'))
-                    .then(() => ResourcesPage.clickSelectResource('test1'))
-                    .then(() => DocumentViewPage.clickEditDocument())
-                    .then(() => DocumentEditWrapperPage.clickConflictsTab())
-                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
-                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
-                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(() => {
-                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
-                        return db.get(testDocument._id);
-                    }).then(doc => {
-                        expect(['Test Local', 'Test Remote']).toContain(doc.resource.shortDescription);
-                        expect(doc.resource.shortDescription).not.toEqual(shortDescription);
-                        done();
-                    });
-            }));
-    });
-
     it('solve a save conflict', done => {
 
         NavbarPage.clickNavigateToProject()
@@ -285,34 +255,4 @@ describe('resources/syncing --', function() {
                     }).catch(err => { fail(err); done(); });
             }));
     });
-
-    it('open conflict resolver via taskbar', done => {
-
-        return NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                createEventualConflict()
-                    .then(() => NavbarPage.clickConflictsButton())
-                    .then(() => NavbarPage.clickConflictResolverLink('test1'))
-                    .then(() => {
-                        browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
-                        done();
-                    });
-            }));
-    });
-
-    it('open conflict resolver via conflict button in document view', done => {
-
-        return NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                createEventualConflict()
-                    .then(() => NavbarPage.clickNavigateToProject())
-                    .then(() => ResourcesPage.clickSelectResource('test1'))
-                    .then(() => DocumentViewPage.clickSolveConflicts())
-                    .then(() => {
-                        browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
-                        done();
-                    });
-            }));
-    });
-
 });

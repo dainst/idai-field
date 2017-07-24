@@ -128,6 +128,40 @@ describe('resources/conflicts --', function() {
             })
     }
 
+    function updateTestDoc(testDocument) {
+
+        return db.put(testDocument).then(result => {
+            testDocument._rev = result.rev;
+            console.log("updated successfully")
+        }).catch(err => console.error('Failure while updating test doc', err));
+    }
+
+
+    it('solve a save conflict', done => {
+
+        const testDocument = makeDoc('tf7','testf7','Testfund7');
+        return db.put(testDocument).then(result => {
+            testDocument['_rev'] = result.rev;
+            return NavbarPage.clickNavigateToExcavation()
+        })
+            .then(() => {
+
+                browser.sleep(2000);
+                ResourcesPage.clickSelectResource('testf7')
+                    .then(() => DocumentViewPage.clickEditDocument())
+                    .then(() => {
+                        testDocument.resource.shortDescription = 'Testfund7_alternative';
+                        return updateTestDoc(testDocument);
+                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
+                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
+                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
+                    .then(() => {
+                        expect(ResourcesPage.getListItemEl('testf7').getAttribute('class')).not.toContain('conflicted');
+                        done();
+                    }).catch(err => { fail(err); done(); });
+            });
+    });
 
     it('open conflict resolver via taskbar', done => {
 

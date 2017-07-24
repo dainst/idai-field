@@ -236,23 +236,5 @@ describe('resources/syncing --', function() {
             }));
     });
 
-    it('solve a save conflict', done => {
 
-        NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                ResourcesPage.clickSelectResource('test1')
-                    .then(() => DocumentViewPage.clickEditDocument())
-                    .then(() => {
-                        testDocument.resource.shortDescription = 'Testobjekt 2';
-                        updateTestDoc();
-                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
-                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
-                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(() => {
-                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
-                        done();
-                    }).catch(err => { fail(err); done(); });
-            }));
-    });
 });

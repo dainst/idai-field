@@ -130,7 +130,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupPolygonCreation() {  
 
-        var mapComponent = this;
+        const mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) { 
             let polygon: L.Polygon = <L.Polygon> event.layer; 
             let latLngs: Array<any> = polygon.getLatLngs();
@@ -148,7 +148,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupEditablePolygon(polygon: L.Polygon) {
 
-        var mapComponent = this;
+        const mapComponent = this;
         polygon.on('click', function() {
             mapComponent.setSelectedPolygon(this);
         });
@@ -196,7 +196,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupPolylineCreation() {
 
-        var mapComponent = this;
+        const mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) {
             let polyline: L.Polyline = <L.Polyline> event.layer;
             if (polyline.getLatLngs().length >= 2) {
@@ -213,7 +213,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setupEditablePolyline(polyline: L.Polyline) {
 
-        var mapComponent = this;
+        const mapComponent = this;
         polyline.on('click', function() {
             mapComponent.setSelectedPolyline(this);
         });
@@ -226,6 +226,11 @@ export class EditableMapComponent extends LayerMapComponent {
         }
 
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+
+        const mapComponent = this;
+        polyline.on('pm:edit', function() {;
+            if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
+        });
         this.selectedPolyline = polyline;
     }
 
@@ -336,7 +341,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode != 'None') this.finishDrawing();
 
-        var geometry: IdaiFieldGeometry = { type: '', coordinates: [], crs: 'local' };
+        let geometry: IdaiFieldGeometry = { type: '', coordinates: [], crs: 'local' };
 
         if (this.editablePolygons.length == 1) {
             geometry.type = 'Polygon';
@@ -458,12 +463,12 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private getCoordinatesFromPolygon(polygon: L.Polygon): number[][][] {
 
-        var coordinates = [];
-        var latLngs = polygon.getLatLngs();
+        let coordinates = [];
+        let latLngs = polygon.getLatLngs();
 
-        for (var i in latLngs) {
+        for (let i in latLngs) {
             coordinates.push([]);
-            for (var j in latLngs[i]) {
+            for (let j in latLngs[i]) {
                 coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
             }
         }
@@ -484,10 +489,10 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private getCoordinatesFromPolyline(polyline: L.Polyline): number[][] {
 
-        var coordinates = [];
-        var latLngs = polyline.getLatLngs();
+        let coordinates = [];
+        let latLngs = polyline.getLatLngs();
 
-        for (var i in latLngs) {
+        for (let i in latLngs) {
             coordinates.push([ latLngs[i].lng , latLngs[i].lat ]);
         }
 

@@ -29,6 +29,7 @@ $layer-menu-button-inactive-color: grey;
 #map-editor-button-ok,
 #map-editor-button-abort,
 #map-editor-button-delete,
+#map-editor-button-delete-disabled,
 #map-editor-button-add-polygon,
 #map-editor-button-add-polyline {
   position: absolute;
@@ -62,7 +63,8 @@ $layer-menu-button-inactive-color: grey;
   bottom: 20px;
 }
 
-#map-editor-button-delete {
+#map-editor-button-delete,
+#map-editor-button-delete-disabled {
   left: 25px;
   bottom: 20px;
 }

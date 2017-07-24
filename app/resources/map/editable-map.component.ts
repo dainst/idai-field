@@ -283,6 +283,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private addPolyLayer(drawMode: string) {
 
+        if (this.drawMode != 'None') this.finishDrawing();
+
         let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
         className += ' active';
 
@@ -314,6 +316,7 @@ export class EditableMapComponent extends LayerMapComponent {
             if (this.editablePolygons.length > 0) {
                 this.setSelectedPolygon(this.editablePolygons[0]);
             } else {
+                this.selectedPolygon = undefined;
                 this.addPolygon();
             }
         } else if (this.getEditorType() == 'polyline' && this.selectedPolyline) {
@@ -321,10 +324,9 @@ export class EditableMapComponent extends LayerMapComponent {
             if (this.editablePolylines.length > 0) {
                 this.setSelectedPolyline(this.editablePolylines[0]);
             } else {
+                this.selectedPolyline = undefined;
                 this.addPolyline();
             }
-        } else {
-            this.resetEditing();
         }
     }
 

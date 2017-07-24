@@ -126,8 +126,7 @@ describe('resources/conflicts --', function() {
                 return db.put(testDocument)
                     .then(() => db.put(testDocumentAlternative,{force:true}))}).then(()=>{
 
-                NavbarPage.clickNavigateToExcavation();
-                browser.sleep(2000);
+                return NavbarPage.clickNavigateToExcavation().then(()=>browser.sleep(2000));
             })
     }
 

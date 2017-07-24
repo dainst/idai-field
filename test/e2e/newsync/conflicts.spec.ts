@@ -21,7 +21,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('resources/conflicts --', function() {
+fdescribe('resources/conflicts --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -121,10 +121,15 @@ describe('resources/conflicts --', function() {
         const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
         testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
 
-        return db.put(testDocument)
-            .then(() => db.put(testDocumentAlternative,{force:true}))
-            .then(()=>{
-                return NavbarPage.clickNavigateToExcavation().then(()=>browser.sleep(2000));
+        return db.put(testDocument).then(()=>browser.sleep(2000))
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(2000))
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
+                return db.put(testDocumentAlternative,{force:true})
+                    .then(()=>NavbarPage.clickNavigateToSettings())
+                    .then(()=>NavbarPage.clickNavigateToExcavation())
+                    .then(()=>browser.sleep(2000))
             })
     }
 

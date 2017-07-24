@@ -132,31 +132,6 @@ describe('resources/syncing --', function() {
         browser.sleep(5000);
     }
 
-    function removeRemoteSiteConfiguration() {
-
-        common.typeIn(SettingsPage.getRemoteSiteAddressInput(), ' ');
-        SettingsPage.clickSaveSettingsButton();
-        browser.sleep(5000);
-    }
-
-    function createEventualConflict() {
-
-        return NavbarPage.clickNavigateToSettings()
-            .then(() => removeRemoteSiteConfiguration())
-            .then(() => NavbarPage.clickNavigateToProject())
-            .then(() => ResourcesPage.clickSelectResource('test1'))
-            .then(() => DocumentViewPage.clickEditDocument())
-            .then(() => DocumentEditWrapperPage.typeInInputField('Test Local', 1))
-            .then(() => DocumentEditWrapperPage.clickSaveDocument())
-            .then(() => {
-                testDocument.resource.shortDescription = 'Test Remote';
-                updateTestDoc();
-            })
-            .then(() => NavbarPage.clickNavigateToSettings())
-            .then(() => configureRemoteSite())
-            .then(() => NavbarPage.clickNavigateToProject());
-    }
-
     beforeAll(done => {
 
         browser.sleep(2000);
@@ -220,21 +195,4 @@ describe('resources/syncing --', function() {
                 ResourcesPage.performCreateResource('test3');
             }).catch(err => { fail(err); done(); });
     });
-
-    it('detect an eventual conflict and mark the corresponding resource list item', done => {
-
-        return NavbarPage.clickNavigateToProject()
-            .then(() => waitForIt('test1', () => {
-                expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).not.toContain('conflicted');
-
-                createEventualConflict()
-                    .then(() => {
-                        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('test1')), delays.ECWaitTime);
-                        expect(ResourcesPage.getListItemEl('test1').getAttribute('class')).toContain('conflicted');
-                        done();
-                    }).catch(err => { fail(err); done(); });
-            }));
-    });
-
-
 });

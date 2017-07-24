@@ -327,6 +327,8 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.selectedPolyline = undefined;
                 this.addPolyline();
             }
+        } else if (this.getEditorType() == 'point' && this.editableMarker) {
+            this.resetEditing();
         }
     }
 

@@ -21,9 +21,9 @@
 </div>
 
 <div *ngIf="editMode">
-    <div *ngIf="selectedPolygon || selectedPolyline" id="map-editor-button-delete"
+    <div *ngIf="selectedPolygon || selectedPolyline || editableMarker" id="map-editor-button-delete"
          class="btn btn-danger mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>
-    <div *ngIf="!selectedPolygon && !selectedPolyline" id="map-editor-button-delete-disabled"
+    <div *ngIf="!selectedPolygon && !selectedPolyline && !editableMarker" id="map-editor-button-delete-disabled"
          class="btn btn-danger disabled mdi mdi-delete mdi-24px"></div>
     <div *ngIf="getEditorType() == 'polygon'" id="map-editor-button-add-polygon"
          class="btn btn-success mdi mdi-shape-polygon-plus mdi-24px" (click)="addPolygon()"></div>

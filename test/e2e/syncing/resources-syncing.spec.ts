@@ -152,7 +152,6 @@ describe('resources/syncing --', function() {
 
         return db.put(testDocument).then(result => {
             testDocument._rev = result.rev;
-            console.log("updated successfully")
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 

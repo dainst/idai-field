@@ -152,7 +152,27 @@ describe('resources/conflicts --', function() {
             console.log("updated successfully")
         }).catch(err => console.error('Failure while updating test doc', err));
     }
-    
+
+
+    it('show changes made in other db', done => {
+
+        const nr = '5';
+
+        return createOneDocument(nr)
+            .then(testDocument => {
+                testDocument.resource.shortDescription = 'altered';
+                return updateTestDoc(testDocument);
+            })
+            .then(() => {
+                NavbarPage.clickNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                browser.sleep(2000);
+                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                    expect(text).toContain('altered');
+                    done();
+                })
+            });
+    });
 
     it('solve a save conflict', done => {
         const nr = '6';

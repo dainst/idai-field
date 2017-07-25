@@ -39,9 +39,6 @@ describe('resources/syncing --', function() {
                 "relations": {
                     "isRecordedIn": [
                         "t1"
-                    ],
-                    "liesWithin": [
-                        "c1"
                     ]
                 },
                 "type": "object",

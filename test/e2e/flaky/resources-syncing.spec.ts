@@ -163,18 +163,6 @@ describe('resources/syncing --', function() {
             .then(done);
     });
 
-    it('show changes made in other db', done => {
-
-        NavbarPage.clickNavigateToProject()
-            .then(() => {
-                testDocument.resource.identifier = 'test2';
-                updateTestDoc();
-            }).then(() => waitForIt('test2', () => {
-                ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).toBe('test2')});
-                done();
-            }));
-    });
-
     it('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToProject()

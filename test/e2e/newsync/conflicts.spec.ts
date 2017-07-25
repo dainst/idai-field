@@ -154,8 +154,19 @@ describe('resources/conflicts --', function() {
     }
 
 
-    it('show changes made in other db', done => {
+    it('show resource created in other db', done => {
+        const nr = '4';
 
+        return createOneDocument(nr)
+            .then(() => {
+                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                    expect(text).toContain('Testfund4');
+                    done();
+                })
+            });
+    });
+
+    it('show changes made in other db', done => {
         const nr = '5';
 
         return createOneDocument(nr)

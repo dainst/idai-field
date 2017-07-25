@@ -145,23 +145,22 @@ describe('resources/conflicts --', function() {
     it('solve a save conflict', done => {
 
         const testDocument = makeDoc('tf7','testf7','Testfund7');
-        return db.put(testDocument).then(result => {
-            testDocument['_rev'] = result.rev;
-            return NavbarPage.clickNavigateToExcavation()
-        })
-            .then(() => {
+        return db.put(testDocument)
+            .then(result => {
+                testDocument['_rev'] = result.rev;
 
+                NavbarPage.clickNavigateToExcavation();
                 browser.sleep(2000);
-                ResourcesPage.clickSelectResource('testf7')
-                    .then(() => DocumentViewPage.clickEditDocument())
+                ResourcesPage.clickSelectResource('testf7');
+                DocumentViewPage.clickEditDocument()
                     .then(() => {
                         testDocument.resource.shortDescription = 'Testfund7_alternative';
                         return updateTestDoc(testDocument);
-                    }).then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(() => DocumentEditWrapperPage.clickChooseRightRevision())
-                    .then(() => DocumentEditWrapperPage.clickSolveConflictButton())
-                    .then(() => DocumentEditWrapperPage.clickSaveDocument())
-                    .then(() => {
+                    }).then(() => {
+                        DocumentEditWrapperPage.clickSaveDocument();
+                        DocumentEditWrapperPage.clickChooseRightRevision();
+                        DocumentEditWrapperPage.clickSolveConflictButton();
+                        DocumentEditWrapperPage.clickSaveDocument();
                         expect(ResourcesPage.getListItemEl('testf7').getAttribute('class')).not.toContain('conflicted');
                         done();
                     }).catch(err => { fail(err); done(); });

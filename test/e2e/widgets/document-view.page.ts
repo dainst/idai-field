@@ -17,7 +17,7 @@ export class DocumentViewPage {
     };
 
     public static clickEditDocument() {
-        common.click(by.id('document-view-button-edit-document'));
+        return common.click(by.id('document-view-button-edit-document'));
     };
 
     public static clickCreateGeometry(type) {

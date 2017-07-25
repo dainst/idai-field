@@ -116,14 +116,26 @@ describe('resources/conflicts --', function() {
     });
 
 
-    function createEventualConflict(nr) {
+    function createOneDocument(nr) {
         const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
+
+        return db.put(testDocument).then(result => {
+                testDocument['_rev'] = result.rev;
+                return browser.sleep(2000);
+            })
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(2000))
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+                return Promise.resolve(testDocument);
+            });
+    }
+
+    function createEventualConflict(nr) {
         const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
         testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
 
-        return db.put(testDocument).then(()=>browser.sleep(2000))
-            .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(2000))
+        return createOneDocument(nr)
             .then(() => {
                 expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
                 return db.put(testDocumentAlternative,{force:true})
@@ -145,13 +157,9 @@ describe('resources/conflicts --', function() {
     it('solve a save conflict', done => {
         const nr = '6';
 
-        const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
-        return db.put(testDocument)
-            .then(result => {
-                testDocument['_rev'] = result.rev;
+        return createOneDocument(nr)
+            .then(testDocument => {
 
-                NavbarPage.clickNavigateToExcavation();
-                browser.sleep(2000);
                 ResourcesPage.clickSelectResource('testf'+nr);
                 DocumentViewPage.clickEditDocument()
                     .then(() => {

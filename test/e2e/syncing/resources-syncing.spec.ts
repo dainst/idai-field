@@ -163,15 +163,6 @@ describe('resources/syncing --', function() {
             .then(done);
     });
 
-    it('show resource created in other db', done => {
-
-        NavbarPage.clickNavigateToProject();
-        waitForIt('test1', () => {
-            ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).toBe('test1')});
-            done();
-        });
-    });
-
     it('show changes made in other db', done => {
 
         NavbarPage.clickNavigateToProject()

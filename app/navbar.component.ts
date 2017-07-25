@@ -18,8 +18,7 @@ export class NavbarComponent implements OnInit {
     public views: Array<ViewDefinition>;
     public activeRoute: string;
 
-    constructor(private messages: Messages,
-                private configLoader: ConfigLoader,
+    constructor(private configLoader: ConfigLoader,
                 router: Router) {
 
         router.events.subscribe(() => this.activeRoute = router.url);
@@ -35,10 +34,5 @@ export class NavbarComponent implements OnInit {
     public isActiveRoute(route: string) {
 
         return this.activeRoute.startsWith(route);
-    }
-
-    public setMessagesHidden(shown) {
-
-        this.messages.setHidden(!shown);
     }
 }

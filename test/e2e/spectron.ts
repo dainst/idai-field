@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const configPath = 'config/config.test.json';
 const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
-const suite = (process.argv.length > 3 && process.argv[3] == 'syncing') ? 'syncing' : 'default';
+const suite = (process.argv.length > 3 && process.argv[3] == 'flaky') ? 'flaky' : 'default';
 
 console.log('Running test suite:', suite);
 console.log('Fail fast mode:', failFast);

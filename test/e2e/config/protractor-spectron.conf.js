@@ -13,7 +13,7 @@ exports.config = {
 
     suites: {
         default: [
-            '../newsync/*.spec.js',
+            '../syncing/*.spec.js',
             '../images/*.spec.js',
             '../import/*.spec.js',
             '../list/*.spec.js',
@@ -22,8 +22,8 @@ exports.config = {
             '../widgets/*.spec.js',
             '../settings/*.spec.js'
         ],
-        syncing: [
-            '../syncing/*.spec.js'
+        flaky: [
+            '../flaky/*.spec.js'
         ]
     },
 

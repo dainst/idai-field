@@ -91,7 +91,7 @@ so that test execution stops when the first error is found.
 Additionally, there is a (not yet) stable syncing test suite, which can be started with
 
 ```
-$ npm run e2e (no)ff syncing
+$ npm run e2e (no)ff flaky
 ```
 
 ## Packaging

@@ -19,6 +19,7 @@ const common = require('../common');
 /**
  * @author Sebastian Cuy
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 describe('resources/syncing --', function() {
 
@@ -27,21 +28,32 @@ describe('resources/syncing --', function() {
     const configTemplate = browser.params.configTemplate;
 
     let db, server, changes;
-    let testResource = {
-        id: 'td1',
-        identifier:'test1',
-        type: 'trench',
-        shortDescription: 'Testobjekt',
-        relations: { 'isRecordedIn': [ 'test' ] }
-    };
-    let testDocument: any = {
-        _id: testResource.id,
-        resource: testResource,
-        created: {
-            date: new Date(),
-            user: 'testuser'
-        }
-    };
+
+    function makeDoc(id,identifier,shortDescription) {
+        return {
+            _id: id,
+            resource: {
+                "id": id,
+                "identifier": identifier,
+                "shortDescription": shortDescription,
+                "relations": {
+                    "isRecordedIn": [
+                        "t1"
+                    ],
+                    "liesWithin": [
+                        "c1"
+                    ]
+                },
+                "type": "object",
+                "_parentTypes": []
+            },
+            created: {
+                "user": "sample_data",
+                "date": "2017-07-24T16:01:10.843Z"
+            },
+            modified: []
+        };
+    }
 
     function setupTestDB() {
 
@@ -53,8 +65,8 @@ describe('resources/syncing --', function() {
             server = app.listen(3001, function() {
                 new PouchDB('test')
                     .destroy().then(() => {
-                        resolve(new PouchDB('test'));
-                    });
+                    resolve(new PouchDB('test'));
+                });
             });
         }).then(newDb => db = newDb);
     }
@@ -63,40 +75,6 @@ describe('resources/syncing --', function() {
 
         return db.destroy()
             .then(() => server.close());
-    }
-
-    function createTestDoc() {
-
-        return db.post(testDocument).then(result => {
-            testDocument._rev = result.rev;
-        }).catch(err => console.error('Failure while creating test doc', err));
-    }
-
-    function resetTestDoc() {
-
-        testDocument.resource.identifier = 'test1';
-        testDocument.resource.shortDescription = 'Testobjekt';
-
-        return db.get(testDocument._id, { conflicts: true })
-            .then(doc => {
-                testDocument._rev = doc._rev;
-
-                let promises = [];
-                if (doc._conflicts) {
-                    for (let revisionId of doc._conflicts) {
-                        promises.push(db.remove(doc._id, revisionId));
-                    }
-                }
-
-                return Promise.all(promises);
-            }).catch(err => console.error('Failure while resetting test doc', err));
-    }
-
-    function updateTestDoc() {
-
-        return db.put(testDocument).then(result => {
-            testDocument._rev = result.rev;
-        }).catch(err => console.error('Failure while updating test doc', err));
     }
 
     function resetConfigJson(): Promise<any> {
@@ -109,27 +87,11 @@ describe('resources/syncing --', function() {
         });
     }
 
-    function waitForIt(searchTerm, successCB) {
-
-        return browser.sleep(3000).then(() =>
-            ResourcesPage.typeInIdentifierInSearchField(searchTerm)
-        ).then(() => {
-            return browser.wait(EC.visibilityOf(
-                    element(by.css('#objectList .list-group-item:nth-child(1) .title'))), 500).then(
-                () => {
-                    return successCB();
-                },
-                () => {
-                    return waitForIt(searchTerm, successCB);
-                });
-        });
-    }
-
     function configureRemoteSite() {
 
         common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         SettingsPage.clickSaveSettingsButton();
-        browser.sleep(5000);
+        return browser.sleep(5000);
     }
 
     beforeAll(done => {
@@ -144,46 +106,169 @@ describe('resources/syncing --', function() {
     });
 
     beforeEach(done => {
-
-        createTestDoc()
-            .then(
-                ()=> {
-                    SettingsPage.get();
-                    configureRemoteSite();
-                })
-            .then(done);
+        SettingsPage.get();
+        configureRemoteSite().then(done);
     });
 
     afterEach(done => {
-
         if (changes) changes.cancel();
+        resetConfigJson().then(done);
+    });
 
-        resetTestDoc()
-            .then(() => resetConfigJson())
-            .then(done);
+
+    function createOneDocument(nr) {
+        const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
+
+        return db.put(testDocument).then(result => {
+                testDocument['_rev'] = result.rev;
+                return browser.sleep(2000);
+            })
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(2000))
+            .then(() => {
+                return Promise.resolve(testDocument);
+            });
+    }
+
+    function createAlternateDocument(nr) {
+        const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
+        testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
+
+        return db.put(testDocumentAlternative,{force:true})
+            .then(() => {
+                NavbarPage.clickNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                return browser.sleep(2000);
+            });
+    }
+
+    function createEventualConflict(nr) {
+
+        return createOneDocument(nr)
+            .then(() => createAlternateDocument(nr));
+    }
+
+    function updateTestDoc(testDocument) {
+
+        return db.put(testDocument).then(result => {
+            testDocument._rev = result.rev;
+            console.log("updated successfully")
+        }).catch(err => console.error('Failure while updating test doc', err));
+    }
+
+
+    it('show resource created in other db', done => {
+        const nr = '3';
+
+        return createOneDocument(nr)
+            .then(() => {
+                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                    expect(text).toContain('Testfund3');
+                    done();
+                })
+            });
     });
 
     it('show changes made in other db', done => {
+        const nr = '4';
 
-        NavbarPage.clickNavigateToProject()
+        return createOneDocument(nr)
+            .then(testDocument => {
+                testDocument.resource.shortDescription = 'altered';
+                return updateTestDoc(testDocument);
+            })
             .then(() => {
-                testDocument.resource.identifier = 'test2';
-                updateTestDoc();
-            }).then(() => waitForIt('test2', () => {
-                ResourcesPage.getListItemIdentifierText(0).then(x=>{expect(x).toBe('test2')});
-                done();
-            }));
+                NavbarPage.clickNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                browser.sleep(2000);
+                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                    expect(text).toContain('altered');
+                    done();
+                })
+            });
     });
 
-    it('resource created in client should be synced to other db', done => {
+    it('solve a save conflict', done => {
+        const nr = '5';
 
-        NavbarPage.clickNavigateToProject()
-            .then(() => {
-                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
-                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
+        return createOneDocument(nr)
+            .then(testDocument => {
+
+                ResourcesPage.clickSelectResource('testf'+nr);
+                DocumentViewPage.clickEditDocument()
+                    .then(() => {
+                        testDocument.resource.shortDescription = 'Testfund'+nr+'_alternative';
+                        return updateTestDoc(testDocument);
+                    }).then(() => {
+                        DocumentEditWrapperPage.clickSaveDocument();
+                        DocumentEditWrapperPage.clickChooseRightRevision();
+                        DocumentEditWrapperPage.clickSolveConflictButton();
+                        DocumentEditWrapperPage.clickSaveDocument();
+                        expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
                         done();
-                });
-                ResourcesPage.performCreateResource('test3');
-            }).catch(err => { fail(err); done(); });
+                    }).catch(err => { fail(err); done(); });
+            });
+    });
+
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
+        const nr = '6';
+
+        return createOneDocument(nr)
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+            })
+            .then(() => createAlternateDocument(nr))
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).toContain('conflicted');
+                done();
+            });
+    });
+
+    it('open conflict resolver via taskbar', done => {
+        const nr = '7';
+
+        createEventualConflict(nr).then(() => {
+
+            NavbarPage.clickConflictsButton();
+            NavbarPage.clickConflictResolverLink('testf'+nr);
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
+        });
+    });
+
+    it('open conflict resolver via conflict button in document view', done => {
+        const nr = '8';
+
+        createEventualConflict(nr).then(() => {
+            ResourcesPage.clickSelectResource('testf'+nr);
+            DocumentViewPage.clickSolveConflicts();
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
+        });
+    });
+
+    it('resolve an eventual conflict', done => {
+        const nr = '9';
+
+        createEventualConflict(nr).then(() => {
+
+            ResourcesPage.clickSelectResource('testf'+nr);
+            ResourcesPage.clickSelectResource('testf'+nr);
+            DocumentViewPage.clickEditDocument();
+            DocumentEditWrapperPage.clickConflictsTab();
+            DocumentEditWrapperPage.clickChooseRightRevision();
+            DocumentEditWrapperPage.clickSolveConflictButton();
+            DocumentEditWrapperPage.clickSaveDocument();
+            browser.sleep(2000);
+            expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
+
+            db.get('tf'+nr).then(doc => {
+                expect(['Testfund'+nr, 'Testfund'+nr+'_alternative']).toContain(doc.resource.shortDescription);
+                // expect(doc.resource.shortDescription).not.toEqual(shortDescription);
+                done();
+            });
+
+        }).catch(err => {
+            console.error('Failure while creating test doc', err);
+            fail(); done()
+        });
     });
 });

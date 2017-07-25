@@ -261,7 +261,6 @@ describe('resources/syncing --', function() {
 
             db.get('tf'+nr).then(doc => {
                 expect(['Testfund'+nr, 'Testfund'+nr+'_alternative']).toContain(doc.resource.shortDescription);
-                // expect(doc.resource.shortDescription).not.toEqual(shortDescription);
                 done();
             });
 

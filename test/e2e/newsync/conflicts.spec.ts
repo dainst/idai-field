@@ -140,70 +140,74 @@ describe('resources/conflicts --', function() {
             console.log("updated successfully")
         }).catch(err => console.error('Failure while updating test doc', err));
     }
-
+    
 
     it('solve a save conflict', done => {
+        const nr = '6';
 
-        const testDocument = makeDoc('tf7','testf7','Testfund7');
+        const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
         return db.put(testDocument)
             .then(result => {
                 testDocument['_rev'] = result.rev;
 
                 NavbarPage.clickNavigateToExcavation();
                 browser.sleep(2000);
-                ResourcesPage.clickSelectResource('testf7');
+                ResourcesPage.clickSelectResource('testf'+nr);
                 DocumentViewPage.clickEditDocument()
                     .then(() => {
-                        testDocument.resource.shortDescription = 'Testfund7_alternative';
+                        testDocument.resource.shortDescription = 'Testfund'+nr+'_alternative';
                         return updateTestDoc(testDocument);
                     }).then(() => {
                         DocumentEditWrapperPage.clickSaveDocument();
                         DocumentEditWrapperPage.clickChooseRightRevision();
                         DocumentEditWrapperPage.clickSolveConflictButton();
                         DocumentEditWrapperPage.clickSaveDocument();
-                        expect(ResourcesPage.getListItemEl('testf7').getAttribute('class')).not.toContain('conflicted');
+                        expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
                         done();
                     }).catch(err => { fail(err); done(); });
             });
     });
 
     it('open conflict resolver via taskbar', done => {
+        const nr = '7';
 
-        createEventualConflict('3').then(() => {
+        createEventualConflict(nr).then(() => {
 
             NavbarPage.clickConflictsButton();
-            NavbarPage.clickConflictResolverLink('testf3');
+            NavbarPage.clickConflictResolverLink('testf'+nr);
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 
     it('open conflict resolver via conflict button in document view', done => {
+        const nr = '8';
 
-        createEventualConflict('4').then(() => {
-            ResourcesPage.clickSelectResource('testf4');
+        createEventualConflict(nr).then(() => {
+            ResourcesPage.clickSelectResource('testf'+nr);
             DocumentViewPage.clickSolveConflicts();
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 
     it('resolve an eventual conflict', done => {
+        const nr = '9';
 
-        createEventualConflict('2').then(() => {
+        createEventualConflict(nr).then(() => {
 
-            expect(ResourcesPage.getListItemEl('testf2').getAttribute('class')).toContain('conflicted');
+            expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).toContain('conflicted');
 
-            ResourcesPage.clickSelectResource('testf2');
-            ResourcesPage.clickSelectResource('testf2');
+            ResourcesPage.clickSelectResource('testf'+nr);
+            ResourcesPage.clickSelectResource('testf'+nr);
             DocumentViewPage.clickEditDocument();
             DocumentEditWrapperPage.clickConflictsTab();
             DocumentEditWrapperPage.clickChooseRightRevision();
             DocumentEditWrapperPage.clickSolveConflictButton();
             DocumentEditWrapperPage.clickSaveDocument();
             browser.sleep(2000);
-            expect(ResourcesPage.getListItemEl('testf2').getAttribute('class')).not.toContain('conflicted');
+            expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
 
-            db.get('tf2').then(doc => {
-                expect(['Testfund2', 'Testfund2_alternative']).toContain(doc.resource.shortDescription);
+            db.get('tf'+nr).then(doc => {
+                expect(['Testfund'+nr, 'Testfund'+nr+'_alternative']).toContain(doc.resource.shortDescription);
                 // expect(doc.resource.shortDescription).not.toEqual(shortDescription);
                 done();
             });

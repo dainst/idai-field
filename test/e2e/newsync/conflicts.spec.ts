@@ -126,23 +126,26 @@ describe('resources/conflicts --', function() {
             .then(() => NavbarPage.clickNavigateToExcavation())
             .then(() => browser.sleep(2000))
             .then(() => {
-                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
                 return Promise.resolve(testDocument);
             });
     }
 
-    function createEventualConflict(nr) {
+    function createAlternateDocument(nr) {
         const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
         testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
 
-        return createOneDocument(nr)
+        return db.put(testDocumentAlternative,{force:true})
             .then(() => {
-                expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
-                return db.put(testDocumentAlternative,{force:true})
-                    .then(()=>NavbarPage.clickNavigateToSettings())
-                    .then(()=>NavbarPage.clickNavigateToExcavation())
-                    .then(()=>browser.sleep(2000))
-            })
+                NavbarPage.clickNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                return browser.sleep(2000);
+            });
+    }
+
+    function createEventualConflict(nr) {
+
+        return createOneDocument(nr)
+            .then(() => createAlternateDocument(nr));
     }
 
     function updateTestDoc(testDocument) {
@@ -155,19 +158,19 @@ describe('resources/conflicts --', function() {
 
 
     it('show resource created in other db', done => {
-        const nr = '4';
+        const nr = '3';
 
         return createOneDocument(nr)
             .then(() => {
                 ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
-                    expect(text).toContain('Testfund4');
+                    expect(text).toContain('Testfund3');
                     done();
                 })
             });
     });
 
     it('show changes made in other db', done => {
-        const nr = '5';
+        const nr = '4';
 
         return createOneDocument(nr)
             .then(testDocument => {
@@ -186,7 +189,7 @@ describe('resources/conflicts --', function() {
     });
 
     it('solve a save conflict', done => {
-        const nr = '6';
+        const nr = '5';
 
         return createOneDocument(nr)
             .then(testDocument => {
@@ -204,6 +207,20 @@ describe('resources/conflicts --', function() {
                         expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
                         done();
                     }).catch(err => { fail(err); done(); });
+            });
+    });
+
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
+        const nr = '6';
+
+        return createOneDocument(nr)
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+            })
+            .then(() => createAlternateDocument(nr))
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).toContain('conflicted');
+                done();
             });
     });
 
@@ -232,8 +249,6 @@ describe('resources/conflicts --', function() {
         const nr = '9';
 
         createEventualConflict(nr).then(() => {
-
-            expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).toContain('conflicted');
 
             ResourcesPage.clickSelectResource('testf'+nr);
             ResourcesPage.clickSelectResource('testf'+nr);

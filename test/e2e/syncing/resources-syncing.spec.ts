@@ -152,6 +152,17 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
+    it('resource created in client should be synced to other db', done => {
+
+        NavbarPage.clickNavigateToProject()
+            .then(() => {
+                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
+                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
+                        done();
+                });
+                ResourcesPage.performCreateResource('test3');
+            }).catch(err => { fail(err); done(); });
+    });
 
     it('show resource created in other db', done => {
         const nr = '3';

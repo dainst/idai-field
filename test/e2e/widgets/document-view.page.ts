@@ -34,6 +34,11 @@ export class DocumentViewPage {
 
     // get text
 
+    public static getShortDescription() {
+        browser.wait(EC.visibilityOf(element(by.id('description-view-short-description'))), delays.ECWaitTime);
+        return element(by.id('description-view-short-description')).getText();
+    }
+
     /**
      * @param index counting from 0 for the first field
      */

@@ -194,31 +194,53 @@ describe('resources/syncing --', function() {
             });
     });
 
-    it('solve a save conflict', done => {
+    it('resolve a save conflict via conflict resolver', done => {
         const nr = '5';
+        let testDocument;
 
-        return createOneDocument(nr).then(testDocument => {
-
+        return createOneDocument(nr).then(document => {
+            testDocument = document;
             ResourcesPage.clickSelectResource('testf' + nr);
-            DocumentViewPage.clickEditDocument()
-                .then(() => {
-                    testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
-                    return updateTestDoc(testDocument);
-                }).then(() => {
-                    DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
-                    DocumentEditWrapperPage.clickSaveDocument();
-                    DocumentEditWrapperPage.clickChooseRightRevision();
-                    DocumentEditWrapperPage.clickSolveConflictButton();
-                    DocumentEditWrapperPage.clickSaveDocument();
-                    expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
-                        .not.toContain('conflicted');
-                    done();
-                }).catch(err => { fail(err); done(); });
-        });
+            return DocumentViewPage.clickEditDocument();
+        }).then(() => {
+            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
+            return updateTestDoc(testDocument);
+        }).then(() => {
+            DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
+            DocumentEditWrapperPage.clickSaveDocument();
+            DocumentEditWrapperPage.clickChooseRightRevision();
+            DocumentEditWrapperPage.clickSolveConflictButton();
+            DocumentEditWrapperPage.clickSaveDocument();
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+                .not.toContain('conflicted');
+            done();
+        }).catch(err => { fail(err); done(); });
+    });
+
+    it('resolve a save conflict automatically', done => {
+        const nr = '6';
+        let testDocument;
+
+        return createOneDocument(nr).then(document => {
+            testDocument = document;
+            ResourcesPage.clickSelectResource('testf' + nr);
+            return DocumentViewPage.clickEditDocument();
+        }).then(() => {
+            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative';
+            return updateTestDoc(testDocument);
+        }).then(() => {
+            DocumentEditWrapperPage.clickSaveDocument();
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+                .not.toContain('conflicted');
+            return DocumentViewPage.getShortDescription();
+        }).then(shortDescription => {
+            expect(shortDescription).toEqual('Testfund' + nr + '_alternative');
+            done();
+        }).catch(err => { fail(err); done(); });
     });
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {
-        const nr = '6';
+        const nr = '7';
 
         return createOneDocument(nr)
             .then(() => {
@@ -232,7 +254,7 @@ describe('resources/syncing --', function() {
     });
 
     it('open conflict resolver via taskbar', done => {
-        const nr = '7';
+        const nr = '8';
 
         createEventualConflict(nr).then(() => {
 
@@ -243,7 +265,7 @@ describe('resources/syncing --', function() {
     });
 
     it('open conflict resolver via conflict button in document view', done => {
-        const nr = '8';
+        const nr = '9';
 
         createEventualConflict(nr).then(() => {
             ResourcesPage.clickSelectResource('testf'+nr);
@@ -253,7 +275,7 @@ describe('resources/syncing --', function() {
     });
 
     it('resolve an eventual conflict', done => {
-        const nr = '9';
+        const nr = '10';
 
         createEventualConflict(nr).then(() => {
 

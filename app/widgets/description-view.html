@@ -3,8 +3,8 @@
         while in another there is only the identifier.
     -->
 <div>
-    <h1>{{document.resource.identifier}}</h1>
-    <h2 *ngIf="document.resource.shortDescription" class="document-view-identifier">
+    <h1 id="description-view-identifier">{{document.resource.identifier}}</h1>
+    <h2 id="description-view-short-description" *ngIf="document.resource.shortDescription">
         {{document.resource.shortDescription}}
     </h2>
 </div>

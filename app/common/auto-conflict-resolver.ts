@@ -83,51 +83,21 @@ export class AutoConflictResolver {
 
             if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
 
-            let resolvedFieldConflicts: number = 0;
-            let unresolvedFieldConflicts: number = 0;
+            const fieldConflictsResult = this.resolveFieldConflicts(latestRevision, conflictedRevision,
+                previousRevision);
+            const relationConflictsResult = this.resolveRelationConflicts(latestRevision, conflictedRevision,
+                previousRevision);
 
-            const differingFieldsNames: string[]
-                = DiffUtility.findDifferingFields(latestRevision.resource, conflictedRevision.resource);
-
-            for (let fieldName of differingFieldsNames) {
-                let winningRevision = this.determineWinningRevisionForField(latestRevision, conflictedRevision,
-                    previousRevision, fieldName);
-                if (winningRevision) {
-                    if (winningRevision.resource[fieldName]) {
-                        latestRevision.resource[fieldName] = winningRevision.resource[fieldName];
-                    } else {
-                        delete latestRevision.resource[fieldName];
-                    }
-                    if (winningRevision == conflictedRevision) resolvedFieldConflicts++;
-                } else {
-                    unresolvedFieldConflicts++;
-                }
-            }
-
-            const differingRelationsNames: string[]
-                = DiffUtility.findDifferingRelations(latestRevision.resource, conflictedRevision.resource);
-
-            for (let relationName of differingRelationsNames) {
-                let winningRevision = this.determineWinningRevisionForRelation(latestRevision, conflictedRevision,
-                    previousRevision, relationName);
-                if (winningRevision) {
-                    if (winningRevision.resource.relations[relationName]) {
-                        latestRevision.resource.relations[relationName]
-                            = winningRevision.resource.relations[relationName];
-                    } else {
-                        delete latestRevision.resource.relations[relationName];
-                    }
-                    if (winningRevision == conflictedRevision) resolvedFieldConflicts++;
-                } else {
-                    unresolvedFieldConflicts++;
-                }
-            }
+            const resolvedConflicts: number
+                = fieldConflictsResult.resolvedConflicts + relationConflictsResult.resolvedConflicts;
+            const unresolvedConflicts: number
+                = fieldConflictsResult.unresolvedConflicts + relationConflictsResult.unresolvedConflicts;
 
             this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
 
-            if (resolvedFieldConflicts > 0 || unresolvedFieldConflicts == 0) {
+            if (resolvedConflicts > 0 || unresolvedConflicts == 0) {
                 return this.datastore.update(latestRevision).then(() => {
-                    if (!unresolvedFieldConflicts) {
+                    if (!unresolvedConflicts) {
                         return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev']);
                     } else {
                         return Promise.resolve();
@@ -137,6 +107,65 @@ export class AutoConflictResolver {
                 return Promise.resolve();
             }
         });
+    }
+
+    private resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
+                                  previousRevision: IdaiFieldDocument): any {
+
+        let result = {
+            resolvedConflicts: 0,
+            unresolvedConflicts: 0
+        };
+
+        const differingFieldsNames: string[]
+            = DiffUtility.findDifferingFields(latestRevision.resource, conflictedRevision.resource);
+
+        for (let fieldName of differingFieldsNames) {
+            let winningRevision = this.determineWinningRevisionForField(latestRevision, conflictedRevision,
+                previousRevision, fieldName);
+            if (winningRevision) {
+                if (winningRevision.resource[fieldName]) {
+                    latestRevision.resource[fieldName] = winningRevision.resource[fieldName];
+                } else {
+                    delete latestRevision.resource[fieldName];
+                }
+                if (winningRevision == conflictedRevision) result.resolvedConflicts++;
+            } else {
+                result.unresolvedConflicts++;
+            }
+        }
+
+        return result;
+    }
+
+    private resolveRelationConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
+                                     previousRevision: IdaiFieldDocument): any {
+
+        let result = {
+            resolvedConflicts: 0,
+            unresolvedConflicts: 0
+        };
+
+        const differingRelationsNames: string[]
+            = DiffUtility.findDifferingRelations(latestRevision.resource, conflictedRevision.resource);
+
+        for (let relationName of differingRelationsNames) {
+            let winningRevision = this.determineWinningRevisionForRelation(latestRevision, conflictedRevision,
+                previousRevision, relationName);
+            if (winningRevision) {
+                if (winningRevision.resource.relations[relationName]) {
+                    latestRevision.resource.relations[relationName]
+                        = winningRevision.resource.relations[relationName];
+                } else {
+                    delete latestRevision.resource.relations[relationName];
+                }
+                if (winningRevision == conflictedRevision) result.resolvedConflicts++;
+            } else {
+                result.unresolvedConflicts++;
+            }
+        }
+
+        return result;
     }
 
     private determineWinningRevisionForField(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,

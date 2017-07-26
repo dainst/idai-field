@@ -120,4 +120,22 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
+
+    it ('do not delete last project', () => {
+
+        ResourcesPage.clickDeleteProject();
+        ResourcesPage.typeInProjectName('test');
+        ResourcesPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
+    });
+
+    it('do not create with the same name', () => {
+
+        ResourcesPage.clickCreateProject();
+        ResourcesPage.typeInProjectName('test');
+        ResourcesPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
+    });
 });

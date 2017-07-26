@@ -15,6 +15,7 @@ import {M} from '../m';
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ProjectsComponent implements OnInit {
 
@@ -22,8 +23,10 @@ export class ProjectsComponent implements OnInit {
     public projects: string[];
     public selectedProject: string;
     public newProject: string = '';
+    public projectToDelete: string = '';
 
     @ViewChild('popover') private popover;
+    @ViewChild('deletePopover') private deletePopover;
 
     constructor(private settingsService: SettingsService,
                 private resourcesComponent: ResourcesComponent,
@@ -41,6 +44,7 @@ export class ProjectsComponent implements OnInit {
 
     public reset() {
 
+        this.projectToDelete = '';
         this.newProject = '';
     }
 
@@ -66,6 +70,22 @@ export class ProjectsComponent implements OnInit {
         this.selectedProject = this.newProject;
         this.updateProjectSettings();
     }
+
+    public deleteProject() {
+
+        if (!this.projectToDelete || (this.projectToDelete == '')) {
+            return this.deletePopover.close();
+        }
+        if (this.projectToDelete != this.selectedProject) {
+            this.deletePopover.close();
+            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
+        }
+
+        // TODO delete project
+        console.log("deleting project",this.projectToDelete);
+        this.deletePopover.close();
+    }
+
 
     private updateProjectSettings() {
 

@@ -94,6 +94,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
     public static RESOURCES_ERROR_PROJECT_NAME_EXISTS: string = 'resources/error/projectnamexists';
+    public static RESOURCES_ERROR_PROJECT_NAME_NOT_SAME: string = 'resources/error/projectnamenotsame';
 
     // Keys END /////////////////////////////////
 
@@ -418,6 +419,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_EXISTS] = {
             content: 'Ein Projekt mit dem Namen \'{0}\' existiert bereits.',
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME] = {
+            content: 'Die Namen stimmen nicht übereinander. Das Projekt wird nicht gelöscht.',
+            level: 'warning',
             params: [],
             hidden: false
         };

@@ -29,24 +29,24 @@ describe('resources/syncing --', function() {
 
     let db, server, changes;
 
-    function makeDoc(id,identifier,shortDescription) {
+    function makeDoc(id, identifier, shortDescription) {
         return {
             _id: id,
             resource: {
-                "id": id,
-                "identifier": identifier,
-                "shortDescription": shortDescription,
-                "relations": {
-                    "isRecordedIn": [
-                        "t1"
+                'id': id,
+                'identifier': identifier,
+                'shortDescription': shortDescription,
+                'relations': {
+                    'isRecordedIn': [
+                        't1'
                     ]
                 },
-                "type": "object",
-                "_parentTypes": []
+                'type': 'object',
+                '_parentTypes': []
             },
             created: {
-                "user": "sample_data",
-                "date": "2017-07-24T16:01:10.843Z"
+                'user': 'anonymous',
+                'date': '2017-07-24T16:01:10.843Z'
             },
             modified: []
         };
@@ -112,7 +112,6 @@ describe('resources/syncing --', function() {
         resetConfigJson().then(done);
     });
 
-
     function createOneDocument(nr) {
         const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
 
@@ -129,7 +128,7 @@ describe('resources/syncing --', function() {
 
     function createAlternateDocument(nr) {
         const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
-        testDocumentAlternative['_rev'] = "1-dca7c53e7c0e47278b2c09744cc94b21";
+        testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
 
         return db.put(testDocumentAlternative,{force:true})
             .then(() => {
@@ -198,23 +197,24 @@ describe('resources/syncing --', function() {
     it('solve a save conflict', done => {
         const nr = '5';
 
-        return createOneDocument(nr)
-            .then(testDocument => {
+        return createOneDocument(nr).then(testDocument => {
 
-                ResourcesPage.clickSelectResource('testf'+nr);
-                DocumentViewPage.clickEditDocument()
-                    .then(() => {
-                        testDocument.resource.shortDescription = 'Testfund'+nr+'_alternative';
-                        return updateTestDoc(testDocument);
-                    }).then(() => {
-                        DocumentEditWrapperPage.clickSaveDocument();
-                        DocumentEditWrapperPage.clickChooseRightRevision();
-                        DocumentEditWrapperPage.clickSolveConflictButton();
-                        DocumentEditWrapperPage.clickSaveDocument();
-                        expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
-                        done();
-                    }).catch(err => { fail(err); done(); });
-            });
+            ResourcesPage.clickSelectResource('testf' + nr);
+            DocumentViewPage.clickEditDocument()
+                .then(() => {
+                    testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
+                    return updateTestDoc(testDocument);
+                }).then(() => {
+                    DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
+                    DocumentEditWrapperPage.clickSaveDocument();
+                    DocumentEditWrapperPage.clickChooseRightRevision();
+                    DocumentEditWrapperPage.clickSolveConflictButton();
+                    DocumentEditWrapperPage.clickSaveDocument();
+                    expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+                        .not.toContain('conflicted');
+                    done();
+                }).catch(err => { fail(err); done(); });
+        });
     });
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {

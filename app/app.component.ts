@@ -4,7 +4,9 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {AppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
-import {M} from "./m";
+import {AutoConflictResolver} from './common/auto-conflict-resolver';
+import {M} from './m';
+
 const remote = require('electron').remote;
 
 @Component({
@@ -26,7 +28,8 @@ export class AppComponent implements OnInit {
                 private configLoader: ConfigLoader,
                 private router: Router,
                 private messages: Messages,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                private autoConflictResolver: AutoConflictResolver) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -34,7 +37,7 @@ export class AppComponent implements OnInit {
         // like
         // { router.navigate(['target']); messages.add(['some']); }
         //
-        router.events.subscribe( (event:Event) => {
+        router.events.subscribe((event: Event) => {
             if(event instanceof NavigationStart) {
                 this.messages.clear();
             }
@@ -46,7 +49,9 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.appConfigurator.go(AppComponent.PROJECT_CONFIGURATION_PATH);
+
         this.configLoader.getProjectConfiguration().then(
             projectConfiguration => {
                 if (!projectConfiguration.getProjectIdentifier()) {
@@ -58,8 +63,9 @@ export class AppComponent implements OnInit {
             msgsWithParams.forEach(msg => this.messages.add(msg));
             if (count > 1) this.messages.add([M.APP_ERRORS_IN_CONFIG, count]);
         });
-    }
 
+        this.autoConflictResolver.initialize();
+    }
 
     private static preventDefaultDragAndDropBehavior() {
 

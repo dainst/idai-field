@@ -116,6 +116,10 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.getRevision(docId, revisionId);
     }
 
+    getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
+        return this.datastore.getRevisionHistory(docId);
+    }
+
     removeRevision(docId: string, revisionId: string): Promise<any> {
         return this.datastore.removeRevision(docId, revisionId);
     }

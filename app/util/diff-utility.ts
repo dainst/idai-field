@@ -50,7 +50,7 @@ export class DiffUtility {
         return differingFieldsNames;
     }
 
-    private static compareFields(field1: any, field2: any): boolean {
+    public static compareFields(field1: any, field2: any): boolean {
 
         if ((field1 && !field2) || (!field1 && field2)) return false;
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;

@@ -77,9 +77,8 @@ export class MapWrapperComponent implements OnInit {
     private save() {
 
         this.persistenceManager.setOldVersions([this.selectedDocument]);
-        this.persistenceManager.persist(this.selectedDocument, this.settingsService.getUsername()).then(
-            () => {
-                //
-            }, msgWithParams => this.messages.add(msgWithParams));
+        this.persistenceManager.persist(this.selectedDocument, this.settingsService.getUsername())
+            .catch(msgWithParams => this.messages.add(msgWithParams));
     }
+
 }

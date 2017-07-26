@@ -1,13 +1,13 @@
-import {Query, ReadDatastore, Datastore, DatastoreErrors} from "idai-components-2/datastore";
-import {Document} from "idai-components-2/core";
-import {ConfigLoader, ProjectConfiguration} from "idai-components-2/configuration";
-import {IdGenerator} from "./id-generator";
-import {Observable} from "rxjs/Observable";
-import {M} from "../m";
-import {IdaiFieldDatastore} from "./idai-field-datastore";
-import {SyncState} from "./sync-state";
+import {Query, ReadDatastore, Datastore, DatastoreErrors} from 'idai-components-2/datastore';
+import {Document} from 'idai-components-2/core';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {IdGenerator} from './id-generator';
+import {Observable} from 'rxjs/Observable';
+import {M} from '../m';
+import {IdaiFieldDatastore} from './idai-field-datastore';
+import {SyncState} from './sync-state';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {PouchdbManager} from "./pouchdb-manager";
+import {PouchdbManager} from './pouchdb-manager';
 
 /**
  * @author Sebastian Cuy
@@ -31,7 +31,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
             .then(config => this.config = config, () => {})
             .then(() => this.setupServer())
             .then(() => this.setupChangesEmitter())
-
     }
 
     /**
@@ -188,6 +187,17 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     /**
+     * Implements {@link IdaiFieldDatastore#getRevisionHistory}.
+     *
+     * @param docId
+     * @returns {Promise<Array<PouchDB.Core.RevisionInfo>>}
+     */
+    public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
+        return this.db.get(docId, { revs_info: true })
+            .then(doc => Promise.resolve(doc._revs_info));
+    }
+
+    /**
      * Implements {@link IdaiFieldDatastore#removeRevision}.
      *
      * @param resourceId
@@ -209,7 +219,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
     public documentChangesNotifications(): Observable<Document> {
 
-        return Observable.create( observer => {
+        return Observable.create(observer => {
             this.observers.push(observer);
         });
     }
@@ -218,18 +228,18 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
      * Implements {@link ReadDatastore#find}.
      */
     public find(query: Query,
-                offset: number=0,
-                limit: number=-1): Promise<Document[]> {
+                offset: number = 0,
+                limit: number = -1): Promise<Document[]> {
 
         if (!query) return Promise.resolve([]);
 
         let impl: Promise<Document[]>;
         if (!this.hasValidConstraints(query)) {
-            impl = this.simpleFind(query,offset,limit);
+            impl = this.simpleFind(query,offset, limit);
         } else {
             impl = this.findWithConstraints(query,offset,limit);
         }
-        return impl.catch(err=>{
+        return impl.catch(err => {
             console.error(err);
             return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
         })
@@ -242,7 +252,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         let validConstraints = 0;
         for (let constraint in query.constraints) {
             if (!this.pouchdbManager.getIndexCreator().hasIndex(constraint)) {
-                console.warn("ignoring unknown constraint",constraint);
+                console.warn('ignoring unknown constraint',constraint);
                 delete query.constraints[constraint];
             } else validConstraints++;
         }
@@ -382,7 +392,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     public setupSync(url: string): Promise<SyncState> {
 
             let fullUrl = url + '/' + this.pouchdbManager.getName();
-            console.log("start syncing with " + fullUrl);
+            console.log('start syncing with ' + fullUrl);
 
             return this.db.rdy.then(db => {
                 let sync = db.sync(fullUrl, { live: true, retry: false });
@@ -399,7 +409,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     public stopSync() {
 
         for (let handle of this.syncHandles) {
-            console.debug("stop sync",handle);
+            console.debug('stop sync',handle);
             handle.cancel();
         }
         this.syncHandles = [];
@@ -477,9 +487,9 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     }
                 });
             }).on('complete', info => {
-                console.error("changes stream was canceled", info);
+                console.error('changes stream was canceled', info);
             }).on('error', err => {
-                console.error("changes stream errored", err);
+                console.error('changes stream errored', err);
             });
         });
     }

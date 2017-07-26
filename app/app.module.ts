@@ -36,9 +36,10 @@ import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {ImageTypeUtility} from './util/image-type-utility';
 import {ViewUtility} from './util/view-utility';
-import {PouchdbManager} from "./datastore/pouchdb-manager";
-import {PouchDbFsImagestore} from "./imagestore/pouch-db-fs-imagestore";
-import {SampleDataLoader} from "./datastore/sample-data-loader";
+import {PouchdbManager} from './datastore/pouchdb-manager';
+import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
+import {SampleDataLoader} from './datastore/sample-data-loader';
+import {AutoConflictResolver} from './common/auto-conflict-resolver';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -115,7 +116,8 @@ if (CONFIG['imagestorepath']) {
         Exporter,
         RelationsCompleter,
         ImageTypeUtility,
-        ViewUtility
+        ViewUtility,
+        AutoConflictResolver
     ],
     bootstrap: [ AppComponent ]
 })

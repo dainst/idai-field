@@ -31,5 +31,7 @@ export abstract class IdaiFieldDatastore extends Datastore {
 
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
+    abstract getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>>;
+
     abstract removeRevision(docId: string, revisionId: string): Promise<any>;
 }

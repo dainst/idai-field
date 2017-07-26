@@ -43,6 +43,8 @@ export class SettingsService {
 
                 const project = this.getSelectedProject();
 
+                // TODO project could be undefined
+
                 return this.setProjectSettings(this.settings.dbs, project, false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
                     .then(() => this.activateSettings());
@@ -95,8 +97,18 @@ export class SettingsService {
         return undefined;
     }
 
+    /**
+     * Sets project settings
+     *
+     * @param projects
+     * @param selectedProject
+     * @param storeSettings if set to false, settings get not persisted
+     * @returns {any}
+     */
     public setProjectSettings(projects: string[], selectedProject: string,
                               storeSettings: boolean = true): Promise<any> {
+
+        // TODO test if no db
 
         this.settings.dbs = projects.slice(0);
         this.makeFirstOfDbsArray(selectedProject);
@@ -106,6 +118,16 @@ export class SettingsService {
         } else {
             return Promise.resolve();
         }
+    }
+
+    public deleteCurrentProject() {
+
+        this.imagestore.destroy();
+
+        this.settings.dbs.splice(0,1);
+
+        return this.pouchdbManager.destroy()
+            .then(() => this.useSelectedDatabase())
     }
 
     /**
@@ -213,6 +235,7 @@ export class SettingsService {
             this.settings.dbs.unshift(projectName);
         }
     }
+
 
     /**
      * Observe synchronization status changes. The following states can be

@@ -39,7 +39,9 @@ export class PouchdbManager {
         if (this.db) {
             let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
             this.dbProxy.switchDb(dbReady);
-            rdy = rdy.then(() => this.db.close());
+            if (this.name) {
+                rdy = rdy.then(() => this.db.close());
+            }
         }
 
         this.name = name;
@@ -73,7 +75,9 @@ export class PouchdbManager {
     }
 
     public destroy(): Promise<any> {
-        return this.db.destroy();
+        return this.db.destroy().then(() => {
+            this.name = undefined;
+        });
     }
 
     private createDb(): Promise<any> {

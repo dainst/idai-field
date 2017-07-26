@@ -1,10 +1,10 @@
 import {browser, protractor, element, by} from 'protractor';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
-import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
+import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 import {SettingsPage} from '../settings/settings.page';
+import {NavbarPage} from '../navbar.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 let EC = protractor.ExpectedConditions;
@@ -112,8 +112,12 @@ describe('resources/syncing --', function() {
         resetConfigJson().then(done);
     });
 
-    function createOneDocument(nr) {
-        const testDocument = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr);
+    function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+        const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
+
+        if (additionalFieldName && additionalFieldValue) {
+            testDocument.resource[additionalFieldName] = additionalFieldValue;
+        }
 
         return db.put(testDocument).then(result => {
                 testDocument['_rev'] = result.rev;
@@ -127,10 +131,23 @@ describe('resources/syncing --', function() {
     }
 
     function createAlternateDocument(nr) {
-        const testDocumentAlternative = makeDoc('tf'+nr,'testf'+nr,'Testfund'+nr+'_alternative');
+        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr + '_alternative');
         testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
 
-        return db.put(testDocumentAlternative,{force:true})
+        return db.put(testDocumentAlternative, { force: true })
+            .then(() => {
+                NavbarPage.clickNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                return browser.sleep(2000);
+            });
+    }
+
+    function createAlternateDocumentForAutoResolving(nr, additionalFieldName, additionalFieldValue) {
+        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
+        testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
+        testDocumentAlternative.resource[additionalFieldName] = additionalFieldValue;
+
+        return db.put(testDocumentAlternative, { force: true })
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
@@ -142,6 +159,12 @@ describe('resources/syncing --', function() {
 
         return createOneDocument(nr)
             .then(() => createAlternateDocument(nr));
+    }
+
+    function createEventualConflictForAutoResolving(nr) {
+
+        return createOneDocument(nr, 'weight', '100')
+            .then(() => createAlternateDocumentForAutoResolving(nr, 'height', '50'));
     }
 
     function updateTestDoc(testDocument) {
@@ -168,7 +191,7 @@ describe('resources/syncing --', function() {
 
         return createOneDocument(nr)
             .then(() => {
-                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
                     expect(text).toContain('Testfund3');
                     done();
                 })
@@ -187,7 +210,7 @@ describe('resources/syncing --', function() {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
                 browser.sleep(2000);
-                ResourcesPage.getListItemEl('testf'+nr).getText().then(text => {
+                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
                     expect(text).toContain('altered');
                     done();
                 })
@@ -248,7 +271,7 @@ describe('resources/syncing --', function() {
             })
             .then(() => createAlternateDocument(nr))
             .then(() => {
-                expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).toContain('conflicted');
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
                 done();
             });
     });
@@ -259,7 +282,7 @@ describe('resources/syncing --', function() {
         createEventualConflict(nr).then(() => {
 
             NavbarPage.clickConflictsButton();
-            NavbarPage.clickConflictResolverLink('testf'+nr);
+            NavbarPage.clickConflictResolverLink('testf' + nr);
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
@@ -268,35 +291,55 @@ describe('resources/syncing --', function() {
         const nr = '9';
 
         createEventualConflict(nr).then(() => {
-            ResourcesPage.clickSelectResource('testf'+nr);
+            ResourcesPage.clickSelectResource('testf' + nr);
             DocumentViewPage.clickSolveConflicts();
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
 
-    it('resolve an eventual conflict', done => {
+    it('resolve an eventual conflict via conflict resolver', done => {
         const nr = '10';
 
         createEventualConflict(nr).then(() => {
 
-            ResourcesPage.clickSelectResource('testf'+nr);
-            ResourcesPage.clickSelectResource('testf'+nr);
+            ResourcesPage.clickSelectResource('testf' + nr);
+            ResourcesPage.clickSelectResource('testf' + nr);
             DocumentViewPage.clickEditDocument();
             DocumentEditWrapperPage.clickConflictsTab();
             DocumentEditWrapperPage.clickChooseRightRevision();
             DocumentEditWrapperPage.clickSolveConflictButton();
             DocumentEditWrapperPage.clickSaveDocument();
             browser.sleep(2000);
-            expect(ResourcesPage.getListItemEl('testf'+nr).getAttribute('class')).not.toContain('conflicted');
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
 
-            db.get('tf'+nr).then(doc => {
-                expect(['Testfund'+nr, 'Testfund'+nr+'_alternative']).toContain(doc.resource.shortDescription);
+            db.get('tf' + nr).then(doc => {
+                expect(['Testfund' + nr, 'Testfund' + nr + '_alternative']).toContain(doc.resource.shortDescription);
                 done();
             });
 
         }).catch(err => {
             console.error('Failure while creating test doc', err);
-            fail(); done()
+            fail(); done();
+        });
+    });
+
+    it('resolve an eventual conflict automatically', done => {
+        const nr = '11';
+
+        createEventualConflictForAutoResolving(nr).then(() => {
+            browser.sleep(2000);
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+
+            db.get('tf' + nr).then(doc => {
+                expect(doc.resource.shortDescription).toEqual('Testfund' + nr);
+                expect(doc.resource.weight).toEqual('100');
+                expect(doc.resource.height).toEqual('50');
+                done();
+            });
+
+        }).catch(err => {
+            console.error('Failure while creating test doc', err);
+            fail(); done();
         });
     });
 });

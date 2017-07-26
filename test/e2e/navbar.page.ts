@@ -37,6 +37,11 @@ export class NavbarPage {
         return element(by.id('taskbar-conflict-' + identifier)).click();
     };
 
+    public static clickSelectProject = function(option) {
+        browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
+        element.all(by.css('#projectSelectBox option')).get(option).click();
+    };
+
     // unused?
     public static clickCloseMessage() {
         browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);

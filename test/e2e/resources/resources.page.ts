@@ -15,6 +15,18 @@ export class ResourcesPage {
 
     // click
 
+    public static clickCreateProject = function() {
+        common.click(by.id('new-project-button'));
+    };
+
+    public static clickDeleteProject = function() {
+        common.click(by.id('delete-project-button'));
+    };
+
+    public static clickConfirmProjectOperation = function() {
+        common.click(by.css('.project-option-ok'));
+    };
+
     public static clickCreateResource = function() {
         common.click(by.css('#create-document-button .circular-button'));
     };
@@ -86,6 +98,11 @@ export class ResourcesPage {
         return element(by.id('choose-type-option-' + typeIndex)).click();
     };
 
+    public static clickSelectMainType = function(option) {
+        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
+        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
+    };
+
     // get text
 
     public static getListItemIdentifierText = function(itemNr) {
@@ -131,11 +148,6 @@ export class ResourcesPage {
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
-    };
-
-    public static selectMainType = function(option) {
-        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };
 
     // sequences
@@ -198,5 +210,10 @@ export class ResourcesPage {
 
     public static typeInListModeInputField = function(identifier, index, inputText) {
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
+    };
+
+    public static typeInProjectName = function(projectName) {
+        browser.wait(EC.visibilityOf(element(by.css('.project-name-input'))), delays.ECWaitTime);
+        common.typeIn(element(by.css('.project-name-input')), projectName)
     };
 }

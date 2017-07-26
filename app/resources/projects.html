@@ -30,9 +30,9 @@
     <div id="new-project-menu">
         <div class="popover-custom-title">Bitte geben Sie den Namen des neuen Projekts ein.</div>
         <div class="input-group">
-            <input id="new-project-input" type="text" class="form-control" [(ngModel)]="newProject"/>
+            <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
             <span class="input-group-btn">
-                <button class="btn btn-default" (click)="createProject()">OK</button>
+                <button class="project-option-ok btn btn-default" (click)="createProject()">OK</button>
             </span>
         </div>
     </div>
@@ -42,9 +42,9 @@
     <div id="delete-project-menu">
         <div class="popover-custom-title">Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.</div>
         <div class="input-group">
-            <input id="delete-project-input" type="text" class="form-control" [(ngModel)]="projectToDelete"/>
+            <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
             <span class="input-group-btn">
-                <button class="btn btn-default" (click)="deleteProject()">OK</button>
+                <button class="project-option-ok btn btn-default" (click)="deleteProject()">OK</button>
             </span>
         </div>
     </div>

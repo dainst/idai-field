@@ -33,7 +33,7 @@ describe('import --', function() {
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.selectMainType(1);
+        ResourcesPage.clickSelectMainType(1);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);

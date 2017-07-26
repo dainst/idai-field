@@ -39,7 +39,7 @@ export class SettingsService {
         this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.useSelectedDatabase();
+                this.useSelectedDatabase(false);
 
                 const project = this.getSelectedProject();
 
@@ -131,10 +131,10 @@ export class SettingsService {
      * @param restart
      * @returns {any}
      */
-    public activateSettings(restart = false): Promise<any> {
+    public activateSettings(restart = false, createDb = false): Promise<any> {
 
         if (restart) {
-            return this.restartSync();
+            return this.restartSync(createDb);
         } else {
             return this.startSync();
         }
@@ -162,12 +162,12 @@ export class SettingsService {
 
     }
 
-    private restartSync() {
+    private restartSync(createDb: boolean) {
 
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         return new Promise<any>((resolve) => {
-            this.useSelectedDatabase().then(
+            this.useSelectedDatabase(createDb).then(
                 () => {
                     this.observers.forEach(o => o.next(false));
                     this.datastore.stopSync();
@@ -178,11 +178,11 @@ export class SettingsService {
             });
     }
 
-    private useSelectedDatabase(): Promise<any> {
+    private useSelectedDatabase(createDb): Promise<any> {
 
         const project = this.getSelectedProject();
 
-        this.pouchdbManager.select(project);
+        this.pouchdbManager.select(project,createDb);
         this.imagestore.select(project);
 
         return this.datastore.find({

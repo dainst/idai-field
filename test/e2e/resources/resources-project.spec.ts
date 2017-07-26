@@ -1,9 +1,8 @@
 import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
-
 import {ResourcesPage} from './resources.page';
-
+const fs = require('fs');
 
 /**
  * @author Daniel de Oliveira
@@ -15,18 +14,37 @@ describe('resources/project --', function() {
         return browser.get('#/resources/project');
     });
 
+    // TODO remove duplicate code with resources syncing spec
+    const configPath = browser.params.configPath;
+    const configTemplate = browser.params.configTemplate;
+
+    function resetConfigJson(): Promise<any> {
+
+        return new Promise(resolve => {
+            fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
+                if (err) console.error('Failure while resetting config.json', err);
+                resolve();
+            });
+        });
+    }
+
+    afterEach(done => {
+        resetConfigJson().then(done);
+    });
+
+
     it('basic stuff', () => {
         ResourcesPage.performCreateResource('trench2', 0);
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.selectMainType(1);
+        ResourcesPage.clickSelectMainType(1);
         ResourcesPage.performCreateResource('befund1', 0);
 
-        ResourcesPage.selectMainType(0);
+        ResourcesPage.clickSelectMainType(0);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        ResourcesPage.selectMainType(1);
+        ResourcesPage.clickSelectMainType(1);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
@@ -58,9 +76,9 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('building2', 1);
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.selectMainType(0);
+        ResourcesPage.clickSelectMainType(0);
         ResourcesPage.performCreateResource('befund1', 0);
-        ResourcesPage.selectMainType(1);
+        ResourcesPage.clickSelectMainType(1);
         ResourcesPage.performCreateResource('fund1', 1);
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
@@ -71,5 +89,35 @@ describe('resources/project --', function() {
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+    });
+
+    it ('create, switch, delete project', () => {
+
+        ResourcesPage.clickCreateProject();
+        ResourcesPage.typeInProjectName('abc');
+        ResourcesPage.clickConfirmProjectOperation();
+
+        ResourcesPage.performCreateResource('abc_t1', 0);
+        NavbarPage.clickNavigateToExcavation();
+
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+        ResourcesPage.clickDeleteProject();
+        ResourcesPage.typeInProjectName('abc');
+        ResourcesPage.clickConfirmProjectOperation();
+
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

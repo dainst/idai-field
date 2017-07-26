@@ -68,7 +68,7 @@ export class ProjectsComponent implements OnInit {
 
         this.projects.push(this.newProject);
         this.selectedProject = this.newProject;
-        this.updateProjectSettings();
+        this.updateProjectSettings(true);
     }
 
     public deleteProject() {
@@ -108,10 +108,10 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    private updateProjectSettings() {
+    private updateProjectSettings(createDb: boolean = false) {
 
         this.settingsService.setProjectSettings(this.projects, this.selectedProject)
-            .then(() => this.settingsService.activateSettings(true))
+            .then(() => this.settingsService.activateSettings(true,createDb))
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)

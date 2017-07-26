@@ -33,4 +33,5 @@ export abstract class Imagestore extends ReadImagestore {
 
     abstract select(projectName: string): void;
 
+    abstract destroy(): void;
 }

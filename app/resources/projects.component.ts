@@ -80,10 +80,18 @@ export class ProjectsComponent implements OnInit {
             this.deletePopover.close();
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
         }
-
-        // TODO delete project
-        console.log("deleting project",this.projectToDelete);
-        this.deletePopover.close();
+        this.settingsService.deleteCurrentProject().then(() => {
+            let index = this.projects.indexOf(this.selectedProject);
+            this.projects.splice(index,1);
+            this.selectedProject = this.settingsService.getSelectedProject();
+            this.updateProjectSettings();
+            this.deletePopover.close();
+            this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
+        },error => {
+            console.error("error while trying to destroy the database",error);
+            this.deletePopover.close();
+            this.messages.add([M.RESOURCES_ERROR_PROJECT_DELETED]);
+        });
     }
 
 

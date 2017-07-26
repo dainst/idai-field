@@ -83,14 +83,16 @@ export class ProjectsComponent implements OnInit {
         this.settingsService.deleteCurrentProject().then(() => {
             let index = this.projects.indexOf(this.selectedProject);
             this.projects.splice(index,1);
-            this.selectedProject = this.settingsService.getSelectedProject();
+            this.selectedProject = this.projects[0];
             this.updateProjectSettings();
-            this.deletePopover.close();
             this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
+
         },error => {
             console.error("error while trying to destroy the database",error);
-            this.deletePopover.close();
             this.messages.add([M.RESOURCES_ERROR_PROJECT_DELETED]);
+
+        }).then(() => {
+            this.deletePopover.close();
         });
     }
 

@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {Settings, SyncTarget} from './settings';
-import {SettingsSerializer} from './settings-serializer';
-import {Imagestore} from '../imagestore/imagestore';
-import {Observable} from 'rxjs/Rx';
-import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {Injectable} from "@angular/core";
+import {Document} from "idai-components-2/core";
+import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
+import {Settings, SyncTarget} from "./settings";
+import {SettingsSerializer} from "./settings-serializer";
+import {Imagestore} from "../imagestore/imagestore";
+import {Observable} from "rxjs/Rx";
+import {PouchdbManager} from "../datastore/pouchdb-manager";
 
 
 @Injectable()
@@ -121,13 +121,8 @@ export class SettingsService {
     }
 
     public deleteCurrentProject() {
-
         this.imagestore.destroy();
-
-        this.settings.dbs.splice(0,1);
-
-        return this.pouchdbManager.destroy()
-            .then(() => this.useSelectedDatabase())
+        return this.pouchdbManager.destroy();
     }
 
     /**

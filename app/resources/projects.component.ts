@@ -73,18 +73,14 @@ export class ProjectsComponent implements OnInit {
 
     public deleteProject() {
 
-        if (!this.projectToDelete || (this.projectToDelete == '')) {
-            return this.deletePopover.close();
-        }
-        if (this.projectToDelete != this.selectedProject) {
-            this.deletePopover.close();
-            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
-        }
+        if (!this.canDeleteProject()) return this.deletePopover.close();
+
         this.settingsService.deleteCurrentProject().then(() => {
-            let index = this.projects.indexOf(this.selectedProject);
-            this.projects.splice(index,1);
+            this.projects.splice(this.projects.indexOf(this.selectedProject),1);
+
             this.selectedProject = this.projects[0];
             this.updateProjectSettings();
+
             this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
 
         },error => {
@@ -94,6 +90,21 @@ export class ProjectsComponent implements OnInit {
         }).then(() => {
             this.deletePopover.close();
         });
+    }
+
+    public canDeleteProject() {
+        if (!this.projectToDelete || (this.projectToDelete == '')) {
+            return false;
+        }
+        if (this.projectToDelete != this.selectedProject) {
+            this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
+            return false;
+        }
+        if (this.projects.length < 2) {
+            this.messages.add([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);
+            return false;
+        }
+        return true;
     }
 
 

@@ -108,8 +108,6 @@ export class SettingsService {
     public setProjectSettings(projects: string[], selectedProject: string,
                               storeSettings: boolean = true): Promise<any> {
 
-        // TODO test if no db
-
         this.settings.dbs = projects.slice(0);
         this.makeFirstOfDbsArray(selectedProject);
 

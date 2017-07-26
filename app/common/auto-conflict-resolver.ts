@@ -81,6 +81,8 @@ export class AutoConflictResolver {
 
         return this.getPreviousRevision(conflictedRevision).then(previousRevision => {
 
+            if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
+
             let resolvedFieldConflicts: number = 0;
             let unresolvedFieldConflicts: number = 0;
 
@@ -193,6 +195,9 @@ export class AutoConflictResolver {
 
         return this.datastore.getRevisionHistory(revision.resource.id).then(history => {
             const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
+
+            if (previousRevisionNumber < 1) return Promise.resolve(undefined);
+
             const prefix = previousRevisionNumber.toString() + '-';
             let previousRevisionId: string;
 

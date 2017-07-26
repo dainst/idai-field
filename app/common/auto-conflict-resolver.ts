@@ -36,7 +36,7 @@ export class AutoConflictResolver {
             } else {
                 return Promise.resolve();
             }
-        }).catch(msgWithParams => Promise.reject(msgWithParams));
+        });
 
         return this.promise;
     }
@@ -51,7 +51,7 @@ export class AutoConflictResolver {
             }
 
             return promise;
-        }).catch(msgWithParams => Promise.reject(msgWithParams));
+        });
     }
 
     private getConflictedRevisions(document: IdaiFieldDocument): Promise<Array<IdaiFieldDocument>> {
@@ -74,7 +74,7 @@ export class AutoConflictResolver {
             }
 
             return Promise.resolve(result);
-        }).catch(msgWithParams => Promise.reject(msgWithParams));
+        });
     }
 
     private tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument): Promise<any> {
@@ -132,7 +132,7 @@ export class AutoConflictResolver {
                     } else {
                         return Promise.resolve();
                     }
-                }).catch(msgWithParams => Promise.reject(msgWithParams));
+                });
             } else {
                 return Promise.resolve();
             }
@@ -202,7 +202,7 @@ export class AutoConflictResolver {
             let previousRevisionId: string;
 
             for (let historyElement of history) {
-                if (historyElement.rev.startsWith(prefix)) {
+                if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
                     previousRevisionId = historyElement.rev;
                     break;
                 }

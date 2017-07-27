@@ -70,7 +70,7 @@ describe('resources/project --', function() {
 
     it ('delete project', () => {
         performCreatProject();
-        browser.sleep(200);
+        browser.sleep(200); // to prevent core.umd.js "ERROR"
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
@@ -79,10 +79,12 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
 
         ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(100);
 
-        browser.sleep(200);
+        // ProjectPage.typeInProjectName('abc');
+        // ProjectPage.clickConfirmProjectOperation();
+        //
+        // browser.sleep(200);
         //
         // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         //

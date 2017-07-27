@@ -29,37 +29,28 @@ describe('resources/project --', function() {
         });
     }
 
-    beforeEach(done => {
-        resetConfigJson().then(done);
-    });
-
     afterEach(done => {
         resetConfigJson().then(done);
     });
 
-    it ('delete project', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
+    function performCreatProject() {
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
+    }
 
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-        browser.sleep(1000);
+    it ('delete project', () => {
+        performCreatProject();
 
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('abc') });
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(500);
 
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         //
         // browser.sleep(2000);
         //
@@ -69,14 +60,7 @@ describe('resources/project --', function() {
     });
 
     it ('create, switch project', () => {
-
-        browser.sleep(2000);
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        browser.sleep(2000);
+        performCreatProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToExcavation();

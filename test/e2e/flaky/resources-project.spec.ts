@@ -51,16 +51,15 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToProject();
         browser.sleep(1000);
 
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('test')
-        });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
         browser.sleep(1000);
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(1000);
+        // browser.sleep(1000);
 
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
         //
         // browser.sleep(2000);

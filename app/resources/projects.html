@@ -1,18 +1,11 @@
 <div *ngIf="ready" class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <select id="projectSelectBox" class="form-control" [(ngModel)]="selectedProject"
                 (ngModelChange)="selectProject($event)">
             <option *ngFor="let project of projects" [ngValue]="project">
                 {{project}}
             </option>
         </select>
-    </div>
-
-    <div class="col-md-2">
-        <div id="edit-main-type-document-button" class="circular-button type-button"
-             (click)="resourcesComponent.editDocument(resourcesComponent.selectedMainTypeDocument)">
-            <span class="mdi mdi-pencil mdi-18px"></span>
-        </div>
     </div>
 
     <div class="col-md-2">

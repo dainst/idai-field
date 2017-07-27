@@ -203,7 +203,6 @@ export class SettingsService {
                 type: 'project',
                 identifier: project,
                 id: project,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
             created: { user: this.getUsername(), date: new Date() },
@@ -229,6 +228,7 @@ export class SettingsService {
             this.settings.dbs.unshift(projectName);
         }
     }
+
 
     /**
      * Observe synchronization status changes. The following states can be

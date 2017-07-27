@@ -61,7 +61,7 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
         browser.sleep(1000);
 
-        // expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
+        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
         //
         // browser.sleep(2000);
         //

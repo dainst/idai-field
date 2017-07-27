@@ -50,7 +50,14 @@ export class PouchdbManager {
         }
         rdy = rdy.then(() => this.indexCreator.go(this.db));
         if (name == 'test') {
-            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
+            rdy = rdy.then(config => {
+                return new Promise<any>((resolve)=> {
+                    setTimeout(
+                        () => {
+                            this.sampleDataLoader.go(this.db, this.name).then(resolve)
+                        }, 1000);
+                });
+            });
         }
         rdy.then(() => this.resolveDbReady(this.db));
     }

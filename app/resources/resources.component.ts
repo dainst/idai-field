@@ -358,10 +358,10 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    public editDocument(doc?: Document, activeTabName?: string) {
+    public editDocument(document: Document = this.selectedDocument, activeTabName?: string) {
 
         this.editGeometry = false;
-        if (doc) this.setSelected(doc);
+        if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         const docedit = doceditRef.componentInstance;
@@ -378,12 +378,19 @@ export class ResourcesComponent implements AfterViewChecked {
                     this.fetchDocuments();
                 });
         }, closeReason => {
-            this.fetchDocuments();
             this.documentEditChangeMonitor.reset();
-            if (closeReason == 'deleted') this.selectedDocument = undefined;
+            if (closeReason == 'deleted') {
+                this.selectedDocument = undefined;
+                if (document == this.selectedMainTypeDocument) {
+                    return this.fetchMainTypeDocuments()
+                        .then(() => this.fetchDocuments())
+                        .then(() => this.notifyMainTypeObservers());
+                }
+            }
+            this.fetchDocuments();
         });
 
-        docedit.setDocument(this.selectedDocument);
+        docedit.setDocument(document);
 
         if (activeTabName) {
             docedit.setActiveTab(activeTabName);

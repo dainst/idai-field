@@ -3,7 +3,7 @@
 
     <div class="col-md-3">
         <div *ngIf="view && view.mainType != 'project'" class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                         class="form-control" [(ngModel)]="selectedMainTypeDocument"
                         (ngModelChange)="filterByMainTypeDocument($event)">
@@ -18,6 +18,14 @@
                     </option>
                 </select>
             </div>
+
+            <div class="col-md-2">
+                <div id="edit-main-type-document-button" class="circular-button type-button"
+                     (click)="editDocument(selectedMainTypeDocument)">
+                    <span class="mdi mdi-pencil mdi-18px"></span>
+                </div>
+            </div>
+
             <div class="col-md-2">
                 <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
@@ -28,7 +36,7 @@
         <projects *ngIf="view && view.mainType == 'project'"></projects>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4 offset-1">
         <search-bar *ngIf="view" [showFiltersMenu]="mode != 'list'"
                     [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
@@ -36,7 +44,7 @@
         </search-bar>
     </div>
 
-    <div class="col-md-3" align="right">
+    <div class="col-md-4" align="right">
         <div *ngIf="ready" class="btn-group">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">

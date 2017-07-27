@@ -40,7 +40,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     /**
-     * Destroys the project on the file system
+     * Destroys the project images on the file system
      */
     public destroy(): void {
         if (this.projectPath == undefined) return;

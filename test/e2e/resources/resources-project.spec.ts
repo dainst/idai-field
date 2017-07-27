@@ -33,7 +33,7 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
-    fit ('delete project', () => {
+    it ('delete project', () => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
@@ -48,9 +48,8 @@ describe('resources/project --', function() {
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        ProjectPage.clickConfirmProjectOperation();
 
-        browser.sleep(500);
+        browser.sleep(100);
 
         expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
 

@@ -76,11 +76,11 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToProject();
         browser.sleep(100);
 
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-
-        ProjectPage.clickDeleteProject();
-        browser.sleep(100);
+        // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        // ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+        //
+        // ProjectPage.clickDeleteProject();
+        // browser.sleep(100);
 
         // ProjectPage.typeInProjectName('abc');
         // ProjectPage.clickConfirmProjectOperation();

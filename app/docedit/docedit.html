@@ -29,10 +29,10 @@
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
-                <button *ngIf="clonedDocument && clonedDocument.resource.id" class="btn btn-danger pull-right"
-                        id="document-edit-button-delete-document"
-                        style="float: right;"
-                        (click)="openDeleteModal(deleteModal);">
+                <button *ngIf="clonedDocument && clonedDocument.resource.id
+                            && clonedDocument.resource.type != 'project'"
+                        class="btn btn-danger pull-right" id="document-edit-button-delete-document"
+                        style="float: right;" (click)="openDeleteModal(deleteModal);">
                     <span class="mdi mdi-delete"></span>
                     <span class="button-label">Löschen</span>
                 </button>

@@ -129,6 +129,8 @@ describe('resources/project --', function() {
         ResourcesPage.typeInProjectName('abc');
         ResourcesPage.clickConfirmProjectOperation();
 
+        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
+
         browser.sleep(2000);
 
         NavbarPage.clickNavigateToSettings();

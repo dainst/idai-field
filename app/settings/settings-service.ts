@@ -118,9 +118,9 @@ export class SettingsService {
         }
     }
 
-    public deleteCurrentProject() {
-        this.imagestore.destroy();
-        return this.pouchdbManager.destroy();
+    public deleteProject(name: string) {
+        this.imagestore.destroy(name);
+        return this.pouchdbManager.destroyDb(name);
     }
 
     /**

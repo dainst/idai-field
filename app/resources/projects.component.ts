@@ -75,21 +75,21 @@ export class ProjectsComponent implements OnInit {
 
         if (!this.canDeleteProject()) return this.deletePopover.close();
 
-        this.settingsService.deleteCurrentProject().then(() => {
-            this.projects.splice(this.projects.indexOf(this.selectedProject),1);
+        const projectToDelete = this.selectedProject;
+        this.projects.splice(this.projects.indexOf(this.selectedProject),1);
+        this.selectedProject = this.projects[0];
+        this.updateProjectSettings()
+            .then(() => this.settingsService.deleteProject(projectToDelete))
+            .then(() => {
+                this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
+            },error => {
+                console.error("error while trying to destroy the database",error);
+                this.messages.add([M.RESOURCES_ERROR_PROJECT_DELETED]);
+            })
+            .then(() => {
+                this.deletePopover.close();
+            });
 
-            this.selectedProject = this.projects[0];
-            this.updateProjectSettings();
-
-            this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
-
-        },error => {
-            console.error("error while trying to destroy the database",error);
-            this.messages.add([M.RESOURCES_ERROR_PROJECT_DELETED]);
-
-        }).then(() => {
-            this.deletePopover.close();
-        });
     }
 
     public canDeleteProject() {
@@ -110,7 +110,7 @@ export class ProjectsComponent implements OnInit {
 
     private updateProjectSettings(recreateDb: boolean = false) {
 
-        this.settingsService.setProjectSettings(this.projects, this.selectedProject)
+        return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
             .then(() => this.settingsService.activateSettings(true, recreateDb))
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {

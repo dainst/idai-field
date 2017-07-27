@@ -42,15 +42,18 @@ export class PouchDbFsImagestore implements Imagestore {
     /**
      * Destroys the project images on the file system
      */
-    public destroy(): void {
-        if (this.projectPath == undefined) return;
-        if (this.projectPath == "") return;
-        if (this.projectPath == ".") return;
-        if (this.projectPath == "..") return;
-        if (this.projectPath == "./") return;
-        if (this.projectPath == "/") return;
-        if (this.projectPath == "c:\\") return;
-        if (this.projectPath == "C:\\") return;
+    public destroy(dbName: string): void {
+        const projectPath = this.basePath + dbName + '/';
+
+        // TODO check this again
+        if (projectPath == undefined) return;
+        if (projectPath == "") return;
+        if (projectPath == ".") return;
+        if (projectPath == "..") return;
+        if (projectPath == "./") return;
+        if (projectPath == "/") return;
+        if (projectPath == "c:\\") return;
+        if (projectPath == "C:\\") return;
 
         const deleteFolderRecursive = function(path) {
             if( fs.existsSync(path) ) {
@@ -62,7 +65,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 });
             }
         };
-        deleteFolderRecursive(this.projectPath);
+        deleteFolderRecursive(projectPath);
     }
 
     /**

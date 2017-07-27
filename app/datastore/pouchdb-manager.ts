@@ -40,9 +40,7 @@ export class PouchdbManager {
         if (this.db) {
             let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
             this.dbProxy.switchDb(dbReady);
-            if (this.name) {
-                rdy = rdy.then(() => this.db.close());
-            }
+            rdy = rdy.then(() => this.db.close());
         }
 
         this.name = name;
@@ -50,8 +48,11 @@ export class PouchdbManager {
         rdy = rdy.then(() => this.createDb());
         if (name == 'test' || recreateDb) {
             rdy = rdy.then(() => {
+
+                // TODO still necessary?
                 console.debug("db '"+name+"' gets destroyed, then (re-)created");
                 return this.db.destroy();
+
             }).then(() => this.createDb());
         }
         rdy = rdy.then(() => this.indexCreator.go(this.db));
@@ -78,10 +79,13 @@ export class PouchdbManager {
         return this.name;
     }
 
+    // TODO still used?
     public destroy(): Promise<any> {
-        return this.db.destroy().then(() => {
-            this.name = undefined;
-        });
+        return this.db.destroy();
+    }
+
+    public destroyDb(dbName: string): Promise<any> {
+        return new PouchDB(dbName).destroy();
     }
 
     private createDb(): Promise<any> {

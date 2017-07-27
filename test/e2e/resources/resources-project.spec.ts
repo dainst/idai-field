@@ -33,7 +33,7 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
-    fit ('delete project', () => {
+    it ('delete project', () => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));

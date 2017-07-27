@@ -91,7 +91,7 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 
-    fit ('create, switch, delete project', () => {
+    it ('create, switch project', () => {
 
         ResourcesPage.clickCreateProject();
         ResourcesPage.typeInProjectName('abc');
@@ -111,10 +111,25 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+    });
+
+    it ('delete project', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.clickCreateProject();
+        ResourcesPage.typeInProjectName('abc');
+        ResourcesPage.clickConfirmProjectOperation();
+
+        browser.sleep(1000);
 
         ResourcesPage.clickDeleteProject();
         ResourcesPage.typeInProjectName('abc');
         ResourcesPage.clickConfirmProjectOperation();
+
+        browser.sleep(2000);
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();

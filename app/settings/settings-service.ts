@@ -170,7 +170,7 @@ export class SettingsService {
             this.useSelectedDatabase(createDb).then(
                 () => {
                     this.observers.forEach(o => o.next(false));
-                    this.datastore.stopSync(); // TODO this seems to be wrong. the sync should be stopped before switching to new db with useSelectedDb
+                    this.datastore.stopSync();
                     setTimeout(() => {
                         this.startSync().then(() => resolve());
                     }, 1000);

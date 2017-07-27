@@ -41,8 +41,6 @@ export class PouchDbFsImagestore implements Imagestore {
 
     /**
      * Destroys the project on the file system
-     *
-     * @param projectName
      */
     public destroy(): void {
         if (this.projectPath == undefined) return;
@@ -51,22 +49,19 @@ export class PouchDbFsImagestore implements Imagestore {
         if (this.projectPath == "..") return;
         if (this.projectPath == "./") return;
         if (this.projectPath == "/") return;
-        // TODO improve on these checks
+        if (this.projectPath == "c:\\") return;
+        if (this.projectPath == "C:\\") return;
 
         const deleteFolderRecursive = function(path) {
             if( fs.existsSync(path) ) {
-                fs.readdirSync(path).forEach(function(file,index){
+                fs.readdirSync(path).forEach(function(file){
                     const curPath = path + "/" + file;
-                    if(fs.lstatSync(curPath).isDirectory()) { // recurse
-                        deleteFolderRecursive(curPath);
-                    } else { // delete file
+                    if(!fs.lstatSync(curPath).isDirectory()) {
                         fs.unlinkSync(curPath);
                     }
                 });
-                // fs.rmdirSync(path); // do not remove directories
             }
         };
-
         deleteFolderRecursive(this.projectPath);
     }
 

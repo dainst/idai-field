@@ -33,6 +33,30 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
+    it ('create, switch project', () => {
+
+        browser.sleep(2000);
+
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+
+        ResourcesPage.performCreateResource('abc_t1', 0);
+        NavbarPage.clickNavigateToExcavation();
+
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+    });
+
     it ('delete project', () => {
 
         NavbarPage.clickNavigateToExcavation();
@@ -58,27 +82,5 @@ describe('resources/project --', function() {
         // NavbarPage.clickNavigateToSettings();
         // NavbarPage.clickNavigateToExcavation();
         // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-    });
-
-    it ('create, switch project', () => {
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        ResourcesPage.performCreateResource('abc_t1', 0);
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

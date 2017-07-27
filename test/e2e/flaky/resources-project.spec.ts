@@ -75,13 +75,14 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
 
-        // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        // ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-        //
-        // ProjectPage.clickDeleteProject();
-        // ProjectPage.typeInProjectName('abc');
-        // ProjectPage.clickConfirmProjectOperation();
-        // browser.sleep(200);
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+
+        browser.sleep(200);
         //
         // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         //

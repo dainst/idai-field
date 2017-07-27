@@ -73,11 +73,7 @@ export class ImageGridComponent {
 
         this.query = query;
 
-        let p;
-        if (!query.q) p = this.datastore.all(query.type);
-        else p = this.datastore.find(query);
-
-        p.then(documents => {
+        this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images

@@ -37,7 +37,7 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
-    fit ('create, switch project', () => {
+    it ('create, switch project', () => {
 
         browser.sleep(2000);
 

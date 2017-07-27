@@ -29,6 +29,10 @@ describe('resources/project --', function() {
         });
     }
 
+    beforeEach(done => {
+        resetConfigJson().then(done);
+    });
+
     afterEach(done => {
         resetConfigJson().then(done);
     });

@@ -28,4 +28,10 @@ export class ProjectPage {
     public static typeInProjectName = function(projectName) {
         common.typeIn(element(by.css('.project-name-input')), projectName)
     };
+
+    // element
+
+    public static getProjectNameOptionText = function(index) {
+        return element.all(by.css('#projectSelectBox option')).get(index).getText();
+    }
 }

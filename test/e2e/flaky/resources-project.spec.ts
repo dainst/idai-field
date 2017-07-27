@@ -51,7 +51,7 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         NavbarPage.clickNavigateToProject();
-        element.all(by.css('#projectSelectBox option')).get(1).getText().then(t=>{
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
@@ -60,17 +60,13 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         NavbarPage.clickNavigateToProject();
-        element.all(by.css('#projectSelectBox option')).get(1).getText().then(t=>{
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('abc')
         });
         NavbarPage.clickSelectProject(1);
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => {
-            console.log("debug",text)
-        });
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });

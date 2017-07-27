@@ -342,7 +342,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode != 'None') this.finishDrawing();
 
-        let geometry: IdaiFieldGeometry = { type: '', coordinates: [], crs: 'local' };
+        let geometry: IdaiFieldGeometry = { type: '', coordinates: [] };
 
         if (this.editablePolygons.length == 1) {
             geometry.type = 'Polygon';

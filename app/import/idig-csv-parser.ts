@@ -197,7 +197,7 @@ export class IdigCsvParser extends AbstractParser {
 
     private parsePointGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
-        let geometry: IdaiFieldGeometry = {type: 'Point', coordinates: [], crs: 'local'};
+        let geometry: IdaiFieldGeometry = { type: 'Point', coordinates: [] };
 
         geometryString = geometryString
             .replace('point ((', '')
@@ -210,7 +210,7 @@ export class IdigCsvParser extends AbstractParser {
 
     private parsePolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
-        let geometry: IdaiFieldGeometry = {type: 'Polygon', coordinates: [], crs: 'local'};
+        let geometry: IdaiFieldGeometry = { type: 'Polygon', coordinates: [] };
 
         geometryString = geometryString
             .replace('polygon ((', '')
@@ -223,7 +223,7 @@ export class IdigCsvParser extends AbstractParser {
 
     private parseMultiPolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
-        let geometry: IdaiFieldGeometry = {type: 'MultiPolygon', coordinates: [], crs: 'local'};
+        let geometry: IdaiFieldGeometry = {  type: 'MultiPolygon', coordinates: [] };
 
         geometryString = geometryString
             .replace('multipolygon ((', '')

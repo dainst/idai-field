@@ -22,8 +22,7 @@ export const DOCS: IdaiFieldDocument[] = [
                 "type": "Polygon",
                 "coordinates": [[[27.189218354962215, 39.14132050335332], [27.189276375601313, 39.14133824217116],
                     [27.18928181180254, 39.14132438323931], [27.189226035114622, 39.141306298358316],
-                    [27.189218354962215, 39.14132050335332]]],
-                "crs": "local"
+                    [27.189218354962215, 39.14132050335332]]]
             },
             "type": "trench"
         }
@@ -39,8 +38,7 @@ export const DOCS: IdaiFieldDocument[] = [
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [ 27.1892209283, 39.1411510096 ],
-                "crs": "local"
+                "coordinates": [ 27.1892209283, 39.1411510096 ]
             },
             "type": "context"
         }
@@ -56,8 +54,7 @@ export const DOCS: IdaiFieldDocument[] = [
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [ 27.1892609283, 39.1411810096 ],
-                "crs": "local"
+                "coordinates": [ 27.1892609283, 39.1411810096 ]
             },
             "type": "object"
         }

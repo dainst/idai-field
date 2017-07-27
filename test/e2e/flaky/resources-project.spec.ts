@@ -80,13 +80,13 @@ describe('resources/project --', function() {
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(200);
-
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        // ProjectPage.clickConfirmProjectOperation();
+        // browser.sleep(200);
+        //
+        // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+        //
+        // NavbarPage.clickNavigateToSettings();
+        // NavbarPage.clickNavigateToExcavation();
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

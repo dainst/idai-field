@@ -170,7 +170,7 @@ export class SettingsService {
             this.useSelectedDatabase(createDb).then(
                 () => {
                     this.observers.forEach(o => o.next(false));
-                    this.datastore.stopSync();
+                    this.datastore.stopSync(); // TODO this seems to be wrong. the sync should be stopped before switching to new db with useSelectedDb
                     setTimeout(() => {
                         this.startSync().then(() => resolve());
                     }, 1000);
@@ -203,7 +203,6 @@ export class SettingsService {
                 type: 'project',
                 identifier: project,
                 id: project,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
             created: { user: this.getUsername(), date: new Date() },
@@ -229,6 +228,7 @@ export class SettingsService {
             this.settings.dbs.unshift(projectName);
         }
     }
+
 
     /**
      * Observe synchronization status changes. The following states can be

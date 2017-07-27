@@ -33,6 +33,7 @@ export class EditableMapComponent extends LayerMapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() mainTypeDocument: IdaiFieldDocument;
+    @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
     @Input() editMode: boolean;
 

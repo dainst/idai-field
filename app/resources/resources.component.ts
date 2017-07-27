@@ -367,8 +367,9 @@ export class ResourcesComponent implements AfterViewChecked {
         const docedit = doceditRef.componentInstance;
 
         doceditRef.result.then(result => {
-            this.fetchMainTypeDocuments().then(
-                () => {
+            this.fetchProjectDocument()
+                .then(() => this.fetchMainTypeDocuments())
+                .then(() => {
                     if (result.document && result.document.resource.type == this.view.mainType) {
                         this.selectedMainTypeDocument = result.document;
                     } else {

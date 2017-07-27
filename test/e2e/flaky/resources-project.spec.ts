@@ -41,7 +41,7 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
     }
 
-    it('create, switch project', () => {
+    xit('create, switch project', () => {
         performCreatProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);

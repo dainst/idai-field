@@ -55,9 +55,8 @@ describe('resources/project --', function() {
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
-        browser.sleep(1000);
         ProjectPage.clickConfirmProjectOperation();
-        // browser.sleep(1000);
+        browser.sleep(500);
 
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
         expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');

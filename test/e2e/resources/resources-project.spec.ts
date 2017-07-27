@@ -91,7 +91,7 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 
-    it ('create, switch, delete project', () => {
+    fit ('create, switch, delete project', () => {
 
         ResourcesPage.clickCreateProject();
         ResourcesPage.typeInProjectName('abc');

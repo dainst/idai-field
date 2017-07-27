@@ -92,53 +92,6 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 
-    xit ('create, switch project', () => {
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        ResourcesPage.performCreateResource('abc_t1', 0);
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-    });
-
-    xit ('delete project', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        browser.sleep(1000);
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
-
-        browser.sleep(2000);
-
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-    });
-
     it ('do not delete last project', () => {
 
         ProjectPage.clickDeleteProject();

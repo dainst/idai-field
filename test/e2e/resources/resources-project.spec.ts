@@ -3,6 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 const fs = require('fs');
+import {ProjectPage} from '../project.page';
 
 /**
  * @author Daniel de Oliveira
@@ -11,7 +12,7 @@ const fs = require('fs');
 describe('resources/project --', function() {
 
     beforeEach(function() {
-        return browser.get('#/resources/project');
+        return ProjectPage.get();
     });
 
     // TODO remove duplicate code with resources syncing spec
@@ -93,9 +94,9 @@ describe('resources/project --', function() {
 
     xit ('create, switch project', () => {
 
-        ResourcesPage.clickCreateProject();
-        ResourcesPage.typeInProjectName('abc');
-        ResourcesPage.clickConfirmProjectOperation();
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToExcavation();
@@ -119,15 +120,15 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickCreateProject();
-        ResourcesPage.typeInProjectName('abc');
-        ResourcesPage.clickConfirmProjectOperation();
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
 
         browser.sleep(1000);
 
-        ResourcesPage.clickDeleteProject();
-        ResourcesPage.typeInProjectName('abc');
-        ResourcesPage.clickConfirmProjectOperation();
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
 
         expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
 
@@ -140,18 +141,18 @@ describe('resources/project --', function() {
 
     it ('do not delete last project', () => {
 
-        ResourcesPage.clickDeleteProject();
-        ResourcesPage.typeInProjectName('test');
-        ResourcesPage.clickConfirmProjectOperation();
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
 
         expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
     });
 
     it('do not create with the same name', () => {
 
-        ResourcesPage.clickCreateProject();
-        ResourcesPage.typeInProjectName('test');
-        ResourcesPage.clickConfirmProjectOperation();
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });

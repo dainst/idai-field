@@ -15,18 +15,6 @@ export class ResourcesPage {
 
     // click
 
-    public static clickCreateProject = function() {
-        common.click(element(by.id('new-project-button')));
-    };
-
-    public static clickDeleteProject = function() {
-        common.click(element(by.id('delete-project-button')));
-    };
-
-    public static clickConfirmProjectOperation = function() {
-        common.click(element(by.css('.project-option-ok')));
-    };
-
     public static clickCreateResource = function() {
         common.click(element(by.css('#create-document-button .circular-button')));
     };
@@ -212,9 +200,5 @@ export class ResourcesPage {
 
     public static typeInListModeInputField = function(identifier, index, inputText) {
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
-    };
-
-    public static typeInProjectName = function(projectName) {
-        common.typeIn(element(by.css('.project-name-input')), projectName)
     };
 }

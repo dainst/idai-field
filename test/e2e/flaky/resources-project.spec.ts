@@ -74,9 +74,9 @@ describe('resources/project --', function() {
         performCreatProject();
         browser.sleep(200); // to prevent core.umd.js "ERROR"
 
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-        browser.sleep(100);
+        // NavbarPage.clickNavigateToSettings();
+        // NavbarPage.clickNavigateToProject();
+        // browser.sleep(100);
 
         // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         // ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });

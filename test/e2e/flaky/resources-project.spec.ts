@@ -36,6 +36,8 @@ describe('resources/project --', function() {
 
 
     function performCreatProject() {
+        browser.sleep(2000);
+
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();

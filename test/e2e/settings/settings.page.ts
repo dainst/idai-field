@@ -17,7 +17,7 @@ export class SettingsPage {
     };
 
     public static clickSaveSettingsButton = function() {
-        common.click(by.id('save-settings-button'));
+        common.click(element(by.id('save-settings-button')));
     };
 
     public static getRemoteSiteAddressInput = function() {

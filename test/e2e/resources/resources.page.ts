@@ -16,77 +16,85 @@ export class ResourcesPage {
     // click
 
     public static clickCreateProject = function() {
-        common.click(by.id('new-project-button'));
+        common.click(element(by.id('new-project-button')));
     };
 
     public static clickDeleteProject = function() {
-        common.click(by.id('delete-project-button'));
+        common.click(element(by.id('delete-project-button')));
     };
 
     public static clickConfirmProjectOperation = function() {
-        common.click(by.css('.project-option-ok'));
+        common.click(element(by.css('.project-option-ok')));
     };
 
     public static clickCreateResource = function() {
-        common.click(by.css('#create-document-button .circular-button'));
+        common.click(element(by.css('#create-document-button .circular-button')));
     };
 
     public static clickCreateMainTypeResource = function() {
-        common.click(by.css('#create-main-type-document-button .circular-button'));
+        common.click(element(by.css('#create-main-type-document-button .circular-button')));
     };
 
     public static clickEditMainTypeResource = function() {
-        common.click(by.id('edit-main-type-document-button'));
+        common.click(element(by.id('edit-main-type-document-button')));
     };
 
     public static clickSaveInModal = function() {
-        common.click(by.id('overview-save-confirmation-modal-save-button'));
+        common.click(element(by.id('overview-save-confirmation-modal-save-button')));
     };
 
     public static clickCancelInModal = function() {
-        common.click(by.id('overview-save-confirmation-modal-cancel-button'));
+        common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
     };
 
     public static clickDiscardInModal = function() {
-        common.click(by.id('overview-save-confirmation-modal-discard-button'));
+        common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
     };
 
     public static clickDeleteDocument = function() {
-        common.click(by.id('document-edit-button-delete-document'));
+        common.click(element(by.id('document-edit-button-delete-document')));
     };
 
     public static clickDeleteInModal = function() {
-        common.click(by.id('delete-resource-confirm'));
+        common.click(element(by.id('delete-resource-confirm')));
     };
 
     public static clickChooseTypeFilter = function(typeIndex) {
 
-        common.click(by.id('searchfilter'));
-        common.click(by.id('choose-type-filter-option-' + typeIndex));
+        common.click(element(by.id('searchfilter')));
+        common.click(element(by.id('choose-type-filter-option-' + typeIndex)));
     };
 
     public static clickSelectGeometryType = function(type?) {
         let geom = 'none';
         if (type) geom = type;
-        return common.click(by.id('choose-geometry-option-' + geom));
+        return common.click(element(by.id('choose-geometry-option-' + geom)));
     };
 
     /**
      * @deprecated use selectObjectByIdentifier instead
      */
     public static clickSelectObjectByIndex = function(listIndex) {
-        browser.wait(EC.visibilityOf(element(by.id('objectList')).all(by.tagName('li')).get(listIndex)),
-            delays.ECWaitTime);
-        return element(by.id('objectList')).all(by.tagName('li')).get(listIndex).click();
+        return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
     };
 
     public static clickSelectResource = function(identifier) {
-        return common.click(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
-            + identifier + '"]'));
+        return common.click(element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
+            + identifier + '"]')));
     };
 
     public static clickListModeButton = function() {
-        common.click(by.id('list-mode-button'));
+        common.click(element(by.id('list-mode-button')));
+    };
+
+    public static clickSelectResourceType = function(typeIndex?) {
+        if (!typeIndex) typeIndex = 0;
+        return common.click(element(by.id('choose-type-option-' + typeIndex)));
+    };
+
+    public static clickSelectMainType = function(option) {
+        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
+        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };
 
     public static openEditByDoubleClickResource = function(identifier) {
@@ -95,16 +103,6 @@ export class ResourcesPage {
                 + identifier + '"]'))), delays.ECWaitTime);
         return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]'))).perform();
-    };
-
-    public static clickSelectResourceType = function(typeIndex?) {
-        if (!typeIndex) typeIndex = 0;
-        return element(by.id('choose-type-option-' + typeIndex)).click();
-    };
-
-    public static clickSelectMainType = function(option) {
-        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };
 
     // get text

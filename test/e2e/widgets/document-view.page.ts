@@ -17,19 +17,19 @@ export class DocumentViewPage {
     };
 
     public static clickEditDocument() {
-        return common.click(by.id('document-view-button-edit-document'));
+        return common.click(element(by.id('document-view-button-edit-document')));
     };
 
     public static clickCreateGeometry(type) {
-        return common.click(by.id('document-view-button-create-' + type));
+        return common.click(element(by.id('document-view-button-create-' + type)));
     };
 
     public static clickReeditGeometry() {
-        common.click(by.id('document-view-button-edit-geometry'));
+        common.click(element(by.id('document-view-button-edit-geometry')));
     };
 
     public static clickSolveConflicts() {
-        common.click(by.id('document-view-button-solve-conflicts'));
+        common.click(element(by.id('document-view-button-solve-conflicts')));
     };
 
     // get text

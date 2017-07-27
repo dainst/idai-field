@@ -2,27 +2,33 @@
         id="resource-{{docRef.doc.resource.identifier}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)" class="row py-3" [class.bg-faded]="depth == 0"
         style="border-top: 1px solid rgba(0, 0, 0, 0.125)" [class.no-search-result]="resourcesComponent.query.q != '' && !resourcesComponent.documentsInclude(docRef.doc)">
     <div class="col-md-3" [style.padding-left]="(1+depth*2) + 'rem'" [class.font-weight-bold]="depth == 0">
+        <div style="margin-top: -8px; display:inline-block; width:24px; float:right">
+            <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="docRef.doc"
+                     [preselectedGeometryType]="'none'"></plus-button>
+        </div>
+
         {{typesMap[docRef.doc.resource.type].label}}<br>
-        <button *ngIf="docRef.doc.resource.relations['includes']"
+        <span *ngIf="docRef.doc.resource.relations['includes']"
                 (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
-                class="btn btn-sm btn-link pr-0">
-            {{docRef.doc.resource.relations['includes'].length}} untergeordnete
-        </button>
+                class="btn btn-sm btn-link p-0">
+             <span class="mdi h5" [class.mdi-chevron-down]="!listComponent.childrenHiddenFor(docRef.doc.resource.id)" [class.mdi-chevron-right]="listComponent.childrenHiddenFor(docRef.doc.resource.id)"></span>
+        </span>
+        <small class="text-muted" *ngIf="docRef.doc.resource.relations['includes']">
+            {{docRef.doc.resource.relations['includes'].length}}
+        </small>
+
     </div>
     <div class="col-md-3">
         <input [(ngModel)]="docRef.doc.resource.identifier" (blur)="save(docRef.doc)" (keyup)="markAsChanged()"
                class="form-control form-control-sm identifier-input">
 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)"
                                  (keyup)="markAsChanged()" class="form-control form-control-sm">
     </div>
-    <div class="col-md-3">
-        <div style="margin-top: -7px; display:inline-block; height: 24px; width:40px;">
-        <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="docRef.doc"
-                     [preselectedGeometryType]="'none'"></plus-button>
-        </div>
+    <div class="col-md-2">
+        
         <small>
             <button (click)="resourcesComponent.editDocument(docRef.doc)" class="btn btn-sm btn-link">Bearbeiten</button>
         </small>

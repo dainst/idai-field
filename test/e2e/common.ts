@@ -8,6 +8,7 @@ let delays = require('./config/delays');
  */
 
 function typeIn(inputField, text) {
+    browser.wait(EC.visibilityOf(inputField), delays.ECWaitTime);
     inputField.clear();
     for (let i in text) {
         inputField.sendKeys(text[i]);

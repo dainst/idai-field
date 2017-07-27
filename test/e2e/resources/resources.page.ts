@@ -217,7 +217,6 @@ export class ResourcesPage {
     };
 
     public static typeInProjectName = function(projectName) {
-        browser.wait(EC.visibilityOf(element(by.css('.project-name-input'))), delays.ECWaitTime);
         common.typeIn(element(by.css('.project-name-input')), projectName)
     };
 }

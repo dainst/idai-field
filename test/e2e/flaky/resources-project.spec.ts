@@ -33,6 +33,33 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
+    it ('delete project', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+
+        browser.sleep(1000);
+
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('abc');
+        browser.sleep(1000);
+        ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(1000);
+        
+        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
+
+        browser.sleep(2000);
+
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+    });
+
     it ('create, switch project', () => {
 
         ProjectPage.clickCreateProject();
@@ -53,30 +80,5 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-    });
-
-    it ('delete project', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        browser.sleep(1000);
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
-
-        browser.sleep(2000);
-
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

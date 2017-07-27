@@ -92,7 +92,7 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 
-    xit ('create, switch project', () => {
+    it ('create, switch project', () => {
 
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
@@ -107,14 +107,14 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        // NavbarPage.clickNavigateToProject();
+        // NavbarPage.clickSelectProject(1);
+        // NavbarPage.clickNavigateToSettings();
+        // NavbarPage.clickNavigateToProject();
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
-    it ('delete project', () => {
+    xit ('delete project', () => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));

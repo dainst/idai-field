@@ -51,7 +51,7 @@ export class ProjectsComponent implements OnInit {
     public selectProject(project: string) {
 
         this.selectedProject = project;
-        this.updateProjectSettings();
+        return this.updateProjectSettings();
     }
 
     public createProject() {
@@ -68,7 +68,7 @@ export class ProjectsComponent implements OnInit {
 
         this.projects.push(this.newProject);
         this.selectedProject = this.newProject;
-        this.updateProjectSettings(true);
+        this.updateProjectSettings();
     }
 
     public deleteProject() {
@@ -77,8 +77,7 @@ export class ProjectsComponent implements OnInit {
 
         const projectToDelete = this.selectedProject;
         this.projects.splice(this.projects.indexOf(this.selectedProject),1);
-        this.selectedProject = this.projects[0];
-        this.updateProjectSettings()
+        this.selectProject(this.projects[0])
             .then(() => this.settingsService.deleteProject(projectToDelete))
             .then(() => {
                 this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
@@ -108,10 +107,10 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    private updateProjectSettings(recreateDb: boolean = false) {
+    private updateProjectSettings() {
 
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
-            .then(() => this.settingsService.activateSettings(true, recreateDb))
+            .then(() => this.settingsService.activateSettings(true))
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)

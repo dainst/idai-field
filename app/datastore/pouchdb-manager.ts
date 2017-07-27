@@ -28,9 +28,8 @@ export class PouchdbManager {
      * Selects the current database.
      * This method has to be called before the database can be used.
      * @param name the database name
-     * @param recreateDb if set to true, a possibly existing db gets erased before (re-)creating it
      */
-    public select(name: string, recreateDb = false): void {
+    public select(name: string): void {
 
         // same db selected, no need for action
         if (this.name == name) return;
@@ -46,14 +45,8 @@ export class PouchdbManager {
         this.name = name;
 
         rdy = rdy.then(() => this.createDb());
-        if (name == 'test' || recreateDb) {
-            rdy = rdy.then(() => {
-
-                // TODO still necessary?
-                console.debug("db '"+name+"' gets destroyed, then (re-)created");
-                return this.db.destroy();
-
-            }).then(() => this.createDb());
+        if (name == 'test') {
+            rdy = rdy.then(() => this.db.destroy()).then(() => this.createDb());
         }
         rdy = rdy.then(() => this.indexCreator.go(this.db));
         if (name == 'test') {
@@ -79,7 +72,6 @@ export class PouchdbManager {
         return this.name;
     }
 
-    // TODO still used?
     public destroy(): Promise<any> {
         return this.db.destroy();
     }

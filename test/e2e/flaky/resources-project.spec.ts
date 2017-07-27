@@ -62,31 +62,4 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
-
-    it ('create, switch project', () => {
-        performCreatProject();
-
-        ResourcesPage.performCreateResource('abc_t1', 0);
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('test')
-        });
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('abc')
-        });
-        NavbarPage.clickSelectProject(1);
-
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-    });
 });

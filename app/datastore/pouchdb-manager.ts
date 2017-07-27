@@ -4,12 +4,12 @@ import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
 import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 
+@Injectable()
 /**
  * Manages the creation of PouchDB instances.
  * Also handles loading of sample data if 'test' database is selected.
  * @author Sebastian Cuy
  */
-@Injectable()
 export class PouchdbManager {
 
     private db = undefined;
@@ -76,6 +76,7 @@ export class PouchdbManager {
         return this.db.destroy();
     }
 
+    // TODO reject if dbName is not this.name
     public destroyDb(dbName: string): Promise<any> {
         return new PouchDB(dbName).destroy();
     }

@@ -1,40 +1,34 @@
 import {browser, protractor, element, by} from 'protractor';
-let EC = protractor.ExpectedConditions;
-let delays = require('./config/delays');
-
+const EC = protractor.ExpectedConditions;
+const delays = require('./config/delays');
+const common = require('./common');
 
 export class NavbarPage {
 
     // click
 
     public static clickNavigateToProject() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(0)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(0).click();
+        return common.click(element.all(by.css('.nav-link')).get(0));
     }
 
     public static clickNavigateToExcavation() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(1)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(1).click();
+        return common.click(element.all(by.css('.nav-link')).get(1));
     };
 
     public static clickNavigateToBuilding() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(2)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(2).click();
+        return common.click(element.all(by.css('.nav-link')).get(2));
     };
 
     public static clickNavigateToSettings() {
-        browser.wait(EC.visibilityOf(element.all(by.css('.nav-link')).get(6)), delays.ECWaitTime);
-        return element.all(by.css('.nav-link')).get(6).click();
+        return common.click(element.all(by.css('.nav-link')).get(6));
     };
 
     public static clickConflictsButton() {
-        browser.wait(EC.visibilityOf(element(by.id('taskbar-conflicts-button'))), delays.ECWaitTime);
-        return element(by.id('taskbar-conflicts-button')).click();
+        return common.click(element(by.id('taskbar-conflicts-button')));
     };
 
     public static clickConflictResolverLink(identifier) {
-        browser.wait(EC.visibilityOf(element(by.id('taskbar-conflict-' + identifier))), delays.ECWaitTime);
-        return element(by.id('taskbar-conflict-' + identifier)).click();
+        return common.click(element(by.id('taskbar-conflict-' + identifier)));
     };
 
     public static clickSelectProject = function(option) {
@@ -44,8 +38,7 @@ export class NavbarPage {
 
     // unused?
     public static clickCloseMessage() {
-        browser.wait(EC.visibilityOf(element(by.css('#message-0 button'))), delays.ECWaitTime);
-        element(by.css('#message-0 button')).click();
+        common.click(element(by.css('#message-0 button')));
     };
 
     // await

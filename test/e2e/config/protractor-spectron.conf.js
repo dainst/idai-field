@@ -4,7 +4,6 @@ const fileUrl = require('file-url');
 const failFast = require('protractor-fail-fast');
 
 const failFastActive = (process.argv.length > 4 && process.argv[4] == '--params=ff');
-const syncingTestsActive = (process.argv.length > 5 && process.argv[5] == '--suite=syncing');
 
 exports.config = {
 
@@ -53,9 +52,6 @@ exports.config = {
         if (failFastActive) {
             console.log("Fail fast mode active");
             jasmine.getEnv().addReporter(failFast.init());
-        }
-        if (syncingTestsActive) {
-            console.log("syncing test suite active");
         }
 
         var FailureScreenshotReporter = function() {

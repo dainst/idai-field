@@ -35,6 +35,10 @@ export class ResourcesPage {
         common.click(by.css('#create-main-type-document-button .circular-button'));
     };
 
+    public static clickEditMainTypeResource = function() {
+        common.click(by.id('edit-main-type-document-button'));
+    };
+
     public static clickSaveInModal = function() {
         common.click(by.id('overview-save-confirmation-modal-save-button'));
     };

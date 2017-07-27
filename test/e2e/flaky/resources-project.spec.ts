@@ -4,6 +4,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from '../resources/resources.page';
 const fs = require('fs');
 import {ProjectPage} from '../project.page';
+import {browser, protractor, element, by} from 'protractor';
 
 /**
  * @author Daniel de Oliveira
@@ -37,7 +38,7 @@ describe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
-    it ('create, switch project', () => {
+    fit ('create, switch project', () => {
 
         browser.sleep(2000);
 
@@ -51,15 +52,22 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         NavbarPage.clickNavigateToProject();
+        element.all(by.css('#projectSelectBox option')).get(1).getText().then(t=>{
+            expect(t).toContain('test')
+        });
         NavbarPage.clickSelectProject(1);
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        // NavbarPage.clickNavigateToProject();
-        // NavbarPage.clickSelectProject(1);
-        // NavbarPage.clickNavigateToSettings();
-        // NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToProject();
+        element.all(by.css('#projectSelectBox option')).get(1).getText().then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
+
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToProject();
         // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 

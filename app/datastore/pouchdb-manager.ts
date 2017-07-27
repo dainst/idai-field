@@ -55,7 +55,7 @@ export class PouchdbManager {
                     setTimeout(
                         () => {
                             this.sampleDataLoader.go(this.db, this.name).then(resolve)
-                        }, 1000);
+                        }, 500);
                 });
             });
         }

@@ -4,6 +4,7 @@ import {ResourcesPage} from '../resources/resources.page';
 const fs = require('fs');
 import {ProjectPage} from '../project.page';
 import {browser, protractor, element, by} from 'protractor';
+const EC = protractor.ExpectedConditions;
 
 /**
  * @author Daniel de Oliveira
@@ -43,20 +44,23 @@ describe('resources/project --', function() {
     it ('delete project', () => {
         performCreatProject();
 
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('abc') });
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(200);
+
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(200);
 
-        expect(NavbarPage.getMessageText()).toContain('wurde gelöscht');
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-        //
-        // browser.sleep(2000);
-        //
-        // NavbarPage.clickNavigateToSettings();
-        // NavbarPage.clickNavigateToExcavation();
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
     it ('create, switch project', () => {

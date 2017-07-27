@@ -1,4 +1,3 @@
-import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from '../resources/resources.page';
@@ -68,7 +67,12 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => {
+            console.log("debug",text)
+        });
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
     it ('delete project', () => {

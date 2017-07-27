@@ -125,7 +125,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.APP_GENERIC_SAVE_ERROR]={
             content: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.',
-            level: 'error', // TODO this should be danger
+            level: 'danger',
             params: [],
             hidden: false
         };

@@ -26,6 +26,7 @@ export class SettingsService {
     private observers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
+    private currentSyncUrl = '';
 
     public ready: Promise<any>;
 
@@ -132,7 +133,8 @@ export class SettingsService {
      * @returns {any}
      */
     public activateSettings(restart = false): Promise<any> {
-
+        
+        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (restart) {
             return this.restartSync();
         } else {
@@ -142,10 +144,9 @@ export class SettingsService {
 
     private startSync(): Promise<any> {
 
-        let address = SettingsService.makeAddressFromSyncTarget(this.settings.syncTarget);
-        if (!address) return Promise.resolve();
+        if (!this.currentSyncUrl) return Promise.resolve();
 
-        return this.datastore.setupSync(address).then(syncState => {
+        return this.datastore.setupSync(this.currentSyncUrl).then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500);
@@ -245,7 +246,7 @@ export class SettingsService {
         });
     }
 
-    private static makeAddressFromSyncTarget(serverSetting) {
+    private static makeUrlFromSyncTarget(serverSetting) {
 
         let address = serverSetting['address'];
 

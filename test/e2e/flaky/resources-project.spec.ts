@@ -88,8 +88,12 @@ describe('resources/project --', function() {
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);
-
-        fail("here");
+        NavbarPage.clickNavigateToBuilding();
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest);
+        
+        fail("take a picture");
         done();
 
         // waitForIt('abc_t1', () => {

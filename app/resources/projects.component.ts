@@ -66,7 +66,7 @@ export class ProjectsComponent implements OnInit {
 
         this.popover.close();
 
-        this.projects.push(this.newProject);
+        this.projects.unshift(this.newProject);
         this.selectedProject = this.newProject;
         this.updateProjectSettings();
     }

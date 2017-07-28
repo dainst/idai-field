@@ -72,7 +72,7 @@ describe('resources/project --', function() {
 
     it ('delete project', () => {
         performCreatProject();
-        browser.sleep(200); // to prevent core.umd.js "ERROR"
+        browser.sleep(200);
 
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });

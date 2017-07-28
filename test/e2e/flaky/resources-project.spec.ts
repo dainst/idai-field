@@ -49,6 +49,8 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
 
         NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest);
+
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));

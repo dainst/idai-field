@@ -48,8 +48,12 @@ describe('resources/project --', function() {
         performCreateProject();
         browser.sleep(delays.shortRest);
 
+        NavbarPage.clickNavigateToExcavation();
         ResourcesPage.performCreateResource('abc_t1', 0);
+        browser.sleep(delays.shortRest);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+        NavbarPage.clickNavigateToProject();
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
@@ -70,7 +74,9 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         //
 
-        browser.sleep(4000);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(2000);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });

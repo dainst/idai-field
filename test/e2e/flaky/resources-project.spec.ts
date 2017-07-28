@@ -83,7 +83,7 @@ describe('resources/project --', function() {
         });
     }
 
-    it('try reproduce why create switch fails', () => {
+    xit('try reproduce why create switch fails', () => {
         browser.sleep(200);
 
         // do it in the test project
@@ -94,6 +94,8 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
+
+        // this works, we see the abc_t1 as first list element
 
         fail("take a picture");
     });
@@ -107,6 +109,8 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
+
+        // this does not work, we do not see abc_t1 here
 
         fail("take a picture");
         done();

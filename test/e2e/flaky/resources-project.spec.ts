@@ -49,6 +49,7 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
 
         ResourcesPage.performCreateResource('abc_t1', 0);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });

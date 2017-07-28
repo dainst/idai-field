@@ -58,16 +58,18 @@ describe('resources/project --', function() {
         browser.sleep(1000);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        // NavbarPage.clickNavigateToProject();
-        // ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //     expect(t).toContain('abc')
-        // });
-        // NavbarPage.clickSelectProject(1);
-        //
-        // NavbarPage.clickNavigateToImages();
-        // NavbarPage.clickNavigateToProject();
-        //
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
+
+        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToProject();
+
+        browser.sleep(2000);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
     it ('delete project', () => {

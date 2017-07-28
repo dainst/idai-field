@@ -48,9 +48,6 @@ describe('resources/project --', function() {
         performCreateProject();
         browser.sleep(delays.shortRest);
 
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest);
-
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
@@ -76,9 +73,10 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         //
 
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
         browser.sleep(2000);
+        NavbarPage.clickNavigateToSettings();
+        browser.sleep(200);
+        NavbarPage.clickNavigateToProject();
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });

@@ -77,6 +77,8 @@ describe('resources/project --', function() {
 
         browser.sleep(2000);
 
+        ResourcesPage.getListItemIdentifierText(0).then(text => console.log("debug",text));
+
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 

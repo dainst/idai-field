@@ -85,10 +85,11 @@ describe('resources/project --', function() {
 
         browser.sleep(200);
         //
-        // ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-        //
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+
         // NavbarPage.clickNavigateToSettings();
-        // NavbarPage.clickNavigateToExcavation();
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(200);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

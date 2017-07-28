@@ -44,7 +44,7 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
     }
 
-    it('create, switchProject project', () => {
+    xit('create, switchProject project', () => {
         performCreateProject();
         browser.sleep(delays.shortRest);
 
@@ -79,29 +79,5 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToProject();
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-    });
-
-    xit ('delete project', () => {
-        performCreateProject();
-        browser.sleep(200);
-
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-
-        ProjectPage.clickDeleteProject();
-        browser.sleep(100);
-
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        browser.sleep(200);
-
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-
-        NavbarPage.clickNavigateToBuilding();
-        browser.sleep(3000);
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(100);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

@@ -69,15 +69,7 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         //
 
-
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToProject();
-
-        browser.sleep(2000);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => console.log("debug",text));
+        browser.sleep(4000);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });

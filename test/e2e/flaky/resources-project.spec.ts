@@ -37,16 +37,38 @@ describe('resources/project --', function() {
 
 
     function performCreateProject() {
-        browser.sleep(2000);
-
+        browser.sleep(delays.shortRest * 10);
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(delays.shortRest);
     }
+
+    xit ('delete project', () => {
+        performCreateProject();
+
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+
+        ProjectPage.clickDeleteProject();
+        browser.sleep(delays.shortRest);
+
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+
+        browser.sleep(delays.shortRest);
+
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+
+        NavbarPage.clickNavigateToBuilding();
+        browser.sleep(delays.shortRest * 15);
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+    });
 
     xit('create, switchProject project', () => {
         performCreateProject();
-        browser.sleep(delays.shortRest);
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);

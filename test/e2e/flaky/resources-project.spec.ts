@@ -87,7 +87,7 @@ describe('resources/project --', function() {
         //
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
 
-        // NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToBuilding();
         browser.sleep(3000);
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(100);

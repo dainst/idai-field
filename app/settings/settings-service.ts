@@ -27,6 +27,7 @@ export class SettingsService {
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
+    private currentSyncTimeout;
 
     public ready: Promise<any>;
 
@@ -146,6 +147,8 @@ export class SettingsService {
 
     private startSync(): Promise<any> {
 
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+
         if (!this.currentSyncUrl) return Promise.resolve();
 
         return this.datastore.setupSync(this.currentSyncUrl).then(syncState => {
@@ -157,11 +160,10 @@ export class SettingsService {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
                 this.observers.forEach(o => o.next('disconnected'));
-                setTimeout(() => this.startSync(), 5000); // retry
+                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
             syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
-            }
-        );
+        });
 
     }
 

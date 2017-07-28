@@ -262,7 +262,7 @@ export class SettingsService {
 
         if (!serverSetting['username'] || !serverSetting['password']) return address;
 
-        return address.replace('(https?)://', '$1://' +
+        return address.replace(/(https?):\/\//, '$1://' +
             serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 

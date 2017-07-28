@@ -5,6 +5,7 @@ const fs = require('fs');
 import {ProjectPage} from '../project.page';
 import {browser, protractor, element, by} from 'protractor';
 const EC = protractor.ExpectedConditions;
+const delays = require('./config/delays');
 
 /**
  * @author Daniel de Oliveira
@@ -45,20 +46,20 @@ describe('resources/project --', function() {
 
     it('create, switchProject project', () => {
         performCreateProject();
-        browser.sleep(200);
+        browser.sleep(delays.shortRest);
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
-        browser.sleep(200);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToImages();
 
-        browser.sleep(100);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
 
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest * 5);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         NavbarPage.clickNavigateToProject();
@@ -69,9 +70,9 @@ describe('resources/project --', function() {
         //
 
 
-        browser.sleep(200);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToImages();
-        browser.sleep(100);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
 
         browser.sleep(2000);

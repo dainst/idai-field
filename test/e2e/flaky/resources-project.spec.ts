@@ -5,7 +5,7 @@ const fs = require('fs');
 import {ProjectPage} from '../project.page';
 import {browser, protractor, element, by} from 'protractor';
 const EC = protractor.ExpectedConditions;
-const delays = require('./config/delays');
+const delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira

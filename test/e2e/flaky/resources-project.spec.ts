@@ -83,7 +83,21 @@ describe('resources/project --', function() {
         });
     }
 
-    it('create, switchProject project', done => {
+    it('try reproduce why create switch fails', done => {
+        browser.sleep(200);
+
+        // do it in the test project
+
+        ResourcesPage.performCreateResource('abc_t1', 0);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToBuilding();
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest);
+
+        fail("take a picture");
+
+    xit('create, switchProject project', done => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
@@ -92,7 +106,7 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
-        
+
         fail("take a picture");
         done();
 

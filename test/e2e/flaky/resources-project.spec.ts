@@ -96,6 +96,7 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
 
         fail("take a picture");
+    });
 
     xit('create, switchProject project', done => {
         performCreateProject();

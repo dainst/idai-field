@@ -67,11 +67,28 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
-    it('create, switchProject project', () => {
+    function waitForIt(searchTerm, successCB) {
+
+        return browser.sleep(3000).then(() =>
+            ResourcesPage.typeInIdentifierInSearchField(searchTerm)
+        ).then(() => {
+            return browser.wait(EC.visibilityOf(
+                element(by.css('#objectList .list-group-item:nth-child(1) .title'))), 500).then(
+                () => {
+                    return successCB();
+                },
+                () => {
+                    return waitForIt(searchTerm, successCB);
+                });
+        });
+    }
+
+    it('create, switchProject project', done => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);
+
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
         NavbarPage.clickNavigateToProject();
@@ -95,8 +112,10 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         browser.sleep(200);
 
-        fail("here");
-
+        waitForIt('abc_t1', () => {
+            ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+            done();
+        });
         //
 
         // browser.sleep(2000);
@@ -104,6 +123,5 @@ describe('resources/project --', function() {
         // browser.sleep(200);
         // NavbarPage.clickNavigateToProject();
         //
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

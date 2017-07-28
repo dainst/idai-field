@@ -43,7 +43,7 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
     }
 
-    xit('create, switch project', () => {
+    it('create, switch project', () => {
         performCreatProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
@@ -54,20 +54,21 @@ describe('resources/project --', function() {
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToBuilding();
+        browser.sleep(3000);
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('abc')
-        });
-        NavbarPage.clickSelectProject(1);
-
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        // NavbarPage.clickNavigateToProject();
+        // ProjectPage.getProjectNameOptionText(1).then(t=>{
+        //     expect(t).toContain('abc')
+        // });
+        // NavbarPage.clickSelectProject(1);
+        //
+        // NavbarPage.clickNavigateToSettings();
+        // NavbarPage.clickNavigateToProject();
+        //
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
     it ('delete project', () => {
@@ -76,7 +77,7 @@ describe('resources/project --', function() {
 
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-        //
+
         ProjectPage.clickDeleteProject();
         browser.sleep(100);
 
@@ -84,7 +85,7 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
 
         browser.sleep(200);
-        //
+
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
 
         NavbarPage.clickNavigateToBuilding();

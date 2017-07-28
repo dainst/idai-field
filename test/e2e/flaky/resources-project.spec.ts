@@ -93,13 +93,17 @@ describe('resources/project --', function() {
             expect(t).toContain('abc')
         });
         NavbarPage.clickSelectProject(1);
+        browser.sleep(200);
+
+        fail("here");
+
         //
 
-        browser.sleep(2000);
-        NavbarPage.clickNavigateToSettings();
-        browser.sleep(200);
-        NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        // browser.sleep(2000);
+        // NavbarPage.clickNavigateToSettings();
+        // browser.sleep(200);
+        // NavbarPage.clickNavigateToProject();
+        //
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

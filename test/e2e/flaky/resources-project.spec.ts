@@ -35,7 +35,7 @@ describe('resources/project --', function() {
     });
 
 
-    function performCreatProject() {
+    function performCreateProject() {
         browser.sleep(2000);
 
         ProjectPage.clickCreateProject();
@@ -43,38 +43,32 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
     }
 
-    xit('create, switch project', () => {
-        performCreatProject();
+    it('create, switchProject project', () => {
+        performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToProject();
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
-        browser.sleep(100);
-        NavbarPage.clickNavigateToBuilding();
-        browser.sleep(3000);
+        NavbarPage.clickNavigateToImages();
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(100);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        // NavbarPage.clickNavigateToProject();
-        // ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //     expect(t).toContain('abc')
-        // });
-        // NavbarPage.clickSelectProject(1);
-        //
-        // NavbarPage.clickNavigateToSettings();
-        // NavbarPage.clickNavigateToProject();
-        //
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
+
+        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToProject();
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
     it ('delete project', () => {
-        performCreatProject();
+        performCreateProject();
         browser.sleep(200);
 
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });

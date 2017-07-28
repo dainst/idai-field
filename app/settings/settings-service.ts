@@ -40,7 +40,7 @@ export class SettingsService {
         this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.useSelectedDatabase();
+                this.useSelectedDatabase(false); // TODO important to test this false, bc could overwrite db
 
                 const project = this.getSelectedProject();
 
@@ -132,11 +132,13 @@ export class SettingsService {
      * @param restart
      * @returns {any}
      */
-    public activateSettings(restart = false): Promise<any> {
-        
+
+    public activateSettings(restart = false, createDb: boolean = false): Promise<any> {
+
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
+
         if (restart) {
-            return this.restartSync();
+            return this.restartSync(createDb);
         } else {
             return this.startSync();
         }
@@ -163,12 +165,12 @@ export class SettingsService {
 
     }
 
-    private restartSync() {
+    private restartSync(createDb) {
 
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         return new Promise<any>((resolve) => {
-            this.useSelectedDatabase().then(
+            this.useSelectedDatabase(createDb).then(
                 () => {
                     this.observers.forEach(o => o.next(false));
                     this.datastore.stopSync(); // TODO this seems to be wrong. the sync should be stopped before switching to new db with useSelectedDb
@@ -179,11 +181,15 @@ export class SettingsService {
             });
     }
 
-    private useSelectedDatabase(): Promise<any> {
+    private useSelectedDatabase(createDb: boolean): Promise<any> {
 
         const project = this.getSelectedProject();
 
-        this.pouchdbManager.select(project);
+        if (createDb) {
+            this.pouchdbManager.create(project);
+        } else {
+            this.pouchdbManager.select(project);
+        }
         this.imagestore.select(project);
 
         return this.datastore.find({

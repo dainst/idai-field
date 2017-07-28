@@ -25,12 +25,22 @@ export class PouchdbManager {
     }
 
     /**
+     * @param name
+     */
+    public create(name: string): void {
+        this.switchProject(name, true);
+    }
+
+    /**
      * Selects the current database.
-     * This method has to be called before the database can be used.
+     * This (or {@link PouchdbManager#create}) has to be called before the database can be used.
      * @param name the database name
      */
     public select(name: string): void {
+        this.switchProject(name, false);
+    }
 
+    private switchProject(name: string, destroy: boolean) {
         // same db selected, no need for action
         if (this.name == name) return;
 
@@ -45,7 +55,7 @@ export class PouchdbManager {
         this.name = name;
 
         rdy = rdy.then(() => this.createDb());
-        if (name == 'test') {
+        if ((name == 'test') || destroy) {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.createDb());
         }
         rdy = rdy.then(() => this.indexCreator.go(this.db));

@@ -50,8 +50,7 @@ export class ProjectsComponent implements OnInit {
 
     public selectProject(project: string) {
 
-        this.selectedProject = project;
-        return this.updateProjectSettings();
+        return this.switchProjectDb(project);
     }
 
     public createProject() {
@@ -68,7 +67,7 @@ export class ProjectsComponent implements OnInit {
 
         this.projects.unshift(this.newProject);
         this.selectedProject = this.newProject;
-        this.updateProjectSettings();
+        this.switchProjectDb(this.newProject, true);
     }
 
     public deleteProject() {
@@ -107,10 +106,11 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    private updateProjectSettings() {
+    private switchProjectDb(project: string, createDb: boolean = false) {
 
+        this.selectedProject = project;
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
-            .then(() => this.settingsService.activateSettings(true))
+            .then(() => this.settingsService.activateSettings(true, createDb))
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)

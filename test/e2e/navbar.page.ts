@@ -19,6 +19,10 @@ export class NavbarPage {
         return common.click(element.all(by.css('.nav-link')).get(2));
     };
 
+    public static clickNavigateToImages() {
+        return common.click(element.all(by.css('.nav-link')).get(3));
+    };
+
     public static clickNavigateToSettings() {
         return common.click(element.all(by.css('.nav-link')).get(6));
     };

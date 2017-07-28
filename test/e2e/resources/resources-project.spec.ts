@@ -53,7 +53,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
-    it('switch views after click on relation link', () => {
+    it('switchProject views after click on relation link', () => {
         ResourcesPage.performCreateResource('building1', 1);
 
         NavbarPage.clickNavigateToBuilding();

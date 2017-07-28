@@ -54,18 +54,19 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         browser.sleep(200);
         NavbarPage.clickNavigateToImages();
-        //
+
         browser.sleep(100);
         NavbarPage.clickNavigateToExcavation();
-        
+
         browser.sleep(1000);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        //
 
-        // NavbarPage.clickNavigateToProject();
-        // ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //     expect(t).toContain('abc')
-        // });
-        // NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
         //
         // NavbarPage.clickNavigateToImages();
         // browser.sleep(100);

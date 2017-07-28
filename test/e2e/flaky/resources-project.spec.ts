@@ -67,39 +67,39 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
-    xit('create, switchProject project', () => {
+    it('create, switchProject project', () => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         browser.sleep(delays.shortRest);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('test')
-        });
-        NavbarPage.clickSelectProject(1);
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToImages();
-
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
-
-        browser.sleep(delays.shortRest * 5);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('abc')
-        });
-        NavbarPage.clickSelectProject(1);
+        // NavbarPage.clickNavigateToProject();
+        // ProjectPage.getProjectNameOptionText(1).then(t=>{
+        //     expect(t).toContain('test')
+        // });
+        // NavbarPage.clickSelectProject(1);
+        // browser.sleep(delays.shortRest);
+        // NavbarPage.clickNavigateToImages();
+        //
+        // browser.sleep(delays.shortRest);
+        // NavbarPage.clickNavigateToExcavation();
+        //
+        // browser.sleep(delays.shortRest * 5);
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        //
+        // NavbarPage.clickNavigateToProject();
+        // ProjectPage.getProjectNameOptionText(1).then(t=>{
+        //     expect(t).toContain('abc')
+        // });
+        // NavbarPage.clickSelectProject(1);
         //
 
-        browser.sleep(2000);
-        NavbarPage.clickNavigateToSettings();
-        browser.sleep(200);
-        NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        // browser.sleep(2000);
+        // NavbarPage.clickNavigateToSettings();
+        // browser.sleep(200);
+        // NavbarPage.clickNavigateToProject();
+        //
+        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

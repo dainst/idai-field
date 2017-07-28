@@ -25,9 +25,12 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     console.log('electron webdriver session id:', sessionId);
 
     function takeShot(mode) {
-        console.log('taking screenshot ' + i + ' on ' + mode);
+        let flakyFlag = "";
+        if (suite == 'flaky') flakyFlag = "F!";
+
+        console.log('taking screenshot ' + flakyFlag + i + ' on ' + mode);
         app.browserWindow.capturePage().then(function(imageBuffer) {
-            fs.writeFileSync('test/e2e-screenshots/' + i + '.png', imageBuffer);
+            fs.writeFileSync('test/e2e-screenshots/' + flakyFlag + i + '.png', imageBuffer);
             i++;
         });
     }

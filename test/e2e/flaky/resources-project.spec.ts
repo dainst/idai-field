@@ -88,8 +88,9 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
 
         // NavbarPage.clickNavigateToSettings();
+        browser.sleep(3000);
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(200);
+        browser.sleep(100);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 });

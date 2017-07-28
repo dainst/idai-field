@@ -53,6 +53,7 @@ describe('resources/project --', function() {
         });
         NavbarPage.clickSelectProject(1);
         NavbarPage.clickNavigateToImages();
+        browser.sleep(100);
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(1000);
@@ -65,6 +66,7 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
 
         NavbarPage.clickNavigateToImages();
+        browser.sleep(100);
         NavbarPage.clickNavigateToProject();
 
         browser.sleep(2000);

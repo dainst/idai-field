@@ -217,7 +217,7 @@ export class SettingsService {
 
         if (address == '') return true;
 
-        const re = new RegExp('^http:\/\/[0-9a-z.]+:[0-9]+$');
+        const re = new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$');
         return re.test(address);
     }
 
@@ -249,9 +249,13 @@ export class SettingsService {
 
         let address = serverSetting['address'];
 
-        if (!address || !serverSetting['username'] || !serverSetting['password']) return address;
+        if (!address) return address;
 
-        return address.replace('http://', 'http://' +
+        if (address.indexOf('http') == -1) address = 'http://' + address;
+
+        if (!serverSetting['username'] || !serverSetting['password']) return address;
+
+        return address.replace('(https?)://', '$1://' +
             serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 

@@ -399,7 +399,10 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 this.syncHandles.push(sync);
                 return {
                     url: url,
-                    cancel: () => sync.cancel(),
+                    cancel: () => {
+                        sync.cancel();
+                        this.syncHandles.splice(this.syncHandles.indexOf(sync), 1);
+                    },
                     onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
                     onChange: Observable.create(obs => sync.on('change', () => obs.next()))
                 };
@@ -409,7 +412,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     public stopSync() {
 
         for (let handle of this.syncHandles) {
-            console.debug('stop sync',handle);
+            console.debug('stop sync', handle);
             handle.cancel();
         }
         this.syncHandles = [];

@@ -83,7 +83,7 @@ describe('resources/project --', function() {
         });
     }
 
-    it('try reproduce why create switch fails', done => {
+    it('try reproduce why create switch fails', () => {
         browser.sleep(200);
 
         // do it in the test project

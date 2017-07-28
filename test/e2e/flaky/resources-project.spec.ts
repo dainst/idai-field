@@ -54,9 +54,11 @@ describe('resources/project --', function() {
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
+        browser.sleep(100);
         NavbarPage.clickNavigateToBuilding();
         browser.sleep(3000);
         NavbarPage.clickNavigateToExcavation();
+        browser.sleep(100);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         // NavbarPage.clickNavigateToProject();

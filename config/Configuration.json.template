@@ -270,7 +270,8 @@
         {
           "name":"dating",
           "label":"Datierung",
-          "description":"archäologische Datierung"
+          "description":"archäologische Datierung",
+          "inputType": "dating"
         },
         {
           "name":"weight",

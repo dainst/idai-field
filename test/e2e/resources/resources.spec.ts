@@ -121,19 +121,4 @@ describe('resources --', () => {
         DocumentEditWrapperPage.clickSaveDocument();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
-
-    xit('should delete a main type resource', () => {
-        ResourcesPage.performCreateMainTypeResource('newTrench');
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        ResourcesPage.clickEditMainTypeResource();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.clickDeleteInModal();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
-        ResourcesPage.clickEditMainTypeResource();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.clickDeleteInModal();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value.length).toBe(0));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-    });
 });

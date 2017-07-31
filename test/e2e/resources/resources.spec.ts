@@ -122,7 +122,7 @@ describe('resources --', () => {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
 
-    xit('should delete a main type resource', () => {
+    it('should delete a main type resource', () => {
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.clickEditMainTypeResource();

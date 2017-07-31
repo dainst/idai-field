@@ -28,6 +28,7 @@ describe('resources --', () => {
         ResourcesPage.clickEditMainTypeResource();
         ResourcesPage.clickDeleteDocument();
         ResourcesPage.clickDeleteInModal();
+        browser.sleep(2000);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value.length).toBe(0));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });

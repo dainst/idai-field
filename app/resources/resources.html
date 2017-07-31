@@ -27,9 +27,12 @@
             </div>
 
             <div class="col-md-2">
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'"
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project' && mode == 'map'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project' && mode == 'list'"
+                             id="create-main-type-document-button" [preselectedType]="view.mainType"
+                             [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
             </div>
         </div>
 

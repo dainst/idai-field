@@ -376,8 +376,8 @@ export class ResourcesComponent implements AfterViewChecked {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
                     }
-                    this.fetchDocuments();
-                });
+                    return this.fetchDocuments();
+                }).then(() => this.notifyMainTypeObservers());
         }, closeReason => {
             this.documentEditChangeMonitor.reset();
             if (closeReason == 'deleted') {
@@ -444,7 +444,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
     }
 
-    private isRemoteChange(changedDocument: Document) {
+    public isRemoteChange(changedDocument: Document) {
 
         let latestAction: Action;
 

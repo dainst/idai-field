@@ -3,12 +3,11 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {IdaiType} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {M} from '../../m';
 import {SettingsService} from '../../settings/settings-service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ResourcesComponent} from '../resources.component';
-import {IdaiType} from 'idai-components-2/configuration';
 import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";
 
@@ -22,25 +21,24 @@ import {DocumentReference} from "./document-reference";
  * @author Fabian Z.
  */
 export class RowComponent {
+
     @Input() docRef: DocumentReference;
     @Input() depth: number;
     @Input() typesMap: { [type: string]: IdaiType };
-
-    private childrenShown : false;
 
     constructor(
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
-        private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private validator: Validator,
         private datastore: IdaiFieldDatastore,
-        private resourcesComponent: ResourcesComponent,
-        private listComponent: ListComponent
+        public resourcesComponent: ResourcesComponent,
+        public listComponent: ListComponent
     ) {  }
 
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+
         return this.datastore.getLatestRevision(document.resource.id).then(
             latestRevision => {
                 document.resource.identifier = latestRevision.resource.identifier;
@@ -52,7 +50,6 @@ export class RowComponent {
         this.documentEditChangeMonitor.setChanged();
     }
 
-
     public save(document: IdaiFieldDocument) {
 
         if (!this.documentEditChangeMonitor.isChanged()) return;
@@ -61,14 +58,12 @@ export class RowComponent {
 
         const oldVersion = JSON.parse(JSON.stringify(document));
 
-        this.validator.validate(document).then(
-            () => {
-                return this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]);
-            }).then(() => {
-            this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-        }).catch(msgWithParams => {
-            this.messages.add(msgWithParams);
-            return this.restoreIdentifier(document);
-        }).catch(msgWithParams => this.messages.add(msgWithParams));
+        this.validator.validate(document)
+            .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]))
+            .then(() => this.messages.add([M.DOCEDIT_SAVE_SUCCESS]))
+            .catch(msgWithParams => {
+                this.messages.add(msgWithParams);
+                return this.restoreIdentifier(document);
+            }).catch(msgWithParams => this.messages.add(msgWithParams));
     }
 }

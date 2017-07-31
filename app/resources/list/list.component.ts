@@ -1,10 +1,11 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {Component, Output, OnInit, EventEmitter} from '@angular/core';
+import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
-import {IdaiFieldDatastore,} from '../../datastore/idai-field-datastore';
+import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {Query} from 'idai-components-2/datastore';
+import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
-import {Query} from 'idai-components-2/datastore';
 
 @Component({
     selector: 'list',
@@ -29,7 +30,7 @@ export class ListComponent implements OnInit {
 
     private childrenShownForIds: string[] = [];
 
-    private awaitsReload:boolean = false;
+    private awaitsReload: boolean = false;
     
     constructor(
 
@@ -42,12 +43,13 @@ export class ListComponent implements OnInit {
             this.typesMap = projectConfiguration.getTypesMap();
         });
 
-        datastore.documentChangesNotifications().subscribe(() => {
-            this.handleChange();
+        datastore.documentChangesNotifications().subscribe(changedDocument => {
+            this.handleChange(changedDocument);
         });
     }
 
     ngOnInit() {
+
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
             this.selectedMainTypeDocument = result as IdaiFieldDocument;
             this.populateTree();
@@ -55,7 +57,8 @@ export class ListComponent implements OnInit {
 
     }
 
-    public toggleChildrenForId(id:string) {
+    public toggleChildrenForId(id: string) {
+
         let index = this.childrenShownForIds.indexOf(id);
         if (index != -1) {
             this.childrenShownForIds.splice(index, 1);
@@ -78,6 +81,7 @@ export class ListComponent implements OnInit {
     }
 
     private isAscendantPartOfResult(docRef: DocumentReference): boolean {
+
         let parent = docRef['parent'];
         while (parent) {
             if (this.resourcesComponent.documentsInclude(parent.doc as IdaiFieldDocument))
@@ -88,6 +92,7 @@ export class ListComponent implements OnInit {
     }
 
     private isDescendantPartOfResult(docRef: DocumentReference): boolean {
+
         if (this.resourcesComponent.documentsInclude(docRef.doc as IdaiFieldDocument))
             return true;
         else
@@ -112,11 +117,11 @@ export class ListComponent implements OnInit {
 
         const query: Query = {
             constraints: {
-                'resource.relations.isRecordedIn' : this.selectedMainTypeDocument.resource.id,
+                'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id,
             }
         };
 
-        this.datastore.find(query).then( docs => {
+        this.datastore.find(query).then(docs => {
             // initialize docRefMap to make sure it is fully populated before building the tree
             docs.forEach(doc => {
                 let docRef: DocumentReference = { doc: doc, children: [] };
@@ -138,7 +143,10 @@ export class ListComponent implements OnInit {
         });
     }
 
-    private handleChange() {
+    private handleChange(changedDocument: Document) {
+
+        if (!this.resourcesComponent.isRemoteChange(changedDocument)) return;
+
         if (!this.awaitsReload) {
             this.awaitsReload = true;
             setTimeout(this.populateTree.bind(this), 200);

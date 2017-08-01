@@ -108,6 +108,8 @@ export class ProjectsComponent implements OnInit {
 
     private switchProjectDb(project: string, createDb: boolean = false) {
 
+        this.resourcesComponent.stop();
+
         this.selectedProject = project;
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
             .then(() => this.settingsService.activateSettings(true, createDb))

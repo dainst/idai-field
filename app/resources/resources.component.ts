@@ -109,6 +109,10 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+    public stop() {
+        this.ready = false;
+    }
+
     public initialize(): Promise<any> {
 
         return this.fetchProjectDocument()

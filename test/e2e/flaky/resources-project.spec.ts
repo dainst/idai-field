@@ -67,22 +67,6 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
-    function waitForIt(searchTerm, successCB) {
-
-        return browser.sleep(3000).then(() =>
-            ResourcesPage.typeInIdentifierInSearchField(searchTerm)
-        ).then(() => {
-            return browser.wait(EC.visibilityOf(
-                element(by.css('#objectList .list-group-item:nth-child(1) .title'))), 500).then(
-                () => {
-                    return successCB();
-                },
-                () => {
-                    return waitForIt(searchTerm, successCB);
-                });
-        });
-    }
-
     xit('try reproduce why create switch fails', () => {
         browser.sleep(200);
 
@@ -98,37 +82,5 @@ describe('resources/project --', function() {
         // this works, we see the abc_t1 as first list element
 
         fail("take a picture");
-    });
-
-    it('create, switchProject project', () => {
-        performCreateProject();
-
-        ResourcesPage.performCreateResource('abc_t1', 0);
-        NavbarPage.clickNavigateToBuilding();
-        NavbarPage.clickNavigateToProject();
-        browser.sleep(delays.shortRest);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('test')
-        });
-        NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToImages();
-
-        NavbarPage.clickNavigateToExcavation();
-
-        browser.sleep(delays.shortRest * 5);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        NavbarPage.clickNavigateToProject();
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('abc')
-        });
-        NavbarPage.clickSelectProject(1);
-        browser.sleep(delays.shortRest * 10);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

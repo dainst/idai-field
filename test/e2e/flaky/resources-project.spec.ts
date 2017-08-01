@@ -104,13 +104,8 @@ describe('resources/project --', function() {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
-        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToBuilding();
-        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
-        browser.sleep(delays.shortRest);
-
-        // this does not work, we do not see abc_t1 here
 
         waitForIt('abc_t1', () => {
 
@@ -121,10 +116,8 @@ describe('resources/project --', function() {
                 expect(t).toContain('test')
             });
             NavbarPage.clickSelectProject(1);
-            browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToImages();
 
-            browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToExcavation();
 
             browser.sleep(delays.shortRest * 5);
@@ -135,7 +128,6 @@ describe('resources/project --', function() {
                 expect(t).toContain('abc')
             });
             NavbarPage.clickSelectProject(1);
-            browser.sleep(200);
 
             waitForIt('abc_t1', () => {
                 ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));

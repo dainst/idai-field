@@ -112,38 +112,35 @@ describe('resources/project --', function() {
 
         // this does not work, we do not see abc_t1 here
 
-        fail("take a picture");
-        done();
+        waitForIt('abc_t1', () => {
 
-        // waitForIt('abc_t1', () => {
-        //
-        //     ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-        //
-        //     NavbarPage.clickNavigateToProject();
-        //     ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //         expect(t).toContain('test')
-        //     });
-        //     NavbarPage.clickSelectProject(1);
-        //     browser.sleep(delays.shortRest);
-        //     NavbarPage.clickNavigateToImages();
-        //
-        //     browser.sleep(delays.shortRest);
-        //     NavbarPage.clickNavigateToExcavation();
-        //
-        //     browser.sleep(delays.shortRest * 5);
-        //     ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-        //
-        //     NavbarPage.clickNavigateToProject();
-        //     ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //         expect(t).toContain('abc')
-        //     });
-        //     NavbarPage.clickSelectProject(1);
-        //     browser.sleep(200);
-        //
-        //     waitForIt('abc_t1', () => {
-        //         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-        //         done();
-        //     });
-        // });
+            ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+            NavbarPage.clickNavigateToProject();
+            ProjectPage.getProjectNameOptionText(1).then(t=>{
+                expect(t).toContain('test')
+            });
+            NavbarPage.clickSelectProject(1);
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToImages();
+
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+
+            browser.sleep(delays.shortRest * 5);
+            ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+            NavbarPage.clickNavigateToProject();
+            ProjectPage.getProjectNameOptionText(1).then(t=>{
+                expect(t).toContain('abc')
+            });
+            NavbarPage.clickSelectProject(1);
+            browser.sleep(200);
+
+            waitForIt('abc_t1', () => {
+                ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+                done();
+            });
+        });
     });
 });

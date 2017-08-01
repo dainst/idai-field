@@ -100,39 +100,35 @@ describe('resources/project --', function() {
         fail("take a picture");
     });
 
-    it('create, switchProject project', done => {
+    it('create, switchProject project', () => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToBuilding();
         NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest);
 
-        waitForIt('abc_t1', () => {
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
-            ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-
-            NavbarPage.clickNavigateToProject();
-            ProjectPage.getProjectNameOptionText(1).then(t=>{
-                expect(t).toContain('test')
-            });
-            NavbarPage.clickSelectProject(1);
-            NavbarPage.clickNavigateToImages();
-
-            NavbarPage.clickNavigateToExcavation();
-
-            browser.sleep(delays.shortRest * 5);
-            ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-            NavbarPage.clickNavigateToProject();
-            ProjectPage.getProjectNameOptionText(1).then(t=>{
-                expect(t).toContain('abc')
-            });
-            NavbarPage.clickSelectProject(1);
-
-            waitForIt('abc_t1', () => {
-                ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-                done();
-            });
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('test')
         });
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToImages();
+
+        NavbarPage.clickNavigateToExcavation();
+
+        browser.sleep(delays.shortRest * 5);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        NavbarPage.clickNavigateToProject();
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
+        browser.sleep(delays.shortRest * 10);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

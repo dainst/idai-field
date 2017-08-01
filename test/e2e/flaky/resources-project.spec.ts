@@ -66,21 +66,4 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
-
-    xit('try reproduce why create switch fails', () => {
-        browser.sleep(200);
-
-        // do it in the test project
-
-        ResourcesPage.performCreateResource('abc_t1', 0);
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToBuilding();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToProject();
-        browser.sleep(delays.shortRest);
-
-        // this works, we see the abc_t1 as first list element
-
-        fail("take a picture");
-    });
 });

@@ -100,7 +100,7 @@ describe('resources/project --', function() {
         fail("take a picture");
     });
 
-    xit('create, switchProject project', done => {
+    it('create, switchProject project', done => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);

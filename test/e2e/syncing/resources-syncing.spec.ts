@@ -121,10 +121,10 @@ describe('resources/syncing --', function() {
 
         return db.put(testDocument).then(result => {
                 testDocument['_rev'] = result.rev;
-                return browser.sleep(2000);
+                return browser.sleep(5000);
             })
             .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(2000))
+            .then(() => browser.sleep(5000))
             .then(() => {
                 return Promise.resolve(testDocument);
             });
@@ -138,7 +138,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                return browser.sleep(2000);
+                return browser.sleep(5000);
             });
     }
 
@@ -151,7 +151,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                return browser.sleep(2000);
+                return browser.sleep(5000);
             });
     }
 

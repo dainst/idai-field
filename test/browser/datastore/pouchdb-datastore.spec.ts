@@ -620,7 +620,7 @@ export function main() {
                     }
                 );
         });
-        
+
 
         // idai-field-datastore specific
 

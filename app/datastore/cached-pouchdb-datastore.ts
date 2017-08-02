@@ -79,22 +79,9 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     private replaceAllWithCached(results) {
         let ps = [];
         for (let id of results) {
-            ps.push(this.replaceWithCached(id));
+            ps.push(this.get(id));
         }
         return Promise.all(ps);
-    }
-
-    private replaceWithCached(id) { // TODO use public get method
-        if (!id) return id;
-        if (this.documentCache[id]) {
-            return Promise.resolve(this.documentCache[id]);
-        }
-        else {
-            return this.datastore.get(id).then(doc => {
-                this.documentCache[id] = doc;
-                return Promise.resolve(doc);
-            })
-        }
     }
 
     refresh(doc: Document): Promise<Document> {

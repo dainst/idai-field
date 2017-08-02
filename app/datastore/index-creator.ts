@@ -12,7 +12,6 @@ export class IndexCreator {
             .then(() => this.setupIdentifierIndex(db))
             .then(() => this.setupIsRecordedInIndex(db))
             .then(() => this.setupLiesWithinIndex(db))
-            .then(() => this.setupAllIndex(db))
             .then(() => this.setupConflictedIndex(db));
     }
 
@@ -41,19 +40,6 @@ export class IndexCreator {
             });
         };
         return this.setupIndex(db,'fulltext', mapFun);
-    }
-
-    private setupAllIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource || !doc.resource.type) return;
-            const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
-            if (types.indexOf('image') == -1) types.push('resource');
-            let lastModified = doc.created.date;
-            if (doc.modified && doc.modified.length > 0)
-                lastModified = doc.modified[doc.modified.length-1].date;
-            types.forEach(type => emit([type, lastModified]));
-        };
-        return this.setupIndex(db,'all', mapFun);
     }
 
     private setupIdentifierIndex(db): Promise<any> {

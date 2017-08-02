@@ -179,7 +179,7 @@ describe('resources/syncing --', function() {
 
     it('resource created in client should be synced to other db', done => {
 
-        NavbarPage.clickNavigateToProject()
+        NavbarPage.clickNavigateToExcavation()
             .then(() => {
                 changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
                     if (change.doc.resource && change.doc.resource.identifier == 'test3')

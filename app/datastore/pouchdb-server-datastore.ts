@@ -14,7 +14,7 @@ declare function emit(key: any, value?: any): void;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class PouchdbServerDatastore extends PouchdbDatastore implements IdaiFieldDatastore {
+export class PouchdbServerDatastore extends PouchdbDatastore {
 
     protected setupServer(): Promise<any> {
         return new Promise((resolve, reject) => {

@@ -66,9 +66,12 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
     find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
-
+        query['no_docs'] = true;
         return this.datastore.find(query, offset, limit)
-            .then(result => this.replaceAllWithCached(result));
+            .then(result => {
+                delete query['no_docs'];
+                return this.replaceAllWithCached(result)
+            });
     }
 
     all(type?:string, offset?:number, limit?:number): Promise<Document[]> {
@@ -77,20 +80,24 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
     private replaceAllWithCached(results) {
-        let results_ = [];
-        for (let result of results) {
-            results_.push(this.replaceWithCached(result));
+        let ps = [];
+        for (let id of results) {
+            ps.push(this.replaceWithCached(id));
         }
-        return results_;
+        return Promise.all(ps);
     }
 
-    private replaceWithCached(result) {
-        if (!result)
-            return result;
-        else if (this.documentCache[result.resource.id])
-            return this.documentCache[result.resource.id];
-        else
-            return this.documentCache[result.resource.id] = result;
+    private replaceWithCached(id) { // TODO use public get method
+        if (!id) return id;
+        if (this.documentCache[id]) {
+            return Promise.resolve(this.documentCache[id]);
+        }
+        else {
+            return this.datastore.get(id).then(doc => {
+                this.documentCache[id] = doc;
+                return Promise.resolve(doc);
+            })
+        }
     }
 
     refresh(doc: Document): Promise<Document> {

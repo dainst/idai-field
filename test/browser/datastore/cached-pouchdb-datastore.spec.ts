@@ -23,8 +23,9 @@ export function main() {
         }
 
         beforeEach(
-            function () {
-                const mockdb = jasmine.createSpyObj('mockdb', ['find','documentChangesNotifications','create','update']);
+            () => {
+                const mockdb = jasmine.createSpyObj('mockdb',
+                    ['find','documentChangesNotifications','create','update']);
                 mockdb.update.and.callFake(function(dd){
                     // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
                     dd.resource.id = '1';
@@ -34,7 +35,7 @@ export function main() {
                 mockdb.find.and.callFake(function() {
                     const d = doc('sd1');
                     d.resource.id = '1';
-                    return Promise.resolve([d]);
+                    return Promise.resolve(['1']);
                 });
                 mockdb.create.and.callFake(function(dd) {
                     // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -64,7 +65,7 @@ export function main() {
                 });
         });
 
-       it ('should return cached instance of update', (done)=>{
+       it('should return cached instance of update', (done)=>{
            let doc1 = doc('sd1','identifier1');
            let doc2;
 

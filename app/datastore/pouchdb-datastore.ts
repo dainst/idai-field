@@ -233,16 +233,19 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         if (!query) return Promise.resolve([]);
 
-        let impl: Promise<Document[]>;
-        if (!this.hasValidConstraints(query)) {
-            impl = this.simpleFind(query,offset, limit);
-        } else {
-            impl = this.findWithConstraints(query,offset,limit);
-        }
-        return impl.catch(err => {
-            console.error(err);
-            return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
-        })
+        return this.findWithConstraints(query)
+            .then(results => {
+                if (query['no_docs']) return Promise.resolve(results);
+                else {
+                    let ps = [];
+                    for (let r of results) ps.push(this.get(r));
+                    return Promise.all(ps);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+            })
     }
 
     private hasValidConstraints(query) {
@@ -299,43 +302,39 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     }
 
     // TODO respect offset and limit
-    private findWithConstraints(query, offset, limit) {
+    private findWithConstraints(query) {
 
-        let allDocs = false;
+        let skipIntersectWithSimpleFindResult = false;
+        let hasValidConstraints = false;
+        let startWith = Promise.resolve([]);
+        if (this.hasValidConstraints(query)) {
+            hasValidConstraints = true;
+            startWith = this.performConstraintQueries(query);
+        }
 
         let tmp;
-        return this.performConstraintQueries(query)
+        return startWith
             .then(results => {
                 tmp = results;
 
-                if ((!query.q || query.q == '') && !query.type) {
-                    allDocs = true;
+                if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
+                    skipIntersectWithSimpleFindResult = true;
                     return Promise.resolve(undefined);
                 } else {
-                    return this.simpleFind(query,undefined,undefined,false)
+                    return this.simpleFind(query,undefined,undefined)
                 }
             })
             .then(results => {
-
-                if (!allDocs) tmp.push(results);
-
+                if (!skipIntersectWithSimpleFindResult) tmp.push(results);
                 return this.intersectResults(tmp)
-            })
-            .then(results => {
-
-                let proms = [];
-                for (let r of results) {
-                    proms.push(this.get(r));
-                }
-                return Promise.all(proms);
             });
     }
 
-    private simpleFind(query, offset, limit, include_docs = true) {
+    private simpleFind(query, offset, limit) {
 
         const opt = {
             reduce: false,
-            include_docs: include_docs,
+            include_docs: false,
             conflicts: true,
         };
 
@@ -355,11 +354,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
 
         return this.db.query('fulltext', opt)
             .then(result => {
-                if (include_docs) {
-                    return this.filterResult(this.docsFromResult(result))
-                } else {
-                    return result.rows.map(r => r.id);
-                }
+                return this.uniqueIds(result.rows.map(r => r.id));
             });
 
     }
@@ -382,21 +377,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                offset:number=0,
                limit:number=-1): Promise<Document[]> {
 
-        let opt = {
-            include_docs: true,
-            startkey: [type, {}],
-            endkey: [type],
-            descending: true,
-            conflicts: true,
-        };
-        // performs poorly according to PouchDB documentation
-        // could be replaced by using startKey instead
-        // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
-        if (offset) opt['skip'] = offset;
-        if (limit > -1) opt['limit'] = limit;
-
-        return this.db.query('all', opt)
-            .then(result => this.filterResult(this.docsFromResult(result)));
+        return Promise.resolve(undefined);
     }
 
     public setupSync(url: string): Promise<SyncState> {
@@ -469,15 +450,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return doc;
     }
 
-    // only return every doc once by using Set
-    private filterResult(docs: Document[]): Document[] {
+    private uniqueIds(ids: any[]): Document[] {
 
         const set: Set<string> = new Set<string>();
         let filtered = [];
-        docs.forEach(doc => {
-            if (!set.has(doc.resource.id)) {
-                set.add(doc.resource.id);
-                filtered.push(doc);
+        ids.forEach(id => {
+            if (!set.has(id)) {
+                set.add(id);
+                filtered.push(id);
             }
         });
         return filtered;

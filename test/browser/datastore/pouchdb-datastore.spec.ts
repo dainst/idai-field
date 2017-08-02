@@ -628,7 +628,7 @@ export function main() {
 
 
 
-        it('should show all sorted by lastModified', function(done) {
+        xit('should show all sorted by lastModified', function(done) {
             datastore.create(doc('bla1','blub1','type1'))
                 // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
                 .then(() => datastore.create(doc('bla2', 'blub2', 'type2')))
@@ -652,7 +652,7 @@ export function main() {
 
         // all
 
-        it('should filter by parent type in all', function(done) {
+        xit('should filter by parent type in all', function(done) {
             const doc1 = doc('blub','bla1','type1');
             const doc2 = doc('blub','bla2','type2');
             const doc3 = doc('blub','bla1.1','type1.1');
@@ -679,7 +679,7 @@ export function main() {
 
         // idai-field-datastore specific
 
-        it('should find conflicted documents sorted by lastModified', function(done) {
+        xit('should find conflicted documents sorted by lastModified', function(done) {
 
             let db1 = new PouchDB('testdb');
             let db2 = new PouchDB('testdb2');

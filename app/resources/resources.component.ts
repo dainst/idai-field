@@ -304,13 +304,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
         query.constraints = {};
         if (this.selectedMainTypeDocument) {
+            if (query.type == 'resource') delete query.type; // trigger allDocs within find, images ought not have isRecordedIn
             query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
             this.documents = [];
             this.notify();
             return Promise.resolve();
         }
-
         return this.datastore.find(query)
             .then(documents => {
                 this.documents = documents;
@@ -371,6 +371,7 @@ export class ResourcesComponent implements AfterViewChecked {
         const docedit = doceditRef.componentInstance;
 
         doceditRef.result.then(result => {
+
             this.fetchProjectDocument()
                 .then(() => this.fetchMainTypeDocuments())
                 .then(() => {
@@ -382,6 +383,8 @@ export class ResourcesComponent implements AfterViewChecked {
                     }
                     return this.fetchDocuments();
                 }).then(() => this.notifyMainTypeObservers());
+
+
         }, closeReason => {
 
             this.documentEditChangeMonitor.reset();

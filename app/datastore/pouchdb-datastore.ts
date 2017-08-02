@@ -301,20 +301,24 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
     // TODO respect offset and limit
     private findWithConstraints(query, offset, limit) {
 
+        let allDocs = false;
+
         let tmp;
         return this.performConstraintQueries(query)
             .then(results => {
                 tmp = results;
 
-                if (query.q == undefined && query.type == undefined) {
-                    return this.allDocsFind();
+                if ((!query.q || query.q == '') && !query.type) {
+                    allDocs = true;
+                    return Promise.resolve(undefined);
                 } else {
                     return this.simpleFind(query,undefined,undefined,false)
                 }
             })
             .then(results => {
 
-                tmp.push(results);
+                if (!allDocs) tmp.push(results);
+
                 return this.intersectResults(tmp)
             })
             .then(results => {
@@ -325,14 +329,6 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 }
                 return Promise.all(proms);
             });
-    }
-
-    private allDocsFind() {
-        return new Promise<any>((resolve) =>
-            this.db.allDocs((err, result) => {
-                resolve(result.rows.map(r => r.id));
-            })
-        );
     }
 
     private simpleFind(query, offset, limit, include_docs = true) {

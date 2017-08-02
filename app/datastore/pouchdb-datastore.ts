@@ -264,6 +264,7 @@ export class PouchdbDatastore {
 
                 if (resultSets.length > 0){
 
+                    // TODO extract method
                     for (let i in resultSets) {
                         for (let j in resultSets[i]) {
                             resultSets[i][j] = [resultSets[i][j].id,resultSets[i][j].key[1]];
@@ -280,6 +281,7 @@ export class PouchdbDatastore {
             })
             .then(results => {
 
+                // TODO extract method
                 if (results) {
                     for (let i in results) {
                         results[i] = [results[i].id,results[i].key[2]];

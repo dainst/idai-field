@@ -351,16 +351,6 @@ export class PouchdbDatastore {
         });
     }
 
-    /**
-     * Implements {@link ReadDatastore#all}.
-     */
-    public all(type:string='',
-               offset:number=0,
-               limit:number=-1): Promise<Document[]> {
-
-        return Promise.resolve(undefined);
-    }
-
     public setupSync(url: string): Promise<SyncState> {
 
             let fullUrl = url + '/' + this.pouchdbManager.getName();

@@ -620,57 +620,7 @@ export function main() {
                     }
                 );
         });
-
-
-
-        xit('should show all sorted by lastModified', function(done) {
-            datastore.create(doc('bla1','blub1','type1'))
-                // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc('bla2', 'blub2', 'type2')))
-                // .then(() => new Promise(resolve => setTimeout(resolve, 100)))
-                .then(() => datastore.create(doc('bla3', 'blub3', 'type3')))
-                .then(() => datastore.all())
-                .then(
-                    result => {
-                        expect(result.length).toBe(3);
-                        expect(result[0].resource['shortDescription']).toBe('bla3');
-                        expect(result[1].resource['shortDescription']).toBe('bla2');
-                        expect(result[2].resource['shortDescription']).toBe('bla1');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        }, 2000);
-
-        // all
-
-        xit('should filter by parent type in all', function(done) {
-            const doc1 = doc('blub','bla1','type1');
-            const doc2 = doc('blub','bla2','type2');
-            const doc3 = doc('blub','bla1.1','type1.1');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.all('type1'))
-                .then(
-                    result => {
-                        expect(result.length).toBe(2);
-                        expect(result[0].resource['shortDescription']).not.toBe('bla2');
-                        expect(result[0].resource.type).not.toBe('type2');
-                        expect(result[1].resource['shortDescription']).not.toBe('bla2');
-                        expect(result[1].resource.type).not.toBe('type2');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
+        
 
         // idai-field-datastore specific
 

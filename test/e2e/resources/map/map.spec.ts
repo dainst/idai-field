@@ -239,7 +239,7 @@ describe('resources/map --', function() {
         });
     });
 
-    fit('create a multipolyline geometry later', function() {
+    it('create a multipolyline geometry later', function() {
         ResourcesPage.performCreateResource('doc');
         DocumentViewPage.clickCreateGeometry('polyline').then(setMultiPolyline);
         MapPage.clickMapOption('ok');

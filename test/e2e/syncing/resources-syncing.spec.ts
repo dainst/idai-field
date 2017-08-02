@@ -48,7 +48,10 @@ describe('resources/syncing --', function() {
                 'user': 'anonymous',
                 'date': '2017-07-24T16:01:10.843Z'
             },
-            modified: []
+            modified: [{
+                'user': 'anonymous',
+                'date': '2017-07-24T16:01:10.843Z'
+            }]
         };
     }
 

@@ -277,13 +277,13 @@ export function main() {
         // find
 
         it('should find with filterSet undefined', function(done){
-            const doc1 = doc('sd1');
+            const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({q: 'sd1'}))
+                .then(() => datastore.findIds({q: 'sd1'}))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        expect(result[0]).toBe('id1');
                         done();
                     },
                     err => {
@@ -297,7 +297,7 @@ export function main() {
             const doc1 = doc('sd1');
 
             datastore.create(doc1)
-                .then(() => datastore.find(undefined))
+                .then(() => datastore.findIds(undefined))
                 .then(
                     result => {
                         expect(result.length).toBe(0);
@@ -311,13 +311,13 @@ export function main() {
         });
 
         it('should find with prefix query undefined', function(done){
-            const doc1 = doc('sd1');
+            const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({q: undefined, prefix: true}))
+                .then(() => datastore.findIds({q: undefined, prefix: true}))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        expect(result[0]).toBe('id1');
                         done();
                     },
                     err => {
@@ -328,13 +328,13 @@ export function main() {
         });
 
         it('should find with omitted q', function(done){
-            const doc1 = doc('sd1');
+            const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({prefix: true}))
+                .then(() => datastore.findIds({prefix: true}))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        expect(result[0]).toBe('id1');
                         done();
                     },
                     err => {
@@ -345,13 +345,13 @@ export function main() {
         });
 
         it('should find with omitted q and ommitted prefix', function(done){
-            const doc1 = doc('sd1');
+            const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.find({}))
+                .then(() => datastore.findIds({}))
                 .then(
                     result => {
-                        expect(result[0].resource['shortDescription']).toBe('sd1');
+                        expect(result[0]).toBe('id1');
                         done();
                     },
                     err => {
@@ -367,7 +367,7 @@ export function main() {
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
-                .then(() => datastore.find({q: 'bla'}))
+                .then(() => datastore.findIds({q: 'bla'}))
                 .then(
                     result => {
                         expect(result.length).toBe(2);
@@ -383,17 +383,16 @@ export function main() {
         it('should filter by one type in find', function(done){
             const doc1 = doc('bla1', 'blub', 'type1');
             const doc2 = doc('bla2', 'blub', 'type2');
-            const doc3 = doc('bla3', 'blub', 'type3');
+            const doc3 = doc('bla3', 'blub', 'type3','id3');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find({q: 'blub', type: 'type3'}))
+                .then(() => datastore.findIds({q: 'blub', type: 'type3'}))
                 .then(
                     result => {
                         expect(result.length).toBe(1);
-                        expect(result[0].resource['shortDescription']).toBe('bla3');
-                        expect(result[0].resource.type).toBe('type3');
+                        expect(result[0]).toBe('id3');
                         done();
                     },
                     err => {
@@ -405,21 +404,19 @@ export function main() {
 
         it('should filter by parent type in find', function(done){
             const doc1 = doc('blub', 'bla1', 'type1');
-            const doc2 = doc('blub', 'bla2', 'type2');
+            const doc2 = doc('blub', 'bla2', 'type2','id2');
             const doc3 = doc('blub', 'bla1.1', 'type1.1');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find({q: 'blub', type: 'type1'}))
+                .then(() => datastore.findIds({q: 'blub', type: 'type1'}))
                 .then(result => {
                     expect(result.length).toBe(2);
-                    expect(result[0].resource['shortDescription']).not.toBe('bla2');
-                    expect(result[0].resource.type).not.toBe('type2');
-                    expect(result[1].resource['shortDescription']).not.toBe('bla2');
-                    expect(result[1].resource.type).not.toBe('type2');
+                    expect(result[0]).not.toBe('id2');
+                    expect(result[1]).not.toBe('id2');
                 })
-                .then(() => datastore.find({q: 'blub', type: 'root'}))
+                .then(() => datastore.findIds({q: 'blub', type: 'root'}))
                 .then(result => {
                         expect(result.length).toBe(3);
                         done();
@@ -439,7 +436,7 @@ export function main() {
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find({
+                .then(() => datastore.findIds({
                     q: 'blub',
                     type: 'type2',
                     prefix: true
@@ -447,10 +444,8 @@ export function main() {
                 .then(
                     result => {
                         expect(result.length).toBe(2);
-                        expect(result[0].resource['shortDescription']).not.toBe('bla1');
-                        expect(result[0].resource.type).not.toBe('type1');
-                        expect(result[1].resource['shortDescription']).not.toBe('bla1');
-                        expect(result[1].resource.type).not.toBe('type1');
+                        expect(result[0]).not.toBe('id1');
+                        expect(result[1]).not.toBe('id1');
                         done();
                     },
                     err => {
@@ -482,11 +477,11 @@ export function main() {
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.create(doc4))
-                .then(() => datastore.find(q))
+                .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0].resource['shortDescription']).toBe('bla2');
-                        expect(results[1].resource['shortDescription']).toBe('bla3');
+                        expect(results[0]).toBe('id2');
+                        expect(results[1]).toBe('id3');
                         expect(results.length).toBe(2);
                         done();
                     },
@@ -515,11 +510,11 @@ export function main() {
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find(q))
+                .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0].resource['shortDescription']).toBe('bla1');
-                        expect(results[1].resource['shortDescription']).toBe('bla2');
+                        expect(results[0]).toBe('id1');
+                        expect(results[1]).toBe('id2');
                         expect(results.length).toBe(2);
                         done();
                     },
@@ -551,10 +546,10 @@ export function main() {
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.find(q))
+                .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0].resource['shortDescription']).toBe('bla2');
+                        expect(results[0]).toBe('id2');
                         expect(results.length).toBe(1);
                         done();
                     },
@@ -579,11 +574,11 @@ export function main() {
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
-                .then(() => datastore.find(q))
+                .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0].resource['shortDescription']).toBe('bla1');
-                        expect(results[1].resource['shortDescription']).toBe('bla2');
+                        expect(results[0]).toBe('id1');
+                        expect(results[1]).toBe('id2');
                         expect(results.length).toBe(2);
                         expect(console.warn).toHaveBeenCalled();
                         done();
@@ -611,10 +606,10 @@ export function main() {
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
-                .then(() => datastore.find(q))
+                .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0].resource['shortDescription']).toBe('bla2');
+                        expect(results[0]).toBe('id2');
                         expect(results.length).toBe(1);
                         expect(console.warn).toHaveBeenCalled();
                         done();

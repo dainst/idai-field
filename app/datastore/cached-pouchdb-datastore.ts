@@ -66,10 +66,8 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
     find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
-        query['no_docs'] = true;
-        return this.datastore.find(query, offset, limit)
+        return this.datastore.findIds(query, offset, limit)
             .then(result => {
-                delete query['no_docs'];
                 return this.replaceAllWithCached(result)
             });
     }

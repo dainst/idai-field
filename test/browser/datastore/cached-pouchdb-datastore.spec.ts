@@ -25,14 +25,14 @@ export function main() {
         beforeEach(
             () => {
                 const mockdb = jasmine.createSpyObj('mockdb',
-                    ['find','documentChangesNotifications','create','update']);
+                    ['findIds','documentChangesNotifications','create','update']);
                 mockdb.update.and.callFake(function(dd){
                     // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
                     dd.resource.id = '1';
                     dd['_rev'] = '2';
                     return Promise.resolve(dd);
                 });
-                mockdb.find.and.callFake(function() {
+                mockdb.findIds.and.callFake(function() {
                     const d = doc('sd1');
                     d.resource.id = '1';
                     return Promise.resolve(['1']);

@@ -14,10 +14,7 @@ import {PouchdbManager} from './pouchdb-manager';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class PouchdbDatastore implements IdaiFieldDatastore {
-
-    private static MSG_ID_EXISTS_IN_CREATE: string = 'Aborting creation: document.id already exists. ' +
-        'Maybe you wanted to update the object with update()?';
+export class PouchdbDatastore {
 
     protected db: any;
     private observers = [];
@@ -224,24 +221,13 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         });
     }
 
-    /**
-     * Implements {@link ReadDatastore#find}.
-     */
-    public find(query: Query,
+    public findIds(query: Query,
                 offset: number = 0,
-                limit: number = -1): Promise<Document[]> {
+                limit: number = -1): Promise<string[]> {
 
         if (!query) return Promise.resolve([]);
 
         return this.findWithConstraints(query)
-            .then(results => {
-                if (query['no_docs']) return Promise.resolve(results);
-                else {
-                    let ps = [];
-                    for (let r of results) ps.push(this.get(r));
-                    return Promise.all(ps);
-                }
-            })
             .catch(err => {
                 console.error(err);
                 return Promise.reject([M.DATASTORE_GENERIC_ERROR]);

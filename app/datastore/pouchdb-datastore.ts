@@ -305,10 +305,15 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
         return this.performConstraintQueries(query)
             .then(results => {
                 tmp = results;
-                // simpleFind could be skipped if no type and q == *
-                return this.simpleFind(query,undefined,undefined,false)
+
+                if (query.q == undefined && query.type == undefined) {
+                    return this.allDocsFind();
+                } else {
+                    return this.simpleFind(query,undefined,undefined,false)
+                }
             })
             .then(results => {
+
                 tmp.push(results);
                 return this.intersectResults(tmp)
             })
@@ -320,6 +325,14 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                 }
                 return Promise.all(proms);
             });
+    }
+
+    private allDocsFind() {
+        return new Promise<any>((resolve) =>
+            this.db.allDocs((err, result) => {
+                resolve(result.rows.map(r => r.id));
+            })
+        );
     }
 
     private simpleFind(query, offset, limit, include_docs = true) {
@@ -352,6 +365,7 @@ export class PouchdbDatastore implements IdaiFieldDatastore {
                     return result.rows.map(r => r.id);
                 }
             });
+
     }
 
     public findConflicted(): Promise<IdaiFieldDocument[]> {

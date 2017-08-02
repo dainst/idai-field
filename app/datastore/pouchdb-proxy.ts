@@ -18,6 +18,10 @@ export class PouchdbProxy {
         return this.rdy.then(db => db.query(index, opts));
     }
 
+    public allDocs(cb): Promise<any> {
+        return this.rdy.then(db => db.allDocs(cb));
+    }
+
     public sync(url, opts): Promise<any> {
         return this.rdy.then(db => db.sync(url, opts));
     }

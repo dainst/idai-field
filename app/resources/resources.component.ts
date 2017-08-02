@@ -383,6 +383,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     return this.fetchDocuments();
                 }).then(() => this.notifyMainTypeObservers());
         }, closeReason => {
+
             this.documentEditChangeMonitor.reset();
             if (closeReason == 'deleted') {
                 this.selectedDocument = undefined;
@@ -391,8 +392,8 @@ export class ResourcesComponent implements AfterViewChecked {
                         .then(() => this.fetchDocuments())
                         .then(() => this.notifyMainTypeObservers());
                 }
+                this.fetchDocuments();
             }
-            this.fetchDocuments();
         });
 
         docedit.setDocument(document);

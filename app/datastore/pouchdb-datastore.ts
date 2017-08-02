@@ -228,7 +228,7 @@ export class PouchdbDatastore {
 
         if (!query) return Promise.resolve([]);
 
-        return this.findWithConstraints(query)
+        return this.perform(query)
             .catch(err => {
                 console.error(err);
                 return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
@@ -249,9 +249,63 @@ export class PouchdbDatastore {
         return (validConstraints > 0);
     }
 
+    private perform(query) {
+
+        let hasValidConstraints = false; // TODO get rid of temp var
+        let startWith = Promise.resolve([]);
+        if (this.hasValidConstraints(query)) {
+            hasValidConstraints = true;
+            startWith = this.performConstraintQueries(query);
+        }
+
+        let theResultSets;
+        return startWith
+            .then(resultSets => {
+
+                if (resultSets.length > 0){
+
+                    for (let i in resultSets) {
+                        for (let j in resultSets[i]) {
+                            resultSets[i][j] = [resultSets[i][j].id,resultSets[i][j].key[1]];
+                        }
+                    }
+                }
+                theResultSets = resultSets;
+
+                if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
+                    return Promise.resolve(undefined);
+                } else {
+                    return this.performSimpleQuery(query)
+                }
+            })
+            .then(results => {
+
+                if (results) {
+                    for (let i in results) {
+                        results[i] = [results[i].id,results[i].key[2]];
+                    }
+                    theResultSets.push(results);
+                }
+
+                results = this.intersect(theResultSets);
+                results.sort(this.comp);
+                results = results.map(r => r[0]);
+
+                return Promise.resolve(results);
+            });
+    }
+
+    private comp(a,b) {
+        if (a[1] > b[1])
+            return -1;
+        if (a[1] < b[1])
+            return 1;
+        return 0;
+    }
+
     private performConstraintQueries(query) {
 
-        const queries = [];
+        const ps = [];
         for (let constraint in query.constraints) {
             const opt = {
                 reduce: false,
@@ -264,59 +318,37 @@ export class PouchdbDatastore {
                 opt['startkey'] = [query.constraints[constraint]];
                 opt['endkey'] = [query.constraints[constraint], {}];
             }
-            queries.push(this.db.query(constraint, opt));
+            ps.push(this.db.query(constraint, opt));
         }
-        return Promise.all(queries)
-            .then(results => {
-                for (let i in results) {
-                    results[i] = results[i].rows.map(r => r.id)
-                }
-                return results;
-            });
+        return Promise.all(ps).then(results => {
+            for (let i in results) {
+                results[i] = results[i].rows;
+            }
+            return results;
+        });
     }
 
-    private intersectResults(results) {
+    private intersect(results) {
 
         let rows = [];
+
         for (let result of results) {
             let row = [];
             for (let column of result) {
+
                 row.push(column)
             }
             rows.push(row)
         }
-        return rows.reduce((p,c) => p.filter(e => c.includes(e)))
-    }
 
-    private findWithConstraints(query) {
-
-        let skipIntersectWithSimpleFindResult = false;
-        let hasValidConstraints = false;
-        let startWith = Promise.resolve([]);
-        if (this.hasValidConstraints(query)) {
-            hasValidConstraints = true;
-            startWith = this.performConstraintQueries(query);
-        }
-
-        let tmp;
-        return startWith
-            .then(results => {
-                tmp = results;
-
-                if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
-                    skipIntersectWithSimpleFindResult = true;
-                    return Promise.resolve(undefined);
-                } else {
-                    return this.simpleFind(query)
-                }
+        return rows.reduce((p,c) => {
+            return p.filter(e => {
+                return c.map(r => r[0]).includes(e[0])
             })
-            .then(results => {
-                if (!skipIntersectWithSimpleFindResult) tmp.push(results);
-                return this.intersectResults(tmp)
-            });
+        })
     }
 
-    private simpleFind(query) {
+    private performSimpleQuery(query) {
 
         const opt = {
             reduce: false,
@@ -331,11 +363,11 @@ export class PouchdbDatastore {
 
         if (!query.prefix && q == '') query.prefix = true;
         let endKey = query.prefix ? q + '\uffff' : q;
-        opt['endkey'] = [type, endKey];
+        opt['endkey'] = [type, endKey, {}];
 
         return this.db.query('fulltext', opt)
             .then(result => {
-                return this.uniqueIds(result.rows.map(r => r.id));
+                return Promise.resolve(this.uniqueIds(result.rows));
             });
 
     }
@@ -421,14 +453,14 @@ export class PouchdbDatastore {
         return doc;
     }
 
-    private uniqueIds(ids: any[]): Document[] {
+    private uniqueIds(items: any[]): Document[] {
 
         const set: Set<string> = new Set<string>();
         let filtered = [];
-        ids.forEach(id => {
-            if (!set.has(id)) {
-                set.add(id);
-                filtered.push(id);
+        items.forEach(item => {
+            if (!set.has(item.id)) {
+                set.add(item.id);
+                filtered.push(item);
             }
         });
         return filtered;

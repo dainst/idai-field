@@ -31,12 +31,17 @@ export class IndexCreator {
             if (!doc.resource || !doc.resource.type) return;
             const types = ['', doc.resource.type].concat(doc.resource['_parentTypes']);
             if (types.indexOf('image') == -1) types.push('resource');
+
+            let lastModified = doc.created.date;
+            if (doc.modified && doc.modified.length > 0)
+                lastModified = doc.modified[doc.modified.length - 1].date;
+
             types.forEach(function(type) {
                 if (doc.resource.shortDescription)
                     doc.resource.shortDescription.split(/[.;,\- ]+/)
-                        .forEach(token => emit([type, token.toLowerCase()]));
+                        .forEach(token => emit([type, token.toLowerCase(),lastModified]));
                 if (doc.resource.identifier)
-                    emit([type, doc.resource.identifier.toLowerCase()]);
+                    emit([type, doc.resource.identifier.toLowerCase(), lastModified]);
             });
         };
         return this.setupIndex(db,'fulltext', mapFun);
@@ -53,14 +58,18 @@ export class IndexCreator {
     private setupIsRecordedInIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource) return;
-            // split identifier and convert numbers to achieve desired order
-            var identifier = doc.resource.identifier.split(/(\d+)/);
-            identifier = identifier.map(s => /^\d+$/.test(s) ? parseInt(s) : s);
+
+            // TODO handle liesWithin accordingly
+            // TODO remove duplicate code
+            let lastModified = doc.created.date;
+            if (doc.modified && doc.modified.length > 0)
+                lastModified = doc.modified[doc.modified.length - 1].date;
+
             if (doc.resource.relations['isRecordedIn'] != undefined) {
                 doc.resource.relations['isRecordedIn'].forEach(resourceId =>
-                    emit([resourceId, doc.resource.type].concat(identifier)));
+                    emit([resourceId].concat(lastModified)))
             } else {
-                emit(['UNKNOWN', doc.resource.type].concat(identifier));
+                emit(['UNKNOWN'].concat(lastModified));
             }
         };
         return this.setupIndex(db, 'resource.relations.isRecordedIn', mapFun);
@@ -69,14 +78,16 @@ export class IndexCreator {
     private setupLiesWithinIndex(db): Promise<any> {
         let mapFun = function(doc) {
             if (!doc.resource) return;
-            // split identifier and convert numbers to achieve desired order
-            var identifier = doc.resource.identifier.split(/(\d+)/);
-            identifier = identifier.map(s => /^\d+$/.test(s) ? parseInt(s) : s);
+
+            let lastModified = doc.created.date;
+            if (doc.modified && doc.modified.length > 0)
+                lastModified = doc.modified[doc.modified.length - 1].date;
+
             if (doc.resource.relations['liesWithin'] != undefined) {
                 doc.resource.relations['liesWithin'].forEach(resourceId =>
-                    emit([resourceId, doc.resource.type].concat(identifier)));
+                    emit([resourceId].concat(lastModified)));
             } else {
-                emit(['UNKNOWN', doc.resource.type].concat(identifier));
+                emit(['UNKNOWN'].concat(lastModified));
             }
         };
         return this.setupIndex(db,'resource.relations.liesWithin', mapFun);

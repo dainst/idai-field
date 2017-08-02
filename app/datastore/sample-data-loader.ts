@@ -22,11 +22,12 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
         let promises = [];
         for (let doc of DOCS) {
             doc.created = { user: 'sample_data', date: new Date() };
-            doc.modified = [];
+            doc.modified = [{ user: 'sample_data', date: new Date() }];
             doc['_id'] = doc.resource.id;
             doc.resource['_parentTypes'] = config
                 .getParentTypes(doc.resource.type);
             promises.push(db.put(doc, { force: true }));
+            setTimeout(()=>{},15);
         }
 
         return Promise.all(promises)

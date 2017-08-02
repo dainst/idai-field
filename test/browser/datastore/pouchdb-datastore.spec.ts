@@ -69,7 +69,13 @@ export function main() {
                 created: {
                     user: 'anonymous',
                     date: new Date()
-                }
+                },
+                modified: [
+                    {
+                        user: 'anonymous',
+                        date: new Date()
+                    }
+                ]
             };
             if (id) {
                 doc['_id'] = id;
@@ -623,6 +629,42 @@ export function main() {
 
 
         // idai-field-datastore specific
+
+        it('should sort', function(done) {
+            const doc1 = doc('bla1', 'blub1', 'type1','id1');
+            const doc3 = doc('bla3', 'blub3', 'type3','id3');
+            doc3.resource.relations['isRecordedIn'] = ['id1'];
+
+            setTimeout(()=>{
+
+                const doc2 = doc('bla2', 'blub2', 'type2','id2');
+                doc2.resource.relations['isRecordedIn'] = ['id1'];
+
+                const q: Query = {
+                    q: 'blub',
+                    prefix: true,
+                    constraints: {
+                        'resource.relations.isRecordedIn' : 'id1'
+                    }
+                };
+
+                datastore.create(doc1)
+                    .then(() => datastore.create(doc2))
+                    .then(() => datastore.create(doc3))
+                    .then(() => datastore.findIds(q))
+                    .then(
+                        results => {
+                            console.log("results",results);
+                            done();
+                        },
+                        err => {
+                            fail(err);
+                            done();
+                        }
+                    );
+
+            },100)
+        });
 
         xit('should find conflicted documents sorted by lastModified', function(done) {
 

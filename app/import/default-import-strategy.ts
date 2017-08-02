@@ -20,7 +20,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         return this.setMainTypeDocumentRelation(document)
             .then(() => {
                 document.created = { user: this.settingsService.getUsername(), date: new Date() };
-                document.modified = [];
+                document.modified = [{ user: this.settingsService.getUsername(), date: new Date() }];
 
                 return this.validator.validate(document);
             }).then(() => this.datastore.create(document))

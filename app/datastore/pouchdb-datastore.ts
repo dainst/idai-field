@@ -221,6 +221,7 @@ export class PouchdbDatastore {
         });
     }
 
+    // TODO implement offset and limit
     public findIds(query: Query,
                 offset: number = 0,
                 limit: number = -1): Promise<string[]> {
@@ -287,7 +288,6 @@ export class PouchdbDatastore {
         return rows.reduce((p,c) => p.filter(e => c.includes(e)))
     }
 
-    // TODO respect offset and limit
     private findWithConstraints(query) {
 
         let skipIntersectWithSimpleFindResult = false;
@@ -307,7 +307,7 @@ export class PouchdbDatastore {
                     skipIntersectWithSimpleFindResult = true;
                     return Promise.resolve(undefined);
                 } else {
-                    return this.simpleFind(query,undefined,undefined)
+                    return this.simpleFind(query)
                 }
             })
             .then(results => {
@@ -316,7 +316,7 @@ export class PouchdbDatastore {
             });
     }
 
-    private simpleFind(query, offset, limit) {
+    private simpleFind(query) {
 
         const opt = {
             reduce: false,
@@ -332,11 +332,6 @@ export class PouchdbDatastore {
         if (!query.prefix && q == '') query.prefix = true;
         let endKey = query.prefix ? q + '\uffff' : q;
         opt['endkey'] = [type, endKey];
-        // performs poorly according to PouchDB documentation
-        // could be replaced by using startKey instead
-        // (see http://docs.couchdb.org/en/latest/couchapp/views/pagination.html)
-        if (offset) opt['skip'] = offset;
-        if (limit > -1) opt['limit'] = limit;
 
         return this.db.query('fulltext', opt)
             .then(result => {

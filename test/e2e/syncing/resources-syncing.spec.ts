@@ -209,7 +209,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                browser.sleep(2000);
+                browser.sleep(5000);
                 ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
                     expect(text).toContain('altered');
                     done();
@@ -229,6 +229,7 @@ describe('resources/syncing --', function() {
             testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
             return updateTestDoc(testDocument);
         }).then(() => {
+            browser.sleep(5000);
             DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
             DocumentEditWrapperPage.clickSaveDocument();
             DocumentEditWrapperPage.clickChooseRightRevision();

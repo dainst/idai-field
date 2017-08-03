@@ -583,8 +583,8 @@ export function main() {
                 .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0]).toBe('id1');
-                        expect(results[1]).toBe('id2');
+                        expect(results).toContain('id1');
+                        expect(results).toContain('id2');
                         expect(results.length).toBe(2);
                         expect(console.warn).toHaveBeenCalled();
                         done();

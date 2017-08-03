@@ -18,6 +18,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     private autoCacheUpdate: boolean = true;
 
     constructor(private datastore: PouchdbDatastore) {
+
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
                 // explicitly assign by value in order for

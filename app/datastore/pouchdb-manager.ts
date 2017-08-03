@@ -5,6 +5,7 @@ import {Injectable} from "@angular/core";
 import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 import {Observable} from 'rxjs/Observable';
 import {SyncState} from './sync-state';
+import {Document} from 'idai-components-2/core';
 
 @Injectable()
 /**
@@ -19,6 +20,7 @@ export class PouchdbManager {
     private name:string = undefined;
     private indexCreator = new IndexCreator();
     private syncHandles = [];
+    private observers = [];
 
     private resolveDbReady = undefined;
 
@@ -118,10 +120,6 @@ export class PouchdbManager {
         return this.dbProxy;
     }
 
-    public getName(): string {
-        return this.name;
-    }
-
     public destroy(): Promise<any> {
         // TODO wait for rdy
         return this.db.destroy();
@@ -137,4 +135,43 @@ export class PouchdbManager {
         return Promise.resolve(this.db);
     }
 
+    // TODO remove duplicate code, put to model package
+    // strips document of any properties that are only
+    // used to simplify index creation
+    private cleanDoc(doc: Document): Document {
+
+        if (doc && doc.resource) {
+            delete doc.resource['_parentTypes'];
+        }
+        return doc;
+    }
+
+    public addObserver(observer) {
+        this.observers.push(observer);
+    }
+
+    // TODO make private, switch if db switches
+    public setupChangesEmitter(): void {
+
+        this.getDb().rdy.then(db => {
+            db.changes({
+                live: true,
+                include_docs: true,
+                conflicts: true,
+                since: 'now'
+            }).on('change', change => {
+                if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
+                if (!change || !change.doc) return;
+                if (this.observers && Array.isArray(this.observers)) this.observers.forEach(observer => {
+                    if (observer && (observer.next != undefined)) {
+                        observer.next(this.cleanDoc(change.doc));
+                    }
+                });
+            }).on('complete', info => {
+                console.error('changes stream was canceled', info);
+            }).on('error', err => {
+                console.error('changes stream errored', err);
+            });
+        });
+    }
 }

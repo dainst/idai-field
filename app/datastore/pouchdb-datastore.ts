@@ -162,46 +162,16 @@ export class PouchdbDatastore {
         );
     }
 
-    /**
-     * Implements {@link IdaiFieldDatastore#getLatestRevision}.
-     *
-     * @param id
-     * @returns {Promise<Document>}
-     */
-    getLatestRevision(id: string): Promise<IdaiFieldDocument> {
-        return this.get(id);
-    }
-
-    /**
-     * Implements {@link IdaiFieldDatastore#getRevision}.
-     *
-     * @param resourceId
-     * @param revisionId
-     * @returns {Promise<Document>}
-     */
     public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
         return this.fetchRevision(docId, revisionId)
             .then(doc => this.cleanDoc(doc));
     }
 
-    /**
-     * Implements {@link IdaiFieldDatastore#getRevisionHistory}.
-     *
-     * @param docId
-     * @returns {Promise<Array<PouchDB.Core.RevisionInfo>>}
-     */
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
         return this.db.get(docId, { revs_info: true })
             .then(doc => Promise.resolve(doc._revs_info));
     }
 
-    /**
-     * Implements {@link IdaiFieldDatastore#removeRevision}.
-     *
-     * @param resourceId
-     * @param revisionId
-     * @returns {Promise<any>}
-     */
     public removeRevision(docId: string, revisionId: string): Promise<any> {
 
         return this.db.remove(docId, revisionId)

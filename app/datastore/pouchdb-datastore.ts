@@ -258,46 +258,43 @@ export class PouchdbDatastore {
             startWith = this.performConstraintQueries(query);
         }
 
-        let theResultSets;
+        /**
+         * Example:
+         * [
+         *   [['1','2017-01-01'],['2',2017-01-02']],
+         *   [['2','2017-01-02']]
+         * ]
+         */
+        let theResultSets: Array<Array<Array<string>>>;
+
         return startWith
             .then(resultSets => {
 
                 if (resultSets.length > 0){
-
-                    // TODO extract method
-                    for (let i in resultSets) {
-                        for (let j in resultSets[i]) {
-                            resultSets[i][j] = [resultSets[i][j].id,resultSets[i][j].key[1]];
-                        }
-                    }
+                    for (let i in resultSets) resultSets[i] = resultSets[i].map(r => [r.id,r.key[1]]);
                 }
                 theResultSets = resultSets;
 
                 if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
-                    return Promise.resolve(undefined);
+                    return undefined;
                 } else {
                     return this.performSimpleQuery(query)
                 }
             })
             .then(results => {
 
-                // TODO extract method
                 if (results) {
-                    for (let i in results) {
-                        results[i] = [results[i].id,results[i].key[2]];
-                    }
+                    results = results.map(r => [r.id,r.key[1]]);
                     theResultSets.push(results);
                 }
 
-                results = this.intersect(theResultSets);
-                results.sort(this.comp);
-                results = results.map(r => r[0]);
-
-                return Promise.resolve(results);
+                return this.intersect(theResultSets)
+                        .sort(PouchdbDatastore.comp)
+                        .map(r => r[0]);
             });
     }
 
-    private comp(a,b) {
+    private static comp(a,b) {
         if (a[1] > b[1])
             return -1;
         if (a[1] < b[1])

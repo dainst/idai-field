@@ -3,7 +3,10 @@
  */
 export class ResultSets {
 
-    private sets;
+    private sets: Array<  // multiple result sets
+        Array<            // a single result set
+            Array<string> // an element of a result set. Example: ['3','2017-01-03']; [0] is an id, [1] is a date
+        >>;
 
     constructor() {
         this.sets = [];
@@ -12,8 +15,8 @@ export class ResultSets {
     /**
      * Example for sets:
      * [
-     *   [['1','2017-01-01'],['2',2017-01-02']],
-     *   [['2','2017-01-02']]
+     *   [['1','2017-01-01'],['2',2017-01-02'],['3','2017-01-03']],
+     *   [['2','2017-01-02'],['3','2017-01-03']]
      * ]
      */
     public set(sets: Array<Array<Array<string>>>) {
@@ -25,7 +28,11 @@ export class ResultSets {
     }
 
     /**
-     * Sorts by date descending
+     * Finds the elements that have ids common to all sets.
+     * Sorts by element date descending.
+     *
+     * Taking the example, intersect would return
+     * [['3','2017-01-03'],['2','2017-01-02']]
      */
     public intersect() {
 

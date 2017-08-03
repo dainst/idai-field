@@ -252,9 +252,7 @@ export class PouchdbDatastore {
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
 
-                if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
-                    return undefined;
-                } else {
+                if (!PouchdbDatastore.canSkipSimpleQuery(query,hasValidConstraints)) {
                     return this.performSimpleQuery(query)
                 }
             })
@@ -263,6 +261,10 @@ export class PouchdbDatastore {
 
                 return theResultSets.intersect().map(r => r[0]);
             });
+    }
+
+    private static canSkipSimpleQuery(query, hasValidConstraints) {
+        return ((!query.q || query.q == '') && !query.type && hasValidConstraints);
     }
 
     private performConstraintQueries(query): Promise<ResultSets> {

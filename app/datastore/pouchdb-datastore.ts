@@ -263,8 +263,13 @@ export class PouchdbDatastore {
             });
     }
 
-    private static canSkipSimpleQuery(query, hasValidConstraints) {
-        return ((!query.q || query.q == '') && !query.type && hasValidConstraints);
+    /**
+     * If usable constraints were there, an empty query can be skipped. This is because
+     * the resultsSet of a simpleQuery would return all existing ids, which means an
+     * intersection with the previous resultSets would make no difference.
+     */
+    private static canSkipSimpleQuery(query, hasUsableConstraints) {
+        return ((!query.q || query.q == '') && !query.type && hasUsableConstraints);
     }
 
     private performConstraintQueries(query): Promise<ResultSets> {

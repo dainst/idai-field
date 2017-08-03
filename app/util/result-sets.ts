@@ -35,7 +35,7 @@ export class ResultSets {
 
         return this.sets.reduce((p,c) => {
             return p.filter(e => {
-                return (c.map(r => r[field]).indexOf(e['field'])!=-1)
+                return (c.map(r => r[field]).indexOf(e[field])!=-1)
             })
         });
     }

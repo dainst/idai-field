@@ -16,7 +16,7 @@ import {ResultSets} from "../util/result-sets";
 export class PouchdbDatastore {
 
     protected db: any;
-
+    private observers = [];
     private config: ProjectConfiguration;
 
 
@@ -26,7 +26,7 @@ export class PouchdbDatastore {
         configLoader.getProjectConfiguration()
             .then(config => this.config = config, () => {})
             .then(() => this.setupServer())
-            .then(() => this.pouchdbManager.setupChangesEmitter())
+            .then(() => this.setupChangesEmitter())
     }
 
     /**
@@ -184,8 +184,9 @@ export class PouchdbDatastore {
     }
 
     public documentChangesNotifications(): Observable<Document> {
+
         return Observable.create(observer => {
-            this.pouchdbManager.addObserver(observer);
+            this.observers.push(observer);
         });
     }
 
@@ -312,6 +313,10 @@ export class PouchdbDatastore {
         });
     }
 
+
+
+
+
     protected setupServer() {
         return Promise.resolve();
     }
@@ -366,5 +371,27 @@ export class PouchdbDatastore {
         return filtered;
     }
 
+    private setupChangesEmitter(): void {
 
+        this.db.rdy.then(db => {
+            db.changes({
+                live: true,
+                include_docs: true,
+                conflicts: true,
+                since: 'now'
+            }).on('change', change => {
+                if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
+                if (!change || !change.doc) return;
+                if (this.observers && Array.isArray(this.observers)) this.observers.forEach(observer => {
+                    if (observer && (observer.next != undefined)) {
+                        observer.next(this.cleanDoc(change.doc));
+                    }
+                });
+            }).on('complete', info => {
+                console.error('changes stream was canceled', info);
+            }).on('error', err => {
+                console.error('changes stream errored', err);
+            });
+        });
+    }
 }

@@ -236,8 +236,18 @@ export class PouchdbDatastore {
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
 
-                return theResultSets.intersect('date').map(r => r.id);
+                return theResultSets.intersect('id').sort(this.comp('date')).map(r => r['id']);
             });
+    }
+
+    private comp(sortOn) {
+        return ((a,b)=> {
+            if (a[sortOn] > b[sortOn])
+                return -1;
+            if (a[sortOn] < b[sortOn])
+                return 1;
+            return 0;
+        });
     }
 
     /**

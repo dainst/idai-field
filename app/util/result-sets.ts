@@ -5,14 +5,14 @@ export class ResultSets {
 
     private sets: Array<  // multiple result sets
         Array<            // a single result set
-            { id:string } // an element of a result set. Example: {id:'3',sortableField:'2017-01-03'};
+            { } // an element of a result set. Example: {id:'3'};
         >> = [];
 
     /**
      * Example for sets:
      * [
-     *   [{id:'1',sortableField:'2017-01-01'},{id:'2',sortableField:'2017-01-02'},{id:'3',sortableField:'2017-01-03'}],
-     *   [{id:'2',sortableField:'2017-01-02'},{id:'3',sortableField:'2017-01-03'}]
+     *   [{id:'1'},{id:'2'},{id:'3'}],
+     *   [{id:'2'},{id:'3'}]
      * ]
      */
     public set(sets: Array<Array<{ id: string }>>) {
@@ -25,29 +25,18 @@ export class ResultSets {
 
     /**
      * Finds the elements that have ids common to all sets.
-     * Sorts by element[sortOn] descending.
      *
-     * Taking the example, intersect with sortOn = 'sortableField' would return
-     * [{id:'3',sortableField:'2017-01-03'},{id:'2',sortableField:'2017-01-02'}]
+     * Taking the example, intersect with field = 'id' would return
+     * [{id:'3'},{id:'2'}]
      *
-     * @param sortOn
+     * @param field
      */
-    public intersect(sortOn) {
+    public intersect(field) {
 
         return this.sets.reduce((p,c) => {
             return p.filter(e => {
-                return (c.map(r => r.id).indexOf(e.id)!=-1)
+                return (c.map(r => r[field]).indexOf(e['field'])!=-1)
             })
-        }).sort(this.comp(sortOn));
-    }
-
-    private comp(sortOn) {
-        return ((a,b)=> {
-            if (a[sortOn] > b[sortOn])
-                return -1;
-            if (a[sortOn] < b[sortOn])
-                return 1;
-            return 0;
         });
     }
 }

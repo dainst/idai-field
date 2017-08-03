@@ -6,14 +6,7 @@ export class ResultSets {
     private sets: Array<  // multiple result sets
         Array<            // a single result set
             { id:string } // an element of a result set. Example: {id:'3',sortableField:'2017-01-03'};
-        >>;
-
-    /**
-     *
-     */
-    constructor() {
-        this.sets = [];
-    }
+        >> = [];
 
     /**
      * Example for sets:

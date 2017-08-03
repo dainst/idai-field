@@ -91,12 +91,12 @@ describe('resources/syncing --', function() {
 
         common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
         SettingsPage.clickSaveSettingsButton();
-        return browser.sleep(5000);
+        return browser.sleep(delays.shortRest * 10);
     }
 
     beforeAll(done => {
 
-        browser.sleep(2000);
+        browser.sleep(delays.shortRest * 10);
         setupTestDB().then(done);
     });
 
@@ -124,10 +124,10 @@ describe('resources/syncing --', function() {
 
         return db.put(testDocument).then(result => {
                 testDocument['_rev'] = result.rev;
-                return browser.sleep(5000);
+                return browser.sleep(delays.shortRest * 10);
             })
             .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(5000))
+            .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => {
                 return Promise.resolve(testDocument);
             });
@@ -141,7 +141,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                return browser.sleep(5000);
+                return browser.sleep(delays.shortRest * 10);
             });
     }
 
@@ -154,7 +154,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                return browser.sleep(5000);
+                return browser.sleep(delays.shortRest * 10);
             });
     }
 
@@ -212,7 +212,7 @@ describe('resources/syncing --', function() {
             .then(() => {
                 NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
-                browser.sleep(5000);
+                browser.sleep(delays.shortRest * 10);
                 ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
                     expect(text).toContain('altered');
                     done();
@@ -232,7 +232,7 @@ describe('resources/syncing --', function() {
             testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
             return updateTestDoc(testDocument);
         }).then(() => {
-            browser.sleep(5000);
+            browser.sleep(delays.shortRest * 10);
             DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
             DocumentEditWrapperPage.clickSaveDocument();
             DocumentEditWrapperPage.clickChooseRightRevision();
@@ -313,7 +313,7 @@ describe('resources/syncing --', function() {
             DocumentEditWrapperPage.clickChooseRightRevision();
             DocumentEditWrapperPage.clickSolveConflictButton();
             DocumentEditWrapperPage.clickSaveDocument();
-            browser.sleep(2000);
+            browser.sleep(delays.shortRest * 10);
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
 
             db.get('tf' + nr).then(doc => {
@@ -331,7 +331,7 @@ describe('resources/syncing --', function() {
         const nr = '11';
 
         createEventualConflictForAutoResolving(nr).then(() => {
-            browser.sleep(2000);
+            browser.sleep(delays.shortRest * 10);
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
 
             db.get('tf' + nr).then(doc => {

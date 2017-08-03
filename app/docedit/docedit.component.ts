@@ -152,12 +152,12 @@ export class DoceditComponent {
         this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
                 return this.autoConflictResolver.autoResolve(latestRevision);
-            }).then(() => this.datastore.get(this.clonedDocument.resource.id))
+            }).then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
             .then(latestRevision => {
-                this.clonedDocument = latestRevision as IdaiFieldDocument;
+                this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
 
-                if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision as IdaiFieldDocument)) {
+                if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
                     this.activeTab = 'conflicts';
                     this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
                 } else {
@@ -204,7 +204,7 @@ export class DoceditComponent {
         this.inspectedRevisionsIds = [];
 
         return Promise.all(promises).then(
-            () => this.datastore.get(resourceId)
+            () => this.datastore.getLatestRevision(resourceId)
         );
     }
 

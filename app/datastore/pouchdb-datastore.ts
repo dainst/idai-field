@@ -163,6 +163,16 @@ export class PouchdbDatastore {
     }
 
     /**
+     * Implements {@link IdaiFieldDatastore#getLatestRevision}.
+     *
+     * @param id
+     * @returns {Promise<Document>}
+     */
+    getLatestRevision(id: string): Promise<IdaiFieldDocument> {
+        return this.get(id);
+    }
+
+    /**
      * Implements {@link IdaiFieldDatastore#getRevision}.
      *
      * @param resourceId

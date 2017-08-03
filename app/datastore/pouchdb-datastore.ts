@@ -8,6 +8,7 @@ import {IdaiFieldDatastore} from './idai-field-datastore';
 import {SyncState} from './sync-state';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
+import {ResultSets} from "./result-sets";
 
 /**
  * @author Sebastian Cuy
@@ -248,29 +249,18 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        let hasValidConstraints = false; // TODO get rid of temp var
-        let startWith = Promise.resolve([]);
+        let hasValidConstraints = false;
+        let startWith = Promise.resolve(undefined);
         if (this.hasValidConstraints(query)) {
             hasValidConstraints = true;
             startWith = this.performConstraintQueries(query);
         }
 
-        /**
-         * Example:
-         * [
-         *   [['1','2017-01-01'],['2',2017-01-02']],
-         *   [['2','2017-01-02']]
-         * ]
-         */
-        let theResultSets: Array<Array<Array<string>>>;
+        let theResultSets: ResultSets = new ResultSets();
 
         return startWith
             .then(resultSets => {
-
-                if (resultSets.length > 0){
-                    for (let i in resultSets) resultSets[i] = resultSets[i].map(r => [r.id,r.key[1]]);
-                }
-                theResultSets = resultSets;
+                if (resultSets) theResultSets = resultSets;
 
                 if ((!query.q || query.q == '') && !query.type && hasValidConstraints) {
                     return undefined;
@@ -278,28 +268,14 @@ export class PouchdbDatastore {
                     return this.performSimpleQuery(query)
                 }
             })
-            .then(results => {
+            .then(resultSet => {
+                if (resultSet) theResultSets.add(resultSet);
 
-                if (results) {
-                    results = results.map(r => [r.id,r.key[1]]);
-                    theResultSets.push(results);
-                }
-
-                return this.intersect(theResultSets)
-                        .sort(PouchdbDatastore.comp)
-                        .map(r => r[0]);
+                return theResultSets.intersect().map(r => r[0]);
             });
     }
 
-    private static comp(a,b) {
-        if (a[1] > b[1])
-            return -1;
-        if (a[1] < b[1])
-            return 1;
-        return 0;
-    }
-
-    private performConstraintQueries(query) {
+    private performConstraintQueries(query): Promise<ResultSets> {
 
         const ps = [];
         for (let constraint in query.constraints) {
@@ -317,31 +293,13 @@ export class PouchdbDatastore {
             ps.push(this.db.query(constraint, opt));
         }
         return Promise.all(ps).then(results => {
+
+            const resultSets: ResultSets = new ResultSets();
             for (let i in results) {
-                results[i] = results[i].rows;
+                resultSets.add(results[i].rows.map(r => [r.id,r.key[1]]));
             }
-            return results;
+            return resultSets;
         });
-    }
-
-    private intersect(results) {
-
-        let rows = [];
-
-        for (let result of results) {
-            let row = [];
-            for (let column of result) {
-
-                row.push(column)
-            }
-            rows.push(row)
-        }
-
-        return rows.reduce((p,c) => {
-            return p.filter(e => {
-                return c.map(r => r[0]).includes(e[0])
-            })
-        })
     }
 
     private performSimpleQuery(query) {
@@ -363,7 +321,9 @@ export class PouchdbDatastore {
 
         return this.db.query('fulltext', opt)
             .then(result => {
-                return Promise.resolve(this.uniqueIds(result.rows));
+                return Promise.resolve(
+                    this.uniqueIds(result.rows).map(r => [r.id,r.key[1]])
+                );
             });
 
     }
@@ -449,7 +409,7 @@ export class PouchdbDatastore {
         return doc;
     }
 
-    private uniqueIds(items: any[]): Document[] {
+    private uniqueIds(items: any[]): any[] {
 
         const set: Set<string> = new Set<string>();
         let filtered = [];

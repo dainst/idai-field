@@ -223,7 +223,7 @@ export class PouchdbDatastore {
             })
     }
 
-    private hasValidConstraints(query) {
+    private hasUsableConstraints(query) {
 
         if (!query.constraints) return false;
 
@@ -239,10 +239,10 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        let hasValidConstraints = false;
+        let hasUsableConstraints = false;
         let startWith = Promise.resolve(undefined);
-        if (this.hasValidConstraints(query)) {
-            hasValidConstraints = true;
+        if (this.hasUsableConstraints(query)) {
+            hasUsableConstraints = true;
             startWith = this.performConstraintQueries(query);
         }
 
@@ -252,7 +252,7 @@ export class PouchdbDatastore {
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
 
-                if (!PouchdbDatastore.canSkipSimpleQuery(query,hasValidConstraints)) {
+                if (!PouchdbDatastore.canSkipSimpleQuery(query,hasUsableConstraints)) {
                     return this.performSimpleQuery(query)
                 }
             })

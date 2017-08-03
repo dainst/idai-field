@@ -224,7 +224,7 @@ export class PouchdbDatastore {
             startWith = this.performConstraintQueries(query);
         }
 
-        let theResultSets: ResultSets = new ResultSets('date');
+        let theResultSets: ResultSets = new ResultSets();
 
         return startWith
             .then(resultSets => {
@@ -236,7 +236,7 @@ export class PouchdbDatastore {
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
 
-                return theResultSets.intersect().map(r => r.id);
+                return theResultSets.intersect('date').map(r => r.id);
             });
     }
 
@@ -268,7 +268,7 @@ export class PouchdbDatastore {
         }
         return Promise.all(ps).then(results => {
 
-            const resultSets: ResultSets = new ResultSets('date');
+            const resultSets: ResultSets = new ResultSets();
             for (let i in results) {
                 resultSets.add(results[i].rows.map(r => {return {id: r.id, date: r.key[1]}}));
             }

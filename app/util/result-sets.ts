@@ -9,9 +9,9 @@ export class ResultSets {
         >>;
 
     /**
-     * @param sortOn
+     *
      */
-    constructor(private sortOn: string) {
+    constructor() {
         this.sets = [];
     }
 
@@ -36,21 +36,25 @@ export class ResultSets {
      *
      * Taking the example, intersect with sortOn = 'sortableField' would return
      * [{id:'3',sortableField:'2017-01-03'},{id:'2',sortableField:'2017-01-02'}]
+     *
+     * @param sortOn
      */
-    public intersect() {
+    public intersect(sortOn) {
 
         return this.sets.reduce((p,c) => {
             return p.filter(e => {
                 return (c.map(r => r.id).indexOf(e.id)!=-1)
             })
-        }).sort(this.comp.bind(this));
+        }).sort(this.comp(sortOn));
     }
 
-    private comp(a,b) {
-        if (a[this.sortOn] > b[this.sortOn])
-            return -1;
-        if (a[this.sortOn] < b[this.sortOn])
-            return 1;
-        return 0;
+    private comp(sortOn) {
+        return ((a,b)=> {
+            if (a[sortOn] > b[sortOn])
+                return -1;
+            if (a[sortOn] < b[sortOn])
+                return 1;
+            return 0;
+        });
     }
 }

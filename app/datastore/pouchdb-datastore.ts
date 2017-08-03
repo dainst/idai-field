@@ -245,7 +245,7 @@ export class PouchdbDatastore {
 
     /**
      * If usable constraints are there, an empty query can be skipped. This is because
-     * the resultsSet of a simpleQuery would return all existing ids, which means an
+     * the resultsSet of a simpleQuery for an emtpy query would return all existing ids, which means an
      * intersection with the previous resultSets would make no difference.
      */
     private static canSkipSimpleQuery(query, hasUsableConstraints) {

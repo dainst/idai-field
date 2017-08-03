@@ -4,10 +4,9 @@ import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuratio
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {M} from '../m';
-import {IdaiFieldDatastore} from './idai-field-datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from "./result-sets";
+import {ResultSets} from "../util/result-sets";
 
 /**
  * @author Sebastian Cuy
@@ -224,12 +223,11 @@ export class PouchdbDatastore {
             startWith = this.performConstraintQueries(query);
         }
 
-        let theResultSets: ResultSets = new ResultSets();
+        let theResultSets: ResultSets = new ResultSets('date');
 
         return startWith
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
-
                 if (!PouchdbDatastore.canSkipSimpleQuery(query,hasUsableConstraints)) {
                     return this.performSimpleQuery(query)
                 }
@@ -237,7 +235,7 @@ export class PouchdbDatastore {
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
 
-                return theResultSets.intersect().map(r => r[0]);
+                return theResultSets.intersect().map(r => r.id);
             });
     }
 
@@ -269,9 +267,9 @@ export class PouchdbDatastore {
         }
         return Promise.all(ps).then(results => {
 
-            const resultSets: ResultSets = new ResultSets();
+            const resultSets: ResultSets = new ResultSets('date');
             for (let i in results) {
-                resultSets.add(results[i].rows.map(r => [r.id,r.key[1]]));
+                resultSets.add(results[i].rows.map(r => {return {id: r.id, date: r.key[1]}}));
             }
             return resultSets;
         });
@@ -297,7 +295,7 @@ export class PouchdbDatastore {
         return this.db.query('fulltext', opt)
             .then(result => {
                 return Promise.resolve(
-                    this.uniqueIds(result.rows).map(r => [r.id,r.key[1]])
+                    this.uniqueIds(result.rows).map(r => {return {id: r.id, date: r.key[2]}})
                 );
             });
 

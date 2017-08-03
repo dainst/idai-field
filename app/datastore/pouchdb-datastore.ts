@@ -5,7 +5,6 @@ import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {M} from '../m';
 import {IdaiFieldDatastore} from './idai-field-datastore';
-import {SyncState} from './sync-state';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "./result-sets";
@@ -20,7 +19,7 @@ export class PouchdbDatastore {
     protected db: any;
     private observers = [];
     private config: ProjectConfiguration;
-    private syncHandles = [];
+
 
     constructor(configLoader: ConfigLoader, private pouchdbManager: PouchdbManager) {
 
@@ -316,34 +315,9 @@ export class PouchdbDatastore {
         });
     }
 
-    public setupSync(url: string): Promise<SyncState> {
 
-            let fullUrl = url + '/' + this.pouchdbManager.getName();
-            console.log('start syncing with ' + fullUrl);
 
-            return this.db.rdy.then(db => {
-                let sync = db.sync(fullUrl, { live: true, retry: false });
-                this.syncHandles.push(sync);
-                return {
-                    url: url,
-                    cancel: () => {
-                        sync.cancel();
-                        this.syncHandles.splice(this.syncHandles.indexOf(sync), 1);
-                    },
-                    onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
-                    onChange: Observable.create(obs => sync.on('change', () => obs.next()))
-                };
-            });
-    }
 
-    public stopSync() {
-
-        for (let handle of this.syncHandles) {
-            console.debug('stop sync', handle);
-            handle.cancel();
-        }
-        this.syncHandles = [];
-    }
 
     protected setupServer() {
         return Promise.resolve();

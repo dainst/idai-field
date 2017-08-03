@@ -18,7 +18,7 @@ export class Exporter {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.datastore.all().then(
+            this.datastore.find({}).then(
                 documents => {
                     fs.writeFile(filePath, serializer.serialize(documents), (err) => {
                         if (err) {

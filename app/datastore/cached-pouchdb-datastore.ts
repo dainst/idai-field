@@ -66,7 +66,10 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
     find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
-        return this.datastore.findIds(query, offset, limit)
+        if (offset) console.warn('offset not implemented for this datastore',query);
+        if (limit) console.warn('limit not implemented for this datastore',query);
+
+        return this.datastore.findIds(query)
             .then(result => {
                 return this.replaceAllWithCached(result)
             });

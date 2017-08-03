@@ -221,10 +221,7 @@ export class PouchdbDatastore {
         });
     }
 
-    // TODO implement offset and limit
-    public findIds(query: Query,
-                offset: number = 0,
-                limit: number = -1): Promise<string[]> {
+    public findIds(query: Query): Promise<string[]> {
 
         if (!query) return Promise.resolve([]);
 

@@ -282,7 +282,7 @@ export class PouchdbDatastore {
 
             const resultSets: ResultSets = new ResultSets();
             for (let i in results) {
-                resultSets.add(results[i].rows.map(r => {return {id: r.id, date: r.key[1]}}));
+                resultSets.add(results[i].rows.map(r => new Object({id: r.id, date: r.key[1]})));
             }
             return resultSets;
         });
@@ -308,7 +308,7 @@ export class PouchdbDatastore {
         return this.db.query('fulltext', opt)
             .then(result => {
                 return Promise.resolve(
-                    this.uniqueIds(result.rows).map(r => {return {id: r.id, date: r.key[2]}})
+                    this.uniqueIds(result.rows).map(r => new Object({id: r.id, date: r.key[2]}))
                 );
             });
 

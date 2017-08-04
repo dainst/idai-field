@@ -61,7 +61,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench1'));
     });
 
-    xit('switchProject views after click on relation link', () => {
+    it('switchProject views after click on relation link', () => {
         ResourcesPage.performCreateResource('building1', 1);
 
         NavbarPage.clickNavigateToBuilding();
@@ -80,7 +80,7 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
-    xit('select correct main type document after click on relation link', () => {
+    it('select correct main type document after click on relation link', () => {
         ResourcesPage.performCreateResource('building1', 1);
         ResourcesPage.performCreateResource('building2', 1);
 

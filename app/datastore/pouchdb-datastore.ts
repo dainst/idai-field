@@ -233,8 +233,8 @@ export class PouchdbDatastore {
 
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
-                if (!PouchdbDatastore.canSkipSimpleQuery(query,hasUsableConstraints)) {
-                    return this.performSimpleQuery(query)
+                if (PouchdbDatastore.cantSkipSimple(query, hasUsableConstraints)) {
+                    return this.performSimple(query)
                 }
             })
             .then(resultSet => {
@@ -264,8 +264,8 @@ export class PouchdbDatastore {
      * the resultsSet of a simpleQuery for an emtpy query would return all existing ids, which means an
      * intersection with the previous resultSets would make no difference.
      */
-    private static canSkipSimpleQuery(query, hasUsableConstraints) {
-        return ((!query.q || query.q == '') && !query.type && hasUsableConstraints);
+    private static cantSkipSimple(query, hasUsableConstraints) {
+        return !((!query.q || query.q == '') && !query.type && hasUsableConstraints);
     }
 
     private performConstraintQueries(query): Promise<ResultSets> {
@@ -295,7 +295,7 @@ export class PouchdbDatastore {
         });
     }
 
-    private performSimpleQuery(query) {
+    private performSimple(query) {
 
         const opt = {
             reduce: false,

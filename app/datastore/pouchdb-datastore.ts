@@ -190,6 +190,14 @@ export class PouchdbDatastore {
         });
     }
 
+    /**
+     * @param query
+     * @return an array of the resource ids of the documents the query matches.
+     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
+     *   dates come first. they are sorted by last modfied descending, so to speak.
+     *   if two or more documents have the same last modifed date, their sort order is unspecified.
+     *   the modified date is taken from document.modified[document.modified.length-1].date
+     */
     public findIds(query: Query): Promise<string[]> {
 
         if (!query) return Promise.resolve([]);

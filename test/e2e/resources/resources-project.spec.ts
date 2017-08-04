@@ -34,24 +34,6 @@ xdescribe('resources/project --', function() {
         resetConfigJson().then(done);
     });
 
-    it ('do not delete last project', () => {
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
-    });
-
-    it('do not create with the same name', () => {
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
-    });
-
     function performCreateProject() {
         browser.sleep(delays.shortRest * 10);
         ProjectPage.clickCreateProject();

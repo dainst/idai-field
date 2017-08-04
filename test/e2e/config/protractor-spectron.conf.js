@@ -19,6 +19,14 @@ exports.config = {
         ]
     },
 
+    // '../syncing/*.spec.js',
+    // '../images/*.spec.js',
+    // '../import/*.spec.js',
+    // '../list/*.spec.js',
+    // '../resources/map/*.spec.js',
+    // '../widgets/*.spec.js',
+    // '../settings/*.spec.js',
+
     allScriptsTimeout: 110000,
     getPageTimeout: 100000,
     framework: 'jasmine2',

@@ -236,7 +236,9 @@ export class PouchdbDatastore {
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
 
-                return theResultSets.intersect('id').sort(this.comp('date')).map(r => r['id']);
+                return theResultSets.intersect(e => e.id)
+                    .sort(this.comp('date'))
+                    .map(e => e['id']);
             });
     }
 

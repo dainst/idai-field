@@ -3,35 +3,36 @@
  */
 export class ResultSets {
 
-    /**
-     * Example for sets:
-     * [
-     *   [{id:'1'},{id:'2'},{id:'3'}],
-     *   [{id:'2'},{id:'3'}]
-     * ]
-     */
     private sets: Array<  // multiple result sets
         Array<            // a single result set
-            { } // an element of a result set.
+            Object // an element of a result set
         >> = [];
 
-    public add(set: Array<{ id: string }>) {
+    public add(set: Array<Object>) {
         this.sets.push(set);
     }
 
     /**
-     * Finds the elements that have ids common to all sets.
+     * Finds the elements that are common to all sets.
      *
-     * Taking the example, intersect with field = 'id' would return
-     * [{id:'3'},{id:'2'}]
+     * Assuming, one adds the two sets
      *
-     * @param field
+     *   [{id:'1'},{id:'2'},{id:'3'}]
+     *   [{id:'2'},{id:'3'}]
+     *
+     * intersect would return
+     *
+     *   [{id:'3'},{id:'2'}] with f = a => a.id
+     *
+     * @param f gets applied to elements
+     *   to get an elements field on which the comparison
+     *   is performed
      */
-    public intersect(field) {
+    public intersect(f) {
 
         return this.sets.reduce((p,c) => {
             return p.filter(e => {
-                return (c.map(r => r[field]).indexOf(e[field])!=-1)
+                return (c.map(r => f(r)).indexOf(f(e))!=-1)
             })
         });
     }

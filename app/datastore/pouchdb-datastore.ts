@@ -8,7 +8,7 @@ import {IdaiFieldDatastore} from './idai-field-datastore';
 import {SyncState} from './sync-state';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from "../util/result-sets";
+import {ResultSets} from "./result-sets";
 
 /**
  * @author Sebastian Cuy
@@ -231,6 +231,7 @@ export class PouchdbDatastore {
         return startWith
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
+
                 if (!PouchdbDatastore.canSkipSimpleQuery(query,hasUsableConstraints)) {
                     return this.performSimpleQuery(query)
                 }
@@ -238,18 +239,8 @@ export class PouchdbDatastore {
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
 
-                return theResultSets.intersect('id').sort(this.comp('date')).map(r => r['id']);
+                return theResultSets.intersect().map(r => r[0]);
             });
-    }
-
-    private comp(sortOn) {
-        return ((a,b)=> {
-            if (a[sortOn] > b[sortOn])
-                return -1;
-            if (a[sortOn] < b[sortOn])
-                return 1;
-            return 0;
-        });
     }
 
     /**
@@ -282,7 +273,7 @@ export class PouchdbDatastore {
 
             const resultSets: ResultSets = new ResultSets();
             for (let i in results) {
-                resultSets.add(results[i].rows.map(r => {return {id: r.id, date: r.key[1]}}));
+                resultSets.add(results[i].rows.map(r => [r.id,r.key[1]]));
             }
             return resultSets;
         });
@@ -308,7 +299,7 @@ export class PouchdbDatastore {
         return this.db.query('fulltext', opt)
             .then(result => {
                 return Promise.resolve(
-                    this.uniqueIds(result.rows).map(r => {return {id: r.id, date: r.key[2]}})
+                    this.uniqueIds(result.rows).map(r => [r.id,r.key[1]])
                 );
             });
 

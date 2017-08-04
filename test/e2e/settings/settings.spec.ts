@@ -16,7 +16,7 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-describe('settings --', function() {
+xdescribe('settings --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;

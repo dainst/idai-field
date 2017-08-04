@@ -29,15 +29,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
 
     abstract findConflicted(): Promise<IdaiFieldDocument[]>;
 
-    /**
-     * Setup peer-to-peer syncing between this datastore and target.
-     * Changes to sync state will be published via the onSync*-Methods.
-     * @param url target datastore
-     */
-    abstract setupSync(url: string): Promise<SyncState>;
-
-    abstract stopSync();
-
     abstract getLatestRevision(id: string): Promise<IdaiFieldDocument>;
 
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;

@@ -151,7 +151,7 @@ export class SettingsService {
 
         if (!this.currentSyncUrl) return Promise.resolve();
 
-        return this.datastore.setupSync(this.currentSyncUrl).then(syncState => {
+        return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500);
@@ -175,7 +175,6 @@ export class SettingsService {
             this.useSelectedDatabase(createDb).then(
                 () => {
                     this.observers.forEach(o => o.next(false));
-                    this.datastore.stopSync(); // TODO this seems to be wrong. the sync should be stopped before switching to new db with useSelectedDb
                     setTimeout(() => {
                         this.startSync().then(() => resolve());
                     }, 1000);

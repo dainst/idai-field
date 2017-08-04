@@ -3,6 +3,8 @@ import {IndexCreator} from "./index-creator";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
 import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
+import {SyncState} from './sync-state';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 /**
@@ -16,6 +18,7 @@ export class PouchdbManager {
     private dbProxy = undefined;
     private name:string = undefined;
     private indexCreator = new IndexCreator();
+    private syncHandles = [];
 
     private resolveDbReady = undefined;
 
@@ -43,6 +46,8 @@ export class PouchdbManager {
     private switchProject(name: string, destroy: boolean) {
         // same db selected, no need for action
         if (this.name == name) return;
+
+        this.stopSync();
 
         let rdy: Promise<any> = Promise.resolve();
 
@@ -78,10 +83,6 @@ export class PouchdbManager {
         return this.dbProxy;
     }
 
-    public getName(): string {
-        return this.name;
-    }
-
     public destroy(): Promise<any> {
         // TODO wait for rdy
         return this.db.destroy();
@@ -97,4 +98,37 @@ export class PouchdbManager {
         return Promise.resolve(this.db);
     }
 
+    /**
+     * Setup peer-to-peer syncing between this datastore and target.
+     * Changes to sync state will be published via the onSync*-Methods.
+     * @param url target datastore
+     */
+    public setupSync(url: string): Promise<SyncState> {
+
+        let fullUrl = url + '/' + this.name;
+        console.log('start syncing with ' + fullUrl);
+
+        return this.getDb().rdy.then(db => {
+            let sync = db.sync(fullUrl, { live: true, retry: false });
+            this.syncHandles.push(sync);
+            return {
+                url: url,
+                cancel: () => {
+                    sync.cancel();
+                    this.syncHandles.splice(this.syncHandles.indexOf(sync), 1);
+                },
+                onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
+                onChange: Observable.create(obs => sync.on('change', () => obs.next()))
+            };
+        });
+    }
+
+    public stopSync() {
+
+        for (let handle of this.syncHandles) {
+            console.debug('stop sync', handle);
+            handle.cancel();
+        }
+        this.syncHandles = [];
+    }
 }

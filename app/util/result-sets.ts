@@ -30,10 +30,10 @@ export class ResultSets {
      */
     public intersect(f) {
 
-        return this.sets.reduce((p,c) => {
-            return p.filter(e => {
-                return (c.map(r => f(r)).indexOf(f(e))!=-1)
-            })
-        });
+        return this.sets.reduce((p,c) =>
+            p.filter(e =>
+                c.map(r => f(r)).indexOf(f(e)) !=- 1
+            )
+        );
     }
 }

@@ -3,7 +3,7 @@ import {ResourcesPage} from './resources.page';
 
 let delays = require('../config/delays');
 
-xdescribe('resources/list --', function() {
+describe('resources/list --', function() {
 
     beforeEach(function () {
         ResourcesPage.get();

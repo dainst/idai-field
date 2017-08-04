@@ -17,14 +17,14 @@ exports.config = {
             '../list/*.spec.js',
             '../resources/map/*.spec.js',
             '../widgets/*.spec.js',
-            '../settings/*.spec.js'
+            '../settings/*.spec.js',
+            '../resources/*.spec.js'
         ],
         flaky: [
             '../flaky/*.spec.js'
         ]
     },
 
-    // '../resources/*.spec.js'
     // '../syncing/*.spec.js',
 
     allScriptsTimeout: 110000,

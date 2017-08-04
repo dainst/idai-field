@@ -68,24 +68,6 @@ describe('resources/project --', function() {
     });
 
 
-    it ('do not delete last project', () => {
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
-    });
-
-    it('do not create with the same name', () => {
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
-    });
-
     xit('create, switchProject project', () => {
         performCreateProject();
 

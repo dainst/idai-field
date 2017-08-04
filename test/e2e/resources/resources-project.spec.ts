@@ -42,7 +42,7 @@ xdescribe('resources/project --', function() {
         browser.sleep(delays.shortRest);
     }
 
-    xit('basic stuff', () => {
+    it('basic stuff', () => {
         ResourcesPage.performCreateResource('trench2', 0);
 
         NavbarPage.clickNavigateToExcavation();
@@ -98,5 +98,23 @@ xdescribe('resources/project --', function() {
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+    });
+
+    it ('do not delete last project', () => {
+
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
+    });
+
+    it('do not create with the same name', () => {
+
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });
 });

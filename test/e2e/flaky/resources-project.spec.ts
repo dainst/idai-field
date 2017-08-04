@@ -82,10 +82,10 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
-        // NavbarPage.clickSelectProject(1);
-        // NavbarPage.clickNavigateToImages();
-        //
-        // NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickSelectProject(1);
+        NavbarPage.clickNavigateToImages();
+
+        NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);
         // TODO comment in

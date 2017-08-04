@@ -62,7 +62,7 @@ describe('settings --', function() {
         resetConfigJson().then(done);
     });
 
-    it('save syncing settings to config file and load them after restart', done => {
+    xit('save syncing settings to config file and load them after restart', done => {
 
         const expectedConfig = {
             'username': 'username',

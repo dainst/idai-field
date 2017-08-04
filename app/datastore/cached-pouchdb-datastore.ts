@@ -90,6 +90,14 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         });
     }
 
+    setupSync(url: string): Promise<SyncState> {
+        return this.datastore.setupSync(url);
+    }
+
+    stopSync() {
+        return this.datastore.stopSync();
+    }
+
     getLatestRevision(id: string): Promise<Document> {
         return this.datastore.get(id);
     }

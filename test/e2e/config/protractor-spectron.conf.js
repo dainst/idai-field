@@ -15,13 +15,6 @@ exports.config = {
             '../resources/*.spec.js'
         ],
         flaky: [
-            '../syncing/*.spec.js',
-            '../images/*.spec.js',
-            '../import/*.spec.js',
-            '../list/*.spec.js',
-            '../resources/map/*.spec.js',
-            '../widgets/*.spec.js',
-            '../settings/*.spec.js',
             '../flaky/*.spec.js'
         ]
     },

@@ -8,7 +8,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 
-describe('resources/relations --', function() {
+xdescribe('resources/relations --', function() {
 
     beforeEach(function() {
         ResourcesPage.get();

@@ -3,7 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
 
 
-describe('resources/messages --', () => {
+xdescribe('resources/messages --', () => {
 
     beforeEach(() => {
         ResourcesPage.get();

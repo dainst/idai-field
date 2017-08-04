@@ -12,13 +12,13 @@ exports.config = {
 
     suites: {
         default: [
+            '../settings/*.spec.js',
             '../syncing/*.spec.js',
             '../images/*.spec.js',
             '../import/*.spec.js',
             '../list/*.spec.js',
             '../resources/map/*.spec.js',
             '../widgets/*.spec.js',
-            '../settings/*.spec.js',
             '../resources/*.spec.js'
         ],
         flaky: [

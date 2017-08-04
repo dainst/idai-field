@@ -225,16 +225,12 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        let hasUsableConstraints = false;
-        let startWith = Promise.resolve(undefined);
-        if (this.hasUsableConstraints(query)) {
-            hasUsableConstraints = true;
-            startWith = this.performConstraintQueries(query);
-        }
-
+        let hasUsableConstraints = this.hasUsableConstraints(query);
         let theResultSets = new ResultSets();
 
-        return startWith
+        return (hasUsableConstraints ?
+            this.performConstraintQueries(query) : Promise.resolve(undefined))
+
             .then(resultSets => {
                 if (resultSets) theResultSets = resultSets;
                 if (!PouchdbDatastore.canSkipSimpleQuery(query,hasUsableConstraints)) {
@@ -243,11 +239,14 @@ export class PouchdbDatastore {
             })
             .then(resultSet => {
                 if (resultSet) theResultSets.add(resultSet);
-
-                return theResultSets.intersect(e => e.id)
-                    .sort(this.comp('date'))
-                    .map(e => e['id']);
+                return this.generateOrderedResultList(theResultSets);
             });
+    }
+
+    private generateOrderedResultList(theResultSets: ResultSets) {
+        return theResultSets.intersect(e => e.id)
+            .sort(this.comp('date'))
+            .map(e => e['id']);
     }
 
     private comp(sortOn) {

@@ -12,6 +12,7 @@ exports.config = {
 
     suites: {
         default: [
+            '../syncing/*.spec.js',
             '../images/*.spec.js',
             '../import/*.spec.js',
             '../list/*.spec.js',
@@ -25,7 +26,6 @@ exports.config = {
         ]
     },
 
-    // '../syncing/*.spec.js',
 
     allScriptsTimeout: 110000,
     getPageTimeout: 100000,

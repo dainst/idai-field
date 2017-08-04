@@ -224,7 +224,7 @@ export class PouchdbDatastore {
             startWith = this.performConstraintQueries(query);
         }
 
-        let theResultSets: ResultSets = new ResultSets();
+        let theResultSets = new ResultSets();
 
         return startWith
             .then(resultSets => {
@@ -280,7 +280,7 @@ export class PouchdbDatastore {
         }
         return Promise.all(ps).then(results => {
 
-            const resultSets: ResultSets = new ResultSets();
+            const resultSets = new ResultSets();
             for (let i in results) {
                 resultSets.add(results[i].rows.map(r => new Object({id: r.id, date: r.key[1]})));
             }

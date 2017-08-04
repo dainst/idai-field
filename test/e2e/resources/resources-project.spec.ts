@@ -10,7 +10,7 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('resources/project --', function() {
+describe('resources/project --', function() {
 
     beforeEach(function() {
         return ProjectPage.get();

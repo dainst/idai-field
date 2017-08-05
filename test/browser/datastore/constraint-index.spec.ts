@@ -5,7 +5,7 @@ import {ConstraintIndex} from "../../../app/datastore/constraint-index";
  */
 export function main() {
 
-    fdescribe('ConstraintIndex', () => {
+    describe('ConstraintIndex', () => {
 
         let ci;
 
@@ -204,7 +204,22 @@ export function main() {
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
-        // TODO make UNKOWN queries possible
+        it('query for unkown', () => {
+
+            const docs = [
+                doc('1'),
+                doc('2')
+            ];
+            docs[0].resource.relations['liesWithin'] = ['3'];
+
+            ci = new ConstraintIndex([
+                { path: 'resource.relations.liesWithin' } ,
+            ]);
+            ci.setDocs(docs);
+
+            expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
+                .toEqual([{id: '2', date: '2018-01-01'}]);
+        });
 
         // TODO update docs where doc is new
 

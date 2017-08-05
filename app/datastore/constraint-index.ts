@@ -42,6 +42,8 @@ export class ConstraintIndex {
                     this.addToIndex(doc, pathDef.path, target);
                 }
             }
+        } else {
+            this.addToIndex(doc, pathDef.path, 'UNKOWN');
         }
 
     }

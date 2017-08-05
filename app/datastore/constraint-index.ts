@@ -47,6 +47,7 @@ export class ConstraintIndex {
     }
 
     // TODO factor out duplicate code with setDocs
+    // TODO remove also from dates
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {

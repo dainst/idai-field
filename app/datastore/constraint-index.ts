@@ -16,35 +16,42 @@ export class ConstraintIndex {
     public setDocs(docs) {
         for (let pathDef of this.pathsDefinitions) {
             for (let doc of docs) {
-                if (this.getElForPathIn(doc, pathDef.path)) {
+                this.build(doc,pathDef)
+            }
+        }
+    }
 
-                    if (pathDef.string) {
-                        this.addToIndex(doc, pathDef.path,
-                            this.getElForPathIn(doc, pathDef.path));
-                    } else {
-                        for (let target of this.getElForPathIn(doc, pathDef.path)) {
-                            this.addToIndex(doc, pathDef.path, target);
-                        }
-                    }
+    private build(doc, pathDef) {
+        if (this.getElForPathIn(doc, pathDef.path)) {
+
+            if (pathDef.string) {
+                this.addToIndex(doc, pathDef.path,
+                    this.getElForPathIn(doc, pathDef.path));
+            } else {
+                for (let target of this.getElForPathIn(doc, pathDef.path)) {
+                    this.addToIndex(doc, pathDef.path, target);
                 }
             }
         }
+
     }
 
     // TODO factor out duplicate code with setDocs
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
-            if (this.getElForPathIn(doc, pathDef.path)) {
-
-                if (pathDef.string) {
-                    this.removeFromIndex(doc, pathDef.path,
-                        this.getElForPathIn(doc, pathDef.path));
-                } else {
-                    for (let target of this.getElForPathIn(doc, pathDef.path)) {
-                        this.removeFromIndex(doc, pathDef.path, target);
-                    }
+            for (let key of Object.keys(this.index[pathDef.path])) {
+                if (this.index[pathDef.path][key].indexOf(doc.resource.id) != -1) {
+                    // TODO there should be only one occurence of the id to remove
+                    this.index[pathDef.path][key].splice(this.index[pathDef.path][key].indexOf(doc.resource.id), 1);
                 }
             }
+        }
+    }
+
+    public update(doc) {
+        this.remove(doc);
+        for (let pathDef of this.pathsDefinitions) {
+            this.build(doc, pathDef);
         }
     }
 
@@ -70,14 +77,6 @@ export class ConstraintIndex {
             this.index[path][target] = [doc.resource.id]; // TODO this can be done with maps, e.g. [target][doc.resource.id] = true, in order to raise performance
         } else {
             this.index[path][target].push(doc.resource.id);
-        }
-    }
-
-    private removeFromIndex(doc, path, target) {
-        if (!this.index[path][target]) return;
-
-        if (this.index[path][target].indexOf(doc.resource.id) != -1) {
-            this.index[path][target].splice(this.index[path][target].indexOf(doc.resource.id),1);
         }
     }
 

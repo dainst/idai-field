@@ -33,7 +33,7 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.isRecordedIn','1'))
+            expect(ci.get('resource.relations.isRecordedIn', '1'))
                 .toEqual(['2', '3']);
         });
 
@@ -54,9 +54,9 @@ export function main() {
 
             oneDocRecordedInMultipleOthers();
 
-            expect(ci.get('resource.relations.isRecordedIn','2'))
+            expect(ci.get('resource.relations.isRecordedIn', '2'))
                 .toEqual(['1']);
-            expect(ci.get('resource.relations.isRecordedIn','3'))
+            expect(ci.get('resource.relations.isRecordedIn', '3'))
                 .toEqual(['1']);
         });
 
@@ -74,9 +74,9 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.liesWithin','3'))
+            expect(ci.get('resource.relations.liesWithin', '3'))
                 .toEqual(['1']);
-            expect(ci.get('resource.relations.isRecordedIn','2'))
+            expect(ci.get('resource.relations.isRecordedIn', '2'))
                 .toEqual(['1']);
         });
 
@@ -91,7 +91,7 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.liesWithin','3'))
+            expect(ci.get('resource.relations.liesWithin', '3'))
                 .toEqual([]);
         });
 
@@ -111,7 +111,7 @@ export function main() {
 
             docWithIdentifier();
 
-            expect(ci.get('resource.identifier','identifier1'))
+            expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual(['1']);
         });
 
@@ -121,7 +121,7 @@ export function main() {
 
             ci.clear();
 
-            expect(ci.get('resource.identifier','identifier1'))
+            expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([]);
         });
 
@@ -135,36 +135,51 @@ export function main() {
             ci = new ConstraintIndex([ ]);
             ci.setDocs(docs);
 
-            expect(()=>{ci.get('resource.identifier','identifier1')})
+            expect(()=>{ci.get('resource.identifier', 'identifier1')})
                 .toThrow("an index for 'resource.identifier' does not exist");
         });
 
         it('remove one doc', () => {
 
-            let docs = docWithIdentifier();
+            const doc = docWithIdentifier()[0];
 
-            expect(ci.get('resource.identifier','identifier1'))
+            expect(ci.get('resource.identifier', 'identifier1')) // TODO remove duplicate code
                 .toEqual(['1']);
 
-            ci.remove(docs[0]);
+            ci.remove(doc);
 
-            expect(ci.get('resource.identifier','identifier1'))
+            expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([]);
         });
 
         it('remove where one doc was recorded in multiple docs for the same constraint', () => {
 
-            let docs = oneDocRecordedInMultipleOthers();
+            const doc = oneDocRecordedInMultipleOthers()[0];
 
-            ci.remove(docs[0]);
+            ci.remove(doc);
 
-            expect(ci.get('resource.relations.isRecordedIn','2'))
+            expect(ci.get('resource.relations.isRecordedIn', '2'))
                 .toEqual([]);
-            expect(ci.get('resource.relations.isRecordedIn','3'))
+            expect(ci.get('resource.relations.isRecordedIn', '3'))
                 .toEqual([]);
         });
 
-        // TODO update docs where the relations change
+        it('update docs where the relations change', () => {
+
+            let doc = docWithIdentifier()[0];
+            doc.resource.identifier = 'identifier2';
+
+            ci.update(doc);
+
+            expect(ci.get('resource.identifier', 'identifier1'))
+                .toEqual([ ]);
+            expect(ci.get('resource.identifier', 'identifier2'))
+                .toEqual(['1']);
+        });
+
+        // TODO do remove it also with an array type path
+
+        // TODO remove from multiple indices
 
         // TODO update docs where doc is new
 

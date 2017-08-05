@@ -225,19 +225,16 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        const _ = (rs) => rs ? rs : new ResultSets();
-
         return (this.hasUsableConstraints(query) ?
             this.performThem(query.constraints, new ResultSets()) : Promise.resolve(undefined))
 
-            .then(rsets => {
-                if (PouchdbDatastore.cantSkipSimple(query, rsets != undefined)) {
-                    return this.performSimple(query, _(rsets));
-                } else return _(rsets);
-            })
-            .then(rsets => {
-                return this.generateOrderedResultList(rsets);
-            });
+                .then(rsets => {
+                    if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
+                    else return this.performSimple(query, rsets ? rsets : new ResultSets());
+                })
+                .then(rsets => {
+                    return this.generateOrderedResultList(rsets);
+                });
     }
 
     private generateOrderedResultList(theResultSets: ResultSets) {
@@ -256,13 +253,8 @@ export class PouchdbDatastore {
         });
     }
 
-    /**
-     * If usable constraints are there, an empty query can be skipped. This is because
-     * the resultsSet of a simpleQuery for an emtpy query would return all existing ids, which means an
-     * intersection with the previous resultSets would make no difference.
-     */
-    private static cantSkipSimple(query, hasUsableConstraints) {
-        return !((!query.q || query.q == '') && !query.type && hasUsableConstraints);
+    private static isEmpty(query) {
+        return ((!query.q || query.q == '') && !query.type);
     }
 
     private performThem(constraints, resultSets): Promise<ResultSets> {

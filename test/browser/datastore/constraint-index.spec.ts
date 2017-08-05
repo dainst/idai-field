@@ -140,11 +140,8 @@ export function main() {
         });
 
         it('remove one doc', () => {
-
+    
             const doc = docWithIdentifier()[0];
-
-            expect(ci.get('resource.identifier', 'identifier1')) // TODO remove duplicate code
-                .toEqual(['1']);
 
             ci.remove(doc);
 

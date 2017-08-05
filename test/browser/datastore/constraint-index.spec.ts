@@ -31,7 +31,27 @@ export function main() {
             const ci = new ConstraintIndex();
             ci.setDocs(docs);
 
-            expect(ci.get('1')).toEqual(['2','3']);
+            expect(ci.get('1')).toEqual(['2', '3']);
+        });
+
+        it('one doc is recorded in multiple others', () => {
+
+            const docs = [
+                {
+                    resource: {
+                        id: '1',
+                        relations: {
+                            isRecordedIn: ['2', '3']
+                        }
+                    }
+                }
+            ];
+
+            const ci = new ConstraintIndex();
+            ci.setDocs(docs);
+
+            expect(ci.get('2')).toEqual(['1']);
+            expect(ci.get('3')).toEqual(['1']);
         });
     });
 }

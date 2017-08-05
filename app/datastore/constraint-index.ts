@@ -7,10 +7,13 @@ export class ConstraintIndex {
 
     public setDocs(docs) {
         for (let doc of docs) {
-            if (!this.index[doc.resource.relations.isRecordedIn[0]]) {
-                this.index[doc.resource.relations.isRecordedIn[0]] = [doc.resource.id];
-            } else {
-                this.index[doc.resource.relations.isRecordedIn[0]].push(doc.resource.id);
+            for (let target of doc.resource.relations.isRecordedIn) {
+
+                if (!this.index[target]) {
+                    this.index[target] = [doc.resource.id];
+                } else {
+                    this.index[target].push(doc.resource.id);
+                }
             }
         }
     }

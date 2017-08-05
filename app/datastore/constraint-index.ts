@@ -14,15 +14,19 @@ export class ConstraintIndex {
     public setDocs(docs) {
         for (let path of this.paths) {
             for (let doc of docs) {
-                for (let target of this.getElForPathIn(doc, path)) {
-                    this.addToIndex(doc, path, target);
+                if (this.getElForPathIn(doc, path)) {
+                    for (let target of this.getElForPathIn(doc, path)) {
+                        this.addToIndex(doc, path, target);
+                    }
                 }
             }
         }
     }
 
     public get(path, matchTerm): string[] {
-        return this.index[path][matchTerm];
+        if (this.index[path][matchTerm]) {
+            return this.index[path][matchTerm];
+        } else return [];
     }
 
     private addToIndex(doc, path, target) {
@@ -36,7 +40,8 @@ export class ConstraintIndex {
     private getElForPathIn(doc, path) {
         let result = doc;
         for (let segment of path.split('.')) {
-            result = result[segment];
+            if (result[segment]) result = result[segment];
+            else result = undefined;
         }
         return result;
     }

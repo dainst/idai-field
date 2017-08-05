@@ -7,28 +7,27 @@ export function main() {
 
     describe('ConstraintIndex', () => {
 
+        function doc(id) {
+            return {
+                resource: {
+                    id: id,
+                    relations: { } // TODO test for undefined relations
+                }
+            }
+        }
+
         it('multiple docs are recorded in another', () => {
 
             const docs = [
-                {
-                    resource: {
-                        id: '2',
-                        relations: {
-                            isRecordedIn: ['1']
-                        }
-                    }
-                },
-                {
-                    resource: {
-                        id: '3',
-                        relations: {
-                            isRecordedIn: ['1']
-                        }
-                    }
-                }
+                doc('2'),
+                doc('3')
             ];
+            docs[0].resource.relations['isRecordedIn'] = ['1'];
+            docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-            const ci = new ConstraintIndex(['resource.relations.isRecordedIn']);
+            const ci = new ConstraintIndex([
+                'resource.relations.isRecordedIn'
+            ]);
             ci.setDocs(docs);
 
             expect(ci.get('resource.relations.isRecordedIn','1'))
@@ -38,17 +37,13 @@ export function main() {
         it('one doc is recorded in multiple others', () => {
 
             const docs = [
-                {
-                    resource: {
-                        id: '1',
-                        relations: {
-                            isRecordedIn: ['2', '3']
-                        }
-                    }
-                }
+                doc('1')
             ];
+            docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-            const ci = new ConstraintIndex(['resource.relations.isRecordedIn']);
+            const ci = new ConstraintIndex([
+                'resource.relations.isRecordedIn'
+            ]);
             ci.setDocs(docs);
 
             expect(ci.get('resource.relations.isRecordedIn','2'))
@@ -60,29 +55,36 @@ export function main() {
         it('works for multiple constrains', () => {
 
             const docs = [
-                {
-                    resource: {
-                        id: '1',
-                        relations: {
-                            isRecordedIn: ['2'],
-                            liesWithin: ['3']
-                        }
-                    }
-                }
+                doc('1')
             ];
+            docs[0].resource.relations['isRecordedIn'] = ['2'];
+            docs[0].resource.relations['liesWithin'] = ['3'];
 
-            const ci = new ConstraintIndex(
-                [
-                    'resource.relations.liesWithin',
-                    'resource.relations.isRecordedIn',
-                ]
-            );
+            const ci = new ConstraintIndex([
+                'resource.relations.liesWithin',
+                'resource.relations.isRecordedIn',
+            ]);
             ci.setDocs(docs);
 
             expect(ci.get('resource.relations.liesWithin','3'))
                 .toEqual(['1']);
             expect(ci.get('resource.relations.isRecordedIn','2'))
                 .toEqual(['1']);
+        });
+
+        it('index also works if doc does not have the field', () => {
+
+            const docs = [
+                doc('1')
+            ];
+
+            const ci = new ConstraintIndex([
+                'resource.relations.liesWithin'
+            ]);
+            ci.setDocs(docs);
+
+            expect(ci.get('resource.relations.liesWithin','3'))
+                .toEqual([]);
         });
     });
 }

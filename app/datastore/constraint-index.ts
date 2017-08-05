@@ -12,18 +12,10 @@ export class ConstraintIndex {
     }
 
     public setDocs(docs) {
-
         for (let path of this.paths) {
-
             for (let doc of docs) {
-
                 for (let target of this.getElForPathIn(doc, path)) {
-
-                    if (!this.index[path][target]) {
-                        this.index[path][target] = [doc.resource.id];
-                    } else {
-                        this.index[path][target].push(doc.resource.id);
-                    }
+                    this.addToIndex(doc, path, target);
                 }
             }
         }
@@ -31,6 +23,14 @@ export class ConstraintIndex {
 
     public get(path, matchTerm): string[] {
         return this.index[path][matchTerm];
+    }
+
+    private addToIndex(doc, path, target) {
+        if (!this.index[path][target]) {
+            this.index[path][target] = [doc.resource.id];
+        } else {
+            this.index[path][target].push(doc.resource.id);
+        }
     }
 
     private getElForPathIn(doc, path) {

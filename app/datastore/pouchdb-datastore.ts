@@ -225,21 +225,22 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        const hasUsableConstraints = this.hasUsableConstraints(query);
-        let theResultSets = new ResultSets();
+        const _ = (rs) => rs ? rs : new ResultSets();
 
-        return (hasUsableConstraints ?
+        return (this.hasUsableConstraints(query) ?
             this.performConstraintQueries(query) : Promise.resolve(undefined))
 
-            .then(resultSets => {
-                if (hasUsableConstraints) theResultSets = resultSets;
-                if (PouchdbDatastore.cantSkipSimple(query, hasUsableConstraints)) {
+            .then(rsets => {
+                if (PouchdbDatastore.cantSkipSimple(query, rsets)) {
                     return this.performSimple(query)
+                        .then(sqr => Promise.resolve([_(rsets), sqr]))
+                } else {
+                    return Promise.resolve([_(rsets), undefined]);
                 }
             })
-            .then(resultSet => {
-                if (resultSet) theResultSets.add(resultSet);
-                return this.generateOrderedResultList(theResultSets);
+            .then(r => {
+                if (r[1]) r[0].add(r[1]);
+                return this.generateOrderedResultList(r[0]);
             });
     }
 

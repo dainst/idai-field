@@ -232,7 +232,7 @@ export class PouchdbDatastore {
             this.performConstraintQueries(query) : Promise.resolve(undefined))
 
             .then(resultSets => {
-                if (resultSets) theResultSets = resultSets;
+                if (hasUsableConstraints) theResultSets = resultSets;
                 if (PouchdbDatastore.cantSkipSimple(query, hasUsableConstraints)) {
                     return this.performSimple(query)
                 }

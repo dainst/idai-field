@@ -31,6 +31,23 @@ export class ConstraintIndex {
         }
     }
 
+    // TODO factor out duplicate code with setDocs
+    public remove(doc) {
+        for (let pathDef of this.pathsDefinitions) {
+            if (this.getElForPathIn(doc, pathDef.path)) {
+
+                if (pathDef.string) {
+                    this.removeFromIndex(doc, pathDef.path,
+                        this.getElForPathIn(doc, pathDef.path));
+                } else {
+                    for (let target of this.getElForPathIn(doc, pathDef.path)) {
+                        this.removeFromIndex(doc, pathDef.path, target);
+                    }
+                }
+            }
+        }
+    }
+
     public get(path, matchTerm): string[] {
         if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
 
@@ -46,11 +63,19 @@ export class ConstraintIndex {
         return false;
     }
 
-    private addToIndex(doc, path, target) {
+    private addToIndex(doc, path, target) { // TODO prevent adding a doc more than once
         if (!this.index[path][target]) {
-            this.index[path][target] = [doc.resource.id];
+            this.index[path][target] = [doc.resource.id]; // TODO this can be done with maps, e.g. [target][doc.resource.id] = true, in order to raise performance
         } else {
             this.index[path][target].push(doc.resource.id);
+        }
+    }
+
+    private removeFromIndex(doc, path, target) {
+        if (!this.index[path][target]) return;
+
+        if (this.index[path][target].indexOf(doc.resource.id) != -1) {
+            this.index[path][target].splice(this.index[path][target].indexOf(doc.resource.id),1);
         }
     }
 

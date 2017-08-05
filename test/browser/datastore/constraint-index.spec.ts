@@ -136,5 +136,56 @@ export function main() {
             expect(()=>{ci.get('resource.identifier','identifier1')})
                 .toThrow("an index for 'resource.identifier' does not exist");
         });
+
+        it('remove one doc', () => {
+
+            // TODO factor out duplicate code
+            const docs = [
+                doc('1')
+            ];
+
+            const ci = new ConstraintIndex([
+                { path: 'resource.identifier', string: true }
+            ]);
+            ci.setDocs(docs);
+            // TODO end
+
+            expect(ci.get('resource.identifier','identifier1'))
+                .toEqual(['1']);
+
+            ci.remove(docs[0]);
+
+            expect(ci.get('resource.identifier','identifier1'))
+                .toEqual([]);
+        });
+
+        it('remove where one doc was recorded in multiple docs for the same constraint', () => {
+
+            // TODO factor out duplicate code
+            const docs = [
+                doc('1')
+            ];
+            docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
+
+            const ci = new ConstraintIndex([
+                { path: 'resource.relations.isRecordedIn' }
+            ]);
+            ci.setDocs(docs);
+            // TODO end
+
+            expect(ci.get('resource.relations.isRecordedIn','2'))
+                .toEqual(['1']);
+            expect(ci.get('resource.relations.isRecordedIn','3'))
+                .toEqual(['1']);
+
+            ci.remove(docs[0]);
+
+            expect(ci.get('resource.relations.isRecordedIn','2'))
+                .toEqual([]);
+            expect(ci.get('resource.relations.isRecordedIn','3'))
+                .toEqual([]);
+        });
+
+        // TODO remove the target docs, for example delete the trench, then also the findings recorded in in are not to be found
     });
 }

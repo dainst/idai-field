@@ -28,10 +28,11 @@ export function main() {
                 }
             ];
 
-            const ci = new ConstraintIndex();
+            const ci = new ConstraintIndex(['resource.relations.isRecordedIn']);
             ci.setDocs(docs);
 
-            expect(ci.get('1')).toEqual(['2', '3']);
+            expect(ci.get('resource.relations.isRecordedIn','1'))
+                .toEqual(['2', '3']);
         });
 
         it('one doc is recorded in multiple others', () => {
@@ -47,11 +48,41 @@ export function main() {
                 }
             ];
 
-            const ci = new ConstraintIndex();
+            const ci = new ConstraintIndex(['resource.relations.isRecordedIn']);
             ci.setDocs(docs);
 
-            expect(ci.get('2')).toEqual(['1']);
-            expect(ci.get('3')).toEqual(['1']);
+            expect(ci.get('resource.relations.isRecordedIn','2'))
+                .toEqual(['1']);
+            expect(ci.get('resource.relations.isRecordedIn','3'))
+                .toEqual(['1']);
+        });
+
+        it('works for multiple constrains', () => {
+
+            const docs = [
+                {
+                    resource: {
+                        id: '1',
+                        relations: {
+                            isRecordedIn: ['2'],
+                            liesWithin: ['3']
+                        }
+                    }
+                }
+            ];
+
+            const ci = new ConstraintIndex(
+                [
+                    'resource.relations.liesWithin',
+                    'resource.relations.isRecordedIn',
+                ]
+            );
+            ci.setDocs(docs);
+
+            expect(ci.get('resource.relations.liesWithin','3'))
+                .toEqual(['1']);
+            expect(ci.get('resource.relations.isRecordedIn','2'))
+                .toEqual(['1']);
         });
     });
 }

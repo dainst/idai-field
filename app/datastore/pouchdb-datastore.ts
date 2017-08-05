@@ -225,7 +225,7 @@ export class PouchdbDatastore {
 
     private perform(query) {
 
-        let hasUsableConstraints = this.hasUsableConstraints(query);
+        const hasUsableConstraints = this.hasUsableConstraints(query);
         let theResultSets = new ResultSets();
 
         return (hasUsableConstraints ?

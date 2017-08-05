@@ -4,6 +4,7 @@
 export class ConstraintIndex {
 
     private index = undefined;
+    private dates = {}; // map: resourceId => date
 
     constructor(private pathsDefinitions) {
         this.setUp();
@@ -16,12 +17,21 @@ export class ConstraintIndex {
     public setDocs(docs) {
         for (let pathDef of this.pathsDefinitions) {
             for (let doc of docs) {
-                this.build(doc,pathDef)
+                this.build(doc, pathDef)
             }
         }
     }
 
     private build(doc, pathDef) {
+
+        let lastModified = doc.created.date;
+        if (doc.modified && doc.modified.length > 0)
+            lastModified = doc.modified[doc.modified.length - 1].date;
+
+        this.dates[doc.resource.id] = lastModified;
+
+
+
         if (this.getElForPathIn(doc, pathDef.path)) {
 
             if (pathDef.string) {
@@ -61,7 +71,7 @@ export class ConstraintIndex {
         if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
 
         if (this.index[path][matchTerm]) {
-            return this.index[path][matchTerm];
+            return this.index[path][matchTerm].map(id => new Object({id:id, date: this.dates[id]}));
         } else return [];
     }
 
@@ -82,6 +92,7 @@ export class ConstraintIndex {
 
     private setUp() {
         this.index = { };
+        this.dates = { };
         for (let pathDefinition of this.pathsDefinitions) {
             this.index[pathDefinition.path] = { };
         }

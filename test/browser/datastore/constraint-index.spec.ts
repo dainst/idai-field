@@ -5,7 +5,7 @@ import {ConstraintIndex} from "../../../app/datastore/constraint-index";
  */
 export function main() {
 
-    describe('ConstraintIndex', () => {
+    fdescribe('ConstraintIndex', () => {
 
         let ci;
 
@@ -14,8 +14,17 @@ export function main() {
                 resource: {
                     id: id,
                     identifier: 'identifier1',
-                    relations: { } // TODO test for undefined relations
-                }
+                    relations: { } // TODO test for undefined relations,
+                },
+                created:
+                    {
+                        date: '2017-12-31'
+                    },
+                modified: [
+                    {
+                        date: '2018-01-01'
+                    }
+                ]
             }
         }
 
@@ -34,7 +43,7 @@ export function main() {
             ci.setDocs(docs);
 
             expect(ci.get('resource.relations.isRecordedIn', '1'))
-                .toEqual(['2', '3']);
+                .toEqual([{id: '2', date: '2018-01-01'}, {id: '3', date: '2018-01-01'}]);
         });
 
         function docWithMultipleConstraintTargets() {
@@ -55,9 +64,9 @@ export function main() {
             docWithMultipleConstraintTargets();
 
             expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(ci.get('resource.relations.isRecordedIn', '3'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         function docWithMultipleConstraints() {
@@ -81,9 +90,9 @@ export function main() {
             docWithMultipleConstraints();
 
             expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('index also works if doc does not have the field', () => {
@@ -118,7 +127,7 @@ export function main() {
             docWithIdentifier();
 
             expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('clear index', () => {
@@ -128,7 +137,7 @@ export function main() {
             ci.clear();
 
             expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([]);
+                .toEqual([ ]);
         });
 
         // TODO later we do not throw but issue a warning and return []. now we try to stick to the existing interface, i.e. checking if the index exists with hasIndex
@@ -166,9 +175,9 @@ export function main() {
             ci.remove(doc);
 
             expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([]);
+                .toEqual([ ]);
             expect(ci.get('resource.relations.isRecordedIn', '3'))
-                .toEqual([]);
+                .toEqual([ ]);
         });
 
         it('update docs where the relations change', () => {
@@ -188,16 +197,14 @@ export function main() {
                 .toEqual([ ]);
 
             expect(ci.get('resource.identifier', 'identifier2'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(ci.get('resource.relations.isRecordedIn', '4'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(ci.get('resource.relations.liesWithin', '5'))
-                .toEqual(['1']);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         // TODO make UNKOWN queries possible
-
-        // TODO wrap the ids with last modified dates
 
         // TODO update docs where doc is new
 

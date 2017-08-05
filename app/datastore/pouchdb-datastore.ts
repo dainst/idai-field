@@ -228,19 +228,15 @@ export class PouchdbDatastore {
         const _ = (rs) => rs ? rs : new ResultSets();
 
         return (this.hasUsableConstraints(query) ?
-            this.performThem(query.constraints) : Promise.resolve(undefined))
+            this.performThem(query.constraints, new ResultSets()) : Promise.resolve(undefined))
 
             .then(rsets => {
-                if (PouchdbDatastore.cantSkipSimple(query, rsets)) {
-                    return this.performSimple(query)
-                        .then(sqr => Promise.resolve([_(rsets), sqr]))
-                } else {
-                    return Promise.resolve([_(rsets), undefined]);
-                }
+                if (PouchdbDatastore.cantSkipSimple(query, rsets != undefined)) {
+                    return this.performSimple(query, _(rsets));
+                } else return _(rsets);
             })
-            .then(r => {
-                if (r[1]) r[0].add(r[1]);
-                return this.generateOrderedResultList(r[0]);
+            .then(rsets => {
+                return this.generateOrderedResultList(rsets);
             });
     }
 
@@ -269,7 +265,7 @@ export class PouchdbDatastore {
         return !((!query.q || query.q == '') && !query.type && hasUsableConstraints);
     }
 
-    private performThem(constraints): Promise<ResultSets> {
+    private performThem(constraints, resultSets): Promise<ResultSets> {
 
         const ps = [];
         for (let constraint in constraints) {
@@ -288,7 +284,6 @@ export class PouchdbDatastore {
         }
         return Promise.all(ps).then(results => {
 
-            const resultSets = new ResultSets();
             for (let i in results) {
                 resultSets.add(results[i].rows.map(r => new Object({id: r.id, date: r.key[1]})));
             }
@@ -296,7 +291,7 @@ export class PouchdbDatastore {
         });
     }
 
-    private performSimple(query) {
+    private performSimple(query, rsets) {
 
         const opt = {
             reduce: false,
@@ -315,9 +310,8 @@ export class PouchdbDatastore {
 
         return this.db.query('fulltext', opt)
             .then(result => {
-                return Promise.resolve(
-                    this.uniqueIds(result.rows).map(r => new Object({id: r.id, date: r.key[2]}))
-                );
+                rsets.add(this.uniqueIds(result.rows).map(r => new Object({id: r.id, date: r.key[2]})));
+                return rsets;
             });
 
     }

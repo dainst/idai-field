@@ -228,7 +228,7 @@ export class PouchdbDatastore {
         const _ = (rs) => rs ? rs : new ResultSets();
 
         return (this.hasUsableConstraints(query) ?
-            this.queryWith(query.constraints) : Promise.resolve(undefined))
+            this.performThem(query.constraints) : Promise.resolve(undefined))
 
             .then(rsets => {
                 if (PouchdbDatastore.cantSkipSimple(query, rsets)) {
@@ -269,7 +269,7 @@ export class PouchdbDatastore {
         return !((!query.q || query.q == '') && !query.type && hasUsableConstraints);
     }
 
-    private queryWith(constraints): Promise<ResultSets> {
+    private performThem(constraints): Promise<ResultSets> {
 
         const ps = [];
         for (let constraint in constraints) {

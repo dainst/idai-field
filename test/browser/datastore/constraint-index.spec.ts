@@ -7,6 +7,8 @@ export function main() {
 
     describe('ConstraintIndex', () => {
 
+        let ci;
+
         function doc(id) {
             return {
                 resource: {
@@ -26,7 +28,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['1'];
             docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-            const ci = new ConstraintIndex([
+            ci = new ConstraintIndex([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
@@ -35,17 +37,22 @@ export function main() {
                 .toEqual(['2', '3']);
         });
 
-        it('one doc is recorded in multiple others', () => {
-
+        function oneDocRecordedInMultipleOthers() {
             const docs = [
                 doc('1')
             ];
             docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-            const ci = new ConstraintIndex([
+            ci = new ConstraintIndex([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
+            return docs;
+        }
+
+        it('one doc is recorded in multiple others', () => {
+
+            oneDocRecordedInMultipleOthers();
 
             expect(ci.get('resource.relations.isRecordedIn','2'))
                 .toEqual(['1']);
@@ -61,7 +68,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['2'];
             docs[0].resource.relations['liesWithin'] = ['3'];
 
-            const ci = new ConstraintIndex([
+            ci = new ConstraintIndex([
                 { path: 'resource.relations.liesWithin' } ,
                 { path: 'resource.relations.isRecordedIn' },
             ]);
@@ -79,7 +86,7 @@ export function main() {
                 doc('1')
             ];
 
-            const ci = new ConstraintIndex([
+            ci = new ConstraintIndex([
                 { path: 'resource.relations.liesWithin' }
             ]);
             ci.setDocs(docs);
@@ -88,16 +95,21 @@ export function main() {
                 .toEqual([]);
         });
 
-        it('work with non arrays', () => {
-
+        function docWithIdentifier() {
             const docs = [
                 doc('1')
             ];
 
-            const ci = new ConstraintIndex([
+            ci = new ConstraintIndex([
                 { path: 'resource.identifier', string: true }
             ]);
             ci.setDocs(docs);
+            return docs;
+        }
+
+        it('work with non arrays', () => {
+
+            docWithIdentifier();
 
             expect(ci.get('resource.identifier','identifier1'))
                 .toEqual(['1']);
@@ -105,17 +117,7 @@ export function main() {
 
         it('clear index', () => {
 
-            const docs = [
-                doc('1')
-            ];
-
-            const ci = new ConstraintIndex([
-                { path: 'resource.identifier', string: true }
-            ]);
-            ci.setDocs(docs);
-
-            expect(ci.get('resource.identifier','identifier1'))
-                .toEqual(['1']);
+            docWithIdentifier();
 
             ci.clear();
 
@@ -130,7 +132,7 @@ export function main() {
                 doc('1')
             ];
 
-            const ci = new ConstraintIndex([ ]);
+            ci = new ConstraintIndex([ ]);
             ci.setDocs(docs);
 
             expect(()=>{ci.get('resource.identifier','identifier1')})
@@ -139,16 +141,7 @@ export function main() {
 
         it('remove one doc', () => {
 
-            // TODO factor out duplicate code
-            const docs = [
-                doc('1')
-            ];
-
-            const ci = new ConstraintIndex([
-                { path: 'resource.identifier', string: true }
-            ]);
-            ci.setDocs(docs);
-            // TODO end
+            let docs = docWithIdentifier();
 
             expect(ci.get('resource.identifier','identifier1'))
                 .toEqual(['1']);
@@ -161,17 +154,7 @@ export function main() {
 
         it('remove where one doc was recorded in multiple docs for the same constraint', () => {
 
-            // TODO factor out duplicate code
-            const docs = [
-                doc('1')
-            ];
-            docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
-
-            const ci = new ConstraintIndex([
-                { path: 'resource.relations.isRecordedIn' }
-            ]);
-            ci.setDocs(docs);
-            // TODO end
+            let docs = oneDocRecordedInMultipleOthers();
 
             expect(ci.get('resource.relations.isRecordedIn','2'))
                 .toEqual(['1']);
@@ -185,6 +168,10 @@ export function main() {
             expect(ci.get('resource.relations.isRecordedIn','3'))
                 .toEqual([]);
         });
+
+        // TODO update docs where the relations change
+
+        // TODO update docs where doc is new
 
         // TODO remove the target docs, for example delete the trench, then also the findings recorded in in are not to be found
     });

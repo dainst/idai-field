@@ -48,6 +48,8 @@ export class ConstraintIndex {
         }
     }
 
+    // TODO get method which executes multiple constraints at the same time, taking query.constraints, returning resultsets struct, or undefined if no usable constraint
+
     public get(path, matchTerm): string[] {
         if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
 

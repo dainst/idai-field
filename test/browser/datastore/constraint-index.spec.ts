@@ -102,5 +102,25 @@ export function main() {
             expect(ci.get('resource.identifier','identifier1'))
                 .toEqual(['1']);
         });
+
+        it('clear index', () => {
+
+            const docs = [
+                doc('1')
+            ];
+
+            const ci = new ConstraintIndex([
+                { path: 'resource.identifier', string: true }
+            ]);
+            ci.setDocs(docs);
+
+            expect(ci.get('resource.identifier','identifier1'))
+                .toEqual(['1']);
+
+            ci.clear();
+
+            expect(ci.get('resource.identifier','identifier1'))
+                .toEqual([]);
+        });
     });
 }

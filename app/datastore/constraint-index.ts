@@ -3,12 +3,14 @@
  */
 export class ConstraintIndex {
 
-    private index = { };
+    private index = undefined;
 
     constructor(private pathsDefinitions) {
-        for (let pathDefinition of pathsDefinitions) {
-            this.index[pathDefinition.path] = { };
-        }
+        this.setUp();
+    }
+
+    public clear() {
+        this.setUp();
     }
 
     public setDocs(docs) {
@@ -40,6 +42,13 @@ export class ConstraintIndex {
             this.index[path][target] = [doc.resource.id];
         } else {
             this.index[path][target].push(doc.resource.id);
+        }
+    }
+
+    private setUp() {
+        this.index = { };
+        for (let pathDefinition of this.pathsDefinitions) {
+            this.index[pathDefinition.path] = { };
         }
     }
 

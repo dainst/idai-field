@@ -122,5 +122,19 @@ export function main() {
             expect(ci.get('resource.identifier','identifier1'))
                 .toEqual([]);
         });
+
+        // TODO later we do not throw but issue a warning and return []. now we try to stick to the existing interface, i.e. checking if the index exists with hasIndex
+        it('ask for non existing index', () => {
+
+            const docs = [
+                doc('1')
+            ];
+
+            const ci = new ConstraintIndex([ ]);
+            ci.setDocs(docs);
+
+            expect(()=>{ci.get('resource.identifier','identifier1')})
+                .toThrow("an index for 'resource.identifier' does not exist");
+        });
     });
 }

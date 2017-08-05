@@ -32,9 +32,18 @@ export class ConstraintIndex {
     }
 
     public get(path, matchTerm): string[] {
+        if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
+
         if (this.index[path][matchTerm]) {
             return this.index[path][matchTerm];
         } else return [];
+    }
+
+    public hasIndex(path) {
+        for (let pd of this.pathsDefinitions) {
+            if (pd.path == path) return true;
+        }
+        return false;
     }
 
     private addToIndex(doc, path, target) {

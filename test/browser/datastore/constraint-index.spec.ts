@@ -156,11 +156,6 @@ export function main() {
 
             let docs = oneDocRecordedInMultipleOthers();
 
-            expect(ci.get('resource.relations.isRecordedIn','2'))
-                .toEqual(['1']);
-            expect(ci.get('resource.relations.isRecordedIn','3'))
-                .toEqual(['1']);
-
             ci.remove(docs[0]);
 
             expect(ci.get('resource.relations.isRecordedIn','2'))

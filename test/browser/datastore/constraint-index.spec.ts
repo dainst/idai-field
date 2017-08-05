@@ -37,7 +37,7 @@ export function main() {
                 .toEqual(['2', '3']);
         });
 
-        function oneDocRecordedInMultipleOthers() {
+        function docWithMultipleConstraintTargets() {
             const docs = [
                 doc('1')
             ];
@@ -52,7 +52,7 @@ export function main() {
 
         it('one doc is recorded in multiple others', () => {
 
-            oneDocRecordedInMultipleOthers();
+            docWithMultipleConstraintTargets();
 
             expect(ci.get('resource.relations.isRecordedIn', '2'))
                 .toEqual(['1']);
@@ -60,8 +60,7 @@ export function main() {
                 .toEqual(['1']);
         });
 
-        it('works for multiple constrains', () => {
-
+        function docWithMultipleConstraints() {
             const docs = [
                 doc('1')
             ];
@@ -71,8 +70,15 @@ export function main() {
             ci = new ConstraintIndex([
                 { path: 'resource.relations.liesWithin' } ,
                 { path: 'resource.relations.isRecordedIn' },
+                { path: 'resource.identifier', string: true },
             ]);
             ci.setDocs(docs);
+            return docs;
+        }
+
+        it('works for multiple constrains', () => {
+
+            docWithMultipleConstraints();
 
             expect(ci.get('resource.relations.liesWithin', '3'))
                 .toEqual(['1']);
@@ -139,19 +145,23 @@ export function main() {
                 .toThrow("an index for 'resource.identifier' does not exist");
         });
 
-        it('remove one doc', () => {
-    
-            const doc = docWithIdentifier()[0];
+        it('remove doc', () => {
+
+            const doc = docWithMultipleConstraints()[0];
 
             ci.remove(doc);
 
             expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([]);
+                .toEqual([ ]);
+            expect(ci.get('resource.relations.isRecordedIn', '2'))
+                .toEqual([ ]);
+            expect(ci.get('resource.relations.liesWithin', '3'))
+                .toEqual([ ]);
         });
 
         it('remove where one doc was recorded in multiple docs for the same constraint', () => {
 
-            const doc = oneDocRecordedInMultipleOthers()[0];
+            const doc = docWithMultipleConstraintTargets()[0];
 
             ci.remove(doc);
 
@@ -163,21 +173,28 @@ export function main() {
 
         it('update docs where the relations change', () => {
 
-            let doc = docWithIdentifier()[0];
-            doc.resource.identifier = 'identifier2';
+            let doc = docWithMultipleConstraints()[0];
 
+            doc.resource.relations['isRecordedIn'] = ['4'];
+            doc.resource.relations['liesWithin'] = ['5'];
+            doc.resource.identifier = 'identifier2';
             ci.update(doc);
 
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([ ]);
+            expect(ci.get('resource.relations.isRecordedIn', '2'))
+                .toEqual([ ]);
+            expect(ci.get('resource.relations.liesWithin', '3'))
+                .toEqual([ ]);
+
             expect(ci.get('resource.identifier', 'identifier2'))
                 .toEqual(['1']);
+            expect(ci.get('resource.relations.isRecordedIn', '4'))
+                .toEqual(['1']);
+            expect(ci.get('resource.relations.liesWithin', '5'))
+                .toEqual(['1']);
         });
-
-        // TODO do remove it also with an array type path
-
-        // TODO remove from multiple indices
-
+        
         // TODO update docs where doc is new
 
         // TODO remove the target docs, for example delete the trench, then also the findings recorded in in are not to be found

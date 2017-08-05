@@ -11,6 +11,7 @@ export function main() {
             return {
                 resource: {
                     id: id,
+                    identifier: 'identifier1',
                     relations: { } // TODO test for undefined relations
                 }
             }
@@ -26,7 +27,7 @@ export function main() {
             docs[1].resource.relations['isRecordedIn'] = ['1'];
 
             const ci = new ConstraintIndex([
-                'resource.relations.isRecordedIn'
+                { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
 
@@ -42,7 +43,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
             const ci = new ConstraintIndex([
-                'resource.relations.isRecordedIn'
+                { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
 
@@ -61,8 +62,8 @@ export function main() {
             docs[0].resource.relations['liesWithin'] = ['3'];
 
             const ci = new ConstraintIndex([
-                'resource.relations.liesWithin',
-                'resource.relations.isRecordedIn',
+                { path: 'resource.relations.liesWithin' } ,
+                { path: 'resource.relations.isRecordedIn' },
             ]);
             ci.setDocs(docs);
 
@@ -79,12 +80,27 @@ export function main() {
             ];
 
             const ci = new ConstraintIndex([
-                'resource.relations.liesWithin'
+                { path: 'resource.relations.liesWithin' }
             ]);
             ci.setDocs(docs);
 
             expect(ci.get('resource.relations.liesWithin','3'))
                 .toEqual([]);
+        });
+
+        it('work with non arrays', () => {
+
+            const docs = [
+                doc('1')
+            ];
+
+            const ci = new ConstraintIndex([
+                { path: 'resource.identifier', string: true }
+            ]);
+            ci.setDocs(docs);
+
+            expect(ci.get('resource.identifier','identifier1'))
+                .toEqual(['1']);
         });
     });
 }

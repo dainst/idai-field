@@ -5,18 +5,24 @@ export class ConstraintIndex {
 
     private index = { };
 
-    constructor(private paths) {
-        for (let path of paths) {
-            this.index[path] = { };
+    constructor(private pathsDefinitions) {
+        for (let pathDefinition of pathsDefinitions) {
+            this.index[pathDefinition.path] = { };
         }
     }
 
     public setDocs(docs) {
-        for (let path of this.paths) {
+        for (let pathDef of this.pathsDefinitions) {
             for (let doc of docs) {
-                if (this.getElForPathIn(doc, path)) {
-                    for (let target of this.getElForPathIn(doc, path)) {
-                        this.addToIndex(doc, path, target);
+                if (this.getElForPathIn(doc, pathDef.path)) {
+
+                    if (pathDef.string) {
+                        this.addToIndex(doc, pathDef.path,
+                            this.getElForPathIn(doc, pathDef.path));
+                    } else {
+                        for (let target of this.getElForPathIn(doc, pathDef.path)) {
+                            this.addToIndex(doc, pathDef.path, target);
+                        }
                     }
                 }
             }

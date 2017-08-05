@@ -51,10 +51,8 @@ export class ConstraintIndex {
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
-                if (this.index[pathDef.path][key].indexOf(doc.resource.id) != -1) {
-                    // TODO there should be only one occurence of the id to remove
-                    this.index[pathDef.path][key].splice(this.index[pathDef.path][key].indexOf(doc.resource.id), 1);
-                }
+                if (this.index[pathDef.path][key][doc.resource.id])
+                    delete this.index[pathDef.path][key][doc.resource.id];
             }
         }
     }
@@ -68,11 +66,11 @@ export class ConstraintIndex {
 
     // TODO get method which executes multiple constraints at the same time, taking query.constraints, returning resultsets struct, or undefined if no usable constraint
 
-    public get(path, matchTerm): string[] {
+    public get(path, matchTerm): any[] {
         if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
 
         if (this.index[path][matchTerm]) {
-            return this.index[path][matchTerm].map(id => new Object({id:id, date: this.dates[id]}));
+            return Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]}));
         } else return [];
     }
 
@@ -83,12 +81,9 @@ export class ConstraintIndex {
         return false;
     }
 
-    private addToIndex(doc, path, target) { // TODO prevent adding a doc more than once
-        if (!this.index[path][target]) {
-            this.index[path][target] = [doc.resource.id]; // TODO this can be done with maps, e.g. [target][doc.resource.id] = true, in order to raise performance
-        } else {
-            this.index[path][target].push(doc.resource.id);
-        }
+    private addToIndex(doc, path, target) {
+        if (!this.index[path][target]) this.index[path][target] = {};
+        this.index[path][target][doc.resource.id] = true;
     }
 
     private setUp() {

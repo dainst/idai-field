@@ -194,7 +194,11 @@ export function main() {
             expect(ci.get('resource.relations.liesWithin', '5'))
                 .toEqual(['1']);
         });
-        
+
+        // TODO make UNKOWN queries possible
+
+        // TODO wrap the ids with last modified dates
+
         // TODO update docs where doc is new
 
         // TODO remove the target docs, for example delete the trench, then also the findings recorded in in are not to be found

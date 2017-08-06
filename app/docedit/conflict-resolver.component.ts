@@ -6,7 +6,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Action} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
-import {DiffUtility} from '../util/diff-utility';
+import {DiffUtility} from '../model/diff-utility';
 
 const moment = require('moment');
 

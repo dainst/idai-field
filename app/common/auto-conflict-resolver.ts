@@ -4,7 +4,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
-import {DiffUtility} from '../util/diff-utility';
+import {DiffUtility} from '../model/diff-utility';
+import {Util} from "../util/util";
 
 /**
  * @author Thomas Kleinke
@@ -193,11 +194,11 @@ export class AutoConflictResolver {
             }
         }
 
-        if (DiffUtility.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (Util.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return conflictedRevision;
         }
 
-        if (DiffUtility.compareFields(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (Util.compareFields(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return latestRevision;
         }
 
@@ -209,12 +210,12 @@ export class AutoConflictResolver {
                                                 previousRevision: IdaiFieldDocument,
                                                 relationName: string): IdaiFieldDocument {
 
-        if (DiffUtility.compareFields(latestRevision.resource.relations[relationName],
+        if (Util.compareFields(latestRevision.resource.relations[relationName],
                 previousRevision.resource.relations[relationName])) {
             return conflictedRevision;
         }
 
-        if (DiffUtility.compareFields(conflictedRevision.resource.relations[relationName],
+        if (Util.compareFields(conflictedRevision.resource.relations[relationName],
                 previousRevision.resource.relations[relationName])) {
             return latestRevision;
         }

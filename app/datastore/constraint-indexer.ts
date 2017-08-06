@@ -14,15 +14,6 @@ export class ConstraintIndexer {
         this.setUp();
     }
 
-    // TODO maybe we only need the update method
-    public setDocs(docs) {
-        for (let pathDef of this.pathsDefinitions) {
-            for (let doc of docs) {
-                this.build(doc, pathDef)
-            }
-        }
-    }
-
     private build(doc, pathDef) {
 
         let lastModified = doc.created.date;

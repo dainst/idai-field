@@ -44,7 +44,8 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
+            ci.update(docs[1]);
 
             expect(ci.get('resource.relations.isRecordedIn', '1'))
                 .toEqual([{id: '2', date: '2018-01-01'}, {id: '3', date: '2018-01-01'}]);
@@ -59,7 +60,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
             return docs;
         }
 
@@ -85,7 +86,7 @@ export function main() {
                 { path: 'resource.relations.isRecordedIn' },
                 { path: 'resource.identifier', string: true },
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
             return docs;
         }
 
@@ -108,7 +109,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' }
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
 
             expect(ci.get('resource.relations.liesWithin', '3'))
                 .toEqual([ ]);
@@ -122,7 +123,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.identifier', string: true }
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
             return docs;
         }
 
@@ -146,11 +147,7 @@ export function main() {
 
         it('ask for non existing index', () => {
 
-            const docs = [
-            ];
-
             ci = new ConstraintIndexer([ ]);
-            ci.setDocs(docs);
 
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual(undefined);
@@ -158,11 +155,7 @@ export function main() {
 
         it('ask without constraints', () => {
 
-            const docs = [
-            ];
-
             ci = new ConstraintIndexer([ ]);
-            ci.setDocs(docs);
 
             expect(ci.get(undefined))
                 .toEqual(undefined);
@@ -170,13 +163,9 @@ export function main() {
 
         it('ask for one existing index and one nonexisting index', () => {
 
-            const docs = [
-            ];
-
             ci = new ConstraintIndexer([
                 { path: 'resource.identifier' }
             ]);
-            ci.setDocs(docs);
 
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([ ]);
@@ -243,7 +232,8 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' } ,
             ]);
-            ci.setDocs(docs);
+            ci.update(docs[0]);
+            ci.update(docs[1]);
 
             expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
                 .toEqual([{id: '2', date: '2018-01-01'}]);

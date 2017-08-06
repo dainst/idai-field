@@ -140,18 +140,42 @@ export function main() {
                 .toEqual([ ]);
         });
 
-        // TODO later we do not throw but issue a warning and return []. now we try to stick to the existing interface, i.e. checking if the index exists with hasIndex
         it('ask for non existing index', () => {
 
             const docs = [
-                doc('1')
             ];
 
             ci = new ConstraintIndex([ ]);
             ci.setDocs(docs);
 
-            expect(()=>{ci.get({'resource.identifier': 'identifier1'}).intersect(r=>r.id)})
-                .toThrow("an index for 'resource.identifier' does not exist");
+            expect(ci.get({'resource.identifier': 'identifier1'}))
+                .toEqual(undefined);
+        });
+
+        it('ask without constraints', () => {
+
+            const docs = [
+            ];
+
+            ci = new ConstraintIndex([ ]);
+            ci.setDocs(docs);
+
+            expect(ci.get(undefined))
+                .toEqual(undefined);
+        });
+
+        it('ask for one existing index and one nonexisting index', () => {
+
+            const docs = [
+            ];
+
+            ci = new ConstraintIndex([
+                { path: 'resource.identifier' }
+            ]);
+            ci.setDocs(docs);
+
+            expect(ci.get({'resource.identifier': 'identifier1'}).intersect(r=>r.id))
+                .toEqual([ ]);
         });
 
         it('remove doc', () => {

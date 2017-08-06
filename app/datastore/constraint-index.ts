@@ -49,8 +49,6 @@ export class ConstraintIndex {
 
     }
 
-    // TODO factor out duplicate code with setDocs
-    // TODO remove also from dates
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
@@ -67,17 +65,18 @@ export class ConstraintIndex {
         }
     }
 
-    // TODO get method which executes multiple constraints at the same time, taking query.constraints, returning resultsets struct, or undefined if no usable constraint
-
     public get(constraints): ResultSets {
+        if (!constraints) return undefined;
 
         const rsets = new ResultSets();
 
+        let legalQueries = 0;
         for (let path of Object.keys(constraints)) {
+            if (!this.hasIndex(path)) continue;
+            // TODO issue warning
+            legalQueries++;
 
             let matchTerm = constraints[path];
-            if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
-
             if (this.index[path][matchTerm]) {
                 rsets.add(Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]})));
             } else {
@@ -85,10 +84,11 @@ export class ConstraintIndex {
             }
         }
 
+        if (legalQueries == 0) return undefined;
         return rsets;
     }
 
-    public hasIndex(path) {
+    private hasIndex(path) {
         for (let pd of this.pathsDefinitions) {
             if (pd.path == path) return true;
         }

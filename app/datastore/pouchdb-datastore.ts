@@ -225,7 +225,7 @@ export class PouchdbDatastore {
 
         return this.db.ready()
             .then(() => {
-                let rsets = this.constraintIndexer.get(query.constraints);
+                let rsets = this.performThem(query.constraints);
                 if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
                 else return this.performSimple(query, rsets ? rsets : new ResultSets());
             })
@@ -238,6 +238,25 @@ export class PouchdbDatastore {
         return theResultSets.intersect(e => e.id)
             .sort(this.comp('date'))
             .map(e => e['id']);
+    }
+
+    /**
+     * @param constraints
+     * @returns {any} undefined if there is no usable constraint
+     */
+    private performThem(constraints) {
+        if (!constraints) return undefined;
+        const rsets = new ResultSets();
+        let usableConstraints = 0;
+        for (let constraint of Object.keys(constraints)) {
+            let result = this.constraintIndexer.get(constraint, constraints[constraint]);
+            if (result) {
+                rsets.add(result);
+                usableConstraints++;
+            }
+        }
+        if (usableConstraints == 0) return undefined;
+        return rsets;
     }
 
     private comp(sortOn) {

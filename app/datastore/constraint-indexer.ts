@@ -1,4 +1,3 @@
-import {ResultSets} from "../util/result-sets";
 /**
  * @author Daniel de Oliveira
  */
@@ -66,29 +65,18 @@ export class ConstraintIndexer {
         }
     }
 
-    public get(constraints): ResultSets {
-        if (!constraints) return undefined;
+    public get(path, matchTerm): any {
 
-        const rsets = new ResultSets();
-
-        let legalQueries = 0;
-        for (let path of Object.keys(constraints)) {
-            if (!this.hasIndex(path)) {
-                console.warn("ignoring unknown constraint '"+path+"'");
-                continue;
-            }
-            legalQueries++;
-
-            let matchTerm = constraints[path];
-            if (this.index[path][matchTerm]) {
-                rsets.add(Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]})));
-            } else {
-                rsets.add([]);
-            }
+        if (!this.hasIndex(path)) {
+            console.warn("ignoring unknown constraint '"+path+"'");
+            return undefined;
         }
 
-        if (legalQueries == 0) return undefined;
-        return rsets;
+        if (this.index[path][matchTerm]) {
+            return Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]}));
+        } else {
+            return [];
+        }
     }
 
     private hasIndex(path) {

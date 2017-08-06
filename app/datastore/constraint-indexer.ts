@@ -16,29 +16,22 @@ export class ConstraintIndexer {
 
     private build(doc, pathDef) {
 
-        let lastModified = doc.created.date;
-        if (doc.modified && doc.modified.length > 0)
-            lastModified = doc.modified[doc.modified.length - 1].date;
+        this.dates[doc.resource.id] = ConstraintIndexer.getLastModified(doc);
 
-        this.dates[doc.resource.id] = lastModified;
-
-
-
-        if (this.getElForPathIn(doc, pathDef.path)) {
-
-            if (pathDef.string) {
-                this.addToIndex(doc, pathDef.path,
-                    this.getElForPathIn(doc, pathDef.path));
-            } else {
-                for (let target of this.getElForPathIn(doc, pathDef.path)) {
-                    this.addToIndex(doc, pathDef.path, target);
-                }
-            }
-        } else {
-            this.addToIndex(doc, pathDef.path, 'UNKOWN');
+        if (!ConstraintIndexer.getElForPathIn(doc, pathDef.path)) {
+            return this.addToIndex(doc, pathDef.path, 'UNKOWN');
         }
 
+        if (pathDef.string) {
+            this.addToIndex(doc, pathDef.path,
+                ConstraintIndexer.getElForPathIn(doc, pathDef.path));
+        } else {
+            for (let target of ConstraintIndexer.getElForPathIn(doc, pathDef.path)) {
+                this.addToIndex(doc, pathDef.path, target);
+            }
+        }
     }
+
 
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
@@ -90,12 +83,18 @@ export class ConstraintIndexer {
         }
     }
 
-    private getElForPathIn(doc, path) {
+    private static getElForPathIn(doc, path) {
         let result = doc;
         for (let segment of path.split('.')) {
             if (result[segment]) result = result[segment];
             else result = undefined;
         }
         return result;
+    }
+
+    private static getLastModified(doc) {
+        if (doc.modified && doc.modified.length > 0) {
+            return doc.modified[doc.modified.length - 1].date;
+        } else return doc.created.date;
     }
 }

@@ -42,7 +42,7 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.isRecordedIn', '1'))
+            expect(ci.get({'resource.relations.isRecordedIn': '1'}))
                 .toEqual([{id: '2', date: '2018-01-01'}, {id: '3', date: '2018-01-01'}]);
         });
 
@@ -63,9 +63,9 @@ export function main() {
 
             docWithMultipleConstraintTargets();
 
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
+            expect(ci.get({'resource.relations.isRecordedIn': '2'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
-            expect(ci.get('resource.relations.isRecordedIn', '3'))
+            expect(ci.get({'resource.relations.isRecordedIn': '3'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
@@ -89,9 +89,9 @@ export function main() {
 
             docWithMultipleConstraints();
 
-            expect(ci.get('resource.relations.liesWithin', '3'))
+            expect(ci.get({'resource.relations.liesWithin': '3'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
+            expect(ci.get({'resource.relations.isRecordedIn': '2'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
@@ -106,7 +106,7 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.liesWithin', '3'))
+            expect(ci.get({'resource.relations.liesWithin': '3'}))
                 .toEqual([]);
         });
 
@@ -126,7 +126,7 @@ export function main() {
 
             docWithIdentifier();
 
-            expect(ci.get('resource.identifier', 'identifier1'))
+            expect(ci.get({'resource.identifier': 'identifier1'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
@@ -136,7 +136,7 @@ export function main() {
 
             ci.clear();
 
-            expect(ci.get('resource.identifier', 'identifier1'))
+            expect(ci.get({'resource.identifier': 'identifier1'}))
                 .toEqual([ ]);
         });
 
@@ -150,7 +150,7 @@ export function main() {
             ci = new ConstraintIndex([ ]);
             ci.setDocs(docs);
 
-            expect(()=>{ci.get('resource.identifier', 'identifier1')})
+            expect(()=>{ci.get({'resource.identifier': 'identifier1'})})
                 .toThrow("an index for 'resource.identifier' does not exist");
         });
 
@@ -160,11 +160,11 @@ export function main() {
 
             ci.remove(doc);
 
-            expect(ci.get('resource.identifier', 'identifier1'))
+            expect(ci.get({'resource.identifier': 'identifier1'}))
                 .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
+            expect(ci.get({'resource.relations.isRecordedIn': '2'}))
                 .toEqual([ ]);
-            expect(ci.get('resource.relations.liesWithin', '3'))
+            expect(ci.get({'resource.relations.liesWithin': '3'}))
                 .toEqual([ ]);
         });
 
@@ -174,9 +174,9 @@ export function main() {
 
             ci.remove(doc);
 
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
+            expect(ci.get({'resource.relations.isRecordedIn': '2'}))
                 .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '3'))
+            expect(ci.get({'resource.relations.isRecordedIn': '3'}))
                 .toEqual([ ]);
         });
 
@@ -189,18 +189,18 @@ export function main() {
             doc.resource.identifier = 'identifier2';
             ci.update(doc);
 
-            expect(ci.get('resource.identifier', 'identifier1'))
+            expect(ci.get({'resource.identifier': 'identifier1'}))
                 .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
+            expect(ci.get({'resource.relations.isRecordedIn': '2'}))
                 .toEqual([ ]);
-            expect(ci.get('resource.relations.liesWithin', '3'))
+            expect(ci.get({'resource.relations.liesWithin': '3'}))
                 .toEqual([ ]);
 
-            expect(ci.get('resource.identifier', 'identifier2'))
+            expect(ci.get({'resource.identifier': 'identifier2'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
-            expect(ci.get('resource.relations.isRecordedIn', '4'))
+            expect(ci.get({'resource.relations.isRecordedIn': '4'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
-            expect(ci.get('resource.relations.liesWithin', '5'))
+            expect(ci.get({'resource.relations.liesWithin': '5'}))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
@@ -217,7 +217,7 @@ export function main() {
             ]);
             ci.setDocs(docs);
 
-            expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
+            expect(ci.get({'resource.relations.liesWithin': 'UNKOWN'}))
                 .toEqual([{id: '2', date: '2018-01-01'}]);
         });
 

@@ -1,4 +1,5 @@
 import {Util} from "../util/util";
+import {ModelUtil} from "../model/model-util";
 /**
  * @author Daniel de Oliveira
  */
@@ -48,7 +49,7 @@ export class ConstraintIndexer {
 
     private build(doc, pathDef) {
 
-        this.dates[doc.resource.id] = ConstraintIndexer.getLastModified(doc);
+        this.dates[doc.resource.id] = ModelUtil.getLastModified(doc);
 
         if (!Util.getElForPathIn(doc, pathDef.path)) {
             return this.addToIndex(doc, pathDef.path, 'UNKOWN');
@@ -82,11 +83,5 @@ export class ConstraintIndexer {
         for (let pathDefinition of this.pathsDefinitions) {
             this.index[pathDefinition.path] = { };
         }
-    }
-
-    private static getLastModified(doc) {
-        if (doc.modified && doc.modified.length > 0) {
-            return doc.modified[doc.modified.length - 1].date;
-        } else return doc.created.date;
     }
 }

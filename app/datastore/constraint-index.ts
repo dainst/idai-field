@@ -1,3 +1,4 @@
+import {ResultSets} from "../util/result-sets";
 /**
  * @author Daniel de Oliveira
  */
@@ -68,15 +69,23 @@ export class ConstraintIndex {
 
     // TODO get method which executes multiple constraints at the same time, taking query.constraints, returning resultsets struct, or undefined if no usable constraint
 
-    public get(constraints): any[] {
-        let path = Object.keys(constraints)[0];
-        let matchTerm = constraints[Object.keys(constraints)[0]];
+    public get(constraints): ResultSets {
 
-        if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
+        const rsets = new ResultSets();
 
-        if (this.index[path][matchTerm]) {
-            return Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]}));
-        } else return [];
+        for (let path of Object.keys(constraints)) {
+
+            let matchTerm = constraints[path];
+            if (!this.hasIndex(path)) throw "an index for '"+path+"' does not exist";
+
+            if (this.index[path][matchTerm]) {
+                rsets.add(Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]})));
+            } else {
+                rsets.add([]);
+            }
+        }
+
+        return rsets;
     }
 
     public hasIndex(path) {

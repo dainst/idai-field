@@ -1,3 +1,4 @@
+import {Util} from "../util/util";
 /**
  * @author Daniel de Oliveira
  */
@@ -13,7 +14,7 @@ export class ConstraintIndexer {
     public clear() {
         this.setUp();
     }
-    
+
     public update(doc) {
         this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
@@ -49,15 +50,15 @@ export class ConstraintIndexer {
 
         this.dates[doc.resource.id] = ConstraintIndexer.getLastModified(doc);
 
-        if (!ConstraintIndexer.getElForPathIn(doc, pathDef.path)) {
+        if (!Util.getElForPathIn(doc, pathDef.path)) {
             return this.addToIndex(doc, pathDef.path, 'UNKOWN');
         }
 
         if (pathDef.string) {
             this.addToIndex(doc, pathDef.path,
-                ConstraintIndexer.getElForPathIn(doc, pathDef.path));
+                Util.getElForPathIn(doc, pathDef.path));
         } else {
-            for (let target of ConstraintIndexer.getElForPathIn(doc, pathDef.path)) {
+            for (let target of Util.getElForPathIn(doc, pathDef.path)) {
                 this.addToIndex(doc, pathDef.path, target);
             }
         }
@@ -81,15 +82,6 @@ export class ConstraintIndexer {
         for (let pathDefinition of this.pathsDefinitions) {
             this.index[pathDefinition.path] = { };
         }
-    }
-
-    private static getElForPathIn(doc, path) {
-        let result = doc;
-        for (let segment of path.split('.')) {
-            if (result[segment]) result = result[segment];
-            else result = undefined;
-        }
-        return result;
     }
 
     private static getLastModified(doc) {

@@ -13,6 +13,37 @@ export class ConstraintIndexer {
     public clear() {
         this.setUp();
     }
+    
+    public update(doc) {
+        this.remove(doc);
+        for (let pathDef of this.pathsDefinitions) {
+            this.build(doc, pathDef);
+        }
+    }
+
+    public remove(doc) {
+        for (let pathDef of this.pathsDefinitions) {
+            for (let key of Object.keys(this.index[pathDef.path])) {
+                if (this.index[pathDef.path][key][doc.resource.id])
+                    delete this.index[pathDef.path][key][doc.resource.id];
+            }
+        }
+    }
+
+    public get(path, matchTerm): any {
+
+        if (!this.hasIndex(path)) {
+            console.warn("ignoring unknown constraint '"+path+"'");
+            return undefined;
+        }
+
+        const result = this.index[path][matchTerm];
+        if (result) {
+            return Object.keys(result).map(id => new Object({id:id, date: this.dates[id]}));
+        } else {
+            return [];
+        }
+    }
 
     private build(doc, pathDef) {
 
@@ -29,38 +60,6 @@ export class ConstraintIndexer {
             for (let target of ConstraintIndexer.getElForPathIn(doc, pathDef.path)) {
                 this.addToIndex(doc, pathDef.path, target);
             }
-        }
-    }
-
-
-    public remove(doc) {
-        for (let pathDef of this.pathsDefinitions) {
-            for (let key of Object.keys(this.index[pathDef.path])) {
-                if (this.index[pathDef.path][key][doc.resource.id])
-                    delete this.index[pathDef.path][key][doc.resource.id];
-            }
-        }
-    }
-
-    public update(doc) {
-        this.remove(doc);
-        for (let pathDef of this.pathsDefinitions) {
-            this.build(doc, pathDef);
-        }
-    }
-
-    public get(path, matchTerm): any {
-
-        if (!this.hasIndex(path)) {
-            console.warn("ignoring unknown constraint '"+path+"'");
-            return undefined;
-        }
-
-        const result = this.index[path][matchTerm];
-        if (result) {
-            return Object.keys(result).map(id => new Object({id:id, date: this.dates[id]}));
-        } else {
-            return [];
         }
     }
 

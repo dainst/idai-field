@@ -56,8 +56,9 @@ export class ConstraintIndexer {
             return undefined;
         }
 
-        if (this.index[path][matchTerm]) {
-            return Object.keys(this.index[path][matchTerm]).map(id => new Object({id:id, date: this.dates[id]}));
+        const result = this.index[path][matchTerm];
+        if (result) {
+            return Object.keys(result).map(id => new Object({id:id, date: this.dates[id]}));
         } else {
             return [];
         }

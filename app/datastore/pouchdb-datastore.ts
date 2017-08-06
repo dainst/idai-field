@@ -8,6 +8,7 @@ import {M} from '../m';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "../util/result-sets";
+import {ConstraintIndexer} from "./constraint-indexer";
 
 /**
  * @author Sebastian Cuy
@@ -20,7 +21,11 @@ export class PouchdbDatastore {
     private observers = [];
     private config: ProjectConfiguration;
 
-    constructor(configLoader: ConfigLoader, private pouchdbManager: PouchdbManager) {
+    constructor(
+        configLoader: ConfigLoader,
+        private pouchdbManager: PouchdbManager,
+        private constraintIndexer: ConstraintIndexer
+        ) {
 
         this.db = pouchdbManager.getDb();
         configLoader.getProjectConfiguration()
@@ -58,6 +63,7 @@ export class PouchdbDatastore {
             })
             .then(result => {
 
+                this.constraintIndexer.update(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
@@ -87,6 +93,7 @@ export class PouchdbDatastore {
 
                 return this.db.put(document, { force: true }).then(result => {
 
+                    this.constraintIndexer.update(document);
                     document['_rev'] = result['rev'];
                     return Promise.resolve(this.cleanDoc(document));
 
@@ -153,6 +160,8 @@ export class PouchdbDatastore {
             return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
         }
 
+        this.constraintIndexer.remove(doc);
+
         return this.get(doc.resource.id).then(
             () => this.db.remove(doc)
                 .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
@@ -203,38 +212,26 @@ export class PouchdbDatastore {
         if (!query) return Promise.resolve([]);
 
         return this.perform(query)
+            .then(a => {
+                return a;
+            })
             .catch(err => {
                 console.error(err);
                 return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
             })
     }
 
-    private hasUsableConstraints(query) {
+    private perform(query): Promise<any> {
 
-        if (!query.constraints) return false;
-
-        let validConstraints = 0;
-        for (let constraint in query.constraints) {
-            if (!this.pouchdbManager.getIndexCreator().hasIndex(constraint)) {
-                console.warn('ignoring unknown constraint',constraint);
-                delete query.constraints[constraint];
-            } else validConstraints++;
-        }
-        return (validConstraints > 0);
-    }
-
-    private perform(query) {
-
-        return (this.hasUsableConstraints(query) ?
-            this.performThem(query.constraints, new ResultSets()) : Promise.resolve(undefined))
-
-                .then(rsets => {
-                    if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
-                    else return this.performSimple(query, rsets ? rsets : new ResultSets());
-                })
-                .then(rsets => {
-                    return this.generateOrderedResultList(rsets);
-                });
+        return this.db.ready()
+            .then(() => {
+                let rsets = this.constraintIndexer.get(query.constraints);
+                if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
+                else return this.performSimple(query, rsets ? rsets : new ResultSets());
+            })
+            .then(rsets => {
+                return <any> this.generateOrderedResultList(rsets);
+            });
     }
 
     private generateOrderedResultList(theResultSets: ResultSets) {
@@ -255,32 +252,6 @@ export class PouchdbDatastore {
 
     private static isEmpty(query) {
         return ((!query.q || query.q == '') && !query.type);
-    }
-
-    private performThem(constraints, resultSets): Promise<ResultSets> {
-
-        const ps = [];
-        for (let constraint in constraints) {
-            const opt = {
-                reduce: false,
-                include_docs: false,
-                conflicts: true,
-                startkey: ['UNKNOWN'],
-                endkey: ['UNKNOWN', {}]
-            };
-            if (constraints[constraint] != undefined) {
-                opt['startkey'] = [constraints[constraint]];
-                opt['endkey'] = [constraints[constraint], {}];
-            }
-            ps.push(this.db.query(constraint, opt));
-        }
-        return Promise.all(ps).then(results => {
-
-            for (let i in results) {
-                resultSets.add(results[i].rows.map(r => new Object({id: r.id, date: r.key[1]})));
-            }
-            return resultSets;
-        });
     }
 
     private performSimple(query, rsets) {
@@ -384,6 +355,13 @@ export class PouchdbDatastore {
             }).on('change', change => {
                 if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.doc) return;
+
+                if (change.doc._deleted) {
+                    this.constraintIndexer.remove({resource:{id:change.doc._id}})
+                } else {
+                    this.constraintIndexer.update(change.doc);
+                }
+
                 if (this.observers && Array.isArray(this.observers)) this.observers.forEach(observer => {
                     if (observer && (observer.next != undefined)) {
                         observer.next(this.cleanDoc(change.doc));

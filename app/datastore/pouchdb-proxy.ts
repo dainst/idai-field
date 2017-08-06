@@ -6,6 +6,10 @@ export class PouchdbProxy {
         this.rdy = rdy;
     }
 
+    public ready() {
+        return this.rdy;
+    }
+
     public put(document, options?): Promise<any> {
         return this.rdy.then(db => db.put(document, options));
     }
@@ -18,6 +22,7 @@ export class PouchdbProxy {
         return this.rdy.then(db => db.query(index, opts));
     }
 
+    // TODO remove it
     public allDocs(cb): Promise<any> {
         return this.rdy.then(db => db.allDocs(cb));
     }

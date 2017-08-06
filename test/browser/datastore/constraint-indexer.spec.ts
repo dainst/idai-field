@@ -1,11 +1,11 @@
-import {ConstraintIndex} from "../../../app/datastore/constraint-index";
+import {ConstraintIndexer} from "../../../app/datastore/constraint-indexer";
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('ConstraintIndex', () => {
+    describe('ConstraintIndexer', () => {
 
         let ci;
 
@@ -28,6 +28,10 @@ export function main() {
             }
         }
 
+        beforeEach(() => {
+            spyOn(console, 'warn');
+        });
+
         it('multiple docs are recorded in another', () => {
 
             const docs = [
@@ -37,7 +41,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['1'];
             docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
@@ -52,7 +56,7 @@ export function main() {
             ];
             docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
             ci.setDocs(docs);
@@ -76,7 +80,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['2'];
             docs[0].resource.relations['liesWithin'] = ['3'];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' } ,
                 { path: 'resource.relations.isRecordedIn' },
                 { path: 'resource.identifier', string: true },
@@ -101,7 +105,7 @@ export function main() {
                 doc('1')
             ];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' }
             ]);
             ci.setDocs(docs);
@@ -115,7 +119,7 @@ export function main() {
                 doc('1')
             ];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.identifier', string: true }
             ]);
             ci.setDocs(docs);
@@ -145,7 +149,7 @@ export function main() {
             const docs = [
             ];
 
-            ci = new ConstraintIndex([ ]);
+            ci = new ConstraintIndexer([ ]);
             ci.setDocs(docs);
 
             expect(ci.get({'resource.identifier': 'identifier1'}))
@@ -157,7 +161,7 @@ export function main() {
             const docs = [
             ];
 
-            ci = new ConstraintIndex([ ]);
+            ci = new ConstraintIndexer([ ]);
             ci.setDocs(docs);
 
             expect(ci.get(undefined))
@@ -169,7 +173,7 @@ export function main() {
             const docs = [
             ];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.identifier' }
             ]);
             ci.setDocs(docs);
@@ -236,7 +240,7 @@ export function main() {
             ];
             docs[0].resource.relations['liesWithin'] = ['3'];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' } ,
             ]);
             ci.setDocs(docs);
@@ -255,7 +259,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['2'];
             docs[1].resource.relations['isRecordedIn'] = ['2'];
 
-            ci = new ConstraintIndex([
+            ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' },
                 { path: 'resource.relations.liesWithin' }
             ]);

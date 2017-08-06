@@ -2,7 +2,7 @@ import {ResultSets} from "../util/result-sets";
 /**
  * @author Daniel de Oliveira
  */
-export class ConstraintIndex {
+export class ConstraintIndexer {
 
     private index = undefined;
     private dates = {}; // map: resourceId => date
@@ -15,6 +15,7 @@ export class ConstraintIndex {
         this.setUp();
     }
 
+    // TODO maybe we only need the update method
     public setDocs(docs) {
         for (let pathDef of this.pathsDefinitions) {
             for (let doc of docs) {
@@ -72,8 +73,10 @@ export class ConstraintIndex {
 
         let legalQueries = 0;
         for (let path of Object.keys(constraints)) {
-            if (!this.hasIndex(path)) continue;
-            // TODO issue warning
+            if (!this.hasIndex(path)) {
+                console.warn("ignoring unknown constraint '"+path+"'");
+                continue;
+            }
             legalQueries++;
 
             let matchTerm = constraints[path];

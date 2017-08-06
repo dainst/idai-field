@@ -40,6 +40,7 @@ import {PouchdbManager} from './datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './datastore/sample-data-loader';
 import {AutoConflictResolver} from './common/auto-conflict-resolver';
+import {ConstraintIndexer} from "./datastore/constraint-indexer";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -78,21 +79,34 @@ if (CONFIG['imagestorepath']) {
         { provide: 'app.config', useValue: CONFIG },
         { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
+        {
+            provide: ConstraintIndexer,
+            useFactory: function() {
+                return new ConstraintIndexer([
+                    { path: 'resource.relations.isRecordedIn' },
+                    { path: 'resource.relations.liesWithin' },
+                    { path: 'resource.identifier', string: true }
+                ]);
+            }
+        },
         SampleDataLoader,
-        { provide: PouchdbManager, useFactory: function(sampleDataLoader: SampleDataLoader){
-                return new PouchdbManager(sampleDataLoader);
+        { provide: PouchdbManager, useFactory: function(
+                sampleDataLoader: SampleDataLoader,
+                constraintIndexer: ConstraintIndexer
+            ){
+                return new PouchdbManager(sampleDataLoader, constraintIndexer);
             },
-            deps: [SampleDataLoader]
+            deps: [SampleDataLoader, ConstraintIndexer]
         },
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,
-            useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager) : Datastore {
-                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager));
+            useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager, constraintIndexer: ConstraintIndexer) : Datastore {
+                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager, constraintIndexer));
             },
-            deps: [ConfigLoader, PouchdbManager]
+            deps: [ConfigLoader, PouchdbManager, ConstraintIndexer]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

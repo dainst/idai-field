@@ -5,12 +5,14 @@ import {Injectable} from "@angular/core";
 import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
+import {ConstraintIndexer} from "./constraint-indexer";
 
 @Injectable()
 /**
  * Manages the creation of PouchDB instances.
  * Also handles loading of sample data if 'test' database is selected.
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export class PouchdbManager {
 
@@ -22,7 +24,10 @@ export class PouchdbManager {
 
     private resolveDbReady = undefined;
 
-    constructor(private sampleDataLoader: AbstractSampleDataLoader) {
+    constructor(
+        private sampleDataLoader: AbstractSampleDataLoader,
+        private constraintIndexer: ConstraintIndexer,
+    ) {
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
     }
@@ -47,6 +52,7 @@ export class PouchdbManager {
         // same db selected, no need for action
         if (this.name == name) return;
 
+        this.constraintIndexer.clear();
         this.stopSync();
 
         let rdy: Promise<any> = Promise.resolve();
@@ -67,6 +73,18 @@ export class PouchdbManager {
         if (name == 'test') {
             rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
         }
+
+        rdy = rdy.then(() => new Promise((resolve) =>
+            this.db.allDocs({include_docs: true},(err, resultDocs) => {
+                for (let i in resultDocs.rows) {
+                    if (resultDocs.rows[i].id.indexOf('_design') == -1) {
+                        this.constraintIndexer.update(resultDocs.rows[i].doc);
+                    }
+                }
+                resolve();
+            })
+        ));
+
         rdy.then(() => this.resolveDbReady(this.db));
     }
 

@@ -9,20 +9,7 @@ export class IndexCreator {
 
     public go(db) {
         return this.setupFulltextIndex(db)
-            .then(() => this.setupIdentifierIndex(db))
-            .then(() => this.setupIsRecordedInIndex(db))
-            .then(() => this.setupLiesWithinIndex(db))
             .then(() => this.setupConflictedIndex(db));
-    }
-
-    public hasIndex(indexName: string) {
-        return (([
-            'resource.identifier',
-            'resource.relations.isRecordedIn',
-            'resource.relations.liesWithin',
-            'conflicted',
-            'fulltext',
-            ]).indexOf(indexName) != -1);
     }
 
     private setupFulltextIndex(db): Promise<any> {
@@ -45,52 +32,6 @@ export class IndexCreator {
             });
         };
         return this.setupIndex(db,'fulltext', mapFun);
-    }
-
-    private setupIdentifierIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource || !doc.resource.identifier) return;
-            emit([doc.resource.identifier]);
-        };
-        return this.setupIndex(db, 'resource.identifier', mapFun);
-    }
-
-    private setupIsRecordedInIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource) return;
-
-            // TODO handle liesWithin accordingly
-            // TODO remove duplicate code
-            let lastModified = doc.created.date;
-            if (doc.modified && doc.modified.length > 0)
-                lastModified = doc.modified[doc.modified.length - 1].date;
-
-            if (doc.resource.relations['isRecordedIn'] != undefined) {
-                doc.resource.relations['isRecordedIn'].forEach(resourceId =>
-                    emit([resourceId].concat(lastModified)))
-            } else {
-                emit(['UNKNOWN'].concat(lastModified));
-            }
-        };
-        return this.setupIndex(db, 'resource.relations.isRecordedIn', mapFun);
-    }
-
-    private setupLiesWithinIndex(db): Promise<any> {
-        let mapFun = function(doc) {
-            if (!doc.resource) return;
-
-            let lastModified = doc.created.date;
-            if (doc.modified && doc.modified.length > 0)
-                lastModified = doc.modified[doc.modified.length - 1].date;
-
-            if (doc.resource.relations['liesWithin'] != undefined) {
-                doc.resource.relations['liesWithin'].forEach(resourceId =>
-                    emit([resourceId].concat(lastModified)));
-            } else {
-                emit(['UNKNOWN'].concat(lastModified));
-            }
-        };
-        return this.setupIndex(db,'resource.relations.liesWithin', mapFun);
     }
 
     private setupConflictedIndex(db): Promise<any> {

@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
+import {Component, Input, ElementRef, ViewChild, OnChanges, Renderer} from '@angular/core';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Relations} from 'idai-components-2/core';
@@ -10,10 +10,7 @@ import {M} from '../m';
 @Component({
     selector: 'plus-button',
     moduleId: module.id,
-    templateUrl: './plus-button.html',
-    host: {
-        '(document:click)': 'handleClick($event)',
-    }
+    templateUrl: './plus-button.html'
 })
 
 /**
@@ -28,21 +25,26 @@ export class PlusButtonComponent implements OnChanges {
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
 
+    @ViewChild('popover') private popover;
+
     private typesTreeList: Array<IdaiType>;
     private type: string;
-    @ViewChild('popover') private popover;
+
+    private clickEventListener: Function;
 
     constructor(
         private elementRef: ElementRef,
+        private renderer: Renderer,
         private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
         private messages: Messages) {}
 
     ngOnChanges() {
 
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.initializeTypesTreeList(projectConfiguration);
-        }).catch(() => {});
+        this.configLoader.getProjectConfiguration()
+            .then(projectConfiguration => this.initializeTypesTreeList(projectConfiguration))
+            .then(() => this.setClickEventListener())
+            .catch(() => {});
     }
 
     public startDocumentCreation(geometryType: string = this.preselectedGeometryType) {
@@ -70,6 +72,21 @@ export class PlusButtonComponent implements OnChanges {
 
         this.type = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
+    }
+
+    private setClickEventListener() {
+
+        // Remove existing listener
+        if (this.clickEventListener) {
+            this.clickEventListener();
+            this.clickEventListener = undefined;
+        }
+
+        if (this.typesTreeList.length > 1 || !this.preselectedGeometryType) {
+            this.clickEventListener = this.renderer.listenGlobal('document', 'click', event => {
+                this.handleClick(event);
+            });
+        }
     }
 
     private handleClick(event) {

@@ -1,6 +1,8 @@
-import {Component, AfterViewChecked} from '@angular/core';
+import {Component, AfterViewChecked, Renderer} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
@@ -8,9 +10,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {Observable} from 'rxjs/Observable';
 import {SettingsService} from '../settings/settings-service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
 
@@ -45,14 +45,17 @@ export class ResourcesComponent implements AfterViewChecked {
     private ready: boolean = false;
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
+
     private observers: Array<any> = [];
     private mainTypeObservers: Array<any> = [];
+    private clickEventObservers: Array<any> = [];
 
     private mainTypeHistory = {};
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
+                private renderer: Renderer,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
@@ -82,6 +85,8 @@ export class ResourcesComponent implements AfterViewChecked {
         datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
         });
+
+        this.initializeClickEventListener();
     }
 
     ngAfterViewChecked() {
@@ -185,6 +190,22 @@ export class ResourcesComponent implements AfterViewChecked {
                 }
             });
         }
+    }
+
+    private initializeClickEventListener() {
+
+        this.renderer.listenGlobal('document', 'click', event => {
+            for (let clickEventObserver of this.clickEventObservers) {
+                clickEventObserver.next(event);
+            }
+        });
+    }
+
+    public listenToClickEvents(): Observable<Event> {
+
+        return Observable.create(observer => {
+            this.clickEventObservers.push(observer);
+        });
     }
 
     /**

@@ -1,9 +1,9 @@
-import {Component, Input, ElementRef, ViewChild, OnChanges, Renderer} from '@angular/core';
+import {Component, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
+import {Relations} from 'idai-components-2/core';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Relations} from 'idai-components-2/core';
-import {ResourcesComponent} from './resources.component';
 import {Messages} from 'idai-components-2/messages';
+import {ResourcesComponent} from './resources.component';
 import {M} from '../m';
 
 
@@ -30,20 +30,21 @@ export class PlusButtonComponent implements OnChanges {
     private typesTreeList: Array<IdaiType>;
     private type: string;
 
-    private clickEventListener: Function;
-
     constructor(
         private elementRef: ElementRef,
-        private renderer: Renderer,
         private resourcesComponent: ResourcesComponent,
         private configLoader: ConfigLoader,
-        private messages: Messages) {}
+        private messages: Messages) {
+
+        this.resourcesComponent.listenToClickEvents().subscribe(event => {
+            this.handleClick(event);
+        });
+    }
 
     ngOnChanges() {
 
         this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => this.initializeTypesTreeList(projectConfiguration))
-            .then(() => this.setClickEventListener())
             .catch(() => {});
     }
 
@@ -72,21 +73,6 @@ export class PlusButtonComponent implements OnChanges {
 
         this.type = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
-    }
-
-    private setClickEventListener() {
-
-        // Remove existing listener
-        if (this.clickEventListener) {
-            this.clickEventListener();
-            this.clickEventListener = undefined;
-        }
-
-        if (this.typesTreeList.length > 1 || !this.preselectedGeometryType) {
-            this.clickEventListener = this.renderer.listenGlobal('document', 'click', event => {
-                this.handleClick(event);
-            });
-        }
     }
 
     private handleClick(event) {

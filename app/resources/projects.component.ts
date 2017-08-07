@@ -113,6 +113,7 @@ export class ProjectsComponent implements OnInit {
         this.selectedProject = project;
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
             .then(() => this.settingsService.activateSettings(true, createDb))
+            .then(() => this.resourcesComponent.resetMainTypeHistory())
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)

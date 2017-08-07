@@ -1,6 +1,7 @@
 /**
- * @author: Jan G. Wieners
- * @author: Sebastian Cuy
+ * @author Jan G. Wieners
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 
 @import "map/map";
@@ -41,4 +42,19 @@
   main {
     padding: 7px;
   }
+}
+
+#resources {
+  .spinner {
+    display: inline-block;
+    position: fixed;
+    margin-left: -50px;
+    margin-top: 6px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.resources-mode-buttons {
+  margin-top: 2px !important;
 }

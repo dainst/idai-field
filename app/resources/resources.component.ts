@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, Renderer} from '@angular/core';
+import {Component, AfterViewChecked, Renderer, ChangeDetectorRef} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -42,7 +42,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public projectDocument: IdaiFieldDocument;
 
-    private ready: boolean = false;
+    public ready: boolean = false;
+    public loading: number = 0;
+
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
 
@@ -56,6 +58,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private router: Router,
                 private location: Location,
                 private renderer: Renderer,
+                private changeDetectorRef: ChangeDetectorRef,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
@@ -120,11 +123,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
+        this.startLoading();
+
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
             .then(() => this.fetchDocuments())
             .then(() => {
                 this.ready = true;
+                this.stopLoading();
                 this.notifyMainTypeObservers();
             });
     }
@@ -289,8 +295,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public queryChanged(query: Query): Promise<any> {
 
+        this.startLoading();
         this.query = query;
-        return this.fetchDocuments(query);
+
+        return this.fetchDocuments(query)
+            .then(() => this.stopLoading());
     }
 
     public replace(document: Document,restoredObject: Document) {
@@ -333,16 +342,24 @@ export class ResourcesComponent implements AfterViewChecked {
             return Promise.resolve();
         }
 
+        this.startLoading();
+
         return this.datastore.find(query)
             .then(documents => {
+                this.stopLoading();
                 this.documents = documents;
                 this.notify();
-            }).catch(msgWithParams => this.messages.add(msgWithParams));
+            }).catch(msgWithParams => {
+                this.stopLoading();
+                this.messages.add(msgWithParams)
+            });
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
 
         if (!this.view) return Promise.resolve();
+
+        this.startLoading();
 
         const query: Query = {type: this.view.mainType, prefix: true};
 
@@ -361,6 +378,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 }
             }
 
+            this.stopLoading();
         });
     }
 
@@ -511,12 +529,21 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
 
-        this.removeEmptyDocuments();
-        if (mode != 'list') {
-            this.fetchDocuments();
-        }
-        this.mode = mode;
-        this.editGeometry = false;
+        this.startLoading();
+        const that = this;
+
+        // The timeout is necessary to make the loading icon appear
+        setTimeout(function() {
+            that.removeEmptyDocuments();
+            if (mode != 'list') {
+                that.fetchDocuments()
+                    .then(() => that.stopLoading());
+            } else {
+                that.stopLoading();
+            }
+            that.mode = mode;
+            that.editGeometry = false;
+        }, 50);
     }
 
     private removeEmptyDocuments() {
@@ -534,6 +561,22 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public deleteMainTypeHistory() {
         this.mainTypeHistory = {};
+    }
+
+    public startLoading() {
+
+        this.loading++;
+
+        // This is necessary because of a possible bug in angular (see angular issue #17572)
+        this.changeDetectorRef.detectChanges();
+    }
+
+    public stopLoading() {
+
+        this.loading--;
+
+        // This is necessary because of a possible bug in angular (see angular issue #17572)
+        this.changeDetectorRef.detectChanges();
     }
 
 }

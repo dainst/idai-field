@@ -3,6 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
+import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
@@ -36,6 +37,7 @@ export class ListComponent implements OnInit {
 
         private datastore: IdaiFieldDatastore,
         private resourcesComponent: ResourcesComponent,
+        private messages: Messages,
         configLoader: ConfigLoader
     ) {
 
@@ -51,10 +53,23 @@ export class ListComponent implements OnInit {
     ngOnInit() {
 
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
-            this.selectedMainTypeDocument = result as IdaiFieldDocument;
-            this.populateTree();
-        });
+            this.resourcesComponent.startLoading();
 
+            // The timeout is necessary to make the loading icon appear
+            setTimeout(this.setSelectedMainTypeDocument.bind(this), 50, result as IdaiFieldDocument);
+        });
+    }
+
+    private setSelectedMainTypeDocument(document: IdaiFieldDocument) {
+
+        this.selectedMainTypeDocument = document;
+
+        this.populateTree()
+            .then(() => this.resourcesComponent.stopLoading())
+            .catch(msgWithParams => {
+                this.resourcesComponent.stopLoading();
+                this.messages.add(msgWithParams);
+            });
     }
 
     public toggleChildrenForId(id: string) {
@@ -105,14 +120,14 @@ export class ListComponent implements OnInit {
         return false;
     }
 
-    private populateTree() {
+    private populateTree(): Promise<any> {
 
         this.docRefTree = [];
         this.docRefMap = {};
 
         if (!this.selectedMainTypeDocument) {
             this.awaitsReload = false;
-            return;
+            return Promise.resolve();
         }
 
         const query: Query = {
@@ -121,7 +136,7 @@ export class ListComponent implements OnInit {
             }
         };
 
-        this.datastore.find(query).then(docs => {
+        return this.datastore.find(query).then(docs => {
             // initialize docRefMap to make sure it is fully populated before building the tree
             docs.forEach(doc => {
                 let docRef: DocumentReference = { doc: doc, children: [] };
@@ -140,6 +155,8 @@ export class ListComponent implements OnInit {
                 }
             });
             this.awaitsReload = false;
+
+            return Promise.resolve();
         });
     }
 

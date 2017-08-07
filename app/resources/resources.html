@@ -1,4 +1,4 @@
-<div style="position: fixed; width: 100%; z-index: 1001;"
+<div id="resources" style="position: fixed; width: 100%; z-index: 1001;"
      class="row bg-faded py-2">
 
     <div class="col-md-3">
@@ -48,7 +48,8 @@
     </div>
 
     <div class="col-md-4" align="right">
-        <div *ngIf="ready" class="btn-group">
+        <div *ngIf="loading" class="spinner"></div>
+        <div *ngIf="ready" class="btn-group resources-mode-buttons">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">
                 Karte
@@ -58,7 +59,7 @@
                 Liste
             </button>
         </div>
-        <div *ngIf="!ready" class="btn-group">
+        <div *ngIf="!ready" class="btn-group resources-mode-buttons">
             <button class="btn btn-primary m-0" [disabled]="mode == 'map'">Karte</button>
             <button class="btn btn-primary m-0" [disabled]="mode == 'list'">Liste</button>
         </div>

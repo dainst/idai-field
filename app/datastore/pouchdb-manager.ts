@@ -52,7 +52,6 @@ export class PouchdbManager {
         // same db selected, no need for action
         if (this.name == name) return;
 
-        this.constraintIndexer.clear();
         this.stopSync();
 
         let rdy: Promise<any> = Promise.resolve();
@@ -74,18 +73,17 @@ export class PouchdbManager {
             rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
         }
 
-        rdy = rdy.then(() => new Promise((resolve) =>
+        rdy.then(() =>
             this.db.allDocs({include_docs: true},(err, resultDocs) => {
+                this.constraintIndexer.clear();
                 for (let i in resultDocs.rows) {
                     if (resultDocs.rows[i].id.indexOf('_design') == -1) {
                         this.constraintIndexer.update(resultDocs.rows[i].doc);
                     }
                 }
-                resolve();
+                this.resolveDbReady(this.db)
             })
-        ));
-
-        rdy.then(() => this.resolveDbReady(this.db));
+        );
     }
 
     public getIndexCreator() {

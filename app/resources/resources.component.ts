@@ -511,7 +511,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.documents.some(d => d.resource.id == doc.resource.id );
     }
 
-    public resetMainTypeHistory() {
+    public deleteMainTypeHistory() {
         this.mainTypeHistory = {};
     }
 

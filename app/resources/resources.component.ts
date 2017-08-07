@@ -311,6 +311,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.notify();
             return Promise.resolve();
         }
+
         return this.datastore.find(query)
             .then(documents => {
                 this.documents = documents;
@@ -488,6 +489,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
+
         this.removeEmptyDocuments();
         if (mode != 'list') {
             this.fetchDocuments();
@@ -497,6 +499,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private removeEmptyDocuments() {
+
         if (!this.documents) return;
 
         for (let document of this.documents) {
@@ -506,7 +509,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public documentsInclude(doc: IdaiFieldDocument): boolean {
         return this.documents.some(d => d.resource.id == doc.resource.id );
+    }
 
+    public deleteMainTypeHistory() {
+        this.mainTypeHistory = {};
     }
 
 }

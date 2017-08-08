@@ -7,6 +7,7 @@ import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
+import {Loading} from '../../widgets/loading';
 
 @Component({
     selector: 'list',
@@ -38,6 +39,7 @@ export class ListComponent implements OnInit {
         private datastore: IdaiFieldDatastore,
         private resourcesComponent: ResourcesComponent,
         private messages: Messages,
+        private loading: Loading,
         configLoader: ConfigLoader
     ) {
 
@@ -53,7 +55,7 @@ export class ListComponent implements OnInit {
     ngOnInit() {
 
         this.resourcesComponent.getSelectedMainTypeDocument().subscribe(result => {
-            this.resourcesComponent.startLoading();
+            this.loading.start();
 
             // The timeout is necessary to make the loading icon appear
             setTimeout(this.setSelectedMainTypeDocument.bind(this), 50, result as IdaiFieldDocument);
@@ -65,11 +67,8 @@ export class ListComponent implements OnInit {
         this.selectedMainTypeDocument = document;
 
         this.populateTree()
-            .then(() => this.resourcesComponent.stopLoading())
-            .catch(msgWithParams => {
-                this.resourcesComponent.stopLoading();
-                this.messages.add(msgWithParams);
-            });
+            .catch(msgWithParams => this.messages.add(msgWithParams))
+            .then(() => this.loading.stop())
     }
 
     public toggleChildrenForId(id: string) {

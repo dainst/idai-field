@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, Renderer, ChangeDetectorRef} from '@angular/core';
+import {Component, AfterViewChecked, Renderer} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +13,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
+import {Loading} from '../widgets/loading';
 
 
 @Component({
@@ -43,7 +44,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public projectDocument: IdaiFieldDocument;
 
     public ready: boolean = false;
-    public loading: number = 0;
 
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
@@ -58,14 +58,14 @@ export class ResourcesComponent implements AfterViewChecked {
                 private router: Router,
                 private location: Location,
                 private renderer: Renderer,
-                private changeDetectorRef: ChangeDetectorRef,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor,
                 private messages: Messages,
                 private configLoader: ConfigLoader,
-                private viewUtility: ViewUtility
+                private viewUtility: ViewUtility,
+                private loading: Loading
     ) {
         this.route.params.subscribe(params => {
             if (this.selectedMainTypeDocument != undefined && this.view != undefined) {
@@ -123,14 +123,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
-        this.startLoading();
+        this.loading.start();
 
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
             .then(() => this.fetchDocuments())
             .then(() => {
                 this.ready = true;
-                this.stopLoading();
+                this.loading.stop();
                 this.notifyMainTypeObservers();
             });
     }
@@ -295,11 +295,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public queryChanged(query: Query): Promise<any> {
 
-        this.startLoading();
+        this.loading.start();
         this.query = query;
 
         return this.fetchDocuments(query)
-            .then(() => this.stopLoading());
+            .then(() => this.loading.stop());
     }
 
     public replace(document: Document,restoredObject: Document) {
@@ -342,24 +342,22 @@ export class ResourcesComponent implements AfterViewChecked {
             return Promise.resolve();
         }
 
-        this.startLoading();
+        this.loading.start();
 
         return this.datastore.find(query)
             .then(documents => {
-                this.stopLoading();
                 this.documents = documents;
                 this.notify();
             }).catch(msgWithParams => {
-                this.stopLoading();
                 this.messages.add(msgWithParams)
-            });
+            }).then(() => this.loading.stop());
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
 
         if (!this.view) return Promise.resolve();
 
-        this.startLoading();
+        this.loading.start();
 
         const query: Query = {type: this.view.mainType, prefix: true};
 
@@ -378,7 +376,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 }
             }
 
-            this.stopLoading();
+            this.loading.stop();
         });
     }
 
@@ -529,17 +527,16 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
 
-        this.startLoading();
+        this.loading.start();
         const that = this;
 
         // The timeout is necessary to make the loading icon appear
         setTimeout(function() {
             that.removeEmptyDocuments();
             if (mode != 'list') {
-                that.fetchDocuments()
-                    .then(() => that.stopLoading());
+                that.fetchDocuments().then(() => that.loading.stop());
             } else {
-                that.stopLoading();
+                that.loading.stop();
             }
             that.mode = mode;
             that.editGeometry = false;
@@ -562,21 +559,4 @@ export class ResourcesComponent implements AfterViewChecked {
     public deleteMainTypeHistory() {
         this.mainTypeHistory = {};
     }
-
-    public startLoading() {
-
-        this.loading++;
-
-        // This is necessary because of a possible bug in angular (see angular issue #17572)
-        this.changeDetectorRef.detectChanges();
-    }
-
-    public stopLoading() {
-
-        this.loading--;
-
-        // This is necessary because of a possible bug in angular (see angular issue #17572)
-        this.changeDetectorRef.detectChanges();
-    }
-
 }

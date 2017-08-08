@@ -1,17 +1,19 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {DocumentViewComponent} from 'idai-components-2/documents';
-import {RouterModule} from '@angular/router';
+import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {DocumentPickerComponent} from './document-picker.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
-import {IdaiMessagesModule} from 'idai-components-2/messages';
+import {Loading} from './loading';
+import {LoadingIconComponent} from './loading-icon.component';
 
 @NgModule({
     imports: [
@@ -28,14 +30,19 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,
-        ImagePickerComponent
+        ImagePickerComponent,
+        LoadingIconComponent
+    ],
+    providers: [
+        Loading
     ],
     exports: [
         DocumentViewComponent,
         DocumentTeaserComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
-        DescriptionViewComponent
+        DescriptionViewComponent,
+        LoadingIconComponent
     ],
     entryComponents: [
         ImagePickerComponent

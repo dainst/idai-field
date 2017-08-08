@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 
@@ -9,34 +8,62 @@ import {Observable} from 'rxjs/Observable';
  */
 export class Loading {
 
-    constructor() {}
+    public showIcons: boolean = false;
 
     private loading: number = 0;
-    private observers: Array<any> = [];
+    private timeoutReference: number;
+    private showIconsDelay: boolean = false;
 
     public start() {
 
         this.loading++;
-        this.notifyObservers();
+        this.updateIconStatus();
     }
 
     public stop() {
 
         this.loading--;
-        this.notifyObservers();
+        this.updateIconStatus();
     }
 
-    public loadingStatus(): Observable<boolean> {
+    public setShowIconsDelay(showIconsDelay) {
 
-        return Observable.create(observer => {
-            this.observers.push(observer);
-        });
+        this.showIconsDelay = showIconsDelay;
     }
 
-    private notifyObservers() {
+    private updateIconStatus() {
 
-        for (let observer of this.observers) {
-            observer.next(this.loading > 0);
+        if (this.showIconsDelay) {
+            this.updateIconStatusWithDelay();
+        } else {
+            this.updateIconStatusWithoutDelay();
+        }
+    }
+
+    private updateIconStatusWithoutDelay() {
+
+        this.clearTimeout();
+        this.showIcons = this.loading > 0;
+    }
+
+    private updateIconStatusWithDelay() {
+
+        if (this.loading && !this.timeoutReference) {
+            this.timeoutReference = window.setTimeout(() => {
+                this.timeoutReference = undefined;
+                this.showIcons = true;
+            }, 1000);
+        } else if (!this.loading) {
+            this.clearTimeout();
+            this.showIcons = false;
+        }
+    }
+
+    private clearTimeout() {
+
+        if (this.timeoutReference) {
+            window.clearTimeout(this.timeoutReference);
+            this.timeoutReference = undefined;
         }
     }
 }

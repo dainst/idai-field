@@ -13,13 +13,5 @@ import {Loading} from './loading';
  */
 export class LoadingIconComponent {
 
-    public showLoadingIcon: boolean;
-
-    constructor(private loading: Loading) {
-
-        this.loading.loadingStatus().subscribe(loadingStatus => {
-            this.showLoadingIcon = loadingStatus;
-        });
-    }
-
+    constructor(private loading: Loading) {}
 }

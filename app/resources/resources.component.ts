@@ -534,7 +534,9 @@ export class ResourcesComponent implements AfterViewChecked {
         setTimeout(function() {
             that.removeEmptyDocuments();
             if (mode != 'list') {
-                that.fetchDocuments().then(() => that.loading.stop());
+                that.fetchDocuments().then(() => {
+                    that.loading.stop();
+                });
             } else {
                 that.loading.stop();
             }

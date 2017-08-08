@@ -68,7 +68,9 @@ export class ListComponent implements OnInit {
 
         this.populateTree()
             .catch(msgWithParams => this.messages.add(msgWithParams))
-            .then(() => this.loading.stop())
+            .then(() => {
+                this.loading.stop();
+            })
     }
 
     public toggleChildrenForId(id: string) {

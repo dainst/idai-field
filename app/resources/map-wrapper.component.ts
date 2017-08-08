@@ -4,6 +4,7 @@ import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
+import {Loading} from '../widgets/loading';
 
 @Component({
     selector: 'map-wrapper',
@@ -24,6 +25,7 @@ export class MapWrapperComponent implements OnInit {
     private docs: IdaiFieldDocument[];
 
     constructor(
+        public loading: Loading,
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,

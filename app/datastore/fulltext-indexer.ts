@@ -20,14 +20,16 @@ export class FulltextIndexer {
         }
     }
 
-    public get(s: string, type) {
+    public get(s: string, types) {
         let resultSets = [];
-        if (!type) {
+        if (!types) {
             for (let type of Object.keys(this.index)) {
                 this._get(resultSets, s, type);
             }
         } else {
-            this._get(resultSets, s, type);
+            for (let type of types) {
+                this._get(resultSets, s, type);
+            }
         }
         return resultSets;
     }

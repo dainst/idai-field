@@ -31,9 +31,9 @@ export function main() {
             const fi = new FulltextIndexer();
 
             fi.add(doc('1', 'identifier1', 'object'));
-            expect(fi.get('identifier1', 'object'))
+            expect(fi.get('identifier1', ['object']))
                 .toEqual([[{id: '1', date: '2018-01-01'}]]);
-            expect(fi.get('ide', 'object'))
+            expect(fi.get('ide', ['object']))
                 .toEqual([[{id: '1', date: '2018-01-01'}]]);
         });
 
@@ -42,7 +42,7 @@ export function main() {
 
             fi.add(doc('1', 'identifier1', 'object'));
             fi.add(doc('2', 'identifier2', 'object'));
-            expect(fi.get('identifier', 'object'))
+            expect(fi.get('identifier', ['object']))
                 .toEqual([[{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]]);
         });
 
@@ -52,6 +52,16 @@ export function main() {
             fi.add(doc('1', 'identifier1', 'object'));
             expect(fi.get('identifier', undefined))
                 .toEqual([[{id: '1', date: '2018-01-01'}]]);
+        });
+
+        it('match in multiple selected types', () => {
+            const fi = new FulltextIndexer();
+
+            fi.add(doc('1', 'identifier1', 'object1'));
+            fi.add(doc('2', 'identifier2', 'object2'));
+            fi.add(doc('3', 'identifier3', 'object3'));
+            expect(fi.get('identifier', ['object1', 'object2']))
+                .toEqual([[{id: '1', date: '2018-01-01'}],[{id: '2', date: '2018-01-01'}]]);
         });
     });
 }

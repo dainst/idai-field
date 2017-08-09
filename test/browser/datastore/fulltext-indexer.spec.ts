@@ -63,5 +63,28 @@ export function main() {
             expect(fi.get('identifier', ['object1', 'object2']))
                 .toEqual([[{id: '1', date: '2018-01-01'}],[{id: '2', date: '2018-01-01'}]]);
         });
+
+        it('do not match search term', () => {
+            const fi = new FulltextIndexer();
+
+            fi.add(doc('1', 'iden', 'object'));
+            expect(fi.get('identifier', ['object']))
+                .toEqual([[]]);
+        });
+
+        it('do not match search in type', () => {
+            const fi = new FulltextIndexer();
+
+            fi.add(doc('1', 'iden', 'object1'));
+            expect(fi.get('identifier', ['object2']))
+                .toEqual([[]]);
+        });
+
+        it('no types present', () => {
+            const fi = new FulltextIndexer();
+
+            expect(fi.get('identifier', 'object'))
+                .toEqual([]);
+        });
     });
 }

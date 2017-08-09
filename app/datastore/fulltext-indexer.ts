@@ -22,14 +22,9 @@ export class FulltextIndexer {
 
     public get(s: string, types) {
         let resultSets = [];
-        if (!types) {
-            for (let type of Object.keys(this.index)) {
-                this._get(resultSets, s, type);
-            }
-        } else {
-            for (let type of types) {
-                this._get(resultSets, s, type);
-            }
+        if (!types) types = Object.keys(this.index);
+        for (let type of types) {
+            this._get(resultSets, s, type);
         }
         return resultSets;
     }

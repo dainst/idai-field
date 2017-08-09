@@ -83,7 +83,7 @@ export function main() {
         it('no types present', () => {
             const fi = new FulltextIndexer();
 
-            expect(fi.get('identifier', 'object'))
+            expect(fi.get('identifier', ['object']))
                 .toEqual([]);
         });
 
@@ -92,20 +92,22 @@ export function main() {
 
             fi.add(doc('1', 'identifier1', 'object'));
             fi.clear();
-            expect(fi.get('identifier', 'object'))
+            expect(fi.get('identifier', ['object']))
                 .toEqual([]);
         });
 
         xit('rough size estimate', () => {
             const fi = new FulltextIndexer();
 
+            let str;
             for (let i=0; i < 50000;i++) {
-                let str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
+                str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
                 // console.log("string",str)
                 fi.add(doc('1', str, 'object'));
             }
 
             fi.print();
+            console.log(fi.get(str, ['object']))
         });
 
         // TODO index more fields

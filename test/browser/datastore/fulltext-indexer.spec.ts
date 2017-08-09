@@ -86,5 +86,14 @@ export function main() {
             expect(fi.get('identifier', 'object'))
                 .toEqual([]);
         });
+
+        it('clear', () => {
+            const fi = new FulltextIndexer();
+
+            fi.add(doc('1', 'identifier1', 'object'));
+            fi.clear();
+            expect(fi.get('identifier', 'object'))
+                .toEqual([]);
+        });
     });
 }

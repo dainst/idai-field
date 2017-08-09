@@ -4,7 +4,15 @@ import {ModelUtil} from "../model/model-util";
  */
 export class FulltextIndexer {
 
-    private index = {};
+    private index;
+
+    constructor() {
+        this.setUp();
+    }
+
+    public clear() {
+        this.setUp();
+    }
 
     public add(doc) {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
@@ -37,5 +45,9 @@ export class FulltextIndexer {
 
         resultSets.push(Object.keys(this.index[type][s])
             .map(id => {return {id: id, date: this.index[type][s][id]}}));
+    }
+
+    private setUp() {
+        this.index = { };
     }
 }

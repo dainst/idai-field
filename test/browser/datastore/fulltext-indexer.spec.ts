@@ -32,8 +32,10 @@ export function main() {
             const fi = new FulltextIndexer();
 
             fi.add(doc('1','identifier1'));
-            expect(fi.get('identifier1')).toEqual(['1']);
-            expect(fi.get('ide')).toEqual(['1']);
+            expect(fi.get('identifier1'))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+            expect(fi.get('ide'))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('match two with the same search term', () => {
@@ -41,7 +43,8 @@ export function main() {
 
             fi.add(doc('1','identifier1'));
             fi.add(doc('2','identifier2'));
-            expect(fi.get('identifier')).toEqual(['1','2']);
+            expect(fi.get('identifier'))
+                .toEqual([{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]);
         });
     });
 }

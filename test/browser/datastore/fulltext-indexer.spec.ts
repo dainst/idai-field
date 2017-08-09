@@ -95,5 +95,21 @@ export function main() {
             expect(fi.get('identifier', 'object'))
                 .toEqual([]);
         });
+
+        xit('rough size estimate', () => {
+            const fi = new FulltextIndexer();
+
+            for (let i=0; i < 50000;i++) {
+                let str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
+                // console.log("string",str)
+                fi.add(doc('1', str, 'object'));
+            }
+
+            fi.print();
+        });
+
+        // TODO index more fields
+
+        // TODO tokenize fields
     });
 }

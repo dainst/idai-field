@@ -14,6 +14,10 @@ export class FulltextIndexer {
         this.setUp();
     }
 
+    public print() {
+        console.log(JSON.stringify(this.index).length)
+    }
+
     public add(doc) {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 

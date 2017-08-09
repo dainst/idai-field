@@ -6,7 +6,6 @@ import {ModelUtil} from "../model/model-util";
 export class ConstraintIndexer {
 
     private index = undefined;
-    private dates = {}; // map: resourceId => date
 
     constructor(private pathsDefinitions) {
         this.setUp();
@@ -41,15 +40,13 @@ export class ConstraintIndexer {
 
         const result = this.index[path][matchTerm];
         if (result) {
-            return Object.keys(result).map(id => new Object({id:id, date: this.dates[id]}));
+            return Object.keys(result).map(id => new Object({id: id, date: result[id]}));
         } else {
             return [];
         }
     }
 
     private build(doc, pathDef) {
-
-        this.dates[doc.resource.id] = ModelUtil.getLastModified(doc);
 
         if (!Util.getElForPathIn(doc, pathDef.path)) {
             return this.addToIndex(doc, pathDef.path, 'UNKOWN');
@@ -74,12 +71,11 @@ export class ConstraintIndexer {
 
     private addToIndex(doc, path, target) {
         if (!this.index[path][target]) this.index[path][target] = {};
-        this.index[path][target][doc.resource.id] = true;
+        this.index[path][target][doc.resource.id] = ModelUtil.getLastModified(doc);
     }
 
     private setUp() {
         this.index = { };
-        this.dates = { };
         for (let pathDefinition of this.pathsDefinitions) {
             this.index[pathDefinition.path] = { };
         }

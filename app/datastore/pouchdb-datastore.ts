@@ -368,21 +368,20 @@ export class PouchdbDatastore {
         this.db.rdy.then(db => {
             db.changes({
                 live: true,
-                include_docs: false,
+                include_docs: true,
                 conflicts: true,
                 since: 'now'
             }).on('change', change => {
-                if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
-                if (!change || !change.id) return;
+                if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
+                if (!change || !change.doc) return;
 
-                if (change.deleted) {
-                    this.constraintIndexer.remove({resource: {id: change.id}})
-                    return;
+                if (change.doc._deleted) {
+                    this.constraintIndexer.remove({resource:{id:change.doc._id}})
+                } else {
+                    this.constraintIndexer.update(change.doc);
                 }
-                this.get(change.id).then(document => {
-                    this.constraintIndexer.update(document);
-                    this.notify();
-                });
+                
+                this.notify();
             }).on('complete', info => {
                 console.error('changes stream was canceled', info);
             }).on('error', err => {

@@ -5,7 +5,7 @@ import {FulltextIndexer} from "../../../app/datastore/fulltext-indexer";
  */
 export function main() {
 
-    fdescribe('FulltextIndexer', () => {
+    describe('FulltextIndexer', () => {
 
         function doc(id, identifier, type) {
             return {

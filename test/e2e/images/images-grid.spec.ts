@@ -48,7 +48,7 @@ describe('image grid --', function() {
         expect(ImagesGridPage.getCell(0).getAttribute('class')).not.toMatch(ImagesGridPage.selectedClass);
     });
 
-    it('delete an image in the grid view', function() {
+    xit('delete an image in the grid view', function() {
         ImagesGridPage.getCellImageName(0)
             .then(function (filename) {
                 ImagesGridPage.getCell(0).click();

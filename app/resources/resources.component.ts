@@ -48,7 +48,6 @@ export class ResourcesComponent implements AfterViewChecked {
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
 
-    private mainTypeObservers: Array<any> = [];
     private clickEventObservers: Array<any> = [];
 
     private mainTypeHistory = {};
@@ -136,7 +135,6 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => {
                 this.ready = true;
                 this.loading.stop();
-                this.notifyMainTypeObservers();
             });
     }
 
@@ -167,14 +165,12 @@ export class ResourcesComponent implements AfterViewChecked {
     public filterByMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
-        this.notifyMainTypeObservers();
-        if (this.mode != 'list') {
-            if (this.selectedDocument
-                    && this.getMainTypeDocumentForDocument(this.selectedDocument) != this.selectedMainTypeDocument) {
-                this.setSelected(undefined);
-            }
-            this.fetchDocuments();
+        if (this.selectedDocument && this.getMainTypeDocumentForDocument(this.selectedDocument)
+                != this.selectedMainTypeDocument) {
+
+            this.setSelected(undefined);
         }
+        this.fetchDocuments();
     }
 
     private handleChange(changedDocument: Document) {
@@ -261,14 +257,6 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     public getSelected(): Document {
         return this.selectedDocument;
-    }
-
-    public getSelectedMainTypeDocument(): Observable<IdaiFieldDocument> {
-
-        return Observable.create(observer => {
-            this.mainTypeObservers.push(observer);
-            this.notifyMainTypeObservers();
-        });
     }
 
     private selectLinkedMainTypeDocumentForSelectedDocument() {
@@ -420,8 +408,7 @@ export class ResourcesComponent implements AfterViewChecked {
                         this.scrollTarget = result.document;
                     }
                     return this.fetchDocuments();
-                }).then(() => this.notifyMainTypeObservers());
-
+                });
 
         }, closeReason => {
 
@@ -429,9 +416,7 @@ export class ResourcesComponent implements AfterViewChecked {
             if (closeReason == 'deleted') {
                 this.selectedDocument = undefined;
                 if (document == this.selectedMainTypeDocument) {
-                    return this.fetchMainTypeDocuments()
-                        .then(() => this.fetchDocuments())
-                        .then(() => this.notifyMainTypeObservers());
+                    return this.fetchMainTypeDocuments().then(() => this.fetchDocuments());
                 }
                 this.fetchDocuments();
             }
@@ -458,12 +443,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
-    }
-
-    private notifyMainTypeObservers() {
-        this.mainTypeObservers.forEach(observer => {
-            observer.next(this.selectedMainTypeDocument);
-        });
     }
 
     public isNewDocumentFromRemote(document: Document) {

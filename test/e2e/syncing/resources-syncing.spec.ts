@@ -244,7 +244,7 @@ describe('resources/syncing --', function() {
         }).catch(err => { fail(err); done(); });
     });
 
-    it('resolve a save conflict automatically', done => {
+    xit('resolve a save conflict automatically', done => {
         const nr = '6';
         let testDocument;
 

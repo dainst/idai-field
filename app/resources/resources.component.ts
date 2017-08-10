@@ -48,7 +48,6 @@ export class ResourcesComponent implements AfterViewChecked {
     private newDocumentsFromRemote: Array<Document> = [];
     private scrollTarget: IdaiFieldDocument;
 
-    private observers: Array<any> = [];
     private mainTypeObservers: Array<any> = [];
     private clickEventObservers: Array<any> = [];
 
@@ -252,8 +251,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public setSelected(documentToSelect: Document): Document {
 
         this.selectedDocument = documentToSelect;
-        this.notify();
-
         if (this.selectedDocument) this.selectLinkedMainTypeDocumentForSelectedDocument();
 
         return this.selectedDocument;
@@ -312,13 +309,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
         let index = this.documents.indexOf(document);
         this.documents[index] = restoredObject;
-        this.notify();
     }
 
     public remove(document: Document) {
         const index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
-        this.notify();
     }
 
     public fetchProjectDocument(): Promise<any> {
@@ -344,7 +339,6 @@ export class ResourcesComponent implements AfterViewChecked {
             query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
         } else {
             this.documents = [];
-            this.notify();
             return Promise.resolve();
         }
 
@@ -353,7 +347,6 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.datastore.find(query)
             .then(documents => {
                 this.documents = documents;
-                this.notify();
             }).catch(msgWithParams => {
                 this.messages.add(msgWithParams)
             }).then(() => this.loading.stop());
@@ -402,7 +395,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (newDocument.resource.type != this.view.mainType) {
             this.documents.unshift(<Document> newDocument);
-            this.notify();
         }
     }
 
@@ -464,19 +456,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
-    }
-
-    public getDocuments(): Observable<Array<Document>> {
-        return Observable.create(observer => {
-            this.observers.push(observer);
-            this.notify();
-        });
-    }
-
-    private notify() {
-        this.observers.forEach(observer => {
-            observer.next(this.documents);
-        });
     }
 
     private notifyMainTypeObservers() {

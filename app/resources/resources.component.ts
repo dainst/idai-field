@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, Renderer} from '@angular/core';
+import {Component, AfterViewChecked, OnDestroy, Renderer} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -54,6 +54,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private mainTypeHistory = {};
 
+    private subscription;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
@@ -85,11 +87,15 @@ export class ResourcesComponent implements AfterViewChecked {
         });
 
         const self = this;
-        datastore.documentChangesNotifications().subscribe(result => {
+        this.subscription = datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
         });
 
         this.initializeClickEventListener();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     ngAfterViewChecked() {

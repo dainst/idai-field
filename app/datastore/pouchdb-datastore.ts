@@ -379,15 +379,9 @@ export class PouchdbDatastore {
                     this.constraintIndexer.remove({resource: {id: change.id}})
                     return;
                 }
-
                 this.get(change.id).then(document => {
                     this.constraintIndexer.update(document);
-
-                    if (this.observers && Array.isArray(this.observers)) {
-                        this.observers.forEach(observer => {
-                            if (observer && (observer.next != undefined)) observer.next(document);
-                        });
-                    }
+                    this.notify();
                 });
             }).on('complete', info => {
                 console.error('changes stream was canceled', info);
@@ -395,5 +389,28 @@ export class PouchdbDatastore {
                 console.error('changes stream errored', err);
             });
         });
+    }
+
+    private notify() {
+
+        if (!this.observers) return;
+        this.removeClosedObservers();
+
+        this.observers.forEach(observer => {
+            if (observer.closed) return;
+            if (observer && (observer.next != undefined)) observer.next(document);
+        });
+    }
+
+    private removeClosedObservers() {
+
+        const observersToDelete = [];
+        for (let i = 0; i < this.observers.length; i++) {
+            if (this.observers[i].closed) observersToDelete.push(this.observers[i]);
+        }
+        for (let observerToDelete of observersToDelete) {
+            let i = this.observers.indexOf(observerToDelete);
+            this.observers.splice(i, 1);
+        }
     }
 }

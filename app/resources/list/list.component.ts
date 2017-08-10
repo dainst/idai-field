@@ -37,7 +37,6 @@ export class ListComponent implements OnChanges {
         private loading: Loading,
         configLoader: ConfigLoader
     ) {
-
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.typesMap = projectConfiguration.getTypesMap();
         });
@@ -49,11 +48,12 @@ export class ListComponent implements OnChanges {
 
         this.loading.start();
 
-        this.update()
-            .catch(msgWithParams => this.messages.add(msgWithParams))
-            .then(() => {
-                this.loading.stop();
-            });
+        // The timeout is necessary to make the loading icon appear
+        setTimeout(() => {
+            this.update()
+                .catch(msgWithParams => this.messages.add(msgWithParams))
+                .then(() => this.loading.stop());
+        }, 1);
     }
 
     private update(): Promise<any> {

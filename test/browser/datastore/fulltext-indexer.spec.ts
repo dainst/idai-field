@@ -1,5 +1,4 @@
 import {FulltextIndexer} from "../../../app/datastore/fulltext-indexer";
-import {browser} from "protractor";
 
 /**
  * @author Daniel de Oliveira

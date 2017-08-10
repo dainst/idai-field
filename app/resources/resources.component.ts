@@ -492,24 +492,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
 
-        this.loading.start();
-
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(() => {
-            this.removeEmptyDocuments();
-
-            let p;
-            if (mode != 'list') {
-                p = this.fetchDocuments();
-            } else {
-                this.query.type = undefined;
-                p = this.fetchDocuments()
-            }
-            p.then(() => this.loading.stop());
-
-            this.mode = mode;
-            this.editGeometry = false;
-        }, 50);
+        this.removeEmptyDocuments();
+        this.mode = mode;
+        this.editGeometry = false;
     }
 
     private removeEmptyDocuments() {
@@ -520,8 +505,6 @@ export class ResourcesComponent implements AfterViewChecked {
             if (!document.resource.id) this.remove(document);
         }
     }
-
-
 
     public deleteMainTypeHistory() {
         this.mainTypeHistory = {};

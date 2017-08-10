@@ -376,12 +376,12 @@ export class PouchdbDatastore {
                 if (!change || !change.id) return;
 
                 if (change.deleted) {
-                    this.constraintIndexer.remove({resource: {id: change.id}})
+                    this.constraintIndexer.remove({resource: {id: change.id}});
                     return;
                 }
                 this.get(change.id).then(document => {
                     this.constraintIndexer.update(document);
-                    this.notify();
+                    this.notify(document);
                 });
             }).on('complete', info => {
                 console.error('changes stream was canceled', info);
@@ -391,7 +391,7 @@ export class PouchdbDatastore {
         });
     }
 
-    private notify() {
+    private notify(document: Document) {
 
         if (!this.observers) return;
         this.removeClosedObservers();

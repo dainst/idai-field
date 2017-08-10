@@ -21,7 +21,7 @@ export class MapWrapperComponent {
 
     @Input() documents: Array<Document>; // TODO make it Array<IdaiFieldDocument>
     @Input() selectedDocument: IdaiFieldDocument;
-    @Input() editMode: boolean = false;
+    @Input() isEditing: boolean = false;
 
     constructor(
         public loading: Loading,

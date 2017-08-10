@@ -35,7 +35,7 @@ export class EditableMapComponent extends LayerMapComponent {
     @Input() mainTypeDocument: IdaiFieldDocument;
     @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
-    @Input() editMode: boolean;
+    @Input() isEditing: boolean;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
@@ -57,7 +57,7 @@ export class EditableMapComponent extends LayerMapComponent {
         super.updateMap(changes).then(() => {
             this.resetEditing();
 
-            if (this.editMode) {
+            if (this.isEditing) {
                 this.map.doubleClickZoom.disable();
 
                 if (this.selectedDocument.resource.geometry.coordinates) {
@@ -516,7 +516,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected select(document: IdaiFieldDocument): boolean {
 
-        if (!this.editMode) {
+        if (!this.isEditing) {
             this.onSelectDocument.emit(document);
             return true;
         } else {
@@ -526,7 +526,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected deselect() {
 
-        if (!this.editMode) {
+        if (!this.isEditing) {
             this.onSelectDocument.emit(null);
         }
     }
@@ -542,7 +542,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public getEditorType(): string {
 
-        if (!this.editMode || !this.selectedDocument || !this.selectedDocument.resource
+        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
                 || !this.selectedDocument.resource.geometry)
             return 'none';
 

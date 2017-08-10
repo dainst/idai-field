@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div *ngIf="editMode">
+<div *ngIf="isEditing">
     <div *ngIf="selectedPolygon || selectedPolyline || editableMarker" id="map-editor-button-delete"
          class="btn btn-danger mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>
     <div *ngIf="!selectedPolygon && !selectedPolyline && !editableMarker" id="map-editor-button-delete-disabled"

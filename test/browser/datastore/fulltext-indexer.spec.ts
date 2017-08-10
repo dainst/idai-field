@@ -108,24 +108,32 @@ export function main() {
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
-        // TODO fix the overwrite issue first, then enable this
-        xit('shortDescription empty', () => {
+        it('put overwrite', () => {
             const d = doc('1', 'identifier1', 'type');
-            d['shortDescription'] = '';
             fi.put(d);
-            expect(fi.get('short', ['type']))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
-            d['shortDescription'] = undefined;
+            d['resource']['identifier'] = 'identifier2';
             fi.put(d);
-            expect(fi.get('short', ['type']))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
-            delete d['shortDescription'];
-            fi.put(d);
-            expect(fi.get('short', ['type']))
+            expect(fi.get('identifier1', ['type']))
+                .toEqual([]);
+            expect(fi.get('identifier2', ['type']))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
-        // TODO when overwriting with put, delete old things first
+        it('shortDescription empty', () => {
+            const d = doc('1', 'identifier1', 'type');
+            d['resource']['shortDescription'] = '';
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([]);
+            d['resource']['shortDescription'] = undefined;
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([]);
+            delete d['resource']['shortDescription'];
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([]);
+        });
 
         // TODO tokenize fields
     });

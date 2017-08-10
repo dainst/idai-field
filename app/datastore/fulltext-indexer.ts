@@ -18,6 +18,7 @@ export class FulltextIndexer {
     }
 
     public put(doc) {
+        this.remove(doc);
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 
         if (!this.index[doc.resource.type]['*']) this.index[doc.resource.type]['*'] = { };
@@ -26,7 +27,7 @@ export class FulltextIndexer {
 
         for (let field of this.fieldsToIndex) {
 
-            // if (!doc.resource[field] || doc.resource.field == '') continue;
+            if (!doc.resource[field] || doc.resource.field == '') continue;
 
             let accumulator = '';
             for (let letter of doc.resource[field]) {

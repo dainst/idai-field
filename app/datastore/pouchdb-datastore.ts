@@ -375,9 +375,7 @@ export class PouchdbDatastore {
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
-                console.log("hallo",change)
                 if (change.deleted) {
-                    console.log("hallo2")
                     this.constraintIndexer.remove({resource: {id: change.id}});
                     return;
                 }

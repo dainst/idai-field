@@ -38,10 +38,9 @@ export class ResourcesComponent implements AfterViewChecked {
     public documents: Array<Document>;
     public selectedDocument: Document;
 
+    public projectDocument: IdaiFieldDocument;
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
-
-    public projectDocument: IdaiFieldDocument;
 
     public ready: boolean = false;
 
@@ -498,13 +497,16 @@ export class ResourcesComponent implements AfterViewChecked {
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
             this.removeEmptyDocuments();
+
+            let p;
             if (mode != 'list') {
-                this.fetchDocuments().then(() => {
-                    this.loading.stop();
-                });
+                p = this.fetchDocuments();
             } else {
-                this.loading.stop();
+                this.query.type = undefined;
+                p = this.fetchDocuments()
             }
+            p.then(() => this.loading.stop());
+
             this.mode = mode;
             this.editGeometry = false;
         }, 50);
@@ -519,9 +521,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    public documentsInclude(doc: IdaiFieldDocument): boolean {
-        return this.documents.some(d => d.resource.id == doc.resource.id );
-    }
+
 
     public deleteMainTypeHistory() {
         this.mainTypeHistory = {};

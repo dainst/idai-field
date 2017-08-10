@@ -6,6 +6,7 @@ import {Messages} from "idai-components-2/messages";
 import {ResourcesComponent} from "../resources.component";
 import {DocumentReference} from "./document-reference";
 import {Loading} from "../../widgets/loading";
+import {IdaiFieldDatastore} from "../../datastore/idai-field-datastore";
 
 @Component({
     selector: 'list',
@@ -20,9 +21,10 @@ import {Loading} from "../../widgets/loading";
 export class ListComponent implements OnChanges {
 
     @Input() documents: Array<Document>;
+    @Input() selectedMainTypeDocument: IdaiFieldDocument;
+    @Input() ready;
 
-    private docRefMap: {[type: string]: DocumentReference};
-    private docRefTree: DocumentReference[];
+    public docRefTree: DocumentReference[];
 
     public typesMap: { [type: string]: IdaiType };
 
@@ -31,7 +33,8 @@ export class ListComponent implements OnChanges {
     private awaitsReload: boolean = false;
     
     constructor(
-        private resourcesComponent: ResourcesComponent,
+        private datastore: IdaiFieldDatastore,
+        public resourcesComponent: ResourcesComponent,
         private messages: Messages,
         private loading: Loading,
         configLoader: ConfigLoader
@@ -44,13 +47,15 @@ export class ListComponent implements OnChanges {
 
     ngOnChanges() {
 
+        if (!this.ready) return;
+
         // TODO show loading icon
 
         this.populateTree()
             .catch(msgWithParams => this.messages.add(msgWithParams))
             .then(() => {
                 this.loading.stop();
-            })
+            });
     }
 
     public toggleChildrenForId(id: string) {
@@ -80,7 +85,7 @@ export class ListComponent implements OnChanges {
 
         let parent = docRef['parent'];
         while (parent) {
-            if (this.resourcesComponent.documentsInclude(parent.doc as IdaiFieldDocument))
+            if (this.documentsInclude(parent.doc as IdaiFieldDocument))
                 return true;
             parent = parent['parent'];
         }
@@ -89,7 +94,7 @@ export class ListComponent implements OnChanges {
 
     private isDescendantPartOfResult(docRef: DocumentReference): boolean {
 
-        if (this.resourcesComponent.documentsInclude(docRef.doc as IdaiFieldDocument))
+        if (this.documentsInclude(docRef.doc as IdaiFieldDocument))
             return true;
         else
             for (let child of docRef['children'])
@@ -103,8 +108,9 @@ export class ListComponent implements OnChanges {
 
     private populateTree(): Promise<any> {
 
+        let docRefMap: {[type: string]: DocumentReference} = {};
+
         this.docRefTree = [];
-        this.docRefMap = {};
 
         // TODO what was this for?
         // if (!this.selectedMainTypeDocument) {
@@ -112,25 +118,33 @@ export class ListComponent implements OnChanges {
         //     return Promise.resolve();
         // }
 
-        // initialize docRefMap to make sure it is fully populated before building the tree
-        this.documents.forEach(doc => {
-            let docRef: DocumentReference = { doc: doc, children: [] };
-            this.docRefMap[doc.resource.id] = docRef;
-        });
-        // build tree from liesWithin relations
-        this.documents.forEach(doc => {
-            let docRef = this.docRefMap[doc.resource.id];
-            if (!doc.resource.relations['liesWithin']) {
-                this.docRefTree.push(docRef);
-            } else {
-                doc.resource.relations['liesWithin'].forEach(parentId => {
-                    this.docRefMap[parentId]['children'].push(docRef);
-                    docRef['parent'] = this.docRefMap[parentId];
-                });
-            }
-        });
-        this.awaitsReload = false;
+        return this.datastore.find(
+            {constraints:{'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id}}
+            ).then(resultDocs => {
 
-        return Promise.resolve();
+            // initialize docRefMap to make sure it is fully populated before building the tree
+            resultDocs.forEach(doc => {
+                let docRef: DocumentReference = { doc: doc, children: [] };
+                docRefMap[doc.resource.id] = docRef;
+            });
+
+            // build tree from liesWithin relations
+            resultDocs.forEach(doc => {
+                let docRef = docRefMap[doc.resource.id];
+                if (!doc.resource.relations['liesWithin']) {
+                    this.docRefTree.push(docRef);
+                } else {
+                    doc.resource.relations['liesWithin'].forEach(parentId => {
+                        docRefMap[parentId]['children'].push(docRef);
+                        docRef['parent'] = docRefMap[parentId];
+                    });
+                }
+            });
+            this.awaitsReload = false;
+        });
+    }
+
+    private documentsInclude(doc: IdaiFieldDocument): boolean {
+        return this.documents.some(d => d.resource.id == doc.resource.id );
     }
 }

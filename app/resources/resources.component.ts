@@ -494,20 +494,19 @@ export class ResourcesComponent implements AfterViewChecked {
     public setMode(mode: string) {
 
         this.loading.start();
-        const that = this;
 
         // The timeout is necessary to make the loading icon appear
-        setTimeout(function() {
-            that.removeEmptyDocuments();
+        setTimeout(() => {
+            this.removeEmptyDocuments();
             if (mode != 'list') {
-                that.fetchDocuments().then(() => {
-                    that.loading.stop();
+                this.fetchDocuments().then(() => {
+                    this.loading.stop();
                 });
             } else {
-                that.loading.stop();
+                this.loading.stop();
             }
-            that.mode = mode;
-            that.editGeometry = false;
+            this.mode = mode;
+            this.editGeometry = false;
         }, 50);
     }
 

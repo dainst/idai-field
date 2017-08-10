@@ -120,15 +120,4 @@ describe('image grid --', function() {
             ImagesGridPage.getCellImageName(0).then(imageName=>{expect(imageName).toEqual(imageName)});
         });
     });
-
-    it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {
-        // image is already present in mediastore folder since uploading does not work in HttpMediastore
-        const fileName = 'Aldrin_Apollo_11.jpg';
-        const xpath = '//span[@class="badge badge-default"][text()="' + fileName + '"]';
-
-        ImagesGridPage.clickUploadArea();
-        ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));
-        ImagesGridPage.chooseImageSubtype(0);
-        browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime);
-    });
 });

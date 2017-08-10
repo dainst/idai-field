@@ -492,9 +492,15 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
 
-        this.removeEmptyDocuments();
-        this.mode = mode;
-        this.editGeometry = false;
+        this.loading.start();
+
+        // The timeout is necessary to make the loading icon appear
+        setTimeout(() => {
+            this.removeEmptyDocuments();
+            this.mode = mode;
+            this.editGeometry = false;
+            this.loading.stop();
+        }, 50);
     }
 
     private removeEmptyDocuments() {

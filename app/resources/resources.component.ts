@@ -175,9 +175,21 @@ export class ResourcesComponent implements AfterViewChecked {
     private handleChange(changedDocument: Document) {
 
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
+        if (this.isExistingDoc(changedDocument)) return;
+
+        let oldDocuments = this.documents;
+        this.fetchDocuments().then(() => {
+            for (let doc of this.documents) {
+                if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
+                    this.newDocumentsFromRemote.push(doc);
+                }
+            }
+        });
+    }
+
+    private isExistingDoc(changedDocument) {
 
         let existingDoc = false;
-
         for (let doc of this.documents) {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
@@ -185,17 +197,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 existingDoc = true;
             }
         }
-
-        if (!existingDoc) {
-            let oldDocuments = this.documents;
-            this.fetchDocuments().then(() => {
-                for (let doc of this.documents) {
-                    if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
-                        this.newDocumentsFromRemote.push(doc);
-                    }
-                }
-            });
-        }
+        return existingDoc;
     }
 
     private initializeClickEventListener() {

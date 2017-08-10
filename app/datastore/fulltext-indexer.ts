@@ -40,7 +40,17 @@ export class FulltextIndexer {
         for (let type of types) {
             this._get(resultSets, s, type);
         }
-        return resultSets;
+        return this.unify(resultSets);
+    }
+
+    private unify(resultSets) {
+        const result = {};
+        for (let resultSet of resultSets) {
+            for (let item of resultSet) {
+                result[item.id] = item;
+            }
+        }
+        return Object.keys(result).map(key => result[key]);
     }
 
     private _get(resultSets, s, type) {

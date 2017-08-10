@@ -5,7 +5,7 @@ import {FulltextIndexer} from "../../../app/datastore/fulltext-indexer";
  */
 export function main() {
 
-    describe('FulltextIndexer', () => {
+    fdescribe('FulltextIndexer', () => {
 
         function doc(id, identifier, type) {
             return {
@@ -32,9 +32,9 @@ export function main() {
 
             fi.add(doc('1', 'identifier1', 'object'));
             expect(fi.get('identifier1', ['object']))
-                .toEqual([[{id: '1', date: '2018-01-01'}]]);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(fi.get('ide', ['object']))
-                .toEqual([[{id: '1', date: '2018-01-01'}]]);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('match two with the same search term', () => {
@@ -43,7 +43,7 @@ export function main() {
             fi.add(doc('1', 'identifier1', 'object'));
             fi.add(doc('2', 'identifier2', 'object'));
             expect(fi.get('identifier', ['object']))
-                .toEqual([[{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]]);
+                .toEqual([{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]);
         });
 
         it('match in all types', () => {
@@ -51,7 +51,7 @@ export function main() {
 
             fi.add(doc('1', 'identifier1', 'object'));
             expect(fi.get('identifier', undefined))
-                .toEqual([[{id: '1', date: '2018-01-01'}]]);
+                .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('match in multiple selected types', () => {
@@ -61,7 +61,7 @@ export function main() {
             fi.add(doc('2', 'identifier2', 'object2'));
             fi.add(doc('3', 'identifier3', 'object3'));
             expect(fi.get('identifier', ['object1', 'object2']))
-                .toEqual([[{id: '1', date: '2018-01-01'}],[{id: '2', date: '2018-01-01'}]]);
+                .toEqual([{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]);
         });
 
         it('do not match search term', () => {
@@ -69,7 +69,7 @@ export function main() {
 
             fi.add(doc('1', 'iden', 'object'));
             expect(fi.get('identifier', ['object']))
-                .toEqual([[]]);
+                .toEqual([]);
         });
 
         it('do not match search in type', () => {
@@ -77,7 +77,7 @@ export function main() {
 
             fi.add(doc('1', 'iden', 'object1'));
             expect(fi.get('identifier', ['object2']))
-                .toEqual([[]]);
+                .toEqual([]);
         });
 
         it('no types present', () => {

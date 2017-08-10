@@ -357,26 +357,28 @@ export class ResourcesComponent implements AfterViewChecked {
         if (!this.view) return Promise.resolve();
 
         this.loading.start();
+        return this.datastore.find({type: this.view.mainType, prefix: true})
+            .then(documents => {
+                this.loading.stop();
+                this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
+                this.setSelectedMainTypeDocument();
+            });
+    }
 
-        const query: Query = {type: this.view.mainType, prefix: true};
+    private setSelectedMainTypeDocument() {
 
-        return this.datastore.find(query).then(documents => {
-            this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-            if (this.mainTypeDocuments.length == 0) {
-                this.selectedMainTypeDocument = undefined;
-            } else if (this.selectedDocument) {
-                this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
-                if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+        if (this.mainTypeDocuments.length == 0) {
+            this.selectedMainTypeDocument = undefined;
+        } else if (this.selectedDocument) {
+            this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+        } else {
+            if (this.mainTypeHistory[this.view.name]) {
+                this.selectedMainTypeDocument = this.mainTypeHistory[this.view.name];
             } else {
-                if (this.mainTypeHistory[this.view.name]) {
-                    this.selectedMainTypeDocument = this.mainTypeHistory[this.view.name];
-                } else {
-                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-                }
+                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
-
-            this.loading.stop();
-        });
+        }
     }
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {

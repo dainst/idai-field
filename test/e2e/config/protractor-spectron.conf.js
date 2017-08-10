@@ -12,8 +12,8 @@ exports.config = {
 
     suites: {
         default: [
-            '../images/*.spec.js',
             '../syncing/*.spec.js',
+            '../images/*.spec.js',
             '../import/*.spec.js',
             '../list/*.spec.js',
             '../resources/map/*.spec.js',

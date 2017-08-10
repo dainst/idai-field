@@ -6,6 +6,7 @@ import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
 import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
+import {FulltextIndexer} from "./fulltext-indexer";
 
 @Injectable()
 /**
@@ -27,6 +28,7 @@ export class PouchdbManager {
     constructor(
         private sampleDataLoader: AbstractSampleDataLoader,
         private constraintIndexer: ConstraintIndexer,
+        private fulltextIndexer: FulltextIndexer
     ) {
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -76,9 +78,11 @@ export class PouchdbManager {
         rdy.then(() =>
             this.db.allDocs({include_docs: true},(err, resultDocs) => {
                 this.constraintIndexer.clear();
+                this.fulltextIndexer.clear();
                 for (let i in resultDocs.rows) {
                     if (resultDocs.rows[i].id.indexOf('_design') == -1) {
                         this.constraintIndexer.update(resultDocs.rows[i].doc);
+                        this.fulltextIndexer.add(resultDocs.rows[i].doc);
                     }
                 }
                 this.resolveDbReady(this.db)

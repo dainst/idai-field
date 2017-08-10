@@ -169,17 +169,19 @@ export class DropAreaComponent {
 
         return new Promise((resolve, reject) => {
 
-            var img = new Image();
+            let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                var doc = {
+                let doc = {
                     "resource": {
                         "identifier": file.name,
                         "type": type.name,
                         "filename": file.name,
                         "width": img.width,
                         "height": img.height,
-                        "relations": {}
+                        "relations": {
+                            "isRecordedIn" : ["images"]
+                        }
                     }
                 };
                 this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])

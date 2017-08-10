@@ -86,6 +86,14 @@ export function main() {
                 .toEqual([]);
         });
 
+        it('remove', () => {
+            const d = doc('1', 'identifier1', 'type');
+            fi.add(d);
+            fi.remove(d);
+            expect(fi.get('identifier', ['type']))
+                .toEqual([]);
+        });
+
         xit('rough size estimate', () => {
             console.log("start")
             let str;

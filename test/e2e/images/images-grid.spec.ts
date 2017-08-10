@@ -1,24 +1,27 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, by, element, protractor} from "protractor";
+import {ImagesGridPage} from "./images-grid.page";
+import {ImagesViewPage} from "./images-view.page";
+import {NavbarPage} from "../navbar.page";
+import {ResourcesPage} from "../resources/resources.page";
 
 let path = require('path');
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
-import {ImagesGridPage} from './images-grid.page';
-import {ImagesViewPage} from './images-view.page';
-
 describe('image grid --', function() {
 
     beforeEach(function () {
-        ImagesGridPage.get();
+        ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
+        browser.sleep(1000);
+        NavbarPage.clickNavigateToImages();
     });
 
     it('deselect cells', function() {
         ImagesGridPage.getAllCells().then(function(cells) {
-            let first = 0;
-            let last = cells.length - 1;
+            const first = 0;
+            const last = cells.length - 1;
 
             cells[first].click();
             expect(cells[first].getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
@@ -31,7 +34,7 @@ describe('image grid --', function() {
                 expect(cells[last].getAttribute('class')).not.toMatch(ImagesGridPage.selectedClass);
 
                 if (last > 1) {
-                    var middle = Math.floor(0.5 * (cells.length));
+                    const middle = Math.floor(0.5 * (cells.length));
                     cells[middle].click();
                     expect(cells[middle].getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
                     cells[middle].click();
@@ -78,9 +81,9 @@ describe('image grid --', function() {
     });
 
     it('connect a resource with an image in the grid view', function() {
-        var imageToConnect = ImagesGridPage.getCell(0);
-        var resourceId = 'tf1';
-        var resourceIdentifier = 'testf1';
+        const imageToConnect = ImagesGridPage.getCell(0);
+        const resourceId = 'tf1';
+        const resourceIdentifier = 'testf1';
 
         imageToConnect.click();
         expect(imageToConnect.getAttribute('class')).toMatch(ImagesGridPage.selectedClass);

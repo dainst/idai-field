@@ -15,12 +15,22 @@ export class FulltextIndexer {
     }
 
     public print() {
-        console.log(JSON.stringify(this.index).length)
+        console.log(JSON.stringify(this.index))
+        // console.log(JSON.stringify(this.index).length)
     }
 
+    // TODO rename to put
     public add(doc) {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 
+        // TODO { find another solution
+        if (!this.index[doc.resource.type]['_']) this.index[doc.resource.type]['_'] = {};
+        this.index[doc.resource.type]['_'][doc.resource.id]
+            = ModelUtil.getLastModified(doc);
+        // TODO }
+
+
+        // TODO also index other fields
         let accumulator = '';
         for (let letter of doc.resource.identifier) {
             accumulator += letter;
@@ -29,6 +39,17 @@ export class FulltextIndexer {
             }
             this.index[doc.resource.type][accumulator][doc.resource.id]
                 = ModelUtil.getLastModified(doc);
+        }
+    }
+
+    public remove(doc) {
+        if (Object.keys(this.index).length == 0) return;
+        for (let type of Object.keys(this.index)) {
+            for (let term of Object.keys(this.index[type])) {
+                if (this.index[type][term][doc.resource.id]) {
+                    delete this.index[type][term][doc.resource.id];
+                }
+            }
         }
     }
 

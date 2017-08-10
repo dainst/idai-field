@@ -9,6 +9,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "../util/result-sets";
 import {ConstraintIndexer} from "./constraint-indexer";
+import {FulltextIndexer} from "./fulltext-indexer";
 
 /**
  * @author Sebastian Cuy
@@ -20,11 +21,14 @@ export class PouchdbDatastore {
     protected db: any;
     private observers = [];
     private config: ProjectConfiguration;
+    private deletedOnes = []; // TODO check if we can get rid of it
+
 
     constructor(
         configLoader: ConfigLoader,
         private pouchdbManager: PouchdbManager,
-        private constraintIndexer: ConstraintIndexer
+        private constraintIndexer: ConstraintIndexer,
+        private fulltextIndexer: FulltextIndexer
         ) {
 
         this.db = pouchdbManager.getDb();
@@ -64,6 +68,7 @@ export class PouchdbDatastore {
             .then(result => {
 
                 this.constraintIndexer.update(document);
+                this.fulltextIndexer.add(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
@@ -94,6 +99,7 @@ export class PouchdbDatastore {
                 return this.db.put(document, { force: true }).then(result => {
 
                     this.constraintIndexer.update(document);
+                    this.fulltextIndexer.add(document);
                     document['_rev'] = result['rev'];
                     return Promise.resolve(this.cleanDoc(document));
 
@@ -160,7 +166,9 @@ export class PouchdbDatastore {
             return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
         }
 
+        this.deletedOnes.push(doc.resource.id);
         this.constraintIndexer.remove(doc);
+        this.fulltextIndexer.remove(doc);
 
         return this.get(doc.resource.id).then(
             docFromGet => this.db.remove(docFromGet)
@@ -212,11 +220,7 @@ export class PouchdbDatastore {
         if (!query) return Promise.resolve([]);
 
         return this.perform(query)
-            .then(a => {
-                return a;
-            })
             .catch(err => {
-                console.error(err);
                 return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
             })
     }
@@ -234,6 +238,14 @@ export class PouchdbDatastore {
             });
     }
 
+    private performSimple(query, rsets) {
+        let q = query.q ? query.q : '_';
+        let type = query.type ? [query.type] : undefined;
+        let result = this.fulltextIndexer.get(q, type);
+        rsets.add(result);
+        return rsets;
+    }
+
     private generateOrderedResultList(theResultSets: ResultSets) {
         return theResultSets.intersect(e => e.id)
             .sort(this.comp('date'))
@@ -246,6 +258,7 @@ export class PouchdbDatastore {
      */
     private performThem(constraints) {
         if (!constraints) return undefined;
+
         const rsets = new ResultSets();
         let usableConstraints = 0;
         for (let constraint of Object.keys(constraints)) {
@@ -271,31 +284,6 @@ export class PouchdbDatastore {
 
     private static isEmpty(query) {
         return ((!query.q || query.q == '') && !query.type);
-    }
-
-    private performSimple(query, rsets) {
-
-        const opt = {
-            reduce: false,
-            include_docs: false,
-            conflicts: true,
-        };
-
-        let q = query.q ? query.q.toLowerCase() : '';
-        let type = query.type ? query.type : '';
-
-        opt['startkey'] = [type, q];
-
-        if (!query.prefix && q == '') query.prefix = true;
-        let endKey = query.prefix ? q + '\uffff' : q;
-        opt['endkey'] = [type, endKey, {}];
-
-        return this.db.query('fulltext', opt)
-            .then(result => {
-                rsets.add(this.uniqueIds(result.rows).map(r => new Object({id: r.id, date: r.key[2]})));
-                return rsets;
-            });
-
     }
 
     public findConflicted(): Promise<IdaiFieldDocument[]> {
@@ -375,12 +363,14 @@ export class PouchdbDatastore {
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
-                if (change.deleted) {
+                if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}});
+                    this.fulltextIndexer.remove({resource: {id: change.id}});
                     return;
                 }
                 this.get(change.id).then(document => {
                     this.constraintIndexer.update(document);
+                    this.fulltextIndexer.add(document);
                     this.notify(document);
                 });
             }).on('complete', info => {

@@ -25,8 +25,9 @@ export class ConstraintIndexer {
     public remove(doc) {
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
-                if (this.index[pathDef.path][key][doc.resource.id])
+                if (this.index[pathDef.path][key][doc.resource.id]) {
                     delete this.index[pathDef.path][key][doc.resource.id];
+                }
             }
         }
     }

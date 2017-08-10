@@ -26,7 +26,7 @@ export class DocumentPickerComponent {
     constructor(private datastore: Datastore,
                 private configLoader: ConfigLoader) {
 
-        this.query = {type: 'resource', prefix: true};
+        this.query = { };
         this.fetchDocuments(this.query);
     }
 
@@ -43,12 +43,16 @@ export class DocumentPickerComponent {
      */
     public fetchDocuments(query: Query) {
 
+        if (query.type == 'resource') delete query.type;
+        console.log("query",query)
         this.datastore.find(query).then(documents => this.filterDocuments(documents as Array<IdaiFieldDocument>))
             .then(filteredDocuments => this.documents = filteredDocuments)
             .catch(err => console.error(err));
     }
 
     private filterDocuments(documents: Array<IdaiFieldDocument>): Promise<Array<IdaiFieldDocument>> {
+        // console.log("documents",documents)
+        // return Promise.resolve(documents)
 
         return this.configLoader.getProjectConfiguration()
             .then(projectConfiguration => {

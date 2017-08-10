@@ -32,7 +32,7 @@ export class ImageGridComponent {
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;
 
-    private query : Query = {type: 'image', prefix: true};
+    private query : Query = { constraints : { "resource.relations.isRecordedIn" : "images" }};
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;
@@ -73,7 +73,9 @@ export class ImageGridComponent {
 
         this.query = query;
 
+        console.log("find",query)
         this.datastore.find(query).then(documents => {
+            console.log("found", documents)
             this.documents = documents as IdaiFieldImageDocument[];
 
             // insert stub document for first cell that will act as drop area for uploading images
@@ -118,14 +120,14 @@ export class ImageGridComponent {
         this.imageGridBuilder.calcGrid(
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
             this.rows = result['rows'];
-            for (var msgWithParams of result['msgsWithParams']) {
+            for (let msgWithParams of result['msgsWithParams']) {
                 this.messages.add(msgWithParams);
             }
         });
     }
 
     /**
-     * @param documentToSelect the object that should be selected
+     * @param document the object that should be selected
      */
     public select(document: IdaiFieldImageDocument) {
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
@@ -170,6 +172,8 @@ export class ImageGridComponent {
         this.deleteImageDocuments(this.selected).then(
             () => {
                 this.clearSelection();
+
+                console.log("fetching again")
                 this.fetchDocuments(this.query);
             }).catch(error => {
                 this.messages.add(error); // TODO seems that this can not happen, see catch in fetchDocuments
@@ -178,6 +182,8 @@ export class ImageGridComponent {
 
     private deleteImageDocuments(documents: Array<IdaiFieldImageDocument>): Promise<any> {
 
+
+        // TODO refactor
         return new Promise<any>((resolve, reject) => {
 
             let promise: Promise<any> = new Promise<any>((res) => res());
@@ -210,7 +216,7 @@ export class ImageGridComponent {
 
             for (let imageDocument of imageDocuments) {
                 const oldVersion = JSON.parse(JSON.stringify(imageDocument));
-
+                // TODO make a method in Util
                 if (!imageDocument.resource.relations['depicts']) {
                     imageDocument.resource.relations['depicts'] = [];
                 }

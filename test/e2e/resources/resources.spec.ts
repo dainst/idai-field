@@ -25,6 +25,16 @@ describe('resources --', () => {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
     });
 
+    it('should delete a resource', () => {
+        ResourcesPage.performCreateResource('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.clickEditDocument();
+        ResourcesPage.clickDeleteDocument();
+        ResourcesPage.clickDeleteInModal();
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
     it('show only resources of the selected type', () => {
         ResourcesPage.performCreateResource('1', 0);
         ResourcesPage.performCreateResource('2', 1);
@@ -96,16 +106,6 @@ describe('resources --', () => {
         DocumentEditWrapperPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
         expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('2');
-    });
-
-    it('should delete a resource', () => {
-        ResourcesPage.performCreateResource('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.clickDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 
     it('should create a new main type resource', () => {

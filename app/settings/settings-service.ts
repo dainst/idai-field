@@ -184,29 +184,54 @@ export class SettingsService {
 
     private useSelectedDatabase(createDb: boolean): Promise<any> {
 
-        const project = this.getSelectedProject();
-
         if (createDb) {
-            this.pouchdbManager.create(project);
+            this.pouchdbManager.create(this.getSelectedProject());
         } else {
-            this.pouchdbManager.select(project);
+            this.pouchdbManager.select(this.getSelectedProject());
         }
-        this.imagestore.select(project);
+        this.imagestore.select(this.getSelectedProject());
+        return this.createSuperDocs(this.getSelectedProject());
+    }
+
+    private createSuperDocs(project) {
 
         return this.datastore.find({
-            constraints: { 'resource.identifier' : project }
-        }).then(result => {
-            if (!result || result.length == 0) {
-                return this.createProjectDocument(project);
-            } else {
-                return Promise.resolve();
-            }
-        }, msgWithParams => Promise.reject(msgWithParams));
+                constraints: { 'resource.identifier' : project }
+            })
+            .then(results => {
+                if (!results || results.length == 0) {
+                    return this.createProjectDocument(project);
+                }
+            })
+            .then(() => this.datastore.find({
+                constraints: { 'resource.identifier' : 'images' }
+            }))
+            .then(results => {
+                if (!results || results.length == 0) {
+                    return this.createImagesDocument();
+                }
+            })
+            .catch(msgWithParams => Promise.reject(msgWithParams));
+    }
+
+    private createImagesDocument(): Promise<any> {
+
+        const projectDocument: Document = {
+            resource: {
+                type: 'images',
+                identifier: 'images',
+                id: 'images',
+                relations: {}
+            },
+            created: { user: this.getUsername(), date: new Date() },
+            modified: [{ user: this.getUsername(), date: new Date() }]
+        };
+        return this.datastore.create(projectDocument);
     }
 
     private createProjectDocument(project: string): Promise<any> {
 
-        const projectDocument: Document = {
+        const imagesDocument: Document = {
             resource: {
                 type: 'project',
                 identifier: project,
@@ -215,10 +240,9 @@ export class SettingsService {
                 relations: {}
             },
             created: { user: this.getUsername(), date: new Date() },
-            modified: []
+            modified: [{ user: this.getUsername(), date: new Date() }]
         };
-
-        return this.datastore.create(projectDocument);
+        return this.datastore.create(imagesDocument);
     }
 
     private static validateAddress(address) {

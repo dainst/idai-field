@@ -70,7 +70,7 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                 }
                 console.debug("Successfully put samples from " + path + " to " + dest );
             });
-            Promise.all(promises).then(resolve).catch(err => {
+            return Promise.all(promises).then(resolve).catch(err => {
                 console.error("Problem when storing sample images", err);
                 return Promise.reject(err);
             });

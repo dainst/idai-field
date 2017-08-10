@@ -41,6 +41,7 @@ import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './datastore/sample-data-loader';
 import {AutoConflictResolver} from './common/auto-conflict-resolver';
 import {ConstraintIndexer} from "./datastore/constraint-indexer";
+import {FulltextIndexer} from "./datastore/fulltext-indexer";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -89,24 +90,29 @@ if (CONFIG['imagestorepath']) {
                 ]);
             }
         },
+        FulltextIndexer,
         SampleDataLoader,
         { provide: PouchdbManager, useFactory: function(
                 sampleDataLoader: SampleDataLoader,
-                constraintIndexer: ConstraintIndexer
+                constraintIndexer: ConstraintIndexer,
+                fulltextIndexer: FulltextIndexer
             ){
-                return new PouchdbManager(sampleDataLoader, constraintIndexer);
+                return new PouchdbManager(sampleDataLoader, constraintIndexer, fulltextIndexer);
             },
-            deps: [SampleDataLoader, ConstraintIndexer]
+            deps: [SampleDataLoader, ConstraintIndexer, FulltextIndexer]
         },
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,
-            useFactory: function(configLoader: ConfigLoader, pouchdbManager: PouchdbManager, constraintIndexer: ConstraintIndexer) : Datastore {
-                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager, constraintIndexer));
+            useFactory: function(configLoader: ConfigLoader,
+                                 pouchdbManager: PouchdbManager,
+                                 constraintIndexer: ConstraintIndexer,
+                                 fulltextIndexer: FulltextIndexer) : Datastore {
+                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager, constraintIndexer, fulltextIndexer));
             },
-            deps: [ConfigLoader, PouchdbManager, ConstraintIndexer]
+            deps: [ConfigLoader, PouchdbManager, ConstraintIndexer, FulltextIndexer]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

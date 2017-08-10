@@ -99,8 +99,10 @@ export function main() {
         xit('rough size estimate', () => {
             const fi = new FulltextIndexer();
 
+            console.log("start")
+
             let str;
-            for (let i=0; i < 50000;i++) {
+            for (let i=0; i < 100000;i++) {
                 str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
                 // console.log("string",str)
                 fi.add(doc('1', str, 'object'));
@@ -108,7 +110,7 @@ export function main() {
 
             fi.print();
             console.log(fi.get(str, ['object']))
-        });
+        }, 20000);
 
         // TODO index more fields
 

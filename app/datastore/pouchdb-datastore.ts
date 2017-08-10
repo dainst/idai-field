@@ -239,7 +239,7 @@ export class PouchdbDatastore {
     }
 
     private performSimple(query, rsets) {
-        let q = query.q ? query.q : '_';
+        let q = (!query.q || query.q == '') ? '*' : query.q;
         let type = query.type ? [query.type] : undefined;
         let result = this.fulltextIndexer.get(q, type);
         rsets.add(result);

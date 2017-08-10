@@ -94,6 +94,13 @@ export function main() {
                 .toEqual([]);
         });
 
+        it('search *', () => {
+            const d = doc('1', 'identifier1', 'type');
+            fi.put(d);
+            expect(fi.get('*', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+        });
+
         xit('rough size estimate', () => {
             console.log("start")
             let str;

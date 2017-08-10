@@ -23,8 +23,8 @@ export class FulltextIndexer {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 
         // TODO { find another solution
-        if (!this.index[doc.resource.type]['_']) this.index[doc.resource.type]['_'] = {};
-        this.index[doc.resource.type]['_'][doc.resource.id]
+        if (!this.index[doc.resource.type]['*']) this.index[doc.resource.type]['*'] = {};
+        this.index[doc.resource.type]['*'][doc.resource.id]
             = ModelUtil.getLastModified(doc);
         // TODO }
 

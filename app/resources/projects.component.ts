@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {ResourcesComponent} from './resources.component';
+import {Loading} from '../widgets/loading';
 import {M} from '../m';
 
 @Component({
@@ -30,7 +31,8 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private settingsService: SettingsService,
                 private resourcesComponent: ResourcesComponent,
-                private messages: Messages) {
+                private messages: Messages,
+                private loading: Loading) {
     }
 
     ngOnInit() {
@@ -108,6 +110,7 @@ export class ProjectsComponent implements OnInit {
 
     private switchProjectDb(project: string, createDb: boolean = false) {
 
+        this.loading.start();
         this.resourcesComponent.stop();
 
         this.selectedProject = project;
@@ -117,7 +120,7 @@ export class ProjectsComponent implements OnInit {
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)
-            });
+            }).then(() => this.loading.stop());
     }
 
     private handleClick(event) {

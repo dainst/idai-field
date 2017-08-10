@@ -368,22 +368,25 @@ export class PouchdbDatastore {
         this.db.rdy.then(db => {
             db.changes({
                 live: true,
-                include_docs: true,
+                include_docs: false,
                 conflicts: true,
                 since: 'now'
             }).on('change', change => {
-                if (change && change['id'] && (change['id'].indexOf('_design') == 0)) return; // starts with _design
-                if (!change || !change.doc) return;
+                if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
+                if (!change || !change.id) return;
 
-                if (change.doc._deleted) {
-                    this.constraintIndexer.remove({resource:{id:change.doc._id}})
-                } else {
-                    this.constraintIndexer.update(change.doc);
+                if (change.deleted) {
+                    this.constraintIndexer.remove({resource: {id: change.id}})
+                    return;
                 }
 
-                if (this.observers && Array.isArray(this.observers)) this.observers.forEach(observer => {
-                    if (observer && (observer.next != undefined)) {
-                        observer.next(this.cleanDoc(change.doc));
+                this.get(change.id).then(document => {
+                    this.constraintIndexer.update(document);
+
+                    if (this.observers && Array.isArray(this.observers)) {
+                        this.observers.forEach(observer => {
+                            if (observer && (observer.next != undefined)) observer.next(document);
+                        });
                     }
                 });
             }).on('complete', info => {

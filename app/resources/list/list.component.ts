@@ -28,9 +28,7 @@ export class ListComponent implements OnChanges {
 
     public typesMap: { [type: string]: IdaiType };
 
-    private childrenShownForIds: string[] = [];
-
-    private awaitsReload: boolean = false;
+    private childrenShownForIds: string[];
     
     constructor(
         private datastore: IdaiFieldDatastore,
@@ -49,13 +47,47 @@ export class ListComponent implements OnChanges {
 
         if (!this.ready) return;
 
-        // TODO show loading icon
+        this.loading.start();
 
-        this.populateTree()
+        this.update()
             .catch(msgWithParams => this.messages.add(msgWithParams))
             .then(() => {
                 this.loading.stop();
             });
+    }
+
+    private update(): Promise<any> {
+
+        this.docRefTree = [];
+        this.childrenShownForIds = [];
+
+        return this.datastore.find(
+            { constraints: { 'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id } }
+        ).then(resultDocs => this.buildTreeFrom(resultDocs));
+    }
+
+    private buildTreeFrom(documents: Array<Document>) {
+
+        let docRefMap: {[type: string]: DocumentReference} = {};
+
+        // initialize docRefMap to make sure it is fully populated before building the tree
+        documents.forEach(doc => {
+            let docRef: DocumentReference = { doc: doc, children: [] };
+            docRefMap[doc.resource.id] = docRef;
+        });
+
+        // build tree from liesWithin relations
+        documents.forEach(doc => {
+            let docRef = docRefMap[doc.resource.id];
+            if (!doc.resource.relations['liesWithin']) {
+                this.docRefTree.push(docRef);
+            } else {
+                doc.resource.relations['liesWithin'].forEach(parentId => {
+                    docRefMap[parentId]['children'].push(docRef);
+                    docRef['parent'] = docRefMap[parentId];
+                });
+            }
+        });
     }
 
     public toggleChildrenForId(id: string) {
@@ -104,44 +136,6 @@ export class ListComponent implements OnChanges {
                     return true;
                 }
         return false;
-    }
-
-    private populateTree(): Promise<any> {
-
-        let docRefMap: {[type: string]: DocumentReference} = {};
-
-        this.docRefTree = [];
-
-        // TODO what was this for?
-        // if (!this.selectedMainTypeDocument) {
-        //     this.awaitsReload = false;
-        //     return Promise.resolve();
-        // }
-
-        return this.datastore.find(
-            {constraints:{'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id}}
-            ).then(resultDocs => {
-
-            // initialize docRefMap to make sure it is fully populated before building the tree
-            resultDocs.forEach(doc => {
-                let docRef: DocumentReference = { doc: doc, children: [] };
-                docRefMap[doc.resource.id] = docRef;
-            });
-
-            // build tree from liesWithin relations
-            resultDocs.forEach(doc => {
-                let docRef = docRefMap[doc.resource.id];
-                if (!doc.resource.relations['liesWithin']) {
-                    this.docRefTree.push(docRef);
-                } else {
-                    doc.resource.relations['liesWithin'].forEach(parentId => {
-                        docRefMap[parentId]['children'].push(docRef);
-                        docRef['parent'] = docRefMap[parentId];
-                    });
-                }
-            });
-            this.awaitsReload = false;
-        });
     }
 
     private documentsInclude(doc: IdaiFieldDocument): boolean {

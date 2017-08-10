@@ -7,6 +7,8 @@ export function main() {
 
     describe('FulltextIndexer', () => {
 
+        let fi;
+
         function doc(id, identifier, type) {
             return {
                 resource: {
@@ -27,9 +29,11 @@ export function main() {
             }
         }
 
-        it('match one with with different search terms', () => {
-            const fi = new FulltextIndexer();
+        beforeEach(() => {
+            fi = new FulltextIndexer();
+        });
 
+        it('match one with with different search terms', () => {
             fi.add(doc('1', 'identifier1', 'object'));
             expect(fi.get('identifier1', ['object']))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
@@ -38,8 +42,6 @@ export function main() {
         });
 
         it('match two with the same search term', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'identifier1', 'object'));
             fi.add(doc('2', 'identifier2', 'object'));
             expect(fi.get('identifier', ['object']))
@@ -47,16 +49,12 @@ export function main() {
         });
 
         it('match in all types', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'identifier1', 'object'));
             expect(fi.get('identifier', undefined))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('match in multiple selected types', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'identifier1', 'object1'));
             fi.add(doc('2', 'identifier2', 'object2'));
             fi.add(doc('3', 'identifier3', 'object3'));
@@ -65,31 +63,23 @@ export function main() {
         });
 
         it('do not match search term', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'iden', 'object'));
             expect(fi.get('identifier', ['object']))
                 .toEqual([]);
         });
 
         it('do not match search in type', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'iden', 'object1'));
             expect(fi.get('identifier', ['object2']))
                 .toEqual([]);
         });
 
         it('no types present', () => {
-            const fi = new FulltextIndexer();
-
             expect(fi.get('identifier', ['object']))
                 .toEqual([]);
         });
 
         it('clear', () => {
-            const fi = new FulltextIndexer();
-
             fi.add(doc('1', 'identifier1', 'object'));
             fi.clear();
             expect(fi.get('identifier', ['object']))
@@ -97,8 +87,6 @@ export function main() {
         });
 
         xit('rough size estimate', () => {
-            const fi = new FulltextIndexer();
-
             console.log("start")
 
             let str;

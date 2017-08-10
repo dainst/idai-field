@@ -14,6 +14,7 @@ export function main() {
                 resource: {
                     id: id,
                     identifier: identifier,
+                    shortDescription: 'short',
                     relations: { },
                     type: type
                 },
@@ -95,26 +96,36 @@ export function main() {
         });
 
         it('search *', () => {
-            const d = doc('1', 'identifier1', 'type');
-            fi.put(d);
+            fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('*', ['type']))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
-        xit('rough size estimate', () => {
-            console.log("start")
-            let str;
-            for (let i=0; i < 100000;i++) {
-                str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
-                // console.log("string",str)
-                fi.put(doc('1', str, 'type'));
-            }
+        it('index shortDescription', () => {
+            const d = doc('1', 'identifier1', 'type');
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+        });
 
-            fi.print();
-            console.log(fi.get(str, ['type']))
-        }, 20000);
+        // TODO fix the overwrite issue first, then enable this
+        xit('shortDescription empty', () => {
+            const d = doc('1', 'identifier1', 'type');
+            d['shortDescription'] = '';
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+            d['shortDescription'] = undefined;
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+            delete d['shortDescription'];
+            fi.put(d);
+            expect(fi.get('short', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+        });
 
-        // TODO index more fields
+        // TODO when overwriting with put, delete old things first
 
         // TODO tokenize fields
     });

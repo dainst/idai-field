@@ -6,6 +6,9 @@ export class FulltextIndexer {
 
     private index;
 
+    // TODO make it a constructor param
+    private fieldsToIndex = ['identifier', 'shortDescription'];
+
     constructor() {
         this.setUp();
     }
@@ -14,30 +17,26 @@ export class FulltextIndexer {
         this.setUp();
     }
 
-    public print() {
-        console.log(JSON.stringify(this.index))
-        // console.log(JSON.stringify(this.index).length)
-    }
-
     public put(doc) {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 
-        // TODO { find another solution
-        if (!this.index[doc.resource.type]['*']) this.index[doc.resource.type]['*'] = {};
+        if (!this.index[doc.resource.type]['*']) this.index[doc.resource.type]['*'] = { };
         this.index[doc.resource.type]['*'][doc.resource.id]
             = ModelUtil.getLastModified(doc);
-        // TODO }
 
+        for (let field of this.fieldsToIndex) {
 
-        // TODO also index other fields
-        let accumulator = '';
-        for (let letter of doc.resource.identifier) {
-            accumulator += letter;
-            if (!this.index[doc.resource.type][accumulator]) {
-                this.index[doc.resource.type][accumulator] = {};
+            // if (!doc.resource[field] || doc.resource.field == '') continue;
+
+            let accumulator = '';
+            for (let letter of doc.resource[field]) {
+                accumulator += letter;
+                if (!this.index[doc.resource.type][accumulator]) {
+                    this.index[doc.resource.type][accumulator] = { };
+                }
+                this.index[doc.resource.type][accumulator][doc.resource.id]
+                    = ModelUtil.getLastModified(doc);
             }
-            this.index[doc.resource.type][accumulator][doc.resource.id]
-                = ModelUtil.getLastModified(doc);
         }
     }
 

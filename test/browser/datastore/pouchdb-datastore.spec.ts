@@ -494,8 +494,8 @@ export function main() {
                 .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0]).toBe('id2');
-                        expect(results[1]).toBe('id3');
+                        expect(results).toContain('id2');
+                        expect(results).toContain('id3');
                         expect(results.length).toBe(2);
                         done();
                     },

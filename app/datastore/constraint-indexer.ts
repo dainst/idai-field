@@ -15,7 +15,7 @@ export class ConstraintIndexer {
         this.setUp();
     }
 
-    public update(doc) {
+    public put(doc) {
         this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
             this.build(doc, pathDef);

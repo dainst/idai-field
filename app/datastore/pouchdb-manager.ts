@@ -81,7 +81,7 @@ export class PouchdbManager {
                 this.fulltextIndexer.clear();
                 for (let i in resultDocs.rows) {
                     if (resultDocs.rows[i].id.indexOf('_design') == -1) {
-                        this.constraintIndexer.update(resultDocs.rows[i].doc);
+                        this.constraintIndexer.put(resultDocs.rows[i].doc);
                         this.fulltextIndexer.put(resultDocs.rows[i].doc);
                     }
                 }

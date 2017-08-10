@@ -44,8 +44,8 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
-            ci.update(docs[0]);
-            ci.update(docs[1]);
+            ci.put(docs[0]);
+            ci.put(docs[1]);
 
             expect(ci.get('resource.relations.isRecordedIn', '1'))
                 .toEqual([{id: '2', date: '2018-01-01'}, {id: '3', date: '2018-01-01'}]);
@@ -60,7 +60,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.isRecordedIn' }
             ]);
-            ci.update(docs[0]);
+            ci.put(docs[0]);
             return docs;
         }
 
@@ -86,7 +86,7 @@ export function main() {
                 { path: 'resource.relations.isRecordedIn' },
                 { path: 'resource.identifier', string: true },
             ]);
-            ci.update(docs[0]);
+            ci.put(docs[0]);
             return docs;
         }
 
@@ -109,7 +109,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' }
             ]);
-            ci.update(docs[0]);
+            ci.put(docs[0]);
 
             expect(ci.get('resource.relations.liesWithin', '3'))
                 .toEqual([ ]);
@@ -123,7 +123,7 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.identifier', string: true }
             ]);
-            ci.update(docs[0]);
+            ci.put(docs[0]);
             return docs;
         }
 
@@ -204,7 +204,7 @@ export function main() {
             doc.resource.relations['isRecordedIn'] = ['4'];
             doc.resource.relations['liesWithin'] = ['5'];
             doc.resource.identifier = 'identifier2';
-            ci.update(doc);
+            ci.put(doc);
 
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([ ]);
@@ -232,8 +232,8 @@ export function main() {
             ci = new ConstraintIndexer([
                 { path: 'resource.relations.liesWithin' } ,
             ]);
-            ci.update(docs[0]);
-            ci.update(docs[1]);
+            ci.put(docs[0]);
+            ci.put(docs[1]);
 
             expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
                 .toEqual([{id: '2', date: '2018-01-01'}]);

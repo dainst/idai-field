@@ -502,7 +502,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.mode = mode;
             this.editGeometry = false;
             this.loading.stop();
-        }, 50);
+        }, 1);
     }
 
     private removeEmptyDocuments() {

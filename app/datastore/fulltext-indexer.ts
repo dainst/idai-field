@@ -19,8 +19,7 @@ export class FulltextIndexer {
         // console.log(JSON.stringify(this.index).length)
     }
 
-    // TODO rename to put
-    public add(doc) {
+    public put(doc) {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
 
         // TODO { find another solution

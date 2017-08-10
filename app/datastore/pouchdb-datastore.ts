@@ -68,7 +68,7 @@ export class PouchdbDatastore {
             .then(result => {
 
                 this.constraintIndexer.update(document);
-                this.fulltextIndexer.add(document);
+                this.fulltextIndexer.put(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(this.cleanDoc(document));
 
@@ -99,7 +99,7 @@ export class PouchdbDatastore {
                 return this.db.put(document, { force: true }).then(result => {
 
                     this.constraintIndexer.update(document);
-                    this.fulltextIndexer.add(document);
+                    this.fulltextIndexer.put(document);
                     document['_rev'] = result['rev'];
                     return Promise.resolve(this.cleanDoc(document));
 
@@ -370,7 +370,7 @@ export class PouchdbDatastore {
                 }
                 this.get(change.id).then(document => {
                     this.constraintIndexer.update(document);
-                    this.fulltextIndexer.add(document);
+                    this.fulltextIndexer.put(document);
                     this.notify(document);
                 });
             }).on('complete', info => {

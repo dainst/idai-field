@@ -34,7 +34,7 @@ export function main() {
         });
 
         it('match one with with different search terms', () => {
-            fi.add(doc('1', 'identifier1', 'type'));
+            fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('identifier1', ['type']))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
             expect(fi.get('ide', ['type']))
@@ -42,34 +42,34 @@ export function main() {
         });
 
         it('match two with the same search term', () => {
-            fi.add(doc('1', 'identifier1', 'type'));
-            fi.add(doc('2', 'identifier2', 'type'));
+            fi.put(doc('1', 'identifier1', 'type'));
+            fi.put(doc('2', 'identifier2', 'type'));
             expect(fi.get('identifier', ['type']))
                 .toEqual([{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]);
         });
 
         it('match in all types', () => {
-            fi.add(doc('1', 'identifier1', 'type'));
+            fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('identifier', undefined))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
         it('match in multiple selected types', () => {
-            fi.add(doc('1', 'identifier1', 'type1'));
-            fi.add(doc('2', 'identifier2', 'type2'));
-            fi.add(doc('3', 'identifier3', 'type3'));
+            fi.put(doc('1', 'identifier1', 'type1'));
+            fi.put(doc('2', 'identifier2', 'type2'));
+            fi.put(doc('3', 'identifier3', 'type3'));
             expect(fi.get('identifier', ['type1', 'type2']))
                 .toEqual([{id: '1', date: '2018-01-01'}, {id: '2', date: '2018-01-01'}]);
         });
 
         it('do not match search term', () => {
-            fi.add(doc('1', 'iden', 'type'));
+            fi.put(doc('1', 'iden', 'type'));
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
         });
 
         it('do not match search in type', () => {
-            fi.add(doc('1', 'iden', 'type1'));
+            fi.put(doc('1', 'iden', 'type1'));
             expect(fi.get('identifier', ['type2']))
                 .toEqual([]);
         });
@@ -80,7 +80,7 @@ export function main() {
         });
 
         it('clear', () => {
-            fi.add(doc('1', 'identifier1', 'type'));
+            fi.put(doc('1', 'identifier1', 'type'));
             fi.clear();
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
@@ -88,7 +88,7 @@ export function main() {
 
         it('remove', () => {
             const d = doc('1', 'identifier1', 'type');
-            fi.add(d);
+            fi.put(d);
             fi.remove(d);
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
@@ -100,7 +100,7 @@ export function main() {
             for (let i=0; i < 100000;i++) {
                 str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 20);
                 // console.log("string",str)
-                fi.add(doc('1', str, 'type'));
+                fi.put(doc('1', str, 'type'));
             }
 
             fi.print();

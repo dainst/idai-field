@@ -163,7 +163,7 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
 
         return this.get(doc.resource.id).then(
-            () => this.db.remove(doc)
+            docFromGet => this.db.remove(docFromGet)
                 .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR])
         );
@@ -375,7 +375,9 @@ export class PouchdbDatastore {
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
+                console.log("hallo",change)
                 if (change.deleted) {
+                    console.log("hallo2")
                     this.constraintIndexer.remove({resource: {id: change.id}});
                     return;
                 }

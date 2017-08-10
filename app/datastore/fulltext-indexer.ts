@@ -6,7 +6,6 @@ export class FulltextIndexer {
 
     private index;
 
-    // TODO make it a constructor param
     private fieldsToIndex = ['identifier', 'shortDescription'];
 
     constructor() {

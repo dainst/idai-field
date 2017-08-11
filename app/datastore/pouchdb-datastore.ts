@@ -3,9 +3,6 @@ import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {M} from '../m';
-
-// TODO this datastore should not know about idai-field-model
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "../util/result-sets";
 import {ConstraintIndexer} from "./constraint-indexer";
@@ -230,7 +227,7 @@ export class PouchdbDatastore {
         return ((!query.q || query.q == '') && !query.type);
     }
 
-    public findConflicted(): Promise<IdaiFieldDocument[]> {
+    public findConflicted(): Promise<Document[]> {
 
         return this.db.query('conflicted', {
             include_docs: true,

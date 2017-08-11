@@ -2,7 +2,7 @@
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
-
+    
     <a class="navbar-brand" routerLink="/" id="idai-field-brand">
         <img src="img/logo.png" style="height:38px; width:38px; float:left; margin-right:12px;">
         <div class="brand-text">
@@ -11,7 +11,7 @@
         </div>
     </a>
 
-    <div class="navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav" style="margin-top: 2px;">
             <li *ngFor="let view of views" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/' + view.name)"

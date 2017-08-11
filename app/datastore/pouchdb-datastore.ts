@@ -163,12 +163,22 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
-    public fetch(id: string, options: any = { conflicts: true }): Promise<Document> {
+    public fetch(id: string, options = { conflicts: true }): Promise<Document> {
 
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(id, { conflicts: true })
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+    }
+
+    private fetchRevision(docId: string, revisionId: string): Promise<Document> {
+        return this.db.get(docId, { rev: revisionId })
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+    }
+
+    public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
+        return this.fetchRevision(docId, revisionId)
+            .then(doc => this.cleanDoc(doc));
     }
 
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {

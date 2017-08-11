@@ -24,6 +24,8 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
             doc.created = { user: 'sample_data', date: new Date() };
             doc.modified = [{ user: 'sample_data', date: new Date() }];
             doc['_id'] = doc.resource.id;
+            doc.resource['_parentTypes'] = config
+                .getParentTypes(doc.resource.type);
             promises.push(db.put(doc, { force: true }));
             setTimeout(()=>{},15);
         }

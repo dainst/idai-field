@@ -67,7 +67,7 @@ export class PouchdbDatastore {
 
         const resetFun = this.resetDocOnErr(document);
 
-        return this.get(document.resource.id).then(() => {
+        return this.fetch(document.resource.id).then(() => {
                 document['_id'] = document.resource.id;})
             .catch(() => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]))
             .then(() => this.performPut(document, resetFun, err => {
@@ -109,22 +109,12 @@ export class PouchdbDatastore {
 
     /**
      * Implements {@link ReadDatastore#refresh}.
-     *
+     * TODO remove this method
      * @param doc
      * @returns {Promise<Document>}
      */
     public refresh(doc: Document): Promise<Document> {
-        return this.fetchObject(doc.resource.id);
-    }
-
-    /**
-     * Implements {@link ReadDatastore#get}.
-     *
-     * @param resourceId
-     * @returns {Promise<Document>}
-     */
-    public get(resourceId: string): Promise<Document> {
-        return this.fetchObject(resourceId);
+        return this.fetch(doc.resource.id);
     }
 
     /**
@@ -143,7 +133,7 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
-        return this.get(doc.resource.id).then(
+        return this.fetch(doc.resource.id).then(
             docFromGet => this.db.remove(docFromGet)
                 .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR])
@@ -271,12 +261,12 @@ export class PouchdbDatastore {
      */
     private proveThatDoesNotExist(doc:Document): Promise<any> {
         if (doc.resource.id) {
-            return this.fetchObject(doc.resource.id)
+            return this.fetch(doc.resource.id)
                 .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
         } else return Promise.resolve();
     }
 
-    private fetchObject(id: string): Promise<Document> {
+    public fetch(id: string): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(id, { conflicts: true })
@@ -305,7 +295,7 @@ export class PouchdbDatastore {
                     this.fulltextIndexer.remove({resource: {id: change.id}});
                     return;
                 }
-                this.get(change.id).then(document => {
+                this.fetch(change.id).then(document => {
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
                     this.notify(document);

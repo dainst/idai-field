@@ -120,7 +120,7 @@ export function main() {
                 // get refreshed later
                     .then(() => datastore.refresh(docToCreate))
                     // and the same may occur on get
-                    .then(() => datastore.get(docToCreate.resource.id))
+                    .then(() => datastore.fetch(docToCreate.resource.id))
                     .then(
                         _createdDoc => {
                             let createdDoc = _createdDoc as Document;
@@ -210,7 +210,7 @@ export function main() {
             function (done) {
                 const d = doc('sd1');
                 datastore.create(d)
-                    .then(() => datastore.get(d['resource']['id']))
+                    .then(() => datastore.fetch(d['resource']['id']))
                     .then(doc => {
                         expect(doc['resource']['shortDescription']).toBe('sd1');
                         done();
@@ -222,7 +222,7 @@ export function main() {
         it('should reject with keyOfM in when trying to get a non existing document',
             function (done) {
                 expectErr(()=>{return datastore.create(doc('sd1'))
-                        .then(() => datastore.get('nonexisting'))}
+                        .then(() => datastore.fetch('nonexisting'))}
                     ,[M.DATASTORE_NOT_FOUND],done);
             }
         );
@@ -247,7 +247,7 @@ export function main() {
                 expectErr(()=>{
                     return datastore.create(d)
                         .then(() => datastore.remove(d))
-                        .then(() => datastore.get(d['resource']['id']))
+                        .then(() => datastore.fetch(d['resource']['id']))
                     },
                     [M.DATASTORE_NOT_FOUND],done);
 

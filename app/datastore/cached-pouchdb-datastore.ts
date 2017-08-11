@@ -77,7 +77,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         if (this.documentCache[id]) {
             return Promise.resolve(this.documentCache[id]);
         }
-        return this.datastore.get(id).then(doc => this.documentCache[id] = doc);
+        return this.datastore.fetch(id).then(doc => this.documentCache[id] = doc);
     }
 
     public find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
@@ -110,7 +110,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
     public getLatestRevision(id: string): Promise<Document> {
 
-        return this.datastore.get(id);
+        return this.datastore.fetch(id);
     }
 
     /**

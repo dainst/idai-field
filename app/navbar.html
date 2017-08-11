@@ -11,7 +11,7 @@
         </div>
     </a>
 
-    <div class="navbar-collapse" id="navbarSupportedContent">
+    <div id="navbarSupportedContent">
         <ul class="nav navbar-nav" style="margin-top: 2px;">
             <li *ngFor="let view of views" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/' + view.name)"

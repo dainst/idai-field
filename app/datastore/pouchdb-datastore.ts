@@ -240,7 +240,7 @@ export class PouchdbDatastore {
             return Promise.resolve(result.rows.map(result => result.doc));
         });
     }
-    // TODO can be private
+    
     protected setupServer() {
         return Promise.resolve();
     }

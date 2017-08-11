@@ -233,10 +233,11 @@ export class PouchdbDatastore {
     public findConflicted(): Promise<Document[]> {
 
         return this.db.query('conflicted', {
-            include_docs: true,
-            conflicts: true,
-            descending: true
-        }).then(result => result.rows.map(result => result.doc))
+                include_docs: true,
+                conflicts: true,
+                descending: true
+            })
+            .then(result => result.rows.map(result => result.doc))
     }
 
     protected setupServer() {

@@ -236,9 +236,7 @@ export class PouchdbDatastore {
             include_docs: true,
             conflicts: true,
             descending: true
-        }).then(result => {
-            return Promise.resolve(result.rows.map(result => result.doc));
-        });
+        }).then(result => result.rows.map(result => result.doc))
     }
 
     protected setupServer() {

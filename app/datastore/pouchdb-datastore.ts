@@ -303,7 +303,6 @@ export class PouchdbDatastore {
         this.removeClosedObservers();
 
         this.observers.forEach(observer => {
-            if (observer.closed) return;
             if (observer && (observer.next != undefined)) observer.next(document);
         });
     }

@@ -6,6 +6,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {DiffUtility} from '../model/diff-utility';
 import {Util} from "../util/util";
+import {M} from "../m";
 
 /**
  * @author Thomas Kleinke
@@ -99,7 +100,8 @@ export class AutoConflictResolver {
             if (resolvedConflicts > 0 || unresolvedConflicts == 0) {
                 return this.datastore.update(latestRevision).then(() => {
                     if (!unresolvedConflicts) {
-                        return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev']);
+                        return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev'])
+                            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
                     } else {
                         return Promise.resolve();
                     }

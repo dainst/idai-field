@@ -203,9 +203,9 @@ export class DoceditComponent {
         }
         this.inspectedRevisionsIds = [];
 
-        return Promise.all(promises).then(
-            () => this.datastore.getLatestRevision(resourceId)
-        );
+        return Promise.all(promises)
+            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
+            .then(() => this.datastore.getLatestRevision(resourceId));
     }
 
     private handleDeletedConflict() {

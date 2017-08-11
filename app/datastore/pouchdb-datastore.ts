@@ -136,8 +136,8 @@ export class PouchdbDatastore {
 
         return this.db.remove(docId, revisionId)
             .catch(err => {
-                console.error(err);
-                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+                console.error("error in remove revision",err);
+                return Promise.reject([DatastoreErrors.GENERIC_ERROR]);
             });
     }
 

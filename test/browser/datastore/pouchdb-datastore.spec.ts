@@ -18,27 +18,6 @@ export function main() {
         let datastore: PouchdbDatastore;
         let pouchdbManager: PouchdbManager;
 
-        const mockConfigLoader = jasmine.createSpyObj(
-            'mockConfigLoader',
-            [ 'getProjectConfiguration' ]
-        );
-
-        const mockProjectConfiguration = jasmine.createSpyObj(
-            'mockProjectConfiguration',
-            ['getParentTypes']
-        );
-
-        mockProjectConfiguration.getParentTypes.and.callFake(type => {
-            if (type == 'root') return [];
-            if (type == 'type1') return ['root'];
-            if (type == 'type1.1') return ['type1','root'];
-            if (type == 'type2') return ['root'];
-        });
-
-        mockConfigLoader.getProjectConfiguration
-            .and.callFake(() => Promise.resolve(mockProjectConfiguration));
-
-
         beforeEach(
             () => {
 
@@ -52,8 +31,8 @@ export function main() {
                 spyOn(console, 'debug'); // to suppress console.debug output
                 spyOn(console, 'error'); // to suppress console.error output
                 spyOn(console, 'warn');
-                pouchdbManager = new PouchdbManager(mockConfigLoader, constraintIndexer, fulltextIndexer);
-                datastore = new PouchdbDatastore(mockConfigLoader, pouchdbManager, constraintIndexer, fulltextIndexer);
+                pouchdbManager = new PouchdbManager(undefined, constraintIndexer, fulltextIndexer);
+                datastore = new PouchdbDatastore(pouchdbManager, constraintIndexer, fulltextIndexer);
                 pouchdbManager.select('testdb');
             }
         );

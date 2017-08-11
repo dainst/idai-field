@@ -1,6 +1,5 @@
 import {Query, ReadDatastore, Datastore, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {M} from '../m';
@@ -21,22 +20,16 @@ export class PouchdbDatastore {
 
     protected db: any;
     private observers = [];
-    private config: ProjectConfiguration;
     private deletedOnes = []; // TODO check if we can get rid of it
 
-
     constructor(
-        configLoader: ConfigLoader,
         private pouchdbManager: PouchdbManager,
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer
         ) {
 
         this.db = pouchdbManager.getDb();
-        configLoader.getProjectConfiguration()
-            .then(config => this.config = config, () => {})
-            .then(() => this.setupServer())
-            .then(() => this.setupChangesEmitter())
+        this.setupServer().then(() => this.setupChangesEmitter())
     }
 
     /**
@@ -99,11 +92,11 @@ export class PouchdbDatastore {
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
         document['_rev'] = result['rev'];
-        return Promise.resolve(document); // TODO return document
+        return document;
     }
 
     private resetDocOnErr(original: Document) {
-        let created = original.created;
+        let created = original.created; // TODO deep copy necessary in order to work properly
         let modified = original.modified;
         let id = original.resource.id;
         return function(document: Document) {
@@ -175,6 +168,7 @@ export class PouchdbDatastore {
             });
     }
 
+    // TODO deprecated
     public shutDown(): Promise<void> {
         return this.db.destroy();
     }
@@ -301,19 +295,6 @@ export class PouchdbDatastore {
     private fetchRevision(docId: string, revisionId: string): Promise<Document> {
         return this.db.get(docId, { rev: revisionId })
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
-    }
-
-    private uniqueIds(items: any[]): any[] {
-
-        const set: Set<string> = new Set<string>();
-        let filtered = [];
-        items.forEach(item => {
-            if (!set.has(item.id)) {
-                set.add(item.id);
-                filtered.push(item);
-            }
-        });
-        return filtered;
     }
 
     private setupChangesEmitter(): void {

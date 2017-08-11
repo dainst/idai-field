@@ -106,13 +106,12 @@ if (CONFIG['imagestorepath']) {
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             provide: Datastore,
-            useFactory: function(configLoader: ConfigLoader,
-                                 pouchdbManager: PouchdbManager,
+            useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer) : Datastore {
-                return new CachedPouchdbDatastore(new PouchdbServerDatastore(configLoader, pouchdbManager, constraintIndexer, fulltextIndexer));
+                return new CachedPouchdbDatastore(new PouchdbServerDatastore(pouchdbManager, constraintIndexer, fulltextIndexer));
             },
-            deps: [ConfigLoader, PouchdbManager, ConstraintIndexer, FulltextIndexer]
+            deps: [PouchdbManager, ConstraintIndexer, FulltextIndexer]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

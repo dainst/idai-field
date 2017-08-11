@@ -1,7 +1,7 @@
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';
 import {PouchdbDatastore} from './pouchdb-datastore';
-import {IdaiFieldDatastore} from './idai-field-datastore';
+
 const expressPouchDB = require('express-pouchdb');
 import {Injectable} from '@angular/core';
 

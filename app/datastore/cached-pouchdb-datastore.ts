@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IdaiFieldDatastore} from './idai-field-datastore';
-import {SyncState} from './sync-state';
+
 import {PouchdbDatastore} from './pouchdb-datastore';
 
 @Injectable()
@@ -42,7 +42,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      */
     public create(document: Document): Promise<Document> {
         return this.datastore.create(document)
-            .then(doc => {
+            .then(doc => { // TODO make statement short
                 // working with the assumption that create returns the same instance of document as doc
                 return this.documentCache[doc.resource.id] = doc
             });

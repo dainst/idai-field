@@ -108,16 +108,6 @@ export class PouchdbDatastore {
     }
 
     /**
-     * Implements {@link ReadDatastore#refresh}.
-     * TODO remove this method
-     * @param doc
-     * @returns {Promise<Document>}
-     */
-    public refresh(doc: Document): Promise<Document> {
-        return this.fetch(doc.resource.id);
-    }
-
-    /**
      * Implements {@link Datastore#remove}.
      *
      * @param doc
@@ -250,7 +240,7 @@ export class PouchdbDatastore {
             return Promise.resolve(result.rows.map(result => result.doc));
         });
     }
-
+    // TODO can be private
     protected setupServer() {
         return Promise.resolve();
     }

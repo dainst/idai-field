@@ -118,7 +118,7 @@ export function main() {
                 // this step was added to adress a problem where a document
                 // with an existing resource.id was stored but could not
                 // get refreshed later
-                    .then(() => datastore.refresh(docToCreate))
+                    .then(() => datastore.fetch(docToCreate.resource.id))
                     // and the same may occur on get
                     .then(() => datastore.fetch(docToCreate.resource.id))
                     .then(
@@ -232,10 +232,9 @@ export function main() {
         it('should reject with keyOfM in when trying to refresh a non existing document',
             function (done) {
 
-                const non = doc('sd2');
                 expectErr(()=>{
                     return datastore.create(doc('id1'))
-                        .then(() => datastore.refresh(non))},[M.DATASTORE_NOT_FOUND],done);
+                        .then(() => datastore.fetch('nonexistingid'))},[M.DATASTORE_NOT_FOUND],done);
             }
         );
 

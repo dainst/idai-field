@@ -102,7 +102,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
     public refresh(doc: Document): Promise<Document> {
 
-        return this.datastore.refresh(doc).then(result => {
+        return this.datastore.fetch(doc.resource.id).then(result => {
             this.documentCache[doc.resource.id] = result as Document;
             return Promise.resolve(result);
         });

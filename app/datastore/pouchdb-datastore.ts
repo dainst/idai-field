@@ -65,18 +65,18 @@ export class PouchdbDatastore {
                     }
                 );
             })
-            .then(result => {
-
-                this.constraintIndexer.put(document);
-                this.fulltextIndexer.put(document);
-                document['_rev'] = result['rev'];
-                return Promise.resolve(this.cleanDoc(document));
-
-            }).catch(keyOfM => {
-
+            .then(result => this.processResult(document, result))
+            .catch(keyOfM => {
                 reset(document);
                 return Promise.reject([keyOfM]);
             })
+    }
+
+    private processResult(document, result) {
+        this.constraintIndexer.put(document);
+        this.fulltextIndexer.put(document);
+        document['_rev'] = result['rev'];
+        return Promise.resolve(this.cleanDoc(document));
     }
 
     /**
@@ -96,22 +96,15 @@ export class PouchdbDatastore {
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
 
-                return this.db.put(document, { force: true }).then(result => {
-
-                    this.constraintIndexer.put(document);
-                    this.fulltextIndexer.put(document);
-                    document['_rev'] = result['rev'];
-                    return Promise.resolve(this.cleanDoc(document));
-
-                }).catch(err => {
-
-                    let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
-                    if (err.name && err.name == 'conflict')
-                        errType = DatastoreErrors.SAVE_CONFLICT;
-                    reset(document);
-                    return Promise.reject([errType]);
-
-                })
+                return this.db.put(document, { force: true })
+                    .then(result => this.processResult(document, result))
+                    .catch(err => {
+                        let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
+                            if (err.name && err.name == 'conflict')
+                                errType = DatastoreErrors.SAVE_CONFLICT;
+                            reset(document);
+                            return Promise.reject([errType]);
+                    })
             },
             () => {
                 return Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]);

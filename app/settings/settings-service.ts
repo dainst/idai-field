@@ -6,6 +6,7 @@ import {SettingsSerializer} from "./settings-serializer";
 import {Imagestore} from "../imagestore/imagestore";
 import {Observable} from "rxjs/Rx";
 import {PouchdbManager} from "../datastore/pouchdb-manager";
+import {M} from "../m";
 
 
 @Injectable()
@@ -198,6 +199,7 @@ export class SettingsService {
         return this.datastore.find({
                 constraints: { 'resource.identifier' : project }
             })
+            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
             .then(results => {
                 if (!results || results.length == 0) {
                     return this.createProjectDocument(project);
@@ -206,6 +208,7 @@ export class SettingsService {
             .then(() => this.datastore.find({
                 constraints: { 'resource.identifier' : 'images' }
             }))
+            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
             .then(results => {
                 if (!results || results.length == 0) {
                     return this.createImagesDocument();

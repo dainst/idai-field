@@ -14,6 +14,7 @@ import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
 import {Loading} from '../widgets/loading';
+import {M} from "../m";
 
 
 @Component({
@@ -334,10 +335,9 @@ export class ResourcesComponent implements AfterViewChecked {
         this.loading.start();
 
         return this.datastore.find(query)
-            .then(documents => {
-                this.documents = documents;
-            }).catch(msgWithParams => {
-                this.messages.add(msgWithParams)
+            .then(documents => this.documents = documents)
+            .catch(msgWithParams => {
+                this.messages.add([M.ALL_FIND_ERROR])
             }).then(() => this.loading.stop());
     }
 

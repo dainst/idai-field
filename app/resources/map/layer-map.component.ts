@@ -9,6 +9,7 @@ import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
+import {M} from "../../m";
 
 @Component({
     moduleId: module.id,
@@ -88,6 +89,7 @@ export class LayerMapComponent extends MapComponent {
         };
 
         return this.datastore.find(query)
+            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
             .then(documents => this.makeLayersForDocuments(documents as Array<Document>))
             .then(layersMap => {
                 this.removeOldLayersFromMap(layersMap);

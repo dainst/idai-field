@@ -27,7 +27,7 @@ export class Exporter {
                             resolve();
                         }
                     });
-                }, msgWithParams => reject(msgWithParams)
+                }, () => reject([M.ALL_FIND_ERROR])
             );
         });
     }

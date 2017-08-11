@@ -161,8 +161,9 @@ export class PouchdbDatastore {
         if (!query) return Promise.resolve([]);
 
         return this.perform(query)
-            .catch(() => {
-                return Promise.reject([M.DATASTORE_GENERIC_ERROR]);
+            .catch(err => {
+                console.error('err in findIds',err);
+                return Promise.reject([DatastoreErrors.GENERIC_ERROR]);
             })
     }
 

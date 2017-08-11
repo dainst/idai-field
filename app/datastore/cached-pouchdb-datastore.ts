@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {IdaiFieldDatastore} from './idai-field-datastore';
 
 import {PouchdbDatastore} from './pouchdb-datastore';
+import {DocumentCache} from "./document-cache";
 
 @Injectable()
 /**
@@ -14,18 +15,17 @@ import {PouchdbDatastore} from './pouchdb-datastore';
  */
 export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
-    private documentCache: { [resourceId: string]: Document } = {};
     private autoCacheUpdate: boolean = true;
 
-    constructor(private datastore: PouchdbDatastore) {
+    constructor(private datastore: PouchdbDatastore, private documentCache: DocumentCache) {
         this.datastore.documentChangesNotifications()
             .subscribe(doc => {
                 // explicitly assign by value in order for
                 // changes to be detected by angular
-                if (this.autoCacheUpdate && doc && doc.resource && this.documentCache[doc.resource.id]) {
+                if (this.autoCacheUpdate && doc && doc.resource && this.documentCache.get(doc.resource.id)) {
                     console.debug('change detected', doc);
-                    if (!doc['_conflicts']) delete this.documentCache[doc.resource.id]['_conflicts'];
-                    Object.assign(this.documentCache[doc.resource.id], doc);
+                    if (!doc['_conflicts']) delete this.documentCache.get(doc.resource.id)['_conflicts'];
+                    Object.assign(this.documentCache.get(doc.resource.id), doc);
                 }
             });
     }
@@ -45,7 +45,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
         return this.datastore.create(document)
             // knowing that create returns the same instance of document as doc
-            .then(doc => this.documentCache[doc.resource.id] = doc);
+            .then(doc => this.documentCache.set(doc));
     }
 
     /**
@@ -58,13 +58,13 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
         return this.datastore.update(document)
             // knowing that update returns the same instance of document as doc
-            .then(doc => this.documentCache[doc.resource.id] = doc);
+            .then(doc => this.documentCache.set(doc));
     }
 
     public remove(doc: Document): Promise<any> {
 
         return this.datastore.remove(doc)
-            .then(() => delete this.documentCache[doc.resource.id]);
+            .then(() => this.documentCache.remove(doc.resource.id));
     }
 
     public documentChangesNotifications(): Observable<Document> {
@@ -74,10 +74,10 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
     public get(id: string): Promise<Document> {
 
-        if (this.documentCache[id]) {
-            return Promise.resolve(this.documentCache[id]);
+        if (this.documentCache.get(id)) {
+            return Promise.resolve(this.documentCache.get(id));
         }
-        return this.datastore.fetch(id).then(doc => this.documentCache[id] = doc);
+        return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
     }
 
     public find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
@@ -103,7 +103,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public refresh(doc: Document): Promise<Document> {
 
         return this.datastore.fetch(doc.resource.id).then(result => {
-            this.documentCache[doc.resource.id] = result as Document;
+            this.documentCache.set(result);
             return Promise.resolve(result);
         });
     }

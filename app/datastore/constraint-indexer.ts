@@ -15,8 +15,8 @@ export class ConstraintIndexer {
         this.setUp();
     }
 
-    public put(doc) {
-        this.remove(doc);
+    public put(doc, skipRemoval = false) {
+        if (!skipRemoval) this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
             this.build(doc, pathDef);
         }
@@ -49,15 +49,16 @@ export class ConstraintIndexer {
 
     private build(doc, pathDef) {
 
-        if (!Util.getElForPathIn(doc, pathDef.path)) {
+        const elForPath = Util.getElForPathIn(doc, pathDef.path);
+
+        if (!elForPath) {
             return this.addToIndex(doc, pathDef.path, 'UNKOWN');
         }
 
         if (pathDef.string) {
-            this.addToIndex(doc, pathDef.path,
-                Util.getElForPathIn(doc, pathDef.path));
+            this.addToIndex(doc, pathDef.path, elForPath);
         } else {
-            for (let target of Util.getElForPathIn(doc, pathDef.path)) {
+            for (let target of elForPath) {
                 this.addToIndex(doc, pathDef.path, target);
             }
         }

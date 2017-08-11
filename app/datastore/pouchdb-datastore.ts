@@ -260,11 +260,12 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
-    public fetch(id: string, options: any = { conflicts: true }): Promise<Document> {
+    public fetch(resourceId: string,
+                 options: any = { conflicts: true }): Promise<Document> {
 
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
-        return this.db.get(id, options)
+        return this.db.get(resourceId, options)
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
@@ -273,7 +274,7 @@ export class PouchdbDatastore {
         this.db.rdy.then(db => {
             db.changes({
                 live: true,
-                include_docs: false,
+                include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
                 conflicts: true,
                 since: 'now'
             }).on('change', change => {

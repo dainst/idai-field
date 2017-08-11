@@ -7,6 +7,7 @@ import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
 import {FulltextIndexer} from "./fulltext-indexer";
+import {DocumentCache} from "./document-cache";
 
 @Injectable()
 /**
@@ -28,7 +29,8 @@ export class PouchdbManager {
     constructor(
         private sampleDataLoader: AbstractSampleDataLoader,
         private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer
+        private fulltextIndexer: FulltextIndexer,
+        private documentCache: DocumentCache
     ) {
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -75,19 +77,26 @@ export class PouchdbManager {
             rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
         }
 
-        rdy.then(() =>
-            this.db.allDocs({include_docs: true},(err, resultDocs) => {
-                this.constraintIndexer.clear();
-                this.fulltextIndexer.clear();
-                for (let i in resultDocs.rows) {
-                    if (resultDocs.rows[i].id.indexOf('_design') == -1) {
-                        this.constraintIndexer.put(resultDocs.rows[i].doc);
-                        this.fulltextIndexer.put(resultDocs.rows[i].doc);
-                    }
-                }
-                this.resolveDbReady(this.db)
-            })
-        );
+        rdy.then(() => this.index());
+    }
+
+    private index() {
+        return this.db.allDocs({include_docs: true},(err, resultDocs) => {
+            this.constraintIndexer.clear();
+            this.fulltextIndexer.clear();
+            this.documentCache.clear();
+
+            for (let i in resultDocs.rows) {
+                if (resultDocs.rows[i].id.indexOf('_') == 0) continue; // design docs
+
+                this.constraintIndexer.put(resultDocs.rows[i].doc, true);
+                this.fulltextIndexer.put(resultDocs.rows[i].doc, true);
+
+                this.documentCache.set(resultDocs.rows[i].doc);
+            }
+
+            this.resolveDbReady(this.db)
+        })
     }
 
     public getIndexCreator() {

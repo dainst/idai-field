@@ -6,6 +6,7 @@ import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
 import {Query} from "idai-components-2/src/app/datastore/query";
 import {ConstraintIndexer} from "../../../app/datastore/constraint-indexer";
 import {FulltextIndexer} from "../../../app/datastore/fulltext-indexer";
+import {DocumentCache} from "../../../app/datastore/document-cache";
 
 /**
  * @author Daniel de Oliveira
@@ -31,7 +32,7 @@ export function main() {
                 spyOn(console, 'debug'); // to suppress console.debug output
                 spyOn(console, 'error'); // to suppress console.error output
                 spyOn(console, 'warn');
-                pouchdbManager = new PouchdbManager(undefined, constraintIndexer, fulltextIndexer);
+                pouchdbManager = new PouchdbManager(undefined, constraintIndexer, fulltextIndexer, new DocumentCache());
                 datastore = new PouchdbDatastore(pouchdbManager, constraintIndexer, fulltextIndexer);
                 pouchdbManager.select('testdb');
             }

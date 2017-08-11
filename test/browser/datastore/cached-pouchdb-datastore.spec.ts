@@ -1,5 +1,6 @@
 import {Document} from "idai-components-2/core";
 import {CachedPouchdbDatastore} from "../../../app/datastore/cached-pouchdb-datastore";
+import {DocumentCache} from "../../../app/datastore/document-cache";
 
 /**
  * @author Daniel de Oliveira
@@ -44,7 +45,7 @@ export function main() {
                 });
                 mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
 
-                datastore = new CachedPouchdbDatastore(mockdb);
+                datastore = new CachedPouchdbDatastore(mockdb, new DocumentCache());
             }
         );
 

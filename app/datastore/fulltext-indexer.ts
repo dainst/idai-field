@@ -16,13 +16,14 @@ export class FulltextIndexer {
         this.setUp();
     }
 
-    public put(doc) {
-        this.remove(doc);
-        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = { };
+    public put(doc, skipRemoval = false) {
+        if (!skipRemoval) this.remove(doc);
+        if (!this.index[doc.resource.type]) {
+            this.index[doc.resource.type] = {'*' : { } };
+        }
+        const lastModified = ModelUtil.getLastModified(doc);
 
-        if (!this.index[doc.resource.type]['*']) this.index[doc.resource.type]['*'] = { };
-        this.index[doc.resource.type]['*'][doc.resource.id]
-            = ModelUtil.getLastModified(doc);
+        this.index[doc.resource.type]['*'][doc.resource.id] = lastModified;
 
         for (let field of this.fieldsToIndex) {
 
@@ -34,8 +35,7 @@ export class FulltextIndexer {
                 if (!this.index[doc.resource.type][accumulator]) {
                     this.index[doc.resource.type][accumulator] = { };
                 }
-                this.index[doc.resource.type][accumulator][doc.resource.id]
-                    = ModelUtil.getLastModified(doc);
+                this.index[doc.resource.type][accumulator][doc.resource.id] = lastModified;
             }
         }
     }

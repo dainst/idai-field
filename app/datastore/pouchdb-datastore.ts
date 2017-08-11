@@ -54,8 +54,6 @@ export class PouchdbDatastore {
                     document.resource.id = IdGenerator.generateId();
                 }
                 document['_id'] = document.resource.id;
-                document.resource['_parentTypes'] = this.config
-                    .getParentTypes(document.resource.type);
             })
             .then(() => this.db.put(document, { force: true }).catch(err => {
                 console.error(err);
@@ -69,7 +67,7 @@ export class PouchdbDatastore {
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
         document['_rev'] = result['rev'];
-        return Promise.resolve(this.cleanDoc(document));
+        return Promise.resolve(document); // TODO return document
     }
 
     /**
@@ -86,8 +84,6 @@ export class PouchdbDatastore {
         const reset = this.resetDocOnErr(document);
         return this.fetch(document.resource.id).then(() => {
                 document['_id'] = document.resource.id;
-                document.resource['_parentTypes'] = this.config
-                    .getParentTypes(document.resource.type);
 
                 return this.db.put(document, { force: true })
                     .then(result => this.processResult(document, result))
@@ -111,7 +107,6 @@ export class PouchdbDatastore {
         let id = original.resource.id;
         return function(document: Document) {
             delete document['_id'];
-            delete document.resource['_parentTypes'];
             document.resource.id = id;
             document.created = created;
             document.modified = modified;
@@ -125,8 +120,7 @@ export class PouchdbDatastore {
      * @returns {Promise<Document>}
      */
     public refresh(doc: Document): Promise<Document> {
-        return this.fetch(doc.resource.id)
-            .then(doc => this.cleanDoc(doc));
+        return this.fetch(doc.resource.id);
     }
 
     /**
@@ -281,27 +275,11 @@ export class PouchdbDatastore {
             include_docs: true,
             conflicts: true,
             descending: true
-        }).then(result => {
-            return Promise.resolve(result.rows.map(result=>this.cleanDoc(result.doc)));
-        });
+        }).then(result => Promise.resolve(result.rows));
     }
 
     protected setupServer() {
         return Promise.resolve();
-    }
-
-    private docsFromResult(result: any[]): Document[] {
-        return result['rows'].map(row => this.cleanDoc(row.doc));
-    }
-
-    // strips document of any properties that are only
-    // used to simplify index creation
-    private cleanDoc(doc: Document): Document {
-
-        if (doc && doc.resource) {
-            delete doc.resource['_parentTypes'];
-        }
-        return doc;
     }
 
     private uniqueIds(items: any[]): any[] {

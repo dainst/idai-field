@@ -86,9 +86,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         if (limit) console.warn('limit not implemented for this datastore',query);
 
         return this.datastore.findIds(query)
-            .then(result => {
-                return this.replaceAllWithCached(result)
-            });
+            .then(result => this.replaceAllWithCached(result));
     }
 
     private replaceAllWithCached(results) {

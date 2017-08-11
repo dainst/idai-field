@@ -127,7 +127,7 @@ describe('resources/syncing --', function() {
                 return browser.sleep(delays.shortRest * 10);
             })
             .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(delays.shortRest * 20))
+            .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => {
                 return Promise.resolve(testDocument);
             });
@@ -177,7 +177,7 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
-    xit('resource created in client should be synced to other db', done => {
+    it('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()
             .then(() => {

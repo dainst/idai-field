@@ -1,4 +1,4 @@
-import {Query, ReadDatastore, Datastore, DatastoreErrors} from 'idai-components-2/datastore';
+import {Query, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
@@ -30,7 +30,6 @@ export class PouchdbDatastore {
     }
 
     /**
-     * Implements {@link Datastore#create}.
      * @param document
      * @returns {Promise<Document>} same instance of the document
      */
@@ -52,7 +51,6 @@ export class PouchdbDatastore {
     }
 
     /**
-     *
      * @param document
      * @returns {Promise<Document>} same instance of the document
      */
@@ -77,6 +75,7 @@ export class PouchdbDatastore {
     }
 
     private performPut(document, resetFun, errFun) {
+
         return this.db.put(document, { force: true })
             .then(result => this.processPutResult(document, result))
             .catch(err => {
@@ -86,6 +85,7 @@ export class PouchdbDatastore {
     }
 
     private processPutResult(document, result) {
+
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
         document['_rev'] = result['rev'];
@@ -93,6 +93,7 @@ export class PouchdbDatastore {
     }
 
     private resetDocOnErr(original: Document) {
+
         let created = original.created; // TODO deep copy necessary in order to work properly
         let modified = original.modified;
         let id = original.resource.id;
@@ -105,8 +106,6 @@ export class PouchdbDatastore {
     }
 
     /**
-     * Implements {@link Datastore#remove}.
-     *
      * @param doc
      * @returns {Promise<undefined>}
      */
@@ -128,6 +127,7 @@ export class PouchdbDatastore {
     }
 
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
+
         return this.db.get(docId, { revs_info: true })
             .then(doc => Promise.resolve(doc._revs_info));
     }
@@ -180,6 +180,7 @@ export class PouchdbDatastore {
     }
 
     private performSimple(query, rsets) {
+
         let q = (!query.q || query.q == '') ? '*' : query.q;
         let type = query.type ? [query.type] : undefined;
         let result = this.fulltextIndexer.get(q, type);
@@ -188,6 +189,7 @@ export class PouchdbDatastore {
     }
 
     private generateOrderedResultList(theResultSets: ResultSets) {
+
         return theResultSets.intersect(e => e.id)
             .sort(this.comp('date'))
             .map(e => e['id']);
@@ -198,6 +200,7 @@ export class PouchdbDatastore {
      * @returns {any} undefined if there is no usable constraint
      */
     private performThem(constraints) {
+
         if (!constraints) return undefined;
 
         const rsets = new ResultSets();
@@ -214,6 +217,7 @@ export class PouchdbDatastore {
     }
 
     private comp(sortOn) {
+
         return ((a,b)=> {
             if (a[sortOn] > b[sortOn])
                 return -1;
@@ -224,6 +228,7 @@ export class PouchdbDatastore {
     }
 
     private static isEmpty(query) {
+
         return ((!query.q || query.q == '') && !query.type);
     }
 
@@ -239,6 +244,7 @@ export class PouchdbDatastore {
     }
 
     protected setupServer() {
+
         return Promise.resolve();
     }
 
@@ -247,6 +253,7 @@ export class PouchdbDatastore {
      * @return resolve when document with the given resource id does not exist already, reject otherwise
      */
     private proveThatDoesNotExist(doc:Document): Promise<any> {
+
         if (doc.resource.id) {
             return this.fetch(doc.resource.id)
                 .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
@@ -254,6 +261,7 @@ export class PouchdbDatastore {
     }
 
     public fetch(id: string, options: any = { conflicts: true }): Promise<Document> {
+
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(id, options)

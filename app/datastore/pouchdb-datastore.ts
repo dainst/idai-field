@@ -150,10 +150,6 @@ export class PouchdbDatastore {
         );
     }
 
-    public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
-        return this.fetchRevision(docId, revisionId);
-    }
-
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
         return this.db.get(docId, { revs_info: true })
             .then(doc => Promise.resolve(doc._revs_info));
@@ -292,7 +288,7 @@ export class PouchdbDatastore {
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
-    private fetchRevision(docId: string, revisionId: string): Promise<Document> {
+    public fetchRevision(docId: string, revisionId: string): Promise<Document> {
         return this.db.get(docId, { rev: revisionId })
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }

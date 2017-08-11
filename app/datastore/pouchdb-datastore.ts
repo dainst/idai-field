@@ -142,7 +142,9 @@ export class PouchdbDatastore {
 
     public documentChangesNotifications(): Observable<Document> {
 
-        return Observable.create(observer => this.observers.push(observer));
+        return Observable.create(observer => {
+            this.observers.push(observer);
+        });
     }
 
     /**

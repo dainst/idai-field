@@ -127,7 +127,7 @@ describe('resources/syncing --', function() {
                 return browser.sleep(delays.shortRest * 10);
             })
             .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(delays.shortRest * 10))
+            .then(() => browser.sleep(delays.shortRest * 20))
             .then(() => {
                 return Promise.resolve(testDocument);
             });

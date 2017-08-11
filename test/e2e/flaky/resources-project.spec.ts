@@ -68,7 +68,7 @@ describe('resources/project --', function() {
     });
 
 
-    it('create, switchProject project', () => {
+    xit('create, switchProject project', () => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);

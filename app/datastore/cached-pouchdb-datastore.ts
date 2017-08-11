@@ -133,7 +133,8 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      */
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
 
-        return this.datastore.getRevisionHistory(docId);
+        return this.datastore.fetch(docId, { revs_info: true })
+            .then(doc => doc['_revs_info']);
     }
 
     /**

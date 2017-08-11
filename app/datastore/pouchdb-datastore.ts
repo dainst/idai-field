@@ -99,9 +99,9 @@ export class PouchdbDatastore {
 
     private resetDocOnErr(original: Document) {
 
-        let created = original.created; // TODO deep copy necessary in order to work properly
-        let modified = original.modified;
-        let id = original.resource.id;
+        const created = original.created; // TODO deep copy necessary in order to work properly
+        const modified = original.modified;
+        const id = original.resource.id;
         return function(document: Document) {
             delete document['_id'];
             document.resource.id = id;
@@ -129,12 +129,6 @@ export class PouchdbDatastore {
                 .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR])
         );
-    }
-
-    public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
-
-        return this.db.get(docId, { revs_info: true })
-            .then(doc => Promise.resolve(doc._revs_info));
     }
 
     public removeRevision(docId: string, revisionId: string): Promise<any> {

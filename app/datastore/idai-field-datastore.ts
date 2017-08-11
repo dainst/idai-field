@@ -43,6 +43,11 @@ export abstract class IdaiFieldDatastore extends Datastore {
      */
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
+    /**
+     * @returns
+     *   Rejects with
+     *     [DOCUMENT_NOT_FOUND] - in case of error
+     */
     abstract getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>>;
 
     /**
@@ -50,7 +55,7 @@ export abstract class IdaiFieldDatastore extends Datastore {
      * @param revisionId
      * @returns
      *   Rejects with
-     *     [GENERIC_ERROR] - in case of error
+     *     [GENERIC_ERROR] - in case of error // TODO use generic delete error
      */
     abstract removeRevision(resourceId: string, revisionId: string): Promise<any>;
 }

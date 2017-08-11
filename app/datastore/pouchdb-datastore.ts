@@ -16,7 +16,13 @@ export class PouchdbDatastore {
 
     protected db: any;
     private observers = [];
-    private deletedOnes = []; // TODO check if we can get rid of it
+
+    // There is an issue where docs pop up in }).on('change',
+    // despite them beeing deleted in remove before. When they
+    // pop up in 'change', they do not have the deleted property.
+    // So in order to identify them as to remove from the indices
+    // they are marked "manually".
+    private deletedOnes = [];
 
     constructor(
         private pouchdbManager: PouchdbManager,

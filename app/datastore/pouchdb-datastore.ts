@@ -240,7 +240,7 @@ export class PouchdbDatastore {
             return Promise.resolve(result.rows.map(result => result.doc));
         });
     }
-    
+
     protected setupServer() {
         return Promise.resolve();
     }
@@ -256,15 +256,10 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
-    public fetch(id: string): Promise<Document> {
+    public fetch(id: string, options: any = { conflicts: true }): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
-        return this.db.get(id, { conflicts: true })
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
-    }
-
-    public fetchRevision(docId: string, revisionId: string): Promise<Document> {
-        return this.db.get(docId, { rev: revisionId })
+        return this.db.get(id, options)
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 

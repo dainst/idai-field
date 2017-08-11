@@ -4,9 +4,15 @@ import {ModelUtil} from "../model/model-util";
  */
 export class FulltextIndexer {
 
-    private index;
-
     private fieldsToIndex = ['identifier', 'shortDescription'];
+
+    private index: {
+        [resourceType: string]: {
+            [term: string]: {
+                [resourceId: string]:
+                    string // date
+            }
+        }};
 
     constructor() {
         this.setUp();

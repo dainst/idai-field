@@ -5,7 +5,13 @@ import {ModelUtil} from "../model/model-util";
  */
 export class ConstraintIndexer {
 
-    private index = undefined;
+    private index: {
+        [path: string]: {
+            [resourceId: string]:
+                { [resourceId: string] :
+                    string // date
+                }
+        }};
 
     constructor(private pathsDefinitions) {
         this.setUp();
@@ -18,7 +24,7 @@ export class ConstraintIndexer {
     public put(doc, skipRemoval = false) {
         if (!skipRemoval) this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
-            this.build(doc, pathDef);
+            this.putFor(pathDef, doc);
         }
     }
 
@@ -47,7 +53,7 @@ export class ConstraintIndexer {
         }
     }
 
-    private build(doc, pathDef) {
+    private putFor(pathDef, doc) {
 
         const elForPath = Util.getElForPathIn(doc, pathDef.path);
 

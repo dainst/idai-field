@@ -174,9 +174,7 @@ export class PouchdbDatastore {
                 if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
                 else return this.performSimple(query, rsets ? rsets : new ResultSets());
             })
-            .then(rsets => {
-                return <any> this.generateOrderedResultList(rsets);
-            });
+            .then(rsets => this.generateOrderedResultList(rsets));
     }
 
     private performSimple(query, rsets) {

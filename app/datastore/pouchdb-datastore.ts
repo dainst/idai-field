@@ -84,7 +84,7 @@ export class PouchdbDatastore {
         }
 
         const reset = this.resetDocOnErr(document);
-        return this.fetch(document.resource.id).then(() => {
+        return this.get(document.resource.id).then(() => {
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
@@ -125,7 +125,18 @@ export class PouchdbDatastore {
      * @returns {Promise<Document>}
      */
     public refresh(doc: Document): Promise<Document> {
-        return this.fetch(doc.resource.id)
+        return this.fetchObject(doc.resource.id)
+            .then(doc => this.cleanDoc(doc));
+    }
+
+    /**
+     * Implements {@link ReadDatastore#get}.
+     *
+     * @param resourceId
+     * @returns {Promise<Document>}
+     */
+    public get(resourceId: string): Promise<Document> {
+        return this.fetchObject(resourceId)
             .then(doc => this.cleanDoc(doc));
     }
 
@@ -145,35 +156,11 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
-        return this.fetch(doc.resource.id).then(
+        return this.get(doc.resource.id).then(
             docFromGet => this.db.remove(docFromGet)
                 .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR])
         );
-    }
-
-    /**
-     * @param doc
-     * @return resolve when document with the given resource id does not exist already, reject otherwise
-     */
-    private proveThatDoesNotExist(doc:Document): Promise<any> {
-        if (doc.resource.id) {
-            return this.fetch(doc.resource.id)
-                .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
-        } else return Promise.resolve();
-    }
-
-    public fetch(id: string, options = { conflicts: true }): Promise<Document> {
-
-        // Beware that for this to work we need to make sure
-        // the document _id/id and the resource.id are always the same.
-        return this.db.get(id, { conflicts: true })
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
-    }
-
-    private fetchRevision(docId: string, revisionId: string): Promise<Document> {
-        return this.db.get(docId, { rev: revisionId })
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
     public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
@@ -300,6 +287,29 @@ export class PouchdbDatastore {
         return Promise.resolve();
     }
 
+    /**
+     * @param doc
+     * @return resolve when document with the given resource id does not exist already, reject otherwise
+     */
+    private proveThatDoesNotExist(doc:Document): Promise<any> {
+        if (doc.resource.id) {
+            return this.fetchObject(doc.resource.id)
+                .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
+        } else return Promise.resolve();
+    }
+
+    private fetchObject(id: string): Promise<Document> {
+        // Beware that for this to work we need to make sure
+        // the document _id/id and the resource.id are always the same.
+        return this.db.get(id, { conflicts: true })
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+    }
+
+    private fetchRevision(docId: string, revisionId: string): Promise<Document> {
+        return this.db.get(docId, { rev: revisionId })
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+    }
+
     private docsFromResult(result: any[]): Document[] {
         return result['rows'].map(row => this.cleanDoc(row.doc));
     }
@@ -344,7 +354,7 @@ export class PouchdbDatastore {
                     this.fulltextIndexer.remove({resource: {id: change.id}});
                     return;
                 }
-                this.fetch(change.id).then(document => {
+                this.get(change.id).then(document => {
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
                     this.notify(document);

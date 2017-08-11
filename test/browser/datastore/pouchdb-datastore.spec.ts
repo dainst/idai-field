@@ -1,7 +1,6 @@
 import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
 import {Document} from "idai-components-2/core";
 import {DatastoreErrors} from "idai-components-2/datastore";
-import {M} from "../../../app/m";
 import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
 import {Query} from "idai-components-2/src/app/datastore/query";
 import {ConstraintIndexer} from "../../../app/datastore/constraint-indexer";
@@ -146,7 +145,7 @@ export function main() {
 
                 expectErr(()=>{return datastore.create(docToCreate1)
                         .then(() => datastore.create(docToCreate2))},
-                    [M.DATASTORE_RESOURCE_ID_EXISTS],done);
+                    [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS],done);
             }
         );
 
@@ -224,7 +223,7 @@ export function main() {
             function (done) {
                 expectErr(()=>{return datastore.create(doc('sd1'))
                         .then(() => datastore.fetch('nonexisting'))}
-                    ,[M.DATASTORE_NOT_FOUND],done);
+                    ,[DatastoreErrors.DOCUMENT_NOT_FOUND],done);
             }
         );
 
@@ -235,7 +234,7 @@ export function main() {
 
                 expectErr(()=>{
                     return datastore.create(doc('id1'))
-                        .then(() => datastore.fetch('nonexistingid'))},[M.DATASTORE_NOT_FOUND],done);
+                        .then(() => datastore.fetch('nonexistingid'))},[DatastoreErrors.DOCUMENT_NOT_FOUND],done);
             }
         );
 
@@ -249,7 +248,7 @@ export function main() {
                         .then(() => datastore.remove(d))
                         .then(() => datastore.fetch(d['resource']['id']))
                     },
-                    [M.DATASTORE_NOT_FOUND],done);
+                    [DatastoreErrors.DOCUMENT_NOT_FOUND],done);
 
             }
         );

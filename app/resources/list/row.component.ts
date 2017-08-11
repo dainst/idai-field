@@ -39,11 +39,13 @@ export class RowComponent {
 
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
-        return this.datastore.getLatestRevision(document.resource.id).then(
-            latestRevision => {
-                document.resource.identifier = latestRevision.resource.identifier;
-            }
-        );
+        return this.datastore.getLatestRevision(document.resource.id)
+            .then(
+                latestRevision => {
+                    document.resource.identifier = latestRevision.resource.identifier;
+                }
+            )
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
     public markAsChanged() {

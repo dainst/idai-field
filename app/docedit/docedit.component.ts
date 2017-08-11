@@ -152,7 +152,9 @@ export class DoceditComponent {
         this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
                 return this.autoConflictResolver.autoResolve(latestRevision);
-            }).then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
+            })
+            .then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
             .then(latestRevision => {
                 this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
@@ -205,7 +207,8 @@ export class DoceditComponent {
 
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
-            .then(() => this.datastore.getLatestRevision(resourceId));
+            .then(() => this.datastore.getLatestRevision(resourceId))
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
     private handleDeletedConflict() {

@@ -23,7 +23,8 @@ export class DefaultImportStrategy implements ImportStrategy {
                 document.modified = [{ user: this.settingsService.getUsername(), date: new Date() }];
 
                 return this.validator.validate(document);
-            }).then(() => this.datastore.create(document))
+            })
+            .then(() => this.datastore.create(document))
             .catch(
                 errorWithParams => Promise.reject(errorWithParams)
             );

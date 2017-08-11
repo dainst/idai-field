@@ -66,7 +66,9 @@ export class AutoConflictResolver {
             promises.push(this.datastore.getRevision(document.resource.id, revisionId));
         }
 
-        return Promise.all(promises).then(revisions => {
+        return Promise.all(promises)
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            .then(revisions => {
             let result: Array<IdaiFieldDocument> = [];
 
             for (let revision of revisions) {
@@ -240,7 +242,8 @@ export class AutoConflictResolver {
                 }
             }
 
-            return this.datastore.getRevision(revision.resource.id, previousRevisionId);
+            return this.datastore.getRevision(revision.resource.id, previousRevisionId)
+                .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
         });
     }
 

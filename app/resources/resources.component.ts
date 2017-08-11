@@ -158,7 +158,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 } else {
                     this.setSelected(document);
                 }
-            }, msgWithParams => this.messages.add(msgWithParams)
+            }, () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }
 

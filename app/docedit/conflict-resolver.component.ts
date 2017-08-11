@@ -7,6 +7,7 @@ import {PersistenceManager} from 'idai-components-2/persist';
 import {Action} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
 import {DiffUtility} from '../model/diff-utility';
+import {M} from "../m";
 
 const moment = require('moment');
 
@@ -49,7 +50,7 @@ export class ConflictResolverComponent implements OnChanges {
 
             promises.push(this.datastore.getRevision(this.document.resource.id, revisionId).then(
                 revision => this.conflictedRevisions.push(revision),
-                msgWithParams => this.messages.add(msgWithParams)
+                () => this.messages.add([M.DATASTORE_NOT_FOUND])
             ));
         }
 
@@ -178,7 +179,7 @@ export class ConflictResolverComponent implements OnChanges {
             for (let targetId of resource.relations[fieldName]) {
                 this.datastore.get(targetId).then(
                     doc => { this.relationTargets[targetId] = <IdaiFieldDocument> doc; },
-                    msgWithParams => this.messages.add(msgWithParams)
+                    () => this.messages.add([M.DATASTORE_NOT_FOUND])
                 );
             }
         }

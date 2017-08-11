@@ -2,7 +2,6 @@ import {Query, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
-import {M} from '../m';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "../util/result-sets";
 import {ConstraintIndexer} from "./constraint-indexer";
@@ -255,7 +254,7 @@ export class PouchdbDatastore {
 
         if (doc.resource.id) {
             return this.fetch(doc.resource.id)
-                .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
+                .then(result => Promise.reject([DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]), () => Promise.resolve())
         } else return Promise.resolve();
     }
 
@@ -265,7 +264,7 @@ export class PouchdbDatastore {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            .catch(err => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
     }
 
     private setupChangesEmitter(): void {

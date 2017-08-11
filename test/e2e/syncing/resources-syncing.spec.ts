@@ -41,8 +41,7 @@ describe('resources/syncing --', function() {
                         't1'
                     ]
                 },
-                'type': 'object',
-                '_parentTypes': []
+                'type': 'object'
             },
             created: {
                 'user': 'anonymous',

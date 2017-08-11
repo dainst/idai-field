@@ -30,11 +30,17 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             });
     }
 
-    findConflicted() {
+    public findConflicted() {
         return this.datastore.findConflicted();
     }
 
-    create(document: Document): Promise<Document> {
+    /**
+     * Implements {@link IdaiFieldDatastore#create}
+     *
+     * @param document
+     * @returns
+     */
+    public create(document: Document): Promise<Document> {
         return this.datastore.create(document)
             .then(doc => {
                 // working with the assumption that create returns the same instance of document as doc
@@ -42,30 +48,36 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             });
     }
 
-    update(document: Document): Promise<Document> {
+    /**
+     * Implements {@link IdaiFieldDatastore#update}
+     *
+     * @param document
+     * @returns
+     */
+    public update(document: Document): Promise<Document> {
         return this.datastore.update(document).then(doc => {
             // working with the assumption that update returns the same instance of document as doc
             return this.documentCache[doc.resource.id] = doc;
         });
     }
 
-    remove(doc: Document): Promise<any> {
+    public remove(doc: Document): Promise<any> {
         return this.datastore.remove(doc)
             .then(() => delete this.documentCache[doc.resource.id]);
     }
 
-    documentChangesNotifications(): Observable<Document> {
+    public documentChangesNotifications(): Observable<Document> {
         return this.datastore.documentChangesNotifications();
     }
 
-    get(id: string): Promise<Document> {
+    public get(id: string): Promise<Document> {
         if (this.documentCache[id]) {
             return Promise.resolve(this.documentCache[id]);
         }
         return this.datastore.get(id).then(doc => this.documentCache[id] = doc);
     }
 
-    find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
+    public find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
         if (offset) console.warn('offset not implemented for this datastore',query);
         if (limit) console.warn('limit not implemented for this datastore',query);
 
@@ -83,14 +95,14 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return Promise.all(ps);
     }
 
-    refresh(doc: Document): Promise<Document> {
+    public refresh(doc: Document): Promise<Document> {
         return this.datastore.refresh(doc).then(result => {
             this.documentCache[doc.resource.id] = result as Document;
             return Promise.resolve(result);
         });
     }
 
-    getLatestRevision(id: string): Promise<Document> {
+    public getLatestRevision(id: string): Promise<Document> {
         return this.datastore.get(id);
     }
 
@@ -101,7 +113,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      * @param revisionId
      * @returns {Promise<IdaiFieldDocument>}
      */
-    getRevision(docId: string, revisionId: string): Promise<Document> {
+    public getRevision(docId: string, revisionId: string): Promise<Document> {
         return this.datastore.getRevision(docId, revisionId);
     }
 
@@ -111,7 +123,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      * @param docId
      * @returns {Promise<Array<PouchDB.Core.RevisionInfo>>}
      */
-    getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
+    public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
         return this.datastore.getRevisionHistory(docId);
     }
 
@@ -122,11 +134,11 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      * @param revisionId
      * @returns {Promise<any>}
      */
-    removeRevision(docId: string, revisionId: string): Promise<any> {
+    public removeRevision(docId: string, revisionId: string): Promise<any> {
         return this.datastore.removeRevision(docId, revisionId);
     }
 
-    setAutoCacheUpdate(autoCacheUpdate: boolean) {
+    public setAutoCacheUpdate(autoCacheUpdate: boolean) {
         this.autoCacheUpdate = autoCacheUpdate;
     }
 }

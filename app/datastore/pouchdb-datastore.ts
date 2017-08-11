@@ -46,7 +46,7 @@ export class PouchdbDatastore {
      */
     public create(document: Document): Promise<Document> {
 
-        const reset = this.resetDocOnErr(document);
+        const resetFun = this.resetDocOnErr(document);
 
         return this.proveThatDoesNotExist(document)
             .then(() => {
@@ -54,26 +54,15 @@ export class PouchdbDatastore {
                     document.resource.id = IdGenerator.generateId();
                 }
                 document['_id'] = document.resource.id;
-                document.resource['_parentTypes'] = this.config
-                    .getParentTypes(document.resource.type);
             })
-            .then(() => this.db.put(document, { force: true }).catch(err => {
+            .then(() => this.performPut(document, resetFun, err => {
                 console.error(err);
-                reset(document);
                 return Promise.reject([DatastoreErrors.GENERIC_SAVE_ERROR]);
-            }))
-            .then(result => this.processResult(document, result))
-    }
-
-    private processResult(document, result) {
-        this.constraintIndexer.put(document);
-        this.fulltextIndexer.put(document);
-        document['_rev'] = result['rev'];
-        return Promise.resolve(this.cleanDoc(document));
+            }));
     }
 
     /**
-     * Implements {@link Datastore#update}.
+     *
      * @param document
      * @returns {Promise<Document>} same instance of the document
      */
@@ -83,26 +72,34 @@ export class PouchdbDatastore {
             return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
         }
 
-        const reset = this.resetDocOnErr(document);
-        return this.get(document.resource.id).then(() => {
-                document['_id'] = document.resource.id;
-                document.resource['_parentTypes'] = this.config
-                    .getParentTypes(document.resource.type);
+        const resetFun = this.resetDocOnErr(document);
 
-                return this.db.put(document, { force: true })
-                    .then(result => this.processResult(document, result))
-                    .catch(err => {
-                        let errType = DatastoreErrors.GENERIC_SAVE_ERROR;
-                            if (err.name && err.name == 'conflict')
-                                errType = DatastoreErrors.SAVE_CONFLICT;
-                            reset(document);
-                            return Promise.reject([errType]);
-                    })
-            },
-            () => {
-                return Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]);
-            }
-        );
+        return this.get(document.resource.id).then(() => {
+                document['_id'] = document.resource.id;})
+            .catch(() => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR]))
+            .then(() => this.performPut(document, resetFun, err => {
+                if (err.name && err.name == 'conflict') {
+                    return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
+                } else {
+                    return Promise.reject([DatastoreErrors.GENERIC_SAVE_ERROR]);
+                }
+            }))
+    }
+
+    private performPut(document, resetFun, errFun) {
+        return this.db.put(document, { force: true })
+            .then(result => this.processPutResult(document, result))
+            .catch(err => {
+                resetFun(document);
+                return errFun(err);
+            })
+    }
+
+    private processPutResult(document, result) {
+        this.constraintIndexer.put(document);
+        this.fulltextIndexer.put(document);
+        document['_rev'] = result['rev'];
+        return Promise.resolve(document); // TODO return document
     }
 
     private resetDocOnErr(original: Document) {
@@ -111,7 +108,6 @@ export class PouchdbDatastore {
         let id = original.resource.id;
         return function(document: Document) {
             delete document['_id'];
-            delete document.resource['_parentTypes'];
             document.resource.id = id;
             document.created = created;
             document.modified = modified;
@@ -125,8 +121,7 @@ export class PouchdbDatastore {
      * @returns {Promise<Document>}
      */
     public refresh(doc: Document): Promise<Document> {
-        return this.fetchObject(doc.resource.id)
-            .then(doc => this.cleanDoc(doc));
+        return this.fetchObject(doc.resource.id);
     }
 
     /**
@@ -136,8 +131,7 @@ export class PouchdbDatastore {
      * @returns {Promise<Document>}
      */
     public get(resourceId: string): Promise<Document> {
-        return this.fetchObject(resourceId)
-            .then(doc => this.cleanDoc(doc));
+        return this.fetchObject(resourceId);
     }
 
     /**
@@ -164,8 +158,7 @@ export class PouchdbDatastore {
     }
 
     public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
-        return this.fetchRevision(docId, revisionId)
-            .then(doc => this.cleanDoc(doc));
+        return this.fetchRevision(docId, revisionId);
     }
 
     public getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>> {
@@ -279,7 +272,7 @@ export class PouchdbDatastore {
             conflicts: true,
             descending: true
         }).then(result => {
-            return Promise.resolve(result.rows.map(result=>this.cleanDoc(result.doc)));
+            return Promise.resolve(result.rows.map(result => result.doc));
         });
     }
 
@@ -308,20 +301,6 @@ export class PouchdbDatastore {
     private fetchRevision(docId: string, revisionId: string): Promise<Document> {
         return this.db.get(docId, { rev: revisionId })
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]))
-    }
-
-    private docsFromResult(result: any[]): Document[] {
-        return result['rows'].map(row => this.cleanDoc(row.doc));
-    }
-
-    // strips document of any properties that are only
-    // used to simplify index creation
-    private cleanDoc(doc: Document): Document {
-
-        if (doc && doc.resource) {
-            delete doc.resource['_parentTypes'];
-        }
-        return doc;
     }
 
     private uniqueIds(items: any[]): any[] {

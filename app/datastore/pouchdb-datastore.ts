@@ -164,11 +164,6 @@ export class PouchdbDatastore {
             });
     }
 
-    // TODO deprecated
-    public shutDown(): Promise<void> {
-        return this.db.destroy();
-    }
-
     public documentChangesNotifications(): Observable<Document> {
 
         return Observable.create(observer => {

@@ -5,6 +5,7 @@ import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {M} from '../m';
 
+// TODO this datastore should not know about idai-field-model
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from "../util/result-sets";
@@ -41,35 +42,27 @@ export class PouchdbDatastore {
     /**
      * Implements {@link Datastore#create}.
      * @param document
-     * @param initial
      * @returns {Promise<Document>} same instance of the document
      */
-    public create(document: Document, initial: boolean = false): Promise<Document> {
+    public create(document: Document): Promise<Document> {
 
-        let reset = this.resetDocOnErr(document);
+        const reset = this.resetDocOnErr(document);
 
         return this.proveThatDoesNotExist(document)
             .then(() => {
-
                 if (!document.resource.id) {
                     document.resource.id = IdGenerator.generateId();
                 }
                 document['_id'] = document.resource.id;
                 document.resource['_parentTypes'] = this.config
                     .getParentTypes(document.resource.type);
-
-                return this.db.put(document, { force: true }).catch(
-                    err => {
-                        console.error(err);
-                        return Promise.reject(DatastoreErrors.GENERIC_SAVE_ERROR);
-                    }
-                );
             })
-            .then(result => this.processResult(document, result))
-            .catch(keyOfM => {
+            .then(() => this.db.put(document, { force: true }).catch(err => {
+                console.error(err);
                 reset(document);
-                return Promise.reject([keyOfM]);
-            })
+                return Promise.reject([DatastoreErrors.GENERIC_SAVE_ERROR]);
+            }))
+            .then(result => this.processResult(document, result))
     }
 
     private processResult(document, result) {
@@ -301,7 +294,7 @@ export class PouchdbDatastore {
     private proveThatDoesNotExist(doc:Document): Promise<any> {
         if (doc.resource.id) {
             return this.fetchObject(doc.resource.id)
-                .then(result => Promise.reject(M.DATASTORE_RESOURCE_ID_EXISTS), () => Promise.resolve())
+                .then(result => Promise.reject([M.DATASTORE_RESOURCE_ID_EXISTS]), () => Promise.resolve())
         } else return Promise.resolve();
     }
 

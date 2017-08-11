@@ -177,7 +177,7 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
-    it('resource created in client should be synced to other db', done => {
+    xit('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()
             .then(() => {

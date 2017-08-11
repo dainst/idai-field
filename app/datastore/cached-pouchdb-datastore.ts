@@ -3,7 +3,6 @@ import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IdaiFieldDatastore} from './idai-field-datastore';
-
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from "./document-cache";
 

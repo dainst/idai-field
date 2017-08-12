@@ -88,11 +88,11 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);
+        ResourcesPage.typeInIdentifierInSearchField('con');
+        browser.sleep(delays.shortRest * 5);
 
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
         fail();
-
-        // TODO comment in
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
         // NavbarPage.clickNavigateToProject();
         // ProjectPage.getProjectNameOptionText(1).then(t=>{

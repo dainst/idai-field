@@ -116,8 +116,15 @@ export class PouchdbManager {
         return this.getDb().ready().then(db => db.destroy())
     }
 
+    /**
+     * Destroys the db named dbName, if it is not the currently selected active database
+     *
+     * @param dbName
+     * @returns {any}
+     *   Rejects with undefined if trying do delete the currently active database
+     */
     public destroyDb(dbName: string): Promise<any> {
-        if (dbName != this.name) return Promise.reject(undefined);
+        if (dbName == this.name) return Promise.reject(undefined);
         return new PouchDB(dbName).destroy();
     }
 

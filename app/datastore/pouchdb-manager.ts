@@ -113,12 +113,11 @@ export class PouchdbManager {
     }
 
     public destroy(): Promise<any> {
-        // TODO wait for rdy
-        return this.db.destroy();
+        return this.getDb().ready().then(db => db.destroy())
     }
 
-    // TODO reject if dbName is not this.name
     public destroyDb(dbName: string): Promise<any> {
+        if (dbName != this.name) return Promise.reject(undefined);
         return new PouchDB(dbName).destroy();
     }
 
@@ -137,7 +136,7 @@ export class PouchdbManager {
         let fullUrl = url + '/' + this.name;
         console.log('start syncing with ' + fullUrl);
 
-        return this.getDb().rdy.then(db => {
+        return this.getDb().ready().then(db => {
             let sync = db.sync(fullUrl, { live: true, retry: false });
             this.syncHandles.push(sync);
             return {

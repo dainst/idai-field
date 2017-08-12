@@ -1,6 +1,8 @@
 export class PouchdbProxy {
 
-    constructor(public rdy: Promise<any>) { }
+    constructor(
+        private rdy: Promise<any> // TODO should be private and accessed through ready()
+    ) { }
 
     public switchDb(rdy: Promise<any>) {
         this.rdy = rdy;

@@ -186,9 +186,7 @@ export class ImageGridComponent {
     }
 
     private deleteImageDocuments(documents: Array<IdaiFieldImageDocument>): Promise<any> {
-
-
-        // TODO refactor
+        
         return new Promise<any>((resolve, reject) => {
 
             let promise: Promise<any> = new Promise<any>((res) => res());

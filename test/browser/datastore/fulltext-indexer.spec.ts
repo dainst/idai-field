@@ -152,7 +152,5 @@ export function main() {
             expect(fi.get('short', ['type']))
                 .toEqual([]);
         });
-
-        // TODO tokenize fields
     });
 }

@@ -50,12 +50,9 @@ exports.config = {
         configTemplate: { 'dbs' : ['test'] }
     },
     onPrepare: function() {
-        if (failFastActive) {
-            console.log("Fail fast mode active");
-            jasmine.getEnv().addReporter(failFast.init());
-        }
+        if (failFastActive) jasmine.getEnv().addReporter(failFast.init());
 
-        var FailureScreenshotReporter = function() {
+        var ProgressReporter = function() {
 
             this.specStarted = function(spec) {
                 process.stdout.write("SPEC " + spec.fullName + " ")
@@ -65,7 +62,7 @@ exports.config = {
                 console.log(spec.status.toUpperCase())
             }
         };
-        jasmine.getEnv().addReporter(new FailureScreenshotReporter());
+        jasmine.getEnv().addReporter(new ProgressReporter());
     },
     afterLaunch: function() {
         if (failFastActive) failFast.clean();

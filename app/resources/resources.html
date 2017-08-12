@@ -11,7 +11,7 @@
                         {{viewUtility.getMainTypeDocumentLabel(document)}}
                     </option>
                 </select>
-                <select *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
+                <select id="mainTypeSelectBoxSubstitute" *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
                         class="form-control" disabled>
                     <option>
                         {{mainTypeLabel}} anlegen ➔

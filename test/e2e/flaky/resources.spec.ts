@@ -17,7 +17,7 @@ describe('resources --', () => {
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
     });
 
-    xit('should delete a main type resource', () => {
+    it('should delete a main type resource', () => {
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.clickEditMainTypeResource();
@@ -28,7 +28,10 @@ describe('resources --', () => {
         ResourcesPage.clickEditMainTypeResource();
         ResourcesPage.clickDeleteDocument();
         ResourcesPage.clickDeleteInModal();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value.length).toBe(0));
+
+        browser.wait(EC.stalenessOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBoxSubstitute'))), delays.ECWaitTime);
+
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 });

@@ -116,6 +116,11 @@ export class ResourcesPage {
         return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
     };
 
+    public static getMainTypeDocumentOption = function() {
+        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
+        return element.all(by.css('#mainTypeSelectBox')).getText();
+    };
+
     // elements
 
     public static getListItemEl = function(identifier) {

@@ -48,24 +48,24 @@ export class ImageGridBuilder {
         });
     }
 
+    /**
+     * @returns {Promise<any>} cellsWithMessages
+     */
     private calcRow(rowIndex, calculatedHeight, nrOfColumns) {
 
-        return new Promise<any>((resolve) => {
-            const promises = [];
-            for (let i = 0; i < nrOfColumns; i++) {
+        const promises = [];
+        for (let i = 0; i < nrOfColumns; i++) {
 
-                const document = this.documents[rowIndex * nrOfColumns + i];
-                if (!document) break;
+            const document = this.documents[rowIndex * nrOfColumns + i];
+            if (!document) break;
 
-                promises.push(
-                    this.getImg(
-                        document,
-                        ImageGridBuilder.newCell(document, calculatedHeight)
-                    )
-                );
-            }
-            Promise.all(promises).then(cellsWithMsgs => resolve(cellsWithMsgs));
-        });
+            promises.push(
+                this.getImg(document,
+                    ImageGridBuilder.newCell(document, calculatedHeight)
+                )
+            );
+        }
+        return Promise.all(promises);
     }
 
     private static newCell(document, calculatedHeight): ImageContainer {
@@ -105,6 +105,9 @@ export class ImageGridBuilder {
         return naturalRowWidth;
     }
 
+    /**
+     * @returns {Promise<any>} cellWithMsg
+     */
     private getImg(document, cell): Promise<any> {
 
         return new Promise<any>((resolve) => {

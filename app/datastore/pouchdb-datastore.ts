@@ -161,7 +161,7 @@ export class PouchdbDatastore {
 
         return this.perform(query)
             .catch(err => {
-                console.error('err in findIds',err);
+                console.error('err in findIds',err); // TODO return the cause as part of errWithParams instead
                 return Promise.reject([DatastoreErrors.GENERIC_ERROR]);
             })
     }

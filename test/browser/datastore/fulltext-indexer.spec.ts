@@ -101,11 +101,29 @@ export function main() {
                 .toEqual([{id: '1', date: '2018-01-01'}]);
         });
 
-        it('index shortDescription', () => {
+        it('index other field', () => {
             const d = doc('1', 'identifier1', 'type');
             fi.put(d);
             expect(fi.get('short', ['type']))
                 .toEqual([{id: '1', date: '2018-01-01'}]);
+        });
+
+        it('tokenize fields', () => {
+            const d = doc('1', 'hello token', 'type');
+            fi.put(d);
+            expect(fi.get('hello', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+            expect(fi.get('token', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+        });
+
+        it('find everything lowercase', () => {
+            fi.put(doc('1', 'Hello', 'type'));
+            fi.put(doc('2', 'something', 'type'));
+            expect(fi.get('hello', ['type']))
+                .toEqual([{id: '1', date: '2018-01-01'}]);
+            expect(fi.get('Something', ['type']))
+                .toEqual([{id: '2', date: '2018-01-01'}]);
         });
 
         it('put overwrite', () => {

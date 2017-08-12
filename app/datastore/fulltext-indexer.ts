@@ -28,21 +28,26 @@ export class FulltextIndexer {
             this.index[doc.resource.type] = {'*' : { } };
         }
         const lastModified = ModelUtil.getLastModified(doc);
-
         this.index[doc.resource.type]['*'][doc.resource.id] = lastModified;
 
         for (let field of this.fieldsToIndex) {
+            if (!doc.resource[field] || doc.resource[field] == '') continue;
 
-            if (!doc.resource[field] || doc.resource.field == '') continue;
-
-            let accumulator = '';
-            for (let letter of doc.resource[field]) {
-                accumulator += letter;
-                if (!this.index[doc.resource.type][accumulator]) {
-                    this.index[doc.resource.type][accumulator] = { };
-                }
-                this.index[doc.resource.type][accumulator][doc.resource.id] = lastModified;
+            for (let token of doc.resource[field].split(' ')) {
+                this.indexToken(doc.resource.id, token,
+                    doc.resource.type, lastModified);
             }
+        }
+    }
+
+    private indexToken(id, token, type, lastModified) {
+        let accumulator = '';
+        for (let letter of token.toLowerCase()) {
+            accumulator += letter;
+            if (!this.index[type][accumulator]) {
+                this.index[type][accumulator] = { };
+            }
+            this.index[type][accumulator][id] = lastModified;
         }
     }
 
@@ -63,7 +68,7 @@ export class FulltextIndexer {
         if (!types) types = Object.keys(this.index);
 
         for (let type of types) {
-            this._get(resultSets, s, type);
+            this._get(resultSets, s.toLowerCase(), type);
         }
         return this.unify(resultSets);
     }

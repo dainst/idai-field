@@ -84,17 +84,26 @@ export class LayerMapComponent extends MapComponent {
     private initializeLayers(): Promise<any> {
 
         let query: Query = {
-            type: 'image'
+            constraints: {
+                'resource.relations.isRecordedIn' : 'images'
+            }
         };
 
         return this.datastore.find(query)
-            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
+            .catch(errWithParams => {
+                console.error("error in find with query",query);
+                if (errWithParams.length == 2) {
+                    console.error("error in find, cause",errWithParams[1]);
+                }
+                this.messages.add([M.ALL_FIND_ERROR]);
+                Promise.reject(undefined);
+            })
             .then(documents => this.makeLayersForDocuments(documents as Array<Document>))
             .then(layersMap => {
                 this.removeOldLayersFromMap(layersMap);
                 this.layersMap = layersMap;
                 this.layersList = this.getLayersAsList(layersMap);
-            }).catch(msgWithParams => Promise.reject(msgWithParams));
+            });
     }
 
     private makeLayersForDocuments(documents: Array<Document>): Promise<{ [id: string]: ImageContainer }> {

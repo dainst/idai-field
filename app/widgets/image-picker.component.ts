@@ -6,6 +6,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {Messages} from 'idai-components-2/messages';
 import {Query, Datastore} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {M} from "../m";
 
 @Component({
     selector: 'image-picker',
@@ -98,6 +99,7 @@ export class ImagePickerComponent {
                 if (errWithParams.length == 2) {
                     console.error("error in find, cause",errWithParams[1]);
                 }
+                this.messages.add([M.ALL_FIND_ERROR]);
             });
     }
 

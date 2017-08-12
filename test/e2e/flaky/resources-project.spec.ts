@@ -93,13 +93,14 @@ describe('resources/project --', function() {
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
+        NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToProject();
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('abc')
         });
         NavbarPage.clickSelectProject(1);
         browser.sleep(delays.shortRest * 10);
-        
+
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

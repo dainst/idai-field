@@ -32,7 +32,7 @@ export class ImageGridComponent {
     private imageGridBuilder : ImageGridBuilder;
     private imageTool : ImageTool;
 
-    private query : Query = { constraints : { "resource.relations.isRecordedIn" : "images" }};
+    private query : Query;
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;
@@ -71,33 +71,42 @@ export class ImageGridComponent {
      */
     private fetchDocuments(query: Query) {
 
+        if (!query) query = {};
         this.query = query;
+        this.query.constraints = { 'resource.relations.isRecordedIn': 'images'};
+        delete this.query.type;
 
-        console.log("find",query)
-        this.datastore.find(query).then(documents => {
-            console.log("found", documents)
+        return this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
 
-            // insert stub document for first cell that will act as drop area for uploading images
-            this.documents.unshift(<IdaiFieldImageDocument>{
-                id: 'droparea',
-                resource: { identifier: '', shortDescription:'', type: '',
-                    width: 1, height: 1, filename: '', relations: {} }
-            });
-
-            // cache ids of connected resources
-            for (let doc of documents) {
-                if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                    for (let resourceId of doc.resource.relations['depicts']) {
-                        this.datastore.get(resourceId).then(result => {
-                            this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                        });
-                    }
-            }
-
+            this.insertStub(this.documents);
+            this.cacheIdsOfConnectedResources(documents);
             this.calcGrid();
 
-        }).catch(err => console.error(err));
+        }).catch(errWithParams => {
+            console.log("ERROR with find using query",this.query);
+            if (errWithParams.length == 2) console.error("Cause: ",errWithParams[1]);
+        });
+    }
+
+    // insert stub document for first cell that will act as drop area for uploading images
+    private insertStub(documents) {
+        documents.unshift(<IdaiFieldImageDocument>{
+            id: 'droparea',
+            resource: { identifier: '', shortDescription:'', type: '',
+                width: 1, height: 1, filename: '', relations: {} }
+        });
+    }
+
+    private cacheIdsOfConnectedResources(documents) {
+        for (let doc of documents) {
+            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
+                for (let resourceId of doc.resource.relations['depicts']) {
+                    this.datastore.get(resourceId).then(result => {
+                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
+                    });
+                }
+        }
     }
 
     public queryChanged(query: Query) {
@@ -172,11 +181,7 @@ export class ImageGridComponent {
         this.deleteImageDocuments(this.selected).then(
             () => {
                 this.clearSelection();
-
-                console.log("fetching again")
                 this.fetchDocuments(this.query);
-            }).catch(error => {
-                this.messages.add(error); // TODO seems that this can not happen, see catch in fetchDocuments
             });
     }
 

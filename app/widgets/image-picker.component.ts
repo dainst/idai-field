@@ -24,7 +24,7 @@ export class ImagePickerComponent {
     public rows = [];
 
     private imageGridBuilder: ImageGridBuilder;
-    private query: Query = { type: 'image', prefix: true };
+    private query: Query = { type: 'image' };
     private imageDocuments: Array<IdaiFieldImageDocument>;
     private numberOfColumns: number = 3;
 
@@ -61,14 +61,14 @@ export class ImagePickerComponent {
         this.imageGridBuilder.calcGrid(
             this.imageDocuments, this.numberOfColumns, this.el.nativeElement.children[0].clientWidth).then(result => {
             this.rows = result['rows'];
-            for (var msgWithParams of result['msgsWithParams']) {
+            for (let msgWithParams of result['msgsWithParams']) {
                 this.messages.add(msgWithParams);
             }
         });
     }
 
     /**
-     * @param documentToSelect the object that should be selected
+     * @param document the object that should be selected
      */
     public select(document: IdaiFieldImageDocument) {
 

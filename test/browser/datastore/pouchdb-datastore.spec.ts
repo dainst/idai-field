@@ -309,7 +309,7 @@ export function main() {
             const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.findIds({q: undefined, prefix: true}))
+                .then(() => datastore.findIds({q: undefined}))
                 .then(
                     result => {
                         expect(result[0]).toBe('id1');
@@ -326,7 +326,7 @@ export function main() {
             const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
-                .then(() => datastore.findIds({prefix: true}))
+                .then(() => datastore.findIds({ }))
                 .then(
                     result => {
                         expect(result[0]).toBe('id1');
@@ -433,8 +433,7 @@ export function main() {
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.findIds({
                     q: 'blub',
-                    type: 'type2',
-                    prefix: true
+                    type: 'type2'
                 }))
                 .then(
                     result => {
@@ -462,7 +461,6 @@ export function main() {
 
             const q: Query = {
                 q: 'blub',
-                prefix: true,
                 constraints: {
                     'resource.relations.isRecordedIn' : 'id1'
                 }
@@ -496,7 +494,6 @@ export function main() {
 
             const q: Query = {
                 q: 'blub',
-                prefix: true,
                 constraints: {
                     'resource.relations.isRecordedIn' : undefined
                 }
@@ -531,7 +528,6 @@ export function main() {
 
             const q: Query = {
                 q: 'blub',
-                prefix: true,
                 constraints: {
                     'resource.relations.isRecordedIn' : 'id1',
                     'resource.relations.liesWithin' : undefined
@@ -561,7 +557,6 @@ export function main() {
 
             const q: Query = {
                 q: 'blub',
-                prefix: true,
                 constraints: {
                     'unknown' : 'id1',
                 }
@@ -592,7 +587,6 @@ export function main() {
 
             const q: Query = {
                 q: 'blub',
-                prefix: true,
                 constraints: {
                     'unknown' : 'id1',
                     'resource.relations.liesWithin' : 'id1'
@@ -628,7 +622,6 @@ export function main() {
 
                 const q: Query = {
                     q: 'blub',
-                    prefix: true,
                     constraints: {
                         'resource.relations.isRecordedIn' : 'id1'
                     }

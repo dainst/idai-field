@@ -34,7 +34,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeLabel: string;
     public mode: string = 'map';
     public editGeometry: boolean = false;
-    public query: Query = {q: '', type: 'resource', prefix: true};
+    public query: Query = {q: '', type: 'resource'};
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -348,7 +348,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (!this.view) return Promise.resolve();
 
         this.loading.start();
-        return this.datastore.find({type: this.view.mainType, prefix: true})
+        return this.datastore.find({type: this.view.mainType})
             .then(documents => {
                 this.loading.stop();
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;

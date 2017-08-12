@@ -84,8 +84,7 @@ export class LayerMapComponent extends MapComponent {
     private initializeLayers(): Promise<any> {
 
         let query: Query = {
-            type: 'image',
-            prefix: true
+            type: 'image'
         };
 
         return this.datastore.find(query)

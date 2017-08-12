@@ -356,7 +356,7 @@ export function main() {
                 );
         });
 
-        xit('should match all fields', function(done){
+        it('should match all fields', function(done){
             const doc1 = doc('bla','blub');
             const doc2 = doc('blub','bla');
 
@@ -396,32 +396,6 @@ export function main() {
                     }
                 );
         });
-
-        xit('should filter by parent type in find', function(done){
-            const doc1 = doc('blub', 'bla1', 'type1');
-            const doc2 = doc('blub', 'bla2', 'type2','id2');
-            const doc3 = doc('blub', 'bla1.1', 'type1.1');
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.findIds({q: 'blub', type: 'type1'}))
-                .then(result => {
-                    expect(result.length).toBe(2);
-                    expect(result[0]).not.toBe('id2');
-                    expect(result[1]).not.toBe('id2');
-                })
-                .then(() => datastore.findIds({q: 'blub', type: 'root'}))
-                .then(result => {
-                        expect(result.length).toBe(3);
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        }, 2000);
 
         it('should find by prefix query and filter', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1');
@@ -485,39 +459,7 @@ export function main() {
                 );
         });
 
-        xit('should filter with constraint undefined', function(done) {
-            const doc1 = doc('bla1', 'blub1', 'type1','id1');
-            const doc2 = doc('bla2', 'blub2', 'type2','id2');
-
-            const doc3 = doc('bla3', 'blub3', 'type2','id3');
-            doc3.resource.relations['isRecordedIn'] = ['id5'];
-
-            const q: Query = {
-                q: 'blub',
-                constraints: {
-                    'resource.relations.isRecordedIn' : undefined
-                }
-            };
-
-            datastore.create(doc1)
-                .then(() => datastore.create(doc2))
-                .then(() => datastore.create(doc3))
-                .then(() => datastore.findIds(q))
-                .then(
-                    results => {
-                        expect(results).toContain('id1');
-                        expect(results).toContain('id2');
-                        expect(results.length).toBe(2);
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        });
-
-        xit('should filter with multiple constraints', function(done) {
+        it('should filter with multiple constraints', function(done) {
             const doc1 = doc('bla1', 'blub1', 'type1','id1');
 
             const doc2 = doc('bla2', 'blub2', 'type2','id2');
@@ -530,7 +472,7 @@ export function main() {
                 q: 'blub',
                 constraints: {
                     'resource.relations.isRecordedIn' : 'id1',
-                    'resource.relations.liesWithin' : undefined
+                    'resource.relations.liesWithin' : 'id2'
                 }
             };
 
@@ -540,7 +482,7 @@ export function main() {
                 .then(() => datastore.findIds(q))
                 .then(
                     results => {
-                        expect(results[0]).toBe('id2');
+                        expect(results[0]).toBe('id3');
                         expect(results.length).toBe(1);
                         done();
                     },
@@ -647,7 +589,7 @@ export function main() {
             },100)
         });
 
-        xit('should find conflicted documents sorted by lastModified', function(done) {
+        it('should find conflicted documents sorted by lastModified', function(done) {
 
             let db1 = new PouchDB('testdb');
             let db2 = new PouchDB('testdb2');

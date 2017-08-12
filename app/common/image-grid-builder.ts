@@ -44,7 +44,7 @@ export class ImageGridBuilder {
             for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
                 rowPromises.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
             }
-            resolve(this.splitCellsAndMessages(rowPromises));
+            resolve(ImageGridBuilder.splitCellsAndMessages(rowPromises));
         });
     }
 
@@ -121,27 +121,22 @@ export class ImageGridBuilder {
         })
     }
 
-    private splitCellsAndMessages(rowPromises) {
+    private static splitCellsAndMessages(rowPromises) {
 
-        return new Promise<any>((resolve) => {
-            Promise.all(rowPromises).then(
-                rows => this.split(rows, resolve)
-            );
-        })
-    }
-
-    private split(rows, resolve) {
-
-        const rows_ = [];
-        const msgsWithParams = [];
-        rows.forEach(row => {
-            const row_ = [];
-            row.forEach(cell => {
-                if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
-                row_.push(cell.cell);
-            });
-            rows_.push(row_);
-        });
-        resolve({rows: rows_, msgsWithParams: msgsWithParams});
+        return Promise.all(rowPromises).then(
+            rows => {
+                const rows_ = [];
+                const msgsWithParams = [];
+                rows.forEach(row => {
+                    const row_ = [];
+                    (row as any).forEach(cell => {
+                        if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
+                        row_.push(cell.cell);
+                    });
+                    rows_.push(row_);
+                });
+                return {rows: rows_, msgsWithParams: msgsWithParams};
+            }
+        );
     }
 }

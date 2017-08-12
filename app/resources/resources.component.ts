@@ -336,7 +336,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return this.datastore.find(query)
             .then(documents => this.documents = documents)
-            .catch(msgWithParams => {
+            .catch(errWithParams => {
+                console.error("error with find. query:",query);
+                if (errWithParams.length == 2) console.error("error with find. cause:",errWithParams[1]);
                 this.messages.add([M.ALL_FIND_ERROR])
             }).then(() => this.loading.stop());
     }

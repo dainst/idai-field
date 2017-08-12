@@ -24,7 +24,7 @@ export class ImagePickerComponent {
     public rows = [];
 
     private imageGridBuilder: ImageGridBuilder;
-    private query: Query = { type: 'image' };
+    private query: Query;
     private imageDocuments: Array<IdaiFieldImageDocument>;
     private numberOfColumns: number = 3;
 
@@ -84,11 +84,21 @@ export class ImagePickerComponent {
     private fetchDocuments(query: Query) {
 
         this.query = query;
+        if (!this.query) this.query = { };
+        this.query.constraints = {
+            'resource.relations.isRecordedIn' : 'images'
+        };
 
         this.datastore.find(query).then(documents => {
-            this.imageDocuments = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-            this.calcGrid();
-        }).catch(err => console.error(err));
+                this.imageDocuments = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
+                this.calcGrid();
+            })
+            .catch(errWithParams => {
+                console.error("error in find with query",query);
+                if (errWithParams.length == 2) {
+                    console.error("error in find, cause",errWithParams[1]);
+                }
+            });
     }
 
     private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)

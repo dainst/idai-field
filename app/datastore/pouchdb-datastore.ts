@@ -99,8 +99,8 @@ export class PouchdbDatastore {
 
     private resetDocOnErr(original: Document) {
 
-        const created = original.created; // TODO deep copy necessary in order to work properly
-        const modified = original.modified;
+        const created = JSON.parse(JSON.stringify(original.created));
+        const modified = JSON.parse(JSON.stringify(original.modified));
         const id = original.resource.id;
         return function(document: Document) {
             delete document['_id'];

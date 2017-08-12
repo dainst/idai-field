@@ -40,8 +40,8 @@ export class ImageGridBuilder {
             this.documents = documents;
             if (!this.documents) resolve([]);
 
-            var rowPromises = [];
-            for (var i = 0; i < this.nrOfRows(nrOfColumns); i++) {
+            const rowPromises = [];
+            for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
                 rowPromises.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
             }
             resolve(this.splitCellsAndMessages(rowPromises));
@@ -51,16 +51,16 @@ export class ImageGridBuilder {
     private calcRow(rowIndex, calculatedHeight, nrOfColumns) {
 
         return new Promise<any>((resolve) => {
-            var promises = [];
-            for (var i = 0; i < nrOfColumns; i++) {
+            const promises = [];
+            for (let i = 0; i < nrOfColumns; i++) {
 
-                var document = this.documents[rowIndex * nrOfColumns + i];
+                const document = this.documents[rowIndex * nrOfColumns + i];
                 if (!document) break;
 
                 promises.push(
                     this.getImg(
                         document,
-                        this.newCell(document, calculatedHeight)
+                        ImageGridBuilder.newCell(document, calculatedHeight)
                     )
                 );
             }
@@ -68,10 +68,10 @@ export class ImageGridBuilder {
         });
     }
 
-    private newCell(document, calculatedHeight): ImageContainer {
+    private static newCell(document, calculatedHeight): ImageContainer {
 
-        var cell: ImageContainer = {};
-        var image = document.resource as IdaiFieldImageResource;
+        const cell: ImageContainer = {};
+        const image = document.resource as IdaiFieldImageResource;
         cell.document = document;
         cell.calculatedWidth = image.width * calculatedHeight / image.height;
         cell.calculatedHeight = calculatedHeight;
@@ -80,8 +80,8 @@ export class ImageGridBuilder {
 
     private calculatedHeight(rowIndex, nrOfColumns, gridWidth) {
 
-        var rowWidth = Math.ceil(gridWidth - this.paddingRight);
-        return rowWidth / this.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
+        const rowWidth = Math.ceil(gridWidth - this.paddingRight);
+        return rowWidth / ImageGridBuilder.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
     }
 
     private nrOfRows(nrOfColumns) {
@@ -91,11 +91,11 @@ export class ImageGridBuilder {
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
      */
-    private calcNaturalRowWidth(documents, nrOfColumns, rowIndex) {
+    private static calcNaturalRowWidth(documents, nrOfColumns, rowIndex) {
 
-        var naturalRowWidth = 0;
-        for (var columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
-            var document = documents[rowIndex * nrOfColumns + columnIndex];
+        let naturalRowWidth = 0;
+        for (let columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
+            const document = documents[rowIndex * nrOfColumns + columnIndex];
             if (!document) {
                 naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
                 break;
@@ -105,11 +105,6 @@ export class ImageGridBuilder {
         return naturalRowWidth;
     }
 
-    /**
-     * @param identifier
-     * @param cell
-     * @param showAllAtOnce is applied here
-     */
     private getImg(document, cell): Promise<any> {
 
         return new Promise<any>((resolve) => {
@@ -137,10 +132,10 @@ export class ImageGridBuilder {
 
     private split(rows, resolve) {
 
-        var rows_ = [];
-        var msgsWithParams = [];
+        const rows_ = [];
+        const msgsWithParams = [];
         rows.forEach(row => {
-            var row_ = [];
+            const row_ = [];
             row.forEach(cell => {
                 if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
                 row_.push(cell.cell);

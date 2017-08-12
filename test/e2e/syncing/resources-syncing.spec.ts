@@ -86,11 +86,14 @@ describe('resources/syncing --', function() {
         });
     }
 
-    function configureRemoteSite() {
+    function setConfigJson(): Promise<any> {
 
-        common.typeIn(SettingsPage.getRemoteSiteAddressInput(), remoteSiteAddress);
-        SettingsPage.clickSaveSettingsButton();
-        return browser.sleep(delays.shortRest * 10);
+        return new Promise(resolve => {
+            fs.writeFile(configPath, JSON.stringify({ "syncTarget":{"address":"http://localhost:3001"}, 'dbs' : ['test'] }), err => {
+                if (err) console.error('Failure while resetting config.json', err);
+                resolve();
+            });
+        });
     }
 
     beforeAll(done => {
@@ -105,8 +108,9 @@ describe('resources/syncing --', function() {
     });
 
     beforeEach(done => {
-        SettingsPage.get();
-        configureRemoteSite().then(done);
+        setConfigJson().then(()=>{
+            SettingsPage.get().then(done);
+        });
     });
 
     afterEach(done => {

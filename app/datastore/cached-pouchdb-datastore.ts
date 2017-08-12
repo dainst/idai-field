@@ -79,10 +79,13 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
     }
 
-    public find(query: Query, offset?: number, limit?: number):Promise<Document[]> {
-
-        if (offset) console.warn('offset not implemented for this datastore',query);
-        if (limit) console.warn('limit not implemented for this datastore',query);
+    /**
+     * Implements {@link ReadDatastore#find}
+     *
+     * @param query
+     * @returns {Promise<TResult2|TResult1>}
+     */
+    public find(query: Query):Promise<Document[]> {
 
         return this.datastore.findIds(query)
             .then(result => this.replaceAllWithCached(result));
@@ -95,14 +98,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             ps.push(this.get(id));
         }
         return Promise.all(ps);
-    }
-
-    public refresh(doc: Document): Promise<Document> {
-
-        return this.datastore.fetch(doc.resource.id).then(result => {
-            this.documentCache.set(result);
-            return Promise.resolve(result);
-        });
     }
 
     public getLatestRevision(id: string): Promise<Document> {

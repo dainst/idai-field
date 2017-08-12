@@ -68,7 +68,7 @@ describe('resources/project --', function() {
     });
 
 
-    xit('create, switchProject project', () => {
+    it('create, switchProject project', () => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
@@ -83,7 +83,7 @@ describe('resources/project --', function() {
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToSettings();
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -95,9 +95,9 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('abc')
         });
-        // NavbarPage.clickSelectProject(1);
-        // browser.sleep(delays.shortRest * 10);
-        //
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        NavbarPage.clickSelectProject(1);
+        browser.sleep(delays.shortRest * 10);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

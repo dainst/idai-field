@@ -14,11 +14,11 @@ exports.config = {
         default: [
             '../syncing/*.spec.js',
             '../images/*.spec.js',
-            '../import/*.spec.js',
             '../list/*.spec.js',
+            '../resources/*.spec.js',
             '../resources/map/*.spec.js',
             '../widgets/*.spec.js',
-            '../resources/*.spec.js'
+            '../import/*.spec.js'
         ],
         flaky: [
             '../settings/*.spec.js',

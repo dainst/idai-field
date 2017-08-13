@@ -1,4 +1,5 @@
-import {ModelUtil} from "../model/model-util";
+import {ModelUtil} from '../model/model-util';
+
 /**
  * @author Daniel de Oliveira
  */
@@ -15,14 +16,17 @@ export class FulltextIndexer {
         }};
 
     constructor() {
+
         this.setUp();
     }
 
     public clear() {
+
         this.setUp();
     }
 
     public put(doc, skipRemoval = false) {
+
         if (!skipRemoval) this.remove(doc);
         if (!this.index[doc.resource.type]) {
             this.index[doc.resource.type] = {'*' : { } };
@@ -41,6 +45,7 @@ export class FulltextIndexer {
     }
 
     private indexToken(id, token, type, lastModified) {
+
         let accumulator = '';
         for (let letter of token.toLowerCase()) {
             accumulator += letter;
@@ -52,6 +57,7 @@ export class FulltextIndexer {
     }
 
     public remove(doc) {
+
         if (Object.keys(this.index).length == 0) return;
         for (let type of Object.keys(this.index)) {
             for (let term of Object.keys(this.index[type])) {
@@ -63,6 +69,7 @@ export class FulltextIndexer {
     }
 
     public get(s: string, types) {
+
         let resultSets = [];
         if (Object.keys(this.index).length == 0) return [];
         if (!types) types = Object.keys(this.index);
@@ -74,6 +81,7 @@ export class FulltextIndexer {
     }
 
     private unify(resultSets) {
+
         const result = {};
         for (let resultSet of resultSets) {
             for (let item of resultSet) {
@@ -84,6 +92,7 @@ export class FulltextIndexer {
     }
 
     private _get(resultSets, s, type) {
+
         if (!this.index[type]) return resultSets.push([]);
         if (!this.index[type][s]) return resultSets.push([]);
 
@@ -92,6 +101,7 @@ export class FulltextIndexer {
     }
 
     private setUp() {
+        
         this.index = { };
     }
 }

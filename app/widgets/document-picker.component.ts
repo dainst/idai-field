@@ -43,8 +43,6 @@ export class DocumentPickerComponent {
      */
     public fetchDocuments(query: Query) {
 
-        if (query.type == 'resource') delete query.type;
-
         this.datastore.find(query).then(documents => this.filterDocuments(documents as Array<IdaiFieldDocument>))
             .then(filteredDocuments => this.documents = filteredDocuments)
             .catch(err => console.error(err));

@@ -267,10 +267,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public queryChanged(query: Query): Promise<any> {
 
-        this.loading.start();
         this.query = query;
-
-        return this.fetchDocuments(query)
+        this.loading.start();
+        return this.fetchDocuments()
             .then(() => this.loading.stop());
     }
 
@@ -297,21 +296,20 @@ export class ResourcesComponent implements AfterViewChecked {
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
-     * @param query
      */
-    public fetchDocuments(query: Query = this.query): Promise<any> {
+    public fetchDocuments(): Promise<any> {
 
         if (!this.selectedMainTypeDocument) return (this.documents = []) && Promise.resolve();
 
         this.newDocumentsFromRemote = [];
 
-        query.constraints = { 'resource.relations.isRecordedIn' :
+        this.query.constraints = { 'resource.relations.isRecordedIn' :
             this.selectedMainTypeDocument.resource.id };
 
         this.loading.start();
-        return this.datastore.find(query)
+        return this.datastore.find(this.query)
             .then(documents => this.documents = documents)
-            .catch(errWithParams => this.handleFindErr(errWithParams, query))
+            .catch(errWithParams => this.handleFindErr(errWithParams, this.query))
             .then(() => this.loading.stop());
     }
 

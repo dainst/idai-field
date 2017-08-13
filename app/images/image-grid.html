@@ -14,8 +14,7 @@
      (drop)="false">
 
     <div class="navbar navbar-light bg-faded">
-        <search-bar [type]="'image'"
-                    [showFiltersMenu]="false"
+        <search-bar [showFiltersMenu]="false"
                     [hidden]="selected.length"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>

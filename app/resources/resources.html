@@ -40,8 +40,7 @@
     </div>
 
     <div class="col-md-4 offset-1">
-        <search-bar *ngIf="view" [showFiltersMenu]="true"
-                    [relationName]="'isRecordedIn'"
+        <search-bar *ngIf="view" [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
                     (onQueryChanged)="queryChanged($event)">
         </search-bar>

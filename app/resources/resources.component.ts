@@ -34,7 +34,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeLabel: string;
     public mode: string = 'map';
     public editGeometry: boolean = false;
-    public query: Query = {q: '', type: 'resource'};
+    public query: Query = {q: ''};
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -301,26 +301,25 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     public fetchDocuments(query: Query = this.query): Promise<any> {
 
+        if (!this.selectedMainTypeDocument) return (this.documents = []) && Promise.resolve();
+
         this.newDocumentsFromRemote = [];
 
-        query.constraints = {};
-        if (this.selectedMainTypeDocument) {
-            if (query.type == 'resource') delete query.type; // trigger allDocs within find, images ought not have isRecordedIn
-            query.constraints['resource.relations.isRecordedIn'] = this.selectedMainTypeDocument.resource.id;
-        } else {
-            this.documents = [];
-            return Promise.resolve();
-        }
+        query.constraints = { 'resource.relations.isRecordedIn' :
+            this.selectedMainTypeDocument.resource.id };
 
         this.loading.start();
-
         return this.datastore.find(query)
             .then(documents => this.documents = documents)
-            .catch(errWithParams => {
-                console.error("error with find. query:",query);
-                if (errWithParams.length == 2) console.error("error with find. cause:",errWithParams[1]);
-                this.messages.add([M.ALL_FIND_ERROR])
-            }).then(() => this.loading.stop());
+            .catch(errWithParams => this.handleFindErr(errWithParams, query))
+            .then(() => this.loading.stop());
+    }
+
+    private handleFindErr(errWithParams, query) {
+
+        console.error("error with find. query:",query);
+        if (errWithParams.length == 2) console.error("error with find. cause:",errWithParams[1]);
+        this.messages.add([M.ALL_FIND_ERROR])
     }
 
     private fetchMainTypeDocuments(): Promise <any> {
@@ -333,7 +332,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.loading.stop();
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 this.setSelectedMainTypeDocument();
-            });
+            })
+            .catch(errWithParams => this.handleFindErr(errWithParams, {type: this.view.mainType}))
+
     }
 
     private setSelectedMainTypeDocument() {
@@ -453,7 +454,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public solveConflicts(doc: IdaiFieldDocument) {
-        
+
         this.editDocument(doc, 'conflicts');
     }
 

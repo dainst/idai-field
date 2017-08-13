@@ -71,10 +71,8 @@ export class ImageGridComponent {
      */
     private fetchDocuments(query: Query) {
 
-        if (!query) query = {};
-        this.query = query;
+        this.query = query ? query : { };
         this.query.constraints = { 'resource.relations.isRecordedIn': 'images'};
-        delete this.query.type;
 
         return this.datastore.find(query).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];

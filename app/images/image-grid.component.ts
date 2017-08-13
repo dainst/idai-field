@@ -13,7 +13,6 @@ import {LinkModalComponent} from './link-modal.component';
 import {ElementRef} from '@angular/core';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
-import {Util} from "../util/util";
 
 @Component({
     moduleId: module.id,
@@ -58,13 +57,54 @@ export class ImageGridComponent {
     }
 
     public refreshGrid() {
-
         this.fetchDocuments(this.query);
     }
 
     public showUploadErrorMsg(msgWithParams) {
-
         this.messages.add(msgWithParams);
+    }
+
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     * @param query
+     */
+    private fetchDocuments(query: Query) {
+
+        this.query = query ? query : { };
+        this.query.constraints = { 'resource.relations.isRecordedIn': 'images'};
+
+        return this.datastore.find(query).then(documents => {
+            this.documents = documents as IdaiFieldImageDocument[];
+
+            this.insertStub(this.documents);
+            this.cacheIdsOfConnectedResources(documents);
+            this.calcGrid();
+
+        }).catch(errWithParams => {
+            console.log("ERROR with find using query",this.query);
+            if (errWithParams.length == 2) console.error("Cause: ",errWithParams[1]);
+        });
+    }
+
+    // insert stub document for first cell that will act as drop area for uploading images
+    private insertStub(documents) {
+        documents.unshift(<IdaiFieldImageDocument>{
+            id: 'droparea',
+            resource: { identifier: '', shortDescription:'', type: '',
+                width: 1, height: 1, filename: '', relations: {} }
+        });
+    }
+
+    private cacheIdsOfConnectedResources(documents) {
+        for (let doc of documents) {
+            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
+                for (let resourceId of doc.resource.relations['depicts']) {
+                    this.datastore.get(resourceId).then(result => {
+                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
+                    });
+                }
+        }
     }
 
     public queryChanged(query: Query) {
@@ -74,20 +114,29 @@ export class ImageGridComponent {
     }
 
     public onResize() {
-
         this.calcGrid();
     }
 
     public getIdentifier(id: string): string {
-
         return this.resourceIdentifiers[id];
+    }
+
+    private calcGrid() {
+
+        this.rows = [];
+        this.imageGridBuilder.calcGrid(
+            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.rows = result['rows'];
+            for (let msgWithParams of result['msgsWithParams']) {
+                this.messages.add(msgWithParams);
+            }
+        });
     }
 
     /**
      * @param document the object that should be selected
      */
     public select(document: IdaiFieldImageDocument) {
-
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
     }
@@ -97,17 +146,14 @@ export class ImageGridComponent {
      *   to change the selection are met.
      */
     public navigateTo(documentToSelect: IdaiFieldImageDocument) {
-
         this.router.navigate(['images', documentToSelect.resource.id, 'show']);
     }
 
     public clearSelection() {
-
         this.selected = [];
     }
 
     public openDeleteModal(modal) {
-
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') this.deleteSelected();
         });
@@ -161,90 +207,36 @@ export class ImageGridComponent {
     }
 
     private updateAndPersistDepictsRelations(imageDocuments: Array<IdaiFieldImageDocument>,
-                 target: IdaiFieldDocument): Promise<any> {
+                 targetDocument: IdaiFieldDocument): Promise<any> {
 
-        this.resourceIdentifiers[target.resource.id] = target.resource.identifier;
+        this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
 
         return new Promise<any>((resolve, reject) => {
 
-            let promise: Promise<any> = Promise.resolve();
+            let promise: Promise<any> = new Promise<any>((res) => res());
+
             for (let imageDocument of imageDocuments) {
-                this.persistOne(promise, imageDocument, target, reject);
-            }
-            promise.then(() => resolve(), msgWithParams => reject(msgWithParams));
-        });
-    }
-
-    private persistOne(promise, imageDocument, target, reject) {
-
-        const oldVersion = JSON.parse(JSON.stringify(imageDocument));
-        let depicts = Util.takeOrMake(imageDocument, 'resource.relations.depicts', []);
-
-        if (depicts.indexOf(target.resource.id) == -1) {
-            depicts.push(target.resource.id);
-        }
-
-        promise = promise.then(
-            () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
-                [oldVersion]),
-            msgWithParams => reject(msgWithParams)
-        );
-    }
-
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     * @param query
-     */
-    private fetchDocuments(query: Query) {
-
-        this.query = query ? query : { };
-        this.query.constraints = { 'resource.relations.isRecordedIn': 'images'};
-
-        return this.datastore.find(query).then(documents => {
-            this.documents = documents as IdaiFieldImageDocument[];
-
-            ImageGridComponent.insertStub(this.documents);
-            this.cacheIdsOfConnectedResources(documents);
-            this.calcGrid();
-
-        }).catch(errWithParams => {
-            console.log("ERROR with find using query",this.query);
-            if (errWithParams.length == 2) console.error("Cause: ",errWithParams[1]);
-        });
-    }
-
-    // insert stub document for first cell that will act as drop area for uploading images
-    private static insertStub(documents) {
-
-        documents.unshift(<IdaiFieldImageDocument> {
-            id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, filename: '', relations: { } }
-        });
-    }
-
-    private cacheIdsOfConnectedResources(documents) {
-
-        for (let doc of documents) {
-            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                for (let resourceId of doc.resource.relations['depicts']) {
-                    this.datastore.get(resourceId).then(result => {
-                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                    });
+                const oldVersion = JSON.parse(JSON.stringify(imageDocument));
+                // TODO make a method in Util
+                if (!imageDocument.resource.relations['depicts']) {
+                    imageDocument.resource.relations['depicts'] = [];
                 }
-        }
-    }
 
-    private calcGrid() {
+                if (imageDocument.resource.relations['depicts'].indexOf(targetDocument.resource.id) == -1) {
+                    imageDocument.resource.relations['depicts'].push(targetDocument.resource.id);
+                }
 
-        this.rows = [];
-        this.imageGridBuilder.calcGrid(
-            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
-            this.rows = result['rows'];
-            for (let msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
+                promise = promise.then(
+                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
+                            [oldVersion]),
+                    msgWithParams => reject(msgWithParams)
+                );
             }
+
+            promise.then(
+                () => resolve(),
+                msgWithParams => reject(msgWithParams)
+            );
         });
     }
 }

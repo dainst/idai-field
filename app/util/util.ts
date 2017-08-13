@@ -5,19 +5,12 @@
 export class Util {
 
     public static getElForPathIn(object, path) {
-
         let result = object;
         for (let segment of path.split('.')) {
             if (result[segment]) result = result[segment];
-            else return result = undefined;
+            else result = undefined;
         }
         return result;
-    }
-
-    public static takeOrMake(object: Object, path: string, val: any) {
-
-        return Util.getElForPathIn(object, path)
-            ? Util.getElForPathIn(object, path) : val;
     }
 
     public static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {

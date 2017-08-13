@@ -180,7 +180,7 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
-    it('resolve a save conflict automatically', done => {
+    xit('resolve a save conflict automatically', done => {
 
         const nr = '6';
         let testDocument;

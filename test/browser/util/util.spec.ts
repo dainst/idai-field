@@ -1,4 +1,3 @@
-import {ResultSets} from "../../../app/util/result-sets";
 import {Util} from "../../../app/util/util";
 
 /**

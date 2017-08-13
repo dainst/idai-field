@@ -1,8 +1,8 @@
-import {browser, by, element, protractor} from "protractor";
-import {ImagesGridPage} from "./images-grid.page";
-import {ImagesViewPage} from "./images-view.page";
-import {NavbarPage} from "../navbar.page";
-import {ResourcesPage} from "../resources/resources.page";
+import {browser, by, element, protractor} from 'protractor';
+import {ImagesGridPage} from './images-grid.page';
+import {ImagesViewPage} from './images-view.page';
+import {NavbarPage} from '../navbar.page';
+import {ResourcesPage} from '../resources/resources.page';
 
 let path = require('path');
 

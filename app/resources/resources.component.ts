@@ -354,15 +354,13 @@ export class ResourcesComponent implements AfterViewChecked {
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
         this.removeEmptyDocuments();
-
         this.selectedDocument = newDocument;
 
-        if (geometryType != 'none') {
+        if (geometryType == 'none') this.editDocument();
+        else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.editGeometry = true;
             this.mode = 'map';
-        } else {
-            this.editDocument();
         }
 
         if (newDocument.resource.type != this.view.mainType) {
@@ -405,13 +403,11 @@ export class ResourcesComponent implements AfterViewChecked {
         });
 
         docedit.setDocument(document);
-
-        if (activeTabName) {
-            docedit.setActiveTab(activeTabName);
-        }
+        if (activeTabName) docedit.setActiveTab(activeTabName);
     }
 
     public startEditGeometry() {
+
         this.editGeometry = true;
     }
 

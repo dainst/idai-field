@@ -106,19 +106,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private parseParams(params: Params): Promise<any> {
 
-        let viewName: string = params['view'];
-        let resourceId: string = params['id'];
-        let tab: string = params['tab'];
+        if (params['id']) this.selectDocumentFromParams(params['id'], params['tab']);
 
-        if (resourceId) this.selectDocumentFromParams(resourceId, tab);
+        this.location.replaceState('resources/' + params['view']);
 
-        this.location.replaceState('resources/' + viewName);
-
-        if (!this.view || viewName != this.view.name) {
-            return this.initializeView(viewName);
-        } else {
-            return Promise.resolve();
-        }
+        return (!this.view || params['view'] != this.view.name)
+            ? this.initializeView(params['view']) : Promise.resolve();
     }
 
     public stop() {
@@ -132,10 +125,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
             .then(() => this.fetchDocuments())
-            .then(() => {
-                this.ready = true;
-                this.loading.stop();
-            });
+            .then(() => (this.ready = true) && this.loading.stop());
     }
 
     private initializeView(viewName: string): Promise<any> {
@@ -144,21 +134,15 @@ export class ResourcesComponent implements AfterViewChecked {
             projectConfiguration => {
                 this.view = projectConfiguration.getView(viewName);
                 this.mainTypeLabel = projectConfiguration.getLabelForType(this.view.mainType);
-                Promise.resolve();
             }
-        ).catch(() => { return Promise.reject(null); });
+        ).catch(() => Promise.reject(null));
     }
 
     private selectDocumentFromParams(id: string, tab: string) {
 
         this.datastore.get(id).then(
-            document => {
-                if (tab) {
-                    this.editDocument(document, tab);
-                } else {
-                    this.setSelected(document);
-                }
-            }, () => this.messages.add([M.DATASTORE_NOT_FOUND])
+            document =>  tab ? this.editDocument(document, tab) : this.setSelected(document),
+            () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }
 
@@ -243,9 +227,6 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    /**
-     * @param documentToSelect
-     */
     public setSelected(documentToSelect: Document): Document {
 
         this.selectedDocument = documentToSelect;
@@ -254,10 +235,8 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.selectedDocument;
     }
 
-    /**
-     * @returns {Document}
-     */
     public getSelected(): Document {
+
         return this.selectedDocument;
     }
 
@@ -302,16 +281,17 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public remove(document: Document) {
+
         const index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
     }
 
     public fetchProjectDocument(): Promise<any> {
-        const project: string = this.settingsService.getSelectedProject();
 
-        return this.datastore.get(project).then(
-            document => this.projectDocument = document as IdaiFieldDocument
-        );
+        return this.datastore.get(this.settingsService.getSelectedProject())
+            .then(
+                document => this.projectDocument = document as IdaiFieldDocument
+            );
     }
 
     /**
@@ -473,18 +453,22 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public solveConflicts(doc: IdaiFieldDocument) {
+        
         this.editDocument(doc, 'conflicts');
     }
 
     public deselect() {
+
         this.selectedDocument = undefined;
     }
 
     public startEdit(doc: IdaiFieldDocument) {
+
         this.editDocument(doc);
     }
 
     public setScrollTarget(doc: IdaiFieldDocument) {
+
         this.scrollTarget = doc;
     }
 
@@ -517,6 +501,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public deleteMainTypeHistory() {
-        this.mainTypeHistory = {};
+
+        this.mainTypeHistory = { };
     }
 }

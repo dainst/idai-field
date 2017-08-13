@@ -8,9 +8,24 @@ export class Util {
         let result = object;
         for (let segment of path.split('.')) {
             if (result[segment]) result = result[segment];
-            else result = undefined;
+            else return result = undefined;
         }
         return result;
+    }
+
+    public static takeOrMake(object: Object, path: string, val: any) {
+
+        if (Util.getElForPathIn(object, path)) return Util.getElForPathIn(object, path);
+        let result = object;
+        let last;
+        let lastSegment;
+        for (let segment of path.split('.')) {
+            if (!result[segment]) result[segment] = { };
+            last = result;
+            lastSegment = segment;
+            result = result[segment];
+        }
+        return last[lastSegment] = val;
     }
 
     public static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {

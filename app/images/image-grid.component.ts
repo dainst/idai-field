@@ -13,6 +13,7 @@ import {LinkModalComponent} from './link-modal.component';
 import {ElementRef} from '@angular/core';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
+import {Util} from "../util/util";
 
 @Component({
     moduleId: module.id,
@@ -217,13 +218,12 @@ export class ImageGridComponent {
 
             for (let imageDocument of imageDocuments) {
                 const oldVersion = JSON.parse(JSON.stringify(imageDocument));
-                // TODO make a method in Util
-                if (!imageDocument.resource.relations['depicts']) {
-                    imageDocument.resource.relations['depicts'] = [];
-                }
 
-                if (imageDocument.resource.relations['depicts'].indexOf(targetDocument.resource.id) == -1) {
-                    imageDocument.resource.relations['depicts'].push(targetDocument.resource.id);
+                const depictsEl = Util.takeOrMake(imageDocument,
+                    'resource.relations.depicts', []);
+
+                if (depictsEl.indexOf(targetDocument.resource.id) == -1) {
+                    depictsEl.push(targetDocument.resource.id);
                 }
 
                 promise = promise.then(

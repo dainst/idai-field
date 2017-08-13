@@ -21,7 +21,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('resources/syncing --', function() {
+xdescribe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -143,7 +143,7 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
-    xit('resolve a save conflict automatically', done => {
+    it('resolve a save conflict automatically', done => {
 
         const nr = '6';
         let testDocument;

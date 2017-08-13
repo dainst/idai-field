@@ -1,5 +1,4 @@
 import {ModelUtil} from '../model/model-util';
-import {Util} from '../util/util';
 
 /**
  * @author Daniel de Oliveira
@@ -29,9 +28,9 @@ export class FulltextIndexer {
     public put(doc, skipRemoval = false) {
 
         if (!skipRemoval) this.remove(doc);
-
-        Util.takeOrMake(this.index, doc.resource.type, {'*' : { } });
-
+        if (!this.index[doc.resource.type]) {
+            this.index[doc.resource.type] = {'*' : { } };
+        }
         const lastModified = ModelUtil.getLastModified(doc);
         this.index[doc.resource.type]['*'][doc.resource.id] = lastModified;
 
@@ -39,7 +38,8 @@ export class FulltextIndexer {
             if (!doc.resource[field] || doc.resource[field] == '') continue;
 
             for (let token of doc.resource[field].split(' ')) {
-                this.indexToken(doc.resource.id, token, doc.resource.type, lastModified);
+                this.indexToken(doc.resource.id, token,
+                    doc.resource.type, lastModified);
             }
         }
     }

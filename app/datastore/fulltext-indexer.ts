@@ -101,7 +101,7 @@ export class FulltextIndexer {
     }
 
     private setUp() {
-        
+
         this.index = { };
     }
 }

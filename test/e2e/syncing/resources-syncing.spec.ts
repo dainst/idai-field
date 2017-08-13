@@ -181,6 +181,7 @@ describe('resources/syncing --', function() {
     }
 
     it('resolve a save conflict automatically', done => {
+
         const nr = '6';
         let testDocument;
 
@@ -200,7 +201,7 @@ describe('resources/syncing --', function() {
             expect(shortDescription).toEqual('Testfund' + nr + '_alternative');
             done();
         }).catch(err => { fail(err); done(); });
-    })
+    });
 
     it('resource created in client should be synced to other db', done => {
 

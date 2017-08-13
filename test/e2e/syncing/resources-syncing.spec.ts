@@ -180,29 +180,6 @@ describe('resources/syncing --', function() {
         }).catch(err => console.error('Failure while updating test doc', err));
     }
 
-    xit('resolve a save conflict automatically', done => {
-
-        const nr = '6';
-        let testDocument;
-
-        return createOneDocument(nr).then(document => {
-            testDocument = document;
-            ResourcesPage.clickSelectResource('testf' + nr);
-            return DocumentViewPage.clickEditDocument();
-        }).then(() => {
-            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative';
-            return updateTestDoc(testDocument);
-        }).then(() => {
-            DocumentEditWrapperPage.clickSaveDocument();
-            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
-                .not.toContain('conflicted');
-            return DocumentViewPage.getShortDescription();
-        }).then(shortDescription => {
-            expect(shortDescription).toEqual('Testfund' + nr + '_alternative');
-            done();
-        }).catch(err => { fail(err); done(); });
-    });
-
     it('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()

@@ -40,4 +40,11 @@ export class ImageTypeUtility {
             return Promise.resolve(projectImageTypes);
         });
     }
+
+    public getProjectImageTypeNames(): Promise<string[]> {
+
+        return this.getProjectImageTypes().then(imageTypes => {
+            return Promise.resolve(Object.keys(imageTypes));
+        });
+    }
 }

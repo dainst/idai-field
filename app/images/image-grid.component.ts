@@ -6,14 +6,14 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
-import {ConfigLoader} from 'idai-components-2/configuration';
 import {Imagestore} from '../imagestore/imagestore';
 import {ImageGridBuilder} from '../common/image-grid-builder';
 import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
-import {M} from '../m';
 import {Util} from '../util/util';
+import {ImageTypeUtility} from '../util/image-type-utility';
+import {M} from '../m';
 
 @Component({
     moduleId: module.id,
@@ -50,7 +50,7 @@ export class ImageGridComponent {
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
         private settingsService: SettingsService,
-        private configLoader: ConfigLoader
+        private imageTypeUtility: ImageTypeUtility
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
@@ -75,8 +75,8 @@ export class ImageGridComponent {
 
         this.query = query ? query : { };
 
-        this.getImageTypes().then(imageTypes => {
-            this.query.types = imageTypes;
+        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
+            this.query.types = imageTypeNames;
             return this.datastore.find(this.query);
         }).catch(msgWithParams => this.messages.add(msgWithParams)
         ).then(documents => {
@@ -241,20 +241,6 @@ export class ImageGridComponent {
                 () => resolve(),
                 msgWithParams => reject(msgWithParams)
             );
-        });
-    }
-
-    private getImageTypes(): Promise<string[]> {
-
-        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            let imageTypes = ['image'];
-
-            const typesTree = projectConfiguration.getTypesTree();
-            for (let childType of typesTree['image'].children) {
-                imageTypes.push(childType.name);
-            }
-
-            return Promise.resolve(imageTypes);
         });
     }
 }

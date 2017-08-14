@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ResourcesViewState} from './resources-view-state';
 
 @Injectable()
 
@@ -8,17 +9,22 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
  */
 export class ResourcesState {
 
-    private mainTypeDocumentHistory: { [viewName: string]: IdaiFieldDocument } = {};
+    private _: { [viewName: string]: ResourcesViewState } = {};
 
     public setLastSelectedMainTypeDocument(viewName: string, mainTypeDocument: IdaiFieldDocument) {
-        this.mainTypeDocumentHistory[viewName] = mainTypeDocument;
+        if (!this._[viewName]) this._[viewName] = {};
+        this._[viewName].mainTypeDocument = mainTypeDocument;
     }
 
     public getLastSelectedMainTypeDocument(viewName: string): IdaiFieldDocument {
-        return this.mainTypeDocumentHistory[viewName];
+        if (!this._[viewName]) {
+            return undefined;
+        } else {
+            return this._[viewName].mainTypeDocument;
+        }
     }
 
     public clear() {
-        this.mainTypeDocumentHistory = {};
+        this._ = {};
     }
 }

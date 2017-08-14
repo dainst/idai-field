@@ -35,8 +35,9 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeLabel: string;
     public mode: string = 'map';
     public editGeometry: boolean = false;
+
     public query: Query = { q: '' };
-    public filterType: string = undefined;
+    public filterType: string;
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -118,6 +119,9 @@ export class ResourcesComponent implements AfterViewChecked {
     public initialize(): Promise<any> {
 
         this.loading.start();
+
+        this.query.q = '';
+        this.filterType = this.resourcesState.getLastSelectedFilterType(this.view.name);
 
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
@@ -278,6 +282,9 @@ export class ResourcesComponent implements AfterViewChecked {
             delete this.query.types;
         }
 
+        this.resourcesState.setLastSelectedFilterType(this.view.name, type);
+        this.filterType = type;
+
         this.fetchDocuments();
     }
 
@@ -313,8 +320,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.query.constraints = { 'resource.relations.isRecordedIn' :
             this.selectedMainTypeDocument.resource.id };
-
-        console.log(this.query);
 
         this.loading.start();
         return this.datastore.find(this.query)

@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
-import {Document} from "idai-components-2/core";
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {ConfigLoader, IdaiType} from "idai-components-2/configuration";
-import {Messages} from "idai-components-2/messages";
-import {ResourcesComponent} from "../resources.component";
-import {DocumentReference} from "./document-reference";
-import {Loading} from "../../widgets/loading";
-import {IdaiFieldDatastore} from "../../datastore/idai-field-datastore";
+import {Component, Input, OnChanges} from '@angular/core';
+import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {Messages} from 'idai-components-2/messages';
+import {ResourcesComponent} from '../resources.component';
+import {DocumentReference} from './document-reference';
+import {Loading} from '../../widgets/loading';
+import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 
 @Component({
     selector: 'list',

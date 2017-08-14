@@ -14,6 +14,7 @@ import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
 import {Loading} from '../widgets/loading';
+import {MainTypeDocumentHistory} from './main-type-document-history';
 import {M} from "../m";
 
 
@@ -50,8 +51,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    private mainTypeHistory = {};
-
     private subscription;
 
     constructor(private route: ActivatedRoute,
@@ -65,13 +64,10 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private configLoader: ConfigLoader,
                 private viewUtility: ViewUtility,
-                private loading: Loading
+                private loading: Loading,
+                private mainTypeDocumentHistory: MainTypeDocumentHistory
     ) {
         this.route.params.subscribe(params => {
-            if (this.selectedMainTypeDocument != undefined && this.view != undefined) {
-                this.mainTypeHistory[this.view.name] = this.selectedMainTypeDocument;
-            }
-
             this.selectedDocument = undefined;
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
@@ -146,14 +142,16 @@ export class ResourcesComponent implements AfterViewChecked {
         );
     }
 
-    public filterByMainTypeDocument(document: IdaiFieldDocument) {
+    public selectMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
+        this.mainTypeDocumentHistory.updateEntry(this.view.name, this.selectedMainTypeDocument);
+
         if (this.selectedDocument && this.getMainTypeDocumentForDocument(this.selectedDocument)
                 != this.selectedMainTypeDocument) {
-
             this.setSelected(undefined);
         }
+
         this.fetchDocuments();
     }
 
@@ -344,8 +342,10 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
         } else {
-            if (this.mainTypeHistory[this.view.name]) {
-                this.selectedMainTypeDocument = this.mainTypeHistory[this.view.name];
+            const lastSelectedMainTypeDocument
+                = this.mainTypeDocumentHistory.getLastSelectedMainTypeDocumentFor(this.view.name);
+            if (lastSelectedMainTypeDocument) {
+                this.selectedMainTypeDocument = lastSelectedMainTypeDocument;
             } else {
                 this.selectedMainTypeDocument = this.mainTypeDocuments[0];
             }
@@ -494,10 +494,5 @@ export class ResourcesComponent implements AfterViewChecked {
         for (let document of this.documents) {
             if (!document.resource.id) this.remove(document);
         }
-    }
-
-    public deleteMainTypeHistory() {
-
-        this.mainTypeHistory = { };
     }
 }

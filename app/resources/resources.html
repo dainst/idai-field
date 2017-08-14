@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                         class="form-control" [(ngModel)]="selectedMainTypeDocument"
-                        (ngModelChange)="filterByMainTypeDocument($event)">
+                        (ngModelChange)="selectMainTypeDocument($event)">
                     <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
                         {{viewUtility.getMainTypeDocumentLabel(document)}}
                     </option>

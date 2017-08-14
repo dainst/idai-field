@@ -3,6 +3,7 @@ import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
+import {MainTypeDocumentHistory} from './main-type-document-history';
 import {M} from '../m';
 
 @Component({
@@ -32,7 +33,8 @@ export class ProjectsComponent implements OnInit {
     constructor(private settingsService: SettingsService,
                 private resourcesComponent: ResourcesComponent,
                 private messages: Messages,
-                private loading: Loading) {
+                private loading: Loading,
+                private mainTypeDocumentHistory: MainTypeDocumentHistory) {
     }
 
     ngOnInit() {
@@ -116,7 +118,7 @@ export class ProjectsComponent implements OnInit {
         this.selectedProject = project;
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
             .then(() => this.settingsService.activateSettings(true, createDb))
-            .then(() => this.resourcesComponent.deleteMainTypeHistory())
+            .then(() => this.mainTypeDocumentHistory.clear())
             .then(() => this.resourcesComponent.initialize())
             .catch(msgWithParams => {
                 if (msgWithParams) this.messages.add(msgWithParams)

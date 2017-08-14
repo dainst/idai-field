@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {IdaiDocumentsModule} from 'idai-components-2/documents';
+import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './geometry-view.component';
 import {EditableMapComponent} from './map/editable-map.component';
@@ -12,9 +14,8 @@ import {PlusButtonComponent} from './plus-button.component';
 import {ProjectsComponent} from './projects.component';
 import {LayerMapState} from './map/layer-map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
-import {IdaiDocumentsModule} from 'idai-components-2/documents';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 import {DoceditModule} from '../docedit/docedit.module';
+import {MainTypeDocumentHistory} from './main-type-document-history';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {DoceditModule} from '../docedit/docedit.module';
         ProjectsComponent
     ],
     providers: [
-        LayerMapState
+        LayerMapState,
+        MainTypeDocumentHistory
     ],
     exports: [
         GeometryViewComponent

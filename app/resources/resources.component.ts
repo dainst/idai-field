@@ -14,7 +14,7 @@ import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
 import {Loading} from '../widgets/loading';
-import {MainTypeDocumentHistory} from './main-type-document-history';
+import {ResourcesState} from './resources-state';
 import {M} from "../m";
 
 
@@ -65,7 +65,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private configLoader: ConfigLoader,
                 private viewUtility: ViewUtility,
                 private loading: Loading,
-                private mainTypeDocumentHistory: MainTypeDocumentHistory
+                private resourcesState: ResourcesState
     ) {
         this.route.params.subscribe(params => {
             this.selectedDocument = undefined;
@@ -145,7 +145,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public selectMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
-        this.mainTypeDocumentHistory.updateEntry(this.view.name, this.selectedMainTypeDocument);
+        this.resourcesState.setLastSelectedMainTypeDocument(this.view.name, this.selectedMainTypeDocument);
 
         if (this.selectedDocument && this.getMainTypeDocumentForDocument(this.selectedDocument)
                 != this.selectedMainTypeDocument) {
@@ -342,8 +342,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
         } else {
-            const lastSelectedMainTypeDocument
-                = this.mainTypeDocumentHistory.getLastSelectedMainTypeDocumentFor(this.view.name);
+            const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
             if (lastSelectedMainTypeDocument) {
                 this.selectedMainTypeDocument = lastSelectedMainTypeDocument;
             } else {

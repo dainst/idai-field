@@ -15,7 +15,7 @@ import {ProjectsComponent} from './projects.component';
 import {LayerMapState} from './map/layer-map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
-import {MainTypeDocumentHistory} from './main-type-document-history';
+import {ResourcesState} from './resources-state';
 
 @NgModule({
     imports: [
@@ -39,7 +39,7 @@ import {MainTypeDocumentHistory} from './main-type-document-history';
     ],
     providers: [
         LayerMapState,
-        MainTypeDocumentHistory
+        ResourcesState
     ],
     exports: [
         GeometryViewComponent

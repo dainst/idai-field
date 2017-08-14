@@ -1,12 +1,13 @@
 import {Component, ElementRef} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImageGridBuilder} from '../common/image-grid-builder';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {Imagestore} from '../imagestore/imagestore';
 import {Messages} from 'idai-components-2/messages';
 import {Query, Datastore} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {M} from "../m";
+import {ImageGridBuilder} from '../common/image-grid-builder';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {Imagestore} from '../imagestore/imagestore';
+import {ImageTypeUtility} from '../util/image-type-utility';
+import {M} from '../m';
 
 @Component({
     selector: 'image-picker',
@@ -34,6 +35,7 @@ export class ImagePickerComponent {
         private messages: Messages,
         private datastore: Datastore,
         private el: ElementRef,
+        private imageTypeUtility: ImageTypeUtility,
         imagestore: Imagestore,
     ) {
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
@@ -85,22 +87,23 @@ export class ImagePickerComponent {
     private fetchDocuments(query: Query) {
 
         this.query = query;
-        if (!this.query) this.query = { };
-        this.query.constraints = {
-            'resource.relations.isRecordedIn' : 'images'
-        };
+        if (!this.query) this.query = {};
 
-        this.datastore.find(query).then(documents => {
-                this.imageDocuments = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-                this.calcGrid();
-            })
-            .catch(errWithParams => {
-                console.error("error in find with query",query);
-                if (errWithParams.length == 2) {
-                    console.error("error in find, cause",errWithParams[1]);
-                }
-                this.messages.add([M.ALL_FIND_ERROR]);
-            });
+        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
+            this.query.types = imageTypeNames;
+            return this.datastore.find(this.query);
+        }).catch(msgWithParams => this.messages.add(msgWithParams)
+        ).then(documents => {
+            this.imageDocuments = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
+            this.calcGrid();
+        })
+        .catch(errWithParams => {
+            console.error('error in find with query', this.query);
+            if (errWithParams.length == 2) {
+                console.error('error in find, cause', errWithParams[1]);
+            }
+            this.messages.add([M.ALL_FIND_ERROR]);
+        });
     }
 
     private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)

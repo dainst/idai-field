@@ -88,6 +88,7 @@ export class DoceditComponent {
      * @param document
      */
     public setDocument(document: IdaiFieldDocument) {
+
         if (!document) return;
 
         this.document = document;

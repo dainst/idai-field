@@ -53,6 +53,7 @@ export class DoceditImageTabComponent {
     }
 
     private calcGrid() {
+
         this.rows = [];
         this.imageGridBuilder.calcGrid(
             this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result => {
@@ -64,14 +65,15 @@ export class DoceditImageTabComponent {
     }
 
     private loadImages() {
+
         const imageDocPromises = [];
         this.imageDocuments = [];
         this.document.resource.relations['isDepictedIn'].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
-        Promise.all(imageDocPromises).then( docs =>{
-            this.imageDocuments = docs as IdaiFieldImageDocument[];
+        Promise.all(imageDocPromises).then(docs => {
+            this.imageDocuments = docs as Array<IdaiFieldImageDocument>;
             this.calcGrid();
         });
     }
@@ -98,7 +100,7 @@ export class DoceditImageTabComponent {
 
     public openImagePicker() {
 
-        let imagePickerModal = this.modalService.open(ImagePickerComponent, {size: 'lg'});
+        let imagePickerModal = this.modalService.open(ImagePickerComponent, { size: 'lg' });
         imagePickerModal.componentInstance.setDocument(this.document);
 
         imagePickerModal.result.then(

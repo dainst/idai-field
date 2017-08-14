@@ -167,25 +167,25 @@ export class PouchdbDatastore {
 
         return this.db.ready()
             .then(() => {
-                let rsets = this.performThem(query.constraints);
-                if (PouchdbDatastore.isEmpty(query) && rsets) return rsets;
-                else return this.performSimple(query, rsets ? rsets : new ResultSets());
+                let resultSets = this.performThem(query.constraints);
+                if (PouchdbDatastore.isEmpty(query) && resultSets) return resultSets;
+                else return this.performSimple(query, resultSets ? resultSets : new ResultSets());
             })
-            .then(rsets => this.generateOrderedResultList(rsets));
+            .then(resultSets => this.generateOrderedResultList(resultSets));
     }
 
-    private performSimple(query: Query, rsets: ResultSets) {
+    private performSimple(query: Query, resultSets: ResultSets) {
 
         let q = (!query.q || query.q == '') ? '*' : query.q;
         let types = query.types ? query.types : undefined;
         let result = this.fulltextIndexer.get(q, types);
-        rsets.add(result);
-        return rsets;
+        resultSets.add(result);
+        return resultSets;
     }
 
-    private generateOrderedResultList(theResultSets: ResultSets) {
+    private generateOrderedResultList(resultSets: ResultSets) {
 
-        return theResultSets.intersect(e => e.id)
+        return resultSets.intersect(e => e.id)
             .sort(this.comp('date'))
             .map(e => e['id']);
     }
@@ -198,17 +198,17 @@ export class PouchdbDatastore {
 
         if (!constraints) return undefined;
 
-        const rsets = new ResultSets();
+        const resultSets = new ResultSets();
         let usableConstraints = 0;
         for (let constraint of Object.keys(constraints)) {
             let result = this.constraintIndexer.get(constraint, constraints[constraint]);
             if (result) {
-                rsets.add(result);
+                resultSets.add(result);
                 usableConstraints++;
             }
         }
         if (usableConstraints == 0) return undefined;
-        return rsets;
+        return resultSets;
     }
 
     private comp(sortOn) {

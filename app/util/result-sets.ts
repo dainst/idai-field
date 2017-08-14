@@ -12,21 +12,23 @@ export class ResultSets {
         this.sets.push(set);
     }
 
+    public merge(resultSets: ResultSets) {
+        this.sets.concat(resultSets.sets);
+    }
+
     /**
      * Finds the elements that are common to all sets.
      *
      * Assuming, one adds the two sets
      *
-     *   [{id:'1'},{id:'2'},{id:'3'}]
-     *   [{id:'2'},{id:'3'}]
+     *   [{id:'1'}, {id:'2'}, {id:'3'}]
+     *   [{id:'2'}, {id:'3'}]
      *
      * intersect would return
      *
      *   [{id:'3'},{id:'2'}] with f = a => a.id
      *
-     * @param f gets applied to elements
-     *   to get an elements field on which the comparison
-     *   is performed
+     * @param f gets applied to elements to get the field on which the comparison is performed
      */
     public intersect(f) {
 
@@ -35,5 +37,32 @@ export class ResultSets {
                 c.map(r => f(r)).indexOf(f(e)) !=- 1
             )
         );
+    }
+
+    /**
+     * Returns a single result set which contains the objects of all result sets
+     *
+     *  Assuming, one adds the two sets
+     *
+     *   [{id:'1'}, {id:'2'}, {id:'3'}]
+     *   [{id:'2'}, {id:'3'}]
+     *
+     * unify would return
+     *
+     *   [{id:'1'}, {id:'2'}, {id:'3'}] with f = a => a.id
+     *
+     * @param f gets applied to elements to get the field on which the comparison is performed
+     */
+    public unify(f): Array<Object> {
+
+        const result = {};
+
+        for (let resultSet of this.sets) {
+            for (let item of resultSet) {
+                result[f(item)] = item;
+            }
+        }
+
+        return Object.keys(result).map(key => result[key]);
     }
 }

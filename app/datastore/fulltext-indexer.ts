@@ -1,4 +1,5 @@
 import {ModelUtil} from '../model/model-util';
+import {ResultSets} from '../util/result-sets';
 
 /**
  * @author Daniel de Oliveira
@@ -70,34 +71,26 @@ export class FulltextIndexer {
 
     public get(s: string, types: string[]) {
 
-        let resultSets = [];
         if (Object.keys(this.index).length == 0) return [];
+
+        let resultSets: ResultSets = new ResultSets();
         if (!types) types = Object.keys(this.index);
 
         for (let type of types) {
             this._get(resultSets, s.toLowerCase(), type);
         }
-        return this.unify(resultSets);
+
+        return resultSets.unify(item => item.id);
     }
 
-    private unify(resultSets) {
+    private _get(resultSets: ResultSets, s, type) {
 
-        const result = {};
-        for (let resultSet of resultSets) {
-            for (let item of resultSet) {
-                result[item.id] = item;
-            }
-        }
-        return Object.keys(result).map(key => result[key]);
-    }
+        if (!this.index[type] || !this.index[type][s]) return;
 
-    private _get(resultSets, s, type) {
-
-        if (!this.index[type]) return resultSets.push([]);
-        if (!this.index[type][s]) return resultSets.push([]);
-
-        resultSets.push(Object.keys(this.index[type][s])
-            .map(id => {return {id: id, date: this.index[type][s][id]}}));
+        resultSets.add(
+            Object.keys(this.index[type][s])
+                .map(id => { return { id: id, date: this.index[type][s][id] }; })
+        );
     }
 
     private setUp() {

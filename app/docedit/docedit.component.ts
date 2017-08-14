@@ -268,10 +268,7 @@ export class DoceditComponent {
 
     private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {
 
-        const clonedDoc = Object.assign({}, document);
-        clonedDoc.resource = Object.assign({}, document.resource);
-
-        return clonedDoc;
+        return JSON.parse(JSON.stringify(document));
     }
 
     private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,

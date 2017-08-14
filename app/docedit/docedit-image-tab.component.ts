@@ -23,7 +23,6 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 export class DoceditImageTabComponent {
 
     @Input() document: IdaiFieldDocument;
-    @Input() clonedDocument: IdaiFieldDocument;
 
     private imageDocuments: IdaiFieldImageDocument[];
     private imageGridBuilder: ImageGridBuilder;
@@ -80,8 +79,8 @@ export class DoceditImageTabComponent {
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        const relations = this.clonedDocument.resource.relations['isDepictedIn']
-            ? this.clonedDocument.resource.relations['isDepictedIn'].slice() : [];
+        const relations = this.document.resource.relations['isDepictedIn']
+            ? this.document.resource.relations['isDepictedIn'].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
@@ -89,7 +88,7 @@ export class DoceditImageTabComponent {
             }
         }
 
-        this.clonedDocument.resource.relations['isDepictedIn'] = relations;
+        this.document.resource.relations['isDepictedIn'] = relations;
 
         this.loadImages();
     }

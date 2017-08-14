@@ -14,9 +14,8 @@
      (drop)="false">
 
     <div class="navbar navbar-light bg-faded">
-        <search-bar [showFiltersMenu]="false"
-                    [hidden]="selected.length"
-                    (onQueryChanged)="queryChanged($event)">
+        <search-bar [showFiltersMenu]="false" [hidden]="selected.length"
+                    (onQueryStringChanged)="setQueryString($event)">
         </search-bar>
 
         <span *ngIf="selected.length">

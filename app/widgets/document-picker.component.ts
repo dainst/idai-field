@@ -21,29 +21,39 @@ export class DocumentPickerComponent {
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
-    protected query: Query;
+    protected query: Query = { q: '' };
 
     constructor(private datastore: Datastore,
                 private configLoader: ConfigLoader) {
 
         this.query = { };
-        this.fetchDocuments(this.query);
+        this.fetchDocuments();
     }
 
-    public queryChanged(query: Query) {
+    public setQueryString(q: string) {
 
-        this.query = query;
-        this.fetchDocuments(query);
+        this.query.q = q;
+        this.fetchDocuments();
+    }
+
+    public setQueryType(type: string) {
+
+        if (type) {
+            this.query.types = [type];
+        } else {
+            delete this.query.types;
+        }
+
+        this.fetchDocuments();
     }
 
     /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     * @param query
+     * Populates the document list with all documents from the datastore which match the current query.
      */
-    public fetchDocuments(query: Query) {
+    public fetchDocuments() {
 
-        this.datastore.find(query).then(documents => this.filterDocuments(documents as Array<IdaiFieldDocument>))
+        this.datastore.find(this.query)
+            .then(documents => this.filterDocuments(documents as Array<IdaiFieldDocument>))
             .then(filteredDocuments => this.documents = filteredDocuments)
             .catch(err => console.error(err));
     }

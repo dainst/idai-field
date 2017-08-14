@@ -26,7 +26,7 @@ export class ImagePickerComponent {
     public rows = [];
 
     private imageGridBuilder: ImageGridBuilder;
-    private query: Query;
+    private query: Query = { q: '' };
     private imageDocuments: Array<IdaiFieldImageDocument>;
     private numberOfColumns: number = 3;
 
@@ -47,9 +47,9 @@ export class ImagePickerComponent {
         this.document = document;
     }
 
-    public queryChanged(query: Query) {
+    public setQueryString(q: string) {
 
-        this.query.q = query.q;
+        this.query.q = q;
         this.fetchDocuments(this.query);
     }
 

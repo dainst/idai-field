@@ -33,7 +33,7 @@ export class ImageGridComponent {
     private imageGridBuilder: ImageGridBuilder;
     private imageTool: ImageTool;
 
-    private query: Query;
+    private query: Query = { q: '' };
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;
@@ -55,11 +55,11 @@ export class ImageGridComponent {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
 
-        this.fetchDocuments(this.query);
+        this.fetchDocuments();
     }
 
     public refreshGrid() {
-        this.fetchDocuments(this.query);
+        this.fetchDocuments();
     }
 
     public showUploadErrorMsg(msgWithParams) {
@@ -71,9 +71,7 @@ export class ImageGridComponent {
      * the datastore which match a <code>query</code>
      * @param query
      */
-    private fetchDocuments(query: Query) {
-
-        this.query = query ? query : { };
+    private fetchDocuments() {
 
         this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
             this.query.types = imageTypeNames;
@@ -112,10 +110,10 @@ export class ImageGridComponent {
         }
     }
 
-    public queryChanged(query: Query) {
+    public setQueryString(q: string) {
 
-        this.query = query;
-        this.fetchDocuments(query);
+        this.query.q = q;
+        this.fetchDocuments();
     }
 
     public onResize() {
@@ -184,7 +182,7 @@ export class ImageGridComponent {
         this.deleteImageDocuments(this.selected).then(
             () => {
                 this.clearSelection();
-                this.fetchDocuments(this.query);
+                this.fetchDocuments();
             });
     }
 

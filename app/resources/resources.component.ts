@@ -36,6 +36,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mode: string = 'map';
     public editGeometry: boolean = false;
     public query: Query = { q: '' };
+    public filterType: string = undefined;
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -263,12 +264,21 @@ export class ResourcesComponent implements AfterViewChecked {
         return undefined;
     }
 
-    public queryChanged(query: Query): Promise<any> {
+    public setQueryString(q: string) {
 
-        this.query = query;
-        this.loading.start();
-        return this.fetchDocuments()
-            .then(() => this.loading.stop());
+        this.query.q = q;
+        this.fetchDocuments();
+    }
+
+    public setQueryType(type: string) {
+
+        if (type) {
+            this.query.types = [type];
+        } else {
+            delete this.query.types;
+        }
+
+        this.fetchDocuments();
     }
 
     public replace(document: Document,restoredObject: Document) {
@@ -303,6 +313,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.query.constraints = { 'resource.relations.isRecordedIn' :
             this.selectedMainTypeDocument.resource.id };
+
+        console.log(this.query);
 
         this.loading.start();
         return this.datastore.find(this.query)

@@ -3,7 +3,8 @@
     <search-bar [showFiltersMenu]="true"
                 [relationName]="relationName"
                 [relationRangeType]="relationRangeType"
-                (onQueryChanged)="queryChanged($event)"></search-bar>
+                (onQueryStringChanged)="setQueryString($event)"
+                (onTypeChanged)="setQueryType($event)"></search-bar>
 
     <ul class="list-group object-list" id="objectList">
         <li *ngFor="let document of documents; let index=index"

@@ -34,7 +34,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mainTypeLabel: string;
     public mode: string = 'map';
     public editGeometry: boolean = false;
-    public query: Query = {q: ''};
+    public query: Query = { q: '' };
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -315,8 +315,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private handleFindErr(errWithParams, query) {
 
-        console.error("error with find. query:",query);
-        if (errWithParams.length == 2) console.error("error with find. cause:",errWithParams[1]);
+        console.error('error with find. query:', query);
+        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
         this.messages.add([M.ALL_FIND_ERROR])
     }
 
@@ -324,15 +324,16 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!this.view) return Promise.resolve();
 
+        const query: Query = { types: [this.view.mainType] };
+
         this.loading.start();
-        return this.datastore.find({type: this.view.mainType})
+        return this.datastore.find(query)
             .then(documents => {
                 this.loading.stop();
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 this.setSelectedMainTypeDocument();
             })
-            .catch(errWithParams => this.handleFindErr(errWithParams, {type: this.view.mainType}))
-
+            .catch(errWithParams => this.handleFindErr(errWithParams, query));
     }
 
     private setSelectedMainTypeDocument() {

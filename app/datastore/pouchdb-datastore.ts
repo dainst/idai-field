@@ -3,9 +3,9 @@ import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from "../util/result-sets";
-import {ConstraintIndexer} from "./constraint-indexer";
-import {FulltextIndexer} from "./fulltext-indexer";
+import {ResultSets} from '../util/result-sets';
+import {ConstraintIndexer} from './constraint-indexer';
+import {FulltextIndexer} from './fulltext-indexer';
 
 /**
  * @author Sebastian Cuy
@@ -135,7 +135,7 @@ export class PouchdbDatastore {
 
         return this.db.remove(docId, revisionId)
             .catch(err => {
-                console.error("error in remove revision",err);
+                console.error('error in remove revision', err);
                 return Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR]);
             });
     }
@@ -163,7 +163,7 @@ export class PouchdbDatastore {
             .catch(err => Promise.reject([DatastoreErrors.GENERIC_ERROR, err]))
     }
 
-    private perform(query): Promise<any> {
+    private perform(query: Query): Promise<any> {
 
         return this.db.ready()
             .then(() => {
@@ -174,11 +174,11 @@ export class PouchdbDatastore {
             .then(rsets => this.generateOrderedResultList(rsets));
     }
 
-    private performSimple(query, rsets) {
+    private performSimple(query: Query, rsets: ResultSets) {
 
         let q = (!query.q || query.q == '') ? '*' : query.q;
-        let type = query.type ? [query.type] : undefined;
-        let result = this.fulltextIndexer.get(q, type);
+        let types = query.types ? query.types : undefined;
+        let result = this.fulltextIndexer.get(q, types);
         rsets.add(result);
         return rsets;
     }
@@ -213,7 +213,7 @@ export class PouchdbDatastore {
 
     private comp(sortOn) {
 
-        return ((a,b)=> {
+        return ((a, b) => {
             if (a[sortOn] > b[sortOn])
                 return -1;
             if (a[sortOn] < b[sortOn])
@@ -222,9 +222,9 @@ export class PouchdbDatastore {
         });
     }
 
-    private static isEmpty(query) {
+    private static isEmpty(query: Query) {
 
-        return ((!query.q || query.q == '') && !query.type);
+        return ((!query.q || query.q == '') && !query.types);
     }
 
     public findConflicted(): Promise<Document[]> {

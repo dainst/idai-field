@@ -68,7 +68,7 @@ export class FulltextIndexer {
         }
     }
 
-    public get(s: string, types) {
+    public get(s: string, types: string[]) {
 
         let resultSets = [];
         if (Object.keys(this.index).length == 0) return [];

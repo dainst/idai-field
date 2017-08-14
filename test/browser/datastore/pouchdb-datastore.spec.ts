@@ -1,11 +1,11 @@
-import {PouchdbDatastore} from "../../../app/datastore/pouchdb-datastore";
-import {Document} from "idai-components-2/core";
-import {DatastoreErrors} from "idai-components-2/datastore";
-import {PouchdbManager} from "../../../app/datastore/pouchdb-manager";
-import {Query} from "idai-components-2/src/app/datastore/query";
-import {ConstraintIndexer} from "../../../app/datastore/constraint-indexer";
-import {FulltextIndexer} from "../../../app/datastore/fulltext-indexer";
-import {DocumentCache} from "../../../app/datastore/document-cache";
+import {PouchdbDatastore} from '../../../app/datastore/pouchdb-datastore';
+import {Document} from 'idai-components-2/core';
+import {DatastoreErrors} from 'idai-components-2/datastore';
+import {PouchdbManager} from '../../../app/datastore/pouchdb-manager';
+import {Query} from 'idai-components-2/src/app/datastore/query';
+import {ConstraintIndexer} from '../../../app/datastore/constraint-indexer';
+import {FulltextIndexer} from '../../../app/datastore/fulltext-indexer';
+import {DocumentCache} from '../../../app/datastore/document-cache';
 
 /**
  * @author Daniel de Oliveira
@@ -38,14 +38,14 @@ export function main() {
         );
 
         afterEach(
-            (done)=> {
+            (done) => {
                 pouchdbManager.destroy()
                     .then(() => new PouchDB('testdb2').destroy())
                     .then(()=>done());
             }, 5000
         );
 
-        function doc(sd,identifier?,type?,id?) : Document {
+        function doc(sd, identifier?, type?, id?): Document {
             if (!identifier) identifier = 'identifer';
             if (!type) type = 'object';
             const doc = {
@@ -189,14 +189,14 @@ export function main() {
         );
 
         it('should not update if not existent',
-            function (done) {
+            function(done) {
 
                 datastore.update(doc('sd1','identifier1','object','id1')).then(
                     () => {
                         fail();
                         done();
                     },
-                    expectedErr=>{
+                    expectedErr => {
                         expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR);
                         done();
                     }
@@ -207,7 +207,7 @@ export function main() {
         // get
 
         it('should get if existent',
-            function (done) {
+            function(done) {
                 const d = doc('sd1');
                 datastore.create(d)
                     .then(() => datastore.fetch(d['resource']['id']))
@@ -220,7 +220,7 @@ export function main() {
         );
 
         it('should reject with keyOfM in when trying to get a non existing document',
-            function (done) {
+            function(done) {
                 expectErr(()=>{return datastore.create(doc('sd1'))
                         .then(() => datastore.fetch('nonexisting'))}
                     ,[DatastoreErrors.DOCUMENT_NOT_FOUND],done);
@@ -230,7 +230,7 @@ export function main() {
         // refresh
 
         it('should reject with keyOfM in when trying to refresh a non existing document',
-            function (done) {
+            function(done) {
 
                 expectErr(()=>{
                     return datastore.create(doc('id1'))
@@ -241,7 +241,7 @@ export function main() {
         // remove
 
         it('should remove if existent',
-            function (done) {
+            function(done) {
                 const d = doc('sd1');
                 expectErr(()=>{
                     return datastore.create(d)
@@ -254,25 +254,25 @@ export function main() {
         );
 
         it('should throw error when no resource id',
-            function (done) {
+            function(done) {
                 expectErr(()=>{return datastore.remove(doc('sd2'))}
-                    ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID],done);
+                    ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
             }
         );
 
         it('should throw error when trying to remove and not existent',
-            function (done) {
+            function(done) {
                 const d = doc('sd1');
                 d['resource']['id'] = 'hoax';
                 expectErr(()=>{return datastore.remove(d)}
-                    ,[DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR],done);
+                    ,[DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR], done);
             }
         );
 
         // find
 
-        it('should find with filterSet undefined', function(done){
-            const doc1 = doc('sd1','identifier1','object','id1');
+        it('should find with filterSet undefined', function(done) {
+            const doc1 = doc('sd1', 'identifier1', 'object', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({q: 'identifier'}))
@@ -288,7 +288,7 @@ export function main() {
                 );
         });
 
-        it('should not find with query undefined', function(done){
+        it('should not find with query undefined', function(done) {
             const doc1 = doc('sd1');
 
             datastore.create(doc1)
@@ -305,7 +305,7 @@ export function main() {
                 );
         });
 
-        it('should find with prefix query undefined', function(done){
+        it('should find with prefix query undefined', function(done) {
             const doc1 = doc('sd1','identifier1','object','id1');
 
             datastore.create(doc1)
@@ -322,8 +322,8 @@ export function main() {
                 );
         });
 
-        it('should find with omitted q', function(done){
-            const doc1 = doc('sd1','identifier1','object','id1');
+        it('should find with omitted q', function(done) {
+            const doc1 = doc('sd1', 'identifier1', 'object', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({ }))
@@ -339,8 +339,8 @@ export function main() {
                 );
         });
 
-        it('should find with omitted q and ommitted prefix', function(done){
-            const doc1 = doc('sd1','identifier1','object','id1');
+        it('should find with omitted q and ommitted prefix', function(done) {
+            const doc1 = doc('sd1', 'identifier1', 'object', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({}))
@@ -356,9 +356,9 @@ export function main() {
                 );
         });
 
-        it('should match all fields', function(done){
-            const doc1 = doc('bla','blub');
-            const doc2 = doc('blub','bla');
+        it('should match all fields', function(done) {
+            const doc1 = doc('bla', 'blub');
+            const doc2 = doc('blub', 'bla');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
@@ -375,15 +375,15 @@ export function main() {
                 );
         });
 
-        it('should filter by one type in find', function(done){
+        it('should filter by one type in find', function(done) {
             const doc1 = doc('bla1', 'blub', 'type1');
             const doc2 = doc('bla2', 'blub', 'type2');
-            const doc3 = doc('bla3', 'blub', 'type3','id3');
+            const doc3 = doc('bla3', 'blub', 'type3', 'id3');
 
             datastore.create(doc1)
                 .then(() => datastore.create(doc2))
                 .then(() => datastore.create(doc3))
-                .then(() => datastore.findIds({q: 'blub', type: 'type3'}))
+                .then(() => datastore.findIds({q: 'blub', types: ['type3']}))
                 .then(
                     result => {
                         expect(result.length).toBe(1);
@@ -407,7 +407,7 @@ export function main() {
                 .then(() => datastore.create(doc3))
                 .then(() => datastore.findIds({
                     q: 'blub',
-                    type: 'type2'
+                    types: ['type2']
                 }))
                 .then(
                     result => {

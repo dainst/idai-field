@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {Document} from "idai-components-2/core";
-import {IdaiFieldDatastore} from "../datastore/idai-field-datastore";
-import {Settings, SyncTarget} from "./settings";
-import {SettingsSerializer} from "./settings-serializer";
-import {Imagestore} from "../imagestore/imagestore";
-import {Observable} from "rxjs/Rx";
-import {PouchdbManager} from "../datastore/pouchdb-manager";
-import {M} from "../m";
+import {Injectable} from '@angular/core';
+import {Document} from 'idai-components-2/core';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {Settings, SyncTarget} from './settings';
+import {SettingsSerializer} from './settings-serializer';
+import {Imagestore} from '../imagestore/imagestore';
+import {Observable} from 'rxjs/Rx';
+import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {M} from '../m';
 
 
 @Injectable()
@@ -165,7 +165,6 @@ export class SettingsService {
             });
             syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
         });
-
     }
 
     private restartSync(createDb) {
@@ -191,50 +190,12 @@ export class SettingsService {
             this.pouchdbManager.select(this.getSelectedProject());
         }
         this.imagestore.select(this.getSelectedProject());
-        return this.createSuperDocs(this.getSelectedProject());
+        return this.createProjectDocumentIfNotExisting(this.getSelectedProject());
     }
 
-    private createSuperDocs(project) {
-
-        return this.datastore.find({
-                constraints: { 'resource.identifier' : project }
-            })
-            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
-            .then(results => {
-                if (!results || results.length == 0) {
-                    return this.createProjectDocument(project);
-                }
-            })
-            .then(() => this.datastore.find({
-                constraints: { 'resource.identifier' : 'images' }
-            }))
-            .catch(() => Promise.reject([M.ALL_FIND_ERROR]))
-            .then(results => {
-                if (!results || results.length == 0) {
-                    return this.createImagesDocument();
-                }
-            })
-            .catch(msgWithParams => Promise.reject(msgWithParams));
-    }
-
-    private createImagesDocument(): Promise<any> {
+    private createProjectDocumentIfNotExisting(project: string): Promise<any> {
 
         const projectDocument: Document = {
-            resource: {
-                type: 'images',
-                identifier: 'images',
-                id: 'images',
-                relations: {}
-            },
-            created: { user: this.getUsername(), date: new Date() },
-            modified: [{ user: this.getUsername(), date: new Date() }]
-        };
-        return this.datastore.create(projectDocument);
-    }
-
-    private createProjectDocument(project: string): Promise<any> {
-
-        const imagesDocument: Document = {
             resource: {
                 type: 'project',
                 identifier: project,
@@ -245,7 +206,15 @@ export class SettingsService {
             created: { user: this.getUsername(), date: new Date() },
             modified: [{ user: this.getUsername(), date: new Date() }]
         };
-        return this.datastore.create(imagesDocument);
+
+        return this.datastore.find({
+            constraints: { 'resource.identifier' : project }
+        }).catch(() => Promise.reject([M.ALL_FIND_ERROR]))
+        .then(results => {
+            if (!results || results.length == 0) {
+                return this.datastore.create(projectDocument);
+            }
+        }).catch(msgWithParams => Promise.reject(msgWithParams));
     }
 
     private static validateAddress(address) {

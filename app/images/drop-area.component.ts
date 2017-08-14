@@ -1,12 +1,12 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-import {Imagestore} from '../imagestore/imagestore';
-import {M} from '../m';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {SettingsService} from '../settings/settings-service';
+import {M} from '../m';
 
 @Component({
     selector: 'drop-area',
@@ -38,28 +38,33 @@ export class DropAreaComponent {
     }
 
     public onDragOver(event) {
+
         if (this.dragOverActive) return;
         this.dragOverActive = true;
-        event.target.classList.add("dragover");
+        event.target.classList.add('dragover');
         event.preventDefault();
     }
 
     public onDragLeave(event) {
+
         this.dragOverActive = false;
-        event.target.classList.remove("dragover");
+        event.target.classList.remove('dragover');
     }
 
     public onDrop(event) {
+
         event.preventDefault();
         this.startUpload(event);
         this.onDragLeave(event);
     }
 
     public onSelectImages(event) {
+
         this.startUpload(event);
     }
 
     private startUpload(event) {
+
         let files = this.getFiles(event);
         if(files.length == 0) return;
 
@@ -74,6 +79,7 @@ export class DropAreaComponent {
 
 
     private getFiles(event) {
+
         if (!event) return [];
         let files = [];
 
@@ -88,7 +94,8 @@ export class DropAreaComponent {
         return files;
     }
 
-    private getUnsupportedExts (files) {
+    private getUnsupportedExts(files) {
+
         let unsupportedExts: Array<string> = [];
         for (let file of files) {
             let ext;
@@ -98,12 +105,14 @@ export class DropAreaComponent {
     }
 
     private reportUnsupportedFileTypes(unsupportedExts) {
+
         if (unsupportedExts.length > 0) {
             this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
         }
     }
 
     private chooseType(): Promise<IdaiType> {
+
         return new Promise((resolve, reject) => {
             this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
@@ -121,6 +130,7 @@ export class DropAreaComponent {
     }
 
     private uploadFiles(files: File[], type: IdaiType) {
+
         if (!files) return;
 
         for (let file of files) {
@@ -131,6 +141,7 @@ export class DropAreaComponent {
     }
 
     private ofUnsupportedExtension(file: File) {
+
         let ext = file.name.split('.').pop();
         if (this.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
@@ -173,15 +184,13 @@ export class DropAreaComponent {
             img.src = URL.createObjectURL(file);
             img.onload = () => {
                 let doc = {
-                    "resource": {
-                        "identifier": file.name,
-                        "type": type.name,
-                        "filename": file.name,
-                        "width": img.width,
-                        "height": img.height,
-                        "relations": {
-                            "isRecordedIn" : ["images"]
-                        }
+                    resource: {
+                        identifier: file.name,
+                        type: type.name,
+                        filename: file.name,
+                        width: img.width,
+                        height: img.height,
+                        relations: {}
                     }
                 };
                 this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])

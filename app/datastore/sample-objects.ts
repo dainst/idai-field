@@ -12,15 +12,6 @@ export const DOCS: IdaiFieldDocument[] = [
     },
     {
         "resource": {
-            "id": "images",
-            "identifier": "images",
-            "shortDescription": "Bilder",
-            "relations": {},
-            "type": "images"
-        }
-    },
-    {
-        "resource": {
             "id": "t1",
             "identifier": "trench1",
             "shortDescription": "Goldener Schnitt",
@@ -74,9 +65,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "PE07-So-07_Z001.jpg",
             "shortDescription": "Test Layer 1",
             "type": "image",
-            "relations": {
-                "isRecordedIn": ["images"]
-            },
+            "relations": {},
             "filename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
             "width" : 3513,
@@ -93,9 +82,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "mapLayerTest2.png",
             "shortDescription": "Test Layer 2",
             "type": "image",
-            "relations": {
-                "isRecordedIn": ["images"]
-            },
+            "relations": {},
             "filename" : "mapLayerTest2.png",
             "height" : 782,
             "width" : 748,

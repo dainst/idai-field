@@ -1,19 +1,19 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Datastore, Query} from 'idai-components-2/datastore';
-import {Imagestore} from '../imagestore/imagestore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
+import {ConfigLoader} from 'idai-components-2/configuration';
+import {Imagestore} from '../imagestore/imagestore';
 import {ImageGridBuilder} from '../common/image-grid-builder';
 import {ImageTool} from './image-tool';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {LinkModalComponent} from './link-modal.component';
-import {ElementRef} from '@angular/core';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
-import {Util} from "../util/util";
+import {Util} from '../util/util';
 
 @Component({
     moduleId: module.id,
@@ -30,10 +30,10 @@ import {Util} from "../util/util";
  */
 export class ImageGridComponent {
 
-    private imageGridBuilder : ImageGridBuilder;
-    private imageTool : ImageTool;
+    private imageGridBuilder: ImageGridBuilder;
+    private imageTool: ImageTool;
 
-    private query : Query;
+    private query: Query;
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;
@@ -49,7 +49,8 @@ export class ImageGridComponent {
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private configLoader: ConfigLoader
     ) {
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
@@ -73,23 +74,25 @@ export class ImageGridComponent {
     private fetchDocuments(query: Query) {
 
         this.query = query ? query : { };
-        this.query.constraints = { 'resource.relations.isRecordedIn': 'images'};
 
-        return this.datastore.find(query).then(documents => {
+        this.getImageTypes().then(imageTypes => {
+            this.query.types = imageTypes;
+            return this.datastore.find(this.query);
+        }).catch(msgWithParams => this.messages.add(msgWithParams)
+        ).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
-
             this.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
             this.calcGrid();
-
         }).catch(errWithParams => {
-            console.log("ERROR with find using query",this.query);
-            if (errWithParams.length == 2) console.error("Cause: ",errWithParams[1]);
+            console.error('ERROR with find using query', this.query);
+            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
         });
     }
 
     // insert stub document for first cell that will act as drop area for uploading images
     private insertStub(documents) {
+
         documents.unshift(<IdaiFieldImageDocument>{
             id: 'droparea',
             resource: { identifier: '', shortDescription:'', type: '',
@@ -98,6 +101,7 @@ export class ImageGridComponent {
     }
 
     private cacheIdsOfConnectedResources(documents) {
+
         for (let doc of documents) {
             if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
                 for (let resourceId of doc.resource.relations['depicts']) {
@@ -237,6 +241,20 @@ export class ImageGridComponent {
                 () => resolve(),
                 msgWithParams => reject(msgWithParams)
             );
+        });
+    }
+
+    private getImageTypes(): Promise<string[]> {
+
+        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+            let imageTypes = ['image'];
+
+            const typesTree = projectConfiguration.getTypesTree();
+            for (let childType of typesTree['image'].children) {
+                imageTypes.push(childType.name);
+            }
+
+            return Promise.resolve(imageTypes);
         });
     }
 }

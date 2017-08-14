@@ -167,7 +167,7 @@ export class PouchdbDatastore {
 
         return this.db.ready()
             .then(() => {
-                let resultSets = this.performThem(query.constraints);
+                let resultSets: ResultSets = this.performThem(query.constraints);
                 if (PouchdbDatastore.isEmpty(query) && resultSets) return resultSets;
                 else return this.performSimple(query, resultSets ? resultSets : new ResultSets());
             })
@@ -176,9 +176,9 @@ export class PouchdbDatastore {
 
     private performSimple(query: Query, resultSets: ResultSets) {
 
-        let q = (!query.q || query.q == '') ? '*' : query.q;
-        let types = query.types ? query.types : undefined;
-        let result = this.fulltextIndexer.get(q, types);
+        let q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
+        let types: string[] = query.types ? query.types : undefined;
+        let result: Array<any> = this.fulltextIndexer.get(q, types);
         resultSets.add(result);
         return resultSets;
     }
@@ -198,7 +198,7 @@ export class PouchdbDatastore {
 
         if (!constraints) return undefined;
 
-        const resultSets = new ResultSets();
+        const resultSets: ResultSets = new ResultSets();
         let usableConstraints = 0;
         for (let constraint of Object.keys(constraints)) {
             let result = this.constraintIndexer.get(constraint, constraints[constraint]);

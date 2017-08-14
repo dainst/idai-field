@@ -1,8 +1,10 @@
+import {Document} from 'idai-components-2/core';
 import {ModelUtil} from '../model/model-util';
 import {ResultSets} from '../util/result-sets';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class FulltextIndexer {
 
@@ -26,7 +28,7 @@ export class FulltextIndexer {
         this.setUp();
     }
 
-    public put(doc, skipRemoval = false) {
+    public put(doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) this.remove(doc);
         if (!this.index[doc.resource.type]) {
@@ -45,7 +47,7 @@ export class FulltextIndexer {
         }
     }
 
-    private indexToken(id, token, type, lastModified) {
+    private indexToken(id: string, token: string, type: string, lastModified: string) {
 
         let accumulator = '';
         for (let letter of token.toLowerCase()) {
@@ -57,7 +59,7 @@ export class FulltextIndexer {
         }
     }
 
-    public remove(doc) {
+    public remove(doc: any) {
 
         if (Object.keys(this.index).length == 0) return;
         for (let type of Object.keys(this.index)) {
@@ -69,21 +71,33 @@ export class FulltextIndexer {
         }
     }
 
-    public get(s: string, types: string[]) {
+    public get(s: string, types: string[]): Array<any> {
+
+        const resultSets: ResultSets = new ResultSets();
 
         if (Object.keys(this.index).length == 0) return [];
 
-        let resultSets: ResultSets = new ResultSets();
         if (!types) types = Object.keys(this.index);
 
+        for (let token of s.split(' ')) {
+            if (token.length > 0) resultSets.add(this.getForToken(token, types));
+        }
+
+        return resultSets.intersect(item => item.id);
+    }
+
+    private getForToken(token: string, types: string[]): Array<any> {
+
+        const resultSets: ResultSets = new ResultSets();
+
         for (let type of types) {
-            this._get(resultSets, s.toLowerCase(), type);
+            this._get(resultSets, token.toLowerCase(), type);
         }
 
         return resultSets.unify(item => item.id);
     }
 
-    private _get(resultSets: ResultSets, s, type) {
+    private _get(resultSets: ResultSets, s: string, type: string) {
 
         if (!this.index[type] || !this.index[type][s]) return;
 

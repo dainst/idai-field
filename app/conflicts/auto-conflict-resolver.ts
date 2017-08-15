@@ -27,12 +27,8 @@ export class AutoConflictResolver {
                 return this.datastore.update(latestRevision).then(() => {
                     if (!unresolvedConflicts) {
                         return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev']);
-                    } else {
-                        return Promise.resolve();
                     }
                 });
-            } else {
-                return Promise.resolve();
             }
         });
     }
@@ -97,7 +93,8 @@ export class AutoConflictResolver {
     }
 
     private determineWinningRevisionForField(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
-                                             previousRevision: IdaiFieldDocument, fieldName: string): IdaiFieldDocument {
+                                             previousRevision: IdaiFieldDocument,
+                                             fieldName: string): IdaiFieldDocument {
 
         if (fieldName == 'geometry' || fieldName == 'georeference') {
             if (latestRevision.resource[fieldName] && previousRevision.resource[fieldName]

@@ -3,7 +3,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {AutoConflictResolver} from './auto-conflict-resolver';
 import {M} from '../m';
 import {PouchdbDatastore} from '../datastore/pouchdb-datastore';
+import {Injectable} from "@angular/core";
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
@@ -13,13 +15,18 @@ export class AutoConflictResolvingExtension {
 
     private inspectedRevisionsIds: string[] = [];
     private autoConflictResolver: AutoConflictResolver;
+    private datastore: PouchdbDatastore;
 
-    constructor(private datastore: PouchdbDatastore) {
-
+    constructor() {
         this.autoConflictResolver = new AutoConflictResolver();
     }
 
+    public setDatastore(datastore: PouchdbDatastore) {
+        this.datastore = datastore;
+    }
+
     public autoResolve(document: IdaiFieldDocument, userName: string): Promise<any> {
+        if (!this.datastore) return Promise.reject("no datastore");
 
         this.promise = this.promise.then(() => {
             if (this.hasUnhandledConflicts(document)) {

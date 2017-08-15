@@ -43,6 +43,7 @@ import {ConstraintIndexer} from './datastore/constraint-indexer';
 import {FulltextIndexer} from './datastore/fulltext-indexer';
 import {DocumentCache} from './datastore/document-cache';
 import {AppState} from './app-state';
+import {AutoConflictResolvingExtension} from './conflicts/auto-conflict-resolving-extension';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -79,6 +80,7 @@ if (CONFIG['imagestorepath']) {
     ],
     providers: [
         AppState,
+        AutoConflictResolvingExtension,
         { provide: 'app.config', useValue: CONFIG },
         { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
@@ -117,12 +119,18 @@ if (CONFIG['imagestorepath']) {
             useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer,
-                                 documentCache: DocumentCache, appState: AppState): Datastore {
+                                 documentCache: DocumentCache,
+                                 appState: AppState,
+                                 autoConflictResolvingExtension: AutoConflictResolvingExtension): Datastore {
                 return new CachedPouchdbDatastore(
-                    new PouchdbServerDatastore(pouchdbManager, constraintIndexer, fulltextIndexer, appState),
+                    new PouchdbServerDatastore(pouchdbManager,
+                        constraintIndexer, fulltextIndexer,
+                        appState, autoConflictResolvingExtension),
                     documentCache);
             },
-            deps: [PouchdbManager, ConstraintIndexer, FulltextIndexer, DocumentCache, AppState]
+            deps: [PouchdbManager, ConstraintIndexer,
+                FulltextIndexer, DocumentCache,
+                AppState, AutoConflictResolvingExtension]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

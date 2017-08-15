@@ -26,21 +26,18 @@ export class PouchdbDatastore {
     // they are marked "manually".
     private deletedOnes = [];
 
-    private autoConflictResolvingExtension: AutoConflictResolvingExtension;
-
     constructor(
         private pouchdbManager: PouchdbManager,
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer,
         private appState: AppState,
+        private autoConflictResolvingExtension: AutoConflictResolvingExtension
         ) {
 
-        this.autoConflictResolvingExtension = new AutoConflictResolvingExtension(this);
+        autoConflictResolvingExtension.setDatastore(this);
         this.db = pouchdbManager.getDb();
         this.setupServer().then(() => this.setupChangesEmitter())
     }
-
-
 
     /**
      * @param document

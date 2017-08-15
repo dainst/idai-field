@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {DiffUtility} from './diff-utility';
-import {Util} from '../util/util';
+import {IdaiFieldDiffUtility} from './idai-field-diff-utility';
+import {ObjectUtil} from '../util/object-util';
 
 export class IdaiFieldConflictResolver {
 
@@ -37,7 +37,7 @@ export class IdaiFieldConflictResolver {
         };
 
         const differingFieldsNames: string[]
-            = DiffUtility.findDifferingFields(latestRevision.resource, conflictedRevision.resource);
+            = IdaiFieldDiffUtility.findDifferingFields(latestRevision.resource, conflictedRevision.resource);
 
         for (let fieldName of differingFieldsNames) {
             let winningRevision = this.determineWinningRevisionForField(latestRevision, conflictedRevision,
@@ -66,7 +66,7 @@ export class IdaiFieldConflictResolver {
         };
 
         const differingRelationsNames: string[]
-            = DiffUtility.findDifferingRelations(latestRevision.resource, conflictedRevision.resource);
+            = IdaiFieldDiffUtility.findDifferingRelations(latestRevision.resource, conflictedRevision.resource);
 
         for (let relationName of differingRelationsNames) {
             let winningRevision = this.determineWinningRevisionForRelation(latestRevision, conflictedRevision,
@@ -113,11 +113,11 @@ export class IdaiFieldConflictResolver {
             }
         }
 
-        if (Util.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (ObjectUtil.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return conflictedRevision;
         }
 
-        if (Util.compareFields(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (ObjectUtil.compareFields(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return latestRevision;
         }
 
@@ -129,12 +129,12 @@ export class IdaiFieldConflictResolver {
                                                 previousRevision: IdaiFieldDocument,
                                                 relationName: string): IdaiFieldDocument {
 
-        if (Util.compareFields(latestRevision.resource.relations[relationName],
+        if (ObjectUtil.compareFields(latestRevision.resource.relations[relationName],
                 previousRevision.resource.relations[relationName])) {
             return conflictedRevision;
         }
 
-        if (Util.compareFields(conflictedRevision.resource.relations[relationName],
+        if (ObjectUtil.compareFields(conflictedRevision.resource.relations[relationName],
                 previousRevision.resource.relations[relationName])) {
             return latestRevision;
         }

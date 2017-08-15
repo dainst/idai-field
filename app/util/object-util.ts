@@ -2,7 +2,7 @@
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class Util {
+export class ObjectUtil {
 
     public static getElForPathIn(object, path) {
         let result = object;
@@ -15,7 +15,7 @@ export class Util {
 
     public static takeOrMake(object: Object, path: string, val: any) {
 
-        if (Util.getElForPathIn(object, path)) return Util.getElForPathIn(object, path);
+        if (ObjectUtil.getElForPathIn(object, path)) return ObjectUtil.getElForPathIn(object, path);
         let result = object;
         let last;
         let lastSegment;
@@ -41,6 +41,15 @@ export class Util {
             }
         }
         return differingFieldsNames;
+    }
+
+    public static compareObjects(object1: any, object2: any): boolean {
+
+        if (!object1 && !object2) return true;
+
+        if ((object1 && !object2) || (!object1 && object2)) return false;
+
+        return JSON.stringify(object1) == JSON.stringify(object2);
     }
 
     public static compareFields(field1: any, field2: any): boolean {

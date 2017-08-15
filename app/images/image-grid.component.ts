@@ -11,7 +11,7 @@ import {ImageGridBuilder} from '../common/image-grid-builder';
 import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
-import {Util} from '../util/util';
+import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../util/image-type-utility';
 import {M} from '../m';
 
@@ -221,7 +221,7 @@ export class ImageGridComponent {
             for (let imageDocument of imageDocuments) {
                 const oldVersion = JSON.parse(JSON.stringify(imageDocument));
 
-                const depictsEl = Util.takeOrMake(imageDocument,
+                const depictsEl = ObjectUtil.takeOrMake(imageDocument,
                     'resource.relations.depicts', []);
 
                 if (depictsEl.indexOf(targetDocument.resource.id) == -1) {

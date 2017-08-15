@@ -6,7 +6,7 @@ import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
-import {DiffUtility} from '../model/diff-utility';
+import {IdaiFieldDiffUtility} from '../model/idai-field-diff-utility';
 import {M} from '../m';
 
 const moment = require('moment');
@@ -81,9 +81,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let differingFields = [];
 
         let differingFieldsNames: string[]
-            = DiffUtility.findDifferingFields(this.document.resource, revision.resource);
+            = IdaiFieldDiffUtility.findDifferingFields(this.document.resource, revision.resource);
         let differingRelationsNames: string[]
-            = DiffUtility.findDifferingRelations(this.document.resource, revision.resource);
+            = IdaiFieldDiffUtility.findDifferingRelations(this.document.resource, revision.resource);
 
         return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 

@@ -1,4 +1,4 @@
-import {Util} from "../util/util";
+import {ObjectUtil} from "../util/object-util";
 import {ModelUtil} from "../model/model-util";
 /**
  * @author Daniel de Oliveira
@@ -55,7 +55,7 @@ export class ConstraintIndexer {
 
     private putFor(pathDef, doc) {
 
-        const elForPath = Util.getElForPathIn(doc, pathDef.path);
+        const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
 
         if (!elForPath) {
             return this.addToIndex(doc, pathDef.path, 'UNKOWN');

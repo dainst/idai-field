@@ -44,13 +44,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
 
     /**
-     * @returns
-     *   Rejects with
-     *     [DOCUMENT_NOT_FOUND] - in case of error
-     */
-    abstract getRevisionHistory(docId: string): Promise<Array<PouchDB.Core.RevisionInfo>>;
-
-    /**
      * @param resourceId
      * @param revisionId
      * @returns

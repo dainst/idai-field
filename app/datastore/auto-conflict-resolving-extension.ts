@@ -27,6 +27,7 @@ export class AutoConflictResolvingExtension {
 
     public autoResolve(document: Document, userName: string): Promise<any> {
         if (!this.datastore) return Promise.reject("no datastore");
+        if (!this.conflictResolver) return Promise.reject("no conflict resolver");
 
         this.promise = this.promise.then(() => {
             if (this.hasUnhandledConflicts(document)) {

@@ -12,10 +12,6 @@ export class ResultSets {
         this.sets.push(set);
     }
 
-    public merge(resultSets: ResultSets) {
-        this.sets.concat(resultSets.sets);
-    }
-
     /**
      * Finds the elements that are common to all sets.
      *

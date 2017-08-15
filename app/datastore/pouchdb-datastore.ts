@@ -169,12 +169,12 @@ export class PouchdbDatastore {
             .then(() => {
                 let resultSets: ResultSets = this.performThem(query.constraints);
                 if (PouchdbDatastore.isEmpty(query) && resultSets) return resultSets;
-                else return this.performSimple(query, resultSets ? resultSets : new ResultSets());
+                else return this.performFulltext(query, resultSets ? resultSets : new ResultSets());
             })
             .then(resultSets => this.generateOrderedResultList(resultSets));
     }
 
-    private performSimple(query: Query, resultSets: ResultSets) {
+    private performFulltext(query: Query, resultSets: ResultSets) {
 
         let q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
         let types: string[] = query.types ? query.types : undefined;

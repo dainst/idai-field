@@ -68,7 +68,7 @@ export class ConflictResolvingExtension {
         });
     }
 
-    private getRevisionNumber(revision: Document): number {
+    private static getRevisionNumber(revision: Document): number {
 
         const revisionId = revision['_rev'];
         const index = revisionId.indexOf('-');
@@ -82,7 +82,7 @@ export class ConflictResolvingExtension {
         return this.datastore.fetch(revision.resource.id, { revs_info: true })
             .then(doc => doc['_revs_info']).then(history => {
 
-                const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
+                const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
 
                 if (previousRevisionNumber < 1) return Promise.resolve(undefined);
 

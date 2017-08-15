@@ -308,7 +308,7 @@ describe('resources/syncing --', function() {
         });
     });
 
-    it('resolve an eventual conflict automatically', done => {
+    xit('resolve an eventual conflict automatically', done => {
         const nr = '11';
 
         createEventualConflictForAutoResolving(nr).then(() => {

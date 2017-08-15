@@ -27,7 +27,7 @@ export function main() {
             };
         };
 
-        fit('autosolve a conflict', () => {
+        it('autosolve a conflict', () => {
 
             const originalRevision = createDocument('id1', '1-xyz', 'identifier1', 'shortDescription1', 'testuser1');
             const conflictedRevision = createDocument('id1', '2-abc', 'identifier1_changed', 'shortDescription1',

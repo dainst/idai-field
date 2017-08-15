@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Datastore, ReadDatastore} from 'idai-components-2/datastore';
-import {IdaiMessagesModule, Messages, MD} from 'idai-components-2/messages';
-import {IdaiDocumentsModule, DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {Validator, PersistenceManager} from 'idai-components-2/persist';
+import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/messages';
+import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/documents';
+import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './model/idai-field-validator';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
@@ -39,10 +39,10 @@ import {ViewUtility} from './util/view-utility';
 import {PouchdbManager} from './datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './datastore/sample-data-loader';
-import {AutoConflictResolvingWorker} from './conflicts/auto-conflict-resolving-worker';
-import {ConstraintIndexer} from "./datastore/constraint-indexer";
-import {FulltextIndexer} from "./datastore/fulltext-indexer";
-import {DocumentCache} from "./datastore/document-cache";
+import {ConstraintIndexer} from './datastore/constraint-indexer';
+import {FulltextIndexer} from './datastore/fulltext-indexer';
+import {DocumentCache} from './datastore/document-cache';
+import {AppState} from './app-state';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -78,6 +78,7 @@ if (CONFIG['imagestorepath']) {
         ExportComponent
     ],
     providers: [
+        AppState,
         { provide: 'app.config', useValue: CONFIG },
         { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
@@ -116,12 +117,12 @@ if (CONFIG['imagestorepath']) {
             useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer,
-                                 documentCache: DocumentCache): Datastore {
+                                 documentCache: DocumentCache, appState: AppState): Datastore {
                 return new CachedPouchdbDatastore(
-                    new PouchdbServerDatastore(pouchdbManager, constraintIndexer, fulltextIndexer),
+                    new PouchdbServerDatastore(pouchdbManager, constraintIndexer, fulltextIndexer, appState),
                     documentCache);
             },
-            deps: [PouchdbManager, ConstraintIndexer, FulltextIndexer, DocumentCache]
+            deps: [PouchdbManager, ConstraintIndexer, FulltextIndexer, DocumentCache, AppState]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },
@@ -145,8 +146,7 @@ if (CONFIG['imagestorepath']) {
         Exporter,
         RelationsCompleter,
         ImageTypeUtility,
-        ViewUtility,
-        AutoConflictResolvingWorker
+        ViewUtility
     ],
     bootstrap: [ AppComponent ]
 })

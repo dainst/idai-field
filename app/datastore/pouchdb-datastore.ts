@@ -6,6 +6,8 @@ import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from '../util/result-sets';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
+import {AppState} from '../app-state';
+import {AutoConflictResolvingExtension} from '../conflicts/auto-conflict-resolving-extension';
 
 /**
  * @author Sebastian Cuy
@@ -24,15 +26,21 @@ export class PouchdbDatastore {
     // they are marked "manually".
     private deletedOnes = [];
 
+    private autoConflictResolvingExtension: AutoConflictResolvingExtension;
+
     constructor(
         private pouchdbManager: PouchdbManager,
         private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer
+        private fulltextIndexer: FulltextIndexer,
+        private appState: AppState,
         ) {
 
+        this.autoConflictResolvingExtension = new AutoConflictResolvingExtension(this);
         this.db = pouchdbManager.getDb();
         this.setupServer().then(() => this.setupChangesEmitter())
     }
+
+
 
     /**
      * @param document
@@ -281,6 +289,11 @@ export class PouchdbDatastore {
                     return;
                 }
                 this.fetch(change.id).then(document => {
+
+                    // TODO handle result
+                    // this.autoConflictResolvingExtension.autoResolve(
+                    //     <any> document, this.appState.getCurrentUser());
+
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
                     this.notify(document);

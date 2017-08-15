@@ -12,7 +12,6 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
-import {AutoConflictResolvingWorker} from '../conflicts/auto-conflict-resolving-worker';
 
 @Component({
     selector: 'detail-modal',
@@ -72,7 +71,6 @@ export class DoceditComponent {
         private datastore: IdaiFieldDatastore,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
-        private autoConflictResolvingWorker: AutoConflictResolvingWorker,
         configLoader: ConfigLoader
     ) {
         this.imageTypeUtility.getProjectImageTypes().then(
@@ -152,11 +150,11 @@ export class DoceditComponent {
 
         this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
-                return this.autoConflictResolvingWorker.autoResolve(latestRevision);
-            })
-            .then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
-            .then(latestRevision => {
+                // return this.autoConflictResolvingWorker.autoResolve(latestRevision);
+            // })
+            // .then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
+            // .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            // .then(latestRevision => {
                 this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
 

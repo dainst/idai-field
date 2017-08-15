@@ -7,6 +7,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {M} from '../m';
+import {AppState} from "../app-state";
 
 
 @Injectable()
@@ -34,7 +35,8 @@ export class SettingsService {
 
     constructor(private datastore: IdaiFieldDatastore,
                 private imagestore: Imagestore,
-                private pouchdbManager: PouchdbManager) {
+                private pouchdbManager: PouchdbManager,
+                private appState: AppState) {
     }
 
     public init() {
@@ -88,6 +90,7 @@ export class SettingsService {
     public setSettings(username: string, syncTarget: SyncTarget): string {
 
         this.settings.username = username;
+        this.appState.setCurrentUser(username);
 
         if (syncTarget.address) {
             syncTarget.address = syncTarget.address.trim();

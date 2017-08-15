@@ -32,7 +32,11 @@ export function main() {
                 spyOn(console, 'error'); // to suppress console.error output
                 spyOn(console, 'warn');
                 pouchdbManager = new PouchdbManager(undefined, constraintIndexer, fulltextIndexer, new DocumentCache());
-                datastore = new PouchdbDatastore(pouchdbManager, constraintIndexer, fulltextIndexer);
+
+
+                const appState = jasmine.createSpyObj('appState', ['getCurrentUser']);
+
+                datastore = new PouchdbDatastore(pouchdbManager, constraintIndexer, fulltextIndexer, appState);
                 pouchdbManager.select('testdb');
             }
         );

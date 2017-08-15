@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ResourcesViewState} from './resources-view-state';
+
+interface ResourcesViewState {
+    mainTypeDocument?: IdaiFieldDocument;
+    type?: string;
+}
 
 @Injectable()
 
@@ -19,26 +23,18 @@ export class ResourcesState {
 
     public getLastSelectedMainTypeDocument(viewName: string): IdaiFieldDocument {
 
-        if (!this._[viewName]) {
-            return undefined;
-        } else {
-            return this._[viewName].mainTypeDocument;
-        }
+        return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocument;
     }
 
-    public setLastSelectedFilterType(viewName: string, type: string) {
+    public setLastSelectedTypeFilter(viewName: string, type: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].type = type;
     }
 
-    public getLastSelectedFilterType(viewName: string): string {
+    public getLastSelectedTypeFilter(viewName: string): string {
 
-        if (!this._[viewName]) {
-            return undefined;
-        } else {
-            return this._[viewName].type;
-        }
+         return (!this._[viewName]) ? undefined : this._[viewName].type;
     }
 
     public clear() {

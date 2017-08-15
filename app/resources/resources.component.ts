@@ -280,7 +280,7 @@ export class ResourcesComponent implements AfterViewChecked {
             delete this.query.types;
         }
 
-        this.resourcesState.setLastSelectedFilterType(this.view.name, type);
+        this.resourcesState.setLastSelectedTypeFilter(this.view.name, type);
         this.filterType = type;
 
         this.fetchDocuments();
@@ -289,7 +289,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private resetQuery() {
 
         this.query = { q: '' };
-        this.filterType = this.resourcesState.getLastSelectedFilterType(this.view.name);
+        this.filterType = this.resourcesState.getLastSelectedTypeFilter(this.view.name);
         if (this.filterType) this.query.types = [this.filterType];
     }
 

@@ -1,8 +1,7 @@
 import {Action, Document} from 'idai-components-2/core';
-import {IdaiFieldConflictResolver} from '../model/idai-field-conflict-resolver';
 import {M} from '../m';
 import {PouchdbDatastore} from './pouchdb-datastore';
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {ConflictResolver} from './conflict-resolver';
 
 @Injectable()

@@ -9,7 +9,9 @@ import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
-import {M} from "../../m";
+import {ImageTypeUtility} from '../../util/image-type-utility';
+import {M} from '../../m';
+
 
 @Component({
     moduleId: module.id,
@@ -35,6 +37,7 @@ export class LayerMapComponent extends MapComponent {
                 protected datastore: ReadDatastore,
                 protected messages: Messages,
                 protected imagestore: Imagestore,
+                private imageTypeUtility: ImageTypeUtility,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -83,27 +86,24 @@ export class LayerMapComponent extends MapComponent {
 
     private initializeLayers(): Promise<any> {
 
-        let query: Query = {
-            constraints: {
-                'resource.relations.isRecordedIn' : 'images'
+        const query: Query = { q: '' };
+        
+        return this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
+            query.types = imageTypeNames;
+            return this.datastore.find(query);
+        }).catch(errWithParams => {
+            console.error('error in find with query', query);
+            if (errWithParams.length == 2) {
+                console.error('error in find, cause',errWithParams[1]);
             }
-        };
-
-        return this.datastore.find(query)
-            .catch(errWithParams => {
-                console.error("error in find with query",query);
-                if (errWithParams.length == 2) {
-                    console.error("error in find, cause",errWithParams[1]);
-                }
-                this.messages.add([M.ALL_FIND_ERROR]);
-                Promise.reject(undefined);
-            })
-            .then(documents => this.makeLayersForDocuments(documents as Array<Document>))
-            .then(layersMap => {
-                this.removeOldLayersFromMap(layersMap);
-                this.layersMap = layersMap;
-                this.layersList = this.getLayersAsList(layersMap);
-            });
+            this.messages.add([M.ALL_FIND_ERROR]);
+            Promise.reject(undefined);
+        }).then(documents => this.makeLayersForDocuments(documents as Array<Document>))
+        .then(layersMap => {
+            this.removeOldLayersFromMap(layersMap);
+            this.layersMap = layersMap;
+            this.layersList = this.getLayersAsList(layersMap);
+        });
     }
 
     private makeLayersForDocuments(documents: Array<Document>): Promise<{ [id: string]: ImageContainer }> {

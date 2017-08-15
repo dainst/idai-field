@@ -73,16 +73,16 @@ export class FulltextIndexer {
 
     public get(s: string, types: string[]): Array<any> {
 
-        const resultSets: ResultSets = new ResultSets();
-
         if (Object.keys(this.index).length == 0) return [];
 
-        if (!types) types = Object.keys(this.index);
-
+        const resultSets: ResultSets = new ResultSets();
         for (let token of s.split(' ')) {
-            if (token.length > 0) resultSets.add(this.getForToken(token, types));
+            if (token.length > 0) {
+                resultSets.add(
+                    this.getForToken(token, types ? types : Object.keys(this.index))
+                )
+            }
         }
-
         return resultSets.intersect(item => item.id);
     }
 

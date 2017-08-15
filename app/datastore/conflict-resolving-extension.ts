@@ -32,8 +32,6 @@ export class ConflictResolvingExtension {
         this.promise = this.promise.then(() => {
             if (this.hasUnhandledConflicts(document)) {
                 return this.handleConflicts(document, userName);
-            } else {
-                return Promise.resolve();
             }
         });
 
@@ -46,14 +44,17 @@ export class ConflictResolvingExtension {
             let promise: Promise<any> = Promise.resolve();
 
             for (let conflictedRevision of conflictedRevisions) {
+
                 promise = promise.then(() => {
                     this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
 
                     this.getPreviousRevision(conflictedRevision).then(previousRevision => {
+
                         const result = this.conflictResolver.tryToSolveConflict(
                             <any> document, <any> conflictedRevision, <any> previousRevision);
 
                         if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+
                             return this.datastore.update(document).then(() => {
                                 if (!result['unresolvedConflicts']) {
                                     return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
@@ -82,22 +83,23 @@ export class ConflictResolvingExtension {
         return this.datastore.fetch(revision.resource.id, { revs_info: true })
             .then(doc => doc['_revs_info']).then(history => {
 
-            const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
+                const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
 
-            if (previousRevisionNumber < 1) return Promise.resolve(undefined);
+                if (previousRevisionNumber < 1) return Promise.resolve(undefined);
 
-            const prefix = previousRevisionNumber.toString() + '-';
-            let previousRevisionId: string;
+                const prefix = previousRevisionNumber.toString() + '-';
+                let previousRevisionId: string;
 
-            for (let historyElement of history) {
-                if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
-                    previousRevisionId = historyElement.rev;
-                    break;
+                for (let historyElement of history) {
+                    if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
+                        previousRevisionId = historyElement.rev;
+                        break;
+                    }
                 }
-            }
 
-            return this.datastore.fetch(revision.resource.id, { rev: previousRevisionId });
-        });
+                return this.datastore.fetch(revision.resource.id, { rev: previousRevisionId });
+            }
+        );
     }
 
     private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
@@ -114,16 +116,16 @@ export class ConflictResolvingExtension {
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
             .then(revisions => {
-            let result: Array<Document> = [];
+                const result: Array<Document> = [];
 
-            for (let revision of revisions) {
-                const lastAction: Action = revision.modified && revision.modified.length > 0 ?
-                    revision.modified[revision.modified.length - 1] : revision.created;
-                if (lastAction.user == userName) result.push(revision);
-            }
+                for (let revision of revisions) {
+                    const lastAction: Action = revision.modified && revision.modified.length > 0 ?
+                        revision.modified[revision.modified.length - 1] : revision.created;
+                    if (lastAction.user == userName) result.push(revision); // TODO unit test that
+                }
 
-            return Promise.resolve(result);
-        });
+                return Promise.resolve(result);
+            });
     }
 
     private hasUnhandledConflicts(document: Document): boolean {

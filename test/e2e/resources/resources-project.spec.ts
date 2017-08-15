@@ -87,7 +87,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
-    it('create, switchProject project', () => {
+    it('create & switch project', () => {
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
@@ -123,7 +123,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
-    it('switchProject views after click on relation link', () => {
+    it('switch views after click on relation link', () => {
         ResourcesPage.performCreateResource('building1', 1);
 
         NavbarPage.clickNavigateToBuilding();
@@ -171,7 +171,7 @@ describe('resources/project --', function() {
         expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
     });
 
-    it('do not create with the same name', () => {
+    it('do not create a project of an already existing name', () => {
 
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('test');

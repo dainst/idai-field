@@ -7,7 +7,8 @@ import {ResultSets} from '../util/result-sets';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
 import {AppState} from '../app-state';
-import {AutoConflictResolvingExtension} from '../conflicts/auto-conflict-resolving-extension';
+import {AutoConflictResolvingExtension} from './auto-conflict-resolving-extension';
+import {ConflictResolver} from "./conflict-resolver";
 
 /**
  * @author Sebastian Cuy
@@ -31,10 +32,12 @@ export class PouchdbDatastore {
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer,
         private appState: AppState,
-        private autoConflictResolvingExtension: AutoConflictResolvingExtension
+        private autoConflictResolvingExtension: AutoConflictResolvingExtension,
+        private conflictResolver: ConflictResolver
         ) {
 
         autoConflictResolvingExtension.setDatastore(this);
+        autoConflictResolvingExtension.setConflictResolver(conflictResolver);
         this.db = pouchdbManager.getDb();
         this.setupServer().then(() => this.setupChangesEmitter())
     }

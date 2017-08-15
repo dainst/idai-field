@@ -1,4 +1,4 @@
-import {AutoConflictResolver} from '../../../app/conflicts/auto-conflict-resolver';
+import {IdaiFieldConflictResolver} from '../../../app/model/idai-field-conflict-resolver';
 
 /**
  * @author Daniel de Oliveira
@@ -6,9 +6,9 @@ import {AutoConflictResolver} from '../../../app/conflicts/auto-conflict-resolve
  */
 export function main() {
 
-    describe('AutoConflictResolver', () => {
+    describe('IdaiFieldConflictResolver', () => {
 
-        const autoConflictResolver = new AutoConflictResolver();
+        const autoConflictResolver = new IdaiFieldConflictResolver();
 
         const createDocument = (id: string, rev: string, identifier: string, shortDescription: string, user: string) => {
 

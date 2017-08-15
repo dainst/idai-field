@@ -1,9 +1,9 @@
 import {Action, Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {AutoConflictResolver} from './auto-conflict-resolver';
+import {IdaiFieldConflictResolver} from '../model/idai-field-conflict-resolver';
 import {M} from '../m';
-import {PouchdbDatastore} from '../datastore/pouchdb-datastore';
+import {PouchdbDatastore} from './pouchdb-datastore';
 import {Injectable} from "@angular/core";
+import {ConflictResolver} from './conflict-resolver';
 
 @Injectable()
 /**
@@ -14,18 +14,18 @@ export class AutoConflictResolvingExtension {
     public promise: Promise<any> = Promise.resolve();
 
     private inspectedRevisionsIds: string[] = [];
-    private autoConflictResolver: AutoConflictResolver;
     private datastore: PouchdbDatastore;
-
-    constructor() {
-        this.autoConflictResolver = new AutoConflictResolver();
-    }
+    private conflictResolver: ConflictResolver;
 
     public setDatastore(datastore: PouchdbDatastore) {
         this.datastore = datastore;
     }
 
-    public autoResolve(document: IdaiFieldDocument, userName: string): Promise<any> {
+    public setConflictResolver(conflictResolver: ConflictResolver) {
+        this.conflictResolver = conflictResolver;
+    }
+
+    public autoResolve(document: Document, userName: string): Promise<any> {
         if (!this.datastore) return Promise.reject("no datastore");
 
         this.promise = this.promise.then(() => {
@@ -39,7 +39,7 @@ export class AutoConflictResolvingExtension {
         return this.promise;
     }
 
-    public handleConflicts(document: IdaiFieldDocument, userName: string): Promise<any> {
+    public handleConflicts(document: Document, userName: string): Promise<any> {
 
         return this.getConflictedRevisions(document, userName).then(conflictedRevisions => {
             let promise: Promise<any> = Promise.resolve();
@@ -49,7 +49,8 @@ export class AutoConflictResolvingExtension {
                     this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
 
                     this.getPreviousRevision(conflictedRevision).then(previousRevision => {
-                        const result = this.autoConflictResolver.tryToSolveConflict(document, conflictedRevision, previousRevision);
+                        const result = this.conflictResolver.tryToSolveConflict(
+                            <any> document, <any> conflictedRevision, <any> previousRevision);
 
                         if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
                             return this.datastore.update(document).then(() => {
@@ -66,7 +67,7 @@ export class AutoConflictResolvingExtension {
         });
     }
 
-    private getRevisionNumber(revision: IdaiFieldDocument): number {
+    private getRevisionNumber(revision: Document): number {
 
         const revisionId = revision['_rev'];
         const index = revisionId.indexOf('-');
@@ -75,7 +76,7 @@ export class AutoConflictResolvingExtension {
         return parseInt(revisionNumber);
     }
 
-    private getPreviousRevision(revision: IdaiFieldDocument): Promise<IdaiFieldDocument> {
+    private getPreviousRevision(revision: Document): Promise<Document> {
 
         return this.datastore.fetch(revision.resource.id, { revs_info: true })
             .then(doc => doc['_revs_info']).then(history => {
@@ -98,12 +99,12 @@ export class AutoConflictResolvingExtension {
         });
     }
 
-    private getConflictedRevisions(document: IdaiFieldDocument, userName: string): Promise<Array<IdaiFieldDocument>> {
+    private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
 
         // TODO Necessary?
         if (!document['_conflicts']) return Promise.resolve([]);
 
-        let promises: Array<Promise<IdaiFieldDocument>> = [];
+        let promises: Array<Promise<Document>> = [];
 
         for (let revisionId of document['_conflicts']) {
             promises.push(this.datastore.fetch(document.resource.id, { rev: revisionId }));
@@ -112,7 +113,7 @@ export class AutoConflictResolvingExtension {
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
             .then(revisions => {
-            let result: Array<IdaiFieldDocument> = [];
+            let result: Array<Document> = [];
 
             for (let revision of revisions) {
                 const lastAction: Action = revision.modified && revision.modified.length > 0 ?

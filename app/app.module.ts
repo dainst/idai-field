@@ -43,7 +43,9 @@ import {ConstraintIndexer} from './datastore/constraint-indexer';
 import {FulltextIndexer} from './datastore/fulltext-indexer';
 import {DocumentCache} from './datastore/document-cache';
 import {AppState} from './app-state';
-import {AutoConflictResolvingExtension} from './conflicts/auto-conflict-resolving-extension';
+import {AutoConflictResolvingExtension} from './datastore/auto-conflict-resolving-extension';
+import {IdaiFieldConflictResolver} from "./model/idai-field-conflict-resolver";
+import {ConflictResolver} from "./datastore/conflict-resolver";
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -80,6 +82,7 @@ if (CONFIG['imagestorepath']) {
     ],
     providers: [
         AppState,
+        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
         AutoConflictResolvingExtension,
         { provide: 'app.config', useValue: CONFIG },
         { provide: 'app.imgPath', useValue: IMG_PATH },
@@ -121,16 +124,17 @@ if (CONFIG['imagestorepath']) {
                                  fulltextIndexer: FulltextIndexer,
                                  documentCache: DocumentCache,
                                  appState: AppState,
-                                 autoConflictResolvingExtension: AutoConflictResolvingExtension): Datastore {
+                                 autoConflictResolvingExtension: AutoConflictResolvingExtension,
+                                 conflictResolver: ConflictResolver): Datastore {
                 return new CachedPouchdbDatastore(
                     new PouchdbServerDatastore(pouchdbManager,
                         constraintIndexer, fulltextIndexer,
-                        appState, autoConflictResolvingExtension),
+                        appState, autoConflictResolvingExtension, conflictResolver),
                     documentCache);
             },
             deps: [PouchdbManager, ConstraintIndexer,
                 FulltextIndexer, DocumentCache,
-                AppState, AutoConflictResolvingExtension]
+                AppState, AutoConflictResolvingExtension, ConflictResolver]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DiffUtility} from './diff-utility';
 import {Util} from '../util/util';
 
-export class AutoConflictResolver {
+export class IdaiFieldConflictResolver {
 
     constructor() {}
 

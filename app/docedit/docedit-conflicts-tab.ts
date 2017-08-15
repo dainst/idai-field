@@ -6,7 +6,7 @@ import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
-import {DiffUtility} from './diff-utility';
+import {DiffUtility} from '../model/diff-utility';
 import {M} from '../m';
 
 const moment = require('moment');
@@ -17,7 +17,7 @@ const moment = require('moment');
 @Component({
     moduleId: module.id,
     selector: 'conflict-resolver',
-    templateUrl: './conflict-resolver.html'
+    templateUrl: './docedit-conflicts-tab.html'
 })
 
 export class ConflictResolverComponent implements OnChanges {

@@ -1,36 +1,31 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {DiffUtility} from './diff-utility';
 import {Util} from '../util/util';
 
 export class AutoConflictResolver {
 
-    constructor(private datastore: IdaiFieldDatastore) {}
+    constructor() {}
 
-    public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument): Promise<any> {
+    // TODO clone latestRevision and return
+    public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
+                              previousRevision: IdaiFieldDocument) {
 
-        return this.getPreviousRevision(conflictedRevision).then(previousRevision => {
+        if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
 
-            if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
+        const fieldConflictsResult = this.resolveFieldConflicts(latestRevision, conflictedRevision,
+            previousRevision);
+        const relationConflictsResult = this.resolveRelationConflicts(latestRevision, conflictedRevision,
+            previousRevision);
 
-            const fieldConflictsResult = this.resolveFieldConflicts(latestRevision, conflictedRevision,
-                previousRevision);
-            const relationConflictsResult = this.resolveRelationConflicts(latestRevision, conflictedRevision,
-                previousRevision);
+        const resolvedConflicts: number
+            = fieldConflictsResult.resolvedConflicts + relationConflictsResult.resolvedConflicts;
+        const unresolvedConflicts: number
+            = fieldConflictsResult.unresolvedConflicts + relationConflictsResult.unresolvedConflicts;
 
-            const resolvedConflicts: number
-                = fieldConflictsResult.resolvedConflicts + relationConflictsResult.resolvedConflicts;
-            const unresolvedConflicts: number
-                = fieldConflictsResult.unresolvedConflicts + relationConflictsResult.unresolvedConflicts;
-
-            if (resolvedConflicts > 0 || unresolvedConflicts == 0) {
-                return this.datastore.update(latestRevision).then(() => {
-                    if (!unresolvedConflicts) {
-                        return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev']);
-                    }
-                });
-            }
-        });
+        return {
+            resolvedConflicts: resolvedConflicts,
+            unresolvedConflicts: unresolvedConflicts
+        }
     }
 
     private resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
@@ -145,33 +140,5 @@ export class AutoConflictResolver {
         }
     }
 
-    private getPreviousRevision(revision: IdaiFieldDocument): Promise<IdaiFieldDocument> {
 
-        return this.datastore.getRevisionHistory(revision.resource.id).then(history => {
-            const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
-
-            if (previousRevisionNumber < 1) return Promise.resolve(undefined);
-
-            const prefix = previousRevisionNumber.toString() + '-';
-            let previousRevisionId: string;
-
-            for (let historyElement of history) {
-                if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
-                    previousRevisionId = historyElement.rev;
-                    break;
-                }
-            }
-
-            return this.datastore.getRevision(revision.resource.id, previousRevisionId);
-        });
-    }
-
-    private getRevisionNumber(revision: IdaiFieldDocument): number {
-
-        const revisionId = revision['_rev'];
-        const index = revisionId.indexOf('-');
-        const revisionNumber = revisionId.substring(0, index);
-
-        return parseInt(revisionNumber);
-    }
 }

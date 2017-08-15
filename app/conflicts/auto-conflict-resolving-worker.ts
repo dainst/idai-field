@@ -22,7 +22,7 @@ export class AutoConflictResolvingWorker {
                 private messages: Messages,
                 private settingsService: SettingsService) {
 
-        this.autoConflictResolver = new AutoConflictResolver(datastore);
+        this.autoConflictResolver = new AutoConflictResolver();
     }
 
     public initialize() {
@@ -51,17 +51,58 @@ export class AutoConflictResolvingWorker {
 
     public handleConflicts(document: IdaiFieldDocument): Promise<any> {
 
-        return this.getConflictedRevisions(document).then(revisions => {
+        return this.getConflictedRevisions(document).then(conflictedRevisions => {
             let promise: Promise<any> = Promise.resolve();
 
-            for (let revision of revisions) {
+            for (let conflictedRevision of conflictedRevisions) {
                 promise = promise.then(() => {
-                    this.inspectedRevisionsIds.push(revision['_rev']);
-                    this.autoConflictResolver.tryToSolveConflict(document, revision);
+                    this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
+
+                    this.getPreviousRevision(conflictedRevision).then(previousRevision => {
+                        const result = this.autoConflictResolver.tryToSolveConflict(document, conflictedRevision, previousRevision);
+
+                        if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+                            return this.datastore.update(document).then(() => {
+                                if (!result['unresolvedConflicts']) {
+                                    return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
+                                }
+                            });
+                        }
+                    });
                 });
             }
 
             return promise;
+        });
+    }
+
+    private getRevisionNumber(revision: IdaiFieldDocument): number {
+
+        const revisionId = revision['_rev'];
+        const index = revisionId.indexOf('-');
+        const revisionNumber = revisionId.substring(0, index);
+
+        return parseInt(revisionNumber);
+    }
+
+    private getPreviousRevision(revision: IdaiFieldDocument): Promise<IdaiFieldDocument> {
+
+        return this.datastore.getRevisionHistory(revision.resource.id).then(history => {
+            const previousRevisionNumber: number = this.getRevisionNumber(revision) - 1;
+
+            if (previousRevisionNumber < 1) return Promise.resolve(undefined);
+
+            const prefix = previousRevisionNumber.toString() + '-';
+            let previousRevisionId: string;
+
+            for (let historyElement of history) {
+                if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
+                    previousRevisionId = historyElement.rev;
+                    break;
+                }
+            }
+
+            return this.datastore.getRevision(revision.resource.id, previousRevisionId);
         });
     }
 

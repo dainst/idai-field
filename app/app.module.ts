@@ -39,7 +39,7 @@ import {ViewUtility} from './util/view-utility';
 import {PouchdbManager} from './datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './datastore/sample-data-loader';
-import {AutoConflictResolver} from './common/auto-conflict-resolver';
+import {AutoConflictResolvingWorker} from './conflicts/auto-conflict-resolving-worker';
 import {ConstraintIndexer} from "./datastore/constraint-indexer";
 import {FulltextIndexer} from "./datastore/fulltext-indexer";
 import {DocumentCache} from "./datastore/document-cache";
@@ -146,7 +146,7 @@ if (CONFIG['imagestorepath']) {
         RelationsCompleter,
         ImageTypeUtility,
         ViewUtility,
-        AutoConflictResolver
+        AutoConflictResolvingWorker
     ],
     bootstrap: [ AppComponent ]
 })

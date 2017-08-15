@@ -4,7 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {AppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
-import {AutoConflictResolver} from './common/auto-conflict-resolver';
+import {AutoConflictResolvingWorker} from './conflicts/auto-conflict-resolving-worker';
 import {M} from './m';
 
 const remote = require('electron').remote;
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
                 private router: Router,
                 private messages: Messages,
                 private settingsService: SettingsService,
-                private autoConflictResolver: AutoConflictResolver) {
+                private autoConflictResolvingWorker: AutoConflictResolvingWorker) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
             if (count > 1) this.messages.add([M.APP_ERRORS_IN_CONFIG, count]);
         });
 
-        this.autoConflictResolver.initialize();
+        this.autoConflictResolvingWorker.initialize();
     }
 
     private static preventDefaultDragAndDropBehavior() {

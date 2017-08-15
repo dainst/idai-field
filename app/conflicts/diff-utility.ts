@@ -1,6 +1,5 @@
-import {IdaiFieldResource} from 'idai-components-2/idai-field-model';
+import {IdaiFieldResource} from '../../../idai-components-2/idai-field-model';
 import {Util} from "../util/util";
-const deepEqual = require('deep-equal');
 
 /**
  * @author Thomas Kleinke
@@ -40,6 +39,6 @@ export class DiffUtility {
 
         if ((object1 && !object2) || (!object1 && object2)) return false;
 
-        return deepEqual(object1, object2);
+        return JSON.stringify(object1) == JSON.stringify(object2);
     }
 }

@@ -54,7 +54,8 @@
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                                    (document.resource.type)"></edit-form>
+                                                    (document.resource.type)">
+                                    </edit-form>
                                 </ng-template>
                             </ngb-tab>
                             <ngb-tab *ngIf="relDefs() && relDefs().length > 0" title="Relationen"
@@ -63,7 +64,8 @@
                                     <relations-form
                                             [(document)]="clonedDocument"
                                             [primary]="'identifier'"
-                                            [relationDefinitions]="relDefs()"></relations-form>
+                                            [relationDefinitions]="relDefs()">
+                                    </relations-form>
                                 </ng-template>
                             </ngb-tab>
 

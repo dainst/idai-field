@@ -9,7 +9,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditImageTabComponent} from './docedit-image-tab.component';
-import {ConflictResolverComponent} from './docedit-conflicts-tab.component';
+import {DoceditConflictsTabComponent} from './docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 
@@ -30,7 +30,7 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
         DoceditComponent,
         EditSaveDialogComponent,
         DoceditImageTabComponent,
-        ConflictResolverComponent
+        DoceditConflictsTabComponent
     ],
     exports: [
         EditSaveDialogComponent,

@@ -20,7 +20,7 @@ const moment = require('moment');
     templateUrl: './docedit-conflicts-tab.html'
 })
 
-export class ConflictResolverComponent implements OnChanges {
+export class DoceditConflictsTabComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
     @Input() inspectedRevisionsIds: string[];

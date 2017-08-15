@@ -58,6 +58,8 @@ export class ListComponent implements OnChanges {
 
     private update(): Promise<any> {
 
+        if (!this.selectedMainTypeDocument) return Promise.resolve();
+
         this.docRefTree = [];
         this.childrenShownForIds = [];
 

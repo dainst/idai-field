@@ -63,17 +63,20 @@ export function main() {
             const originalRevision = createDocument('id1', '1-xyz', 'identifier1', 'shortDescription1', 'testuser1');
             const conflictedRevision = createDocument('id1', '2-abc', 'identifier1_changed', 'shortDescription1',
                 'testuser1');
-            const latestRevision = createDocument('id1', '2-def', 'identifier1', 'shortDescription1', 'testuser2');
+            const latestRevision = createDocument('id1', '2-def', 'identifier1', 'shortDescription1_changed',
+                'testuser2');
             configureMockDatastore(originalRevision, conflictedRevision, latestRevision);
 
             autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision).then(() => {
                 expect(latestRevision.resource.identifier).toEqual('identifier1_changed');
+                expect(latestRevision.resource.shortDescription).toEqual('shortDescription1_changed');
                 expect(mockDatastore.update).toHaveBeenCalled();
                 expect(mockDatastore.removeRevision).toHaveBeenCalled();
             }).catch(err => {
                 fail(err);
             }).then(done);
         });
+
 
     });
 }

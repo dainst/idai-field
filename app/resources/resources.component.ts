@@ -119,9 +119,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public initialize(): Promise<any> {
 
         this.loading.start();
-
-        this.query.q = '';
-        this.filterType = this.resourcesState.getLastSelectedFilterType(this.view.name);
+        this.resetQuery();
 
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
@@ -286,6 +284,13 @@ export class ResourcesComponent implements AfterViewChecked {
         this.filterType = type;
 
         this.fetchDocuments();
+    }
+
+    private resetQuery() {
+
+        this.query = { q: '' };
+        this.filterType = this.resourcesState.getLastSelectedFilterType(this.view.name);
+        if (this.filterType) this.query.types = [this.filterType];
     }
 
     public replace(document: Document,restoredObject: Document) {

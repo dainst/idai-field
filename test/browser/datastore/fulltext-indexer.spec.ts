@@ -80,6 +80,8 @@ export function main() {
             fi.put(doc('1', 'identifier1', 'type', 'a short description'));
             expect(fi.get('short description', ['type']))
                 .toEqual([{ id: '1', date: '2018-01-01' }]);
+            expect(fi.get('a description', ['type']))
+                .toEqual([{ id: '1', date: '2018-01-01' }]);
         });
 
         it('ignore additional spaces', () => {

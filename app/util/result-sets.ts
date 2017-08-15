@@ -1,5 +1,6 @@
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ResultSets {
 

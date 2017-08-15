@@ -1,4 +1,4 @@
-import {IdaiFieldResource} from '../../../idai-components-2/idai-field-model';
+import {IdaiFieldResource} from 'idai-components-2/idai-field-model';
 import {Util} from "../util/util";
 
 /**

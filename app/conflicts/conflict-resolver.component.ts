@@ -1,13 +1,13 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldResource} from '../../../idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field-model';
+import {Action} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from '../../../idai-components-2/configuration';
+import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
-import {Action} from '../../../idai-components-2/core';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore'
 import {DiffUtility} from './diff-utility';
-import {M} from "../m";
+import {M} from '../m';
 
 const moment = require('moment');
 

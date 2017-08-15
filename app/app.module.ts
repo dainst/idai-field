@@ -43,7 +43,7 @@ import {ConstraintIndexer} from './datastore/constraint-indexer';
 import {FulltextIndexer} from './datastore/fulltext-indexer';
 import {DocumentCache} from './datastore/document-cache';
 import {AppState} from './app-state';
-import {AutoConflictResolvingExtension} from './datastore/auto-conflict-resolving-extension';
+import {ConflictResolvingExtension} from './datastore/conflict-resolving-extension';
 import {IdaiFieldConflictResolver} from "./model/idai-field-conflict-resolver";
 import {ConflictResolver} from "./datastore/conflict-resolver";
 
@@ -83,7 +83,7 @@ if (CONFIG['imagestorepath']) {
     providers: [
         AppState,
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
-        AutoConflictResolvingExtension,
+        ConflictResolvingExtension,
         { provide: 'app.config', useValue: CONFIG },
         { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
@@ -124,7 +124,7 @@ if (CONFIG['imagestorepath']) {
                                  fulltextIndexer: FulltextIndexer,
                                  documentCache: DocumentCache,
                                  appState: AppState,
-                                 autoConflictResolvingExtension: AutoConflictResolvingExtension,
+                                 autoConflictResolvingExtension: ConflictResolvingExtension,
                                  conflictResolver: ConflictResolver): Datastore {
                 return new CachedPouchdbDatastore(
                     new PouchdbServerDatastore(pouchdbManager,
@@ -134,7 +134,7 @@ if (CONFIG['imagestorepath']) {
             },
             deps: [PouchdbManager, ConstraintIndexer,
                 FulltextIndexer, DocumentCache,
-                AppState, AutoConflictResolvingExtension, ConflictResolver]
+                AppState, ConflictResolvingExtension, ConflictResolver]
         },
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },

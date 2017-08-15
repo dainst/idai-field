@@ -9,7 +9,7 @@ import {ConflictResolver} from './conflict-resolver';
 /**
  * @author Thomas Kleinke
  */
-export class AutoConflictResolvingExtension {
+export class ConflictResolvingExtension {
 
     public promise: Promise<any> = Promise.resolve();
 

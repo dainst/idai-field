@@ -1,16 +1,16 @@
-import {AutoConflictResolvingExtension} from '../../../app/datastore/auto-conflict-resolving-extension';
+import {ConflictResolvingExtension} from '../../../app/datastore/conflict-resolving-extension';
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('AutoConflictResolvingExtension', () => {
+    describe('ConflictResolvingExtension', () => {
 
         it('match one with with different search terms', done => {
 
             const datastore = jasmine.createSpyObj('datastore', ['fetch']);
             const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-            const extension = new AutoConflictResolvingExtension();
+            const extension = new ConflictResolvingExtension();
 
             extension.setDatastore(datastore);
             extension.setConflictResolver(conflictResolver);

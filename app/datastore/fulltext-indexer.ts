@@ -71,6 +71,15 @@ export class FulltextIndexer {
         }
     }
 
+    /**
+     * @param s search string, which gets tokenized, so that the result will include
+     *   search hits for any of the tokens. If s is "hello world", all items which are
+     *   indexed under either "hello" or "world" will be included in the result. The
+     *   result will be a set in the sense that it will include each item only once.
+     * @param types if undefined, searches in all types. If defined, only search hits
+     *   indexed under the specified types will be included in the results.
+     * @returns {any} array of items
+     */
     public get(s: string, types: string[]): Array<any> {
 
         if (Object.keys(this.index).length == 0) return [];

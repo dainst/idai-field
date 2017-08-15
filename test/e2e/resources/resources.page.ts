@@ -48,7 +48,6 @@ export class ResourcesPage {
     };
 
     public static clickChooseTypeFilter = function(typeIndex) {
-
         common.click(element(by.id('searchfilter')));
         common.click(element(by.id('choose-type-filter-option-' + typeIndex)));
     };
@@ -143,6 +142,10 @@ export class ResourcesPage {
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
+    };
+
+    public static getSelectedTypeFilterButton = function() {
+        return element(by.css('#filter-button type-icon'));
     };
 
     // sequences

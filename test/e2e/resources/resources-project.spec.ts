@@ -222,13 +222,16 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('excavation-fund', 1);
 
         ResourcesPage.clickChooseTypeFilter(1);
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToBuilding();
+        browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('building-befund')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
     });

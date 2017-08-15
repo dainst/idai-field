@@ -1,10 +1,12 @@
-import {browser} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
-const fs = require('fs');
 import {ProjectPage} from '../project.page';
+
+const fs = require('fs');
 const delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
 
 /**
  * @author Daniel de Oliveira
@@ -206,5 +208,28 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+    });
+
+    it('autoselect last selected type filter on switching views', () => {
+
+        ResourcesPage.performCreateResource('building', 1);
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.performCreateResource('building-befund');
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.performCreateResource('excavation-befund', 0);
+        ResourcesPage.performCreateResource('excavation-fund', 1);
+
+        ResourcesPage.clickChooseTypeFilter(1);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToBuilding();
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('building-befund')), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
     });
 });

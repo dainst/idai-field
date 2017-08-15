@@ -64,7 +64,7 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime)
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
     it('not reflect changes in overview in realtime', () => {

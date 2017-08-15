@@ -43,6 +43,7 @@ describe('resources/project --', function() {
     }
 
     it('basic stuff', () => {
+
         ResourcesPage.performCreateResource('trench2', 0);
 
         NavbarPage.clickNavigateToExcavation();
@@ -62,6 +63,7 @@ describe('resources/project --', function() {
     });
 
     it ('delete project', () => {
+
         performCreateProject();
         browser.sleep(delays.shortRest * 10);
 
@@ -88,6 +90,7 @@ describe('resources/project --', function() {
     });
 
     it('create & switch project', () => {
+
         performCreateProject();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
@@ -124,6 +127,7 @@ describe('resources/project --', function() {
     });
 
     it('switch views after click on relation link', () => {
+
         ResourcesPage.performCreateResource('building1', 1);
 
         NavbarPage.clickNavigateToBuilding();
@@ -143,6 +147,7 @@ describe('resources/project --', function() {
     });
 
     it('select correct main type document after click on relation link', () => {
+
         ResourcesPage.performCreateResource('building1', 1);
         ResourcesPage.performCreateResource('building2', 1);
 
@@ -178,5 +183,28 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
+    });
+
+    it('autoselect last selected main type document on switching views', () => {
+
+        ResourcesPage.performCreateResource('trench2', 0);
+        ResourcesPage.performCreateResource('building1', 1);
+        ResourcesPage.performCreateResource('building2', 1);
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
+        ResourcesPage.clickSelectMainType(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+        ResourcesPage.clickSelectMainType(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
     });
 });

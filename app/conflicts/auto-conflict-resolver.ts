@@ -2,7 +2,6 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {DiffUtility} from './diff-utility';
 import {Util} from '../util/util';
-import {M} from '../m';
 
 export class AutoConflictResolver {
 
@@ -27,8 +26,7 @@ export class AutoConflictResolver {
             if (resolvedConflicts > 0 || unresolvedConflicts == 0) {
                 return this.datastore.update(latestRevision).then(() => {
                     if (!unresolvedConflicts) {
-                        return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev'])
-                            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
+                        return this.datastore.removeRevision(latestRevision.resource.id, conflictedRevision['_rev']);
                     } else {
                         return Promise.resolve();
                     }
@@ -167,8 +165,7 @@ export class AutoConflictResolver {
                 }
             }
 
-            return this.datastore.getRevision(revision.resource.id, previousRevisionId)
-                .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            return this.datastore.getRevision(revision.resource.id, previousRevisionId);
         });
     }
 

@@ -29,7 +29,10 @@ export class AutoConflictResolvingWorker {
 
         this.datastore.documentChangesNotifications().subscribe(document => {
             this.autoResolve(document as IdaiFieldDocument)
-                .catch(msgWithParams => this.messages.add(msgWithParams));
+                .catch(err => {
+                    console.error(err);
+                    this.messages.add([M.DATASTORE_GENERIC_ERROR]);
+                });
         });
     }
 

@@ -119,8 +119,11 @@ export class ResourcesComponent implements AfterViewChecked {
     public initialize(): Promise<any> {
 
         this.resetQuery();
-        this.mode = this.resourcesState.getLastSelectedMode(this.view.name) ?
-            this.resourcesState.getLastSelectedMode(this.view.name) : this.mode;
+        if (this.resourcesState.getLastSelectedMode(this.view.name)) {
+            this.mode = this.resourcesState.getLastSelectedMode(this.view.name);
+        } else {
+            this.resourcesState.setLastSelectedMode(this.view.name, this.mode);
+        }
 
         this.loading.start();
         return this.fetchProjectDocument()

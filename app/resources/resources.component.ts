@@ -70,12 +70,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 private resourcesState: ResourcesState
     ) {
         this.route.params.subscribe(params => {
-            this.selectedDocument = undefined;
-            this.selectedMainTypeDocument = undefined;
-            this.mainTypeDocuments = undefined;
-            this.ready = false;
 
-            this.parseParams(params)
+            this.setupViewFrom(params)
                 .then(() => this.initialize())
                 .catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)
@@ -102,7 +98,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    private parseParams(params: Params): Promise<any> {
+    private setupViewFrom(params: Params): Promise<any> {
 
         if (params['id']) this.selectDocumentFromParams(params['id'], params['tab']);
 
@@ -128,6 +124,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
+        this.ready = false;
+
+        this.selectedDocument = undefined;
+        this.selectedMainTypeDocument = undefined;
+        this.mainTypeDocuments = undefined;
+
         this.resetQuery();
         this.initializeMode();
 
@@ -136,12 +138,12 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
-    private populateAll(f?, param?) {
+    private populateAll(cb?) {
 
         return this.populateProjectDocument()
             .then(() => this.populateMainTypeDocuments())
             .then(() => {
-                if (f && param) f(param);
+                if (cb) cb();
                 return this.populateDocumentList();
             })
     }
@@ -271,7 +273,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.populateDocumentList();
         }
     }
-    
+
     public setQueryString(q: string) {
 
         this.query.q = q;
@@ -399,7 +401,7 @@ export class ResourcesComponent implements AfterViewChecked {
         const docedit = doceditRef.componentInstance;
 
         doceditRef.result.then(result =>
-                this.populateAll(this.selectDocument, result.document)
+                this.populateAll(() => this.selectDocument(result.document))
             , closeReason => {
 
                 this.documentEditChangeMonitor.reset();

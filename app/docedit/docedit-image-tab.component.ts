@@ -83,8 +83,6 @@ export class DoceditImageTabComponent {
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
-        console.log("addIsDepicted",imageDocuments)
-
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
 

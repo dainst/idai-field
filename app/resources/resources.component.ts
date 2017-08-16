@@ -282,11 +282,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryType(type: string) {
 
-        if (type) {
-            this.query.types = [type];
-        } else {
-            delete this.query.types;
-        }
+        type ? this.query.types = [type] : delete this.query.types;
 
         this.resourcesState.setLastSelectedTypeFilter(this.view.name, type);
         this.filterType = type;
@@ -303,8 +299,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public remove(document: Document) {
 
-        const index = this.documents.indexOf(document);
-        this.documents.splice(index, 1);
+        this.documents.splice(this.documents.indexOf(document), 1);
     }
 
     private populateProjectDocument(): Promise<any> {
@@ -398,7 +393,6 @@ export class ResourcesComponent implements AfterViewChecked {
         if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
-        const docedit = doceditRef.componentInstance;
 
         doceditRef.result.then(result =>
                 this.populateAll(() => this.selectDocument(result.document))
@@ -415,6 +409,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 }
             });
 
+        const docedit = doceditRef.componentInstance;
         docedit.setDocument(document);
         if (activeTabName) docedit.setActiveTab(activeTabName);
     }

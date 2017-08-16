@@ -33,7 +33,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public view: ViewDefinition;
     public mainTypeLabel: string;
-    public mode: string = 'map';
+    public mode: string; // 'map' or 'list'
     public editGeometry: boolean = false;
 
     public query: Query = { q: '' };
@@ -116,14 +116,20 @@ export class ResourcesComponent implements AfterViewChecked {
         this.ready = false;
     }
 
-    public initialize(): Promise<any> {
+    private initializeMode() {
 
-        this.resetQuery();
         if (this.resourcesState.getLastSelectedMode(this.view.name)) {
             this.mode = this.resourcesState.getLastSelectedMode(this.view.name);
         } else {
-            this.resourcesState.setLastSelectedMode(this.view.name, this.mode);
+            this.mode = 'map';
+            this.resourcesState.setLastSelectedMode(this.view.name, 'map');
         }
+    }
+
+    public initialize(): Promise<any> {
+
+        this.resetQuery();
+        this.initializeMode();
 
         this.loading.start();
         return this.fetchProjectDocument()

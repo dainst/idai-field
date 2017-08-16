@@ -262,6 +262,17 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
+    public fetchRevsInfo(resourceId: string) {
+
+        return this.fetch(resourceId, { revs_info: true })
+            .then(doc => doc['_revs_info']);
+    }
+
+    public fetchRevision(resourceId: string, revisionId: string) {
+
+        return this.fetch(resourceId, { rev: revisionId });
+    }
+
     public fetch(resourceId: string,
                  options: any = { conflicts: true }): Promise<Document> {
 

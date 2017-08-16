@@ -44,7 +44,7 @@ export function main() {
             latestRevision['_rev'] = '2-abc';
             latestRevision['_conflicts'] = ['2-xyz'];
 
-            const datastore = jasmine.createSpyObj('datastore', ['fetch', 'update', 'removeRevision']);
+            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetchRevsInfo', 'update', 'removeRevision']);
             const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
             const extension = new ConflictResolvingExtension();
 
@@ -55,13 +55,17 @@ export function main() {
 
             datastore.update.and.callFake(() => Promise.resolve(undefined));
             datastore.removeRevision.and.callFake(() => Promise.resolve(undefined));
-            datastore.fetch.and.callFake((resourceId, options) => {
+            datastore.fetchRevision.and.callFake((resourceId, revisionId) => {
                 if (resourceId != '1') return Promise.reject(undefined);
 
-                if (options['revs_info']) return Promise.resolve({_revs_info:[{rev: '1-hij', status: 'available'}]});
-                if (options['rev'] == '2-xyz') return Promise.resolve(conflictedRevision);
-                if (options['rev'] == '1-hij') return Promise.resolve(originalRevision);
+                if (revisionId == '2-xyz') return Promise.resolve(conflictedRevision);
+                if (revisionId == '1-hij') return Promise.resolve(originalRevision);
                 return Promise.reject(undefined);
+            });
+            datastore.fetchRevsInfo.and.callFake((resourceId) => {
+                if (resourceId != '1') return Promise.reject(undefined);
+
+                return Promise.resolve([{rev: '1-hij', status: 'available'}]);
             });
 
             extension.setDatastore(datastore);

@@ -114,7 +114,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      */
     public getRevision(docId: string, revisionId: string): Promise<Document> {
 
-        return this.datastore.fetch(docId, { rev: revisionId });
+        return this.datastore.fetchRevision(docId, revisionId);
     }
 
     /**

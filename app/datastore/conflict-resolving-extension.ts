@@ -79,8 +79,8 @@ export class ConflictResolvingExtension {
 
     private getPreviousRevision(revision: Document): Promise<Document> {
 
-        return this.datastore.fetch(revision.resource.id, { revs_info: true })
-            .then(doc => doc['_revs_info']).then(history => {
+        return this.datastore.fetchRevsInfo(revision.resource.id, )
+            .then(history => {
 
                 const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
 
@@ -96,7 +96,7 @@ export class ConflictResolvingExtension {
                     }
                 }
 
-                return this.datastore.fetch(revision.resource.id, { rev: previousRevisionId });
+                return this.datastore.fetchRevision(revision.resource.id, previousRevisionId);
             }
         );
     }
@@ -109,7 +109,7 @@ export class ConflictResolvingExtension {
         let promises: Array<Promise<Document>> = [];
 
         for (let revisionId of document['_conflicts']) {
-            promises.push(this.datastore.fetch(document.resource.id, { rev: revisionId }));
+            promises.push(this.datastore.fetchRevision(document.resource.id, revisionId));
         }
 
         return Promise.all(promises)

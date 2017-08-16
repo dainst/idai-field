@@ -50,7 +50,7 @@ export class ConflictResolvingExtension {
                     this.getPreviousRevision(conflictedRevision).then(previousRevision => {
 
                         const result = this.conflictResolver.tryToSolveConflict(
-                            <any> document, <any> conflictedRevision, <any> previousRevision);
+                            document, conflictedRevision, previousRevision);
 
                         if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
 

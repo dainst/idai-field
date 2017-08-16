@@ -113,7 +113,7 @@ export class ConflictResolvingExtension {
         }
 
         return Promise.all(promises)
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND])) // TODO return a datastore error and adjust apidoc
             .then(revisions => {
                 const result: Array<Document> = [];
 

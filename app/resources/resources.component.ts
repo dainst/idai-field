@@ -132,9 +132,9 @@ export class ResourcesComponent implements AfterViewChecked {
         this.initializeMode();
 
         this.loading.start();
-        return this.fetchProjectDocument()
-            .then(() => this.fetchMainTypeDocuments())
-            .then(() => this.fetchDocuments())
+        return this.populateProjectDocument()
+            .then(() => this.populateMainTypeDocuments())
+            .then(() => this.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
@@ -161,21 +161,23 @@ export class ResourcesComponent implements AfterViewChecked {
         this.selectedMainTypeDocument = document;
         this.resourcesState.setLastSelectedMainTypeDocument(this.view.name, this.selectedMainTypeDocument);
 
-        if (this.selectedDocument && this.getMainTypeDocumentForDocument(this.selectedDocument)
-                != this.selectedMainTypeDocument) {
+        if (this.selectedDocument &&
+            ResourcesComponent.getMainTypeDocumentForDocument(
+                this.selectedDocument, this.mainTypeDocuments) != this.selectedMainTypeDocument) {
+
             this.setSelected(undefined);
         }
 
-        this.fetchDocuments();
+        this.populateDocumentList();
     }
 
     private handleChange(changedDocument: Document) {
 
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
-        if (this.isExistingDoc(changedDocument)) return;
+        if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
 
         let oldDocuments = this.documents;
-        this.fetchDocuments().then(() => {
+        this.populateDocumentList().then(() => {
             for (let doc of this.documents) {
                 if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
                     this.newDocumentsFromRemote.push(doc);
@@ -184,10 +186,10 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
-    private isExistingDoc(changedDocument) {
+    private static isExistingDoc(changedDocument, documents) {
 
         let existingDoc = false;
-        for (let doc of this.documents) {
+        for (let doc of documents) {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
             if (doc.resource.id == changedDocument.resource.id) {
@@ -256,20 +258,21 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return;
 
-        let mainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+        let mainTypeDocument = ResourcesComponent.getMainTypeDocumentForDocument(
+            this.selectedDocument, this.mainTypeDocuments);
 
         if (mainTypeDocument != this.selectedMainTypeDocument) {
             this.selectedMainTypeDocument = mainTypeDocument;
-            this.fetchDocuments();
+            this.populateDocumentList();
         }
     }
 
-    private getMainTypeDocumentForDocument(document: Document): IdaiFieldDocument {
+    private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
 
         if (!document.resource.relations['isRecordedIn']) return undefined;
 
         for (let documentId of document.resource.relations['isRecordedIn']) {
-            for (let mainTypeDocument of this.mainTypeDocuments) {
+            for (let mainTypeDocument of mainTypeDocuments) {
                 if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
             }
         }
@@ -280,7 +283,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public setQueryString(q: string) {
 
         this.query.q = q;
-        this.fetchDocuments();
+        this.populateDocumentList();
     }
 
     public setQueryType(type: string) {
@@ -294,7 +297,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.resourcesState.setLastSelectedTypeFilter(this.view.name, type);
         this.filterType = type;
 
-        this.fetchDocuments();
+        this.populateDocumentList();
     }
 
     private resetQuery() {
@@ -304,19 +307,13 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.filterType) this.query.types = [this.filterType];
     }
 
-    public replace(document: Document,restoredObject: Document) {
-
-        let index = this.documents.indexOf(document);
-        this.documents[index] = restoredObject;
-    }
-
     public remove(document: Document) {
 
         const index = this.documents.indexOf(document);
         this.documents.splice(index, 1);
     }
 
-    public fetchProjectDocument(): Promise<any> {
+    private populateProjectDocument(): Promise<any> {
 
         return this.datastore.get(this.settingsService.getSelectedProject())
             .then(
@@ -328,43 +325,64 @@ export class ResourcesComponent implements AfterViewChecked {
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
      */
-    public fetchDocuments(): Promise<any> {
-
-        if (!this.selectedMainTypeDocument) return (this.documents = []) && Promise.resolve();
+    private populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
 
-        this.query.constraints = { 'resource.relations.isRecordedIn' :
-            this.selectedMainTypeDocument.resource.id };
+        if (!this.selectedMainTypeDocument) {
+            this.documents = [];
+            return Promise.resolve();
+        }
 
-        this.loading.start();
-        return this.datastore.find(this.query)
-            .then(documents => this.documents = documents)
-            .catch(errWithParams => this.handleFindErr(errWithParams, this.query))
-            .then(() => this.loading.stop());
+        return this.fetchDocuments(ResourcesComponent.makeDocsQuery(this.query,
+                    this.selectedMainTypeDocument.resource.id))
+            .then(documents => this.documents = documents);
+
     }
 
-    private handleFindErr(errWithParams, query) {
-
-        console.error('error with find. query:', query);
-        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
-        this.messages.add([M.ALL_FIND_ERROR])
-    }
-
-    private fetchMainTypeDocuments(): Promise <any> {
+    private populateMainTypeDocuments(): Promise <any> {
 
         if (!this.view) return Promise.resolve();
 
-        const query: Query = { types: [this.view.mainType] };
-
-        this.loading.start();
-        return this.datastore.find(query)
+        return this.fetchDocuments(
+                ResourcesComponent.makeMainTypeQuery(this.view.mainType))
             .then(documents => {
-                this.loading.stop();
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 this.setSelectedMainTypeDocument();
             })
-            .catch(errWithParams => this.handleFindErr(errWithParams, query));
+    }
+
+    private fetchDocuments(f): Promise<any> {
+
+        this.loading.start();
+        return this.datastore.find(f())
+            .catch(errWithParams => ResourcesComponent.handleFindErr(
+                this.messages, errWithParams, this.query)
+            )
+            .then(documents => {
+                this.loading.stop(); return documents;
+            });
+    }
+
+    private static makeDocsQuery(query, mainTypeDocumentResourceId) : Query {
+        return () => {
+            const q = JSON.parse(JSON.stringify(query));
+            q.constraints = { 'resource.relations.isRecordedIn' : mainTypeDocumentResourceId };
+            return q;
+        }
+    }
+
+    private static makeMainTypeQuery(mainType) : Query {
+        return () => {
+            return { types: [mainType] };
+        }
+    }
+
+    private static handleFindErr(messages, errWithParams, query) {
+
+        console.error('error with find. query:', query);
+        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
+        messages.add([M.ALL_FIND_ERROR])
     }
 
     private setSelectedMainTypeDocument() {
@@ -372,7 +390,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.mainTypeDocuments.length == 0) {
             this.selectedMainTypeDocument = undefined;
         } else if (this.selectedDocument) {
-            this.selectedMainTypeDocument = this.getMainTypeDocumentForDocument(this.selectedDocument);
+            this.selectedMainTypeDocument = ResourcesComponent.getMainTypeDocumentForDocument(this.selectedDocument, this.mainTypeDocuments);
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
         } else {
             const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
@@ -411,8 +429,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         doceditRef.result.then(result => {
 
-            this.fetchProjectDocument()
-                .then(() => this.fetchMainTypeDocuments())
+            this.populateProjectDocument()
+                .then(() => this.populateMainTypeDocuments())
                 .then(() => {
                     if (result.document && result.document.resource.type == this.view.mainType) {
                         this.selectedMainTypeDocument = result.document;
@@ -420,7 +438,7 @@ export class ResourcesComponent implements AfterViewChecked {
                         this.selectedDocument = result.document;
                         this.scrollTarget = result.document;
                     }
-                    return this.fetchDocuments();
+                    return this.populateDocumentList();
                 });
 
         }, closeReason => {
@@ -429,9 +447,9 @@ export class ResourcesComponent implements AfterViewChecked {
             if (closeReason == 'deleted') {
                 this.selectedDocument = undefined;
                 if (document == this.selectedMainTypeDocument) {
-                    return this.fetchMainTypeDocuments().then(() => this.fetchDocuments());
+                    return this.populateMainTypeDocuments().then(() => this.populateDocumentList());
                 }
-                this.fetchDocuments();
+                this.populateDocumentList();
             }
         });
 
@@ -447,7 +465,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public endEditGeometry() {
 
         this.editGeometry = false;
-        this.fetchDocuments();
+        this.populateDocumentList();
     }
 
     public createGeometry(geometryType: string) {

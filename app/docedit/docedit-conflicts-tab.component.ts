@@ -229,6 +229,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         field.rightSideWinning = rightSideWinning;
     }
 
+    // TODO put to a util, possibly in model package of idai-field-client
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
 
         revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
@@ -244,6 +245,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         });
     }
 
+    // TODO put to a util, possibly in model package of idai-field-client
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
         let latestAction: Action;

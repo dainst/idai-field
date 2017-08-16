@@ -204,19 +204,6 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
-    private static isExistingDoc(changedDocument, documents) {
-
-        let existingDoc = false;
-        for (let doc of documents) {
-            if (!doc.resource || !changedDocument.resource) continue;
-            if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) {
-                existingDoc = true;
-            }
-        }
-        return existingDoc;
-    }
-
     private initializeClickEventListener() {
 
         this.renderer.listenGlobal('document', 'click', event => {
@@ -284,20 +271,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.populateDocumentList();
         }
     }
-
-    private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
-
-        if (!document.resource.relations['isRecordedIn']) return undefined;
-
-        for (let documentId of document.resource.relations['isRecordedIn']) {
-            for (let mainTypeDocument of mainTypeDocuments) {
-                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
-            }
-        }
-
-        return undefined;
-    }
-
+    
     public setQueryString(q: string) {
 
         this.query.q = q;
@@ -382,27 +356,6 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    private static makeDocsQuery(query, mainTypeDocumentResourceId) : Query {
-        return () => {
-            const q = JSON.parse(JSON.stringify(query));
-            q.constraints = { 'resource.relations.isRecordedIn' : mainTypeDocumentResourceId };
-            return q;
-        }
-    }
-
-    private static makeMainTypeQuery(mainType) : Query {
-        return () => {
-            return { types: [mainType] };
-        }
-    }
-
-    private static handleFindErr(messages, errWithParams, query) {
-
-        console.error('error with find. query:', query);
-        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
-        messages.add([M.ALL_FIND_ERROR])
-    }
-
     private setSelectedMainTypeDocument() {
 
         if (this.mainTypeDocuments.length == 0) {
@@ -463,8 +416,6 @@ export class ResourcesComponent implements AfterViewChecked {
         docedit.setDocument(document);
         if (activeTabName) docedit.setActiveTab(activeTabName);
     }
-
-
 
     public startEditGeometry() {
 
@@ -554,5 +505,54 @@ export class ResourcesComponent implements AfterViewChecked {
         for (let document of this.documents) {
             if (!document.resource.id) this.remove(document);
         }
+    }
+
+    private static isExistingDoc(changedDocument, documents) {
+
+        let existingDoc = false;
+        for (let doc of documents) {
+            if (!doc.resource || !changedDocument.resource) continue;
+            if (!doc.resource.id || !changedDocument.resource.id) continue;
+            if (doc.resource.id == changedDocument.resource.id) {
+                existingDoc = true;
+            }
+        }
+        return existingDoc;
+    }
+
+    private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
+
+        if (!document.resource.relations['isRecordedIn']) return undefined;
+
+        for (let documentId of document.resource.relations['isRecordedIn']) {
+            for (let mainTypeDocument of mainTypeDocuments) {
+                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
+            }
+        }
+
+        return undefined;
+    }
+
+    private static makeDocsQuery(query, mainTypeDocumentResourceId) : Query {
+
+        return () => {
+            const q = JSON.parse(JSON.stringify(query));
+            q.constraints = { 'resource.relations.isRecordedIn' : mainTypeDocumentResourceId };
+            return q;
+        }
+    }
+
+    private static makeMainTypeQuery(mainType) : Query {
+
+        return () => {
+            return { types: [mainType] };
+        }
+    }
+
+    private static handleFindErr(messages, errWithParams, query) {
+
+        console.error('error with find. query:', query);
+        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
+        messages.add([M.ALL_FIND_ERROR])
     }
 }

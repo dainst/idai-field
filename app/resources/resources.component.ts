@@ -36,7 +36,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mode: string; // 'map' or 'list'
     public editGeometry: boolean = false;
 
-    public query: Query = { q: '' };
+    public query: Query = { q: '' }; // TODO remove definition. it gets initialized in initializeQuery
     public filterType: string;
 
     public documents: Array<Document>;
@@ -78,7 +78,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 });
         });
 
-        const self = this;
+        const self = this; // TODO remove unnecessary tmpvar
         this.subscription = datastore.documentChangesNotifications().subscribe(result => {
             self.handleChange(result);
         });
@@ -130,7 +130,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.selectedMainTypeDocument = undefined;
         this.mainTypeDocuments = undefined;
 
-        this.resetQuery();
+        this.initializeQuery();
         this.initializeMode();
 
         this.loading.start();
@@ -294,7 +294,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
-    private resetQuery() {
+    private initializeQuery() {
 
         this.query = { q: '' };
         this.filterType = this.resourcesState.getLastSelectedTypeFilter(this.view.name);

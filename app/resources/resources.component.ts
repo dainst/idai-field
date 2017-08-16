@@ -132,10 +132,18 @@ export class ResourcesComponent implements AfterViewChecked {
         this.initializeMode();
 
         this.loading.start();
+        return this.populateAll()
+            .then(() => (this.ready = true) && this.loading.stop());
+    }
+
+    private populateAll(f?, param?) {
+
         return this.populateProjectDocument()
             .then(() => this.populateMainTypeDocuments())
-            .then(() => this.populateDocumentList())
-            .then(() => (this.ready = true) && this.loading.stop());
+            .then(() => {
+                if (f && param) f(param);
+                return this.populateDocumentList();
+            })
     }
 
     private initializeView(viewName: string): Promise<any> {
@@ -146,6 +154,16 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.mainTypeLabel = projectConfiguration.getLabelForType(this.view.mainType);
             }
         ).catch(() => Promise.reject(null));
+    }
+
+    private selectDocument(document) {
+
+        if (document && document.resource.type == this.view.mainType) {
+            this.selectedMainTypeDocument = document;
+        } else {
+            this.selectedDocument = document;
+            this.scrollTarget = document;
+        }
     }
 
     private selectDocumentFromParams(id: string, tab: string) {
@@ -427,35 +445,26 @@ export class ResourcesComponent implements AfterViewChecked {
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         const docedit = doceditRef.componentInstance;
 
-        doceditRef.result.then(result => {
+        doceditRef.result.then(result =>
+                this.populateAll(this.selectDocument, result.document)
+            , closeReason => {
 
-            this.populateProjectDocument()
-                .then(() => this.populateMainTypeDocuments())
-                .then(() => {
-                    if (result.document && result.document.resource.type == this.view.mainType) {
-                        this.selectedMainTypeDocument = result.document;
-                    } else {
-                        this.selectedDocument = result.document;
-                        this.scrollTarget = result.document;
+                this.documentEditChangeMonitor.reset();
+                if (closeReason == 'deleted') {
+                    this.selectedDocument = undefined;
+                    if (document == this.selectedMainTypeDocument) {
+                        return this.populateMainTypeDocuments()
+                            .then(() => this.populateDocumentList());
                     }
-                    return this.populateDocumentList();
-                });
-
-        }, closeReason => {
-
-            this.documentEditChangeMonitor.reset();
-            if (closeReason == 'deleted') {
-                this.selectedDocument = undefined;
-                if (document == this.selectedMainTypeDocument) {
-                    return this.populateMainTypeDocuments().then(() => this.populateDocumentList());
+                    this.populateDocumentList();
                 }
-                this.populateDocumentList();
-            }
-        });
+            });
 
         docedit.setDocument(document);
         if (activeTabName) docedit.setActiveTab(activeTabName);
     }
+
+
 
     public startEditGeometry() {
 

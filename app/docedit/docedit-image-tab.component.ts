@@ -55,12 +55,16 @@ export class DoceditImageTabComponent {
 
         this.rows = [];
         this.imageGridBuilder.calcGrid(
-            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth).then(result => {
-            this.rows = result['rows'];
-            for (let msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
-            }
-        });
+            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth)
+            .then(result => {
+                this.rows = result['rows'];
+
+                if (result['msgWithParams']) {
+                    for (let msgWithParams of result['msgsWithParams']) {
+                        this.messages.add(msgWithParams);
+                    }
+                }
+            });
     }
 
     private loadImages() {
@@ -79,6 +83,8 @@ export class DoceditImageTabComponent {
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
+        console.log("addIsDepicted",imageDocuments)
+
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
 
@@ -94,6 +100,7 @@ export class DoceditImageTabComponent {
     }
 
     public onResize() {
+
         this.calcGrid();
     }
 

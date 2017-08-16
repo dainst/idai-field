@@ -59,7 +59,7 @@ export class DoceditImageTabComponent {
             .then(result => {
                 this.rows = result['rows'];
 
-                if (result['msgWithParams']) {
+                if (result['msgsWithParams']) {
                     for (let msgWithParams of result['msgsWithParams']) {
                         this.messages.add(msgWithParams);
                     }

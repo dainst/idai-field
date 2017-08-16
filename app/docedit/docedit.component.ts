@@ -206,7 +206,7 @@ export class DoceditComponent {
 
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
-            .then(() => this.datastore.getLatestRevision(resourceId))
+            .then(() => this.datastore.get(resourceId, { skip_cache: true}))
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 

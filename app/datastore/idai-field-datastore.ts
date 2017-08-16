@@ -27,14 +27,20 @@ export abstract class IdaiFieldDatastore extends Datastore {
      * so the order between them is unspecified.
      */
 
-    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
+    /**
+     * get
+     *
+     * In addition to {@link Datastore#get}, {@link IdaiFieldDatastore#get}
+     * has some extra specifications:
+     *
+     * options can be
+     *   { skip_cache: true }
+     */
 
     /**
-     * @returns
-     *   Rejects with
-     *     [DOCUMENT_NOT_FOUND] - in case of error
+     * TODO remove and incorporate into find (with constraints)
      */
-    abstract getLatestRevision(id: string): Promise<IdaiFieldDocument>;
+    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
 
     /**
      * @returns

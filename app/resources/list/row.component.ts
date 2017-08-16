@@ -39,7 +39,7 @@ export class RowComponent {
 
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
-        return this.datastore.getLatestRevision(document.resource.id)
+        return this.datastore.get(document.resource.id, { skip_cache: true })
             .then(
                 latestRevision => {
                     document.resource.identifier = latestRevision.resource.identifier;

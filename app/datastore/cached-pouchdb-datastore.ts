@@ -71,12 +71,17 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.documentChangesNotifications();
     }
 
-    public get(id: string): Promise<Document> {
+    public get(id: string, options?: Object): Promise<Document> {
 
-        if (this.documentCache.get(id)) {
+        if ((!options || !options['skip_cache']) && this.documentCache.get(id)) {
             return Promise.resolve(this.documentCache.get(id));
         }
         return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
+    }
+
+    public getLatestRevision(id: string): Promise<Document> {
+
+        return this.datastore.fetch(id);
     }
 
     /**
@@ -98,11 +103,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             ps.push(this.get(id));
         }
         return Promise.all(ps);
-    }
-
-    public getLatestRevision(id: string): Promise<Document> {
-
-        return this.datastore.fetch(id);
     }
 
     /**

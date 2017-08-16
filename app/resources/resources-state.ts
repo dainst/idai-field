@@ -4,6 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 interface ResourcesViewState {
     mainTypeDocument?: IdaiFieldDocument;
     type?: string;
+    mode?: string;
 }
 
 @Injectable()
@@ -25,6 +26,18 @@ export class ResourcesState {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocument;
     }
+
+    public setLastSelectedMode(viewName: string, mode: string) {
+
+        if (!this._[viewName]) this._[viewName] = {};
+        this._[viewName].mode = mode;
+    }
+
+    public getLastSelectedMode(viewName: string) {
+
+        return (!this._[viewName]) ? undefined : this._[viewName].mode;
+    }
+
 
     public setLastSelectedTypeFilter(viewName: string, type: string) {
 

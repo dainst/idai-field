@@ -118,9 +118,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
-        this.loading.start();
         this.resetQuery();
+        this.mode = this.resourcesState.getLastSelectedMode(this.view.name) ?
+            this.resourcesState.getLastSelectedMode(this.view.name) : this.mode;
 
+        this.loading.start();
         return this.fetchProjectDocument()
             .then(() => this.fetchMainTypeDocuments())
             .then(() => this.fetchDocuments())
@@ -497,8 +499,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setMode(mode: string) {
 
-        this.loading.start();
+        this.resourcesState.setLastSelectedMode(this.view.name, mode);
 
+        this.loading.start();
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
             this.removeEmptyDocuments();

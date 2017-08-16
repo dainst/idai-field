@@ -46,7 +46,7 @@
             </geometry-view>
             <fields-view [doc]="selectedDocument"></fields-view>
             <relations-view [doc]="selectedDocument"
-                            (relationClicked)="resourcesComponent.selectRelationTarget($event)"></relations-view>
+                            (relationClicked)="resourcesComponent.jumpToRelationTarget($event)"></relations-view>
         </document-view>
     </div>
 </div>

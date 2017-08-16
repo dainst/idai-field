@@ -247,7 +247,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.setSelected(documentToSelect);
     }
 
-    public selectRelationTarget(documentToSelect: IdaiFieldDocument) {
+    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
 
         this.viewUtility.getViewNameForDocument(documentToSelect)
             .then(viewName => {

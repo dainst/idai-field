@@ -71,6 +71,12 @@ export class ResourcesComponent implements AfterViewChecked {
     ) {
         this.route.params.subscribe(params => {
 
+            this.ready = false;
+
+            this.selectedDocument = undefined;
+            this.selectedMainTypeDocument = undefined;
+            this.mainTypeDocuments = undefined;
+
             this.setupViewFrom(params)
                 .then(() => this.initialize())
                 .catch(msgWithParams => {
@@ -123,12 +129,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public initialize(): Promise<any> {
-
-        this.ready = false;
-
-        this.selectedDocument = undefined;
-        this.selectedMainTypeDocument = undefined;
-        this.mainTypeDocuments = undefined;
 
         this.initializeQuery();
         this.initializeMode();

@@ -25,6 +25,7 @@ export class PouchdbManager {
     private syncHandles = [];
 
     private resolveDbReady = undefined;
+    private dbSwitchedObservers = [];
 
     constructor(
         private sampleDataLoader: AbstractSampleDataLoader,
@@ -36,10 +37,18 @@ export class PouchdbManager {
         this.dbProxy = new PouchdbProxy(dbReady);
     }
 
+    public dbSwitched() {
+
+        return Observable.create(observer => {
+            this.dbSwitchedObservers.push(observer);
+        });
+    }
+
     /**
      * @param name
      */
     public create(name: string): void {
+        
         this.switchProject(name, true);
     }
 
@@ -49,25 +58,32 @@ export class PouchdbManager {
      * @param name the database name
      */
     public select(name: string): void {
+        
         this.switchProject(name, false);
     }
 
+    private notifyDbSwitchedObservers() {
+
+        for (let observer of this.dbSwitchedObservers) observer.next(true);
+    }
+    
     private switchProject(name: string, destroy: boolean) {
         // same db selected, no need for action
         if (this.name == name) return;
-
+        
         this.stopSync();
 
         let rdy: Promise<any> = Promise.resolve();
 
         if (this.db) {
-            let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
-            this.dbProxy.switchDb(dbReady);
+            this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
+            this.notifyDbSwitchedObservers();
             rdy = rdy.then(() => {
                 this.db.close();
                 this.db = undefined;
             });
         }
+
 
         this.name = name;
 
@@ -114,6 +130,7 @@ export class PouchdbManager {
      *  calls to the actual PouchDB instance as soon as it is available
      */
     public getDb(): PouchdbProxy {
+
         return this.dbProxy;
     }
 

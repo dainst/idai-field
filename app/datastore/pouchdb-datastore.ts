@@ -27,6 +27,8 @@ export class PouchdbDatastore {
     // they are marked "manually".
     private deletedOnes = [];
 
+    private dbChangesRef;
+
     constructor(
         private pouchdbManager: PouchdbManager,
         private constraintIndexer: ConstraintIndexer,
@@ -39,7 +41,15 @@ export class PouchdbDatastore {
         autoConflictResolvingExtension.setDatastore(this);
         autoConflictResolvingExtension.setConflictResolver(conflictResolver);
         this.db = pouchdbManager.getDb();
-        this.setupServer().then(() => this.setupChangesEmitter())
+
+        this.setupServer().then(() => this.setupChangesEmitter());
+        pouchdbManager.getDb().ready().then(() => {
+            pouchdbManager.dbSwitched().subscribe(val => {
+                this.dbChangesRef.cancel();
+                this.dbChangesRef = undefined;
+                this.setupChangesEmitter();
+            });
+        });
     }
 
     /**
@@ -284,13 +294,15 @@ export class PouchdbDatastore {
 
     private setupChangesEmitter(): void {
 
-        this.db.rdy.then(db => {
-            db.changes({
+        this.db.ready().then(db => {
+
+            this.dbChangesRef = db.changes({
                 live: true,
                 include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
                 conflicts: true,
                 since: 'now'
             }).on('change', change => {
+
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
@@ -304,13 +316,13 @@ export class PouchdbDatastore {
                     // TODO handle result
                     // this.autoConflictResolvingExtension.autoResolve(
                     //     <any> document, this.appState.getCurrentUser());
-
+                    //
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
                     this.notify(document);
                 });
             }).on('complete', info => {
-                console.error('changes stream was canceled', info);
+                console.log('changes stream was canceled', info);
             }).on('error', err => {
                 console.error('changes stream errored', err);
             });

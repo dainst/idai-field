@@ -44,7 +44,8 @@ export function main() {
             latestRevision['_rev'] = '2-abc';
             latestRevision['_conflicts'] = ['2-xyz'];
 
-            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetchRevsInfo', 'update', 'removeRevision']);
+            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetchRevsInfo', 'update',
+                'removeRevision']);
             const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
             const extension = new ConflictResolvingExtension();
 

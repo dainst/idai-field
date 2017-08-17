@@ -20,7 +20,7 @@ export class PouchdbManager {
 
     private db = undefined;
     private dbProxy = undefined;
-    private name:string = undefined;
+    private name: string = undefined;
     private indexCreator = new IndexCreator();
     private syncHandles = [];
 

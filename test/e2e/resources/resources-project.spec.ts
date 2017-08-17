@@ -107,8 +107,9 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
-    xit('do not create a project of an already existing name', () => {
+    it('do not create a project of an already existing name', () => {
 
+        ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('test');
         ProjectPage.clickConfirmProjectOperation();

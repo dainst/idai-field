@@ -3,6 +3,7 @@ import {M} from '../m';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {Injectable} from '@angular/core';
 import {ConflictResolver} from './conflict-resolver';
+import {RevisionHelper} from './revision-helper';
 
 @Injectable()
 /**
@@ -54,7 +55,7 @@ export class ConflictResolvingExtension {
 
                         .then(history => {
                             return this.datastore.fetchRevision(conflictedRevision.resource.id,
-                                    ConflictResolvingExtension.getPreviousRevisionId(history, conflictedRevision))})
+                                    RevisionHelper.getPreviousRevisionId(history, conflictedRevision))})
                         .then(previousRevision =>
                             this.solveAndUpdate(document, conflictedRevision, previousRevision)
                         );
@@ -66,7 +67,7 @@ export class ConflictResolvingExtension {
     }
 
     private solveAndUpdate(document, conflictedRevision, previousRevision) {
-        
+
         const result = this.conflictResolver.tryToSolveConflict(
             document, conflictedRevision, previousRevision);
 
@@ -97,8 +98,6 @@ export class ConflictResolvingExtension {
     }
 
     /**
-     *
-     *
      * @param revisions
      * @param userName
      * @returns {Array<Document>} the conflicted revisions to
@@ -128,35 +127,5 @@ export class ConflictResolvingExtension {
         }
 
         return false;
-    }
-
-    // TODO move to RevisionHelper
-    private static getPreviousRevisionId(history, revision: Document) {
-
-        const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
-
-        if (previousRevisionNumber < 1) return undefined;
-
-        const prefix = previousRevisionNumber.toString() + '-';
-        let previousRevisionId: string;
-
-        for (let historyElement of history) {
-            if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
-                previousRevisionId = historyElement.rev;
-                break;
-            }
-        }
-
-        return previousRevisionId;
-    }
-
-    // TODO move to RevisionHelper
-    private static getRevisionNumber(revision: Document): number {
-
-        const revisionId = revision['_rev'];
-        const index = revisionId.indexOf('-');
-        const revisionNumber = revisionId.substring(0, index);
-
-        return parseInt(revisionNumber);
     }
 }

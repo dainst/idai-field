@@ -63,7 +63,10 @@ export class PouchdbManager {
         if (this.db) {
             let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
             this.dbProxy.switchDb(dbReady);
-            rdy = rdy.then(() => this.db.close());
+            rdy = rdy.then(() => {
+                this.db.close();
+                this.db = undefined;
+            });
         }
 
         this.name = name;

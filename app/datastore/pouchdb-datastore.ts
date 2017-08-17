@@ -313,7 +313,7 @@ export class PouchdbDatastore {
                     this.notify(document);
                 });
             }).on('complete', info => {
-                console.log('changes stream was canceled', info);
+                console.error('changes stream was canceled', info);
             }).on('error', err => {
                 console.error('changes stream errored', err);
             });

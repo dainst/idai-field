@@ -25,7 +25,6 @@ export class PouchdbManager {
     private syncHandles = [];
 
     private resolveDbReady = undefined;
-    private dbSwitchedObservers = [];
 
     constructor(
         private sampleDataLoader: AbstractSampleDataLoader,
@@ -37,36 +36,9 @@ export class PouchdbManager {
         this.dbProxy = new PouchdbProxy(dbReady);
     }
 
-    public dbSwitched() {
+    public setProject(name: string) {
 
-        return Observable.create(observer => {
-            this.dbSwitchedObservers.push(observer);
-        });
-    }
-
-    /**
-     * @param name
-     */
-    public create(name: string): void {
-        
-        this.switchProject(name, true);
-    }
-
-    /**
-     * Selects the current database.
-     * This (or {@link PouchdbManager#create}) has to be called before the database can be used.
-     * @param name the database name
-     */
-    public select(name: string): void {
-        
-        this.switchProject(name, false);
-    }
-
-    private switchProject(name: string, destroy: boolean) {
-        // same db selected, no need for action
-        if (this.name == name) return;
-        
-        this.stopSync();
+        this.name = name;
 
         let rdy: Promise<any> = Promise.resolve();
 
@@ -78,12 +50,9 @@ export class PouchdbManager {
             });
         }
 
-
-        this.name = name;
-
-        rdy = rdy.then(() => this.createDb());
-        if ((name == 'test') || destroy) {
-            rdy = rdy.then(() => this.db.destroy()).then(() => this.createDb());
+        rdy = rdy.then(() => this.create());
+        if ((name == 'test')) {
+            rdy = rdy.then(() => this.db.destroy()).then(() => this.create());
         }
         rdy = rdy.then(() => this.indexCreator.go(this.db));
         if (name == 'test') {
@@ -129,6 +98,7 @@ export class PouchdbManager {
     }
 
     public destroy(): Promise<any> {
+
         return this.getDb().ready().then(db => db.destroy())
     }
 
@@ -140,11 +110,22 @@ export class PouchdbManager {
      *   Rejects with undefined if trying do delete the currently active database
      */
     public destroyDb(dbName: string): Promise<any> {
-        if (dbName == this.name) return Promise.reject(undefined);
+
+        this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
         return new PouchDB(dbName).destroy();
     }
 
-    private createDb(): Promise<any> {
+    public createDb(name: string, doc) {
+
+        let db = new PouchDB(name);
+        return db.destroy().then(() => {
+            let db = new PouchDB(name);
+            return db.put(doc);
+        });
+    }
+
+    private create(): Promise<any> {
+
         this.db = new PouchDB(this.name);
         return Promise.resolve(this.db);
     }

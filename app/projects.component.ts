@@ -78,7 +78,7 @@ export class ProjectsComponent implements OnInit {
 
         this.projects.unshift(this.newProject);
         this.selectedProject = this.newProject;
-        this.switchProjectDb();
+        this.switchProjectDb(true);
     }
 
     public deleteProject() {
@@ -88,18 +88,10 @@ export class ProjectsComponent implements OnInit {
         const projectToDelete = this.selectedProject;
         this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
         this.selectedProject = this.projects[0];
-        this.selectProject()
-            .then(() => this.settingsService.deleteProject(projectToDelete))
-            .then(() => {
-                this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
-            },error => {
-                console.error("error while trying to destroy the database",error);
-                this.messages.add([M.RESOURCES_ERROR_PROJECT_DELETED]);
-            })
-            .then(() => {
-                this.deletePopover.close();
-            });
 
+        return this.settingsService.deleteProject(projectToDelete).then(() =>
+            this.switchProjectDb()
+        );
     }
 
     public canDeleteProject() {
@@ -118,10 +110,10 @@ export class ProjectsComponent implements OnInit {
         return true;
     }
 
+    private switchProjectDb(create = false) {
 
-    private switchProjectDb() {
-
-        return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
+        return this.settingsService.setProjectSettings(
+                this.projects, this.selectedProject, true, create)
             .then(() => window.location.reload());
     }
 

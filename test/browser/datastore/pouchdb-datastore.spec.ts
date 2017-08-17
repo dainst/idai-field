@@ -43,7 +43,7 @@ export function main() {
                     fulltextIndexer, appState,
                     autoConflictResolvingExtension,
                     conflictResolver);
-                pouchdbManager.select('testdb');
+                pouchdbManager.setProject('testdb');
             }
         );
 

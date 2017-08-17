@@ -51,7 +51,7 @@ describe('PouchDbFsImagestore', () => {
         const mockConstraintIndexer = jasmine.createSpyObj('mockConstraintIndexer',['update', 'clear']);
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
         manager = new PouchdbManager(mockConfigProvider, mockConstraintIndexer, mockFulltextIndexer, new DocumentCache());
-        manager.select('unittest');
+        manager.setProject('unittest');
 
         store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, 'store/', manager);
         store.select('unittest');

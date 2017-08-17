@@ -33,8 +33,7 @@ export class SettingsService {
 
     public ready: Promise<any>;
 
-    constructor(private datastore: IdaiFieldDatastore,
-                private imagestore: Imagestore,
+    constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private appState: AppState) {
     }
@@ -58,14 +57,17 @@ export class SettingsService {
     }
 
     public getSyncTarget() {
+
         return JSON.parse(JSON.stringify(this.settings.syncTarget));
     }
 
     public getUsername() {
+
         return this.settings.username ? JSON.parse(JSON.stringify(this.settings.username)) : 'anonymous';
     }
 
     public getProjects() {
+
         return this.settings.dbs;
     }
 
@@ -109,19 +111,28 @@ export class SettingsService {
      * @param projects
      * @param selectedProject
      * @param storeSettings if set to false, settings get not persisted
+     * @param create
      * @returns {any}
      */
     public setProjectSettings(projects: string[], selectedProject: string,
-                              storeSettings: boolean = true): Promise<any> {
+                              storeSettings: boolean = true, create: boolean = false): Promise<any> {
 
         this.settings.dbs = projects.slice(0);
         this.makeFirstOfDbsArray(selectedProject);
 
+        let p: Promise<any> = Promise.resolve();
         if (storeSettings) {
-            return this.storeSettings();
-        } else {
-            return Promise.resolve();
+            p = p.then(() => this.storeSettings());
         }
+
+        if (create) {
+            p = p.then(() => {
+                return this.pouchdbManager.createDb(
+                    selectedProject, this.makeProjectDoc(selectedProject));
+            });
+        }
+
+        return p;
     }
 
     public deleteProject(name: string) {
@@ -143,11 +154,7 @@ export class SettingsService {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
 
-        if (restart) {
-            return this.restartSync(createDb);
-        } else {
-            return this.startSync();
-        }
+        return restart ? this.restartSync(createDb) : this.startSync();
     }
 
     private startSync(): Promise<any> {
@@ -188,37 +195,25 @@ export class SettingsService {
 
     private useSelectedDatabase(createDb: boolean): Promise<any> {
 
-        if (createDb) {
-            this.pouchdbManager.create(this.getSelectedProject());
-        } else {
-            this.pouchdbManager.select(this.getSelectedProject());
-        }
+        this.pouchdbManager.setProject(this.getSelectedProject());
         this.imagestore.select(this.getSelectedProject());
-        return this.createProjectDocumentIfNotExisting(this.getSelectedProject());
+        return Promise.resolve();
     }
 
-    private createProjectDocumentIfNotExisting(project: string): Promise<any> {
+    private makeProjectDoc(name: string) {
 
-        const projectDocument: Document = {
+        return {
+            _id: name,
             resource: {
                 type: 'project',
-                identifier: project,
-                id: project,
+                identifier: name,
+                id: name,
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
             created: { user: this.getUsername(), date: new Date() },
             modified: [{ user: this.getUsername(), date: new Date() }]
         };
-
-        return this.datastore.find({
-            constraints: { 'resource.identifier' : project }
-        }).catch(() => Promise.reject([M.ALL_FIND_ERROR]))
-        .then(results => {
-            if (!results || results.length == 0) {
-                return this.datastore.create(projectDocument);
-            }
-        }).catch(msgWithParams => Promise.reject(msgWithParams));
     }
 
     private static validateAddress(address) {
@@ -268,6 +263,7 @@ export class SettingsService {
     }
 
     private storeSettings(): Promise<any> {
+
         return this.settingsSerializer.store(this.settings);
     }
 }

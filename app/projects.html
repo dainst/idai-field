@@ -1,0 +1,71 @@
+<div *ngIf="ready" id="projects-badge" class="badge badge-info" (click)="openModal()">{{selectedProject}}</div>
+
+<ng-template #projectsModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title">Projekteinstellungen</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="col-md-6">
+            <select id="projectSelectBox" class="form-control" [(ngModel)]="selectedProject"
+                    (ngModelChange)="selectProject($event)">
+                <option *ngFor="let project of projects" [ngValue]="project">
+                    {{project}}
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <div id="edit-main-type-document-button" class="circular-button type-button"
+                 (click)="resourcesComponent.editDocument(resourcesComponent.selectedMainTypeDocument)">
+                <span class="mdi mdi-pencil mdi-18px"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div id="delete-project-button" class="circular-button type-button" [ngbPopover]="deleteProjectMenu"
+                 #deletePopover="ngbPopover" triggers="manual" placement="bottom" (click)="reset(); deletePopover.toggle();">
+                <span class="delete-sign mdi mdi-delete mdi-18px"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div id="new-project-button" class="circular-button type-button" [ngbPopover]="newProjectMenu"
+                 #popover="ngbPopover" triggers="manual" placement="bottom" (click)="reset(); popover.toggle();">
+                <type-icon [type]="'project'" size="41"></type-icon>
+                <div class="plus-sign-circle">
+                    <span class="plus-sign mdi mdi-plus mdi-18px"></span>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #newProjectMenu>
+            <div id="new-project-menu">
+                <div class="popover-custom-title">Bitte geben Sie den Namen des neuen Projekts ein.</div>
+                <div class="input-group">
+                    <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
+                    <span class="input-group-btn">
+                    <button class="project-option-ok btn btn-default" (click)="createProject()">OK</button>
+                </span>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #deleteProjectMenu>
+            <div id="delete-project-menu">
+                <div class="popover-custom-title">Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.</div>
+                <div class="input-group">
+                    <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
+                    <span class="input-group-btn">
+                    <button class="project-option-ok btn btn-default" (click)="deleteProject()">OK</button>
+                </span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="modal-footer">
+        <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-primary"
+                (click)="closeModal()">Schließen
+        </button>
+    </div>
+</ng-template>

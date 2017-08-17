@@ -1,11 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
-import {SettingsService} from '../settings/settings-service';
-import {ResourcesComponent} from './resources.component';
-import {Loading} from '../widgets/loading';
-import {ResourcesState} from './resources-state';
-import {M} from '../m';
-import {electron} from '../desktop/electron';
+import {SettingsService} from './settings/settings-service';
+import {M} from './m';
 
 @Component({
     selector: 'projects',
@@ -28,14 +25,15 @@ export class ProjectsComponent implements OnInit {
     public newProject: string = '';
     public projectToDelete: string = '';
 
+    @ViewChild('projectsModalTemplate') public modalTemplate: TemplateRef<any>;
     @ViewChild('popover') private popover;
     @ViewChild('deletePopover') private deletePopover;
 
+    private modalRef: NgbModalRef;
+
     constructor(private settingsService: SettingsService,
-                private resourcesComponent: ResourcesComponent,
-                private messages: Messages,
-                private loading: Loading,
-                private resourcesState: ResourcesState) {
+                private modalService: NgbModal,
+                private messages: Messages) {
     }
 
     ngOnInit() {
@@ -47,15 +45,25 @@ export class ProjectsComponent implements OnInit {
         });
     }
 
+    public openModal() {
+
+        this.modalRef = this.modalService.open(this.modalTemplate);
+    }
+
+    public closeModal() {
+
+        this.modalRef.close();
+    }
+
     public reset() {
 
         this.projectToDelete = '';
         this.newProject = '';
     }
 
-    public selectProject(project: string) {
+    public selectProject() {
 
-        return this.switchProjectDb(project);
+        return this.switchProjectDb();
     }
 
     public createProject() {
@@ -68,11 +76,9 @@ export class ProjectsComponent implements OnInit {
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, this.newProject]);
         }
 
-        this.popover.close();
-
         this.projects.unshift(this.newProject);
         this.selectedProject = this.newProject;
-        this.switchProjectDb(this.newProject, true);
+        this.switchProjectDb();
     }
 
     public deleteProject() {
@@ -80,8 +86,9 @@ export class ProjectsComponent implements OnInit {
         if (!this.canDeleteProject()) return this.deletePopover.close();
 
         const projectToDelete = this.selectedProject;
-        this.projects.splice(this.projects.indexOf(this.selectedProject),1);
-        this.selectProject(this.projects[0])
+        this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
+        this.selectedProject = this.projects[0];
+        this.selectProject()
             .then(() => this.settingsService.deleteProject(projectToDelete))
             .then(() => {
                 this.messages.add([M.RESOURCES_SUCCESS_PROJECT_DELETED]);
@@ -96,6 +103,7 @@ export class ProjectsComponent implements OnInit {
     }
 
     public canDeleteProject() {
+
         if (!this.projectToDelete || (this.projectToDelete == '')) {
             return false;
         }
@@ -111,12 +119,10 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    private switchProjectDb(project: string, createDb: boolean = false) {
+    private switchProjectDb() {
 
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
-            .then(() => {
-                window.location.reload();
-            });
+            .then(() => window.location.reload());
     }
 
     private handleClick(event) {

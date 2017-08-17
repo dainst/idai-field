@@ -11,7 +11,6 @@ import {MapWrapperComponent} from './map-wrapper.component';
 import {ListComponent} from './list/list.component';
 import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
-import {ProjectsComponent} from './projects.component';
 import {LayerMapState} from './map/layer-map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
@@ -34,8 +33,7 @@ import {ResourcesState} from './resources-state';
         MapWrapperComponent,
         ListComponent,
         RowComponent,
-        PlusButtonComponent,
-        ProjectsComponent
+        PlusButtonComponent
     ],
     providers: [
         LayerMapState,

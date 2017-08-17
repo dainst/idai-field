@@ -44,8 +44,9 @@ import {FulltextIndexer} from './datastore/fulltext-indexer';
 import {DocumentCache} from './datastore/document-cache';
 import {AppState} from './app-state';
 import {ConflictResolvingExtension} from './datastore/conflict-resolving-extension';
-import {IdaiFieldConflictResolver} from "./model/idai-field-conflict-resolver";
-import {ConflictResolver} from "./datastore/conflict-resolver";
+import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
+import {ConflictResolver} from './datastore/conflict-resolver';
+import {ProjectsComponent} from './projects.component';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
@@ -77,6 +78,7 @@ if (CONFIG['imagestorepath']) {
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
+        ProjectsComponent,
         ImportComponent,
         ExportComponent
     ],

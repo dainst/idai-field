@@ -2,12 +2,14 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDiffUtility} from './idai-field-diff-utility';
 import {ObjectUtil} from '../util/object-util';
 import {ConflictResolver} from '../datastore/conflict-resolver';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class IdaiFieldConflictResolver implements ConflictResolver {
+export class IdaiFieldConflictResolver extends ConflictResolver {
 
     // TODO clone latestRevision and return
     public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,

@@ -1,11 +1,13 @@
 import {Document} from 'idai-components-2/core';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 /**
  * @Daniel de Oliveira
  */
-export interface ConflictResolver {
+export abstract class ConflictResolver {
 
-    tryToSolveConflict(
+    abstract tryToSolveConflict(
         latestRevision: Document,
         conflictedRevision: Document,
         previousRevision: Document);

@@ -5,6 +5,7 @@ import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
+import {electron} from '../desktop/electron';
 
 @Component({
     selector: 'projects',
@@ -112,17 +113,10 @@ export class ProjectsComponent implements OnInit {
 
     private switchProjectDb(project: string, createDb: boolean = false) {
 
-        this.loading.start();
-        this.resourcesComponent.stop();
-
-        this.selectedProject = project;
         return this.settingsService.setProjectSettings(this.projects, this.selectedProject)
-            .then(() => this.settingsService.activateSettings(true, createDb))
-            .then(() => this.resourcesState.clear())
-            .then(() => this.resourcesComponent.initialize())
-            .catch(msgWithParams => {
-                if (msgWithParams) this.messages.add(msgWithParams)
-            }).then(() => this.loading.stop());
+            .then(() => {
+                window.location.reload();
+            });
     }
 
     private handleClick(event) {

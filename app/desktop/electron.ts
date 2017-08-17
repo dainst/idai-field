@@ -1,4 +1,4 @@
-const electron = (<any>window).require('electron');
+export const electron = (<any>window).require('electron');
 
 export const {BrowserWindowProxy} = electron;
 export const {desktopCapturer} = electron;

@@ -102,6 +102,15 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
+    xit('do not create a project of an already existing name', () => {
+
+        ProjectPage.clickCreateProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
+    });
+
     xit ('delete project', () => {
 
         performCreateProject();
@@ -177,15 +186,6 @@ describe('resources/project --', function() {
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
-    });
-
-    it('do not create a project of an already existing name', () => {
-
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });
 
     it('autoselect last selected main type document on switching views', () => {

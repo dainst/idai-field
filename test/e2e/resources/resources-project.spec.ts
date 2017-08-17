@@ -65,33 +65,6 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench1'));
     });
 
-    xit ('delete project', () => {
-
-        performCreateProject();
-        browser.sleep(delays.shortRest * 10);
-
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-
-        ProjectPage.clickDeleteProject();
-        browser.sleep(delays.shortRest);
-
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-
-        browser.sleep(delays.shortRest * 10);
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-
-        NavbarPage.clickNavigateToBuilding();
-        browser.sleep(delays.shortRest * 15);
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 5);
-        ResourcesPage.typeInIdentifierInSearchField('con');
-        browser.sleep(delays.shortRest * 5);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-    });
-
     xit('create & switch project', () => {
 
         performCreateProject();
@@ -127,6 +100,42 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest * 10);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+    });
+
+    xit ('delete project', () => {
+
+        performCreateProject();
+        browser.sleep(delays.shortRest * 10);
+
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+
+        ProjectPage.clickDeleteProject();
+        browser.sleep(delays.shortRest);
+
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+
+        browser.sleep(delays.shortRest * 10);
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+
+        NavbarPage.clickNavigateToBuilding();
+        browser.sleep(delays.shortRest * 15);
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest * 5);
+        ResourcesPage.typeInIdentifierInSearchField('con');
+        browser.sleep(delays.shortRest * 5);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+    });
+
+    xit ('do not delete last project', () => {
+
+        ProjectPage.clickDeleteProject();
+        ProjectPage.typeInProjectName('test');
+        ProjectPage.clickConfirmProjectOperation();
+
+        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
     });
 
     it('switch views after click on relation link', () => {
@@ -168,15 +177,6 @@ describe('resources/project --', function() {
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
-    });
-
-    it ('do not delete last project', () => {
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
     });
 
     it('do not create a project of an already existing name', () => {

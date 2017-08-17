@@ -1,5 +1,4 @@
 import {Component, ElementRef, Input} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/configuration';
 import {ImageGridBuilder} from '../common/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
@@ -29,7 +28,6 @@ export class DoceditImageTabComponent {
     private rows = [];
 
     constructor(
-        private configLoader: ConfigLoader,
         private imagestore: Imagestore,
         private el: ElementRef,
         private messages: Messages,
@@ -42,13 +40,10 @@ export class DoceditImageTabComponent {
 
     ngOnChanges() {
 
-        this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-
-            if (!this.document) return;
-            if (this.document.resource.relations['isDepictedIn']) {
-                this.loadImages();
-            }
-        });
+        if (!this.document) return;
+        if (this.document.resource.relations['isDepictedIn']) {
+            this.loadImages();
+        }
     }
 
     private calcGrid() {

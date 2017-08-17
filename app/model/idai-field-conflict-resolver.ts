@@ -2,13 +2,17 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDiffUtility} from './idai-field-diff-utility';
 import {ObjectUtil} from '../util/object-util';
 
+/**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
 export class IdaiFieldConflictResolver {
 
     constructor() {}
 
     // TODO clone latestRevision and return
     public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
-                              previousRevision: IdaiFieldDocument) {
+                              previousRevision: IdaiFieldDocument): any {
 
         if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
 
@@ -139,6 +143,4 @@ export class IdaiFieldConflictResolver {
             return latestRevision;
         }
     }
-
-
 }

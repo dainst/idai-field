@@ -55,26 +55,29 @@ export class ConflictResolvingExtension {
                         .then(history => {
                             return this.datastore.fetchRevision(conflictedRevision.resource.id,
                                     ConflictResolvingExtension.getPreviousRevisionId(history, conflictedRevision))})
-                        .then(previousRevision=>{
-
-                            const result = this.conflictResolver.tryToSolveConflict(
-                                document, conflictedRevision, previousRevision);
-
-                            if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
-
-                                return this.datastore.update(document).then(() => {
-                                    if (!result['unresolvedConflicts']) {
-                                        return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
-                                    }
-                                });
-                            }
-                        });
-
+                        .then(previousRevision =>
+                            this.solveAndUpdate(document, conflictedRevision, previousRevision)
+                        );
                 });
             }
 
             return promise;
         });
+    }
+
+    private solveAndUpdate(document, conflictedRevision, previousRevision) {
+        
+        const result = this.conflictResolver.tryToSolveConflict(
+            document, conflictedRevision, previousRevision);
+
+        if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+
+            return this.datastore.update(document).then(() => {
+                if (!result['unresolvedConflicts']) {
+                    return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
+                }
+            });
+        }
     }
 
     private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {

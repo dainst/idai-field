@@ -84,6 +84,7 @@ export class PouchdbManager {
     }
 
     private index() {
+
         return this.db.allDocs({include_docs: true},(err, resultDocs) => {
             this.constraintIndexer.clear();
             this.fulltextIndexer.clear();
@@ -103,6 +104,7 @@ export class PouchdbManager {
     }
 
     public getIndexCreator() {
+
         return this.indexCreator;
     }
 

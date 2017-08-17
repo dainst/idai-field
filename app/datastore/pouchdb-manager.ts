@@ -62,11 +62,6 @@ export class PouchdbManager {
         this.switchProject(name, false);
     }
 
-    private notifyDbSwitchedObservers() {
-
-        for (let observer of this.dbSwitchedObservers) observer.next(true);
-    }
-    
     private switchProject(name: string, destroy: boolean) {
         // same db selected, no need for action
         if (this.name == name) return;
@@ -77,7 +72,6 @@ export class PouchdbManager {
 
         if (this.db) {
             this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
-            this.notifyDbSwitchedObservers();
             rdy = rdy.then(() => {
                 this.db.close();
                 this.db = undefined;

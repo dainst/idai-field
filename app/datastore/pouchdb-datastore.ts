@@ -27,8 +27,6 @@ export class PouchdbDatastore {
     // they are marked "manually".
     private deletedOnes = [];
 
-    private dbChangesRef;
-
     constructor(
         private pouchdbManager: PouchdbManager,
         private constraintIndexer: ConstraintIndexer,
@@ -43,13 +41,6 @@ export class PouchdbDatastore {
         this.db = pouchdbManager.getDb();
 
         this.setupServer().then(() => this.setupChangesEmitter());
-        pouchdbManager.getDb().ready().then(() => {
-            pouchdbManager.dbSwitched().subscribe(val => {
-                this.dbChangesRef.cancel();
-                this.dbChangesRef = undefined;
-                this.setupChangesEmitter();
-            });
-        });
     }
 
     /**
@@ -296,7 +287,7 @@ export class PouchdbDatastore {
 
         this.db.ready().then(db => {
 
-            this.dbChangesRef = db.changes({
+            db.changes({
                 live: true,
                 include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
                 conflicts: true,

@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, OnDestroy, Renderer} from '@angular/core';
+import {Component, AfterViewChecked, Renderer} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
-import {M} from "../m";
+import {M} from '../m';
 
 
 @Component({
@@ -84,9 +84,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 });
         });
 
-        const self = this; // TODO remove unnecessary tmpvar
         this.subscription = datastore.documentChangesNotifications().subscribe(result => {
-            self.handleChange(result);
+            this.handleChange(result);
         });
 
         this.initializeClickEventListener();
@@ -138,14 +137,14 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
-    private populateAll(cb?) {
+    private populateAll(callback?: Function) {
 
         return this.populateProjectDocument()
             .then(() => this.populateMainTypeDocuments())
             .then(() => {
-                if (cb) cb();
+                if (callback) callback();
                 return this.populateDocumentList();
-            })
+            });
     }
 
     private initializeView(viewName: string): Promise<any> {
@@ -326,10 +325,9 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.fetchDocuments(ResourcesComponent.makeDocsQuery(this.query,
                     this.selectedMainTypeDocument.resource.id))
             .then(documents => this.documents = documents);
-
     }
 
-    private populateMainTypeDocuments(): Promise <any> {
+    private populateMainTypeDocuments(): Promise<any> {
 
         if (!this.view) return Promise.resolve();
 
@@ -358,7 +356,8 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.mainTypeDocuments.length == 0) {
             this.selectedMainTypeDocument = undefined;
         } else if (this.selectedDocument) {
-            this.selectedMainTypeDocument = ResourcesComponent.getMainTypeDocumentForDocument(this.selectedDocument, this.mainTypeDocuments);
+            this.selectedMainTypeDocument
+                = ResourcesComponent.getMainTypeDocumentForDocument(this.selectedDocument, this.mainTypeDocuments);
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
         } else {
             const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
@@ -431,7 +430,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.startEditGeometry();
     }
 
-    public isNewDocumentFromRemote(document: Document) {
+    public isNewDocumentFromRemote(document: Document): boolean {
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
@@ -442,7 +441,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
     }
 
-    public isRemoteChange(changedDocument: Document) {
+    public isRemoteChange(changedDocument: Document): boolean {
 
         let latestAction: Action;
 
@@ -504,9 +503,10 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    private static isExistingDoc(changedDocument, documents) {
+    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
         let existingDoc = false;
+
         for (let doc of documents) {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
@@ -514,6 +514,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 existingDoc = true;
             }
         }
+
         return existingDoc;
     }
 
@@ -530,26 +531,26 @@ export class ResourcesComponent implements AfterViewChecked {
         return undefined;
     }
 
-    private static makeDocsQuery(query, mainTypeDocumentResourceId) : Query {
+    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
         return () => {
-            const q = JSON.parse(JSON.stringify(query));
-            q.constraints = { 'resource.relations.isRecordedIn' : mainTypeDocumentResourceId };
-            return q;
-        }
+            const clonedQuery = JSON.parse(JSON.stringify(query));
+            clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
+            return clonedQuery;
+        };
     }
 
-    private static makeMainTypeQuery(mainType) : Query {
+    private static makeMainTypeQuery(mainType: string): Query {
 
         return () => {
             return { types: [mainType] };
-        }
+        };
     }
 
-    private static handleFindErr(messages, errWithParams, query) {
+    private static handleFindErr(messages: Messages, errWithParams: Array<string>, query: Query) {
 
         console.error('error with find. query:', query);
         if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
-        messages.add([M.ALL_FIND_ERROR])
+        messages.add([M.ALL_FIND_ERROR]);
     }
 }

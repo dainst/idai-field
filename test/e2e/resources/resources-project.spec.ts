@@ -65,7 +65,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench1'));
     });
 
-    it ('delete project', () => {
+    xit ('delete project', () => {
 
         performCreateProject();
         browser.sleep(delays.shortRest * 10);
@@ -92,7 +92,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
     });
 
-    it('create & switch project', () => {
+    xit('create & switch project', () => {
 
         performCreateProject();
 

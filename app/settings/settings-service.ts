@@ -25,7 +25,7 @@ import {AppState} from "../app-state";
  */
 export class SettingsService {
 
-    private syncStateObservers = [];
+    private observers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
@@ -125,6 +125,7 @@ export class SettingsService {
     }
 
     public deleteProject(name: string) {
+
         this.imagestore.destroy(name);
         return this.pouchdbManager.destroyDb(name);
     }
@@ -158,15 +159,15 @@ export class SettingsService {
         return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
 
             // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.syncStateObservers.forEach(o => o.next('connected')), 500);
+            const msg = setTimeout(() => this.observers.forEach(o => o.next('connected')), 500);
 
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
-                this.syncStateObservers.forEach(o => o.next('disconnected'));
+                this.observers.forEach(o => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
-            syncState.onChange.subscribe(() => this.syncStateObservers.forEach(o => o.next('changed')));
+            syncState.onChange.subscribe(() => this.observers.forEach(o => o.next('changed')));
         });
     }
 
@@ -177,7 +178,7 @@ export class SettingsService {
         return new Promise<any>((resolve) => {
             this.useSelectedDatabase(createDb).then(
                 () => {
-                    this.syncStateObservers.forEach(o => o.next(false));
+                    this.observers.forEach(o => o.next(false));
                     setTimeout(() => {
                         this.startSync().then(() => resolve());
                     }, 1000);
@@ -248,7 +249,7 @@ export class SettingsService {
     public syncStatusChanges(): Observable<string> {
 
         return Observable.create(observer => {
-            this.syncStateObservers.push(observer);
+            this.observers.push(observer);
         });
     }
 

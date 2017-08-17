@@ -83,9 +83,6 @@ export class ConflictResolvingExtension {
 
     private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
 
-        // TODO Necessary?
-        if (!document['_conflicts']) return Promise.resolve([]);
-
         let promises: Array<Promise<Document>> = [];
 
         for (let revisionId of document['_conflicts']) {

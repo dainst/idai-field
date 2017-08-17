@@ -49,8 +49,7 @@ export class DoceditImageTabComponent {
     private calcGrid() {
 
         this.rows = [];
-        this.imageGridBuilder.calcGrid(
-            this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth)
+        this.imageGridBuilder.calcGrid(this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth)
             .then(result => {
                 this.rows = result['rows'];
 

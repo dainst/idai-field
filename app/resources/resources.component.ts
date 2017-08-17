@@ -336,16 +336,14 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 this.setSelectedMainTypeDocument();
-            })
+            });
     }
 
     private fetchDocuments(f): Promise<any> {
 
         this.loading.start();
         return this.datastore.find(f())
-            .catch(errWithParams => ResourcesComponent.handleFindErr(
-                this.messages, errWithParams, this.query)
-            )
+            .catch(errWithParams => this.handleFindErr(errWithParams, this.query))
             .then(documents => {
                 this.loading.stop(); return documents;
             });
@@ -503,6 +501,13 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+    private handleFindErr(errWithParams: Array<string>, query: Query) {
+
+        console.error('Error with find. Query:', query);
+        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+        this.messages.add([M.ALL_FIND_ERROR]);
+    }
+
     private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
         let existingDoc = false;
@@ -545,12 +550,5 @@ export class ResourcesComponent implements AfterViewChecked {
         return () => {
             return { types: [mainType] };
         };
-    }
-
-    private static handleFindErr(messages: Messages, errWithParams: Array<string>, query: Query) {
-
-        console.error('error with find. query:', query);
-        if (errWithParams.length == 2) console.error('error with find. cause:', errWithParams[1]);
-        messages.add([M.ALL_FIND_ERROR]);
     }
 }

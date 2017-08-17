@@ -13,8 +13,8 @@ export class MapPage {
                         .mouseMove(element(by.id("map-container")), {x: x, y: y})
                         .click()
                         .perform()
-                        .then(function () {
-                            setTimeout(function () {
+                        .then(() => {
+                            setTimeout(() => {
                                 resolve()
                             }, delays.shortRest)
                         })
@@ -22,17 +22,21 @@ export class MapPage {
         });
     };
 
-    public static setMarker = function (x, y) {
+    public static setMarker = function(x, y) {
         return this.clickMap(x, y);
     };
 
-    public static setPolygon = function (pointArray) {
+    public static setPolygon = function(pointArray) {
         const _this = this;
         return function () {
             for(let i = 0; i < pointArray.length; ++i){
                 _this.clickMap(pointArray[i][0], pointArray[i][1]);
             }
         }
+    };
+
+    public static getMapContainer = function() {
+        return element(by.id('map-container'));
     };
 
     public static getMapOption = function(optionName) {

@@ -3,6 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
+import {MapPage} from './map/map.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -234,5 +235,19 @@ describe('resources/project --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
+    });
+
+    it('autoselect last selected view mode on switching views', () => {
+
+        ResourcesPage.clickListModeButton();
+        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToProject();
+        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
     });
 });

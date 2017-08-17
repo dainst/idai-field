@@ -29,7 +29,9 @@ export class ConflictResolvingExtension {
         if (!this.conflictResolver) return Promise.reject("no conflict resolver");
 
         this.promise = this.promise.then(() => {
-            if (this.hasUnhandledConflicts(document)) {
+            if (ConflictResolvingExtension.hasUnhandledConflicts(
+                this.inspectedRevisionsIds, document)) {
+
                 return this.handleConflicts(document, userName);
             }
         });
@@ -47,20 +49,27 @@ export class ConflictResolvingExtension {
                 promise = promise.then(() => {
                     this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
 
-                    this.getPreviousRevision(conflictedRevision).then(previousRevision => {
+                    return this.datastore.fetchRevsInfo(conflictedRevision.resource.id)
+                        .then(history => {
 
-                        const result = this.conflictResolver.tryToSolveConflict(
-                            document, conflictedRevision, previousRevision);
+                            return this.datastore.fetchRevision(conflictedRevision.resource.id,
+                                    ConflictResolvingExtension.getPreviousRevision(history, conflictedRevision))
+                                .then(previousRevision=>{
 
-                        if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+                                const result = this.conflictResolver.tryToSolveConflict(
+                                    document, conflictedRevision, previousRevision);
 
-                            return this.datastore.update(document).then(() => {
-                                if (!result['unresolvedConflicts']) {
-                                    return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
+                                if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+
+                                    return this.datastore.update(document).then(() => {
+                                        if (!result['unresolvedConflicts']) {
+                                            return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
+                                        }
+                                    });
                                 }
                             });
-                        }
-                    });
+                        });
+
                 });
             }
 
@@ -68,39 +77,7 @@ export class ConflictResolvingExtension {
         });
     }
 
-    private static getRevisionNumber(revision: Document): number {
-
-        const revisionId = revision['_rev'];
-        const index = revisionId.indexOf('-');
-        const revisionNumber = revisionId.substring(0, index);
-
-        return parseInt(revisionNumber);
-    }
-
-    private getPreviousRevision(revision: Document): Promise<Document> {
-
-        return this.datastore.fetchRevsInfo(revision.resource.id, )
-            .then(history => {
-
-                const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
-
-                if (previousRevisionNumber < 1) return Promise.resolve(undefined);
-
-                const prefix = previousRevisionNumber.toString() + '-';
-                let previousRevisionId: string;
-
-                for (let historyElement of history) {
-                    if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
-                        previousRevisionId = historyElement.rev;
-                        break;
-                    }
-                }
-
-                return this.datastore.fetchRevision(revision.resource.id, previousRevisionId);
-            }
-        );
-    }
-
+    // TODO extract calls to datastore, so we can make method static
     private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
 
         // TODO Necessary?
@@ -127,14 +104,42 @@ export class ConflictResolvingExtension {
             });
     }
 
-    private hasUnhandledConflicts(document: Document): boolean {
+    private static hasUnhandledConflicts(inspectedRevisionsIds, document: Document): boolean {
 
         if (!document['_conflicts']) return false;
 
         for (let revisionId of document['_conflicts']) {
-            if (this.inspectedRevisionsIds.indexOf(revisionId) == -1) return true;
+            if (inspectedRevisionsIds.indexOf(revisionId) == -1) return true;
         }
 
         return false;
+    }
+
+    private static getPreviousRevision(history, revision: Document) {
+
+        const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
+
+        if (previousRevisionNumber < 1) return undefined;
+
+        const prefix = previousRevisionNumber.toString() + '-';
+        let previousRevisionId: string;
+
+        for (let historyElement of history) {
+            if (historyElement.rev.startsWith(prefix) && historyElement.status == 'available') {
+                previousRevisionId = historyElement.rev;
+                break;
+            }
+        }
+
+        return previousRevisionId;
+    }
+
+    private static getRevisionNumber(revision: Document): number {
+
+        const revisionId = revision['_rev'];
+        const index = revisionId.indexOf('-');
+        const revisionNumber = revisionId.substring(0, index);
+
+        return parseInt(revisionNumber);
     }
 }

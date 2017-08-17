@@ -7,6 +7,7 @@ import {ConflictResolver} from './conflict-resolver';
 @Injectable()
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ConflictResolvingExtension {
 

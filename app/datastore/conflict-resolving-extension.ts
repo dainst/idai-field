@@ -76,7 +76,6 @@ export class ConflictResolvingExtension {
         });
     }
 
-    // TODO extract calls to datastore, so we can make method static
     private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
 
         // TODO Necessary?
@@ -90,17 +89,30 @@ export class ConflictResolvingExtension {
 
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND])) // TODO return a datastore error and adjust apidoc
-            .then(revisions => {
-                const result: Array<Document> = [];
+            .then(revisions => ConflictResolvingExtension.extractRevisionsToHandle(revisions, userName));
+    }
 
-                for (let revision of revisions) {
-                    const lastAction: Action = revision.modified && revision.modified.length > 0 ?
-                        revision.modified[revision.modified.length - 1] : revision.created;
-                    if (lastAction.user == userName) result.push(revision); // TODO unit test that
-                }
+    /**
+     *
+     *
+     * @param revisions
+     * @param userName
+     * @returns {Array<Document>} the conflicted revisions to
+     *   actually to be resolved within this client. These are the ones having the
+     *   clients current userName as the name of the lastAction of the revision.
+     *   TODO unit test that if this is not the case the revision gets not handled
+     */
+    private static extractRevisionsToHandle(revisions, userName) {
 
-                return Promise.resolve(result);
-            });
+        const result: Array<Document> = [];
+
+        for (let revision of revisions) {
+            const lastAction: Action = revision.modified && revision.modified.length > 0 ?
+                revision.modified[revision.modified.length - 1] : revision.created;
+            if (lastAction.user == userName) result.push(revision);
+        }
+
+        return result;
     }
 
     private static hasUnhandledConflicts(inspectedRevisionsIds, document: Document): boolean {

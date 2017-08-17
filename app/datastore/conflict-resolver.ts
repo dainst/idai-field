@@ -3,9 +3,9 @@ import {Document} from 'idai-components-2/core';
 /**
  * @Daniel de Oliveira
  */
-export abstract class ConflictResolver {
+export interface ConflictResolver {
 
-    abstract tryToSolveConflict(
+    tryToSolveConflict(
         latestRevision: Document,
         conflictedRevision: Document,
         previousRevision: Document);

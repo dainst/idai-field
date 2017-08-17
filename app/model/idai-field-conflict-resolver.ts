@@ -1,14 +1,13 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDiffUtility} from './idai-field-diff-utility';
 import {ObjectUtil} from '../util/object-util';
+import {ConflictResolver} from '../datastore/conflict-resolver';
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class IdaiFieldConflictResolver {
-
-    constructor() {}
+export class IdaiFieldConflictResolver implements ConflictResolver {
 
     // TODO clone latestRevision and return
     public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,

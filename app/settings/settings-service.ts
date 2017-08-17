@@ -43,13 +43,9 @@ export class SettingsService {
         this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.useSelectedDatabase(false); // TODO important to test this false, bc could overwrite db
-
-                const project = this.getSelectedProject();
-
-                // TODO project could be undefined
-
-                return this.setProjectSettings(this.settings.dbs, project, false)
+                this.useSelectedDatabase();
+                
+                return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
                     .then(() => this.activateSettings());
             }
@@ -150,11 +146,11 @@ export class SettingsService {
      * @returns {any}
      */
 
-    public activateSettings(restart = false, createDb: boolean = false): Promise<any> {
+    public activateSettings(restart = false): Promise<any> {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
 
-        return restart ? this.restartSync(createDb) : this.startSync();
+        return restart ? this.restartSync() : this.startSync();
     }
 
     private startSync(): Promise<any> {
@@ -178,12 +174,12 @@ export class SettingsService {
         });
     }
 
-    private restartSync(createDb) {
+    private restartSync() {
 
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         return new Promise<any>((resolve) => {
-            this.useSelectedDatabase(createDb).then(
+            this.useSelectedDatabase().then(
                 () => {
                     this.observers.forEach(o => o.next(false));
                     setTimeout(() => {
@@ -193,7 +189,7 @@ export class SettingsService {
             });
     }
 
-    private useSelectedDatabase(createDb: boolean): Promise<any> {
+    private useSelectedDatabase(): Promise<any> {
 
         this.pouchdbManager.setProject(this.getSelectedProject());
         this.imagestore.select(this.getSelectedProject());

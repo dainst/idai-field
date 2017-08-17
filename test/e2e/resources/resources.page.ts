@@ -106,10 +106,6 @@ export class ResourcesPage {
         return element(by.css('#objectList .list-group-item.selected .title')).getText();
     };
 
-    public static getListModeInputFieldValue = function(identifier, index) {
-        return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
-    };
-
     public static getSelectedMainTypeDocumentOption = function() {
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
@@ -118,6 +114,14 @@ export class ResourcesPage {
     public static getMainTypeDocumentOption = function() {
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox')).getText();
+    };
+
+    public static getSearchBarInputFieldValue = function() {
+        return ResourcesPage.getSearchBarInputField().getAttribute('value');
+    };
+
+    public static getListModeInputFieldValue = function(identifier, index) {
+        return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
     };
 
     // elements
@@ -146,6 +150,10 @@ export class ResourcesPage {
 
     public static getSelectedTypeFilterButton = function() {
         return element(by.css('#filter-button type-icon'));
+    };
+
+    public static getSearchBarInputField = function() {
+        return element(by.id('object-search'));
     };
 
     // sequences
@@ -203,7 +211,7 @@ export class ResourcesPage {
     // type in
 
     public static typeInIdentifierInSearchField = function(identifier) {
-        return common.typeIn(element(by.id('object-search')), identifier);
+        return common.typeIn(ResourcesPage.getSearchBarInputField(), identifier);
     };
 
     public static typeInListModeInputField = function(identifier, index, inputText) {

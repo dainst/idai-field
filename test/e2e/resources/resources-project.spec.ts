@@ -250,4 +250,18 @@ describe('resources/project --', function() {
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
     });
+
+    it('clear search bar input field on switching views', () => {
+
+        ResourcesPage.typeInIdentifierInSearchField('xyz');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+    });
 });

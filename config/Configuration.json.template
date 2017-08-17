@@ -250,7 +250,19 @@
         {
           "name":"height",
           "label":"Höhe",
+          "inputType": "unsignedFloat",
           "description":"Höhe des Fundes  in cm, vor allem bei Gefäßen anstatt Länge benutzen"
+        },
+        {
+          "name": "diameter",
+          "label": "Durchmesser",
+          "inputType":"dimension",
+          "description": "Der Durchmesser",
+          "position_values": [
+            "am Bruch",
+            "Oberkante",
+            "Unterkante"
+          ]
         },
         {
           "name":"inventoryLocation",

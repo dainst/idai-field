@@ -94,7 +94,7 @@ export class ProjectsComponent implements OnInit {
         );
     }
 
-    public canDeleteProject() {
+    private canDeleteProject() {
 
         if (!this.projectToDelete || (this.projectToDelete == '')) {
             return false;

@@ -120,7 +120,6 @@ describe('resources/project --', function() {
     it ('delete project', () => {
 
         performCreateProject();
-        // browser.sleep(delays.shortRest * 10);
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });

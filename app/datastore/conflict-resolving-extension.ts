@@ -126,6 +126,7 @@ export class ConflictResolvingExtension {
         return false;
     }
 
+    // TODO move to RevisionHelper
     private static getPreviousRevisionId(history, revision: Document) {
 
         const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
@@ -145,6 +146,7 @@ export class ConflictResolvingExtension {
         return previousRevisionId;
     }
 
+    // TODO move to RevisionHelper
     private static getRevisionNumber(revision: Document): number {
 
         const revisionId = revision['_rev'];

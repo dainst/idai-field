@@ -19,6 +19,10 @@
                 </select>
             </div>
 
+            <div *ngIf="view.mainType == 'project' && projectDocument" class="col-md-8">
+                Projekt: {{projectDocument.resource.identifier}}
+            </div>
+
             <div *ngIf="selectedMainTypeDocument" class="col-md-2">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(selectedMainTypeDocument)">

@@ -44,7 +44,7 @@ export class SettingsService {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.useSelectedDatabase();
-                
+
                 return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
                     .then(() => this.activateSettings());

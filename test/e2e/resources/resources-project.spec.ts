@@ -38,11 +38,13 @@ describe('resources/project --', function() {
     });
 
     function performCreateProject() {
+
         browser.sleep(delays.shortRest * 10);
+        ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 10);
     }
 
     it('basic stuff', () => {
@@ -65,7 +67,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench1'));
     });
 
-    xit('create & switch project', () => {
+    it('create & switch project', () => {
 
         performCreateProject();
 
@@ -76,11 +78,13 @@ describe('resources/project --', function() {
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
-        NavbarPage.clickNavigateToProject();
+        ProjectPage.clickProjectsBadge();
+
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
+        browser.sleep(delays.shortRest * 10);
         NavbarPage.clickNavigateToSettings();
 
         NavbarPage.clickNavigateToExcavation();
@@ -91,14 +95,15 @@ describe('resources/project --', function() {
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
-        NavbarPage.clickNavigateToSettings();
-        NavbarPage.clickNavigateToProject();
+        ProjectPage.clickProjectsBadge();
+
         ProjectPage.getProjectNameOptionText(1).then(t=>{
             expect(t).toContain('abc')
         });
         NavbarPage.clickSelectProject(1);
         browser.sleep(delays.shortRest * 10);
 
+        NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 

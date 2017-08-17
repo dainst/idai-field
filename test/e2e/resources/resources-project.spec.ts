@@ -117,11 +117,12 @@ describe('resources/project --', function() {
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });
 
-    xit ('delete project', () => {
+    it ('delete project', () => {
 
         performCreateProject();
-        browser.sleep(delays.shortRest * 10);
+        // browser.sleep(delays.shortRest * 10);
 
+        ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
 
@@ -132,7 +133,6 @@ describe('resources/project --', function() {
         ProjectPage.clickConfirmProjectOperation();
 
         browser.sleep(delays.shortRest * 10);
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
 
         NavbarPage.clickNavigateToBuilding();
         browser.sleep(delays.shortRest * 15);
@@ -142,6 +142,10 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest * 5);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        ProjectPage.clickProjectsBadge();
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+
     });
 
     xit ('do not delete last project', () => {

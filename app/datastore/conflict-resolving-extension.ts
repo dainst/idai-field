@@ -53,7 +53,7 @@ export class ConflictResolvingExtension {
                         .then(history => {
 
                             return this.datastore.fetchRevision(conflictedRevision.resource.id,
-                                    ConflictResolvingExtension.getPreviousRevision(history, conflictedRevision))
+                                    ConflictResolvingExtension.getPreviousRevisionId(history, conflictedRevision))
                                 .then(previousRevision=>{
 
                                 const result = this.conflictResolver.tryToSolveConflict(
@@ -115,7 +115,7 @@ export class ConflictResolvingExtension {
         return false;
     }
 
-    private static getPreviousRevision(history, revision: Document) {
+    private static getPreviousRevisionId(history, revision: Document) {
 
         const previousRevisionNumber: number = ConflictResolvingExtension.getRevisionNumber(revision) - 1;
 

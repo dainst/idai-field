@@ -185,7 +185,7 @@ export class PouchdbDatastore {
             .then(resultSets => this.generateOrderedResultList(resultSets));
     }
 
-    private performFulltext(query: Query, resultSets: ResultSets) {
+    private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
         let q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
         let types: string[] = query.types ? query.types : undefined;
@@ -194,7 +194,7 @@ export class PouchdbDatastore {
         return resultSets;
     }
 
-    private generateOrderedResultList(resultSets: ResultSets) {
+    private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
         return resultSets.intersect(e => e.id)
             .sort(this.comp('date'))

@@ -139,7 +139,6 @@ export class SettingsService {
      * @param restart
      * @returns {any}
      */
-
     public activateSettings(restart = false): Promise<any> {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);

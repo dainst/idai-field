@@ -387,10 +387,8 @@ export class ResourcesComponent implements AfterViewChecked {
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
 
         doceditRef.result.then(result => {
-                this.populateMainTypeDocuments() // TODO necessary?
-                    .then(() => this.selectDocument(result.document))
-                    .then(() => this.populateDocumentList());
-
+                this.selectDocument(result.document);
+                this.populateDocumentList();
             }, closeReason => {
 
                 this.documentEditChangeMonitor.reset();

@@ -512,12 +512,8 @@ export class ResourcesComponent implements AfterViewChecked {
         for (let doc of documents) {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) {
-                return true;
-            }
+            if (doc.resource.id == changedDocument.resource.id) return true;
         }
-
-        return false;
     }
 
     private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {

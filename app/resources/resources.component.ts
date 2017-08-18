@@ -409,9 +409,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 }
             });
 
-        const docedit = doceditRef.componentInstance;
-        docedit.setDocument(document);
-        if (activeTabName) docedit.setActiveTab(activeTabName);
+        doceditRef.componentInstance.setDocument(document);
+        if (activeTabName) doceditRef.componentInstance.setActiveTab(activeTabName);
     }
 
     public startEditGeometry() {
@@ -444,13 +443,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isRemoteChange(changedDocument: Document): boolean {
 
-        let latestAction: Action;
-
-        if (changedDocument.modified && changedDocument.modified.length > 0) {
-            latestAction = changedDocument.modified[changedDocument.modified.length - 1];
-        } else {
-            latestAction = changedDocument.created;
-        }
+        const latestAction: Action =
+            (changedDocument.modified && changedDocument.modified.length > 0)
+            ? changedDocument.modified[changedDocument.modified.length - 1]
+            : changedDocument.created;
 
         return latestAction && latestAction.user != this.settingsService.getUsername();
     }

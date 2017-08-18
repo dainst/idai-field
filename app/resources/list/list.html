@@ -11,7 +11,7 @@
         </div>
     </div>
     <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.query.q == ''
-                        && resourcesComponent.selectedMainTypeDocument"
+                        && !resourcesComponent.query.types && resourcesComponent.selectedMainTypeDocument"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [isRecordedIn]="resourcesComponent.selectedMainTypeDocument"></plus-button>
     <loading-icon></loading-icon>

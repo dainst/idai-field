@@ -31,10 +31,12 @@
             </div>
 
             <div *ngIf="view.mainType != 'project'" class="col-md-2">
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project' && mode == 'map'"
+                <plus-button *ngIf="ready && query.q == '' && !query.types && view.mainType != 'project'
+                                    && mode == 'map'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project' && mode == 'list'"
+                <plus-button *ngIf="ready && query.q == '' && !query.types && view.mainType != 'project'
+                                    && mode == 'list'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
             </div>

@@ -58,10 +58,9 @@ export class PouchdbDatastore {
                 }
                 document['_id'] = document.resource.id;
             })
-            .then(() => this.performPut(document, resetFun, err => {
-                console.error(err);
-                return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
-            }));
+            .then(() => this.performPut(document, resetFun, err =>
+                Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
+            ));
     }
 
     /**

@@ -529,8 +529,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
             }
         }
-
-        return undefined;
     }
 
     private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {

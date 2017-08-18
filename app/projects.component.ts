@@ -50,11 +50,6 @@ export class ProjectsComponent implements OnInit {
         this.modalRef = this.modalService.open(this.modalTemplate);
     }
 
-    public closeModal() {
-
-        this.modalRef.close();
-    }
-
     public selectProject() {
 
         return this.switchProjectDb();

@@ -18,7 +18,7 @@ import {ConflictResolver} from "./conflict-resolver";
 export class PouchdbDatastore {
 
     protected db: any;
-    private observers = [];
+    private documentChangesObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
     // despite them beeing deleted in remove before. When they
@@ -165,7 +165,7 @@ export class PouchdbDatastore {
     public documentChangesNotifications(): Observable<Document> {
 
         return Observable.create(observer => {
-            this.observers.push(observer);
+            this.documentChangesObservers.push(observer);
         });
     }
 
@@ -205,7 +205,7 @@ export class PouchdbDatastore {
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints) {
+    private performThem(constraints): ResultSets {
 
         if (!constraints) return undefined;
 
@@ -234,12 +234,12 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
-    private notify(document: Document) {
+    private notifyDocumentChangesObservers(document: Document) {
 
-        if (!this.observers) return;
+        if (!this.documentChangesObservers) return;
         this.removeClosedObservers();
 
-        this.observers.forEach(observer => {
+        this.documentChangesObservers.forEach(observer => {
             if (observer && (observer.next != undefined)) observer.next(document);
         });
     }
@@ -247,12 +247,12 @@ export class PouchdbDatastore {
     private removeClosedObservers() {
 
         const observersToDelete = [];
-        for (let i = 0; i < this.observers.length; i++) {
-            if (this.observers[i].closed) observersToDelete.push(this.observers[i]);
+        for (let i = 0; i < this.documentChangesObservers.length; i++) {
+            if (this.documentChangesObservers[i].closed) observersToDelete.push(this.documentChangesObservers[i]);
         }
         for (let observerToDelete of observersToDelete) {
-            let i = this.observers.indexOf(observerToDelete);
-            this.observers.splice(i, 1);
+            let i = this.documentChangesObservers.indexOf(observerToDelete);
+            this.documentChangesObservers.splice(i, 1);
         }
     }
 
@@ -314,7 +314,7 @@ export class PouchdbDatastore {
                     //
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
-                    this.notify(document);
+                    this.notifyDocumentChangesObservers(document);
                 });
             }).on('complete', info => {
                 // console.debug('changes stream was canceled', info);

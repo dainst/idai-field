@@ -352,19 +352,22 @@ export class ResourcesComponent implements AfterViewChecked {
     private setSelectedMainTypeDocument() {
 
         if (this.mainTypeDocuments.length == 0) {
-            this.selectedMainTypeDocument = undefined;
-        } else if (this.selectedDocument) {
-            this.selectedMainTypeDocument
-                = ResourcesComponent.getMainTypeDocumentForDocument(this.selectedDocument, this.mainTypeDocuments);
-            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-        } else {
-            const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
-            if (lastSelectedMainTypeDocument) {
-                this.selectedMainTypeDocument = lastSelectedMainTypeDocument;
-            } else {
-                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            }
+            return this.selectedMainTypeDocument = undefined;
         }
+
+        if (this.selectedDocument) {
+            this.selectedMainTypeDocument =
+                ResourcesComponent.getMainTypeDocumentForDocument(
+                    this.selectedDocument, this.mainTypeDocuments
+                );
+            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            return;
+        }
+
+        const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
+        this.selectedMainTypeDocument = lastSelectedMainTypeDocument ?
+              lastSelectedMainTypeDocument : this.mainTypeDocuments[0];
+
     }
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {

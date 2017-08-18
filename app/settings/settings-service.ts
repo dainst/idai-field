@@ -69,11 +69,7 @@ export class SettingsService {
 
     public getSelectedProject() {
         
-        if (!this.settings.dbs || this.settings.dbs.length == 0) {
-            return undefined;
-        } else {
-            return this.settings.dbs[0];
-        }
+        if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
     }
 
     /**
@@ -97,8 +93,6 @@ export class SettingsService {
 
         this.settings.syncTarget = syncTarget;
         this.storeSettings();
-
-        return undefined;
     }
 
     /**

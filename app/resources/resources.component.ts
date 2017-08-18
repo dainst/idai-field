@@ -133,18 +133,10 @@ export class ResourcesComponent implements AfterViewChecked {
         this.initializeMode();
 
         this.loading.start();
-        return this.populateAll()
-            .then(() => (this.ready = true) && this.loading.stop());
-    }
-
-    private populateAll(callback?: Function) {
-
         return this.populateProjectDocument()
             .then(() => this.populateMainTypeDocuments())
-            .then(() => {
-                if (callback) callback();
-                return this.populateDocumentList();
-            });
+            .then(() => this.populateDocumentList())
+            .then(() => (this.ready = true) && this.loading.stop());
     }
 
     private initializeView(viewName: string): Promise<any> {
@@ -394,9 +386,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
 
-        doceditRef.result.then(result =>
-                this.populateAll(() => this.selectDocument(result.document))
-            , closeReason => {
+        doceditRef.result.then(result => {
+                this.populateMainTypeDocuments() // TODO necessary?
+                    .then(() => this.selectDocument(result.document))
+                    .then(() => this.populateDocumentList());
+
+            }, closeReason => {
 
                 this.documentEditChangeMonitor.reset();
                 if (closeReason == 'deleted') {

@@ -1,7 +1,9 @@
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 
-let delays = require('../config/delays');
+const delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
 
 describe('resources/list --', function() {
 
@@ -45,5 +47,29 @@ describe('resources/list --', function() {
         ResourcesPage.getListModeInputFieldValue('2', 0).then(
             inputValue => { expect(inputValue).toEqual('2'); }
         );
+    });
+
+    it('perform a fulltext search', () => {
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.typeInIdentifierInSearchField('testf1');
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
+
+        ResourcesPage.typeInIdentifierInSearchField(' ');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
+    });
+
+    it('perform a type filter search', () => {
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickChooseTypeFilter(1);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
+
+        ResourcesPage.clickChooseTypeFilter('all');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });
 });

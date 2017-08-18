@@ -55,12 +55,6 @@ export class ProjectsComponent implements OnInit {
         this.modalRef.close();
     }
 
-    public reset() {
-
-        this.projectToDelete = '';
-        this.newProject = '';
-    }
-
     public selectProject() {
 
         return this.switchProjectDb();

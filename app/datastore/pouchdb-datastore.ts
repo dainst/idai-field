@@ -70,8 +70,8 @@ export class PouchdbDatastore {
      */
     public update(document: Document): Promise<Document> {
 
-        if (document.resource.id == null) {
-            return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
+        if (!document.resource.id) {
+            return Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
         }
 
         const resetFun = this.resetDocOnErr(document);

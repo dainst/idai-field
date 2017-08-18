@@ -7,10 +7,7 @@ import {M} from './m';
 @Component({
     selector: 'projects',
     moduleId: module.id,
-    templateUrl: './projects.html',
-    host: {
-        '(document:click)': 'handleClick($event)',
-    }
+    templateUrl: './projects.html'
 })
 
 /**
@@ -26,8 +23,6 @@ export class ProjectsComponent implements OnInit {
     public projectToDelete: string = '';
 
     @ViewChild('projectsModalTemplate') public modalTemplate: TemplateRef<any>;
-    @ViewChild('popover') private popover;
-    @ViewChild('deletePopover') private deletePopover;
 
     private modalRef: NgbModalRef;
 
@@ -78,7 +73,7 @@ export class ProjectsComponent implements OnInit {
 
     public deleteProject() {
 
-        if (!this.canDeleteProject()) return this.deletePopover.close();
+        if (!this.canDeleteProject()) return;
 
         return this.settingsService.deleteProject(this.selectedProject).then(() => {
             this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
@@ -108,23 +103,5 @@ export class ProjectsComponent implements OnInit {
         return this.settingsService.setProjectSettings(
                 this.projects, this.selectedProject, true, create)
             .then(() => window.location.reload());
-    }
-
-    private handleClick(event) {
-
-        if (!this.popover) return;
-
-        let target = event.target;
-        let inside = false;
-
-        do {
-            if (target.id == 'new-project-button' || target.id == 'new-project-menu') {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.popover.close();
     }
 }

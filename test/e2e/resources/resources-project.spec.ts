@@ -147,7 +147,9 @@ describe('resources/project --', function() {
 
     });
 
-    xit ('do not delete last project', () => {
+    it ('do not delete last project', () => {
+
+        ProjectPage.clickProjectsBadge();
 
         ProjectPage.clickDeleteProject();
         ProjectPage.typeInProjectName('test');

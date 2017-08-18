@@ -45,6 +45,12 @@ export class ProjectsComponent implements OnInit {
         });
     }
 
+    public reset() {
+
+        this.projectToDelete = '';
+        this.newProject = '';
+    }
+
     public openModal() {
 
         this.modalRef = this.modalService.open(this.modalTemplate);

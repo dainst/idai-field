@@ -16,6 +16,7 @@ describe('image grid --', function() {
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         browser.sleep(1000);
         NavbarPage.clickNavigateToImages();
+        browser.sleep(delays.shortRest);
     });
 
     it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {

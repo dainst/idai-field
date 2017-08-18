@@ -36,7 +36,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public mode: string; // 'map' or 'list'
     public editGeometry: boolean = false;
 
-    public query: Query = { q: '' }; // TODO remove definition. it gets initialized in initializeQuery
+    public query: Query;
     public filterType: string;
 
     public documents: Array<Document>;

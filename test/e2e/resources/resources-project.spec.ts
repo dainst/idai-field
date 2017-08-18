@@ -275,4 +275,28 @@ describe('resources/project --', function() {
         ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
+
+    it('keep query string in search bar input field on switching view modes', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.typeInIdentifierInSearchField('testf1');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('testf1'));
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickMapModeButton();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('testf1'));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.typeInIdentifierInSearchField(' ');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+    });
 });

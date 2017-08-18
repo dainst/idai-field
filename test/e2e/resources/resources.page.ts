@@ -70,6 +70,10 @@ export class ResourcesPage {
             + identifier + '"]')));
     };
 
+    public static clickMapModeButton = function() {
+        common.click(element(by.id('map-mode-button')));
+    };
+
     public static clickListModeButton = function() {
         common.click(element(by.id('list-mode-button')));
     };

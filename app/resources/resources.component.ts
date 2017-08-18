@@ -509,17 +509,15 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
-        let existingDoc = false;
-
         for (let doc of documents) {
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
             if (doc.resource.id == changedDocument.resource.id) {
-                existingDoc = true;
+                return true;
             }
         }
 
-        return existingDoc;
+        return false;
     }
 
     private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {

@@ -299,4 +299,28 @@ describe('resources/project --', function() {
         ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
     });
+
+    it('keep type filter on switching view modes', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickChooseTypeFilter(1);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickListModeButton();
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickMapModeButton();
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+
+        ResourcesPage.clickChooseTypeFilter('all');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+
+        ResourcesPage.clickListModeButton();
+        browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+    });
 });

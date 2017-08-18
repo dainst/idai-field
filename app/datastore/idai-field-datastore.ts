@@ -54,7 +54,7 @@ export abstract class IdaiFieldDatastore extends Datastore {
      * @param revisionId
      * @returns
      *   Rejects with
-     *     [GENERIC_DELETE_ERROR] - in case of error
+     *     [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     abstract removeRevision(resourceId: string, revisionId: string): Promise<any>;
 }

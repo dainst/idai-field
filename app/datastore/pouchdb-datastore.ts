@@ -60,7 +60,7 @@ export class PouchdbDatastore {
             })
             .then(() => this.performPut(document, resetFun, err => {
                 console.error(err);
-                return Promise.reject([DatastoreErrors.GENERIC_SAVE_ERROR]);
+                return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
             }));
     }
 
@@ -83,7 +83,7 @@ export class PouchdbDatastore {
                 if (err.name && err.name == 'conflict') {
                     return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
                 } else {
-                    return Promise.reject([DatastoreErrors.GENERIC_SAVE_ERROR]);
+                    return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
                 }
             }))
     }
@@ -104,7 +104,7 @@ export class PouchdbDatastore {
 
         return this.fetch(doc.resource.id).then(
             docFromGet => this.db.remove(docFromGet)
-                .catch(() => Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR])),
+                .catch(err => Promise.reject([DatastoreErrors.GENERIC_ERROR, err])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR])
         );
     }
@@ -113,8 +113,7 @@ export class PouchdbDatastore {
 
         return this.db.remove(docId, revisionId)
             .catch(err => {
-                console.error('error in remove revision', err);
-                return Promise.reject([DatastoreErrors.GENERIC_DELETE_ERROR]);
+                return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
             });
     }
 

@@ -43,11 +43,12 @@ export class SettingsService {
         this.ready = this.settingsSerializer.load().then(settings => {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.useSelectedDatabase();
+                this.pouchdbManager.setProject(this.getSelectedProject());
+                this.imagestore.select(this.getSelectedProject());
 
                 return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
-                    .then(() => this.activateSettings());
+                    .then(() => this.startSync());
             }
         })
     }
@@ -131,25 +132,11 @@ export class SettingsService {
         return this.pouchdbManager.destroyDb(name);
     }
 
-    /**
-     * Activates the current settings state set by {@link #setSettings}
-     * by triggering (re-)start of syncing of the corresponding db
-     * and selecting the imagestore.
-     *
-     * @param restart
-     * @returns {any}
-     */
-    public activateSettings(restart = false): Promise<any> {
-
-        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
-
-        return restart ? this.restartSync() : this.startSync();
-    }
-
     private startSync(): Promise<any> {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
+        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (!this.currentSyncUrl) return Promise.resolve();
 
         return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
@@ -167,26 +154,16 @@ export class SettingsService {
         });
     }
 
-    private restartSync() {
+    public restartSync() {
 
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         return new Promise<any>((resolve) => {
-            this.useSelectedDatabase().then(
-                () => {
-                    this.observers.forEach(o => o.next(false));
-                    setTimeout(() => {
-                        this.startSync().then(() => resolve());
-                    }, 1000);
-                });
+                this.observers.forEach(o => o.next(false));
+                setTimeout(() => {
+                    this.startSync().then(() => resolve());
+                }, 1000);
             });
-    }
-
-    private useSelectedDatabase(): Promise<any> {
-
-        this.pouchdbManager.setProject(this.getSelectedProject());
-        this.imagestore.select(this.getSelectedProject());
-        return Promise.resolve();
     }
 
     private makeProjectDoc(name: string) {

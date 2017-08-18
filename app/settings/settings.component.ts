@@ -52,7 +52,7 @@ export class SettingsComponent implements OnInit {
 
         this.saving = true;
 
-        this.settingsService.activateSettings(true).then(
+        this.settingsService.restartSync().then(
             () => {
                 this.saving = false;
                 this.messages.add([M.SETTINGS_ACTIVATED])

@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Settings, SyncTarget} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
-import {M} from '../m';
-import {AppState} from "../app-state";
+import {AppState} from '../app-state';
 
 
 @Injectable()

@@ -85,13 +85,11 @@ export class ProjectsComponent implements OnInit {
 
         if (!this.canDeleteProject()) return this.deletePopover.close();
 
-        const projectToDelete = this.selectedProject;
-        this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
-        this.selectedProject = this.projects[0];
-
-        return this.settingsService.deleteProject(projectToDelete).then(() =>
-            this.switchProjectDb()
-        );
+        return this.settingsService.deleteProject(this.selectedProject).then(() => {
+            this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
+            this.selectedProject = this.projects[0];
+            return this.switchProjectDb();
+        });
     }
 
     private canDeleteProject() {

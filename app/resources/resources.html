@@ -11,7 +11,8 @@
                         {{viewUtility.getMainTypeDocumentLabel(document)}}
                     </option>
                 </select>
-                <select id="mainTypeSelectBoxSubstitute" *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
+                <select id="mainTypeSelectBoxSubstitute"
+                        *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
                         class="form-control" disabled>
                     <option>
                         {{mainTypeLabel}} anlegen ➔
@@ -31,11 +32,11 @@
             </div>
 
             <div *ngIf="view.mainType != 'project'" class="col-md-2">
-                <plus-button *ngIf="ready && query.q == '' && !query.types && view.mainType != 'project'
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'
                                     && mode == 'map'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
-                <plus-button *ngIf="ready && query.q == '' && !query.types && view.mainType != 'project'
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'
                                     && mode == 'list'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
@@ -74,7 +75,8 @@
      (drop)="false">
 
     <div *ngIf="ready && view && view.mainType != 'project' && !selectedMainTypeDocument && !editGeometry"
-         class="col-sm-8 offset-sm-2 text-center alert alert-warning" style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 900;">
+         class="col-sm-8 offset-sm-2 text-center alert alert-warning"
+         style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 900;">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
     </div>
 
@@ -83,7 +85,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [documents]="documents" [selectedDocument]="selectedDocument"
                      [isEditing]="editGeometry"></map-wrapper>
-        <list *ngIf="mode == 'list'" [ready]="ready" [documents]="documents" [selectedMainTypeDocument]="selectedMainTypeDocument"></list>
+        <list *ngIf="mode == 'list'" [ready]="ready" [documents]="documents"
+              [selectedMainTypeDocument]="selectedMainTypeDocument"></list>
     </div>
 
 </div>

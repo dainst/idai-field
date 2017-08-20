@@ -18,6 +18,7 @@
 
   ul#objectList {
     height: calc(100vh - 140px);
+    overflow: scroll;
   }
 
   #objectOverview .object-list {

@@ -10,6 +10,10 @@
 @import "geometry-view";
 @import "list/list";
 
+#objectOverview {
+  overflow: hidden;
+}
+
 #objectOverview,
 #imageOverview {
   padding: 0 !important;

@@ -80,11 +80,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
     }
 
-    public getLatestRevision(id: string): Promise<Document> {
-
-        return this.datastore.fetch(id);
-    }
-
     /**
      * Implements {@link ReadDatastore#find}
      *

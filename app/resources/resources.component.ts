@@ -162,7 +162,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private selectDocumentFromParams(id: string, tab: string) {
 
         this.datastore.get(id).then(
-            document =>  tab ? this.editDocument(document, tab) : this.setSelected(document),
+            document => tab ? this.editDocument(document, tab) : this.setSelected(document),
             () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }

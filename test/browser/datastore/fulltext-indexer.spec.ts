@@ -31,6 +31,10 @@ export function main() {
             }
         }
 
+        function item(id) {
+            return {id: id, date: '2018-01-01'};
+        }
+
         beforeEach(() => {
             fi = new FulltextIndexer();
         });
@@ -38,22 +42,22 @@ export function main() {
         it('match one with with different search terms', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('identifier1', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
             expect(fi.get('ide', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('match two with the same search term', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             fi.put(doc('2', 'identifier2', 'type'));
             expect(fi.get('identifier', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }, { id: '2', date: '2018-01-01' }]);
+                .toEqual([item('1'), item('2')]);
         });
 
         it('match in all types', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('identifier', undefined))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('match in multiple selected types', () => {
@@ -61,7 +65,7 @@ export function main() {
             fi.put(doc('2', 'identifier2', 'type2'));
             fi.put(doc('3', 'identifier3', 'type3'));
             expect(fi.get('identifier', ['type1', 'type2']))
-                .toEqual([{ id: '1', date: '2018-01-01' }, { id: '2', date: '2018-01-01' }]);
+                .toEqual([item('1'), item('2')]);
         });
 
         it('do not match search term', () => {
@@ -79,15 +83,15 @@ export function main() {
         it('match one with two search terms', () => {
             fi.put(doc('1', 'identifier1', 'type', 'a short description'));
             expect(fi.get('short description', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
             expect(fi.get('a description', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('ignore additional spaces', () => {
             fi.put(doc('1', 'identifier1', 'type', 'a short description'));
             expect(fi.get(' a    short  description  ', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('no types present', () => {
@@ -113,32 +117,32 @@ export function main() {
         it('search *', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('*', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('index other field', () => {
             const d = doc('1', 'identifier1', 'type');
             fi.put(d);
             expect(fi.get('short', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('tokenize fields', () => {
             const d = doc('1', 'hello token', 'type');
             fi.put(d);
             expect(fi.get('hello', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
             expect(fi.get('token', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
-        it('find everything lowercase', () => {
+        it('find case insensitive', () => {
             fi.put(doc('1', 'Hello', 'type'));
             fi.put(doc('2', 'something', 'type'));
             expect(fi.get('hello', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
             expect(fi.get('Something', ['type']))
-                .toEqual([{ id: '2', date: '2018-01-01' }]);
+                .toEqual([item('2')]);
         });
 
         it('put overwrite', () => {
@@ -149,7 +153,7 @@ export function main() {
             expect(fi.get('identifier1', ['type']))
                 .toEqual([]);
             expect(fi.get('identifier2', ['type']))
-                .toEqual([{ id: '1', date: '2018-01-01' }]);
+                .toEqual([item('1')]);
         });
 
         it('shortDescription empty', () => {

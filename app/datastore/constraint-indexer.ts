@@ -14,14 +14,17 @@ export class ConstraintIndexer {
         }};
 
     constructor(private pathsDefinitions) {
+
         this.setUp();
     }
 
     public clear() {
+
         this.setUp();
     }
 
     public put(doc, skipRemoval = false) {
+
         if (!skipRemoval) this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
             this.putFor(pathDef, doc);
@@ -29,6 +32,7 @@ export class ConstraintIndexer {
     }
 
     public remove(doc) {
+
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
                 if (this.index[pathDef.path][key][doc.resource.id]) {
@@ -71,6 +75,7 @@ export class ConstraintIndexer {
     }
 
     private hasIndex(path) {
+
         for (let pd of this.pathsDefinitions) {
             if (pd.path == path) return true;
         }
@@ -78,11 +83,13 @@ export class ConstraintIndexer {
     }
 
     private addToIndex(doc, path, target) {
+
         if (!this.index[path][target]) this.index[path][target] = {};
         this.index[path][target][doc.resource.id] = ModelUtil.getLastModified(doc);
     }
 
     private setUp() {
+
         this.index = { };
         for (let pathDefinition of this.pathsDefinitions) {
             this.index[pathDefinition.path] = { };

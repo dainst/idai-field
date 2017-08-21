@@ -28,6 +28,10 @@ export function main() {
             }
         }
 
+        function item(id) {
+            return {id: id, date: '2018-01-01'};
+        }
+
         beforeEach(() => {
             spyOn(console, 'warn');
         });
@@ -48,7 +52,7 @@ export function main() {
             ci.put(docs[1]);
 
             expect(ci.get('resource.relations.isRecordedIn', '1'))
-                .toEqual([{id: '2', date: '2018-01-01'}, {id: '3', date: '2018-01-01'}]);
+                .toEqual([item('2'), item('3')]);
         });
 
         function docWithMultipleConstraintTargets() {
@@ -69,9 +73,9 @@ export function main() {
             docWithMultipleConstraintTargets();
 
             expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
             expect(ci.get('resource.relations.isRecordedIn', '3'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
         });
 
         function docWithMultipleConstraints() {
@@ -95,9 +99,9 @@ export function main() {
             docWithMultipleConstraints();
 
             expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
             expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
         });
 
         it('index also works if doc does not have the field', () => {
@@ -132,7 +136,7 @@ export function main() {
             docWithIdentifier();
 
             expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
         });
 
         it('clear index', () => {
@@ -214,11 +218,11 @@ export function main() {
                 .toEqual([ ]);
 
             expect(ci.get('resource.identifier', 'identifier2'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
             expect(ci.get('resource.relations.isRecordedIn', '4'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
             expect(ci.get('resource.relations.liesWithin', '5'))
-                .toEqual([{id: '1', date: '2018-01-01'}]);
+                .toEqual([item('1')]);
         });
 
         it('query for unkown', () => {
@@ -236,7 +240,7 @@ export function main() {
             ci.put(docs[1]);
 
             expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
-                .toEqual([{id: '2', date: '2018-01-01'}]);
+                .toEqual([item('2')]);
         });
 
         // TODO update docs where doc is new

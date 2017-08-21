@@ -93,6 +93,11 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         browser.wait(EC.presenceOf(element(by.id('document-view'))), delays.ECWaitTime);
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType();
+        DocumentEditWrapperPage.clickCloseEdit();
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 
     it('should save changes via dialog modal', () => {

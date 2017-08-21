@@ -4,7 +4,8 @@
  */
 export class ObjectUtil {
 
-    public static getElForPathIn(object, path) {
+    public static getElForPathIn(object: any, path: string) {
+
         let result = object;
         for (let segment of path.split('.')) {
             if (result[segment]) result = result[segment];
@@ -28,22 +29,32 @@ export class ObjectUtil {
         return last[lastSegment] = val;
     }
 
-    public static findDifferingFieldsInObject(object1: any, object2: any, fieldsToIgnore: string[]): string[] {
+    public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         let differingFieldsNames: string[] = [];
 
         for (let fieldName in object1) {
             if (object1.hasOwnProperty(fieldName)) {
-                if (fieldsToIgnore.indexOf(fieldName) > -1) continue;
-                if (!this.compareFields(object1[fieldName], object2[fieldName])) {
-                    differingFieldsNames.push(fieldName);
+
+                if (fieldsToIgnore && fieldsToIgnore.indexOf(fieldName) > -1) continue;
+
+                let differing: boolean = false;
+
+                if (typeof object1[fieldName] == 'object' && typeof object2[fieldName] == 'object') {
+                    differing = !this.compareObjects(object1[fieldName], object2[fieldName]);
+                } else if (typeof object1[fieldName] == 'object' || typeof object2[fieldName] == 'object') {
+                    differing = true;
+                } else {
+                    differing = !this.compareFields(object1[fieldName], object2[fieldName]);
                 }
+
+                if (differing) differingFieldsNames.push(fieldName);
             }
         }
         return differingFieldsNames;
     }
 
-    public static compareObjects(object1: any, object2: any): boolean {
+    public static compareObjects(object1: Object, object2: Object): boolean {
 
         if (!object1 && !object2) return true;
 

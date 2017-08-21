@@ -390,10 +390,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.populateMainTypeDocuments()
                     .then(() => this.selectDocument(result.document))
                     .then(() => this.populateDocumentList());
-
             }, closeReason => {
-
                 this.documentEditChangeMonitor.reset();
+                this.removeEmptyDocuments();
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
                     if (document == this.selectedMainTypeDocument) {

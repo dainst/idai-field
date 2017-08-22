@@ -207,7 +207,7 @@ export function main() {
                         done();
                     },
                     expectedErr => {
-                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR);
+                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
                         done();
                     }
                 );
@@ -263,19 +263,19 @@ export function main() {
             }
         );
 
-        it('should throw error when no resource id',
-            function(done) {
+        it('should throw error when no resource id', (done) => {
+            
                 expectErr(()=>{return datastore.remove(doc('sd2'))}
                     ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
             }
         );
 
-        it('should throw error when trying to remove and not existent',
-            function(done) {
+        it('should throw error when trying to remove and not existent', (done) => {
+
                 const d = doc('sd1');
                 d['resource']['id'] = 'hoax';
                 expectErr(()=>{return datastore.remove(d)}
-                    ,[DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR], done);
+                    ,[DatastoreErrors.DOCUMENT_NOT_FOUND], done);
             }
         );
 

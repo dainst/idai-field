@@ -171,7 +171,7 @@ export class DoceditComponent {
 
     private handleSaveError(errorWithParams) {
 
-        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
             this.handleDeletedConflict();
         } else {
             console.error(errorWithParams);

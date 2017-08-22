@@ -1,11 +1,8 @@
 import {NavbarPage} from '../navbar.page';
-import {by, element, protractor} from 'protractor';
 import {ResourcesPage} from './resources.page';
 import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
-const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
-
-let common = require('../common.js');
+import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
+import {ThumbnailViewPage} from '../widgets/thumnail-view.page';
 
 /**
  * @author Daniel de Oliveira
@@ -17,16 +14,18 @@ describe('resources/images --', function() {
     });
 
     it ('create links for images', done => {
+
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DocumentEditWrapperPage.clickImagesTab();
         DocumentEditWrapperPage.clickInsertImage();
-        common.typeIn(element(by.css('#image-picker-modal #object-search')), '2');
-        element.all(by.css('.cell')).then(cells => {
+
+        ImagePickerModalPage.typeInIdentifierInSearchField('2');
+        ImagePickerModalPage.getCells().then(cells => {
             cells[0].click();
-            common.click(element(by.css('#image-picker-modal-header #add-image')));
+            ImagePickerModalPage.clickAddImage();
             DocumentEditWrapperPage.clickSaveDocument();
-            element.all(by.css('#thumbnail-view .thumbnail')).then(thumbs => {
+            ThumbnailViewPage.getThumbs().then(thumbs => {
                 expect(thumbs.length).toBe(1);
                 done();
             });

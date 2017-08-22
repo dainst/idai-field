@@ -65,7 +65,7 @@ export class ObjectUtil {
 
     public static cloneObject(object: Object): Object {
 
-        return JSON.parse(JSON.stringify(document));
+        return JSON.parse(JSON.stringify(object));
     }
 
     public static compareFields(field1: any, field2: any): boolean {

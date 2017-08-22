@@ -1,11 +1,6 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-
-interface ResourcesViewState {
-    mainTypeDocument?: IdaiFieldDocument;
-    type?: string;
-    mode?: string;
-}
+import {ResourcesViewState} from './resources-view-state';
+import {ResourcesStateSerializer} from './resources-state-serializer';
 
 @Injectable()
 
@@ -14,23 +9,34 @@ interface ResourcesViewState {
  */
 export class ResourcesState {
 
-    private _: { [viewName: string]: ResourcesViewState } = {};
+    private _: { [viewName: string]: ResourcesViewState };
 
-    public setLastSelectedMainTypeDocument(viewName: string, mainTypeDocument: IdaiFieldDocument) {
+    constructor(private serializer: ResourcesStateSerializer) {}
 
-        if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].mainTypeDocument = mainTypeDocument;
+    public initialize(): Promise<any> {
+
+        if (this._) return Promise.resolve();
+
+        return this.serializer.load().then(resourcesStateMap => this._ = resourcesStateMap);
     }
 
-    public getLastSelectedMainTypeDocument(viewName: string): IdaiFieldDocument {
+    public setLastSelectedMainTypeDocumentId(viewName: string, id: string) {
 
-        return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocument;
+        if (!this._[viewName]) this._[viewName] = {};
+        this._[viewName].mainTypeDocumentId = id;
+        this.serializer.store(this._);
+    }
+
+    public getLastSelectedMainTypeDocumentId(viewName: string): string {
+
+        return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocumentId;
     }
 
     public setLastSelectedMode(viewName: string, mode: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mode = mode;
+        this.serializer.store(this._);
     }
 
     public getLastSelectedMode(viewName: string) {
@@ -38,11 +44,11 @@ export class ResourcesState {
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
 
-
     public setLastSelectedTypeFilter(viewName: string, type: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].type = type;
+        this.serializer.store(this._);
     }
 
     public getLastSelectedTypeFilter(viewName: string): string {

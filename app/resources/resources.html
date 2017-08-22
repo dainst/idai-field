@@ -45,7 +45,7 @@
     </div>
 
     <div class="col-md-4 offset-1">
-        <search-bar *ngIf="view" [q]="query.q" [type]="filterType" [relationName]="'isRecordedIn'"
+        <search-bar *ngIf="query" [q]="query.q" [type]="filterType" [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
                     (onQueryStringChanged)="setQueryString($event)" (onTypeChanged)="setQueryType($event)">
         </search-bar>

@@ -15,6 +15,7 @@ import {LayerMapState} from './map/layer-map-state';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
 import {ResourcesState} from './resources-state';
+import {ResourcesStateSerializer} from './resources-state-serializer';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {ResourcesState} from './resources-state';
     ],
     providers: [
         LayerMapState,
-        ResourcesState
+        ResourcesState,
+        ResourcesStateSerializer
     ],
     exports: [
         GeometryViewComponent

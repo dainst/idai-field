@@ -129,12 +129,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public initialize(): Promise<any> {
 
-        this.initializeQuery();
-        this.initializeMode();
-
         this.loading.start();
-        return this.populateProjectDocument()
-            .then(() => this.populateMainTypeDocuments())
+
+        return this.resourcesState.initialize()
+            .then(() => {
+                this.initializeQuery();
+                this.initializeMode();
+                return this.populateProjectDocument();
+            }).then(() => this.populateMainTypeDocuments())
             .then(() => this.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
@@ -170,7 +172,8 @@ export class ResourcesComponent implements AfterViewChecked {
     public selectMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
-        this.resourcesState.setLastSelectedMainTypeDocument(this.view.name, this.selectedMainTypeDocument);
+        this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
+            this.selectedMainTypeDocument.resource.id);
 
         if (this.selectedDocument &&
             ResourcesComponent.getMainTypeDocumentForDocument(
@@ -327,7 +330,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 ResourcesComponent.makeMainTypeQuery(this.view.mainType))
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-                this.setSelectedMainTypeDocument();
+                return this.setSelectedMainTypeDocument();
             });
     }
 
@@ -341,10 +344,11 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    private setSelectedMainTypeDocument() {
+    private setSelectedMainTypeDocument(): Promise<any> {
 
         if (this.mainTypeDocuments.length == 0) {
-            return this.selectedMainTypeDocument = undefined;
+            this.selectedMainTypeDocument = undefined;
+            return Promise.resolve();
         }
 
         if (this.selectedDocument) {
@@ -353,13 +357,17 @@ export class ResourcesComponent implements AfterViewChecked {
                     this.selectedDocument, this.mainTypeDocuments
                 );
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            return;
+            return Promise.resolve();
         }
 
-        const lastSelectedMainTypeDocument = this.resourcesState.getLastSelectedMainTypeDocument(this.view.name);
-        this.selectedMainTypeDocument = lastSelectedMainTypeDocument ?
-              lastSelectedMainTypeDocument : this.mainTypeDocuments[0];
-
+        const mainTypeDocumentId = this.resourcesState.getLastSelectedMainTypeDocumentId(this.view.name);
+        if (!mainTypeDocumentId) {
+            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            return Promise.resolve();
+        } else {
+            return this.datastore.get(mainTypeDocumentId)
+                .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument);
+        }
     }
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {

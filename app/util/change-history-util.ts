@@ -1,5 +1,8 @@
 import {Document, Action} from 'idai-components-2/core';
 
+/**
+ * @author Thomas Kleinke
+ */
 export class ChangeHistoryUtil {
 
     /**
@@ -7,7 +10,7 @@ export class ChangeHistoryUtil {
      * Merges the change histories of two documents.
      *
      * Only the mainDocument is changed. Its change history merges with the change history (created & modified actions)
-     * of the changeHistoryDocument.
+     * of the secondDocument.
      */
     public static mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
 

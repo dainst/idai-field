@@ -264,7 +264,7 @@ export function main() {
         );
 
         it('should throw error when no resource id', (done) => {
-            
+
                 expectErr(()=>{return datastore.remove(doc('sd2'))}
                     ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
             }

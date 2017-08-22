@@ -256,7 +256,7 @@ export class DoceditComponent {
 
         return this.persistenceManager.remove(document, this.settingsService.getUsername())
             .catch(removeError => {
-                if (removeError == DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR) {
+                if (removeError == DatastoreErrors.DOCUMENT_NOT_FOUND) {
                     return Promise.resolve();
                 } else {
                     return Promise.reject([M.DOCEDIT_DELETE_ERROR]);

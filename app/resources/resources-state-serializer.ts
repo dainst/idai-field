@@ -5,10 +5,11 @@ import {SettingsService} from '../settings/settings-service';
 const remote = require('electron').remote;
 const fs = remote.require('fs');
 
+@Injectable()
+
 /**
  * @author Thomas Kleinke
  */
-@Injectable()
 export class ResourcesStateSerializer {
 
     constructor(private settingsService: SettingsService) {}

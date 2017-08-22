@@ -56,6 +56,28 @@ export class ResourcesState {
          return (!this._[viewName]) ? undefined : this._[viewName].type;
     }
 
+    public setActiveLayersIds(viewName: string, mainTypeDocumentId: string, activeLayersIds: string[]) {
+
+        if (!this._[viewName]) this._[viewName] = {};
+        if (!this._[viewName].layerIds) this._[viewName].layerIds = {};
+        this._[viewName].layerIds[mainTypeDocumentId] = activeLayersIds;
+        this.serializer.store(this._);
+    }
+
+    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
+
+        return (!this._[viewName] || !this._[viewName].layerIds )
+            ? undefined : this._[viewName].layerIds[mainTypeDocumentId];
+    }
+
+    public removeActiveLayersIds(viewName: string, mainTypeDocumentId: string) {
+
+        if (!this._[viewName] || !this._[viewName].layerIds) return;
+
+        delete this._[viewName].layerIds[mainTypeDocumentId];
+        this.serializer.store(this._);
+    }
+
     public clear() {
         this._ = {};
     }

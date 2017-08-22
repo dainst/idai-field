@@ -404,6 +404,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
                     if (document == this.selectedMainTypeDocument) {
+                        this.resourcesState.removeActiveLayersIds(this.view.name,
+                            this.selectedMainTypeDocument.resource.id);
                         return this.populateMainTypeDocuments()
                             .then(() => this.populateDocumentList());
                     }

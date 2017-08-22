@@ -4,12 +4,13 @@ import {ReadDatastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Document} from 'idai-components-2/core';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {LayerMapState} from './layer-map-state';
 import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 import {ImageTypeUtility} from '../../util/image-type-utility';
+import {ResourcesState} from '../resources-state';
+import {ResourcesComponent} from '../resources.component';
 import {M} from '../../m';
 
 
@@ -33,11 +34,12 @@ export class LayerMapComponent extends MapComponent {
 
     private layersUpdate: boolean = false;
 
-    constructor(protected mapState: LayerMapState,
-                protected datastore: ReadDatastore,
+    constructor(protected datastore: ReadDatastore,
                 protected messages: Messages,
                 protected imagestore: Imagestore,
                 private imageTypeUtility: ImageTypeUtility,
+                private resourcesState: ResourcesState,
+                private resourcesComponent: ResourcesComponent,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -67,14 +69,18 @@ export class LayerMapComponent extends MapComponent {
 
     private updateLayers(): Promise<any> {
 
+        if (!this.mainTypeDocument) {
+            this.clearLayers();
+            return Promise.resolve();
+        }
+
         return this.initializeLayers().then(
             () => {
                 this.initializePanes();
-                this.addActiveLayersFromMapState();
-                if (this.activeLayers.length == 0 && this.layersList.length > 0
-                    && !this.mapState.getActiveLayersIds()) {
+                if (!this.addActiveLayersFromResourcesState() && this.activeLayers.length == 0
+                        && this.layersList.length > 0) {
                     this.addLayerToMap(this.layersList[0]);
-                    this.saveActiveLayersIdsInMapState();
+                    this.saveActiveLayersIdsInResourcesState();
                 }
             }
         ).then(() => {
@@ -159,10 +165,11 @@ export class LayerMapComponent extends MapComponent {
                 if (index > -1) {
                     this.activeLayers.splice(index, 1);
                     this.map.removeLayer(layer.object);
-                    this.mapState.removeFromActiveLayersIds(layer.document.resource.id);
                 }
             }
         }
+
+        this.activeLayers = [];
     }
 
     private initializePanes() {
@@ -200,7 +207,7 @@ export class LayerMapComponent extends MapComponent {
             this.map.removeLayer(layer.object);
         }
 
-        this.saveActiveLayersIdsInMapState();
+        this.saveActiveLayersIdsInResourcesState();
     }
 
     public isActiveLayer(layer: ImageContainer) {
@@ -208,7 +215,16 @@ export class LayerMapComponent extends MapComponent {
         return this.activeLayers.indexOf(layer) > -1;
     }
 
-    private saveActiveLayersIdsInMapState() {
+    private clearLayers() {
+
+        this.removeOldLayersFromMap({});
+        this.layersList = [];
+        this.layersMap = {};
+    }
+
+    private saveActiveLayersIdsInResourcesState() {
+
+        if (!this.mainTypeDocument) return;
 
         var activeLayersIds: Array<string> = [];
 
@@ -216,12 +232,21 @@ export class LayerMapComponent extends MapComponent {
             activeLayersIds.push(this.activeLayers[i].document.resource.id);
         }
 
-        this.mapState.setActiveLayersIds(activeLayersIds);
+        this.resourcesState.setActiveLayersIds(this.resourcesComponent.view.name, this.mainTypeDocument.resource.id,
+            activeLayersIds);
     }
 
-    private addActiveLayersFromMapState() {
+    /**
+     * @return true if active layers were added from resources state, otherwise false
+     */
+    private addActiveLayersFromResourcesState(): boolean {
 
-        var activeLayersIds: Array<string> = this.mapState.getActiveLayersIds();
+        if (!this.mainTypeDocument) return;
+
+        var activeLayersIds: Array<string> = this.resourcesState.getActiveLayersIds(this.resourcesComponent.view.name,
+            this.mainTypeDocument.resource.id);
+
+        if (!activeLayersIds) return false;
 
         for (var i in activeLayersIds) {
             let layerId = activeLayersIds[i];
@@ -232,6 +257,8 @@ export class LayerMapComponent extends MapComponent {
                 this.addLayerToMap(layer);
             }
         }
+
+        return true;
     }
 
     public focusLayer(layer: ImageContainer) {

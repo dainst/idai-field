@@ -47,7 +47,7 @@ export class ResourcesStateSerializer {
 
     private getFilePath(): string {
 
-        return remote.app.getPath('appData') + '/' + remote.app.getName()
+        return remote.getGlobal('appDataPath')
             + '/resources-state-' + this.settingsService.getSelectedProject() + '.json';
     }
 }

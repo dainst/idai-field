@@ -1,8 +1,8 @@
-<div class="modal-header">
-    <button *ngIf="selectedDocuments.length == 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+<div class="modal-header" id="image-picker-modal-header">
+    <button id="add-image" *ngIf="selectedDocuments.length == 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
         Bild hinzufügen
     </button>
-    <button *ngIf="selectedDocuments.length > 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+    <button id="add-images" *ngIf="selectedDocuments.length > 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
         {{selectedDocuments.length}} Bilder hinzufügen
     </button>
 </div>

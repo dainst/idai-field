@@ -1,6 +1,6 @@
-<div>
+<div id="thumbnail-view">
     <a *ngFor="let image of images" (click)="selectImage(image.document);">
-        <img
+        <img class="thumbnail"
             style="width:100%; // so that black img with 1x1px for error cases can stretch to full width"
          [src]="image.imgSrc">
     </a>

@@ -31,6 +31,10 @@ export class DocumentEditWrapperPage {
             .click();
     };
 
+    public static clickInsertImage = function() {
+        common.click(element(by.id('create-depicts-relations-btn')));
+    };
+
     public static clickFieldsTab = function() {
         element(by.id('document-edit-fields-tab')).click();
     };
@@ -39,8 +43,12 @@ export class DocumentEditWrapperPage {
         element(by.id('document-edit-relations-tab')).click();
     };
 
+    public static clickImagesTab = function() {
+        element(by.id('document-edit-images-tab')).click();
+    };
+
     public static clickConflictsTab = function() {
-        element(by.id('document-edit-conflicts-tab')).click();
+        element(by.id('document-edit-images-tab')).click();
     };
 
     public static clickSaveDocument = function() {

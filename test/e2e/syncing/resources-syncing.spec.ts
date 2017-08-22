@@ -223,7 +223,7 @@ describe('resources/syncing --', function() {
             });
     });
 
-    it('resolve a save conflict via conflict resolver', done => {
+    xit('resolve a save conflict via conflict resolver', done => {
         const nr = '5';
         let testDocument;
 

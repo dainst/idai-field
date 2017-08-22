@@ -64,7 +64,12 @@ export class LayerMapComponent extends MapComponent {
             promise = Promise.resolve();
         }
 
-        return promise.then(() => super.setView());
+        return promise.then(() => {
+            for (let layer of this.activeLayers) {
+                this.addLayerCoordinatesToBounds(layer);
+            }
+            super.setView();
+        });
     }
 
     private updateLayers(): Promise<any> {
@@ -74,20 +79,15 @@ export class LayerMapComponent extends MapComponent {
             return Promise.resolve();
         }
 
-        return this.initializeLayers().then(
-            () => {
+        return this.initializeLayers()
+            .then(() => {
                 this.initializePanes();
                 if (!this.addActiveLayersFromResourcesState() && this.activeLayers.length == 0
                         && this.layersList.length > 0) {
                     this.addLayerToMap(this.layersList[0]);
                     this.saveActiveLayersIdsInResourcesState();
                 }
-            }
-        ).then(() => {
-            for (let layer of this.activeLayers) {
-                this.addLayerCoordinatesToBounds(layer);
-            }
-        });
+            });
     }
 
     private initializeLayers(): Promise<any> {

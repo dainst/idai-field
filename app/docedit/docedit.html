@@ -49,7 +49,7 @@
             <div *ngIf="clonedDocument" class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <ngb-tabset activeId="document-edit-{{activeTab}}-tab">
+                        <ngb-tabset activeId="docedit-{{activeTab}}-tab">
                             <ngb-tab title="Felder" id="docedit-fields-tab">
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"

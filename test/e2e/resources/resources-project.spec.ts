@@ -68,11 +68,11 @@ describe('resources/project --', function() {
 
         ResourcesPage.performCreateResource('befund1', 0);
 
-        ResourcesPage.clickSelectMainType(1);
+        ResourcesPage.clickSelectMainTypeDocument(1);
         // TODO comment in
         // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
         //
-        ResourcesPage.clickSelectMainType(0); // trench2
+        ResourcesPage.clickSelectMainTypeDocument(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
@@ -197,9 +197,9 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('building2', 1);
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.clickSelectMainType(0); // building2
+        ResourcesPage.clickSelectMainTypeDocument(0); // building2
         ResourcesPage.performCreateResource('befund1', 0);
-        ResourcesPage.clickSelectMainType(1); // building1
+        ResourcesPage.clickSelectMainTypeDocument(1); // building1
         ResourcesPage.performCreateResource('fund1', 1);
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
@@ -220,12 +220,12 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
-        ResourcesPage.clickSelectMainType(1);
+        ResourcesPage.clickSelectMainTypeDocument(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
-        ResourcesPage.clickSelectMainType(1);
+        ResourcesPage.clickSelectMainTypeDocument(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
 
         NavbarPage.clickNavigateToExcavation();
@@ -335,5 +335,25 @@ describe('resources/project --', function() {
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+    });
+
+    it('restore resources state after restarting client', () => {
+
+        performCreateProject();
+        ResourcesPage.performCreateResource('excavation1', 0);
+        ResourcesPage.performCreateResource('excavation2', 0);
+        ResourcesPage.clickChooseTypeFilter(1);
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.clickListModeButton();
+
+        ProjectPage.get();
+        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation1'));
     });
 });

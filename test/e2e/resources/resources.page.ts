@@ -83,7 +83,7 @@ export class ResourcesPage {
         return common.click(element(by.id('choose-type-option-' + typeIndex)));
     };
 
-    public static clickSelectMainType = function(option) {
+    public static clickSelectMainTypeDocument = function(option) {
         browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };

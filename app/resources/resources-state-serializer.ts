@@ -16,6 +16,9 @@ export class ResourcesStateSerializer {
     public load(): Promise<{ [viewName: string]: ResourcesViewState }> {
 
         return new Promise(resolve => {
+
+            if (this.settingsService.getSelectedProject() == 'test') return resolve({});
+
             fs.readFile(this.getFilePath(), 'utf-8', (err, content) => {
                 if (err) {
                     resolve({});
@@ -29,6 +32,9 @@ export class ResourcesStateSerializer {
     public store(resourcesStateMap: { [viewName: string]: ResourcesViewState }): Promise<any> {
 
         return new Promise((resolve, reject) => {
+
+            if (this.settingsService.getSelectedProject() == 'test') return resolve();
+
             fs.writeFile(this.getFilePath(), JSON.stringify(resourcesStateMap), err => {
                 if (err) {
                     reject(err);

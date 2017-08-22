@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngb-tabset activeId="document-edit-{{activeTab}}-tab">
-                            <ngb-tab title="Felder" id="document-edit-fields-tab">
+                            <ngb-tab title="Felder" id="docedit-fields-tab">
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
@@ -59,7 +59,7 @@
                                 </ng-template>
                             </ngb-tab>
                             <ngb-tab *ngIf="relDefs() && relDefs().length > 0" title="Relationen"
-                                     id="document-edit-relations-tab">
+                                     id="docedit-relations-tab">
                                 <ng-template ngbTabContent>
                                     <relations-form
                                             [(document)]="clonedDocument"
@@ -70,15 +70,15 @@
                             </ngb-tab>
 
                             <ngb-tab *ngIf="!projectImageTypes[clonedDocument.resource.type]" title="Bilder"
-                                     id="document-edit-images-tab">
+                                     id="docedit-images-tab">
                                 <ng-template ngbTabContent>
-                                    <document-edit-image-tab
+                                    <docedit-image-tab
                                             [(document)]="clonedDocument">
-                                    </document-edit-image-tab>
+                                    </docedit-image-tab>
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="clonedDocument._conflicts" id="document-edit-conflicts-tab">
+                            <ngb-tab *ngIf="clonedDocument._conflicts" id="docedit-conflicts-tab">
                                 <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte
                                 </ng-template>
                                 <ng-template ngbTabContent>

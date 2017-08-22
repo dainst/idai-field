@@ -282,7 +282,7 @@ describe('resources/syncing --', function() {
         });
     });
 
-    xit('resolve an eventual conflict via conflict resolver', done => {
+    it('resolve an eventual conflict via conflict resolver', done => {
         const nr = '10';
 
         createEventualConflict(nr).then(() => {

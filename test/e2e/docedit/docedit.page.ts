@@ -36,19 +36,19 @@ export class DoceditPage {
     };
 
     public static clickFieldsTab = function() {
-        element(by.id('document-edit-fields-tab')).click();
+        element(by.id('docedit-fields-tab')).click();
     };
 
     public static clickRelationsTab = function() {
-        element(by.id('document-edit-relations-tab')).click();
+        element(by.id('docedit-relations-tab')).click();
     };
 
     public static clickImagesTab = function() {
-        element(by.id('document-edit-images-tab')).click();
+        element(by.id('docedit-images-tab')).click();
     };
 
     public static clickConflictsTab = function() {
-        element(by.id('document-edit-images-tab')).click();
+        element(by.id('docedit-conflicts-tab')).click();
     };
 
     public static clickSaveDocument = function() {

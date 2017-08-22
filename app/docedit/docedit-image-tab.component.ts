@@ -10,7 +10,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 @Component({
-    selector: 'document-edit-image-tab',
+    selector: 'docedit-image-tab',
     moduleId: module.id,
     templateUrl: './docedit-image-tab.html'
 })

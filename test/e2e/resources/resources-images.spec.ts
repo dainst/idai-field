@@ -1,6 +1,6 @@
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
 import {ThumbnailViewPage} from '../widgets/thumnail-view.page';
 
@@ -17,14 +17,14 @@ describe('resources/images --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
-        DocumentEditWrapperPage.clickImagesTab();
-        DocumentEditWrapperPage.clickInsertImage();
+        DoceditPage.clickImagesTab();
+        DoceditPage.clickInsertImage();
 
         ImagePickerModalPage.typeInIdentifierInSearchField('2');
         ImagePickerModalPage.getCells().then(cells => {
             cells[0].click();
             ImagePickerModalPage.clickAddImage();
-            DocumentEditWrapperPage.clickSaveDocument();
+            DoceditPage.clickSaveDocument();
             ThumbnailViewPage.getThumbs().then(thumbs => {
                 expect(thumbs.length).toBe(1);
                 done();

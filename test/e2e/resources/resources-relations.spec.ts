@@ -5,7 +5,7 @@ const delays = require('../config/delays');
 
 import {ResourcesPage} from './resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 
 describe('resources/relations --', function() {
@@ -30,20 +30,20 @@ describe('resources/relations --', function() {
     it('create a new relation and the corresponding inverse relation', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DocumentEditWrapperPage.getRelationButtonText(1, 0, 0)).toEqual('1');
-        DocumentEditWrapperPage.clickCloseEdit();
+        expect(DoceditPage.getRelationButtonText(1, 0, 0)).toEqual('1');
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        expect(DocumentEditWrapperPage.getRelationButtonText(2, 0, 0)).toEqual('2');
+        expect(DoceditPage.getRelationButtonText(2, 0, 0)).toEqual('2');
     });
 
     it('edit a resource that contains a relation', function() {
         ResourcesPage.performCreateLink();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         ResourcesPage.openEditByDoubleClickResource('2');
-        DocumentEditWrapperPage.clickFieldsTab();
-        DocumentEditWrapperPage.typeInInputField('123');
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.clickFieldsTab();
+        DoceditPage.typeInInputField('123');
+        DoceditPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
@@ -58,9 +58,9 @@ describe('resources/relations --', function() {
             expect(relations.length).toBe(1);
         });
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickRelationDeleteButtonByIndices(1, 0, 0);
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.clickRelationsTab();
+        DoceditPage.clickRelationDeleteButtonByIndices(1, 0, 0);
+        DoceditPage.clickSaveDocument();
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

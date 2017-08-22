@@ -2,7 +2,7 @@ import {browser} from 'protractor';
 import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources.page';
 import {DocumentViewPage} from '../../widgets/document-view.page';
-import {DocumentEditWrapperPage} from '../../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../../docedit/docedit.page';
 
 let delays = require('../../config/delays');
 
@@ -102,9 +102,9 @@ describe('resources/map --', function() {
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
             function() {
                 MapPage.clickMapOption('ok');
-                DocumentEditWrapperPage.typeInInputField(identifier);
+                DoceditPage.typeInInputField(identifier);
                 ResourcesPage.scrollUp();
-                DocumentEditWrapperPage.clickSaveDocument();
+                DoceditPage.clickSaveDocument();
             });
     }
 

@@ -4,7 +4,7 @@ import {browser, protractor, element, by} from 'protractor';
 let common = require('../common.js');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 
 export class ResourcesPage {
@@ -167,32 +167,32 @@ export class ResourcesPage {
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeIndex);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
-        DocumentEditWrapperPage.typeInInputField(identifier);
+        DoceditPage.typeInInputField(identifier);
         if (inputFieldText && inputFieldIndex) {
-            DocumentEditWrapperPage.typeInInputField(inputFieldText, inputFieldIndex);
+            DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
         }
         ResourcesPage.scrollUp();
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };
 
     public static performCreateMainTypeResource = function(identifier: string) {
         ResourcesPage.clickCreateMainTypeResource();
         ResourcesPage.clickSelectGeometryType();
-        DocumentEditWrapperPage.typeInInputField(identifier);
+        DoceditPage.typeInInputField(identifier);
         ResourcesPage.scrollUp();
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };
 
     public static performCreateRelation = function(identifier: string, targetIdentifier: string,
                                                    relationGroupIndex: number) {
         ResourcesPage.openEditByDoubleClickResource(identifier);
-        DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
-        DocumentEditWrapperPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.clickRelationsTab();
+        DoceditPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
+        DoceditPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
+        DoceditPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
+        DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };
 

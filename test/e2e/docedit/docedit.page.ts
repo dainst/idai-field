@@ -8,7 +8,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DocumentEditWrapperPage {
+export class DoceditPage {
 
     public static clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
         browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);

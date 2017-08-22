@@ -1,5 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 
@@ -71,7 +71,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('1b');
+        DoceditPage.typeInInputField('1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
     });
 
@@ -96,7 +96,7 @@ describe('resources --', () => {
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
         ResourcesPage.clickSelectGeometryType();
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.clickCloseEdit();
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 
@@ -104,8 +104,8 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('2');
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.typeInInputField('2');
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
         browser.sleep(1000);
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
@@ -115,8 +115,8 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('2');
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.typeInInputField('2');
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1')});
     });
@@ -125,10 +125,10 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.typeInInputField('2');
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.typeInInputField('2');
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
-        expect<any>(DocumentEditWrapperPage.getInputFieldValue(0)).toEqual('2');
+        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
     });
 
     it('should create a new main type resource', () => {
@@ -140,8 +140,8 @@ describe('resources --', () => {
 
     it('should edit a main type resource', () => {
         ResourcesPage.clickEditMainTypeResource();
-        DocumentEditWrapperPage.typeInInputField('newIdentifier');
-        DocumentEditWrapperPage.clickSaveDocument();
+        DoceditPage.typeInInputField('newIdentifier');
+        DoceditPage.clickSaveDocument();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
 });

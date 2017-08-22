@@ -1,6 +1,6 @@
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 
 describe('resources/messages --', () => {
@@ -17,8 +17,8 @@ describe('resources/messages --', () => {
     it('show the success msg also on route change', () => {
         ResourcesPage.performCreateResource('12');
         ResourcesPage.openEditByDoubleClickResource('12');
-        DocumentEditWrapperPage.typeInInputField('34');
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.typeInInputField('34');
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');

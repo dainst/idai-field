@@ -1,5 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
-import {DocumentEditWrapperPage} from './document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 
 import {ResourcesPage} from '../resources/resources.page';
@@ -69,11 +69,11 @@ describe('document view --', function() {
         ResourcesPage.performCreateResource('2', 0);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        DocumentEditWrapperPage.clickRelationsTab();
-        DocumentEditWrapperPage.clickAddRelationForGroupWithIndex(1);
-        DocumentEditWrapperPage.typeInRelationByIndices(1, 0, '2');
-        DocumentEditWrapperPage.clickChooseRelationSuggestion(1, 0, 0);
-        DocumentEditWrapperPage.clickCloseEdit();
+        DoceditPage.clickRelationsTab();
+        DoceditPage.clickAddRelationForGroupWithIndex(1);
+        DoceditPage.typeInRelationByIndices(1, 0, '2');
+        DoceditPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
         browser.wait(EC.visibilityOf(element(by.tagName('document-view'))), delays.ECWaitTime);

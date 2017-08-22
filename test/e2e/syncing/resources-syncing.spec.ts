@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import * as PouchDB from 'pouchdb';
 import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {SettingsPage} from '../settings/settings.page';
 import {NavbarPage} from '../navbar.page';
 
@@ -236,11 +236,11 @@ describe('resources/syncing --', function() {
             return updateTestDoc(testDocument);
         }).then(() => {
             browser.sleep(delays.shortRest * 10);
-            DocumentEditWrapperPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
-            DocumentEditWrapperPage.clickSaveDocument();
-            DocumentEditWrapperPage.clickChooseRightRevision();
-            DocumentEditWrapperPage.clickSolveConflictButton();
-            DocumentEditWrapperPage.clickSaveDocument();
+            DoceditPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
+            DoceditPage.clickSaveDocument();
+            DoceditPage.clickChooseRightRevision();
+            DoceditPage.clickSolveConflictButton();
+            DoceditPage.clickSaveDocument();
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
                 .not.toContain('conflicted');
             done();
@@ -290,10 +290,10 @@ describe('resources/syncing --', function() {
             ResourcesPage.clickSelectResource('testf' + nr);
             ResourcesPage.clickSelectResource('testf' + nr);
             DocumentViewPage.clickEditDocument();
-            DocumentEditWrapperPage.clickConflictsTab();
-            DocumentEditWrapperPage.clickChooseRightRevision();
-            DocumentEditWrapperPage.clickSolveConflictButton();
-            DocumentEditWrapperPage.clickSaveDocument();
+            DoceditPage.clickConflictsTab();
+            DoceditPage.clickChooseRightRevision();
+            DoceditPage.clickSolveConflictButton();
+            DoceditPage.clickSaveDocument();
             browser.sleep(delays.shortRest * 10);
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
 

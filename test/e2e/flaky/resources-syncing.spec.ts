@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import * as PouchDB from 'pouchdb';
 import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
-import {DocumentEditWrapperPage} from '../widgets/document-edit-wrapper.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {SettingsPage} from '../settings/settings.page';
 import {NavbarPage} from '../navbar.page';
 
@@ -156,7 +156,7 @@ xdescribe('resources/syncing --', function() {
             testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative';
             return updateTestDoc(testDocument);
         }).then(() => {
-            DocumentEditWrapperPage.clickSaveDocument();
+            DoceditPage.clickSaveDocument();
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
                 .not.toContain('conflicted');
             return DocumentViewPage.getShortDescription();

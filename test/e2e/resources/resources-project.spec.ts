@@ -15,13 +15,18 @@ const EC = protractor.ExpectedConditions;
  */
 describe('resources/project --', function() {
 
-    beforeEach(function() {
+    beforeAll(() => {
+       removeResourcesStateFile();
+    });
+
+    beforeEach(() => {
         return ProjectPage.get();
     });
 
     // TODO remove duplicate code with resources syncing spec
     const configPath = browser.params.configPath;
     const configTemplate = browser.params.configTemplate;
+    const appDataPath = browser.params.appDataPath;
 
     function resetConfigJson(): Promise<any> {
 
@@ -34,6 +39,8 @@ describe('resources/project --', function() {
     }
 
     afterEach(done => {
+
+        removeResourcesStateFile();
         resetConfigJson().then(done);
     });
 
@@ -45,6 +52,12 @@ describe('resources/project --', function() {
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
         browser.sleep(delays.shortRest * 10);
+    }
+
+    function removeResourcesStateFile() {
+
+        const filePath = appDataPath + '/resources-state-' + 'abc.json';
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
 
     it('basic stuff', () => {

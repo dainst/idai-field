@@ -26,7 +26,6 @@ exports.config = {
         ]
     },
 
-
     allScriptsTimeout: 110000,
     getPageTimeout: 100000,
     framework: 'jasmine2',
@@ -46,6 +45,7 @@ exports.config = {
         ]
     }],
     params: {
+        appDataPath: 'test/test-temp',
         configPath: 'config/config.test.json',
         configTemplate: { 'dbs' : ['test'] }
     },

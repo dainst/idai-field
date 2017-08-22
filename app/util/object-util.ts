@@ -31,7 +31,7 @@ export class ObjectUtil {
 
     public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
-        let differingFieldsNames: string[] = [];
+        const differingFieldsNames: string[] = [];
 
         for (let fieldName in object1) {
             if (object1.hasOwnProperty(fieldName)) {
@@ -63,6 +63,11 @@ export class ObjectUtil {
         return JSON.stringify(object1) == JSON.stringify(object2);
     }
 
+    public static cloneObject(object: Object): Object {
+
+        return JSON.parse(JSON.stringify(document));
+    }
+
     public static compareFields(field1: any, field2: any): boolean {
 
         if ((field1 && !field2) || (!field1 && field2)) return false;
@@ -91,7 +96,7 @@ export class ObjectUtil {
 
     public static removeDuplicateValues(array: any[]): any[] {
 
-        let result: any[] = [];
+        const result: any[] = [];
 
         for (let value of array) {
             if (result.indexOf(value) == -1) result.push(value);

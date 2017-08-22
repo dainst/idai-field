@@ -12,6 +12,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
+import {ObjectUtil} from '../util/object-util';
 
 @Component({
     selector: 'detail-modal',
@@ -71,8 +72,8 @@ export class DoceditComponent {
         private datastore: IdaiFieldDatastore,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
-        configLoader: ConfigLoader
-    ) {
+        configLoader: ConfigLoader) {
+
         this.imageTypeUtility.getProjectImageTypes().then(
             projectImageTypes => this.projectImageTypes = projectImageTypes
         );
@@ -91,12 +92,13 @@ export class DoceditComponent {
 
         this.document = document;
         this.inspectedRevisionsIds = [];
-        this.clonedDocument = DoceditComponent.cloneDocument(this.document);
+        this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(this.document);
 
         this.persistenceManager.setOldVersions([this.document]);
     }
 
     public setActiveTab(activeTabName: string) {
+
         this.activeTab = activeTabName;
     }
 
@@ -106,7 +108,8 @@ export class DoceditComponent {
      */
     public save(viaSaveButton: boolean = false) {
 
-        const documentBeforeSave: IdaiFieldDocument = DoceditComponent.cloneDocument(this.clonedDocument);
+        const documentBeforeSave: IdaiFieldDocument =
+            <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
 
         this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
             .then(
@@ -120,6 +123,7 @@ export class DoceditComponent {
     }
 
     public showModal() {
+
         this.dialog = this.modalService.open(this.modalTemplate);
     }
 
@@ -260,11 +264,6 @@ export class DoceditComponent {
                     return Promise.reject([M.DOCEDIT_DELETE_ERROR]);
                 }
             });
-    }
-
-    private static cloneDocument(document: IdaiFieldDocument): IdaiFieldDocument {
-
-        return JSON.parse(JSON.stringify(document));
     }
 
     private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,

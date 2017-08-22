@@ -1,9 +1,10 @@
-import {Action, Document} from 'idai-components-2/core';
-import {M} from '../m';
-import {PouchdbDatastore} from './pouchdb-datastore';
 import {Injectable} from '@angular/core';
+import {Action, Document} from 'idai-components-2/core';
+import {PouchdbDatastore} from './pouchdb-datastore';
 import {ConflictResolver} from './conflict-resolver';
 import {RevisionHelper} from './revision-helper';
+import {ChangeHistoryUtil} from '../util/change-history-util';
+import {M} from '../m';
 
 @Injectable()
 /**
@@ -27,13 +28,12 @@ export class ConflictResolvingExtension {
     }
 
     public autoResolve(document: Document, userName: string): Promise<any> {
-        if (!this.datastore) return Promise.reject("no datastore");
-        if (!this.conflictResolver) return Promise.reject("no conflict resolver");
+        
+        if (!this.datastore) return Promise.reject('no datastore');
+        if (!this.conflictResolver) return Promise.reject('no conflict resolver');
 
         this.promise = this.promise.then(() => {
-            if (ConflictResolvingExtension.hasUnhandledConflicts(
-                this.inspectedRevisionsIds, document)) {
-
+            if (ConflictResolvingExtension.hasUnhandledConflicts(this.inspectedRevisionsIds, document)) {
                 return this.handleConflicts(document, userName);
             }
         });
@@ -66,12 +66,14 @@ export class ConflictResolvingExtension {
         });
     }
 
-    private solveAndUpdate(document, conflictedRevision, previousRevision) {
+    private solveAndUpdate(document: Document, conflictedRevision: Document, previousRevision: Document) {
 
         const result = this.conflictResolver.tryToSolveConflict(
             document, conflictedRevision, previousRevision);
 
         if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
+
+            ChangeHistoryUtil.mergeChangeHistories(document, conflictedRevision);
 
             return this.datastore.update(document).then(() => {
                 if (!result['unresolvedConflicts']) {
@@ -102,7 +104,7 @@ export class ConflictResolvingExtension {
      *   clients current userName as the name of the lastAction of the revision.
      *   TODO unit test that if this is not the case the revision gets not handled
      */
-    private static extractRevisionsToHandle(revisions, userName) {
+    private static extractRevisionsToHandle(revisions: Array<Document>, userName: string) {
 
         const result: Array<Document> = [];
 
@@ -115,7 +117,7 @@ export class ConflictResolvingExtension {
         return result;
     }
 
-    private static hasUnhandledConflicts(inspectedRevisionsIds, document: Document): boolean {
+    private static hasUnhandledConflicts(inspectedRevisionsIds: string[], document: Document): boolean {
 
         if (!document['_conflicts']) return false;
 

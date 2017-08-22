@@ -16,7 +16,7 @@ describe('resources/images --', function() {
         ResourcesPage.get();
     });
 
-    it ('create links for relations', done => {
+    it ('create links for images', done => {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DocumentEditWrapperPage.clickImagesTab();

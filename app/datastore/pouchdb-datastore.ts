@@ -4,6 +4,7 @@ import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from '../util/result-sets';
+import {SortUtil} from '../util/sort-util';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
 import {AppState} from '../app-state';
@@ -196,7 +197,7 @@ export class PouchdbDatastore {
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
         return resultSets.intersect(e => e.id)
-            .sort(this.comp('date'))
+            .sort(SortUtil.compareDescending(SortUtil.compareField('date', SortUtil.compare)))
             .map(e => e['id']);
     }
 
@@ -331,17 +332,6 @@ export class PouchdbDatastore {
             }).on('error', err => {
                 console.error('changes stream errored', err);
             });
-        });
-    }
-
-    private comp(sortOn) {
-
-        return ((a, b) => {
-            if (a[sortOn] > b[sortOn])
-                return -1;
-            if (a[sortOn] < b[sortOn])
-                return 1;
-            return 0;
         });
     }
 

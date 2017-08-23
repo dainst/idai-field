@@ -32,12 +32,12 @@ export class PouchdbDatastore {
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer,
         private appState: AppState,
-        private autoConflictResolvingExtension: ConflictResolvingExtension,
+        private conflictResolvingExtension: ConflictResolvingExtension,
         private conflictResolver: ConflictResolver
         ) {
 
-        autoConflictResolvingExtension.setDatastore(this);
-        autoConflictResolvingExtension.setConflictResolver(conflictResolver);
+        conflictResolvingExtension.setDatastore(this);
+        conflictResolvingExtension.setConflictResolver(conflictResolver);
         this.db = pouchdbManager.getDb();
 
         this.setupServer().then(() => this.setupChangesEmitter());
@@ -306,19 +306,18 @@ export class PouchdbDatastore {
                 };
 
                 // TODO instead of checking deletedOnes we should do a fetch and see if it's there. that way it would work also for remotely deleted documents
-
                 if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}} as Document);
                     this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
                     documentChange.type = 'deleted'; // for the same reason we use deletedOnes
                     return this.notifyDocumentChangesObservers(documentChange);
                 }
-                this.fetch(change.id).then(document => {
 
-                    // TODO handle result
-                    // this.autoConflictResolvingExtension.autoResolve(
-                    //     <any> document, this.appState.getCurrentUser());
-                    //
+                let document: Document;
+                this.fetch(change.id).then(fetchedDoc => {
+                    document = fetchedDoc;
+                    return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
+                }).then(() => {
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
                     documentChange.document = document;

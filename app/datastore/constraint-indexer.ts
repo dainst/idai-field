@@ -9,11 +9,14 @@ export class ConstraintIndexer {
 
     private index: {
         [path: string]: {
-            [resourceId: string]:
-                { [resourceId: string] :
-                    string // date
+            [resourceId: string]: {
+                [resourceId: string]: {
+                    date: string,
+                    identifier: string
                 }
-        }};
+            }
+        }
+    };
 
     constructor(private pathsDefinitions) {
 
@@ -53,7 +56,11 @@ export class ConstraintIndexer {
 
         const result = this.index[path][matchTerm];
         if (result) {
-            return Object.keys(result).map(id => new Object({id: id, date: result[id]}));
+            return Object.keys(result).map(id => new Object({
+                id: id,
+                date: result[id].date,
+                identifier: result[id].identifier
+            }));
         } else {
             return [];
         }
@@ -90,7 +97,10 @@ export class ConstraintIndexer {
     private addToIndex(doc: Document, path: string, target: string) {
 
         if (!this.index[path][target]) this.index[path][target] = {};
-        this.index[path][target][doc.resource.id] = ChangeHistoryUtil.getLastModified(doc);
+        this.index[path][target][doc.resource.id] = {
+            date: ChangeHistoryUtil.getLastModified(doc),
+            identifier: doc.resource['identifier']
+        };
     }
 
     private setUp() {

@@ -197,7 +197,7 @@ export class PouchdbDatastore {
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
         return resultSets.intersect(e => e.id)
-            .sort(SortUtil.compareDescending(SortUtil.compareField('date', SortUtil.compare)))
+            .sort((a,b) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
             .map(e => e['id']);
     }
 

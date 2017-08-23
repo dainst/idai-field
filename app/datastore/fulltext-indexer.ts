@@ -13,10 +13,13 @@ export class FulltextIndexer {
     private index: {
         [resourceType: string]: {
             [term: string]: {
-                [resourceId: string]:
-                    string // date
+                [resourceId: string]: {
+                    date: string,
+                    identifier: string
+                }
             }
-        }};
+        }
+    };
 
     constructor() {
 
@@ -34,20 +37,22 @@ export class FulltextIndexer {
         if (!this.index[doc.resource.type]) {
             this.index[doc.resource.type] = {'*' : { } };
         }
-        const lastModified = ChangeHistoryUtil.getLastModified(doc);
-        this.index[doc.resource.type]['*'][doc.resource.id] = lastModified;
+        this.index[doc.resource.type]['*'][doc.resource.id] = {
+            date: ChangeHistoryUtil.getLastModified(doc),
+            identifier: doc.resource['identifier']
+        };
 
         for (let field of this.fieldsToIndex) {
             if (!doc.resource[field] || doc.resource[field] == '') continue;
 
             for (let token of doc.resource[field].split(' ')) {
                 this.indexToken(doc.resource.id, token,
-                    doc.resource.type, lastModified);
+                    doc.resource.type, doc);
             }
         }
     }
 
-    private indexToken(id: string, token: string, type: string, lastModified: string) {
+    private indexToken(id: string, token: string, type: string, doc: Document) {
 
         let accumulator = '';
         for (let letter of token.toLowerCase()) {
@@ -55,7 +60,10 @@ export class FulltextIndexer {
             if (!this.index[type][accumulator]) {
                 this.index[type][accumulator] = { };
             }
-            this.index[type][accumulator][id] = lastModified;
+            this.index[type][accumulator][id] = {
+                date: ChangeHistoryUtil.getLastModified(doc),
+                identifier: doc.resource['identifier']
+            };
         }
     }
 
@@ -111,8 +119,12 @@ export class FulltextIndexer {
         if (!this.index[type] || !this.index[type][s]) return;
 
         resultSets.add(
-            Object.keys(this.index[type][s])
-                .map(id => { return { id: id, date: this.index[type][s][id] }; })
+            Object.keys(this.index[type][s]).map(id => {
+                return { id: id,
+                    date: this.index[type][s][id].date,
+                    identifier: this.index[type][s][id].identifier
+                };
+            })
         );
     }
 

@@ -15,8 +15,8 @@ export class SortUtil {
      */
     public static alnumCompare(a, b): number {
 
-        let arrayA = this.makeAlNumArray(a);
-        let arrayB = this.makeAlNumArray(b);
+        let arrayA = SortUtil.makeAlNumArray(a);
+        let arrayB = SortUtil.makeAlNumArray(b);
 
         for (let i=0; i < arrayA.length; i++) {
             // a is longer than b
@@ -65,21 +65,6 @@ export class SortUtil {
     }
 
     /**
-     * Wraps a compare function in order to be able to sort an array of objects
-     * by the contents of one particular field.
-     *
-     * @param sortField The field to sort by
-     * @param compareFunction the compare function to wrap
-     * @returns {(a:any, b:any)=>any} the new compare function
-     */
-    public static compareField(sortField, compareFunction) {
-
-        return (a, b) => {
-            return compareFunction(a[sortField], b[sortField]);
-        };
-    }
-
-    /**
      * Wraps a compare function in order to reverse sorting.
      *
      * @param compareFunction the compare function to wrap
@@ -95,6 +80,7 @@ export class SortUtil {
     // split string and convert numbers to be able to sort alphabetic
     // and numeric parts of the string separately
     private static makeAlNumArray(s) {
+
         return s.split(/(\d+)/)
             .map(s => /^\d+$/.test(s) ? parseInt(s) : s);
     }

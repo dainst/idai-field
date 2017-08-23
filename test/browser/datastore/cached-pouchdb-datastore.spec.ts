@@ -66,7 +66,8 @@ export function main() {
                 });
         });
 
-       xit('should return cached instance on update', (done)=>{
+       xit('should return cached instance on update', done => {
+
            let doc1 = doc('sd1', 'identifier1');
            let doc2;
 

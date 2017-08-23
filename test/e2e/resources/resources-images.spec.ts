@@ -13,7 +13,7 @@ describe('resources/images --', function() {
         ResourcesPage.get();
     });
 
-    it ('create links for images', done => {
+    it('create links for images', done => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');

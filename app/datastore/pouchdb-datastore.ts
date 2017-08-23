@@ -76,15 +76,15 @@ export class PouchdbDatastore {
         const resetFun = this.resetDocOnErr(document);
 
         return this.fetch(document.resource.id).then(() => {
-                document['_id'] = document.resource.id;})
-            .catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
+                document['_id'] = document.resource.id;
+            }).catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
             .then(() => this.performPut(document, resetFun, err => {
                 if (err.name && err.name == 'conflict') {
                     return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
                 } else {
                     return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
                 }
-            }))
+            }));
     }
 
     /**

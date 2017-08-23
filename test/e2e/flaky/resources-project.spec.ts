@@ -61,6 +61,8 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
+        ProjectPage.get();
+
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToBuilding();
         NavbarPage.clickNavigateToProject();
@@ -74,9 +76,10 @@ describe('resources/project --', function() {
             expect(t).toContain('test')
         });
         NavbarPage.clickSelectProject(1);
-        browser.sleep(delays.shortRest * 10);
-        NavbarPage.clickNavigateToSettings();
 
+        ProjectPage.get();
+
+        NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);
@@ -101,6 +104,8 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
+        ProjectPage.get();
+
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
@@ -110,6 +115,8 @@ describe('resources/project --', function() {
 
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
+
+        ProjectPage.get();
 
         browser.sleep(delays.shortRest * 10);
 
@@ -124,7 +131,6 @@ describe('resources/project --', function() {
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
-
     });
 
 });

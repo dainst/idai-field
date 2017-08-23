@@ -95,7 +95,8 @@ if (CONFIG['imagestorepath']) {
                 return new ConstraintIndexer([
                     { path: 'resource.relations.isRecordedIn' },
                     { path: 'resource.relations.liesWithin' },
-                    { path: 'resource.identifier', string: true }
+                    { path: 'resource.identifier', string: true },
+                    { path: '_conflicts', boolean: true }
                 ]);
             }
         },

@@ -30,11 +30,6 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             });
     }
 
-    public findConflicted() {
-
-        return this.datastore.findConflicted();
-    }
-
     /**
      * Implements {@link IdaiFieldDatastore#create}
      *

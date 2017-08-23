@@ -25,20 +25,15 @@ export class TaskbarComponent {
                 private router: Router,
                 private viewUtility: ViewUtility) {
 
-        this.checkConflicts();
+        this.fetchConflicts();
+        this.subscribeForChanges();
+
         settings.syncStatusChanges().subscribe(c => {
-            if (c == 'disconnected')
+            if (c == 'disconnected') {
                 this.connected = false;
-            else if (c == 'connected')
+            } else if (c == 'connected') {
                 this.connected = true;
-            else if (c == 'changed') this.checkConflicts();
-        });
-    }
-
-    private checkConflicts(): void {
-
-        this.datastore.findConflicted().then(result => {
-            this.conflicts = result;
+            }
         });
     }
 
@@ -51,7 +46,23 @@ export class TaskbarComponent {
                 viewName = name;
                 return this.router.navigate(['resources', viewName]);
             }).then(() => {
-                this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts'])
-            });
+            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts'])
+        });
+    }
+
+    private subscribeForChanges(): void {
+
+        this.datastore.documentChangesNotifications().subscribe(() => {
+            console.log("changes are there");
+            this.fetchConflicts();
+        });
+    }
+
+    private fetchConflicts() {
+
+        this.datastore.find({constraints: {'_conflicts': 'KNOWN'}}).then(result => {
+            console.log("result",result);
+            this.conflicts = result;
+        });
     }
 }

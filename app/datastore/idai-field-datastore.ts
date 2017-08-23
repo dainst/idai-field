@@ -38,11 +38,6 @@ export abstract class IdaiFieldDatastore extends Datastore {
      */
 
     /**
-     * TODO remove and incorporate into find (with constraints)
-     */
-    abstract findConflicted(): Promise<IdaiFieldDocument[]>;
-
-    /**
      * @returns
      *   Rejects with
      *     [DOCUMENT_NOT_FOUND] - in case of error

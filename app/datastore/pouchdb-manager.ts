@@ -1,5 +1,4 @@
 import * as PouchDB from "pouchdb";
-import {IndexCreator} from "./index-creator";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
 import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
@@ -21,7 +20,6 @@ export class PouchdbManager {
     private db = undefined;
     private dbProxy = undefined;
     private name: string = undefined;
-    private indexCreator = new IndexCreator();
     private syncHandles = [];
 
     private resolveDbReady = undefined;
@@ -54,7 +52,6 @@ export class PouchdbManager {
         if ((name == 'test')) {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.create());
         }
-        rdy = rdy.then(() => this.indexCreator.go(this.db));
         if (name == 'test') {
             rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
         }
@@ -94,11 +91,6 @@ export class PouchdbManager {
             handle.cancel();
         }
         this.syncHandles = [];
-    }
-
-    public getIndexCreator() {
-
-        return this.indexCreator;
     }
 
     /**

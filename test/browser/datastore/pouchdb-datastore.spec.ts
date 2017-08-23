@@ -599,7 +599,8 @@ export function main() {
             },100)
         });
 
-        it('should find conflicted documents sorted by lastModified', function(done) {
+        // TODO remove or rewrite
+        xit('should find conflicted documents sorted by lastModified', function(done) {
 
             let db1 = new PouchDB('testdb');
             let db2 = new PouchDB('testdb2');

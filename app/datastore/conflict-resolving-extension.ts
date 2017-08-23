@@ -32,16 +32,11 @@ export class ConflictResolvingExtension {
         if (!this.datastore) return Promise.reject('no datastore');
         if (!this.conflictResolver) return Promise.reject('no conflict resolver');
 
-        this.promise = this.promise.then(() => {
-
-            if (ConflictResolvingExtension.hasUnhandledConflicts(this.inspectedRevisionsIds, document)) {
-                return this.handleConflicts(document, userName);
-            } else {
-                return Promise.resolve(undefined);
-            }
-        });
-
-        return this.promise;
+        if (ConflictResolvingExtension.hasUnhandledConflicts(this.inspectedRevisionsIds, document)) {
+            return this.handleConflicts(document, userName);
+        } else {
+            return Promise.resolve(undefined);
+        }
     }
 
     private handleConflicts(document: Document, userName: string): Promise<any> {

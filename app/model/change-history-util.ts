@@ -25,6 +25,14 @@ export class ChangeHistoryUtil {
         mainDocument.modified = changeHistory;
     }
 
+    // TODO return string as soon as document model is changed
+    public static getLastModified(document: Document): any {
+
+        if (document.modified && document.modified.length > 0) {
+            return document.modified[document.modified.length - 1].date;
+        } else return document.created.date;
+    }
+
     private static getCombinedChangeHistory(documents: Array<Document>) {
 
         const changeHistory: Array<Action> = [];

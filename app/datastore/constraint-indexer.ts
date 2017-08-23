@@ -1,5 +1,7 @@
-import {ObjectUtil} from "../util/object-util";
-import {ModelUtil} from "../model/model-util";
+import {Document} from 'idai-components-2/core';
+import {ObjectUtil} from '../util/object-util';
+import {ChangeHistoryUtil} from '../model/change-history-util';
+
 /**
  * @author Daniel de Oliveira
  */
@@ -23,7 +25,7 @@ export class ConstraintIndexer {
         this.setUp();
     }
 
-    public put(doc, skipRemoval = false) {
+    public put(doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) this.remove(doc);
         for (let pathDef of this.pathsDefinitions) {
@@ -31,7 +33,7 @@ export class ConstraintIndexer {
         }
     }
 
-    public remove(doc) {
+    public remove(doc: Document) {
 
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
@@ -42,10 +44,10 @@ export class ConstraintIndexer {
         }
     }
 
-    public get(path, matchTerm): any {
+    public get(path: string, matchTerm: string): any {
 
         if (!this.hasIndex(path)) {
-            console.warn("ignoring unknown constraint '"+path+"'");
+            console.warn('ignoring unknown constraint "' + path + '"');
             return undefined;
         }
 
@@ -57,7 +59,7 @@ export class ConstraintIndexer {
         }
     }
 
-    private putFor(pathDef, doc) {
+    private putFor(pathDef, doc: Document) {
 
         const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
 
@@ -74,7 +76,7 @@ export class ConstraintIndexer {
         }
     }
 
-    private hasIndex(path) {
+    private hasIndex(path: string) {
 
         for (let pd of this.pathsDefinitions) {
             if (pd.path == path) return true;
@@ -82,10 +84,10 @@ export class ConstraintIndexer {
         return false;
     }
 
-    private addToIndex(doc, path, target) {
+    private addToIndex(doc: Document, path: string, target: string) {
 
         if (!this.index[path][target]) this.index[path][target] = {};
-        this.index[path][target][doc.resource.id] = ModelUtil.getLastModified(doc);
+        this.index[path][target][doc.resource.id] = ChangeHistoryUtil.getLastModified(doc);
     }
 
     private setUp() {

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ModelUtil} from '../model/model-util';
+import {ChangeHistoryUtil} from '../model/change-history-util';
 import {ResultSets} from '../util/result-sets';
 
 /**
@@ -34,7 +34,7 @@ export class FulltextIndexer {
         if (!this.index[doc.resource.type]) {
             this.index[doc.resource.type] = {'*' : { } };
         }
-        const lastModified = ModelUtil.getLastModified(doc);
+        const lastModified = ChangeHistoryUtil.getLastModified(doc);
         this.index[doc.resource.type]['*'][doc.resource.id] = lastModified;
 
         for (let field of this.fieldsToIndex) {

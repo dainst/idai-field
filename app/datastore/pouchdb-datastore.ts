@@ -301,8 +301,8 @@ export class PouchdbDatastore {
                 if (!change || !change.id) return;
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
-                    this.constraintIndexer.remove({resource: {id: change.id}});
-                    this.fulltextIndexer.remove({resource: {id: change.id}});
+                    this.constraintIndexer.remove({resource: {id: change.id}} as Document);
+                    this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
                     return;
                 }
                 this.fetch(change.id).then(document => {

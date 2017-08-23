@@ -41,7 +41,7 @@ export class ConflictResolvingExtension {
         return this.promise;
     }
 
-    public handleConflicts(document: Document, userName: string): Promise<any> {
+    private handleConflicts(document: Document, userName: string): Promise<any> {
 
         return this.getConflictedRevisions(document, userName).then(conflictedRevisions => {
             let promise: Promise<any> = Promise.resolve();

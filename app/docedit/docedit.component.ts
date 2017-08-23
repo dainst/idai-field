@@ -154,11 +154,6 @@ export class DoceditComponent {
 
         this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
-                // return this.autoConflictResolvingWorker.autoResolve(latestRevision);
-            // })
-            // .then(() => this.datastore.getLatestRevision(this.clonedDocument.resource.id))
-            // .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
-            // .then(latestRevision => {
                 this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
 

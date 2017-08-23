@@ -64,18 +64,18 @@ export class PouchdbManager {
 
     private index() {
 
-        return this.db.allDocs({include_docs: true},(err, resultDocs) => {
+        return this.db.allDocs({include_docs: true, conflicts: true},(err, resultDocs) => {
             this.constraintIndexer.clear();
             this.fulltextIndexer.clear();
             this.documentCache.clear();
 
-            for (let i in resultDocs.rows) {
-                if (resultDocs.rows[i].id.indexOf('_') == 0) continue; // design docs
+            for (let row of resultDocs.rows) {
+                if (row.id.indexOf('_') == 0) continue; // design docs
 
-                this.constraintIndexer.put(resultDocs.rows[i].doc, true);
-                this.fulltextIndexer.put(resultDocs.rows[i].doc, true);
+                this.constraintIndexer.put(row.doc, true);
+                this.fulltextIndexer.put(row.doc, true);
 
-                this.documentCache.set(resultDocs.rows[i].doc);
+                this.documentCache.set(row.doc);
             }
 
             this.resolveDbReady(this.db)

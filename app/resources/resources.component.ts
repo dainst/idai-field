@@ -92,6 +92,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     ngOnDestroy() {
+
         this.subscription.unsubscribe();
     }
 
@@ -114,6 +115,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public stop() {
+
         this.ready = false;
     }
 
@@ -334,11 +336,11 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    private fetchDocuments(f): Promise<any> {
+    private fetchDocuments(query: Query): Promise<any> {
 
         this.loading.start();
-        return this.datastore.find(f())
-            .catch(errWithParams => this.handleFindErr(errWithParams, this.query))
+        return this.datastore.find(query)
+            .catch(errWithParams => this.handleFindErr(errWithParams, query))
             .then(documents => {
                 this.loading.stop(); return documents;
             });
@@ -533,17 +535,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
-        return () => {
-            const clonedQuery = JSON.parse(JSON.stringify(query));
-            clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
-            return clonedQuery;
-        };
+        const clonedQuery = JSON.parse(JSON.stringify(query));
+        clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
+        return clonedQuery;
     }
 
     private static makeMainTypeQuery(mainType: string): Query {
 
-        return () => {
-            return { types: [mainType] };
-        };
+        return { types: [mainType] };
     }
 }

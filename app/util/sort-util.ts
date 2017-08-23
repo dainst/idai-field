@@ -1,13 +1,14 @@
 /**
- * Implements utility methods for sorting strings alphanumerically so that
- * numerical portions of strings are treated as numbers.
+ * Implements utility methods for sorting
  *
  * @author Sebastian Cuy
  */
-export class AlnumSortUtil {
+export class SortUtil {
 
     /**
-     * Compares two string alphanumerically
+     * Compares two string alphanumerically so that
+     * numerical portions of strings are treated as numbers.
+     *
      * @param a a string
      * @param b another string
      * @returns {number} -1 if a < b, 1 if a > b, 0 if a == b

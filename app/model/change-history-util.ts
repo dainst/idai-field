@@ -14,7 +14,9 @@ export class ChangeHistoryUtil {
      */
     public static mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
 
-        let changeHistory: Array<Action> = ChangeHistoryUtil.getCombinedChangeHistory([mainDocument, secondDocument]);
+        // TODO Return cloned instance
+
+        const changeHistory: Array<Action> = ChangeHistoryUtil.getCombinedChangeHistory([mainDocument, secondDocument]);
         ChangeHistoryUtil.sortChangeHistory(changeHistory);
 
         if (changeHistory.length == 0) return;
@@ -25,7 +27,7 @@ export class ChangeHistoryUtil {
 
     private static getCombinedChangeHistory(documents: Array<Document>) {
 
-        let changeHistory: Array<Action> = [];
+        const changeHistory: Array<Action> = [];
 
         for (let document of documents) {
             ChangeHistoryUtil.addActionsToChangeHistory(changeHistory, document);
@@ -37,8 +39,8 @@ export class ChangeHistoryUtil {
     private static sortChangeHistory(changeHistory: Array<Action>) {
 
         changeHistory.sort((action1, action2) => {
-            let date1 = new Date(action1.date);
-            let date2 = new Date(action2.date);
+            const date1 = new Date(action1.date);
+            const date2 = new Date(action2.date);
 
             if (date1 < date2) return -1;
             if (date2 < date1) return 1;

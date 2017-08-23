@@ -3,7 +3,7 @@ import {Action, Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {ConflictResolver} from './conflict-resolver';
 import {RevisionHelper} from './revision-helper';
-import {ChangeHistoryUtil} from '../util/change-history-util';
+import {ChangeHistoryUtil} from '../model/change-history-util';
 import {M} from '../m';
 
 @Injectable()

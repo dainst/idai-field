@@ -1,4 +1,4 @@
-import {ChangeHistoryUtil} from '../../../app/util/change-history-util';
+import {ChangeHistoryUtil} from '../../../app/model/change-history-util';
 
 /**
  * @author Thomas Kleinke

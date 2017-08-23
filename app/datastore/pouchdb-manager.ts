@@ -30,8 +30,8 @@ export class PouchdbManager {
         private sampleDataLoader: AbstractSampleDataLoader,
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer,
-        private documentCache: DocumentCache
-    ) {
+        private documentCache: DocumentCache) {
+
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         this.dbProxy = new PouchdbProxy(dbReady);
     }
@@ -60,74 +60,6 @@ export class PouchdbManager {
         }
 
         rdy.then(() => this.index());
-    }
-
-    private index() {
-
-        return this.db.allDocs({include_docs: true},(err, resultDocs) => {
-            this.constraintIndexer.clear();
-            this.fulltextIndexer.clear();
-            this.documentCache.clear();
-
-            for (let i in resultDocs.rows) {
-                if (resultDocs.rows[i].id.indexOf('_') == 0) continue; // design docs
-
-                this.constraintIndexer.put(resultDocs.rows[i].doc, true);
-                this.fulltextIndexer.put(resultDocs.rows[i].doc, true);
-
-                this.documentCache.set(resultDocs.rows[i].doc);
-            }
-
-            this.resolveDbReady(this.db)
-        })
-    }
-
-    public getIndexCreator() {
-
-        return this.indexCreator;
-    }
-
-    /**
-     * Gets the database object.
-     * @returns {PouchdbProxy} a proxy that automatically hands over method
-     *  calls to the actual PouchDB instance as soon as it is available
-     */
-    public getDb(): PouchdbProxy {
-
-        return this.dbProxy;
-    }
-
-    public destroy(): Promise<any> {
-
-        return this.getDb().ready().then(db => db.destroy())
-    }
-
-    /**
-     * Destroys the db named dbName, if it is not the currently selected active database
-     *
-     * @param dbName
-     * @returns {any}
-     *   Rejects with undefined if trying do delete the currently active database
-     */
-    public destroyDb(dbName: string): Promise<any> {
-
-        this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
-        return new PouchDB(dbName).destroy();
-    }
-
-    public createDb(name: string, doc) {
-
-        let db = new PouchDB(name);
-        return db.destroy().then(() => {
-            let db = new PouchDB(name);
-            return db.put(doc);
-        });
-    }
-
-    private create(): Promise<any> {
-
-        this.db = new PouchDB(this.name);
-        return Promise.resolve(this.db);
     }
 
     /**
@@ -162,5 +94,79 @@ export class PouchdbManager {
             handle.cancel();
         }
         this.syncHandles = [];
+    }
+
+    public getIndexCreator() {
+
+        return this.indexCreator;
+    }
+
+    /**
+     * Gets the database object.
+     * @returns {PouchdbProxy} a proxy that automatically hands over method
+     *  calls to the actual PouchDB instance as soon as it is available
+     */
+    public getDb(): PouchdbProxy {
+
+        return this.dbProxy;
+    }
+
+    // TODO remove and use destroyDb
+    public destroy(): Promise<any> {
+
+        return this.getDb().ready().then(db => db.destroy())
+    }
+
+    /**
+     * Destroys the db named dbName, if it is not the currently selected active database
+     *
+     * @param dbName
+     * @returns {any}
+     *   Rejects with undefined if trying do delete the currently active database
+     */
+    public destroyDb(dbName: string): Promise<any> {
+
+        this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
+        return new PouchDB(dbName).destroy();
+    }
+
+    public createDb(name: string, doc) {
+
+        let db = new PouchDB(name);
+        return db.destroy().then(() => {
+            let db = new PouchDB(name);
+            return db.put(doc);
+        });
+    }
+
+    private index() {
+
+        return this.db.allDocs({include_docs: true, conflicts: true},(err, resultDocs) => {
+            this.constraintIndexer.clear();
+            this.fulltextIndexer.clear();
+            this.documentCache.clear();
+
+            for (let row of resultDocs.rows) {
+                if (PouchdbManager.isDesignDoc(row)) continue;
+
+                this.constraintIndexer.put(row.doc, true);
+                this.fulltextIndexer.put(row.doc, true);
+
+                this.documentCache.set(row.doc);
+            }
+
+            this.resolveDbReady(this.db)
+        })
+    }
+
+    private create(): Promise<any> {
+
+        this.db = new PouchDB(this.name);
+        return Promise.resolve(this.db);
+    }
+
+    private static isDesignDoc(row) {
+
+        return row.id.indexOf('_') == 0
     }
 }

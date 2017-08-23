@@ -53,7 +53,6 @@ export class TaskbarComponent {
     private subscribeForChanges(): void {
 
         this.datastore.documentChangesNotifications().subscribe(() => {
-            console.log("changes are there");
             this.fetchConflicts();
         });
     }
@@ -61,7 +60,6 @@ export class TaskbarComponent {
     private fetchConflicts() {
 
         this.datastore.find({constraints: {'_conflicts': 'KNOWN'}}).then(result => {
-            console.log("result",result);
             this.conflicts = result;
         });
     }

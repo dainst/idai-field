@@ -1,4 +1,4 @@
-import {Query, DatastoreErrors} from 'idai-components-2/datastore';
+import {Query, DatastoreErrors, DocumentChange} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
@@ -162,7 +162,7 @@ export class PouchdbDatastore {
             .then(result => result.rows.map(result => result.doc))
     }
 
-    public documentChangesNotifications(): Observable<Document> {
+    public documentChangesNotifications(): Observable<DocumentChange> {
 
         return Observable.create(observer => {
             this.documentChangesObservers.push(observer);
@@ -233,13 +233,13 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
-    private notifyDocumentChangesObservers(document: Document) {
+    private notifyDocumentChangesObservers(documentChange: DocumentChange) {
 
         if (!this.documentChangesObservers) return;
         this.removeClosedObservers();
 
         this.documentChangesObservers.forEach(observer => {
-            if (observer && (observer.next != undefined)) observer.next(document);
+            if (observer && (observer.next != undefined)) observer.next(documentChange);
         });
     }
 
@@ -300,10 +300,18 @@ export class PouchdbDatastore {
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
+                const documentChange: DocumentChange = {
+                    type: change.deleted ? 'deleted' : 'changed',
+                    resourceId: change.id
+                };
+
+                // TODO instead of checking deletedOnes we should do a fetch and see if it's there. that way it would work also for remotely deleted documents
+
                 if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}} as Document);
                     this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
-                    return;
+                    documentChange.type = 'deleted'; // for the same reason we use deletedOnes
+                    return this.notifyDocumentChangesObservers(documentChange);
                 }
                 this.fetch(change.id).then(document => {
 
@@ -313,7 +321,8 @@ export class PouchdbDatastore {
                     //
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);
-                    this.notifyDocumentChangesObservers(document);
+                    documentChange.document = document;
+                    this.notifyDocumentChangesObservers(documentChange);
                 });
             }).on('complete', info => {
                 // console.debug('changes stream was canceled', info);

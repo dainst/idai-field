@@ -1,4 +1,4 @@
-import {Query} from 'idai-components-2/datastore';
+import {Query, DocumentChange} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
@@ -19,13 +19,18 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     constructor(private datastore: PouchdbDatastore, private documentCache: DocumentCache) {
 
         this.datastore.documentChangesNotifications()
-            .subscribe(doc => {
-                // explicitly assign by value in order for
-                // changes to be detected by angular
-                if (this.autoCacheUpdate && doc && doc.resource && this.documentCache.get(doc.resource.id)) {
-                    console.debug('change detected', doc);
-                    this.reassign(doc);
+            .subscribe(documentChange => {
+
+                if (documentChange.type == 'changed') {
+                    const document = documentChange.document;
+
+                    // explicitly assign by value in order for changes to be detected by angular
+                    if (this.autoCacheUpdate && document && document.resource && this.documentCache.get(document.resource.id)) {
+                        console.debug('change detected', document);
+                        this.reassign(document);
+                    }
                 }
+
             });
     }
 
@@ -71,7 +76,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.documentCache.remove(doc.resource.id));
     }
 
-    public documentChangesNotifications(): Observable<Document> {
+    public documentChangesNotifications(): Observable<DocumentChange> {
 
         return this.datastore.documentChangesNotifications();
     }

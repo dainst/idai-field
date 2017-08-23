@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Query} from 'idai-components-2/datastore';
+import {Query, DocumentChange} from 'idai-components-2/datastore';
 import {Document, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
@@ -84,8 +84,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 });
         });
 
-        this.subscription = datastore.documentChangesNotifications().subscribe(result => {
-            this.handleChange(result);
+        this.subscription = datastore.documentChangesNotifications().subscribe(documentChange => {
+            this.handleChange(documentChange);
         });
 
         this.initializeClickEventListener();
@@ -187,7 +187,13 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
-    private handleChange(changedDocument: Document) {
+    private handleChange(documentChange: DocumentChange) {
+
+        if (documentChange.type == 'deleted') {
+            console.warn('unhandled deleted document');
+            return;
+        }
+        let changedDocument: Document = documentChange.document;
 
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
         if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;

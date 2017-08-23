@@ -13,7 +13,7 @@ export class SortUtil {
      * @param b another string
      * @returns {number} -1 if a < b, 1 if a > b, 0 if a == b
      */
-    public static compare(a, b): number {
+    public static alnumCompare(a, b): number {
 
         let arrayA = this.makeAlNumArray(a);
         let arrayB = this.makeAlNumArray(b);

@@ -34,14 +34,15 @@ export function main() {
                 pouchdbManager = new PouchdbManager(undefined, constraintIndexer, fulltextIndexer, new DocumentCache());
 
                 const appState = jasmine.createSpyObj('appState', ['getCurrentUser']);
-                const autoConflictResolvingExtension = jasmine.createSpyObj('autoConflictResolvingExtension',
-                    ['setDatastore', 'setConflictResolver']);
+                const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
+                    ['setDatastore', 'setConflictResolver', 'autoResolve']);
+                conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
                 const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 
                 datastore = new PouchdbDatastore(
                     pouchdbManager, constraintIndexer,
                     fulltextIndexer, appState,
-                    autoConflictResolvingExtension,
+                    conflictResolvingExtension,
                     conflictResolver);
                 pouchdbManager.setProject('testdb');
             }

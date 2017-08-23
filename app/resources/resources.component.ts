@@ -190,7 +190,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private handleChange(documentChange: DocumentChange) {
 
         if (documentChange.type == 'deleted') {
-            console.warn('unhandled deleted document');
+            console.debug('unhandled deleted document');
             return;
         }
         let changedDocument: Document = documentChange.document;

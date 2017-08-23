@@ -17,7 +17,7 @@ const moment = require('moment');
  */
 @Component({
     moduleId: module.id,
-    selector: 'conflict-resolver',
+    selector: 'docedit-conflicts-tab',
     templateUrl: './docedit-conflicts-tab.html'
 })
 

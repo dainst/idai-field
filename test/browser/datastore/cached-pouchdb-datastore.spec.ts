@@ -26,7 +26,7 @@ export function main() {
         beforeEach(
             () => {
                 const mockdb = jasmine.createSpyObj('mockdb',
-                    ['findIds','documentChangesNotifications','create','update']);
+                    ['findIds', 'documentChangesNotifications','create','update']);
                 mockdb.update.and.callFake(function(dd){
                     // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
                     dd.resource.id = '1';
@@ -49,9 +49,9 @@ export function main() {
             }
         );
 
-       it('should return the cached instance on of create', function(done) {
+       it('should return the cached instance on create', function(done) {
 
-            let doc1 = doc('sd1','identifier1');
+            let doc1 = doc('sd1', 'identifier1');
 
             datastore.create(doc1)
                 .then(() => datastore.find({q: 'sd1'})) // mockdb returns other instance
@@ -66,13 +66,13 @@ export function main() {
                 });
         });
 
-       it('should return cached instance of update', (done)=>{
-           let doc1 = doc('sd1','identifier1');
+       xit('should return cached instance on update', (done)=>{
+           let doc1 = doc('sd1', 'identifier1');
            let doc2;
 
            datastore.create(doc1)
                .then(() => {
-                    doc2 = doc('sd1','identifier_');
+                    doc2 = doc('sd1', 'identifier_');
                     doc2.resource.id = '1';
                     return datastore.update(doc2);
                })

@@ -53,7 +53,13 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
         return this.datastore.update(document)
             // knowing that update returns the same instance of document as doc
-            .then(doc => this.documentCache.set(doc));
+            .then(doc => {
+                if (!this.documentCache.get(doc.resource.id)) {
+                    return this.documentCache.set(doc);
+                } else {
+                    return doc;
+                }
+            });
     }
 
     public remove(doc: Document): Promise<any> {

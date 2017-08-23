@@ -279,6 +279,7 @@ describe('resources/project --', function() {
         ResourcesPage.clickListModeButton();
 
         ProjectPage.get();
+        browser.refresh();
         browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
 

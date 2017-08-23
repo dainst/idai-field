@@ -61,7 +61,7 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ProjectPage.get();
+        browser.refresh();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToBuilding();
@@ -77,7 +77,7 @@ describe('resources/project --', function() {
         });
         NavbarPage.clickSelectProject(1);
 
-        ProjectPage.get();
+        browser.refresh();
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
@@ -104,7 +104,7 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ProjectPage.get();
+        browser.refresh();
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
@@ -116,7 +116,7 @@ describe('resources/project --', function() {
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
 
-        ProjectPage.get();
+        browser.refresh();
 
         browser.sleep(delays.shortRest * 10);
 

@@ -1,10 +1,12 @@
-import {browser} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from '../project.page';
+import {MapPage} from '../resources/map/map.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
 
 /**
  * @author Daniel de Oliveira
@@ -48,7 +50,7 @@ describe('resources/project --', function() {
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest * 20);
     }
 
     function removeResourcesStateFile() {
@@ -60,8 +62,6 @@ describe('resources/project --', function() {
     it('create & switch project', () => {
 
         performCreateProject();
-
-        browser.refresh();
 
         ResourcesPage.performCreateResource('abc_t1', 0);
         NavbarPage.clickNavigateToBuilding();
@@ -77,7 +77,7 @@ describe('resources/project --', function() {
         });
         NavbarPage.clickSelectProject(1);
 
-        browser.refresh();
+        browser.sleep(delays.shortRest * 20);
 
         NavbarPage.clickNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
@@ -104,8 +104,6 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        browser.refresh();
-
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
         ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
@@ -115,8 +113,6 @@ describe('resources/project --', function() {
 
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-
-        browser.refresh();
 
         browser.sleep(delays.shortRest * 10);
 
@@ -133,4 +129,24 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
     });
 
+    it('restore resources state after restarting client', () => {
+
+        performCreateProject();
+
+        ResourcesPage.performCreateResource('excavation1', 0);
+        ResourcesPage.performCreateResource('excavation2', 0);
+        ResourcesPage.clickChooseTypeFilter(1);
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.clickListModeButton();
+
+        ProjectPage.get();
+        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation1'));
+    });
 });

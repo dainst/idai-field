@@ -64,10 +64,13 @@ export class ConstraintIndexer {
         const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
 
         if (!elForPath) {
-            return this.addToIndex(doc, pathDef.path, 'UNKOWN');
+            return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
         }
 
-        if (pathDef.string) {
+        // TODO use type instead of boolean or string or array (default)
+        if (pathDef.boolean) {
+            this.addToIndex(doc, pathDef.path, 'KNOWN');
+        } else if (pathDef.string) {
             this.addToIndex(doc, pathDef.path, elForPath);
         } else {
             for (let target of elForPath) {

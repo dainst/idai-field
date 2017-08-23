@@ -225,7 +225,7 @@ export function main() {
                 .toEqual([item('1')]);
         });
 
-        it('query for unkown', () => {
+        it('query for unknown', () => {
 
             const docs = [
                 doc('1'),
@@ -239,7 +239,27 @@ export function main() {
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('resource.relations.liesWithin', 'UNKOWN'))
+            expect(ci.get('resource.relations.liesWithin', 'UNKNOWN'))
+                .toEqual([item('2')]);
+        });
+
+        it('query for existing or not', () => {
+
+            const docs = [
+                doc('1'),
+                doc('2')
+            ];
+            docs[0]['_conflicts'] = ['1-other'];
+
+            ci = new ConstraintIndexer([
+                { path: '_conflicts', boolean: true } ,
+            ]);
+            ci.put(docs[0]);
+            ci.put(docs[1]);
+
+            expect(ci.get('_conflicts', 'KNOWN'))
+                .toEqual([item('1')]);
+            expect(ci.get('_conflicts', 'UNKNOWN'))
                 .toEqual([item('2')]);
         });
 

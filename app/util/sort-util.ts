@@ -49,6 +49,49 @@ export class SortUtil {
         return 0;
     }
 
+    /**
+     * Compares two objects with standard comparison operators.
+     *
+     * @param a
+     * @param b
+     * @returns {number}
+     */
+    public static compare(a, b): number {
+        if (a > b)
+            return 1;
+        if (a < b)
+            return -1;
+        return 0;
+    }
+
+    /**
+     * Wraps a compare function in order to be able to sort an array of objects
+     * by the contents of one particular field.
+     *
+     * @param sortField The field to sort by
+     * @param compareFunction the compare function to wrap
+     * @returns {(a:any, b:any)=>any} the new compare function
+     */
+    public static compareField(sortField, compareFunction) {
+
+        return (a, b) => {
+            return compareFunction(a[sortField], b[sortField]);
+        };
+    }
+
+    /**
+     * Wraps a compare function in order to reverse sorting.
+     *
+     * @param compareFunction the compare function to wrap
+     * @returns {(a:any, b:any)=>number} the new compare function
+     */
+    public static compareDescending(compareFunction) {
+
+        return (a, b) => {
+            return compareFunction(a, b) * -1;
+        };
+    }
+
     // split string and convert numbers to be able to sort alphabetic
     // and numeric parts of the string separately
     private static makeAlNumArray(s) {

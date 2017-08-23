@@ -5,7 +5,7 @@ import {SortUtil} from "../../../app/util/sort-util";
  */
 export function main() {
 
-    describe('SortUtil', () => {
+    fdescribe('SortUtil', () => {
 
         it('should sort strings alphanumerically', () => {
 
@@ -32,6 +32,21 @@ export function main() {
 
             expect(SortUtil.alnumCompare('a1b2c3d4','asdfghjkl')).toEqual(-1);
             expect(SortUtil.alnumCompare('asdfghjkl','a1b2c3d4')).toEqual(1);
+        });
+
+        it('should sort strings alphabetically', () => {
+
+            expect(SortUtil.compare('abc','abd')).toEqual(-1);
+            expect(SortUtil.compare('abd','abc')).toEqual(1);
+            expect(SortUtil.compare('abc','abc')).toEqual(0);
+        });
+
+        it('should sort strings alphabetically and descending', () => {
+
+            let comp = SortUtil.compareDescending(SortUtil.compare);
+            expect(comp('abc','abd')).toEqual(1);
+            expect(comp('abd','abc')).toEqual(-1);
+            expect(comp('abc','abc')).toBe(0); // "toBe" necessary since -0 does not equal 0
         });
 
     });

@@ -24,8 +24,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
                 // changes to be detected by angular
                 if (this.autoCacheUpdate && doc && doc.resource && this.documentCache.get(doc.resource.id)) {
                     console.debug('change detected', doc);
-                    if (!doc['_conflicts']) delete this.documentCache.get(doc.resource.id)['_conflicts'];
-                    Object.assign(this.documentCache.get(doc.resource.id), doc);
+                    this.reassign(doc);
                 }
             });
     }
@@ -39,7 +38,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public create(document: Document): Promise<Document> {
 
         return this.datastore.create(document)
-            // knowing that create returns the same instance of document as doc
+            // knowing that create returns the same instance of document as do
             .then(doc => this.documentCache.set(doc));
     }
 
@@ -52,13 +51,15 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public update(document: Document): Promise<Document> {
 
         return this.datastore.update(document)
-            // knowing that update returns the same instance of document as doc
-            .then(doc => {
-                if (!this.documentCache.get(doc.resource.id)) {
-                    return this.documentCache.set(doc);
-                } else {
-                    return doc;
-                }
+            .then(() => {
+                return this.datastore.fetch(document.resource.id).then(doc => {
+                    if (!this.documentCache.get(doc.resource.id)) {
+                        return this.documentCache.set(doc);
+                    } else {
+                        this.reassign(doc);
+                        return this.documentCache.get(doc.resource.id);
+                    }
+                });
             });
     }
 
@@ -129,5 +130,11 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
         this.autoCacheUpdate = autoCacheUpdate;
+    }
+
+    private reassign(doc: Document) {
+
+        if (!doc['_conflicts']) delete this.documentCache.get(doc.resource.id)['_conflicts'];
+        Object.assign(this.documentCache.get(doc.resource.id), doc);
     }
 }

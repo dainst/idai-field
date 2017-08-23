@@ -334,6 +334,7 @@ export class PouchdbDatastore {
         });
     }
 
+    // TODO Move to query interface (make query a class if necessary)
     private static isEmpty(query: Query) {
 
         return ((!query.q || query.q == '') && !query.types);

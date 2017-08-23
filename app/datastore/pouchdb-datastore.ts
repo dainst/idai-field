@@ -272,7 +272,7 @@ export class PouchdbDatastore {
                 this.constraintIndexer.put(document);
                 this.fulltextIndexer.put(document);
                 document['_rev'] = result['rev'];
-                return document;
+                return Promise.resolve(document);
             });
     }
 

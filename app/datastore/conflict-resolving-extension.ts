@@ -33,8 +33,11 @@ export class ConflictResolvingExtension {
         if (!this.conflictResolver) return Promise.reject('no conflict resolver');
 
         this.promise = this.promise.then(() => {
+
             if (ConflictResolvingExtension.hasUnhandledConflicts(this.inspectedRevisionsIds, document)) {
                 return this.handleConflicts(document, userName);
+            } else {
+                return Promise.resolve(undefined);
             }
         });
 

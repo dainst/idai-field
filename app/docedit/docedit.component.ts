@@ -152,6 +152,7 @@ export class DoceditComponent {
 
     private handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
 
+
         this.removeInspectedRevisions(this.clonedDocument.resource.id)
             .then(latestRevision => {
                 this.clonedDocument = latestRevision;

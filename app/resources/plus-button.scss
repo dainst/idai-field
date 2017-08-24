@@ -23,8 +23,8 @@ plus-button {
   background-color: rgb(240, 240, 240);
 
   .plus-sign-circle {
-    position: relative;
-    top: -26px;
+    position: absolute;
+    top: 26px;
     left: 26px;
     border-radius: 50%;
     width: 18px;
@@ -32,9 +32,11 @@ plus-button {
     background-color: $greenbgr;
 
     .mdi-plus {
-      position: relative;
-      top: -9px;
+      position: absolute;
+      top: -1px;
+      left: 0px;
       color: white;
+      line-height: 17px;
     }
   }
 }

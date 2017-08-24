@@ -1,2 +1,106 @@
-@import 'docedit-wrapper';
 @import 'docedit-conflicts-tab';
+
+#document-edit-wrapper {
+
+  .tab-content {
+    border: 1px solid #ddd;
+    border-top: 0;
+  }
+
+  .form-group.card {
+    margin-bottom: 0;
+  }
+
+  .document-info .card-block {
+    overflow: auto;
+  }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+  }
+
+  header {
+    background-color: #eee;
+    padding: 7px;
+    color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .overview-document-heading .mdi-blur {
+    display: inline-block;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: #007883;
+    padding: 10px 10px 10px 11px;
+    margin-right: 5px;
+  }
+
+  .mdi-arrow-left {
+    margin-left: -5px;
+    margin-right: -3px;
+  }
+
+  header h1 {
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    background-color: #67b2b9;
+  }
+
+  header h1 div {
+    display: inline;
+  }
+
+  main {
+    padding: 25px;
+    background-color: #eee;
+    height: calc(100vh - 178px);
+    overflow: auto;
+  }
+
+  #document-edit-button-save-document:active,
+  #document-edit-button-save-document:focus,
+  #document-edit-button-delete-document:active,
+  #document-edit-button-delete-document:focus,
+  #document-edit-button-goto-view:active,
+  #document-edit-button-goto-view:focus,
+  #document-view-button-edit-document:active,
+  #document-view-button-edit-document:focus,
+  #document-view-button-back-to-map:active,
+  #document-view-button-back-to-map:focus {
+    outline: none;
+  }
+
+  #document-edit-button-delete-document:focus,
+  #document-edit-button-save-document:focus,
+  #document-edit-button-goto-view:focus {
+    background-color: #ddd;
+  }
+
+  #document-edit-button-save-document,
+  #document-edit-button-delete-document,
+  #document-edit-button-goto-view {
+    margin-right: 7px;
+    margin-top: 7px;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+  }
+
+  .button-label {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .choose-geometry-icon {
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+  }
+
+  #document-edit-conflicts-tab {
+    color: red !important;
+  }
+
+}

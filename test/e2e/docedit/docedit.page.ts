@@ -32,26 +32,32 @@ export class DoceditPage {
     };
 
     public static clickInsertImage = function() {
+
         common.click(element(by.id('create-depicts-relations-btn')));
     };
 
     public static clickFieldsTab = function() {
-        element(by.id('docedit-fields-tab')).click();
+
+        common.click(element(by.id('docedit-fields-tab')));
     };
 
     public static clickRelationsTab = function() {
-        element(by.id('docedit-relations-tab')).click();
+
+        common.click(element(by.id('docedit-relations-tab')));
     };
 
     public static clickImagesTab = function() {
-        element(by.id('docedit-images-tab')).click();
+
+        common.click(element(by.id('docedit-images-tab')));
     };
 
     public static clickConflictsTab = function() {
-        element(by.id('docedit-conflicts-tab')).click();
+
+        common.click(element(by.id('docedit-conflicts-tab')));
     };
 
     public static clickSaveDocument = function() {
+        
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {
                 element(by.id('document-edit-button-save-document')).click().then(

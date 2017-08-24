@@ -1,11 +1,11 @@
 import {SortUtil} from "../../../app/util/sort-util";
 
 /**
- * @author Daniel de Oliveira
+ * @author Sebastian Cuy
  */
 export function main() {
 
-    fdescribe('SortUtil', () => {
+    describe('SortUtil', () => {
 
         it('should sort strings alphanumerically', () => {
 

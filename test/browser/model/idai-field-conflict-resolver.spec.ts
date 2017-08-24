@@ -27,6 +27,8 @@ export function main() {
             };
         };
 
+        // TODO add test for no result if not all conflicts resolved
+
         it('autosolve a conflict', () => {
 
             const originalRevision = createDocument('id1', '1-xyz', 'identifier1', 'shortDescription1', 'testuser1');

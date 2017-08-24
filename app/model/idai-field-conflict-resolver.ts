@@ -44,7 +44,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
             = IdaiFieldDiffUtility.findDifferingFields(latestRevision.resource, conflictedRevision.resource);
 
         for (let fieldName of differingFieldsNames) {
-            let winningRevision = this.determineWinningRevisionForField(latestRevision, conflictedRevision,
+            let winningRevision = IdaiFieldConflictResolver.determineWinningRevisionForField(latestRevision, conflictedRevision,
                 previousRevision, fieldName);
             if (winningRevision) {
                 if (winningRevision.resource[fieldName]) {
@@ -66,7 +66,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
                 (latestRevision.resource, conflictedRevision.resource).length > 0);
     }
 
-    private determineWinningRevisionForField(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
+    private static determineWinningRevisionForField(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
                                              previousRevision: IdaiFieldDocument,
                                              fieldName: string): IdaiFieldDocument {
 

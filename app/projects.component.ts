@@ -3,6 +3,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from './settings/settings-service';
 import {M} from './m';
+import {DoceditComponent} from "./docedit/docedit.component";
+import {PouchdbManager} from "./datastore/pouchdb-manager";
 
 @Component({
     selector: 'projects',
@@ -28,7 +30,8 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private messages: Messages) {
+                private messages: Messages,
+                private pouchdbManager: PouchdbManager) {
     }
 
     ngOnInit() {
@@ -79,6 +82,16 @@ export class ProjectsComponent implements OnInit {
             this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
             this.selectedProject = this.projects[0];
             return this.switchProjectDb();
+        });
+    }
+
+
+
+    public editProject() {
+
+        this.pouchdbManager.getDb().get(this.selectedProject).then(document => {
+            const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+            doceditRef.componentInstance.setDocument(document);
         });
     }
 

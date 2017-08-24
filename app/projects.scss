@@ -1,10 +1,19 @@
-projects {
+.projects-modal {
+
+    .project-select{
+        padding-top: 8px;
+    }
+
     .circular-button {
         width: 41px;
         height: 41px;
+        margin-right: 3px;
+        position: inherit;
+        display: inline-block;
 
         &.type-button {
             padding: 0;
+            top: 5px;
         }
     }
 }

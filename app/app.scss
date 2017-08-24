@@ -264,6 +264,12 @@ $lightgraybgr: #eeeeee;
   background-color: lighten($greenbgr, 5%);
 }
 
+.red-button {
+  background-color: $redbgr;
+  color: #fff;
+  font-weight: normal;
+}
+
 .red-button:hover {
   background-color: lighten($redbgr, 35%);
 }

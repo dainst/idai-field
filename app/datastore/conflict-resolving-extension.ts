@@ -52,7 +52,7 @@ export class ConflictResolvingExtension {
 
     private handleConflicts(document: Document, userName: string, history): Promise<any> {
 
-        return this.getConflictedRevisions(document, userName).then(conflictedRevisions => {
+        return this.getConflictedRevisionsForUser(document, userName).then(conflictedRevisions => {
             let promise: Promise<any> = Promise.resolve();
             for (let conflictedRevision of conflictedRevisions) {
                 promise = promise.then(() => this.handleConflict(document, conflictedRevision, history));
@@ -88,9 +88,9 @@ export class ConflictResolvingExtension {
         }
     }
 
-    private getConflictedRevisions(document: Document, userName: string): Promise<Array<Document>> {
+    private getConflictedRevisionsForUser(document: Document, userName: string): Promise<Array<Document>> {
 
-        let promises: Array<Promise<Document>> = [];
+        const promises: Array<Promise<Document>> = [];
 
         for (let revisionId of document['_conflicts']) {
             promises.push(this.datastore.fetchRevision(document.resource.id, revisionId));
@@ -98,7 +98,7 @@ export class ConflictResolvingExtension {
 
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
-            .then(revisions => ConflictResolvingExtension.extractRevisionsToHandle(revisions, userName));
+            .then(revisions => ConflictResolvingExtension.getOnlyUserRevisions(revisions, userName));
     }
 
     private fetchHistory(resourceId: string) {
@@ -108,21 +108,20 @@ export class ConflictResolvingExtension {
     }
 
     /**
-     * @param revisions
+     * @param revisionsDocuments
      * @param userName
      * @returns {Array<Document>} the conflicted revisions to
      *   actually to be resolved within this client. These are the ones having the
      *   clients current userName as the name of the lastAction of the revision.
-     *   TODO unit test that if this is not the case the revision gets not handled
      */
-    private static extractRevisionsToHandle(revisions: Array<Document>, userName: string) {
+    private static getOnlyUserRevisions(revisionsDocuments: Array<Document>, userName: string) {
 
         const result: Array<Document> = [];
 
-        for (let revision of revisions) {
-            const lastAction: Action = revision.modified && revision.modified.length > 0 ?
-                revision.modified[revision.modified.length - 1] : revision.created;
-            if (lastAction.user == userName) result.push(revision);
+        for (let revisionDocument of revisionsDocuments) {
+            const lastAction: Action = revisionDocument.modified && revisionDocument.modified.length > 0 ?
+                revisionDocument.modified[revisionDocument.modified.length - 1] : revisionDocument.created;
+            if (lastAction.user == userName) result.push(revisionDocument);
         }
 
         return result;

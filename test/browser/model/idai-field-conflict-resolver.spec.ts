@@ -27,7 +27,17 @@ export function main() {
             };
         };
 
-        // TODO add test for no result if not all conflicts resolved
+        it('do not autosolve if unresolved conflict', () => {
+
+            const originalRevision = createDocument('id1', '1-xyz', 'identifier1', 'shortDescription1', 'testuser1');
+            const conflictedRevision = createDocument('id1', '2-abc', 'identifier1_changed1', 'shortDescription1',
+                'testuser1');
+            const latestRevision = createDocument('id1', '2-def', 'identifier1_changed2', 'shortDescription1_changed',
+                'testuser2');
+
+            const updatedLatestRevision = autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision, originalRevision)
+            expect(updatedLatestRevision).toBeUndefined();
+        });
 
         it('autosolve a conflict', () => {
 

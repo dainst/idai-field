@@ -1,5 +1,7 @@
 import {Document} from 'idai-components-2/core';
 import {ConflictResolvingExtension} from '../../../app/datastore/conflict-resolving-extension';
+import {isNullOrUndefined} from 'util';
+import {unescape} from 'querystring';
 
 /**
  * @author Daniel de Oliveira
@@ -8,9 +10,17 @@ export function main() {
 
     describe('ConflictResolvingExtension', () => {
 
-        it('match one with with different search terms', done => {
+        let originalRevision: Document;
+        let conflictedRevision: Document;
+        let latestRevision: Document;
 
-            const originalRevision: Document = {
+        let datastore;
+        let db;
+        let conflictResolver;
+        let extension;
+
+        beforeEach(() => {
+            originalRevision = {
                 resource: {
                     type: 'object',
                     id: '1',
@@ -21,7 +31,7 @@ export function main() {
             };
             originalRevision['_rev'] = '1-hij';
 
-            const conflictedRevision: Document = {
+            conflictedRevision = {
                 resource: {
                     type: 'object',
                     id: '1',
@@ -32,7 +42,7 @@ export function main() {
             };
             conflictedRevision['_rev'] = '2-xyz';
 
-            const latestRevision: Document = {
+            latestRevision = {
                 resource: {
                     type: 'object',
                     id: '1',
@@ -44,13 +54,10 @@ export function main() {
             latestRevision['_rev'] = '2-abc';
             latestRevision['_conflicts'] = ['2-xyz'];
 
-            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetch',
+            datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetch',
                 'removeRevision']);
-            const db = jasmine.createSpyObj('db', [ 'put']);
-            const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-            const extension = new ConflictResolvingExtension();
-
-            conflictResolver.tryToSolveConflict.and.returnValue(latestRevision);
+            db = jasmine.createSpyObj('db', [ 'put']);
+            conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 
             db.put.and.callFake(() => Promise.resolve(undefined));
             datastore.removeRevision.and.callFake(() => Promise.resolve(undefined));
@@ -70,15 +77,34 @@ export function main() {
                 }
             });
 
+            extension = new ConflictResolvingExtension();
             extension.setDatastore(datastore);
             extension.setDb(db);
             extension.setConflictResolver(conflictResolver);
+        });
+
+        it('update one doc', done => {
+
+            conflictResolver.tryToSolveConflict.and.returnValue(latestRevision);
 
             extension.autoResolve(latestRevision, 'testuser1').then(() => {
                 expect(conflictResolver.tryToSolveConflict)
                     .toHaveBeenCalledWith(
                         latestRevision, conflictedRevision, originalRevision);
                 expect(db.put).toHaveBeenCalledWith(latestRevision, { force: true });
+                done();
+            })
+        });
+
+        it('do not update doc if conflicts not resolved', done => {
+
+            conflictResolver.tryToSolveConflict.and.returnValue(undefined);
+
+            extension.autoResolve(latestRevision, 'testuser1').then(() => {
+                expect(conflictResolver.tryToSolveConflict)
+                    .toHaveBeenCalledWith(
+                        latestRevision, conflictedRevision, originalRevision);
+                expect(db.put).not.toHaveBeenCalled();
                 done();
             })
         });

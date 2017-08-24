@@ -57,7 +57,7 @@ export class DoceditPage {
     };
 
     public static clickSaveDocument = function() {
-        
+
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {
                 element(by.id('document-edit-button-save-document')).click().then(

@@ -76,7 +76,12 @@ export class ConstraintIndexer {
 
         // TODO use type instead of boolean or string or array (default)
         if (pathDef.boolean) {
-            this.addToIndex(doc, pathDef.path, 'KNOWN');
+            // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
+            if (doc.resource.type == 'project') {
+                this.addToIndex(doc, pathDef.path, 'UNKNOWN');
+            } else {
+                this.addToIndex(doc, pathDef.path, 'KNOWN');
+            }
         } else if (pathDef.string) {
             this.addToIndex(doc, pathDef.path, elForPath);
         } else {

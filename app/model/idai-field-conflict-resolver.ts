@@ -70,37 +70,11 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
                                              previousRevision: IdaiFieldDocument,
                                              fieldName: string): IdaiFieldDocument {
 
-        if (fieldName == 'geometry' || fieldName == 'georeference') {
-
-            return undefined;
-            // TODO write unit test and reenable
-
-            // if (latestRevision.resource[fieldName] && previousRevision.resource[fieldName]
-            //     && !conflictedRevision.resource[fieldName]) {
-            //     return conflictedRevision;
-            // }
-            //
-            // if (!latestRevision.resource[fieldName] && !previousRevision.resource[fieldName]
-            //     && conflictedRevision.resource[fieldName]) {
-            //     return conflictedRevision;
-            // }
-            //
-            // if (conflictedRevision.resource[fieldName] && previousRevision.resource[fieldName]
-            //     && !latestRevision.resource[fieldName]) {
-            //     return latestRevision;
-            // }
-            //
-            // if (!conflictedRevision.resource[fieldName] && !previousRevision.resource[fieldName]
-            //     && latestRevision.resource[fieldName]) {
-            //     return latestRevision;
-            // }
-        }
-
-        if (ObjectUtil.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (ObjectUtil.compare(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return conflictedRevision;
         }
 
-        if (ObjectUtil.compareFields(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
+        if (ObjectUtil.compare(conflictedRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return latestRevision;
         }
 

@@ -29,6 +29,22 @@ export class ObjectUtil {
         return last[lastSegment] = val;
     }
 
+    public static cloneObject(object: Object): Object {
+
+        return JSON.parse(JSON.stringify(object));
+    }
+
+    public static removeDuplicateValues(array: any[]): any[] {
+
+        const result: any[] = [];
+
+        for (let value of array) {
+            if (result.indexOf(value) == -1) result.push(value);
+        }
+
+        return result;
+    }
+
     public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];
@@ -38,39 +54,38 @@ export class ObjectUtil {
 
                 if (fieldsToIgnore && fieldsToIgnore.indexOf(fieldName) > -1) continue;
 
-                let differing: boolean = false;
-
-                if (typeof object1[fieldName] == 'object' && typeof object2[fieldName] == 'object') {
-                    differing = !this.compareObjects(object1[fieldName], object2[fieldName]);
-                } else if (typeof object1[fieldName] == 'object' || typeof object2[fieldName] == 'object') {
-                    differing = true;
-                } else {
-                    differing = !this.compareFields(object1[fieldName], object2[fieldName]);
-                }
-
-                if (differing) differingFieldsNames.push(fieldName);
+                if (!ObjectUtil.compare(object1[fieldName], object2[fieldName])) differingFieldsNames.push(fieldName);
             }
         }
         return differingFieldsNames;
     }
 
-    public static compareObjects(object1: Object, object2: Object): boolean {
+    public static compare(value1: any, value2: any): boolean {
 
-        if (!object1 && !object2) return true;
+        if (!value1 && !value2) return true;
+        if ((value1 && !value2) || (!value1 && value2)) return false;
 
-        if ((object1 && !object2) || (!object1 && object2)) return false;
+        const type1: string = ObjectUtil.getType(value1);
+        const type2: string = ObjectUtil.getType(value2);
+
+        if (type1 != type2) {
+            return false;
+        } else if (type1 == 'object') {
+            return this.compareObjects(value1, value2);
+        } else if (type1 == 'array') {
+            return this.compareArrays(value1, value2);
+        } else {
+            return this.compareFields(value1, value2);
+        }
+    }
+
+    private static compareObjects(object1: Object, object2: Object): boolean {
 
         return JSON.stringify(object1) == JSON.stringify(object2);
     }
 
-    public static cloneObject(object: Object): Object {
+    private static compareFields(field1: any, field2: any): boolean {
 
-        return JSON.parse(JSON.stringify(object));
-    }
-
-    public static compareFields(field1: any, field2: any): boolean {
-
-        if ((field1 && !field2) || (!field1 && field2)) return false;
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
         if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
@@ -94,14 +109,16 @@ export class ObjectUtil {
         return true;
     }
 
-    public static removeDuplicateValues(array: any[]): any[] {
+    private static getType(value: any): string {
 
-        const result: any[] = [];
-
-        for (let value of array) {
-            if (result.indexOf(value) == -1) result.push(value);
+        if (typeof value == 'object') {
+            if (value instanceof Array) {
+                return 'array';
+            } else {
+                return 'object';
+            }
+        } else {
+            return 'flat';
         }
-
-        return result;
     }
 }

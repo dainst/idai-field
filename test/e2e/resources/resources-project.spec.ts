@@ -167,8 +167,8 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench2'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
     it('switch views after click on relation link', () => {
@@ -205,11 +205,11 @@ describe('resources/project --', function() {
 
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('befund1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
 
         DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 
     it('autoselect last selected main type document on switching views', () => {
@@ -219,20 +219,20 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('building2', 1);
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
-        ResourcesPage.clickSelectMainTypeDocument(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
-        ResourcesPage.clickSelectMainTypeDocument(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
     });
 
     it('autoselect last selected type filter on switching views', () => {
@@ -355,6 +355,6 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation2'));
     });
 });

@@ -5,6 +5,7 @@ import {ConflictResolver} from './conflict-resolver';
 import {RevisionHelper} from './revision-helper';
 import {ChangeHistoryUtil} from '../model/change-history-util';
 import {M} from '../m';
+import {PouchdbProxy} from './pouchdb-proxy';
 
 @Injectable()
 /**
@@ -17,54 +18,61 @@ export class ConflictResolvingExtension {
 
     private inspectedRevisionsIds: string[] = [];
     private datastore: PouchdbDatastore;
+    private db: PouchdbProxy;
     private conflictResolver: ConflictResolver;
 
     public setDatastore(datastore: PouchdbDatastore) {
+
         this.datastore = datastore;
     }
 
+    public setDb(db: PouchdbProxy) {
+
+        this.db = db;
+    }
+
     public setConflictResolver(conflictResolver: ConflictResolver) {
+
         this.conflictResolver = conflictResolver;
     }
 
     public autoResolve(document: Document, userName: string): Promise<any> {
         
         if (!this.datastore) return Promise.reject('no datastore');
+        if (!this.db) return Promise.reject('no db');
         if (!this.conflictResolver) return Promise.reject('no conflict resolver');
 
         if (ConflictResolvingExtension.hasUnhandledConflicts(this.inspectedRevisionsIds, document)) {
-            return this.handleConflicts(document, userName);
+            return this.fetchHistory(document.resource.id).then(history =>
+                this.handleConflicts(document, userName, history));
         } else {
             return Promise.resolve(undefined);
         }
     }
 
-    private handleConflicts(document: Document, userName: string): Promise<any> {
+    private handleConflicts(document: Document, userName: string, history): Promise<any> {
 
         return this.getConflictedRevisions(document, userName).then(conflictedRevisions => {
             let promise: Promise<any> = Promise.resolve();
-
             for (let conflictedRevision of conflictedRevisions) {
-
-                promise = promise.then(() => {
-                    this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
-
-                    return this.datastore.fetchRevsInfo(conflictedRevision.resource.id)
-
-                        .then(history => {
-                            return this.datastore.fetchRevision(conflictedRevision.resource.id,
-                                    RevisionHelper.getPreviousRevisionId(history, conflictedRevision))})
-                        .then(previousRevision =>
-                            this.solveAndUpdate(document, conflictedRevision, previousRevision)
-                        );
-                });
+                promise = promise.then(() => this.handleConflict(document, conflictedRevision, history));
             }
-
             return promise;
         });
     }
 
-    private solveAndUpdate(document: Document, conflictedRevision: Document, previousRevision: Document) {
+    private handleConflict(document: Document, conflictedRevision: Document, history): Promise<any> {
+
+        this.inspectedRevisionsIds.push(conflictedRevision['_rev']);
+
+        return this.datastore.fetchRevision(conflictedRevision.resource.id,
+                    RevisionHelper.getPreviousRevisionId(history, conflictedRevision))
+            .then(previousRevision =>
+                this.solveConflict(document, conflictedRevision, previousRevision)
+            );
+    }
+
+    private solveConflict(document: Document, conflictedRevision: Document, previousRevision: Document) {
 
         const result = this.conflictResolver.tryToSolveConflict(
             document, conflictedRevision, previousRevision);
@@ -73,7 +81,7 @@ export class ConflictResolvingExtension {
 
             ChangeHistoryUtil.mergeChangeHistories(document, conflictedRevision);
 
-            return this.datastore.update(document).then(() => {
+            return this.db.put(document, { force: true }).then(() => {
                 if (!result['unresolvedConflicts']) {
                     return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
                 }
@@ -92,6 +100,12 @@ export class ConflictResolvingExtension {
         return Promise.all(promises)
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND])) // TODO return a datastore error and adjust apidoc
             .then(revisions => ConflictResolvingExtension.extractRevisionsToHandle(revisions, userName));
+    }
+
+    private fetchHistory(resourceId: string) {
+
+        return this.datastore.fetch(resourceId, { revs_info: true })
+            .then(doc => doc['_revs_info']);
     }
 
     /**

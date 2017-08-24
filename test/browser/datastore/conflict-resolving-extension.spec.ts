@@ -44,8 +44,9 @@ export function main() {
             latestRevision['_rev'] = '2-abc';
             latestRevision['_conflicts'] = ['2-xyz'];
 
-            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetchRevsInfo', 'update',
+            const datastore = jasmine.createSpyObj('datastore', ['fetchRevision', 'fetch',
                 'removeRevision']);
+            const db = jasmine.createSpyObj('db', [ 'put']);
             const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
             const extension = new ConflictResolvingExtension();
 
@@ -54,7 +55,7 @@ export function main() {
                 unresolvedConflicts: 0
             });
 
-            datastore.update.and.callFake(() => Promise.resolve(undefined));
+            db.put.and.callFake(() => Promise.resolve(undefined));
             datastore.removeRevision.and.callFake(() => Promise.resolve(undefined));
             datastore.fetchRevision.and.callFake((resourceId, revisionId) => {
                 if (resourceId != '1') return Promise.reject(undefined);
@@ -63,20 +64,24 @@ export function main() {
                 if (revisionId == '1-hij') return Promise.resolve(originalRevision);
                 return Promise.reject(undefined);
             });
-            datastore.fetchRevsInfo.and.callFake((resourceId) => {
+            datastore.fetch.and.callFake((resourceId, options) => {
                 if (resourceId != '1') return Promise.reject(undefined);
-
-                return Promise.resolve([{rev: '1-hij', status: 'available'}]);
+                if (options.revs_info == true) {
+                    return Promise.resolve({_revs_info: [{rev: '1-hij', status: 'available'}]});
+                } else {
+                    return Promise.reject(undefined);
+                }
             });
 
             extension.setDatastore(datastore);
+            extension.setDb(db);
             extension.setConflictResolver(conflictResolver);
 
             extension.autoResolve(latestRevision, 'testuser1').then(() => {
                 expect(conflictResolver.tryToSolveConflict)
                     .toHaveBeenCalledWith(
                         latestRevision, conflictedRevision, originalRevision);
-                expect(datastore.update).toHaveBeenCalledWith(latestRevision);
+                expect(db.put).toHaveBeenCalledWith(latestRevision, { force: true });
                 done();
             })
         });

@@ -37,9 +37,10 @@ export class PouchdbDatastore {
         private conflictResolver: ConflictResolver
         ) {
 
-        conflictResolvingExtension.setDatastore(this);
-        conflictResolvingExtension.setConflictResolver(conflictResolver);
         this.db = pouchdbManager.getDb();
+        conflictResolvingExtension.setDatastore(this);
+        conflictResolvingExtension.setDb(this.db);
+        conflictResolvingExtension.setConflictResolver(conflictResolver);
 
         this.setupServer().then(() => this.setupChangesEmitter());
     }
@@ -140,12 +141,6 @@ export class PouchdbDatastore {
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
             .catch(err => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
-    }
-
-    public fetchRevsInfo(resourceId: string) {
-
-        return this.fetch(resourceId, { revs_info: true })
-            .then(doc => doc['_revs_info']);
     }
 
     public fetchRevision(resourceId: string, revisionId: string) {

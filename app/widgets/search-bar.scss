@@ -5,6 +5,11 @@
 
 #searchfilter {
   z-index: 3;
+  padding: 4px 1em;
+
+  .mdi-filter {
+    line-height: 28px;
+  }
 }
 
 #search-bar #object-search {

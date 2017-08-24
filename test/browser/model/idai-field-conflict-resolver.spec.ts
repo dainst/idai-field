@@ -35,10 +35,10 @@ export function main() {
             const latestRevision = createDocument('id1', '2-def', 'identifier1', 'shortDescription1_changed',
                 'testuser2');
 
-            autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision, originalRevision)
+            const updatedLatestRevision = autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision, originalRevision)
 
-            expect(latestRevision.resource.identifier).toEqual('identifier1_changed');
-            expect(latestRevision.resource.shortDescription).toEqual('shortDescription1_changed');
+            expect(updatedLatestRevision.resource.identifier).toEqual('identifier1_changed');
+            expect(updatedLatestRevision.resource.shortDescription).toEqual('shortDescription1_changed');
         });
     });
 }

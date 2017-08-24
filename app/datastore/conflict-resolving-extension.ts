@@ -74,15 +74,14 @@ export class ConflictResolvingExtension {
 
     private solveConflict(document: Document, conflictedRevision: Document, previousRevision: Document) {
 
-        const result = this.conflictResolver.tryToSolveConflict(
+        const updatedDocument = this.conflictResolver.tryToSolveConflict(
             document, conflictedRevision, previousRevision);
 
-        if (result['resolvedConflicts'] > 0 || result['unresolvedConflicts'] == 0) {
-
+        if (updatedDocument) {
             ChangeHistoryUtil.mergeChangeHistories(document, conflictedRevision);
 
             return this.db.put(document, { force: true }).then(() => {
-                if (!result['unresolvedConflicts']) {
+                if (!updatedDocument['unresolvedConflicts']) {
                     return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
                 }
             });

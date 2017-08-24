@@ -11,15 +11,24 @@ import {ConflictResolver} from '../datastore/conflict-resolver';
  */
 export class IdaiFieldConflictResolver extends ConflictResolver {
 
-    // TODO clone latestRevision and return
+    /**
+     * @param latestRevision
+     * @param conflictedRevision
+     * @param previousRevision
+     * @returns {any} a new document, based on latestRevision, with resolved fields
+     *   updated accordingly, if and only if there are no unresolved conflicts,
+     *   undefined otherwise.
+     */
     public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
                               previousRevision: IdaiFieldDocument): any {
 
+        const updatedLatestRevision = JSON.parse(JSON.stringify(latestRevision));
+
         if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
 
-        const fieldConflictsResult = this.resolveFieldConflicts(latestRevision, conflictedRevision,
+        const fieldConflictsResult = this.resolveFieldConflicts(updatedLatestRevision, conflictedRevision,
             previousRevision);
-        const relationConflictsResult = this.resolveRelationConflicts(latestRevision, conflictedRevision,
+        const relationConflictsResult = this.resolveRelationConflicts(updatedLatestRevision, conflictedRevision,
             previousRevision);
 
         const resolvedConflicts: number
@@ -27,10 +36,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
         const unresolvedConflicts: number
             = fieldConflictsResult.unresolvedConflicts + relationConflictsResult.unresolvedConflicts;
 
-        return {
-            resolvedConflicts: resolvedConflicts,
-            unresolvedConflicts: unresolvedConflicts
-        }
+        if (unresolvedConflicts == 0) return updatedLatestRevision;
     }
 
     private resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,

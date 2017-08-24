@@ -169,12 +169,8 @@
         {
           "name":"intrusion",
           "label":"Störung",
-          "valuelist":[
-            "ja",
-            "nein"
-          ],
-          "inputType":"radio",
-          "description":"Störung des Befunds vorhanden? 1=Ja; 2=Nein"
+          "inputType":"boolean",
+          "description":"Störung des Befunds vorhanden?"
         },
         {
           "name":"heightReferencePoint",

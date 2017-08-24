@@ -263,13 +263,13 @@ export class PouchdbDatastore {
 
     private processPutResult(document, result): Promise<Document> {
 
-        return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser())
-            .then(() => {
+        // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser())
+        //     .then(() => {
                 this.constraintIndexer.put(document);
                 this.fulltextIndexer.put(document);
                 document['_rev'] = result['rev'];
                 return Promise.resolve(document);
-            });
+            // });
     }
 
     private resetDocOnErr(original: Document) {
@@ -315,7 +315,7 @@ export class PouchdbDatastore {
                 let document: Document;
                 this.fetch(change.id).then(fetchedDoc => {
                     document = fetchedDoc;
-                    return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
+                    // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
                 }).then(() => {
                     this.constraintIndexer.put(document);
                     this.fulltextIndexer.put(document);

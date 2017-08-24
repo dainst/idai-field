@@ -119,9 +119,9 @@ export class ConflictResolvingExtension {
         const result: Array<Document> = [];
 
         for (let revisionDocument of revisionsDocuments) {
-            const lastAction: Action = revisionDocument.modified && revisionDocument.modified.length > 0 ?
-                revisionDocument.modified[revisionDocument.modified.length - 1] : revisionDocument.created;
-            if (lastAction.user == userName) result.push(revisionDocument);
+            if (ChangeHistoryUtil.getLastModified(revisionDocument).user == userName) {
+                result.push(revisionDocument);
+            }
         }
 
         return result;

@@ -11,7 +11,7 @@ export class ConstraintIndexer {
         [path: string]: {
             [resourceId: string]: {
                 [resourceId: string]: {
-                    date: string,
+                    date: Date,
                     identifier: string
                 }
             }
@@ -98,7 +98,7 @@ export class ConstraintIndexer {
 
         if (!this.index[path][target]) this.index[path][target] = {};
         this.index[path][target][doc.resource.id] = {
-            date: ChangeHistoryUtil.getLastModified(doc),
+            date: ChangeHistoryUtil.getLastModified(doc).date,
             identifier: doc.resource['identifier']
         };
     }

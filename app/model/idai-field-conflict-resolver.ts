@@ -103,25 +103,29 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
                                              fieldName: string): IdaiFieldDocument {
 
         if (fieldName == 'geometry' || fieldName == 'georeference') {
-            if (latestRevision.resource[fieldName] && previousRevision.resource[fieldName]
-                && !conflictedRevision.resource[fieldName]) {
-                return conflictedRevision;
-            }
 
-            if (!latestRevision.resource[fieldName] && !previousRevision.resource[fieldName]
-                && conflictedRevision.resource[fieldName]) {
-                return conflictedRevision;
-            }
+            return undefined;
+            // TODO write unit test and reenable
 
-            if (conflictedRevision.resource[fieldName] && previousRevision.resource[fieldName]
-                && !latestRevision.resource[fieldName]) {
-                return latestRevision;
-            }
-
-            if (!conflictedRevision.resource[fieldName] && !previousRevision.resource[fieldName]
-                && latestRevision.resource[fieldName]) {
-                return latestRevision;
-            }
+            // if (latestRevision.resource[fieldName] && previousRevision.resource[fieldName]
+            //     && !conflictedRevision.resource[fieldName]) {
+            //     return conflictedRevision;
+            // }
+            //
+            // if (!latestRevision.resource[fieldName] && !previousRevision.resource[fieldName]
+            //     && conflictedRevision.resource[fieldName]) {
+            //     return conflictedRevision;
+            // }
+            //
+            // if (conflictedRevision.resource[fieldName] && previousRevision.resource[fieldName]
+            //     && !latestRevision.resource[fieldName]) {
+            //     return latestRevision;
+            // }
+            //
+            // if (!conflictedRevision.resource[fieldName] && !previousRevision.resource[fieldName]
+            //     && latestRevision.resource[fieldName]) {
+            //     return latestRevision;
+            // }
         }
 
         if (ObjectUtil.compareFields(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {

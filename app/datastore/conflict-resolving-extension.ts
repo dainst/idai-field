@@ -113,7 +113,6 @@ export class ConflictResolvingExtension {
      * @returns {Array<Document>} the conflicted revisions to
      *   actually to be resolved within this client. These are the ones having the
      *   clients current userName as the name of the lastAction of the revision.
-     *   TODO unit test that if this is not the case the revision gets not handled
      */
     private static getOnlyUserRevisions(revisionsDocuments: Array<Document>, userName: string) {
 

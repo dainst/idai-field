@@ -96,6 +96,17 @@ export function main() {
             })
         });
 
+        it('do not update doc if not by local user', done => {
+
+            conflictResolver.tryToSolveConflict.and.returnValue(latestRevision);
+
+            extension.autoResolve(latestRevision, 'testuser2').then(() => {
+                expect(conflictResolver.tryToSolveConflict).not.toHaveBeenCalled();
+                expect(db.put).not.toHaveBeenCalled();
+                done();
+            })
+        });
+
         it('do not update doc if conflicts not resolved', done => {
 
             conflictResolver.tryToSolveConflict.and.returnValue(undefined);

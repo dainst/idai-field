@@ -35,7 +35,7 @@ export function main() {
 
                 const appState = jasmine.createSpyObj('appState', ['getCurrentUser']);
                 const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
-                    ['setDatastore', 'setConflictResolver', 'autoResolve']);
+                    ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
                 conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
                 const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 

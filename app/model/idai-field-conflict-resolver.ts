@@ -27,7 +27,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
 
         if (!previousRevision) previousRevision = { resource: { relations: {} } } as IdaiFieldDocument;
 
-        const unresolvedFieldconflicts = this.resolveFieldConflicts(updatedLatestRevision, conflictedRevision,
+        const unresolvedFieldconflicts = IdaiFieldConflictResolver.resolveFieldConflicts(updatedLatestRevision, conflictedRevision,
             previousRevision);
         const hasRelationConflicts = IdaiFieldConflictResolver.hasRelationConflicts(updatedLatestRevision, conflictedRevision);
 
@@ -35,7 +35,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
             && !hasRelationConflicts) return updatedLatestRevision;
     }
 
-    private resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
+    private static resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
                                   previousRevision: IdaiFieldDocument): number {
 
         let unresolvedConflicts = 0;

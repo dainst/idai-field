@@ -40,5 +40,19 @@ export function main() {
             expect(updatedLatestRevision.resource.identifier).toEqual('identifier1_changed');
             expect(updatedLatestRevision.resource.shortDescription).toEqual('shortDescription1_changed');
         });
+
+        it('do not autosolve on relation conflict', () => {
+
+            const originalRevision = createDocument('1', '1-xyz', 'identifier', 'shortDescription', 'testuser1');
+            const conflictedRevision = createDocument('1', '2-abc', 'identifier', 'shortDescription',
+                'testuser1');
+            const latestRevision = createDocument('1', '2-def', 'identifier', 'shortDescription',
+                'testuser2');
+
+            latestRevision.resource.relations['isRecordedIn'] = ['2'];
+
+            const updatedLatestRevision = autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision, originalRevision);
+            expect(updatedLatestRevision).toBeUndefined();
+        });
     });
 }

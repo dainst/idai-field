@@ -97,7 +97,7 @@ export class ConflictResolvingExtension {
         }
 
         return Promise.all(promises)
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND])) // TODO return a datastore error and adjust apidoc
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
             .then(revisions => ConflictResolvingExtension.extractRevisionsToHandle(revisions, userName));
     }
 

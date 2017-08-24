@@ -14,7 +14,7 @@ export class FulltextIndexer {
         [resourceType: string]: {
             [term: string]: {
                 [resourceId: string]: {
-                    date: string,
+                    date: Date,
                     identifier: string
                 }
             }
@@ -38,7 +38,7 @@ export class FulltextIndexer {
             this.index[doc.resource.type] = {'*' : { } };
         }
         this.index[doc.resource.type]['*'][doc.resource.id] = {
-            date: ChangeHistoryUtil.getLastModified(doc),
+            date: ChangeHistoryUtil.getLastModified(doc).date,
             identifier: doc.resource['identifier']
         };
 
@@ -61,7 +61,7 @@ export class FulltextIndexer {
                 this.index[type][accumulator] = { };
             }
             this.index[type][accumulator][id] = {
-                date: ChangeHistoryUtil.getLastModified(doc),
+                date: ChangeHistoryUtil.getLastModified(doc).date,
                 identifier: doc.resource['identifier']
             };
         }

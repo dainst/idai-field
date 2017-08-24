@@ -13,7 +13,7 @@ export function main() {
             return {
                 resource: {
                     id: id,
-                    identifier: 'identifier1',
+                    identifier: 'identifier' + id,
                     relations: { } // TODO test for undefined relations,
                 },
                 created:
@@ -28,8 +28,9 @@ export function main() {
             }
         }
 
-        function item(id) {
-            return {id: id, date: '2018-01-01'};
+        function item(id, identifier?) {
+            if (!identifier) identifier = 'identifier' + id;
+            return {id: id, date: '2018-01-01', identifier: identifier};
         }
 
         beforeEach(() => {
@@ -218,11 +219,11 @@ export function main() {
                 .toEqual([ ]);
 
             expect(ci.get('resource.identifier', 'identifier2'))
-                .toEqual([item('1')]);
+                .toEqual([item('1','identifier2')]);
             expect(ci.get('resource.relations.isRecordedIn', '4'))
-                .toEqual([item('1')]);
+                .toEqual([item('1','identifier2')]);
             expect(ci.get('resource.relations.liesWithin', '5'))
-                .toEqual([item('1')]);
+                .toEqual([item('1','identifier2')]);
         });
 
         it('query for unknown', () => {

@@ -31,8 +31,9 @@ export function main() {
             }
         }
 
-        function item(id) {
-            return {id: id, date: '2018-01-01'};
+        function item(id, identifier?) {
+            if (!identifier) identifier = 'identifier' + id;
+            return {id: id, date: '2018-01-01', identifier: identifier};
         }
 
         beforeEach(() => {
@@ -131,18 +132,18 @@ export function main() {
             const d = doc('1', 'hello token', 'type');
             fi.put(d);
             expect(fi.get('hello', ['type']))
-                .toEqual([item('1')]);
+                .toEqual([item('1','hello token')]);
             expect(fi.get('token', ['type']))
-                .toEqual([item('1')]);
+                .toEqual([item('1','hello token')]);
         });
 
         it('find case insensitive', () => {
             fi.put(doc('1', 'Hello', 'type'));
             fi.put(doc('2', 'something', 'type'));
             expect(fi.get('hello', ['type']))
-                .toEqual([item('1')]);
+                .toEqual([item('1','Hello')]);
             expect(fi.get('Something', ['type']))
-                .toEqual([item('2')]);
+                .toEqual([item('2','something')]);
         });
 
         it('put overwrite', () => {
@@ -153,7 +154,7 @@ export function main() {
             expect(fi.get('identifier1', ['type']))
                 .toEqual([]);
             expect(fi.get('identifier2', ['type']))
-                .toEqual([item('1')]);
+                .toEqual([item('1','identifier2')]);
         });
 
         it('shortDescription empty', () => {

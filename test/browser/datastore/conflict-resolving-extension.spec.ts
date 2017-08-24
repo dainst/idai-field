@@ -50,10 +50,7 @@ export function main() {
             const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
             const extension = new ConflictResolvingExtension();
 
-            conflictResolver.tryToSolveConflict.and.returnValue({
-                resolvedConflicts: 1,
-                unresolvedConflicts: 0
-            });
+            conflictResolver.tryToSolveConflict.and.returnValue(latestRevision);
 
             db.put.and.callFake(() => Promise.resolve(undefined));
             datastore.removeRevision.and.callFake(() => Promise.resolve(undefined));

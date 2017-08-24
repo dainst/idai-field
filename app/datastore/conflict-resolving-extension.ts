@@ -80,7 +80,7 @@ export class ConflictResolvingExtension {
         if (updatedDocument) {
             ChangeHistoryUtil.mergeChangeHistories(document, conflictedRevision);
 
-            return this.db.put(document, { force: true }).then(() => {
+            return this.db.put(updatedDocument, { force: true }).then(() => {
                 if (!updatedDocument['unresolvedConflicts']) {
                     return this.datastore.removeRevision(document.resource.id, conflictedRevision['_rev']);
                 }

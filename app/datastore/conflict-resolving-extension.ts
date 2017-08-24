@@ -90,7 +90,7 @@ export class ConflictResolvingExtension {
 
     private getConflictedRevisionsForUser(document: Document, userName: string): Promise<Array<Document>> {
 
-        let promises: Array<Promise<Document>> = [];
+        const promises: Array<Promise<Document>> = [];
 
         for (let revisionId of document['_conflicts']) {
             promises.push(this.datastore.fetchRevision(document.resource.id, revisionId));

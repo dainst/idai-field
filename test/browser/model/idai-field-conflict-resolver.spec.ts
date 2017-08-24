@@ -231,6 +231,7 @@ export function main() {
 
             const latestRevision: IdaiFieldDocument
                 = createDocument('id1', '2-def', 'identifier1', 'shortDescription1', 'testuser2');
+            latestRevision.resource.geometry = { 'type': 'Point', 'coordinates': [ 1.0, 2.0 ] };
 
             const updatedLatestRevision = autoConflictResolver.tryToSolveConflict(latestRevision, conflictedRevision,
                 originalRevision);
@@ -247,6 +248,7 @@ export function main() {
 
             const conflictedRevision: IdaiFieldDocument
                 = createDocument('id1', '2-abc', 'identifier1', 'shortDescription1', 'testuser1');
+            conflictedRevision.resource.geometry = { 'type': 'Point', 'coordinates': [ 1.0, 2.0 ] };
 
             const latestRevision: IdaiFieldDocument
                 = createDocument('id1', '2-def', 'identifier1', 'shortDescription1', 'testuser2');
@@ -270,9 +272,12 @@ export function main() {
             const conflictedRevision: IdaiFieldDocument
                 = createDocument('id1', '2-abc', 'identifier1', 'shortDescription1', 'testuser1');
             conflictedRevision.resource.geometry = { 'type': 'Point', 'coordinates': [ 2.0, 1.0 ] };
+            conflictedRevision.resource.georeference = { topLeftCoordinates: [1.0, 1.0],
+                topRightCoordinates: [2.0, 1.0], bottomLeftCoordinates: [1.0, 2.0] };
 
             const latestRevision: IdaiFieldDocument
                 = createDocument('id1', '2-def', 'identifier1', 'shortDescription1', 'testuser2');
+            latestRevision.resource.geometry = { 'type': 'Point', 'coordinates': [ 1.0, 2.0 ] };
             latestRevision.resource.georeference = { topLeftCoordinates: [2.0, 2.0], topRightCoordinates: [3.0, 2.0],
                 bottomLeftCoordinates: [2.0, 3.0] };
 

@@ -15,8 +15,9 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
      * @param latestRevision
      * @param conflictedRevision
      * @param previousRevision
-     * @returns {any} a new document, based on latestRevision, with resolved fields
-     *   updated accordingly, if and only if there are no unresolved conflicts,
+     * @returns {any} a new document, based on latestRevision, with fields that have
+     *   been subject to automatic conflict resolution updated accordingly,
+     *   if and only if there are no unresolved conflicts,
      *   undefined otherwise.
      */
     public tryToSolveConflict(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,

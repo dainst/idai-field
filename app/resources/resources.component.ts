@@ -97,10 +97,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-
         if (this.scrollTarget) {
-            this.scrollToDocument(this.scrollTarget);
-            this.scrollTarget = undefined;
+            if (this.scrollToDocument(this.scrollTarget)) {
+                this.scrollTarget = undefined;
+            }
         }
     }
 
@@ -154,7 +154,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private selectDocument(document) {
-
         if (document && document.resource.type == this.view.mainType) {
             this.selectedMainTypeDocument = document;
         } else {
@@ -317,7 +316,6 @@ export class ResourcesComponent implements AfterViewChecked {
      * the datastore which match a <code>query</code>
      */
     private populateDocumentList() {
-
         this.newDocumentsFromRemote = [];
 
         if (!this.selectedMainTypeDocument) {
@@ -404,8 +402,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         doceditRef.result.then(result => {
                 this.populateMainTypeDocuments()
-                    .then(() => this.selectDocument(result.document))
-                    .then(() => this.populateDocumentList());
+                    .then(() => this.populateDocumentList())
+                    .then(() => this.selectDocument(result.document));
             }, closeReason => {
                 this.documentEditChangeMonitor.reset();
                 this.removeEmptyDocuments();
@@ -483,10 +481,13 @@ export class ResourcesComponent implements AfterViewChecked {
         this.scrollTarget = doc;
     }
 
-    private scrollToDocument(doc: IdaiFieldDocument) {
-
+    private scrollToDocument(doc: IdaiFieldDocument) : boolean {
         let element = document.getElementById('resource-' + doc.resource.identifier);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            return true;
+        }
+        return false;  
     }
 
     public setMode(mode: string) {

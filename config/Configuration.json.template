@@ -223,11 +223,6 @@
           "description":"Fundnummer"
         },
         {
-          "name":"diameter",
-          "label":"Durchmesser",
-          "description":"Durchmesser des Fundes in cm"
-        },
-        {
           "name":"provenance",
           "label":"Provenienz",
           "description":"Herkunftort oder -region des Fundes"

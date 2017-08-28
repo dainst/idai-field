@@ -20,7 +20,7 @@ export function main() {
         beforeEach(() => {
             originalRevision = {
                 resource: {
-                    type: 'Object',
+                    type: 'Find',
                     id: '1',
                     relations: {}
                 },
@@ -31,7 +31,7 @@ export function main() {
 
             conflictedRevision = {
                 resource: {
-                    type: 'Object',
+                    type: 'Find',
                     id: '1',
                     relations: {}
                 },
@@ -42,7 +42,7 @@ export function main() {
 
             latestRevision = {
                 resource: {
-                    type: 'Object',
+                    type: 'Find',
                     id: '1',
                     relations: {}
                 },

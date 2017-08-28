@@ -17,7 +17,7 @@ export function main() {
                     shortDescription: sd,
                     identifier: identifier,
                     title: 'title',
-                    type: 'Object',
+                    type: 'Find',
                     relations: {}
                 }
             }

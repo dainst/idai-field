@@ -33,7 +33,7 @@ export function main() {
         it('should import until constraint violation is detected',
             function (done) {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {
-                    observer.next({ resource: {type: 'Object', id: 'abc1', relations: {} }});
+                    observer.next({ resource: {type: 'Find', id: 'abc1', relations: {} }});
                     observer.complete();
                 })});
 
@@ -54,9 +54,9 @@ export function main() {
         it('should import as long as no error is detected',
             function (done) {
                 mockParser.parse.and.callFake(function() {return Observable.create(observer => {
-                    observer.next({resource: {type: 'Object', id: 'abc1', relations: {} }});
-                    observer.next({resource: {type: 'Object', id: 'abc2', relations: {} }});
-                    observer.next({resource: {type: 'Object', id: 'abc3', relations: {} }});
+                    observer.next({resource: {type: 'Find', id: 'abc1', relations: {} }});
+                    observer.next({resource: {type: 'Find', id: 'abc2', relations: {} }});
+                    observer.next({resource: {type: 'Find', id: 'abc3', relations: {} }});
                     observer.complete();
                 })});
 

@@ -58,7 +58,7 @@ export function main() {
 
         function doc(sd, identifier?, type?, id?): Document {
             if (!identifier) identifier = 'identifer';
-            if (!type) type = 'Object';
+            if (!type) type = 'Find';
             const doc = {
                 resource : {
                     shortDescription: sd,
@@ -202,7 +202,7 @@ export function main() {
         it('should not update if not existent',
             function(done) {
 
-                datastore.update(doc('sd1', 'identifier1', 'Object', 'id1')).then(
+                datastore.update(doc('sd1', 'identifier1', 'Find', 'id1')).then(
                     () => {
                         fail();
                         done();
@@ -283,7 +283,7 @@ export function main() {
         // find
 
         it('should find with filterSet undefined', function(done) {
-            const doc1 = doc('sd1', 'identifier1', 'Object', 'id1');
+            const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({q: 'identifier'}))
@@ -317,7 +317,7 @@ export function main() {
         });
 
         it('should find with prefix query undefined', function(done) {
-            const doc1 = doc('sd1', 'identifier1', 'Object', 'id1');
+            const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({q: undefined}))
@@ -334,7 +334,7 @@ export function main() {
         });
 
         it('should find with omitted q', function(done) {
-            const doc1 = doc('sd1', 'identifier1', 'Object', 'id1');
+            const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({ }))
@@ -351,7 +351,7 @@ export function main() {
         });
 
         it('should find with omitted q and ommitted prefix', function(done) {
-            const doc1 = doc('sd1', 'identifier1', 'Object', 'id1');
+            const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
                 .then(() => datastore.findIds({}))

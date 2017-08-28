@@ -1,4 +1,4 @@
-{ "type": "Object", "identifier" : "obob1", "shortDescription" : "O.B. One" }
-{ "type": "Object", "identifier" : "obob2", "shortDescription" : "O.B. Two" }
-{ "type": "Object", "identifier" : "obob2", "shortDescription" : "O.B. Three"}
-{ "type": "Object", "identifier" : "obob4", "shortDescription" : "O.B. Four" }
+{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One" }
+{ "type": "Find", "identifier" : "obob2", "shortDescription" : "O.B. Two" }
+{ "type": "Find", "identifier" : "obob2", "shortDescription" : "O.B. Three"}
+{ "type": "Find", "identifier" : "obob4", "shortDescription" : "O.B. Four" }

@@ -20,11 +20,11 @@ export class NavbarPage {
     };
 
     public static clickNavigateToImages() {
-        return common.click(element.all(by.css('.nav-link')).get(3));
+        return common.click(element.all(by.css('.nav-link')).get(4));
     };
 
     public static clickNavigateToSettings() {
-        return common.click(element.all(by.css('.nav-link')).get(6));
+        return common.click(element.all(by.css('.nav-link')).get(7));
     };
 
     public static clickConflictsButton() {

@@ -41,7 +41,7 @@ describe('resources/syncing --', function() {
                         't1'
                     ]
                 },
-                'type': 'Object'
+                'type': 'Find'
             },
             created: {
                 'user': 'anonymous',

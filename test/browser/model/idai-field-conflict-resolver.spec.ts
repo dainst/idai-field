@@ -20,7 +20,7 @@ export function main() {
                     id: id,
                     identifier: identifier,
                     shortDescription: shortDescription,
-                    type: 'Object',
+                    type: 'Find',
                     relations: {}
                 },
                 modified: [ { date: new Date(), user: user } ],

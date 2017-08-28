@@ -27,7 +27,7 @@ describe('resources/relations --', function() {
         });
     });
 
-    it('create a new relation and the corresponding inverse relation', function() {
+    xit('create a new relation and the corresponding inverse relation', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
         expect(DoceditPage.getRelationButtonText(1, 0, 0)).toEqual('1');

@@ -41,7 +41,7 @@ xdescribe('resources/syncing --', function() {
                         't1'
                     ]
                 },
-                'type': 'object'
+                'type': 'Object'
             },
             created: {
                 'user': 'anonymous',

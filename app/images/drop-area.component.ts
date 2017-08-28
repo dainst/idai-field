@@ -116,7 +116,7 @@ export class DropAreaComponent {
         return new Promise((resolve, reject) => {
             this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
-                let imageType: IdaiType = projectConfiguration.getTypesTree()['image'];
+                let imageType: IdaiType = projectConfiguration.getTypesTree()['Image'];
                 if (imageType.children && imageType.children.length > 0) {
                     this.modalService.open(ImageTypePickerModalComponent).result.then(
                         (type: IdaiType) => resolve(type),

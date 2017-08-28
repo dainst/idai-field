@@ -1,7 +1,5 @@
 import {Document} from 'idai-components-2/core';
 import {ConflictResolvingExtension} from '../../../app/datastore/conflict-resolving-extension';
-import {isNullOrUndefined} from 'util';
-import {unescape} from 'querystring';
 
 /**
  * @author Daniel de Oliveira
@@ -22,34 +20,34 @@ export function main() {
         beforeEach(() => {
             originalRevision = {
                 resource: {
-                    type: 'object',
+                    type: 'Object',
                     id: '1',
                     relations: {}
                 },
-                created: {user: 'testuser1', date: new Date()},
-                modified: [{user: 'testuser1', date: new Date()}]
+                created: { user: 'testuser1', date: new Date() },
+                modified: [{ user: 'testuser1', date: new Date() }]
             };
             originalRevision['_rev'] = '1-hij';
 
             conflictedRevision = {
                 resource: {
-                    type: 'object',
+                    type: 'Object',
                     id: '1',
                     relations: {}
                 },
-                created: {user: 'testuser1', date: new Date()},
-                modified: [{user: 'testuser1', date: new Date()}]
+                created: { user: 'testuser1', date: new Date() },
+                modified: [{ user: 'testuser1', date: new Date() }]
             };
             conflictedRevision['_rev'] = '2-xyz';
 
             latestRevision = {
                 resource: {
-                    type: 'object',
+                    type: 'Object',
                     id: '1',
                     relations: {}
                 },
-                created: {user: 'testuser1', date: new Date()},
-                modified: [{user: 'testuser1', date: new Date()}]
+                created: { user: 'testuser1', date: new Date() },
+                modified: [{ user: 'testuser1', date: new Date() }]
             };
             latestRevision['_rev'] = '2-abc';
             latestRevision['_conflicts'] = ['2-xyz'];
@@ -71,7 +69,7 @@ export function main() {
             datastore.fetch.and.callFake((resourceId, options) => {
                 if (resourceId != '1') return Promise.reject(undefined);
                 if (options.revs_info == true) {
-                    return Promise.resolve({_revs_info: [{rev: '1-hij', status: 'available'}]});
+                    return Promise.resolve({_revs_info: [{ rev: '1-hij', status: 'available' }] });
                 } else {
                     return Promise.reject(undefined);
                 }

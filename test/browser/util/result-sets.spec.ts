@@ -1,4 +1,4 @@
-import {ResultSets} from "../../../app/util/result-sets";
+import {ResultSets} from '../../../app/util/result-sets';
 
 /**
  * @author Daniel de Oliveira

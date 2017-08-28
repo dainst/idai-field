@@ -20,7 +20,7 @@ export function main() {
                     id: id,
                     identifier: identifier,
                     shortDescription: shortDescription,
-                    type: 'object',
+                    type: 'Object',
                     relations: {}
                 },
                 modified: [ { date: new Date(), user: user } ],

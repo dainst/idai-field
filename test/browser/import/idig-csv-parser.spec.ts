@@ -20,8 +20,8 @@ export function main() {
         it('should create documents from file content', (done) => {
 
             let fileContent = 'IdentifierUUID,Identifier,Title,Type\n'
-                + '1,one,One,context\n'
-                + '2,two,Two,context\n';
+                + '1,one,One,Context\n'
+                + '2,two,Two,Context\n';
 
             let parser = new IdigCsvParser();
             let documents: Array<IdaiFieldDocument> = [];
@@ -35,7 +35,7 @@ export function main() {
                 expect(documents.length).toBe(2);
                 expect(parser.getWarnings().length).toBe(0);
                 expect(documents[0].resource.id).toEqual('1');
-                expect(documents[0].resource.type).toEqual('context');
+                expect(documents[0].resource.type).toEqual('Context');
                 expect(documents[1].resource.shortDescription).toEqual('Two');
                 done();
             });
@@ -45,8 +45,8 @@ export function main() {
         it('should abort on syntax errors in file content', (done) => {
 
             let fileContent = 'IdentifierUUID,Identifier,Title,Type\n'
-                + '1,one,One,context\n'
-                + ',two,Two,context\n';
+                + '1,one,One,Context\n'
+                + ',two,Two,Context\n';
 
             let parser = new IdigCsvParser();
             let documents: Array<IdaiFieldDocument> = [];
@@ -65,9 +65,9 @@ export function main() {
         it('should parse point, polygon and multipolygon geometries', (done) => {
 
             let fileContent = 'IdentifierUUID	Identifier	Title	Type	CoverageUnion\n'
-                + '1	one	One	context	POINT ((416,361 354,404))\n'
-                + '2	two	Two	context	POLYGON ((415,732 354,88, 416,982 353,988, 416,227 352,992, 415,732 354,88))\n'
-                + '3	three	Three	context	MULTIPOLYGON ((407,259 356,711, 407,25 356,417, 407,29 356,430, '
+                + '1	one	One	Context	POINT ((416,361 354,404))\n'
+                + '2	two	Two	Context	POLYGON ((415,732 354,88, 416,982 353,988, 416,227 352,992, 415,732 354,88))\n'
+                + '3	three	Three	Context	MULTIPOLYGON ((407,259 356,711, 407,25 356,417, 407,29 356,430, '
                 + '407,259 356,711), (406,432 356,684, 406,46 356,698, 406,50 356,690, 406,432 356,684))\n';
 
             let parser = new IdigCsvParser();
@@ -99,8 +99,8 @@ export function main() {
         it('should abort on invalid geometries', (done) => {
 
             let fileContent = 'IdentifierUUID	Identifier	Title	Type	CoverageUnion\n'
-                + '1	one	One	context	POINT ((416,361 354,404))\n'
-                + '2	two	Two	context	POINT ((416,361 354,404 354,404))\n';
+                + '1	one	One	Context	POINT ((416,361 354,404))\n'
+                + '2	two	Two	Context	POINT ((416,361 354,404 354,404))\n';
 
             let parser = new IdigCsvParser();
             let documents: Array<IdaiFieldDocument> = [];

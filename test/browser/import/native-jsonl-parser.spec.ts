@@ -16,9 +16,9 @@ export function main() {
 
        it('should create objects from file content', (done) => {
 
-            let fileContent  = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
-                + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            let fileContent  = '{ "id": "id1", "type": "Object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "Object", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
+                + '{ "id": "id3", "type": "Object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             let parser = new NativeJsonlParser();
             let objects = [];
@@ -29,9 +29,9 @@ export function main() {
                 fail();
                 done();
             }, () => {
-                expect(objects[0]['resource']['id']).toEqual("id1");
-                expect(objects[0]['resource']['type']).toEqual("object");
-                expect(objects[2]['resource'].title).toEqual("Obi-Three Kenobi");
+                expect(objects[0]['resource']['id']).toEqual('id1');
+                expect(objects[0]['resource']['type']).toEqual('Object');
+                expect(objects[2]['resource'].title).toEqual('Obi-Three Kenobi');
                 expect(objects.length).toEqual(3);
                 done();
             });
@@ -40,9 +40,9 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            let fileContent = '{ "id": "id1", "type": "object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "id2", "type": "object", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
-                + '{ "id": "id3", "type": "object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            let fileContent = '{ "id": "id1", "type": "Object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "Object", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
+                + '{ "id": "id3", "type": "Object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             let parser = new NativeJsonlParser();
             let objects = [];
@@ -51,7 +51,7 @@ export function main() {
                 objects.push(resultDocument);
             }, (error) => {
                 expect(objects.length).toEqual(1);
-                expect(objects[0]['resource']['id']).toEqual("id1");
+                expect(objects[0]['resource']['id']).toEqual('id1');
                 expect(error).toEqual([M.IMPORT_FAILURE_INVALIDJSONL,2]);
                 done();
             });

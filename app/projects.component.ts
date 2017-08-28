@@ -85,8 +85,6 @@ export class ProjectsComponent implements OnInit {
         });
     }
 
-
-
     public editProject() {
 
         this.pouchdbManager.getDb().get(this.selectedProject).then(document => {

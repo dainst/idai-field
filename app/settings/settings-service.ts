@@ -168,7 +168,7 @@ export class SettingsService {
         return {
             _id: name,
             resource: {
-                type: 'project',
+                type: 'Project',
                 identifier: name,
                 id: name,
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',

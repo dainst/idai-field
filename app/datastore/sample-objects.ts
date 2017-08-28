@@ -7,7 +7,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "test",
             "shortDescription": "Testprojekt",
             "relations": {},
-            "type": "project"
+            "type": "Project"
         }
     },
     {
@@ -24,7 +24,7 @@ export const DOCS: IdaiFieldDocument[] = [
                     [27.18928181180254, 39.14132438323931], [27.189226035114622, 39.141306298358316],
                     [27.189218354962215, 39.14132050335332]]]
             },
-            "type": "trench"
+            "type": "Trench"
         }
     },
     {
@@ -40,7 +40,7 @@ export const DOCS: IdaiFieldDocument[] = [
                 "type": "Point",
                 "coordinates": [ 27.1892209283, 39.1411510096 ]
             },
-            "type": "context"
+            "type": "Context"
         }
     },
     {
@@ -56,7 +56,7 @@ export const DOCS: IdaiFieldDocument[] = [
                 "type": "Point",
                 "coordinates": [ 27.1892609283, 39.1411810096 ]
             },
-            "type": "object"
+            "type": "Object"
         }
     },
     {
@@ -64,7 +64,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "o25",
             "identifier": "PE07-So-07_Z001.jpg",
             "shortDescription": "Test Layer 1",
-            "type": "image",
+            "type": "Image",
             "relations": {},
             "filename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
@@ -81,7 +81,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "o26",
             "identifier": "mapLayerTest2.png",
             "shortDescription": "Test Layer 2",
-            "type": "image",
+            "type": "Image",
             "relations": {},
             "filename" : "mapLayerTest2.png",
             "height" : 782,

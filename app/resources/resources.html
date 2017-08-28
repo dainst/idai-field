@@ -3,7 +3,7 @@
 
     <div class="col-md-3">
         <div *ngIf="view" class="row">
-            <div *ngIf="view.mainType != 'project'" class="col-md-8">
+            <div *ngIf="view.mainType != 'Project'" class="col-md-8">
                 <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                         class="form-control" [(ngModel)]="selectedMainTypeDocument"
                         (ngModelChange)="selectMainTypeDocument($event)">
@@ -12,7 +12,7 @@
                     </option>
                 </select>
                 <select id="mainTypeSelectBoxSubstitute"
-                        *ngIf="view && view.mainType != 'project' && !selectedMainTypeDocument"
+                        *ngIf="view && view.mainType != 'Project' && !selectedMainTypeDocument"
                         class="form-control" disabled>
                     <option>
                         {{mainTypeLabel}} anlegen ➔
@@ -20,19 +20,19 @@
                 </select>
             </div>
 
-            <div *ngIf="selectedMainTypeDocument && view.mainType != 'project'" class="col-md-2">
+            <div *ngIf="selectedMainTypeDocument && view.mainType != 'Project'" class="col-md-2">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(selectedMainTypeDocument)">
                     <span class="mdi mdi-pencil mdi-18px"></span>
                 </div>
             </div>
 
-            <div *ngIf="view.mainType != 'project'" class="col-md-2">
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'
+            <div *ngIf="view.mainType != 'Project'" class="col-md-2">
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
                                     && mode == 'map'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'project'
+                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
                                     && mode == 'list'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
@@ -70,7 +70,7 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="ready && view && view.mainType != 'project' && !selectedMainTypeDocument && !editGeometry"
+    <div *ngIf="ready && view && view.mainType != 'Project' && !selectedMainTypeDocument && !editGeometry"
          class="col-sm-8 offset-sm-2 text-center alert alert-warning"
          style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 900;">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>

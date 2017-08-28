@@ -26,13 +26,13 @@ export class ImageTypeUtility {
             const projectTypesTree: { [type: string]: IdaiType } = projectConfiguration.getTypesTree();
             let projectImageTypes: any = {};
 
-            if (projectTypesTree['image']) {
-                projectImageTypes['image'] = projectTypesTree['image'];
+            if (projectTypesTree['Image']) {
+                projectImageTypes['Image'] = projectTypesTree['Image'];
 
-                if (projectTypesTree['image'].children) {
-                    for (let i = projectTypesTree['image'].children.length - 1; i >= 0; i--) {
-                        projectImageTypes[projectTypesTree['image'].children[i].name]
-                            = projectTypesTree['image'].children[i];
+                if (projectTypesTree['Image'].children) {
+                    for (let i = projectTypesTree['Image'].children.length - 1; i >= 0; i--) {
+                        projectImageTypes[projectTypesTree['Image'].children[i].name]
+                            = projectTypesTree['Image'].children[i];
                     }
                 }
             }

@@ -1,4 +1,4 @@
-{ "type": "object", "identifier" : "obob1", "shortDescription" : "O.B. One", "relations" : {} }
-{ "type": "object", "identifier" : "obob2", "shortDescription" : "O.B. Two", "relations" : {} }
-{ "id": "takethisexistingid", "type": "object", "identifier" : "obob4", "shortDescription": "O.B. Four", "relations" : {} }
-{ "type": "object", "identifier" : "obob3", "shortDescription" : "O.B. Three", "relations": {"isBefore": ["takethisexistingid"] } }
+{ "type": "Object", "identifier" : "obob1", "shortDescription" : "O.B. One", "relations" : {} }
+{ "type": "Object", "identifier" : "obob2", "shortDescription" : "O.B. Two", "relations" : {} }
+{ "id": "takethisexistingid", "type": "Object", "identifier" : "obob4", "shortDescription": "O.B. Four", "relations" : {} }
+{ "type": "Object", "identifier" : "obob3", "shortDescription" : "O.B. Three", "relations": {"isBefore": ["takethisexistingid"] } }

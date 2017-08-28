@@ -37,7 +37,7 @@ export class ViewUtility {
 
     public getViewNameForDocument(document: Document): Promise<string> {
 
-        if (document.resource.type == 'project') return Promise.resolve('project');
+        if (document.resource.type == 'Project') return Promise.resolve('project');
 
         let mainTypeName: string;
 

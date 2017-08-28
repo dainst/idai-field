@@ -7,7 +7,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-body" id="link-modal">
         <p>Zu verknüpfende Ressource wählen:</p>
         <document-picker [relationName]="'isDepictedIn'"
-                         [relationRangeType]="'image'"
+                         [relationRangeType]="'Image'"
                          (documentSelected)="activeModal.close($event)"></document-picker>
     </div>
     <div class="modal-footer">

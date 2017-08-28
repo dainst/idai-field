@@ -7,25 +7,25 @@
     {
       "name": "project",
       "label": "Übersicht",
-      "mainType": "project"
+      "mainType": "Project"
     },
 
     {
       "name": "excavation",
       "label": "Ausgrabung",
-      "mainType": "trench"
+      "mainType": "Trench"
     },
 
     {
       "name": "building",
       "label": "Bauforschung",
-      "mainType": "building"
+      "mainType": "Building"
     }
   ],
 
   "types": [
     {
-      "type":"trench",
+      "type":"Trench",
       "label":"Schnitt",
       "fields":[
         {
@@ -66,7 +66,7 @@
     },
 
     {
-      "type":"building",
+      "type":"Building",
       "label":"Bauwerk",
       "fields":[
         {
@@ -79,7 +79,7 @@
     },
 
     {
-      "type":"context",
+      "type":"Context",
       "label":"Befund",
       "fields":[
         {
@@ -214,7 +214,7 @@
     },
 
     {
-      "type":"object",
+      "type":"Object",
       "label":"Fund",
       "fields":[
         {
@@ -321,7 +321,7 @@
     },
 
     {
-      "type":"section",
+      "type":"Section",
       "label":"Profil",
       "fields":[
         {
@@ -431,7 +431,7 @@
     },
 
     {
-      "type":"planum",
+      "type":"Planum",
       "label":"Planum",
       "fields":[
         {
@@ -525,7 +525,7 @@
     },
 
     {
-      "type":"image",
+      "type":"Image",
       "label":"Abbildung",
       "fields":[
         {
@@ -570,9 +570,9 @@
     },
 
     {
-      "type":"photo",
+      "type":"Photo",
       "label":"Foto",
-      "parent":"image",
+      "parent":"Image",
       "fields":[
         {
           "name":"original",
@@ -622,9 +622,9 @@
     },
 
     {
-      "type":"drawing",
+      "type":"Drawing",
       "label":"Zeichnung",
-      "parent":"image",
+      "parent":"Image",
       "fields":[
         {
           "name":"scale",
@@ -738,30 +738,30 @@
       "inverse":"isDepictedIn",
       "label":"Ist Abbildung von",
       "domain":[
-        "image",
-        "photo",
-        "drawing"
+        "Image",
+        "Photo",
+        "Drawing"
       ],
       "range":[
-        "section",
-        "context",
-        "planum",
-        "object"
+        "Section",
+        "Context",
+        "Planum",
+        "Object"
       ]
     },
     {
       "name":"isDepictedIn",
       "inverse":"depicts",
       "domain":[
-        "section",
-        "context",
-        "planum",
-        "object"
+        "Section",
+        "Context",
+        "Planum",
+        "Object"
       ],
       "range":[
-        "image",
-        "photo",
-        "drawing"
+        "Image",
+        "Photo",
+        "Drawing"
       ],
       "visible": false,
       "editable": false
@@ -771,14 +771,14 @@
       "inverse":"NO-INVERSE",
       "label":"Gehört zu",
       "domain":[
-        "context",
-        "object",
-        "section",
-        "planum"
+        "Context",
+        "Object",
+        "Section",
+        "Planum"
       ],
       "range":[
-        "trench",
-        "building"
+        "Trench",
+        "Building"
       ],
       "visible" : false,
       "editable" : false
@@ -788,11 +788,11 @@
       "inverse":"NO-INVERSE",
       "label":"Gehört zu",
       "domain":[
-        "trench",
-        "building"
+        "Trench",
+        "Building"
       ],
       "range":[
-        "project"
+        "Project"
       ],
       "visible" : false,
       "editable" : false
@@ -802,10 +802,10 @@
       "inverse":"includes",
       "label":"Liegt in",
       "domain":[
-        "object"
+        "Object"
       ],
       "range":[
-        "context"
+        "Context"
       ]
     },
     {
@@ -813,10 +813,10 @@
       "inverse":"liesWithin",
       "label":"Enthält",
       "domain":[
-        "context"
+        "Context"
       ],
       "range":[
-        "object"
+        "Object"
       ]
     },
     {
@@ -824,12 +824,12 @@
       "inverse":"isBelow",
       "label":"Liegt über",
       "domain":[
-        "context",
-        "planum"
+        "Context",
+        "Planum"
       ],
       "range":[
-        "context",
-        "planum"
+        "Context",
+        "Planum"
       ]
     },
     {
@@ -837,12 +837,12 @@
       "inverse":"isAbove",
       "label":"Liegt unter",
       "domain":[
-        "context",
-        "planum"
+        "Context",
+        "Planum"
       ],
       "range":[
-        "context",
-        "planum"
+        "Context",
+        "Planum"
       ]
     },
     {
@@ -850,10 +850,10 @@
       "inverse":"isCutBy",
       "label":"Schneidet",
       "domain":[
-        "context"
+        "Context"
       ],
       "range":[
-        "context"
+        "Context"
       ]
     },
     {
@@ -861,10 +861,10 @@
       "inverse":"cuts",
       "label":"Wird geschnitten von",
       "domain":[
-        "context"
+        "Context"
       ],
       "range":[
-        "context"
+        "Context"
       ]
     },
     {
@@ -872,12 +872,12 @@
       "inverse":"isAfter",
       "label":"Zeitlich vor",
       "domain":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ],
       "range":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ]
     },
     {
@@ -885,12 +885,12 @@
       "inverse":"isBefore",
       "label":"Zeitlich nach",
       "domain":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ],
       "range":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ]
     },
     {
@@ -898,12 +898,12 @@
       "inverse":"isContemporaryWith",
       "label":"Zeitgleich mit",
       "domain":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ],
       "range":[
-        "context",
-        "object"
+        "Context",
+        "Object"
       ]
     }
 

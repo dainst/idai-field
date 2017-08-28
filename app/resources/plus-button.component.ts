@@ -126,7 +126,7 @@ export class PlusButtonComponent implements OnChanges {
 
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
-        if (type.name == 'image') return false;
+        if (type.name == 'Image') return false;
 
         if (this.isRecordedIn && !projectConfiguration.isAllowedRelationDomainType(type.name,
                 this.isRecordedIn.resource.type, 'isRecordedIn')) {

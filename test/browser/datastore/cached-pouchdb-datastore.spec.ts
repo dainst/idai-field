@@ -1,6 +1,6 @@
-import {Document} from "idai-components-2/core";
-import {CachedPouchdbDatastore} from "../../../app/datastore/cached-pouchdb-datastore";
-import {DocumentCache} from "../../../app/datastore/document-cache";
+import {Document} from 'idai-components-2/core';
+import {CachedPouchdbDatastore} from '../../../app/datastore/cached-pouchdb-datastore';
+import {DocumentCache} from '../../../app/datastore/document-cache';
 
 /**
  * @author Daniel de Oliveira
@@ -16,8 +16,8 @@ export function main() {
                 resource: {
                     shortDescription: sd,
                     identifier: identifier,
-                    title: "title",
-                    type: "object",
+                    title: 'title',
+                    type: 'Object',
                     relations: {}
                 }
             }

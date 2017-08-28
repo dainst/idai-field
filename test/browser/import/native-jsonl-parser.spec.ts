@@ -16,9 +16,9 @@ export function main() {
 
        it('should create objects from file content', (done) => {
 
-            let fileContent  = '{ "id": "id1", "type": "Object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "id2", "type": "Object", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
-                + '{ "id": "id3", "type": "Object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            let fileContent  = '{ "id": "id1", "type": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
+                + '{ "id": "id3", "type": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             let parser = new NativeJsonlParser();
             let objects = [];
@@ -30,7 +30,7 @@ export function main() {
                 done();
             }, () => {
                 expect(objects[0]['resource']['id']).toEqual('id1');
-                expect(objects[0]['resource']['type']).toEqual('Object');
+                expect(objects[0]['resource']['type']).toEqual('Find');
                 expect(objects[2]['resource'].title).toEqual('Obi-Three Kenobi');
                 expect(objects.length).toEqual(3);
                 done();
@@ -40,9 +40,9 @@ export function main() {
 
         it('should abort on syntax errors in file content', (done) => {
 
-            let fileContent = '{ "id": "id1", "type": "Object", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
-                + '{ "id": "id2", "type": "Object", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
-                + '{ "id": "id3", "type": "Object", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
+            let fileContent = '{ "id": "id1", "type": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+                + '{ "id": "id2", "type": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
+                + '{ "id": "id3", "type": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
             let parser = new NativeJsonlParser();
             let objects = [];

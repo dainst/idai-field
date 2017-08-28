@@ -14,7 +14,7 @@ export function main() {
                 'modified': [ { 'user': 'testuser', 'date': new Date() } ],
                 'resource': {
                     'id': 'id1',
-                    'type': 'Object',
+                    'type': 'Find',
                     'identifier': 'test1',
                     'shortDescription': 'Test 1',
                     'relations': {}
@@ -25,7 +25,7 @@ export function main() {
                 'modified': [ { 'user': 'testuser', 'date': new Date() } ],
                 'resource': {
                     'id': 'id2',
-                    'type': 'Object',
+                    'type': 'Find',
                     'identifier': 'test2',
                     'shortDescription': 'Test 2',
                     'relations': {}
@@ -35,8 +35,8 @@ export function main() {
 
         it('should serialize resources to the native jsonl format', () => {
 
-            const expectedResult = '{"id":"id1","type":"Object","identifier":"test1","shortDescription":"Test 1",' +
-                '"relations":{}}\n{"id":"id2","type":"Object","identifier":"test2","shortDescription":"Test 2",' +
+            const expectedResult = '{"id":"id1","type":"Find","identifier":"test1","shortDescription":"Test 1",' +
+                '"relations":{}}\n{"id":"id2","type":"Find","identifier":"test2","shortDescription":"Test 2",' +
                 '"relations":{}}\n';
 
             const serializer: NativeJsonlSerializer = new NativeJsonlSerializer();

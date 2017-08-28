@@ -112,15 +112,20 @@ const template = [{
     submenu: [{
         label: 'Über ' + name,
         click: function createInfoWindow() {
-            // new frameless window
             var infoWindow = new BrowserWindow({
                 width: 300,
                 height: 350,
                 frame: false,
+                parent: BrowserWindow.getFocusedWindow(),
+                modal: true,
+                show: false,
                 webPreferences: { nodeIntegration: true }
             });
 
-            // load new panel with version info
+            infoWindow.once('ready-to-show', function() {
+                infoWindow.show();
+            });
+
             infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
         }
     }]

@@ -142,6 +142,7 @@ describe('resources --', () => {
         ResourcesPage.clickEditMainTypeResource();
         DoceditPage.typeInInputField('newIdentifier');
         DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortRest * 10);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
 });

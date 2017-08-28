@@ -115,13 +115,9 @@ const template = [{
             // new frameless window
             var infoWindow = new BrowserWindow({
                 width: 300,
-                height: 400,
+                height: 350,
                 frame: false,
                 webPreferences: { nodeIntegration: true }
-            });
-
-            infoWindow.on('closed', function() {
-                infoWindow = null;
             });
 
             // load new panel with version info

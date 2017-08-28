@@ -40,7 +40,7 @@ export const DOCS: IdaiFieldDocument[] = [
                 "type": "Point",
                 "coordinates": [ 27.1892209283, 39.1411510096 ]
             },
-            "type": "Context"
+            "type": "Feature"
         }
     },
     {
@@ -56,7 +56,7 @@ export const DOCS: IdaiFieldDocument[] = [
                 "type": "Point",
                 "coordinates": [ 27.1892609283, 39.1411810096 ]
             },
-            "type": "Object"
+            "type": "Find"
         }
     },
     {

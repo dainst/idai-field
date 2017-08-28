@@ -313,7 +313,7 @@ describe('resources/project --', function() {
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
     });
 
-    fit('keep type filter on switching view modes', () => {
+    it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickChooseTypeFilter(0);

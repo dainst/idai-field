@@ -13,7 +13,6 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "server": "gulp webserver-watch",
-    "make-dist": "gulp versioning --build $1",
     "package": "build -mw --publish never",
     "package-mac": "build -m dmg --publish never",
     "package-win": "build -w nsis --publish never"

@@ -11,7 +11,7 @@
     <img id="about-logo" src="../../img/favicon.png"
          class="m-x-auto d-block"
          alt="idai-field-client logo">
-    <p id="about-version">Version: "VERSION-STRING"</p>
+    <p id="about-version"></p>
     <p class="centered">
         <button id="close-btn" class="btn btn-primary">Schlie&szlig;en</button>
     </p>
@@ -19,6 +19,8 @@
 <script>
     const electron = require('electron');
     const remote = electron.remote;
+
+    document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
 
     document.getElementById("close-btn").addEventListener("click", function () {
         var window = remote.getCurrentWindow();

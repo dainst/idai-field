@@ -7,7 +7,6 @@ var fs = require('fs');
 var path = require('path');
 var pkg = require('./package.json');
 var webserver = require('gulp-webserver');
-var argv = require('yargs').argv;
 var replace = require('gulp-replace');
 
 // compile sass and concatenate to single css file in build dir
@@ -106,8 +105,8 @@ gulp.task('package', [], function () {
 });
 
 function createConfig(path) {
-    fs.access(path, fs.F_OK, function (err) {
 
+    fs.access(path, fs.F_OK, function(err) {
         if (err) {
             fs.createReadStream(path + '.template').pipe(fs.createWriteStream(path));
         } else {
@@ -116,27 +115,10 @@ function createConfig(path) {
     });
 }
 
-// Creates configfiles if the do not exist already
+// Creates config files if they do not exist already
 //
 gulp.task('create-configs', function (callback) {
 
     createConfig('./config/config.json');
     createConfig('./config/Configuration.json');
-
-});
-
-gulp.task('versioning', function () {
-    var buildNo = "SNAPSHOT";
-
-    if (argv.build !== true && argv.build !== false && argv.build != undefined) {
-        buildNo = argv.build;
-    } else console.log("No build number given, falling back to \"SNAPSHOT\"");
-
-    var versionString = "v" + pkg.version + " (build #" + buildNo + ")";
-
-    console.log("Updated version string: " + versionString);
-
-    return gulp.src(['app/info-window.html'])
-        .pipe(replace(/"VERSION-STRING"/g, versionString))
-        .pipe(gulp.dest('dist/app/'));
 });

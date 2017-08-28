@@ -41,7 +41,7 @@ describe('resources/syncing --', function() {
                         't1'
                     ]
                 },
-                'type': 'object'
+                'type': 'Object'
             },
             created: {
                 'user': 'anonymous',
@@ -89,7 +89,10 @@ describe('resources/syncing --', function() {
     function setConfigJson(): Promise<any> {
 
         return new Promise(resolve => {
-            fs.writeFile(configPath, JSON.stringify({ "syncTarget":{"address":"http://localhost:3001"}, 'dbs' : ['test'] }), err => {
+            fs.writeFile(configPath, JSON.stringify({
+                syncTarget: { address: remoteSiteAddress },
+                dbs: ['test']
+            }), err => {
                 if (err) console.error('Failure while resetting config.json', err);
                 resolve();
             });

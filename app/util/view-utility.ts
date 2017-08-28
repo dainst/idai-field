@@ -68,7 +68,7 @@ export class ViewUtility {
         return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
             for (let view of projectConfiguration.getViewsList()) {
-                if (view.mainType == 'project') continue;
+                if (view.mainType == 'Project') continue;
                 let promise = this.datastore.find({ q: '', types: [view.mainType] })
                     .then(documents => mainTypeDocuments = mainTypeDocuments.concat(documents));
                 promises.push(promise);

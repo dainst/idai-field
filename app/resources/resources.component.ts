@@ -306,9 +306,8 @@ export class ResourcesComponent implements AfterViewChecked {
     private populateProjectDocument(): Promise<any> {
 
         return this.datastore.get(this.settingsService.getSelectedProject())
-            .then(
-                document => this.projectDocument = document as IdaiFieldDocument
-            );
+            .then(document => this.projectDocument = document as IdaiFieldDocument)
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
     }
 
     /**

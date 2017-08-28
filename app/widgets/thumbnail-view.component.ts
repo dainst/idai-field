@@ -1,12 +1,12 @@
-import {Component, OnChanges, Input} from "@angular/core";
-import {Imagestore} from "../imagestore/imagestore";
-import {Datastore} from "idai-components-2/datastore";
-import {BlobMaker} from "../imagestore/blob-maker";
-import {ImageContainer} from "../imagestore/image-container";
-import {Router} from "@angular/router";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {Messages} from "idai-components-2/messages";
-
+import {Component, OnChanges, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {Document} from 'idai-components-2/core';
+import {Datastore} from 'idai-components-2/datastore';
+import {Messages} from 'idai-components-2/messages';
+import {Imagestore} from '../imagestore/imagestore';
+import {BlobMaker} from '../imagestore/blob-maker';
+import {ImageContainer} from '../imagestore/image-container';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 
 @Component({
     selector: 'thumbnail-view',
@@ -17,6 +17,7 @@ import {Messages} from "idai-components-2/messages";
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ThumbnailViewComponent implements OnChanges {
 
@@ -29,34 +30,47 @@ export class ThumbnailViewComponent implements OnChanges {
         private datastore: Datastore,
         private router: Router,
         private messages: Messages
-    ) { }
+    ) {}
 
-    public selectImage(documentToJumpTo) {
-        this.router.navigate(['images',documentToJumpTo.resource.id,'show'])
+    public selectImage(documentToJumpTo: Document) {
+
+        this.router.navigate(['images', documentToJumpTo.resource.id, 'show'])
     }
 
-
     ngOnChanges() {
-        if(!this.imageIds) return;
+
+        if (!this.imageIds) return;
 
         this.images = [];
-        this.imageIds.forEach(id =>
+
+        for (let id of this.imageIds) {
+            let imageContainer: ImageContainer;
+
             this.datastore.get(id)
                 .then(doc => {
-                    var imgContainer: ImageContainer = {
-                        document: <IdaiFieldImageDocument> doc
-                    };
-                    this.imagestore.read(
-                        imgContainer.document.resource.id).
-                        then(url=> {
-                            imgContainer.imgSrc = url;
-                            this.images.push(imgContainer);
-                        }).catch(msgWithParams=>{
-                            imgContainer.imgSrc = BlobMaker.blackImg;
-                            this.images.push(imgContainer);
-                            this.messages.add(msgWithParams)
-                        });
-                })
-        );
+                    imageContainer = { document: <IdaiFieldImageDocument> doc };
+                    return this.imagestore.read(imageContainer.document.resource.id);
+                }).then(url => {
+                    if (!this.isLoaded(id)) {
+                        imageContainer.imgSrc = url;
+                        this.images.push(imageContainer);
+                    }
+                }).catch(msgWithParams => {
+                    if (!this.isLoaded(id)) {
+                        imageContainer.imgSrc = BlobMaker.blackImg;
+                        this.images.push(imageContainer);
+                        this.messages.add(msgWithParams);
+                    }
+                });
+        }
+    }
+
+    private isLoaded(resourceId: string): boolean {
+
+        for (let imageContainer of this.images) {
+            if (imageContainer.document.resource.id == resourceId) return true;
+        }
+
+        return false;
     }
 }

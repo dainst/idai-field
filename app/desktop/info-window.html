@@ -23,10 +23,7 @@
     document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
 
     document.getElementById('close-button').addEventListener('click', function() {
-        console.log('close window');
-        var window = remote.getCurrentWindow();
-        console.log('window', window);
-        window.close();
+        remote.getCurrentWindow().close();
     });
 </script>
 </body>

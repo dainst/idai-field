@@ -117,24 +117,21 @@ const template = [{
                 width: 300,
                 height: 400,
                 frame: false,
-                webPreferences: {nodeIntegration: true}
+                webPreferences: { nodeIntegration: true }
             });
 
-            // Open Browser Dev Tool for debugging
-            // infoWindow.webContents.openDevTools();
-
-            infoWindow.on('closed', () => {
+            infoWindow.on('closed', function() {
                 infoWindow = null;
             });
+
             // load new panel with version info
             infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
-            //console.log(app.getVersion());
         }
     }]
 }];
 
 if (process.platform !== 'darwin') {
-    template.splice(0,1);
+    template.splice(0, 1);
 }
 
 module.exports = template;

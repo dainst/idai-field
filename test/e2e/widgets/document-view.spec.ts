@@ -17,13 +17,13 @@ describe('document view --', function() {
     });
 
     it('show the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 1, 'no', 2);
+        ResourcesPage.performCreateResource('1', 0, '100', 6);
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getFieldName(0).then(val=>{
+        DocumentViewPage.getFieldName(0).then(val => {
             expect(val).toBe('Nummer'); // with the correct field label
         });
-        DocumentViewPage.getFieldValue(0).then(val=>{
-            expect(val).toBe('no');
+        DocumentViewPage.getFieldValue(0).then(val => {
+            expect(val).toBe('100');
         });
     });
 
@@ -31,7 +31,7 @@ describe('document view --', function() {
      * Addresses an issue where fields were shown double.
      */
     it('show only the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 1, 'no', 2);
+        ResourcesPage.performCreateResource('1', 0, '100', 6);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
@@ -41,10 +41,10 @@ describe('document view --', function() {
     it('show the relations present in the object', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(0).then(val=>{
-            expect(val).toBe('Zeitlich nach'); // with the correct relation label
+        DocumentViewPage.getRelationName(0).then(val => {
+            expect(val).toBe('Liegt in'); // with the correct relation label
         });
-        DocumentViewPage.getRelationValue(0).then(val=>{
+        DocumentViewPage.getRelationValue(0).then(val => {
             expect(val).toBe('2');
         });
     });

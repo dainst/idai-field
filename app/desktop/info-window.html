@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../app.css">
-</head>
-<body style="-webkit-app-region: drag">
-<div class="info-window">
-    <div id="header-block">
-        <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
-    </div>
-    <img id="about-logo" src="../../img/favicon.png"
-         class="m-x-auto d-block"
-         alt="idai-field-client logo">
-    <p id="about-version"></p>
-    <p class="centered">
-        <button id="close-button" class="btn btn-primary">Schlie&szlig;en</button>
-    </p>
-</div>
-<script>
-    const electron = require('electron');
-    const remote = electron.remote;
+    <head>
+        <link rel="stylesheet" type="text/css" href="../app.css">
+    </head>
+    <body>
+        <div class="info-window">
+            <div id="header-block">
+                <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
+            </div>
+            <img id="about-logo" src="../../img/favicon.png"
+                 class="m-x-auto d-block"
+                 alt="idai-field-client logo">
+            <p id="about-version"></p>
+            <p class="centered">
+                <button id="close-button" class="btn btn-primary">Schlie&szlig;en</button>
+            </p>
+        </div>
+        <script>
+            const electron = require('electron');
+            const remote = electron.remote;
 
-    document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
+            document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
 
-    document.getElementById('close-button').addEventListener('click', function() {
-        remote.getCurrentWindow().close();
-    });
-</script>
-</body>
+            document.getElementById('close-button').addEventListener('click', function() {
+                remote.getCurrentWindow().close();
+            });
+        </script>
+    </body>
 </html>

@@ -13,7 +13,7 @@
          alt="idai-field-client logo">
     <p id="about-version"></p>
     <p class="centered">
-        <button id="close-btn" class="btn btn-primary">Schlie&szlig;en</button>
+        <button id="close-button" class="btn btn-primary">Schlie&szlig;en</button>
     </p>
 </div>
 <script>
@@ -22,8 +22,10 @@
 
     document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
 
-    document.getElementById("close-btn").addEventListener("click", function () {
+    document.getElementById('close-button').addEventListener('click', function() {
+        console.log('close window');
         var window = remote.getCurrentWindow();
+        console.log('window', window);
         window.close();
     });
 </script>

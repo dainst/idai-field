@@ -7,13 +7,22 @@ import {Injectable} from '@angular/core';
  */
 export class AppState {
 
-    private currentUser;
+    private currentUser: string;
+    private imagestorePath: string;
 
-    public getCurrentUser() {
+    public getCurrentUser(): string {
         return this.currentUser;
     }
 
-    public setCurrentUser(name) {
+    public setCurrentUser(name: string) {
         this.currentUser = name;
+    }
+
+    public getImagestorePath(): string {
+        return this.imagestorePath;
+    }
+
+    public setImagestorePath(imagestorePath: string) {
+        this.imagestorePath = imagestorePath;
     }
 }

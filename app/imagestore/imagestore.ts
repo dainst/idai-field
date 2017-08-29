@@ -8,6 +8,8 @@ import {ReadImagestore} from './read-imagestore';
  */
 export abstract class Imagestore extends ReadImagestore {
 
+    abstract initialize(imagestorePath: string, projectName: string): void;
+
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
@@ -30,8 +32,6 @@ export abstract class Imagestore extends ReadImagestore {
      *   reject -> the error message
      */
     abstract remove(key: string): Promise<any>;
-
-    abstract select(projectName: string): void;
 
     abstract destroy(projectName: string): void;
 }

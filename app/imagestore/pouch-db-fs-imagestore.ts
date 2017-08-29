@@ -1,10 +1,10 @@
+import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {BlobMaker} from './blob-maker';
 import {Converter} from './converter';
 import {M} from '../m';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
-import {Inject, Injectable} from '@angular/core';
 
 /**
  * A hybrid image store that uses the file system to store the original images
@@ -13,47 +13,39 @@ import {Inject, Injectable} from '@angular/core';
 @Injectable()
 export class PouchDbFsImagestore implements Imagestore {
 
-    private projectName;
     private projectPath = undefined;
     private db = undefined;
 
     constructor(
         private converter: Converter,
         private blobMaker: BlobMaker,
-        @Inject('app.imgPath') private basePath: string,
         pouchdbManager: PouchdbManager) {
-
-        if (this.basePath.substr(-1) != '/') this.basePath += '/';
-        if (!fs.existsSync(this.basePath)) fs.mkdirSync(this.basePath);
 
         this.db = pouchdbManager.getDb();
     }
 
-    public select(projectName: string): void {
+    public initialize(imagestorePath: string, projectName: string): void {
 
-        if (this.projectName == projectName) return;
+        if (!fs.existsSync(imagestorePath)) fs.mkdirSync(imagestorePath);
 
-        this.projectName = projectName;
-        this.projectPath = this.basePath + projectName + '/';
-
+        this.projectPath = imagestorePath + projectName + '/';
         if (!fs.existsSync(this.projectPath)) fs.mkdirSync(this.projectPath);
     }
 
     /**
      * Destroys the project images on the file system
      */
-    public destroy(dbName: string): void {
-        const projectPath = this.basePath + dbName + '/';
+    public destroy(): void {
 
         // TODO check this again
-        if (projectPath == undefined) return;
-        if (projectPath == "") return;
-        if (projectPath == ".") return;
-        if (projectPath == "..") return;
-        if (projectPath == "./") return;
-        if (projectPath == "/") return;
-        if (projectPath == "c:\\") return;
-        if (projectPath == "C:\\") return;
+        if (this.projectPath == undefined) return;
+        if (this.projectPath == "") return;
+        if (this.projectPath == ".") return;
+        if (this.projectPath == "..") return;
+        if (this.projectPath == "./") return;
+        if (this.projectPath == "/") return;
+        if (this.projectPath == "c:\\") return;
+        if (this.projectPath == "C:\\") return;
 
         const deleteFolderRecursive = function(path) {
             if( fs.existsSync(path) ) {
@@ -65,7 +57,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 });
             }
         };
-        deleteFolderRecursive(projectPath);
+        deleteFolderRecursive(this.projectPath);
     }
 
     /**
@@ -75,6 +67,7 @@ export class PouchDbFsImagestore implements Imagestore {
      *   reject -> the error message
      */
     public create(key: string, data: ArrayBuffer, documentExists: boolean = false): Promise<any> {
+
         return this.write(key, data, false, documentExists);
     }
 
@@ -189,6 +182,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     private readThumb(key: string): Promise<ArrayBuffer> {
+
         return this.db.getAttachment(key, 'thumb');
     }
 }

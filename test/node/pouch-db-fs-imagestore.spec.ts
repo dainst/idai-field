@@ -1,5 +1,5 @@
-import {M} from "../../app/m";
-import * as PouchDB from "pouchdb";
+import {M} from '../../app/m';
+
 /**
  * @author Sebastian Cuy
  */
@@ -13,12 +13,12 @@ Module.prototype.require = function() {
     return originalRequire.apply(this, arguments);
 };
 
-import {PouchDbFsImagestore} from "../../app/imagestore/pouch-db-fs-imagestore";
+import {PouchDbFsImagestore} from '../../app/imagestore/pouch-db-fs-imagestore';
 
 import fs = require('fs');
 import rimraf = require('rimraf');
-import {PouchdbManager} from "../../app/datastore/pouchdb-manager";
-import {DocumentCache} from "../../app/datastore/document-cache";
+import {PouchdbManager} from '../../app/datastore/pouchdb-manager';
+import {DocumentCache} from '../../app/datastore/document-cache';
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
@@ -36,7 +36,6 @@ function ab2str(buf: ArrayBuffer): string {
 
 describe('PouchDbFsImagestore', () => {
 
-
     let store: PouchDbFsImagestore;
     let manager: PouchdbManager;
     const storeProjectPath = 'store/unittest/';
@@ -53,20 +52,19 @@ describe('PouchDbFsImagestore', () => {
         manager = new PouchdbManager(mockConfigProvider, mockConstraintIndexer, mockFulltextIndexer, new DocumentCache());
         manager.setProject('unittest');
 
-        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, 'store/', manager);
-        store.select('unittest');
+        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager);
+        store.initialize('store/', 'unittest');
     });
 
     afterEach(done => {
         rimraf(storeProjectPath, () => {
             manager.destroy().then(done);
         });
-
     });
 
     it('should create a file', (done) => {
 
-        console.log("should create a file");
+        console.log('should create a file');
 
         store.create('test_create', str2ab('asdf')).then(() => {
             fs.readFile(storeProjectPath + 'test_create', (err, data) => {

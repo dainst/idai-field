@@ -50,14 +50,6 @@ import {ProjectsComponent} from './projects.component';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
-console.log(JSON.stringify(CONFIG));
-let IMG_PATH;
-if (CONFIG['imagestorePath']) {
-    IMG_PATH = CONFIG['imagestorePath'];
-} else {
-    const app = (<any>window).require('electron').remote.app;
-    IMG_PATH = app.getPath('appData') + '/' + app.getName() + '/imagestore/';
-}
 
 @NgModule({
     imports: [
@@ -87,7 +79,6 @@ if (CONFIG['imagestorePath']) {
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
         ConflictResolvingExtension,
         { provide: 'app.config', useValue: CONFIG },
-        { provide: 'app.imgPath', useValue: IMG_PATH },
         SettingsService,
         {
             provide: ConstraintIndexer,

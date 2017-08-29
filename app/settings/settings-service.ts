@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {AppState} from '../app-state';
 
+const app = require('electron').remote.app;
 
 @Injectable()
 /**
@@ -41,7 +42,7 @@ export class SettingsService {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.pouchdbManager.setProject(this.getSelectedProject());
-                this.imagestore.select(this.getSelectedProject());
+                this.imagestore.initialize(this.getImagestorePath(), this.getSelectedProject());
 
                 return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget,
@@ -56,19 +57,30 @@ export class SettingsService {
         return JSON.parse(JSON.stringify(this.settings.syncTarget));
     }
 
-    public getUsername() {
+    public getUsername(): string {
 
         return this.settings.username ? JSON.parse(JSON.stringify(this.settings.username)) : 'anonymous';
     }
 
-    public getProjects() {
+    public getProjects(): string[] {
 
         return this.settings.dbs;
     }
 
-    public getSelectedProject() {
+    public getSelectedProject(): string {
         
         if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
+    }
+
+    public getImagestorePath(): string {
+
+        if (this.settings.imagestorePath) {
+            let path: string = this.settings.imagestorePath;
+            if (path.substr(-1) != '/') path += '/';
+            return path;
+        } else {
+            return app.getPath('appData') + '/' + app.getName() + '/imagestore/';
+        }
     }
 
     /**
@@ -85,13 +97,14 @@ export class SettingsService {
         this.settings.username = username;
         this.appState.setCurrentUser(username);
 
+        this.settings.imagestorePath = imagestorePath;
+        this.appState.setImagestorePath(this.getImagestorePath());
+
         if (syncTarget.address) {
             syncTarget.address = syncTarget.address.trim();
             if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
         }
         this.settings.syncTarget = syncTarget;
-
-        this.settings.imagestorePath = imagestorePath;
 
         this.storeSettings();
     }

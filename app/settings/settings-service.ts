@@ -44,7 +44,8 @@ export class SettingsService {
                 this.imagestore.select(this.getSelectedProject());
 
                 return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
-                    .then(() => this.setSettings(this.settings.username, this.settings.syncTarget))
+                    .then(() => this.setSettings(this.settings.username, this.settings.syncTarget,
+                        this.settings.imagestorePath))
                     .then(() => this.startSync());
             }
         })
@@ -79,7 +80,7 @@ export class SettingsService {
      * @return error encoding string
      *   'malformed_address'
      */
-    public setSettings(username: string, syncTarget: SyncTarget): string {
+    public setSettings(username: string, syncTarget: SyncTarget, imagestorePath: string): string {
 
         this.settings.username = username;
         this.appState.setCurrentUser(username);
@@ -88,8 +89,10 @@ export class SettingsService {
             syncTarget.address = syncTarget.address.trim();
             if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
         }
-
         this.settings.syncTarget = syncTarget;
+
+        this.settings.imagestorePath = imagestorePath;
+
         this.storeSettings();
     }
 

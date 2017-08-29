@@ -4,10 +4,10 @@ export interface SyncTarget {
     password: string;
 }
 
-
 export interface Settings {
     remoteSites: Array<string>;
     syncTarget: SyncTarget;
     username: string;
     dbs: Array<string>;
+    imagestorePath: string;
 }

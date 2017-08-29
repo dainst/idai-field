@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
 
     private validateSettings(): boolean {
 
-        const validationError = this.settingsService.setSettings(this.username, this.server);
+        const validationError = this.settingsService.setSettings(this.username, this.server, '');
 
         if (validationError) {
             this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);

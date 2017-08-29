@@ -1,4 +1,5 @@
-import {Settings} from "./settings";
+import {Settings} from './settings';
+
 const remote = require('electron').remote;
 const fs = remote.require('fs');
 
@@ -26,16 +27,22 @@ export class SettingsSerializer {
     }
 
     public store(settings: Settings): Promise<any> {
+
         if (!settings) return Promise.resolve(undefined);
 
         let configToWrite = {};
 
-        if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password'] || settings.syncTarget['address'])) {
+        if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password']
+                || settings.syncTarget['address'])) {
             configToWrite['syncTarget'] = settings.syncTarget;
         }
 
         if (settings.username && settings.username.length > 0) {
             configToWrite['username'] = settings.username;
+        }
+
+        if (settings.imagestorePath) {
+            configToWrite['imagestorePath'] = settings.imagestorePath;
         }
 
         if (settings.dbs) {

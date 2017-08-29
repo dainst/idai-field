@@ -50,10 +50,10 @@ import {ProjectsComponent} from './projects.component';
 
 const CONFIG = require('electron').remote.getGlobal('config');
 
-
+console.log(JSON.stringify(CONFIG));
 let IMG_PATH;
-if (CONFIG['imagestorepath']) {
-    IMG_PATH = CONFIG['imagestorepath'];
+if (CONFIG['imagestorePath']) {
+    IMG_PATH = CONFIG['imagestorePath'];
 } else {
     const app = (<any>window).require('electron').remote.app;
     IMG_PATH = app.getPath('appData') + '/' + app.getName() + '/imagestore/';

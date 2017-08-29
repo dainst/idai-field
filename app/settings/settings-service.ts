@@ -141,7 +141,6 @@ export class SettingsService {
 
     public deleteProject(name: string) {
 
-        this.imagestore.destroy(name);
         return this.pouchdbManager.destroyDb(name);
     }
 

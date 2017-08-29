@@ -33,34 +33,6 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     /**
-     * Destroys the project images on the file system
-     */
-    public destroy(): void {
-
-        // TODO check this again
-        if (this.projectPath == undefined) return;
-        if (this.projectPath == "") return;
-        if (this.projectPath == ".") return;
-        if (this.projectPath == "..") return;
-        if (this.projectPath == "./") return;
-        if (this.projectPath == "/") return;
-        if (this.projectPath == "c:\\") return;
-        if (this.projectPath == "C:\\") return;
-
-        const deleteFolderRecursive = function(path) {
-            if( fs.existsSync(path) ) {
-                fs.readdirSync(path).forEach(function(file){
-                    const curPath = path + "/" + file;
-                    if(!fs.lstatSync(curPath).isDirectory()) {
-                        fs.unlinkSync(curPath);
-                    }
-                });
-            }
-        };
-        deleteFolderRecursive(this.projectPath);
-    }
-
-    /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
      * @returns {Promise<any>} resolve -> (),

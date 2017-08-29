@@ -32,6 +32,4 @@ export abstract class Imagestore extends ReadImagestore {
      *   reject -> the error message
      */
     abstract remove(key: string): Promise<any>;
-
-    abstract destroy(projectName: string): void;
 }

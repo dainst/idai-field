@@ -136,11 +136,11 @@ export class PouchdbDatastore {
 
     public fetch(resourceId: string,
                  options: any = { conflicts: true }): Promise<Document> {
-
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
-            .catch(err => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
+            .then(result => this.createDocFromResult(result) )
+            .catch(err => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]));
     }
 
     public fetchRevision(resourceId: string, revisionId: string) {
@@ -168,6 +168,21 @@ export class PouchdbDatastore {
     protected setupServer() {
 
         return Promise.resolve();
+    }
+
+    /**
+     * Creates a typed Document from an untyped PouchDB result.
+     * Thereby converts dates in created in modified that are given as strings
+     * in JSON to Date objects.
+     * @param result the result as returned from PouchDB
+     * @returns {Document} the typed Document
+     */
+    private createDocFromResult(result: any): Document {
+        result.created.date = new Date(result.created.date);
+        if (result.modified) for (let modified of result.modified) {
+            modified.date = new Date(modified.date);
+        }
+        return result;
     }
 
     private perform(query: Query): Promise<any> {

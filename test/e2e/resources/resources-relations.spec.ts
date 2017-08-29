@@ -27,14 +27,14 @@ describe('resources/relations --', function() {
         });
     });
 
-    xit('create a new relation and the corresponding inverse relation', function() {
+    it('create a new relation and the corresponding inverse relation', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
         expect(DoceditPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        expect(DoceditPage.getRelationButtonText(2, 0, 0)).toEqual('2');
+        expect(DoceditPage.getRelationButtonText(0, 0, 0)).toEqual('2');
     });
 
     it('edit a resource that contains a relation', function() {

@@ -42,7 +42,6 @@ export class SettingsService {
             this.settings = settings;
             if (this.settings.dbs && this.settings.dbs.length > 0) {
                 this.pouchdbManager.setProject(this.getSelectedProject());
-                this.imagestore.initialize(this.getImagestorePath(), this.getSelectedProject());
 
                 return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
                     .then(() => this.setSettings(this.settings.username, this.settings.syncTarget,
@@ -99,6 +98,7 @@ export class SettingsService {
 
         this.settings.imagestorePath = imagestorePath;
         this.appState.setImagestorePath(this.getImagestorePath());
+        this.imagestore.setPath(this.getImagestorePath(), this.getSelectedProject());
 
         if (syncTarget.address) {
             syncTarget.address = syncTarget.address.trim();

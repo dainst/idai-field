@@ -16,6 +16,7 @@ const ip = require('ip');
 export class SettingsComponent implements OnInit {
 
     public username: string;
+    public imagestorePath: string;
     public server: SyncTarget = { address: undefined, username: undefined, password: undefined };
     public ready: boolean = false;
     public saving: boolean = false;
@@ -30,13 +31,14 @@ export class SettingsComponent implements OnInit {
         this.settingsService.ready.then(() => {
             this.ready = true;
             this.username = this.settingsService.getUsername();
+            this.imagestorePath = this.settingsService.getImagestorePath();
             this.server = this.settingsService.getSyncTarget();
         });
     }
 
     private validateSettings(): boolean {
 
-        const validationError = this.settingsService.setSettings(this.username, this.server, '');
+        const validationError = this.settingsService.setSettings(this.username, this.server, this.imagestorePath);
 
         if (validationError) {
             this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);

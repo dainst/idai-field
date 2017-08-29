@@ -34,12 +34,22 @@
 
                     <label class="control-label col-form-label"
                            for="username-input">Name des Bearbeiters
-
                     </label>
                     <span placement="right" ngbTooltip="Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. In der Regel sollte hier der volle Name des aktuellen Datenbanknutzers eingetragen werden." class="mdi mdi-information-outline"></span>
                     <input id="username-input"
                            [ngModel]="username"
                            (ngModelChange)="username = $event"
+                           class="form-control">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+
+                    <label class="control-label col-form-label"
+                           for="username-input">Pfad zum Bilderverzeichnis
+                    </label>
+                    <input id="imagestorepath-input"
+                           [ngModel]="imagestorePath"
+                           (ngModelChange)="imagestorePath = $event"
                            class="form-control">
                 </div>
 

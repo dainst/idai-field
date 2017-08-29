@@ -8,7 +8,7 @@ import {ReadImagestore} from './read-imagestore';
  */
 export abstract class Imagestore extends ReadImagestore {
 
-    abstract initialize(imagestorePath: string, projectName: string): void;
+    abstract setPath(imagestorePath: string, projectName: string): void;
 
     /**
      * @param key the identifier for the data

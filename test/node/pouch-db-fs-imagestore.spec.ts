@@ -53,7 +53,7 @@ describe('PouchDbFsImagestore', () => {
         manager.setProject('unittest');
 
         store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager);
-        store.initialize('store/', 'unittest');
+        store.setPath('store/', 'unittest');
     });
 
     afterEach(done => {

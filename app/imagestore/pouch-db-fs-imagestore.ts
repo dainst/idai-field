@@ -24,7 +24,7 @@ export class PouchDbFsImagestore implements Imagestore {
         this.db = pouchdbManager.getDb();
     }
 
-    public initialize(imagestorePath: string, projectName: string): void {
+    public setPath(imagestorePath: string, projectName: string): void {
 
         if (!fs.existsSync(imagestorePath)) fs.mkdirSync(imagestorePath);
 

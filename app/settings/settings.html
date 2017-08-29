@@ -30,12 +30,13 @@
 
             <div class="col-lg-6 offset-lg-3">
 
-                <h4>Benutzereinstellungen</h4>
-
                 <div class="form-group" style="margin-bottom: 0;">
 
                     <label class="control-label col-form-label"
-                           for="username-input">Benutzer</label>
+                           for="username-input">Name des Bearbeiters
+
+                    </label>
+                    <span placement="right" ngbTooltip="Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. In der Regel sollte hier der volle Name des aktuellen Datenbanknutzers eingetragen werden." class="mdi mdi-information-outline"></span>
                     <input id="username-input"
                            [ngModel]="username"
                            (ngModelChange)="username = $event"

@@ -140,19 +140,25 @@ export class LayerMapComponent extends MapComponent {
 
     private makeLayerForImageResource(document: Document, zIndex: number): Promise<ImageContainer> {
 
-        return new Promise<ImageContainer>((resolve, reject) => {
-            let imgContainer: ImageContainer = {
+        return new Promise<ImageContainer>(resolve => {
+            const imgContainer: ImageContainer = {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
             this.imagestore.read(document.resource.id, true, false)
                 .then(url => {
-                    imgContainer.imgSrc = url;
+                    if (url != '') {
+                        imgContainer.imgSrc = url;
+                        resolve(imgContainer);
+                    } else {
+                        return this.imagestore.read(document.resource.id, true, true);
+                    }
+                }).then(thumbnailUrl => {
+                    imgContainer.imgSrc = thumbnailUrl;
                     resolve(imgContainer);
-                }).catch(msgWithParams => {
+                }).catch(() => {
                     imgContainer.imgSrc = BlobMaker.blackImg;
-                    this.messages.add(msgWithParams);
-                    reject();
+                    resolve(imgContainer);
                 });
         });
     }

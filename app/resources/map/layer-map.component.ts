@@ -145,20 +145,21 @@ export class LayerMapComponent extends MapComponent {
                 document: (<IdaiFieldImageDocument>document),
                 zIndex: zIndex
             };
+
             this.imagestore.read(document.resource.id, true, false)
                 .then(url => {
                     if (url != '') {
                         imgContainer.imgSrc = url;
                         resolve(imgContainer);
                     } else {
-                        return this.imagestore.read(document.resource.id, true, true);
+                        this.imagestore.read(document.resource.id, true, true).then(thumbnailUrl => {
+                            imgContainer.imgSrc = thumbnailUrl;
+                            resolve(imgContainer);
+                        }).catch(() => {
+                            imgContainer.imgSrc = BlobMaker.blackImg;
+                            resolve(imgContainer);
+                        });
                     }
-                }).then(thumbnailUrl => {
-                    imgContainer.imgSrc = thumbnailUrl;
-                    resolve(imgContainer);
-                }).catch(() => {
-                    imgContainer.imgSrc = BlobMaker.blackImg;
-                    resolve(imgContainer);
                 });
         });
     }

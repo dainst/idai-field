@@ -22,8 +22,7 @@ export class AppComponent implements OnInit {
 
     private static PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
 
-    constructor(@Inject('app.config') private config,
-                private appConfigurator: AppConfigurator,
+    constructor(private appConfigurator: AppConfigurator,
                 private configLoader: ConfigLoader,
                 private router: Router,
                 private messages: Messages,

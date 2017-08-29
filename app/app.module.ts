@@ -48,9 +48,6 @@ import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
 
-const CONFIG = require('electron').remote.getGlobal('config');
-
-
 @NgModule({
     imports: [
         ImagesModule,
@@ -78,7 +75,6 @@ const CONFIG = require('electron').remote.getGlobal('config');
         AppState,
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
         ConflictResolvingExtension,
-        { provide: 'app.config', useValue: CONFIG },
         SettingsService,
         {
             provide: ConstraintIndexer,

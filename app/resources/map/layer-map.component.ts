@@ -301,4 +301,13 @@ export class LayerMapComponent extends MapComponent {
 
         return layersList.sort((layer1, layer2) => layer1.zIndex - layer2.zIndex);
     }
+
+    public getLayerLabel(layer: ImageContainer): string {
+
+        if (layer.document.resource.shortDescription && layer.document.resource.shortDescription != '') {
+            return layer.document.resource.shortDescription;
+        } else {
+            return layer.document.resource.filename;
+        }
+    }
 }

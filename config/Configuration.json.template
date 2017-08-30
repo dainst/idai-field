@@ -1406,10 +1406,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasDimensionExtent",
@@ -2102,8 +2102,7 @@
                         "Turm",
                         "Wohnbau"
                     ],
-                    "inputType": "dropdown",
-                    "description": {}
+                    "inputType": "dropdown"
                 },
                 {
                     "name": "hasBuildingCategorySpecific",
@@ -2148,8 +2147,7 @@
                         "Rednertribüne",
                         "Terassenheiligtum"
                     ],
-                    "inputType": "dropdown",
-                    "description": {}
+                    "inputType": "dropdown"
                 },
                 {
                     "name": "hasBuildingTechnique",
@@ -2393,10 +2391,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasFinds",
@@ -2627,8 +2625,7 @@
                     "label": "Lagenhöhe",
                     "visible": true,
                     "descriptions": {},
-                    "inputType": "unsignedFloat",
-                    "description": {}
+                    "inputType": "unsignedFloat"
                 },
                 {
                     "name": "hasMarkDescription",
@@ -3071,10 +3068,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasBeginningDate",
@@ -3342,8 +3339,7 @@
                     "label": "Gazetteer ID",
                     "visible": true,
                     "descriptions": {},
-                    "inputType": "input",
-                    "description": {}
+                    "inputType": "input"
                 },
                 {
                     "name": "hasPlaceName",
@@ -3589,10 +3585,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasBeginningDate",
@@ -6176,10 +6172,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasDescription",
@@ -7190,10 +7186,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasConstructionDetailsDescription",
@@ -8265,8 +8261,7 @@
                     "label": "Ausführung",
                     "visible": true,
                     "descriptions": {},
-                    "inputType": "input",
-                    "description": {}
+                    "inputType": "input"
                 },
                 {
                     "name": "hasArchitectureElement",
@@ -9386,10 +9381,10 @@
                     "label": "Fläche in m2",
                     "visible": true,
                     "descriptions": {
-                        "en": "Flächenangabe in Quadratmetern"
+                        "de": "Flächenangabe in Quadratmetern"
                     },
                     "inputType": "unsignedFloat",
-                    "description": {}
+                    "description": "Flächenangabe in Quadratmetern"
                 },
                 {
                     "name": "hasDecoration",

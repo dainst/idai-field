@@ -28,7 +28,7 @@ describe('resources/images --', function() {
             cells[0].click();
             ImagePickerModalPage.clickAddImage();
             DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortSleep * 20);
+            browser.sleep(delays.shortSleep * 40);
 
             ThumbnailViewPage.getThumbs().then(thumbs => {
                 expect(thumbs.length).toBe(1);

@@ -213,10 +213,13 @@ export class ResourcesComponent implements AfterViewChecked {
             console.debug('unhandled deleted document');
             return;
         }
+
         let changedDocument: Document = documentChange.document;
 
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
         if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
+
+        if (changedDocument.resource.type == this.view.mainType) return this.populateMainTypeDocuments();
 
         let oldDocuments = this.documents;
         this.populateDocumentList().then(() => {

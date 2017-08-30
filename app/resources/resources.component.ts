@@ -82,6 +82,15 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.setupViewFrom(params)
                 .then(() => this.initialize())
+                .then(() => {
+                    if (params['id']) {
+                        // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a
+                        // relation link from image component to resources component)
+                        setTimeout(() => {
+                            this.selectDocumentFromParams(params['id'], params['tab']);
+                        }, 100);
+                    }
+                })
                 .catch(msgWithParams => {
                     if (msgWithParams) this.messages.add(msgWithParams)
                 });
@@ -100,6 +109,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     ngAfterViewChecked() {
+
         if (this.scrollTarget) {
             if (this.scrollToDocument(this.scrollTarget)) {
                 this.scrollTarget = undefined;
@@ -108,8 +118,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private setupViewFrom(params: Params): Promise<any> {
-
-        if (params['id']) this.selectDocumentFromParams(params['id'], params['tab']);
 
         this.location.replaceState('resources/' + params['view']);
 
@@ -157,6 +165,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private selectDocument(document) {
+
         if (document && document.resource.type == this.view.mainType) {
             this.selectedMainTypeDocument = document;
         } else {

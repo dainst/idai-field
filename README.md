@@ -3,9 +3,9 @@
 
 
 # iDAI.field 2 Client
-  
-  
-  
+   
+[Documentation](docs) 
+   
 ## Prerequisites
 
 The iDAI.field2 development stack runs under MacOS, Windows, Linux. 

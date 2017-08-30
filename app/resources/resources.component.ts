@@ -81,7 +81,10 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editGeometry = false;
 
             this.setupViewFrom(params)
-                .then(() => this.initialize())
+                .then(() => {
+                    let defaultMode = params['id'] ? 'map' : undefined;
+                    this.initialize(defaultMode);
+                })
                 .then(() => {
                     if (params['id']) {
                         // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a
@@ -130,24 +133,14 @@ export class ResourcesComponent implements AfterViewChecked {
         this.ready = false;
     }
 
-    private initializeMode() {
-
-        if (this.resourcesState.getLastSelectedMode(this.view.name)) {
-            this.mode = this.resourcesState.getLastSelectedMode(this.view.name);
-        } else {
-            this.mode = 'map';
-            this.resourcesState.setLastSelectedMode(this.view.name, 'map');
-        }
-    }
-
-    public initialize(): Promise<any> {
+    public initialize(defaultMode?: string): Promise<any> {
 
         this.loading.start();
 
         return this.resourcesState.initialize()
             .then(() => {
                 this.initializeQuery();
-                this.initializeMode();
+                this.initializeMode(defaultMode);
                 return this.populateProjectDocument();
             }).then(() => this.populateMainTypeDocuments())
             .then(() => this.populateDocumentList())
@@ -162,6 +155,19 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.mainTypeLabel = projectConfiguration.getLabelForType(this.view.mainType);
             }
         ).catch(() => Promise.reject(null));
+    }
+
+    private initializeMode(defaultMode?: string) {
+
+        if (defaultMode) {
+            this.mode = defaultMode;
+            this.resourcesState.setLastSelectedMode(this.view.name, defaultMode);
+        } else if (this.resourcesState.getLastSelectedMode(this.view.name)) {
+            this.mode = this.resourcesState.getLastSelectedMode(this.view.name);
+        } else {
+            this.mode = 'map';
+            this.resourcesState.setLastSelectedMode(this.view.name, 'map');
+        }
     }
 
     private selectDocument(document) {

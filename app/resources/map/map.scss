@@ -26,7 +26,8 @@ $layer-menu-button-inactive-color: grey;
 
 #layer-button,
 #layer-menu,
-#mouse-position-coordinates,
+#mouse-position-coordinates-x,
+#mouse-position-coordinates-y,
 #map-editor-button-ok,
 #map-editor-button-abort,
 #map-editor-button-delete,
@@ -54,10 +55,18 @@ $layer-menu-button-inactive-color: grey;
   padding-bottom: 10px;
 }
 
-#mouse-position-coordinates {
+#mouse-position-coordinates-x,
+#mouse-position-coordinates-y {
   left: 52px;
-  top: 11px;
   pointer-events: none;
+}
+
+#mouse-position-coordinates-x {
+  top: 11px;
+}
+
+#mouse-position-coordinates-y {
+  top: 32px;
 }
 
 #map-editor-button-ok {

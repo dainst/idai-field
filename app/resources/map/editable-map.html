@@ -21,8 +21,11 @@
 </div>
 
 <div *ngIf="isEditing">
-    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates" class="badge badge-default">
-        Lat: {{mousePositionCoordinates.lat}}, Lng: {{mousePositionCoordinates.lng}}
+    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge badge-default">
+        <b>X:</b> {{mousePositionCoordinates.lng}}
+    </div>
+    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge badge-default">
+        <b>Y:</b> {{mousePositionCoordinates.lat}}
     </div>
     <div *ngIf="selectedPolygon || selectedPolyline || editableMarker" id="map-editor-button-delete"
          class="btn btn-danger mdi mdi-delete mdi-24px" (click)="deleteGeometry()"></div>

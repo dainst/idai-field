@@ -10,7 +10,15 @@ const menuTemplate = require('./menu.js');
 var mainWindow;
 
 
-// CONFIGURATION ---
+// Load configuration -
+
+if (process.argv.length > 2) {
+    global.configurationPath = 'config/Configuration.json';
+    global.configPath = process.argv[2];
+} else {
+    global.configurationPath = '../config/Configuration.json';
+    global.configPath = process.resourcesPath + '/config/config.json';
+}
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(srcPath, destPath) {
@@ -21,33 +29,19 @@ function copyConfigFile(srcPath, destPath) {
     }
 }
 
-if (process.argv.length > 2) { // DEVELOPMENT
-
-    if (process.argv[2].indexOf('config.test.json') == -1) {
-
-        global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
-        var appDataConfigPath = global.appDataPath + '/config.json';
-        copyConfigFile(global.configPath, appDataConfigPath);
-        global.configPath = appDataConfigPath;
-
-    } else { // DEVELOPMENT - E2E TESTING
-
-        global.configPath = process.argv[2];
-        global.appDataPath = 'test/test-temp';
-    }
-
-    global.configurationPath = 'config/Configuration.json';
-
-} else { // PACKAGE
-
-    global.configurationPath = '../config/Configuration.json';
-    global.configPath = process.resourcesPath + '/config/config.json';
+if (global.configPath.indexOf('config.test.json') == -1) {
+  global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
+  var appDataConfigPath = global.appDataPath + '/config.json';
+  copyConfigFile(global.configPath, appDataConfigPath);
+  global.configPath = appDataConfigPath;
+} else {
+    global.appDataPath = 'test/test-temp';
 }
 
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 console.log('Using config file: ' + global.configPath);
 
-// -- CONFIGURATION
+// -- Configuration
 
 
 

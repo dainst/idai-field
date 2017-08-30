@@ -57,6 +57,7 @@ $layer-menu-button-inactive-color: grey;
 #mouse-position-coordinates {
   left: 52px;
   top: 11px;
+  pointer-events: none;
 }
 
 #map-editor-button-ok {

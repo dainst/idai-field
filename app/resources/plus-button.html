@@ -1,31 +1,25 @@
 <div *ngIf="typesTreeList">
-    <div *ngIf="typesTreeList.length > 1"
+    <div *ngIf="!isSingleTypeButton()"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">
-             <!-- Enable when finally implemented in Chromium
-             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-             -->
         <span class="mdi mdi-plus"></span>
     </div>
 
-    <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType != 'none'"
+    <div *ngIf="isSingleTypeButton() && preselectedGeometryType != 'none'"
              class="circular-button type-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
              onclick="window.scrollTo(0, 0)" placement="{{placement}}">
-             <!-- Enable when finally implemented in Chromium
-             onclick="window.scrollTo({'behavior':'smooth','top':'0','left':'0'})">
-             -->
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
 
-    <div *ngIf="typesTreeList.length == 1 && preselectedGeometryType == 'none'"
-         class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
+    <div *ngIf="isSingleTypeButton() && preselectedGeometryType == 'none'"
+            class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>

@@ -64,7 +64,17 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        this.type = this.preselectedType;
+        if (this.isSingleTypeButton()) {
+            this.type = this.typesTreeList[0].name;
+        } else {
+            this.type = undefined;
+        }
+    }
+
+    public isSingleTypeButton(): boolean {
+
+        return this.typesTreeList.length == 1
+            && (!this.typesTreeList[0].children || this.typesTreeList[0].children.length == 0);
     }
 
     public chooseType(type: IdaiType) {

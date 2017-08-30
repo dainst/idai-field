@@ -40,6 +40,8 @@ export class EditableMapComponent extends LayerMapComponent {
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
+    public mousePositionCoordinates: L.LatLng;
+
     private editableMarker: L.Marker;
 
     private editablePolylines: Array<L.Polyline>;
@@ -59,6 +61,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
             if (this.isEditing) {
                 this.map.doubleClickZoom.disable();
+                this.showMousePositionCoordinates();
 
                 if (this.selectedDocument.resource.geometry.coordinates) {
                     this.fadeOutMapElements();
@@ -81,6 +84,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 }
             } else {
                 this.map.doubleClickZoom.enable();
+                this.hideMousePositionCoordinates();
             }
         });
     }
@@ -405,6 +409,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.drawMode = 'None';
 
         this.map.off('pm:create');
+        this.hideMousePositionCoordinates();
     }
 
     private fadeOutMapElements() {
@@ -556,5 +561,18 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.selectedDocument.resource.geometry.type == 'Point')
             return 'point';
+    }
+
+    private showMousePositionCoordinates() {
+
+        this.map.addEventListener('mousemove', event => this.mousePositionCoordinates = event['latlng']);
+        this.map.addEventListener('mouseout', () => this.mousePositionCoordinates = undefined);
+    }
+
+    private hideMousePositionCoordinates() {
+
+        this.map.off('mousemove');
+        this.map.off('mouseout');
+        this.mousePositionCoordinates = undefined;
     }
 }

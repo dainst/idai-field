@@ -26,6 +26,7 @@ $layer-menu-button-inactive-color: grey;
 
 #layer-button,
 #layer-menu,
+#mouse-position-coordinates,
 #map-editor-button-ok,
 #map-editor-button-abort,
 #map-editor-button-delete,
@@ -43,14 +44,19 @@ $layer-menu-button-inactive-color: grey;
 }
 
 #layer-button {
-  top: 10px;
+  top: 11px;
   right: 25px;
 }
 
 #layer-menu {
-  top: 10px;
+  top: 11px;
   right: 25px;
   padding-bottom: 10px;
+}
+
+#mouse-position-coordinates {
+  left: 52px;
+  top: 11px;
 }
 
 #map-editor-button-ok {

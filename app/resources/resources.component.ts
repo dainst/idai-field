@@ -172,8 +172,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private selectDocument(document) {
 
+        // TODO Check if this is still necessary
         if (document && document.resource.type == this.view.mainType) {
             this.selectedMainTypeDocument = document;
+            this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
+                this.selectedMainTypeDocument.resource.id);
         } else {
             this.selectedDocument = document;
             this.scrollTarget = document;
@@ -432,9 +435,13 @@ export class ResourcesComponent implements AfterViewChecked {
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
 
         doceditRef.result.then(result => {
-                this.populateMainTypeDocuments()
-                    .then(() => this.populateDocumentList())
-                    .then(() => this.selectDocument(result.document));
+            this.populateMainTypeDocuments()
+                .then(() => {
+                    if (result.document.resource.type == this.view.mainType) this.selectMainTypeDocument(result.document);
+                    return this.populateDocumentList();
+                }).then(() => {
+                    if (result.document.resource.type != this.view.mainType) this.selectDocument(result.document);
+                });
             }, closeReason => {
                 this.documentEditChangeMonitor.reset();
                 this.removeEmptyDocuments();

@@ -10,17 +10,17 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('document view --', function() {
+describe('widgets/document-view', function() {
 
     beforeEach(function() {
         ResourcesPage.get();
     });
 
     it('show the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 0, '100', 6);
+        ResourcesPage.performCreateResource('1', 1, '100', 3);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFieldName(0).then(val => {
-            expect(val).toBe('Nummer'); // with the correct field label
+            expect(val).toBe('Vergleich'); // with the correct field label
         });
         DocumentViewPage.getFieldValue(0).then(val => {
             expect(val).toBe('100');

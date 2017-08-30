@@ -200,7 +200,7 @@ describe('resources/project --', function() {
         ResourcesPage.clickSelectMainTypeDocument(0); // building2
         ResourcesPage.performCreateResource('befund1', 0);
         ResourcesPage.clickSelectMainTypeDocument(1); // building1
-        ResourcesPage.performCreateResource('fund1', 1);
+        ResourcesPage.performCreateResource('fund1', 5);
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
         DocumentViewPage.clickRelation(0);
@@ -243,13 +243,13 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('building-befund');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('excavation-befund', 1);
-        ResourcesPage.performCreateResource('excavation-fund', 0);
+        ResourcesPage.performCreateResource('excavation-befund', 0);
+        ResourcesPage.performCreateResource('excavation-inschrift', 1);
 
-        ResourcesPage.clickChooseTypeFilter(0);
+        ResourcesPage.clickChooseTypeFilter(1);
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToBuilding();
         browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
@@ -258,7 +258,7 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-fund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
     });
 
     it('autoselect last selected view mode on switching views', () => {
@@ -317,21 +317,21 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickChooseTypeFilter(0);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        //browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        //browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        //browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickChooseTypeFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);

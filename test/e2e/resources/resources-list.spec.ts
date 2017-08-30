@@ -64,7 +64,7 @@ describe('resources/list --', function() {
     it('perform a type filter search', () => {
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        ResourcesPage.clickChooseTypeFilter(6);
+        ResourcesPage.clickChooseTypeFilter(5);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
 

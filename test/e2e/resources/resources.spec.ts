@@ -54,12 +54,12 @@ describe('resources --', () => {
     });
 
     it('show only resources of the selected type', () => {
-        ResourcesPage.performCreateResource('1', 0);
-        ResourcesPage.performCreateResource('2', 2);
-        ResourcesPage.clickChooseTypeFilter(2);
+        ResourcesPage.performCreateResource('1', 3);
+        ResourcesPage.performCreateResource('2', 1);
+        ResourcesPage.clickChooseTypeFilter(1);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter(0);
+        ResourcesPage.clickChooseTypeFilter(3);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter('all');

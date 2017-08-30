@@ -9,7 +9,7 @@ let path = require('path');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
-describe('image grid --', function() {
+describe('images/image-grid --', function() {
 
     beforeEach(function () {
         ResourcesPage.get();

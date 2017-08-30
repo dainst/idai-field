@@ -197,8 +197,8 @@ export class ResourcesPage {
     };
 
     public static performCreateLink = function() {
-        ResourcesPage.performCreateResource('1', 1); // Fund
-        ResourcesPage.performCreateResource('2', 1); // Fund
+        ResourcesPage.performCreateResource('1', 0);
+        ResourcesPage.performCreateResource('2', 0);
         ResourcesPage.performCreateRelation('2', '1', 1);
     };
 

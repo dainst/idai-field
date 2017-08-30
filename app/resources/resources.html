@@ -2,38 +2,40 @@
      class="row bg-faded py-2">
 
     <div class="col-md-3">
-        <div *ngIf="view" class="row">
-            <div *ngIf="view.mainType != 'Project'" class="col-md-8">
-                <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
-                        class="form-control" [(ngModel)]="selectedMainTypeDocument"
-                        (ngModelChange)="selectMainTypeDocument($event)">
-                    <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                        {{viewUtility.getMainTypeDocumentLabel(document)}}
-                    </option>
-                </select>
-                <select id="mainTypeSelectBoxSubstitute"
-                        *ngIf="view && view.mainType != 'Project' && !selectedMainTypeDocument"
-                        class="form-control" disabled>
-                    <option>
-                        {{mainTypeLabel}} anlegen ➔
-                    </option>
-                </select>
-            </div>
+        <div *ngIf="view && view.mainType != 'Project'">
+            <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
+                    class="form-control" [(ngModel)]="selectedMainTypeDocument"
+                    (ngModelChange)="selectMainTypeDocument($event)">
+                <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
+                    {{viewUtility.getMainTypeDocumentLabel(document)}}
+                </option>
+            </select>
+            <select id="mainTypeSelectBoxSubstitute"
+                    *ngIf="view && view.mainType != 'Project' && !selectedMainTypeDocument"
+                    class="form-control" disabled>
+                <option>
+                    {{mainTypeLabel}} anlegen ➔
+                </option>
+            </select>
+        </div>
+    </div>
 
-            <div *ngIf="selectedMainTypeDocument && view.mainType != 'Project'" class="col-md-2">
+    <div class="col-md-1">
+        <div *ngIf="view && view.mainType != 'Project'" class="row">
+            <div *ngIf="selectedMainTypeDocument" class="col-md-6">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(selectedMainTypeDocument)">
                     <span class="mdi mdi-pencil mdi-18px"></span>
                 </div>
             </div>
 
-            <div *ngIf="view.mainType != 'Project'" class="col-md-2">
+            <div class="col-md-6">
                 <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
-                                    && mode == 'map'"
+                                        && mode == 'map'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
                 <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
-                                    && mode == 'list'"
+                                        && mode == 'list'"
                              id="create-main-type-document-button" [preselectedType]="view.mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
             </div>
@@ -47,7 +49,7 @@
         </search-bar>
     </div>
 
-    <div class="col-md-4" align="right">
+    <div class="col-md-3" align="right">
         <div *ngIf="ready" class="btn-group resources-mode-buttons">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [disabled]="mode == 'map'">

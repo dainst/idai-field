@@ -6684,7 +6684,7 @@
                 "de": "Abbildung",
                 "en": "Image"
             },
-            "type": "image",
+            "type": "Image",
             "label": "Abbildung"
         },
         {
@@ -8167,7 +8167,7 @@
                 "en": "Drawing"
             },
             "type": "Drawing",
-            "parent": "image",
+            "parent": "Image",
             "label": "Zeichnung"
         },
         {
@@ -9526,7 +9526,7 @@
                 "en": "Photo"
             },
             "type": "Photo",
-            "parent": "image",
+            "parent": "Image",
             "label": "Foto"
         },
         {

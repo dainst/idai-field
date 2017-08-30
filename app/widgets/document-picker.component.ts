@@ -26,7 +26,7 @@ export class DocumentPickerComponent {
     constructor(private datastore: Datastore,
                 private configLoader: ConfigLoader) {
 
-        this.query = { };
+        this.query = {};
         this.fetchDocuments();
     }
 
@@ -51,6 +51,11 @@ export class DocumentPickerComponent {
      * Populates the document list with all documents from the datastore which match the current query.
      */
     public fetchDocuments() {
+
+        if ((!this.query.q || this.query.q == '') && (!this.query.types || this.query.types.length == 0)) {
+            this.documents = [];
+            return;
+        }
 
         this.datastore.find(this.query)
             .then(documents => this.filterDocuments(documents as Array<IdaiFieldDocument>))

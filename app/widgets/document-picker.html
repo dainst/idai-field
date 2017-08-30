@@ -6,8 +6,8 @@
                 (onQueryStringChanged)="setQueryString($event)"
                 (onTypesChanged)="setQueryTypes($event)"></search-bar>
 
-    <ul class="list-group object-list" id="objectList">
-        <li *ngFor="let document of documents; let index=index"
+    <ul class="list-group" id="document-picker-list">
+        <li *ngFor="let document of documents; let index = index"
             (click)="documentSelected.emit(document)"
             class="list-group-item"
             [id]="'resource-' + document.resource.identifier">

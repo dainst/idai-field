@@ -1,7 +1,39 @@
-ul#objectList {
-  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+#document-picker-list {
+  max-height: calc(100vh - 350px) !important;
+  overflow: scroll;
+  margin-top: -2px;
+  border-bottom: 1px solid #eee;
 
-ul#objectList li {
-  margin: 0 0 1px 0 !important;
+  .list-group-item {
+    display: block;
+    cursor: pointer;
+    border: 0;
+    border-radius: 0;
+    margin: 0 0 -1px 0 !important;
+    font-size: 1em;
+    padding: 10px 5px 10px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-height: 62px;
+  }
+
+  .list-group-item:hover {
+    background-color: darken($list-item-hover-colour, 5%);
+    transition: background-color .65s ease;
+  }
+
+  .selected {
+    background-color: darken($list-item-hover-colour, 5%);
+  }
+
+  .title {
+    color: #111;
+  }
+
+  .subtitle {
+    font-size: 0.7em;
+    color: #999;
+  }
 }

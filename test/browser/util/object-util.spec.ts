@@ -30,6 +30,8 @@ export function main() {
             expect(ObjectUtil.compare('field1', 'field1')).toBe(true);
             expect(ObjectUtil.compare({ field: 'value' }, { field: 'value' })).toBe(true);
             expect(ObjectUtil.compare(['value1', 'value2'], ['value1', 'value2'])).toBe(true);
+            expect(ObjectUtil.compare([{ field1: 'value1' }, { field2: 'value2' }],
+                [{ field1: 'value1' }, { field2: 'value2' }])).toBe(true);
             expect(ObjectUtil.compare(undefined, undefined)).toBe(true);
 
             expect(ObjectUtil.compare('field1', undefined)).toBe(false);
@@ -43,6 +45,8 @@ export function main() {
             expect(ObjectUtil.compare({ field: 'value1' }, { field: 'value2' })).toBe(false);
             expect(ObjectUtil.compare({ field: 'value1' }, { field: 'value1', anotherField: 'value2' })).toBe(false);
             expect(ObjectUtil.compare(['value1', 'value2'], ['value3', 'value4'])).toBe(false);
+            expect(ObjectUtil.compare([{ field1: 'value1' }, { field2: 'value2' }],
+                [{ field2: 'value1' }, { field1: 'value2' }])).toBe(false);
 
             expect(ObjectUtil.compare('field1', { field: 'value' })).toBe(false);
             expect(ObjectUtil.compare('field1', ['value1', 'value2'])).toBe(false);

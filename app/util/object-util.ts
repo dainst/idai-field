@@ -98,15 +98,24 @@ export class ObjectUtil {
 
         if (array1.length != array2.length) return false;
 
-        for (let i in array1) {
-            if (array2.indexOf(array1[i]) == -1) return false;
+        for (let element of array1) {
+            if (!ObjectUtil.isInArray(array2, element)) return false;
         }
 
-        for (let i in array2) {
-            if (array1.indexOf(array2[i]) == -1) return false;
+        for (let element of array2) {
+            if (!ObjectUtil.isInArray(array1, element)) return false;
         }
 
         return true;
+    }
+
+    private static isInArray(array: any[], value: any): boolean {
+
+        for (let element of array) {
+            if (ObjectUtil.compareObjects(element, value)) return true;
+        }
+
+        return false;
     }
 
     private static getType(value: any): string {

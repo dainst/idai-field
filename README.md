@@ -26,7 +26,7 @@ $ npm run build
 $ npm start
 ```
 
-`npm run build` compiles the typescript files and creates configuration files.
+`npm run build` compiles the typescript files and creates [configuration](config/README.md) files.
 The typescript files are compiled once, so it is recommended to configure your IDE to 
 do that continuously in the background for you.
 

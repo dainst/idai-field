@@ -73,23 +73,24 @@ export class ListComponent implements OnChanges {
         let docRefMap: {[type: string]: DocumentReference} = {};
 
         // initialize docRefMap to make sure it is fully populated before building the tree
-        documents.forEach(doc => {
+        for (let doc of documents) {
             let docRef: DocumentReference = { doc: doc, children: [] };
             docRefMap[doc.resource.id] = docRef;
-        });
+        }
 
         // build tree from liesWithin relations
-        documents.forEach(doc => {
+        for (let doc of documents) {
             let docRef = docRefMap[doc.resource.id];
             if (!doc.resource.relations['liesWithin']) {
                 this.docRefTree.push(docRef);
             } else {
-                doc.resource.relations['liesWithin'].forEach(parentId => {
+                for (let parentId of doc.resource.relations['liesWithin']) {
+                    if (!docRefMap[parentId]) continue;
                     docRefMap[parentId]['children'].push(docRef);
                     docRef['parent'] = docRefMap[parentId];
-                });
+                }
             }
-        });
+        }
     }
 
     public toggleChildrenForId(id: string) {
@@ -132,7 +133,7 @@ export class ListComponent implements OnChanges {
             return true;
         else
             for (let child of docRef['children'])
-                if(this.isDescendantPartOfResult(child)) {
+                if (this.isDescendantPartOfResult(child)) {
                     if (this.childrenHiddenFor(docRef.doc.resource.id))
                         this.toggleChildrenForId(docRef.doc.resource.id);
                     return true;

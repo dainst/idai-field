@@ -9,14 +9,14 @@
         </div>
 
         {{typesMap[docRef.doc.resource.type].label}}<br>
-        <span *ngIf="docRef.doc.resource.relations['includes']"
+        <span *ngIf="docRef.children.length > 0"
                 (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
                 class="btn btn-sm btn-link p-0">
              <span class="mdi h5" [class.mdi-chevron-down]="!listComponent.childrenHiddenFor(docRef.doc.resource.id)"
                    [class.mdi-chevron-right]="listComponent.childrenHiddenFor(docRef.doc.resource.id)"></span>
         </span>
-        <small class="text-muted" *ngIf="docRef.doc.resource.relations['includes']">
-            {{docRef.doc.resource.relations['includes'].length}}
+        <small class="text-muted" *ngIf="docRef.children.length > 0">
+            {{docRef.children.length}}
         </small>
 
     </div>

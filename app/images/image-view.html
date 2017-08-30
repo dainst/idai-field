@@ -1,5 +1,4 @@
 <div class="row">
-
     <div *ngIf="image.document" class="col-md-9 px-0">
         <img *ngIf="image.imgSrc" [src]="image.imgSrc" style="width: 100%; height: 100%;">
         <div *ngIf="!image.imgSrc">
@@ -14,11 +13,11 @@
     </div>
 
     <div *ngIf="image.document" class="col-md-3 px-0">
-        <document-view [(document)]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
+        <document-view [document]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
             <description-view [document]="image.document"></description-view>
-            <georeference-view [(document)]="image.document"></georeference-view>
-            <fields-view [(doc)]="image.document"></fields-view>
-            <relations-view [(doc)]="image.document" (relationClicked)="jumpToRelationTarget($event)"></relations-view>
+            <georeference-view [document]="image.document"></georeference-view>
+            <fields-view [resource]="image.document.resource"></fields-view>
+            <relations-view [resource]="image.document.resource" (relationClicked)="jumpToRelationTarget($event)"></relations-view>
         </document-view>
     </div>
 </div>

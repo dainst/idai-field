@@ -46,9 +46,10 @@
                            (onEditGeometry)="resourcesComponent.startEditGeometry()"
                            (onCreateGeometry)="resourcesComponent.createGeometry($event)">
             </geometry-view>
-            <fields-view [doc]="selectedDocument"></fields-view>
-            <relations-view [doc]="selectedDocument"
-                            (relationClicked)="resourcesComponent.jumpToRelationTarget($event)"></relations-view>
+            <fields-view [resource]="selectedDocument.resource"></fields-view>
+            <relations-view [resource]="selectedDocument.resource"
+                            (relationClicked)="resourcesComponent.jumpToRelationTarget($event)">
+            </relations-view>
         </document-view>
     </div>
 </div>

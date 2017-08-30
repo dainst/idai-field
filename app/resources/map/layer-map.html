@@ -1,7 +1,7 @@
 <div id="map-container"></div>
 
 <div *ngIf="!layerMenuVisible && layersList.length > 0" id="layer-button" class="btn btn-primary"
-        (mouseenter)="layerMenuVisible = true;">Karten</div>
+        (mouseenter)="layerMenuVisible = true;"><span class="mdi mdi-layers mdi-18px"></span></div>
 <div *ngIf="layerMenuVisible && layersList.length > 0" id="layer-menu" class="card card-block form-group"
         (mouseleave)="layerMenuVisible = false;">
     <div *ngFor="let layer of layersList" class="layer-entry">

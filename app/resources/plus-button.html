@@ -1,5 +1,5 @@
 <div *ngIf="typesTreeList">
-    <div *ngIf="!isSingleTypeButton()"
+    <div *ngIf="getButtonType() == 'multipleTypes'"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
@@ -7,7 +7,7 @@
         <span class="mdi mdi-plus"></span>
     </div>
 
-    <div *ngIf="isSingleTypeButton() && preselectedGeometryType != 'none'"
+    <div *ngIf="getButtonType() == 'singleType' && preselectedGeometryType != 'none'"
              class="circular-button type-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" (click)="reset(); popover.toggle();"
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div *ngIf="isSingleTypeButton() && preselectedGeometryType == 'none'"
+    <div *ngIf="getButtonType() == 'singleType' && preselectedGeometryType == 'none'"
             class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">

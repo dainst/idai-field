@@ -304,10 +304,16 @@ export class LayerMapComponent extends MapComponent {
 
     public getLayerLabel(layer: ImageContainer): string {
 
+        let label: string;
+
         if (layer.document.resource.shortDescription && layer.document.resource.shortDescription != '') {
-            return layer.document.resource.shortDescription;
+            label = layer.document.resource.shortDescription;
         } else {
-            return layer.document.resource.filename;
+            label = layer.document.resource.identifier;
         }
+
+        if (label.length > 48) label = label.substring(0, 45) + '...';
+
+        return label;
     }
 }

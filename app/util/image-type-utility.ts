@@ -15,7 +15,7 @@ export class ImageTypeUtility {
         return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
             const type = projectConfiguration.getTypesMap()[typeName];
 
-            return Promise.resolve(type.name == 'image' || (type.parentType && type.parentType.name == 'image'));
+            return Promise.resolve(type.name == 'Image' || (type.parentType && type.parentType.name == 'Image'));
         });
     }
 

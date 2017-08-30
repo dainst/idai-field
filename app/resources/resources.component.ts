@@ -16,6 +16,7 @@ import {ViewUtility} from '../util/view-utility';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
+import {ImageTypeUtility} from '../util/image-type-utility';
 
 
 @Component({
@@ -66,6 +67,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private configLoader: ConfigLoader,
                 private viewUtility: ViewUtility,
+                private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
                 private resourcesState: ResourcesState
     ) {
@@ -245,14 +247,22 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
 
-        this.viewUtility.getViewNameForDocument(documentToSelect)
-            .then(viewName => {
-                if (viewName != this.view.name) {
-                    return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
+        this.imageTypeUtility.isImageType(documentToSelect.resource.type)
+            .then(isImageType => {
+                if (isImageType) {
+                    this.router.navigate(['images', documentToSelect.resource.id, 'show']);
                 } else {
-                    this.select(documentToSelect);
+                    this.viewUtility.getViewNameForDocument(documentToSelect)
+                        .then(viewName => {
+                            if (viewName != this.view.name) {
+                                return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
+                            } else {
+                                this.select(documentToSelect);
+                            }
+                        });
                 }
-            });
+            }
+        );
     }
 
     public setSelected(documentToSelect: Document): Document {

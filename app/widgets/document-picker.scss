@@ -1,6 +1,7 @@
 #document-picker-list {
   max-height: calc(100vh - 350px) !important;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin-top: -2px;
   border-bottom: 1px solid #eee;
 

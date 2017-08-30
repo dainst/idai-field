@@ -76,6 +76,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectedDocument = undefined;
             this.selectedMainTypeDocument = undefined;
             this.mainTypeDocuments = undefined;
+            this.editGeometry = false;
 
             this.setupViewFrom(params)
                 .then(() => this.initialize())
@@ -315,6 +316,7 @@ export class ResourcesComponent implements AfterViewChecked {
      * the datastore which match a <code>query</code>
      */
     private populateDocumentList() {
+
         this.newDocumentsFromRemote = [];
 
         if (!this.selectedMainTypeDocument) {

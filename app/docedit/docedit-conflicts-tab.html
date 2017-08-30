@@ -46,7 +46,8 @@
             <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="!field.rightSideWinning"
                  [class.losing-side]="field.rightSideWinning" (click)="setWinningSideForField(field, false)">
                 <div *ngIf="field.type == 'field'" >
-                    <div *ngIf="document.resource[field.name]">{{document.resource[field.name]}}</div>
+                    <div *ngIf="document.resource[field.name]" [innerHTML]="getFieldContent(field, document)">
+                    </div>
                     <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
                 </div>
                 <div *ngIf="field.type == 'geometry'">
@@ -74,9 +75,8 @@
             <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="field.rightSideWinning"
                  [class.losing-side]="!field.rightSideWinning" (click)="setWinningSideForField(field, true)">
                 <div *ngIf="field.type == 'field'">
-                    <div *ngIf="selectedRevision.resource[field.name]">
-                        {{selectedRevision.resource[field.name]}}
-                    </div>
+                    <div *ngIf="selectedRevision.resource[field.name]"
+                         [innerHTML]="getFieldContent(field, selectedRevision)"></div>
                     <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
                 </div>
                 <div *ngIf="field.type == 'geometry'">

@@ -262,4 +262,24 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         return latestAction.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
+
+    public getFieldContent(field: any, revision: IdaiFieldDocument): string {
+
+        const fieldContent: any = revision.resource[field.name];
+
+        if (fieldContent instanceof Array) {
+            let contentString: string = '';
+            for (let element of fieldContent) {
+                if (element.hasLabel) {
+                    contentString += '<div>' + element.hasLabel + '</div>';
+                } else {
+                    if (contentString.length > 0) contentString += ', ';
+                    contentString += element;
+                }
+            }
+            return contentString;
+        } else {
+            return fieldContent;
+        }
+    }
 }

@@ -10,14 +10,18 @@ const menuTemplate = require('./menu.js');
 var mainWindow;
 
 
-// Load configuration -
+// CONFIGURATION ---
 
+var configSourcePath;
 if (process.argv.length > 2) { // DEVELOPMENT
+
     global.configurationPath = 'config/Configuration.json';
-    global.configPath = process.argv[2];
+    configSourcePath = process.argv[2];
+
 } else { // PACKAGE
+
     global.configurationPath = '../config/Configuration.json';
-    global.configPath = process.resourcesPath + '/config/config.json';
+    configSourcePath = process.resourcesPath + '/config/config.json.template';
 }
 
 // Copy config file to appData if no config file exists in appData
@@ -30,19 +34,23 @@ function copyConfigFile(srcPath, destPath) {
     }
 }
 
-if (global.configPath.indexOf('config.test.json') == -1) {
+if (configSourcePath.indexOf('config.test.json') == -1) { // PRODUCTION
+
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     var appDataConfigPath = global.appDataPath + '/config.json';
-    copyConfigFile(global.configPath, appDataConfigPath);
+    copyConfigFile(configSourcePath, appDataConfigPath);
     global.configPath = appDataConfigPath;
-} else {
+
+} else { // E2E TESTING
+
+    global.configPath = configSourcePath;
     global.appDataPath = 'test/test-temp';
 }
 
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 console.log('Using config file: ' + global.configPath);
 
-// -- Configuration
+// -- CONFIGURATION
 
 
 

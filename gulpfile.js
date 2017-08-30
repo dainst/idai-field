@@ -119,6 +119,5 @@ function createConfig(path) {
 //
 gulp.task('create-configs', function (callback) {
 
-    createConfig('./config/config.json');
     createConfig('./config/Configuration.json');
 });

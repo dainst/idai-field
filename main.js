@@ -12,6 +12,16 @@ var mainWindow;
 
 // CONFIGURATION ---
 
+// Copy config file to appData if no config file exists in appData
+function copyConfigFile(srcPath, destPath) {
+
+    if (!fs.existsSync(destPath)) {
+        console.log('copy ' + srcPath + ' to ' + destPath);
+        var config = fs.readFileSync(srcPath, 'utf-8');
+        fs.writeFileSync(destPath, config);
+    }
+}
+
 var configSourcePath;
 if (process.argv.length > 2) { // DEVELOPMENT
 
@@ -22,16 +32,6 @@ if (process.argv.length > 2) { // DEVELOPMENT
 
     global.configurationPath = '../config/Configuration.json';
     configSourcePath = process.resourcesPath + '/config/config.json.template';
-}
-
-// Copy config file to appData if no config file exists in appData
-function copyConfigFile(srcPath, destPath) {
-
-    if (!fs.existsSync(destPath)) {
-        console.log('copy ' + srcPath + ' to ' + destPath);
-        var config = fs.readFileSync(srcPath, 'utf-8');
-        fs.writeFileSync(destPath, config);
-    }
 }
 
 if (configSourcePath.indexOf('config.test.json') == -1) { // PRODUCTION

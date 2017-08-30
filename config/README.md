@@ -1,27 +1,17 @@
 # Configuration
 
-For starting the app or running the e2e tests, it is expected that the files
-
-```
-idai-field-client/config/config.json
-idai-field-client/config/Configuration.json
-```
-
-exist. These files are provided as template files. These get automatically created
-by `npm run build` from their template suffixed counterparts in case they do not exist.
-
-The template files are meant to show general usage. See below for more in depth discussion of configuration options.
-
-**Important note regarding e2e testing:** Although other configurations may work, too, the .template suffixed
-files are the ones proven to work for the e2e tests. 
-In case you experience problems with the tests, provide the .template configuratons and test again.
-
 The .template files are provided and the actual configuration file names are .gitignored ([see](.gitignore)) so developers can experiment with different configurations locally
 without risking of committing actual real configurations to the repo.
 
-## config.json
+## misc configs
 
-### imagestorepath
+When the clients starts for the first time, it creates a
+`config.json` and several other config files `resources-state-*\`
+at the users app dir for idai-field-client. On MacOS,
+this is `/Users/<username>/Library/Application\ Support/idai-field-client/`.
+These files contain view states, db and sync settings etc. 
+
+### config.json - imagestorepath
 
 The client uses one directory to store and manage all its media files.
 
@@ -33,15 +23,14 @@ The client uses one directory to store and manage all its media files.
 
 ## Configuration.json
 
-In addition to the general rules for 
-[Configuration.json](https://github.com/dainst/idai-components-2/blob/master/docs/configuration.md),
-there are a few additional ones, regarding the iDAI.field 2 configuration.
+During development, the client works with `config/Configuration.json`.
+Initially it gets cloned from `config/Configuration.json.template`, when
+calling `npm run build`. If the target file exists, `npm run build` will 
+not overwrite it. If e2e tests fail with an adjusted `Configuration.json`, 
+try deleting `config/Configuration.json` and run `npm run build`.
+ 
+## Configuration.json - structure
 
-In iDAI.field 2, the fields `identifier` and `shortDescription`
-automatically get added to every defined type, if not defined
-explicitely.
-
-Furthermore, the `image` type has to be defined. Otherwise the
-application won't start.
+[documentation](../docs/configuration-structure.md)
 
 

@@ -18,7 +18,7 @@
             <description-view [document]="image.document"></description-view>
             <georeference-view [(document)]="image.document"></georeference-view>
             <fields-view [(doc)]="image.document"></fields-view>
-            <relations-view [(doc)]="image.document" (relationClicked)="selectRelatedDocument($event)"></relations-view>
+            <relations-view [(doc)]="image.document" (relationClicked)="jumpToRelationTarget($event)"></relations-view>
         </document-view>
     </div>
 </div>

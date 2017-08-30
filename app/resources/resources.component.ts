@@ -238,6 +238,11 @@ export class ResourcesComponent implements AfterViewChecked {
         this.setSelected(documentToSelect);
     }
 
+    public deselect() {
+
+        this.selectedDocument = undefined;
+    }
+
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
 
         this.viewUtility.getViewNameForDocument(documentToSelect)
@@ -465,11 +470,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public solveConflicts(doc: IdaiFieldDocument) {
 
         this.editDocument(doc, 'conflicts');
-    }
-
-    public deselect() {
-
-        this.selectedDocument = undefined;
     }
 
     public startEdit(doc: IdaiFieldDocument) {

@@ -1,13 +1,14 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute,Router} from "@angular/router";
-import {Datastore} from "idai-components-2/datastore";
-import {ImageComponentBase} from "./image-component-base";
-import {Messages} from "idai-components-2/messages";
-import {Imagestore} from "../imagestore/imagestore";
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute,Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {DoceditComponent} from '../docedit/docedit.component';
+import {Datastore} from 'idai-components-2/datastore';
+import {Messages} from 'idai-components-2/messages';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {ImageComponentBase} from './image-component-base';
+import {Imagestore} from '../imagestore/imagestore';
+import {DoceditComponent} from '../docedit/docedit.component';
+import {ViewUtility} from '../util/view-utility';
 
 @Component({
     moduleId: module.id,
@@ -26,7 +27,8 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor
+        private documentEditChangeMonitor: DocumentEditChangeMonitor,
+        private viewUtility: ViewUtility
     ) {
         super(route, datastore, imagestore, messages);
     }
@@ -36,8 +38,10 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         window.getSelection().removeAllRanges();
     }
 
-    public selectRelatedDocument(documentToJumpTo) {
-        this.router.navigate(['resources', { id: documentToJumpTo.resource.id }])
+    public jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
+
+        this.viewUtility.getViewNameForDocument(documentToJumpTo)
+            .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id]));
     }
 
     public deselect() {

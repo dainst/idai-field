@@ -40,7 +40,7 @@ export class EditableMapComponent extends LayerMapComponent {
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
 
-    public mousePositionCoordinates: L.LatLng;
+    public mousePositionCoordinates: string[];
 
     private editableMarker: L.Marker;
 
@@ -565,7 +565,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private showMousePositionCoordinates() {
 
-        this.map.addEventListener('mousemove', event => this.mousePositionCoordinates = event['latlng']);
+        this.map.addEventListener('mousemove', event => this.updateMousePositionCoordinates(event['latlng']));
         this.map.addEventListener('mouseout', () => this.mousePositionCoordinates = undefined);
     }
 
@@ -574,5 +574,10 @@ export class EditableMapComponent extends LayerMapComponent {
         this.map.off('mousemove');
         this.map.off('mouseout');
         this.mousePositionCoordinates = undefined;
+    }
+
+    private updateMousePositionCoordinates(latLng: L.LatLng) {
+
+        this.mousePositionCoordinates = [latLng.lng.toFixed(7), latLng.lat.toFixed(7)];
     }
 }

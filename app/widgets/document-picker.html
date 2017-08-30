@@ -4,7 +4,7 @@
                 [relationName]="relationName"
                 [relationRangeType]="relationRangeType"
                 (onQueryStringChanged)="setQueryString($event)"
-                (onTypeChanged)="setQueryType($event)"></search-bar>
+                (onTypesChanged)="setQueryTypes($event)"></search-bar>
 
     <ul class="list-group object-list" id="objectList">
         <li *ngFor="let document of documents; let index=index"
@@ -13,7 +13,6 @@
             [id]="'resource-' + document.resource.identifier">
 
             <document-teaser [document]="document"></document-teaser>
-
         </li>
     </ul>
 

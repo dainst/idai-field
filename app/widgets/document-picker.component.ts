@@ -36,10 +36,10 @@ export class DocumentPickerComponent {
         this.fetchDocuments();
     }
 
-    public setQueryType(type: string) {
+    public setQueryTypes(types: string[]) {
 
-        if (type) {
-            this.query.types = [type];
+        if (types && types.length > 0) {
+            this.query.types = types;
         } else {
             delete this.query.types;
         }

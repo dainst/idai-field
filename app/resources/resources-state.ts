@@ -44,16 +44,16 @@ export class ResourcesState {
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
 
-    public setLastSelectedTypeFilter(viewName: string, type: string) {
+    public setLastSelectedTypeFilters(viewName: string, types: string[]) {
 
         if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].type = type;
+        this._[viewName].types = types;
         this.serializer.store(this._);
     }
 
-    public getLastSelectedTypeFilter(viewName: string): string {
+    public getLastSelectedTypeFilters(viewName: string): string[] {
 
-         return (!this._[viewName]) ? undefined : this._[viewName].type;
+         return (!this._[viewName]) ? undefined : this._[viewName].types;
     }
 
     public setActiveLayersIds(viewName: string, mainTypeDocumentId: string, activeLayersIds: string[]) {

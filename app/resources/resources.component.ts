@@ -37,7 +37,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public editGeometry: boolean = false;
 
     public query: Query;
-    public filterType: string;
+    public filterTypes: string[];
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -282,12 +282,12 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
-    public setQueryType(type: string) {
+    public setQueryTypes(types: string[]) {
 
-        type ? this.query.types = [type] : delete this.query.types;
+        types && types.length > 0 ? this.query.types = types : delete this.query.types;
 
-        this.resourcesState.setLastSelectedTypeFilter(this.view.name, type);
-        this.filterType = type;
+        this.resourcesState.setLastSelectedTypeFilters(this.view.name, types);
+        this.filterTypes = types;
 
         this.populateDocumentList();
     }
@@ -295,8 +295,8 @@ export class ResourcesComponent implements AfterViewChecked {
     private initializeQuery() {
 
         this.query = { q: '' };
-        this.filterType = this.resourcesState.getLastSelectedTypeFilter(this.view.name);
-        if (this.filterType) this.query.types = [this.filterType];
+        this.filterTypes = this.resourcesState.getLastSelectedTypeFilters(this.view.name);
+        if (this.filterTypes && this.filterTypes.length > 0) this.query.types = this.filterTypes;
     }
 
     public remove(document: Document) {

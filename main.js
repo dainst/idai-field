@@ -12,10 +12,10 @@ var mainWindow;
 
 // Load configuration -
 
-if (process.argv.length > 2) {
+if (process.argv.length > 2) { // DEVELOPMENT
     global.configurationPath = 'config/Configuration.json';
     global.configPath = process.argv[2];
-} else {
+} else { // PACKAGE
     global.configurationPath = '../config/Configuration.json';
     global.configPath = process.resourcesPath + '/config/config.json';
 }
@@ -24,16 +24,17 @@ if (process.argv.length > 2) {
 function copyConfigFile(srcPath, destPath) {
 
     if (!fs.existsSync(destPath)) {
+        console.log('copy ' + srcPath + ' to ' + destPath);
         var config = fs.readFileSync(srcPath, 'utf-8');
         fs.writeFileSync(destPath, config);
     }
 }
 
 if (global.configPath.indexOf('config.test.json') == -1) {
-  global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
-  var appDataConfigPath = global.appDataPath + '/config.json';
-  copyConfigFile(global.configPath, appDataConfigPath);
-  global.configPath = appDataConfigPath;
+    global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
+    var appDataConfigPath = global.appDataPath + '/config.json';
+    copyConfigFile(global.configPath, appDataConfigPath);
+    global.configPath = appDataConfigPath;
 } else {
     global.appDataPath = 'test/test-temp';
 }

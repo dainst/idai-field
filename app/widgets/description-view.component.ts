@@ -1,6 +1,5 @@
-import {Component, OnChanges, Input} from "@angular/core";
-import {Router} from "@angular/router";
-import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field-model';
+import {Component, Input} from '@angular/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 
 @Component({
@@ -12,16 +11,7 @@ import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field
 /**
  * @author Jan G. Wieners
  */
-export class DescriptionViewComponent implements OnChanges {
+export class DescriptionViewComponent {
 
     @Input() document: IdaiFieldDocument;
-
-    constructor(
-        private router: Router
-    ) { }
-
-    ngOnChanges() {
-        if (!this.document) return;
-        var resource:IdaiFieldResource = this.document.resource;
-    }
 }

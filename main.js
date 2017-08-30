@@ -16,7 +16,6 @@ var mainWindow;
 function copyConfigFile(srcPath, destPath) {
 
     if (!fs.existsSync(destPath)) {
-        console.log('Use and copy config file ' + srcPath + ' to ' + destPath);
         var config = fs.readFileSync(srcPath, 'utf-8');
         fs.writeFileSync(destPath, config);
     }
@@ -28,7 +27,7 @@ if (process.argv.length > 2) { // DEVELOPMENT
 
         global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
         var appDataConfigPath = global.appDataPath + '/config.json';
-        copyConfigFile('config/config.json.template', appDataConfigPath);
+        copyConfigFile(global.configPath, appDataConfigPath);
         global.configPath = appDataConfigPath;
 
     } else { // DEVELOPMENT - E2E TESTING

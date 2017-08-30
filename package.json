@@ -7,7 +7,7 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
-    "build": "gulp create-configuration && gulp compile",
+    "build": "gulp create-configs && gulp compile",
     "start": "electron . config/config.json",
     "test": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json && karma start test/browser/config/karma.conf.js",
     "pree2e": "rimraf test/e2e-screenshots/*.png",

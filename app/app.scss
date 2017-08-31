@@ -94,6 +94,8 @@ html [type="button"],
   background-color: #eee;
   padding: 10px;
   font-weight: lighter;
+  user-select: none;
+  cursor: default;
 }
 
 .popover-custom-title {
@@ -300,4 +302,3 @@ $lightgraybgr: #eeeeee;
 .modal-lg {
   min-width: 86%;
 }
-

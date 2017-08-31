@@ -269,7 +269,11 @@ export class ResourcesComponent implements AfterViewChecked {
     public setSelected(documentToSelect: Document): Document {
 
         this.selectedDocument = documentToSelect;
-        if (this.selectedDocument) this.selectLinkedMainTypeDocumentForSelectedDocument();
+        if (this.selectedDocument) {
+            const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
+            const res2 = this.invalidateTypeFiltersIfNecessary();
+            if (res1 || res2) this.populateDocumentList();
+        }
 
         return this.selectedDocument;
     }
@@ -279,17 +283,35 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.selectedDocument;
     }
 
-    private selectLinkedMainTypeDocumentForSelectedDocument() {
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateTypeFiltersIfNecessary() {
 
-        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return;
+        if (!this.selectedDocument) return false;
+        if (this.query.types && this.filterTypes.indexOf(this.selectedDocument.resource.type) != -1) return false;
+
+        delete this.query.types;
+        this.filterTypes = [];
+        return true;
+    }
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private selectLinkedMainTypeDocumentForSelectedDocument(): boolean {
+
+        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return false;
 
         let mainTypeDocument = ResourcesComponent.getMainTypeDocumentForDocument(
             this.selectedDocument, this.mainTypeDocuments);
 
         if (mainTypeDocument != this.selectedMainTypeDocument) {
             this.selectedMainTypeDocument = mainTypeDocument;
-            this.populateDocumentList();
+            return true;
         }
+
+        return false;
     }
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {

@@ -23,45 +23,49 @@ export class ImagesGridPage {
         return ImagesGridPage.getCell(index).click();
     };
 
+    public static chooseImageSubtype(index) {
+
+        return common.click(element(by.id('choose-image-subtype-option-' + index)));
+    };
+
+    public static getCellFilenameElement(filename) {
+
+        return common.click(element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]')));
+    };
+
+    public static clickDeselectButton() {
+
+        return common.click(element(by.id('deselect-images')));
+    };
+
+    public static clickDeleteButton() {
+
+        return common.click(element(by.id('delete-images')));
+    };
+
+    public static clickCreateRelationsButton() {
+
+        return common.click(element(by.id('create-relations-btn')));
+    };
+
+    public static clickConfirmDeleteButton() {
+
+        return common.click(element(by.id('delete-images-confirm')));
+    };
+
+    public static clickCancelDeleteButton() {
+
+        return common.click(element(by.id('delete-images-cancel')));
+    };
+
+    // double click
+
     public static doubleClickCell(index) {
 
         return browser.actions().doubleClick(ImagesGridPage.getCell(index)).perform();
     };
 
-    public static getCellImageName(index) {
-
-        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-default')).getText();
-    };
-
-    public static getCellFilenameElement(filename) {
-
-        return element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]'));
-    };
-
-    public static clickDeselectButton() {
-
-        return element(by.id('deselect-images')).click();
-    };
-
-    public static clickDeleteButton() {
-
-        return element(by.id('delete-images')).click();
-    };
-
-    public static clickCreateRelationsButton() {
-
-        return element(by.id('create-relations-btn')).click();
-    };
-
-    public static clickConfirmDeleteButton() {
-
-        return element(by.id('delete-images-confirm')).click();
-    };
-
-    public static clickCancelDeleteButton() {
-
-        return element(by.id('delete-images-cancel')).click();
-    };
+    // mouse moves
 
     public static clickUploadArea = function() {
 
@@ -69,6 +73,13 @@ export class ImagesGridPage {
             .mouseMove(element(by.css('.droparea')), {x: 10, y: 10})
             .click()
             .perform();
+    };
+
+    // text
+
+    public static getCellImageName(index) {
+
+        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-default')).getText();
     };
 
     // elements
@@ -105,11 +116,6 @@ export class ImagesGridPage {
     public static uploadImage(filePath) {
 
         return element(by.id('file')).sendKeys(filePath);
-    };
-
-    public static chooseImageSubtype(index) {
-
-        return element(by.id('choose-image-subtype-option-' + index)).click();
     };
 
     // sequences

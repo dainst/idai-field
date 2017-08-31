@@ -10,49 +10,60 @@ import {DoceditPage} from '../docedit/docedit.page';
 export class ResourcesPage {
 
     public static get = function() {
+
         return browser.get('#/resources/excavation');
     };
 
     // click
 
-    public static clickCreateResource = function() {
+    public static clickCreateResource() {
+
         common.click(element(by.css('#create-document-button .circular-button')));
     };
 
-    public static clickCreateMainTypeResource = function() {
+    public static clickCreateMainTypeResource() {
+
         common.click(element(by.css('#create-main-type-document-button .circular-button')));
     };
 
-    public static clickEditMainTypeResource = function() {
+    public static clickEditMainTypeResource() {
+
         common.click(element(by.id('edit-main-type-document-button')));
     };
 
-    public static clickSaveInModal = function() {
+    public static clickSaveInModal() {
+
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
     };
 
-    public static clickCancelInModal = function() {
+    public static clickCancelInModal() {
+
         common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
     };
 
-    public static clickDiscardInModal = function() {
+    public static clickDiscardInModal() {
+
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
     };
 
-    public static clickDeleteDocument = function() {
+    public static clickDeleteDocument() {
+
         common.click(element(by.id('document-edit-button-delete-document')));
     };
 
-    public static clickDeleteInModal = function() {
+    public static clickDeleteInModal() {
+
         common.click(element(by.id('delete-resource-confirm')));
     };
 
-    public static clickChooseTypeFilter = function(typeIndex) {
+    public static clickChooseTypeFilter(typeIndex) {
+
         common.click(element(by.id('searchfilter')));
         common.click(element(by.id('choose-type-filter-option-' + typeIndex)));
     };
 
-    public static clickSelectGeometryType = function(type?) {
+    public static clickSelectGeometryType(type?) {
+
         let geom = 'none';
         if (type) geom = type;
         return common.click(element(by.id('choose-geometry-option-' + geom)));
@@ -61,34 +72,41 @@ export class ResourcesPage {
     /**
      * @deprecated use selectObjectByIdentifier instead
      */
-    public static clickSelectObjectByIndex = function(listIndex) {
+    public static clickSelectObjectByIndex(listIndex) {
+
         return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
     };
 
-    public static clickSelectResource = function(identifier) {
+    public static clickSelectResource(identifier) {
+
         return common.click(element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
             + identifier + '"]')));
     };
 
-    public static clickMapModeButton = function() {
+    public static clickMapModeButton() {
+
         common.click(element(by.id('map-mode-button')));
     };
 
-    public static clickListModeButton = function() {
+    public static clickListModeButton() {
+
         common.click(element(by.id('list-mode-button')));
     };
 
-    public static clickSelectResourceType = function(typeIndex?) {
+    public static clickSelectResourceType(typeIndex?) {
+
         if (!typeIndex) typeIndex = 0;
         return common.click(element(by.id('choose-type-option-' + typeIndex)));
     };
 
-    public static clickSelectMainTypeDocument = function(option) {
+    public static clickSelectMainTypeDocument(option) {
+
         browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#mainTypeSelectBox option')).get(option).click();
     };
 
-    public static openEditByDoubleClickResource = function(identifier) {
+    public static openEditByDoubleClickResource(identifier) {
+
         browser.wait(EC.visibilityOf(
             element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
                 + identifier + '"]'))), delays.ECWaitTime);
@@ -98,72 +116,86 @@ export class ResourcesPage {
 
     // get text
 
-    public static getListItemIdentifierText = function(itemNr) {
+    public static getListItemIdentifierText(itemNr) {
+
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
             + (itemNr + 1) + ') .title'))), delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
     };
 
-    public static getSelectedListItemIdentifierText = function() {
+    public static getSelectedListItemIdentifierText() {
+
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .title'))),
             delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item.selected .title')).getText();
     };
 
-    public static getSelectedMainTypeDocumentOption = function() {
+    public static getSelectedMainTypeDocumentOption() {
+
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
     };
 
-    public static getMainTypeDocumentOption = function() {
+    public static getMainTypeDocumentOption() {
+
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox')).getText();
     };
 
-    public static getSearchBarInputFieldValue = function() {
+    public static getSearchBarInputFieldValue() {
+
         return ResourcesPage.getSearchBarInputField().getAttribute('value');
     };
 
-    public static getListModeInputFieldValue = function(identifier, index) {
+    public static getListModeInputFieldValue(identifier, index) {
+
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
     };
 
     // elements
 
-    public static getListItemEl = function(identifier) {
+    public static getListItemEl(identifier) {
+
         return element(by.id('resource-' + identifier));
     };
 
-    public static getListItemEls = function() {
+    public static getListItemEls() {
+
         return element.all(by.css('.list-group-item'));
     };
 
-    public static getListItemMarkedNewEl = function() {
+    public static getListItemMarkedNewEl() {
+
         return element(by.css('#objectList .list-group-item .new'));
     };
 
-    public static getListItemMarkedNewEls = function() {
+    public static getListItemMarkedNewEls() {
+
         return element.all(by.css('#objectList .list-group-item .new'));
     };
 
-    public static getListModeInputField = function(identifier, index) {
+    public static getListModeInputField (identifier, index) {
+
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
-    public static getSelectedTypeFilterButton = function() {
+    public static getSelectedTypeFilterButton() {
+
         return element(by.css('#filter-button type-icon'));
     };
 
-    public static getSearchBarInputField = function() {
+    public static getSearchBarInputField() {
+
         return element(by.id('object-search'));
     };
 
     // sequences
 
-    public static performCreateResource = function(identifier: string, typeIndex?: number, inputFieldText?: string,
+    public static performCreateResource(identifier: string, typeIndex?: number, inputFieldText?: string,
                                                    inputFieldIndex?: number, skipGeometry?: boolean) {
+
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeIndex);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
@@ -176,7 +208,8 @@ export class ResourcesPage {
         browser.sleep(delays.shortRest);
     };
 
-    public static performCreateMainTypeResource = function(identifier: string) {
+    public static performCreateMainTypeResource(identifier: string) {
+
         ResourcesPage.clickCreateMainTypeResource();
         ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField(identifier);
@@ -185,8 +218,9 @@ export class ResourcesPage {
         browser.sleep(delays.shortRest);
     };
 
-    public static performCreateRelation = function(identifier: string, targetIdentifier: string,
+    public static performCreateRelation(identifier: string, targetIdentifier: string,
                                                    relationGroupIndex: number) {
+
         ResourcesPage.openEditByDoubleClickResource(identifier);
         DoceditPage.clickRelationsTab();
         DoceditPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
@@ -196,7 +230,8 @@ export class ResourcesPage {
         browser.sleep(delays.shortRest);
     };
 
-    public static performCreateLink = function() {
+    public static performCreateLink() {
+
         ResourcesPage.performCreateResource('1', 0);
         ResourcesPage.performCreateResource('2', 0);
         ResourcesPage.performCreateRelation('2', '1', 1);
@@ -204,21 +239,25 @@ export class ResourcesPage {
 
     // script
 
-    public static scrollDown = function() {
+    public static scrollDown() {
+
         return browser.executeScript('window.scrollTo(0,200);');
     };
 
-    public static scrollUp = function() {
+    public static scrollUp() {
+
         return browser.executeScript('window.scrollTo(0,0);');
     };
 
     // type in
 
-    public static typeInIdentifierInSearchField = function(identifier) {
+    public static typeInIdentifierInSearchField(identifier) {
+
         return common.typeIn(ResourcesPage.getSearchBarInputField(), identifier);
     };
 
-    public static typeInListModeInputField = function(identifier, index, inputText) {
+    public static typeInListModeInputField(identifier, index, inputText) {
+
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     };
 }

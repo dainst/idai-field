@@ -76,16 +76,6 @@ xdescribe('resources/syncing --', function() {
             .then(() => server.close());
     }
 
-    function resetConfigJson(): Promise<any> {
-
-        return new Promise(resolve => {
-            fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
-                if (err) console.error('Failure while resetting config.json', err);
-                resolve();
-            });
-        });
-    }
-
     function setConfigJson(): Promise<any> {
 
         return new Promise(resolve => {
@@ -115,7 +105,7 @@ xdescribe('resources/syncing --', function() {
 
     afterEach(done => {
         if (changes) changes.cancel();
-        resetConfigJson().then(done);
+        common.resetConfigJson().then(done);
     });
 
     function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {

@@ -8,6 +8,7 @@ import {MapPage} from './map/map.page';
 const fs = require('fs');
 const delays = require('../config/delays');
 const EC = protractor.ExpectedConditions;
+const common = require('../common');
 
 /**
  * @author Daniel de Oliveira
@@ -23,25 +24,12 @@ describe('resources/project --', function() {
         return ProjectPage.get();
     });
 
-    // TODO remove duplicate code with resources syncing spec
-    const configPath = browser.params.configPath;
-    const configTemplate = browser.params.configTemplate;
     const appDataPath = browser.params.appDataPath;
-
-    function resetConfigJson(): Promise<any> {
-
-        return new Promise(resolve => {
-            fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
-                if (err) console.error('Failure while resetting config.json', err);
-                resolve();
-            });
-        });
-    }
 
     afterEach(done => {
 
         removeResourcesStateFile();
-        resetConfigJson().then(done);
+        common.resetConfigJson().then(done);
     });
 
     function performCreateProject() {

@@ -13,7 +13,9 @@ var mainWindow;
 // CONFIGURATION ---
 
 // Copy config file to appData if no config file exists in appData
-function copyConfigFile(srcPath, destPath) {
+function copyConfigFile(srcPath, destPath, appDataPath) {
+
+    if (!fs.existsSync(appDataPath)) fs.mkdirSync(appDataPath);
 
     if (!fs.existsSync(destPath)) {
         console.log('copy ' + srcPath + ' to ' + destPath);
@@ -38,7 +40,7 @@ if (configSourcePath.indexOf('config.test.json') == -1) { // PRODUCTION
 
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     var appDataConfigPath = global.appDataPath + '/config.json';
-    copyConfigFile(configSourcePath, appDataConfigPath);
+    copyConfigFile(configSourcePath, appDataConfigPath, global.appDataPath);
     global.configPath = appDataConfigPath;
 
 } else { // E2E TESTING
@@ -51,8 +53,6 @@ global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 console.log('Using config file: ' + global.configPath);
 
 // -- CONFIGURATION
-
-
 
 
 function createWindow() {

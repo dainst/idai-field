@@ -9,16 +9,16 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <a class="navbar-brand" routerLink="/" id="idai-field-brand">
-        <img src="img/logo.png" style="height:38px; width:38px; float:left; margin-right:12px;">
-        <div class="brand-text">
-            <span style="color: #ccc; font-size:90%; font-weight:300;">iDAI.</span>field
-            <small style="color: #ccc;">2.0</small>
+    <div class="navbar-brand" id="idai-field-brand">
+        <img src="img/logo.png">
+        <div id="brand-text">
+            <span id="brand-text-idai">iDAI.</span><span id="brand-text-field">field</span>
+            <small id="brand-text-number">2.0</small>
         </div>
-    </a>
+    </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav navbar-nav" style="margin-top: 2px;">
+        <ul class="nav navbar-nav">
             <li *ngFor="let view of views" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/' + view.name)"
                    href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>

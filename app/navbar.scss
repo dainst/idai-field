@@ -10,13 +10,38 @@
   color: #fff;
 }
 
-.navbar-brand {
+#idai-field-brand {
   padding-top: 0;
-}
+  margin-top: 3px;
+  margin-right: 40px;
 
-.brand-text {
-  display: inline-block;
-  padding-top: 5px;
+  img {
+    height: 38px;
+    width: 38px;
+    float: left;
+  }
+
+  #brand-text {
+    display: inline-block;
+    padding-top: 5px;
+    margin-top: -2px;
+    margin-left: 5px;
+    cursor: default;
+
+    #brand-text-idai {
+      color: #ccc;
+      font-size: 90%;
+      font-weight: 300;
+    }
+
+    #brand-text-field {
+      color: #fff;
+    }
+
+    #brand-text-number {
+      color: #ccc;
+    }
+  }
 }
 
 .navbar-nav {

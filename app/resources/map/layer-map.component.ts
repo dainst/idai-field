@@ -74,14 +74,15 @@ export class LayerMapComponent extends MapComponent {
 
     private updateLayers(): Promise<any> {
 
-        this.clearLayers();
-
-        if (!this.mainTypeDocument) return Promise.resolve();
+        if (!this.mainTypeDocument) {
+            this.clearLayers();
+            return Promise.resolve();
+        }
 
         return this.initializeLayers()
             .then(() => {
                 this.initializePanes();
-                if (!this.addActiveLayersFromResourcesState() && this.activeLayers.length == 0
+                if (!this.setActiveLayersFromResourcesState() && this.activeLayers.length == 0
                         && this.layersList.length > 0) {
                     this.addLayerToMap(this.layersList[0]);
                     this.saveActiveLayersIdsInResourcesState();
@@ -99,7 +100,7 @@ export class LayerMapComponent extends MapComponent {
         }).catch(errWithParams => {
             console.error('error in find with query', query);
             if (errWithParams.length == 2) {
-                console.error('error in find, cause',errWithParams[1]);
+                console.error('error in find, cause', errWithParams[1]);
             }
             this.messages.add([M.ALL_FIND_ERROR]);
             Promise.reject(undefined);
@@ -164,18 +165,12 @@ export class LayerMapComponent extends MapComponent {
     }
 
     private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
-
+        
         for (let layer of this.getLayersAsList(this.layersMap)) {
-            if (!newLayersMap[layer.document.resource.id]) {
-                let index = this.activeLayers.indexOf(layer);
-                if (index > -1) {
-                    this.activeLayers.splice(index, 1);
-                    this.map.removeLayer(layer.object);
-                }
+            if (!newLayersMap[layer.document.resource.id] && this.isActiveLayer(layer)) {
+                this.map.removeLayer(layer.object);
             }
         }
-
-        this.activeLayers = [];
     }
 
     private initializePanes() {
@@ -216,9 +211,13 @@ export class LayerMapComponent extends MapComponent {
         this.saveActiveLayersIdsInResourcesState();
     }
 
-    public isActiveLayer(layer: ImageContainer) {
+    public isActiveLayer(layer: ImageContainer): boolean {
 
-        return this.activeLayers.indexOf(layer) > -1;
+        for (let activeLayer of this.activeLayers) {
+            if (layer.document.resource.id == activeLayer.document.resource.id) return true;
+        }
+
+        return false;
     }
 
     private clearLayers() {
@@ -226,6 +225,7 @@ export class LayerMapComponent extends MapComponent {
         this.removeOldLayersFromMap({});
         this.layersList = [];
         this.layersMap = {};
+        this.activeLayers = [];
     }
 
     private saveActiveLayersIdsInResourcesState() {
@@ -245,26 +245,44 @@ export class LayerMapComponent extends MapComponent {
     /**
      * @return true if active layers were added from resources state, otherwise false
      */
-    private addActiveLayersFromResourcesState(): boolean {
+    private setActiveLayersFromResourcesState(): boolean {
 
         if (!this.mainTypeDocument) return;
 
         var activeLayersIds: Array<string> = this.resourcesState.getActiveLayersIds(this.resourcesComponent.view.name,
             this.mainTypeDocument.resource.id);
 
-        if (!activeLayersIds) return false;
+        if (!activeLayersIds) {
+            this.removeLayersFromActiveLayers([]);
+            return false;
+        }
+
+        this.removeLayersFromActiveLayers(activeLayersIds);
 
         for (var i in activeLayersIds) {
             let layerId = activeLayersIds[i];
             let layer = this.layersMap[layerId];
             if (!layer) continue;
 
-            if (this.activeLayers.indexOf(layer) == -1) {
-                this.addLayerToMap(layer);
-            }
+            if (!this.isActiveLayer(layer)) this.addLayerToMap(layer);
         }
 
         return true;
+    }
+
+    private removeLayersFromActiveLayers(newActiveLayerIds: string[]) {
+
+        let activeLayersToRemove: Array<ImageContainer> = [];
+        for (let activeLayer of this.activeLayers) {
+            if (newActiveLayerIds.indexOf(activeLayer.document.resource.id) == -1) {
+                activeLayersToRemove.push(activeLayer);
+            }
+        }
+
+        for (let layerToRemove of activeLayersToRemove) {
+            this.activeLayers.splice(this.activeLayers.indexOf(layerToRemove), 1);
+            this.map.removeLayer(layerToRemove.object);
+        }
     }
 
     public focusLayer(layer: ImageContainer) {

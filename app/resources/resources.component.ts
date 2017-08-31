@@ -409,7 +409,12 @@ export class ResourcesComponent implements AfterViewChecked {
             return Promise.resolve();
         } else {
             return this.datastore.get(mainTypeDocumentId)
-                .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument);
+                .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument)
+                .catch(() => {
+                    console.warn('Failed to restore last selected main type document from resources state');
+                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                    return Promise.resolve();
+                })
         }
     }
 
@@ -453,6 +458,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     if (document == this.selectedMainTypeDocument) {
                         this.resourcesState.removeActiveLayersIds(this.view.name,
                             this.selectedMainTypeDocument.resource.id);
+                        this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name, undefined);
                         return this.populateMainTypeDocuments()
                             .then(() => this.populateDocumentList());
                     }

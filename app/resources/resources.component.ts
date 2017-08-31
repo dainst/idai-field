@@ -283,13 +283,22 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.selectedDocument;
     }
 
+    private isSelectedDocumentTypeInTypeFilters(): boolean {
+
+        if (!this.selectedDocument) return true;
+
+        if (this.query.types && this.filterTypes
+            && this.filterTypes.indexOf(this.selectedDocument.resource.type) != -1) return true;
+
+        return false;
+    }
+
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    private invalidateTypeFiltersIfNecessary() {
+    private invalidateTypeFiltersIfNecessary(): boolean {
 
-        if (!this.selectedDocument) return false;
-        if (this.query.types && this.filterTypes.indexOf(this.selectedDocument.resource.type) != -1) return false;
+        if (this.isSelectedDocumentTypeInTypeFilters()) return false;
 
         delete this.query.types;
         this.filterTypes = [];
@@ -346,6 +355,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.resourcesState.setLastSelectedTypeFilters(this.view.name, types);
         this.filterTypes = types;
+
+        if (!this.isSelectedDocumentTypeInTypeFilters()) {
+            this.editGeometry = false;
+            this.deselect();
+        }
 
         this.populateDocumentList();
     }

@@ -180,14 +180,28 @@ describe('resources/project --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
-    it('switch from image to map view after click on depicts relation link', () => {
+    function createDepictsRelation() {
 
         NavbarPage.clickNavigateToImages();
         ImagesGridPage.createDepictsRelation('trench1');
-
+        //
         ImagesGridPage.doubleClickCell(0);
         DocumentViewPage.clickRelation(0);
+    }
 
+    xit('switch from image to map view after click on depicts relation link', () => {
+
+        createDepictsRelation();
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+    });
+
+    xit('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        ResourcesPage.clickChooseTypeFilter(1);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime); // make sure it disappeared
+
+        createDepictsRelation();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 

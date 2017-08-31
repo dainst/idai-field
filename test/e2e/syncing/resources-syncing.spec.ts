@@ -141,29 +141,10 @@ describe('resources/syncing --', function() {
             });
     }
 
-    function createAlternateDocumentForAutoResolving(nr, additionalFieldName, additionalFieldValue) {
-        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
-        testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
-        testDocumentAlternative.resource[additionalFieldName] = additionalFieldValue;
-
-        return db.put(testDocumentAlternative, { force: true })
-            .then(() => {
-                NavbarPage.clickNavigateToSettings();
-                NavbarPage.clickNavigateToExcavation();
-                return browser.sleep(delays.shortRest * 10);
-            });
-    }
-
     function createEventualConflict(nr) {
 
         return createOneDocument(nr)
             .then(() => createAlternateDocument(nr));
-    }
-
-    function createEventualConflictForAutoResolving(nr) {
-
-        return createOneDocument(nr, 'weight', '100')
-            .then(() => createAlternateDocumentForAutoResolving(nr, 'height', '50'));
     }
 
     function updateTestDoc(testDocument) {
@@ -292,26 +273,6 @@ describe('resources/syncing --', function() {
 
             db.get('tf' + nr).then(doc => {
                 expect(['Testfund' + nr, 'Testfund' + nr + '_alternative']).toContain(doc.resource.shortDescription);
-                done();
-            });
-
-        }).catch(err => {
-            console.error('Failure while creating test doc', err);
-            fail(); done();
-        });
-    });
-
-    xit('resolve an eventual conflict automatically', done => {
-        const nr = '11';
-
-        createEventualConflictForAutoResolving(nr).then(() => {
-            browser.sleep(delays.shortRest * 10);
-            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
-
-            db.get('tf' + nr).then(doc => {
-                expect(doc.resource.shortDescription).toEqual('Testfund' + nr);
-                expect(doc.resource.weight).toEqual('100');
-                expect(doc.resource.height).toEqual('50');
                 done();
             });
 

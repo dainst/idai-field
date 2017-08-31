@@ -57,7 +57,7 @@ describe('resources/project --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
-    xit('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter(1);

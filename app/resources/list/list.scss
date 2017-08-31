@@ -9,7 +9,7 @@
 
   #list-body {
     height: calc(100vh - 175px);
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 

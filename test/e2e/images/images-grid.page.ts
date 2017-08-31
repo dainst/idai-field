@@ -28,11 +28,6 @@ export class ImagesGridPage {
         return common.click(element(by.id('choose-image-subtype-option-' + index)));
     };
 
-    public static getCellFilenameElement(filename) {
-
-        return common.click(element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]')));
-    };
-
     public static clickDeselectButton() {
 
         return common.click(element(by.id('deselect-images')));
@@ -90,6 +85,11 @@ export class ImagesGridPage {
     };
 
     // elements
+
+    public static getCellFilenameElement(filename) {
+
+        return element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]'));
+    };
 
     public static getAllCells() {
 

@@ -48,13 +48,13 @@ describe('resources/project --', function() {
         browser.sleep(2000);
 
         ImagesGridPage.doubleClickCell(0);
-        // DocumentViewPage.clickRelation(0);
+        DocumentViewPage.clickRelation(0);
     }
 
     it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();
-        // browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
     xit('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {

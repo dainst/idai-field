@@ -169,19 +169,6 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    private selectDocument(document) {
-
-        // TODO Check if this is still necessary
-        if (document && document.resource.type == this.view.mainType) {
-            this.selectedMainTypeDocument = document;
-            this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
-                this.selectedMainTypeDocument.resource.id);
-        } else {
-            this.selectedDocument = document;
-            this.scrollTarget = document;
-        }
-    }
-
     private selectDocumentFromParams(id: string, tab: string) {
 
         this.datastore.get(id).then(
@@ -244,6 +231,19 @@ export class ResourcesComponent implements AfterViewChecked {
         return Observable.create(observer => {
             this.clickEventObservers.push(observer);
         });
+    }
+
+    private selectDocument(document) {
+
+        // TODO Check if this is still necessary
+        if (document && document.resource.type == this.view.mainType) {
+            this.selectedMainTypeDocument = document;
+            this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
+                this.selectedMainTypeDocument.resource.id);
+        } else {
+            this.selectedDocument = document;
+            this.scrollTarget = document;
+        }
     }
 
     /**

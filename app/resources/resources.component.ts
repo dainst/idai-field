@@ -302,6 +302,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         delete this.query.types;
         this.filterTypes = [];
+        this.resourcesState.setLastSelectedTypeFilters(this.view.name, this.filterTypes);
+
         return true;
     }
 

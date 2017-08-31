@@ -247,6 +247,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     /**
+     * TODO since there are to many methods with 'select' in their names, try to get rid of this method or move it to MapWrapper. It is called only from there.
      * @param documentToSelect the object that should get selected
      */
     public select(documentToSelect: IdaiFieldDocument) {

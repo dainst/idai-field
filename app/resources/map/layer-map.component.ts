@@ -74,10 +74,9 @@ export class LayerMapComponent extends MapComponent {
 
     private updateLayers(): Promise<any> {
 
-        if (!this.mainTypeDocument) {
-            this.clearLayers();
-            return Promise.resolve();
-        }
+        this.clearLayers();
+
+        if (!this.mainTypeDocument) return Promise.resolve();
 
         return this.initializeLayers()
             .then(() => {

@@ -11,7 +11,8 @@ let delays = require('../config/delays');
 
 describe('images/image-grid --', function() {
 
-    beforeEach(function () {
+    beforeEach(() => {
+
         ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         browser.sleep(1000);
@@ -19,7 +20,8 @@ describe('images/image-grid --', function() {
         browser.sleep(delays.shortRest);
     });
 
-    it('image upload should create a JSON document, which in turn gets displayed in the grid', function() {
+    it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {
+
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         const fileName = 'Aldrin_Apollo_11.jpg';
         const xpath = '//span[@class="badge badge-default"][text()="' + fileName + '"]';
@@ -30,7 +32,8 @@ describe('images/image-grid --', function() {
         browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime);
     });
 
-    it('deselect cells', function() {
+    it('deselect cells', () => {
+
         ImagesGridPage.getAllCells().then(function(cells) {
             const first = 0;
             const last = cells.length - 1;
@@ -56,14 +59,16 @@ describe('images/image-grid --', function() {
         });
     });
 
-    it('deselect images by clicking the corresponding button', function() {
+    it('deselect images by clicking the corresponding button', () => {
+
         ImagesGridPage.clickCell(0);
         expect(ImagesGridPage.getCell(0).getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
         ImagesGridPage.clickDeselectButton();
         expect(ImagesGridPage.getCell(0).getAttribute('class')).not.toMatch(ImagesGridPage.selectedClass);
     });
 
-    it('delete an image in the grid view', function() {
+    it('delete an image in the grid view', () => {
+
         ImagesGridPage.getCellImageName(0)
             .then(function (filename) {
                 ImagesGridPage.getCell(0).click();
@@ -74,7 +79,8 @@ describe('images/image-grid --', function() {
             });
     });
 
-    it('delete two images in the grid view', function() {
+    it('delete two images in the grid view', () => {
+
         ImagesGridPage.getCellImageName(0)
             .then(function (image1filename) {
                 ImagesGridPage.getCellImageName(1)
@@ -92,20 +98,15 @@ describe('images/image-grid --', function() {
             });
     });
 
-    it('connect a resource with an image in the grid view', function() {
-        const imageToConnect = ImagesGridPage.getCell(0);
-        const resourceId = 'tf1';
-        const resourceIdentifier = 'testf1';
+    it('connect a resource with an image in the grid view', () => {
 
-        imageToConnect.click();
-        expect(imageToConnect.getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
-        ImagesGridPage.clickCreateRelationsButton();
-        ImagesGridPage.typeInIdentifierInLinkModal(resourceIdentifier);
-        ImagesGridPage.getSuggestedResourcesInLinkModalByIdentifier(resourceIdentifier).click();
-        expect(imageToConnect.all(by.id('related-resource-'+resourceId)).first().isPresent()).toBeTruthy();
+        const resourceId = 'tf1';
+        ImagesGridPage.createDepictsRelation('testf1');
+        expect(ImagesGridPage.getCell(0).all(by.id('related-resource-'+resourceId)).first().isPresent()).toBeTruthy();
     });
 
-    it('cancel an image delete in the modal.', function() {
+    it('cancel an image delete in the modal.', () => {
+
         const elementToDelete = ImagesGridPage.getCell(0);
 
         ImagesGridPage.getCellImageName(0)
@@ -119,7 +120,8 @@ describe('images/image-grid --', function() {
             });
     });
 
-    it('navigate from grid to view, and back to grid', function() {
+    it('navigate from grid to view, and back to grid', () => {
+
         const xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
 
         ImagesGridPage.getCellImageName(0).then(function(imageName){

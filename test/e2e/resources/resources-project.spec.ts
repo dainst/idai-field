@@ -4,6 +4,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
 import {MapPage} from './map/map.page';
+import {ImagesGridPage} from "../images/images-grid.page";
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -177,6 +178,17 @@ describe('resources/project --', function() {
         DocumentViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+    });
+
+    it('switch from image to map view after click on depicts relation link', () => {
+
+        NavbarPage.clickNavigateToImages();
+        ImagesGridPage.createDepictsRelation('trench1');
+
+        ImagesGridPage.doubleClickCell(0);
+        DocumentViewPage.clickRelation(0);
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
     it('select correct main type document after click on relation link', () => {

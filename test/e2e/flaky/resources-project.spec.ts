@@ -33,16 +33,6 @@ describe('resources/project --', function() {
         common.resetConfigJson().then(done);
     });
 
-    function performCreateProject() {
-
-        browser.sleep(delays.shortRest * 10);
-        ProjectPage.clickProjectsBadge();
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 10);
-    }
-
     function removeResourcesStateFile() {
 
         const filePath = appDataPath + '/resources-state-' + 'abc.json';
@@ -52,8 +42,10 @@ describe('resources/project --', function() {
     function createDepictsRelation() {
 
         NavbarPage.clickNavigateToImages();
+        browser.sleep(1000);
         ImagesGridPage.createDepictsRelation('trench1');
-        //
+        browser.sleep(1000);
+
         ImagesGridPage.doubleClickCell(0);
         DocumentViewPage.clickRelation(0);
     }

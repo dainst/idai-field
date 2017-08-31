@@ -87,8 +87,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 })
                 .then(() => {
                     if (params['id']) {
-                        // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a
-                        // relation link from image component to resources component)
+                        // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a relation link from image component to resources component)
                         setTimeout(() => {
                             this.selectDocumentFromParams(params['id'], params['tab']);
                         }, 100);
@@ -266,26 +265,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.selectedDocument = undefined;
     }
 
-    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
-
-        this.imageTypeUtility.isImageType(documentToSelect.resource.type)
-            .then(isImageType => {
-                if (isImageType) {
-                    this.router.navigate(['images', documentToSelect.resource.id, 'show']);
-                } else {
-                    this.viewUtility.getViewNameForDocument(documentToSelect)
-                        .then(viewName => {
-                            if (viewName != this.view.name) {
-                                return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
-                            } else {
-                                this.select(documentToSelect);
-                            }
-                        });
-                }
-            }
-        );
-    }
-
     public setSelected(documentToSelect: Document): Document {
 
         this.selectedDocument = documentToSelect;
@@ -310,6 +289,26 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectedMainTypeDocument = mainTypeDocument;
             this.populateDocumentList();
         }
+    }
+
+    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
+
+        this.imageTypeUtility.isImageType(documentToSelect.resource.type)
+            .then(isImageType => {
+                    if (isImageType) {
+                        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+                    } else {
+                        this.viewUtility.getViewNameForDocument(documentToSelect)
+                            .then(viewName => {
+                                if (viewName != this.view.name) {
+                                    return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
+                                } else {
+                                    this.select(documentToSelect);
+                                }
+                            });
+                    }
+                }
+            );
     }
 
     public setQueryString(q: string) {

@@ -14,6 +14,7 @@
   padding-top: 0;
   margin-top: 3px;
   margin-right: 40px;
+  user-select: none;
 
   img {
     height: 38px;
@@ -44,8 +45,13 @@
   }
 }
 
+#navbarSupportedContent {
+  cursor: default;
+}
+
 .navbar-nav {
   margin-top: 0 !important;
+  user-select: none;
 }
 
 .nav-link.active,

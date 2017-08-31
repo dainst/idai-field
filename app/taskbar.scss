@@ -1,4 +1,5 @@
 .taskbar {
+  margin-top: 2px;
 
   li.nav-item {
 
@@ -13,6 +14,11 @@
 
   .mdi {
     font-size: 1.7em;
+  }
+
+  .mdi-cloud,
+  .mdi-cloud-outline-off {
+    color: #fff;
   }
 
   .conflicts {

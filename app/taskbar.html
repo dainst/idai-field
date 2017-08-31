@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav taskbar" style="margin-top: 2px;">
+<ul class="nav navbar-nav taskbar">
     <projects></projects>
     <li class="nav-item conflicts" *ngIf="conflicts.length">
         <ng-template #popContent>
@@ -16,10 +16,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a>
-            <span class="mdi mdi-cloud" *ngIf="connected"></span>
-            <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
-        </a>
+        <span class="mdi mdi-cloud" *ngIf="connected"></span>
+        <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
     </li>
 </ul>
 

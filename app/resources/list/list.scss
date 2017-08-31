@@ -3,6 +3,8 @@
   #list-header {
     position: static;
     height: 35px;
+    user-select: none;
+    cursor: default;
   }
 
   #list-body {

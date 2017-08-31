@@ -1,0 +1,15 @@
+.list-row {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.list-row-left {
+  user-select: none;
+  cursor: default;
+
+  .plus-button-wrapper {
+    margin-top: -8px;
+    display: inline-block;
+    width: 24px;
+    float: right;
+  }
+}

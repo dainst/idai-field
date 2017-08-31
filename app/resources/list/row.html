@@ -1,9 +1,10 @@
 <div *ngIf="listComponent.showRow(docRef)"
         id="resource-{{docRef.doc.resource.identifier}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)"
-        class="row py-3" [class.bg-faded]="depth == 0" style="border-top: 1px solid rgba(0, 0, 0, 0.125)"
+        class="row py-3 list-row" [class.bg-faded]="depth == 0"
         [class.no-search-result]="!listComponent.documentsInclude(docRef.doc)">
-    <div class="col-md-3" [style.padding-left]="(1+depth*2) + 'rem'" [class.font-weight-bold]="depth == 0">
-        <div style="margin-top: -8px; display:inline-block; width:24px; float:right">
+    <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
+         [class.font-weight-bold]="depth == 0">
+        <div class="plus-button-wrapper">
             <plus-button [isRecordedIn]="resourcesComponent.selectedMainTypeDocument" [liesWithin]="docRef.doc"
                      [preselectedGeometryType]="'none'" (dblclick)="$event.stopPropagation();"></plus-button>
         </div>

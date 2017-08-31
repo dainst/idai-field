@@ -75,6 +75,13 @@ export class ImagesGridPage {
             .perform();
     };
 
+    // send keys
+
+    public static uploadImage(filePath) {
+
+        return element(by.id('file')).sendKeys(filePath);
+    };
+
     // text
 
     public static getCellImageName(index) {
@@ -111,11 +118,6 @@ export class ImagesGridPage {
     public static getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
         return ImagesGridPage.getLinkModal().element(by.id('resource-'+identifier))
-    };
-
-    public static uploadImage(filePath) {
-
-        return element(by.id('file')).sendKeys(filePath);
     };
 
     // sequences

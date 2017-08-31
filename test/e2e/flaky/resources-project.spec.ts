@@ -45,9 +45,9 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToImages();
         browser.sleep(1000);
         ImagesGridPage.createDepictsRelation('trench1');
-        browser.sleep(1000);
+        browser.sleep(2000);
 
-        // ImagesGridPage.doubleClickCell(0);
+        ImagesGridPage.doubleClickCell(0);
         // DocumentViewPage.clickRelation(0);
     }
 

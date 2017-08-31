@@ -81,7 +81,7 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ResourcesPage.performCreateResource('abc_t1', 0);
+        ResourcesPage.performCreateResource('abc_t1', 'trench');
         NavbarPage.clickNavigateToBuilding();
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
@@ -170,11 +170,11 @@ describe('resources/project --', function() {
 
     it('basic stuff', () => {
 
-        ResourcesPage.performCreateResource('trench2', 0);
+        ResourcesPage.performCreateResource('trench2', 'trench');
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.performCreateResource('befund1', 0);
+        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
         ResourcesPage.clickSelectMainTypeDocument(1);
         // TODO comment in
@@ -190,13 +190,13 @@ describe('resources/project --', function() {
 
     it('switch views after click on relation link', () => {
 
-        ResourcesPage.performCreateResource('building1', 1);
+        ResourcesPage.performCreateResource('building1', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('befund1', 0);
+        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('fund1', 1);
+        ResourcesPage.performCreateResource('fund1', 'feature-floor');
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
         DocumentViewPage.clickRelation(0);
@@ -210,14 +210,14 @@ describe('resources/project --', function() {
 
     it('select correct main type document after click on relation link', () => {
 
-        ResourcesPage.performCreateResource('building1', 1);
-        ResourcesPage.performCreateResource('building2', 1);
+        ResourcesPage.performCreateResource('building1', 'building');
+        ResourcesPage.performCreateResource('building2', 'building');
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.clickSelectMainTypeDocument(0); // building2
-        ResourcesPage.performCreateResource('befund1', 0);
+        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
         ResourcesPage.clickSelectMainTypeDocument(1); // building1
-        ResourcesPage.performCreateResource('fund1', 5);
+        ResourcesPage.performCreateResource('fund1', 'feature-floor');
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
         DocumentViewPage.clickRelation(0);
@@ -231,9 +231,9 @@ describe('resources/project --', function() {
 
     it('autoselect last selected main type document on switching views', () => {
 
-        ResourcesPage.performCreateResource('trench2', 0);
-        ResourcesPage.performCreateResource('building1', 1);
-        ResourcesPage.performCreateResource('building2', 1);
+        ResourcesPage.performCreateResource('trench2', 'trench');
+        ResourcesPage.performCreateResource('building1', 'building');
+        ResourcesPage.performCreateResource('building2', 'building');
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
@@ -254,16 +254,16 @@ describe('resources/project --', function() {
 
     it('autoselect last selected type filter on switching views', () => {
 
-        ResourcesPage.performCreateResource('building', 1);
+        ResourcesPage.performCreateResource('building', 'building');
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.performCreateResource('building-befund');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('excavation-befund', 0);
-        ResourcesPage.performCreateResource('excavation-inschrift', 1);
+        ResourcesPage.performCreateResource('excavation-befund', 'feature-architecture');
+        ResourcesPage.performCreateResource('excavation-inschrift', 'feature-floor');
 
-        ResourcesPage.clickChooseTypeFilter(1);
+        ResourcesPage.clickChooseTypeFilter('0-2');
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
@@ -359,8 +359,8 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ResourcesPage.performCreateResource('excavation1', 0);
-        ResourcesPage.performCreateResource('excavation2', 0);
+        ResourcesPage.performCreateResource('excavation1', 'trench');
+        ResourcesPage.performCreateResource('excavation2', 'trench');
         ResourcesPage.clickChooseTypeFilter(1);
 
         NavbarPage.clickNavigateToExcavation();

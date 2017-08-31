@@ -33,7 +33,7 @@
         <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
         <ul class="list-group">
             <li *ngFor="let type of typesTreeList; let index = index"
-                id="choose-type-option-{{index}}" [ngClass]="{'abstract-idai-type': type.isAbstract}"
+                id="choose-type-option-{{type.name.toLowerCase()}}" [ngClass]="{'abstract-idai-type': type.isAbstract}"
                 class="list-group-item popover-item"
                 (click)="chooseType(type)">
                 <div>
@@ -42,7 +42,7 @@
                 </div>
                 <ul *ngIf="type.children" style="padding: 0;">
                     <li *ngFor="let childType of type.children; let childIndex = index"
-                        id="choose-type-option-{{index}}-{{childIndex}}" class="list-group-item popover-item"
+                        id="choose-type-option-{{type.name.toLowerCase()}}-{{childType.name.toLowerCase()}}" class="list-group-item popover-item"
                         (click)="chooseType(childType)">
                         <div>
                             <type-icon [type]="childType.name" size="30"></type-icon>

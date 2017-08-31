@@ -93,10 +93,10 @@ export class ResourcesPage {
         common.click(element(by.id('list-mode-button')));
     };
 
-    public static clickSelectResourceType(typeIndex?) {
+    public static clickSelectResourceType(typeName?) {
 
-        if (!typeIndex) typeIndex = 0;
-        return common.click(element(by.id('choose-type-option-' + typeIndex)));
+        if (!typeName) typeName = "feature-architecture";
+        return common.click(element(by.id('choose-type-option-' + typeName)));
     };
 
     public static clickSelectMainTypeDocument(option) {
@@ -193,11 +193,11 @@ export class ResourcesPage {
 
     // sequences
 
-    public static performCreateResource(identifier: string, typeIndex?: number, inputFieldText?: string,
+    public static performCreateResource(identifier: string, typeName?: string, inputFieldText?: string,
                                                    inputFieldIndex?: number, skipGeometry?: boolean) {
 
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType(typeIndex);
+        ResourcesPage.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField(identifier);
         if (inputFieldText && inputFieldIndex) {
@@ -232,8 +232,8 @@ export class ResourcesPage {
 
     public static performCreateLink() {
 
-        ResourcesPage.performCreateResource('1', 0);
-        ResourcesPage.performCreateResource('2', 0);
+        ResourcesPage.performCreateResource('1', "feature-architecture");
+        ResourcesPage.performCreateResource('2', "feature-architecture");
         ResourcesPage.performCreateRelation('2', '1', 1);
     };
 

@@ -17,10 +17,10 @@ describe('widgets/document-view', function() {
     });
 
     it('show the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 1, '100', 3);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', '100', 3);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFieldName(0).then(val => {
-            expect(val).toBe('Vergleich'); // with the correct field label
+            expect(val).toBe('Fläche in m2'); // with the correct field label
         });
         DocumentViewPage.getFieldValue(0).then(val => {
             expect(val).toBe('100');
@@ -31,7 +31,7 @@ describe('widgets/document-view', function() {
      * Addresses an issue where fields were shown double.
      */
     it('show only the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 0, '100', 6);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', '100', 6);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
@@ -65,8 +65,8 @@ describe('widgets/document-view', function() {
      * (they were not saved though).
      */
     it('show no relations after cancelling edit', function() {
-        ResourcesPage.performCreateResource('1', 0);
-        ResourcesPage.performCreateResource('2', 0);
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
         DoceditPage.clickRelationsTab();

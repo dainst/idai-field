@@ -2,6 +2,7 @@
     "identifier": "development",
     "relations": [
         {
+            "label": "Ist Abbildung von",
             "range": [
                 "Building",
                 "Feature",
@@ -36,14 +37,13 @@
                 "Wall_surface",
                 "Place"
             ],
+            "inverse": "isDepictedIn",
             "domain": [
                 "Image",
                 "Photo",
                 "Drawing"
             ],
-            "inverse": "isDepictedIn",
-            "name": "depicts",
-            "label": "Ist Abbildung von"
+            "name": "depicts"
         },
         {
             "domain": [
@@ -129,32 +129,33 @@
             ]
         },
         {
+            "label": "Liegt in",
             "range": [
                 "Place"
-            ],
-            "domain": [
-                "Trench",
-                "Building",
-                "Survey"
             ],
             "inverse": "includes",
-            "name": "liesWithin",
-            "label": "Liegt in"
+            "domain": [
+                "Trench",
+                "Building",
+                "Survey"
+            ],
+            "name": "liesWithin"
         },
         {
+            "label": "Enthält",
             "range": [
                 "Trench",
                 "Building",
                 "Survey"
             ],
+            "inverse": "liesWithin",
             "domain": [
                 "Place"
             ],
-            "inverse": "liesWithin",
-            "name": "includes",
-            "label": "Enthält"
+            "name": "includes"
         },
         {
+            "label": "Liegt in",
             "range": [
                 "Feature",
                 "DrillCoreLayer",
@@ -168,6 +169,7 @@
                 "SurveyUnit",
                 "Survey"
             ],
+            "inverse": "includes",
             "domain": [
                 "Find",
                 "Brick",
@@ -190,11 +192,10 @@
                 "Architecture",
                 "Room"
             ],
-            "inverse": "includes",
-            "name": "liesWithin",
-            "label": "Liegt in"
+            "name": "liesWithin"
         },
         {
+            "label": "Enthält",
             "range": [
                 "Find",
                 "Brick",
@@ -217,6 +218,7 @@
                 "Architecture",
                 "Room"
             ],
+            "inverse": "liesWithin",
             "domain": [
                 "Feature",
                 "DrillCoreLayer",
@@ -230,23 +232,11 @@
                 "SurveyUnit",
                 "Survey"
             ],
-            "inverse": "liesWithin",
-            "name": "includes",
-            "label": "Enthält"
+            "name": "includes"
         },
         {
+            "label": "Liegt über",
             "range": [
-                "Feature",
-                "DrillCoreLayer",
-                "Floor",
-                "Grave",
-                "Layer",
-                "Other",
-                "Architecture",
-                "Planum",
-                "Sample"
-            ],
-            "domain": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -258,11 +248,7 @@
                 "Sample"
             ],
             "inverse": "isBelow",
-            "name": "isAbove",
-            "label": "Liegt über"
-        },
-        {
-            "range": [
+            "domain": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -273,7 +259,11 @@
                 "Planum",
                 "Sample"
             ],
-            "domain": [
+            "name": "isAbove"
+        },
+        {
+            "label": "Liegt unter",
+            "range": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -285,20 +275,22 @@
                 "Sample"
             ],
             "inverse": "isAbove",
-            "name": "isBelow",
-            "label": "Liegt unter"
-        },
-        {
-            "range": [
+            "domain": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
+                "Architecture",
+                "Planum",
+                "Sample"
             ],
-            "domain": [
+            "name": "isBelow"
+        },
+        {
+            "label": "Schneidet",
+            "range": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -308,11 +300,7 @@
                 "Architecture"
             ],
             "inverse": "isCutBy",
-            "name": "cuts",
-            "label": "Schneidet"
-        },
-        {
-            "range": [
+            "domain": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -321,7 +309,11 @@
                 "Other",
                 "Architecture"
             ],
-            "domain": [
+            "name": "cuts"
+        },
+        {
+            "label": "Wird geschnitten von",
+            "range": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -331,35 +323,20 @@
                 "Architecture"
             ],
             "inverse": "cuts",
-            "name": "isCutBy",
-            "label": "Wird geschnitten von"
-        },
-        {
-            "range": [
-                "Room",
-                "Wall_surface",
-                "Building",
+            "domain": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture",
-                "Find",
-                "Brick",
-                "Bone",
-                "Coin",
-                "Glass",
-                "Metal",
-                "Mollusk",
-                "PlasterFragment",
-                "Pottery",
-                "Stone",
-                "Terracotta",
-                "Wood"
+                "Architecture"
             ],
-            "domain": [
+            "name": "isCutBy"
+        },
+        {
+            "label": "Zeitlich vor",
+            "range": [
                 "Room",
                 "Wall_surface",
                 "Building",
@@ -384,11 +361,7 @@
                 "Wood"
             ],
             "inverse": "isAfter",
-            "name": "isBefore",
-            "label": "Zeitlich vor"
-        },
-        {
-            "range": [
+            "domain": [
                 "Room",
                 "Wall_surface",
                 "Building",
@@ -412,7 +385,11 @@
                 "Terracotta",
                 "Wood"
             ],
-            "domain": [
+            "name": "isBefore"
+        },
+        {
+            "label": "Zeitlich nach",
+            "range": [
                 "Room",
                 "Wall_surface",
                 "Building",
@@ -437,11 +414,10 @@
                 "Wood"
             ],
             "inverse": "isBefore",
-            "name": "isAfter",
-            "label": "Zeitlich nach"
-        },
-        {
-            "range": [
+            "domain": [
+                "Room",
+                "Wall_surface",
+                "Building",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -460,12 +436,13 @@
                 "Pottery",
                 "Stone",
                 "Terracotta",
-                "Wood",
-                "Building",
-                "Wall_surface",
-                "Room"
+                "Wood"
             ],
-            "domain": [
+            "name": "isAfter"
+        },
+        {
+            "label": "Zeitgleich mit",
+            "range": [
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -490,86 +467,7 @@
                 "Room"
             ],
             "inverse": "isContemporaryWith",
-            "name": "isContemporaryWith",
-            "label": "Zeitgleich mit"
-        },
-        {
-            "range": [
-                "Inscription"
-            ],
             "domain": [
-                "Find",
-                "Brick",
-                "Bone",
-                "Coin",
-                "Glass",
-                "Metal",
-                "Mollusk",
-                "PlasterFragment",
-                "Pottery",
-                "Stone",
-                "Terracotta",
-                "Wood",
-                "Floor",
-                "Other",
-                "Wall_surface",
-                "Architecture"
-            ],
-            "inverse": "isFoundOn",
-            "name": "bears",
-            "label": "trägt"
-        },
-        {
-            "range": [
-                "Wall_surface"
-            ],
-            "domain": [
-                "Architecture"
-            ],
-            "inverse": "isFoundOn",
-            "name": "bears",
-            "label": "trägt"
-        },
-        {
-            "range": [
-                "Find",
-                "Brick",
-                "Bone",
-                "Coin",
-                "Glass",
-                "Metal",
-                "Mollusk",
-                "PlasterFragment",
-                "Pottery",
-                "Stone",
-                "Terracotta",
-                "Wood",
-                "Floor",
-                "Other",
-                "Wall_surface",
-                "Architecture"
-            ],
-            "domain": [
-                "Inscription"
-            ],
-            "inverse": "bears",
-            "name": "isFoundOn",
-            "label": "ist aufgebracht auf"
-        },
-        {
-            "range": [
-                "Architecture"
-            ],
-            "domain": [
-                "Wall_surface"
-            ],
-            "inverse": "bears",
-            "name": "isFoundOn",
-            "label": "ist aufgebracht auf"
-        },
-        {
-            "range": [
-                "Room",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -577,10 +475,101 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "SurveyUnit",
-                "Building"
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Building",
+                "Wall_surface",
+                "Room"
             ],
+            "name": "isContemporaryWith"
+        },
+        {
+            "label": "trägt",
+            "range": [
+                "Inscription"
+            ],
+            "inverse": "isFoundOn",
             "domain": [
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Floor",
+                "Other",
+                "Wall_surface",
+                "Architecture"
+            ],
+            "name": "bears"
+        },
+        {
+            "label": "trägt",
+            "range": [
+                "Wall_surface"
+            ],
+            "inverse": "isFoundOn",
+            "domain": [
+                "Architecture"
+            ],
+            "name": "bears"
+        },
+        {
+            "label": "ist aufgebracht auf",
+            "range": [
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Floor",
+                "Other",
+                "Wall_surface",
+                "Architecture"
+            ],
+            "inverse": "bears",
+            "domain": [
+                "Inscription"
+            ],
+            "name": "isFoundOn"
+        },
+        {
+            "label": "ist aufgebracht auf",
+            "range": [
+                "Architecture"
+            ],
+            "inverse": "bears",
+            "domain": [
+                "Wall_surface"
+            ],
+            "name": "isFoundOn"
+        },
+        {
+            "label": "grenzt an",
+            "range": [
                 "Room",
                 "Feature",
                 "DrillCoreLayer",
@@ -593,8 +582,19 @@
                 "Building"
             ],
             "inverse": "borders",
-            "name": "borders",
-            "label": "grenzt an"
+            "domain": [
+                "Room",
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "SurveyUnit",
+                "Building"
+            ],
+            "name": "borders"
         }
     ],
     "types": [
@@ -625,7 +625,8 @@
                     "editable": false,
                     "label": "Niveau",
                     "visible": false,
-                    "inputType": "unsignedFloat"
+                    "inputType": "unsignedFloat",
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
                 },
                 {
                     "name": "hasResearchQuestion",
@@ -658,25 +659,6 @@
                     "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionLength",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -692,6 +674,25 @@
                     "inputType": "dimension"
                 },
                 {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                },
+                {
                     "name": "hasDimensionWidth",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -705,10 +706,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasExcavationType",
@@ -944,7 +945,7 @@
                     "label": "Ansprache bzw. Art des Objektes",
                     "visible": true,
                     "descriptions": {
-                        "de": "Welcher Art ist das vorgefundene Glasobjekt?"
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                     },
                     "valuelist": [
                         "Tessera",
@@ -970,7 +971,7 @@
                         "Unsicher bzw. unbestimmbar"
                     ],
                     "inputType": "dropdown",
-                    "description": "Welcher Art ist das vorgefundene Glasobjekt?"
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasProvinience",
@@ -1011,6 +1012,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -1045,6 +1056,9 @@
                     "editable": true,
                     "label": "Gefäß-Grundform",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+                    },
                     "valuelist": [
                         "Becher",
                         "Schale",
@@ -1058,9 +1072,11 @@
                         "Napf",
                         "Vorratsgefäß",
                         "Deckel",
+                        "Unbestimmt",
                         "Tasse"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
                 },
                 {
                     "name": "hasVesselFormGlassSpecific",
@@ -1072,6 +1088,9 @@
                     "editable": true,
                     "label": "Form",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+                    },
                     "valuelist": [
                         "Skyphos",
                         "Rippenschale",
@@ -1103,7 +1122,8 @@
                         "Tierflasche",
                         "Unguentarium"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
                 }
             ],
             "labels": {
@@ -1136,25 +1156,6 @@
                     "description": "Angabe des Objektdurchmessers"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -1172,6 +1173,25 @@
                     },
                     "inputType": "dimension",
                     "description": "Angabe der Objekthöhe"
+                },
+                {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
                 },
                 {
                     "name": "hasDrillingEquipment",
@@ -1257,7 +1277,8 @@
                     "editable": false,
                     "label": "Niveau",
                     "visible": false,
-                    "inputType": "unsignedFloat"
+                    "inputType": "unsignedFloat",
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
                 },
                 {
                     "name": "hasNumber",
@@ -1412,25 +1433,6 @@
                     "description": "Flächenangabe in Quadratmetern"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionLength",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -1446,6 +1448,25 @@
                     "inputType": "dimension"
                 },
                 {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                },
+                {
                     "name": "hasDimensionWidth",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -1459,10 +1480,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasHorizontalLocation",
@@ -1855,6 +1876,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -1905,12 +1936,15 @@
                         "de": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
                     },
                     "valuelist": [
+                        "Steinchen",
                         "Glimmer",
                         "Kalk",
                         "Mineralische Partikel",
                         "Vulkanische Partikel",
                         "Organische Partikel",
                         "Schamotte",
+                        "Vacua",
+                        "Sonstige",
                         "Muschelgrus",
                         "Quarz",
                         "Stroh/Spreu"
@@ -2024,16 +2058,16 @@
                     "name": "hasRestauration",
                     "labels": {
                         "de": "Restaurierung",
-                        "en": "restauration"
+                        "en": "Restauration"
                     },
-                    "editable": false,
+                    "editable": true,
                     "label": "Restaurierung",
-                    "visible": false,
+                    "visible": true,
                     "descriptions": {
-                        "de": "Aufführung alles unternommenen Maßnahmen zur Restaurierung und Konservierung."
+                        "de": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
                     },
                     "inputType": "boolean",
-                    "description": "Aufführung alles unternommenen Maßnahmen zur Restaurierung und Konservierung."
+                    "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
                 },
                 {
                     "name": "borders",
@@ -2078,6 +2112,7 @@
                     "label": "Bautyp",
                     "visible": true,
                     "descriptions": {
+                        "de": "Bautyp (bspw.: Altar, Brücke)",
                         "en": "Single build works by function"
                     },
                     "valuelist": [
@@ -2102,7 +2137,8 @@
                         "Turm",
                         "Wohnbau"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Bautyp (bspw.: Altar, Brücke)"
                 },
                 {
                     "name": "hasBuildingCategorySpecific",
@@ -2114,6 +2150,7 @@
                     "label": "Bautyp Spezial",
                     "visible": true,
                     "descriptions": {
+                        "de": "Spezieller Bautyp (bspw.: Ehrenbogen, Hoftempel)",
                         "en": "Specification of the building type."
                     },
                     "valuelist": [
@@ -2147,7 +2184,8 @@
                         "Rednertribüne",
                         "Terassenheiligtum"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Spezieller Bautyp (bspw.: Ehrenbogen, Hoftempel)"
                 },
                 {
                     "name": "hasBuildingTechnique",
@@ -2450,10 +2488,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 }
             ],
             "labels": {
@@ -2494,6 +2532,9 @@
                     "editable": true,
                     "label": "Ansprache bzw. Art des Objektes",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+                    },
                     "valuelist": [
                         "Plastik/Skulptur",
                         "Mobiliar",
@@ -2511,7 +2552,8 @@
                         "Kasten/Kiste",
                         "Unsicher bzw. unbestimmbar"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasTypeOfWood",
@@ -2624,8 +2666,11 @@
                     "editable": true,
                     "label": "Lagenhöhe",
                     "visible": true,
-                    "descriptions": {},
-                    "inputType": "unsignedFloat"
+                    "descriptions": {
+                        "de": "Anzahl der Mauerlagen."
+                    },
+                    "inputType": "unsignedFloat",
+                    "description": "Anzahl der Mauerlagen."
                 },
                 {
                     "name": "hasMarkDescription",
@@ -2868,10 +2913,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasMark",
@@ -3338,8 +3383,11 @@
                     "editable": true,
                     "label": "Gazetteer ID",
                     "visible": true,
-                    "descriptions": {},
-                    "inputType": "input"
+                    "descriptions": {
+                        "de": "ID Nummer des Ortslexikons. Nummerierung zur zugehörigen Ortsbezeichnung."
+                    },
+                    "inputType": "input",
+                    "description": "ID Nummer des Ortslexikons. Nummerierung zur zugehörigen Ortsbezeichnung."
                 },
                 {
                     "name": "hasPlaceName",
@@ -3417,21 +3465,6 @@
                     },
                     "inputType": "input",
                     "description": "Beschreibung der Entstehung der Schicht, z.B. 'Versturz der östlichen Lehmziegelmauer'"
-                },
-                {
-                    "name": "hasColorSoil",
-                    "labels": {
-                        "de": "Farbe des Bodens",
-                        "en": "color soil"
-                    },
-                    "editable": true,
-                    "label": "Farbe des Bodens",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Farbe des Sediments."
-                    },
-                    "inputType": "input",
-                    "description": "Farbe des Sediments."
                 },
                 {
                     "name": "hasNatural",
@@ -3705,7 +3738,8 @@
                     "editable": false,
                     "label": "Niveau",
                     "visible": false,
-                    "inputType": "unsignedFloat"
+                    "inputType": "unsignedFloat",
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
                 },
                 {
                     "name": "hasNumber",
@@ -3772,25 +3806,6 @@
                     "inputType": "dating"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -3825,6 +3840,25 @@
                     "inputType": "dimension"
                 },
                 {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                },
+                {
                     "name": "hasDimensionWidth",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -3838,10 +3872,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasFeatureForm",
@@ -4384,10 +4418,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasObjectTypeInscription",
@@ -4895,20 +4929,19 @@
                     "description": "Beschreibung des Projekts."
                 },
                 {
-                    "name": "hasDate",
+                    "name": "hasCaption",
                     "labels": {
-                        "de": "Datum",
-                        "en": "date",
-                        "it": "Data"
+                        "de": "Beschriftung",
+                        "en": "caption"
                     },
-                    "editable": true,
-                    "label": "Datum",
-                    "visible": true,
+                    "editable": false,
+                    "label": "Beschriftung",
+                    "visible": false,
                     "descriptions": {
-                        "de": "Datum der Durchführung"
+                        "de": "Feld der Abbildungsbeschriftung."
                     },
                     "inputType": "input",
-                    "description": "Datum der Durchführung"
+                    "description": "Feld der Abbildungsbeschriftung."
                 },
                 {
                     "name": "hasDescription",
@@ -4924,6 +4957,36 @@
                     },
                     "inputType": "text",
                     "description": "Freies Beschreibungsfeld"
+                },
+                {
+                    "name": "hasDraughtsmen",
+                    "labels": {
+                        "de": "Bildersteller/Bilderstellerin",
+                        "en": "image creator"
+                    },
+                    "editable": true,
+                    "label": "Bildersteller/Bilderstellerin",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
+                    },
+                    "inputType": "input",
+                    "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
+                },
+                {
+                    "name": "hasFilename",
+                    "labels": {
+                        "de": "Dateiname",
+                        "en": "filename"
+                    },
+                    "editable": true,
+                    "label": "Dateiname",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Dateiname des Fotos. der Zeichnung(wenn digital)"
+                    },
+                    "inputType": "input",
+                    "description": "Dateiname des Fotos. der Zeichnung(wenn digital)"
                 },
                 {
                     "name": "hasIdentify",
@@ -4968,51 +5031,60 @@
                     "inputType": "input"
                 },
                 {
-                    "name": "hasOperationClassification",
+                    "name": "hasCampaign",
                     "labels": {
-                        "de": "Klassifikation Arbeitsgang",
-                        "en": "operation classification"
+                        "de": "Kampagne"
                     },
                     "editable": true,
-                    "label": "Klassifikation Arbeitsgang",
+                    "label": "Kampagne",
                     "visible": true,
                     "valuelist": [
-                        "Abhub",
-                        "Profil",
-                        "Planum",
-                        "Bohrung",
-                        "Sondage"
+                        "Campaign"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "input"
                 },
                 {
-                    "name": "isRecordedIn",
+                    "name": "hasPictureObject",
                     "labels": {
-                        "de": "ist dokumentiert in"
+                        "de": "Abbildungsgegenstand",
+                        "en": "picture object"
                     },
-                    "editable": false,
-                    "label": "ist dokumentiert in",
-                    "visible": false,
-                    "inputType": "input"
+                    "editable": true,
+                    "label": "Abbildungsgegenstand",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
+                    },
+                    "valuelist": [
+                        "Befund (Nr.)",
+                        "Übersichtsfoto",
+                        "Arbeitsfoto",
+                        "Profil (Nr.)",
+                        "Fund (Nr.)",
+                        "Befundkomplex",
+                        "Detailsansicht"
+                    ],
+                    "inputType": "dropdown",
+                    "description": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
                 }
             ],
             "labels": {
-                "de": "Arbeitsgang",
-                "en": "Process Unit"
+                "de": "Abbildung",
+                "en": "Image"
             },
-            "type": "ProcessUnit",
-            "label": "Arbeitsgang"
+            "type": "Image",
+            "label": "Abbildung"
         },
         {
             "fields": [
                 {
-                    "name": "hasAmountSherds",
+                    "name": "hasAmountRimSherds",
                     "labels": {
-                        "de": "Anzahl Wandungsscherben",
+                        "de": "Anzahl Wand-Scherben",
                         "en": "amount sherds"
                     },
                     "editable": true,
-                    "label": "Anzahl Wandungsscherben",
+                    "label": "Anzahl Wand-Scherben",
                     "visible": true,
                     "inputType": "unsignedInt"
                 },
@@ -5050,6 +5122,67 @@
                     "inputType": "unsignedInt"
                 },
                 {
+                    "name": "hasAmountSherdsPedestal",
+                    "labels": {
+                        "de": "Anzahl Fuß-Scherben"
+                    },
+                    "editable": true,
+                    "label": "Anzahl Fuß-Scherben",
+                    "visible": true,
+                    "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasAmountSherdsRimBase",
+                    "labels": {
+                        "de": "Anzahl Rand-Boden Scherben"
+                    },
+                    "editable": true,
+                    "label": "Anzahl Rand-Boden Scherben",
+                    "visible": true,
+                    "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasAmountSherdsRimShoulder",
+                    "labels": {
+                        "de": "Anzahl Rand-Schulter Scherben"
+                    },
+                    "editable": true,
+                    "label": "Anzahl Rand-Schulter Scherben",
+                    "visible": true,
+                    "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasAmountSherdsShoulder",
+                    "labels": {
+                        "de": "Anzahl Schulter-Scherben"
+                    },
+                    "editable": true,
+                    "label": "Anzahl Schulter-Scherben",
+                    "visible": true,
+                    "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasAmountSherdsxOther",
+                    "labels": {
+                        "de": "Anzahl anderer Scherben"
+                    },
+                    "editable": true,
+                    "label": "Anzahl anderer Scherben",
+                    "visible": true,
+                    "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasAmountSherdsxPercent",
+                    "labels": {
+                        "de": "Qantifizierung in Prozent"
+                    },
+                    "editable": true,
+                    "label": "Qantifizierung in Prozent",
+                    "visible": true,
+                    "inputType": "unsignedFloat",
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
+                },
+                {
                     "name": "hasAmountShertsLid",
                     "labels": {
                         "de": "Anzahl Deckel",
@@ -5059,6 +5192,36 @@
                     "label": "Anzahl Deckel",
                     "visible": true,
                     "inputType": "unsignedInt"
+                },
+                {
+                    "name": "hasClayColorBreakMunsell",
+                    "labels": {
+                        "de": "Farbe des Bruches Munsell"
+                    },
+                    "editable": true,
+                    "label": "Farbe des Bruches Munsell",
+                    "visible": true,
+                    "inputType": "input"
+                },
+                {
+                    "name": "hasClayColorInsideMunsell",
+                    "labels": {
+                        "de": "Farbe Innen Munsell"
+                    },
+                    "editable": true,
+                    "label": "Farbe Innen Munsell",
+                    "visible": true,
+                    "inputType": "input"
+                },
+                {
+                    "name": "hasClayColorOutsideMunsell",
+                    "labels": {
+                        "de": "Farbe Außen Munsell"
+                    },
+                    "editable": true,
+                    "label": "Farbe Außen Munsell",
+                    "visible": true,
+                    "inputType": "input"
                 },
                 {
                     "name": "hasCoat",
@@ -5132,6 +5295,48 @@
                     "description": "Durchmesser des Gefäßhalses."
                 },
                 {
+                    "name": "hasPotteryBreakStructure",
+                    "labels": {
+                        "de": "Bemerkungen zum Bruch (Struktur, Porösität etc.)"
+                    },
+                    "editable": true,
+                    "label": "Bemerkungen zum Bruch (Struktur, Porösität etc.)",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Beschreibung der Struktur und der Porösität des Bruches."
+                    },
+                    "inputType": "input",
+                    "description": "Beschreibung der Struktur und der Porösität des Bruches."
+                },
+                {
+                    "name": "hasPotteryResidueAnalysis",
+                    "labels": {
+                        "de": "Rückstandsanalys"
+                    },
+                    "editable": true,
+                    "label": "Rückstandsanalys",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Angabe zur Rückstandsanalys"
+                    },
+                    "inputType": "input",
+                    "description": "Angabe zur Rückstandsanalys"
+                },
+                {
+                    "name": "hasPotterySample",
+                    "labels": {
+                        "de": "Probe"
+                    },
+                    "editable": true,
+                    "label": "Probe",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Angaben zu entnommener Probe"
+                    },
+                    "inputType": "input",
+                    "description": "Angaben zu entnommener Probe"
+                },
+                {
                     "name": "hasPurpose",
                     "labels": {
                         "de": "Verwendung",
@@ -5145,6 +5350,20 @@
                     },
                     "inputType": "input",
                     "description": "Zweck bzw. Verwendung des Objekts."
+                },
+                {
+                    "name": "hasTemperRemarks",
+                    "labels": {
+                        "de": "Bemerkungen zur Magerung"
+                    },
+                    "editable": true,
+                    "label": "Bemerkungen zur Magerung",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Weiter Bemerkungen zur Magerung"
+                    },
+                    "inputType": "input",
+                    "description": "Weiter Bemerkungen zur Magerung"
                 },
                 {
                     "name": "hasxTypeNumber",
@@ -5362,6 +5581,25 @@
                     "inputType": "dropdown"
                 },
                 {
+                    "name": "hasCoatInsideType",
+                    "labels": {
+                        "de": "Bearbeitung Innen"
+                    },
+                    "editable": true,
+                    "label": "Bearbeitung Innen",
+                    "visible": true,
+                    "valuelist": [
+                        "Überzug",
+                        "Bemalung",
+                        "Glasur",
+                        "Poliert",
+                        "Geglättet",
+                        "Verstrichen",
+                        "Andere"
+                    ],
+                    "inputType": "checkboxes"
+                },
+                {
                     "name": "hasCoatOutside",
                     "labels": {
                         "de": "Überzug Außen"
@@ -5376,6 +5614,25 @@
                         "Glasur"
                     ],
                     "inputType": "dropdown"
+                },
+                {
+                    "name": "hasCoatOutsideType",
+                    "labels": {
+                        "de": "Bearbeitung Außen"
+                    },
+                    "editable": true,
+                    "label": "Bearbeitung Außen",
+                    "visible": true,
+                    "valuelist": [
+                        "Überzug",
+                        "Bemalung",
+                        "Glasur",
+                        "Poliert",
+                        "Geglättet",
+                        "Verstrichen",
+                        "Andere"
+                    ],
+                    "inputType": "checkboxes"
                 },
                 {
                     "name": "hasDecorationTechniquePottery",
@@ -5430,21 +5687,6 @@
                     ],
                     "inputType": "checkboxes",
                     "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-                },
-                {
-                    "name": "hasInclusions",
-                    "labels": {
-                        "de": "Einschlüsse"
-                    },
-                    "editable": true,
-                    "label": "Einschlüsse",
-                    "visible": true,
-                    "valuelist": [
-                        "Viele Einschlüsse",
-                        "Wenig Einschlüsse",
-                        "Keine Einschlüsse"
-                    ],
-                    "inputType": "radio"
                 },
                 {
                     "name": "hasManufactoring",
@@ -5512,7 +5754,7 @@
                     "label": "Art des Objektes",
                     "visible": true,
                     "descriptions": {
-                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck etc.)"
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                     },
                     "valuelist": [
                         "Plastik/Skulptur",
@@ -5536,10 +5778,12 @@
                         "Gussform",
                         "Altar",
                         "Kette",
+                        "Becken",
+                        "Kohlebecken",
                         "Unsicher bzw. unbestimmbar"
                     ],
                     "inputType": "dropdown",
-                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck etc.)"
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasPotteryType",
@@ -5579,7 +5823,26 @@
                         "Terra sigilata",
                         "Glasierte Keramik",
                         "Prähistorische Keramik",
-                        "Küchenware"
+                        "Küchenware",
+                        "Arretina schwarz",
+                        "Attisch farbig aufgehöhte Schwarzglanzton Ware",
+                        "Attische Rotfigurige Keramik",
+                        "Attische Schwarzfigurige Keramik",
+                        "Attische Schwarzglanzton Ware",
+                        "Bemalte Ware (floral)",
+                        "Bemalte Ware (linear)",
+                        "Bichrome Ware",
+                        "Campana A",
+                        "Campana B",
+                        "Campana B Imitation",
+                        "Campana B-oid",
+                        "Campana C",
+                        "Dünnwandige Feinkeramik",
+                        "Glattwandige Ware",
+                        "Hand",
+                        "Red Slip Ware",
+                        "Schlichte Ware",
+                        "Schwarzglanzton Ware"
                     ],
                     "inputType": "radio"
                 },
@@ -5622,6 +5885,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -5640,18 +5913,40 @@
                         "de": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
                     },
                     "valuelist": [
+                        "Steinchen",
                         "Glimmer",
                         "Kalk",
                         "Mineralische Partikel",
                         "Vulkanische Partikel",
                         "Organische Partikel",
                         "Schamotte",
+                        "Vacua",
+                        "Sonstige",
                         "Muschelgrus",
                         "Quarz",
                         "Stroh/Spreu"
                     ],
                     "inputType": "checkboxes",
                     "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
+                },
+                {
+                    "name": "hasTemperAmount",
+                    "labels": {
+                        "de": "Menge der Einschlüsse"
+                    },
+                    "editable": true,
+                    "label": "Menge der Einschlüsse",
+                    "visible": true,
+                    "valuelist": [
+                        "Nicht erkennbar",
+                        "Keine Einschlüsse",
+                        "Vereinzelt",
+                        "Viel",
+                        "Wenig",
+                        "Mittel",
+                        "Sehr Viel"
+                    ],
+                    "inputType": "radio"
                 },
                 {
                     "name": "hasTemperParticles",
@@ -5668,10 +5963,26 @@
                     "valuelist": [
                         "mittel",
                         "fein",
-                        "grob"
+                        "grob",
+                        "sehr fein",
+                        "mittelfein",
+                        "sehr grob"
                     ],
                     "inputType": "radio",
                     "description": "Größe der Magerungspartikel."
+                },
+                {
+                    "name": "hasTemperTypeClay",
+                    "labels": {
+                        "de": "Tongruppe"
+                    },
+                    "editable": false,
+                    "label": "Tongruppe",
+                    "visible": false,
+                    "valuelist": [
+                        "Fehlende Werteliste"
+                    ],
+                    "inputType": "checkboxes"
                 },
                 {
                     "name": "hasVesselFormPottery",
@@ -5681,6 +5992,9 @@
                     "editable": true,
                     "label": "Gefäß-Grundform",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+                    },
                     "valuelist": [
                         "Becher",
                         "Schale",
@@ -5695,9 +6009,19 @@
                         "Napf",
                         "Vorratsgefäß",
                         "Deckel",
+                        "Unbestimmt",
+                        "Kochschüssel",
+                        "Kanne",
+                        "Kasserole",
+                        "Pfanne",
+                        "Offenes Gefäß",
+                        "Teller/Untersatz",
+                        "Geschlossenes Gefäß",
+                        "Räuchergefäß",
                         "Tasse"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
                 },
                 {
                     "name": "hasVesselFormPotterySpecific",
@@ -5709,6 +6033,9 @@
                     "editable": true,
                     "label": "Form",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+                    },
                     "valuelist": [
                         "Lutrophore",
                         "Pithos",
@@ -5737,9 +6064,17 @@
                         "Luterion",
                         "Pelike",
                         "Stamnos",
-                        "Tierflasche"
+                        "Tierflasche",
+                        "Lekane",
+                        "Miscellanea",
+                        "Tischamphore",
+                        "Pyxis",
+                        "Tränenfläschchen",
+                        "Handelsamphore",
+                        "Fischteller"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
                 },
                 {
                     "name": "hasWare",
@@ -5800,25 +6135,6 @@
                     "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionThickness",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -5836,6 +6152,25 @@
                     },
                     "inputType": "dimension",
                     "description": "Dicke bzw. Stärke des Objektes"
+                },
+                {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
                 },
                 {
                     "name": "hasSoilType",
@@ -6070,7 +6405,7 @@
                     "label": "Ansprache bzw. Art des Objektes",
                     "visible": true,
                     "descriptions": {
-                        "de": "Objektart der Knochen (Beispiel: Löffel, Bearbeitet etc.)"
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                     },
                     "valuelist": [
                         "Gerät",
@@ -6092,7 +6427,7 @@
                         "Unsicher bzw. unbestimmbar"
                     ],
                     "inputType": "dropdown",
-                    "description": "Objektart der Knochen (Beispiel: Löffel, Bearbeitet etc.)"
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasSpecies",
@@ -6312,25 +6647,6 @@
                     "inputType": "dating"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -6365,6 +6681,25 @@
                     "inputType": "dimension"
                 },
                 {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                },
+                {
                     "name": "hasDimensionWidth",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -6378,10 +6713,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasPeriodBeginning",
@@ -6537,19 +6872,20 @@
                     "description": "Beschreibung des Projekts."
                 },
                 {
-                    "name": "hasCaption",
+                    "name": "hasDate",
                     "labels": {
-                        "de": "Beschriftung",
-                        "en": "caption"
+                        "de": "Datum",
+                        "en": "date",
+                        "it": "Data"
                     },
-                    "editable": false,
-                    "label": "Beschriftung",
-                    "visible": false,
+                    "editable": true,
+                    "label": "Datum",
+                    "visible": true,
                     "descriptions": {
-                        "de": "Feld der Abbildungsbeschriftung."
+                        "de": "Datum der Durchführung"
                     },
                     "inputType": "input",
-                    "description": "Feld der Abbildungsbeschriftung."
+                    "description": "Datum der Durchführung"
                 },
                 {
                     "name": "hasDescription",
@@ -6565,36 +6901,6 @@
                     },
                     "inputType": "text",
                     "description": "Freies Beschreibungsfeld"
-                },
-                {
-                    "name": "hasDraughtsmen",
-                    "labels": {
-                        "de": "Bildersteller/Bilderstellerin",
-                        "en": "image creator"
-                    },
-                    "editable": true,
-                    "label": "Bildersteller/Bilderstellerin",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
-                    },
-                    "inputType": "input",
-                    "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
-                },
-                {
-                    "name": "hasFilename",
-                    "labels": {
-                        "de": "Dateiname",
-                        "en": "filename"
-                    },
-                    "editable": true,
-                    "label": "Dateiname",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Dateiname des Fotos. der Zeichnung(wenn digital)"
-                    },
-                    "inputType": "input",
-                    "description": "Dateiname des Fotos. der Zeichnung(wenn digital)"
                 },
                 {
                     "name": "hasIdentify",
@@ -6639,49 +6945,40 @@
                     "inputType": "input"
                 },
                 {
-                    "name": "hasCampaign",
+                    "name": "hasOperationClassification",
                     "labels": {
-                        "de": "Kampagne"
+                        "de": "Klassifikation Arbeitsgang",
+                        "en": "operation classification"
                     },
                     "editable": true,
-                    "label": "Kampagne",
+                    "label": "Klassifikation Arbeitsgang",
                     "visible": true,
                     "valuelist": [
-                        "Campaign"
+                        "Abhub",
+                        "Profil",
+                        "Planum",
+                        "Bohrung",
+                        "Sondage"
                     ],
-                    "inputType": "input"
+                    "inputType": "dropdown"
                 },
                 {
-                    "name": "hasPictureObject",
+                    "name": "isRecordedIn",
                     "labels": {
-                        "de": "Abbildungsgegenstand",
-                        "en": "picture object"
+                        "de": "ist dokumentiert in"
                     },
-                    "editable": true,
-                    "label": "Abbildungsgegenstand",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
-                    },
-                    "valuelist": [
-                        "Befund (Nr.)",
-                        "Übersichtsfoto",
-                        "Arbeitsfoto",
-                        "Profil (Nr.)",
-                        "Fund (Nr.)",
-                        "Befundkomplex",
-                        "Detailsansicht"
-                    ],
-                    "inputType": "dropdown",
-                    "description": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
+                    "editable": false,
+                    "label": "ist dokumentiert in",
+                    "visible": false,
+                    "inputType": "input"
                 }
             ],
             "labels": {
-                "de": "Abbildung",
-                "en": "Image"
+                "de": "Arbeitsgang",
+                "en": "Process Unit"
             },
-            "type": "Image",
-            "label": "Abbildung"
+            "type": "ProcessUnit",
+            "label": "Arbeitsgang"
         },
         {
             "fields": [
@@ -6921,21 +7218,6 @@
                     "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
                 },
                 {
-                    "name": "hasInclusions",
-                    "labels": {
-                        "de": "Einschlüsse"
-                    },
-                    "editable": true,
-                    "label": "Einschlüsse",
-                    "visible": true,
-                    "valuelist": [
-                        "Viele Einschlüsse",
-                        "Wenig Einschlüsse",
-                        "Keine Einschlüsse"
-                    ],
-                    "inputType": "radio"
-                },
-                {
                     "name": "hasManufactoringMethodPottery",
                     "labels": {
                         "de": "Herstellungstechnik"
@@ -6992,6 +7274,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -7036,18 +7328,40 @@
                         "de": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
                     },
                     "valuelist": [
+                        "Steinchen",
                         "Glimmer",
                         "Kalk",
                         "Mineralische Partikel",
                         "Vulkanische Partikel",
                         "Organische Partikel",
                         "Schamotte",
+                        "Vacua",
+                        "Sonstige",
                         "Muschelgrus",
                         "Quarz",
                         "Stroh/Spreu"
                     ],
                     "inputType": "checkboxes",
                     "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
+                },
+                {
+                    "name": "hasTemperAmount",
+                    "labels": {
+                        "de": "Menge der Einschlüsse"
+                    },
+                    "editable": true,
+                    "label": "Menge der Einschlüsse",
+                    "visible": true,
+                    "valuelist": [
+                        "Nicht erkennbar",
+                        "Keine Einschlüsse",
+                        "Vereinzelt",
+                        "Viel",
+                        "Wenig",
+                        "Mittel",
+                        "Sehr Viel"
+                    ],
+                    "inputType": "radio"
                 },
                 {
                     "name": "hasTemperParticles",
@@ -7064,7 +7378,10 @@
                     "valuelist": [
                         "mittel",
                         "fein",
-                        "grob"
+                        "grob",
+                        "sehr fein",
+                        "mittelfein",
+                        "sehr grob"
                     ],
                     "inputType": "radio",
                     "description": "Größe der Magerungspartikel."
@@ -7095,6 +7412,9 @@
                     "editable": true,
                     "label": "Gefäß-Grundform",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+                    },
                     "valuelist": [
                         "Becher",
                         "Schale",
@@ -7109,9 +7429,11 @@
                         "Napf",
                         "Vorratsgefäß",
                         "Deckel",
+                        "Unbestimmt",
                         "Tasse"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
                 },
                 {
                     "name": "hasVesselFormTerracottaSpecific",
@@ -7123,6 +7445,9 @@
                     "editable": true,
                     "label": "Form",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+                    },
                     "valuelist": [
                         "Lutrophore",
                         "Pithos",
@@ -7149,7 +7474,8 @@
                         "Pelike",
                         "Stamnos"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
                 }
             ],
             "labels": {
@@ -7563,10 +7889,10 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                 },
                 {
                     "name": "hasJointsCondition",
@@ -8260,8 +8586,11 @@
                     "editable": true,
                     "label": "Ausführung",
                     "visible": true,
-                    "descriptions": {},
-                    "inputType": "input"
+                    "descriptions": {
+                        "de": "Beschreibung der Quallität, in welcher ein bearbeiteter Stein, welcher z.B. als Träger einer innschrift verwendet wurde, vorliegt."
+                    },
+                    "inputType": "input",
+                    "description": "Beschreibung der Quallität, in welcher ein bearbeiteter Stein, welcher z.B. als Träger einer innschrift verwendet wurde, vorliegt."
                 },
                 {
                     "name": "hasArchitectureElement",
@@ -8362,21 +8691,6 @@
                     "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
                 },
                 {
-                    "name": "hasInclusions",
-                    "labels": {
-                        "de": "Einschlüsse"
-                    },
-                    "editable": true,
-                    "label": "Einschlüsse",
-                    "visible": true,
-                    "valuelist": [
-                        "Viele Einschlüsse",
-                        "Wenig Einschlüsse",
-                        "Keine Einschlüsse"
-                    ],
-                    "inputType": "radio"
-                },
-                {
                     "name": "hasMaterial",
                     "labels": {
                         "de": "Material",
@@ -8417,6 +8731,9 @@
                     "editable": true,
                     "label": "Art des Objektes",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+                    },
                     "valuelist": [
                         "Tessera",
                         "Plastik/Skulptur",
@@ -8460,7 +8777,8 @@
                         "Spolie",
                         "Unsicher bzw. unbestimmbar"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasOrigin",
@@ -8524,10 +8842,39 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
                     "description": "Herkunftsort"
+                },
+                {
+                    "name": "hasTemperAmount",
+                    "labels": {
+                        "de": "Menge der Einschlüsse"
+                    },
+                    "editable": true,
+                    "label": "Menge der Einschlüsse",
+                    "visible": true,
+                    "valuelist": [
+                        "Nicht erkennbar",
+                        "Keine Einschlüsse",
+                        "Vereinzelt",
+                        "Viel",
+                        "Wenig",
+                        "Mittel",
+                        "Sehr Viel"
+                    ],
+                    "inputType": "radio"
                 }
             ],
             "labels": {
@@ -8781,6 +9128,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -8920,6 +9277,20 @@
                     "inputType": "input"
                 },
                 {
+                    "name": "hasConditionPercent",
+                    "labels": {
+                        "de": "Erhaltung in Prozent"
+                    },
+                    "editable": true,
+                    "label": "Erhaltung in Prozent",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Erhaltene Menge in Prozent"
+                    },
+                    "inputType": "unsignedFloat",
+                    "description": "Erhaltene Menge in Prozent"
+                },
+                {
                     "name": "hasDate",
                     "labels": {
                         "de": "Datum",
@@ -8996,16 +9367,16 @@
                     "name": "hasRestauration",
                     "labels": {
                         "de": "Restaurierung",
-                        "en": "restauration"
+                        "en": "Restauration"
                     },
-                    "editable": false,
+                    "editable": true,
                     "label": "Restaurierung",
-                    "visible": false,
+                    "visible": true,
                     "descriptions": {
-                        "de": "Aufführung alles unternommenen Maßnahmen zur Restaurierung und Konservierung."
+                        "de": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
                     },
                     "inputType": "boolean",
-                    "description": "Aufführung alles unternommenen Maßnahmen zur Restaurierung und Konservierung."
+                    "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
                 },
                 {
                     "name": "hasStorageInventNr.",
@@ -9037,6 +9408,16 @@
                     },
                     "inputType": "unsignedFloat",
                     "description": "Gewicht in Gramm"
+                },
+                {
+                    "name": "hasxBibliography",
+                    "labels": {
+                        "de": "Bibliographie"
+                    },
+                    "editable": true,
+                    "label": "Bibliographie",
+                    "visible": true,
+                    "inputType": "text"
                 },
                 {
                     "name": "bears",
@@ -9122,25 +9503,6 @@
                     "description": "Angabe des Objektdurchmessers"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -9175,6 +9537,24 @@
                     "inputType": "dimension"
                 },
                 {
+                    "name": "hasDimensionPerimeter",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Umfang"
+                    },
+                    "editable": true,
+                    "label": "Umfang",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Angabe des Umfangs des Objektes"
+                    },
+                    "inputType": "dimension",
+                    "description": "Angabe des Umfangs des Objektes"
+                },
+                {
                     "name": "hasDimensionThickness",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -9194,6 +9574,25 @@
                     "description": "Dicke bzw. Stärke des Objektes"
                 },
                 {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                },
+                {
                     "name": "hasDimensionWidth",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -9207,10 +9606,28 @@
                     "label": "Breite",
                     "visible": true,
                     "descriptions": {
-                        "de": "Angabe der Breite an der maximalen Ausdehnung."
+                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
                     },
                     "inputType": "dimension",
-                    "description": "Angabe der Breite an der maximalen Ausdehnung."
+                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+                },
+                {
+                    "name": "hasDimensionxOther",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Andere Maße"
+                    },
+                    "editable": true,
+                    "label": "Andere Maße",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Andere Maße können hier eingegeben werden. Bitte kommentieren."
+                    },
+                    "inputType": "dimension",
+                    "description": "Andere Maße können hier eingegeben werden. Bitte kommentieren."
                 },
                 {
                     "name": "hasPeriodBeginning",
@@ -9537,25 +9954,6 @@
                     "inputType": "input"
                 },
                 {
-                    "name": "hasDimensionExtent",
-                    "position_values": [
-                        "Oberkante",
-                        "Unterkante"
-                    ],
-                    "labels": {
-                        "de": "Niveau",
-                        "en": "level"
-                    },
-                    "editable": true,
-                    "label": "Niveau",
-                    "visible": true,
-                    "descriptions": {
-                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                    },
-                    "inputType": "dimension",
-                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-                },
-                {
                     "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
@@ -9573,6 +9971,25 @@
                     },
                     "inputType": "dimension",
                     "description": "Angabe der Objekthöhe"
+                },
+                {
+                    "name": "hasDimensionVerticalExtent",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
+                    ],
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "level"
+                    },
+                    "editable": true,
+                    "label": "Niveau",
+                    "visible": true,
+                    "descriptions": {
+                        "de": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+                    },
+                    "inputType": "dimension",
+                    "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
                 },
                 {
                     "name": "hasOrientation",
@@ -9730,7 +10147,7 @@
                     "label": "Ansprache bzw. Art des Objektes",
                     "visible": true,
                     "descriptions": {
-                        "de": "Welcher Art ist das vorgefundene Metallobjekt?"
+                        "de": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                     },
                     "valuelist": [
                         "Plastik/Skulptur",
@@ -9788,7 +10205,7 @@
                         "Unsicher bzw. unbestimmbar"
                     ],
                     "inputType": "dropdown",
-                    "description": "Welcher Art ist das vorgefundene Metallobjekt?"
+                    "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
                 },
                 {
                     "name": "hasProvinience",
@@ -9829,6 +10246,16 @@
                         "Samos",
                         "Rhodos",
                         "Palästina",
+                        "Attisch",
+                        "Etruskisch",
+                        "Kampanisch",
+                        "Karthagisch",
+                        "Lokal",
+                        "Lokal/Regional",
+                        "Nordafrikanisch",
+                        "Südtunesisch",
+                        "Regional",
+                        "Sizilien",
                         "Ägypten"
                     ],
                     "inputType": "dropdown",
@@ -9842,6 +10269,9 @@
                     "editable": true,
                     "label": "Gefäß-Grundform",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+                    },
                     "valuelist": [
                         "Becher",
                         "Schale",
@@ -9855,9 +10285,11 @@
                         "Napf",
                         "Vorratsgefäß",
                         "Deckel",
+                        "Unbestimmt",
                         "Tasse"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
                 },
                 {
                     "name": "hasVesselFormMetalSpecific",
@@ -9869,6 +10301,9 @@
                     "editable": true,
                     "label": "Form",
                     "visible": true,
+                    "descriptions": {
+                        "de": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+                    },
                     "valuelist": [
                         "Skyphos",
                         "Rippenschale",
@@ -9897,7 +10332,8 @@
                         "Pelike",
                         "Stamnos"
                     ],
-                    "inputType": "dropdown"
+                    "inputType": "dropdown",
+                    "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
                 }
             ],
             "labels": {
@@ -9911,24 +10347,24 @@
     ],
     "views": [
         {
-            "mainType": "Project",
+            "label": "Übersicht",
             "name": "project",
-            "label": "Übersicht"
+            "mainType": "Project"
         },
         {
-            "mainType": "Trench",
+            "label": "Ausgrabung",
             "name": "excavation",
-            "label": "Ausgrabung"
+            "mainType": "Trench"
         },
         {
-            "mainType": "Building",
+            "label": "Bauaufnahme",
             "name": "building",
-            "label": "Bauaufnahme"
+            "mainType": "Building"
         },
         {
-            "mainType": "Survey",
+            "label": "Survey",
             "name": "survey",
-            "label": "Survey"
+            "mainType": "Survey"
         }
     ]
 }

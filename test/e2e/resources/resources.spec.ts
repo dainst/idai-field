@@ -61,10 +61,10 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
-        ResourcesPage.clickChooseTypeFilter('0-2');
+        ResourcesPage.clickChooseTypeFilter('feature-floor');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('0-0');
+        ResourcesPage.clickChooseTypeFilter('feature-architecture');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter('all');

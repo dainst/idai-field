@@ -70,7 +70,7 @@ describe('resources/project --', function() {
     it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter(1);
+        ResourcesPage.clickChooseTypeFilter('place');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime); // make sure it disappeared
 
         createDepictsRelation();
@@ -263,7 +263,7 @@ describe('resources/project --', function() {
         ResourcesPage.performCreateResource('excavation-befund', 'feature-architecture');
         ResourcesPage.performCreateResource('excavation-inschrift', 'feature-floor');
 
-        ResourcesPage.clickChooseTypeFilter('0-2');
+        ResourcesPage.clickChooseTypeFilter('feature-floor');
         browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
@@ -333,7 +333,7 @@ describe('resources/project --', function() {
     it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickChooseTypeFilter(0);
+        ResourcesPage.clickChooseTypeFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
@@ -361,7 +361,7 @@ describe('resources/project --', function() {
 
         ResourcesPage.performCreateResource('excavation1', 'trench');
         ResourcesPage.performCreateResource('excavation2', 'trench');
-        ResourcesPage.clickChooseTypeFilter(1);
+        ResourcesPage.clickChooseTypeFilter('building');
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickSelectMainTypeDocument(1);

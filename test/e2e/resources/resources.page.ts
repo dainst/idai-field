@@ -56,10 +56,10 @@ export class ResourcesPage {
         common.click(element(by.id('delete-resource-confirm')));
     };
 
-    public static clickChooseTypeFilter(typeIndex) {
+    public static clickChooseTypeFilter(typeName) {
 
         common.click(element(by.id('searchfilter')));
-        common.click(element(by.id('choose-type-filter-option-' + typeIndex)));
+        common.click(element(by.id('choose-type-filter-option-' + typeName)));
     };
 
     public static clickSelectGeometryType(type?) {

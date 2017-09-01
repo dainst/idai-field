@@ -47,10 +47,20 @@
                     <label class="control-label col-form-label"
                            for="imagestorepath-input">Pfad zum Bilderverzeichnis
                     </label>
-                    <input id="imagestorepath-input"
-                           [ngModel]="imagestorePath"
-                           (ngModelChange)="imagestorePath = $event"
-                           class="form-control">
+                    <div class="input-group">
+                        <input id="imagestorepath-input"
+                               [ngModel]="imagestorePath"
+                               (ngModelChange)="imagestorePath = $event"
+                               class="form-control">
+                        <span class="input-group-btn">
+                            <input id="imagestorepath-file" type="file" webkitdirectory directory
+                                   (change)="imagestorePath = $event.target.files[0].path + '/'"
+                                   style="display: none">
+                            <label for="imagestorepath-file" class="btn btn-secondary">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </span>
+                    </div>
                 </div>
 
                 <h5 style="margin-top: 35px;">Synchronisierungseinstellungen</h5>

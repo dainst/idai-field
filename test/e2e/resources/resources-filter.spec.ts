@@ -32,4 +32,6 @@ describe('resources/filter --', () => {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
+
+    // TODO test filter by parent type
 });

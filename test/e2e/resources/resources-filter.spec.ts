@@ -1,6 +1,4 @@
 import {browser, protractor, element, by} from 'protractor';
-import {DoceditPage} from '../docedit/docedit.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 
 let EC = protractor.ExpectedConditions;

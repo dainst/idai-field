@@ -4,7 +4,7 @@ import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 
-let delays = require('../../config/delays');
+const delays = require('../config/delays');
 
 
 describe('resources/map --', function() {

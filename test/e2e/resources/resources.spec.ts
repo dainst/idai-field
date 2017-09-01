@@ -57,21 +57,6 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 
-    it('show only resources of the selected type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'feature-floor');
-        ResourcesPage.clickChooseTypeFilter('feature-floor');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-    });
-
     it('not reflect changes in overview in realtime', () => {
 
         ResourcesPage.performCreateResource('1a');

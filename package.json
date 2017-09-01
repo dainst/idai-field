@@ -85,7 +85,7 @@
     "@types/papaparse": "4.1.28",
     "@types/pouchdb": "~6.1.1",
     "archiver": "1.1.0",
-    "chromedriver": "^2.29.0",
+    "chromedriver": "2.29.0",
     "electron": "1.6.1",
     "electron-builder": "^15.2.0",
     "electron-packager": "8.4.0",

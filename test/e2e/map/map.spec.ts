@@ -1,8 +1,8 @@
 import {browser} from 'protractor';
 import {MapPage} from './map.page';
-import {ResourcesPage} from '../resources.page';
-import {DocumentViewPage} from '../../widgets/document-view.page';
-import {DoceditPage} from '../../docedit/docedit.page';
+import {ResourcesPage} from '../resources/resources.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 let delays = require('../../config/delays');
 

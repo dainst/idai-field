@@ -28,10 +28,28 @@ describe('resources/filter --', () => {
         ResourcesPage.clickChooseTypeFilter('feature-architecture');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+    });
+
+    it('select all filter', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-floor');
+        ResourcesPage.clickChooseTypeFilter('inscription');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
-    // TODO test filter by parent type
+    it('filter by parent type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'inscription');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        ResourcesPage.clickChooseTypeFilter('feature');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
 });

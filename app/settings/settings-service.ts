@@ -23,7 +23,7 @@ const app = require('electron').remote.app;
  */
 export class SettingsService {
 
-    private syncStatucObservers = [];
+    private syncStatusObservers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
@@ -154,15 +154,15 @@ export class SettingsService {
         return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
 
             // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.syncStatucObservers.forEach(o => o.next('connected')), 500);
+            const msg = setTimeout(() => this.syncStatusObservers.forEach(o => o.next('connected')), 500);
 
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
-                this.syncStatucObservers.forEach(o => o.next('disconnected'));
+                this.syncStatusObservers.forEach(o => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
-            syncState.onChange.subscribe(() => this.syncStatucObservers.forEach(o => o.next('changed')));
+            syncState.onChange.subscribe(() => this.syncStatusObservers.forEach(o => o.next('changed')));
         });
     }
 
@@ -171,11 +171,16 @@ export class SettingsService {
         if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
 
         return new Promise<any>((resolve) => {
-                this.syncStatucObservers.forEach(o => o.next(false));
+                this.stopSync();
                 setTimeout(() => {
                     this.startSync().then(() => resolve());
                 }, 1000);
             });
+    }
+
+    private stopSync() {
+        this.pouchdbManager.stopSync();
+        this.syncStatusObservers.forEach(o => o.next('disconnected'));
     }
 
     private makeProjectDoc(name: string) {
@@ -222,7 +227,7 @@ export class SettingsService {
     public syncStatusChanges(): Observable<string> {
 
         return Observable.create(observer => {
-            this.syncStatucObservers.push(observer);
+            this.syncStatusObservers.push(observer);
         });
     }
 

@@ -1,6 +1,6 @@
 import {browser, protractor, element, by} from 'protractor';
 
-let delays = require('../../config/delays');
+let delays = require('../config/delays');
 let EC = protractor.ExpectedConditions;
 
 export class MapPage {

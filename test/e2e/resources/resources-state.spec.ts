@@ -56,6 +56,9 @@ describe('resources/state --', function() {
         browser.sleep(1000);
         ImagesGridPage.createDepictsRelation('trench1');
         browser.sleep(2000);
+    }
+
+    function clickDepictsRelationLink() {
 
         ImagesGridPage.doubleClickCell(0);
         DocumentViewPage.clickRelation(0);
@@ -85,6 +88,7 @@ describe('resources/state --', function() {
     it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();
+        clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
@@ -95,6 +99,7 @@ describe('resources/state --', function() {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime); // make sure it disappeared
 
         createDepictsRelation();
+        clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 

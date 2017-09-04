@@ -85,8 +85,6 @@ export class PlusButtonComponent implements OnChanges {
 
     public chooseType(type: IdaiType) {
 
-        if (type.isAbstract) return;
-
         this.type = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
     }

@@ -13,7 +13,6 @@ let delays = require('../config/delays');
  */
 describe('resources --', () => {
 
-
     beforeEach(() => {
 
         ResourcesPage.get();

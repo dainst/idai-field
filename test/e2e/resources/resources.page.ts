@@ -59,7 +59,7 @@ export class ResourcesPage {
     public static clickChooseTypeFilter(typeName) {
 
         common.click(element(by.id('searchfilter')));
-        common.click(element(by.id('choose-type-filter-option-' + typeName)));
+        common.click(element(by.id('choose-type-option-' + typeName)));
     };
 
     public static clickSelectGeometryType(type?) {

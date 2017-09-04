@@ -8,6 +8,7 @@ $layer-menu-button-inactive-color: grey;
 #map-container {
   width: 100%;
   height: calc(100vh - 113px);
+  user-select: none;
 
   .leaflet-overlay-pane path {
 

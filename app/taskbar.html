@@ -16,8 +16,10 @@
         </a>
     </li>
     <li class="nav-item">
-        <span class="mdi mdi-cloud" *ngIf="connected"></span>
-        <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
+        <a href="#" routerLink="/settings">
+            <span class="mdi mdi-cloud" *ngIf="connected"></span>
+            <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
+        </a>
     </li>
 </ul>
 

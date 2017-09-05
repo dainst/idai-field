@@ -12,6 +12,7 @@ import {DoceditImageTabComponent} from './docedit-image-tab.component';
 import {DoceditConflictsTabComponent} from './docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
+import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
         DoceditComponent,
         EditSaveDialogComponent,
         DoceditImageTabComponent,
-        DoceditConflictsTabComponent
+        DoceditConflictsTabComponent,
+        TypeSwitcherButtonComponent
     ],
     exports: [
         EditSaveDialogComponent,

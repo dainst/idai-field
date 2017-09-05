@@ -66,6 +66,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_SAVE_ERROR: string = 'docedit/saveerror';
     public static DOCEDIT_DELETE_ERROR: string = 'docedit/deleteerror';
     public static DOCEDIT_SAVE_CONFLICT: string = 'docedit/saveconflict';
+    public static DOCEDIT_TYPE_CHANGE_WARNING: string = 'docedit/typechangewarning';
 
     // Images Package
 
@@ -339,6 +340,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: 'Beim Speichern der Ressource ist ein Konflikt aufgetreten.',
             level: 'warning',
             params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_TYPE_CHANGE_WARNING]={
+            content: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: {0}',
+            level: 'warning',
+            params: [''],
             hidden: false
         };
         this.msgs[M.DATASTORE_RESOURCE_ID_EXISTS]={

@@ -1,0 +1,142 @@
+$greenbgr: #1b9519;
+$redbgr: #e00000;
+$lightgraybgr: #eeeeee;
+
+.circular-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 4px 0 0 1px;
+  border-radius: 50%;
+  min-width: 35px;
+  height: 39px;
+  width: 39px;
+  z-index: 1;
+  font-size: 23px;
+  position: absolute;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  -webkit-appearance: inherit !important;
+}
+
+.circular-button:hover {
+  transition: background-color .3s ease;
+}
+
+.small-circular-button {
+  font-size: 17px;
+  cursor: pointer;
+  text-align: center;
+  padding: 8px 0 0 0;
+  border-radius: 50%;
+  min-width: 33px;
+  height: 33px;
+  width: 33px;
+  z-index: 1;
+  position: absolute;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  -webkit-appearance: inherit !important;
+}
+
+.small-circular-button:hover {
+  transition: background-color .3s ease;
+}
+
+.lightgray-button:hover {
+  background-color: $lightgraybgr;
+}
+
+.green-button {
+  background-color: $greenbgr;
+  color: #fff;
+  font-weight: normal;
+}
+
+.green-button:hover {
+  background-color: lighten($greenbgr, 5%);
+}
+
+.red-button {
+  background-color: $redbgr;
+  color: #fff;
+  font-weight: normal;
+}
+
+.red-button:hover {
+  background-color: lighten($redbgr, 35%);
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.nav-link {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+
+plus-button,
+type-switcher-button {
+
+  .abstract-idai-type {
+    cursor: not-allowed;
+    font-style: italic;
+  }
+
+  .abstract-idai-type ul {
+    font-style: normal;
+  }
+
+  .circular-button {
+    width: 41px;
+    height: 41px;
+
+    &.type-button {
+      padding: 0;
+    }
+  }
+}
+
+.type-button {
+  background-color: rgb(240, 240, 240);
+
+  .plus-sign-circle,
+  .menu-down-sign-circle {
+    position: absolute;
+    top: 26px;
+    left: 26px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+
+    .mdi {
+      position: absolute;
+      left: 0;
+      color: white;
+      line-height: 17px;
+    }
+  }
+
+  .plus-sign-circle {
+    background-color: $greenbgr;
+
+    .mdi {
+      top: -1px;
+    }
+  }
+
+  .menu-down-sign-circle {
+    background-color: $primary-color;
+  }
+}
+
+.type-button:hover {
+
+  type-icon {
+    filter: brightness(1.15);
+    transition: filter .3s ease;
+  }
+
+  .sign-circle {
+    filter: brightness(1.18);
+    transition: filter .3s ease;
+  }
+}

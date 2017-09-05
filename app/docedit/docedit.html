@@ -36,12 +36,19 @@
                     <span class="mdi mdi-delete"></span>
                     <span class="button-label">Löschen</span>
                 </button>
-                <span class="mdi mdi-blur"></span>
-
-                <span *ngIf="projectConfiguration && showBackButton && clonedDocument">
-                {{projectConfiguration.getLabelForType(this.document.resource.type)}} bearbeiten
-            </span>
-                <span *ngIf="!showBackButton">Neue Ressource</span>
+                <div id="type-switcher-button-container">
+                    <type-switcher-button [type]="clonedDocument.resource.type"
+                                          (onTypeChanged)="changeType($event)">
+                    </type-switcher-button>
+                </div>
+                <div *ngIf="projectConfiguration && clonedDocument && clonedDocument.resource.id"
+                      class="docedit-header-label">
+                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}} bearbeiten
+                </div>
+                <span *ngIf="projectConfiguration && clonedDocument && !clonedDocument.resource.id"
+                      class="docedit-header-label">
+                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}} anlegen
+                </span>
             </h1>
         </header>
         <main>
@@ -54,17 +61,18 @@
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                                    (document.resource.type)">
+                                                    (clonedDocument.resource.type)">
                                     </edit-form>
                                 </ng-template>
                             </ngb-tab>
-                            <ngb-tab *ngIf="relDefs() && relDefs().length > 0" title="Relationen"
+                            <ngb-tab *ngIf="getRelationDefinitions() && getRelationDefinitions().length > 0"
+                                     title="Relationen"
                                      id="docedit-relations-tab">
                                 <ng-template ngbTabContent>
                                     <relations-form
                                             [(document)]="clonedDocument"
                                             [primary]="'identifier'"
-                                            [relationDefinitions]="relDefs()">
+                                            [relationDefinitions]="getRelationDefinitions()">
                                     </relations-form>
                                 </ng-template>
                             </ngb-tab>

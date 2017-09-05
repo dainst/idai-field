@@ -23,17 +23,22 @@
   header {
     background-color: #eee;
     padding: 7px;
-    color: #fff;
     border-bottom: 1px solid #ccc;
   }
 
-  .overview-document-heading .mdi-blur {
+  .docedit-header-label {
     display: inline-block;
-    font-size: 1.1em;
+    position: relative;
+    top: -17px;
     color: #fff;
-    background-color: #007883;
-    padding: 10px 10px 10px 11px;
-    margin-right: 5px;
+  }
+
+  #type-switcher-button-container {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 9px 5px 0 10px;
+    width: 50px;
+    height: 55px;
   }
 
   .mdi-arrow-left {
@@ -46,10 +51,6 @@
     padding: 0;
     margin: 0;
     background-color: #67b2b9;
-  }
-
-  header h1 div {
-    display: inline;
   }
 
   main {
@@ -82,7 +83,7 @@
   #document-edit-button-delete-document,
   #document-edit-button-goto-view {
     margin-right: 7px;
-    margin-top: 7px;
+    margin-top: 12px;
     border: 0;
     border-radius: 2px;
     color: #fff;

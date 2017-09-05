@@ -1,18 +1,18 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
+import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {M} from '../m';
-import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {ImageTypeUtility} from '../util/image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
 import {ObjectUtil} from '../util/object-util';
+import {M} from '../m';
 
 @Component({
     selector: 'detail-modal',
@@ -102,11 +102,36 @@ export class DoceditComponent {
         this.activeTab = activeTabName;
     }
 
+    public changeType(newType: string) {
+
+        this.clonedDocument.resource.type = newType;
+        this.documentEditChangeMonitor.setChanged();
+        this.showTypeChangeWarning();
+    }
+
+    public showTypeChangeWarning() {
+
+        const invalidFields: string[]
+            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+
+        if (!invalidFields || invalidFields.length == 0) return;
+
+        let invalidFieldsLabels: string[] = [];
+        for (let fieldName of invalidFields) {
+            invalidFieldsLabels.push(
+                this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName));
+        }
+
+        this.messages.add([M.DOCEDIT_TYPE_CHANGE_WARNING, invalidFieldsLabels.join(', ')]);
+    }
+
     /**
      * @param viaSaveButton if true, it is assumed the call for save came directly
      *   via a user interaction.
      */
     public save(viaSaveButton: boolean = false) {
+
+        this.removeInvalidFields();
 
         const documentBeforeSave: IdaiFieldDocument =
             <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
@@ -122,6 +147,21 @@ export class DoceditComponent {
             .catch(msgWithParams => this.messages.add(msgWithParams))
     }
 
+    /**
+     * Removes fields that have become invalid after a type change.
+     */
+    private removeInvalidFields() {
+
+        const invalidFields: string[]
+            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+
+        if (!invalidFields) return;
+
+        for (let fieldName of invalidFields) {
+            delete this.clonedDocument.resource[fieldName];
+        }
+    }
+
     public showModal() {
 
         this.dialog = this.modalService.open(this.modalTemplate);
@@ -134,11 +174,11 @@ export class DoceditComponent {
         });
     }
 
-    public relDefs() {
+    public getRelationDefinitions() {
 
         if (!this.projectConfiguration) return undefined;
-        return this.projectConfiguration.getRelationDefinitions(
-            this.document.resource.type, false, 'editable');
+
+        return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
     }
 
     public cancel() {

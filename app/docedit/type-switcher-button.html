@@ -1,0 +1,20 @@
+<div *ngIf="isTypeSwitchingPossible()" class="circular-button type-button"
+     [ngbPopover]="typeChangerMenu" #popover="ngbPopover"
+     triggers="manual" (click)="popover.toggle();" placement="bottom">
+    <type-icon [type]="type" size="41"></type-icon>
+    <div class="menu-down-sign-circle">
+        <span class="mdi mdi-menu-down mdi-18px"></span>
+    </div>
+
+    <ng-template #typeChangerMenu>
+        <div id="type-changer-menu">
+            <div class="popover-custom-title">Ressourcentyp ändern</div>
+            <type-picker *ngIf="typesTreeList" [typesTreeList]="typesTreeList" [selectedTypes]="[type]"
+                         (onTypePicked)="chooseType($event); popover.close();"></type-picker>
+        </div>
+    </ng-template>
+</div>
+
+<div *ngIf="!isTypeSwitchingPossible()" style="position: absolute;">
+    <type-icon [type]="type" size="41"></type-icon>
+</div>

@@ -2,6 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
+import {NavbarPage} from '../navbar.page';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
@@ -140,5 +141,58 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest * 10);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
+    });
+
+    it('should change the type of a resource to a child type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature');
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.clickEditDocument();
+        DoceditPage.clickTypeSwitcherButton();
+        DoceditPage.clickTypeSwitcherOption('feature-architecture');
+        browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+    });
+
+    it('should delete invalid fields when changing the type of a resource to its parent type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.clickEditDocument();
+        DoceditPage.clickSelectOption(60, 1);
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        DocumentViewPage.clickEditDocument();
+        DoceditPage.clickTypeSwitcherButton();
+        DoceditPage.clickTypeSwitcherOption('feature');
+        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
+            'gehen: Mauertyp');
+        NavbarPage.clickCloseMessage();
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
+        browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
+    });
+
+    it('should delete invalid relations when changing the type of a resource to a sibling type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'inscription');
+        ResourcesPage.performCreateRelation('1', '2', 9);
+        ResourcesPage.clickSelectResource('2');
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
+        DocumentViewPage.clickEditDocument();
+        DoceditPage.clickTypeSwitcherButton();
+        DoceditPage.clickTypeSwitcherOption('feature-layer');
+        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
+            + 'verloren gehen: trägt');
+        NavbarPage.clickCloseMessage();
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        ResourcesPage.clickSelectResource('2');
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 });

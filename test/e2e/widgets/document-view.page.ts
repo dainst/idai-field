@@ -39,6 +39,11 @@ export class DocumentViewPage {
         return element(by.id('description-view-short-description')).getText();
     }
 
+    public static getTypeLabel() {
+        browser.wait(EC.visibilityOf(element(by.id('document-view-resource-type-label'))), delays.ECWaitTime);
+        return element(by.id('document-view-resource-type-label')).getText();
+    }
+
     /**
      * @param index counting from 0 for the first field
      */
@@ -85,4 +90,8 @@ export class DocumentViewPage {
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
+
+    public static getFieldElement(index) {
+        return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'));
+    }
 }

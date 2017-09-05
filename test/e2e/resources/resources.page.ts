@@ -99,10 +99,10 @@ export class ResourcesPage {
         return common.click(element(by.id('choose-type-option-' + typeName)));
     };
 
-    public static clickSelectMainTypeDocument(option) {
+    public static clickSelectMainTypeDocument(optionIndex) {
 
         browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#mainTypeSelectBox option')).get(option).click();
+        element.all(by.css('#mainTypeSelectBox option')).get(optionIndex).click();
     };
 
     public static openEditByDoubleClickResource(identifier) {

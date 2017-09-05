@@ -86,6 +86,8 @@ export class PouchdbManager {
 
     public stopSync() {
 
+        console.log('stop sync');
+
         for (let handle of this.syncHandles) {
             console.debug('stop sync', handle);
             handle.cancel();

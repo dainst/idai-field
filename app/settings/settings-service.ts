@@ -5,6 +5,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {AppState} from '../app-state';
+import {SyncState} from "../datastore/sync-state";
 
 const app = require('electron').remote.app;
 
@@ -38,32 +39,14 @@ export class SettingsService {
 
     public init() {
 
-        this.ready = this.settingsSerializer.load().then(settings => {
-            this.settings = settings;
-            if (this.settings.dbs && this.settings.dbs.length > 0) {
-                this.pouchdbManager.setProject(this.getSelectedProject());
-
-                return this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false)
-                    .then(() => this.setSettings(this.settings.username, this.settings.syncTarget,
-                        this.settings.imagestorePath))
-                    .then(() => this.startSync());
-            }
-        })
-    }
-
-    public getSyncTarget() {
-
-        return JSON.parse(JSON.stringify(this.settings.syncTarget));
-    }
-
-    public getUsername(): string {
-
-        return this.settings.username ? JSON.parse(JSON.stringify(this.settings.username)) : 'anonymous';
-    }
-
-    public getProjects(): string[] {
-
-        return this.settings.dbs;
+        this.ready = this.settingsSerializer.load()
+            .then(settings => this.updateSettings(settings))
+            .then(() => this.pouchdbManager.setProject(this.getSelectedProject()))
+            .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false))
+            .then(() => {
+                if (this.settings.isSyncActive)
+                    return this.startSync();
+            });
     }
 
     public getSelectedProject(): string {
@@ -71,42 +54,44 @@ export class SettingsService {
         if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
     }
 
-    public getImagestorePath(): string {
-
-        if (this.settings.imagestorePath) {
-            let path: string = this.settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            return path;
-        } else {
-            return app.getPath('appData') + '/' + app.getName() + '/imagestore/';
-        }
+    public getUsername(): string {
+        return this.settings.username;
     }
 
     /**
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      *
-     * @param username
-     * @param syncTarget
-     * @return error encoding string
+     * @param settings
+     * @return Promise encoding string
      *   'malformed_address'
      */
-    public setSettings(username: string, syncTarget: SyncTarget, imagestorePath: string): string {
+    public updateSettings(settings: Settings): Promise<any> {
 
-        this.settings.username = username;
-        this.appState.setCurrentUser(username);
+        settings = JSON.parse(JSON.stringify(settings)); // deep copy
+        this.settings = this.initSettings(settings);
 
-        this.settings.imagestorePath = imagestorePath;
-        this.appState.setImagestorePath(this.getImagestorePath());
-        this.imagestore.setPath(this.getImagestorePath(), this.getSelectedProject());
+        this.appState.setCurrentUser(settings.username);
+        this.appState.setImagestorePath(settings.imagestorePath);
+        this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject());
 
-        if (syncTarget.address) {
-            syncTarget.address = syncTarget.address.trim();
-            if (!SettingsService.validateAddress(syncTarget.address)) return 'malformed_address';
+        if (this.settings.syncTarget.address) {
+            this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
+            if (!SettingsService.validateAddress(this.settings.syncTarget.address))
+                Promise.reject('malformed_address');
         }
-        this.settings.syncTarget = syncTarget;
 
-        this.storeSettings();
+        return this.storeSettings();
+    }
+
+    /**
+     * Retrieve the current settings.
+     * Returns a clone of the settings object in order to prevent the settings
+     * object from being changed without explicitly saving the settings.
+     * @returns {Settings} the current settings
+     */
+    public getSettings(): Settings {
+        return JSON.parse(JSON.stringify(this.settings)); // deep copy
     }
 
     /**
@@ -144,12 +129,14 @@ export class SettingsService {
         return this.pouchdbManager.destroyDb(name);
     }
 
-    private startSync(): Promise<any> {
+    public startSync(): Promise<any> {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (!this.currentSyncUrl) return Promise.resolve();
+
+        console.log('SettingsService.startSync()');
 
         return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
 
@@ -168,17 +155,46 @@ export class SettingsService {
 
     public restartSync() {
 
-        if (!this.settings.dbs || !(this.settings.dbs.length > 0)) return;
+        this.stopSync();
+
+        if (!this.settings.isSyncActive
+                || !this.settings.dbs
+                || !(this.settings.dbs.length > 0))
+            return Promise.resolve();
 
         return new Promise<any>((resolve) => {
-                this.stopSync();
                 setTimeout(() => {
                     this.startSync().then(() => resolve());
                 }, 1000);
             });
     }
 
+    /**
+     * initializes settings to default values
+     * @param settings provided settings
+     * @returns {Settings} settings with added default settings
+     */
+    private initSettings(settings: Settings): Settings {
+
+        if (!settings.username) settings.username = 'anonymous';
+
+        if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
+
+        if (!settings.isSyncActive) settings.isSyncActive = false;
+
+        if (settings.imagestorePath) {
+            let path: string = settings.imagestorePath;
+            if (path.substr(-1) != '/') path += '/';
+            settings.imagestorePath = path;
+        } else {
+            settings.imagestorePath = app.getPath('appData') + '/'
+                + app.getName() + '/imagestore/';
+        }
+        return settings;
+    }
+
     private stopSync() {
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.syncStatusObservers.forEach(o => o.next('disconnected'));
     }
@@ -194,8 +210,8 @@ export class SettingsService {
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
-            created: { user: this.getUsername(), date: new Date() },
-            modified: [{ user: this.getUsername(), date: new Date() }]
+            created: { user: this.settings.username, date: new Date() },
+            modified: [{ user: this.settings.username, date: new Date() }]
         };
     }
 
@@ -235,7 +251,7 @@ export class SettingsService {
 
         let address = serverSetting['address'];
 
-        if (!address) return address;
+        if (!address) return false;
 
         if (address.indexOf('http') == -1) address = 'http://' + address;
 

@@ -135,8 +135,13 @@ type-switcher-button {
     transition: filter .3s ease;
   }
 
-  .sign-circle {
+  .plus-sign-circle {
     filter: brightness(1.18);
+    transition: filter .3s ease;
+  }
+
+  .menu-down-sign-circle {
+    filter: brightness(1.25);
     transition: filter .3s ease;
   }
 }

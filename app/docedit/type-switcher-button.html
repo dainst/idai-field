@@ -1,4 +1,4 @@
-<div *ngIf="isTypeSwitchingPossible()" class="circular-button type-button"
+<div *ngIf="isTypeSwitchingPossible()" id="type-switcher-button" class="circular-button type-button"
      [ngbPopover]="typeChangerMenu" #popover="ngbPopover"
      triggers="manual" (click)="popover.toggle();" placement="bottom">
     <type-icon [type]="type" size="41"></type-icon>

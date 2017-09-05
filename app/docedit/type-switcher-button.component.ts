@@ -1,11 +1,14 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 
 @Component({
     moduleId: module.id,
     selector: 'type-switcher-button',
-    templateUrl: './type-switcher-button.html'
+    templateUrl: './type-switcher-button.html',
+    host: {
+        '(document:click)': 'handleClick($event)',
+    }
 })
 
 /**
@@ -16,6 +19,8 @@ export class TypeSwitcherButtonComponent implements OnChanges{
     @Input() type: string;
 
     @Output() onTypeChanged: EventEmitter<string> = new EventEmitter<string>();
+
+    @ViewChild('popover') private popover;
 
     private typesTreeList: Array<IdaiType>;
 
@@ -53,4 +58,23 @@ export class TypeSwitcherButtonComponent implements OnChanges{
         });
     }
 
+    private handleClick(event) {
+
+        if (!this.popover) return;
+
+        let target = event.target;
+        let inside = false;
+
+        do {
+            if (target.id === 'type-switcher-button' || target.id === 'type-changer-menu') {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+
+        if (!inside) {
+            this.popover.close();
+        }
+    }
 }

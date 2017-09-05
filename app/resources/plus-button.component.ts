@@ -154,6 +154,4 @@ export class PlusButtonComponent implements OnChanges {
 
         return true;
     }
-
-
 }

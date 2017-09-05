@@ -94,8 +94,30 @@
         {
             "domain": [
                 "Feature",
+                "Architecture",
+                "Layer",
+                "Floor",
+                "DrillCoreLayer",
+                "Grave",
+                "Other",
                 "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
                 "ProcessUnit",
+                "Drilling",
+                "Planum",
+                "SurveyUnit",
+                "Sample",
+                "Profile",
                 "Inscription"
             ],
             "inverse": "NO-INVERSE",
@@ -105,17 +127,15 @@
             "visible": true,
             "range": [
                 "Trench",
-                "Survey"
+                "Survey",
+                "Building",
+                "Place"
             ]
         },
         {
             "domain": [
-                "Feature",
-                "Find",
-                "ProcessUnit",
                 "Room",
-                "Wall_surface",
-                "Inscription"
+                "Wall_surface"
             ],
             "inverse": "NO-INVERSE",
             "name": "isRecordedIn",

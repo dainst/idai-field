@@ -517,15 +517,15 @@
                 "Wood",
                 "Floor",
                 "Other",
-                "Wall_surface",
-                "Architecture"
+                "Wall_surface"
             ],
             "name": "bears"
         },
         {
             "label": "trägt",
             "range": [
-                "Wall_surface"
+                "Wall_surface",
+                "Inscription"
             ],
             "inverse": "isFoundOn",
             "domain": [

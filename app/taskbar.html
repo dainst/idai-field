@@ -1,5 +1,4 @@
 <ul class="nav navbar-nav taskbar">
-    <projects></projects>
     <li class="nav-item conflicts" *ngIf="conflicts.length">
         <ng-template #popContent>
             <ul class="list-group conflicts-popover-content">
@@ -17,10 +16,15 @@
     </li>
     <li class="nav-item">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud" *ngIf="connected"></span>
-            <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
+            <span class="mdi mdi-cloud" *ngIf="connected"
+                  ngbTooltip="Synchronisation ist aktiv"
+                  placement="bottom"></span>
+            <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"
+                  ngbTooltip="Synchronisation ist deaktiviert"
+                  placement="bottom"></span>
         </a>
     </li>
+    <projects></projects>
 </ul>
 
 

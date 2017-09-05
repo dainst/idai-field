@@ -10,7 +10,9 @@
             </ul>
         </ng-template>
         <a [ngbPopover]="popContent" popoverTitle="Konflikte"
-           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button">
+           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
+           ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
+           placement="bottom" container="body">
             <span class="mdi mdi-alert-outline"></span>
         </a>
     </li>
@@ -18,10 +20,10 @@
         <a href="#" routerLink="/settings">
             <span class="mdi mdi-cloud" *ngIf="connected"
                   ngbTooltip="Synchronisierung ist aktiv"
-                  placement="bottom"></span>
+                  placement="bottom" container="body"></span>
             <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"
                   ngbTooltip="Synchronisierung ist deaktiviert"
-                  placement="bottom"></span>
+                  placement="bottom" container="body"></span>
         </a>
     </li>
     <projects></projects>

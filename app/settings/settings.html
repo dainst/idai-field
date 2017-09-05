@@ -37,8 +37,8 @@
                     </label>
                     <span placement="right" ngbTooltip="Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. In der Regel sollte hier der volle Name des aktuellen Datenbanknutzers eingetragen werden." class="mdi mdi-information-outline"></span>
                     <input id="username-input"
-                           [ngModel]="username"
-                           (ngModelChange)="username = $event"
+                           [ngModel]="settings.username"
+                           (ngModelChange)="settings.username = $event"
                            class="form-control">
                 </div>
 
@@ -49,12 +49,12 @@
                     </label>
                     <div class="input-group">
                         <input id="imagestorepath-input"
-                               [ngModel]="imagestorePath"
-                               (ngModelChange)="imagestorePath = $event"
+                               [ngModel]="settings.imagestorePath"
+                               (ngModelChange)="settings.imagestorePath = $event"
                                class="form-control">
                         <span class="input-group-btn">
                             <input id="imagestorepath-file" type="file" webkitdirectory directory
-                                   (change)="imagestorePath = $event.target.files[0].path + '/'"
+                                   (change)="settings.imagestorePath = $event.target.files[0].path + '/'"
                                    style="display: none">
                             <label for="imagestorepath-file" class="btn btn-secondary">
                                 <span class="mdi mdi-folder"></span>
@@ -65,26 +65,39 @@
 
                 <h5 style="margin-top: 35px;">Synchronisierungseinstellungen</h5>
 
+                <div class="row" style="margin: 15px 0 0;">
+                    <div class="col-auto mr-auto">
+                        Synchronisierung aktivieren
+                    </div>
+                    <div class="col-auto">
+                        <label class="switch" style="margin-bottom: 0;">
+                            <input type="checkbox" [checked]="settings.isSyncActive"
+                                   (change)="toggleSync()">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="form-group">
 
                     <label for="sync-target-address-input"
                            class="control-label col-form-label">Adresse</label>
-                    <input id="sync-target-address-input" [ngModel]="server.address"
-                           (ngModelChange)="server.address = $event"
+                    <input id="sync-target-address-input" [ngModel]="settings.syncTarget.address"
+                           (ngModelChange)="settings.syncTarget.address = $event"
                            class="form-control">
 
                     <label for="sync-target-username-input"
                            class="control-label col-form-label">Benutzer</label>
-                    <input id="sync-target-username-input" [ngModel]="server.username"
-                           (ngModelChange)="server.username = $event"
+                    <input id="sync-target-username-input" [ngModel]="settings.syncTarget.username"
+                           (ngModelChange)="settings.syncTarget.username = $event"
                            class="form-control">
 
                     <label for="sync-target-password-input"
                            class="control-label col-form-label">Passwort</label>
                     <input id="sync-target-password-input"
                            type="password"
-                           [ngModel]="server.password"
-                           (ngModelChange)="server.password = $event"
+                           [ngModel]="settings.syncTarget.password"
+                           (ngModelChange)="settings.syncTarget.password = $event"
                            class="form-control">
 
                     <label class="control-label col-form-label">

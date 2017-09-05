@@ -39,7 +39,7 @@ export class ProjectsComponent implements OnInit {
         this.settingsService.ready.then(() => {
             this.ready = true;
             this.selectedProject = this.settingsService.getSelectedProject();
-            this.projects = this.settingsService.getProjects().slice(0);
+            this.projects = this.settingsService.getSettings().dbs.slice(0);
         });
     }
 

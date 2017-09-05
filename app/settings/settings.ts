@@ -5,6 +5,7 @@ export interface SyncTarget {
 }
 
 export interface Settings {
+    isSyncActive: boolean;
     remoteSites: Array<string>;
     syncTarget: SyncTarget;
     username: string;

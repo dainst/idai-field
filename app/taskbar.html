@@ -1,5 +1,4 @@
 <ul class="nav navbar-nav taskbar">
-    <projects></projects>
     <li class="nav-item conflicts" *ngIf="conflicts.length">
         <ng-template #popContent>
             <ul class="list-group conflicts-popover-content">
@@ -11,14 +10,23 @@
             </ul>
         </ng-template>
         <a [ngbPopover]="popContent" popoverTitle="Konflikte"
-           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button">
-            <span class="mdi mdi-alert-outline"></span>
+           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
+           ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
+           placement="bottom" container="body">
+            <span class="mdi mdi-alert-outline text-danger"></span>
         </a>
     </li>
     <li class="nav-item">
-        <span class="mdi mdi-cloud" *ngIf="connected"></span>
-        <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"></span>
+        <a href="#" routerLink="/settings">
+            <span class="mdi mdi-cloud" *ngIf="connected"
+                  ngbTooltip="Synchronisierung ist aktiv"
+                  placement="bottom" container="body"></span>
+            <span class="mdi mdi-cloud-outline-off" *ngIf="!connected"
+                  ngbTooltip="Synchronisierung ist deaktiviert"
+                  placement="bottom" container="body"></span>
+        </a>
     </li>
+    <projects></projects>
 </ul>
 
 

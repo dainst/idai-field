@@ -80,6 +80,7 @@ describe('resources/syncing --', function() {
 
         return new Promise(resolve => {
             fs.writeFile(configPath, JSON.stringify({
+                isSyncActive: true,
                 syncTarget: { address: remoteSiteAddress },
                 dbs: ['test']
             }), err => {

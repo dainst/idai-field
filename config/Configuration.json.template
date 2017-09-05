@@ -96,6 +96,23 @@
                 "Feature",
                 "Find",
                 "ProcessUnit",
+                "Inscription"
+            ],
+            "inverse": "NO-INVERSE",
+            "name": "isRecordedIn",
+            "editable": false,
+            "label": "Gehört zu",
+            "visible": true,
+            "range": [
+                "Trench",
+                "Survey"
+            ]
+        },
+        {
+            "domain": [
+                "Feature",
+                "Find",
+                "ProcessUnit",
                 "Room",
                 "Wall_surface",
                 "Inscription"
@@ -106,9 +123,7 @@
             "label": "Gehört zu",
             "visible": true,
             "range": [
-                "Trench",
                 "Building",
-                "Survey",
                 "Place"
             ]
         },
@@ -164,10 +179,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Building",
-                "Trench",
-                "SurveyUnit",
-                "Survey"
+                "SurveyUnit"
             ],
             "inverse": "includes",
             "domain": [
@@ -227,10 +239,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Building",
-                "Trench",
-                "SurveyUnit",
-                "Survey"
+                "SurveyUnit"
             ],
             "name": "includes"
         },
@@ -339,7 +348,6 @@
             "range": [
                 "Room",
                 "Wall_surface",
-                "Building",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -364,7 +372,6 @@
             "domain": [
                 "Room",
                 "Wall_surface",
-                "Building",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -392,7 +399,6 @@
             "range": [
                 "Room",
                 "Wall_surface",
-                "Building",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -417,7 +423,6 @@
             "domain": [
                 "Room",
                 "Wall_surface",
-                "Building",
                 "Feature",
                 "DrillCoreLayer",
                 "Floor",
@@ -462,7 +467,6 @@
                 "Stone",
                 "Terracotta",
                 "Wood",
-                "Building",
                 "Wall_surface",
                 "Room"
             ],
@@ -487,7 +491,6 @@
                 "Stone",
                 "Terracotta",
                 "Wood",
-                "Building",
                 "Wall_surface",
                 "Room"
             ],
@@ -514,15 +517,15 @@
                 "Wood",
                 "Floor",
                 "Other",
-                "Wall_surface",
-                "Architecture"
+                "Wall_surface"
             ],
             "name": "bears"
         },
         {
             "label": "trägt",
             "range": [
-                "Wall_surface"
+                "Wall_surface",
+                "Inscription"
             ],
             "inverse": "isFoundOn",
             "domain": [
@@ -578,8 +581,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "SurveyUnit",
-                "Building"
+                "SurveyUnit"
             ],
             "inverse": "borders",
             "domain": [
@@ -591,8 +593,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "SurveyUnit",
-                "Building"
+                "SurveyUnit"
             ],
             "name": "borders"
         }
@@ -666,7 +667,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -681,7 +683,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -700,7 +703,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -787,7 +791,8 @@
             },
             "type": "Trench",
             "parent": "Operation",
-            "label": "Schnitt"
+            "label": "Schnitt",
+            "color": "blue"
         },
         {
             "fields": [
@@ -881,7 +886,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -1128,11 +1134,13 @@
             ],
             "labels": {
                 "de": "Glas",
-                "en": "Glass"
+                "en": "Glass",
+                "it": "Vetro"
             },
             "type": "Glass",
             "parent": "Find",
-            "label": "Glas"
+            "label": "Glas",
+            "color": "#99CC33"
         },
         {
             "fields": [
@@ -1144,7 +1152,8 @@
                     ],
                     "labels": {
                         "de": "Durchmesser",
-                        "en": "diameter"
+                        "en": "diameter",
+                        "it": "Diametro"
                     },
                     "editable": true,
                     "label": "Durchmesser",
@@ -1163,7 +1172,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -1182,7 +1192,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -1218,7 +1229,8 @@
             },
             "type": "Drilling",
             "parent": "ProcessUnit",
-            "label": "Bohrung"
+            "label": "Bohrung",
+            "color": "#08519c"
         },
         {
             "fields": [
@@ -1226,7 +1238,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -1305,7 +1318,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasCampaign",
@@ -1410,11 +1427,13 @@
             "fields": [],
             "labels": {
                 "de": "Molluske",
-                "en": "Mollusk"
+                "en": "Mollusk",
+                "it": "Molluschi"
             },
             "type": "Mollusk",
             "parent": "Find",
-            "label": "Molluske"
+            "label": "Molluske",
+            "color": "#ff99ff"
         },
         {
             "fields": [
@@ -1440,7 +1459,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -1455,7 +1475,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -1474,7 +1495,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -1583,7 +1605,8 @@
             },
             "type": "Planum",
             "parent": "ProcessUnit",
-            "label": "Planum"
+            "label": "Planum",
+            "color": "#2171b5"
         },
         {
             "fields": [
@@ -1653,7 +1676,8 @@
                     "name": "hasClayColorOutside",
                     "labels": {
                         "de": "Aussen: Tonfarbe und -intensität",
-                        "en": "clay color outside"
+                        "en": "clay color outside",
+                        "it": "All'infuori: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Aussen: Tonfarbe und -intensität",
@@ -1773,7 +1797,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -1960,7 +1985,8 @@
             },
             "type": "Brick",
             "parent": "Find",
-            "label": "Ziegel"
+            "label": "Ziegel",
+            "color": "#CC0000"
         },
         {
             "fields": [
@@ -1968,7 +1994,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -2312,7 +2339,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -2330,7 +2358,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -2467,7 +2496,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -2482,7 +2512,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -2500,7 +2531,8 @@
             },
             "type": "SurveyUnit",
             "parent": "ProcessUnit",
-            "label": "Planquadrat"
+            "label": "Planquadrat",
+            "color": "#6baed6"
         },
         {
             "fields": [
@@ -2559,7 +2591,8 @@
                     "name": "hasTypeOfWood",
                     "labels": {
                         "de": "Holzart",
-                        "en": "type of wood"
+                        "en": "type of wood",
+                        "it": "Specie de legno"
                     },
                     "editable": true,
                     "label": "Holzart",
@@ -2589,11 +2622,13 @@
             ],
             "labels": {
                 "de": "Holz",
-                "en": "Wood"
+                "en": "Wood",
+                "it": "Legno"
             },
             "type": "Wood",
             "parent": "Find",
-            "label": "Holz"
+            "label": "Holz",
+            "color": "#660000"
         },
         {
             "fields": [
@@ -2746,7 +2781,8 @@
                     "name": "hasBlockTreatment",
                     "labels": {
                         "de": "Steinblockbearbeitung",
-                        "en": "block treatment"
+                        "en": "block treatment",
+                        "it": "tecnologia litica"
                     },
                     "editable": true,
                     "label": "Steinblockbearbeitung",
@@ -2873,7 +2909,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -2892,7 +2929,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -2907,7 +2945,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -2922,7 +2961,8 @@
                     "name": "hasMark",
                     "labels": {
                         "de": "Steinmetzzeichen",
-                        "en": "mark"
+                        "en": "mark",
+                        "it": "il segno lo scalpellino"
                     },
                     "editable": false,
                     "label": "Steinmetzzeichen",
@@ -3085,7 +3125,8 @@
             },
             "type": "Architecture",
             "parent": "Feature",
-            "label": "Architektur"
+            "label": "Architektur",
+            "color": "#707070"
         },
         {
             "fields": [
@@ -3093,7 +3134,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -3218,7 +3260,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasSupervisor",
@@ -3511,7 +3557,8 @@
                     ],
                     "labels": {
                         "de": "Stärke",
-                        "en": "thickness"
+                        "en": "thickness",
+                        "it": "Spessore"
                     },
                     "editable": true,
                     "label": "Stärke",
@@ -3590,7 +3637,8 @@
             },
             "type": "Layer",
             "parent": "Feature",
-            "label": "Erdbefund"
+            "label": "Erdbefund",
+            "color": "#663300"
         },
         {
             "fields": [
@@ -3598,7 +3646,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -3766,7 +3815,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "borders",
@@ -3795,7 +3848,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -3813,7 +3867,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -3832,7 +3887,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -3847,7 +3903,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -3866,7 +3923,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -4081,7 +4139,8 @@
                 "it": "US"
             },
             "type": "Feature",
-            "label": "Stratigrafische Einheit"
+            "label": "Stratigrafische Einheit",
+            "color": "black"
         },
         {
             "fields": [
@@ -4243,7 +4302,8 @@
             },
             "type": "Floor",
             "parent": "Feature",
-            "label": "Fußboden"
+            "label": "Fußboden",
+            "color": "#6600cc"
         },
         {
             "fields": [
@@ -4251,7 +4311,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -4348,7 +4409,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasCondition",
@@ -4394,7 +4459,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -4412,7 +4478,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -4547,7 +4614,8 @@
             ],
             "labels": {
                 "de": "Inschrift",
-                "en": "Inscription"
+                "en": "Inscription",
+                "it": "Iscrizione"
             },
             "type": "Inscription",
             "label": "Inschrift"
@@ -4579,7 +4647,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasSupervisor",
@@ -4610,7 +4682,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -4751,7 +4824,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasCampaign",
@@ -4917,7 +4994,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -5028,7 +5106,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasCampaign",
@@ -5124,7 +5206,8 @@
                 {
                     "name": "hasAmountSherdsPedestal",
                     "labels": {
-                        "de": "Anzahl Fuß-Scherben"
+                        "de": "Anzahl Fuß-Scherben",
+                        "it": "Piede"
                     },
                     "editable": true,
                     "label": "Anzahl Fuß-Scherben",
@@ -5227,7 +5310,8 @@
                     "name": "hasCoat",
                     "labels": {
                         "de": "Überzug",
-                        "en": "coat"
+                        "en": "coat",
+                        "it": "Ricopertura"
                     },
                     "editable": true,
                     "label": "Überzug",
@@ -5253,7 +5337,8 @@
                     "name": "hasDiameterBase",
                     "labels": {
                         "de": "Durchmesser Boden",
-                        "en": "diameter base"
+                        "en": "diameter base",
+                        "it": "Diametro fondo"
                     },
                     "editable": false,
                     "label": "Durchmesser Boden",
@@ -5268,7 +5353,8 @@
                     "name": "hasDiameterBelly",
                     "labels": {
                         "de": "Durchmesser Bauch",
-                        "en": "diameter belly"
+                        "en": "diameter belly",
+                        "it": "Diametro corpo"
                     },
                     "editable": false,
                     "label": "Durchmesser Bauch",
@@ -5283,7 +5369,8 @@
                     "name": "hasDiameterNeck",
                     "labels": {
                         "de": "Durchmesser Hals",
-                        "en": "diameter neck"
+                        "en": "diameter neck",
+                        "it": "Diametro collo"
                     },
                     "editable": false,
                     "label": "Durchmesser Hals",
@@ -5384,7 +5471,8 @@
                     "name": "hasClayColorBreak",
                     "labels": {
                         "de": "Bruch: Tonfarbe und -intensität",
-                        "en": "clay color break"
+                        "en": "clay color break",
+                        "it": "Rottura: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Bruch: Tonfarbe und -intensität",
@@ -5416,7 +5504,8 @@
                     "name": "hasClayColorInside",
                     "labels": {
                         "de": "Innen: Tonfarbe und -intensität",
-                        "en": "clay color inside"
+                        "en": "clay color inside",
+                        "it": "Dentro: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Innen: Tonfarbe und -intensität",
@@ -5448,7 +5537,8 @@
                     "name": "hasClayColorOutside",
                     "labels": {
                         "de": "Aussen: Tonfarbe und -intensität",
-                        "en": "clay color outside"
+                        "en": "clay color outside",
+                        "it": "All'infuori: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Aussen: Tonfarbe und -intensität",
@@ -5567,7 +5657,8 @@
                 {
                     "name": "hasCoatInside",
                     "labels": {
-                        "de": "Überzug Innen"
+                        "de": "Überzug Innen",
+                        "it": "Ricopertura dentro"
                     },
                     "editable": true,
                     "label": "Überzug Innen",
@@ -5602,7 +5693,8 @@
                 {
                     "name": "hasCoatOutside",
                     "labels": {
-                        "de": "Überzug Außen"
+                        "de": "Überzug Außen",
+                        "it": "Ricopertura all'infuori"
                     },
                     "editable": true,
                     "label": "Überzug Außen",
@@ -5659,7 +5751,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -5789,7 +5882,8 @@
                     "name": "hasPotteryType",
                     "labels": {
                         "de": "Art der Keramik",
-                        "en": "pottery type"
+                        "en": "pottery type",
+                        "it": "Denominazione"
                     },
                     "editable": false,
                     "label": "Art der Keramik",
@@ -6142,7 +6236,8 @@
                     ],
                     "labels": {
                         "de": "Stärke",
-                        "en": "thickness"
+                        "en": "thickness",
+                        "it": "Spessore"
                     },
                     "editable": true,
                     "label": "Stärke",
@@ -6161,7 +6256,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -6314,7 +6410,8 @@
             },
             "type": "Grave",
             "parent": "Feature",
-            "label": "Grab"
+            "label": "Grab",
+            "color": "#339900"
         },
         {
             "fields": [
@@ -6346,7 +6443,8 @@
                     "name": "hasBoneClassification",
                     "labels": {
                         "de": "Knochen Klassifikation",
-                        "en": "bone classification"
+                        "en": "bone classification",
+                        "it": "Osso la classificazione"
                     },
                     "editable": true,
                     "label": "Knochen Klassifikation",
@@ -6475,11 +6573,13 @@
             ],
             "labels": {
                 "de": "Knochen",
-                "en": "Bone"
+                "en": "Bone",
+                "it": "Osso"
             },
             "type": "Bone",
             "parent": "Find",
-            "label": "Knochen"
+            "label": "Knochen",
+            "color": "#CCFFFF"
         },
         {
             "fields": [
@@ -6487,7 +6587,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -6567,7 +6668,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "borders",
@@ -6636,7 +6741,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -6654,7 +6760,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -6673,7 +6780,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -6688,7 +6796,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -6707,7 +6816,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -6860,7 +6970,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -6882,7 +6993,8 @@
                     "label": "Datum",
                     "visible": true,
                     "descriptions": {
-                        "de": "Datum der Durchführung"
+                        "de": "Datum der Durchführung",
+                        "it": "Data"
                     },
                     "inputType": "input",
                     "description": "Datum der Durchführung"
@@ -6942,7 +7054,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasOperationClassification",
@@ -6978,7 +7094,8 @@
                 "en": "Process Unit"
             },
             "type": "ProcessUnit",
-            "label": "Arbeitsgang"
+            "label": "Arbeitsgang",
+            "color": "#08306b"
         },
         {
             "fields": [
@@ -6986,7 +7103,8 @@
                     "name": "hasClayColorBreak",
                     "labels": {
                         "de": "Bruch: Tonfarbe und -intensität",
-                        "en": "clay color break"
+                        "en": "clay color break",
+                        "it": "Rottura: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Bruch: Tonfarbe und -intensität",
@@ -7018,7 +7136,8 @@
                     "name": "hasClayColorInside",
                     "labels": {
                         "de": "Innen: Tonfarbe und -intensität",
-                        "en": "clay color inside"
+                        "en": "clay color inside",
+                        "it": "Dentro: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Innen: Tonfarbe und -intensität",
@@ -7050,7 +7169,8 @@
                     "name": "hasClayColorOutside",
                     "labels": {
                         "de": "Aussen: Tonfarbe und -intensität",
-                        "en": "clay color outside"
+                        "en": "clay color outside",
+                        "it": "All'infuori: Colore dell'impasto"
                     },
                     "editable": true,
                     "label": "Aussen: Tonfarbe und -intensität",
@@ -7188,7 +7308,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -7480,11 +7601,13 @@
             ],
             "labels": {
                 "de": "Terrakotta",
-                "en": "Terracotta"
+                "en": "Terracotta",
+                "it": "Terracotte"
             },
             "type": "Terracotta",
             "parent": "Find",
-            "label": "Terrakotta"
+            "label": "Terrakotta",
+            "color": "#FF6600"
         },
         {
             "fields": [
@@ -7492,7 +7615,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -7632,7 +7756,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasSurfaceDecoration",
@@ -7678,7 +7806,8 @@
                     "name": "hasBlockTreatment",
                     "labels": {
                         "de": "Steinblockbearbeitung",
-                        "en": "block treatment"
+                        "en": "block treatment",
+                        "it": "tecnologia litica"
                     },
                     "editable": true,
                     "label": "Steinblockbearbeitung",
@@ -7846,7 +7975,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -7864,7 +7994,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -7883,7 +8014,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -7945,7 +8077,8 @@
                     "name": "hasMark",
                     "labels": {
                         "de": "Steinmetzzeichen",
-                        "en": "mark"
+                        "en": "mark",
+                        "it": "il segno lo scalpellino"
                     },
                     "editable": false,
                     "label": "Steinmetzzeichen",
@@ -8298,7 +8431,8 @@
             },
             "type": "Other",
             "parent": "Feature",
-            "label": "Sonstiges"
+            "label": "Sonstiges",
+            "color": "#CC6600"
         },
         {
             "fields": [
@@ -8322,7 +8456,7 @@
                     "labels": {
                         "de": "Gewicht (g)",
                         "en": "Weight (g)",
-                        "it": "Peso"
+                        "it": "Peso (complessivo)"
                     },
                     "editable": true,
                     "label": "Gewicht (g)",
@@ -8385,7 +8519,8 @@
             },
             "type": "Sample",
             "parent": "ProcessUnit",
-            "label": "Probe"
+            "label": "Probe",
+            "color": "#9ecae1"
         },
         {
             "fields": [
@@ -8661,7 +8796,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -8726,7 +8862,8 @@
                     "name": "hasObjectTypeStone",
                     "labels": {
                         "de": "Art des Objektes",
-                        "en": "Type of Object"
+                        "en": "Type of Object",
+                        "it": "Ogetto"
                     },
                     "editable": true,
                     "label": "Art des Objektes",
@@ -8769,6 +8906,8 @@
                         "Produktionsfragment",
                         "Siegel",
                         "Webgewicht",
+                        "Architekturdekor",
+                        "Fußbodenfragment",
                         "Waffe",
                         "Reibstein",
                         "Gussform",
@@ -8879,11 +9018,13 @@
             ],
             "labels": {
                 "de": "Stein",
-                "en": "Stone"
+                "en": "Stone",
+                "it": "Pietra"
             },
             "type": "Stone",
             "parent": "Find",
-            "label": "Stein"
+            "label": "Stein",
+            "color": "#5c5c8a"
         },
         {
             "fields": [
@@ -9211,11 +9352,13 @@
             ],
             "labels": {
                 "de": "Münze",
-                "en": "Coin"
+                "en": "Coin",
+                "it": "Moneta"
             },
             "type": "Coin",
             "parent": "Find",
-            "label": "Münze"
+            "label": "Münze",
+            "color": "#cc9900"
         },
         {
             "fields": [
@@ -9223,7 +9366,8 @@
                     "name": "ShortDescription",
                     "labels": {
                         "de": "Kurzbeschreibung",
-                        "en": "short description"
+                        "en": "short description",
+                        "it": "Descrizione"
                     },
                     "editable": false,
                     "label": "Kurzbeschreibung",
@@ -9301,7 +9445,8 @@
                     "label": "Datum",
                     "visible": true,
                     "descriptions": {
-                        "de": "Datum der Durchführung"
+                        "de": "Datum der Durchführung",
+                        "it": "Data"
                     },
                     "inputType": "input",
                     "description": "Datum der Durchführung"
@@ -9361,7 +9506,11 @@
                     "editable": true,
                     "label": "Bearbeiter/Bearbeiterin",
                     "visible": true,
-                    "inputType": "input"
+                    "descriptions": {
+                        "it": "Responsabile"
+                    },
+                    "inputType": "input",
+                    "description": {}
                 },
                 {
                     "name": "hasRestauration",
@@ -9382,7 +9531,8 @@
                     "name": "hasStorageInventNr.",
                     "labels": {
                         "de": "Inventarnummer",
-                        "en": "storage invent nr"
+                        "en": "storage invent nr",
+                        "it": "Numero d'inventario"
                     },
                     "editable": true,
                     "label": "Inventarnummer",
@@ -9398,7 +9548,7 @@
                     "labels": {
                         "de": "Gewicht (g)",
                         "en": "Weight (g)",
-                        "it": "Peso"
+                        "it": "Peso (complessivo)"
                     },
                     "editable": true,
                     "label": "Gewicht (g)",
@@ -9473,7 +9623,8 @@
                     "name": "hasDating",
                     "labels": {
                         "de": "Datierung",
-                        "en": "Dating"
+                        "en": "Dating",
+                        "it": "Datazione"
                     },
                     "editable": true,
                     "label": "Datierung",
@@ -9491,7 +9642,8 @@
                     ],
                     "labels": {
                         "de": "Durchmesser",
-                        "en": "diameter"
+                        "en": "diameter",
+                        "it": "Diametro"
                     },
                     "editable": true,
                     "label": "Durchmesser",
@@ -9510,7 +9662,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -9529,7 +9682,8 @@
                     ],
                     "labels": {
                         "de": "Länge",
-                        "en": "length"
+                        "en": "length",
+                        "it": "la lunghezza"
                     },
                     "editable": true,
                     "label": "Länge",
@@ -9543,7 +9697,8 @@
                         "Minimale Ausdehnung"
                     ],
                     "labels": {
-                        "de": "Umfang"
+                        "de": "Umfang",
+                        "it": "la circonferenza"
                     },
                     "editable": true,
                     "label": "Umfang",
@@ -9562,7 +9717,8 @@
                     ],
                     "labels": {
                         "de": "Stärke",
-                        "en": "thickness"
+                        "en": "thickness",
+                        "it": "Spessore"
                     },
                     "editable": true,
                     "label": "Stärke",
@@ -9581,7 +9737,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -9600,7 +9757,8 @@
                     ],
                     "labels": {
                         "de": "Breite",
-                        "en": "width"
+                        "en": "width",
+                        "it": "la larghezza"
                     },
                     "editable": true,
                     "label": "Breite",
@@ -9618,7 +9776,8 @@
                         "Minimale Ausdehnung"
                     ],
                     "labels": {
-                        "de": "Andere Maße"
+                        "de": "Andere Maße",
+                        "it": "Ulteriore misure"
                     },
                     "editable": true,
                     "label": "Andere Maße",
@@ -9785,7 +9944,9 @@
                 "en": "Find"
             },
             "type": "Find",
-            "label": "Fund"
+            "label": "Fund",
+            "color": "black"
+
         },
         {
             "fields": [
@@ -9807,7 +9968,8 @@
                     "name": "hasDecoration",
                     "labels": {
                         "de": "Bemalung",
-                        "en": "decoration"
+                        "en": "decoration",
+                        "it": "Pittura"
                     },
                     "editable": true,
                     "label": "Bemalung",
@@ -9822,7 +9984,8 @@
                     "name": "hasDecorationPattern",
                     "labels": {
                         "de": "Dekoration",
-                        "en": "decoration pattern"
+                        "en": "decoration pattern",
+                        "it": "Decorazione"
                     },
                     "editable": true,
                     "label": "Dekoration",
@@ -9899,11 +10062,13 @@
             ],
             "labels": {
                 "de": "Putzfragment",
-                "en": "Plaster Fragment"
+                "en": "Plaster Fragment",
+                "it": "Pezzi di intonaco"
             },
             "type": "PlasterFragment",
             "parent": "Find",
-            "label": "Putzfragment"
+            "label": "Putzfragment",
+            "color": "#737373"
         },
         {
             "fields": [
@@ -9961,7 +10126,8 @@
                     ],
                     "labels": {
                         "de": "Höhe",
-                        "en": "height"
+                        "en": "height",
+                        "it": "l'altezza"
                     },
                     "editable": true,
                     "label": "Höhe",
@@ -9980,7 +10146,8 @@
                     ],
                     "labels": {
                         "de": "Niveau",
-                        "en": "level"
+                        "en": "level",
+                        "it": "Livello"
                     },
                     "editable": true,
                     "label": "Niveau",
@@ -10023,7 +10190,8 @@
             },
             "type": "Profile",
             "parent": "ProcessUnit",
-            "label": "Profil"
+            "label": "Profil",
+            "color": "#c6dbef"
         },
         {
             "fields": [
@@ -10068,7 +10236,8 @@
                     "name": "hasFormDescription",
                     "labels": {
                         "de": "Beschreibung der Form",
-                        "en": "form description"
+                        "en": "form description",
+                        "it": "Scultura"
                     },
                     "editable": true,
                     "label": "Beschreibung der Form",
@@ -10338,11 +10507,13 @@
             ],
             "labels": {
                 "de": "Metall",
-                "en": "Metal"
+                "en": "Metal",
+                "it": "Metallo"
             },
             "type": "Metal",
             "parent": "Find",
-            "label": "Metall"
+            "label": "Metall",
+            "color": "#995f25"
         }
     ],
     "views": [

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from './settings-service';
 import {M} from '../m';
-import {SyncTarget} from './settings';
+import {Settings, SyncTarget} from './settings';
 
 const ip = require('ip');
 
@@ -12,12 +12,11 @@ const ip = require('ip');
 })
 /**
  * @author Daniel de Oliveira
+ * @author Sebastian Cuy
  */
 export class SettingsComponent implements OnInit {
 
-    public username: string;
-    public imagestorePath: string;
-    public server: SyncTarget = { address: undefined, username: undefined, password: undefined };
+    public settings: Settings;
     public ready: boolean = false;
     public saving: boolean = false;
     public ipAddress: string = ip.address();
@@ -30,39 +29,31 @@ export class SettingsComponent implements OnInit {
 
         this.settingsService.ready.then(() => {
             this.ready = true;
-            this.username = this.settingsService.getUsername();
-            this.imagestorePath = this.settingsService.getImagestorePath();
-            this.server = this.settingsService.getSyncTarget();
+            this.settings = this.settingsService.getSettings();
+            console.log('got settings', this.settings);
         });
     }
 
-    private validateSettings(): boolean {
-
-        const validationError = this.settingsService.setSettings(this.username, this.server, this.imagestorePath);
-
-        if (validationError) {
-            this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);
-            return false;
-        }
-
-        return true;
+    public toggleSync() {
+        this.settings.isSyncActive = !this.settings.isSyncActive;
     }
 
     public save() {
 
-        if (!this.validateSettings()) return;
+        this.settingsService.updateSettings(this.settings).then(() => {
 
-        this.saving = true;
+            this.saving = true;
 
-        this.settingsService.restartSync().then(
-            () => {
-                this.saving = false;
-                this.messages.add([M.SETTINGS_ACTIVATED])
-            },
-            err => {
-                this.saving = false;
-                console.error(err);
-            }
-        );
+            this.settingsService.restartSync().then(
+                () => {
+                    this.saving = false;
+                    this.messages.add([M.SETTINGS_ACTIVATED])
+                },
+                err => {
+                    this.saving = false;
+                    console.error(err);
+                }
+            );
+        }).catch(err => this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]));
     }
 }

@@ -1,4 +1,6 @@
-<div *ngIf="ready" id="projects-badge" class="badge badge-default" (click)="openModal()">{{selectedProject}}</div>
+<button *ngIf="ready" id="projects-badge" class="btn btn-sm align-middle btn-outline-secondary" type="button" (click)="openModal()">
+    {{selectedProject}}
+</button>
 
 <ng-template #projectsModalTemplate>
     <div class="modal-header">

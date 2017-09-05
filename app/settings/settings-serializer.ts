@@ -32,6 +32,10 @@ export class SettingsSerializer {
 
         let configToWrite = {};
 
+        if (settings.isSyncActive) {
+            configToWrite['isSyncActive'] = settings.isSyncActive;
+        }
+
         if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password']
                 || settings.syncTarget['address'])) {
             configToWrite['syncTarget'] = settings.syncTarget;

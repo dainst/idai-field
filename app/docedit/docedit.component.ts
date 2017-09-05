@@ -106,23 +106,40 @@ export class DoceditComponent {
 
         this.clonedDocument.resource.type = newType;
         this.documentEditChangeMonitor.setChanged();
-        this.showTypeChangeWarning();
+        this.showTypeChangeFieldsWarning();
+        this.showTypeChangeRelationsWarning();
     }
 
-    public showTypeChangeWarning() {
+    private showTypeChangeFieldsWarning() {
 
         const invalidFields: string[]
             = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
 
-        if (!invalidFields || invalidFields.length == 0) return;
+        if (invalidFields && invalidFields.length > 0) {
+            let invalidFieldsLabels: string[] = [];
+            for (let fieldName of invalidFields) {
+                invalidFieldsLabels.push(
+                    this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName));
+            }
 
-        let invalidFieldsLabels: string[] = [];
-        for (let fieldName of invalidFields) {
-            invalidFieldsLabels.push(
-                this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName));
+            this.messages.add([M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING, invalidFieldsLabels.join(', ')]);
         }
+    }
 
-        this.messages.add([M.DOCEDIT_TYPE_CHANGE_WARNING, invalidFieldsLabels.join(', ')]);
+    private showTypeChangeRelationsWarning() {
+
+        const invalidRelationFields: string[]
+            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+
+        if (invalidRelationFields && invalidRelationFields.length > 0) {
+            let invalidRelationFieldsLabels: string[] = [];
+            for (let relationFieldName of invalidRelationFields) {
+                invalidRelationFieldsLabels.push(
+                    this.projectConfiguration.getRelationDefinitionLabel(relationFieldName));
+            }
+
+            this.messages.add([M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING, invalidRelationFieldsLabels.join(', ')]);
+        }
     }
 
     /**
@@ -132,6 +149,7 @@ export class DoceditComponent {
     public save(viaSaveButton: boolean = false) {
 
         this.removeInvalidFields();
+        this.removeInvalidRelations();
 
         const documentBeforeSave: IdaiFieldDocument =
             <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
@@ -159,6 +177,21 @@ export class DoceditComponent {
 
         for (let fieldName of invalidFields) {
             delete this.clonedDocument.resource[fieldName];
+        }
+    }
+
+    /**
+     * Removes relation fields that have become invalid after a type change.
+     */
+    private removeInvalidRelations() {
+
+        const invalidRelationFields: string[]
+            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+
+        if (!invalidRelationFields) return;
+
+        for (let relationFieldName of invalidRelationFields) {
+            delete this.clonedDocument.resource.relations[relationFieldName];
         }
     }
 

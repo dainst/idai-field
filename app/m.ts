@@ -66,7 +66,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_SAVE_ERROR: string = 'docedit/saveerror';
     public static DOCEDIT_DELETE_ERROR: string = 'docedit/deleteerror';
     public static DOCEDIT_SAVE_CONFLICT: string = 'docedit/saveconflict';
-    public static DOCEDIT_TYPE_CHANGE_WARNING: string = 'docedit/typechangewarning';
+    public static DOCEDIT_TYPE_CHANGE_FIELDS_WARNING: string = 'docedit/typechangefieldswarning';
+    public static DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING: string = 'docedit/typechangerelationswarning';
 
     // Images Package
 
@@ -342,8 +343,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.DOCEDIT_TYPE_CHANGE_WARNING]={
+        this.msgs[M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING]={
             content: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: {0}',
+            level: 'warning',
+            params: [''],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING]={
+            content: 'Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren ' +
+                'gehen: {0}',
             level: 'warning',
             params: [''],
             hidden: false

@@ -5556,7 +5556,7 @@
                         "de": "Nummer aus dem Typenkatalog."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Typnummer",
                     "labels": {
                         "de": "Typnummer",
@@ -6798,7 +6798,7 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter oder Bearbeiterin der Ressouce",
                     "descriptions": {
                         "it": "Responsabile"
                     },

@@ -1,12 +1,11 @@
-import {NavbarPage} from '../navbar.page';
 import {browser, protractor, element, by} from 'protractor';
-const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
-
 import {ResourcesPage} from './resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
+import {NavbarPage} from '../navbar.page';
 
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 describe('resources/relations --', function() {
 

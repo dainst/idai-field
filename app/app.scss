@@ -42,6 +42,14 @@ body {
   border-radius: 0 !important;
 }
 
+.btn:focus, .btn.focus {
+  box-shadow: none;
+}
+
+.btn:active, .btn.active {
+  box-shadow: inset 1px 1px 2px 1px rgba(0,0,0,0.2);
+}
+
 .btn-primary {
   background-color: rgba(85, 114, 161, 1);
   border-color: rgba(85, 114, 161, 1);
@@ -52,9 +60,14 @@ body {
   border-color: lighten(rgba(85, 114, 161, 1), 10%);
 }
 
-.btn-primary:disabled, .btn-primary:active {
+.btn-primary:disabled, .btn-primary.disabled {
   background-color: darken(rgba(85, 114, 161, 1), 10%);
   border-color: darken(rgba(85, 114, 161, 1), 10%);
+}
+
+.btn-primary:active, .btn-primary.active {
+  background-color: saturate(rgba(85, 114, 161, 1), 10%);
+  border-color: saturate(rgba(85, 114, 161, 1), 10%);
 }
 
 .btn-secondary {
@@ -69,9 +82,14 @@ body {
   color: #fff;
 }
 
-.btn-secondary:disabled, .btn-primary:active {
+.btn-secondary:disabled, .btn-primary.disabled {
   background-color: darken(#727b84, 10%);
   border-color: darken(#6c757d, 10%);
+}
+
+.btn-secondary:active, .btn-secondary.active {
+  background-color: saturate(#727b84, 10%);
+  background-color: saturate(#6c757d, 10%);
 }
 
 .md-form {

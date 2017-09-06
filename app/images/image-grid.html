@@ -18,8 +18,8 @@
                     (onQueryStringChanged)="setQueryString($event)">
         </search-bar>
 
-        <span *ngIf="selected.length">
-            <div class="btn-group" role="group">
+        <div class="btn-toolbar" *ngIf="selected.length">
+            <div class="btn-group mr-2" role="group">
                 <button type="button" id="delete-images" class="btn btn-danger" (click)="openDeleteModal(deleteModal)">
                     <span class="mdi mdi-delete"></span>
                 </button>
@@ -28,10 +28,12 @@
                     <span class="mdi mdi-link"></span>
                 </button>
             </div>
-            <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()">
-                Auswahl aufheben
-            </button>
-        </span>
+            <div class="btn-group">
+                <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()">
+                    Auswahl aufheben
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="image-grid" (window:resize)="onResize($event)">

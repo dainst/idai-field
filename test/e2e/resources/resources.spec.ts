@@ -177,8 +177,8 @@ describe('resources --', () => {
     it('should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'inscription');
-        ResourcesPage.performCreateRelation('1', '2', 9);
+        ResourcesPage.performCreateResource('2', 'wall_surface');
+        ResourcesPage.performCreateRelation('1', '2', 10);
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
         ResourcesPage.clickSelectResource('1');
@@ -187,7 +187,7 @@ describe('resources --', () => {
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-layer');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
-            + 'verloren gehen: trägt');
+            + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));

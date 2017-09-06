@@ -3436,7 +3436,8 @@
                 "en": "Operation"
             },
             "type": "Operation",
-            "label": "Untersuchung"
+            "label": "Untersuchung",
+            "abstract": true
         },
         {
             "fields": [

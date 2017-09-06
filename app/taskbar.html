@@ -13,7 +13,10 @@
            #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
            ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
            placement="bottom">
-            <span class="mdi mdi-alert-outline text-danger"></span>
+            <span class="mdi mdi-alert-outline"></span>
+            <span class="badge-pill badge-danger conflicts-badge">
+                {{conflicts.length}}
+            </span>
         </a>
     </li>
     <li class="nav-item">
@@ -26,7 +29,9 @@
                   placement="bottom" container="body"></span>
         </a>
     </li>
-    <projects></projects>
+    <li>
+        <projects></projects>
+    </li>
 </ul>
 
 

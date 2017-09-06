@@ -23,6 +23,16 @@
 
   .conflicts {
 
+    position: relative;
+
+    .conflicts-badge {
+      position: absolute;
+      font-size: 0.6em;
+      top: 22px;
+      right: 0;
+      padding-left: 0.5em;
+    }
+
     .popover-title {
       width: 350px;
       position: absolute;

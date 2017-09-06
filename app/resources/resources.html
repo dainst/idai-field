@@ -52,17 +52,17 @@
     <div class="col-md-3" align="right">
         <div *ngIf="ready" class="btn-group resources-mode-buttons">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
-                    [disabled]="mode == 'map'">
+                    [class.active]="mode == 'map'">
                 Karte
             </button>
             <button id="list-mode-button" (click)="setMode('list')"
-                    class="btn btn-primary m-0" [disabled]="mode == 'list'">
+                    class="btn btn-primary m-0" [class.active]="mode == 'list'">
                 Liste
             </button>
         </div>
         <div *ngIf="!ready" class="btn-group resources-mode-buttons">
-            <button class="btn btn-primary m-0" [disabled]="mode == 'map'">Karte</button>
-            <button class="btn btn-primary m-0" [disabled]="mode == 'list'">Liste</button>
+            <button class="btn btn-primary m-0" [class.active]="mode == 'map'">Karte</button>
+            <button class="btn btn-primary m-0" [class.active]="mode == 'list'">Liste</button>
         </div>
     </div>
 </div>

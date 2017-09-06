@@ -1,5 +1,11 @@
 .map-wrapper {
 
+  .document-info {
+    height: calc(100vh - 113px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .document-info .card {
     margin-bottom: 0;
     padding-bottom: 15px;

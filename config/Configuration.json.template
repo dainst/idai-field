@@ -1366,9 +1366,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -3325,9 +3325,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -3937,9 +3937,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -4512,9 +4512,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -4750,9 +4750,9 @@
                     "visible": false
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -4927,9 +4927,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -5209,9 +5209,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -6173,14 +6173,6 @@
                     "name": "hasTemperTypeClay",
                     "valuelist": [
                         "T1",
-                        "T2",
-                        "T3",
-                        "T4",
-                        "T5",
-                        "T6",
-                        "T7",
-                        "T8",
-                        "T9",
                         "T10",
                         "T11",
                         "T12",
@@ -6191,6 +6183,7 @@
                         "T17",
                         "T18",
                         "T19",
+                        "T2",
                         "T20",
                         "T21",
                         "T22",
@@ -6201,7 +6194,14 @@
                         "T27",
                         "T28",
                         "T29",
-                        "T30"
+                        "T3",
+                        "T30",
+                        "T4",
+                        "T5",
+                        "T6",
+                        "T7",
+                        "T8",
+                        "T9"
                     ],
                     "visible": true
                 },
@@ -6798,9 +6798,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Bearbeiter oder Bearbeiterin der Ressouce",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -7189,9 +7189,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -7753,6 +7753,7 @@
             "type": "Terracotta"
         },
         {
+            "color": "#ffff99",
             "fields": [
                 {
                     "description": "Beschreibung des Projekts.",
@@ -7890,9 +7891,9 @@
                     "visible": false
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",
@@ -9666,9 +9667,9 @@
                     "visible": true
                 },
                 {
-                    "description": "Responsabile",
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
-                        "it": "Responsabile"
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
                     },
                     "editable": true,
                     "inputType": "input",

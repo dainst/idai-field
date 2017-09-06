@@ -37,19 +37,37 @@
     <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
-            <description-view [document]="selectedDocument"></description-view>
-            <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
-                            *ngIf="selectedDocument && selectedDocument.resource.relations
+            <ngb-tabset>
+                <ngb-tab title="Felder">
+                    <ng-template ngbTabContent>
+                        <description-view [document]="selectedDocument"></description-view>
+                        <fields-view [resource]="selectedDocument.resource"></fields-view>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Geometrie">
+                    <ng-template ngbTabContent>
+                        <geometry-view [document]="selectedDocument"
+                                       (onEditGeometry)="resourcesComponent.startEditGeometry()"
+                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)">
+                        </geometry-view>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Relationen">
+                    <ng-template ngbTabContent>
+                        <relations-view [resource]="selectedDocument.resource"
+                                        (relationClicked)="resourcesComponent.jumpToRelationTarget($event)">
+                        </relations-view>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Bilder">
+                    <ng-template ngbTabContent>
+                        <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
+                                        *ngIf="selectedDocument && selectedDocument.resource.relations
                             && selectedDocument.resource.relations['isDepictedIn']">
-            </thumbnail-view>
-            <geometry-view [document]="selectedDocument"
-                           (onEditGeometry)="resourcesComponent.startEditGeometry()"
-                           (onCreateGeometry)="resourcesComponent.createGeometry($event)">
-            </geometry-view>
-            <fields-view [resource]="selectedDocument.resource"></fields-view>
-            <relations-view [resource]="selectedDocument.resource"
-                            (relationClicked)="resourcesComponent.jumpToRelationTarget($event)">
-            </relations-view>
+                        </thumbnail-view>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </document-view>
     </div>
 </div>

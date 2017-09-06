@@ -52,6 +52,11 @@ body {
   border-color: lighten(rgba(85, 114, 161, 1), 10%);
 }
 
+.btn-primary:disabled, .btn-primary:active {
+  background-color: darken(rgba(85, 114, 161, 1), 10%);
+  border-color: darken(rgba(85, 114, 161, 1), 10%);
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #727b84;
@@ -62,6 +67,11 @@ body {
   background-color: lighten(#727b84, 10%);
   border-color: lighten(#6c757d, 10%);
   color: #fff;
+}
+
+.btn-secondary:disabled, .btn-primary:active {
+  background-color: darken(#727b84, 10%);
+  border-color: darken(#6c757d, 10%);
 }
 
 .md-form {

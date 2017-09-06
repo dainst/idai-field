@@ -43,12 +43,25 @@ body {
 }
 
 .btn-primary {
-  background-color: rgba(85, 114, 161, 1) !important;
-  border-color: rgba(85, 114, 161, 1) !important;
+  background-color: rgba(85, 114, 161, 1);
+  border-color: rgba(85, 114, 161, 1);
 }
 
 .btn-primary:hover {
-  background-color: lighten(rgba(85, 114, 161, 1), 10%) !important;
+  background-color: lighten(rgba(85, 114, 161, 1), 10%);
+  border-color: lighten(rgba(85, 114, 161, 1), 10%);
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #727b84;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: lighten(#727b84, 10%);
+  border-color: lighten(#6c757d, 10%);
+  color: #fff;
 }
 
 .md-form {
@@ -184,7 +197,7 @@ select.form-control:not([size]):not([multiple]) {
 
 /* Relation Picker */
 
-#relation-picker .btn-default {
+#relation-picker .btn-secondary {
   margin: 0 0 0 10px !important;
   padding: 5px 5px 5px 15px!important;
   border-radius: 2px !important;

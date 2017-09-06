@@ -1,4 +1,4 @@
-<button *ngIf="ready" id="projects-badge" class="btn btn-sm align-middle btn-outline-secondary" type="button" (click)="openModal()">
+<button *ngIf="ready" id="projects-badge" class="btn btn-sm align-middle btn-secondary" type="button" (click)="openModal()">
     {{selectedProject}}
 </button>
 
@@ -47,7 +47,7 @@
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
                     <span class="input-group-btn">
-                    <button class="project-option-ok btn btn-default" (click)="createProject()">OK</button>
+                    <button class="project-option-ok btn btn-secondary" (click)="createProject()">OK</button>
                 </span>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
                     <span class="input-group-btn">
-                    <button class="project-option-ok btn btn-default" (click)="deleteProject()">OK</button>
+                    <button class="project-option-ok btn btn-secondary" (click)="deleteProject()">OK</button>
                 </span>
                 </div>
             </div>

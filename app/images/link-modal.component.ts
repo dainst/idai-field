@@ -11,7 +11,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
                          (documentSelected)="activeModal.close($event)"></document-picker>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="activeModal.dismiss('dismissedByCancel')">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('dismissedByCancel')">
             Abbrechen
         </button>
     </div>

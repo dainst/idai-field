@@ -127,39 +127,14 @@
             "name": "isRecordedIn",
             "range": [
                 "Trench",
-                "Survey"
+                "Survey",
+                "Building",
+                "Place"
             ],
             "visible": true
         },
         {
             "domain": [
-                "Feature",
-                "Architecture",
-                "Layer",
-                "Floor",
-                "DrillCoreLayer",
-                "Grave",
-                "Other",
-                "Find",
-                "Brick",
-                "Bone",
-                "Coin",
-                "Glass",
-                "Metal",
-                "Mollusk",
-                "PlasterFragment",
-                "Pottery",
-                "Stone",
-                "Terracotta",
-                "Wood",
-                "ProcessUnit",
-                "Drilling",
-                "Planum",
-                "SurveyUnit",
-                "Sample",
-                "Profile",
-                "Inscription",
-                "Wall_surface",
                 "Room"
             ],
             "editable": false,
@@ -167,8 +142,7 @@
             "label": "Gehört zu",
             "name": "isRecordedIn",
             "range": [
-                "Building",
-                "Place"
+                "Building"
             ],
             "visible": true
         },

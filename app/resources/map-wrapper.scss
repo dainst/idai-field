@@ -4,20 +4,21 @@
     margin-bottom: 0;
     padding-bottom: 15px;
     box-sizing: border-box;
+    background-color: transparent !important;
   }
 
-  .document-info .card-block {
-    height: calc(100vh - 191px);
+  .document-info .card-header {
+    background-color: transparent !important;
   }
 
   #create-document-button .circular-button {
     left: 45%;
-    margin: -20px auto auto auto;
+    margin: -45px auto auto auto;
     z-index: 100;
   }
 
   ul#objectList {
-    height: calc(100vh - 140px);
+    height: calc(100vh - 113px);
     overflow-y: auto;
     overflow-x: hidden;
   }

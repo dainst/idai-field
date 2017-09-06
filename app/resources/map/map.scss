@@ -10,6 +10,18 @@ $layer-menu-button-inactive-color: grey;
   height: calc(100vh - 113px);
   user-select: none;
 
+  &::after {
+    box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.2);
+    content: '';
+    display: block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: 800;
+  }
+
   .leaflet-overlay-pane path {
 
       &.templine {

@@ -1,4 +1,5 @@
 @import 'docedit-conflicts-tab';
+@import 'type-switcher-button';
 
 #document-edit-wrapper {
 
@@ -24,6 +25,7 @@
     background-color: #eee;
     padding: 7px;
     border-bottom: 1px solid #ccc;
+    user-select: none;
   }
 
   .docedit-header-label {
@@ -31,6 +33,7 @@
     position: relative;
     top: -17px;
     color: #fff;
+    cursor: default;
   }
 
   #type-switcher-button-container {
@@ -100,8 +103,15 @@
     top: 2px;
   }
 
-  #document-edit-conflicts-tab {
+  #docedit-conflicts-tab {
     color: red !important;
+  }
+
+  #docedit-fields-tab,
+  #docedit-relations-tab,
+  #docedit-images-tab,
+  #docedit-conflicts-tab {
+    user-select: none;
   }
 
 }

@@ -188,10 +188,10 @@ export class LayerMapComponent extends MapComponent {
     private addLayerToMap(layer: ImageContainer) {
 
         let georef = layer.document.resource.georeference;
-        layer.object = L.imageOverlay.rotated(layer.imgSrc,
-            georef.topLeftCoordinates,
+        layer.object = L.imageOverlay(layer.imgSrc,
+            [georef.topLeftCoordinates,
             georef.topRightCoordinates,
-            georef.bottomLeftCoordinates,
+            georef.bottomLeftCoordinates],
             { pane: layer.document.resource.id }).addTo(this.map);
 
         this.addLayerCoordinatesToBounds(layer);

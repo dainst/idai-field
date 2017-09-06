@@ -1,5 +1,13 @@
 $buttoncolor: #657faa;
 
+#document-view-field-geometry pre {
+    margin: 1em;
+    padding: 1em;
+    font-size: 0.7em;
+    border-radius: 0.2em;
+    background-color: #f7f7f7;
+}
+
 #document-view-button-create-polygon {
     margin-left: 2px;
     margin-right: -4px;

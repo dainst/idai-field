@@ -26,4 +26,9 @@
             <span class="mdi mdi-map-marker-plus mdi-18px"></span>
         </button>
     </div>
+
+    <div *ngIf="document.resource.geometry" class="fieldname">
+        Koordinaten
+    </div>
+    <pre *ngIf="document.resource.geometry">{{document.resource.geometry.coordinates | json}}</pre>
 </div>

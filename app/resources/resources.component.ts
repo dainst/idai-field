@@ -287,8 +287,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!this.selectedDocument) return true;
 
-        if (this.query.types && this.filterTypes
-            && this.filterTypes.indexOf(this.selectedDocument.resource.type) != -1) return true;
+        if (!this.query.types || this.query.types.indexOf(this.selectedDocument.resource.type) != -1) return true;
 
         return false;
     }
@@ -483,10 +482,13 @@ export class ResourcesComponent implements AfterViewChecked {
         doceditRef.result.then(result => {
             this.populateMainTypeDocuments()
                 .then(() => {
-                    if (result.document.resource.type == this.view.mainType) this.selectMainTypeDocument(result.document);
-                    return this.populateDocumentList();
-                }).then(() => {
-                    if (result.document.resource.type != this.view.mainType) this.selectDocument(result.document);
+                    if (result.document.resource.type == this.view.mainType) {
+                        this.selectMainTypeDocument(result.document);
+                    } else {
+                        this.selectDocument(result.document);
+                    }
+                    this.invalidateTypeFiltersIfNecessary();
+                    this.populateDocumentList();
                 });
             }, closeReason => {
                 this.documentEditChangeMonitor.reset();

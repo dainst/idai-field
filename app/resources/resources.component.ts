@@ -333,7 +333,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.imageTypeUtility.isImageType(documentToSelect.resource.type)
             .then(isImageType => {
                     if (isImageType) {
-                        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+                        this.router.navigate(['images', documentToSelect.resource.id, 'show', 'relations']);
                     } else {
                         this.viewUtility.getViewNameForDocument(documentToSelect)
                             .then(viewName => {

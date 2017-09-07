@@ -268,25 +268,4 @@ describe('resources/state --', function() {
         browser.wait(EC.stalenessOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
     });
-
-    it('restore resources state after restarting client', () => {
-
-        performCreateProject();
-
-        ResourcesPage.performCreateResource('excavation1', 'trench');
-        ResourcesPage.performCreateResource('excavation2', 'trench');
-        ResourcesPage.clickChooseTypeFilter('building');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickSelectMainTypeDocument(1);
-        ResourcesPage.clickListModeButton();
-
-        ProjectPage.get();
-        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation2'));
-    });
 });

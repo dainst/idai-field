@@ -22,6 +22,10 @@ export class DocumentViewPage {
         element(by.id('document-view-relations-tab')).click();
     }
 
+
+    public static clickGeometryTab() {
+        element(by.id('document-view-geometry-tab')).click();
+    }
     public static clickEditDocument() {
         return common.click(element(by.id('document-view-button-edit-document')));
     };
@@ -98,6 +102,7 @@ export class DocumentViewPage {
     };
 
     public static getSelectedGeometryTypeText() {
+        this.clickGeometryTab();
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };

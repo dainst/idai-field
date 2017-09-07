@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 
 @Component({

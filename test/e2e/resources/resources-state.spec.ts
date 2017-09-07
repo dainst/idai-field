@@ -84,7 +84,6 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
-
     it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();

@@ -67,7 +67,7 @@ export class NavbarPage {
     };
 
     public static getActiveNavLinkLabel() {
-        browser.wait(EC.visibilityOf(element(by.css('.nav-link.active'))), delays.ECWaitTime);
-        return element(by.css('.nav-link.active')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))), delays.ECWaitTime);
+        return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
     }
 }

@@ -38,13 +38,19 @@
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">>
-                <ngb-tab title="Felder" id="document-view-fields-tab">
+                <ngb-tab id="document-view-fields-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-format-list-bulleted"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <description-view [document]="selectedDocument"></description-view>
                         <fields-view [resource]="selectedDocument.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Geometrie" id="document-view-geometry-tab">
+                <ngb-tab id="document-view-geometry-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-map"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <geometry-view [document]="selectedDocument"
                                        (onEditGeometry)="resourcesComponent.startEditGeometry()"
@@ -52,7 +58,11 @@
                         </geometry-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab *ngIf="hasRelations()" title="Relationen" id="document-view-relations-tab">
+
+                <ngb-tab *ngIf="hasRelations()" id="document-view-relations-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-sitemap"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
                                         (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
@@ -60,8 +70,10 @@
                         </relations-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab *ngIf="selectedDocument.resource.relations['isDepictedIn']" title="Bilder"
-                         id="document-view-images-tab">
+                <ngb-tab *ngIf="selectedDocument.resource.relations['isDepictedIn']" id="document-view-images-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-image"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
                                         *ngIf="selectedDocument && selectedDocument.resource.relations

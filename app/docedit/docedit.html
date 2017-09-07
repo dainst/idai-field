@@ -57,7 +57,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngb-tabset activeId="docedit-{{activeTab}}-tab">
-                            <ngb-tab title="Felder" id="docedit-fields-tab">
+                            <ngb-tab id="docedit-fields-tab">
+                                <ng-template ngbTabTitle>
+                                    <span class="mdi mdi-format-list-bulleted"></span>
+                                    Metadaten
+                                </ng-template>
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
@@ -66,8 +70,11 @@
                                 </ng-template>
                             </ngb-tab>
                             <ngb-tab *ngIf="getRelationDefinitions() && getRelationDefinitions().length > 0"
-                                     title="Relationen"
                                      id="docedit-relations-tab">
+                                <ng-template ngbTabTitle>
+                                    <span class="mdi mdi-sitemap"></span>
+                                    Relationen
+                                </ng-template>
                                 <ng-template ngbTabContent>
                                     <relations-form
                                             [(document)]="clonedDocument"
@@ -77,8 +84,12 @@
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="!projectImageTypes[clonedDocument.resource.type]" title="Bilder"
+                            <ngb-tab *ngIf="!projectImageTypes[clonedDocument.resource.type]"
                                      id="docedit-images-tab">
+                                <ng-template ngbTabTitle>
+                                    <span class="mdi mdi-image"></span>
+                                    Bilder
+                                </ng-template>
                                 <ng-template ngbTabContent>
                                     <docedit-image-tab
                                             [(document)]="clonedDocument">

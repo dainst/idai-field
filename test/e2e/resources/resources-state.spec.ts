@@ -114,11 +114,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('fund1', 'feature-floor');
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
-        DocumentViewPage.clickRelation(0);
+        DocumentViewPage.clickRelation(1);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
 
-        DocumentViewPage.clickRelation(0);
+        DocumentViewPage.clickRelation(1);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
@@ -135,11 +135,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('fund1', 'feature-floor');
         ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
 
-        DocumentViewPage.clickRelation(0);
+        DocumentViewPage.clickRelation(1);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('befund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
 
-        DocumentViewPage.clickRelation(0);
+        DocumentViewPage.clickRelation(1);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });

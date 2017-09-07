@@ -14,15 +14,15 @@
 
     <div *ngIf="image.document" class="col-md-3 px-0 document-info">
         <document-view [document]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
-            <ngb-tabset activeId="image-view-{{activeTab}}-tab">
-                <ngb-tab title="Felder" id="image-view-fields-tab">
+            <ngb-tabset activeId="document-view-{{activeTab}}-tab">
+                <ngb-tab title="Felder" id="document-view-fields-tab">
                     <ng-template ngbTabContent>
                         <description-view [document]="image.document"></description-view>
                         <georeference-view [document]="image.document"></georeference-view>
                         <fields-view [resource]="image.document.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Relationen" id="image-view-relations-tab">
+                <ngb-tab title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="image.document.resource"
                                         (onRelationTargetClicked)="jumpToRelationTarget($event)">

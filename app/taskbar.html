@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav taskbar">
-    <li class="nav-item conflicts" *ngIf="conflicts.length">
+    <li class="nav-item conflicts pr-2" *ngIf="conflicts.length">
         <ng-template #popContent>
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
@@ -19,7 +19,7 @@
             </span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item pr-2">
         <a href="#" routerLink="/settings">
             <span class="mdi mdi-cloud" *ngIf="connected"
                   ngbTooltip="Synchronisierung ist aktiv"
@@ -29,7 +29,7 @@
                   placement="bottom" container="body"></span>
         </a>
     </li>
-    <li>
+    <li class="nav-item">
         <projects></projects>
     </li>
 </ul>

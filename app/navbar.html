@@ -1,13 +1,7 @@
-<nav *ngIf="views" class="navbar fixed-top navbar-toggleable-xl navbar-dark bg-primary"
+<nav *ngIf="views" class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary"
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
-
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div class="navbar-brand" id="idai-field-brand">
         <img src="img/logo.png">
@@ -17,8 +11,14 @@
         </div>
     </div>
 
+    <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav mr-auto">
             <li *ngFor="let view of views" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/' + view.name)"
                    href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>
@@ -40,9 +40,7 @@
                    href="#" routerLink="/settings">Einstellungen</a>
             </li>
         </ul>
-    </div>
 
-    <div class="navbar-text navbar-right">
         <taskbar></taskbar>
     </div>
 

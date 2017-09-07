@@ -16,6 +16,10 @@ const routes: Routes = [
             {
                 path: ':id/show',
                 component: ImageViewComponent
+            },
+            {
+                path: ':id/show/:tab',
+                component: ImageViewComponent
             }
         ]
     }

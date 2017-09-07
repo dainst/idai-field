@@ -12,14 +12,24 @@
         </div>
     </div>
 
-    <div *ngIf="image.document" class="col-md-3 px-0">
+    <div *ngIf="image.document" class="col-md-3 px-0 document-info">
         <document-view [document]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
-            <description-view [document]="image.document"></description-view>
-            <georeference-view [document]="image.document"></georeference-view>
-            <fields-view [resource]="image.document.resource"></fields-view>
-            <relations-view [resource]="image.document.resource"
-                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
-            </relations-view>
+            <ngb-tabset activeId="image-view-{{activeTab}}-tab">
+                <ngb-tab title="Felder" id="image-view-fields-tab">
+                    <ng-template ngbTabContent>
+                        <description-view [document]="image.document"></description-view>
+                        <georeference-view [document]="image.document"></georeference-view>
+                        <fields-view [resource]="image.document.resource"></fields-view>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Relationen" id="image-view-relations-tab">
+                    <ng-template ngbTabContent>
+                        <relations-view [resource]="image.document.resource"
+                                        (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                        </relations-view>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </document-view>
     </div>
 </div>

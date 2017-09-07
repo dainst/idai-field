@@ -11,6 +11,7 @@ import {BlobMaker} from '../imagestore/blob-maker';
 export class ImageComponentBase {
 
     protected image: ImageContainer = {};
+    protected activeTab: string;
 
     constructor(
         protected route: ActivatedRoute,
@@ -46,6 +47,7 @@ export class ImageComponentBase {
 
     private getRouteParams(callback) {
         this.route.params.forEach((params: Params) => {
+            this.activeTab = params['tab'];
             callback(params['id']);
         });
     }

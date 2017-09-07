@@ -34,7 +34,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
     public selectImage(documentToJumpTo: Document) {
 
-        this.router.navigate(['images', documentToJumpTo.resource.id, 'show'])
+        this.router.navigate(['images', documentToJumpTo.resource.id, 'show', 'relations']);
     }
 
     ngOnChanges() {

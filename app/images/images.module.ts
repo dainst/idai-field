@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {imagesRouting} from './images.routing';
 import {ImagesComponent} from './images.component';
 import {ImageGridComponent} from './image-grid.component';
@@ -16,6 +17,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 @NgModule({
     imports: [
         BrowserModule,
+        NgbModule,
         imagesRouting,
         WidgetsModule,
         IdaiDocumentsModule,

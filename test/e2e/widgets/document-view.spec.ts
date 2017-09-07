@@ -41,10 +41,10 @@ describe('widgets/document-view', function() {
     it('show the relations present in the object', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(0).then(val => {
+        DocumentViewPage.getRelationName(1).then(val => {
             expect(val).toBe('Liegt in'); // with the correct relation label
         });
-        DocumentViewPage.getRelationValue(0).then(val => {
+        DocumentViewPage.getRelationValue(1).then(val => {
             expect(val).toBe('2');
         });
     });
@@ -56,7 +56,7 @@ describe('widgets/document-view', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
     });
 
@@ -78,7 +78,7 @@ describe('widgets/document-view', function() {
 
         browser.wait(EC.visibilityOf(element(by.tagName('document-view'))), delays.ECWaitTime);
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 });

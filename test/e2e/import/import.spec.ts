@@ -73,21 +73,21 @@ describe('import --', function() {
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
-    it('import a relation and add the corresponding inverse relation', () => {
+    fit('import a relation and add the corresponding inverse relation', () => {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('testf1'));
         DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
 
         ResourcesPage.clickSelectResource('testf1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toContain('obob1'));
-        DocumentViewPage.getRelationName(1).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(3));
+        DocumentViewPage.getRelationValue(2).then(relationValue => expect(relationValue).toContain('obob1'));
+        DocumentViewPage.getRelationName(2).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
 
         NavbarPage.clickNavigateToProject();
 

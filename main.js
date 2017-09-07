@@ -57,9 +57,12 @@ console.log('Using config file: ' + global.configPath);
 
 function createWindow() {
 
+  const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
+  const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
+
   mainWindow = new electron.BrowserWindow({
-    width: 1280,
-    height: 800,
+    width: screenWidth >= 1680 ? 1680 : 1280,
+    height: screenHeight >= 1050 ? 1050 : 800,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false

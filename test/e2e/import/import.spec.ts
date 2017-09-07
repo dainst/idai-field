@@ -73,7 +73,7 @@ describe('import --', function() {
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
 
-    fit('import a relation and add the corresponding inverse relation', () => {
+    it('import a relation and add the corresponding inverse relation', () => {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(2000);

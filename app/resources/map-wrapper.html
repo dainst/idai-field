@@ -37,7 +37,7 @@
     <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
-            <ngb-tabset>
+            <ngb-tabset activeId="document-view-{{activeTab}}-tab">>
                 <ngb-tab title="Felder" id="document-view-fields-tab">
                     <ng-template ngbTabContent>
                         <description-view [document]="selectedDocument"></description-view>
@@ -55,7 +55,8 @@
                 <ngb-tab title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
-                                        (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event)">
+                                        (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
+                                        'relations')">
                         </relations-view>
                     </ng-template>
                 </ngb-tab>

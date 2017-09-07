@@ -8,7 +8,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },
     { path: 'resources/:view', component: ResourcesComponent },
     { path: 'resources/:view/:id', component: ResourcesComponent },
-    { path: 'resources/:view/:id/edit/:tab', component: ResourcesComponent },
+    { path: 'resources/:view/:id/:menu/:tab', component: ResourcesComponent },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },
     { path: 'settings', component: SettingsComponent }

@@ -34,6 +34,7 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     }
 
     ngOnInit() {
+
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
     }
@@ -41,10 +42,12 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     public jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
 
         this.viewUtility.getViewNameForDocument(documentToJumpTo)
-            .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id]));
+            .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id,
+                'view', 'images']));
     }
 
     public deselect() {
+
         this.router.navigate(['images']);
     }
 

@@ -56,6 +56,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private subscription;
 
+    private activeDocumentViewTab: string;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
@@ -89,7 +91,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     if (params['id']) {
                         // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a relation link from image component to resources component)
                         setTimeout(() => {
-                            this.selectDocumentFromParams(params['id'], params['tab']);
+                            this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
                         }, 100);
                     }
                 })
@@ -169,10 +171,10 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    private selectDocumentFromParams(id: string, tab: string) {
+    private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.datastore.get(id).then(
-            document => tab ? this.editDocument(document, tab) : this.setSelected(document),
+            document => menu == 'edit' ? this.editDocument(document, tab) : this.setSelected(document, tab),
             () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }
@@ -266,7 +268,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.selectedDocument = undefined;
     }
 
-    public setSelected(documentToSelect: Document): Document {
+    public setSelected(documentToSelect: Document, activeTabName?: string): Document {
 
         this.selectedDocument = documentToSelect;
         if (this.selectedDocument) {
@@ -274,6 +276,8 @@ export class ResourcesComponent implements AfterViewChecked {
             const res2 = this.invalidateTypeFiltersIfNecessary();
             if (res1 || res2) this.populateDocumentList();
         }
+
+        this.activeDocumentViewTab = activeTabName;
 
         return this.selectedDocument;
     }
@@ -324,7 +328,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return false;
     }
 
-    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
+    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
         this.imageTypeUtility.isImageType(documentToSelect.resource.type)
             .then(isImageType => {
@@ -334,7 +338,13 @@ export class ResourcesComponent implements AfterViewChecked {
                         this.viewUtility.getViewNameForDocument(documentToSelect)
                             .then(viewName => {
                                 if (viewName != this.view.name) {
-                                    return this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
+                                    if (tab) {
+                                        return this.router.navigate(['resources', viewName,
+                                            documentToSelect.resource.id, 'view', tab]);
+                                    } else {
+                                        return this.router.navigate(['resources', viewName,
+                                            documentToSelect.resource.id]);
+                                    }
                                 } else {
                                     this.select(documentToSelect);
                                 }

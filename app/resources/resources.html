@@ -82,7 +82,7 @@
     <!--<div *ngIf="(view && view.mainType == 'project') || selectedMainTypeDocument || editGeometry" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="mode == 'map'" [documents]="documents" [selectedDocument]="selectedDocument"
-                     [isEditing]="editGeometry"></map-wrapper>
+                     [isEditing]="editGeometry" [activeTab]="activeDocumentViewTab"></map-wrapper>
         <list *ngIf="mode == 'list'" [ready]="ready" [documents]="documents"
               [selectedMainTypeDocument]="selectedMainTypeDocument"></list>
     </div>

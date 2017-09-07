@@ -1,5 +1,5 @@
 <div id="resources" style="position: fixed; width: 100%; z-index: 1001;"
-     class="row bg-faded py-2">
+     class="row bg-light py-2">
 
     <div class="col-md-3">
         <div *ngIf="view && view.mainType != 'Project'">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 offset-1">
+    <div class="col-md-4 mr-md-auto">
         <search-bar *ngIf="query" [q]="query.q" [types]="filterTypes" [relationName]="'isRecordedIn'"
                     [relationRangeType]="view.mainType"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
@@ -73,8 +73,8 @@
      (drop)="false">
 
     <div *ngIf="ready && view && view.mainType != 'Project' && !selectedMainTypeDocument && !editGeometry"
-         class="col-sm-8 offset-sm-2 text-center alert alert-warning"
-         style="padding: 10px; margin-top: 35vh; position:absolute; z-index: 900;">
+         class="col-8 text-center alert alert-warning"
+         style="padding: 10px; margin: 35vh 16.6vw 0; position:absolute; z-index: 900;">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
     </div>
 

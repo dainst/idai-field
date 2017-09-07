@@ -111,7 +111,7 @@ describe('images/image-grid --', function() {
 
         ImagesGridPage.getCellImageName(0)
             .then(function (imageName) {
-                const xpath = '//span[@class="badge badge-default"][text()="'+ imageName + '"]';
+                const xpath = '//span[@class="badge badge-secondary"][text()="'+ imageName + '"]';
                 elementToDelete.click();
                 ImagesGridPage.clickDeleteButton();
                 ImagesGridPage.clickCancelDeleteButton();

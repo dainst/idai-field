@@ -15,14 +15,20 @@
     <div *ngIf="image.document" class="col-md-3 px-0 document-info">
         <document-view [document]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">
-                <ngb-tab title="Felder" id="document-view-fields-tab">
+                <ngb-tab id="document-view-fields-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-format-list-bulleted"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <description-view [document]="image.document"></description-view>
                         <georeference-view [document]="image.document"></georeference-view>
                         <fields-view [resource]="image.document.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab *ngIf="hasRelations()" title="Relationen" id="document-view-relations-tab">
+                <ngb-tab *ngIf="hasRelations()" id="document-view-relations-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-sitemap"></span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <relations-view [resource]="image.document.resource"
                                         (onRelationTargetClicked)="jumpToRelationTarget($event)">

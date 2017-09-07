@@ -58,7 +58,7 @@ console.log('Using config file: ' + global.configPath);
 function createWindow() {
 
   mainWindow = new electron.BrowserWindow({
-    width: 1200,
+    width: 1280,
     height: 800,
     webPreferences: {
       nodeIntegration: true,

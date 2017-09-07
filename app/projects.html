@@ -1,6 +1,6 @@
-<button *ngIf="ready" id="projects-badge" class="btn btn-sm align-middle btn-secondary" type="button" (click)="openModal()">
+<a *ngIf="ready" id="projects-badge" class="nav-link px-1" type="button" (click)="openModal()">
     {{selectedProject}}
-</button>
+</a>
 
 <ng-template #projectsModalTemplate>
     <div class="modal-header">

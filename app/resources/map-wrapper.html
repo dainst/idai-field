@@ -38,13 +38,13 @@
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                        (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
             <ngb-tabset>
-                <ngb-tab title="Felder">
+                <ngb-tab title="Felder" id="document-view-fields-tab">
                     <ng-template ngbTabContent>
                         <description-view [document]="selectedDocument"></description-view>
                         <fields-view [resource]="selectedDocument.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Geometrie">
+                <ngb-tab title="Geometrie" id="document-view-geometry-tab">
                     <ng-template ngbTabContent>
                         <geometry-view [document]="selectedDocument"
                                        (onEditGeometry)="resourcesComponent.startEditGeometry()"
@@ -52,14 +52,14 @@
                         </geometry-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Relationen">
+                <ngb-tab title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
                                         (relationClicked)="resourcesComponent.jumpToRelationTarget($event)">
                         </relations-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Bilder">
+                <ngb-tab title="Bilder" id="document-view-images-tab">
                     <ng-template ngbTabContent>
                         <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
                                         *ngIf="selectedDocument && selectedDocument.resource.relations

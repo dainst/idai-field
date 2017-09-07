@@ -13,6 +13,7 @@ export class ThumbnailViewPage {
     // elements
 
     public static getThumbs() {
+        element(by.id('document-view-images-tab')).click();
         return element.all(by.css('#thumbnail-view .thumbnail'));
     }
 }

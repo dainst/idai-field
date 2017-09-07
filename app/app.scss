@@ -128,7 +128,7 @@ html [type="button"],
   min-width: 200px;
 }
 
-.popover-content {
+.popover-body {
   padding: 0 !important;
 }
 
@@ -145,7 +145,7 @@ html [type="button"],
   padding-bottom: 10px;
 }
 
-.popover-content .list-group {
+.popover-body .list-group {
   max-height: calc(100vh - 230px);
   overflow: auto;
 }

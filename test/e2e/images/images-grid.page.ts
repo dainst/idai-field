@@ -81,14 +81,14 @@ export class ImagesGridPage {
 
     public static getCellImageName(index) {
 
-        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-default')).getText();
+        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-secondary')).getText();
     };
 
     // elements
 
     public static getCellFilenameElement(filename) {
 
-        return element(by.xpath('//span[@class="badge badge-default"][text()="' + filename + '"]'));
+        return element(by.xpath('//span[@class="badge badge-secondary"][text()="' + filename + '"]'));
     };
 
     public static getAllCells() {

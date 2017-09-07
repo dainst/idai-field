@@ -76,6 +76,7 @@ export class MapWrapperComponent {
 
         if (ObjectUtil.isEmpty(relations)) return false;
 
+        // TODO Check relation definition for visibility
         if (Object.keys(relations).length == 1
             && relations['isRecordedIn']
             && relations['isRecordedIn'].length == 1

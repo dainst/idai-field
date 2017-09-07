@@ -1,10 +1,7 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
-import {ResourcesPage} from './resources.page';
+import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from '../project.page';
-import {MapPage} from '../map/map.page';
-import {ImagesGridPage} from "../images/images-grid.page";
 
 const fs = require('fs');
 const delays = require('../config/delays');

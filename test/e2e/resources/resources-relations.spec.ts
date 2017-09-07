@@ -17,11 +17,11 @@ describe('resources/relations --', function() {
     it ('create links for relations', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationValue(0).then(relVal=>{
+        DocumentViewPage.getRelationValue(1).then(relVal=>{
             expect(relVal).toEqual('2')
         });
-        DocumentViewPage.clickRelation(0);
-        DocumentViewPage.getRelationValue(0).then(relVal=>{
+        DocumentViewPage.clickRelation(1);
+        DocumentViewPage.getRelationValue(1).then(relVal=>{
             expect(relVal).toEqual('1')
         });
     });

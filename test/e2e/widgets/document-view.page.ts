@@ -7,7 +7,6 @@ const delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira
- * @author Sebastian Cuy
  */
 export class DocumentViewPage {
 
@@ -15,17 +14,13 @@ export class DocumentViewPage {
 
     public static clickRelation(relationIndex) {
         this.clickRelationsTab();
-        return element.all(by.css('#document-view-relations-tab-panel a.relation-link')).get(relationIndex).click();
+        return element.all(by.css('#document-view-relations-tab-panel .relation-target')).get(relationIndex).click();
     };
 
     public static clickRelationsTab() {
         element(by.id('document-view-relations-tab')).click();
     }
 
-
-    public static clickGeometryTab() {
-        element(by.id('document-view-geometry-tab')).click();
-    }
     public static clickEditDocument() {
         return common.click(element(by.id('document-view-button-edit-document')));
     };
@@ -59,8 +54,8 @@ export class DocumentViewPage {
      */
     public static getRelationValue(index) {
         this.clickRelationsTab();
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view a')).get(index)), delays.ECWaitTime);
-        return element.all(by.css('relations-view a')).get(index).getText();
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view .title')).get(index)), delays.ECWaitTime);
+        return element.all(by.css('relations-view .title')).get(index).getText();
     };
 
     /**
@@ -68,7 +63,8 @@ export class DocumentViewPage {
      */
     public static getRelationName(index) {
         this.clickRelationsTab();
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index)), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))
+            .get(index)), delays.ECWaitTime);
         return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
     };
 
@@ -102,7 +98,6 @@ export class DocumentViewPage {
     };
 
     public static getSelectedGeometryTypeText() {
-        this.clickGeometryTab();
         browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };

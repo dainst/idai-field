@@ -76,7 +76,7 @@ describe('resources/relations --', function() {
         ResourcesPage.clickDeleteInModal();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 

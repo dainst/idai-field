@@ -67,9 +67,9 @@ export class DocumentViewPage {
      */
     public static getRelationName(index) {
         this.clickRelationsTab();
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view .fieldname'))
             .get(index)), delays.ECWaitTime);
-        return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
+        return element.all(by.css('relations-view .fieldname')).get(index).getText();
     };
 
     /**

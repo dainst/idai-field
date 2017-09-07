@@ -208,8 +208,7 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture",
-                "Room"
+                "Architecture"
             ],
             "inverse": "includes",
             "label": "Liegt in",
@@ -223,7 +222,8 @@
                 "Other",
                 "Architecture",
                 "SurveyUnit",
-                "Planum"
+                "Planum",
+                "Room"
             ]
         },
         {
@@ -236,7 +236,8 @@
                 "Other",
                 "Architecture",
                 "SurveyUnit",
-                "Planum"
+                "Planum",
+                "Room"
             ],
             "inverse": "liesWithin",
             "label": "Enthält",
@@ -260,8 +261,7 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture",
-                "Room"
+                "Architecture"
             ]
         },
         {
@@ -326,46 +326,7 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
-            ],
-            "inverse": "isCutBy",
-            "label": "Schneidet",
-            "name": "cuts",
-            "range": [
-                "Feature",
-                "DrillCoreLayer",
-                "Floor",
-                "Grave",
-                "Layer",
-                "Other",
-                "Architecture"
-            ]
-        },
-        {
-            "domain": [
-                "Feature",
-                "DrillCoreLayer",
-                "Floor",
-                "Grave",
-                "Layer",
-                "Other",
-                "Architecture"
-            ],
-            "inverse": "cuts",
-            "label": "Wird geschnitten von",
-            "name": "isCutBy",
-            "range": [
-                "Feature",
-                "DrillCoreLayer",
-                "Floor",
-                "Grave",
-                "Layer",
-                "Other",
-                "Architecture"
-            ]
-        },
-        {
-            "domain": [
+                "Architecture",
                 "Profile"
             ],
             "inverse": "isCutBy",
@@ -395,6 +356,13 @@
             "label": "Wird geschnitten von",
             "name": "isCutBy",
             "range": [
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
                 "Profile"
             ]
         },
@@ -2393,21 +2361,6 @@
                         "Heiligtum",
                         "Nekropole",
                         "Wohnviertel"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "dating",
-                    "label": "Datierung",
-                    "labels": {
-                        "de": "Datierung",
-                        "en": "Dating",
-                        "it": "Datazione"
-                    },
-                    "name": "hasDating",
-                    "valuelist": [
-                        "Dating"
                     ],
                     "visible": true
                 },
@@ -6172,36 +6125,36 @@
                     },
                     "name": "hasTemperTypeClay",
                     "valuelist": [
-                        "T1",
-                        "T10",
-                        "T11",
-                        "T12",
-                        "T13",
-                        "T14",
-                        "T15",
-                        "T16",
-                        "T17",
-                        "T18",
-                        "T19",
-                        "T2",
-                        "T20",
-                        "T21",
-                        "T22",
-                        "T23",
-                        "T24",
-                        "T25",
-                        "T26",
-                        "T27",
-                        "T28",
-                        "T29",
-                        "T3",
-                        "T30",
-                        "T4",
-                        "T5",
-                        "T6",
-                        "T7",
-                        "T8",
-                        "T9"
+                      "T1",
+                      "T2",
+                      "T3",
+                      "T4",
+                      "T5",
+                      "T6",
+                      "T7",
+                      "T8",
+                      "T9",
+                      "T10",
+                      "T11",
+                      "T12",
+                      "T13",
+                      "T14",
+                      "T15",
+                      "T16",
+                      "T17",
+                      "T18",
+                      "T19",
+                      "T20",
+                      "T21",
+                      "T22",
+                      "T23",
+                      "T24",
+                      "T25",
+                      "T26",
+                      "T27",
+                      "T28",
+                      "T29",
+                      "T30"
                     ],
                     "visible": true
                 },
@@ -8332,12 +8285,12 @@
                     "visible": true
                 },
                 {
-                    "description": "Muss noch besprochen werden zum Thema der komplexen Relationen in der Altdatenbank",
+                    "description": "Orientierung der Wand (beispielsweise: Süd-Südwest)",
                     "descriptions": {
-                        "de": "Muss noch besprochen werden zum Thema der komplexen Relationen in der Altdatenbank"
+                        "de": "Orientierung der Wand (beispielsweise: Süd-Südwest)"
                     },
                     "editable": true,
-                    "inputType": "radio",
+                    "inputType": "checkboxes",
                     "label": "Wandorientierung",
                     "labels": {
                         "de": "Wandorientierung",
@@ -8412,7 +8365,7 @@
                         "de": "Welche Seite des Raumes wird beschrieben/welche Ausrichtung hat er?"
                     },
                     "editable": true,
-                    "inputType": "radio",
+                    "inputType": "checkboxes",
                     "label": "Raumseite",
                     "labels": {
                         "de": "Raumseite",

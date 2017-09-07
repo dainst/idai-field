@@ -112,4 +112,8 @@ export class DocumentViewPage {
     public static getFieldElement(index) {
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'));
     }
+
+    public static getRelationsTab() {
+        return element(by.id('document-view-relations-tab'));
+    }
 }

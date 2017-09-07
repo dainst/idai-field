@@ -24,7 +24,7 @@ describe('images/image-grid --', function() {
 
         // image is already present in mediastore folder since uploading does not work in HttpMediastore
         const fileName = 'Aldrin_Apollo_11.jpg';
-        const xpath = '//span[@class="badge badge-default"][text()="' + fileName + '"]';
+        const xpath = '//span[@class="badge badge-secondary"][text()="' + fileName + '"]';
 
         ImagesGridPage.clickUploadArea();
         ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));

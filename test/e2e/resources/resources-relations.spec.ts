@@ -50,22 +50,22 @@ describe('resources/relations --', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
         DocumentViewPage.clickEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditPage.clickRelationDeleteButtonByIndices(1, 0, 0);
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 

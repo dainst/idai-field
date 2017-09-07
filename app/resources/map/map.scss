@@ -11,15 +11,16 @@ $layer-menu-button-inactive-color: grey;
   user-select: none;
 
   &::after {
-    box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.2);
     content: '';
     display: block;
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 800;
+    pointer-events: none;
   }
 
   .leaflet-overlay-pane path {

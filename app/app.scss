@@ -1,9 +1,10 @@
+@import "variables";
+
 @import "idai-components-2";
 @import "bootstrap";
 @import "materialdesignicons";
 
-@import "variables";
-
+$roboto-font-path: "../fonts/";
 @import "roboto-fontface";
 
 @import "navbar";

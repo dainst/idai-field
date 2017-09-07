@@ -52,7 +52,7 @@
                         </geometry-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Relationen" id="document-view-relations-tab">
+                <ngb-tab *ngIf="hasRelations()" title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
                                         (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
@@ -60,7 +60,8 @@
                         </relations-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Bilder" id="document-view-images-tab">
+                <ngb-tab *ngIf="selectedDocument.resource.relations['isDepictedIn']" title="Bilder"
+                         id="document-view-images-tab">
                     <ng-template ngbTabContent>
                         <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
                                         *ngIf="selectedDocument && selectedDocument.resource.relations

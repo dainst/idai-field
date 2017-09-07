@@ -22,7 +22,7 @@
                         <fields-view [resource]="image.document.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Relationen" id="document-view-relations-tab">
+                <ngb-tab *ngIf="hasRelations()" title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="image.document.resource"
                                         (onRelationTargetClicked)="jumpToRelationTarget($event)">

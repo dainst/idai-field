@@ -34,6 +34,11 @@ export class ObjectUtil {
         return JSON.parse(JSON.stringify(object));
     }
 
+    public static isEmpty(object: Object): boolean {
+
+        return Object.keys(object).length == 0;
+    }
+
     public static removeDuplicateValues(array: any[]): any[] {
 
         const result: any[] = [];

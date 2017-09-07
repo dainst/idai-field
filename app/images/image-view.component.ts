@@ -9,6 +9,7 @@ import {ImageComponentBase} from './image-component-base';
 import {Imagestore} from '../imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../util/view-utility';
+import {ObjectUtil} from '../util/object-util';
 
 @Component({
     moduleId: module.id,
@@ -66,4 +67,8 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
         detailModal.setDocument(doc);
     }
 
+    public hasRelations() {
+
+        return !ObjectUtil.isEmpty(this.image.document.resource.relations);
+    }
 }

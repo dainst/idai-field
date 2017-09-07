@@ -15,6 +15,7 @@
   .cell {
     position: relative;
     cursor: pointer;
+    user-select: none;
 
     &.selected::after {
       content: '';

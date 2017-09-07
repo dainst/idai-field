@@ -8,7 +8,6 @@ import {DocumentViewComponent} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {DocumentPickerComponent} from './document-picker.component';
-import {DocumentTeaserComponent} from './document-teaser.component';
 import {ThumbnailViewComponent} from './thumbnail-view.component';
 import {DescriptionViewComponent} from './description-view.component';
 import {ImagePickerComponent} from './image-picker.component';
@@ -26,7 +25,6 @@ import {LoadingIconComponent} from './loading-icon.component';
         IdaiMessagesModule
     ],
     declarations: [
-        DocumentTeaserComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,
@@ -38,7 +36,6 @@ import {LoadingIconComponent} from './loading-icon.component';
     ],
     exports: [
         DocumentViewComponent,
-        DocumentTeaserComponent,
         DocumentPickerComponent,
         ThumbnailViewComponent,
         DescriptionViewComponent,

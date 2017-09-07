@@ -55,7 +55,7 @@
                 <ngb-tab title="Relationen" id="document-view-relations-tab">
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
-                                        (relationClicked)="resourcesComponent.jumpToRelationTarget($event)">
+                                        (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event)">
                         </relations-view>
                     </ng-template>
                 </ngb-tab>

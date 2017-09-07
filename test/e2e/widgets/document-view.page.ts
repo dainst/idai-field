@@ -30,10 +30,12 @@ export class DocumentViewPage {
     };
 
     public static clickCreateGeometry(type) {
+        this.clickGeometryTab();
         return common.click(element(by.id('document-view-button-create-' + type)));
     };
 
     public static clickReeditGeometry() {
+        this.clickGeometryTab();
         common.click(element(by.id('document-view-button-edit-geometry')));
     };
 

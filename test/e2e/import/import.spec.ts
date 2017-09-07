@@ -111,7 +111,7 @@ describe('import --', function() {
 
         ResourcesPage.clickSelectResource('testf1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
     });
 

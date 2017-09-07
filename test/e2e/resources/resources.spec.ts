@@ -152,7 +152,7 @@ describe('resources --', () => {
         DoceditPage.clickTypeSwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+        DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('A'));
     });
 
     it('should delete invalid fields when changing the type of a resource to its parent type', () => {
@@ -170,7 +170,7 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
+        DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
 
@@ -190,7 +190,7 @@ describe('resources --', () => {
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeLabel().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('E'));
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));

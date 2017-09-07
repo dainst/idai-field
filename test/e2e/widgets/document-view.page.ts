@@ -7,14 +7,20 @@ const delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira
+ * @author Sebastian Cuy
  */
 export class DocumentViewPage {
 
     // click
 
     public static clickRelation(relationIndex) {
-        return element.all(by.css('#document-view .relation-target')).get(relationIndex).click();
+        this.clickRelationsTab();
+        return element.all(by.css('#document-view-relations-tab-panel a.relation-link')).get(relationIndex).click();
     };
+
+    public static clickRelationsTab() {
+        element(by.id('document-view-relations-tab')).click();
+    }
 
     public static clickEditDocument() {
         return common.click(element(by.id('document-view-button-edit-document')));
@@ -39,25 +45,26 @@ export class DocumentViewPage {
         return element(by.id('description-view-short-description')).getText();
     }
 
-    public static getTypeLabel() {
-        browser.wait(EC.visibilityOf(element(by.id('document-view-resource-type-label'))), delays.ECWaitTime);
-        return element(by.id('document-view-resource-type-label')).getText();
+    public static getTypeCharacter() {
+        browser.wait(EC.visibilityOf(element(by.css('.document-info .card-header div.type-icon'))), delays.ECWaitTime);
+        return element(by.css('.document-info .card-header div.type-icon')).getText();
     }
 
     /**
      * @param index counting from 0 for the first field
      */
     public static getRelationValue(index) {
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view .title')).get(index)), delays.ECWaitTime);
-        return element.all(by.css('relations-view .title')).get(index).getText();
+        this.clickRelationsTab();
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view a')).get(index)), delays.ECWaitTime);
+        return element.all(by.css('relations-view a')).get(index).getText();
     };
 
     /**
      * @param index counting from 0 for the first field
      */
     public static getRelationName(index) {
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname'))
-            .get(index)), delays.ECWaitTime);
+        this.clickRelationsTab();
+        browser.wait(EC.visibilityOf(element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index)), delays.ECWaitTime);
         return element.all(by.css('relations-view div:nth-child(' + (index + 1) + ') .fieldname')).get(index).getText();
     };
 
@@ -85,6 +92,7 @@ export class DocumentViewPage {
     };
 
     public static getRelations() {
+        this.clickRelationsTab();
         browser.sleep(delays.shortRest);
         return element.all(by.css('relations-view .relation-target'));
     };

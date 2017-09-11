@@ -11,11 +11,11 @@ var replace = require('gulp-replace');
 
 // compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', function () {
-
     return gulp.src([
         'app/app.scss',
         'node_modules/leaflet/dist/leaflet.css',
         'node_modules/Leaflet.vector-markers/dist/leaflet-vector-markers.css',
+        'node_modules/leaflet-measure/dist/leaflet-measure.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'
     ])
         .pipe(sass({

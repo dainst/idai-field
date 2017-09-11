@@ -53,8 +53,10 @@ export class LayerMapComponent extends MapComponent {
 
         return super.updateMap(changes);
     }
-    
+
     protected setView(): Promise<any> {
+
+        L.control.scale().addTo(this.map);
 
         let promise: Promise<any>;
         if (this.layersUpdate) {
@@ -93,7 +95,7 @@ export class LayerMapComponent extends MapComponent {
     private initializeLayers(): Promise<any> {
 
         const query: Query = { q: '' };
-        
+
         return this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
             query.types = imageTypeNames;
             return this.datastore.find(query);
@@ -165,7 +167,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
     private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
-        
+
         for (let layer of this.getLayersAsList(this.layersMap)) {
             if (!newLayersMap[layer.document.resource.id] && this.isActiveLayer(layer)) {
                 this.map.removeLayer(layer.object);

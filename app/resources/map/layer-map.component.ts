@@ -32,6 +32,8 @@ export class LayerMapComponent extends MapComponent {
 
     protected panes: { [id: string]: any } = {};
 
+    protected scale: L.Control;
+
     private layersUpdate: boolean = false;
 
     constructor(protected datastore: ReadDatastore,
@@ -56,7 +58,7 @@ export class LayerMapComponent extends MapComponent {
 
     protected setView(): Promise<any> {
 
-        L.control.scale().addTo(this.map);
+        if (!this.scale) this.createControl();
 
         let promise: Promise<any>;
         if (this.layersUpdate) {
@@ -73,6 +75,12 @@ export class LayerMapComponent extends MapComponent {
             super.setView();
         });
     }
+
+    private createControl() {
+      this.scale = L.control.scale();
+      this.scale.addTo(this.map);
+    }
+
 
     private updateLayers(): Promise<any> {
 

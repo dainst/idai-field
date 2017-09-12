@@ -13,6 +13,14 @@ import {ResourcesState} from '../resources-state';
 import {ResourcesComponent} from '../resources.component';
 import {M} from '../../m';
 
+// no typings for leaflet-measure available
+declare global {
+    namespace L {
+        namespace control {
+            function measure(option): any;
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -33,6 +41,7 @@ export class LayerMapComponent extends MapComponent {
     protected panes: { [id: string]: any } = {};
 
     protected scale: L.Control;
+    protected measure: L.Control;
 
     private layersUpdate: boolean = false;
 

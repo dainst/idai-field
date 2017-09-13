@@ -8,6 +8,7 @@ const EC = protractor.ExpectedConditions;
 describe('resources/list --', () => {
 
     beforeEach(() => {
+
         ResourcesPage.get();
         ResourcesPage.clickListModeButton();
     });

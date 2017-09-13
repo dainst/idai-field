@@ -1,5 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 import {ResourcesPage} from './resources.page';
+import {DoceditPage} from '../docedit/docedit.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
@@ -10,7 +12,6 @@ let delays = require('../config/delays');
  * @author Thomas Kleinke
  */
 describe('resources/filter --', () => {
-
 
     beforeEach(() => {
 
@@ -51,5 +52,84 @@ describe('resources/filter --', () => {
         ResourcesPage.clickChooseTypeFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+    it('show correct types in plus type menu after choosing type filter', () => {
+
+        const checkTypeOptions = () => {
+
+            ResourcesPage.clickChooseTypeFilter('feature');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+
+            ResourcesPage.clickChooseTypeFilter('processunit');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+
+            ResourcesPage.clickChooseTypeFilter('all');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+        };
+
+        checkTypeOptions();
+        ResourcesPage.clickListModeButton();
+        checkTypeOptions();
+    });
+
+    it('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+
+        const checkTypeIcon = () => {
+
+            ResourcesPage.clickChooseTypeFilter('feature-architecture');
+            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('A'));
+
+            ResourcesPage.clickChooseTypeFilter('feature');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+
+            ResourcesPage.clickChooseTypeFilter('all');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+        };
+
+        const createResourceWithPresetType = (identifier: string, selectGeometryType: boolean) => {
+
+            ResourcesPage.clickChooseTypeFilter('feature-layer');
+            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
+            ResourcesPage.clickCreateResource();
+            if (selectGeometryType) ResourcesPage.clickSelectGeometryType();
+            DoceditPage.typeInInputField(identifier);
+            ResourcesPage.scrollUp();
+            DoceditPage.clickSaveDocument();
+            browser.sleep(delays.shortRest);
+        };
+
+        checkTypeIcon();
+        createResourceWithPresetType('1', true);
+        DocumentViewPage.getTypeCharacter().then(character => expect(character).toEqual('E'));
+
+        ResourcesPage.clickListModeButton();
+        checkTypeIcon();
+        createResourceWithPresetType('2', false);
+        ResourcesPage.getListModeTypeLabel('2').then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
     });
 });

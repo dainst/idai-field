@@ -9,7 +9,7 @@
                      [preselectedGeometryType]="'none'" (dblclick)="$event.stopPropagation();"></plus-button>
         </div>
 
-        {{typesMap[docRef.doc.resource.type].label}}<br>
+        <span class="list-type-label">{{typesMap[docRef.doc.resource.type].label}}</span><br>
         <span *ngIf="docRef.children.length > 0"
                 (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
                 class="btn btn-sm btn-link p-0">

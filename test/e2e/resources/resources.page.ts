@@ -152,6 +152,16 @@ export class ResourcesPage {
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
     };
 
+    public static getCreateDocumentButtonTypeCharacter() {
+
+        return element(by.css('#create-document-button div.type-icon')).getText();
+    }
+
+    public static getListModeTypeLabel(identifier) {
+
+        return element(by.css('#resource-' + identifier + ' .list-type-label')).getText();
+    }
+
     // elements
 
     public static getListItemEl(identifier) {
@@ -190,6 +200,17 @@ export class ResourcesPage {
 
         return element(by.id('object-search'));
     };
+
+    public static getResourceTypeOption(typeName: string) {
+
+        return element(by.id('choose-type-option-' + typeName));
+    }
+
+    public static getCreateDocumentButtonTypeIcon() {
+
+        return element(by.id('#create-document-button .type-icon'));
+    }
+
 
     // sequences
 

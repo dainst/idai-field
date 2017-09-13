@@ -27,8 +27,8 @@
         </button>
     </div>
 
-    <div *ngIf="document.resource.geometry" class="fieldname">
+    <div *ngIf="document.resource.geometry && document.resource.geometry.coordinates" class="fieldname">
         Koordinaten
     </div>
-    <pre *ngIf="document.resource.geometry">{{document.resource.geometry.coordinates | json}}</pre>
+    <pre *ngIf="document.resource.geometry && document.resource.geometry.coordinates">{{document.resource.geometry.coordinates | json}}</pre>
 </div>

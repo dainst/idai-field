@@ -21,7 +21,7 @@ import {M} from '../m';
  */
 export class DropAreaComponent {
 
-    @Output() onImageUploaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
 
     private dragOverActive = false;
@@ -40,6 +40,7 @@ export class DropAreaComponent {
     public onDragOver(event) {
 
         if (this.dragOverActive) return;
+
         this.dragOverActive = true;
         event.target.classList.add('dragover');
         event.preventDefault();
@@ -66,7 +67,7 @@ export class DropAreaComponent {
     private startUpload(event) {
 
         let files = this.getFiles(event);
-        if(files.length == 0) return;
+        if (files.length == 0) return;
 
         let unsupportedExts = this.getUnsupportedExts(files);
         if (unsupportedExts.length > 0) {
@@ -76,7 +77,6 @@ export class DropAreaComponent {
             type => this.uploadFiles(files, type)
         );
     }
-
 
     private getFiles(event) {
 
@@ -133,11 +133,18 @@ export class DropAreaComponent {
 
         if (!files) return;
 
+        let promise: Promise<any> = Promise.resolve();
+
         for (let file of files) {
             if (!this.ofUnsupportedExtension(file)) {
-                this.uploadFile(file, type);
+                promise = promise.then(() => this.uploadFile(file, type));
             }
         }
+
+        promise.then(
+            () => this.onImagesUploaded.emit(),
+            msgWithParams => this.onUploadError.emit(msgWithParams)
+        );
     }
 
     private ofUnsupportedExtension(file: File) {
@@ -153,27 +160,30 @@ export class DropAreaComponent {
      * @param file
      * @param type
      */
-    private uploadFile(file: File, type: IdaiType) {
+    private uploadFile(file: File, type: IdaiType): Promise<any> {
 
-        let reader = new FileReader();
-        reader.onloadend = (that => {
-            return () => {
-                that.createImageDocument(file, type)
-                    .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
-                    .then(() => that.onImageUploaded.emit())
-                    .catch(error => {
-                        that.onUploadError.emit([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
-                        console.error(error);
-                    });
-            }
-        })(this);
-        reader.onerror = (that => {
-            return (error) => {
-                that.onUploadError.emit([M.IMAGES_ERROR_FILEREADER, file.name]);
-                console.error(error);
-            }
-        })(this);
-        reader.readAsArrayBuffer(file);
+        return new Promise<any>((resolve, reject) => {
+
+            let reader = new FileReader();
+            reader.onloadend = (that => {
+                return () => {
+                    that.createImageDocument(file, type)
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
+                        .then(() => resolve())
+                        .catch(error => {
+                            console.error(error);
+                            reject([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
+                        });
+                }
+            })(this);
+            reader.onerror = () => {
+                return (error) => {
+                    console.error(error);
+                    reject([M.IMAGES_ERROR_FILEREADER, file.name]);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
     }
 
     private createImageDocument(file: File, type: IdaiType): Promise<any> {

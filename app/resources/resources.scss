@@ -27,3 +27,12 @@
 .resources-mode-buttons {
   margin-top: 2px !important;
 }
+
+.no-main-type-resource-alert {
+  position: absolute;
+  padding: 10px;
+  margin: 35vh 16.6vw 0;
+  z-index: 900;
+  user-select: none;
+  cursor: default;
+}

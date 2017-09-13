@@ -77,9 +77,8 @@
      (drop)="false">
 
     <div *ngIf="ready && view && view.mainType != 'Project' && !selectedMainTypeDocument && !editGeometry"
-         class="col-8 text-center alert alert-warning"
-         style="padding: 10px; margin: 35vh 16.6vw 0; position:absolute; z-index: 900;">
-        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen ...</em>
+         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen...</em>
     </div>
 
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->

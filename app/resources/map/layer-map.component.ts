@@ -86,17 +86,12 @@ export class LayerMapComponent extends MapComponent {
     }
 
     private createControl() {
+
       this.scale = L.control.scale();
       this.scale.addTo(this.map);
     }
 
-
     private updateLayers(): Promise<any> {
-
-        if (!this.mainTypeDocument) {
-            this.clearLayers();
-            return Promise.resolve();
-        }
 
         return this.initializeLayers()
             .then(() => {
@@ -239,14 +234,6 @@ export class LayerMapComponent extends MapComponent {
         return false;
     }
 
-    private clearLayers() {
-
-        this.removeOldLayersFromMap({});
-        this.layersList = [];
-        this.layersMap = {};
-        this.activeLayers = [];
-    }
-
     private saveActiveLayersIdsInResourcesState() {
 
         if (!this.mainTypeDocument) return;
@@ -266,10 +253,12 @@ export class LayerMapComponent extends MapComponent {
      */
     private setActiveLayersFromResourcesState(): boolean {
 
-        if (!this.mainTypeDocument) return;
+        var activeLayersIds: Array<string>;
 
-        var activeLayersIds: Array<string> = this.resourcesState.getActiveLayersIds(this.resourcesComponent.view.name,
-            this.mainTypeDocument.resource.id);
+        if (this.mainTypeDocument) {
+            activeLayersIds = this.resourcesState.getActiveLayersIds(this.resourcesComponent.view.name,
+                this.mainTypeDocument.resource.id);
+        }
 
         if (!activeLayersIds) {
             this.removeLayersFromActiveLayers([]);

@@ -12,19 +12,17 @@ describe('resources/list --', function() {
         ResourcesPage.clickListModeButton();
     });
 
-    it('show newly created resource in list view', function() {
+    it('show newly created resource in list view', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
 
-        ResourcesPage.getListModeInputFieldValue('1', 0).then(
-            inputValue => { expect(inputValue).toEqual('1'); }
-        );
+        ResourcesPage.getListModeInputFieldValue('1', 0).then(inputValue => expect(inputValue).toEqual('1'));
 
-        ResourcesPage.getListModeInputFieldValue('1', 1).then(
-            inputValue => { expect(inputValue).toEqual('Resource 1'); }
-        );
+        ResourcesPage.getListModeInputFieldValue('1', 1).then(inputValue => expect(inputValue).toEqual('Resource 1'));
     });
 
-    it('save changes on input field blur', function() {
+    it('save changes on input field blur', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'Resource 2', 1, true);
 
@@ -34,7 +32,8 @@ describe('resources/list --', function() {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    it('restore identifier from database if a duplicate identifier is typed in', function() {
+    it('restore identifier from database if a duplicate identifier is typed in', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'Resource 2', 1, true);
         ResourcesPage.performCreateResource('3', 'feature-architecture', 'Resource 3', 1, true);
@@ -44,12 +43,11 @@ describe('resources/list --', function() {
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 
-        ResourcesPage.getListModeInputFieldValue('2', 0).then(
-            inputValue => { expect(inputValue).toEqual('2'); }
-        );
+        ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
     });
 
     it('perform a fulltext search', () => {
+
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         ResourcesPage.typeInIdentifierInSearchField('testf1');
@@ -62,6 +60,7 @@ describe('resources/list --', function() {
     });
 
     it('perform a type filter search', () => {
+
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         ResourcesPage.clickChooseTypeFilter('find');

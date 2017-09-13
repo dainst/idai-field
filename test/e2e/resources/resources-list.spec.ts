@@ -5,9 +5,9 @@ import {ResourcesPage} from './resources.page';
 const delays = require('../config/delays');
 const EC = protractor.ExpectedConditions;
 
-describe('resources/list --', function() {
+describe('resources/list --', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
         ResourcesPage.get();
         ResourcesPage.clickListModeButton();
     });

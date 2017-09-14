@@ -67,7 +67,7 @@ export class PouchdbManager {
     public setupSync(url: string): Promise<SyncState> {
 
         let fullUrl = url + '/' + this.name;
-        console.log('start syncing with ' + fullUrl);
+        console.log('start syncing');
 
         return this.getDb().ready().then(db => {
             let sync = db.sync(fullUrl, { live: true, retry: false });

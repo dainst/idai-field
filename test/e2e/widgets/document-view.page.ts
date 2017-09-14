@@ -18,11 +18,11 @@ export class DocumentViewPage {
     };
 
     public static clickRelationsTab() {
-        element(by.id('document-view-relations-tab')).click();
+        return common.click(element(by.id('document-view-relations-tab')));
     }
 
     public static clickGeometryTab() {
-        element(by.id('document-view-geometry-tab')).click();
+        return common.click(element(by.id('document-view-geometry-tab')));
     }
 
     public static clickEditDocument() {

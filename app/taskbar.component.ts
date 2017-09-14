@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef, Renderer} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
@@ -20,10 +20,16 @@ export class TaskbarComponent {
     public connected = false;
     public conflicts: Array<Document> = [];
 
+    @ViewChild('popover') private popover;
+
+    private cancelClickListener: Function;
+
     constructor(private datastore: IdaiFieldDatastore,
                 private settings: SettingsService,
                 private router: Router,
-                private viewUtility: ViewUtility) {
+                private viewUtility: ViewUtility,
+                private elementRef: ElementRef,
+                private renderer: Renderer) {
 
         this.fetchConflicts();
         this.subscribeForChanges();
@@ -35,6 +41,16 @@ export class TaskbarComponent {
                 this.connected = true;
             }
         });
+    }
+
+    public togglePopover() {
+
+        if (this.popover.isOpen()) {
+            this.closePopover();
+        } else {
+            this.popover.open();
+            this.cancelClickListener = this.startClickListener();
+        }
     }
 
     public openConflictResolver(document: Document) {
@@ -62,5 +78,35 @@ export class TaskbarComponent {
         this.datastore.find({constraints: {'_conflicts': 'KNOWN'}}).then(result => {
             this.conflicts = result;
         });
+    }
+
+    private startClickListener(): Function {
+
+        return this.renderer.listenGlobal('document', 'click', event => {
+            this.handleClick(event);
+        });
+    }
+
+    private closePopover() {
+
+        this.popover.close();
+        this.cancelClickListener();
+        this.cancelClickListener = undefined;
+    }
+
+    private handleClick(event) {
+
+        let target = event.target;
+        let inside = false;
+
+        do {
+            if (target === this.elementRef.nativeElement) {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+
+        if (!inside) this.closePopover();
     }
 }

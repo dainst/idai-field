@@ -4,14 +4,15 @@
             <ul class="list-group conflicts-popover-content">
                 <li *ngFor="let document of conflicts" class="list-group-item"
                     [id]="'taskbar-conflict-' + document.resource.identifier"
-                    (click)="openConflictResolver(document); p.close();">
+                    (click)="closePopover(); openConflictResolver(document);">
                     <document-teaser [document]="document"></document-teaser>
                 </li>
             </ul>
         </ng-template>
         <a [ngbPopover]="popContent" popoverTitle="Konflikte"
-           #p="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
+           #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
            ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
+           triggers="manual" (click)="togglePopover()"
            placement="bottom">
             <span class="mdi mdi-alert-outline"></span>
             <span class="badge-pill badge-danger conflicts-badge">

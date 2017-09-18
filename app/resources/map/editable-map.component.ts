@@ -1,6 +1,7 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {GeometryHelper} from './geometry-helper';
 
 declare global {
     namespace L {
@@ -350,16 +351,16 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.editablePolygons.length == 1) {
             geometry.type = 'Polygon';
-            geometry.coordinates = this.getCoordinatesFromPolygon(this.editablePolygons[0]);
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0]);
         } else if (this.editablePolygons.length > 1) {
             geometry.type = 'MultiPolygon';
-            geometry.coordinates = this.getCoordinatesFromPolygons(this.editablePolygons);
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons);
         } else if (this.editablePolylines.length == 1) {
             geometry.type = 'LineString';
-            geometry.coordinates = this.getCoordinatesFromPolyline(this.editablePolylines[0]);
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0]);
         } else if (this.editablePolylines.length > 1) {
             geometry.type = 'MultiLineString';
-            geometry.coordinates = this.getCoordinatesFromPolylines(this.editablePolylines);
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines);
         } else if (this.editableMarker) {
             geometry.type = 'Point';
             geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
@@ -456,54 +457,7 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
-    private getCoordinatesFromPolygons(polygons: Array<L.Polygon>): number[][][][] {
 
-        let coordinates = [];
-
-        for (let polygon of polygons) {
-            coordinates.push(this.getCoordinatesFromPolygon(polygon));
-        }
-
-        return coordinates;
-    }
-
-    private getCoordinatesFromPolygon(polygon: L.Polygon): number[][][] {
-
-        let coordinates = [];
-        let latLngs = polygon.getLatLngs();
-
-        for (let i in latLngs) {
-            coordinates.push([]);
-            for (let j in latLngs[i]) {
-                coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
-            }
-        }
-
-        return coordinates;
-    }
-
-    private getCoordinatesFromPolylines(polylines: Array<L.Polyline>): number[][][] {
-
-        let coordinates = [];
-
-        for (let polyline of polylines) {
-            coordinates.push(this.getCoordinatesFromPolyline(polyline));
-        }
-
-        return coordinates;
-    }
-
-    private getCoordinatesFromPolyline(polyline: L.Polyline): number[][] {
-
-        let coordinates = [];
-        let latLngs = polyline.getLatLngs();
-
-        for (let i in latLngs) {
-            coordinates.push([ latLngs[i].lng , latLngs[i].lat ]);
-        }
-
-        return coordinates;
-    }
 
     protected clickOnMap(clickPosition: L.LatLng) {
 

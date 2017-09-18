@@ -13,15 +13,6 @@ import {ResourcesState} from '../resources-state';
 import {ResourcesComponent} from '../resources.component';
 import {M} from '../../m';
 
-// no typings for leaflet-measure available
-declare global {
-    namespace L {
-        namespace control {
-            function measure(option): any;
-        }
-    }
-}
-
 @Component({
     moduleId: module.id,
     selector: 'layer-map',
@@ -39,9 +30,6 @@ export class LayerMapComponent extends MapComponent {
     protected activeLayers: Array<ImageContainer> = [];
 
     protected panes: { [id: string]: any } = {};
-
-    protected scale: L.Control;
-    protected measure: L.Control;
 
     private layersUpdate: boolean = false;
 
@@ -67,8 +55,6 @@ export class LayerMapComponent extends MapComponent {
 
     protected setView(): Promise<any> {
 
-        if (!this.scale) this.createControl();
-
         let promise: Promise<any>;
         if (this.layersUpdate) {
             this.layersUpdate = false;
@@ -83,12 +69,6 @@ export class LayerMapComponent extends MapComponent {
             }
             super.setView();
         });
-    }
-
-    private createControl() {
-
-      this.scale = L.control.scale();
-      this.scale.addTo(this.map);
     }
 
     private updateLayers(): Promise<any> {

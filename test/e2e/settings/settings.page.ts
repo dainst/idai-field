@@ -1,5 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
-'use strict';
+
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 let common = require('../common.js');
@@ -37,7 +37,14 @@ export class SettingsPage {
     };
 
     public static getUserNameInput = function() {
+
         browser.wait(EC.visibilityOf(element(by.id('username-input'))), delays.ECWaitTime);
         return element(by.id('username-input'));
+    };
+
+    public static getImagestorePathInput = function() {
+
+        browser.wait(EC.visibilityOf(element(by.id('imagestorepath-input'))), delays.ECWaitTime);
+        return element(by.id('imagestorepath-input'));
     };
 }

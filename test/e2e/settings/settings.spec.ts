@@ -2,6 +2,9 @@ import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
+import {ImagesGridPage} from '../images/images-grid.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
@@ -44,6 +47,30 @@ describe('settings --', function() {
                 fail(err);
                 done();
             });
+    });
+
+    it('show warnings if an invalid imagestore path is set', () => {
+
+        SettingsPage.get();
+        common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
+        SettingsPage.clickSaveSettingsButton();
+        NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
+        NavbarPage.clickCloseMessage(1);
+
+        NavbarPage.clickNavigateToImages();
+        ImagesGridPage.clickUploadArea();
+        ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+        NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
+        NavbarPage.clickCloseMessage();
+
+        ImagesGridPage.doubleClickCell(0);
+        NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
+        NavbarPage.clickCloseMessage();
+
+        DocumentViewPage.clickEditDocument();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.clickConfirmDeleteInModal();
+        NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
     });
 });
 

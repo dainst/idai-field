@@ -40,9 +40,8 @@ export class NavbarPage {
         element.all(by.css('#projectSelectBox option')).get(option).click();
     };
 
-    // unused?
-    public static clickCloseMessage() {
-        common.click(element(by.css('#message-0 button')));
+    public static clickCloseMessage(index = 0) {
+        common.click(element(by.css('#message-' + index + ' button')));
     };
 
     // await

@@ -76,6 +76,16 @@ export class DoceditPage {
             });
     };
 
+    public static clickDeleteDocument = function() {
+
+        common.click(element(by.id('document-edit-button-delete-document')));
+    };
+
+    public static clickConfirmDeleteInModal = function() {
+
+        common.click(element(by.id('delete-resource-confirm')));
+    };
+
     public static clickChooseRightRevision = function() {
 
         browser.wait(EC.visibilityOf(element.all(by.css('input[type=radio]')).get(1)), delays.ECWaitTime);

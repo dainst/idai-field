@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Settings, SyncTarget} from './settings';
+import {Messages} from 'idai-components-2/messages';
+import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {AppState} from '../app-state';
-import {SyncState} from "../datastore/sync-state";
 
 const app = require('electron').remote.app;
 
@@ -34,7 +34,8 @@ export class SettingsService {
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
-                private appState: AppState) {
+                private appState: AppState,
+                private messages: Messages) {
     }
 
     public init() {
@@ -55,6 +56,7 @@ export class SettingsService {
     }
 
     public getUsername(): string {
+
         return this.settings.username;
     }
 
@@ -71,17 +73,18 @@ export class SettingsService {
         settings = JSON.parse(JSON.stringify(settings)); // deep copy
         this.settings = this.initSettings(settings);
 
-        this.appState.setCurrentUser(settings.username);
-        this.appState.setImagestorePath(settings.imagestorePath);
-        this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject());
-
         if (this.settings.syncTarget.address) {
             this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
             if (!SettingsService.validateAddress(this.settings.syncTarget.address))
                 Promise.reject('malformed_address');
         }
 
-        return this.storeSettings();
+        this.appState.setCurrentUser(settings.username);
+        this.appState.setImagestorePath(settings.imagestorePath);
+
+        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject())
+            .catch(msgWithParams => this.messages.add(msgWithParams))
+            .then(() => this.storeSettings());
     }
 
     /**
@@ -91,6 +94,7 @@ export class SettingsService {
      * @returns {Settings} the current settings
      */
     public getSettings(): Settings {
+
         return JSON.parse(JSON.stringify(this.settings)); // deep copy
     }
 
@@ -194,6 +198,7 @@ export class SettingsService {
     }
 
     private stopSync() {
+
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.syncStatusObservers.forEach(o => o.next('disconnected'));

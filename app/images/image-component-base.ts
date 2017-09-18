@@ -4,6 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {Imagestore} from '../imagestore/imagestore';
 import {ImageContainer} from '../imagestore/image-container';
 import {BlobMaker} from '../imagestore/blob-maker';
+import {M} from '../m';
 
 /**
  * @author Daniel de Oliveira
@@ -21,6 +22,9 @@ export class ImageComponentBase {
     ) { }
 
     protected fetchDocAndImage() {
+
+        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+
         this.getRouteParams(function(id) {
             this.id = id;
             this.datastore.get(id).then(

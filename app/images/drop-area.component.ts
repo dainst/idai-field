@@ -66,6 +66,8 @@ export class DropAreaComponent {
 
     private startUpload(event) {
 
+        if (!this.imagestore.getPath()) return this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
+
         let files = this.getFiles(event);
         if (files.length == 0) return;
 
@@ -172,7 +174,7 @@ export class DropAreaComponent {
                         .then(() => resolve())
                         .catch(error => {
                             console.error(error);
-                            reject([M.IMAGES_ERROR_MEDIASTORE_WRITE, file.name]);
+                            reject([M.IMAGESTORE_ERROR_WRITE, file.name]);
                         });
                 }
             })(this);

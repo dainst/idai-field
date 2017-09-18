@@ -312,11 +312,12 @@ export class DoceditComponent {
             });
     }
 
-    private removeImageWithImageStore(document) {
+    private removeImageWithImageStore(document): Promise<any> {
 
         return this.imageTypeUtility.isImageType(document.resource.type)
             .then(isImageType => {
                 if (isImageType) {
+                    if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
                     return this.imagestore.remove(document.resource.id);
                 } else {
                     return Promise.resolve();

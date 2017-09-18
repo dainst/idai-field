@@ -30,7 +30,6 @@ export class SettingsComponent implements OnInit {
         this.settingsService.ready.then(() => {
             this.ready = true;
             this.settings = this.settingsService.getSettings();
-            console.log('got settings', this.settings);
         });
     }
 
@@ -40,20 +39,22 @@ export class SettingsComponent implements OnInit {
 
     public save() {
 
+        this.saving = true;
+
         this.settingsService.updateSettings(this.settings).then(() => {
-
-            this.saving = true;
-
             this.settingsService.restartSync().then(
                 () => {
                     this.saving = false;
-                    this.messages.add([M.SETTINGS_ACTIVATED])
+                    this.messages.add([M.SETTINGS_ACTIVATED]);
                 },
                 err => {
                     this.saving = false;
                     console.error(err);
                 }
             );
-        }).catch(err => this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]));
+        }).catch(() => {
+            this.saving = false;
+            this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);
+        });
     }
 }

@@ -74,14 +74,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
-    public static IMAGES_ERROR_MEDIASTORE_WRITE: string = 'images/error/mediastore/write';
 
     // Imagestore Package
 
-    public static IMAGESTORE_ERROR_MEDIASTORE_READ: string = 'images/error/mediastore/read';
-    public static IMAGESTORE_ERROR_DELETE: string = 'images/error/delete';
-    public static IMAGESTORE_ERROR_INVALID_WORLDFILE: string = 'images/error/invalidworldfile';
-    public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/unsupportedexts';
+    public static IMAGESTORE_ERROR_INVALID_PATH: string = 'images/error/mediastore/invalidpath';
+    public static IMAGESTORE_ERROR_INVALID_PATH_READ: string = 'images/error/mediastore/invalidpathread';
+    public static IMAGESTORE_ERROR_INVALID_PATH_WRITE: string = 'images/error/mediastore/invalidpathwrite';
+    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE: string = 'images/error/mediastore/invalidpathdelete';
+    public static IMAGESTORE_ERROR_READ: string = 'images/error/mediastore/read';
+    public static IMAGESTORE_ERROR_WRITE: string = 'images/error/mediastore/write';
+    public static IMAGESTORE_ERROR_DELETE: string = 'images/error/mediastore/delete';
+    public static IMAGESTORE_ERROR_INVALID_WORLDFILE: string = 'images/error/mediastore/invalidworldfile';
+    public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/mediastore/unsupportedexts';
 
     // Model Package
 
@@ -392,13 +396,41 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGESTORE_ERROR_MEDIASTORE_READ]={
+        this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH]={
+            content: "Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '{0}' ist " +
+                "ungültig.",
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_READ]={
+            content: "Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen " +
+                "gültigen Verzeichnispfad in den Einstellungen an.",
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]={
+            content: "Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen " +
+            "gültigen Verzeichnispfad in den Einstellungen an.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]={
+            content: "Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen " +
+            "gültigen Verzeichnispfad in den Einstellungen an.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_READ]={
             content: "Datei '{0}' konnte nicht aus dem Bilderverzeichnis gelesen werden.",
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGES_ERROR_MEDIASTORE_WRITE]={
+        this.msgs[M.IMAGESTORE_ERROR_WRITE]={
             content: "Datei '{0}' konnte nicht im Bilderverzeichnis gespeichert werden.",
             level: 'danger',
             params: [],

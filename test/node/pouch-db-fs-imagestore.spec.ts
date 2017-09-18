@@ -128,7 +128,7 @@ describe('PouchDbFsImagestore', () => {
                                 done();
                             })
                             .catch(err => {
-                                expect(err[0]).toEqual(M.IMAGESTORE_ERROR_MEDIASTORE_READ);
+                                expect(err[0]).toEqual(M.IMAGESTORE_ERROR_READ);
 
                                 fs.readFile(storeProjectPath + 'test_remove', (err) => {
                                     expect(err).toBeTruthy();

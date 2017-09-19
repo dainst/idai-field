@@ -107,11 +107,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('building1', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
+        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('fund1', 'feature-floor');
-        ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
+        ResourcesPage.performCreateResource('floor1', 'feature-floor');
+        ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
         DocumentViewPage.clickRelation(1);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
@@ -129,17 +129,17 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.clickSelectMainTypeDocument(0); // building2
-        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
+        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
         ResourcesPage.clickSelectMainTypeDocument(1); // building1
-        ResourcesPage.performCreateResource('fund1', 'feature-floor');
-        ResourcesPage.performCreateRelation('fund1', 'befund1', 0);
+        ResourcesPage.performCreateResource('floor1', 'feature-floor');
+        ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
         DocumentViewPage.clickRelation(1);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('befund1'));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('architecture1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
 
         DocumentViewPage.clickRelation(1);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('fund1'));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
 

@@ -52,7 +52,11 @@ describe('resources/project --', function() {
         performCreateProject();
 
         ProjectPage.get();
+        browser.sleep(1000);
 
+
+        
+        // -------------------
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType('trench');
         // browser.sleep(1000);
@@ -66,8 +70,11 @@ describe('resources/project --', function() {
         // browser.sleep(delays.shortRest);
 
         // -------------------
-
         // ResourcesPage.performCreateResource('abc_t1', 'trench');
+
+
+
+
         // NavbarPage.clickNavigateToBuilding();
         // NavbarPage.clickNavigateToProject();
         // browser.sleep(delays.shortRest);

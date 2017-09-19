@@ -46,7 +46,7 @@ describe('resources/project --', function() {
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
 
-    fit('create & switch project', () => {
+    it('create & switch project', () => {
 
         performCreateProject();
 

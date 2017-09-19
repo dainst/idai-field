@@ -2,6 +2,7 @@ import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from '../project.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -52,8 +53,8 @@ describe('resources/project --', function() {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType('trench');
-        // if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
-        // DoceditPage.typeInInputField(identifier);
+        ResourcesPage.clickSelectGeometryType();
+        DoceditPage.typeInInputField('abc_t1');
         // if (inputFieldText && inputFieldIndex) {
         //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
         // }

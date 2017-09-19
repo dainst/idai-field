@@ -64,7 +64,7 @@ describe('resources/state --', function() {
         DocumentViewPage.clickRelation(0);
     }
 
-    it('restore resources state after restarting client', () => {
+    xit('restore resources state after restarting client', () => {
 
         performCreateProject();
 

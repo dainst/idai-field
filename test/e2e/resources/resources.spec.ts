@@ -134,6 +134,16 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
+    it('should refresh the resources list when switching main type documents', () => {
+
+        ResourcesPage.performCreateMainTypeResource('newTrench');
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
+        ResourcesPage.clickSelectMainTypeDocument(0);
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+    });
+
     it('should edit a main type resource', () => {
 
         ResourcesPage.clickEditMainTypeResource();

@@ -48,9 +48,9 @@ export class PouchdbManager {
             });
         }
 
-        rdy = rdy.then(() => this.create());
+        rdy = rdy.then(() => this.create(name));
         if ((name == 'test')) {
-            rdy = rdy.then(() => this.db.destroy()).then(() => this.create());
+            rdy = rdy.then(() => this.db.destroy()).then(() => this.create(name));
         }
         if (name == 'test') {
             rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
@@ -121,14 +121,14 @@ export class PouchdbManager {
     public destroyDb(dbName: string): Promise<any> {
 
         this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
-        return new PouchDB(dbName).destroy();
+        return this.create(dbName).destroy();
     }
 
     public createDb(name: string, doc) {
 
-        let db = new PouchDB(name);
+        let db = this.create(name);
         return db.destroy().then(() => {
-            let db = new PouchDB(name);
+            let db = this.create(name);
             return db.put(doc);
         });
     }
@@ -153,10 +153,11 @@ export class PouchdbManager {
         })
     }
 
-    private create(): Promise<any> {
+    private create(name: string): any {
 
-        this.db = new PouchDB(this.name);
-        return Promise.resolve(this.db);
+        this.db = new PouchDB(name);
+        console.log('PouchDB is using adapter', this.db.adapter);
+        return this.db;
     }
 
     private static isDesignDoc(row) {

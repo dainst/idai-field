@@ -50,7 +50,20 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ResourcesPage.performCreateResource('abc_t1', 'trench');
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType('trench');
+        // if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
+        // DoceditPage.typeInInputField(identifier);
+        // if (inputFieldText && inputFieldIndex) {
+        //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
+        // }
+        // ResourcesPage.scrollUp();
+        // DoceditPage.clickSaveDocument();
+        // browser.sleep(delays.shortRest);
+
+        // -------------------
+
+        // ResourcesPage.performCreateResource('abc_t1', 'trench');
         // NavbarPage.clickNavigateToBuilding();
         // NavbarPage.clickNavigateToProject();
         // browser.sleep(delays.shortRest);

@@ -191,6 +191,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.setSelected(undefined);
         }
+
+        this.populateDocumentList();
     }
 
     private handleChange(documentChange: DocumentChange) {

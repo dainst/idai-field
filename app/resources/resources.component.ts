@@ -191,8 +191,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.setSelected(undefined);
         }
-
-        this.populateDocumentList();
     }
 
     private handleChange(documentChange: DocumentChange) {
@@ -489,32 +487,23 @@ export class ResourcesComponent implements AfterViewChecked {
 
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
 
-        doceditRef.result.then(result => {
+        doceditRef.result.then(result =>
             this.populateMainTypeDocuments()
                 .then(() => {
-                    if (result.document.resource.type == this.view.mainType) {
-                        this.selectMainTypeDocument(result.document);
-                    } else {
-                        this.selectDocument(result.document);
-                    }
                     this.invalidateTypeFiltersIfNecessary();
-                    this.populateDocumentList();
-                });
-            }, closeReason => {
+                    this.handleDocumentSelectionOnSaved(result.document);
+                })
+            , closeReason => {
+
                 this.documentEditChangeMonitor.reset();
                 this.removeEmptyDocuments();
+
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
-                    if (document == this.selectedMainTypeDocument) {
-                        this.resourcesState.removeActiveLayersIds(this.view.name,
-                            this.selectedMainTypeDocument.resource.id);
-                        this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name, undefined);
-                        return this.populateMainTypeDocuments()
-                            .then(() => this.populateDocumentList());
-                    }
-                    this.populateDocumentList();
+                    if (document == this.selectedMainTypeDocument) return this.handleMainTypeDocumentOnDeleted();
                 }
-            });
+            }
+        ).then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
 
         doceditRef.componentInstance.setDocument(document);
         if (activeTabName) doceditRef.componentInstance.setActiveTab(activeTabName);
@@ -571,6 +560,23 @@ export class ResourcesComponent implements AfterViewChecked {
     public setScrollTarget(doc: IdaiFieldDocument) {
 
         this.scrollTarget = doc;
+    }
+
+    private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
+
+        if (document.resource.type == this.view.mainType) {
+            this.selectMainTypeDocument(document);
+        } else {
+            this.selectDocument(document);
+        }
+    }
+
+    private handleMainTypeDocumentOnDeleted() {
+
+        this.resourcesState.removeActiveLayersIds(this.view.name,
+            this.selectedMainTypeDocument.resource.id);
+        this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name, undefined);
+        return this.populateMainTypeDocuments();
     }
 
     private scrollToDocument(doc: IdaiFieldDocument) : boolean {

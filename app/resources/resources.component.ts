@@ -179,7 +179,13 @@ export class ResourcesComponent implements AfterViewChecked {
         );
     }
 
-    public selectMainTypeDocument(document: IdaiFieldDocument) {
+    public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
+
+        this.selectMainTypeDocument(document);
+        this.populateDocumentList();
+    }
+
+    private selectMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
         this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
@@ -191,8 +197,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.setSelected(undefined);
         }
-
-        this.populateDocumentList();
     }
 
     private handleChange(documentChange: DocumentChange) {

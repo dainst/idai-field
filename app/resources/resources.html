@@ -5,7 +5,7 @@
         <div *ngIf="view && view.mainType != 'Project'">
             <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                     class="form-control" [(ngModel)]="selectedMainTypeDocument"
-                    (ngModelChange)="selectMainTypeDocument($event)">
+                    (ngModelChange)="chooseMainTypeDocumentOption($event)">
                 <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
                     {{viewUtility.getMainTypeDocumentLabel(document)}}
                 </option>

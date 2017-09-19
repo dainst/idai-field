@@ -59,7 +59,7 @@ describe('resources/project --', function() {
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });
 
-    it('delete project', () => {
+    xit('delete project', () => {
 
         performCreateProject();
 

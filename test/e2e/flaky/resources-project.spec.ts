@@ -37,8 +37,11 @@ describe('resources/project --', function() {
         ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
+        browser.ignoreSynchronization=true;  // or false
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest * 50);
+        ProjectPage.get();
+        browser.ignoreSynchronization=false;  // or false
     }
 
     function removeResourcesStateFile() {
@@ -51,11 +54,10 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        ProjectPage.get();
         browser.sleep(1000);
 
 
-        
+
         // -------------------
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType('trench');

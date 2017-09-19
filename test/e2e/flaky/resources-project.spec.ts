@@ -40,8 +40,8 @@ describe('resources/project --', function() {
         browser.ignoreSynchronization=true;  // or false
         ProjectPage.clickConfirmProjectOperation();
         browser.sleep(delays.shortRest * 50);
-        ProjectPage.get();
         browser.ignoreSynchronization=false;  // or false
+        ProjectPage.get();
     }
 
     function removeResourcesStateFile() {

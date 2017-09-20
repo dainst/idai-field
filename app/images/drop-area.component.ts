@@ -2,6 +2,7 @@ import {Component, Output, EventEmitter} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
+import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
@@ -29,6 +30,7 @@ export class DropAreaComponent {
 
     public constructor(
         private imagestore: Imagestore,
+        private datastore: ReadDatastore,
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
         private configLoader: ConfigLoader,
@@ -131,28 +133,53 @@ export class DropAreaComponent {
         });
     }
 
-    private uploadFiles(files: File[], type: IdaiType) {
+    private uploadFiles(files: Array<File>, type: IdaiType) {
 
         if (!files) return;
 
+        const duplicateFilenames: string[] = [];
         let promise: Promise<any> = Promise.resolve();
 
         for (let file of files) {
             if (!this.ofUnsupportedExtension(file)) {
-                promise = promise.then(() => this.uploadFile(file, type));
+                promise = promise.then(() => this.isDuplicateFilename(file.name))
+                    .then(isDuplicateFilename => {
+                        if (!isDuplicateFilename) {
+                            return this.uploadFile(file, type);
+                        } else {
+                            duplicateFilenames.push(file.name);
+                        }
+                    });
             }
         }
 
         promise.then(
             () => this.onImagesUploaded.emit(),
             msgWithParams => this.onUploadError.emit(msgWithParams)
-        );
+        ).then(
+            () => {
+                if (duplicateFilenames.length == 1) {
+                    this.onUploadError.emit([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
+                } else if (duplicateFilenames.length > 1) {
+                    this.onUploadError.emit([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
+                }
+            }
+        )
     }
 
     private ofUnsupportedExtension(file: File) {
 
         let ext = file.name.split('.').pop();
         if (this.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
+    }
+
+    private isDuplicateFilename(filename: string): Promise<boolean> {
+
+        return this.datastore.find({
+            constraints: {
+                'resource.identifier' : filename
+            }
+        }).then(result => result && result.length > 0);
     }
 
     /**

@@ -74,6 +74,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
+    public static IMAGES_ERROR_DUPLICATE_FILENAME: string = 'images/error/duplicatefilename';
+    public static IMAGES_ERROR_DUPLICATE_FILENAMES: string = 'images/error/duplicatefilenames';
 
     // Imagestore Package
 
@@ -392,6 +394,20 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_FILEREADER]={
             content: "Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAME]={
+            content: "Die Bilddatei '{0}' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen " +
+                "existiert bereits.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES]={
+            content: "Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen " +
+                " Dateinamen bereits existieren: {0}",
             level: 'danger',
             params: [],
             hidden: false

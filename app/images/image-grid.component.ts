@@ -52,6 +52,7 @@ export class ImageGridComponent {
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility
     ) {
+
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
 
@@ -59,55 +60,13 @@ export class ImageGridComponent {
     }
 
     public refreshGrid() {
+
         this.fetchDocuments();
     }
 
     public showUploadErrorMsg(msgWithParams) {
+
         this.messages.add(msgWithParams);
-    }
-
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     * @param query
-     */
-    private fetchDocuments() {
-
-        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
-            this.query.types = imageTypeNames;
-            return this.datastore.find(this.query);
-        }).catch(msgWithParams => this.messages.add(msgWithParams)
-        ).then(documents => {
-            this.documents = documents as IdaiFieldImageDocument[];
-            this.insertStub(this.documents);
-            this.cacheIdsOfConnectedResources(documents);
-            this.calcGrid();
-        }).catch(errWithParams => {
-            console.error('ERROR with find using query', this.query);
-            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-        });
-    }
-
-    // insert stub document for first cell that will act as drop area for uploading images
-    private insertStub(documents) {
-
-        documents.unshift(<IdaiFieldImageDocument>{
-            id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, filename: '', relations: {} }
-        });
-    }
-
-    private cacheIdsOfConnectedResources(documents) {
-
-        for (let doc of documents) {
-            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                for (let resourceId of doc.resource.relations['depicts']) {
-                    this.datastore.get(resourceId).then(result => {
-                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                    });
-                }
-        }
     }
 
     public setQueryString(q: string) {
@@ -117,29 +76,20 @@ export class ImageGridComponent {
     }
 
     public onResize() {
+
         this.calcGrid();
     }
 
     public getIdentifier(id: string): string {
+
         return this.resourceIdentifiers[id];
-    }
-
-    private calcGrid() {
-
-        this.rows = [];
-        this.imageGridBuilder.calcGrid(
-            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
-            this.rows = result['rows'];
-            for (let msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
-            }
-        });
     }
 
     /**
      * @param document the object that should be selected
      */
     public select(document: IdaiFieldImageDocument) {
+
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
     }
@@ -149,14 +99,17 @@ export class ImageGridComponent {
      *   to change the selection are met.
      */
     public navigateTo(documentToSelect: IdaiFieldImageDocument) {
+
         this.router.navigate(['images', documentToSelect.resource.id, 'show']);
     }
 
     public clearSelection() {
+
         this.selected = [];
     }
 
     public openDeleteModal(modal) {
+
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') this.deleteSelected();
         });
@@ -175,6 +128,51 @@ export class ImageGridComponent {
             }
         }, (closeReason) => {
         });
+    }
+
+    /**
+     * Populates the document list with all documents from
+     * the datastore which match a <code>query</code>
+     */
+    private fetchDocuments() {
+
+        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
+            this.query.types = imageTypeNames;
+            return this.datastore.find(this.query);
+        }).catch(msgWithParams => this.messages.add(msgWithParams)
+        ).then(documents => {
+            this.documents = documents as IdaiFieldImageDocument[];
+            ImageGridComponent.insertStub(this.documents);
+            this.cacheIdsOfConnectedResources(documents);
+            this.calcGrid();
+        }).catch(errWithParams => {
+            console.error('ERROR with find using query', this.query);
+            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
+        });
+    }
+
+    private calcGrid() {
+
+        this.rows = [];
+        this.imageGridBuilder.calcGrid(
+            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
+            this.rows = result['rows'];
+            for (let msgWithParams of result['msgsWithParams']) {
+                this.messages.add(msgWithParams);
+            }
+        });
+    }
+
+    private cacheIdsOfConnectedResources(documents) {
+
+        for (let doc of documents) {
+            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
+                for (let resourceId of doc.resource.relations['depicts']) {
+                    this.datastore.get(resourceId).then(result => {
+                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
+                    });
+                }
+        }
     }
 
     private deleteSelected() {
@@ -239,6 +237,16 @@ export class ImageGridComponent {
                 () => resolve(),
                 msgWithParams => reject(msgWithParams)
             );
+        });
+    }
+
+    // insert stub document for first cell that will act as drop area for uploading images
+    private static insertStub(documents) {
+
+        documents.unshift(<IdaiFieldImageDocument>{
+            id: 'droparea',
+            resource: { identifier: '', shortDescription:'', type: '',
+                width: 1, height: 1, filename: '', relations: {} }
         });
     }
 }

@@ -69,7 +69,6 @@ export class ImageGridComponent {
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
-     * @param query
      */
     private fetchDocuments() {
 
@@ -79,22 +78,12 @@ export class ImageGridComponent {
         }).catch(msgWithParams => this.messages.add(msgWithParams)
         ).then(documents => {
             this.documents = documents as IdaiFieldImageDocument[];
-            this.insertStub(this.documents);
+            ImageGridComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
             this.calcGrid();
         }).catch(errWithParams => {
             console.error('ERROR with find using query', this.query);
             if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-        });
-    }
-
-    // insert stub document for first cell that will act as drop area for uploading images
-    private insertStub(documents) {
-
-        documents.unshift(<IdaiFieldImageDocument>{
-            id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, filename: '', relations: {} }
         });
     }
 
@@ -239,6 +228,16 @@ export class ImageGridComponent {
                 () => resolve(),
                 msgWithParams => reject(msgWithParams)
             );
+        });
+    }
+
+    // insert stub document for first cell that will act as drop area for uploading images
+    private static insertStub(documents) {
+
+        documents.unshift(<IdaiFieldImageDocument>{
+            id: 'droparea',
+            resource: { identifier: '', shortDescription:'', type: '',
+                width: 1, height: 1, filename: '', relations: {} }
         });
     }
 }

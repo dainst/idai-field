@@ -2,6 +2,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {M} from '../m';
 import {AbstractParser} from './abstract-parser';
+import {ObjectUtil} from '../util/object-util';
 
 export interface Geojson {
     type: string,
@@ -12,6 +13,7 @@ export interface Geojson {
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class GeojsonParser extends AbstractParser {
 
@@ -42,10 +44,17 @@ export class GeojsonParser extends AbstractParser {
         });
     }
 
-    private iterateDocs(content: Geojson,observer) {
+    private iterateDocs(content: Geojson, observer) {
+
+        const identifiers: string[] = [];
+
         for (let feature of content.features) {
-            observer.next(GeojsonParser.makeDoc(feature));
+            const document: any = GeojsonParser.makeDoc(feature);
+            identifiers.push(document.resource.identifier);
+            observer.next(document);
         }
+
+        this.addDuplicateIdentifierWarnings(identifiers);
     }
 
     private static validate(content: Geojson) {
@@ -81,7 +90,18 @@ export class GeojsonParser extends AbstractParser {
         }
     }
 
+    private addDuplicateIdentifierWarnings(identifiers: string[]) {
+
+        const duplicateIdentifiers: string[] = ObjectUtil.getDuplicateValues(identifiers);
+        if (duplicateIdentifiers.length == 1) {
+            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
+        } else if (duplicateIdentifiers.length > 1) {
+            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS, duplicateIdentifiers.join(', ')]);
+        }
+    }
+
     private static makeDoc(feature) {
+
         return {
             resource: {
                 identifier: feature.properties['identifier'],

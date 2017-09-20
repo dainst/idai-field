@@ -32,6 +32,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_GENERIC_START_ERROR: string = 'importer/genericstarterror';
     public static IMPORT_SUCCESS_SINGLE: string = 'importer/success/single';
     public static IMPORT_SUCCESS_MULTIPLE: string = 'importer/success/multiple';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER: string = 'importer/warning/geojsonduplicateidentifier';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS: string = 'importer/warning/geojsonduplicateidentifiers';
     public static IMPORT_FAILURE_FILEUNREADABLE: string = 'importer/failure/fileunreadable';
     public static IMPORT_FAILURE_INVALIDJSON: string = 'importer/failure/invalidjson';
     public static IMPORT_FAILURE_INVALIDJSONL: string = 'importer/failure/invalidjsonl';
@@ -174,6 +176,20 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ "Mehrere"],
             hidden: false
         };
+        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER]={
+            content: 'In den GeoJSON-Daten ist der Ressourcen-Identifier {0} mehrfach eingetragen. ' +
+            'Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.',
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]={
+            content: 'In den GeoJSON-Daten sind folgende Ressourcen-Identifier mehrfach eingetragen: {0}. ' +
+                'Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.',
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_FAILURE_FILEUNREADABLE]={
             content: 'Beim Import ist ein Fehler aufgetreten: Die Datei {0} konnte nicht gelesen werden.',
             level: 'danger',
@@ -194,7 +210,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT]={
-            content: 'Fehlerhafte Geojson-Importstruktur. Grund: {0}.',
+            content: 'Fehlerhafte GeoJSON-Importstruktur. Grund: {0}.',
             level: 'danger',
             params: [ "?" ],
             hidden: false

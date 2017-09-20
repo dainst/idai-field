@@ -39,6 +39,22 @@ export class ObjectUtil {
         return Object.keys(object).length == 0;
     }
 
+    public static getDuplicateValues(array: any[]): any[] {
+
+        const temp: any[] = [];
+        const result: any[] = [];
+
+        for (let value of array) {
+            if (temp.indexOf(value) > -1 && result.indexOf(value) == -1) {
+                result.push(value);
+            } else {
+                temp.push(value);
+            }
+        }
+
+        return result;
+    }
+
     public static removeDuplicateValues(array: any[]): any[] {
 
         const result: any[] = [];

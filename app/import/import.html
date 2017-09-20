@@ -78,6 +78,14 @@
 
                 </div>
 
+                <div *ngIf="format == 'geojson'" class="geojson-info">
+                    Bitte geben Sie jeden Ressourcen-Identifier nur einmal an. Enthält eine Import-Datei mehrere
+                    GeoJSON-Features mit dem gleichen Ressourcen-Identifier, wird lediglich das zuletzt aufgeführte
+                    Feature importiert.<br><br>
+                    Um einer Ressource mehrere Geometrien zuzuordnen, können Geometrien vom Typ "MultiPoint",
+                    "MultiLineString" und "MultiPolygon" importiert werden.
+                </div>
+
                 <div class="form-group">
 
                     <button id="importStartButton"

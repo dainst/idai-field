@@ -73,11 +73,7 @@ export class DropAreaComponent {
 
         let files = DropAreaComponent.getFiles(event);
         if (files.length == 0) return;
-
-        let unsupportedExts = DropAreaComponent.getUnsupportedExts(files);
-        if (unsupportedExts.length > 0) {
-            this.reportUnsupportedFileTypes(unsupportedExts);
-        }
+        this.reportUnsupportedFileTypes(files);
 
         let uploadModalRef;
         this.chooseType()
@@ -91,8 +87,9 @@ export class DropAreaComponent {
             });
     }
 
-    private reportUnsupportedFileTypes(unsupportedExts) {
+    private reportUnsupportedFileTypes(files) {
 
+        const unsupportedExts = DropAreaComponent.getUnsupportedExts(files);
         if (unsupportedExts.length > 0) {
             this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
         }

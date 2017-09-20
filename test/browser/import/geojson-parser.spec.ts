@@ -4,6 +4,7 @@ import {M} from '../../../app/m';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function main() {
 
@@ -20,7 +21,7 @@ export function main() {
             }, () => fail('should not complete'));
         }
 
-        it('should take a feature collection and make documents', (done) => {
+        it('should take a feature collection and make documents', done => {
 
             const fileContent  = '{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
@@ -49,7 +50,7 @@ export function main() {
             });
         });
 
-        it('should emit an error on invalid json', (done) => {
+        it('should emit an error on invalid json', done => {
 
             expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
@@ -61,14 +62,14 @@ export function main() {
                 , M.IMPORT_FAILURE_INVALIDJSON, done);
         });
 
-        it('should emit an error on invalid structure', (done) => {
+        it('should emit an error on invalid structure', done => {
 
             expectErr('{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
                 '"properties": { "identifier": "122" } } '
                 , M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, done);
         });
 
-        it('should emit an error on unsupported type', (done) => {
+        it('should emit an error on unsupported type', done => {
 
             expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "GeometryCollection", "coordinates": [102.0, 0.5] }, ' +
@@ -76,7 +77,7 @@ export function main() {
                 , M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, done);
         });
 
-        it('should emit an error missing identifier', (done) => {
+        it('should emit an error missing identifier', done => {
 
             expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
@@ -84,19 +85,41 @@ export function main() {
                 , M.IMPORT_FAILURE_MISSING_IDENTIFIER, done);
         });
 
-        it('should emit an error missing properties', (done) => {
+        it('should emit an error missing properties', done => {
 
             expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }} ] }'
                 , M.IMPORT_FAILURE_MISSING_IDENTIFIER, done);
         });
 
-        it('should emit on numerical identifier', (done) => {
+        it('should emit on numerical identifier', done => {
 
             expectErr('{ "type": "FeatureCollection", "features": [' +
                 '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
                 '"properties": { "identifier": 122 } } ] }'
                 , M.IMPORT_FAILURE_IDENTIFIER_FORMAT, done);
+        });
+        
+        it('should produce a warning on duplicate identifiers', done => {
+
+            const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
+                '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "id1" } },' +
+                '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [16.71875,-16.96875] },' +
+                '"properties": { "identifier": "id1" } } ] }';
+
+            const parser = new GeojsonParser();
+            parser.parse(fileContent).subscribe(resultDocument => {
+                expect(resultDocument).not.toBe(undefined);
+            }, err => {
+                fail(err);
+                done();
+            }, () => {
+                const warnings = parser.getWarnings();
+                expect(warnings.length).toBe(1);
+                expect(warnings[0][0]).toEqual(M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER);
+                expect(warnings[0][1]).toEqual('id1');
+                done();
+            });
         });
 
     });

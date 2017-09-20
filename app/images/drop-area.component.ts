@@ -8,7 +8,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
-import {UploadMonitor} from './upload-monitor';
+import {UploadModalComponent} from './upload-modal.component';
 
 @Component({
     selector: 'drop-area',
@@ -36,8 +36,7 @@ export class DropAreaComponent {
         private persistenceManager: PersistenceManager,
         private configLoader: ConfigLoader,
         private messages: Messages,
-        private settingsService: SettingsService,
-        private uploadMonitor: UploadMonitor
+        private settingsService: SettingsService
     ) {
     }
 
@@ -80,12 +79,15 @@ export class DropAreaComponent {
             this.reportUnsupportedFileTypes(unsupportedExts);
         }
 
-        this.uploadMonitor.setUploadActive(true);
+        let uploadModalRef;
         this.chooseType()
-            .then(
-                type => this.uploadFiles(files, type)
+            .then(type =>
+                {
+                    uploadModalRef = this.modalService.open(UploadModalComponent, {backdrop: 'static', keyboard: false});
+                    return this.uploadFiles(files, type)
+                }
             ).then(() => {
-                this.uploadMonitor.setUploadActive(false);
+                uploadModalRef.close();
             });
     }
 

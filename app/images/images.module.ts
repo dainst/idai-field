@@ -12,8 +12,7 @@ import {LinkModalComponent} from './link-modal.component'
 import {DropAreaComponent} from './drop-area.component';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
-import {ImagesCanDeactivateGuard} from './images-can-deactivate-guard';
-import {UploadMonitor} from './upload-monitor';
+import {UploadModalComponent} from './upload-modal.component';
 
 
 @NgModule({
@@ -32,15 +31,13 @@ import {UploadMonitor} from './upload-monitor';
         GeoreferenceViewComponent,
         LinkModalComponent,
         DropAreaComponent,
-        ImageTypePickerModalComponent
-    ],
-    providers: [
-        UploadMonitor,
-        ImagesCanDeactivateGuard,
+        ImageTypePickerModalComponent,
+        UploadModalComponent,
     ],
     entryComponents: [
         LinkModalComponent,
-        ImageTypePickerModalComponent
+        ImageTypePickerModalComponent,
+        UploadModalComponent
     ]
 })
 

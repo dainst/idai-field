@@ -88,7 +88,7 @@ export class DropAreaComponent {
                 this.uploadMonitor.setUploadActive(false);
             });
     }
-    
+
     private reportUnsupportedFileTypes(unsupportedExts) {
 
         if (unsupportedExts.length > 0) {
@@ -146,12 +146,6 @@ export class DropAreaComponent {
                 }
             }
         )
-    }
-
-    private ofUnsupportedExtension(file: File) {
-
-        let ext = file.name.split('.').pop();
-        if (DropAreaComponent.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
 
     private isDuplicateFilename(filename: string): Promise<boolean> {

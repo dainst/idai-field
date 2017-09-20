@@ -8,6 +8,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
+import {UploadMonitor} from './upload-monitor';
 
 @Component({
     selector: 'drop-area',
@@ -26,7 +27,7 @@ export class DropAreaComponent {
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
 
     private dragOverActive = false;
-    private supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
+    private static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
 
     public constructor(
         private imagestore: Imagestore,
@@ -35,7 +36,8 @@ export class DropAreaComponent {
         private persistenceManager: PersistenceManager,
         private configLoader: ConfigLoader,
         private messages: Messages,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private uploadMonitor: UploadMonitor
     ) {
     }
 
@@ -57,57 +59,36 @@ export class DropAreaComponent {
     public onDrop(event) {
 
         event.preventDefault();
-        this.startUpload(event);
+        this.performUpload(event);
         this.onDragLeave(event);
     }
 
     public onSelectImages(event) {
 
-        this.startUpload(event);
+        this.performUpload(event);
     }
 
-    private startUpload(event) {
+    private performUpload(event) {
 
         if (!this.imagestore.getPath()) return this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
 
-        let files = this.getFiles(event);
+        let files = DropAreaComponent.getFiles(event);
         if (files.length == 0) return;
 
-        let unsupportedExts = this.getUnsupportedExts(files);
+        let unsupportedExts = DropAreaComponent.getUnsupportedExts(files);
         if (unsupportedExts.length > 0) {
             this.reportUnsupportedFileTypes(unsupportedExts);
         }
-        this.chooseType().then(
-            type => this.uploadFiles(files, type)
-        );
+
+        this.uploadMonitor.setUploadActive(true);
+        this.chooseType()
+            .then(
+                type => this.uploadFiles(files, type)
+            ).then(() => {
+                this.uploadMonitor.setUploadActive(false);
+            });
     }
-
-    private getFiles(event) {
-
-        if (!event) return [];
-        let files = [];
-
-        if (event.dataTransfer) {
-            if (event.dataTransfer.files)
-                files = event.dataTransfer.files;
-        } else if (event.srcElement) {
-            if (event.srcElement.files)
-                files = event.srcElement.files;
-        }
-
-        return files;
-    }
-
-    private getUnsupportedExts(files) {
-
-        let unsupportedExts: Array<string> = [];
-        for (let file of files) {
-            let ext;
-            if ((ext = this.ofUnsupportedExtension(file)) != undefined) unsupportedExts.push('"*.' + ext + '"');
-        }
-        return unsupportedExts;
-    }
-
+    
     private reportUnsupportedFileTypes(unsupportedExts) {
 
         if (unsupportedExts.length > 0) {
@@ -141,7 +122,7 @@ export class DropAreaComponent {
         let promise: Promise<any> = Promise.resolve();
 
         for (let file of files) {
-            if (!this.ofUnsupportedExtension(file)) {
+            if (!DropAreaComponent.ofUnsupportedExtension(file)) {
                 promise = promise.then(() => this.isDuplicateFilename(file.name))
                     .then(isDuplicateFilename => {
                         if (!isDuplicateFilename) {
@@ -153,7 +134,7 @@ export class DropAreaComponent {
             }
         }
 
-        promise.then(
+        return promise.then(
             () => this.onImagesUploaded.emit(),
             msgWithParams => this.onUploadError.emit(msgWithParams)
         ).then(
@@ -170,7 +151,7 @@ export class DropAreaComponent {
     private ofUnsupportedExtension(file: File) {
 
         let ext = file.name.split('.').pop();
-        if (this.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
+        if (DropAreaComponent.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
 
     private isDuplicateFilename(filename: string): Promise<boolean> {
@@ -237,5 +218,37 @@ export class DropAreaComponent {
                     .catch(error => reject(error));
             };
         });
+    }
+
+    private static ofUnsupportedExtension(file: File) {
+
+        let ext = file.name.split('.').pop();
+        if (DropAreaComponent.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
+    }
+
+    private static getUnsupportedExts(files) {
+
+        let unsupportedExts: Array<string> = [];
+        for (let file of files) {
+            let ext;
+            if ((ext = DropAreaComponent.ofUnsupportedExtension(file)) != undefined) unsupportedExts.push('"*.' + ext + '"');
+        }
+        return unsupportedExts;
+    }
+
+    private static getFiles(event) {
+
+        if (!event) return [];
+        let files = [];
+
+        if (event.dataTransfer) {
+            if (event.dataTransfer.files)
+                files = event.dataTransfer.files;
+        } else if (event.srcElement) {
+            if (event.srcElement.files)
+                files = event.srcElement.files;
+        }
+
+        return files;
     }
 }

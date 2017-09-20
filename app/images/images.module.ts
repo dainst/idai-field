@@ -13,6 +13,7 @@ import {DropAreaComponent} from './drop-area.component';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 import {ImagesCanDeactivateGuard} from './images-can-deactivate-guard';
+import {UploadMonitor} from './upload-monitor';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {ImagesCanDeactivateGuard} from './images-can-deactivate-guard';
         ImageTypePickerModalComponent
     ],
     providers: [
+        UploadMonitor,
         ImagesCanDeactivateGuard,
     ],
     entryComponents: [

@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
@@ -34,10 +34,11 @@ export class DropAreaComponent {
         private datastore: ReadDatastore,
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
-        private configLoader: ConfigLoader,
+        private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
         private settingsService: SettingsService
     ) {
+
     }
 
     public onDragOver(event) {
@@ -98,18 +99,16 @@ export class DropAreaComponent {
     private chooseType(): Promise<IdaiType> {
 
         return new Promise((resolve, reject) => {
-            this.configLoader.getProjectConfiguration().then(projectConfiguration => {
 
-                let imageType: IdaiType = projectConfiguration.getTypesTree()['Image'];
-                if (imageType.children && imageType.children.length > 0) {
-                    this.modalService.open(ImageTypePickerModalComponent).result.then(
-                        (type: IdaiType) => resolve(type),
-                        (closeReason) => reject()
-                    );
-                } else {
-                    resolve(imageType);
-                }
-            })
+            let imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
+            if (imageType.children && imageType.children.length > 0) {
+                this.modalService.open(ImageTypePickerModalComponent).result.then(
+                    (type: IdaiType) => resolve(type),
+                    (closeReason) => reject()
+                );
+            } else {
+                resolve(imageType);
+            }
         });
     }
 

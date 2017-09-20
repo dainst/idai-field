@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
@@ -8,7 +8,7 @@ import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/documents';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './model/idai-field-validator';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {M} from './m';
@@ -47,6 +47,9 @@ import {ConflictResolvingExtension} from './datastore/conflict-resolving-extensi
 import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
+const remote = require('electron').remote;
+
+let pconf = undefined;
 
 @NgModule({
     imports: [
@@ -132,9 +135,37 @@ import {ProjectsComponent} from './projects.component';
         Messages,
         BlobMaker,
         Converter,
-        ConfigLoader,
-        PersistenceManager,
         AppConfigurator,
+        {
+            provide: APP_INITIALIZER,
+            multi: true,
+            deps: [AppConfigurator, ConfigLoader, SettingsService],
+            useFactory: function(appConfigurator: AppConfigurator, configLoader: ConfigLoader, settingsService: SettingsService) {
+
+                return() => {
+                    const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
+                    appConfigurator.go(PROJECT_CONFIGURATION_PATH);
+
+                    return configLoader.getProjectConfiguration().then(pc => {
+                        pconf = pc;
+                    }).catch(() => {}) // errors are handled in AppComponent
+                    .then(() => settingsService.init());
+                }
+            }
+        },
+        ConfigLoader,
+        {
+            provide: ProjectConfiguration,
+            useFactory: () => {
+                if (!pconf) {
+                    console.error("pconf has not yet been provided");
+                    throw "pconf has not yet been provided";
+                }
+                return pconf;
+            },
+            deps: []
+        },
+        PersistenceManager,
         DocumentEditChangeMonitor,
         {
             provide: Validator,

@@ -48,6 +48,8 @@ export class SettingsService {
                 if (this.settings.isSyncActive)
                     return this.startSync();
             });
+
+        return this.ready;
     }
 
     public getSelectedProject(): string {

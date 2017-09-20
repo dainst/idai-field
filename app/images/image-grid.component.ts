@@ -52,6 +52,7 @@ export class ImageGridComponent {
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility
     ) {
+
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
 
@@ -59,11 +60,74 @@ export class ImageGridComponent {
     }
 
     public refreshGrid() {
+
         this.fetchDocuments();
     }
 
     public showUploadErrorMsg(msgWithParams) {
+        
         this.messages.add(msgWithParams);
+    }
+
+    public setQueryString(q: string) {
+
+        this.query.q = q;
+        this.fetchDocuments();
+    }
+
+    public onResize() {
+
+        this.calcGrid();
+    }
+
+    public getIdentifier(id: string): string {
+
+        return this.resourceIdentifiers[id];
+    }
+
+    /**
+     * @param document the object that should be selected
+     */
+    public select(document: IdaiFieldImageDocument) {
+
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        else this.selected.splice(this.selected.indexOf(document), 1);
+    }
+
+    /**
+     * @param documentToSelect the object that should be navigated to if the preconditions
+     *   to change the selection are met.
+     */
+    public navigateTo(documentToSelect: IdaiFieldImageDocument) {
+
+        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+    }
+
+    public clearSelection() {
+
+        this.selected = [];
+    }
+
+    public openDeleteModal(modal) {
+
+        this.modalService.open(modal).result.then(result => {
+            if (result == 'delete') this.deleteSelected();
+        });
+    }
+
+    public openLinkModal() {
+
+        this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
+            if (targetDoc) {
+                this.updateAndPersistDepictsRelations(this.selected, targetDoc)
+                    .then(() => {
+                        this.clearSelection();
+                    }).catch(msgWithParams => {
+                        this.messages.add(msgWithParams);
+                    });
+            }
+        }, (closeReason) => {
+        });
     }
 
     /**
@@ -87,32 +151,6 @@ export class ImageGridComponent {
         });
     }
 
-    private cacheIdsOfConnectedResources(documents) {
-
-        for (let doc of documents) {
-            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                for (let resourceId of doc.resource.relations['depicts']) {
-                    this.datastore.get(resourceId).then(result => {
-                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                    });
-                }
-        }
-    }
-
-    public setQueryString(q: string) {
-
-        this.query.q = q;
-        this.fetchDocuments();
-    }
-
-    public onResize() {
-        this.calcGrid();
-    }
-
-    public getIdentifier(id: string): string {
-        return this.resourceIdentifiers[id];
-    }
-
     private calcGrid() {
 
         this.rows = [];
@@ -125,45 +163,16 @@ export class ImageGridComponent {
         });
     }
 
-    /**
-     * @param document the object that should be selected
-     */
-    public select(document: IdaiFieldImageDocument) {
-        if (this.selected.indexOf(document) == -1) this.selected.push(document);
-        else this.selected.splice(this.selected.indexOf(document), 1);
-    }
+    private cacheIdsOfConnectedResources(documents) {
 
-    /**
-     * @param documentToSelect the object that should be navigated to if the preconditions
-     *   to change the selection are met.
-     */
-    public navigateTo(documentToSelect: IdaiFieldImageDocument) {
-        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
-    }
-
-    public clearSelection() {
-        this.selected = [];
-    }
-
-    public openDeleteModal(modal) {
-        this.modalService.open(modal).result.then(result => {
-            if (result == 'delete') this.deleteSelected();
-        });
-    }
-
-    public openLinkModal() {
-
-        this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
-            if (targetDoc) {
-                this.updateAndPersistDepictsRelations(this.selected, targetDoc)
-                    .then(() => {
-                        this.clearSelection();
-                    }).catch(msgWithParams => {
-                        this.messages.add(msgWithParams);
+        for (let doc of documents) {
+            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
+                for (let resourceId of doc.resource.relations['depicts']) {
+                    this.datastore.get(resourceId).then(result => {
+                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
                     });
-            }
-        }, (closeReason) => {
-        });
+                }
+        }
     }
 
     private deleteSelected() {

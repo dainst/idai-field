@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {ImagesComponent} from './images.component';
 import {ImageGridComponent} from './image-grid.component';
 import {ImageViewComponent} from './image-view.component';
+import {ImagesCanDeactivateGuard} from './images-can-deactivate-guard';
 
 const routes: Routes = [
     {
@@ -11,7 +12,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: ImageGridComponent
+                component: ImageGridComponent,
+                canDeactivate: [ImagesCanDeactivateGuard]
             },
             {
                 path: ':id/show',

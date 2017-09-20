@@ -65,7 +65,7 @@ export class ImageGridComponent {
     }
 
     public showUploadErrorMsg(msgWithParams) {
-        
+
         this.messages.add(msgWithParams);
     }
 

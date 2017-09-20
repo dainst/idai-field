@@ -11,6 +11,17 @@ let delays = require('../config/delays');
 
 describe('images/image-grid --', function() {
 
+    // image is already present in mediastore folder since uploading does not work in HttpMediastore
+    const imageUploadFileName = 'Aldrin_Apollo_11.jpg';
+    const imageUploadXpath = '//span[@class="badge badge-secondary"][text()="' + imageUploadFileName + '"]';
+
+    const uploadImage = () => {
+
+        ImagesGridPage.clickUploadArea();
+        ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageUploadFileName));
+        ImagesGridPage.chooseImageSubtype(0);
+    };
+
     beforeEach(() => {
 
         ResourcesPage.get();
@@ -22,14 +33,16 @@ describe('images/image-grid --', function() {
 
     it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {
 
-        // image is already present in mediastore folder since uploading does not work in HttpMediastore
-        const fileName = 'Aldrin_Apollo_11.jpg';
-        const xpath = '//span[@class="badge badge-secondary"][text()="' + fileName + '"]';
+        uploadImage();
+        browser.wait(EC.presenceOf(element(by.xpath(imageUploadXpath))), delays.ECWaitTime);
+    });
 
-        ImagesGridPage.clickUploadArea();
-        ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/' + fileName));
-        ImagesGridPage.chooseImageSubtype(0);
-        browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime);
+    it('do not allow uploading an image with a duplicate filename', () => {
+
+        uploadImage();
+        browser.wait(EC.presenceOf(element(by.xpath(imageUploadXpath))), delays.ECWaitTime);
+        uploadImage();
+        NavbarPage.awaitAlert('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
     });
 
     it('deselect cells', () => {

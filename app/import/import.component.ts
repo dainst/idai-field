@@ -26,6 +26,8 @@ import {NoRollbackStrategy} from './no-rollback-strategy';
 import {RelationsCompleter} from './relations-completer';
 import {SettingsService} from '../settings/settings-service';
 import {ViewUtility} from '../common/view-utility';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UploadModalComponent} from './upload-modal.component';
 
 
 @Component({
@@ -49,7 +51,6 @@ export class ImportComponent {
     public format: string = 'native';
     public file: File;
     public url: string;
-    public running: boolean = false;
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId: string = '';
 
@@ -62,7 +63,8 @@ export class ImportComponent {
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private configLoader: ConfigLoader,
-        private viewUtility: ViewUtility
+        private viewUtility: ViewUtility,
+        private modalService: NgbModal
     ) {
         this.viewUtility.getMainTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
@@ -72,13 +74,13 @@ export class ImportComponent {
 
     public startImport() {
 
-        let reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
-        let parser: Parser = ImportComponent.createParser(this.format);
-        let importStrategy: ImportStrategy = ImportComponent.createImportStrategy(this.format, this.validator,
+        const reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
+        const parser: Parser = ImportComponent.createParser(this.format);
+        const importStrategy: ImportStrategy = ImportComponent.createImportStrategy(this.format, this.validator,
             this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
-        let relationsStrategy: RelationsStrategy
+        const relationsStrategy: RelationsStrategy
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
-        let rollbackStrategy: RollbackStrategy
+        const rollbackStrategy: RollbackStrategy
             = ImportComponent.createRollbackStrategy(this.format, this.datastore);
 
         this.messages.clear();
@@ -86,12 +88,17 @@ export class ImportComponent {
             return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
         }
 
-        this.messages.add([M.IMPORT_START]);
-        this.running = true;
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy, rollbackStrategy,
-                this.datastore)
-            .then(importReport => this.showImportResult(importReport))
-            .then(() => { this.running = false; });
+        let uploadModalRef = undefined;
+        let uploadReady = false;
+        setTimeout(() => {
+            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
+        }, 200);
+        this.importer.importResources(reader, parser, importStrategy, relationsStrategy, rollbackStrategy, this.datastore)
+            .then(importReport => {
+                uploadReady = true;
+                if(uploadModalRef) uploadModalRef.close();
+                this.showImportResult(importReport)
+            });
     }
 
     public isReady(): boolean {

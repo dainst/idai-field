@@ -47,6 +47,7 @@ import {ConflictResolvingExtension} from './datastore/conflict-resolving-extensi
 import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
+import {UploadModalComponent} from './import/upload-modal.component';
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -72,7 +73,8 @@ let pconf = undefined;
         TaskbarComponent,
         ProjectsComponent,
         ImportComponent,
-        ExportComponent
+        ExportComponent,
+        UploadModalComponent
     ],
     providers: [
         AppState,
@@ -180,6 +182,9 @@ let pconf = undefined;
         RelationsCompleter,
         ImageTypeUtility,
         ViewUtility
+    ],
+    entryComponents: [
+        UploadModalComponent
     ],
     bootstrap: [ AppComponent ]
 })

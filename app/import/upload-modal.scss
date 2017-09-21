@@ -1,0 +1,19 @@
+#image-upload-modal {
+
+  .image-upload-modal-container {
+    width: 250px;
+    margin: 0 auto;
+
+    .spinner {
+      display: inline-block;
+      margin-top: 7px;
+      margin-right: 10px;
+    }
+
+    .upload-info {
+      display: inline-block;
+      position: relative; top: -14px;
+    }
+  }
+
+}

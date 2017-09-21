@@ -4,11 +4,14 @@ import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 
-let common = require('../common.js');
-let delays = require('../config/delays');
-let EC = protractor.ExpectedConditions;
+const common = require('../common.js');
+const delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
 
-
+/**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
 describe('import --', function() {
 
     beforeEach(function() {

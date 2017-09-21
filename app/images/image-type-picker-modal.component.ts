@@ -13,9 +13,12 @@ import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
  */
 export class ImageTypePickerModalComponent {
 
+    public fileCount: number;
+
     private imageType: IdaiType;
 
     constructor(public activeModal: NgbActiveModal, configLoader: ConfigLoader) {
+
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.imageType = projectConfiguration.getTypesTree()['Image'];
         });

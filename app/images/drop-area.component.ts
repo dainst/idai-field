@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {ReadDatastore} from 'idai-components-2/datastore';
@@ -79,22 +79,27 @@ export class DropAreaComponent {
         if (result[0] == 0) return;
 
         let uploadModalRef;
-        this.chooseType()
+        this.chooseType(files.length)
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
                 return this.uploadFiles(files, type).then(() => uploadModalRef.close());
             }).catch(() => {});
     }
 
-    private chooseType(): Promise<IdaiType> {
+    private chooseType(fileCount: number): Promise<IdaiType> {
 
         return new Promise((resolve, reject) => {
 
             const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
             if (imageType.children && imageType.children.length > 0) {
-                this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false }).result.then(
+                const modal: NgbModalRef
+                    = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
+
+                modal.result.then(
                     (type: IdaiType) => resolve(type),
-                    (closeReason) => reject());
+                    closeReason => reject());
+
+                modal.componentInstance.fileCount = fileCount;
             } else {
                 resolve(imageType);
             }

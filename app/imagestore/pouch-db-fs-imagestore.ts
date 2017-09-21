@@ -83,7 +83,9 @@ export class PouchDbFsImagestore implements Imagestore {
 
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
+
         return readFun(key).then(data => {
+
             if (data == undefined) {
                 console.error('data read was undefined for', key, 'thumbnails was', thumb);
                 return Promise.reject([M.IMAGESTORE_ERROR_READ, key]);
@@ -92,7 +94,7 @@ export class PouchDbFsImagestore implements Imagestore {
         }).catch(err => {
             // missing file is ok for originals
             if (err.code == 'ENOENT' && !thumb) return Promise.resolve('');
-            console.error(err);
+            console.error("PouchDbFsImagestore#read",err);
             return Promise.reject([M.IMAGESTORE_ERROR_READ, key]);
         });
     }

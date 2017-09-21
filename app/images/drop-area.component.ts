@@ -75,7 +75,7 @@ export class DropAreaComponent {
 
         const files = DropAreaComponent.getFiles(event);
         const result = ExtensionUtil.reportUnsupportedFileTypes(files, DropAreaComponent.supportedFileTypes);
-        if (result[1]) this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,result[1]]);
+        if (result[1]) this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS, result[1]]);
         if (result[0] == 0) return;
 
         let uploadModalRef;

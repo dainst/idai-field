@@ -2,7 +2,12 @@
     <div class="image-upload-modal-container">
         <div class="spinner"></div>
         <div class="upload-info">
-            {{uploadStatus.getUploadedImages()}} / {{uploadStatus.getTotalImages()}} Bilder eingelesen...
+            <span *ngIf="uploadStatus.getTotalImages() == 1">
+                Bild wird eingelesen...
+            </span>
+            <span *ngIf="uploadStatus.getTotalImages() > 1">
+                {{uploadStatus.getUploadedImages()}} / {{uploadStatus.getTotalImages()}} Bilder eingelesen...
+            </span>
         </div>
     </div>
 </div>

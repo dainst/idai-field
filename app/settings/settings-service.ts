@@ -73,7 +73,7 @@ export class SettingsService {
     public updateSettings(settings: Settings): Promise<any> {
 
         settings = JSON.parse(JSON.stringify(settings)); // deep copy
-        this.settings = this.initSettings(settings);
+        this.settings = SettingsService.initSettings(settings);
 
         if (this.settings.syncTarget.address) {
             this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
@@ -175,30 +175,6 @@ export class SettingsService {
             });
     }
 
-    /**
-     * initializes settings to default values
-     * @param settings provided settings
-     * @returns {Settings} settings with added default settings
-     */
-    private initSettings(settings: Settings): Settings {
-
-        if (!settings.username) settings.username = 'anonymous';
-
-        if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
-
-        if (!settings.isSyncActive) settings.isSyncActive = false;
-
-        if (settings.imagestorePath) {
-            let path: string = settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            settings.imagestorePath = path;
-        } else {
-            settings.imagestorePath = app.getPath('appData') + '/'
-                + app.getName() + '/imagestore/';
-        }
-        return settings;
-    }
-
     private stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
@@ -271,5 +247,29 @@ export class SettingsService {
     private storeSettings(): Promise<any> {
 
         return this.settingsSerializer.store(this.settings);
+    }
+
+    /**
+     * initializes settings to default values
+     * @param settings provided settings
+     * @returns {Settings} settings with added default settings
+     */
+    private static initSettings(settings: Settings): Settings {
+
+        if (!settings.username) settings.username = 'anonymous';
+
+        if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
+
+        if (!settings.isSyncActive) settings.isSyncActive = false;
+
+        if (settings.imagestorePath) {
+            let path: string = settings.imagestorePath;
+            if (path.substr(-1) != '/') path += '/';
+            settings.imagestorePath = path;
+        } else {
+            settings.imagestorePath = app.getPath('appData') + '/'
+                + app.getName() + '/imagestore/';
+        }
+        return settings;
     }
 }

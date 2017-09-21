@@ -9,6 +9,7 @@ import {ImageTypePickerModalComponent} from './image-type-picker-modal.component
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
 import {UploadModalComponent} from './upload-modal.component';
+import {ExtensionUtil} from '../util/extension-util';
 
 @Component({
     selector: 'drop-area',
@@ -59,39 +60,34 @@ export class DropAreaComponent {
     public onDrop(event) {
 
         event.preventDefault();
-        this.performUpload(event);
+        this.startUpload(event);
         this.onDragLeave(event);
     }
 
     public onSelectImages(event) {
 
-        this.performUpload(event);
+        this.startUpload(event);
     }
 
-    private performUpload(event) {
+    private startUpload(event) {
 
         if (!this.imagestore.getPath()) return this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
 
-        let files = DropAreaComponent.getFiles(event);
-        if (files.length == 0) return;
-        this.reportUnsupportedFileTypes(files);
+        const files = DropAreaComponent.getFiles(event);
+        let result;
+        if (result = ExtensionUtil.reportUnsupportedFileTypes(files, DropAreaComponent.supportedFileTypes)) {
+            if (result[1]) this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,result[1]]);
+            if (result[0] == 0) return;
+        }
 
         let uploadModalRef;
         this.chooseType()
             .then(type => {
-                uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-                return this.uploadFiles(files, type);
-            }).then(() => {
-                uploadModalRef.close();
-            });
-    }
-
-    private reportUnsupportedFileTypes(files) {
-
-        const unsupportedExts = DropAreaComponent.getUnsupportedExts(files);
-        if (unsupportedExts.length > 0) {
-            this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,unsupportedExts.join(',')]);
-        }
+                    uploadModalRef = this.modalService.open(UploadModalComponent, {backdrop: 'static', keyboard: false});
+                    return this.uploadFiles(files, type)
+                }
+            )
+            .then(() => uploadModalRef.close());
     }
 
     private chooseType(): Promise<IdaiType> {
@@ -118,7 +114,7 @@ export class DropAreaComponent {
         let promise: Promise<any> = Promise.resolve();
 
         for (let file of files) {
-            if (!DropAreaComponent.ofUnsupportedExtension(file)) {
+            if (!ExtensionUtil.ofUnsupportedExtension(file, DropAreaComponent.supportedFileTypes)) {
                 promise = promise.then(() => this.isDuplicateFilename(file.name))
                     .then(isDuplicateFilename => {
                         if (!isDuplicateFilename) {
@@ -208,22 +204,6 @@ export class DropAreaComponent {
                     .catch(error => reject(error));
             };
         });
-    }
-
-    private static ofUnsupportedExtension(file: File) {
-
-        let ext = file.name.split('.').pop();
-        if (DropAreaComponent.supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
-    }
-
-    private static getUnsupportedExts(files) {
-
-        let unsupportedExts: Array<string> = [];
-        for (let file of files) {
-            let ext;
-            if ((ext = DropAreaComponent.ofUnsupportedExtension(file)) != undefined) unsupportedExts.push('"*.' + ext + '"');
-        }
-        return unsupportedExts;
     }
 
     private static getFiles(event) {

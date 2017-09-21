@@ -13,6 +13,7 @@ import {DropAreaComponent} from './drop-area.component';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 import {UploadModalComponent} from './upload-modal.component';
+import {UploadStatus} from './upload-status';
 
 
 @NgModule({
@@ -38,6 +39,9 @@ import {UploadModalComponent} from './upload-modal.component';
         LinkModalComponent,
         ImageTypePickerModalComponent,
         UploadModalComponent
+    ],
+    providers: [
+        UploadStatus
     ]
 })
 

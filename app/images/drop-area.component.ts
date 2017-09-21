@@ -10,6 +10,7 @@ import {SettingsService} from '../settings/settings-service';
 import {M} from '../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../util/extension-util';
+import {UploadStatus} from './upload-status';
 
 @Component({
     selector: 'drop-area',
@@ -37,10 +38,9 @@ export class DropAreaComponent {
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private settingsService: SettingsService
-    ) {
-
-    }
+        private settingsService: SettingsService,
+        private uploadStatus: UploadStatus
+    ) {}
 
     public onDragOver(event) {
 
@@ -83,7 +83,7 @@ export class DropAreaComponent {
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
                 return this.uploadFiles(files, type).then(() => uploadModalRef.close());
-            }).catch(()=>{});
+            }).catch(() => {});
     }
 
     private chooseType(): Promise<IdaiType> {
@@ -105,6 +105,9 @@ export class DropAreaComponent {
 
         if (!files) return;
 
+        this.uploadStatus.setTotalImages(files.length);
+        this.uploadStatus.setUploadedImages(0);
+
         const duplicateFilenames: string[] = [];
         let promise: Promise<any> = Promise.resolve();
 
@@ -117,7 +120,7 @@ export class DropAreaComponent {
                         } else {
                             duplicateFilenames.push(file.name);
                         }
-                    });
+                    }).then(() => this.uploadStatus.setUploadedImages(this.uploadStatus.getUploadedImages() + 1));
             }
         }
 

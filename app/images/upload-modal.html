@@ -1,6 +1,8 @@
 <div class="modal-body" id="image-upload-modal">
     <div class="image-upload-modal-container">
         <div class="spinner"></div>
-        <div class="upload-info">Bilder werden eingelesen...</div>
+        <div class="upload-info">
+            {{uploadStatus.getUploadedImages()}} / {{uploadStatus.getTotalImages()}} Bildern eingelesen...
+        </div>
     </div>
 </div>

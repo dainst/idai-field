@@ -8,7 +8,7 @@ import {Imagestore} from '../../imagestore/imagestore';
 import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
-import {ImageTypeUtility} from '../../util/image-type-utility';
+import {ImageTypeUtility} from '../../common/image-type-utility';
 import {ResourcesState} from '../resources-state';
 import {ResourcesComponent} from '../resources.component';
 import {M} from '../../m';

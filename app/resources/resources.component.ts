@@ -12,11 +12,11 @@ import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ViewUtility} from '../util/view-utility';
+import {ViewUtility} from '../common/view-utility';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
-import {ImageTypeUtility} from '../util/image-type-utility';
+import {ImageTypeUtility} from '../common/image-type-utility';
 
 
 @Component({

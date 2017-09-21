@@ -8,7 +8,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {ImageComponentBase} from './image-component-base';
 import {Imagestore} from '../imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ViewUtility} from '../util/view-utility';
+import {ViewUtility} from '../common/view-utility';
 import {ObjectUtil} from '../util/object-util';
 
 @Component({

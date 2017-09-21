@@ -9,7 +9,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
-import {ImageTypeUtility} from '../util/image-type-utility';
+import {ImageTypeUtility} from '../common/image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
 import {ObjectUtil} from '../util/object-util';
 import {M} from '../m';

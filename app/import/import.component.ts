@@ -25,7 +25,7 @@ import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {RelationsCompleter} from './relations-completer';
 import {SettingsService} from '../settings/settings-service';
-import {ViewUtility} from '../util/view-utility';
+import {ViewUtility} from '../common/view-utility';
 
 
 @Component({

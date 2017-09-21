@@ -12,7 +12,7 @@ import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
-import {ImageTypeUtility} from '../util/image-type-utility';
+import {ImageTypeUtility} from '../common/image-type-utility';
 import {M} from '../m';
 
 @Component({

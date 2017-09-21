@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {SettingsService} from './settings/settings-service';
-import {ViewUtility} from './util/view-utility';
+import {ViewUtility} from './common/view-utility';
 
 @Component({
     moduleId: module.id,

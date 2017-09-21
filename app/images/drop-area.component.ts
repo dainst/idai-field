@@ -74,11 +74,9 @@ export class DropAreaComponent {
         if (!this.imagestore.getPath()) return this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
 
         const files = DropAreaComponent.getFiles(event);
-        let result;
-        if (result = ExtensionUtil.reportUnsupportedFileTypes(files, DropAreaComponent.supportedFileTypes)) {
-            if (result[1]) this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,result[1]]);
-            if (result[0] == 0) return;
-        }
+        const result = ExtensionUtil.reportUnsupportedFileTypes(files, DropAreaComponent.supportedFileTypes);
+        if (result[1]) this.messages.add([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS,result[1]]);
+        if (result[0] == 0) return;
 
         let uploadModalRef;
         this.chooseType()

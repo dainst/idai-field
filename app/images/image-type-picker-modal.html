@@ -2,14 +2,14 @@
     <div *ngIf="fileCount >= 100" class="text-center alert alert-warning">
        Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
     </div>
-    <p>Bitte wählen Sie den gewünschten Typ aus.</p>
-    <ul class="list-group">
+    <p *ngIf="imageType.children && imageType.children.length > 0">Bitte wählen Sie den gewünschten Typ aus.</p>
+    <ul *ngIf="imageType.children && imageType.children.length > 0" class="list-group">
         <li [ngClass]="{'abstract-idai-type': imageType.isAbstract}" class="list-group-item popover-item"
             id="choose-image-maintype" (click)="!imageType.isAbstract && activeModal.close(imageType)">
             <type-icon [type]="imageType.name" size="30"></type-icon>
             {{imageType.label}}
-            <ul *ngIf="imageType['children']" style="padding:0;">
-                <li *ngFor="let childType of imageType['children']; let index = index"
+            <ul style="padding: 0;">
+                <li *ngFor="let childType of imageType.children; let index = index"
                     id="choose-image-subtype-option-{{index}}"
                     class="list-group-item popover-item"
                     (click)="activeModal.close(childType)">
@@ -22,6 +22,10 @@
 </div>
 
 <div class="modal-footer">
+    <button *ngIf="!imageType.children || imageType.children.length == 0" type="button" class="btn btn-secondary"
+            (click)="activeModal.close(imageType)">
+        OK
+    </button>
     <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('dismissedByCancel')">
         Abbrechen
     </button>

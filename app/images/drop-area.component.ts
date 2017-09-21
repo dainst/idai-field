@@ -91,7 +91,7 @@ export class DropAreaComponent {
         return new Promise((resolve, reject) => {
 
             const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
-            if (imageType.children && imageType.children.length > 0) {
+            if ((imageType.children && imageType.children.length > 0) || fileCount >= 100) {
                 const modal: NgbModalRef
                     = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
 

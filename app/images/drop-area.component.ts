@@ -83,11 +83,11 @@ export class DropAreaComponent {
         let uploadModalRef;
         this.chooseType()
             .then(type => {
-                    uploadModalRef = this.modalService.open(UploadModalComponent, {backdrop: 'static', keyboard: false});
-                    return this.uploadFiles(files, type)
-                }
-            )
-            .then(() => uploadModalRef.close());
+                uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
+                return this.uploadFiles(files, type);
+            }).then(() => {
+                uploadModalRef.close();
+            });
     }
 
     private chooseType(): Promise<IdaiType> {

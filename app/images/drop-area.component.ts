@@ -82,22 +82,19 @@ export class DropAreaComponent {
         this.chooseType()
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-                return this.uploadFiles(files, type);
-            }).then(() => {
-                uploadModalRef.close();
-            });
+                return this.uploadFiles(files, type).then(() => uploadModalRef.close());
+            }).catch(()=>{});
     }
 
     private chooseType(): Promise<IdaiType> {
 
         return new Promise((resolve, reject) => {
 
-            let imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
+            const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
             if (imageType.children && imageType.children.length > 0) {
-                this.modalService.open(ImageTypePickerModalComponent).result.then(
+                this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false }).result.then(
                     (type: IdaiType) => resolve(type),
-                    (closeReason) => reject()
-                );
+                    (closeReason) => reject());
             } else {
                 resolve(imageType);
             }

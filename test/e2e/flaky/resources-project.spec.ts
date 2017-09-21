@@ -54,7 +54,7 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
-        browser.sleep(1000);
+        browser.restart();
 
 
 

@@ -55,29 +55,31 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
 
     private loadDirectory(db, path, dest): Promise<any> {
 
-        return new Promise(resolve => {
-            let promises = [];
+        return new Promise<any>((resolve, reject) => {
+            const promises = [];
             fs.readdir(path, (err, files) => {
+
                 if (files) {
                     files.forEach(file => {
                         if (!fs.statSync(path + file).isDirectory()) {
-                            fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
-                            fs.readFile(path + file, (err, data) => {
-                                let blob = this.converter.convert(data);
-                                db.get(file).then(doc => {
-                                    promises.push(db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]),
-                                        'image/jpeg'));
-                                });
-                            });
+                            // fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file)); // TODO what is this for?
+                            const blob = this.converter.convert(fs.readFileSync(path + file));
+
+                            promises.push(
+                                db.get(file)
+                                    .then(doc => db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg'))
+                            );
                         }
                     });
                 }
-                console.debug('Successfully put samples from ' + path + ' to ' + dest );
-            });
 
-            return Promise.all(promises).then(resolve).catch(err => {
-                console.error('Problem when storing sample images', err);
-                return Promise.reject(err);
+                Promise.all(promises).then(()=>{
+                    console.debug('Successfully put samples from ' + path + ' to ' + dest );
+                    resolve();
+                }).catch(err => {
+                    console.error('Problem when storing sample images', err);
+                    reject(err);
+                });
             });
         });
     }

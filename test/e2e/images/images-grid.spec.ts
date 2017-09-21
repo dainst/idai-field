@@ -2,12 +2,11 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImagesGridPage} from './images-grid.page';
 import {ImagesViewPage} from './images-view.page';
 import {NavbarPage} from '../navbar.page';
-import {ResourcesPage} from '../resources/resources.page';
 
-let path = require('path');
+const path = require('path');
 
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 describe('images/image-grid --', function() {
 
@@ -24,11 +23,7 @@ describe('images/image-grid --', function() {
 
     beforeEach(() => {
 
-        ResourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(1000);
-        NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest);
+        ImagesGridPage.get();
     });
 
     it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {

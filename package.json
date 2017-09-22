@@ -14,9 +14,9 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "server": "gulp webserver-watch",
-    "package": "build -mw --publish never",
-    "package-mac": "build -m dmg --publish never",
-    "package-win": "build -w nsis --publish never"
+    "package": "electron-builder -mw --publish never",
+    "package-mac": "electron-builder -m dmg --publish never",
+    "package-win": "electron-builder -w nsis --publish never"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",

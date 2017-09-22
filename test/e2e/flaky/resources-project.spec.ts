@@ -54,8 +54,9 @@ describe('resources/project --', function() {
         browser.sleep(200).then(() => {removeResourcesStateFile();}).then(()=>{
             browser.sleep(200);
 
-
-            ProjectPage.get();
+            ResourcesPage.get();
+            NavbarPage.clickNavigateToProject();
+            
             browser.sleep(200);
 
             // -------------------

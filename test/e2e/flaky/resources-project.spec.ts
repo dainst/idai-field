@@ -89,25 +89,25 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
 
         browser.sleep(delays.shortRest * 20);
-        //
-        // NavbarPage.clickNavigateToSettings();
-        // NavbarPage.clickNavigateToExcavation();
-        //
-        // browser.sleep(delays.shortRest * 5);
-        // ResourcesPage.typeInIdentifierInSearchField('con');
-        // browser.sleep(delays.shortRest * 5);
-        //
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-        //
-        // ProjectPage.clickProjectsBadge();
-        //
-        // ProjectPage.getProjectNameOptionText(1).then(t=>{
-        //     expect(t).toContain('abc')
-        // });
-        // NavbarPage.clickSelectProject(1);
-        // browser.sleep(delays.shortRest * 10);
-        //
-        // NavbarPage.clickNavigateToProject();
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+        NavbarPage.clickNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+
+        browser.sleep(delays.shortRest * 5);
+        ResourcesPage.typeInIdentifierInSearchField('con');
+        browser.sleep(delays.shortRest * 5);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        ProjectPage.clickProjectsBadge();
+
+        ProjectPage.getProjectNameOptionText(1).then(t=>{
+            expect(t).toContain('abc')
+        });
+        NavbarPage.clickSelectProject(1);
+        browser.sleep(delays.shortRest * 10);
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

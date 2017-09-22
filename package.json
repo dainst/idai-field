@@ -6,7 +6,6 @@
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
-    "postinstall": "git clone https://github.com/dainst/pouchdb-server.git && npm i --no-save ./pouchdb-server/packages/node_modules/express-pouchdb/",
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "start": "electron . config/config.json.template",
@@ -14,9 +13,9 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "server": "gulp webserver-watch",
-    "package": "electron-builder -mw --publish never",
-    "package-mac": "electron-builder -m dmg --publish never",
-    "package-win": "electron-builder -w nsis --publish never"
+    "package": "build -mw --publish never",
+    "package-mac": "build -m dmg --publish never",
+    "package-win": "build -w nsis --publish never"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",
@@ -57,6 +56,7 @@
     "bootstrap": "4.0.0-beta",
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
+    "express-pouchdb-dainst": "1000.0.0",
     "idai-components-2": "1.4.16",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
@@ -87,7 +87,7 @@
     "archiver": "1.1.0",
     "chromedriver": "2.29.0",
     "electron": "1.6.1",
-    "electron-builder": "^19.29.1",
+    "electron-builder": "^15.2.0",
     "electron-packager": "8.4.0",
     "electron-rebuild": "^1.5.7",
     "file-api": "0.10.4",

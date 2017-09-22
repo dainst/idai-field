@@ -51,19 +51,17 @@ describe('resources/project --', function() {
     it('create & switch project', () => {
 
         performCreateProject();
-        browser.sleep(200).then(() => {removeResourcesStateFile();}).then(()=>{
-            browser.sleep(200);
 
-            ResourcesPage.get();
-            NavbarPage.clickNavigateToProject();
-            
-            browser.sleep(200);
+        ResourcesPage.get();
+        NavbarPage.clickNavigateToProject();
+
+        browser.sleep(200);
 
             // -------------------
-            ResourcesPage.clickCreateResource();
-            browser.sleep(200);
-            ResourcesPage.clickSelectResourceType('trench');
-            ResourcesPage.clickSelectGeometryType();
+            // ResourcesPage.clickCreateResource();
+            // browser.sleep(200);
+            // ResourcesPage.clickSelectResourceType('trench');
+            // ResourcesPage.clickSelectGeometryType();
             // DoceditPage.typeInInputField('abc_t1');
             // if (inputFieldText && inputFieldIndex) {
             //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
@@ -73,8 +71,8 @@ describe('resources/project --', function() {
             // browser.sleep(delays.shortRest);
 
             // -------------------
-            // ResourcesPage.performCreateResource('abc_t1', 'trench');
-        })
+        
+        ResourcesPage.performCreateResource('abc_t1', 'trench');
 
 
         // NavbarPage.clickNavigateToBuilding();

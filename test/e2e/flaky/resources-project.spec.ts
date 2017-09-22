@@ -52,25 +52,13 @@ describe('resources/project --', function() {
 
         performCreateProject();
 
+        // this is a workaround. normally we would like to start on the ProjectPage directly.
+        // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
         NavbarPage.clickNavigateToProject();
+        //
 
         browser.sleep(200);
-
-            // -------------------
-            // ResourcesPage.clickCreateResource();
-            // browser.sleep(200);
-            // ResourcesPage.clickSelectResourceType('trench');
-            // ResourcesPage.clickSelectGeometryType();
-            // DoceditPage.typeInInputField('abc_t1');
-            // if (inputFieldText && inputFieldIndex) {
-            //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
-            // }
-            // ResourcesPage.scrollUp();
-            // DoceditPage.clickSaveDocument();
-            // browser.sleep(delays.shortRest);
-
-            // -------------------
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
 

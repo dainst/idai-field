@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
-    "postinstall": "rimraf pouchdb-server && git clone https://github.com/dainst/pouchdb-server.git && npm i --no-save ./pouchdb-server/packages/node_modules/express-pouchdb/",
+    "postinstall": "git clone https://github.com/dainst/pouchdb-server.git && npm i --no-save ./pouchdb-server/packages/node_modules/express-pouchdb/",
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "start": "electron . config/config.json.template",

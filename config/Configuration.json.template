@@ -210,7 +210,8 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
+                "Architecture",
+                "Drilling"
             ],
             "inverse": "includes",
             "label": "Liegt in",
@@ -264,7 +265,8 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
+                "Architecture",
+                "Drilling"
             ],
             "sameMainTypeResource": true
         },
@@ -729,8 +731,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -1238,8 +1240,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -1337,7 +1339,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -1525,8 +1527,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -2938,66 +2940,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Angabe der Objekthöhe",
-                    "descriptions": {
-                        "de": "Angabe der Objekthöhe"
-                    },
-                    "editable": true,
-                    "inputType": "dimension",
-                    "label": "Höhe",
-                    "labels": {
-                        "de": "Höhe",
-                        "en": "height",
-                        "it": "l'altezza"
-                    },
-                    "name": "hasDimensionHight",
-                    "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Angabe der Länge.",
-                    "descriptions": {
-                        "de": "Angabe der Länge."
-                    },
-                    "editable": true,
-                    "inputType": "dimension",
-                    "label": "Länge",
-                    "labels": {
-                        "de": "Länge",
-                        "en": "length",
-                        "it": "la lunghezza"
-                    },
-                    "name": "hasDimensionLength",
-                    "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung.",
-                    "descriptions": {
-                        "de": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-                    },
-                    "editable": true,
-                    "inputType": "dimension",
-                    "label": "Breite",
-                    "labels": {
-                        "de": "Breite",
-                        "en": "width",
-                        "it": "la larghezza"
-                    },
-                    "name": "hasDimensionWidth",
-                    "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
-                    ],
-                    "visible": true
-                },
-                {
                     "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)",
                     "descriptions": {
                         "de": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
@@ -3281,7 +3223,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -3893,7 +3835,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -4011,8 +3953,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -4468,7 +4410,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -4883,7 +4825,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -5165,7 +5107,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -5480,9 +5422,9 @@
                     },
                     "editable": true,
                     "inputType": "input",
-                    "label": "Rückstandsanalys",
+                    "label": "Rückstandsanalyse",
                     "labels": {
-                        "de": "Rückstandsanalys"
+                        "de": "Rückstandsanalyse"
                     },
                     "name": "hasPotteryResidueAnalysis",
                     "visible": true
@@ -6138,36 +6080,36 @@
                     },
                     "name": "hasTemperTypeClay",
                     "valuelist": [
-                      "T1",
-                      "T2",
-                      "T3",
-                      "T4",
-                      "T5",
-                      "T6",
-                      "T7",
-                      "T8",
-                      "T9",
-                      "T10",
-                      "T11",
-                      "T12",
-                      "T13",
-                      "T14",
-                      "T15",
-                      "T16",
-                      "T17",
-                      "T18",
-                      "T19",
-                      "T20",
-                      "T21",
-                      "T22",
-                      "T23",
-                      "T24",
-                      "T25",
-                      "T26",
-                      "T27",
-                      "T28",
-                      "T29",
-                      "T30"
+                        "T1",
+                        "T10",
+                        "T11",
+                        "T12",
+                        "T13",
+                        "T14",
+                        "T15",
+                        "T16",
+                        "T17",
+                        "T18",
+                        "T19",
+                        "T2",
+                        "T20",
+                        "T21",
+                        "T22",
+                        "T23",
+                        "T24",
+                        "T25",
+                        "T26",
+                        "T27",
+                        "T28",
+                        "T29",
+                        "T3",
+                        "T30",
+                        "T4",
+                        "T5",
+                        "T6",
+                        "T7",
+                        "T8",
+                        "T9"
                     ],
                     "visible": true
                 },
@@ -6342,8 +6284,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -6754,7 +6696,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -6912,8 +6854,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -7145,7 +7087,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -7817,7 +7759,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -9623,7 +9565,7 @@
                         "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
                     },
                     "editable": true,
-                    "inputType": "unsignedInt",
+                    "inputType": "input",
                     "label": "Nummer",
                     "labels": {
                         "de": "Nummer",
@@ -9874,8 +9816,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },
@@ -10282,8 +10224,8 @@
                     },
                     "name": "hasDimensionVerticalExtent",
                     "position_values": [
-                        "Maximale Ausdehnung",
-                        "Minimale Ausdehnung"
+                        "Oberkante",
+                        "Unterkante"
                     ],
                     "visible": true
                 },

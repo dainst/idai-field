@@ -64,9 +64,15 @@ describe('resources/state --', function() {
         DocumentViewPage.clickRelation(0);
     }
 
-    xit('restore resources state after restarting client', () => {
+    it('restore resources state after restarting client', () => {
 
         performCreateProject();
+
+        // this is a workaround. normally we would like to start on the ProjectPage directly.
+        // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
+        ResourcesPage.get();
+        NavbarPage.clickNavigateToProject();
+        //
 
         ResourcesPage.performCreateResource('excavation1', 'trench');
         ResourcesPage.performCreateResource('excavation2', 'trench');

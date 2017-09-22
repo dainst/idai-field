@@ -5,13 +5,13 @@ import {SettingsService} from './settings/settings-service';
 import {M} from './m';
 import {DoceditComponent} from "./docedit/docedit.component";
 import {PouchdbManager} from "./datastore/pouchdb-manager";
+const remote = require('electron').remote;
 
 @Component({
     selector: 'projects',
     moduleId: module.id,
     templateUrl: './projects.html'
 })
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -113,6 +113,11 @@ export class ProjectsComponent implements OnInit {
 
         return this.settingsService.setProjectSettings(
                 this.projects, this.selectedProject, true, create)
-            .then(() => window.location.reload());
+            .then(() => {
+                // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
+                if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
+                    window.location.reload();
+                }
+            });
     }
 }

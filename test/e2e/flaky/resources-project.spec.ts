@@ -37,11 +37,9 @@ describe('resources/project --', function() {
         ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
-        browser.ignoreSynchronization=true;  // or false
         ProjectPage.clickConfirmProjectOperation();
         browser.sleep(delays.shortRest * 50);
-        browser.ignoreSynchronization=false;  // or false
-        ProjectPage.get();
+
     }
 
     function removeResourcesStateFile() {
@@ -53,10 +51,7 @@ describe('resources/project --', function() {
     it('create & switch project', () => {
 
         performCreateProject();
-
-        browser.restart();
-
-
+        ProjectPage.get();
 
         // -------------------
         ResourcesPage.clickCreateResource();

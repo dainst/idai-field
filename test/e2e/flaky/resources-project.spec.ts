@@ -56,8 +56,9 @@ describe('resources/project --', function() {
 
         // -------------------
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType('trench');
         browser.sleep(1000);
+        ResourcesPage.clickSelectResourceType('trench');
+        ResourcesPage.clickSelectResourceType('Trench');
         ResourcesPage.clickSelectGeometryType();
         // DoceditPage.typeInInputField('abc_t1');
         // if (inputFieldText && inputFieldIndex) {

@@ -6,7 +6,6 @@ let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
-const expressPouchDB = require('express-pouchdb');
 const fs = require('fs');
 const path = require('path');
 const common = require('../common');

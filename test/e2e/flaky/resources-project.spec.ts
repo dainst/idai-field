@@ -101,7 +101,7 @@ describe('resources/project --', function() {
         // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
-    xit('delete project', () => {
+    it('delete project', () => {
 
         performCreateProject();
         ResourcesPage.get();
@@ -116,8 +116,8 @@ describe('resources/project --', function() {
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
 
+        ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);
-
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();

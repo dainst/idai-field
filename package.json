@@ -87,7 +87,7 @@
     "archiver": "1.1.0",
     "chromedriver": "2.29.0",
     "electron": "1.6.1",
-    "electron-builder": "^15.2.0",
+    "electron-builder": "^19.29.1",
     "electron-packager": "8.4.0",
     "electron-rebuild": "^1.5.7",
     "file-api": "0.10.4",

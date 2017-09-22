@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
-    "postinstall": "mkdir pouchdb-server; cd pouchdb-server; git init; git remote add -f origin https://github.com/dainst/pouchdb-server.git; git config core.sparseCheckout true; echo \"packages/node_modules/express-pouchdb\" >> .git/info/sparse-checkout; git pull --depth=1 origin master; cd ..; npm i ./pouchdb-server/packages/node_modules/express-pouchdb/",
+    "postinstall": "mkdirp pouchdb-server; cd pouchdb-server; git init; git remote add -f origin https://github.com/dainst/pouchdb-server.git; git config core.sparseCheckout true; git pull --depth=1 origin master; cd ..; npm i --no-save ./pouchdb-server/packages/node_modules/express-pouchdb/",
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "start": "electron . config/config.json.template",
@@ -106,6 +106,7 @@
     "karma-chrome-launcher": "2.0.0",
     "karma-electron-launcher": "^0.2.0",
     "karma-jasmine": "1.1.0",
+    "mkdirp": "^0.5.1",
     "pouchdb-adapter-memory": "^6.3.4",
     "protractor": "5.1.2",
     "protractor-console-plugin": "0.1.1",

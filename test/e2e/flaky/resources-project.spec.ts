@@ -38,7 +38,7 @@ describe('resources/project --', function() {
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 50);
+        browser.sleep(delays.shortRest * 10);
 
     }
 
@@ -51,27 +51,29 @@ describe('resources/project --', function() {
     it('create & switch project', () => {
 
         performCreateProject();
-        ProjectPage.get();
-        browser.sleep(1000);
-
-        // -------------------
-        ResourcesPage.clickCreateResource();
-        browser.sleep(1000);
-        ResourcesPage.clickSelectResourceType('trench');
-        ResourcesPage.clickSelectResourceType('Trench');
-        ResourcesPage.clickSelectGeometryType();
-        // DoceditPage.typeInInputField('abc_t1');
-        // if (inputFieldText && inputFieldIndex) {
-        //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
-        // }
-        // ResourcesPage.scrollUp();
-        // DoceditPage.clickSaveDocument();
-        // browser.sleep(delays.shortRest);
-
-        // -------------------
-        // ResourcesPage.performCreateResource('abc_t1', 'trench');
+        browser.sleep(200).then(() => {removeResourcesStateFile();}).then(()=>{
+            browser.sleep(200);
 
 
+            ProjectPage.get();
+            browser.sleep(200);
+
+            // -------------------
+            ResourcesPage.clickCreateResource();
+            browser.sleep(200);
+            ResourcesPage.clickSelectResourceType('trench');
+            ResourcesPage.clickSelectGeometryType();
+            // DoceditPage.typeInInputField('abc_t1');
+            // if (inputFieldText && inputFieldIndex) {
+            //     DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
+            // }
+            // ResourcesPage.scrollUp();
+            // DoceditPage.clickSaveDocument();
+            // browser.sleep(delays.shortRest);
+
+            // -------------------
+            // ResourcesPage.performCreateResource('abc_t1', 'trench');
+        })
 
 
         // NavbarPage.clickNavigateToBuilding();

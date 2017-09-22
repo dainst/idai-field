@@ -48,7 +48,7 @@ describe('resources/project --', function() {
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
 
-    it('create & switch project', () => {
+    fit('create & switch project', () => {
 
         performCreateProject();
 
@@ -95,10 +95,13 @@ describe('resources/project --', function() {
             expect(t).toContain('abc')
         });
         NavbarPage.clickSelectProject(1);
+
+        ResourcesPage.get();
+        NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 10);
-        //
-        // NavbarPage.clickNavigateToProject();
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
     it('delete project', () => {

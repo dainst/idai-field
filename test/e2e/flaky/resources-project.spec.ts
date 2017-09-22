@@ -118,6 +118,7 @@ describe('resources/project --', function() {
 
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(1000);
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);

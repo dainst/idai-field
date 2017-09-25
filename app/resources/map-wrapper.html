@@ -64,6 +64,7 @@
                         <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
+                        <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
                         <relations-view [resource]="selectedDocument.resource"
                                         (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
                                         'relations')">
@@ -76,9 +77,11 @@
                               [class.empty-tab]="!selectedDocument.resource.relations['isDepictedIn']"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
-                                        *ngIf="selectedDocument && selectedDocument.resource.relations
-                            && selectedDocument.resource.relations['isDepictedIn']">
+                        <div *ngIf="!selectedDocument.resource.relations['isDepictedIn']" class="empty-tab-info">
+                            Keine Bilder vorhanden.
+                        </div>
+                        <thumbnail-view *ngIf="selectedDocument.resource.relations['isDepictedIn']"
+                                        [imageIds]="selectedDocument.resource.relations['isDepictedIn']">
                         </thumbnail-view>
                     </ng-template>
                 </ngb-tab>

@@ -47,9 +47,10 @@
                         <fields-view [resource]="selectedDocument.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
+
                 <ngb-tab id="document-view-geometry-tab">
                     <ng-template ngbTabTitle>
-                        <span class="mdi mdi-map"></span>
+                        <span class="mdi mdi-map" [class.empty-tab]="!selectedDocument.resource.geometry"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
                         <geometry-view [document]="selectedDocument"
@@ -71,6 +72,7 @@
                         </relations-view>
                     </ng-template>
                 </ngb-tab>
+
                 <ngb-tab id="document-view-images-tab">
                     <ng-template ngbTabTitle>
                         <span class="mdi mdi-image"

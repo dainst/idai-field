@@ -25,12 +25,14 @@
                         <fields-view [resource]="image.document.resource"></fields-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab *ngIf="hasRelations()" id="document-view-relations-tab">
+
+                <ngb-tab id="document-view-relations-tab">
                     <ng-template ngbTabTitle>
-                        <span class="mdi mdi-sitemap"></span>
+                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <relations-view [resource]="image.document.resource"
+                        <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
+                        <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
                                         (onRelationTargetClicked)="jumpToRelationTarget($event)">
                         </relations-view>
                     </ng-template>

@@ -277,19 +277,23 @@ relations-view .fieldvalue:hover {
   height: calc(100vh - 113px);
   overflow-y: auto;
   overflow-x: hidden;
-}
 
-.document-info .card {
-  margin-bottom: 0;
-  padding-bottom: 15px;
-  box-sizing: border-box;
-  background-color: transparent !important;
-}
+  .card-header {
+    background-color: transparent !important;
+  }
 
-.document-info .card-header {
-  background-color: transparent !important;
-}
+  .card {
+    margin-bottom: 0;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    background-color: transparent !important;
+  }
 
-.document-info .tab-content {
-  padding-top: 1em;
+  .tab-content {
+    padding-top: 1em;
+  }
+
+  .empty-tab {
+    color: #5a6269;
+  }
 }

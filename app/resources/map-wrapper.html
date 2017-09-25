@@ -59,9 +59,9 @@
                     </ng-template>
                 </ngb-tab>
 
-                <ngb-tab *ngIf="hasRelations()" id="document-view-relations-tab">
+                <ngb-tab id="document-view-relations-tab">
                     <ng-template ngbTabTitle>
-                        <span class="mdi mdi-sitemap"></span>
+                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
                         <relations-view [resource]="selectedDocument.resource"
@@ -70,9 +70,10 @@
                         </relations-view>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab *ngIf="selectedDocument.resource.relations['isDepictedIn']" id="document-view-images-tab">
+                <ngb-tab id="document-view-images-tab">
                     <ng-template ngbTabTitle>
-                        <span class="mdi mdi-image"></span>
+                        <span class="mdi mdi-image"
+                              [class.empty-tab]="!selectedDocument.resource.relations['isDepictedIn']"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
                         <thumbnail-view [imageIds]="selectedDocument.resource.relations['isDepictedIn']"

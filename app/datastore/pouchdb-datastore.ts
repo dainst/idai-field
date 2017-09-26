@@ -308,6 +308,9 @@ export class PouchdbDatastore {
                 conflicts: true,
                 since: 'now'
             }).on('change', change => {
+                // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
+                // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
+                // TODO do further investigation, maybe file an issue for pouchdb
 
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
@@ -317,7 +320,6 @@ export class PouchdbDatastore {
                     resourceId: change.id
                 };
 
-                // TODO instead of checking deletedOnes we should do a fetch and see if it's there. that way it would work also for remotely deleted documents
                 if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}} as Document);
                     this.fulltextIndexer.remove({resource: {id: change.id}} as Document);

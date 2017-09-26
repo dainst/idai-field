@@ -142,13 +142,13 @@ export class PouchDbFsImagestore implements Imagestore {
                     reject([M.IMAGESTORE_ERROR_WRITE, key]);
                 }
                 else {
-                    let blob = this.converter.convert(data);
-                    // TODO: remove when tests run with electron
-                    // convert to buffer or blob depending on whether we run in node or browser
+                    const buffer = this.converter.convert(data);
+
+                    let blob;
                     if (typeof Blob !== 'undefined') {
-                        blob = new Blob([blob]);
+                        blob = new Blob([buffer]);  // electron runtime environment
                     } else {
-                        blob = Buffer.from(blob);
+                        blob = Buffer.from(buffer); // jasmine node tests
                     }
 
                     let promise;

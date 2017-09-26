@@ -142,14 +142,7 @@ export class PouchDbFsImagestore implements Imagestore {
                     reject([M.IMAGESTORE_ERROR_WRITE, key]);
                 }
                 else {
-                    let blob = this.converter.convert(data);
-                    // TODO: remove when tests run with electron
-                    // convert to buffer or blob depending on whether we run in node or browser
-                    if (typeof Blob !== 'undefined') {
-                        blob = new Blob([blob]);
-                    } else {
-                        blob = Buffer.from(blob);
-                    }
+                    const blob: Blob = new Blob([this.converter.convert(data)]);
 
                     let promise;
                     if (documentExists) {
@@ -159,7 +152,7 @@ export class PouchDbFsImagestore implements Imagestore {
                     }
 
                     promise.then(rev => {
-                        return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg')
+                        return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg');
                     }).then(() => resolve()
                     ).catch(err => {
                         console.error(err);

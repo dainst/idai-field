@@ -84,6 +84,33 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
+    it('restore resources state after restarting client', () => {
+
+        performCreateProject();
+
+        // this is a workaround. normally we would like to start on the ProjectPage directly.
+        // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
+        ResourcesPage.get();
+        NavbarPage.clickNavigateToProject();
+        //
+
+        ResourcesPage.performCreateResource('excavation1', 'trench');
+        ResourcesPage.performCreateResource('excavation2', 'trench');
+        ResourcesPage.clickChooseTypeFilter('building');
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.clickListModeButton();
+
+        ProjectPage.get();
+        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation2'));
+    });
+
     it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();

@@ -18,7 +18,7 @@ import {DocumentCache} from "./document-cache";
 export class PouchdbManager {
 
     private db = undefined;
-    private dbProxy = undefined;
+    private dbProxy: PouchdbProxy = undefined;
     private name: string = undefined;
     private syncHandles = [];
 
@@ -41,7 +41,6 @@ export class PouchdbManager {
         let rdy: Promise<any> = Promise.resolve();
 
         if (this.db) {
-            this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
             rdy = rdy.then(() => {
                 this.db.close();
                 this.db = undefined;
@@ -114,7 +113,6 @@ export class PouchdbManager {
      */
     public destroyDb(dbName: string): Promise<any> {
 
-        this.dbProxy.switchDb(new Promise(resolve => this.resolveDbReady = resolve));
         return this.createPouchDBObject(dbName).destroy();
     }
 

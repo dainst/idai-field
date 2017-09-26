@@ -43,8 +43,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public create(document: Document): Promise<Document> {
 
         return this.datastore.create(document)
-            // knowing that create returns the same instance of document as do
-            .then(doc => this.documentCache.set(doc));
+            .then(createdDocument => this.documentCache.set(createdDocument));
     }
 
     /**
@@ -56,18 +55,14 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     public update(document: Document): Promise<Document> {
 
         return this.datastore.update(document)
-            .then(() => {
-                // TODO change datastore.update so that it returns the updated
-                // doc and not the same instance. then get rid of the fetch here
-                return this.datastore.fetch(document.resource.id).then(doc => {
-                    if (!this.documentCache.get(doc.resource.id)) {
-                        return this.documentCache.set(doc);
-                    } else {
-                        this.reassign(doc);
-                        return this.documentCache.get(doc.resource.id);
-                    }
-                });
-            });
+            .then(updatedDocument => {
+                if (!this.documentCache.get(document.resource.id)) {
+                    return this.documentCache.set(updatedDocument);
+                } else {
+                    this.reassign(updatedDocument);
+                    return this.documentCache.get(document.resource.id);
+                }
+        });
     }
 
     public remove(doc: Document): Promise<any> {

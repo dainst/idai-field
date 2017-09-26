@@ -47,7 +47,7 @@ export class PouchdbDatastore {
 
     /**
      * @param document
-     * @returns {Promise<Document>} same instance of the document
+     * @returns {Promise<Document>} newest revision of the document fetched from db
      */
     public create(document: Document): Promise<Document> {
 
@@ -67,7 +67,7 @@ export class PouchdbDatastore {
 
     /**
      * @param document
-     * @returns {Promise<Document>} same instance of the document
+     * @returns {Promise<Document>} newest revision of the document fetched from db
      */
     public update(document: Document): Promise<Document> {
 
@@ -278,13 +278,11 @@ export class PouchdbDatastore {
 
     private processPutResult(document, result): Promise<Document> {
 
-        // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser())
-        //     .then(() => {
-                this.constraintIndexer.put(document);
-                this.fulltextIndexer.put(document);
-                document['_rev'] = result['rev'];
-                return Promise.resolve(document);
-            // });
+        this.constraintIndexer.put(document);
+        this.fulltextIndexer.put(document);
+        document['_rev'] = result['rev'];
+
+        return this.fetch(document.resource.id);
     }
 
     private resetDocOnErr(original: Document) {

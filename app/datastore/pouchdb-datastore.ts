@@ -100,6 +100,12 @@ export class PouchdbDatastore {
         }
 
         this.deletedOnes.push(doc.resource.id);
+        // we want the doc removed from the indices asap,
+        // in order to not risk someone finding it still with findIds due to
+        // issues that are theoretically possible because we cannot know
+        // when .on('change' fires. so we do remove it here,
+        // although we know it will be done again for the same doc
+        // in .on('change'
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 

@@ -22,9 +22,9 @@ export function main() {
             () => {
 
                 const constraintIndexer = new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn' },
-                    { path: 'resource.relations.liesWithin' },
-                    { path: 'resource.identifier', string: true }
+                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.identifier', type: 'match' }
                 ]);
                 const fulltextIndexer = new FulltextIndexer();
 

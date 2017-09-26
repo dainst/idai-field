@@ -85,10 +85,10 @@ let pconf = undefined;
             provide: ConstraintIndexer,
             useFactory: function() {
                 return new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn' },
-                    { path: 'resource.relations.liesWithin' },
-                    { path: 'resource.identifier', string: true },
-                    { path: '_conflicts', boolean: true }
+                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.identifier', type: 'match' },
+                    { path: '_conflicts', type: 'exist' }
                 ]);
             }
         },

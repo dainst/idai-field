@@ -46,9 +46,7 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['1'];
             docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.relations.isRecordedIn' }
-            ]);
+            ci = new ConstraintIndexer([{ path: 'resource.relations.isRecordedIn', type: 'contain' }]);
             ci.put(docs[0]);
             ci.put(docs[1]);
 
@@ -62,9 +60,7 @@ export function main() {
             ];
             docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.relations.isRecordedIn' }
-            ]);
+            ci = new ConstraintIndexer([{ path: 'resource.relations.isRecordedIn', type: 'contain' }]);
             ci.put(docs[0]);
             return docs;
         }
@@ -87,9 +83,9 @@ export function main() {
             docs[0].resource.relations['liesWithin'] = ['3'];
 
             ci = new ConstraintIndexer([
-                { path: 'resource.relations.liesWithin' } ,
-                { path: 'resource.relations.isRecordedIn' },
-                { path: 'resource.identifier', string: true },
+                { path: 'resource.relations.liesWithin', type: 'contain' } ,
+                { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                { path: 'resource.identifier', type: 'match' }
             ]);
             ci.put(docs[0]);
             return docs;
@@ -112,7 +108,7 @@ export function main() {
             ];
 
             ci = new ConstraintIndexer([
-                { path: 'resource.relations.liesWithin' }
+                { path: 'resource.relations.liesWithin', type: 'contain' }
             ]);
             ci.put(docs[0]);
 
@@ -126,7 +122,7 @@ export function main() {
             ];
 
             ci = new ConstraintIndexer([
-                { path: 'resource.identifier', string: true }
+                { path: 'resource.identifier', type: 'match' }
             ]);
             ci.put(docs[0]);
             return docs;
@@ -168,9 +164,7 @@ export function main() {
 
         it('ask for one existing index and one nonexisting index', () => {
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.identifier' }
-            ]);
+            ci = new ConstraintIndexer([{ path: 'resource.identifier', type: 'contain' }]);
 
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([ ]);
@@ -204,7 +198,7 @@ export function main() {
 
         it('update docs where the relations change', () => {
 
-            let doc = docWithMultipleConstraints()[0];
+            const doc = docWithMultipleConstraints()[0];
 
             doc.resource.relations['isRecordedIn'] = ['4'];
             doc.resource.relations['liesWithin'] = ['5'];
@@ -234,9 +228,7 @@ export function main() {
             ];
             docs[0].resource.relations['liesWithin'] = ['3'];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.relations.liesWithin' } ,
-            ]);
+            ci = new ConstraintIndexer([{ path: 'resource.relations.liesWithin', type: 'contain' }]);
             ci.put(docs[0]);
             ci.put(docs[1]);
 
@@ -252,9 +244,7 @@ export function main() {
             ];
             docs[0]['_conflicts'] = ['1-other'];
 
-            ci = new ConstraintIndexer([
-                { path: '_conflicts', boolean: true } ,
-            ]);
+            ci = new ConstraintIndexer([{ path: '_conflicts', type: 'exist' }]);
             ci.put(docs[0]);
             ci.put(docs[1]);
 
@@ -263,6 +253,17 @@ export function main() {
             expect(ci.get('_conflicts', 'UNKNOWN'))
                 .toEqual([item('2')]);
         });
+
+        it('throw error if type is undefined', () => {
+
+            expect(() => {new ConstraintIndexer([{ path: 'testpath' }])}).toThrow();
+        });
+
+        it('throw error if type is unknown', () => {
+
+            expect(() => {new ConstraintIndexer([{ path: 'testpath', type: 'unknown' }])}).toThrow();
+        });
+
 
         // TODO update docs where doc is new
 

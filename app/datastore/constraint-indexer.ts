@@ -20,6 +20,9 @@ export class ConstraintIndexer {
 
     constructor(private pathsDefinitions) {
 
+        const validationError = ConstraintIndexer.validatePathsDefinitions(pathsDefinitions);
+        if (validationError) throw validationError;
+
         this.setUp();
     }
 
@@ -74,20 +77,25 @@ export class ConstraintIndexer {
             return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
         }
 
-        // TODO use type instead of boolean or string or array (default)
-        if (pathDef.boolean) {
-            // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
-            if (doc.resource.type == 'Project') {
-                this.addToIndex(doc, pathDef.path, 'UNKNOWN');
-            } else {
-                this.addToIndex(doc, pathDef.path, 'KNOWN');
-            }
-        } else if (pathDef.string) {
-            this.addToIndex(doc, pathDef.path, elForPath);
-        } else {
-            for (let target of elForPath) {
-                this.addToIndex(doc, pathDef.path, target);
-            }
+        switch(pathDef.type) {
+            case 'exist':
+                // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
+                if (doc.resource.type == 'Project') {
+                    this.addToIndex(doc, pathDef.path, 'UNKNOWN');
+                } else {
+                    this.addToIndex(doc, pathDef.path, 'KNOWN');
+                }
+                break;
+
+            case 'match':
+                this.addToIndex(doc, pathDef.path, elForPath);
+                break;
+
+            case 'contain':
+                for (let target of elForPath) {
+                    this.addToIndex(doc, pathDef.path, target);
+                }
+                break;
         }
     }
 
@@ -106,6 +114,18 @@ export class ConstraintIndexer {
             date: ChangeHistoryUtil.getLastModified(doc).date,
             identifier: doc.resource['identifier']
         };
+    }
+
+    private static validatePathsDefinitions(pathsDefinitions): string {
+
+        const types = ['match', 'contain', 'exist'];
+
+        for (let pathsDefinition of pathsDefinitions) {
+            if (!pathsDefinition.type) return 'paths definition type is undefined';
+            if (types.indexOf(pathsDefinition.type) == -1) return 'invalid paths definition type';
+        }
+
+        return undefined;
     }
 
     private setUp() {

@@ -67,7 +67,6 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                 if (files) {
                     files.forEach(file => {
                         if (!fs.statSync(path + file).isDirectory()) {
-                            // fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file)); // TODO what is this for?
                             const blob = this.converter.convert(fs.readFileSync(path + file));
 
                             promises.push(

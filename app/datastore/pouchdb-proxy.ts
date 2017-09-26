@@ -3,14 +3,7 @@
  */
 export class PouchdbProxy {
 
-    constructor(private rdy: Promise<any>) {
-
-    }
-
-    public switchDb(rdy: Promise<any>) { // TODO remove unused
-
-        this.rdy = rdy;
-    }
+    constructor(private rdy: Promise<any>) {}
 
     public ready() {
 

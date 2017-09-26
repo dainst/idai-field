@@ -130,11 +130,9 @@ export class PouchdbManager {
 
         let promise = Promise.resolve();
         if (remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create) {
-            promise = promise.then(() => {
-                return db.destroy().then(() => {
-                    db = this.createPouchDBObject(name);
-                });
-            });
+            promise = db.destroy().then(() =>
+                    db = this.createPouchDBObject(name)
+                );
         }
 
         return promise

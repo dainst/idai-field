@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
 import {FulltextIndexer} from "./fulltext-indexer";
 import {DocumentCache} from "./document-cache";
+const remote = require('electron').remote;
 
 @Injectable()
 /**
@@ -116,10 +117,32 @@ export class PouchdbManager {
         return this.createPouchDBObject(dbName).destroy();
     }
 
+    /**
+     * Creates a new database. Unless specified specifically
+     * with remote.getGlobal('switches').destroy_before_create set to true,
+     * a possible existing database with the specified name will get used
+     * and not overwritten.
+     *
+     */
     public createDb(name: string, doc) {
 
-        return this.createPouchDBObject(name).destroy()
-            .then(() => this.createPouchDBObject(name).put(doc));
+        let db = this.createPouchDBObject(name);
+
+        let promise = Promise.resolve();
+        if (remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create) {
+            promise = promise.then(() => {
+                return db.destroy().then(() => {
+                    db = this.createPouchDBObject(name);
+                });
+            });
+        }
+
+        return promise
+            .then(() => db.get(name)
+                // create project only if it does not exist,
+                // which can happen if the db already existed
+                .catch(() => db.put(doc))
+            );
     }
 
     private index() {

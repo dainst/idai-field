@@ -51,12 +51,16 @@ console.log('Using config file: ' + global.configPath);
 // OTHER GLOBALS --
 
 global.switches = {
-    prevent_reload: false
+    prevent_reload: false,
+    destroy_before_create: false
 };
 
 if (configSourcePath.indexOf('config.test.json') != -1) { // is environment 'test'
     global.switches.prevent_reload = true;
+    global.switches.destroy_before_create = true;
 }
+
+
 
 // -- OTHER GLOBALS
 

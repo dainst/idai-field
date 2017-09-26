@@ -139,15 +139,16 @@ export class ImageGridComponent {
         this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
             this.query.types = imageTypeNames;
             return this.datastore.find(this.query);
-        }).catch(msgWithParams => this.messages.add(msgWithParams)
-        ).then(documents => {
+        }).catch(errWithParams => {
+            console.error('ERROR with find using query', this.query);
+            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
+        }).then(documents => {
+            if (!documents) return;
+
             this.documents = documents as IdaiFieldImageDocument[];
             ImageGridComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
             this.calcGrid();
-        }).catch(errWithParams => {
-            console.error('ERROR with find using query', this.query);
-            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
         });
     }
 

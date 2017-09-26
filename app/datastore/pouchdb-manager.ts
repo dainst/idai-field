@@ -105,12 +105,6 @@ export class PouchdbManager {
         return this.dbProxy;
     }
 
-    // TODO remove and use destroyDb
-    public destroy(): Promise<any> {
-
-        return this.getDb().ready().then(db => db.destroy())
-    }
-
     /**
      * Destroys the db named dbName, if it is not the currently selected active database
      *

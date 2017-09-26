@@ -50,9 +50,9 @@ export function main() {
 
         afterEach(
             (done) => {
-                pouchdbManager.destroy()
+                new PouchDB('testdb').destroy()
                     .then(() => new PouchDB('testdb2').destroy())
-                    .then(()=>done());
+                    .then(() => done());
             }, 5000
         );
 

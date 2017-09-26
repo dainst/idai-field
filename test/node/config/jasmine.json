@@ -5,6 +5,7 @@
   ],
   "helpers": [
     "../../node_modules/reflect-metadata/Reflect.js",
+    "../../node_modules/pouchdb/dist/pouchdb.js",
     "helpers/**/*.js"
   ],
   "stopSpecOnExpectationFailure": false,

@@ -17,6 +17,7 @@ import {PouchDbFsImagestore} from '../../app/imagestore/pouch-db-fs-imagestore';
 
 import fs = require('fs');
 import rimraf = require('rimraf');
+import PouchDB = require('pouchdb');
 import {PouchdbManager} from '../../app/datastore/pouchdb-manager';
 import {DocumentCache} from '../../app/datastore/document-cache';
 
@@ -58,7 +59,7 @@ describe('PouchDbFsImagestore', () => {
 
     afterEach(done => {
         rimraf(storeProjectPath, () => {
-            manager.destroy().then(done);
+            return new PouchDB('unittest').destroy().then(done);
         });
     });
 

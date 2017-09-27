@@ -69,6 +69,7 @@ describe('settings --', function() {
 
         DocumentViewPage.clickEditDocument();
         DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');
         DoceditPage.clickConfirmDeleteInModal();
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
     });

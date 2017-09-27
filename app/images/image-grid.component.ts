@@ -173,7 +173,9 @@ export class ImageGridComponent {
 
             this.rows = result['rows'];
             for (let msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
+                // do not display a msg to the user via messages because there may be two much messages
+                // the user will get black images that indicate that something is wrong
+                console.error("error from calcGrid:",msgWithParams);
             }
         });
     }

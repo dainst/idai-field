@@ -78,6 +78,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME: string = 'images/error/duplicatefilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES: string = 'images/error/duplicatefilenames';
+    public static IMAGES_NOT_FOUND: string = 'images/error/notfound';
 
     // Imagestore Package
 
@@ -424,6 +425,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES]={
             content: "Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen " +
                 " Dateinamen bereits existieren: {0}",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_NOT_FOUND]={
+            content: "Ein oder mehrere Bilder konnten nicht gefunden werden.",
             level: 'danger',
             params: [],
             hidden: false

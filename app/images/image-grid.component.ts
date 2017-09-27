@@ -177,6 +177,12 @@ export class ImageGridComponent {
                 // the user will get black images that indicate that something is wrong
                 console.error("error from calcGrid:",msgWithParams);
             }
+            if (result['msgsWithParams'] &&
+                result['msgsWithParams'].length &&
+                result['msgsWithParams'].length > 0) {
+
+                this.messages.add([M.IMAGES_NOT_FOUND]);
+            }
         });
     }
 

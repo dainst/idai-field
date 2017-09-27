@@ -18,7 +18,6 @@ import {M} from '../../m';
     selector: 'layer-map',
     templateUrl: './layer-map.html'
 })
-
 /**
  * @author Thomas Kleinke
  */

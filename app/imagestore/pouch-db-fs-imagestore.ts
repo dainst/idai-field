@@ -2,16 +2,15 @@ import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {BlobMaker} from './blob-maker';
 import {Converter} from './converter';
-import {M} from '../m';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 
+@Injectable()
 /**
  * A hybrid image store that uses the file system to store the original images
  * but keeps thumbnails as PouchDB attachments in order to be able to sync them.
  */
-@Injectable()
 export class PouchDbFsImagestore implements Imagestore {
 
     private projectPath: string = undefined;
@@ -39,7 +38,7 @@ export class PouchDbFsImagestore implements Imagestore {
                     fs.mkdirSync(imagestorePath);
                 } catch(error) {
                     this.projectPath = undefined;
-                    return reject([M.IMAGESTORE_ERROR_INVALID_PATH, imagestorePath]);
+                    return reject([ImagestoreErrors.INVALID_PATH]);
                 }
             }
 
@@ -50,7 +49,7 @@ export class PouchDbFsImagestore implements Imagestore {
                     fs.mkdirSync(this.projectPath);
                 } catch(error) {
                     this.projectPath = undefined;
-                    return reject([M.IMAGESTORE_ERROR_INVALID_PATH, this.projectPath]);
+                    return reject([ImagestoreErrors.INVALID_PATH]);
                 }
             }
 
@@ -61,8 +60,7 @@ export class PouchDbFsImagestore implements Imagestore {
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
-     * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
+     * @param documentExists
      */
     public create(key: string, data: ArrayBuffer, documentExists: boolean = false): Promise<any> {
 
@@ -89,7 +87,7 @@ export class PouchDbFsImagestore implements Imagestore {
 
             if (data == undefined) {
                 console.error('data read was undefined for', key, 'thumbnails was', thumb);
-                return Promise.reject([M.IMAGESTORE_ERROR_READ, key]);
+                return Promise.reject([ImagestoreErrors.EMPTY]);
             }
             return this.blobMaker.makeBlob(data, sanitizeAfter);
 
@@ -104,8 +102,6 @@ export class PouchDbFsImagestore implements Imagestore {
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
-     * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
      */
     public update(key: string, data: ArrayBuffer): Promise<any> {
 
@@ -114,8 +110,6 @@ export class PouchDbFsImagestore implements Imagestore {
 
     /**
      * @param key the identifier for the data to be removed
-     * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
      */
     public remove(key: string): Promise<any> {
 
@@ -128,7 +122,8 @@ export class PouchDbFsImagestore implements Imagestore {
                     .then(() => resolve())
                     .catch(err => {
                         console.error(err);
-                        return reject([M.IMAGESTORE_ERROR_DELETE, key])
+                        console.error(key);
+                        return reject([ImagestoreErrors.GENERIC_ERROR])
                     });
             })
         });
@@ -141,7 +136,8 @@ export class PouchDbFsImagestore implements Imagestore {
             fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: flag}, (err) => {
                 if (err) {
                     console.error(err);
-                    reject([M.IMAGESTORE_ERROR_WRITE, key]);
+                    console.error(key);
+                    reject([ImagestoreErrors.GENERIC_ERROR]);
                 }
                 else {
                     const buffer = this.converter.convert(data);
@@ -165,7 +161,8 @@ export class PouchDbFsImagestore implements Imagestore {
                     }).then(() => resolve()
                     ).catch(err => {
                         console.error(err);
-                        reject([M.IMAGESTORE_ERROR_WRITE, key])
+                        console.error(key);
+                        reject([ImagestoreErrors.GENERIC_ERROR])
                     });
                 }
             });

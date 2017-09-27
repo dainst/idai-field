@@ -64,8 +64,15 @@ export class ImagePickerComponent {
         this.imageGridBuilder.calcGrid(
             this.imageDocuments, this.numberOfColumns, this.el.nativeElement.children[0].clientWidth).then(result => {
             this.rows = result['rows'];
-            for (let msgWithParams of result['msgsWithParams']) {
-                this.messages.add(msgWithParams);
+
+            for (let errWithParams of result.errsWithParams) {
+                console.error(errWithParams);
+            }
+            if (result.errsWithParams &&
+                result.errsWithParams.length &&
+                result.errsWithParams.length > 0) {
+
+                this.messages.add([M.IMAGES_N_NOT_FOUND]);
             }
         });
     }

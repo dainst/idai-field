@@ -21,6 +21,7 @@ export abstract class ReadImagestore {
      * @returns {Promise<string>} Promise that returns the blob url.
      *   Rejects with
      *     [NOT_FOUND] - in case image is missing
+     *     [EMPTY] - in case the retrieved image data is undefined
      */
     abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string>;
 }

@@ -10,13 +10,21 @@ export abstract class Imagestore extends ReadImagestore {
 
     abstract getPath(): string;
 
+    /**
+     * @param imagestorePath
+     * @param projectName
+     *   Rejects with
+     *     [INVALID_PATH] - in case of invalid path
+     */
     abstract setPath(imagestorePath: string, projectName: string): Promise<any>;
 
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
+     * @param documentExists
      * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
+     *   Rejects with
+     *     [GENERIC_ERROR] - in case of error
      */
     abstract create(key: string, data: ArrayBuffer, documentExists?: boolean): Promise<any>;
 
@@ -24,14 +32,16 @@ export abstract class Imagestore extends ReadImagestore {
      * @param key the identifier for the data
      * @param data the binary data to be stored
      * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
+     *    Rejects with
+     *     [GENERIC_ERROR] - in case of error
      */
     abstract update(key: string, data: ArrayBuffer): Promise<any>;
 
     /**
      * @param key the identifier for the data to be removed
      * @returns {Promise<any>} resolve -> (),
-     *   reject -> the error message
+     *   Rejects with
+     *     [GENERIC_ERROR] - in case of error
      */
     abstract remove(key: string): Promise<any>;
 }

@@ -2,19 +2,16 @@ import {Component, OnChanges, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {Messages} from 'idai-components-2/messages';
 import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {M} from '../m';
 
 @Component({
     selector: 'thumbnail-view',
     moduleId: module.id,
     templateUrl: './thumbnail-view.html'
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -29,8 +26,7 @@ export class ThumbnailViewComponent implements OnChanges {
     constructor(
         private imagestore: Imagestore,
         private datastore: Datastore,
-        private router: Router,
-        private messages: Messages
+        private router: Router
     ) {}
 
     public selectImage(documentToJumpTo: Document) {

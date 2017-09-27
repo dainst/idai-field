@@ -15,7 +15,7 @@
 
     <div class="row bg-light">
         <div class="col-sm-12 py-2">
-            <search-bar [showFiltersMenu]="false" [hidden]="selected.length"
+            <search-bar [q]="imagesState.getQuery().q" [showFiltersMenu]="false" [hidden]="selected.length"
                         (onQueryStringChanged)="setQueryString($event)">
             </search-bar>
 

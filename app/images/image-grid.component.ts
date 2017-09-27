@@ -13,6 +13,7 @@ import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../common/image-type-utility';
+import {ImagesState} from './images-state';
 import {M} from '../m';
 
 @Component({
@@ -33,7 +34,6 @@ export class ImageGridComponent {
     private imageGridBuilder: ImageGridBuilder;
     private imageTool: ImageTool;
 
-    private query: Query = { q: '' };
     private documents: IdaiFieldImageDocument[];
 
     private nrOfColumns = 4;
@@ -55,11 +55,14 @@ export class ImageGridComponent {
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
         private settingsService: SettingsService,
-        private imageTypeUtility: ImageTypeUtility
+        private imageTypeUtility: ImageTypeUtility,
+        private imagesState: ImagesState
     ) {
 
         this.imageTool = new ImageTool();
         this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
+
+        if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
 
         this.fetchDocuments();
     }
@@ -76,7 +79,7 @@ export class ImageGridComponent {
 
     public setQueryString(q: string) {
 
-        this.query.q = q;
+        this.imagesState.getQuery().q = q;
         this.fetchDocuments();
     }
 
@@ -148,11 +151,13 @@ export class ImageGridComponent {
      */
     private fetchDocuments() {
 
+        const query: Query = this.imagesState.getQuery();
+
         this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
-            this.query.types = imageTypeNames;
-            return this.datastore.find(this.query);
+            query.types = imageTypeNames;
+            return this.datastore.find(query);
         }).catch(errWithParams => {
-            console.error('ERROR with find using query', this.query);
+            console.error('ERROR with find using query', query);
             if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
         }).then(documents => {
             if (!documents) return;

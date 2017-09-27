@@ -14,6 +14,7 @@ import {DropAreaComponent} from './drop-area.component';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
 import {UploadStatus} from './upload-status';
+import {ImagesState} from './images-state';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {UploadStatus} from './upload-status';
         UploadModalComponent
     ],
     providers: [
-        UploadStatus
+        UploadStatus,
+        ImagesState
     ]
 })
 

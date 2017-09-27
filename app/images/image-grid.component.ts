@@ -41,6 +41,11 @@ export class ImageGridComponent {
     private selected: IdaiFieldImageDocument[] = [];
     private resourceIdentifiers: string[] = [];
 
+    // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
+    private calcGridOnResizeRunning = false;
+    // to be able to reset the timeout on multiple onResize calls
+    private calcGridOnResizeTimeoutRef = undefined;
+
     public constructor(
         private router: Router,
         private datastore: Datastore,
@@ -77,7 +82,14 @@ export class ImageGridComponent {
 
     public onResize() {
 
-        this.calcGrid();
+        clearTimeout(this.calcGridOnResizeTimeoutRef);
+        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
+            // we just jump out and do not store the recalc request. this could possibly be improved
+            if (this.calcGridOnResizeRunning) return;
+
+            this.calcGridOnResizeRunning = true;
+            this.calcGrid().then(() => this.calcGridOnResizeRunning = false);
+        }, 500);
     }
 
     public getIdentifier(id: string): string {
@@ -155,8 +167,10 @@ export class ImageGridComponent {
     private calcGrid() {
 
         this.rows = [];
-        this.imageGridBuilder.calcGrid(
+
+        return this.imageGridBuilder.calcGrid(
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
+
             this.rows = result['rows'];
             for (let msgWithParams of result['msgsWithParams']) {
                 this.messages.add(msgWithParams);

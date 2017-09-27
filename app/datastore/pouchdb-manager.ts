@@ -166,7 +166,7 @@ export class PouchdbManager {
     private createPouchDBObject(name: string): any {
 
         this.db = new PouchDB(name);
-        console.log('PouchDB is using adapter', this.db.adapter);
+        console.debug('PouchDB is using adapter', this.db.adapter);
         return this.db;
     }
 

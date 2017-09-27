@@ -6,6 +6,8 @@ import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {AppState} from '../app-state';
+import {ImagestoreErrors} from '../imagestore/imagestore-errors';
+import {M} from '../m';
 
 const app = require('electron').remote.app;
 
@@ -85,7 +87,13 @@ export class SettingsService {
         this.appState.setImagestorePath(settings.imagestorePath);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject())
-            .catch(msgWithParams => this.messages.add(msgWithParams))
+            .catch(errWithParams => {
+                if (errWithParams.length > 0 && errWithParams[0] == ImagestoreErrors.INVALID_PATH) {
+                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
+                } else {
+                    console.error("something went wrong with imagestore.setPath",errWithParams);
+                }
+            })
             .then(() => this.storeSettings());
     }
 

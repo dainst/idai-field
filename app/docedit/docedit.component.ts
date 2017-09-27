@@ -318,7 +318,9 @@ export class DoceditComponent {
             .then(isImageType => {
                 if (isImageType) {
                     if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
-                    return this.imagestore.remove(document.resource.id);
+                    return this.imagestore.remove(document.resource.id).catch(() => {
+                        return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
+                    })
                 } else {
                     return Promise.resolve();
                 }

@@ -7,14 +7,12 @@ import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {M} from '../m';
 
 @Component({
     selector: 'thumbnail-view',
     moduleId: module.id,
     templateUrl: './thumbnail-view.html'
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira

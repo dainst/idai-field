@@ -78,7 +78,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME: string = 'images/error/duplicatefilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES: string = 'images/error/duplicatefilenames';
-    public static IMAGES_NOT_FOUND: string = 'images/error/notfound';
+    public static IMAGES_ONE_NOT_FOUND: string = 'images/error/one_notfound';
+    public static IMAGES_N_NOT_FOUND: string = 'images/error/notfound';
 
     // Imagestore Package
 
@@ -429,8 +430,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGES_NOT_FOUND]={
-            content: "Ein oder mehrere Bilder konnten nicht gefunden werden.",
+        this.msgs[M.IMAGES_ONE_NOT_FOUND]={
+            content: "Das Bild konnten nicht gefunden werden.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_N_NOT_FOUND]={
+            content: "Einige Bilder konnten nicht gefunden werden.",
             level: 'danger',
             params: [],
             hidden: false

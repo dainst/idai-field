@@ -48,6 +48,7 @@ import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
 import {UploadModalComponent} from './import/upload-modal.component';
+import {ImportModule} from './import/import-module';
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -65,14 +66,14 @@ let pconf = undefined;
         IdaiMessagesModule,
         routing,
         IdaiWidgetsModule,
-        WidgetsModule
+        WidgetsModule,
+        ImportModule
     ],
     declarations: [
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
         ProjectsComponent,
-        ImportComponent,
         ExportComponent,
         UploadModalComponent
     ],

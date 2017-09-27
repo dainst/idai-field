@@ -1,9 +1,22 @@
 <div class="modal-body p-0">
 
     <ng-template #deleteModal let-c="close">
-        <div class="modal-body">Möchten Sie die Ressource wirklich löschen?</div>
+        <div class="modal-header">
+            <h4 class="modal-title">Ressource löschen?</h4>
+        </div>
+        <div class="modal-body">
+            <div id="confirm-delete-info">
+                Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
+            </div>
+            <div class="input-group">
+                <input id="delete-resource-input" type="text" class="form-control"
+                       [(ngModel)]="confirmDeletionIdentifier"/>
+            </div>
+        </div>
         <div class="modal-footer">
-            <button type="button" id="delete-resource-confirm" class="btn btn-danger" (click)="c('delete')">
+            <button id="delete-resource-confirm" class="btn btn-danger" type="button"
+                    [ngClass]="{ 'disabled': confirmDeletionIdentifier != document.resource.identifier }"
+                    (click)="confirmDeletionIdentifier != document.resource.identifier || c('delete')">
                 Löschen
             </button>
             <button type="button" id="delete-resource-cancel" class="btn btn-secondary" (click)="c('cancel')">

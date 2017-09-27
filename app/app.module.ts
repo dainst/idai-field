@@ -14,11 +14,8 @@ import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
-import {ImportComponent} from './import/import.component';
 import {ExportComponent} from './export/export.component';
-import {Importer} from './import/importer';
 import {Exporter} from './export/exporter';
-import {RelationsCompleter} from './import/relations-completer';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
@@ -47,7 +44,7 @@ import {ConflictResolvingExtension} from './datastore/conflict-resolving-extensi
 import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
-import {UploadModalComponent} from './import/upload-modal.component';
+
 import {ImportModule} from './import/import-module';
 const remote = require('electron').remote;
 
@@ -74,8 +71,7 @@ let pconf = undefined;
         NavbarComponent,
         TaskbarComponent,
         ProjectsComponent,
-        ExportComponent,
-        UploadModalComponent
+        ExportComponent
     ],
     providers: [
         AppState,
@@ -178,14 +174,9 @@ let pconf = undefined;
             deps: [ConfigLoader, ReadDatastore]
         },
         { provide: MD, useClass: M},
-        Importer,
         Exporter,
-        RelationsCompleter,
         ImageTypeUtility,
         ViewUtility
-    ],
-    entryComponents: [
-        UploadModalComponent
     ],
     bootstrap: [ AppComponent ]
 })

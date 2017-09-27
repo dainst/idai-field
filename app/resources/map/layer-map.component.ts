@@ -154,6 +154,8 @@ export class LayerMapComponent extends MapComponent {
                             resolve(imgContainer);
                         });
                     }
+                }, () => {
+                    console.error("makeLayerForImageResource, original image not found in imagestore for document", document);
                 });
         });
     }

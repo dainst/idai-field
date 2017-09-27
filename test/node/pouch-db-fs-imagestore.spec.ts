@@ -1,5 +1,4 @@
-import {M} from '../../app/m';
-
+import {ImagestoreErrors} from '../../app/imagestore/imagestore-errors';
 /**
  * @author Sebastian Cuy
  */
@@ -129,7 +128,7 @@ describe('PouchDbFsImagestore', () => {
                                 done();
                             })
                             .catch(err => {
-                                expect(err[0]).toEqual(M.IMAGESTORE_ERROR_READ);
+                                expect(err[0]).toEqual(ImagestoreErrors.NOT_FOUND);
 
                                 fs.readFile(storeProjectPath + 'test_remove', (err) => {
                                     expect(err).toBeTruthy();

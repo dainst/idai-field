@@ -172,16 +172,16 @@ export class ImageGridComponent {
             this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
 
             this.rows = result['rows'];
-            for (let msgWithParams of result['msgsWithParams']) {
+            for (let msgWithParams of result.errsWithParams) {
                 // do not display a msg to the user via messages because there may be two much messages
                 // the user will get black image which allows to identify which thumbs are missing
                 console.error("error from calcGrid:", msgWithParams);
             }
-            if (result['msgsWithParams'] &&
-                result['msgsWithParams'].length &&
-                result['msgsWithParams'].length > 0) {
+            if (result.errsWithParams &&
+                result.errsWithParams.length &&
+                result.errsWithParams.length > 0) {
 
-                this.messages.add([M.IMAGES_NOT_FOUND]);
+                this.messages.add([M.IMAGES_N_NOT_FOUND]);
             }
         });
     }

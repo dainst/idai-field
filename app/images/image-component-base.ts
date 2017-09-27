@@ -37,9 +37,9 @@ export class ImageComponentBase {
                             // read thumb
                             .then(() => this.imagestore.read(doc.resource.id, false, true))
                             .then(url => this.image.thumbSrc = url)
-                            .catch(msgWithParams => {
+                            .catch(() => {
                                 this.image.imgSrc = BlobMaker.blackImg;
-                                this.messages.add(msgWithParams);
+                                this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
                             });
                     }
                 },

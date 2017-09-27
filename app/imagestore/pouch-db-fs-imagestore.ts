@@ -5,6 +5,7 @@ import {Converter} from './converter';
 import {M} from '../m';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {ImagestoreErrors} from './imagestore-errors';
 
 /**
  * A hybrid image store that uses the file system to store the original images
@@ -69,15 +70,15 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     /**
-     * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
-     * @param key must be an identifier of an existing file in the mediastore.
+     * Implements {@link ReadImagestore#read}
+     *
+     * @param key
      * @param sanitizeAfter
-     * @param boolean image will be loaded as thumb, default: true
-     * @return {Promise<string>} Promise that returns the blob url.
-     *  In case of error the promise gets rejected with msgWithParams.
-     *  File not found errors are not thrown when an original is requested
-     *  (thumb == false) because missing files in the filesystem can be a
-     *  normal result of syncing.
+     * @param thumb image will be loaded as thumb, default: true
+     *
+     *   File not found errors are not thrown when an original is requested
+     *   (thumb == false) because missing files in the filesystem can be a
+     *   normal result of syncing.
      */
     public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string> {
 
@@ -91,11 +92,12 @@ export class PouchDbFsImagestore implements Imagestore {
                 return Promise.reject([M.IMAGESTORE_ERROR_READ, key]);
             }
             return this.blobMaker.makeBlob(data, sanitizeAfter);
+
         }).catch(err => {
             // missing file is ok for originals
             if (err.code == 'ENOENT' && !thumb) return Promise.resolve('');
-            console.error("PouchDbFsImagestore#read",err);
-            return Promise.reject([M.IMAGESTORE_ERROR_READ, key]);
+
+            return Promise.reject([ImagestoreErrors.NOT_FOUND]);
         });
     }
 

@@ -4,6 +4,11 @@ import {ImageContainer} from "../imagestore/image-container";
 import {BlobMaker} from "../imagestore/blob-maker";
 import {Imagestore} from "../imagestore/imagestore";
 
+export interface ImageGridBuilderResult {
+    rows: any;
+    errsWithParams: any;
+}
+
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -32,7 +37,7 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): Promise<any> {
+    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): Promise<ImageGridBuilderResult> {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -117,9 +122,9 @@ export class ImageGridBuilder {
             this.imagestore.read(document.resource.id).then(url => {
                 if (this.showAllAtOnce) resolve({cell: cell});
                 cell.imgSrc = url;
-            }).catch(msgWithParams => {
+            }).catch(errWithParams => {
                 cell.imgSrc = BlobMaker.blackImg;
-                resolve({cell: cell, msgWithParams: msgWithParams});
+                resolve({cell: cell, errWithParams: errWithParams});
             });
         })
     }
@@ -129,16 +134,16 @@ export class ImageGridBuilder {
         return Promise.all(rowPromises).then(
             rows => {
                 const rows_ = [];
-                const msgsWithParams = [];
+                const errsWithParams = [];
                 rows.forEach(row => {
                     const row_ = [];
                     (row as any).forEach(cell => {
-                        if (cell.msgWithParams) msgsWithParams.push(cell.msgWithParams);
+                        if (cell.errWithParams) errsWithParams.push(cell.errWithParams);
                         row_.push(cell.cell);
                     });
                     rows_.push(row_);
                 });
-                return {rows: rows_, msgsWithParams: msgsWithParams};
+                return {rows: rows_, errsWithParams: errsWithParams};
             }
         );
     }

@@ -7,6 +7,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {M} from '../m';
 
 @Component({
     selector: 'thumbnail-view',
@@ -55,11 +56,16 @@ export class ThumbnailViewComponent implements OnChanges {
                         imageContainer.imgSrc = url;
                         this.images.push(imageContainer);
                     }
-                }).catch(msgWithParams => {
+                }).catch(() => {
                     if (!this.isLoaded(id)) {
                         imageContainer.imgSrc = BlobMaker.blackImg;
                         this.images.push(imageContainer);
-                        this.messages.add(msgWithParams);
+
+                        // do not display a message directly to the user, because possibly there are too many thumbs
+                        // shown with thumbnail view and the messages would quickly accumulate. Instead, the visible
+                        // cue to the user that something is wrong is simply that the images are displayed black
+                        console.error("thumbnail view component, " +
+                            "a thumbnail could not be found for document.resource.id",imageContainer.document.resource.id);
                     }
                 });
         }

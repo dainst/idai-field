@@ -66,9 +66,9 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
-        ResourcesPage.clickDeleteInModal();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('2');
+        DoceditPage.clickConfirmDeleteInModal();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });

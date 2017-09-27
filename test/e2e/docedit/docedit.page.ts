@@ -150,6 +150,11 @@ export class DoceditPage {
         return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
     };
 
+    public static getConfirmDeletionInputField() {
+
+        return element(by.id('delete-resource-input'));
+    }
+
     // type in
 
     /**
@@ -174,4 +179,9 @@ export class DoceditPage {
         common.typeIn(this.getRelationEl(groupIndex, pickerIndex)
             .element(by.tagName('input')), input);
     };
+
+    public static typeInIdentifierInConfirmDeletionInputField(identifier) {
+
+        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
+    }
 }

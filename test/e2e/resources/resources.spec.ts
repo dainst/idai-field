@@ -25,15 +25,15 @@ describe('resources --', () => {
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.clickEditMainTypeResource();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newTrench');
-        ResourcesPage.clickDeleteInModal();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('newTrench');
+        DoceditPage.clickConfirmDeleteInModal();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
         ResourcesPage.clickEditMainTypeResource();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('trench1');
-        ResourcesPage.clickDeleteInModal();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
+        DoceditPage.clickConfirmDeleteInModal();
 
         browser.wait(EC.stalenessOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBoxSubstitute'))), delays.ECWaitTime);
@@ -54,9 +54,9 @@ describe('resources --', () => {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
-        ResourcesPage.clickDeleteDocument();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
-        ResourcesPage.clickDeleteInModal();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
+        DoceditPage.clickConfirmDeleteInModal();
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 

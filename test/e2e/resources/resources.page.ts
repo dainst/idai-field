@@ -46,16 +46,6 @@ export class ResourcesPage {
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
     };
 
-    public static clickDeleteDocument() {
-
-        common.click(element(by.id('document-edit-button-delete-document')));
-    };
-
-    public static clickDeleteInModal() {
-
-        common.click(element(by.id('delete-resource-confirm')));
-    };
-
     public static clickChooseTypeFilter(typeName) {
 
         common.click(element(by.id('searchfilter')));
@@ -211,11 +201,6 @@ export class ResourcesPage {
         return element(by.css('#create-document-button .type-icon'));
     }
 
-    public static getConfirmDeletionInputField() {
-
-        return element(by.id('delete-resource-input'));
-    }
-
 
     // sequences
 
@@ -286,9 +271,4 @@ export class ResourcesPage {
 
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     };
-
-    public static typeInIdentifierInConfirmDeletionInputField(identifier) {
-
-        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
-    }
 }

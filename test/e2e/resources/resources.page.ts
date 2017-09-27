@@ -208,7 +208,7 @@ export class ResourcesPage {
 
     public static getCreateDocumentButtonTypeIcon() {
 
-        return element(by.id('#create-document-button .type-icon'));
+        return element(by.css('#create-document-button .type-icon'));
     }
 
     public static getConfirmDeletionInputField() {

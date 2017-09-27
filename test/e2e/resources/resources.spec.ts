@@ -26,11 +26,13 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.clickEditMainTypeResource();
         ResourcesPage.clickDeleteDocument();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newTrench');
         ResourcesPage.clickDeleteInModal();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
         ResourcesPage.clickEditMainTypeResource();
         ResourcesPage.clickDeleteDocument();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('trench1');
         ResourcesPage.clickDeleteInModal();
 
         browser.wait(EC.stalenessOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
@@ -53,6 +55,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.clickEditDocument();
         ResourcesPage.clickDeleteDocument();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
         ResourcesPage.clickDeleteInModal();
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });

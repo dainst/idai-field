@@ -211,6 +211,11 @@ export class ResourcesPage {
         return element(by.id('#create-document-button .type-icon'));
     }
 
+    public static getConfirmDeletionInputField() {
+
+        return element(by.id('delete-resource-input'));
+    }
+
 
     // sequences
 
@@ -281,4 +286,9 @@ export class ResourcesPage {
 
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     };
+
+    public static typeInIdentifierInConfirmDeletionInputField(identifier) {
+
+        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
+    }
 }

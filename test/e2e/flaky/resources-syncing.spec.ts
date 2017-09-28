@@ -165,7 +165,7 @@ xdescribe('resources/syncing --', function() {
 
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
-                NavbarPage.clickNavigateToSettings();
+                NavbarPage.performNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
                 return browser.sleep(delays.shortRest * 10);
             });

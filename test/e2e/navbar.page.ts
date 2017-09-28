@@ -27,9 +27,11 @@ export class NavbarPage {
         return common.click(element.all(by.css('.nav-link')).get(4));
     };
 
-    public static clickNavigateToSettings() {
+    public static performNavigateToSettings() {
 
-        return common.click(element(by.id('settings-button')));
+        common.click(element(by.id('settings-dropdown'))).then(() =>
+            common.click(element(by.id('settings-button')))
+        );
     };
 
     public static clickConflictsButton() {

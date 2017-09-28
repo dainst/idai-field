@@ -33,27 +33,50 @@
     <li class="nav-item">
         <projects></projects>
     </li>
-    <li class="nav-item" id="import-button">&nbsp;&nbsp;
-        <a href="#" routerLink="/import">
-            <span class="mdi mdi-package-down"
-                  ngbTooltip="Dokumente importieren"
-                  placement="bottom" container="body"></span>
-        </a>
+
+    <li class="nav-item">
+        <div ngbDropdown>
+            <span class="mdi mdi-format-list-bulleted"
+                  id="settings-dropdown"
+                  ngbDropdownToggle>
+            </span>
+            <div ngbDropdownMenu aria-labelledby="settings-dropdown">
+
+                <button id="settings-button"
+                        class="dropdown-item"
+                        routerLink="/settings"
+                        ngbTooltip="Einstellungen"
+                        placement="left">
+                    <span class="mdi mdi-settings"
+                          container="body"></span>
+                </button>
+                <button id="import-button"
+                        class="dropdown-item"
+                        routerLink="/import"
+                        ngbTooltip="Dokumente importieren"
+                        placement="left">
+                    <span class="mdi mdi-package-down"
+                           container="body"></span>
+                </button>
+                <button id="export-button"
+                        class="dropdown-item"
+                        routerLink="/export"
+                        ngbTooltip="Dokumente exportieren"
+                        placement="left">
+                    <span class="mdi mdi-package-up"
+                           container="body"></span>
+                </button>
+            </div>
+            <span>&nbsp;&nbsp;</span>
+        </div>
     </li>
-    <li class="nav-item" id="export-button">&nbsp;&nbsp;
-        <a href="#" routerLink="/export">
-            <span class="mdi mdi-package-up"
-                  ngbTooltip="Dokumente exportieren"
-                  placement="bottom" container="body"></span>
-        </a>
-    </li>
-    <li class="nav-item" id="settings-button">&nbsp;&nbsp;
-        <a href="#" routerLink="/settings">
-            <span class="mdi mdi-settings"
-                  ngbTooltip="Einstellungen"
-                  placement="bottom" container="body"></span>
-        </a>
-    </li>
+
+
+
+
+
+
+
 </ul>
 
 

@@ -80,7 +80,7 @@ describe('resources/project --', function() {
 
         browser.sleep(delays.shortRest * 20);
 
-        NavbarPage.clickNavigateToSettings();
+        NavbarPage.performNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);

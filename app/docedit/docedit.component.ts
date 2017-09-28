@@ -47,6 +47,8 @@ export class DoceditComponent {
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
     public dialog: NgbModalRef;
 
+    public isRecordedInResourcesCount: number;
+
     // used in template
     public showBackButton: boolean = true;
 
@@ -95,6 +97,9 @@ export class DoceditComponent {
         this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(this.document);
 
         this.persistenceManager.setOldVersions([this.document]);
+
+        this.datastore.find({ q: '', constraints: { 'resource.relations.isRecordedIn': document.resource.id }})
+            .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
     }
 
     public setActiveTab(activeTabName: string) {

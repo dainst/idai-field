@@ -5,6 +5,13 @@
             <h4 class="modal-title">Ressource löschen?</h4>
         </div>
         <div class="modal-body">
+            <div *ngIf="isRecordedInResourcesCount == 1" class="text-center alert alert-warning">
+                Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
+            </div>
+            <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning">
+                Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
+                ebenfalls entfernt werden.
+            </div>
             <div id="confirm-delete-info">
                 Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
             </div>

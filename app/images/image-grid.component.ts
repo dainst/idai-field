@@ -15,6 +15,7 @@ import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../common/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
+import {ImageGridComponentBase} from '../common/image-grid-component-base';
 
 @Component({
     moduleId: module.id,
@@ -29,28 +30,21 @@ import {M} from '../m';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageGridComponent {
+export class ImageGridComponent extends ImageGridComponentBase {
 
-    private imageGridBuilder: ImageGridBuilder;
     private imageTool: ImageTool;
 
-    private documents: IdaiFieldImageDocument[];
-
-    private nrOfColumns = 4;
-    private rows = [];
+    private static NR_OF_COLUMNS: number = 4;
     private selected: IdaiFieldImageDocument[] = [];
     private resourceIdentifiers: string[] = [];
 
-    // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
-    private calcGridOnResizeRunning = false;
-    // to be able to reset the timeout on multiple onResize calls
-    private calcGridOnResizeTimeoutRef = undefined;
+
 
     public constructor(
         private router: Router,
         private datastore: Datastore,
         private modalService: NgbModal,
-        private messages: Messages,
+        messages: Messages,
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
@@ -58,13 +52,22 @@ export class ImageGridComponent {
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
     ) {
+        super(
+            new ImageGridBuilder(imagestore, true),
+            messages,
+            ImageGridComponent.NR_OF_COLUMNS
+        );
 
         this.imageTool = new ImageTool();
-        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
 
         if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
 
         this.fetchDocuments();
+    }
+
+    public onResize() {
+
+        this._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     public refreshGrid() {
@@ -81,18 +84,6 @@ export class ImageGridComponent {
 
         this.imagesState.getQuery().q = q;
         this.fetchDocuments();
-    }
-
-    public onResize() {
-
-        clearTimeout(this.calcGridOnResizeTimeoutRef);
-        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
-            // we just jump out and do not store the recalc request. this could possibly be improved
-            if (this.calcGridOnResizeRunning) return;
-
-            this.calcGridOnResizeRunning = true;
-            this.calcGrid().then(() => this.calcGridOnResizeRunning = false);
-        }, 500);
     }
 
     public getIdentifier(id: string): string {
@@ -165,29 +156,7 @@ export class ImageGridComponent {
             this.documents = documents as IdaiFieldImageDocument[];
             ImageGridComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
-            this.calcGrid();
-        });
-    }
-
-    private calcGrid() {
-
-        this.rows = [];
-
-        return this.imageGridBuilder.calcGrid(
-            this.documents,this.nrOfColumns, this.el.nativeElement.children[0].clientWidth).then(result=>{
-
-            this.rows = result['rows'];
-            for (let msgWithParams of result.errsWithParams) {
-                // do not display a msg to the user via messages because there may be two much messages
-                // the user will get black image which allows to identify which thumbs are missing
-                console.error("error from calcGrid:", msgWithParams);
-            }
-            if (result.errsWithParams &&
-                result.errsWithParams.length &&
-                result.errsWithParams.length > 0) {
-
-                this.messages.add([M.IMAGES_N_NOT_FOUND]);
-            }
+            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });
     }
 

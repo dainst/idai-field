@@ -8,6 +8,7 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypeUtility} from '../common/image-type-utility';
 import {M} from '../m';
+import {ImageGridComponentBase} from '../common/image-grid-component-base';
 
 @Component({
     selector: 'image-picker',
@@ -19,26 +20,29 @@ import {M} from '../m';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent {
+export class ImagePickerComponent extends ImageGridComponentBase {
 
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
-    public rows = [];
 
-    private imageGridBuilder: ImageGridBuilder;
     private query: Query = { q: '' };
-    private imageDocuments: Array<IdaiFieldImageDocument>;
-    private numberOfColumns: number = 3;
+
+    private static NR_OF_COLUMNS: number = 3;
 
     constructor(
         public activeModal: NgbActiveModal,
-        private messages: Messages,
+        messages: Messages,
         private datastore: Datastore,
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility,
         imagestore: Imagestore,
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
+        super(
+            new ImageGridBuilder(imagestore, true),
+            messages,
+            ImagePickerComponent.NR_OF_COLUMNS
+        );
+
         this.fetchDocuments(this.query);
     }
 
@@ -55,26 +59,7 @@ export class ImagePickerComponent {
 
     public onResize() {
 
-        this.calcGrid();
-    }
-
-    private calcGrid() {
-
-        this.rows = [];
-        this.imageGridBuilder.calcGrid(
-            this.imageDocuments, this.numberOfColumns, this.el.nativeElement.children[0].clientWidth).then(result => {
-            this.rows = result['rows'];
-
-            for (let errWithParams of result.errsWithParams) {
-                console.error(errWithParams);
-            }
-            if (result.errsWithParams &&
-                result.errsWithParams.length &&
-                result.errsWithParams.length > 0) {
-
-                this.messages.add([M.IMAGES_N_NOT_FOUND]);
-            }
-        });
+        this._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     /**
@@ -101,8 +86,8 @@ export class ImagePickerComponent {
             return this.datastore.find(this.query);
         }).catch(msgWithParams => this.messages.add(msgWithParams)
         ).then(documents => {
-            this.imageDocuments = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-            this.calcGrid();
+            this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
+            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
         })
         .catch(errWithParams => {
             console.error('error in find with query', this.query);

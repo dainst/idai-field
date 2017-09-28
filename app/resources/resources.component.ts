@@ -462,7 +462,8 @@ export class ResourcesComponent implements AfterViewChecked {
             return this.datastore.get(mainTypeDocumentId)
                 .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument)
                 .catch(() => {
-                    console.warn('Failed to restore last selected main type document from resources state');
+                    this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
+                    this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name, undefined);
                     this.selectedMainTypeDocument = this.mainTypeDocuments[0];
                     return Promise.resolve();
                 })
@@ -585,7 +586,8 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.populateMainTypeDocuments();
     }
 
-    private scrollToDocument(doc: IdaiFieldDocument) : boolean {
+    private scrollToDocument(doc: IdaiFieldDocument): boolean {
+
         let element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });

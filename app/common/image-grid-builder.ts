@@ -124,6 +124,10 @@ export class ImageGridBuilder {
                 cell.imgSrc = url;
             }).catch(errWithParams => {
                 cell.imgSrc = BlobMaker.blackImg;
+
+                if (errWithParams && errWithParams.length == 1) {
+                    errWithParams.push(document.resource.id);
+                }
                 resolve({cell: cell, errWithParams: errWithParams});
             });
         })

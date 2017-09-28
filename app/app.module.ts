@@ -14,8 +14,6 @@ import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
-import {ExportComponent} from './export/export.component';
-import {Exporter} from './export/exporter';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
@@ -46,6 +44,7 @@ import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
 
 import {ImportModule} from './import/import-module';
+import {ExportModule} from './export/export.module';
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -64,14 +63,14 @@ let pconf = undefined;
         routing,
         IdaiWidgetsModule,
         WidgetsModule,
-        ImportModule
+        ImportModule,
+        ExportModule,
     ],
     declarations: [
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
-        ProjectsComponent,
-        ExportComponent
+        ProjectsComponent
     ],
     providers: [
         AppState,
@@ -174,7 +173,6 @@ let pconf = undefined;
             deps: [ConfigLoader, ReadDatastore]
         },
         { provide: MD, useClass: M},
-        Exporter,
         ImageTypeUtility,
         ViewUtility
     ],

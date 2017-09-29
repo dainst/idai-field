@@ -41,7 +41,6 @@
     <div class="image-grid" (window:resize)="onResize($event)">
         <image-grid
                 [rows]="rows"
-                [resourceIdentifiers]="resourceIdentifiers"
                 [selected]="selected"
                 (onClick)="select($event)"
                 (onDoubleClick)="navigateTo($event)"

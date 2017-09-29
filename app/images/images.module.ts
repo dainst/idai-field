@@ -15,8 +15,7 @@ import {ImageTypePickerModalComponent} from './image-type-picker-modal.component
 import {UploadModalComponent} from '../image-widgets/upload-modal.component';
 import {UploadStatus} from '../image-widgets/upload-status';
 import {ImagesState} from './images-state';
-import {ImageGridComponent} from "../image-widgets/image-grid.component";
-
+import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
 
 @NgModule({
     imports: [
@@ -25,7 +24,8 @@ import {ImageGridComponent} from "../image-widgets/image-grid.component";
         imagesRouting,
         WidgetsModule,
         IdaiDocumentsModule,
-        IdaiWidgetsModule
+        IdaiWidgetsModule,
+        ImageWidgetsModule
     ],
     declarations: [
         ImagesComponent,
@@ -33,10 +33,7 @@ import {ImageGridComponent} from "../image-widgets/image-grid.component";
         ImageViewComponent,
         GeoreferenceViewComponent,
         LinkModalComponent,
-        DropAreaComponent,
-        ImageTypePickerModalComponent,
-        UploadModalComponent,
-        ImageGridComponent,
+        ImageTypePickerModalComponent
     ],
     entryComponents: [
         LinkModalComponent,

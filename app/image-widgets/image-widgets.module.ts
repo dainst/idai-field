@@ -8,6 +8,9 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {ImagePickerComponent} from './image-picker.component';
 import {ThumbnailViewComponent} from "./thumbnail-view.component";
+import {ImageGridComponent} from "./image-grid.component";
+import {UploadModalComponent} from "./upload-modal.component";
+import {DropAreaComponent} from "./drop-area.component";
 
 @NgModule({
     imports: [
@@ -22,15 +25,20 @@ import {ThumbnailViewComponent} from "./thumbnail-view.component";
     declarations: [
         ImagePickerComponent,
         ThumbnailViewComponent,
+        ImageGridComponent,
+        UploadModalComponent,
+        DropAreaComponent
     ],
     providers: [
     ],
     exports: [
         ImagePickerComponent,
-        ThumbnailViewComponent
+        ThumbnailViewComponent,
+        ImageGridComponent, // export necessary?
     ],
     entryComponents: [
-        ImagePickerComponent
+        ImagePickerComponent,
+        UploadModalComponent
     ]
 })
 

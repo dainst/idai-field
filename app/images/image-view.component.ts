@@ -12,7 +12,6 @@ import {ObjectUtil} from '../util/object-util';
 import {BlobMaker} from "../imagestore/blob-maker";
 import {M} from "../m";
 import {ImageContainer} from "../imagestore/image-container";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 
 @Component({
     moduleId: module.id,
@@ -41,9 +40,7 @@ export class ImageViewComponent implements OnInit {
 
     ngOnInit() {
 
-        this.getRouteParams((id) => {
-            this.fetchDocAndImage(id);
-        });
+        this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
     }
 
@@ -79,32 +76,35 @@ export class ImageViewComponent implements OnInit {
         return !ObjectUtil.isEmpty(this.image.document.resource.relations);
     }
 
-    private fetchDocAndImage(id) {
+    protected fetchDocAndImage() {
 
-        if (!this.imagestore.getPath()) return this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.datastore.get(id).then(
-            doc => {
-                this.image.document = doc as IdaiFieldImageDocument;
-                if (doc.resource.filename) {
-                    // read original (empty if not present)
-                    this.imagestore.read(doc.resource.id, false, false)
-                        .then(url => {
-                            if (!url || url == '') this.originalNotFound = true;
-                            this.image.imgSrc = url;
-                        })
-                        // read thumb
-                        .then(() => this.imagestore.read(doc.resource.id, false, true))
-                        .then(url => this.image.thumbSrc = url)
-                        .catch(() => {
-                            this.image.imgSrc = BlobMaker.blackImg;
-                            this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
-                        });
-                }
-            },
-            () => {
-                console.error("Fatal error: could not load document for id ", id);
-            });
+        this.getRouteParams(function(id) {
+            this.id = id;
+            this.datastore.get(id).then(
+                doc => {
+                    this.image.document = doc;
+                    if (doc.resource.filename) {
+                        // read original (empty if not present)
+                        this.imagestore.read(doc.resource.id, false, false)
+                            .then(url => {
+                                if (!url || url == '') this.originalNotFound = true;
+                                this.image.imgSrc = url;
+                            })
+                            // read thumb
+                            .then(() => this.imagestore.read(doc.resource.id, false, true))
+                            .then(url => this.image.thumbSrc = url)
+                            .catch(() => {
+                                this.image.imgSrc = BlobMaker.blackImg;
+                                this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
+                            });
+                    }
+                },
+                () => {
+                    console.error("Fatal error: could not load document for id ", id);
+                });
+        }.bind(this));
     }
 
     private getRouteParams(callback) {

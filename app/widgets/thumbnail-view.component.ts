@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input} from '@angular/core';
+import {Component, OnChanges, Input, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
@@ -6,6 +6,9 @@ import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {ImageGridComponentBase} from "../common/image-grid-component-base";
+import {ImageGridBuilder} from "../common/image-grid-builder";
+import {Messages} from 'idai-components-2/messages';
 
 @Component({
     selector: 'thumbnail-view',
@@ -17,62 +20,51 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ThumbnailViewComponent implements OnChanges {
+export class ThumbnailViewComponent extends ImageGridComponentBase implements OnChanges {
 
     @Input() imageIds: string[];
 
-    public images = [];
+    private static NR_OF_COLUMNS: number = 1;
 
     constructor(
         private imagestore: Imagestore,
         private datastore: Datastore,
-        private router: Router
-    ) {}
+        messages: Messages,
+        private router: Router,
+        private el: ElementRef
+    ) {
+        super(
+            new ImageGridBuilder(imagestore, true),
+            messages,
+            ThumbnailViewComponent.NR_OF_COLUMNS
+        );
+    }
 
     public selectImage(documentToJumpTo: Document) {
 
         this.router.navigate(['images', documentToJumpTo.resource.id, 'show', 'relations']);
     }
 
+    public onResize() {
+
+        if (!this.documents || this.documents.length == 0) return;
+
+        this._onResize(this.el.nativeElement.children[0].clientWidth);
+    }
+
     ngOnChanges() {
 
         if (!this.imageIds) return;
 
-        this.images = [];
-
+        this.documents = [];
+        let promise = Promise.resolve();
         for (let id of this.imageIds) {
-            let imageContainer: ImageContainer;
-
-            this.datastore.get(id)
+            promise = promise.then(() => this.datastore.get(id)
                 .then(doc => {
-                    imageContainer = { document: <IdaiFieldImageDocument> doc };
-                    return this.imagestore.read(imageContainer.document.resource.id);
-                }).then(url => {
-                    if (!this.isLoaded(id)) {
-                        imageContainer.imgSrc = url;
-                        this.images.push(imageContainer);
-                    }
-                }).catch(() => {
-                    if (!this.isLoaded(id)) {
-                        imageContainer.imgSrc = BlobMaker.blackImg;
-                        this.images.push(imageContainer);
-
-                        // do not display a message directly to the user, because possibly there are too many thumbs
-                        // shown with thumbnail view and the messages would quickly accumulate. Instead, the visible
-                        // cue to the user that something is wrong is simply that the images are displayed black
-                        console.error("thumbnail view component, " +
-                            "a thumbnail could not be found for document.resource.id",imageContainer.document.resource.id);
-                    }
-                });
-        }
-    }
-
-    private isLoaded(resourceId: string): boolean {
-
-        for (let imageContainer of this.images) {
-            if (imageContainer.document.resource.id == resourceId) return true;
+                    this.documents.push(doc as IdaiFieldImageDocument);
+                }))
         }
 
-        return false;
+        promise.then(() => this.calcGrid(this.el.nativeElement.children[0].clientWidth));
     }
 }

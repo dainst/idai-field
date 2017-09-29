@@ -78,6 +78,8 @@ electron.app.on('ready', function createWindow() {
     mainWindow = new electron.BrowserWindow({
         width: screenWidth >= 1680 ? 1680 : 1280,
         height: screenHeight >= 1050 ? 1050 : 800,
+        minWidth: 996,
+        minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
             webSecurity: false

@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute,Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {ImageComponentBase} from './image-component-base';
 import {Imagestore} from '../imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../common/view-utility';
 import {ObjectUtil} from '../util/object-util';
+import {BlobMaker} from "../imagestore/blob-maker";
+import {M} from "../m";
+import {ImageContainer} from "../imagestore/image-container";
 
 @Component({
     moduleId: module.id,
@@ -19,20 +21,21 @@ import {ObjectUtil} from '../util/object-util';
 /**
  * @author Daniel de Oliveira
  */
-export class ImageViewComponent extends ImageComponentBase implements OnInit {
+export class ImageViewComponent implements OnInit {
+
+    protected image: ImageContainer = {};
+    protected activeTab: string;
 
     constructor(
-        route: ActivatedRoute,
-        datastore: Datastore,
-        imagestore: Imagestore,
-        messages: Messages,
+        private route: ActivatedRoute,
+        private datastore: Datastore,
+        private imagestore: Imagestore,
+        private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private viewUtility: ViewUtility
-    ) {
-        super(route, datastore, imagestore, messages);
-    }
+    ) { }
 
     ngOnInit() {
 
@@ -70,5 +73,40 @@ export class ImageViewComponent extends ImageComponentBase implements OnInit {
     public hasRelations() {
 
         return !ObjectUtil.isEmpty(this.image.document.resource.relations);
+    }
+
+    protected fetchDocAndImage() {
+
+        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+
+        this.getRouteParams(function(id) {
+            this.id = id;
+            this.datastore.get(id).then(
+                doc => {
+                    this.image.document = doc;
+                    if (doc.resource.filename) {
+                        // read original (empty if not present)
+                        this.imagestore.read(doc.resource.id, false, false)
+                            .then(url => this.image.imgSrc = url)
+                            // read thumb
+                            .then(() => this.imagestore.read(doc.resource.id, false, true))
+                            .then(url => this.image.thumbSrc = url)
+                            .catch(() => {
+                                this.image.imgSrc = BlobMaker.blackImg;
+                                this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
+                            });
+                    }
+                },
+                () => {
+                    console.error("Fatal error: could not load document for id ", id);
+                });
+        }.bind(this));
+    }
+
+    private getRouteParams(callback) {
+        this.route.params.forEach((params: Params) => {
+            this.activeTab = params['tab'];
+            callback(params['id']);
+        });
     }
 }

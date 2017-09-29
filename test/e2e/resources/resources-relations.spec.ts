@@ -31,7 +31,7 @@ describe('resources/relations --', () => {
         expect(DoceditPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         expect(DoceditPage.getRelationButtonText(0, 0, 0)).toEqual('2');
     });
 
@@ -53,7 +53,7 @@ describe('resources/relations --', () => {
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditPage.clickRelationDeleteButtonByIndices(1, 0, 0);
         DoceditPage.clickSaveDocument();

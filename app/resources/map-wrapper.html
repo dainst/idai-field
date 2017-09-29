@@ -36,13 +36,21 @@
 
     <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
         <document-view [document]="selectedDocument" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
-                       (onDeselect)="resourcesComponent.deselect()" (onEdit)="resourcesComponent.startEdit($event)">
+                       (onDeselect)="resourcesComponent.deselect()">
+
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">>
                 <ngb-tab id="document-view-fields-tab">
                     <ng-template ngbTabTitle>
                         <span class="mdi mdi-format-list-bulleted"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
+
+                        <button class="btn btn-link"
+                                 id="document-view-button-edit-document"
+                                 (click)="resourcesComponent.startEdit(selectedDocument)">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+
                         <description-view [document]="selectedDocument"></description-view>
                         <fields-view [resource]="selectedDocument.resource"></fields-view>
                     </ng-template>

@@ -68,7 +68,7 @@ describe('widgets/document-view', function() {
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditPage.clickAddRelationForGroupWithIndex(1);
         DoceditPage.typeInRelationByIndices(1, 0, '2');

@@ -143,7 +143,7 @@ xdescribe('resources/syncing --', function() {
         return createOneDocument(nr).then(document => {
             testDocument = document;
             ResourcesPage.clickSelectResource('testf' + nr);
-            return DocumentViewPage.clickEditDocument();
+            return DocumentViewPage.performEditDocument();
         }).then(() => {
             testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative';
             return updateTestDoc(testDocument);

@@ -207,7 +207,7 @@ describe('resources/syncing --', function() {
         return createOneDocument(nr).then(document => {
             testDocument = document;
             ResourcesPage.clickSelectResource('testf' + nr);
-            return DocumentViewPage.clickEditDocument();
+            return DocumentViewPage.performEditDocument();
         }).then(() => {
             testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
             return updateTestDoc(testDocument);
@@ -266,7 +266,7 @@ describe('resources/syncing --', function() {
 
             ResourcesPage.clickSelectResource('testf' + nr);
             ResourcesPage.clickSelectResource('testf' + nr);
-            DocumentViewPage.clickEditDocument();
+            DocumentViewPage.performEditDocument();
             DoceditPage.clickConflictsTab();
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();

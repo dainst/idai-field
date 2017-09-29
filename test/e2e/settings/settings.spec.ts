@@ -67,7 +67,7 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseMessage();
 
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');
         DoceditPage.clickConfirmDeleteInModal();

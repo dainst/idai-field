@@ -13,13 +13,19 @@
     </div>
 
     <div *ngIf="image.document" class="col-md-3 px-0 document-info">
-        <document-view [document]="image.document" (onDeselect)="deselect()" (onEdit)="startEdit($event)">
+        <document-view [document]="image.document" (onDeselect)="deselect()">
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">
                 <ngb-tab id="document-view-fields-tab">
                     <ng-template ngbTabTitle>
                         <span class="mdi mdi-format-list-bulleted"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
+                        <button class="btn btn-link"
+                                id="document-view-button-edit-document"
+                                (click)="startEdit(image.document)">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+
                         <description-view [document]="image.document"></description-view>
                         <georeference-view [document]="image.document"></georeference-view>
                         <fields-view [resource]="image.document.resource"></fields-view>

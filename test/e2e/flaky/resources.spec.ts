@@ -24,12 +24,12 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
 
         DoceditPage.clickSelectOption(60, 1); // TODO we should avoid working with magic numbers. let's use meaningful css selectors instead
         // DoceditPage.clickSaveDocument();
         // DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-        // DocumentViewPage.clickEditDocument();
+        // DocumentViewPage.performEditDocument();
         // DoceditPage.clickTypeSwitcherButton();
         // DoceditPage.clickTypeSwitcherOption('feature');
         // NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +

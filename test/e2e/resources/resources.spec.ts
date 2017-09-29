@@ -53,7 +53,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
         DoceditPage.clickConfirmDeleteInModal();
@@ -64,7 +64,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.typeInInputField('1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
     });
@@ -99,7 +99,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.typeInInputField('2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
@@ -111,7 +111,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.typeInInputField('2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
@@ -122,7 +122,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.typeInInputField('2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
@@ -160,7 +160,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
@@ -179,7 +179,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toEqual('2'));
-        DocumentViewPage.clickEditDocument();
+        DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-layer');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '

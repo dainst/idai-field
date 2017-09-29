@@ -8,6 +8,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {ImageGridComponentBase} from "../common/image-grid-component-base";
 
 @Component({
     selector: 'docedit-image-tab',
@@ -19,23 +20,25 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class DoceditImageTabComponent {
+export class DoceditImageTabComponent extends ImageGridComponentBase {
 
     @Input() document: IdaiFieldDocument;
 
-    private imageDocuments: IdaiFieldImageDocument[];
-    private imageGridBuilder: ImageGridBuilder;
-    private rows = [];
+    private static NR_OF_COLUMNS: number = 3;
 
     constructor(
         private imagestore: Imagestore,
         private el: ElementRef,
-        private messages: Messages,
+        messages: Messages,
         private datastore: IdaiFieldDatastore,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
-        this.imageGridBuilder = new ImageGridBuilder(imagestore, true);
+        super(
+            new ImageGridBuilder(imagestore, true),
+            messages,
+            DoceditImageTabComponent.NR_OF_COLUMNS
+        );
     }
 
     ngOnChanges() {
@@ -46,32 +49,17 @@ export class DoceditImageTabComponent {
         }
     }
 
-    private calcGrid() {
-
-        this.rows = [];
-        this.imageGridBuilder.calcGrid(this.imageDocuments, 3, this.el.nativeElement.children[0].clientWidth)
-            .then(result => {
-                this.rows = result['rows'];
-
-                if (result['msgsWithParams']) {
-                    for (let msgWithParams of result['msgsWithParams']) {
-                        this.messages.add(msgWithParams);
-                    }
-                }
-            });
-    }
-
     private loadImages() {
 
         const imageDocPromises = [];
-        this.imageDocuments = [];
+        this.documents = [];
         this.document.resource.relations['isDepictedIn'].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
         Promise.all(imageDocPromises).then(docs => {
-            this.imageDocuments = docs as Array<IdaiFieldImageDocument>;
-            this.calcGrid();
+            this.documents = docs as Array<IdaiFieldImageDocument>;
+            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });
     }
 
@@ -93,7 +81,9 @@ export class DoceditImageTabComponent {
 
     public onResize() {
 
-        this.calcGrid();
+        if (!this.documents || this.documents.length == 0) return; // TODO code duplicated - move it to _onResize
+
+        this._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     public openImagePicker() {

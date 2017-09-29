@@ -2,7 +2,7 @@
     <div *ngIf="image.document" class="col-md-9 px-0">
         <img *ngIf="image.imgSrc" [src]="image.imgSrc" style="width: 100%; height: 100%;">
         <div *ngIf="originalNotFound">
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info" role="alert" *ngIf="image.thumbSrc">
                 Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
             </div>
             <div class="d-flex align-items-center justify-content-center"

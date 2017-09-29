@@ -67,8 +67,12 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                 if (files) {
                     files.forEach(file => {
                         if (!fs.statSync(path + file).isDirectory()) {
-                            const blob = this.converter.convert(fs.readFileSync(path + file));
 
+                            // write original
+                            fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+
+                            // write thumb
+                            const blob = this.converter.convert(fs.readFileSync(path + file));
                             promises.push(
                                 db.get(file)
                                     .then(doc => db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg'))

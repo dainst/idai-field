@@ -23,13 +23,13 @@
              [class.selected]="selected.includes(cell['document'])">
 
             <div class="identifier"
-                 *ngIf="getIdentifier(resourceId) && cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
+                 *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                  [style.maxWidth.px]="cell['calculatedWidth']-15">
                 <span class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
                 <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-                      id="related-resource-{{resourceId}}"
-                      class="badge badge-info">
-                             <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+                      id="related-resource-{{cell['document'].id}}"
+                      class="badge badge-info related-resource-{{cell['document'].id}}">
+                             <span class="mdi mdi-link"></span> {{resourceId}}
                         </span>
             </div>
 

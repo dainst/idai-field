@@ -24,7 +24,7 @@ export class ImageGridComponent  {
 
     public getIdentifier(id: string): string {
 
-        if (!this.resourceIdentifiers || !(this.resourceIdentifiers.length > 0)) return undefined;
+        if (!this.resourceIdentifiers || (this.resourceIdentifiers.length < 1)) return undefined;
         return this.resourceIdentifiers[id];
     }
 }

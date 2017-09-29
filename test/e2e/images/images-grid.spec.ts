@@ -106,11 +106,13 @@ describe('images/image-grid --', function() {
             });
     });
 
-    it('connect a resource with an image in the grid view', () => {
+    xit('connect a resource with an image in the grid view', () => {
 
         const resourceId = 'tf1';
         ImagesGridPage.createDepictsRelation('testf1');
-        expect(ImagesGridPage.getCell(0).all(by.id('related-resource-'+resourceId)).first().isPresent()).toBeTruthy();
+        expect(ImagesGridPage.getCell(0)
+            .all(by.id('related-resource-'+resourceId))
+            .first().isPresent()).toBeTruthy();
     });
 
     it('cancel an image delete in the modal.', () => {

@@ -138,7 +138,7 @@ describe('resources/syncing --', function() {
 
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
-                NavbarPage.performNavigateToSettings();
+                NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
                 return browser.sleep(delays.shortRest * 10);
             });
@@ -190,7 +190,7 @@ describe('resources/syncing --', function() {
                 return updateTestDoc(testDocument);
             })
             .then(() => {
-                NavbarPage.performNavigateToSettings();
+                NavbarPage.clickNavigateToSettings();
                 NavbarPage.clickNavigateToExcavation();
                 browser.sleep(delays.shortRest * 10);
                 ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {

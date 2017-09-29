@@ -559,9 +559,9 @@ export class ResourcesComponent implements AfterViewChecked {
         this.editDocument(doc, 'conflicts');
     }
 
-    public startEdit(doc: IdaiFieldDocument) {
+    public startEdit(doc: IdaiFieldDocument, activeTabName?: string) {
 
-        this.editDocument(doc);
+        this.editDocument(doc, activeTabName);
     }
 
     public setScrollTarget(doc: IdaiFieldDocument) {

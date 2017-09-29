@@ -13,7 +13,7 @@ export class DocumentViewPage {
     // click
 
     public static clickRelation(relationIndex) {
-        
+
         this.clickRelationsTab();
         return element.all(by.css('#document-view-relations-tab-panel .relation-target')).get(relationIndex).click();
     };

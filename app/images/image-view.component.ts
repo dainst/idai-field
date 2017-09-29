@@ -56,19 +56,20 @@ export class ImageViewComponent implements OnInit {
         this.router.navigate(['images']);
     }
 
-    public startEdit(doc: IdaiFieldDocument) {
+    public startEdit(doc: IdaiFieldDocument, tabName: string) {
 
-        const detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
-        const detailModal = detailModalRef.componentInstance;
+        const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const doceditModalComponent = doceditModalRef.componentInstance;
 
-        detailModalRef.result.then(result => {
+        doceditModalRef.result.then(result => {
             if (result.document) this.image.document = result.document;
         }, closeReason => {
             this.documentEditChangeMonitor.reset();
             if (closeReason == 'deleted') this.deselect();
         });
 
-        detailModal.setDocument(doc);
+        doceditModalComponent.setDocument(doc);
+        doceditModalComponent.setActiveTab(tabName);
     }
 
     public hasRelations() {

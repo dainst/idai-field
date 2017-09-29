@@ -22,7 +22,7 @@
                     <ng-template ngbTabContent>
                         <button class="btn btn-link"
                                 id="document-view-button-edit-document"
-                                (click)="startEdit(image.document)">
+                                (click)="startEdit(image.document, 'fields')">
                             <span class="mdi mdi-pencil"></span>
                         </button>
 
@@ -37,6 +37,13 @@
                         <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
+
+                        <button class="btn btn-link"
+                                id="document-view-button-edit-document"
+                                (click)="startEdit(image.document, 'relations')">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+
                         <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
                         <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
                                         (onRelationTargetClicked)="jumpToRelationTarget($event)">

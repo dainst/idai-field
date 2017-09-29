@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input, ElementRef} from '@angular/core';
+import {Component, OnChanges, Input, ElementRef, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
@@ -26,6 +26,8 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
 
     private static NR_OF_COLUMNS: number = 1;
 
+    @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
+
     constructor(
         private imagestore: Imagestore,
         private datastore: Datastore,
@@ -50,6 +52,11 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
         if (!this.documents || this.documents.length == 0) return;
 
         this._onResize(this.el.nativeElement.children[0].clientWidth);
+    }
+
+    public clickRelation(document: Document) {
+
+        this.onRelationTargetClicked.emit(document);
     }
 
     ngOnChanges() {

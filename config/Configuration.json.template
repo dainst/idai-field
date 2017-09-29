@@ -89,7 +89,7 @@
                 "Photo",
                 "Drawing"
             ],
-            "visible": true
+            "visible": false
         },
         {
             "domain": [

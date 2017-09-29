@@ -9,7 +9,7 @@
 
             <div
                  [id]="'resource-' + cell['document'].resource.identifier"
-                 class="cell">
+                 class="cell" (click)="clickRelation(cell['document'])">
 
                 <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
                      [style.width.px]="cell['calculatedWidth']"

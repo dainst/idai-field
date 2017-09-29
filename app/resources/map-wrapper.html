@@ -105,7 +105,9 @@
                             Keine Bilder vorhanden.
                         </div>
                         <thumbnail-view *ngIf="selectedDocument.resource.relations['isDepictedIn']"
-                                        [imageIds]="selectedDocument.resource.relations['isDepictedIn']">
+                                        [imageIds]="selectedDocument.resource.relations['isDepictedIn']"
+                                        (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
+                                        'relations')">
                         </thumbnail-view>
                     </ng-template>
                 </ngb-tab>

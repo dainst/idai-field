@@ -17,7 +17,6 @@ import {ImageContainer} from "../imagestore/image-container";
     moduleId: module.id,
     templateUrl: './image-view.html'
 })
-
 /**
  * @author Daniel de Oliveira
  */
@@ -25,6 +24,8 @@ export class ImageViewComponent implements OnInit {
 
     protected image: ImageContainer = {};
     protected activeTab: string;
+
+    private originalNotFound = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -57,8 +58,8 @@ export class ImageViewComponent implements OnInit {
 
     public startEdit(doc: IdaiFieldDocument) {
 
-        var detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
-        var detailModal = detailModalRef.componentInstance;
+        const detailModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const detailModal = detailModalRef.componentInstance;
 
         detailModalRef.result.then(result => {
             if (result.document) this.image.document = result.document;
@@ -87,7 +88,10 @@ export class ImageViewComponent implements OnInit {
                     if (doc.resource.filename) {
                         // read original (empty if not present)
                         this.imagestore.read(doc.resource.id, false, false)
-                            .then(url => this.image.imgSrc = url)
+                            .then(url => {
+                                if (!url || url == '') this.originalNotFound = true;
+                                this.image.imgSrc = url;
+                            })
                             // read thumb
                             .then(() => this.imagestore.read(doc.resource.id, false, true))
                             .then(url => this.image.thumbSrc = url)

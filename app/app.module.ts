@@ -29,7 +29,7 @@ import {SettingsService} from './settings/settings-service';
 import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {ImageTypeUtility} from './common/image-type-utility';
+import {ImageTypeUtility} from './image-widgets/image-type-utility';
 import {ViewUtility} from './common/view-utility';
 import {PouchdbManager} from './datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
@@ -45,6 +45,7 @@ import {ProjectsComponent} from './projects.component';
 
 import {ImportModule} from './import/import-module';
 import {ExportModule} from './export/export.module';
+import {ImageWidgetsModule} from "./image-widgets/image-widgets.module";
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -63,6 +64,7 @@ let pconf = undefined;
         routing,
         IdaiWidgetsModule,
         WidgetsModule,
+        ImageWidgetsModule,
         ImportModule,
         ExportModule,
     ],

@@ -16,7 +16,7 @@ import {ViewUtility} from '../common/view-utility';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
-import {ImageTypeUtility} from '../common/image-type-utility';
+import {ImageTypeUtility} from '../image-widgets/image-type-utility';
 
 
 @Component({

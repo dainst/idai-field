@@ -1,7 +1,7 @@
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ImagesComponent} from './images.component';
-import {ImageGridComponent} from './image-grid.component';
+import {ImageOverviewComponent} from './image-overview.component';
 import {ImageViewComponent} from './image-view.component';
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: ImageGridComponent
+                component: ImageOverviewComponent
             },
             {
                 path: ':id/show',

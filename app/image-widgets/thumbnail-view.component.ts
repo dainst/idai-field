@@ -6,8 +6,8 @@ import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridComponentBase} from "../common/image-grid-component-base";
-import {ImageGridBuilder} from "../common/image-grid-builder";
+import {ImageGridComponentBase} from "./image-grid-component-base";
+import {ImageGridBuilder} from "./image-grid-builder";
 import {Messages} from 'idai-components-2/messages';
 
 @Component({

@@ -7,21 +7,20 @@ import {Datastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
-import {ImageGridBuilder} from '../common/image-grid-builder';
+import {ImageGridBuilder} from '../image-widgets/image-grid-builder';
 import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
-import {ImageTypeUtility} from '../common/image-type-utility';
+import {ImageTypeUtility} from '../image-widgets/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
-import {ImageGridComponentBase} from '../common/image-grid-component-base';
+import {ImageGridComponentBase} from '../image-widgets/image-grid-component-base';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-grid.html'
+    templateUrl: './image-overview.html'
 })
-
 /**
  * Displays images as a grid of tiles.
  *
@@ -30,15 +29,13 @@ import {ImageGridComponentBase} from '../common/image-grid-component-base';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageGridComponent extends ImageGridComponentBase {
+export class ImageOverviewComponent extends ImageGridComponentBase {
 
     private imageTool: ImageTool;
 
     private static NR_OF_COLUMNS: number = 4;
-    private selected: IdaiFieldImageDocument[] = [];
-    private resourceIdentifiers: string[] = [];
-
-
+    public selected: IdaiFieldImageDocument[] = [];
+    public resourceIdentifiers: string[] = [];
 
     public constructor(
         private router: Router,
@@ -55,7 +52,7 @@ export class ImageGridComponent extends ImageGridComponentBase {
         super(
             new ImageGridBuilder(imagestore, true),
             messages,
-            ImageGridComponent.NR_OF_COLUMNS
+            ImageOverviewComponent.NR_OF_COLUMNS
         );
 
         this.imageTool = new ImageTool();
@@ -84,11 +81,6 @@ export class ImageGridComponent extends ImageGridComponentBase {
 
         this.imagesState.getQuery().q = q;
         this.fetchDocuments();
-    }
-
-    public getIdentifier(id: string): string {
-
-        return this.resourceIdentifiers[id];
     }
 
     /**
@@ -154,7 +146,7 @@ export class ImageGridComponent extends ImageGridComponentBase {
             if (!documents) return;
 
             this.documents = documents as IdaiFieldImageDocument[];
-            ImageGridComponent.insertStub(this.documents);
+            ImageOverviewComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
             this.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });

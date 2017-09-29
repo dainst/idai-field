@@ -1,0 +1,45 @@
+<div *ngFor="let row of rows; let index = index">
+
+    <div *ngFor="let cell of row; let ind = ind"
+         class="cell-container"
+         [style.width.px]="cell['calculatedWidth'] + 1"
+         [style.height.px]="cell['calculatedHeight'] + 30">
+
+        <div *ngIf="cell['document'].id == 'droparea'"
+             class="droparea-container"
+             [style.width.px]="cell['calculatedWidth']"
+             [style.height.px]="cell['calculatedHeight']">
+            <drop-area
+                    (onImagesUploaded)="onImagesUploaded.emit()"
+                    (onUploadError)="onUploadError.emit($event)">
+            </drop-area>
+        </div>
+
+        <div *ngIf="cell['document'].id != 'droparea'"
+             (click)="onClick.emit(cell['document'])"
+             (dblclick)="onDoubleClick.emit(cell['document'])"
+             [id]="'resource-' + cell['document'].resource.identifier"
+             class="cell"
+             [class.selected]="selected.includes(cell['document'])">
+
+            <div class="identifier"
+                 *ngIf="getIdentifier(resourceId) && cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
+                 [style.maxWidth.px]="cell['calculatedWidth']-15">
+                <span class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
+                <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
+                      id="related-resource-{{resourceId}}"
+                      class="badge badge-info">
+                             <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+                        </span>
+            </div>
+
+            <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
+                 [style.width.px]="cell['calculatedWidth']"
+                 [style.height.px]="cell['calculatedHeight']">
+
+            <div class="title" [style.width.px]="cell['calculatedWidth']">
+                {{cell['document'].resource.shortDescription}}
+            </div>
+        </div>
+    </div>
+</div>

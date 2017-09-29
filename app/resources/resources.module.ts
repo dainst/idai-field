@@ -15,6 +15,7 @@ import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
 import {ResourcesState} from './resources-state';
 import {ResourcesStateSerializer} from './resources-state-serializer';
+import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import {ResourcesStateSerializer} from './resources-state-serializer';
         NgbModule,
         IdaiDocumentsModule,
         WidgetsModule,
+        ImageWidgetsModule,
         IdaiWidgetsModule,
         DoceditModule
     ],

@@ -1,14 +1,14 @@
 import {Component, ElementRef, Input} from '@angular/core';
-import {ImageGridBuilder} from '../common/image-grid-builder';
+import {ImageGridBuilder} from '../image-widgets/image-grid-builder';
 import {Imagestore} from '../imagestore/imagestore';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {ImagePickerComponent} from '../widgets/image-picker.component';
+import {ImagePickerComponent} from '../image-widgets/image-picker.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {ImageGridComponentBase} from "../common/image-grid-component-base";
+import {ImageGridComponentBase} from "../image-widgets/image-grid-component-base";
 
 @Component({
     selector: 'docedit-image-tab',

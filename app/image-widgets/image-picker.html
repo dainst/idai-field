@@ -17,6 +17,7 @@
         <image-grid
                 [rows]="rows"
                 [selected]="selectedDocuments"
+                [showLinkBadges]="false"
                 (onClick)="select($event)"
                 (onDoubleClick)="navigateTo($event)"
                 (onImagesUploaded)="refreshGrid()"

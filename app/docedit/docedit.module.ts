@@ -13,6 +13,7 @@ import {DoceditConflictsTabComponent} from './docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
+import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
         IdaiDocumentsModule,
         RouterModule,
         IdaiMessagesModule,
-        WidgetsModule
+        WidgetsModule,
+        ImageWidgetsModule
     ],
     declarations: [
         ConflictDeletedModalComponent,

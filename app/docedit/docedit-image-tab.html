@@ -7,32 +7,15 @@
     <div class="card-block">
 
         <div class="image-grid" (window:resize)="onResize($event)">
-            <div *ngFor="let row of rows; let index = index">
 
-                <div *ngFor="let cell of row; let ind = ind"
-                     class="cell-container"
-                     [style.width.px]="cell['calculatedWidth'] + 1"
-                     [style.height.px]="cell['calculatedHeight'] + 30">
 
-                    <div [id]="'resource-' + cell['document'].resource.identifier" class="cell">
-                        <div class="identifier"
-                             *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
-                             [style.maxWidth.px]="cell['calculatedWidth']-15">
-                            <span class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
-                        </div>
-
-                        <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
-                             [style.width.px]="cell['calculatedWidth']"
-                             [style.height.px]="cell['calculatedHeight']">
-
-                        <div class="title" [style.width.px]="cell['calculatedWidth']">
-                            {{cell['document'].resource.shortDescription}}
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+            <image-grid
+                    [rows]="rows"
+                    (onClick)="select($event)"
+                    [showLinkBadges]="false"
+                    (onDoubleClick)="navigateTo($event)"
+            >
+            </image-grid>
 
             <button type="button" id="create-depicts-relations-btn"
                     class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">Bild

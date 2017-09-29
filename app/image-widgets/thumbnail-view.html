@@ -1,26 +1,8 @@
 <div id="thumbnail-view" (window:resize)="onResize($event)">
-
-    <div *ngFor="let row of rows; let index = index">
-
-        <div *ngFor="let cell of row; let ind = ind"
-             class="cell-container"
-             [style.width.px]="cell['calculatedWidth'] + 1"
-             [style.height.px]="cell['calculatedHeight'] + 30">
-
-            <div
-                 [id]="'resource-' + cell['document'].resource.identifier"
-                 class="cell" (click)="clickRelation(cell['document'])">
-
-                <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
-                     [style.width.px]="cell['calculatedWidth']"
-                     [style.height.px]="cell['calculatedHeight']">
-
-                <div class="title" [style.width.px]="cell['calculatedWidth']">
-                    {{cell['document'].resource.shortDescription}}
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+    <image-grid
+            [rows]="rows"
+            [showLinkBadges]="false"
+            (onClick)="clickRelation($event)"
+    >
+    </image-grid>
 </div>

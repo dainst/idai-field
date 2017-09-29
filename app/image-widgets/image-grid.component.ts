@@ -16,6 +16,7 @@ export class ImageGridComponent  {
     @Input() rows = [];
     @Input() resourceIdentifiers: string[] = [];
     @Input() selected: IdaiFieldImageDocument[] = [];
+    @Input() showLinkBadges: boolean = true;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();

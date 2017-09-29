@@ -26,11 +26,13 @@
                  *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                  [style.maxWidth.px]="cell['calculatedWidth']-15">
                 <span class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
-                <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
+                <span *ngIf="showLinkBadges">
+                    <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
                       id="related-resource-{{cell['document'].id}}"
                       class="badge badge-info related-resource-{{cell['document'].id}}">
                              <span class="mdi mdi-link"></span> {{resourceId}}
-                        </span>
+                    </span>
+                </span>
             </div>
 
             <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"

@@ -7,7 +7,6 @@ import {Datastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
-import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
@@ -30,8 +29,6 @@ import {ImageGridUser} from '../image-widgets/image-grid-user';
  */
 export class ImageOverviewComponent extends ImageGridUser {
 
-    private imageTool: ImageTool;
-
     public selected: IdaiFieldImageDocument[] = [];
     public resourceIdentifiers: string[] = [];
 
@@ -48,8 +45,6 @@ export class ImageOverviewComponent extends ImageGridUser {
         private imagesState: ImagesState
     ) {
         super();
-
-        this.imageTool = new ImageTool();
 
         if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
 

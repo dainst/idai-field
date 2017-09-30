@@ -11,7 +11,7 @@ import {GeoreferenceViewComponent} from './georeference-view.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
 import {DropAreaComponent} from '../image-widgets/drop-area.component';
-import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
+import {ImageTypePickerModalComponent} from '../image-widgets/image-type-picker-modal.component';
 import {UploadModalComponent} from '../image-widgets/upload-modal.component';
 import {UploadStatus} from '../image-widgets/upload-status';
 import {ImagesState} from './images-state';
@@ -32,13 +32,10 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         ImageOverviewComponent,
         ImageViewComponent,
         GeoreferenceViewComponent,
-        LinkModalComponent,
-        ImageTypePickerModalComponent
+        LinkModalComponent
     ],
     entryComponents: [
-        LinkModalComponent,
-        ImageTypePickerModalComponent,
-        UploadModalComponent
+        LinkModalComponent
     ],
     providers: [
         UploadStatus,

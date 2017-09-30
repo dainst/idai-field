@@ -136,7 +136,6 @@ export class ImageOverviewComponent {
             if (!documents) return;
 
             this.documents = documents as IdaiFieldImageDocument[];
-            ImageOverviewComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
             this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });
@@ -219,16 +218,6 @@ export class ImageOverviewComponent {
                 () => resolve(),
                 msgWithParams => reject(msgWithParams)
             );
-        });
-    }
-
-    // insert stub document for first cell that will act as drop area for uploading images
-    private static insertStub(documents) {
-
-        documents.unshift(<IdaiFieldImageDocument>{
-            id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, filename: '', relations: {} }
         });
     }
 }

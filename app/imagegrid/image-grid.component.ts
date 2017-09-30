@@ -21,6 +21,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() resourceIdentifiers: string[] = [];
     @Input() selected: IdaiFieldImageDocument[] = [];
     @Input() showLinkBadges: boolean = true;
+    @Input() showDropArea: boolean = false;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
@@ -59,6 +60,7 @@ export class ImageGridComponent implements OnChanges {
     ngOnChanges(changes) {
 
         if (!changes['documents']) return;
+        if (this.showDropArea) this.insertStubForDropArea();
         this.calcGrid(this.clientWidth);
     }
 
@@ -105,5 +107,19 @@ export class ImageGridComponent implements OnChanges {
             this.messages.add([M.IMAGES_N_NOT_FOUND]);
             this.imagesNotFoundMessageDisplayed = true;
         }
+    }
+
+    // insert stub document for first cell that will act as drop area for uploading images
+    private insertStubForDropArea() {
+
+        if (this.documents &&
+            this.documents.length > 0 &&
+            this.documents[0].id == 'droparea') return;
+
+        this.documents.unshift(<IdaiFieldImageDocument>{
+            id: 'droparea',
+            resource: { identifier: '', shortDescription:'', type: '',
+                width: 1, height: 1, filename: '', relations: {} }
+        });
     }
 }

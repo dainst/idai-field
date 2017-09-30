@@ -1,6 +1,7 @@
 <div id="thumbnail-view" (window:resize)="onResize($event)">
-    <image-grid
-            [rows]="rows"
+    <image-grid #imageGrid
+            [nrOfColumns]="1"
+            [documents]="documents"
             [showLinkBadges]="false"
             (onClick)="clickRelation($event)"
     >

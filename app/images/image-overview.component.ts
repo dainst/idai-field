@@ -7,7 +7,6 @@ import {Datastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
-import {ImageGridBuilder} from '../image-widgets/image-grid-builder';
 import {ImageTool} from './image-tool';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
@@ -33,7 +32,6 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
 
     private imageTool: ImageTool;
 
-    private static NR_OF_COLUMNS: number = 4;
     public selected: IdaiFieldImageDocument[] = [];
     public resourceIdentifiers: string[] = [];
 
@@ -41,7 +39,7 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
         private router: Router,
         private datastore: Datastore,
         private modalService: NgbModal,
-        messages: Messages,
+        private messages: Messages,
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private el: ElementRef,
@@ -49,11 +47,7 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
     ) {
-        super(
-            new ImageGridBuilder(imagestore, true),
-            messages,
-            ImageOverviewComponent.NR_OF_COLUMNS
-        );
+        super();
 
         this.imageTool = new ImageTool();
 
@@ -64,7 +58,7 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
 
     public onResize() {
 
-        this._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     public refreshGrid() {
@@ -136,7 +130,7 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
 
         const query: Query = this.imagesState.getQuery();
 
-        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
+        return this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
             query.types = imageTypeNames;
             return this.datastore.find(query);
         }).catch(errWithParams => {
@@ -148,7 +142,7 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
             this.documents = documents as IdaiFieldImageDocument[];
             ImageOverviewComponent.insertStub(this.documents);
             this.cacheIdsOfConnectedResources(documents);
-            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });
     }
 
@@ -186,7 +180,10 @@ export class ImageOverviewComponent extends ImageGridComponentBase {
                 ).then(
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
-                )
+                ).then(() => {
+                    this.documents.splice(
+                        this.documents.indexOf(document), 1);
+                })
             }
 
             promise.then(

@@ -24,8 +24,6 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
 
     @Input() imageIds: string[];
 
-    private static NR_OF_COLUMNS: number = 1;
-
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
     constructor(
@@ -35,11 +33,7 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
         private router: Router,
         private el: ElementRef
     ) {
-        super(
-            new ImageGridBuilder(imagestore, true),
-            messages,
-            ThumbnailViewComponent.NR_OF_COLUMNS
-        );
+        super();
     }
 
     public selectImage(documentToJumpTo: Document) {
@@ -51,7 +45,7 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
 
         if (!this.documents || this.documents.length == 0) return;
 
-        this._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     public clickRelation(document: Document) {
@@ -72,6 +66,6 @@ export class ThumbnailViewComponent extends ImageGridComponentBase implements On
                 }))
         }
 
-        promise.then(() => this.calcGrid(this.el.nativeElement.children[0].clientWidth));
+        promise.then(() => this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth));
     }
 }

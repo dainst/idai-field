@@ -1,5 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {ImageGridBuilder, ImageGridBuilderResult} from "./image-grid-builder";
+import {M} from "../m";
+import {Messages} from 'idai-components-2/messages';
 
 @Component({
     selector: 'image-grid',
@@ -11,9 +14,10 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageGridComponent  {
+export class ImageGridComponent implements OnChanges {
 
-    @Input() rows = [];
+    @Input() nrOfColumns: number = 1;
+    @Input() documents: IdaiFieldImageDocument[];
     @Input() resourceIdentifiers: string[] = [];
     @Input() selected: IdaiFieldImageDocument[] = [];
     @Input() showLinkBadges: boolean = true;
@@ -23,9 +27,85 @@ export class ImageGridComponent  {
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
     @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
 
+    private clientWidth = 0;
+
+    // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
+    private calcGridOnResizeRunning = false;
+    // to be able to reset the timeout on multiple onResize calls
+    private calcGridOnResizeTimeoutRef = undefined;
+
+    // it should be avoided that while being in an image overview and thumbs are missing,
+    // that the missing images messages is shown more than once, as it would happen
+    // on a recalculation of the grid on resize.
+    // only if the user leaves the component and comes back again,
+    // the message would be displayed again.
+    private imagesNotFoundMessageDisplayed = false;
+
+    private rows = [];
+
+    constructor(
+        private imageGridBuilder: ImageGridBuilder,
+        private messages: Messages
+    ) {
+
+    }
+
     public getIdentifier(id: string): string {
 
         if (!this.resourceIdentifiers || (this.resourceIdentifiers.length < 1)) return undefined;
         return this.resourceIdentifiers[id];
+    }
+
+    ngOnChanges(changes) {
+
+        if (!changes['documents']) return;
+        this.calcGrid(this.clientWidth);
+    }
+
+    public calcGrid(clientWidth) {
+
+        this.clientWidth = clientWidth;
+        this.rows = [];
+        if (!this.documents) return;
+
+        return this.imageGridBuilder.calcGrid(
+            this.documents, this.nrOfColumns,
+            // this.el.nativeElement.children[0].
+            clientWidth).then(result => {
+
+                console.log("result",result);
+
+            this.rows = result['rows'];
+            for (let errWithParams of result.errsWithParams) {
+                // do not display a msg to the user via messages because there may be two much messages
+                // the user will get black image which allows to identify which thumbs are missing
+                console.error("error from calcGrid:", errWithParams);
+            }
+            this.showImagesNotFoundMessage(result);
+        });
+    }
+
+    public _onResize(width) {
+
+        clearTimeout(this.calcGridOnResizeTimeoutRef);
+        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
+            // we just jump out and do not store the recalc request. this could possibly be improved
+            if (this.calcGridOnResizeRunning) return;
+
+            this.calcGridOnResizeRunning = true;
+            this.calcGrid(width).then(() => this.calcGridOnResizeRunning = false);
+        }, 500);
+    }
+
+    private showImagesNotFoundMessage(result: ImageGridBuilderResult) {
+
+        if (result.errsWithParams &&
+            result.errsWithParams.length &&
+            result.errsWithParams.length > 0 &&
+            !this.imagesNotFoundMessageDisplayed) {
+
+            this.messages.add([M.IMAGES_N_NOT_FOUND]);
+            this.imagesNotFoundMessageDisplayed = true;
+        }
     }
 }

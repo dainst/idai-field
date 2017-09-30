@@ -14,8 +14,9 @@
     </search-bar>
     <div class="image-grid" (window:resize)="onResize($event)">
 
-        <image-grid
-                [rows]="rows"
+        <image-grid #imageGrid
+                [nrOfColumns]="3"
+                [documents]="documents"
                 [selected]="selectedDocuments"
                 [showLinkBadges]="false"
                 (onClick)="select($event)"

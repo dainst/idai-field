@@ -9,8 +9,9 @@
         <div class="image-grid" (window:resize)="onResize($event)">
 
 
-            <image-grid
-                    [rows]="rows"
+            <image-grid #imageGrid
+                    [nrOfColumns]="3"
+                    [documents]="documents"
                     (onClick)="select($event)"
                     [showLinkBadges]="false"
                     (onDoubleClick)="navigateTo($event)"

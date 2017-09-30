@@ -27,21 +27,14 @@ export class ImagePickerComponent extends ImageGridComponentBase {
 
     private query: Query = { q: '' };
 
-    private static NR_OF_COLUMNS: number = 3;
-
     constructor(
         public activeModal: NgbActiveModal,
-        messages: Messages,
+        private messages: Messages,
         private datastore: Datastore,
         private el: ElementRef,
-        private imageTypeUtility: ImageTypeUtility,
-        imagestore: Imagestore,
+        private imageTypeUtility: ImageTypeUtility
     ) {
-        super(
-            new ImageGridBuilder(imagestore, true),
-            messages,
-            ImagePickerComponent.NR_OF_COLUMNS
-        );
+        super();
 
         this.fetchDocuments(this.query);
     }
@@ -59,7 +52,7 @@ export class ImagePickerComponent extends ImageGridComponentBase {
 
     public onResize() {
 
-        this._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     /**
@@ -87,7 +80,7 @@ export class ImagePickerComponent extends ImageGridComponentBase {
         }).catch(msgWithParams => this.messages.add(msgWithParams)
         ).then(documents => {
             this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
         })
         .catch(errWithParams => {
             console.error('error in find with query', this.query);

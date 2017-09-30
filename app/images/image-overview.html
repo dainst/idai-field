@@ -39,8 +39,9 @@
     </div>
 
     <div class="image-grid" (window:resize)="onResize($event)">
-        <image-grid
-                [rows]="rows"
+        <image-grid #imageGrid
+                [nrOfColumns]="4"
+                [documents]="documents"
                 [resourceIdentifiers]="resourceIdentifiers"
                 [selected]="selected"
                 (onClick)="select($event)"

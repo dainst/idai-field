@@ -11,6 +11,8 @@ import {ThumbnailViewComponent} from "./thumbnail-view.component";
 import {ImageGridComponent} from "./image-grid.component";
 import {UploadModalComponent} from "./upload-modal.component";
 import {DropAreaComponent} from "./drop-area.component";
+import {ImageGridBuilder} from "./image-grid-builder";
+import {Imagestore} from "../imagestore/imagestore";
 
 @NgModule({
     imports: [
@@ -30,6 +32,13 @@ import {DropAreaComponent} from "./drop-area.component";
         DropAreaComponent
     ],
     providers: [
+        {
+            provide: ImageGridBuilder,
+            useFactory: (imageStore: Imagestore) => {
+                return new ImageGridBuilder(imageStore, true);
+            },
+            deps: [Imagestore]
+        },
     ],
     exports: [
         ImagePickerComponent,

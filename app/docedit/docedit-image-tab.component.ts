@@ -24,21 +24,13 @@ export class DoceditImageTabComponent extends ImageGridComponentBase {
 
     @Input() document: IdaiFieldDocument;
 
-    private static NR_OF_COLUMNS: number = 3;
-
     constructor(
-        private imagestore: Imagestore,
         private el: ElementRef,
-        messages: Messages,
         private datastore: IdaiFieldDatastore,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
-        super(
-            new ImageGridBuilder(imagestore, true),
-            messages,
-            DoceditImageTabComponent.NR_OF_COLUMNS
-        );
+        super();
     }
 
     ngOnChanges() {
@@ -59,7 +51,7 @@ export class DoceditImageTabComponent extends ImageGridComponentBase {
 
         Promise.all(imageDocPromises).then(docs => {
             this.documents = docs as Array<IdaiFieldImageDocument>;
-            this.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
         });
     }
 
@@ -83,7 +75,7 @@ export class DoceditImageTabComponent extends ImageGridComponentBase {
 
         if (!this.documents || this.documents.length == 0) return; // TODO code duplicated - move it to _onResize
 
-        this._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
     }
 
     public openImagePicker() {

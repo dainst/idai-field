@@ -17,7 +17,6 @@ import {UploadStatus} from './upload-status';
     moduleId: module.id,
     templateUrl: './drop-area.html'
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -26,7 +25,6 @@ import {UploadStatus} from './upload-status';
 export class DropAreaComponent {
 
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onUploadError: EventEmitter<any> = new EventEmitter<any>();
 
     private dragOverActive = false;
     private static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
@@ -131,13 +129,13 @@ export class DropAreaComponent {
 
         return promise.then(
             () => this.onImagesUploaded.emit(),
-            msgWithParams => this.onUploadError.emit(msgWithParams)
+            msgWithParams => this.messages.add(msgWithParams)
         ).then(
             () => {
                 if (duplicateFilenames.length == 1) {
-                    this.onUploadError.emit([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
+                    this.messages.add([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
                 } else if (duplicateFilenames.length > 1) {
-                    this.onUploadError.emit([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
+                    this.messages.add([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
                 }
             }
         )

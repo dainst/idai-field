@@ -62,11 +62,6 @@ export class ImageOverviewComponent {
         this.fetchDocuments();
     }
 
-    public showUploadErrorMsg(msgWithParams) {
-
-        this.messages.add(msgWithParams);
-    }
-
     public setQueryString(q: string) {
 
         this.imagesState.getQuery().q = q;

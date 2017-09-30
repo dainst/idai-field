@@ -27,8 +27,16 @@
                         </button>
 
                         <description-view [document]="image.document"></description-view>
-                        <georeference-view [document]="image.document"></georeference-view>
                         <fields-view [resource]="image.document.resource"></fields-view>
+                    </ng-template>
+                </ngb-tab>
+
+                <ngb-tab id="document-view-georeference-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-map"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <georeference-view [document]="image.document"></georeference-view>
                     </ng-template>
                 </ngb-tab>
 

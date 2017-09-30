@@ -8,7 +8,7 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypeUtility} from './image-type-utility';
 import {M} from '../m';
-import {ImageGridComponentBase} from './image-grid-component-base';
+import {ImageGridUser} from './image-grid-user';
 
 @Component({
     selector: 'image-picker',
@@ -20,7 +20,7 @@ import {ImageGridComponentBase} from './image-grid-component-base';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent extends ImageGridComponentBase {
+export class ImagePickerComponent extends ImageGridUser {
 
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];

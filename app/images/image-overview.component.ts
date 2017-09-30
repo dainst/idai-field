@@ -14,7 +14,7 @@ import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../image-widgets/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
-import {ImageGridComponentBase} from '../image-widgets/image-grid-component-base';
+import {ImageGridUser} from '../image-widgets/image-grid-user';
 
 @Component({
     moduleId: module.id,
@@ -28,7 +28,7 @@ import {ImageGridComponentBase} from '../image-widgets/image-grid-component-base
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent extends ImageGridComponentBase {
+export class ImageOverviewComponent extends ImageGridUser {
 
     private imageTool: ImageTool;
 

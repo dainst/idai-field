@@ -90,6 +90,7 @@ export class ImageGridBuilder {
     }
 
     private nrOfRows(nrOfColumns) {
+
         return Math.ceil(this.documents.length / nrOfColumns);
     }
 

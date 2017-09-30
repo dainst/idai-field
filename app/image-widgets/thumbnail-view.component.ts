@@ -6,7 +6,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridComponentBase} from "./image-grid-component-base";
+import {ImageGridUser} from "./image-grid-user";
 import {ImageGridBuilder} from "./image-grid-builder";
 import {Messages} from 'idai-components-2/messages';
 
@@ -20,7 +20,7 @@ import {Messages} from 'idai-components-2/messages';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ThumbnailViewComponent extends ImageGridComponentBase implements OnChanges {
+export class ThumbnailViewComponent extends ImageGridUser implements OnChanges {
 
     @Input() imageIds: string[];
 

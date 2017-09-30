@@ -8,7 +8,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {ImagePickerComponent} from '../image-widgets/image-picker.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {ImageGridComponentBase} from "../image-widgets/image-grid-component-base";
+import {ImageGridUser} from "../image-widgets/image-grid-user";
 
 @Component({
     selector: 'docedit-image-tab',
@@ -20,7 +20,7 @@ import {ImageGridComponentBase} from "../image-widgets/image-grid-component-base
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class DoceditImageTabComponent extends ImageGridComponentBase {
+export class DoceditImageTabComponent extends ImageGridUser {
 
     @Input() document: IdaiFieldDocument;
 

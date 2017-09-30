@@ -25,7 +25,7 @@
             <div class="identifier"
                  *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                  [style.maxWidth.px]="cell['calculatedWidth']-15">
-                <span class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
+                <span *ngIf="showIdentifier" class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
                 <span *ngIf="showLinkBadges">
                     <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
                       id="related-resource-{{cell['document'].id}}"
@@ -39,7 +39,7 @@
                  [style.width.px]="cell['calculatedWidth']"
                  [style.height.px]="cell['calculatedHeight']">
 
-            <div class="title" [style.width.px]="cell['calculatedWidth']">
+            <div *ngIf="showShortDescription" class="title" [style.width.px]="cell['calculatedWidth']">
                 {{cell['document'].resource.shortDescription}}
             </div>
         </div>

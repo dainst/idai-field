@@ -21,6 +21,8 @@ export class ImageGridComponent implements OnChanges {
     @Input() resourceIdentifiers: string[] = [];
     @Input() selected: IdaiFieldImageDocument[] = [];
     @Input() showLinkBadges: boolean = true;
+    @Input() showIdentifier: boolean = true;
+    @Input() showShortDescription: boolean = true;
     @Input() showDropArea: boolean = false;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();

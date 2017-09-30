@@ -73,8 +73,6 @@ export class ImageGridComponent implements OnChanges {
             // this.el.nativeElement.children[0].
             clientWidth).then(result => {
 
-                console.log("result",result);
-
             this.rows = result['rows'];
             for (let errWithParams of result.errsWithParams) {
                 // do not display a msg to the user via messages because there may be two much messages

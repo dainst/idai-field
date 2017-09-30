@@ -1,14 +1,9 @@
-import {Component, OnChanges, Input, ElementRef, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {Imagestore} from '../imagestore/imagestore';
-import {BlobMaker} from '../imagestore/blob-maker';
-import {ImageContainer} from '../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridUser} from "./image-grid-user";
-import {ImageGridBuilder} from "./image-grid-builder";
-import {Messages} from 'idai-components-2/messages';
+import {ImageGridComponent} from "../imagegrid/image-grid.component";
 
 @Component({
     selector: 'thumbnail-view',
@@ -20,21 +15,20 @@ import {Messages} from 'idai-components-2/messages';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ThumbnailViewComponent extends ImageGridUser implements OnChanges {
+export class ThumbnailViewComponent implements OnChanges {
+
+    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    public documents: IdaiFieldImageDocument[];
 
     @Input() imageIds: string[];
 
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
     constructor(
-        private imagestore: Imagestore,
         private datastore: Datastore,
-        messages: Messages,
         private router: Router,
         private el: ElementRef
-    ) {
-        super();
-    }
+    ) {}
 
     public selectImage(documentToJumpTo: Document) {
 

@@ -1,14 +1,12 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
-import {Query, Datastore} from 'idai-components-2/datastore';
+import {Datastore, Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ImageGridBuilder} from './image-grid-builder';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {Imagestore} from '../imagestore/imagestore';
 import {ImageTypeUtility} from './image-type-utility';
 import {M} from '../m';
-import {ImageGridUser} from './image-grid-user';
+import {ImageGridComponent} from "../imagegrid/image-grid.component";
 
 @Component({
     selector: 'image-picker',
@@ -20,7 +18,10 @@ import {ImageGridUser} from './image-grid-user';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent extends ImageGridUser {
+export class ImagePickerComponent {
+
+    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    public documents: IdaiFieldImageDocument[];
 
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
@@ -34,8 +35,6 @@ export class ImagePickerComponent extends ImageGridUser {
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility
     ) {
-        super();
-
         this.fetchDocuments(this.query);
     }
 

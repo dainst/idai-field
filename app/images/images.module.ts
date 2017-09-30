@@ -10,12 +10,9 @@ import {ImageViewComponent} from './image-view.component';
 import {GeoreferenceViewComponent} from './georeference-view.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
-import {DropAreaComponent} from '../image-widgets/drop-area.component';
-import {ImageTypePickerModalComponent} from '../image-widgets/image-type-picker-modal.component';
-import {UploadModalComponent} from '../image-widgets/upload-modal.component';
-import {UploadStatus} from '../image-widgets/upload-status';
+import {UploadStatus} from '../imagegrid/upload-status';
 import {ImagesState} from './images-state';
-import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
+import {ImageGridModule} from "../imagegrid/image-grid.module";
 
 @NgModule({
     imports: [
@@ -25,7 +22,7 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         WidgetsModule,
         IdaiDocumentsModule,
         IdaiWidgetsModule,
-        ImageWidgetsModule
+        ImageGridModule
     ],
     declarations: [
         ImagesComponent,

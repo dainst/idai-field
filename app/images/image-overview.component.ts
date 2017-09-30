@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -10,10 +10,10 @@ import {Imagestore} from '../imagestore/imagestore';
 import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
-import {ImageTypeUtility} from '../image-widgets/image-type-utility';
+import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
-import {ImageGridUser} from '../image-widgets/image-grid-user';
+import {ImageGridComponent} from "../imagegrid/image-grid.component";
 
 @Component({
     moduleId: module.id,
@@ -27,7 +27,10 @@ import {ImageGridUser} from '../image-widgets/image-grid-user';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent extends ImageGridUser {
+export class ImageOverviewComponent {
+
+    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    protected documents: IdaiFieldImageDocument[];
 
     public selected: IdaiFieldImageDocument[] = [];
     public resourceIdentifiers: string[] = [];
@@ -44,8 +47,6 @@ export class ImageOverviewComponent extends ImageGridUser {
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
     ) {
-        super();
-
         if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
 
         this.fetchDocuments();

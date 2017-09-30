@@ -38,7 +38,7 @@ export class DropAreaComponent {
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private settingsService: SettingsService,
+        private settingsService: SettingsService, // TODO remove this dependency. replace by username param. it would be nice to get rid of depencency to settings package altogether
         private uploadStatus: UploadStatus
     ) {}
 

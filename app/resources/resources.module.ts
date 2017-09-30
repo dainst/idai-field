@@ -15,7 +15,8 @@ import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
 import {ResourcesState} from './resources-state';
 import {ResourcesStateSerializer} from './resources-state-serializer';
-import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
+import {ThumbnailViewComponent} from "./thumbnail-view.component";
+import {ImageGridModule} from "../imagegrid/image-grid.module";
 
 @NgModule({
     imports: [
@@ -24,7 +25,7 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         NgbModule,
         IdaiDocumentsModule,
         WidgetsModule,
-        ImageWidgetsModule,
+        ImageGridModule,
         IdaiWidgetsModule,
         DoceditModule
     ],
@@ -35,7 +36,8 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         MapWrapperComponent,
         ListComponent,
         RowComponent,
-        PlusButtonComponent
+        PlusButtonComponent,
+        ThumbnailViewComponent
     ],
     providers: [
         ResourcesState,

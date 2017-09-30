@@ -1,26 +1,25 @@
-import {Component, ElementRef, Input} from '@angular/core';
-import {ImageGridBuilder} from '../image-widgets/image-grid-builder';
-import {Imagestore} from '../imagestore/imagestore';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {ImagePickerComponent} from '../image-widgets/image-picker.component';
+import {ImagePickerComponent} from './image-picker.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {ImageGridUser} from "../image-widgets/image-grid-user";
+import {ImageGridComponent} from "../imagegrid/image-grid.component";
 
 @Component({
     selector: 'docedit-image-tab',
     moduleId: module.id,
     templateUrl: './docedit-image-tab.html'
 })
-
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class DoceditImageTabComponent extends ImageGridUser {
+export class DoceditImageTabComponent {
+
+    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    protected documents: IdaiFieldImageDocument[];
 
     @Input() document: IdaiFieldDocument;
 
@@ -30,7 +29,6 @@ export class DoceditImageTabComponent extends ImageGridUser {
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
-        super();
     }
 
     ngOnChanges() {

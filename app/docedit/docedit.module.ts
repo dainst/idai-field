@@ -13,7 +13,8 @@ import {DoceditConflictsTabComponent} from './docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
-import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
+import {ImagePickerComponent} from "./image-picker.component";
+import {ImageGridModule} from "../imagegrid/image-grid.module";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         RouterModule,
         IdaiMessagesModule,
         WidgetsModule,
-        ImageWidgetsModule
+        ImageGridModule
     ],
     declarations: [
         ConflictDeletedModalComponent,
@@ -34,7 +35,8 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
         EditSaveDialogComponent,
         DoceditImageTabComponent,
         DoceditConflictsTabComponent,
-        TypeSwitcherButtonComponent
+        TypeSwitcherButtonComponent,
+        ImagePickerComponent
     ],
     exports: [
         EditSaveDialogComponent,
@@ -42,7 +44,8 @@ import {ImageWidgetsModule} from "../image-widgets/image-widgets.module";
     ],
     entryComponents: [
         DoceditComponent,
-        ConflictDeletedModalComponent
+        ConflictDeletedModalComponent,
+        ImagePickerComponent
     ]
 })
 

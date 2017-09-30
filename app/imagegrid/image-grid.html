@@ -9,9 +9,7 @@
              class="droparea-container"
              [style.width.px]="cell['calculatedWidth']"
              [style.height.px]="cell['calculatedHeight']">
-            <drop-area
-                    (onImagesUploaded)="onImagesUploaded.emit()"
-                    (onUploadError)="onUploadError.emit($event)">
+            <drop-area (onImagesUploaded)="onImagesUploaded.emit()">
             </drop-area>
         </div>
 

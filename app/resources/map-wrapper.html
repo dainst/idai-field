@@ -37,6 +37,7 @@
     <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
         <document-view-wrapper
             [selectedDocument]="selectedDocument"
+            [activeTab]="activeTab"
         ></document-view-wrapper>
     </div>
 </div>

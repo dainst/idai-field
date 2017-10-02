@@ -33,6 +33,8 @@ export class ImageOverviewComponent {
     protected documents: IdaiFieldImageDocument[];
 
     public selected: IdaiFieldImageDocument[] = [];
+
+    // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
 
     public constructor(

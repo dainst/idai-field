@@ -13,6 +13,7 @@ import {ImageTypeUtility} from './image-type-utility';
 import {Imagestore} from '../imagestore/imagestore';
 import {ObjectUtil} from '../util/object-util';
 import {M} from '../m';
+import {DoceditActiveTabService} from './docedit-active-tab-service';
 
 @Component({
     selector: 'detail-modal',
@@ -41,8 +42,6 @@ export class DoceditComponent {
      * on which changes can be made which can be either saved or discarded later.
      */
     private clonedDocument: IdaiFieldDocument;
-
-    public activeTab: string;
 
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
     public dialog: NgbModalRef;
@@ -74,6 +73,7 @@ export class DoceditComponent {
         private datastore: IdaiFieldDatastore,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
+        private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
 
         this.imageTypeUtility.getProjectImageTypes().then(
@@ -102,10 +102,11 @@ export class DoceditComponent {
             .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
     }
 
-    public setActiveTab(activeTabName: string) {
+    private changeActiveTab(event) {
 
-        this.activeTab = activeTabName;
-    }
+        this.activeTabService.setActiveTab(
+            event.nextId.replace('docedit-','').replace('-tab',''));
+    };
 
     public changeType(newType: string) {
 
@@ -236,7 +237,7 @@ export class DoceditComponent {
                 this.documentEditChangeMonitor.reset();
 
                 if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
-                    this.activeTab = 'conflicts';
+                    this.activeTabService.setActiveTab('conflicts');
                     this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
                 } else {
                     return this.closeModalAfterSave(latestRevision.resource.id, viaSaveButton);

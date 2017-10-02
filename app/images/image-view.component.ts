@@ -12,6 +12,7 @@ import {ObjectUtil} from '../util/object-util';
 import {BlobMaker} from "../imagestore/blob-maker";
 import {M} from "../m";
 import {ImageContainer} from "../imagestore/image-container";
+import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 
 @Component({
     moduleId: module.id,
@@ -35,7 +36,8 @@ export class ImageViewComponent implements OnInit {
         private router: Router,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private viewUtility: ViewUtility
+        private viewUtility: ViewUtility,
+        private doceditActiveTabService: DoceditActiveTabService
     ) { }
 
     ngOnInit() {
@@ -58,6 +60,8 @@ export class ImageViewComponent implements OnInit {
 
     public startEdit(doc: IdaiFieldDocument, tabName: string) {
 
+        this.doceditActiveTabService.setActiveTab(tabName);
+
         const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
 
@@ -69,7 +73,6 @@ export class ImageViewComponent implements OnInit {
         });
 
         doceditModalComponent.setDocument(doc);
-        doceditModalComponent.setActiveTab(tabName);
     }
 
     public hasRelations() {

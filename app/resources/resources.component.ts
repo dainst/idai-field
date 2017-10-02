@@ -17,6 +17,7 @@ import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
+import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 
 
 @Component({
@@ -71,7 +72,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewUtility: ViewUtility,
                 private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
-                private resourcesState: ResourcesState
+                private resourcesState: ResourcesState,
+                private doceditActiveTabService: DoceditActiveTabService
     ) {
         this.route.params.subscribe(params => {
 
@@ -492,13 +494,15 @@ export class ResourcesComponent implements AfterViewChecked {
         this.editGeometry = false;
         if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
+        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         doceditRef.result.then(result =>
             this.populateMainTypeDocuments()
                 .then(() => {
                     this.invalidateTypeFiltersIfNecessary();
                     this.handleDocumentSelectionOnSaved(result.document);
+                    this.setNextDocumentViewActiveTab();
                 })
             , closeReason => {
 
@@ -513,7 +517,6 @@ export class ResourcesComponent implements AfterViewChecked {
         ).then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
 
         doceditRef.componentInstance.setDocument(document);
-        if (activeTabName) doceditRef.componentInstance.setActiveTab(activeTabName);
     }
 
     public startEditGeometry() {
@@ -657,5 +660,14 @@ export class ResourcesComponent implements AfterViewChecked {
     private static makeMainTypeQuery(mainType: string): Query {
 
         return { types: [mainType] };
+    }
+
+    private setNextDocumentViewActiveTab() {
+
+        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
+        if (['relations','images','fields']
+                .indexOf(nextActiveTab) != -1) {
+            this.activeDocumentViewTab = nextActiveTab;
+        }
     }
 }

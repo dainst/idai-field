@@ -16,7 +16,6 @@ import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
 import {ImagePickerComponent} from "./image-picker.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 
-
 @NgModule({
     imports: [
         BrowserModule,

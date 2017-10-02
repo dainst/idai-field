@@ -45,6 +45,7 @@ import {ProjectsComponent} from './projects.component';
 
 import {ImportModule} from './import/import-module';
 import {ExportModule} from './export/export.module';
+import {DoceditActiveTabService} from './docedit/docedit-active-tab-service';
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -174,7 +175,8 @@ let pconf = undefined;
         },
         { provide: MD, useClass: M},
         ImageTypeUtility,
-        ViewUtility
+        ViewUtility,
+        DoceditActiveTabService
     ],
     bootstrap: [ AppComponent ]
 })

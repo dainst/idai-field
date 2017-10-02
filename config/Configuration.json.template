@@ -5072,21 +5072,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Dateiname des Fotos. der Zeichnung(wenn digital)",
-                    "descriptions": {
-                        "de": "Dateiname des Fotos. der Zeichnung(wenn digital)"
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Dateiname",
-                    "labels": {
-                        "de": "Dateiname",
-                        "en": "filename"
-                    },
-                    "name": "hasFilename",
-                    "visible": true
-                },
-                {
                     "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
                     "descriptions": {
                         "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."

@@ -60,6 +60,12 @@ export class DocumentViewPage {
 
     // get text
 
+    public static getIdentifier() {
+
+        browser.wait(EC.visibilityOf(element(by.id('document-view-identifier-label'))), delays.ECWaitTime);
+        return element(by.id('document-view-identifier-label')).getText();
+    }
+
     public static getShortDescription() {
 
         browser.wait(EC.visibilityOf(element(by.id('description-view-short-description'))), delays.ECWaitTime);

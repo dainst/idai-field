@@ -1,6 +1,7 @@
 import {browser, by, element, protractor} from 'protractor';
 import {ImagesGridPage} from './images-grid.page';
 import {ImagesViewPage} from './images-view.page';
+import {DocumentViewPage} from '../widgets/document-view.page';
 import {NavbarPage} from '../navbar.page';
 
 const path = require('path');
@@ -119,29 +120,26 @@ describe('images/image-grid --', function() {
 
         const elementToDelete = ImagesGridPage.getCell(0);
 
-        ImagesGridPage.getCellImageName(0)
-            .then(function (imageName) {
-                const xpath = '//span[@class="badge badge-secondary"][text()="'+ imageName + '"]';
-                elementToDelete.click();
-                ImagesGridPage.clickDeleteButton();
-                ImagesGridPage.clickCancelDeleteButton();
-                browser.wait(EC.stalenessOf(ImagesGridPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-                browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime)
-            });
+        ImagesGridPage.getCellImageName(0).then(imageName => {
+            const xpath = '//span[@class="badge badge-secondary"][text()="'+ imageName + '"]';
+            elementToDelete.click();
+            ImagesGridPage.clickDeleteButton();
+            ImagesGridPage.clickCancelDeleteButton();
+            browser.wait(EC.stalenessOf(ImagesGridPage.getDeleteConfirmationModal()), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime)
+        });
     });
 
     it('navigate from grid to view, and back to grid', () => {
 
-        const xpath = '//h3[@class="fieldname"][text()="Dateiname"]/following-sibling::div[@class="fieldvalue"]';
-
-        ImagesGridPage.getCellImageName(0).then(function(imageName){
+        ImagesGridPage.getCellImageName(0).then(imageName => {
             ImagesGridPage.doubleClickCell(0);
             browser.wait(EC.presenceOf(ImagesViewPage.getDocumentCard()), delays.ECWaitTime);
-            element(by.xpath(xpath)).getText().then(imageName=>{expect(imageName).toEqual(imageName)});
+            DocumentViewPage.getIdentifier().then(identifier => expect(identifier).toEqual(imageName));
 
             ImagesViewPage.clickBackToGridButton();
             browser.wait(EC.presenceOf(ImagesGridPage.getCell(0)), delays.ECWaitTime);
-            ImagesGridPage.getCellImageName(0).then(imageName=>{expect(imageName).toEqual(imageName)});
+            ImagesGridPage.getCellImageName(0).then(name => expect(name).toEqual(imageName));
         });
     });
 });

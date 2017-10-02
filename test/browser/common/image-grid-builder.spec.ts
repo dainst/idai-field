@@ -17,7 +17,7 @@ export function main() {
                 shortDescription:'name',
                 height: '1',
                 width: '2',
-                filename: 'abc'
+                originalFilename: 'abc'
             }
         }];
 

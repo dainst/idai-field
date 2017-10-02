@@ -28,7 +28,7 @@
                     <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
                       id="related-resource-{{cell['document'].id}}"
                       class="badge badge-info related-resource-{{cell['document'].id}}">
-                             <span class="mdi mdi-link"></span> {{resourceId}}
+                             <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
                     </span>
                 </span>
             </div>

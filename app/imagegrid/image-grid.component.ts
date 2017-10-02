@@ -54,7 +54,10 @@ export class ImageGridComponent implements OnChanges {
 
     public getIdentifier(id: string): string {
 
-        if (!this.resourceIdentifiers || (this.resourceIdentifiers.length < 1)) return undefined;
+        if (!this.resourceIdentifiers ||
+            (Object.keys(this.resourceIdentifiers).length < 1)) {
+                return undefined;
+        }
         return this.resourceIdentifiers[id];
     }
 

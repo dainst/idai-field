@@ -17,6 +17,7 @@ import {ResourcesState} from './resources-state';
 import {ResourcesStateSerializer} from './resources-state-serializer';
 import {ThumbnailViewComponent} from "./thumbnail-view.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
+import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {ImageGridModule} from "../imagegrid/image-grid.module";
         ListComponent,
         RowComponent,
         PlusButtonComponent,
-        ThumbnailViewComponent
+        ThumbnailViewComponent,
+        DocumentViewWrapperComponent
     ],
     providers: [
         ResourcesState,

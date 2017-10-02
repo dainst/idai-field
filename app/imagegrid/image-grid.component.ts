@@ -122,7 +122,7 @@ export class ImageGridComponent implements OnChanges {
         this.documents.unshift(<IdaiFieldImageDocument>{
             id: 'droparea',
             resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, filename: '', relations: {} }
+                width: 1, height: 1, relations: {} }
         });
     }
 }

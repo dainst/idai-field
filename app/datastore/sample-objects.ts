@@ -66,7 +66,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Test Layer 1",
             "type": "Image",
             "relations": {},
-            "filename" : "PE07-So-07_Z001.jpg",
+            "originalFilename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
             "width" : 3513,
             "georeference": {
@@ -83,7 +83,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Test Layer 2",
             "type": "Image",
             "relations": {},
-            "filename" : "mapLayerTest2.png",
+            "originalFilename" : "mapLayerTest2.png",
             "height" : 782,
             "width" : 748,
             "georeference": {

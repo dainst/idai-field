@@ -86,21 +86,19 @@ export class ImageViewComponent implements OnInit {
             this.datastore.get(id).then(
                 doc => {
                     this.image.document = doc;
-                    if (doc.resource.filename) {
-                        // read original (empty if not present)
-                        this.imagestore.read(doc.resource.id, false, false)
-                            .then(url => {
-                                if (!url || url == '') this.originalNotFound = true;
-                                this.image.imgSrc = url;
-                            })
-                            // read thumb
-                            .then(() => this.imagestore.read(doc.resource.id, false, true))
-                            .then(url => this.image.thumbSrc = url)
-                            .catch(() => {
-                                this.image.imgSrc = BlobMaker.blackImg;
-                                this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
-                            });
-                    }
+                    // read original (empty if not present)
+                    this.imagestore.read(doc.resource.id, false, false)
+                        .then(url => {
+                            if (!url || url == '') this.originalNotFound = true;
+                            this.image.imgSrc = url;
+                        })
+                        // read thumb
+                        .then(() => this.imagestore.read(doc.resource.id, false, true))
+                        .then(url => this.image.thumbSrc = url)
+                        .catch(() => {
+                            this.image.imgSrc = BlobMaker.blackImg;
+                            this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
+                        });
                 },
                 () => {
                     console.error("Fatal error: could not load document for id ", id);

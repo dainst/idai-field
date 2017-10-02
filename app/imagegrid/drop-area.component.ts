@@ -194,7 +194,7 @@ export class DropAreaComponent {
                     resource: {
                         identifier: file.name,
                         type: type.name,
-                        filename: file.name,
+                        originalFilename: file.name,
                         width: img.width,
                         height: img.height,
                         relations: {}

@@ -70,23 +70,7 @@ export class MapWrapperComponent {
         }
     }
     
-    public hasRelations() {
 
-        const relations: any = this.selectedDocument.resource.relations;
-
-        if (ObjectUtil.isEmpty(relations)) return false;
-
-        // TODO Check relation definition for visibility
-        if (Object.keys(relations).length == 1
-            && relations['isRecordedIn']
-            && relations['isRecordedIn'].length == 1
-            && relations['isRecordedIn'][0]
-                == this.resourcesComponent.projectDocument.resource.id) {
-            return false;
-        }
-
-        return true;
-    }
 
     private save() {
 

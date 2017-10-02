@@ -67,6 +67,7 @@ export class ImageViewComponent implements OnInit {
 
         doceditModalRef.result.then(result => {
             if (result.document) this.image.document = result.document;
+            this.setNextDocumentViewActiveTab();
         }, closeReason => {
             this.documentEditChangeMonitor.reset();
             if (closeReason == 'deleted') this.deselect();
@@ -107,6 +108,15 @@ export class ImageViewComponent implements OnInit {
                     console.error("Fatal error: could not load document for id ", id);
                 });
         }.bind(this));
+    }
+
+    private setNextDocumentViewActiveTab() {
+
+        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
+        if (['relations', 'fields']
+                .indexOf(nextActiveTab) != -1) {
+            this.activeTab = nextActiveTab;
+        }
     }
 
     private getRouteParams(callback) {

@@ -14,7 +14,7 @@
         </div>
 
         <div *ngIf="cell['document'].id != 'droparea'"
-             (click)="select(cell['document'])"
+             (click)="onClick.emit(cell['document'])"
              (dblclick)="onDoubleClick.emit(cell['document'])"
              [id]="'resource-' + cell['document'].resource.identifier"
              class="cell"

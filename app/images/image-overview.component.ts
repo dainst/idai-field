@@ -71,12 +71,26 @@ export class ImageOverviewComponent {
     }
 
     /**
+     * @param document the object that should be selected
+     */
+    public select(document: IdaiFieldImageDocument) {
+
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        else this.selected.splice(this.selected.indexOf(document), 1);
+    }
+
+    /**
      * @param documentToSelect the object that should be navigated to if the preconditions
      *   to change the selection are met.
      */
     public navigateTo(documentToSelect: IdaiFieldImageDocument) {
 
         this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+    }
+
+    public clearSelection() {
+
+        this.selected = [];
     }
 
     public openDeleteModal(modal) {
@@ -92,7 +106,7 @@ export class ImageOverviewComponent {
             if (targetDoc) {
                 this.updateAndPersistDepictsRelations(this.selected, targetDoc)
                     .then(() => {
-                        this.imageGrid.clearSelection();
+                        this.clearSelection();
                     }).catch(msgWithParams => {
                         this.messages.add(msgWithParams);
                     });
@@ -140,7 +154,7 @@ export class ImageOverviewComponent {
 
         this.deleteImageDocuments(this.selected).then(
             () => {
-                this.imageGrid.clearSelection();
+                this.clearSelection();
                 this.fetchDocuments();
             });
     }

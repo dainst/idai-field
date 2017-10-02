@@ -25,6 +25,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showShortDescription: boolean = true;
     @Input() showDropArea: boolean = false;
 
+    @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
@@ -86,21 +87,6 @@ export class ImageGridComponent implements OnChanges {
             }
             this.showImagesNotFoundMessage(result);
         });
-    }
-
-    /**
-     * @param document the object that should be selected
-     */
-    public select(document: IdaiFieldImageDocument) {
-
-        if (this.selected.indexOf(document) == -1) this.selected.push(document);
-        else this.selected.splice(this.selected.indexOf(document), 1);
-    }
-
-    public clearSelection() {
-
-        if (!this.selected) return;
-        this.selected.splice(0, this.selected.length);
     }
 
     public _onResize(width) {

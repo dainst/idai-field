@@ -1,4 +1,4 @@
-import {by, protractor} from 'protractor';
+import {browser, by, protractor} from 'protractor';
 import {ImageOverviewPage} from '../images/image-overview.page';
 
 const path = require('path');
@@ -37,6 +37,7 @@ describe('images/image-overview/link --', function() {
     function unlink() {
 
         ImageOverviewPage.getCell(0).click();
+        browser.sleep(delays.shortRest * 10);
         ImageOverviewPage.clickUnlinkButton();
         ImageOverviewPage.clickConfirmUnlinkButton();
     }

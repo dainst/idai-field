@@ -10,34 +10,10 @@ let EC = protractor.ExpectedConditions;
  */
 export class DoceditPage {
 
-    public static clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
-
-        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
-        this.getRelationEl(groupIndex, pickerIndex)
-            .all(by.css('.suggestion')).get(suggestionIndex).click();
-    };
-
      public static clickCloseEdit() {
 
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
-    };
-
-    public static clickAddRelationForGroupWithIndex = function(groupIndex) {
-
-        element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .element(by.css('.circular-button.add-relation')).click();
-    };
-
-    public static clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
-
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
-            .click();
-    };
-
-    public static clickInsertImage = function() {
-
-        common.click(element(by.id('create-depicts-relations-btn')));
     };
 
     public static clickFieldsTab = function() {
@@ -75,11 +51,6 @@ export class DoceditPage {
                 )
             });
     };
-
-    public static clickDeleteImages() {
-
-        common.click(element(by.id('delete-images')));
-    }
 
     public static clickDeleteDocument() {
 
@@ -124,12 +95,6 @@ export class DoceditPage {
 
     // get text
 
-    public static getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
-
-        this.clickRelationsTab();
-        return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
-    };
-
     public static getInputFieldValue = function(index) {
 
         browser.wait(EC.visibilityOf(element.all(by.tagName('dai-input input')).get(index)), delays.ECWaitTime);
@@ -138,31 +103,9 @@ export class DoceditPage {
 
     // elements
 
-    public static getRelationEl = function(groupIndex, pickerIndex) {
-
-        return element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .all(by.tagName('relation-picker')).get(pickerIndex);
-    };
-
-    public static getRelationSuggestionEl = function(groupIndex, pickerIndex, suggestionIndex) {
-
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
-    };
-
-    public static getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
-
-        browser.wait(EC.visibilityOf(element(by.css('relation-picker-group relation-picker'))), delays.ECWaitTime);
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
-    };
-
     public static getConfirmDeletionInputField() {
 
         return element(by.id('delete-resource-input'));
-    }
-
-    public static getCells() {
-
-        return element.all(by.css('.cell'));
     }
 
     // type in
@@ -182,12 +125,6 @@ export class DoceditPage {
         browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + inputFieldNr + ' input'))),
             delays.ECWaitTime);
         common.typeIn(element(by.css('#edit-form-element-' + inputFieldNr + ' input')), text);
-    };
-
-    public static typeInRelationByIndices = function(groupIndex, pickerIndex, input) {
-
-        common.typeIn(this.getRelationEl(groupIndex, pickerIndex)
-            .element(by.tagName('input')), input);
     };
 
     public static typeInIdentifierInConfirmDeletionInputField(identifier) {

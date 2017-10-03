@@ -4,6 +4,7 @@ import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
 import {ThumbnailViewPage} from '../widgets/thumnail-view.page';
+import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 
 const delays = require('../config/delays');
 
@@ -27,7 +28,7 @@ describe('resources/images --', function() {
     function addTwoImages() {
 
         gotoImageTab();
-        DoceditPage.clickInsertImage();
+        DoceditImageTabPage.clickInsertImage();
         ImagePickerModalPage.getCells().get(0).click();
         ImagePickerModalPage.getCells().get(1).click();
         ImagePickerModalPage.clickAddImages();
@@ -48,9 +49,9 @@ describe('resources/images --', function() {
 
         addTwoImages();
         gotoImageTab();
-        DoceditPage.getCells().get(0).click();
-        DoceditPage.clickDeleteImages();
-        DoceditPage.getCells().then(cells => {
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
             expect(cells.length).toBe(1);
         });
         DoceditPage.clickSaveDocument();
@@ -65,10 +66,10 @@ describe('resources/images --', function() {
 
         addTwoImages();
         gotoImageTab();
-        DoceditPage.getCells().get(0).click();
-        DoceditPage.getCells().get(1).click();
-        DoceditPage.clickDeleteImages();
-        DoceditPage.getCells().then(cells => {
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.getCells().get(1).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
             expect(cells.length).toBe(0);
         });
         DoceditPage.clickSaveDocument();

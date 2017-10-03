@@ -3,6 +3,7 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 
 import {ResourcesPage} from '../resources/resources.page';
+import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
@@ -70,9 +71,9 @@ describe('widgets/document-view', function() {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditPage.clickAddRelationForGroupWithIndex(1);
-        DoceditPage.typeInRelationByIndices(1, 0, '2');
-        DoceditPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
+        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 

@@ -47,6 +47,12 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.get();
     });
 
+    it('link two images to a resource', () => {
+
+        createTwo();
+        expectLinkBadgePresence(true, 2)
+    });
+
     it('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');

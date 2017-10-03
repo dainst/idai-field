@@ -51,10 +51,4 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.createDepictsRelation('testf1');
         expectLinkBadgePresence(true);
     });
-
-    it('link two images to a resource', () => {
-
-        createTwo();
-        expectLinkBadgePresence(true, 2)
-    });
 });

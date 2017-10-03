@@ -8,6 +8,39 @@ const delays = require('../config/delays');
 
 describe('images/image-overview/link --', function() {
 
+    const resourceId1 = 'tf1';
+    const resourceId2 = 'c1';
+
+    function createTwo() {
+
+        ImageOverviewPage.createDepictsRelation('testf1');
+        ImageOverviewPage.createDepictsRelation('context1');
+    }
+
+    function expectLinkBadgePresence(toBeTruthy: boolean, nrBadges: number = 1) {
+
+        _expectLinkBadgePresence(toBeTruthy, resourceId1);
+        if (nrBadges == 2) _expectLinkBadgePresence(toBeTruthy, resourceId2);
+    }
+
+    function _expectLinkBadgePresence(toBeTruthy, relatedResourceId) {
+
+        const exp = expect(ImageOverviewPage.getCell(0)
+            .all(by.id('related-resource-'+relatedResourceId))
+            .first().isPresent());
+
+        if (toBeTruthy) exp.toBeTruthy();
+        else exp.toBeFalsy();
+    }
+
+
+    function unlink() {
+
+        ImageOverviewPage.getCell(0).click();
+        ImageOverviewPage.clickUnlinkButton();
+        ImageOverviewPage.clickConfirmUnlinkButton();
+    }
+
     beforeEach(() => {
 
         ImageOverviewPage.get();
@@ -15,23 +48,27 @@ describe('images/image-overview/link --', function() {
 
     it('link an image to a resource', () => {
 
-        const resourceId = 'tf1';
         ImageOverviewPage.createDepictsRelation('testf1');
-        expect(ImageOverviewPage.getCell(0)
-            .all(by.id('related-resource-'+resourceId))
-            .first().isPresent()).toBeTruthy();
+        expectLinkBadgePresence(true);
+    });
+
+    it('link two images to a resource', () => {
+
+        createTwo();
+        expectLinkBadgePresence(true, 2)
     });
 
     it('unlink an image from a resource', () => {
 
-        const resourceId = 'tf1';
         ImageOverviewPage.createDepictsRelation('testf1');
-        ImageOverviewPage.getCell(0).click();
-        ImageOverviewPage.clickUnlinkButton();
-        ImageOverviewPage.clickConfirmUnlinkButton();
+        unlink();
+        expectLinkBadgePresence(false);
+    });
 
-        expect(ImageOverviewPage.getCell(0)
-            .all(by.id('related-resource-'+resourceId))
-            .first().isPresent()).toBeFalsy();
+    it('unlink two images from a resource', () => {
+
+        createTwo();
+        unlink();
+        expectLinkBadgePresence(false, 2);
     });
 });

@@ -107,13 +107,26 @@ describe('images/image-grid --', function() {
             });
     });
 
-    xit('connect a resource with an image in the grid view', () => {
+    it('link an image to a resource', () => {
 
         const resourceId = 'tf1';
         ImagesGridPage.createDepictsRelation('testf1');
         expect(ImagesGridPage.getCell(0)
             .all(by.id('related-resource-'+resourceId))
             .first().isPresent()).toBeTruthy();
+    });
+
+    it('unlink an image from a resource', () => {
+
+        const resourceId = 'tf1';
+        ImagesGridPage.createDepictsRelation('testf1');
+        ImagesGridPage.getCell(0).click();
+        ImagesGridPage.clickUnlinkButton();
+        ImagesGridPage.clickConfirmUnlinkButton();
+
+        expect(ImagesGridPage.getCell(0)
+            .all(by.id('related-resource-'+resourceId))
+            .first().isPresent()).toBeFalsy();
     });
 
     it('cancel an image delete in the modal.', () => {

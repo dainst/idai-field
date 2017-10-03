@@ -38,9 +38,19 @@ export class ImagesGridPage {
         return common.click(element(by.id('delete-images')));
     };
 
-    public static clickCreateRelationsButton() {
+    public static clickConfirmUnlinkButton() {
 
-        return common.click(element(by.id('create-relations-btn')));
+        return common.click(element(by.id('remove-link-confirm')));
+    };
+
+    public static clickLinkButton() {
+
+        return common.click(element(by.id('create-link-btn')));
+    };
+
+    public static clickUnlinkButton() {
+
+        return common.click(element(by.id('remove-link-btn')));
     };
 
     public static clickConfirmDeleteButton() {
@@ -128,7 +138,7 @@ export class ImagesGridPage {
 
         imageToConnect.click();
         expect(imageToConnect.getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
-        ImagesGridPage.clickCreateRelationsButton();
+        ImagesGridPage.clickLinkButton();
         ImagesGridPage.typeInIdentifierInLinkModal(identifier);
         ImagesGridPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
     }

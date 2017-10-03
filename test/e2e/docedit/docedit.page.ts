@@ -76,7 +76,12 @@ export class DoceditPage {
             });
     };
 
-    public static clickDeleteDocument = function() {
+    public static clickDeleteImages() {
+
+        common.click(element(by.id('delete-images')));
+    }
+
+    public static clickDeleteDocument() {
 
         common.click(element(by.id('document-edit-button-delete-document')));
     };
@@ -153,6 +158,11 @@ export class DoceditPage {
     public static getConfirmDeletionInputField() {
 
         return element(by.id('delete-resource-input'));
+    }
+
+    public static getCells() {
+
+        return element.all(by.css('.cell'));
     }
 
     // type in

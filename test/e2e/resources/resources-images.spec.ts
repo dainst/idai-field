@@ -16,24 +16,66 @@ describe('resources/images --', function() {
         ResourcesPage.get();
     });
 
-    it('create links for images', done => {
+    function gotoImageTab() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickImagesTab();
+
+    }
+
+    function addTwoImages() {
+
+        gotoImageTab();
         DoceditPage.clickInsertImage();
+        ImagePickerModalPage.getCells().get(0).click();
+        ImagePickerModalPage.getCells().get(1).click();
+        ImagePickerModalPage.clickAddImages();
+        DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortSleep * 40);
+    }
 
-        ImagePickerModalPage.typeInIdentifierInSearchField('2');
-        ImagePickerModalPage.getCells().then(cells => {
-            cells[0].click();
-            ImagePickerModalPage.clickAddImage();
-            DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortSleep * 40);
+    it('create links for images', done => {
 
-            ThumbnailViewPage.getThumbs().then(thumbs => {
-                expect(thumbs.length).toBe(1);
-                done();
-            });
+        addTwoImages();
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(2);
+            done();
+        });
+    });
+
+    it('delete links to one image', done => {
+
+        addTwoImages();
+        gotoImageTab();
+        DoceditPage.getCells().get(0).click();
+        DoceditPage.clickDeleteImages();
+        DoceditPage.getCells().then(cells => {
+            expect(cells.length).toBe(1);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(1);
+            done();
+        });
+    });
+
+    it('delete links to two images', done => {
+
+        addTwoImages();
+        gotoImageTab();
+        DoceditPage.getCells().get(0).click();
+        DoceditPage.getCells().get(1).click();
+        DoceditPage.clickDeleteImages();
+        DoceditPage.getCells().then(cells => {
+            expect(cells.length).toBe(0);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(0);
+            done();
         });
     });
 });

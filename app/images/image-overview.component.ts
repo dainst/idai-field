@@ -1,17 +1,20 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
+import {LinkModalComponent} from './link-modal.component';
 import {SettingsService} from '../settings/settings-service';
 import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
-import {ImageGridComponent} from '../imagegrid/image-grid.component';
+import {ImageGridComponent} from "../imagegrid/image-grid.component";
+import {RemoveLinkModalComponent} from "./remove-link-modal.component";
 
 @Component({
     moduleId: module.id,
@@ -38,10 +41,11 @@ export class ImageOverviewComponent {
     public constructor(
         private router: Router,
         private datastore: Datastore,
+        private modalService: NgbModal,
         private messages: Messages,
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
-        public el: ElementRef,
+        private el: ElementRef,
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
@@ -90,7 +94,40 @@ export class ImageOverviewComponent {
         this.selected = [];
     }
 
+    public openDeleteModal(modal) {
 
+        this.modalService.open(modal).result.then(result => {
+            if (result == 'delete') this.deleteSelected();
+        });
+    }
+
+    public openLinkModal() {
+
+        this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
+            if (targetDoc) {
+                this.addRelationsToSelectedDocuments(targetDoc)
+                    .then(() => {
+                        this.clearSelection();
+                    }).catch(msgWithParams => {
+                        this.messages.add(msgWithParams);
+                    });
+            }
+        }, () => {}); // do nothing on dismiss
+    }
+
+    public openRemoveLinkModal() {
+
+        // TODO remove entries from resource identifiers necessary?
+
+        this.modalService.open(RemoveLinkModalComponent)
+            .result.then( () => {
+                this.removeRelationsOnSelectedDocuments().then(() => {
+                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth)
+                    this.clearSelection();
+                })
+            }
+            , () => {}); // do nothing on dismiss
+    }
 
     /**
      * Populates the document list with all documents from
@@ -127,7 +164,7 @@ export class ImageOverviewComponent {
         }
     }
 
-    public deleteSelected() {
+    private deleteSelected() {
 
         this.deleteSelectedImageDocuments().then(
             () => {
@@ -162,7 +199,7 @@ export class ImageOverviewComponent {
         });
     }
 
-    public addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
+    private addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
 
         this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
 
@@ -194,7 +231,7 @@ export class ImageOverviewComponent {
         });
     }
 
-    public removeRelationsOnSelectedDocuments() {
+    private removeRelationsOnSelectedDocuments() {
 
         const promises = [];
         for (let document of this.selected) {

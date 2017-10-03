@@ -14,6 +14,7 @@ import {UploadStatus} from '../imagegrid/upload-status';
 import {ImagesState} from './images-state';
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
+import {ImageOverviewToolbarComponent} from './image-overview-toolbar.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
         ImageViewComponent,
         GeoreferenceViewComponent,
         LinkModalComponent,
-        RemoveLinkModalComponent
+        RemoveLinkModalComponent,
+        ImageOverviewToolbarComponent
     ],
     entryComponents: [
         LinkModalComponent,

@@ -1,4 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
+import {DoceditPage} from "./docedit.page";
 
 let common = require('../common.js');
 let delays = require('../config/delays');
@@ -35,7 +36,7 @@ export class DoceditRelationsTabPage {
 
     public static getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
 
-        this.clickRelationsTab();
+        DoceditPage.clickRelationsTab();
         return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 

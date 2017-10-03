@@ -1,5 +1,5 @@
 import {by, protractor} from 'protractor';
-import {ImageOverviewPage} from './image-overview.page';
+import {ImageOverviewPage} from '../images/image-overview.page';
 
 const path = require('path');
 
@@ -46,15 +46,17 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.get();
     });
 
-    it('link an image to a resource', () => {
+    it('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
-        expectLinkBadgePresence(true);
+        unlink();
+        expectLinkBadgePresence(false);
     });
 
-    it('link two images to a resource', () => {
+    it('unlink two images from a resource', () => {
 
         createTwo();
-        expectLinkBadgePresence(true, 2)
+        unlink();
+        expectLinkBadgePresence(false, 2);
     });
 });

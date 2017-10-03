@@ -4,7 +4,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
 import {MapPage} from '../map/map.page';
-import {ImagesGridPage} from "../images/images-grid.page";
+import {ImageOverviewPage} from "../images/image-overview.page";
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -54,13 +54,13 @@ describe('resources/state --', function() {
         browser.sleep(1000);
         NavbarPage.clickNavigateToImages();
         browser.sleep(1000);
-        ImagesGridPage.createDepictsRelation('trench1');
+        ImageOverviewPage.createDepictsRelation('trench1');
         browser.sleep(2000);
     }
 
     function clickDepictsRelationLink() {
 
-        ImagesGridPage.doubleClickCell(0);
+        ImageOverviewPage.doubleClickCell(0);
         DocumentViewPage.clickRelation(0);
     }
 

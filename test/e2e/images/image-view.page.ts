@@ -1,6 +1,6 @@
 import {element, by} from 'protractor';
 
-export class ImagesViewPage {
+export class ImageViewPage {
 
     public static getDocumentCard = function () {
 

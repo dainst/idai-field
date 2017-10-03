@@ -13,6 +13,7 @@ import {LinkModalComponent} from './link-modal.component'
 import {UploadStatus} from '../imagegrid/upload-status';
 import {ImagesState} from './images-state';
 import {ImageGridModule} from "../imagegrid/image-grid.module";
+import {RemoveLinkModalComponent} from './remove-link-modal.component';
 
 @NgModule({
     imports: [
@@ -29,10 +30,12 @@ import {ImageGridModule} from "../imagegrid/image-grid.module";
         ImageOverviewComponent,
         ImageViewComponent,
         GeoreferenceViewComponent,
-        LinkModalComponent
+        LinkModalComponent,
+        RemoveLinkModalComponent
     ],
     entryComponents: [
-        LinkModalComponent
+        LinkModalComponent,
+        RemoveLinkModalComponent
     ],
     providers: [
         UploadStatus,

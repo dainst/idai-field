@@ -1,5 +1,6 @@
 import {browser, by, protractor} from 'protractor';
 import {ImageOverviewPage} from '../images/image-overview.page';
+import {NavbarPage} from '../navbar.page';
 
 const path = require('path');
 
@@ -14,6 +15,8 @@ describe('images/image-overview/link --', function() {
     function createTwo() {
 
         ImageOverviewPage.createDepictsRelation('testf1');
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
         ImageOverviewPage.createDepictsRelation('context1');
     }
 

@@ -54,11 +54,12 @@
   user-select: none;
 }
 
-.nav-link.active,
-.nav-link:hover {
+.navbar-hover-element.active,
+.navbar-hover-element:hover {
   text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
 }
 
-.nav-link {
+.navbar-hover-element {
   transition: text-shadow .25s ease-in-out;
+  cursor: pointer;
 }

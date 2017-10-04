@@ -1,21 +1,41 @@
 .taskbar {
   margin-top: 2px;
 
-  li.nav-item {
-
-    a {
-      color: white;
-      cursor: pointer;
-    }
-  }
-
   .mdi {
     font-size: 1.7em;
   }
 
   .mdi-cloud,
-  .mdi-cloud-outline-off {
+  .mdi-cloud-outline-off,
+  .mdi-dots-vertical {
     color: #fff;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-item {
+    color: black;
+  }
+
+  .dropdown-item:focus {
+    background-color: #fff;
+  }
+
+  .dropdown-item:hover {
+    background-color: $list-item-hover-colour;
+  }
+
+  .dropdown-item:active {
+    background-color: darken($list-item-hover-colour, 5%);
+  }
+
+  .dropdown-entry-label {
+    position: relative;
+    display: inline-block;
+    top: -4px;
+    margin-left: 5px;
   }
 
   .conflicts {

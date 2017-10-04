@@ -1,6 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
+import {NavbarPage} from '../navbar.page';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
@@ -141,5 +142,7 @@ export class ImageOverviewPage {
         ImageOverviewPage.clickLinkButton();
         ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
     }
 }

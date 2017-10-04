@@ -15,8 +15,6 @@ describe('images/image-overview/link --', function() {
     function createTwo() {
 
         ImageOverviewPage.createDepictsRelation('testf1');
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToImages();
         ImageOverviewPage.createDepictsRelation('context1');
     }
 

@@ -341,38 +341,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
-        const isImageType = this.imageTypeUtility.isImageType(documentToSelect.resource.type)
+        if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
 
-        if (isImageType) {
-
-            if (this.currentRoute && this.selectedDocument.resource
-                    && this.selectedDocument.resource.id) {
-
-                this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
-            }
-            this.router.navigate(
-                ['images', documentToSelect.resource.id, 'show', 'relations'],
-                {queryParams: { from: this.currentRoute}}
-            );
-
+            this.jumpToImageTypeRelationTarget(documentToSelect);
         } else {
-            this.viewUtility.getViewNameForDocument(documentToSelect)
-                .then(viewName => {
-                    if (viewName != this.view.name) {
-                        if (tab) {
-                            return this.router.navigate(['resources', viewName,
-                                documentToSelect.resource.id, 'view', tab]);
-                        } else {
-                            return this.router.navigate(['resources', viewName,
-                                documentToSelect.resource.id]);
-                        }
-                    } else {
-                        this.select(documentToSelect);
-                    }
-                });
+
+            this.jumpToResourceTypeRelationTarget(documentToSelect, tab);
         }
     }
-
     public setQueryString(q: string) {
 
         this.query.q = q;
@@ -392,6 +368,37 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         this.populateDocumentList();
+    }
+
+    private jumpToResourceTypeRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
+
+        this.viewUtility.getViewNameForDocument(documentToSelect)
+            .then(viewName => {
+                if (viewName != this.view.name) {
+                    if (tab) {
+                        return this.router.navigate(['resources', viewName,
+                            documentToSelect.resource.id, 'view', tab]);
+                    } else {
+                        return this.router.navigate(['resources', viewName,
+                            documentToSelect.resource.id]);
+                    }
+                } else {
+                    this.select(documentToSelect);
+                }
+            });
+    }
+
+    private jumpToImageTypeRelationTarget(documentToSelect: IdaiFieldDocument) {
+
+        if (this.currentRoute && this.selectedDocument.resource
+            && this.selectedDocument.resource.id) {
+
+            this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
+        }
+        this.router.navigate(
+            ['images', documentToSelect.resource.id, 'show', 'relations'],
+            {queryParams: { from: this.currentRoute}}
+        );
     }
 
     private initializeQuery() {

@@ -51,4 +51,24 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.createDepictsRelation('testf1');
         expectLinkBadgePresence(true);
     });
+
+    it('link two images to a resource', () => {
+
+        createTwo();
+        expectLinkBadgePresence(true, 2)
+    });
+
+    it('unlink an image from a resource', () => {
+
+        ImageOverviewPage.createDepictsRelation('testf1');
+        unlink();
+        expectLinkBadgePresence(false);
+    });
+
+    it('unlink two images from a resource', () => {
+
+        createTwo();
+        unlink();
+        expectLinkBadgePresence(false, 2);
+    });
 });

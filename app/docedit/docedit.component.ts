@@ -76,9 +76,7 @@ export class DoceditComponent {
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
 
-        this.imageTypeUtility.getProjectImageTypes().then(
-            projectImageTypes => this.projectImageTypes = projectImageTypes
-        );
+        this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
 
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.projectConfiguration = projectConfiguration;
@@ -320,17 +318,14 @@ export class DoceditComponent {
 
     private removeImageWithImageStore(document): Promise<any> {
 
-        return this.imageTypeUtility.isImageType(document.resource.type)
-            .then(isImageType => {
-                if (isImageType) {
-                    if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
-                    return this.imagestore.remove(document.resource.id).catch(() => {
-                        return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
-                    })
-                } else {
-                    return Promise.resolve();
-                }
+        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+            if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
+            return this.imagestore.remove(document.resource.id).catch(() => {
+                return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
             });
+        } else {
+            return Promise.resolve();
+        }
     }
 
     private removeWithPersistenceManager(document) {

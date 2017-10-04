@@ -73,21 +73,21 @@ export class ImagePickerComponent {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
-            this.query.types = imageTypeNames;
-            return this.datastore.find(this.query);
-        }).catch(msgWithParams => this.messages.add(msgWithParams)
-        ).then(documents => {
-            this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
-        })
-        .catch(errWithParams => {
-            console.error('error in find with query', this.query);
-            if (errWithParams.length == 2) {
-                console.error('error in find, cause', errWithParams[1]);
-            }
-            this.messages.add([M.ALL_FIND_ERROR]);
-        });
+        this.query.types = this.imageTypeUtility.getProjectImageTypeNames();
+
+        return this.datastore.find(this.query)
+            .catch(msgWithParams => this.messages.add(msgWithParams)
+            ).then(documents => {
+                this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
+                this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            })
+            .catch(errWithParams => {
+                console.error('error in find with query', this.query);
+                if (errWithParams.length == 2) {
+                    console.error('error in find, cause', errWithParams[1]);
+                }
+                this.messages.add([M.ALL_FIND_ERROR]);
+            });
     }
 
     private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)

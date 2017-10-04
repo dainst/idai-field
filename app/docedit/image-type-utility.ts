@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader, IdaiType} from 'idai-components-2/configuration'
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
 
 @Injectable()
 /**
@@ -8,43 +8,36 @@ import {ConfigLoader, IdaiType} from 'idai-components-2/configuration'
  */
 export class ImageTypeUtility {
 
-    constructor(private configLoader: ConfigLoader) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
-    public isImageType(typeName: string): Promise<boolean> {
+    public isImageType(typeName: string): boolean {
 
-        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
-            const type = projectConfiguration.getTypesMap()[typeName];
-
-            return Promise.resolve(type.name == 'Image' || (type.parentType && type.parentType.name == 'Image'));
-        });
+        const type = this.projectConfiguration.getTypesMap()[typeName];
+        return (type.name == 'Image' || (type.parentType && type.parentType.name == 'Image'));
     }
 
-    public getProjectImageTypes(): Promise<any> {
+    public getProjectImageTypes(): any {
 
-        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+        const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
+        let projectImageTypes: any = {};
 
-            const projectTypesTree: { [type: string]: IdaiType } = projectConfiguration.getTypesTree();
-            let projectImageTypes: any = {};
+        if (projectTypesTree['Image']) {
+            projectImageTypes['Image'] = projectTypesTree['Image'];
 
-            if (projectTypesTree['Image']) {
-                projectImageTypes['Image'] = projectTypesTree['Image'];
-
-                if (projectTypesTree['Image'].children) {
-                    for (let i = projectTypesTree['Image'].children.length - 1; i >= 0; i--) {
-                        projectImageTypes[projectTypesTree['Image'].children[i].name]
-                            = projectTypesTree['Image'].children[i];
-                    }
+            if (projectTypesTree['Image'].children) {
+                for (let i = projectTypesTree['Image'].children.length - 1; i >= 0; i--) {
+                    projectImageTypes[projectTypesTree['Image'].children[i].name]
+                        = projectTypesTree['Image'].children[i];
                 }
             }
+        }
 
-            return Promise.resolve(projectImageTypes);
-        });
+        return projectImageTypes;
     }
 
-    public getProjectImageTypeNames(): Promise<string[]> {
+    public getProjectImageTypeNames(): string[] {
 
-        return this.getProjectImageTypes().then(imageTypes => {
-            return Promise.resolve(Object.keys(imageTypes));
-        });
+        const imageTypes = this.getProjectImageTypes();
+        return Object.keys(imageTypes);
     }
 }

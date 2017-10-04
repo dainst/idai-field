@@ -341,39 +341,36 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
-        // TODO we can do this syncronously now
-        this.imageTypeUtility.isImageType(documentToSelect.resource.type)
-            .then(isImageType => {
-                    if (isImageType) {
+        const isImageType = this.imageTypeUtility.isImageType(documentToSelect.resource.type)
 
-                        if (this.currentRoute && this.selectedDocument.resource
-                                && this.selectedDocument.resource.id) {
+        if (isImageType) {
 
-                            this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
-                        }
-                        this.router.navigate(
-                            ['images', documentToSelect.resource.id, 'show', 'relations'],
-                            {queryParams: { from: this.currentRoute}}
-                        );
+            if (this.currentRoute && this.selectedDocument.resource
+                    && this.selectedDocument.resource.id) {
 
-                    } else {
-                        this.viewUtility.getViewNameForDocument(documentToSelect)
-                            .then(viewName => {
-                                if (viewName != this.view.name) {
-                                    if (tab) {
-                                        return this.router.navigate(['resources', viewName,
-                                            documentToSelect.resource.id, 'view', tab]);
-                                    } else {
-                                        return this.router.navigate(['resources', viewName,
-                                            documentToSelect.resource.id]);
-                                    }
-                                } else {
-                                    this.select(documentToSelect);
-                                }
-                            });
-                    }
-                }
+                this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
+            }
+            this.router.navigate(
+                ['images', documentToSelect.resource.id, 'show', 'relations'],
+                {queryParams: { from: this.currentRoute}}
             );
+
+        } else {
+            this.viewUtility.getViewNameForDocument(documentToSelect)
+                .then(viewName => {
+                    if (viewName != this.view.name) {
+                        if (tab) {
+                            return this.router.navigate(['resources', viewName,
+                                documentToSelect.resource.id, 'view', tab]);
+                        } else {
+                            return this.router.navigate(['resources', viewName,
+                                documentToSelect.resource.id]);
+                        }
+                    } else {
+                        this.select(documentToSelect);
+                    }
+                });
+        }
     }
 
     public setQueryString(q: string) {

@@ -139,20 +139,19 @@ export class ImageOverviewComponent {
     private fetchDocuments() {
 
         const query: Query = this.imagesState.getQuery();
+        query.types = this.imageTypeUtility.getProjectImageTypeNames();
 
-        return this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
-            query.types = imageTypeNames;
-            return this.datastore.find(query);
-        }).catch(errWithParams => {
-            console.error('ERROR with find using query', query);
-            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-        }).then(documents => {
-            if (!documents) return;
+        return this.datastore.find(query)
+            .catch(errWithParams => {
+                console.error('ERROR with find using query', query);
+                if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
+            }).then(documents => {
+                if (!documents) return;
 
-            this.documents = documents as IdaiFieldImageDocument[];
-            this.cacheIdsOfConnectedResources(documents);
-            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
-        });
+                this.documents = documents as IdaiFieldImageDocument[];
+                this.cacheIdsOfConnectedResources(documents);
+                this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            });
     }
 
     private cacheIdsOfConnectedResources(documents) {

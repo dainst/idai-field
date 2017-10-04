@@ -233,7 +233,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
     });
 
-    it('clear search bar input field on switching views', () => {
+    it('restore search bar input field after switching views', () => {
 
         ResourcesPage.typeInIdentifierInSearchField('xyz');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
@@ -241,10 +241,18 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        ResourcesPage.typeInIdentifierInSearchField('abc');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('xyz'));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        ResourcesPage.typeInIdentifierInSearchField(' ');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('abc'));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 
     it('keep query string in search bar input field on switching view modes', () => {

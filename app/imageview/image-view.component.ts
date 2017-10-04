@@ -27,6 +27,7 @@ export class ImageViewComponent implements OnInit {
     protected activeTab: string;
 
     private originalNotFound = false;
+    private comingFrom = undefined;
 
     constructor(
         private route: ActivatedRoute,
@@ -38,7 +39,13 @@ export class ImageViewComponent implements OnInit {
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private viewUtility: ViewUtility,
         private doceditActiveTabService: DoceditActiveTabService
-    ) { }
+    ) {
+        this.route.queryParams.subscribe(queryParams => {
+            if (queryParams['from']) {
+                this.comingFrom = queryParams['from'].split('-');
+            }
+        });
+    }
 
     ngOnInit() {
 
@@ -55,7 +62,8 @@ export class ImageViewComponent implements OnInit {
 
     public deselect() {
 
-        this.router.navigate(['images']);
+        if (this.comingFrom) this.router.navigate(this.comingFrom);
+        else this.router.navigate(['images']);
     }
 
     public startEdit(doc: IdaiFieldDocument, tabName: string) {

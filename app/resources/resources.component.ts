@@ -59,6 +59,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private activeDocumentViewTab: string;
 
+    private currentRoute = undefined;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
@@ -88,6 +90,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     let defaultMode = params['id'] ? 'map' : undefined;
                     this.initialize(defaultMode);
+
+                    this.currentRoute = undefined;
+                    if (params['view']) this.currentRoute = 'resources-'+params['view'];
                 })
                 .then(() => {
                     if (params['id']) {
@@ -336,10 +341,21 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
+        // TODO we can do this syncronously now
         this.imageTypeUtility.isImageType(documentToSelect.resource.type)
             .then(isImageType => {
                     if (isImageType) {
-                        this.router.navigate(['images', documentToSelect.resource.id, 'show', 'relations']);
+
+                        if (this.currentRoute && this.selectedDocument.resource
+                                && this.selectedDocument.resource.id) {
+
+                            this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
+                        }
+                        this.router.navigate(
+                            ['images', documentToSelect.resource.id, 'show', 'relations'],
+                            {queryParams: { from: this.currentRoute}}
+                        );
+
                     } else {
                         this.viewUtility.getViewNameForDocument(documentToSelect)
                             .then(viewName => {

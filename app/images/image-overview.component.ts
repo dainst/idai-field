@@ -86,7 +86,10 @@ export class ImageOverviewComponent {
      */
     public navigateTo(documentToSelect: IdaiFieldImageDocument) {
 
-        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+        this.router.navigate(
+            ['images', documentToSelect.resource.id, 'show'],
+            { queryParams: { from: 'images' } }
+        );
     }
 
     public clearSelection() {

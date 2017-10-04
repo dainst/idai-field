@@ -406,6 +406,11 @@ export class ResourcesComponent implements AfterViewChecked {
         this.resourcesState.setLastQueryString(this.view.name, q);
         this.query.q = q;
 
+        if (!this.isSelectedDocumentMatchedByQueryString()) {
+            this.editGeometry = false;
+            this.deselect();
+        }
+
         this.populateDocumentList();
     }
 

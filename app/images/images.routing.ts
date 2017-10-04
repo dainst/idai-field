@@ -1,8 +1,7 @@
 import {ModuleWithProviders} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ImagesComponent} from './images.component';
 import {ImageOverviewComponent} from './image-overview.component';
-import {ImageViewComponent} from './image-view.component';
 
 const routes: Routes = [
     {
@@ -12,14 +11,6 @@ const routes: Routes = [
             {
                 path: '',
                 component: ImageOverviewComponent
-            },
-            {
-                path: ':id/show',
-                component: ImageViewComponent
-            },
-            {
-                path: ':id/show/:tab',
-                component: ImageViewComponent
             }
         ]
     }

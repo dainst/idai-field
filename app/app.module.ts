@@ -46,6 +46,7 @@ import {ProjectsComponent} from './projects.component';
 import {ImportModule} from './import/import-module';
 import {ExportModule} from './export/export.module';
 import {DoceditActiveTabService} from './docedit/docedit-active-tab-service';
+import {ImageViewModule} from './imageview/image-view.module';
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -53,6 +54,7 @@ let pconf = undefined;
 @NgModule({
     imports: [
         ImagesModule,
+        ImageViewModule,
         ResourcesModule,
         SettingsModule,
         BrowserModule,

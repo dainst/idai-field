@@ -341,7 +341,7 @@ export class ResourcesComponent implements AfterViewChecked {
     // TODO Move this method to fulltext indexer or util class?
     private isSelectedDocumentMatchedByQueryString(): boolean {
 
-        if (this.query.q == '') return true;
+        if (!this.selectedDocument || this.query.q == '') return true;
 
         const tokens: Array<string> = this.query.q.split(' ');
         const resource: Resource = this.selectedDocument.resource;

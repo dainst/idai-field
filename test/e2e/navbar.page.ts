@@ -27,11 +27,6 @@ export class NavbarPage {
         return common.click(element.all(by.css('.nav-link')).get(4));
     };
 
-    public static clickNavigateToSettings() {
-
-        return common.click(element(by.id('settings-button')));
-    };
-
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));
@@ -81,4 +76,12 @@ export class NavbarPage {
         browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))), delays.ECWaitTime);
         return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
     }
+
+    // sequences
+
+    public static performNavigateToSettings() {
+
+        common.click(element(by.id('taskbar-dropdown')));
+        common.click(element(by.id('settings-button')));
+    };
 }

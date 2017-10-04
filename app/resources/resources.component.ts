@@ -5,7 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Query, DocumentChange} from 'idai-components-2/datastore';
-import {Document, Action} from 'idai-components-2/core';
+import {Document, Resource, Action} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
@@ -277,7 +277,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.selectedDocument = documentToSelect;
         if (this.selectedDocument) {
             const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
-            const res2 = this.invalidateTypeFiltersIfNecessary();
+            const res2 = this.invalidateQuerySettingsIfNecessary();
             if (res1 || res2) this.populateDocumentList();
         }
 
@@ -291,6 +291,44 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.selectedDocument;
     }
 
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateQuerySettingsIfNecessary(): boolean {
+
+        const typesInvalidated = this.invalidateTypesIfNecessary();
+        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
+
+        return typesInvalidated || queryStringInvalidated;
+    }
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateTypesIfNecessary(): boolean {
+
+        if (this.isSelectedDocumentTypeInTypeFilters()) return false;
+
+        delete this.query.types;
+        this.filterTypes = [];
+        this.resourcesState.setLastSelectedTypeFilters(this.view.name, this.filterTypes);
+
+        return true;
+    }
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateQueryStringIfNecessary(): boolean {
+
+        if (this.isSelectedDocumentMatchedByQueryString()) return false;
+
+        this.query.q = '';
+        this.resourcesState.setLastQueryString(this.view.name, '');
+
+        return true;
+    }
+
     private isSelectedDocumentTypeInTypeFilters(): boolean {
 
         if (!this.selectedDocument) return true;
@@ -300,16 +338,21 @@ export class ResourcesComponent implements AfterViewChecked {
         return false;
     }
 
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateTypeFiltersIfNecessary(): boolean {
+    // TODO Move this method to fulltext indexer or util class?
+    private isSelectedDocumentMatchedByQueryString(): boolean {
 
-        if (this.isSelectedDocumentTypeInTypeFilters()) return false;
+        if (this.query.q == '') return true;
 
-        delete this.query.types;
-        this.filterTypes = [];
-        this.resourcesState.setLastSelectedTypeFilters(this.view.name, this.filterTypes);
+        const tokens: Array<string> = this.query.q.split(' ');
+        const resource: Resource = this.selectedDocument.resource;
+
+        for (let token of tokens) {
+            if (resource.identifier && resource.identifier.toLowerCase().startsWith(token.toLowerCase())) continue;
+            if (resource.shortDescription && resource.shortDescription.toLowerCase()
+                    .startsWith(token.toLowerCase())) continue;
+
+            return false;
+        }
 
         return true;
     }
@@ -360,7 +403,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
+        this.resourcesState.setLastQueryString(this.view.name, q);
         this.query.q = q;
+
         this.populateDocumentList();
     }
 
@@ -381,7 +426,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private initializeQuery() {
 
-        this.query = { q: '' };
+        this.query = { q: this.resourcesState.getLastQueryString(this.view.name) };
+        
         this.filterTypes = this.resourcesState.getLastSelectedTypeFilters(this.view.name);
         if (this.filterTypes && this.filterTypes.length > 0) this.query.types = this.filterTypes;
     }
@@ -497,7 +543,7 @@ export class ResourcesComponent implements AfterViewChecked {
         doceditRef.result.then(result =>
             this.populateMainTypeDocuments()
                 .then(() => {
-                    this.invalidateTypeFiltersIfNecessary();
+                    this.invalidateQuerySettingsIfNecessary();
                     this.handleDocumentSelectionOnSaved(result.document);
                 })
             , closeReason => {

@@ -44,6 +44,18 @@ export class ResourcesState {
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
 
+    public setLastQueryString(viewName: string, q: string) {
+
+        if (!this._[viewName]) this._[viewName] = {};
+        this._[viewName].q = q;
+        this.serializer.store(this._);
+    }
+
+    public getLastQueryString(viewName: string) {
+
+        return (!this._[viewName] || !this._[viewName].q) ? '' : this._[viewName].q;
+    }
+
     public setLastSelectedTypeFilters(viewName: string, types: string[]) {
 
         if (!this._[viewName]) this._[viewName] = {};

@@ -17,7 +17,7 @@ import {ResourcesModule} from './resources/resources.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
-import {ImagesModule} from './images/images.module';
+import {ImageOverviewModule} from './imageoverview/image-overview.module';
 import {NavbarComponent} from './navbar.component';
 import {CachedPouchdbDatastore} from './datastore/cached-pouchdb-datastore';
 import {BlobMaker} from './imagestore/blob-maker';
@@ -53,7 +53,7 @@ let pconf = undefined;
 
 @NgModule({
     imports: [
-        ImagesModule,
+        ImageOverviewModule,
         ImageViewModule,
         ResourcesModule,
         SettingsModule,

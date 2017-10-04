@@ -3,8 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
-import {imagesRouting} from './images.routing';
-import {ImagesComponent} from './images.component';
+import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
@@ -24,7 +23,6 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
         ImageGridModule,
     ],
     declarations: [
-        ImagesComponent,
         ImageOverviewComponent,
         LinkModalComponent,
         RemoveLinkModalComponent
@@ -39,4 +37,4 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
     ]
 })
 
-export class ImagesModule {}
+export class ImageOverviewModule {}

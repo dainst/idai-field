@@ -34,6 +34,7 @@ export class MapWrapperComponent {
     ) { }
 
     private selectedDocumentIsNew(): boolean {
+
         return !this.selectedDocument.resource.id;
     }
 

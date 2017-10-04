@@ -20,6 +20,7 @@ import {ObjectUtil} from '../util/object-util';
  */
 export class DocumentViewWrapperComponent {
 
+    @Input() activeTab;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() isEditing: boolean = false;
 

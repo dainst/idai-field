@@ -3,6 +3,7 @@ import {ResourcesPage} from './resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {NavbarPage} from '../navbar.page';
+import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -28,11 +29,11 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditPage.getRelationButtonText(1, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
-        expect(DoceditPage.getRelationButtonText(0, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(0, 0, 0)).toEqual('2');
     });
 
     it('edit a resource that contains a relation', () => {
@@ -55,7 +56,7 @@ describe('resources/relations --', () => {
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditPage.clickRelationDeleteButtonByIndices(1, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0, 0);
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');

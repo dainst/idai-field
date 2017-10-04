@@ -19,7 +19,9 @@ import {ImageGridComponent} from "../imagegrid/image-grid.component";
 export class DoceditImageTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    protected documents: IdaiFieldImageDocument[];
+    public documents: IdaiFieldImageDocument[];
+
+    public selected: IdaiFieldImageDocument[] = [];
 
     @Input() document: IdaiFieldDocument;
 
@@ -39,6 +41,35 @@ export class DoceditImageTabComponent {
         }
     }
 
+    /**
+     * @param document the object that should be selected
+     */
+    public select(document: IdaiFieldImageDocument) {
+
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        else this.selected.splice(this.selected.indexOf(document), 1);
+    }
+
+    public clearSelection() {
+
+        this.selected = [];
+    }
+
+    public removeLinks() {
+
+        const isDepictedIn = this.document.resource.relations['isDepictedIn'];
+        const targetsToRemove = [];
+        for (let target of isDepictedIn) {
+            for (let sel of this.selected) {
+                if (sel.resource.id == target) targetsToRemove.push(target);
+            }
+        }
+        for (let targetToRemove of targetsToRemove) {
+            isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
+        }
+        this.loadImages();
+    }
+
     private loadImages() {
 
         const imageDocPromises = [];
@@ -49,8 +80,9 @@ export class DoceditImageTabComponent {
 
         Promise.all(imageDocPromises).then(docs => {
             this.documents = docs as Array<IdaiFieldImageDocument>;
-            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            this.clearSelection();
         });
+
     }
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {

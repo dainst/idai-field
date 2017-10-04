@@ -2,7 +2,7 @@ import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
-import {ImagesGridPage} from '../images/images-grid.page';
+import {ImageOverviewPage} from '../images/image-overview.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 
@@ -58,12 +58,12 @@ describe('settings --', function() {
         NavbarPage.clickCloseMessage(1);
 
         NavbarPage.clickNavigateToImages();
-        ImagesGridPage.clickUploadArea();
-        ImagesGridPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+        ImageOverviewPage.clickUploadArea();
+        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         NavbarPage.clickCloseMessage();
 
-        ImagesGridPage.doubleClickCell(0);
+        ImageOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseMessage();
 

@@ -14,6 +14,7 @@ import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
 import {ImageGridComponent} from "../imagegrid/image-grid.component";
+import {RemoveLinkModalComponent} from "./remove-link-modal.component";
 
 @Component({
     moduleId: module.id,
@@ -85,7 +86,10 @@ export class ImageOverviewComponent {
      */
     public navigateTo(documentToSelect: IdaiFieldImageDocument) {
 
-        this.router.navigate(['images', documentToSelect.resource.id, 'show']);
+        this.router.navigate(
+            ['images', documentToSelect.resource.id, 'show'],
+            { queryParams: { from: 'images' } }
+        );
     }
 
     public clearSelection() {
@@ -104,15 +108,28 @@ export class ImageOverviewComponent {
 
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
             if (targetDoc) {
-                this.updateAndPersistDepictsRelations(this.selected, targetDoc)
+                this.addRelationsToSelectedDocuments(targetDoc)
                     .then(() => {
                         this.clearSelection();
                     }).catch(msgWithParams => {
                         this.messages.add(msgWithParams);
                     });
             }
-        }, (closeReason) => {
-        });
+        }, () => {}); // do nothing on dismiss
+    }
+
+    public openRemoveLinkModal() {
+
+        // TODO remove entries from resource identifiers necessary?
+
+        this.modalService.open(RemoveLinkModalComponent)
+            .result.then( () => {
+                this.removeRelationsOnSelectedDocuments().then(() => {
+                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth)
+                    this.clearSelection();
+                })
+            }
+            , () => {}); // do nothing on dismiss
     }
 
     /**
@@ -122,20 +139,19 @@ export class ImageOverviewComponent {
     private fetchDocuments() {
 
         const query: Query = this.imagesState.getQuery();
+        query.types = this.imageTypeUtility.getProjectImageTypeNames();
 
-        return this.imageTypeUtility.getProjectImageTypeNames().then(imageTypeNames => {
-            query.types = imageTypeNames;
-            return this.datastore.find(query);
-        }).catch(errWithParams => {
-            console.error('ERROR with find using query', query);
-            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-        }).then(documents => {
-            if (!documents) return;
+        return this.datastore.find(query)
+            .catch(errWithParams => {
+                console.error('ERROR with find using query', query);
+                if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
+            }).then(documents => {
+                if (!documents) return;
 
-            this.documents = documents as IdaiFieldImageDocument[];
-            this.cacheIdsOfConnectedResources(documents);
-            this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
-        });
+                this.documents = documents as IdaiFieldImageDocument[];
+                this.cacheIdsOfConnectedResources(documents);
+                this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+            });
     }
 
     private cacheIdsOfConnectedResources(documents) {
@@ -152,20 +168,20 @@ export class ImageOverviewComponent {
 
     private deleteSelected() {
 
-        this.deleteImageDocuments(this.selected).then(
+        this.deleteSelectedImageDocuments().then(
             () => {
                 this.clearSelection();
                 this.fetchDocuments();
             });
     }
 
-    private deleteImageDocuments(documents: Array<IdaiFieldImageDocument>): Promise<any> {
+    private deleteSelectedImageDocuments(): Promise<any> {
         
         return new Promise<any>((resolve, reject) => {
 
             let promise: Promise<any> = new Promise<any>((res) => res());
 
-            for (let document of documents) {
+            for (let document of this.selected) {
                 promise = promise.then(
                     () => this.imagestore.remove(document.resource.id),
                     msgWithParams => reject(msgWithParams)
@@ -185,8 +201,7 @@ export class ImageOverviewComponent {
         });
     }
 
-    private updateAndPersistDepictsRelations(imageDocuments: Array<IdaiFieldImageDocument>,
-                 targetDocument: IdaiFieldDocument): Promise<any> {
+    private addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
 
         this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
 
@@ -194,7 +209,7 @@ export class ImageOverviewComponent {
 
             let promise: Promise<any> = new Promise<any>((res) => res());
 
-            for (let imageDocument of imageDocuments) {
+            for (let imageDocument of this.selected) {
                 const oldVersion = JSON.parse(JSON.stringify(imageDocument));
 
                 const depictsEl = ObjectUtil.takeOrMake(imageDocument,
@@ -216,5 +231,20 @@ export class ImageOverviewComponent {
                 msgWithParams => reject(msgWithParams)
             );
         });
+    }
+
+    private removeRelationsOnSelectedDocuments() {
+
+        const promises = [];
+        for (let document of this.selected) {
+
+            const oldVersion = JSON.parse(JSON.stringify(document));
+            delete document.resource.relations['depicts'];
+
+            promises.push(this.persistenceManager.persist(
+                document, this.settingsService.getUsername(),
+                oldVersion));
+        }
+        return Promise.all(promises);
     }
 }

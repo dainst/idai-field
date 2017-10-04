@@ -26,8 +26,8 @@
                 <span *ngIf="showIdentifier" class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
                 <span *ngIf="showLinkBadges">
                     <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-                      id="related-resource-{{cell['document'].id}}"
-                      class="badge badge-info related-resource-{{cell['document'].id}}">
+                      id="related-resource-{{resourceId}}"
+                      class="badge badge-info related-resource-{{resourceId}}">
                              <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
                     </span>
                 </span>

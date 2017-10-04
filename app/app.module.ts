@@ -17,7 +17,7 @@ import {ResourcesModule} from './resources/resources.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './imagestore/imagestore';
 import {ReadImagestore} from './imagestore/read-imagestore';
-import {ImagesModule} from './images/images.module';
+import {ImageOverviewModule} from './imageoverview/image-overview.module';
 import {NavbarComponent} from './navbar.component';
 import {CachedPouchdbDatastore} from './datastore/cached-pouchdb-datastore';
 import {BlobMaker} from './imagestore/blob-maker';
@@ -45,13 +45,16 @@ import {ProjectsComponent} from './projects.component';
 
 import {ImportModule} from './import/import-module';
 import {ExportModule} from './export/export.module';
+import {DoceditActiveTabService} from './docedit/docedit-active-tab-service';
+import {ImageViewModule} from './imageview/image-view.module';
 const remote = require('electron').remote;
 
 let pconf = undefined;
 
 @NgModule({
     imports: [
-        ImagesModule,
+        ImageOverviewModule,
+        ImageViewModule,
         ResourcesModule,
         SettingsModule,
         BrowserModule,
@@ -174,7 +177,8 @@ let pconf = undefined;
         },
         { provide: MD, useClass: M},
         ImageTypeUtility,
-        ViewUtility
+        ViewUtility,
+        DoceditActiveTabService
     ],
     bootstrap: [ AppComponent ]
 })

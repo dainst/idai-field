@@ -5,6 +5,7 @@ let common = require('../common.js');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 import {DoceditPage} from '../docedit/docedit.page';
+import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 
 
 export class ResourcesPage {
@@ -234,9 +235,9 @@ export class ResourcesPage {
 
         ResourcesPage.openEditByDoubleClickResource(identifier);
         DoceditPage.clickRelationsTab();
-        DoceditPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
-        DoceditPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
-        DoceditPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
+        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     };

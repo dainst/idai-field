@@ -17,6 +17,7 @@ import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
+import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 
 
 @Component({
@@ -58,6 +59,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private activeDocumentViewTab: string;
 
+    private currentRoute = undefined;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
@@ -71,7 +74,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewUtility: ViewUtility,
                 private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
-                private resourcesState: ResourcesState
+                private resourcesState: ResourcesState,
+                private doceditActiveTabService: DoceditActiveTabService
     ) {
         this.route.params.subscribe(params => {
 
@@ -86,6 +90,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     let defaultMode = params['id'] ? 'map' : undefined;
                     this.initialize(defaultMode);
+
+                    this.currentRoute = undefined;
+                    if (params['view']) this.currentRoute = 'resources-'+params['view'];
                 })
                 .then(() => {
                     if (params['id']) {
@@ -377,30 +384,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
-        this.imageTypeUtility.isImageType(documentToSelect.resource.type)
-            .then(isImageType => {
-                    if (isImageType) {
-                        this.router.navigate(['images', documentToSelect.resource.id, 'show', 'relations']);
-                    } else {
-                        this.viewUtility.getViewNameForDocument(documentToSelect)
-                            .then(viewName => {
-                                if (viewName != this.view.name) {
-                                    if (tab) {
-                                        return this.router.navigate(['resources', viewName,
-                                            documentToSelect.resource.id, 'view', tab]);
-                                    } else {
-                                        return this.router.navigate(['resources', viewName,
-                                            documentToSelect.resource.id]);
-                                    }
-                                } else {
-                                    this.select(documentToSelect);
-                                }
-                            });
-                    }
-                }
-            );
-    }
+        if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
 
+            this.jumpToImageTypeRelationTarget(documentToSelect);
+        } else {
+
+            this.jumpToResourceTypeRelationTarget(documentToSelect, tab);
+        }
+    }
     public setQueryString(q: string) {
 
         this.resourcesState.setLastQueryString(this.view.name, q);
@@ -427,6 +418,37 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         this.populateDocumentList();
+    }
+
+    private jumpToResourceTypeRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
+
+        this.viewUtility.getViewNameForDocument(documentToSelect)
+            .then(viewName => {
+                if (viewName != this.view.name) {
+                    if (tab) {
+                        return this.router.navigate(['resources', viewName,
+                            documentToSelect.resource.id, 'view', tab]);
+                    } else {
+                        return this.router.navigate(['resources', viewName,
+                            documentToSelect.resource.id]);
+                    }
+                } else {
+                    this.select(documentToSelect);
+                }
+            });
+    }
+
+    private jumpToImageTypeRelationTarget(documentToSelect: IdaiFieldDocument) {
+
+        if (this.currentRoute && this.selectedDocument.resource
+            && this.selectedDocument.resource.id) {
+
+            this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
+        }
+        this.router.navigate(
+            ['images', documentToSelect.resource.id, 'show', 'relations'],
+            {queryParams: { from: this.currentRoute}}
+        );
     }
 
     private initializeQuery() {
@@ -543,13 +565,15 @@ export class ResourcesComponent implements AfterViewChecked {
         this.editGeometry = false;
         if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
+        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         doceditRef.result.then(result =>
             this.populateMainTypeDocuments()
                 .then(() => {
                     this.invalidateQuerySettingsIfNecessary();
                     this.handleDocumentSelectionOnSaved(result.document);
+                    this.setNextDocumentViewActiveTab();
                 })
             , closeReason => {
 
@@ -564,7 +588,6 @@ export class ResourcesComponent implements AfterViewChecked {
         ).then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
 
         doceditRef.componentInstance.setDocument(document);
-        if (activeTabName) doceditRef.componentInstance.setActiveTab(activeTabName);
     }
 
     public startEditGeometry() {
@@ -708,5 +731,14 @@ export class ResourcesComponent implements AfterViewChecked {
     private static makeMainTypeQuery(mainType: string): Query {
 
         return { types: [mainType] };
+    }
+
+    private setNextDocumentViewActiveTab() {
+
+        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
+        if (['relations','images','fields']
+                .indexOf(nextActiveTab) != -1) {
+            this.activeDocumentViewTab = nextActiveTab;
+        }
     }
 }

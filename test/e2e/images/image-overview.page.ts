@@ -1,12 +1,13 @@
 import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
+import {NavbarPage} from '../navbar.page';
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
 let common = require('../common.js');
 
-export class ImagesGridPage {
+export class ImageOverviewPage {
 
     public static selectedClass = 'selected';
 
@@ -20,7 +21,7 @@ export class ImagesGridPage {
 
     public static clickCell(index) {
 
-        return ImagesGridPage.getCell(index).click();
+        return ImageOverviewPage.getCell(index).click();
     };
 
     public static chooseImageSubtype(index) {
@@ -38,9 +39,19 @@ export class ImagesGridPage {
         return common.click(element(by.id('delete-images')));
     };
 
-    public static clickCreateRelationsButton() {
+    public static clickConfirmUnlinkButton() {
 
-        return common.click(element(by.id('create-relations-btn')));
+        return common.click(element(by.id('remove-link-confirm')));
+    };
+
+    public static clickLinkButton() {
+
+        return common.click(element(by.id('create-link-btn')));
+    };
+
+    public static clickUnlinkButton() {
+
+        return common.click(element(by.id('remove-link-btn')));
     };
 
     public static clickConfirmDeleteButton() {
@@ -57,7 +68,7 @@ export class ImagesGridPage {
 
     public static doubleClickCell(index) {
 
-        return browser.actions().doubleClick(ImagesGridPage.getCell(index)).perform();
+        return browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
     };
 
     // mouse moves
@@ -81,7 +92,7 @@ export class ImagesGridPage {
 
     public static getCellImageName(index) {
 
-        return ImagesGridPage.getCell(index).element(by.css('.badge.badge-secondary')).getText();
+        return ImageOverviewPage.getCell(index).element(by.css('.badge.badge-secondary')).getText();
     };
 
     // elements
@@ -97,7 +108,7 @@ export class ImagesGridPage {
     };
     public static getCell(index) {
 
-        return ImagesGridPage.getAllCells().get(index);
+        return ImageOverviewPage.getAllCells().get(index);
     };
 
     public static getDeleteConfirmationModal() {
@@ -112,24 +123,26 @@ export class ImagesGridPage {
 
     public static typeInIdentifierInLinkModal(identifier) {
 
-        return common.typeIn(ImagesGridPage.getLinkModal().element(by.id('object-search')), identifier);
+        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
     };
 
     public static getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return ImagesGridPage.getLinkModal().element(by.id('resource-'+identifier))
+        return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
     };
 
     // sequences
 
     public static createDepictsRelation(identifier) {
 
-        const imageToConnect = ImagesGridPage.getCell(0);
+        const imageToConnect = ImageOverviewPage.getCell(0);
 
         imageToConnect.click();
-        expect(imageToConnect.getAttribute('class')).toMatch(ImagesGridPage.selectedClass);
-        ImagesGridPage.clickCreateRelationsButton();
-        ImagesGridPage.typeInIdentifierInLinkModal(identifier);
-        ImagesGridPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        expect(imageToConnect.getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
+        ImageOverviewPage.clickLinkButton();
+        ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
+        ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
     }
 }

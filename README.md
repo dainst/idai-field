@@ -44,7 +44,7 @@ care that changes made to scss files result in automatic conversion to css.
 
 The app must have been build (`npm run build`) before running the tests.
 
-To execute the *unit tests*, run 
+To execute the **unit tests**, run 
 
 ```
 $ npm test   
@@ -52,7 +52,7 @@ $ npm test
 
 For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 
-To execute *e2e tests*, run 
+To execute **e2e tests**, run 
 
 ```
 $ npm run e2e [noff|ff]

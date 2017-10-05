@@ -41,9 +41,7 @@ export class ImageViewComponent implements OnInit {
         private doceditActiveTabService: DoceditActiveTabService
     ) {
         this.route.queryParams.subscribe(queryParams => {
-            if (queryParams['from']) {
-                this.comingFrom = queryParams['from'].split('-');
-            }
+            if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
         });
     }
 

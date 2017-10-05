@@ -92,7 +92,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     this.initialize(defaultMode);
 
                     this.currentRoute = undefined;
-                    if (params['view']) this.currentRoute = 'resources-' + params['view'];
+                    if (params['view']) this.currentRoute = 'resources/' + params['view'];
                 })
                 .then(() => {
                     if (params['id']) {
@@ -443,7 +443,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.currentRoute && this.selectedDocument.resource
             && this.selectedDocument.resource.id) {
 
-            this.currentRoute += '-' + this.selectedDocument.resource.id + '-show-images';
+            this.currentRoute += '/' + this.selectedDocument.resource.id + '/show/images';
         }
         this.router.navigate(
             ['images', documentToSelect.resource.id, 'show', 'relations'],

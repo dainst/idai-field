@@ -1,11 +1,11 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {ImagePickerComponent} from './image-picker.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {ImageGridComponent} from "../imagegrid/image-grid.component";
+import {ImageGridComponent} from '../imagegrid/image-grid.component';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -61,14 +61,19 @@ export class DoceditImageTabComponent {
 
         const isDepictedIn = this.document.resource.relations['isDepictedIn'];
         const targetsToRemove = [];
+
         for (let target of isDepictedIn) {
             for (let sel of this.selected) {
                 if (sel.resource.id == target) targetsToRemove.push(target);
             }
         }
+
         for (let targetToRemove of targetsToRemove) {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
+
+        if (isDepictedIn.length == 0) delete this.document.resource.relations['isDepictedIn'];
+
         this.loadImages();
     }
 
@@ -84,7 +89,6 @@ export class DoceditImageTabComponent {
             this.documents = docs as Array<IdaiFieldImageDocument>;
             this.clearSelection();
         });
-
     }
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {

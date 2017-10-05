@@ -65,9 +65,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private loading: Loading,
                 private doceditActiveTabService: DoceditActiveTabService
     ) {
-        routingHelper.setRoute(route);
-
-        route.params.subscribe(params => {
+        routingHelper.routeParams(route).subscribe(params => {
 
             this.ready = false;
 
@@ -76,8 +74,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.mainTypeDocuments = undefined;
             this.editGeometry = false;
 
-            this.viewManager.setupViewFrom(params)
-                .then(() => this.initialize())
+            return this.initialize()
                 .then(() => {
                     if (params['id']) {
                         // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a relation link from image component to resources component)

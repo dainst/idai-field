@@ -4,6 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {Injectable} from "@angular/core";
 import {ImageTypeUtility} from "../docedit/image-type-utility";
 import {ViewManager} from "./view-manager";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 /**
@@ -22,7 +23,14 @@ export class RoutingHelper {
 
     }
 
-    public setRoute(route: ActivatedRoute) { // we need a setter because the route must come from the componenent it is bound to
+    public routeParams(route: ActivatedRoute) {
+
+        return Observable.create(observer => {
+            this.setRoute(route, observer);
+        });
+    }
+
+    private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
 
         route.params.subscribe(params => {
 
@@ -30,6 +38,10 @@ export class RoutingHelper {
             if (params['view']) this.currentRoute = 'resources/' + params['view'];
 
             this.location.replaceState('resources/' + params['view']);
+
+            this.viewManager.setupViewFrom(params).then(() => {
+                observer.next(params);
+            })
         })
     }
 

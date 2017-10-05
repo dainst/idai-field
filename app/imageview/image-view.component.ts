@@ -9,10 +9,10 @@ import {Imagestore} from '../imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ViewUtility} from '../common/view-utility';
 import {ObjectUtil} from '../util/object-util';
-import {BlobMaker} from "../imagestore/blob-maker";
-import {M} from "../m";
-import {ImageContainer} from "../imagestore/image-container";
+import {BlobMaker} from '../imagestore/blob-maker';
+import {ImageContainer} from '../imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
+import {M} from '../m';
 
 @Component({
     moduleId: module.id,
@@ -121,13 +121,13 @@ export class ImageViewComponent implements OnInit {
     private setNextDocumentViewActiveTab() {
 
         const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-        if (['relations', 'fields']
-                .indexOf(nextActiveTab) != -1) {
+        if (['relations', 'fields'].indexOf(nextActiveTab) != -1) {
             this.activeTab = nextActiveTab;
         }
     }
 
     private getRouteParams(callback) {
+
         this.route.params.forEach((params: Params) => {
             this.activeTab = params['tab'];
             callback(params['id']);

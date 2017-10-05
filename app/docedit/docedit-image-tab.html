@@ -32,12 +32,11 @@
             </div>
 
             <image-grid #imageGrid
-                    [nrOfColumns]="3"
-                    [selected]="selected"
-                    [documents]="documents"
-                    (onClick)="select($event)"
-                    [showLinkBadges]="false"
-                    (onDoubleClick)="navigateTo($event)">
+                        [nrOfColumns]="3"
+                        [selected]="selected"
+                        [documents]="documents"
+                        [showLinkBadges]="false"
+                        (onClick)="select($event)">
             </image-grid>
 
         </div>

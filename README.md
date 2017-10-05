@@ -66,11 +66,13 @@ $ npm run e2e ff
 
 so that test execution stops when the first error is found. 
 
-Additionally, there is a (not yet) stable syncing test suite, which can be started with
+There is are two test suites, called `default` and `flaky`. Unless specified explicitely with
 
 ```
 $ npm run e2e (no)ff flaky
 ```
+
+the `default` suite gets executed.
 
 ## Packaging
 

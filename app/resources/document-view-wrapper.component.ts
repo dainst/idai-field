@@ -1,11 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {ResourcesComponent} from './resources.component';
-import {PersistenceManager} from 'idai-components-2/persist';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Messages} from 'idai-components-2/messages';
-import {SettingsService} from '../settings/settings-service';
-import {Loading} from '../widgets/loading';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ObjectUtil} from '../util/object-util';
+import {ProjectConfiguration} from 'idai-components-2/configuration'
 
 @Component({
     selector: 'document-view-wrapper',
@@ -24,23 +21,27 @@ export class DocumentViewWrapperComponent {
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() isEditing: boolean = false;
 
-    constructor(public resourcesComponent: ResourcesComponent) { }
+    constructor(public resourcesComponent: ResourcesComponent,
+                private projectConfiguration: ProjectConfiguration) { }
 
     public hasRelations() {
 
         const relations: any = this.selectedDocument.resource.relations;
-
         if (ObjectUtil.isEmpty(relations)) return false;
 
-        // TODO Check relation definition for visibility
-        if (Object.keys(relations).length == 1
-            && relations['isRecordedIn']
-            && relations['isRecordedIn'].length == 1
-            && relations['isRecordedIn'][0]
-            == this.resourcesComponent.projectDocument.resource.id) {
-            return false;
+        for (let relation of Object.keys(relations)) {
+
+            // invisible relations are not counted
+            if (!this.projectConfiguration.isVisibleRelation(relation,this.selectedDocument.resource.type)) continue;
+
+            // relations to project document are not counted
+            if (relation == 'isRecordedIn' &&
+                relations[relation].length == 1 &&
+                relations[relation][0] == this.resourcesComponent.projectDocument.resource.id) continue;
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

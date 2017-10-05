@@ -1,7 +1,6 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Document} from 'idai-components-2/core';
-import {ViewUtility} from "../common/view-utility";
 import {Injectable} from "@angular/core";
 import {ImageTypeUtility} from "../docedit/image-type-utility";
 import {ViewManager} from "./view-manager";
@@ -17,9 +16,8 @@ export class RoutingHelper {
     private currentRoute;
 
     constructor(private router: Router,
-                private resourcesNavigator: ViewManager,
+                private viewManager: ViewManager,
                 private location: Location,
-                private viewUtility: ViewUtility,
                 private imageTypeUtility: ImageTypeUtility) {
 
     }
@@ -61,9 +59,9 @@ export class RoutingHelper {
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
-        this.viewUtility.getViewNameForDocument(documentToSelect)
+        this.viewManager.getViewNameForDocument(documentToSelect)
             .then(viewName => {
-                if (viewName != this.resourcesNavigator.getView().name) {
+                if (viewName != this.viewManager.getView().name) {
                     if (tab) {
                         return this.router.navigate(['resources', viewName,
                             documentToSelect.resource.id, 'view', tab]);

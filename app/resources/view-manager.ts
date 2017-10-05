@@ -110,6 +110,16 @@ export class ViewManager {
         });
     }
 
+    public getViewNameForDocument(document) {
+
+        return this.viewUtility.getViewNameForDocument(document)
+    }
+
+    public getMainTypeDocumentLabel(document) {
+
+        return this.viewUtility.getMainTypeDocumentLabel(document);
+    }
+
     private initializeView(viewName: string): Promise<any> {
 
         return Promise.resolve().then(
@@ -131,11 +141,6 @@ export class ViewManager {
             this.mode = 'map';
             this.setLastSelectedMode('map');
         }
-    }
-
-    public getMainTypeDocumentLabel(document) {
-
-        return this.viewUtility.getMainTypeDocumentLabel(document);
     }
 
     private setLastSelectedMode(defaultMode) {

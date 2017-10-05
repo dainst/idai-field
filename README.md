@@ -21,7 +21,7 @@ You need the following components in order for the local server to work:
 
 * [NodeJS](https://nodejs.org/en/) > 7.0.0
 * Node Package Manager ([NPM](https://www.npmjs.com/)) 
-* Under OS X you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
+
 
 ## Quickstart
 
@@ -73,9 +73,11 @@ $ npm run package[-mac|-win]
 Without using one of the specified suffixed, this will create packages for both MacOs and Windows 32/64 bit.
 If used with one of the suffixed, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release`-directory.
 
-Please note that when using windows, that due to nested node_modules and the 
+Please note that when using **windows**, that due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
+
+When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
 
 Not that creating Linux packages should be possible with electron, but here this is yet untested and not enabled.
 

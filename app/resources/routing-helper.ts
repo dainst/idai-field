@@ -1,24 +1,36 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Document} from 'idai-components-2/core';
-import {ViewUtility} from "../common/view-utility";
 import {Injectable} from "@angular/core";
+import {ImageTypeUtility} from "../docedit/image-type-utility";
+import {ViewManager} from "./view-manager";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export class RoutingHelper {
 
-    private currentRoute = undefined;
+    private currentRoute;
 
     constructor(private router: Router,
+                private viewManager: ViewManager,
                 private location: Location,
-                private viewUtility: ViewUtility) {
+                private imageTypeUtility: ImageTypeUtility) {
 
     }
 
-    public setRoute(route: ActivatedRoute) { // we need a setter because the route must come from the componenent it is bound to
+    public routeParams(route: ActivatedRoute) {
+
+        return Observable.create(observer => {
+            this.setRoute(route, observer);
+        });
+    }
+
+    private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
 
         route.params.subscribe(params => {
 
@@ -26,7 +38,22 @@ export class RoutingHelper {
             if (params['view']) this.currentRoute = 'resources/' + params['view'];
 
             this.location.replaceState('resources/' + params['view']);
+
+            this.viewManager.setupViewFrom(params).then(() => {
+                observer.next(params);
+            })
         })
+    }
+
+    public jumpToRelationTarget(selectedDocument, documentToSelect: Document, cb, tab?: string) {
+
+        if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
+
+            this.jumpToImageTypeRelationTarget(selectedDocument, documentToSelect);
+        } else {
+
+            this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
+        }
     }
 
     public jumpToImageTypeRelationTarget(selectedDocument: Document, documentToSelect: Document) {
@@ -42,11 +69,11 @@ export class RoutingHelper {
         );
     }
 
-    public jumpToResourceTypeRelationTarget(vName, cb, documentToSelect: Document, tab?: string) {
+    public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
-        this.viewUtility.getViewNameForDocument(documentToSelect)
+        this.viewManager.getViewNameForDocument(documentToSelect)
             .then(viewName => {
-                if (viewName != vName) {
+                if (viewName != this.viewManager.getView().name) {
                     if (tab) {
                         return this.router.navigate(['resources', viewName,
                             documentToSelect.resource.id, 'view', tab]);
@@ -58,13 +85,5 @@ export class RoutingHelper {
                     cb(documentToSelect);
                 }
             });
-    }
-
-    // granted this does not make too much sense here. but the indirection helps us to
-    // to remove the viewUtility dependency from the resources component. viewUtility.getMainTypeDocumentLabel could
-    // also be static and maybe we find a better place for that method.
-    public getMainTypeDocumentLabel(document) {
-
-        return this.viewUtility.getMainTypeDocumentLabel(document);
     }
 }

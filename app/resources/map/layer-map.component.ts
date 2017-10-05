@@ -1,6 +1,6 @@
 import {Component, SimpleChanges} from '@angular/core';
 import {MapComponent} from 'idai-components-2/idai-field-map';
-import {ReadDatastore, Query} from 'idai-components-2/datastore';
+import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Document} from 'idai-components-2/core';
 import {ConfigLoader} from 'idai-components-2/configuration';
@@ -9,9 +9,8 @@ import {ImageContainer} from '../../imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
-import {ResourcesState} from '../resources-state';
-import {ResourcesComponent} from '../resources.component';
 import {M} from '../../m';
+import {ViewManager} from "../view-manager";
 
 @Component({
     moduleId: module.id,
@@ -36,8 +35,8 @@ export class LayerMapComponent extends MapComponent {
                 protected messages: Messages,
                 protected imagestore: Imagestore,
                 private imageTypeUtility: ImageTypeUtility,
-                private resourcesState: ResourcesState,
-                private resourcesComponent: ResourcesComponent,
+                private viewManager: ViewManager,
+                // private resourcesComponent: ResourcesComponent,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -224,8 +223,7 @@ export class LayerMapComponent extends MapComponent {
             activeLayersIds.push(this.activeLayers[i].document.resource.id);
         }
 
-        this.resourcesState.setActiveLayersIds(this.resourcesComponent.view.name, this.mainTypeDocument.resource.id,
-            activeLayersIds);
+        this.viewManager.setActiveLayersIds(this.mainTypeDocument.resource.id, activeLayersIds);
     }
 
     /**
@@ -236,8 +234,7 @@ export class LayerMapComponent extends MapComponent {
         var activeLayersIds: Array<string>;
 
         if (this.mainTypeDocument) {
-            activeLayersIds = this.resourcesState.getActiveLayersIds(this.resourcesComponent.view.name,
-                this.mainTypeDocument.resource.id);
+            activeLayersIds = this.viewManager.getActiveLayersIds(this.mainTypeDocument.resource.id);
         }
 
         if (!activeLayersIds) {

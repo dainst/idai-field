@@ -2,14 +2,11 @@
   max-height: calc(100vh - 350px) !important;
   overflow-x: hidden;
   overflow-y: auto;
-  margin-top: -2px;
   border-bottom: 1px solid #eee;
 
   .list-group-item {
     display: block;
     cursor: pointer;
-    border: 0;
-    border-radius: 0;
     margin: 0 0 -1px 0 !important;
     font-size: 1em;
     padding: 10px 5px 10px 10px;

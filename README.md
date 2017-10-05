@@ -1,7 +1,6 @@
 [![Mac build](https://img.shields.io/travis/dainst/idai-field-client/master.svg?label=mac%20build)](https://travis-ci.org/dainst/idai-field-client)
 [![Windows build](https://img.shields.io/appveyor/ci/dainst/idai-field-client/master.svg?label=windows%20build)](https://ci.appveyor.com/project/dainst/idai-field-client)
 
-
 # iDAI.field 2 Client
 
 
@@ -16,12 +15,10 @@ Admin Documentation:
 ## Prerequisites
 
 The iDAI.field2 development stack runs under MacOS, Windows, Linux. 
-
-You need the following components in order for the local server to work:
+To set it up, you need to install
 
 * [NodeJS](https://nodejs.org/en/) > 7.0.0
 * Node Package Manager ([NPM](https://www.npmjs.com/)) 
-
 
 ## Quickstart
 
@@ -73,7 +70,7 @@ $ npm run package[-mac|-win]
 Without using one of the specified suffixed, this will create packages for both MacOs and Windows 32/64 bit.
 If used with one of the suffixed, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release`-directory.
 
-Please note that when using **windows**, that due to nested node_modules and the 
+Please note that when using **Windows**, that due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 

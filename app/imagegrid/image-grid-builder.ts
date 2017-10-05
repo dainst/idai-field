@@ -1,8 +1,8 @@
-import {Document} from "idai-components-2/core";
-import {IdaiFieldImageResource} from "../model/idai-field-image-resource";
-import {ImageContainer} from "../imagestore/image-container";
-import {BlobMaker} from "../imagestore/blob-maker";
-import {Imagestore} from "../imagestore/imagestore";
+import {Document} from 'idai-components-2/core';
+import {IdaiFieldImageResource} from '../model/idai-field-image-resource';
+import {ImageContainer} from '../imagestore/image-container';
+import {BlobMaker} from '../imagestore/blob-maker';
+import {Imagestore} from '../imagestore/imagestore';
 
 export interface ImageGridBuilderResult {
     rows: any;

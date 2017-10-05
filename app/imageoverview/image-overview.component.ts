@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -28,7 +28,7 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent {
+export class ImageOverviewComponent implements OnInit{
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     protected documents: IdaiFieldImageDocument[];
@@ -54,6 +54,11 @@ export class ImageOverviewComponent {
         if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
 
         this.fetchDocuments();
+    }
+
+    ngOnInit() {
+
+        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
     }
 
     public onResize() {
@@ -131,7 +136,7 @@ export class ImageOverviewComponent {
         this.modalService.open(RemoveLinkModalComponent)
             .result.then( () => {
                 this.removeRelationsOnSelectedDocuments().then(() => {
-                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth)
+                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
                     this.clearSelection();
                 })
             }
@@ -156,7 +161,6 @@ export class ImageOverviewComponent {
 
                 this.documents = documents as IdaiFieldImageDocument[];
                 this.cacheIdsOfConnectedResources(documents);
-                this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
             });
     }
 

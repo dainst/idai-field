@@ -1,12 +1,12 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageTypeUtility} from './image-type-utility';
+import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {M} from '../m';
-import {ImageGridComponent} from "../imagegrid/image-grid.component";
 
 @Component({
     selector: 'image-picker',
@@ -18,7 +18,7 @@ import {ImageGridComponent} from "../imagegrid/image-grid.component";
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent {
+export class ImagePickerComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
@@ -36,6 +36,11 @@ export class ImagePickerComponent {
         private imageTypeUtility: ImageTypeUtility
     ) {
         this.fetchDocuments(this.query);
+    }
+
+    ngOnInit() {
+
+        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
     }
 
     public setDocument(document: IdaiFieldDocument) {
@@ -79,7 +84,6 @@ export class ImagePickerComponent {
             .catch(msgWithParams => this.messages.add(msgWithParams)
             ).then(documents => {
                 this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
-                this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
             })
             .catch(errWithParams => {
                 console.error('error in find with query', this.query);

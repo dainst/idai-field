@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridBuilder, ImageGridBuilderResult} from "./image-grid-builder";
-import {M} from "../m";
+import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
+import {M} from '../m';
 
 @Component({
     selector: 'image-grid',
@@ -29,7 +29,7 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
-    private clientWidth = 0;
+    private clientWidth: number = 0;
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridOnResizeRunning = false;
@@ -49,7 +49,6 @@ export class ImageGridComponent implements OnChanges {
         private imageGridBuilder: ImageGridBuilder,
         private messages: Messages
     ) {
-
     }
 
     public getIdentifier(id: string): string {
@@ -61,40 +60,37 @@ export class ImageGridComponent implements OnChanges {
         return this.resourceIdentifiers[id];
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
 
         if (!changes['documents']) return;
         if (this.showDropArea) this.insertStubForDropArea();
         this.calcGrid(this.clientWidth);
     }
 
-    public setClientWidth(clientWidth) {
+    public setClientWidth(clientWidth: number) {
 
         this.clientWidth = clientWidth;
     }
 
-    public calcGrid(clientWidth) {
+    public calcGrid(clientWidth: number) {
 
         this.clientWidth = clientWidth;
         this.rows = [];
+
         if (!this.documents) return;
 
-        return this.imageGridBuilder.calcGrid(
-            this.documents, this.nrOfColumns,
-            // this.el.nativeElement.children[0].
-            clientWidth).then(result => {
-
+        return this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth).then(result => {
             this.rows = result['rows'];
             for (let errWithParams of result.errsWithParams) {
                 // do not display a msg to the user via messages because there may be two much messages
                 // the user will get black image which allows to identify which thumbs are missing
-                console.error("error from calcGrid:", errWithParams);
+                console.error('error from calcGrid:', errWithParams);
             }
             this.showImagesNotFoundMessage(result);
         });
     }
 
-    public _onResize(width) {
+    public _onResize(width: number) {
 
         clearTimeout(this.calcGridOnResizeTimeoutRef);
         this.calcGridOnResizeTimeoutRef = setTimeout(() => {

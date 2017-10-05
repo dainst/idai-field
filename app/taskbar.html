@@ -13,7 +13,7 @@
            #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
            ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
            triggers="manual" (click)="togglePopover()"
-           placement="bottom">
+           placement="bottom" class="navbar-hover-element">
             <span class="mdi mdi-alert-outline"></span>
             <span class="badge-pill badge-danger conflicts-badge">
                 {{conflicts.length}}

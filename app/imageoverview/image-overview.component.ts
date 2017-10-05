@@ -13,8 +13,8 @@ import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {M} from '../m';
-import {ImageGridComponent} from "../imagegrid/image-grid.component";
-import {RemoveLinkModalComponent} from "./remove-link-modal.component";
+import {ImageGridComponent} from '../imagegrid/image-grid.component';
+import {RemoveLinkModalComponent} from './remove-link-modal.component';
 
 @Component({
     moduleId: module.id,
@@ -34,6 +34,7 @@ export class ImageOverviewComponent {
     protected documents: IdaiFieldImageDocument[];
 
     public selected: IdaiFieldImageDocument[] = [];
+    public depictsRelationsSelected: boolean = false;
 
     // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
@@ -76,8 +77,13 @@ export class ImageOverviewComponent {
      */
     public select(document: IdaiFieldImageDocument) {
 
-        if (this.selected.indexOf(document) == -1) this.selected.push(document);
-        else this.selected.splice(this.selected.indexOf(document), 1);
+        if (this.selected.indexOf(document) == -1) {
+            this.selected.push(document);
+        } else {
+            this.selected.splice(this.selected.indexOf(document), 1);
+        }
+
+        this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
     }
 
     /**
@@ -246,5 +252,16 @@ export class ImageOverviewComponent {
                 oldVersion));
         }
         return Promise.all(promises);
+    }
+
+    private doSelectedDocumentsContainDepictsRelations(): boolean {
+
+        for (let document of this.selected) {
+            if (document.resource.relations['depicts'] && document.resource.relations['depicts'].length > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

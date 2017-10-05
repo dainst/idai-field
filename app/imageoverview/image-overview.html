@@ -23,17 +23,20 @@
 
                 <div class="btn-toolbar" *ngIf="selected.length">
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" id="delete-images" class="btn btn-danger" (click)="openDeleteModal(deleteModal)">
+                        <button type="button" id="delete-images" class="btn btn-danger"
+                                (click)="openDeleteModal(deleteModal)">
                             <span class="mdi mdi-delete"></span>
                         </button>
                     </div>
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" id="remove-link-btn" class="btn btn-danger" (click)="openRemoveLinkModal()"
+                        <button *ngIf="depictsRelationsSelected" type="button" id="remove-link-btn"
+                                class="btn btn-danger" (click)="openRemoveLinkModal()"
                                 placement="bottom"
                                 ngbTooltip="Mit dieser Funktion entfernst du nach einer weiteren Bestätigung bei den ausgewählten Bildern sämtliche Verlinkungen zu anderen Ressourcen.">
                             <span class="mdi mdi-link-off"></span>
                         </button>
-                        <button type="button" id="create-link-btn" class="btn btn-primary" (click)="openLinkModal(linkModal)"
+                        <button type="button" id="create-link-btn" class="btn btn-primary"
+                                (click)="openLinkModal(linkModal)"
                                 placement="bottom"
                                 ngbTooltip="Mit dieser Funktion kannst du ein oder mehrere ausgewählte Bilder mit einer anderen Ressource verknüpfen. Eine Verknüpfung ist zu allen Ressourcen möglich, bei denen es sich nicht selbst wiederum um Bilder handelt.">
                             <span class="mdi mdi-link"></span>

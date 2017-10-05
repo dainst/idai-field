@@ -21,7 +21,7 @@
                             (onQueryStringChanged)="setQueryString($event)">
                 </search-bar>
 
-                <div class="btn-toolbar" *ngIf="selected.length">
+                <div id="image-overview-buttons" class="btn-toolbar" *ngIf="selected.length">
                     <div class="btn-group mr-2" role="group">
                         <button type="button" id="delete-images" class="btn btn-danger"
                                 (click)="openDeleteModal(deleteModal)"

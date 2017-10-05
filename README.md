@@ -3,7 +3,14 @@
 
 
 # iDAI.field 2 Client
-   
+
+
+## Documentation
+
+A User Manual with documented workflows and usage is available here:
+[User Manual](https://github.com/dainst/idai-field-documentation)
+
+Admin Documentation:
 [Documentation](docs/README.md) 
    
 ## Prerequisites
@@ -98,3 +105,5 @@ to extract the package. In that case, please use a different archiver, for examp
 
 Afterwards you find packages of the application for different operating systems
 in the `release`-directory.
+
+

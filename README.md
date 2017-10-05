@@ -6,11 +6,10 @@
 
 ## Documentation
 
-A User Manual with documented workflows and usage is available here:
-[User Manual](https://github.com/dainst/idai-field-documentation)
+A user manual with documented workflows and usage is available 
+[here](https://github.com/dainst/idai-field-documentation).
 
-Admin Documentation:
-[Documentation](docs/README.md) 
+Admin documentation is can be found [here](docs/README.md).
    
 ## Prerequisites
 

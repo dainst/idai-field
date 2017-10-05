@@ -72,9 +72,13 @@ export class DoceditImageTabComponent {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
 
-        if (isDepictedIn.length == 0) delete this.document.resource.relations['isDepictedIn'];
-
-        this.loadImages();
+        if (isDepictedIn.length == 0) {
+            delete this.document.resource.relations['isDepictedIn'];
+            this.documents = [];
+            this.clearSelection();
+        } else {
+            this.loadImages();
+        }
     }
 
     private loadImages() {

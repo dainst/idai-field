@@ -1,11 +1,10 @@
-import {Component, AfterViewChecked, Renderer} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Location} from '@angular/common';
+import {AfterViewChecked, Component, Renderer} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Query, DocumentChange} from 'idai-components-2/datastore';
-import {Document, Resource, Action} from 'idai-components-2/core';
+import {DocumentChange, Query} from 'idai-components-2/datastore';
+import {Action, Document, Resource} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
@@ -18,6 +17,7 @@ import {ResourcesState} from './resources-state';
 import {M} from '../m';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
+import {RoutingHelper} from "./routing-helper";
 
 
 @Component({
@@ -59,11 +59,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private activeDocumentViewTab: string;
 
-    private currentRoute = undefined;
-
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private location: Location,
+    constructor(route: ActivatedRoute,
+                private routingHelper: RoutingHelper,
                 private renderer: Renderer,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
@@ -71,13 +68,14 @@ export class ResourcesComponent implements AfterViewChecked {
                 private documentEditChangeMonitor: DocumentEditChangeMonitor,
                 private messages: Messages,
                 private configLoader: ConfigLoader,
-                private viewUtility: ViewUtility,
                 private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
                 private resourcesState: ResourcesState,
                 private doceditActiveTabService: DoceditActiveTabService
     ) {
-        this.route.params.subscribe(params => {
+        routingHelper.setRoute(route);
+
+        route.params.subscribe(params => {
 
             this.ready = false;
 
@@ -90,9 +88,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 .then(() => {
                     let defaultMode = params['id'] ? 'map' : undefined;
                     this.initialize(defaultMode);
-
-                    this.currentRoute = undefined;
-                    if (params['view']) this.currentRoute = 'resources/' + params['view'];
                 })
                 .then(() => {
                     if (params['id']) {
@@ -129,8 +124,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     private setupViewFrom(params: Params): Promise<any> {
-
-        this.location.replaceState('resources/' + params['view']);
 
         return (!this.view || params['view'] != this.view.name)
             ? this.initializeView(params['view']) : Promise.resolve();
@@ -386,10 +379,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
 
-            this.jumpToImageTypeRelationTarget(documentToSelect);
+            this.routingHelper.jumpToImageTypeRelationTarget(this.selectedDocument, documentToSelect);
         } else {
 
-            this.jumpToResourceTypeRelationTarget(documentToSelect, tab);
+            this.routingHelper.
+                jumpToResourceTypeRelationTarget(this.view.name, documentToSelect => this.select(documentToSelect), documentToSelect, tab);
         }
     }
     public setQueryString(q: string) {
@@ -420,36 +414,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
-    private jumpToResourceTypeRelationTarget(documentToSelect: IdaiFieldDocument, tab?: string) {
 
-        this.viewUtility.getViewNameForDocument(documentToSelect)
-            .then(viewName => {
-                if (viewName != this.view.name) {
-                    if (tab) {
-                        return this.router.navigate(['resources', viewName,
-                            documentToSelect.resource.id, 'view', tab]);
-                    } else {
-                        return this.router.navigate(['resources', viewName,
-                            documentToSelect.resource.id]);
-                    }
-                } else {
-                    this.select(documentToSelect);
-                }
-            });
-    }
-
-    private jumpToImageTypeRelationTarget(documentToSelect: IdaiFieldDocument) {
-
-        if (this.currentRoute && this.selectedDocument.resource
-            && this.selectedDocument.resource.id) {
-
-            this.currentRoute += '/' + this.selectedDocument.resource.id + '/show/images';
-        }
-        this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show', 'relations'],
-            { queryParams: { from: this.currentRoute } }
-        );
-    }
 
     private initializeQuery() {
 

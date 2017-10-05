@@ -7,7 +7,7 @@
                     class="form-control" [(ngModel)]="selectedMainTypeDocument"
                     (ngModelChange)="chooseMainTypeDocumentOption($event)">
                 <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                    {{viewUtility.getMainTypeDocumentLabel(document)}}
+                    {{routingHelper.getMainTypeDocumentLabel(document)}}
                 </option>
             </select>
             <select id="mainTypeSelectBoxSubstitute"

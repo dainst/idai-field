@@ -18,6 +18,7 @@ import {ResourcesStateSerializer} from './resources-state-serializer';
 import {ThumbnailViewComponent} from "./thumbnail-view.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
+import {RoutingHelper} from "./routing-helper";
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
     ],
     providers: [
         ResourcesState,
-        ResourcesStateSerializer
+        ResourcesStateSerializer,
+        RoutingHelper
     ],
     exports: [
         GeometryViewComponent

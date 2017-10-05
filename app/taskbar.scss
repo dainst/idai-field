@@ -17,8 +17,11 @@
   }
 
   .dropdown-item {
-    color: black;
     font-size: 15px;
+
+    .mdi {
+      color: #5572a1;
+    }
   }
 
   .dropdown-item:focus {
@@ -38,6 +41,7 @@
     display: inline-block;
     top: -4px;
     margin-left: 5px;
+    color: black;
   }
 
   .conflicts {

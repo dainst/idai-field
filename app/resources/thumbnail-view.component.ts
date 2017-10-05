@@ -1,9 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridComponent} from "../imagegrid/image-grid.component";
+import {ImageGridComponent} from '../imagegrid/image-grid.component';
 
 @Component({
     selector: 'thumbnail-view',
@@ -26,14 +25,8 @@ export class ThumbnailViewComponent implements OnChanges {
 
     constructor(
         private datastore: Datastore,
-        private router: Router,
         private el: ElementRef
     ) {}
-
-    public selectImage(documentToJumpTo: Document) {
-
-        this.router.navigate(['images', documentToJumpTo.resource.id, 'show', 'relations']);
-    }
 
     public onResize() {
 

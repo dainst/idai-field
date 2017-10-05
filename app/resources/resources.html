@@ -2,26 +2,26 @@
      class="row bg-light py-2">
 
     <div class="col-md-3">
-        <div *ngIf="view && view.mainType != 'Project'">
+        <div *ngIf="viewManager.getView() && viewManager.getView().mainType != 'Project'">
             <select id="mainTypeSelectBox" *ngIf="selectedMainTypeDocument"
                     class="form-control" [(ngModel)]="selectedMainTypeDocument"
                     (ngModelChange)="chooseMainTypeDocumentOption($event)">
                 <option *ngFor="let document of mainTypeDocuments" [ngValue]="document">
-                    {{routingHelper.getMainTypeDocumentLabel(document)}}
+                    {{viewManager.getMainTypeDocumentLabel(document)}}
                 </option>
             </select>
             <select id="mainTypeSelectBoxSubstitute"
-                    *ngIf="view && view.mainType != 'Project' && !selectedMainTypeDocument"
+                    *ngIf="viewManager.getView() && viewManager.getView().mainType != 'Project' && !selectedMainTypeDocument"
                     class="form-control" disabled>
                 <option>
-                    {{mainTypeLabel}} anlegen ➔
+                    {{viewManager.getMainTypeLabel()}} anlegen ➔
                 </option>
             </select>
         </div>
     </div>
 
     <div class="col-md-1">
-        <div *ngIf="view && view.mainType != 'Project'" class="row">
+        <div *ngIf="viewManager.getView() && viewManager.getView().mainType != 'Project'" class="row">
             <div *ngIf="selectedMainTypeDocument" class="col-md-6">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(selectedMainTypeDocument)">
@@ -30,13 +30,13 @@
             </div>
 
             <div class="col-md-6">
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
-                                        && mode == 'map'"
-                             id="create-main-type-document-button" [preselectedType]="view.mainType"
+                <plus-button *ngIf="ready && query.q == '' && viewManager.getView().mainType != 'Project'
+                                        && viewManager.getMode() == 'map'"
+                             id="create-main-type-document-button" [preselectedType]="viewManager.getView().mainType"
                              [isRecordedIn]="projectDocument"></plus-button>
-                <plus-button *ngIf="ready && query.q == '' && view.mainType != 'Project'
-                                        && mode == 'list'"
-                             id="create-main-type-document-button" [preselectedType]="view.mainType"
+                <plus-button *ngIf="ready && query.q == '' && viewManager.getView().mainType != 'Project'
+                                        && viewManager.getMode() == 'list'"
+                             id="create-main-type-document-button" [preselectedType]="viewManager.getView().mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="projectDocument"></plus-button>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
     <div class="col-md-4 mr-md-auto">
         <search-bar *ngIf="query" [q]="query.q" [types]="filterTypes" [relationName]="'isRecordedIn'"
-                    [relationRangeType]="view.mainType"
+                    [relationRangeType]="viewManager.getView().mainType"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
         </search-bar>
     </div>
@@ -52,19 +52,19 @@
     <div class="col-md-3" align="right">
         <div *ngIf="ready" class="btn-group resources-mode-buttons">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
-                    [class.active]="mode == 'map'">
+                    [class.active]="viewManager.getMode() == 'map'">
                 <span class="mdi mdi-map"></span> Karte
             </button>
             <button id="list-mode-button" (click)="setMode('list')"
-                    class="btn btn-primary m-0" [class.active]="mode == 'list'">
+                    class="btn btn-primary m-0" [class.active]="viewManager.getMode() == 'list'">
                 <span class="mdi mdi-table"></span> Liste
             </button>
         </div>
         <div *ngIf="!ready" class="btn-group resources-mode-buttons">
-            <button class="btn btn-primary m-0" [class.active]="mode == 'map'">
+            <button class="btn btn-primary m-0" [class.active]="viewManager.getMode() == 'map'">
                 <span class="mdi mdi-map"></span> Karte
             </button>
-            <button class="btn btn-primary m-0" [class.active]="mode == 'list'">
+            <button class="btn btn-primary m-0" [class.active]="viewManager.getMode() == 'list'">
                 <span class="mdi mdi-table"></span> Liste
             </button>
         </div>
@@ -76,17 +76,17 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="ready && view && view.mainType != 'Project' && !selectedMainTypeDocument && !editGeometry"
+    <div *ngIf="ready && viewManager.getView() && viewManager.getView().mainType != 'Project' && !selectedMainTypeDocument && !editGeometry"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Sie müssen zuerst eine Ressource vom Typ '{{mainTypeLabel}}' anlegen...</em>
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{viewManager.getMainTypeLabel()}}' anlegen...</em>
     </div>
 
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->
     <!--<div *ngIf="(view && view.mainType == 'project') || selectedMainTypeDocument || editGeometry" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <map-wrapper *ngIf="mode == 'map'" [documents]="documents" [selectedDocument]="selectedDocument"
+        <map-wrapper *ngIf="viewManager.getMode() == 'map'" [documents]="documents" [selectedDocument]="selectedDocument"
                      [isEditing]="editGeometry" [activeTab]="activeDocumentViewTab"></map-wrapper>
-        <list *ngIf="mode == 'list'" [ready]="ready" [documents]="documents"
+        <list *ngIf="viewManager.getMode() == 'list'" [ready]="ready" [documents]="documents"
               [selectedMainTypeDocument]="selectedMainTypeDocument"></list>
     </div>
 

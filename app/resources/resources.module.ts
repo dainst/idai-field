@@ -18,6 +18,7 @@ import {ResourcesStateSerializer} from './resources-state-serializer';
 import {ThumbnailViewComponent} from "./thumbnail-view.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
+import {ViewManager} from "./view-manager";
 import {RoutingHelper} from "./routing-helper";
 
 @NgModule({
@@ -45,6 +46,7 @@ import {RoutingHelper} from "./routing-helper";
     providers: [
         ResourcesState,
         ResourcesStateSerializer,
+        ViewManager,
         RoutingHelper
     ],
     exports: [

@@ -122,11 +122,23 @@ describe('resources/state --', function() {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
         ResourcesPage.clickChooseTypeFilter('place');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime); // make sure it disappeared
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
 
         createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+    });
+
+    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        ResourcesPage.typeInIdentifierInSearchField('xyz');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+
+        createDepictsRelation();
+        clickDepictsRelationLink();
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        ResourcesPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
     });
 
     it('switch views after click on relation link', () => {

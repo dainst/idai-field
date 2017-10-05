@@ -30,16 +30,13 @@
                 </span>
             </div>
 
-            <hr>
-
             <image-grid #imageGrid
                     [nrOfColumns]="3"
                     [selected]="selected"
                     [documents]="documents"
                     (onClick)="select($event)"
                     [showLinkBadges]="false"
-                    (onDoubleClick)="navigateTo($event)"
-            >
+                    (onDoubleClick)="navigateTo($event)">
             </image-grid>
 
         </div>

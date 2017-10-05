@@ -35,6 +35,8 @@ export class DoceditImageTabComponent {
 
     ngOnChanges() {
 
+        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
+
         if (!this.document) return;
         if (this.document.resource.relations['isDepictedIn']) {
             this.loadImages();

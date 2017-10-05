@@ -68,6 +68,11 @@ export class ImageGridComponent implements OnChanges {
         this.calcGrid(this.clientWidth);
     }
 
+    public setClientWidth(clientWidth) {
+
+        this.clientWidth = clientWidth;
+    }
+
     public calcGrid(clientWidth) {
 
         this.clientWidth = clientWidth;
@@ -97,7 +102,9 @@ export class ImageGridComponent implements OnChanges {
             if (this.calcGridOnResizeRunning) return;
 
             this.calcGridOnResizeRunning = true;
-            this.calcGrid(width).then(() => this.calcGridOnResizeRunning = false);
+            this.calcGrid(width).then(() => {
+                this.calcGridOnResizeRunning = false;
+            });
         }, 500);
     }
 

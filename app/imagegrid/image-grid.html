@@ -1,44 +1,47 @@
-<div *ngFor="let row of rows; let index = index">
+<div class="image-grid">
+    <div *ngFor="let row of rows; let index = index">
 
-    <div *ngFor="let cell of row; let ind = ind"
-         class="cell-container"
-         [style.width.px]="cell['calculatedWidth'] + 1"
-         [style.height.px]="cell['calculatedHeight'] + 30">
+        <div *ngFor="let cell of row; let ind = ind"
+             class="cell-container"
+             [style.width.px]="cell['calculatedWidth'] + 1"
+             [style.height.px]="cell['calculatedHeight'] + 30">
 
-        <div *ngIf="cell['document'].id == 'droparea'"
-             class="droparea-container"
-             [style.width.px]="cell['calculatedWidth']"
-             [style.height.px]="cell['calculatedHeight']">
-            <drop-area (onImagesUploaded)="onImagesUploaded.emit()">
-            </drop-area>
-        </div>
-
-        <div *ngIf="cell['document'].id != 'droparea'"
-             (click)="onClick.emit(cell['document'])"
-             (dblclick)="onDoubleClick.emit(cell['document'])"
-             [id]="'resource-' + cell['document'].resource.identifier"
-             class="cell"
-             [class.selected]="selected.includes(cell['document'])">
-
-            <div class="identifier"
-                 *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
-                 [style.maxWidth.px]="cell['calculatedWidth']-15">
-                <span *ngIf="showIdentifier" class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
-                <span *ngIf="showLinkBadges">
-                    <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-                      id="related-resource-{{resourceId}}"
-                      class="badge badge-info related-resource-{{resourceId}}">
-                             <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
-                    </span>
-                </span>
-            </div>
-
-            <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
+            <div *ngIf="cell['document'].id == 'droparea'"
+                 class="droparea-container"
                  [style.width.px]="cell['calculatedWidth']"
                  [style.height.px]="cell['calculatedHeight']">
+                <drop-area (onImagesUploaded)="onImagesUploaded.emit()">
+                </drop-area>
+            </div>
 
-            <div *ngIf="showShortDescription" class="title" [style.width.px]="cell['calculatedWidth']">
-                {{cell['document'].resource.shortDescription}}
+            <div *ngIf="cell['document'].id != 'droparea'"
+                 (click)="onClick.emit(cell['document'])"
+                 (dblclick)="onDoubleClick.emit(cell['document'])"
+                 [id]="'resource-' + cell['document'].resource.identifier"
+                 class="cell"
+                 [class.selected]="selected.includes(cell['document'])">
+
+                <div class="identifier"
+                     *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
+                     [style.maxWidth.px]="cell['calculatedWidth']-15">
+
+                    <span *ngIf="showIdentifier" class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
+                    <span *ngIf="showLinkBadges">
+                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
+                          id="related-resource-{{resourceId}}"
+                          class="badge badge-info related-resource-{{resourceId}}">
+                                 <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+                        </span>
+                    </span>
+                </div>
+
+                <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
+                     [style.width.px]="cell['calculatedWidth']"
+                     [style.height.px]="cell['calculatedHeight']">
+
+                <div *ngIf="showShortDescription" class="title" [style.width.px]="cell['calculatedWidth']">
+                    {{cell['document'].resource.shortDescription}}
+                </div>
             </div>
         </div>
     </div>

@@ -55,24 +55,18 @@ For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 To execute e2e tests, run 
 
 ```
-$ npm run e2e
+$ npm run e2e [noff|ff]
 ```
 
-This command runs all end to end tests once. To alter this behaviour, you can use the `ff` option (fail fast)
-
-```
-$ npm run e2e ff
-```
-
-so that test execution stops when the first error is found. 
+The optional fail fast parameter specifies if test execution stops on the first error (`ff`) or continues until all tests are finished (`noff`). If not specified, the default mode is `noff`.
 
 There is are two test suites, called `default` and `flaky`. Unless specified explicitely with
 
 ```
-$ npm run e2e (no)ff flaky
+$ npm run e2e noff|ff flaky
 ```
 
-the `default` suite gets executed.
+the `default` suite gets executed. 
 
 ## Packaging
 

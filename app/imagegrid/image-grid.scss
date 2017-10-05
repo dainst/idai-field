@@ -5,6 +5,7 @@
 .image-grid {
   margin-top: 15px;
   position: relative;
+  pointer-events: none;
 
   .cell-container {
     display: inline-block;
@@ -13,12 +14,14 @@
 
   .droparea-container {
     padding: 5px;
+    pointer-events: auto !important;
   }
 
   .cell {
     position: relative;
     cursor: pointer;
     user-select: none;
+    pointer-events: auto !important;
 
     &.selected::after {
       content: '';

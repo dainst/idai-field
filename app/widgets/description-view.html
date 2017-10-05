@@ -1,9 +1,5 @@
-<!--
-        In one project we have this assumption that there is always a shortDescription,
-        while in another there is only the identifier.
-    -->
-<div>
-    <h2 id="description-view-short-description" *ngIf="document.resource.shortDescription">
+<div id="description-view">
+    <h2 *ngIf="document.resource.shortDescription" id="description-view-short-description">
         {{document.resource.shortDescription}}
     </h2>
 </div>

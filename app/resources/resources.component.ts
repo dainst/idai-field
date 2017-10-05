@@ -7,11 +7,10 @@ import {DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document, Resource} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
+import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ViewUtility} from '../common/view-utility';
 import {Loading} from '../widgets/loading';
 import {ResourcesState} from './resources-state';
 import {M} from '../m';
@@ -67,7 +66,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private modalService: NgbModal,
                 private documentEditChangeMonitor: DocumentEditChangeMonitor,
                 private messages: Messages,
-                private configLoader: ConfigLoader,
+                private projectConfiguration: ProjectConfiguration,
                 private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
                 private resourcesState: ResourcesState,
@@ -150,10 +149,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private initializeView(viewName: string): Promise<any> {
 
-        return this.configLoader.getProjectConfiguration().then(
-            projectConfiguration => {
-                this.view = projectConfiguration.getView(viewName);
-                this.mainTypeLabel = projectConfiguration.getLabelForType(this.view.mainType);
+        return Promise.resolve().then(
+            () => {
+                this.view = this.projectConfiguration.getView(viewName);
+                this.mainTypeLabel = this.projectConfiguration.getLabelForType(this.view.mainType);
             }
         ).catch(() => Promise.reject(null));
     }

@@ -26,8 +26,16 @@
   }
 }
 
+#search-bar,
+#mainTypeSelectBox,
+#mainTypeSelectBoxSubstitute{
+  margin-top: 3px;
+  margin-bottom: -3px;
+}
+
 .resources-mode-buttons {
-  margin-top: 2px !important;
+  margin-top: 3px;
+  margin-bottom: -1px;
 }
 
 .no-main-type-resource-alert {

@@ -13,8 +13,8 @@ import {DoceditComponent} from '../docedit/docedit.component';
 import {Loading} from '../widgets/loading';
 import {M} from '../m';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
-import {ViewManager} from "./view-manager";
-import {RoutingHelper} from "./routing-helper";
+import {ViewManager} from './view-manager';
+import {RoutingHelper} from './routing-helper';
 
 
 @Component({
@@ -84,7 +84,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     }
                 })
                 .catch(msgWithParams => {
-                    if (msgWithParams) this.messages.add(msgWithParams)
+                    if (msgWithParams) this.messages.add(msgWithParams);
                 });
         });
 
@@ -111,10 +111,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
 
-        this.routingHelper.jumpToRelationTarget(
-            this.selectedDocument,
-            documentToSelect, docToSelect => this.select(docToSelect),
-            tab );
+        this.routingHelper.jumpToRelationTarget(this.selectedDocument, documentToSelect,
+            docToSelect => this.select(docToSelect), tab);
     }
 
     public stop() {
@@ -122,7 +120,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.ready = false;
     }
 
-    public initialize(defaultMode?: string): Promise<any> {
+    public initialize(): Promise<any> {
 
         this.loading.start();
 
@@ -365,8 +363,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
-
-
     private initializeQuery() {
 
         this.query = { q: this.viewManager.getLastQueryString() };
@@ -464,8 +460,9 @@ export class ResourcesComponent implements AfterViewChecked {
         this.removeEmptyDocuments();
         this.selectedDocument = newDocument;
 
-        if (geometryType == 'none') this.editDocument();
-        else {
+        if (geometryType == 'none') {
+            this.editDocument();
+        } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.editGeometry = true;
             this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later

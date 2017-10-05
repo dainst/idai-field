@@ -1,10 +1,10 @@
+import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
-import {Injectable} from "@angular/core";
-import {ImageTypeUtility} from "../docedit/image-type-utility";
-import {ViewManager} from "./view-manager";
-import {Observable} from "rxjs/Observable";
+import {ImageTypeUtility} from '../docedit/image-type-utility';
+import {ViewManager} from './view-manager';
 
 @Injectable()
 /**
@@ -20,7 +20,6 @@ export class RoutingHelper {
                 private viewManager: ViewManager,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility) {
-
     }
 
     public routeParams(route: ActivatedRoute) {
@@ -41,26 +40,22 @@ export class RoutingHelper {
 
             this.viewManager.setupViewFrom(params).then(() => {
                 observer.next(params);
-            })
+            });
         })
     }
 
     public jumpToRelationTarget(selectedDocument, documentToSelect: Document, cb, tab?: string) {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
-
             this.jumpToImageTypeRelationTarget(selectedDocument, documentToSelect);
         } else {
-
             this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
         }
     }
 
     public jumpToImageTypeRelationTarget(selectedDocument: Document, documentToSelect: Document) {
 
-        if (this.currentRoute && selectedDocument.resource
-            && selectedDocument.resource.id) {
-
+        if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
             this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
         }
         this.router.navigate(

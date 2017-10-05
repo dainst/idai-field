@@ -47,10 +47,10 @@ export class ThumbnailViewComponent implements OnChanges {
         this.documents = [];
         let promise = Promise.resolve();
         for (let id of this.imageIds) {
-            promise = promise.then(() => this.datastore.get(id)
+            promise = promise.then(() => this.datastore.get(id))
                 .then(doc => {
                     this.documents.push(doc as IdaiFieldImageDocument);
-                }))
+                });
         }
 
         promise.then(() => this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth));

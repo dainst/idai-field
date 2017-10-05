@@ -1,8 +1,8 @@
 import {Params} from '@angular/router';
-import {ViewUtility} from "../common/view-utility";
-import {Injectable} from "@angular/core";
-import {ResourcesState} from './resources-state';
+import {Injectable} from '@angular/core';
 import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
+import {ViewUtility} from '../common/view-utility';
+import {ResourcesState} from './resources-state';
 
 @Injectable()
 /**
@@ -21,7 +21,6 @@ export class ViewManager {
     constructor(private viewUtility: ViewUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private resourcesState: ResourcesState) {
-
     }
 
     public setMode(mode, store = true) {

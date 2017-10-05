@@ -40,23 +40,19 @@ do that continuously in the background for you.
 `npm start` start the electron app. Besides starting the application the command takes 
 care that changes made to scss files result in automatic conversion to css.
 
-## Unit - Testing
+## Testing
 
 The app must have been build (`npm run build`) before running the tests.
-To execute the tests, run 
+
+To execute the unit tests, run 
 
 ```
 $ npm test   
 ```
 
-[Troubleshooting](docs/unit-test-troubleshooting.md)
+For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 
-## E2E - Testing
-
-The app must have been build (`npm run build`) before running the tests.
-To execute the tests, run 
-
-Test execution can be started
+To execute e2e tests, run 
 
 ```
 $ npm run e2e

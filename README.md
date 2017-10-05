@@ -73,29 +73,16 @@ the `default` suite gets executed.
 To create binaries run 
 
 ```
-$ npm run package
+$ npm run package[-mac|-win]
 ```
 
-This will create packages for MacOs and Windows 32/64 bit.
-Linux is possible with electron but here this is yet untested and not enabled.
-
-To package only for mac, use
-
-```
-$ npm run package-mac
-```
-
-To package only for windows, use
-
-```
-$ npm run package-win
-```
+Without using one of the specified suffixed, this will create packages for both MacOs and Windows 32/64 bit.
+If used with one of the suffixed, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release`-directory.
 
 Please note that when using windows, that due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
-Afterwards you find packages of the application for different operating systems
-in the `release`-directory.
+Not that creating Linux packages should be possible with electron, but here this is yet untested and not enabled.
 
 

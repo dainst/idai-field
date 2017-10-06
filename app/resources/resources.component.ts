@@ -337,6 +337,8 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     private populateDocumentList() {
 
+        console.log("populateDocumentList")
+
         this.newDocumentsFromRemote = [];
 
         if (!this.selectedMainTypeDocument) {
@@ -428,9 +430,13 @@ export class ResourcesComponent implements AfterViewChecked {
         if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
         this.doceditProxy.editDocument(document, result => {
+
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                this.invalidateQuerySettingsIfNecessary();
-                this.handleDocumentSelectionOnSaved(result.document);
+                return this.populateMainTypeDocuments().then(() => {
+                        this.invalidateQuerySettingsIfNecessary();
+                        this.handleDocumentSelectionOnSaved(result.document);
+                    });
+
             }, closeReason => {
                 this.removeEmptyDocuments();
                 if (closeReason == 'deleted') {

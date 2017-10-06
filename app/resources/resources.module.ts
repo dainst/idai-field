@@ -5,7 +5,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
 import {ResourcesComponent} from './resources.component';
-import {GeometryViewComponent} from './geometry-view.component';
+import {GeometryViewComponent} from './docview/geometry-view.component';
 import {EditableMapComponent} from './map/editable-map.component';
 import {MapWrapperComponent} from './map-wrapper.component';
 import {ListComponent} from './list/list.component';
@@ -13,14 +13,14 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
-import {ResourcesState} from './resources-state';
-import {ResourcesStateSerializer} from './resources-state-serializer';
-import {ThumbnailViewComponent} from "./thumbnail-view.component";
+import {ResourcesState} from './service/resources-state';
+import {ResourcesStateSerializer} from './service/resources-state-serializer';
+import {ThumbnailViewComponent} from "./docview/thumbnail-view.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
-import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
-import {ViewManager} from "./view-manager";
-import {RoutingHelper} from "./routing-helper";
-import {DoceditProxy} from "./docedit-proxy";
+import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.component';
+import {ViewManager} from "./service/view-manager";
+import {RoutingHelper} from "./service/routing-helper";
+import {DoceditProxy} from "./service/docedit-proxy";
 
 @NgModule({
     imports: [

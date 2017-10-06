@@ -9,9 +9,9 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {M} from '../m';
-import {ViewManager} from './view-manager';
-import {RoutingHelper} from './routing-helper';
-import {DoceditProxy} from "./docedit-proxy";
+import {ViewManager} from './service/view-manager';
+import {RoutingHelper} from './service/routing-helper';
+import {DoceditProxy} from "./service/docedit-proxy";
 
 
 @Component({

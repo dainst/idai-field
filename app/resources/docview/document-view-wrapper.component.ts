@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {ResourcesComponent} from './resources.component';
+import {ResourcesComponent} from '../resources.component';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ObjectUtil} from '../util/object-util';
+import {ObjectUtil} from '../../util/object-util';
 import {ProjectConfiguration} from 'idai-components-2/configuration'
 
 @Component({

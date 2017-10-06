@@ -1,7 +1,7 @@
 import {Params} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
-import {ViewUtility} from '../common/view-utility';
+import {ViewUtility} from '../../common/view-utility';
 import {ResourcesState} from './resources-state';
 import {Query} from 'idai-components-2/datastore';
 import {Resource} from "idai-components-2/core";

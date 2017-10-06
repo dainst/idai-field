@@ -1,8 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageGridComponent} from '../imagegrid/image-grid.component';
+import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
+import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 
 @Component({
     selector: 'thumbnail-view',

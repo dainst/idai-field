@@ -1,7 +1,7 @@
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DoceditComponent} from "../docedit/docedit.component";
-import {DoceditActiveTabService} from "../docedit/docedit-active-tab-service";
+import {DoceditComponent} from "../../docedit/docedit.component";
+import {DoceditActiveTabService} from "../../docedit/docedit-active-tab-service";
 import {Injectable} from "@angular/core";
 
 @Injectable()

@@ -43,7 +43,7 @@
     </div>
 
     <div class="col-md-4 mr-md-auto">
-        <search-bar *ngIf="query" [q]="query.q" [types]="filterTypes" [relationName]="'isRecordedIn'"
+        <search-bar *ngIf="query" [q]="query.q" [types]="viewManager.getFilterTypes()" [relationName]="'isRecordedIn'"
                     [relationRangeType]="viewManager.getView().mainType"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
         </search-bar>

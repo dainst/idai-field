@@ -33,7 +33,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public editGeometry: boolean = false;
 
     public query: Query;
-    public filterTypes: string[];
 
     public documents: Array<Document>;
     public selectedDocument: Document;
@@ -270,8 +269,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.isSelectedDocumentTypeInTypeFilters()) return false;
 
         delete this.query.types;
-        this.filterTypes = [];
-        this.viewManager.setLastSelectedTypeFilters(this.filterTypes);
+        this.viewManager.setFilterTypes([]);
 
         return true;
     }
@@ -352,8 +350,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         types && types.length > 0 ? this.query.types = types : delete this.query.types;
 
-        this.viewManager.setLastSelectedTypeFilters(types);
-        this.filterTypes = types;
+        this.viewManager.setFilterTypes(types);
 
         if (!this.isSelectedDocumentTypeInTypeFilters()) {
             this.editGeometry = false;
@@ -367,8 +364,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.query = { q: this.viewManager.getLastQueryString() };
         
-        this.filterTypes = this.viewManager.getLastSelectedTypeFilters();
-        if (this.filterTypes && this.filterTypes.length > 0) this.query.types = this.filterTypes;
+        if (this.viewManager.getFilterTypes() &&
+                this.viewManager.getFilterTypes().length > 0)
+            this.query.types = this.viewManager.getFilterTypes();
     }
 
     public remove(document: Document) {
@@ -594,6 +592,13 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editGeometry = false;
             this.loading.stop();
         }, 1);
+    }
+
+    public getCurrentFilterType()  {
+
+        return (this.viewManager.getFilterTypes() &&
+            this.viewManager.getFilterTypes().length > 0 ?
+            this.viewManager.getFilterTypes()[0] : undefined);
     }
 
     private removeEmptyDocuments() {

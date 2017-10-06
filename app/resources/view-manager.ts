@@ -70,12 +70,13 @@ export class ViewManager {
         this.resourcesState.setLastQueryString(this.view.name, q);
     }
 
-    public getLastSelectedTypeFilters() {
+
+    public getFilterTypes() {
 
         return this.resourcesState.getLastSelectedTypeFilters(this.view.name);
     }
 
-    public setLastSelectedTypeFilters(filterTypes) {
+    public setFilterTypes(filterTypes) {
 
         this.resourcesState.setLastSelectedTypeFilters(this.view.name, filterTypes);
     }

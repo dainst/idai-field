@@ -20,6 +20,7 @@ import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {DocumentViewWrapperComponent} from './document-view-wrapper.component';
 import {ViewManager} from "./view-manager";
 import {RoutingHelper} from "./routing-helper";
+import {DoceditProxy} from "./docedit-proxy";
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import {RoutingHelper} from "./routing-helper";
         ResourcesState,
         ResourcesStateSerializer,
         ViewManager,
-        RoutingHelper
+        RoutingHelper,
+        DoceditProxy
     ],
     exports: [
         GeometryViewComponent

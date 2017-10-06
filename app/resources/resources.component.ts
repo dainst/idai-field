@@ -1,20 +1,17 @@
 import {AfterViewChecked, Component, Renderer} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {DocumentChange, Query} from 'idai-components-2/datastore';
-import {Action, Document, Resource} from 'idai-components-2/core';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Action, Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
-import {DoceditComponent} from '../docedit/docedit.component';
 import {Loading} from '../widgets/loading';
 import {M} from '../m';
-import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {ViewManager} from './view-manager';
 import {RoutingHelper} from './routing-helper';
+import {DoceditProxy} from "./docedit-proxy";
 
 
 @Component({
@@ -53,14 +50,12 @@ export class ResourcesComponent implements AfterViewChecked {
     constructor(route: ActivatedRoute,
                 private viewManager: ViewManager,
                 private routingHelper: RoutingHelper,
+                private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService,
-                private modalService: NgbModal,
-                private documentEditChangeMonitor: DocumentEditChangeMonitor,
                 private messages: Messages,
-                private loading: Loading,
-                private doceditActiveTabService: DoceditActiveTabService
+                private loading: Loading
     ) {
         routingHelper.routeParams(route).subscribe(params => {
 
@@ -432,29 +427,20 @@ export class ResourcesComponent implements AfterViewChecked {
         this.editGeometry = false;
         if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
 
-        if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
-
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
-        doceditRef.result.then(result =>
-            this.populateMainTypeDocuments()
-                .then(() => {
-                    this.invalidateQuerySettingsIfNecessary();
-                    this.handleDocumentSelectionOnSaved(result.document);
-                    this.setNextDocumentViewActiveTab();
-                })
-            , closeReason => {
-
-                this.documentEditChangeMonitor.reset();
+        this.doceditProxy.editDocument(document, result => {
+                if (result['tab']) this.activeDocumentViewTab = result['tab'];
+                this.invalidateQuerySettingsIfNecessary();
+                this.handleDocumentSelectionOnSaved(result.document);
+            }, closeReason => {
                 this.removeEmptyDocuments();
-
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
                     if (document == this.selectedMainTypeDocument) return this.handleMainTypeDocumentOnDeleted();
                 }
-            }
-        ).then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            },
+            activeTabName)
 
-        doceditRef.componentInstance.setDocument(document);
+            .then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
     }
 
     public startEditGeometry() {
@@ -611,14 +597,5 @@ export class ResourcesComponent implements AfterViewChecked {
     private static makeMainTypeQuery(mainType: string): Query {
 
         return { types: [mainType] };
-    }
-
-    private setNextDocumentViewActiveTab() {
-
-        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-        if (['relations','images','fields']
-                .indexOf(nextActiveTab) != -1) {
-            this.activeDocumentViewTab = nextActiveTab;
-        }
     }
 }

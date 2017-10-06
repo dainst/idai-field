@@ -263,7 +263,7 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     private invalidateTypesIfNecessary(): boolean {
 
-        if (this.isSelectedDocumentTypeInTypeFilters()) return false;
+        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) return false;
 
         this.viewManager.setFilterTypes([]);
 
@@ -280,15 +280,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.viewManager.setQueryString('');
 
         return true;
-    }
-
-    private isSelectedDocumentTypeInTypeFilters(): boolean {
-
-        if (!this.selectedDocument) return true;
-
-        if (!this.viewManager.getQueryTypes() || this.viewManager.getQueryTypes().indexOf(this.selectedDocument.resource.type) != -1) return true;
-
-        return false;
     }
 
     // TODO Move this method to fulltext indexer or util class?
@@ -342,11 +333,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryTypes(types: string[]) {
 
-        types && types.length > 0 ? this.viewManager.setQueryTypes(types) : this.viewManager.deleteQueryTypes();
-
         this.viewManager.setFilterTypes(types);
 
-        if (!this.isSelectedDocumentTypeInTypeFilters()) {
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
             this.editGeometry = false;
             this.deselect();
         }

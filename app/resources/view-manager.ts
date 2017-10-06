@@ -63,15 +63,6 @@ export class ViewManager {
         this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
     }
 
-    private initializeQuery() {
-
-        this.query = { q: this.getQueryString() };
-
-        if (this.getFilterTypes() &&
-            this.getFilterTypes().length > 0)
-            this.query.types = this.getFilterTypes();
-    }
-
     public getQueryString() {
 
         return this.resourcesState.getLastQueryString(this.view.name);
@@ -88,16 +79,6 @@ export class ViewManager {
         return this.query.types;
     }
 
-    public setQueryTypes(types) {
-
-        this.query.types = types;
-    }
-
-    public deleteQueryTypes() {
-
-        delete this.query.types;
-    }
-
     public getFilterTypes() {
 
         return this.resourcesState.getLastSelectedTypeFilters(this.view.name);
@@ -105,8 +86,21 @@ export class ViewManager {
 
     public setFilterTypes(filterTypes) {
 
+        filterTypes && filterTypes.length > 0 ?
+            this.setQueryTypes(filterTypes) :
+            this.deleteQueryTypes();
+
         if (filterTypes && filterTypes.length == 0) delete this.query.types;
         this.resourcesState.setLastSelectedTypeFilters(this.view.name, filterTypes);
+    }
+
+    public isSelectedDocumentTypeInTypeFilters(selectedDocument): boolean {
+
+        if (!selectedDocument) return true;
+
+        if (!this.getQueryTypes() || this.getQueryTypes().indexOf(selectedDocument.resource.type) != -1) return true;
+
+        return false;
     }
 
     public setLastSelectedMainTypeDocumentId(selectedMainTypeDocumentResourceId) {
@@ -170,6 +164,25 @@ export class ViewManager {
             this.mode = 'map';
             this.setLastSelectedMode('map');
         }
+    }
+
+    private initializeQuery() {
+
+        this.query = { q: this.getQueryString() };
+
+        if (this.getFilterTypes() &&
+            this.getFilterTypes().length > 0)
+            this.query.types = this.getFilterTypes();
+    }
+
+    private setQueryTypes(types) {
+
+        this.query.types = types;
+    }
+
+    private deleteQueryTypes() {
+
+        delete this.query.types;
     }
 
     private setLastSelectedMode(defaultMode) {

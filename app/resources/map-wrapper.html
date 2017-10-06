@@ -15,7 +15,7 @@
             </li>
         </ul>
 
-        <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.query.q == ''
+        <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.getQuery().q == ''
                             && resourcesComponent.selectedMainTypeDocument"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="resourcesComponent.getCurrentFilterType()"

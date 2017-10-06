@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
 import {ViewUtility} from '../common/view-utility';
 import {ResourcesState} from './resources-state';
+import {Query} from 'idai-components-2/datastore';
 
 @Injectable()
 /**
@@ -13,6 +14,8 @@ import {ResourcesState} from './resources-state';
 export class ViewManager {
 
     private mode: string; // 'map' or 'list'
+
+    private query: Query;
 
     public view: ViewDefinition;
 
@@ -60,16 +63,40 @@ export class ViewManager {
         this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
     }
 
-    public getLastQueryString() {
+    private initializeQuery() {
+
+        this.query = { q: this.getQueryString() };
+
+        if (this.getFilterTypes() &&
+            this.getFilterTypes().length > 0)
+            this.query.types = this.getFilterTypes();
+    }
+
+    public getQueryString() {
 
         return this.resourcesState.getLastQueryString(this.view.name);
     }
 
-    public setLastQueryString(q) {
+    public setQueryString(q) {
 
+        this.query.q = q;
         this.resourcesState.setLastQueryString(this.view.name, q);
     }
 
+    public getQueryTypes() {
+
+        return this.query.types;
+    }
+
+    public setQueryTypes(types) {
+
+        this.query.types = types;
+    }
+
+    public deleteQueryTypes() {
+
+        delete this.query.types;
+    }
 
     public getFilterTypes() {
 
@@ -78,6 +105,7 @@ export class ViewManager {
 
     public setFilterTypes(filterTypes) {
 
+        if (filterTypes && filterTypes.length == 0) delete this.query.types;
         this.resourcesState.setLastSelectedTypeFilters(this.view.name, filterTypes);
     }
 
@@ -97,6 +125,7 @@ export class ViewManager {
         return this.resourcesState.initialize().then(() => {
 
             this.initializeMode(defaultMode);
+            this.initializeQuery();
         })
     }
 

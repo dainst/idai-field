@@ -32,8 +32,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public editGeometry: boolean = false;
 
-    public query: Query;
-
     public documents: Array<Document>;
     public selectedDocument: Document;
 
@@ -125,7 +123,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return Promise.resolve()
             .then(() => {
-                this.initializeQuery();
                 return this.populateProjectDocument();
             }).then(() => this.populateMainTypeDocuments())
             .then(() => this.populateDocumentList())
@@ -268,7 +265,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (this.isSelectedDocumentTypeInTypeFilters()) return false;
 
-        delete this.query.types;
         this.viewManager.setFilterTypes([]);
 
         return true;
@@ -281,8 +277,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (this.isSelectedDocumentMatchedByQueryString()) return false;
 
-        this.query.q = '';
-        this.viewManager.setLastQueryString('');
+        this.viewManager.setQueryString('');
 
         return true;
     }
@@ -291,7 +286,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!this.selectedDocument) return true;
 
-        if (!this.query.types || this.query.types.indexOf(this.selectedDocument.resource.type) != -1) return true;
+        if (!this.viewManager.getQueryTypes() || this.viewManager.getQueryTypes().indexOf(this.selectedDocument.resource.type) != -1) return true;
 
         return false;
     }
@@ -299,9 +294,9 @@ export class ResourcesComponent implements AfterViewChecked {
     // TODO Move this method to fulltext indexer or util class?
     private isSelectedDocumentMatchedByQueryString(): boolean {
 
-        if (!this.selectedDocument || this.query.q == '') return true;
+        if (!this.selectedDocument || this.viewManager.getQueryString() == '') return true;
 
-        const tokens: Array<string> = this.query.q.split(' ');
+        const tokens: Array<string> = this.viewManager.getQueryString().split(' ');
         const resource: Resource = this.selectedDocument.resource;
 
         for (let token of tokens) {
@@ -335,8 +330,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        this.viewManager.setLastQueryString(q);
-        this.query.q = q;
+        this.viewManager.setQueryString(q);
 
         if (!this.isSelectedDocumentMatchedByQueryString()) {
             this.editGeometry = false;
@@ -348,7 +342,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryTypes(types: string[]) {
 
-        types && types.length > 0 ? this.query.types = types : delete this.query.types;
+        types && types.length > 0 ? this.viewManager.setQueryTypes(types) : this.viewManager.deleteQueryTypes();
 
         this.viewManager.setFilterTypes(types);
 
@@ -358,15 +352,6 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         this.populateDocumentList();
-    }
-
-    private initializeQuery() {
-
-        this.query = { q: this.viewManager.getLastQueryString() };
-        
-        if (this.viewManager.getFilterTypes() &&
-                this.viewManager.getFilterTypes().length > 0)
-            this.query.types = this.viewManager.getFilterTypes();
     }
 
     public remove(document: Document) {
@@ -394,7 +379,8 @@ export class ResourcesComponent implements AfterViewChecked {
             return Promise.resolve();
         }
 
-        return this.fetchDocuments(ResourcesComponent.makeDocsQuery(this.query,
+        return this.fetchDocuments(ResourcesComponent.makeDocsQuery(
+            {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
                     this.selectedMainTypeDocument.resource.id))
             .then(documents => this.documents = documents);
     }
@@ -599,6 +585,14 @@ export class ResourcesComponent implements AfterViewChecked {
         return (this.viewManager.getFilterTypes() &&
             this.viewManager.getFilterTypes().length > 0 ?
             this.viewManager.getFilterTypes()[0] : undefined);
+    }
+
+    public getQuery() {
+
+        return {
+            q: this.viewManager.getQueryString(),
+            types: this.viewManager.getQueryTypes()
+        }
     }
 
     private removeEmptyDocuments() {

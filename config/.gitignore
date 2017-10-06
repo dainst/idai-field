@@ -2,7 +2,6 @@
 
 # Explicitely mention files which should be part of the repo.
 
-!config.d.ts
 !Configuration.json.template
 !README.md
 

@@ -3,7 +3,6 @@
 
 # iDAI.field 2 Client
 
-
 ## Documentation
 
 A **user manual** with documented workflows and usage is available 
@@ -29,12 +28,10 @@ $ npm run build
 $ npm start
 ```
 
-`npm run build` compiles the typescript files and creates [configuration](config/README.md) files.
-The typescript files are compiled once, so it is recommended to configure your IDE to 
-do that continuously in the background for you.
-
-`npm start` start the electron app. Besides starting the application the command takes 
-care that changes made to scss files result in automatic conversion to css.
+`npm run build` compiles the typescript files, creates [configuration](config/README.md) files and 
+converts scss files. `npm start` starts the electron app. For a fast development workflow it is 
+recommended to set up your IDE to compile the typescript files continuously while you are working 
+on the sources. That way you can just hit reload to see changes made to the *.ts* or *.html* files.
 
 ## Testing
 

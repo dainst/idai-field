@@ -10,14 +10,17 @@ at the users app dir for idai-field-client. On MacOS, this is `/Users/<username>
 
 The second, **Configuration.json**, is meant to be edited as the domain experts see fit. See
 [here](../docs/configuration-structure.md) for the documentation of its structure.
+
 During development, the client works with `config/Configuration.json`.
 Initially it gets cloned from `config/Configuration.json.template`, when
 calling `npm run build`. If the target file exists, `npm run build` will 
 not overwrite it. If e2e tests fail with an adjusted `Configuration.json`, 
 try deleting `config/Configuration.json` and run `npm run build`.
 
-The *.template* files are provided and the actual configuration file names are .gitignored ([see](.gitignore)) so developers can experiment with different configurations locally
-without risking of committing actual real configurations to the repo.
+Configuration.json.template is provided and 
+negatively .gitignored ([see](.gitignore)) to make sure that no extra 
+files in this folder, like for example your local config/Configuration.json, 
+get added to the repo by accident.
 
 
 

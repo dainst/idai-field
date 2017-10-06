@@ -77,6 +77,7 @@ export class ViewManager {
 
     public getQueryTypes() {
 
+        if (!this.query) return undefined;
         return this.query.types;
     }
 

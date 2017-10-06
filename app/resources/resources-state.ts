@@ -53,6 +53,7 @@ export class ResourcesState {
 
     public getLastQueryString(viewName: string) {
 
+        if (!this._) return '';
         return (!this._[viewName] || !this._[viewName].q) ? '' : this._[viewName].q;
     }
 
@@ -65,7 +66,8 @@ export class ResourcesState {
 
     public getLastSelectedTypeFilters(viewName: string): string[] {
 
-         return (!this._[viewName]) ? undefined : this._[viewName].types;
+        if (!this._) return undefined;
+        return (!this._[viewName]) ? undefined : this._[viewName].types;
     }
 
     public setActiveLayersIds(viewName: string, mainTypeDocumentId: string, activeLayersIds: string[]) {

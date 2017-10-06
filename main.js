@@ -10,25 +10,16 @@ function copyConfigFile(srcPath, destPath, appDataPath) {
     if (!fs.existsSync(appDataPath)) fs.mkdirSync(appDataPath);
 
     if (!fs.existsSync(destPath)) {
-        console.log('Copy ' + srcPath + ' to ' + destPath);
-        var config = fs.readFileSync(srcPath, 'utf-8');
+        console.log('Create config.json at ' + destPath);
+        var config = JSON.stringify({"dbs":["test"]});
         fs.writeFileSync(destPath, config);
     }
 }
 
 // CONFIGURATION ---
 
-var configSourcePath;
-if (process.argv.length > 2) { // DEVELOPMENT
-
-    global.configurationPath = 'config/Configuration.json';
-    configSourcePath = process.argv[2];
-
-} else { // PACKAGE
-
-    global.configurationPath = '../config/Configuration.json';
-    configSourcePath = process.resourcesPath + '/config/config.json.template';
-}
+global.configurationPath = 'config/Configuration.json';
+var configSourcePath = process.argv[2];
 
 if (configSourcePath.indexOf('config.test.json') == -1) { // is environment 'production'
 
@@ -37,7 +28,7 @@ if (configSourcePath.indexOf('config.test.json') == -1) { // is environment 'pro
     copyConfigFile(configSourcePath, appDataConfigPath, global.appDataPath);
     global.configPath = appDataConfigPath;
 
-} else { // E2E TESTING
+} else { // is environment 'test'
 
     global.configPath = configSourcePath;
     global.appDataPath = 'test/test-temp';

@@ -3,10 +3,6 @@
 # Explicitely mention files which should be part of the repo.
 
 !config.d.ts
-!config.json.template
 !Configuration.json.template
 !README.md
-!Relations.json.template
-!Configuration-1.json
-
 

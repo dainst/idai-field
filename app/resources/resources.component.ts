@@ -275,28 +275,9 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     private invalidateQueryStringIfNecessary(): boolean {
 
-        if (this.isSelectedDocumentMatchedByQueryString()) return false;
+        if (this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) return false;
 
         this.viewManager.setQueryString('');
-
-        return true;
-    }
-
-    // TODO Move this method to fulltext indexer or util class?
-    private isSelectedDocumentMatchedByQueryString(): boolean {
-
-        if (!this.selectedDocument || this.viewManager.getQueryString() == '') return true;
-
-        const tokens: Array<string> = this.viewManager.getQueryString().split(' ');
-        const resource: Resource = this.selectedDocument.resource;
-
-        for (let token of tokens) {
-            if (resource.identifier && resource.identifier.toLowerCase().startsWith(token.toLowerCase())) continue;
-            if (resource.shortDescription && resource.shortDescription.toLowerCase()
-                    .startsWith(token.toLowerCase())) continue;
-
-            return false;
-        }
 
         return true;
     }
@@ -323,7 +304,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.viewManager.setQueryString(q);
 
-        if (!this.isSelectedDocumentMatchedByQueryString()) {
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
             this.editGeometry = false;
             this.deselect();
         }

@@ -4,6 +4,7 @@ import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configurat
 import {ViewUtility} from '../common/view-utility';
 import {ResourcesState} from './resources-state';
 import {Query} from 'idai-components-2/datastore';
+import {Resource} from "idai-components-2/core";
 
 @Injectable()
 /**
@@ -82,6 +83,24 @@ export class ViewManager {
     public getFilterTypes() {
 
         return this.resourcesState.getLastSelectedTypeFilters(this.view.name);
+    }
+
+    public isSelectedDocumentMatchedByQueryString(selectedDocument): boolean {
+
+        if (!selectedDocument || this.getQueryString() == '') return true;
+
+        const tokens: Array<string> = this.getQueryString().split(' ');
+        const resource: Resource = selectedDocument.resource;
+
+        for (let token of tokens) {
+            if (resource.identifier && resource.identifier.toLowerCase().startsWith(token.toLowerCase())) continue;
+            if (resource.shortDescription && resource.shortDescription.toLowerCase()
+                    .startsWith(token.toLowerCase())) continue;
+
+            return false;
+        }
+
+        return true;
     }
 
     public setFilterTypes(filterTypes) {

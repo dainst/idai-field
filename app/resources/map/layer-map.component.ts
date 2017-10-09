@@ -10,7 +10,7 @@ import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {M} from '../../m';
-import {ViewManager} from "../service/view-manager";
+import {ViewManager} from '../service/view-manager';
 
 @Component({
     moduleId: module.id,
@@ -36,7 +36,6 @@ export class LayerMapComponent extends MapComponent {
                 protected imagestore: Imagestore,
                 private imageTypeUtility: ImageTypeUtility,
                 private viewManager: ViewManager,
-                // private resourcesComponent: ResourcesComponent,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -48,25 +47,13 @@ export class LayerMapComponent extends MapComponent {
 
         if (!this.update) return Promise.resolve();
 
-        return super.updateMap(changes);
-    }
-
-    protected setView(): Promise<any> {
-
-        let promise: Promise<any>;
-        if (this.layersUpdate) {
-            this.layersUpdate = false;
-            promise = this.updateLayers();
-        } else {
-            promise = Promise.resolve();
-        }
-
-        return promise.then(() => {
-            for (let layer of this.activeLayers) {
-                this.addLayerCoordinatesToBounds(layer);
-            }
-            super.setView();
-        });
+        return super.updateMap(changes)
+            .then(() => {
+                if (this.layersUpdate) {
+                    this.layersUpdate = false;
+                    return this.updateLayers();
+                }
+            });
     }
 
     private updateLayers(): Promise<any> {
@@ -187,7 +174,6 @@ export class LayerMapComponent extends MapComponent {
             georef.bottomLeftCoordinates],
             { pane: layer.document.resource.id }).addTo(this.map);
 
-        this.addLayerCoordinatesToBounds(layer);
         this.activeLayers.push(layer);
     }
 
@@ -280,15 +266,6 @@ export class LayerMapComponent extends MapComponent {
         bounds.push(L.latLng(georeference.bottomLeftCoordinates));
 
         this.map.fitBounds(bounds);
-    }
-
-    private addLayerCoordinatesToBounds(layer: ImageContainer) {
-
-        let georeference = layer.document.resource.georeference;
-
-        this.extendBounds(L.latLng(georeference.topLeftCoordinates));
-        this.extendBounds(L.latLng(georeference.topRightCoordinates));
-        this.extendBounds(L.latLng(georeference.bottomLeftCoordinates));
     }
 
     public getLayersAsList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {

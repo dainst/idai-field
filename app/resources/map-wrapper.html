@@ -29,6 +29,7 @@
                       [selectedDocument]="resourcesComponent.getSelected()"
                       [mainTypeDocument]="resourcesComponent.selectedMainTypeDocument" [isEditing]="isEditing"
                       [projectDocument]="resourcesComponent.projectDocument"
+                      [stayInBounds]="viewManager.getView().mainType != 'Project'"
                       [update]="resourcesComponent.ready" (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>

@@ -5,7 +5,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
-import {ObjectUtil} from '../util/object-util';
+import {ViewManager} from './service/view-manager';
 
 @Component({
     selector: 'map-wrapper',
@@ -27,6 +27,7 @@ export class MapWrapperComponent {
 
     constructor(
         public loading: Loading,
+        public viewManager: ViewManager,
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,

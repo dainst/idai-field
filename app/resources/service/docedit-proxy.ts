@@ -1,8 +1,9 @@
+import {Injectable} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Document} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DoceditComponent} from "../../docedit/docedit.component";
-import {DoceditActiveTabService} from "../../docedit/docedit-active-tab-service";
-import {Injectable} from "@angular/core";
+import {DoceditComponent} from '../../docedit/docedit.component';
+import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 
 @Injectable()
 /**
@@ -18,7 +19,8 @@ export class DoceditProxy {
             private documentEditChangeMonitor: DocumentEditChangeMonitor) {
     }
 
-    public editDocument(document, resultCallback, closeReasonCallback, activeTabName?) {
+    public editDocument(document: Document, resultCallback: Function, closeReasonCallback: Function,
+                        activeTabName?: string) {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 

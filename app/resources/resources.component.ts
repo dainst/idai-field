@@ -11,7 +11,7 @@ import {Loading} from '../widgets/loading';
 import {M} from '../m';
 import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
-import {DoceditProxy} from "./service/docedit-proxy";
+import {DoceditProxy} from './service/docedit-proxy';
 
 
 @Component({
@@ -337,8 +337,6 @@ export class ResourcesComponent implements AfterViewChecked {
      */
     private populateDocumentList() {
 
-        console.log("populateDocumentList")
-
         this.newDocumentsFromRemote = [];
 
         if (!this.selectedMainTypeDocument) {
@@ -529,7 +527,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
     public setMode(mode: string) {
-
 
         this.loading.start();
         // The timeout is necessary to make the loading icon appear

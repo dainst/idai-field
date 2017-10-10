@@ -16,9 +16,10 @@
          (drop)="false">
 
         <div class="row bg-light">
-            <div class="col-sm-12 py-2">
-                <search-bar [q]="imagesState.getQuery().q" [showFiltersMenu]="false" [hidden]="selected.length"
-                            (onQueryStringChanged)="setQueryString($event)">
+            <div class="col-sm-10 py-2">
+                <search-bar [q]="imagesState.getQuery().q" [types]="imagesState.getQuery().types" [parentType]="'Image'"
+                            [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"
+                            (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
 
                 <div id="image-overview-buttons" class="btn-toolbar" *ngIf="selected.length">

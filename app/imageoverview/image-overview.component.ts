@@ -51,8 +51,7 @@ export class ImageOverviewComponent implements OnInit{
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
     ) {
-        if (!this.imagesState.getQuery()) this.imagesState.setQuery({ q: '' });
-
+        if (!this.imagesState.getQuery()) this.setDefaultQuery();
         this.fetchDocuments();
     }
 
@@ -74,6 +73,12 @@ export class ImageOverviewComponent implements OnInit{
     public setQueryString(q: string) {
 
         this.imagesState.getQuery().q = q;
+        this.fetchDocuments();
+    }
+
+    public setQueryTypes(types: string[]) {
+
+        this.imagesState.getQuery().types = types;
         this.fetchDocuments();
     }
 
@@ -150,7 +155,6 @@ export class ImageOverviewComponent implements OnInit{
     private fetchDocuments() {
 
         const query: Query = this.imagesState.getQuery();
-        query.types = this.imageTypeUtility.getProjectImageTypeNames();
 
         return this.datastore.find(query)
             .catch(errWithParams => {
@@ -267,5 +271,15 @@ export class ImageOverviewComponent implements OnInit{
         }
 
         return false;
+    }
+
+    private setDefaultQuery() {
+
+        const defaultQuery: Query = {
+            q: '',
+            types: this.imageTypeUtility.getProjectImageTypeNames()
+        };
+
+        this.imagesState.setQuery(defaultQuery);
     }
 }

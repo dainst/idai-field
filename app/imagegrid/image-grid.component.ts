@@ -1,4 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output} from '@angular/core';
+import {
+    Component, EventEmitter, Input, OnChanges, SimpleChanges, Output,
+    ElementRef
+} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
@@ -30,8 +33,6 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
-    private clientWidth: number = 0;
-
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridOnResizeRunning = false;
     // to be able to reset the timeout on multiple onResize calls
@@ -47,6 +48,7 @@ export class ImageGridComponent implements OnChanges {
     private rows = [];
 
     constructor(
+        private el: ElementRef,
         private imageGridBuilder: ImageGridBuilder,
         private messages: Messages
     ) {
@@ -65,18 +67,14 @@ export class ImageGridComponent implements OnChanges {
 
         if (!changes['documents']) return;
         if (this.showDropArea) this.insertStubForDropArea();
-        this.calcGrid(this.clientWidth);
+        this.calcGrid();
     }
 
-    public setClientWidth(clientWidth: number) {
+    public calcGrid() {
 
-        this.clientWidth = clientWidth;
-    }
-
-    public calcGrid(clientWidth: number) {
-
-        this.clientWidth = clientWidth;
         this.rows = [];
+
+        let clientWidth = this.el.nativeElement.children[0].clientWidth;
 
         if (!this.documents) return;
 
@@ -91,7 +89,7 @@ export class ImageGridComponent implements OnChanges {
         });
     }
 
-    public _onResize(width: number) {
+    public _onResize() {
 
         clearTimeout(this.calcGridOnResizeTimeoutRef);
         this.calcGridOnResizeTimeoutRef = setTimeout(() => {
@@ -99,7 +97,7 @@ export class ImageGridComponent implements OnChanges {
             if (this.calcGridOnResizeRunning) return;
 
             this.calcGridOnResizeRunning = true;
-            this.calcGrid(width).then(() => {
+            this.calcGrid().then(() => {
                 this.calcGridOnResizeRunning = false;
             });
         }, 500);

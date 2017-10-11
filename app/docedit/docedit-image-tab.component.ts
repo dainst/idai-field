@@ -26,7 +26,6 @@ export class DoceditImageTabComponent {
     @Input() document: IdaiFieldDocument;
 
     constructor(
-        private el: ElementRef,
         private datastore: IdaiFieldDatastore,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
@@ -34,8 +33,6 @@ export class DoceditImageTabComponent {
     }
 
     ngOnChanges() {
-
-        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
 
         if (!this.document) return;
         if (this.document.resource.relations['isDepictedIn']) {
@@ -115,7 +112,7 @@ export class DoceditImageTabComponent {
 
         if (!this.documents || this.documents.length == 0) return; // TODO code duplicated - move it to _onResize
 
-        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize();
     }
 
     public openImagePicker() {

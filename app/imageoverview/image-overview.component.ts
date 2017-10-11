@@ -28,7 +28,7 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent implements OnInit{
+export class ImageOverviewComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     protected documents: IdaiFieldImageDocument[];
@@ -53,11 +53,6 @@ export class ImageOverviewComponent implements OnInit{
     ) {
         if (!this.imagesState.getQuery()) this.setDefaultQuery();
         this.fetchDocuments();
-    }
-
-    ngOnInit() {
-
-        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
     }
 
     public changeGridSize(size) {

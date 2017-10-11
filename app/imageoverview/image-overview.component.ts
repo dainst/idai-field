@@ -28,7 +28,7 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent {
+export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     protected documents: IdaiFieldImageDocument[];
@@ -46,7 +46,6 @@ export class ImageOverviewComponent {
         private messages: Messages,
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
-        private el: ElementRef,
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
@@ -55,8 +54,14 @@ export class ImageOverviewComponent {
         this.fetchDocuments();
     }
 
+    public ngOnInit() {
+
+        this.imageGrid.nrOfColumns = this.imagesState.getGridSize();
+    }
+
     public changeGridSize(size) {
 
+        this.imagesState.setGridSize(parseInt(size));
         this.imageGrid.nrOfColumns = parseInt(size);
         this.imageGrid.calcGrid();
     }

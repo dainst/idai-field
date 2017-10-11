@@ -57,7 +57,7 @@
             </div>
             <div class="col-sm-2 text-right py-3">
                 <span class="mdi mdi-view-grid align-middle"></span>
-                <input #gridSize type="range" min="2" max="12" value="4"
+                <input #gridSize type="range" min="2" max="12" value="{{imagesState.getGridSize()}}"
                        class="slider align-middle"
                        (change)="changeGridSize(gridSize.value)">
                 <span class="mdi mdi-apps align-middle"></span>
@@ -66,7 +66,7 @@
 
         <div class="image-grid" (window:resize)="onResize($event)">
             <image-grid #imageGrid
-                    [nrOfColumns]="4"
+                    [nrOfColumns]="imagesState.getGridSize()"
                     [documents]="documents"
                     [resourceIdentifiers]="resourceIdentifiers"
                     [selected]="selected"

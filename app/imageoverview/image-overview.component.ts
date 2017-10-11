@@ -58,12 +58,12 @@ export class ImageOverviewComponent {
     public changeGridSize(size) {
 
         this.imageGrid.nrOfColumns = parseInt(size);
-        this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid.calcGrid();
     }
 
     public onResize() {
 
-        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize();
     }
 
     public refreshGrid() {
@@ -142,7 +142,7 @@ export class ImageOverviewComponent {
         this.modalService.open(RemoveLinkModalComponent)
             .result.then( () => {
                 this.removeRelationsOnSelectedDocuments().then(() => {
-                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+                    this.imageGrid.calcGrid();
                     this.clearSelection();
                 })
             }

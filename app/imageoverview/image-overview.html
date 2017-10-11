@@ -80,7 +80,7 @@
         </div>
 
         <div id="image-count-badge" class="badge badge-secondary">
-            {{documents.length - 1}} von {{totalImageCount}}
+            {{documents ? documents.length - 1 : 0}} von {{totalImageCount}}
             <span *ngIf="totalImageCount == 1">Bild wird</span>
             <span *ngIf="totalImageCount != 1">Bildern werden</span>
             angezeigt

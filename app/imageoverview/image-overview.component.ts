@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
@@ -58,8 +58,7 @@ export class ImageOverviewComponent implements OnInit {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
-        private imagesState: ImagesState,
-        private changeDetectorRef: ChangeDetectorRef
+        private imagesState: ImagesState
     ) {
         this.viewUtility.getMainTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
@@ -220,10 +219,8 @@ export class ImageOverviewComponent implements OnInit {
                     return Promise.resolve(documents);
                 }
             }).then(filteredDocuments => {
-                console.log('filteredDocuments', filteredDocuments);
                 this.documents = filteredDocuments as Array<IdaiFieldImageDocument>;
                 this.cacheIdsOfConnectedResources(this.documents);
-                this.changeDetectorRef.detectChanges();
             });
     }
 

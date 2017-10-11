@@ -43,6 +43,8 @@
   #image-count-badge {
     margin-top: 10px;
     margin-left: 5px;
+    user-select: none;
+    cursor: default;
   }
 
   .slider-container {

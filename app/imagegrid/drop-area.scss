@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   user-select: none;
+  overflow: hidden;
 
   &.dragover {
     background-color: $navbar-default-bg;

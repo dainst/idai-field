@@ -52,6 +52,13 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-2 text-right py-3">
+                <span class="mdi mdi-view-grid align-middle"></span>
+                <input #gridSize type="range" min="2" max="12" value="4"
+                       class="slider align-middle"
+                       (change)="changeGridSize(gridSize.value)">
+                <span class="mdi mdi-apps align-middle"></span>
+            </div>
         </div>
 
         <div class="image-grid" (window:resize)="onResize($event)">

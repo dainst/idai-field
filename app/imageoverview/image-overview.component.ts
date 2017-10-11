@@ -60,6 +60,12 @@ export class ImageOverviewComponent implements OnInit{
         this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
     }
 
+    public changeGridSize(size) {
+
+        this.imageGrid.nrOfColumns = parseInt(size);
+        this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+    }
+
     public onResize() {
 
         this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);

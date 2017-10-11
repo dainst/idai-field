@@ -24,6 +24,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
     @Input() showDropArea: boolean = false;
+    @Input() showGeoIcon: boolean = false;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();

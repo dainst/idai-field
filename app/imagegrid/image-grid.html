@@ -33,6 +33,10 @@
                                  <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
                         </span>
                     </span>
+                    <span *ngIf="showGeoIcon && cell['document'].resource.georeference"
+                            class="badge badge-dark">
+                        <span class="mdi mdi-map"></span> geo
+                    </span>
                 </div>
 
                 <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"

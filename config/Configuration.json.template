@@ -2035,6 +2035,55 @@
         {
             "fields": [
                 {
+                    "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung.",
+                    "descriptions": {
+                        "de": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
+                    },
+                    "editable": true,
+                    "inputType": "unsignedInt",
+                    "label": "Gazetteer ID",
+                    "labels": {
+                        "de": "Gazetteer ID",
+                        "en": "gazetteer id"
+                    },
+                    "name": "hasGazId",
+                    "visible": true
+                },
+                {
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich",
+                    "editable": true,
+                    "inputType": "float",
+                    "label": "Latitude",
+                    "labels": {
+                        "de": "Latitude",
+                        "en": "Latitude"
+                    },
+                    "name": "hasLatitude",
+                    "visible": true
+                },
+                {
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich",
+                    "editable": true,
+                    "inputType": "float",
+                    "label": "Longitude",
+                    "labels": {
+                        "de": "Longitude",
+                        "en": "Longitude"
+                    },
+                    "name": "hasLongitude",
+                    "visible": true
+                }
+            ],
+            "label": "Projekt",
+            "labels": {
+                "de": "Projekt",
+                "en": "Project"
+            },
+            "type": "Project"
+        },
+        {
+            "fields": [
+                {
                     "description": "Beschreibung des Projekts.",
                     "descriptions": {
                         "de": "Beschreibung des Projekts."
@@ -3418,12 +3467,12 @@
         {
             "fields": [
                 {
-                    "description": "ID Nummer des Ortslexikons. Nummerierung zur zugehörigen Ortsbezeichnung.",
+                    "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung.",
                     "descriptions": {
-                        "de": "ID Nummer des Ortslexikons. Nummerierung zur zugehörigen Ortsbezeichnung."
+                        "de": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
                     },
                     "editable": true,
-                    "inputType": "input",
+                    "inputType": "unsignedInt",
                     "label": "Gazetteer ID",
                     "labels": {
                         "de": "Gazetteer ID",

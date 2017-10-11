@@ -40,6 +40,7 @@
       top: 7px;
       left: 7px;
       overflow: hidden;
+      visibility: hidden;
     }
 
     img {
@@ -50,9 +51,9 @@
       background-color: white;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
       font-size: 16px;
       padding: 2px 5px;
+      display: none;
     }
 
     &:hover {
@@ -60,7 +61,11 @@
       z-index: 100;
 
       .title {
-        white-space: normal;
+        display: block;
+      }
+
+      .identifier {
+        visibility: visible;
       }
     }
   }

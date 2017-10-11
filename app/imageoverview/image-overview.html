@@ -21,6 +21,9 @@
                             [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"
                             (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
+                <div *ngIf="imagesState.getQuery().q.length > 0">
+                    <button class="btn btn-primary btn-sm mt-1" (click)="setQueryString('')">Bildsuche: {{documents.length-1}} Bild(er) für &quot;<i>{{imagesState.getQuery().q}}</i>&quot; <span class="mdi mdi-close-circle-outline"></span></button>
+                </div>
 
                 <div id="image-overview-buttons" class="btn-toolbar" *ngIf="selected.length">
                     <div class="btn-group mr-2" role="group">

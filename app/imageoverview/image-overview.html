@@ -18,15 +18,15 @@
 
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!selected.length" class="col-sm-7 py-2">
-                <search-bar [q]="imagesState.getQuery().q" [types]="imagesState.getQuery().types" [parentType]="'Image'"
-                            [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"
-                            (onTypesChanged)="setQueryTypes($event)">
+                <search-bar *ngIf="imagesState.getQuery()" [q]="imagesState.getQuery().q"
+                            [types]="imagesState.getQuery().types" [parentType]="'Image'" [hidden]="selected.length"
+                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
             </div>
 
             <div *ngIf="!selected.length" class="col-sm-3 py-2">
                 <select id="main-type-document-filter-select" class="form-control"
-                        [(ngModel)]="imagesState.mainTypeDocumentFilterOption"
+                        [ngModel]="imagesState.mainTypeDocumentFilterOption"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
                     <option value=""><em>Alle Bilder</em></option>
                     <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>

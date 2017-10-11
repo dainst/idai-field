@@ -33,22 +33,23 @@ import {ViewUtility} from '../common/view-utility';
 export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    protected documents: IdaiFieldImageDocument[];
 
-    public selected: IdaiFieldImageDocument[] = [];
-    public depictsRelationsSelected: boolean = false;
-
+    public documents: Array<IdaiFieldImageDocument>;
     public mainTypeDocuments: Array<Document> = [];
 
     public totalImageCount: number;
 
+    public selected: Array<IdaiFieldImageDocument> = [];
+    public depictsRelationsSelected: boolean = false;
+
     // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
 
-    public maxGridSize = 12;
-    public minGridSize = 2;
+    public maxGridSize: number = 12;
+    public minGridSize: number = 2;
 
-    public constructor(
+
+    constructor(
         public viewUtility: ViewUtility,
         private router: Router,
         private datastore: ReadDatastore,
@@ -65,9 +66,12 @@ export class ImageOverviewComponent implements OnInit {
             msgWithParams => messages.add(msgWithParams)
         );
 
-        if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
-        this.fetchDocuments();
-        this.updateTotalImageCount();
+        this.imagesState.initialize().then(() => {
+            if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
+            this.setQueryConstraints();
+            this.fetchDocuments();
+            this.updateTotalImageCount();
+        });
     }
 
     public ngOnInit() {
@@ -97,13 +101,19 @@ export class ImageOverviewComponent implements OnInit {
 
     public setQueryString(q: string) {
 
-        this.imagesState.getQuery().q = q;
+        const query: Query = this.imagesState.getQuery();
+        query.q = q;
+        this.imagesState.setQuery(query);
+
         this.fetchDocuments();
     }
 
     public setQueryTypes(types: string[]) {
 
-        this.imagesState.getQuery().types = types;
+        const query: Query = this.imagesState.getQuery();
+        query.types = types;
+        this.imagesState.setQuery(query);
+
         this.fetchDocuments();
     }
 
@@ -181,9 +191,17 @@ export class ImageOverviewComponent implements OnInit {
 
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
+        this.imagesState.setMainTypeDocumentFilterOption(filterOption);
+        this.setQueryConstraints();
+
+        this.fetchDocuments();
+    }
+
+    private setQueryConstraints() {
+
         const query: Query = this.imagesState.getQuery();
 
-        switch(filterOption) {
+        switch(this.imagesState.getMainTypeDocumentFilterOption()) {
             case '':
                 delete query.constraints;
                 break;
@@ -195,8 +213,6 @@ export class ImageOverviewComponent implements OnInit {
             default:
                 this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'KNOWN' };
         }
-
-        this.fetchDocuments();
     }
 
     /**

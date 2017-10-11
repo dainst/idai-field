@@ -14,13 +14,12 @@ import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../widgets/widgets.module'
 import {DoceditModule} from '../docedit/docedit.module';
 import {ResourcesState} from './service/resources-state';
-import {ResourcesStateSerializer} from './service/resources-state-serializer';
-import {ThumbnailViewComponent} from "./docview/thumbnail-view.component";
-import {ImageGridModule} from "../imagegrid/image-grid.module";
+import {ThumbnailViewComponent} from './docview/thumbnail-view.component';
+import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.component';
-import {ViewManager} from "./service/view-manager";
-import {RoutingHelper} from "./service/routing-helper";
-import {DoceditProxy} from "./service/docedit-proxy";
+import {ViewManager} from './service/view-manager';
+import {RoutingHelper} from './service/routing-helper';
+import {DoceditProxy} from './service/docedit-proxy';
 
 @NgModule({
     imports: [
@@ -46,7 +45,6 @@ import {DoceditProxy} from "./service/docedit-proxy";
     ],
     providers: [
         ResourcesState,
-        ResourcesStateSerializer,
         ViewManager,
         RoutingHelper,
         DoceditProxy

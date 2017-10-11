@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ResourcesViewState} from './resources-view-state';
-import {ResourcesStateSerializer} from './resources-state-serializer';
+import {StateSerializer} from '../../common/state-serializer';
 
 @Injectable()
 
@@ -11,20 +11,21 @@ export class ResourcesState {
 
     private _: { [viewName: string]: ResourcesViewState };
 
-    constructor(private serializer: ResourcesStateSerializer) {}
+    constructor(private serializer: StateSerializer) {}
 
     public initialize(): Promise<any> {
 
         if (this._) return Promise.resolve();
 
-        return this.serializer.load().then(resourcesStateMap => this._ = resourcesStateMap);
+        return this.serializer.load(StateSerializer.RESOURCES_STATE)
+            .then(resourcesStateMap => this._ = resourcesStateMap);
     }
 
     public setLastSelectedMainTypeDocumentId(viewName: string, id: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mainTypeDocumentId = id;
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public getLastSelectedMainTypeDocumentId(viewName: string): string {
@@ -36,7 +37,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mode = mode;
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public getLastSelectedMode(viewName: string) {
@@ -48,7 +49,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].q = q;
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public getLastQueryString(viewName: string) {
@@ -61,7 +62,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].types = types;
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public getLastSelectedTypeFilters(viewName: string): string[] {
@@ -75,7 +76,7 @@ export class ResourcesState {
         if (!this._[viewName]) this._[viewName] = {};
         if (!this._[viewName].layerIds) this._[viewName].layerIds = {};
         this._[viewName].layerIds[mainTypeDocumentId] = activeLayersIds;
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
@@ -89,7 +90,7 @@ export class ResourcesState {
         if (!this._[viewName] || !this._[viewName].layerIds) return;
 
         delete this._[viewName].layerIds[mainTypeDocumentId];
-        this.serializer.store(this._);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
     public clear() {

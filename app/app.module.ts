@@ -42,11 +42,12 @@ import {ConflictResolvingExtension} from './datastore/conflict-resolving-extensi
 import {IdaiFieldConflictResolver} from './model/idai-field-conflict-resolver';
 import {ConflictResolver} from './datastore/conflict-resolver';
 import {ProjectsComponent} from './projects.component';
-
 import {ImportModule} from './import/import-module';
 import {ExportModule} from './export/export.module';
 import {DoceditActiveTabService} from './docedit/docedit-active-tab-service';
 import {ImageViewModule} from './imageview/image-view.module';
+import {StateSerializer} from './common/state-serializer';
+
 const remote = require('electron').remote;
 
 let pconf = undefined;
@@ -179,7 +180,8 @@ let pconf = undefined;
         { provide: MD, useClass: M},
         ImageTypeUtility,
         ViewUtility,
-        DoceditActiveTabService
+        DoceditActiveTabService,
+        StateSerializer
     ],
     bootstrap: [ AppComponent ]
 })

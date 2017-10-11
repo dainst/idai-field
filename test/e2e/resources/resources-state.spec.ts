@@ -4,7 +4,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
 import {MapPage} from '../map/map.page';
-import {ImageOverviewPage} from "../images/image-overview.page";
+import {ImageOverviewPage} from '../images/image-overview.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');

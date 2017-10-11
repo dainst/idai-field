@@ -271,36 +271,3 @@ relations-view .fieldvalue:hover {
 .modal-lg {
   min-width: 86%;
 }
-
-
-/* Document view */
-
-.document-info {
-  height: calc(100vh - 113px);
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  .card-header {
-    background-color: transparent !important;
-  }
-
-  .card {
-    margin-bottom: 0;
-    padding-bottom: 15px;
-    box-sizing: border-box;
-    background-color: transparent !important;
-  }
-
-  .tab-content {
-    padding-top: 1em;
-  }
-
-  .empty-tab {
-    color: #5a6269;
-  }
-
-  .empty-tab-info {
-    font-style: italic;
-    font-size: 0.9em;
-  }
-}

@@ -62,4 +62,35 @@
     }
   }
 
+  /* Document view */
+
+  .document-info {
+
+    .card-header {
+      background-color: transparent !important;
+    }
+
+    .card {
+      margin-bottom: 0;
+      box-sizing: border-box;
+      background-color: transparent !important;
+    }
+
+    .tab-content {
+      padding-top: 1em;
+      height: calc(100vh - 238px);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .empty-tab {
+      color: #5a6269;
+    }
+
+    .empty-tab-info {
+      font-style: italic;
+      font-size: 0.9em;
+    }
+  }
+
 }

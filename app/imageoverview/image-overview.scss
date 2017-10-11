@@ -1,10 +1,23 @@
 .image-overview {
+
+  margin-top: 62px;
+
   .image-grid {
     margin-top: 5px !important;
   }
 
   #remove-link-btn {
     margin-right: 1px;
+  }
+
+  .image-overview-nav {
+    position: fixed;
+    z-index: 1001;
+    right: 0;
+    left: 0;
+    top: 62px;
+    margin: 0;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   }
 
   #image-overview-buttons {

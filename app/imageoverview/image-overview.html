@@ -15,7 +15,7 @@
          (dragleave)="false"
          (drop)="false">
 
-        <div class="row bg-light">
+        <div class="row bg-light image-overview-nav">
             <div *ngIf="!selected.length" class="col-sm-7 py-2">
                 <search-bar [q]="imagesState.getQuery().q" [types]="imagesState.getQuery().types" [parentType]="'Image'"
                             [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"

@@ -37,6 +37,7 @@
   #main-type-document-filter-select {
     margin-top: 3px;
     margin-bottom: -3px;
+    user-select: none;
   }
 
   #image-count-badge {
@@ -44,9 +45,13 @@
     margin-left: 5px;
   }
 
-  .slider-container .mdi {
-    -webkit-user-select: none;
-    cursor: pointer;
+  .slider-container {
+    user-select: none;
+    cursor: default;
+
+    .mdi {
+      cursor: pointer;
+    }
   }
 
   .slider {

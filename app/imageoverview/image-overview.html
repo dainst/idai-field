@@ -74,16 +74,15 @@
                        (change)="changeGridSize(gridSize.value)">
                 <span class="mdi mdi-apps align-middle"></span>
             </div>
-
-            <div *ngIf="imagesState.getQuery().q.length > 0">
-                <button class="btn btn-primary btn-sm mt-1" (click)="setQueryString('')">
-                    Bildsuche: {{documents.length-1}} Bild(er) für &quot;<i>{{imagesState.getQuery().q}}</i>
-                    &quot; <span class="mdi mdi-close-circle-outline"></span>
-                </button>
-            </div>
         </div>
 
-        <div class="image-grid" (window:resize)="onResize($event)">
+        <div id="image-count-badge" class="badge badge-secondary">
+            <span *ngIf="documents.length == 1">Keine Bilder gefunden</span>
+            <span *ngIf="documents.length == 2">Ein Bild gefunden</span>
+            <span *ngIf="documents.length > 2">{{documents.length - 1}} Bilder gefunden</span>
+        </div>
+
+        <div (window:resize)="onResize($event)">
             <image-grid #imageGrid
                     [nrOfColumns]="imagesState.getGridSize()"
                     [documents]="documents"

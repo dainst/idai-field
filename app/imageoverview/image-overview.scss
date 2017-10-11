@@ -1,4 +1,8 @@
 .image-overview {
+  .image-grid {
+    margin-top: 5px !important;
+  }
+
   #remove-link-btn {
     margin-right: 1px;
   }
@@ -20,6 +24,11 @@
   #main-type-document-filter-select {
     margin-top: 3px;
     margin-bottom: -3px;
+  }
+
+  #image-count-badge {
+    margin-top: 10px;
+    margin-left: 5px;
   }
 
   .slider {

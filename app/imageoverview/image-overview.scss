@@ -30,6 +30,11 @@
     margin-top: 10px;
     margin-left: 5px;
   }
+  
+  .slider-container .mdi {
+    -webkit-user-select: none;
+    cursor: pointer;
+  }
 
   .slider {
     -webkit-appearance: none;

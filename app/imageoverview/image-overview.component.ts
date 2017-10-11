@@ -43,6 +43,9 @@ export class ImageOverviewComponent implements OnInit {
     // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
 
+    public maxGridSize = 12;
+    public minGridSize = 2;
+
     public constructor(
         public viewUtility: ViewUtility,
         private router: Router,
@@ -69,11 +72,13 @@ export class ImageOverviewComponent implements OnInit {
         this.imageGrid.nrOfColumns = this.imagesState.getGridSize();
     }
 
-    public changeGridSize(size) {
+    public setGridSize(size) {
 
-        this.imagesState.setGridSize(parseInt(size));
-        this.imageGrid.nrOfColumns = parseInt(size);
-        this.imageGrid.calcGrid();
+        if (size >= this.minGridSize && size <= this.maxGridSize) {
+            this.imagesState.setGridSize(parseInt(size));
+            this.imageGrid.nrOfColumns = parseInt(size);
+            this.imageGrid.calcGrid();
+        }
     }
 
     public onResize() {

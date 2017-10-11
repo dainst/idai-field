@@ -16,7 +16,7 @@ export interface ImageGridBuilderResult {
 export class ImageGridBuilder {
 
     // nr of pixels between the right end of the screenspace and the grid
-    private paddingRight: number = 57;
+    private paddingRight: number = 20;
     private documents: Array<Document>;
 
     /**

@@ -86,6 +86,7 @@ let pconf = undefined;
                 return new ConstraintIndexer([
                     { path: 'resource.relations.isRecordedIn', type: 'contain' },
                     { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.relations.depicts', type: 'exist' },
                     { path: 'resource.identifier', type: 'match' },
                     { path: '_conflicts', type: 'exist' }
                 ]);

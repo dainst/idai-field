@@ -60,8 +60,11 @@
   main {
     padding: 25px;
     background-color: #eee;
-    height: calc(100vh - 178px);
-    overflow: auto;
+
+    .tab-content {
+      height: calc(100vh - 238px);
+      overflow: auto;
+    }
   }
 
   #document-edit-button-save-document:active,

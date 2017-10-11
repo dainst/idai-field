@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
@@ -11,8 +11,9 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 /**
  * @author Sebastian Cuy
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class DocumentPickerComponent {
+export class DocumentPickerComponent implements OnChanges {
 
     @Input() relationName: string;
     @Input() relationRangeType: string;
@@ -21,12 +22,17 @@ export class DocumentPickerComponent {
         new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
-    protected query: Query = { q: '' };
+    protected query: Query = {};
 
     constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration) {
 
         this.query = {};
+        this.fetchDocuments();
+    }
+
+    ngOnChanges() {
+
         this.fetchDocuments();
     }
 
@@ -51,13 +57,6 @@ export class DocumentPickerComponent {
      * from the datastore which match the current query.
      */
     public fetchDocuments() {
-
-        if ((!this.query.q || this.query.q == '') &&
-                (!this.query.types || this.query.types.length == 0)) {
-
-            this.documents = [];
-            return;
-        }
 
         this.datastore.find(this.query)
             .then(

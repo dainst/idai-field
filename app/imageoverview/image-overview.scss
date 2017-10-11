@@ -1,6 +1,9 @@
 .image-overview {
 
   margin-top: 62px;
+  height: calc(100vh - 119px);
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .image-grid {
     margin-top: 5px !important;

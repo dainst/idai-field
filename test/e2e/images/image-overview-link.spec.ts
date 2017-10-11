@@ -1,4 +1,4 @@
-import {by, protractor} from 'protractor';
+import {by, browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 
 const path = require('path');
@@ -70,5 +70,28 @@ describe('images/image-overview/link --', function() {
         createTwo();
         unlink();
         expectLinkBadgePresence(false, 2);
+    });
+
+    it('use main type document filter', () => {
+
+        ImageOverviewPage.createDepictsRelation('testf1');
+
+        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellFilenameElement('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellFilenameElement('mapLayerTest2.png')),
+            delays.ECWaitTime);
+
+        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
+        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellFilenameElement('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellFilenameElement('mapLayerTest2.png')),
+            delays.ECWaitTime);
+
+        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellFilenameElement('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellFilenameElement('mapLayerTest2.png')),
+            delays.ECWaitTime);
     });
 });

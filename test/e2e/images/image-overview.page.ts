@@ -64,6 +64,12 @@ export class ImageOverviewPage {
         return common.click(element(by.id('delete-images-cancel')));
     };
 
+    public static clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
+
+        browser.wait(EC.presenceOf(element(by.id('main-type-document-filter-select'))), delays.ECWaitTime);
+        element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
+    };
+
     // double click
 
     public static doubleClickCell(index) {
@@ -106,6 +112,7 @@ export class ImageOverviewPage {
 
         return element.all(by.css('.cell'));
     };
+
     public static getCell(index) {
 
         return ImageOverviewPage.getAllCells().get(index);

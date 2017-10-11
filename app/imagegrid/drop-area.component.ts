@@ -128,8 +128,9 @@ export class DropAreaComponent {
         }
 
         return promise.then(
-            () => this.onImagesUploaded.emit(),
-            msgWithParams => this.messages.add(msgWithParams)
+            () => {
+                if (duplicateFilenames.length < files.length) this.onImagesUploaded.emit();
+            }, msgWithParams => this.messages.add(msgWithParams)
         ).then(
             () => {
                 if (duplicateFilenames.length == 1) {

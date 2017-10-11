@@ -108,6 +108,12 @@ export class ImageOverviewComponent implements OnInit {
         this.fetchDocuments();
     }
 
+    public resetSearch() {
+
+        this.imagesState.setQuery(this.getDefaultQuery());
+        this.imagesState.setMainTypeDocumentFilterOption('');
+    }
+
     /**
      * @param document the object that should be selected
      */

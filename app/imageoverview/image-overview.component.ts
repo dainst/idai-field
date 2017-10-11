@@ -40,6 +40,8 @@ export class ImageOverviewComponent implements OnInit {
 
     public mainTypeDocuments: Array<Document> = [];
 
+    public totalImageCount: number;
+
     // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
 
@@ -64,8 +66,9 @@ export class ImageOverviewComponent implements OnInit {
             msgWithParams => messages.add(msgWithParams)
         );
 
-        if (!this.imagesState.getQuery()) this.setDefaultQuery();
+        if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
         this.fetchDocuments();
+        this.updateTotalImageCount();
     }
 
     public ngOnInit() {
@@ -90,6 +93,7 @@ export class ImageOverviewComponent implements OnInit {
     public refreshGrid() {
 
         this.fetchDocuments();
+        this.updateTotalImageCount();
     }
 
     public setQueryString(q: string) {
@@ -291,6 +295,7 @@ export class ImageOverviewComponent implements OnInit {
             () => {
                 this.clearSelection();
                 this.fetchDocuments();
+                this.updateTotalImageCount();
             });
     }
 
@@ -378,13 +383,17 @@ export class ImageOverviewComponent implements OnInit {
         return false;
     }
 
-    private setDefaultQuery() {
+    private getDefaultQuery(): Query {
 
-        const defaultQuery: Query = {
+        return {
             q: '',
             types: this.imageTypeUtility.getProjectImageTypeNames()
         };
+    }
 
-        this.imagesState.setQuery(defaultQuery);
+    private updateTotalImageCount() {
+
+        this.datastore.find(this.getDefaultQuery())
+            .then(documents => this.totalImageCount = documents.length);
     }
 }

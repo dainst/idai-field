@@ -80,9 +80,10 @@
         </div>
 
         <div id="image-count-badge" class="badge badge-secondary">
-            <span *ngIf="documents.length == 1">Keine Bilder gefunden</span>
-            <span *ngIf="documents.length == 2">Ein Bild gefunden</span>
-            <span *ngIf="documents.length > 2">{{documents.length - 1}} Bilder gefunden</span>
+            {{documents.length - 1}} von {{totalImageCount}}
+            <span *ngIf="totalImageCount == 1">Bild wird</span>
+            <span *ngIf="totalImageCount != 1">Bildern werden</span>
+            angezeigt
         </div>
 
         <div (window:resize)="onResize($event)">

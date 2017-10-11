@@ -9,6 +9,7 @@ export class ImagesState {
 
     private query: Query;
     private mainTypeDocumentFilterOption: string = '';
+    private gridSize: number = 4;
 
 
     public getQuery(): Query {
@@ -29,5 +30,15 @@ export class ImagesState {
     public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
 
         this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
+    }
+
+    public getGridSize(): number {
+
+        return this.gridSize;
+    }
+
+    public setGridSize(value: number) {
+
+        this.gridSize = value;
     }
 }

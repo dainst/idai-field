@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
@@ -30,7 +30,7 @@ import {ViewUtility} from '../common/view-utility';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent {
+export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     protected documents: IdaiFieldImageDocument[];
@@ -51,7 +51,6 @@ export class ImageOverviewComponent {
         private messages: Messages,
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
-        private el: ElementRef,
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
@@ -65,8 +64,14 @@ export class ImageOverviewComponent {
         this.fetchDocuments();
     }
 
+    public ngOnInit() {
+
+        this.imageGrid.nrOfColumns = this.imagesState.getGridSize();
+    }
+
     public changeGridSize(size) {
 
+        this.imagesState.setGridSize(parseInt(size));
         this.imageGrid.nrOfColumns = parseInt(size);
         this.imageGrid.calcGrid();
     }

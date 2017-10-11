@@ -15,9 +15,11 @@ export interface ImageGridBuilderResult {
  */
 export class ImageGridBuilder {
 
+
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 20;
     private documents: Array<Document>;
+
 
     /**
      * @param imagestore
@@ -28,6 +30,7 @@ export class ImageGridBuilder {
         private imagestore: Imagestore,
         private showAllAtOnce: boolean = false
     ) { }
+
 
     /**
      * @param documents
@@ -53,6 +56,7 @@ export class ImageGridBuilder {
         });
     }
 
+
     /**
      * @returns {Promise<any>} cellsWithMessages
      */
@@ -73,6 +77,7 @@ export class ImageGridBuilder {
         return Promise.all(promises);
     }
 
+
     private static newCell(document, calculatedHeight): ImageContainer {
 
         const cell: ImageContainer = {};
@@ -83,16 +88,19 @@ export class ImageGridBuilder {
         return cell;
     }
 
+
     private calculatedHeight(rowIndex, nrOfColumns, gridWidth) {
 
         const rowWidth = Math.ceil(gridWidth - this.paddingRight);
         return rowWidth / ImageGridBuilder.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
     }
 
+
     private nrOfRows(nrOfColumns) {
 
         return Math.ceil(this.documents.length / nrOfColumns);
     }
+
 
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
@@ -110,6 +118,7 @@ export class ImageGridBuilder {
         }
         return naturalRowWidth;
     }
+
 
     /**
      * @returns {Promise<any>} cellWithMsg
@@ -134,6 +143,7 @@ export class ImageGridBuilder {
         })
     }
 
+
     private static splitCellsAndMessages(rowPromises) {
 
         return Promise.all(rowPromises).then(
@@ -152,4 +162,5 @@ export class ImageGridBuilder {
             }
         );
     }
+
 }

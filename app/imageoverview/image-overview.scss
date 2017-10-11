@@ -31,8 +31,14 @@
     margin-left: 5px;
   }
 
+  .slider-container .mdi {
+    -webkit-user-select: none;
+    cursor: pointer;
+  }
+
   .slider {
     -webkit-appearance: none;
+    width: 70%;
     height: 5px;
     border-radius: 2px;
     background: #d3d3d3;

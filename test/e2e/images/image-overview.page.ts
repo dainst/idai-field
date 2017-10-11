@@ -103,9 +103,9 @@ export class ImageOverviewPage {
 
     // elements
 
-    public static getCellFilenameElement(filename) {
+    public static getCellIdentifierElement(identifier: string) {
 
-        return element(by.xpath('//span[@class="badge badge-secondary"][text()="' + filename + '"]'));
+        return element(by.xpath('//span[@class="badge badge-secondary"][text()="' + identifier + '"]'));
     };
 
     public static getAllCells() {

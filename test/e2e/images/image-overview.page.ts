@@ -92,7 +92,7 @@ export class ImageOverviewPage {
 
     public static getCellImageName(index) {
 
-        return ImageOverviewPage.getCell(index).element(by.css('.badge.badge-secondary')).getText();
+        return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring("resource-".length));
     };
 
     // elements

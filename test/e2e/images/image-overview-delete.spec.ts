@@ -49,12 +49,11 @@ describe('images/image-overview/delete --', function() {
         const elementToDelete = ImageOverviewPage.getCell(0);
 
         ImageOverviewPage.getCellImageName(0).then(imageName => {
-            const xpath = '//span[@class="badge badge-secondary"][text()="'+ imageName + '"]';
             elementToDelete.click();
             ImageOverviewPage.clickDeleteButton();
             ImageOverviewPage.clickCancelDeleteButton();
             browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(element(by.xpath(xpath))), delays.ECWaitTime)
+            browser.wait(EC.presenceOf(element(by.id('resource-' + imageName))), delays.ECWaitTime);
         });
     });
 });

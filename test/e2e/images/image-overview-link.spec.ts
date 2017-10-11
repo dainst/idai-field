@@ -77,21 +77,21 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.createDepictsRelation('testf1');
 
         ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellIdentifierElement('PE07-So-07_Z001.jpg')),
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellIdentifierElement('mapLayerTest2.png')),
+        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
         ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellIdentifierElement('PE07-So-07_Z001.jpg')),
+        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellIdentifierElement('mapLayerTest2.png')),
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
         ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellIdentifierElement('PE07-So-07_Z001.jpg')),
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellIdentifierElement('mapLayerTest2.png')),
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
     });
 });

@@ -1,4 +1,4 @@
-import {browser, element, by, protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 
 const path = require('path');
@@ -20,7 +20,7 @@ describe('images/image-overview/delete --', () => {
             ImageOverviewPage.clickDeleteButton();
             ImageOverviewPage.clickConfirmDeleteButton();
             browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ImageOverviewPage.getCellIdentifierElement(identifier)), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(identifier)), delays.ECWaitTime);
         });
     });
 
@@ -33,9 +33,9 @@ describe('images/image-overview/delete --', () => {
                 ImageOverviewPage.clickDeleteButton();
                 ImageOverviewPage.clickConfirmDeleteButton();
                 browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellIdentifierElement(image1Identifier)),
+                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(image1Identifier)),
                     delays.ECWaitTime);
-                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellIdentifierElement(image2Identifier)),
+                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(image2Identifier)),
                     delays.ECWaitTime);
             });
         });
@@ -50,7 +50,7 @@ describe('images/image-overview/delete --', () => {
             ImageOverviewPage.clickDeleteButton();
             ImageOverviewPage.clickCancelDeleteButton();
             browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(element(by.id('resource-' + identifier))), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier(identifier)), delays.ECWaitTime);
         });
     });
 });

@@ -103,11 +103,6 @@ export class ImageOverviewPage {
 
     // elements
 
-    public static getCellIdentifierElement(identifier: string) {
-
-        return element(by.xpath('//span[@class="badge badge-secondary"][text()="' + identifier + '"]'));
-    };
-
     public static getAllCells() {
 
         return element.all(by.css('.cell'));
@@ -116,6 +111,11 @@ export class ImageOverviewPage {
     public static getCell(index) {
 
         return ImageOverviewPage.getAllCells().get(index);
+    };
+
+    public static getCellByIdentifier(identifier: string) {
+
+        return element(by.id('resource-' + identifier));
     };
 
     public static getDeleteConfirmationModal() {

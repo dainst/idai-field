@@ -18,7 +18,7 @@ import {M} from '../m';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent implements OnInit {
+export class ImagePickerComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
@@ -38,11 +38,6 @@ export class ImagePickerComponent implements OnInit {
         this.fetchDocuments(this.query);
     }
 
-    ngOnInit() {
-
-        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
-    }
-
     public setDocument(document: IdaiFieldDocument) {
 
         this.document = document;
@@ -56,7 +51,7 @@ export class ImagePickerComponent implements OnInit {
 
     public onResize() {
 
-        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize();
     }
 
     /**

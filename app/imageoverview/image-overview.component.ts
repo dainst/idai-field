@@ -30,7 +30,7 @@ import {ViewUtility} from '../common/view-utility';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent implements OnInit{
+export class ImageOverviewComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     protected documents: IdaiFieldImageDocument[];
@@ -65,14 +65,15 @@ export class ImageOverviewComponent implements OnInit{
         this.fetchDocuments();
     }
 
-    ngOnInit() {
+    public changeGridSize(size) {
 
-        this.imageGrid.setClientWidth(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid.nrOfColumns = parseInt(size);
+        this.imageGrid.calcGrid();
     }
 
     public onResize() {
 
-        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize();
     }
 
     public refreshGrid() {
@@ -151,7 +152,7 @@ export class ImageOverviewComponent implements OnInit{
         this.modalService.open(RemoveLinkModalComponent)
             .result.then( () => {
                 this.removeRelationsOnSelectedDocuments().then(() => {
-                    this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth);
+                    this.imageGrid.calcGrid();
                     this.clearSelection();
                 })
             }

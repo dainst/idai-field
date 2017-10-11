@@ -16,7 +16,26 @@
          (drop)="false">
 
         <div class="row bg-light">
-            <div *ngIf="selected.length" class="col-sm-12 py-2">
+            <div *ngIf="!selected.length" class="col-sm-7 py-2">
+                <search-bar [q]="imagesState.getQuery().q" [types]="imagesState.getQuery().types" [parentType]="'Image'"
+                            [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"
+                            (onTypesChanged)="setQueryTypes($event)">
+                </search-bar>
+            </div>
+
+            <div *ngIf="!selected.length" class="col-sm-3 py-2">
+                <select id="main-type-document-filter-select" class="form-control"
+                        [(ngModel)]="imagesState.mainTypeDocumentFilterOption"
+                        (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
+                    <option value=""><em>Alle Bilder</em></option>
+                    <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>
+                    <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
+                        {{viewUtility.getMainTypeDocumentLabel(document)}}
+                    </option>
+                </select>
+            </div>
+
+            <div *ngIf="selected.length" class="col-sm-10 py-2">
                 <div id="image-overview-buttons" class="btn-toolbar">
                     <div class="btn-group mr-2" role="group">
                         <button type="button" id="delete-images" class="btn btn-danger"
@@ -48,23 +67,19 @@
                 </div>
             </div>
 
-            <div *ngIf="!selected.length" class="col-sm-9 py-2">
-                <search-bar [q]="imagesState.getQuery().q" [types]="imagesState.getQuery().types" [parentType]="'Image'"
-                            [hidden]="selected.length" (onQueryStringChanged)="setQueryString($event)"
-                            (onTypesChanged)="setQueryTypes($event)">
-                </search-bar>
+            <div class="col-sm-2 text-right py-3">
+                <span class="mdi mdi-view-grid align-middle"></span>
+                <input #gridSize type="range" min="2" max="12" value="4"
+                       class="slider align-middle"
+                       (change)="changeGridSize(gridSize.value)">
+                <span class="mdi mdi-apps align-middle"></span>
             </div>
 
-            <div *ngIf="!selected.length" class="col-sm-3 py-2">
-                <select id="main-type-document-filter-select" class="form-control"
-                        [(ngModel)]="imagesState.mainTypeDocumentFilterOption"
-                        (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
-                    <option value=""><em>Alle Bilder</em></option>
-                    <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>
-                    <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
-                        {{viewUtility.getMainTypeDocumentLabel(document)}}
-                    </option>
-                </select>
+            <div *ngIf="imagesState.getQuery().q.length > 0">
+                <button class="btn btn-primary btn-sm mt-1" (click)="setQueryString('')">
+                    Bildsuche: {{documents.length-1}} Bild(er) für &quot;<i>{{imagesState.getQuery().q}}</i>
+                    &quot; <span class="mdi mdi-close-circle-outline"></span>
+                </button>
             </div>
         </div>
 
@@ -75,6 +90,7 @@
                     [resourceIdentifiers]="resourceIdentifiers"
                     [selected]="selected"
                     [showDropArea]="true"
+                    [showGeoIcon]="true"
                     (onClick)="select($event)"
                     (onDoubleClick)="navigateTo($event)"
                     (onImagesUploaded)="refreshGrid()"

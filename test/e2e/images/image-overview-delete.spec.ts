@@ -1,4 +1,4 @@
-import {browser, protractor} from 'protractor';
+import {browser, element, by, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 
 const path = require('path');
@@ -50,7 +50,7 @@ describe('images/image-overview/delete --', () => {
             ImageOverviewPage.clickDeleteButton();
             ImageOverviewPage.clickCancelDeleteButton();
             browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ImageOverviewPage.getCellIdentifierElement(identifier)), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(element(by.id('resource-' + identifier))), delays.ECWaitTime);
         });
     });
 });

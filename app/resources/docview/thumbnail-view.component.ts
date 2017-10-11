@@ -32,7 +32,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
         if (!this.documents || this.documents.length == 0) return;
 
-        this.imageGrid._onResize(this.el.nativeElement.children[0].clientWidth);
+        this.imageGrid._onResize();
     }
 
     public clickRelation(document: Document) {
@@ -53,6 +53,6 @@ export class ThumbnailViewComponent implements OnChanges {
                 });
         }
 
-        promise.then(() => this.imageGrid.calcGrid(this.el.nativeElement.children[0].clientWidth));
+        promise.then(() => this.imageGrid.calcGrid());
     }
 }

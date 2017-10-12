@@ -17,6 +17,7 @@
     pointer-events: auto !important;
   }
 
+
   .cell {
     position: relative;
     cursor: pointer;
@@ -59,10 +60,6 @@
     &:hover {
       box-shadow: 1px 10px 30px 0px rgba(0,0,0,0.3);
       z-index: 100;
-
-      .title {
-        display: block;
-      }
 
       .identifier {
         visibility: visible;

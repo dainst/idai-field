@@ -1,7 +1,7 @@
 <div class="image-grid">
     <div *ngFor="let row of rows; let index = index">
 
-        <div *ngFor="let cell of row; let ind = ind"
+        <div *ngFor="let cell of row; let cell_index = index"
              class="cell-container"
              [style.width.px]="cell['calculatedWidth'] + 1"
              [style.height.px]="cell['calculatedHeight'] + 1">
@@ -19,7 +19,12 @@
                  (dblclick)="onDoubleClick.emit(cell['document'])"
                  [id]="'resource-' + cell['document'].resource.identifier"
                  class="cell"
-                 [class.selected]="selected.includes(cell['document'])">
+                 [class.selected]="selected.includes(cell['document'])"
+                 [ngbTooltip]="cellTooltip"
+                 container="body" placement="{{ cell_index < (nrOfColumns/2) ? 'right-top' : 'left-top'}}">
+                 <ng-template #cellTooltip >
+                    <fields-view style="text-align:left" [resource]="cell['document'].resource"></fields-view>
+                 </ng-template>
 
                 <div class="identifier"
                      *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
@@ -42,10 +47,8 @@
                 <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
-
-                <div *ngIf="showShortDescription" class="title" [style.width.px]="cell['calculatedWidth']">
-                    {{cell['document'].resource.shortDescription}}
-                </div>
+            </div>
+            <div style="background-color: silver">
             </div>
         </div>
     </div>

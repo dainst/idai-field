@@ -3,7 +3,6 @@ const spawn = require('child_process').spawn;
 const rimraf = require('rimraf');
 const fs = require('fs');
 
-const configPath = 'config/config.test.json';
 const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
 const suite = (process.argv.length > 3 && process.argv[3] == 'flaky') ? 'flaky' : 'default';
 
@@ -11,11 +10,11 @@ console.log('Running test suite:', suite);
 console.log('Fail fast mode:', failFast);
 console.log('\n');
 
-fs.writeFileSync(configPath, JSON.stringify({ 'dbs': ['test'] }));
+fs.writeFileSync('config/config.test.json', JSON.stringify({ 'dbs': ['test'] }));
 
 let app = new Application({
     path: require('electron'),
-    args: ['.', configPath]
+    args: ['.', 'test']
 });
 
 app.start().then(() => app.client.sessions()).then(sessions => {

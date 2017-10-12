@@ -11,36 +11,35 @@ function copyConfigFile(destPath, appDataPath) {
 
     if (!fs.existsSync(destPath)) {
         console.log('Create config.json at ' + destPath);
-        var config = JSON.stringify({"dbs":["test"]});
-        fs.writeFileSync(destPath, config);
+        fs.writeFileSync(destPath, JSON.stringify({"dbs":["test"]}));
     }
 }
 
 // CONFIGURATION ---
 
-var configSourcePath = undefined;
+var env = undefined;
 if (process.argv && process.argv.length > 2) {
-    configSourcePath = process.argv[2];
+    env = process.argv[2];
 }
-if (configSourcePath) { // is environment 'development' (npm start) or 'test' (npm run e2e)
+if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationPath = 'config/Configuration.json';
 }
 
 
-if (!configSourcePath || // is environment 'production' (packaged app)
-    configSourcePath.indexOf('dev') !== -1) { // is environment 'development' (npm start)
+if (!env || // is environment 'production' (packaged app)
+    env.indexOf('dev') !== -1) { // is environment 'development' (npm start)
 
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 
-    if (!configSourcePath) { // is environment 'production' (packaged app)
+    if (!env) { // is environment 'production' (packaged app)
         global.configurationPath = '../config/Configuration.json'
     }
 
 } else { // is environment 'test' (npm run e2e)
 
-    global.configPath = configSourcePath;
+    global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
 
@@ -57,7 +56,7 @@ global.switches = {
     destroy_before_create: false
 };
 
-if (configSourcePath && configSourcePath.indexOf('test') !== -1) { // is environment 'test'
+if (env && env.indexOf('test') !== -1) { // is environment 'test'
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
 }

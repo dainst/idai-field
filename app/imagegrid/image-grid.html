@@ -20,12 +20,16 @@
                  [id]="'resource-' + cell['document'].resource.identifier"
                  class="cell"
                  [class.selected]="selected.includes(cell['document'])"
-                 [ngbTooltip]="cellTooltip"
-                 container="body" placement="{{ cell_index < (nrOfColumns/2) ? 'right-top' : 'left-top'}}">
-                 <ng-template #cellTooltip >
-                    <fields-view style="text-align:left" [resource]="cell['document'].resource"></fields-view>
-                 </ng-template>
+                 [ngbTooltip]="(showTooltips) ? cellTooltip : ''"
+                 container="body"
+                 placement="{{ cell_index < (nrOfColumns/2) ? 'right-top' : 'left-top'}}">
 
+                 <ng-template #cellTooltip>
+                    <p *ngIf="cell['document'].resource.shortDescription" align="left" class="small">
+                        {{cell['document'].resource.shortDescription}}</p>
+                    <fields-view align="left" [resource]="cell['document'].resource"></fields-view>
+                 </ng-template>
+                
                 <div class="identifier"
                      *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                      [style.maxWidth.px]="cell['calculatedWidth']-15">

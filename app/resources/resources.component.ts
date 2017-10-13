@@ -119,11 +119,9 @@ export class ResourcesComponent implements AfterViewChecked {
     public initialize(): Promise<any> {
 
         this.loading.start();
-
         return Promise.resolve()
-            .then(() => {
-                return this.populateProjectDocument();
-            }).then(() => this.populateMainTypeDocuments())
+            .then(() => this.populateProjectDocument())
+            .then(() => this.populateMainTypeDocuments())
             .then(() => this.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
@@ -199,11 +197,11 @@ export class ResourcesComponent implements AfterViewChecked {
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        promise.then(() => this.insertFakeRecordsRelationDocuments());
+        promise.then(() => this.insertRecordsRelation());
     }
 
 
-    private insertFakeRecordsRelationDocuments() {
+    private insertRecordsRelation() {
 
         if (this.selectedMainTypeDocument.resource.type != 'Project') return;
 
@@ -216,12 +214,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
         }).then(documents => {
 
-            // this.selectedDocument.resource.relations['records'] = [];
-            // for (let doc of documents) {
-            //     this.selectedDocument.resource.relations['records'].push(
-            //         doc.resource.id
-            //     );
-            // }
+            this.selectedDocument.resource.relations['records'] = [];
+            for (let doc of documents) {
+                this.selectedDocument.resource.relations['records'].push(
+                    doc.resource.id
+                );
+            }
         });
     }
 
@@ -497,11 +495,20 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.selectedDocument, activeTabName?: string) {
+    public editDocument(document: Document = this.selectedDocument,
+                        activeTabName?: string) {
 
         this.editGeometry = false;
-        if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.selectDocumentAndAdjustContext(document);
 
+        // TODO find out what this is code for. this.selectedDocumentAndAdjustContext was called selectDocument before, and also did not create the records relation
+        if (document != this.selectedDocument &&
+                document != this.selectedMainTypeDocument) {
+
+            this.selectDocumentAndAdjustContext(document);
+        }
+        // -
+
+        ResourcesComponent.removeRecordsRelation(document);
         this.doceditProxy.editDocument(document, result => {
 
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
@@ -514,12 +521,22 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.removeEmptyDocuments();
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
-                    if (document == this.selectedMainTypeDocument) return this.handleMainTypeDocumentOnDeleted();
+                    if (document == this.selectedMainTypeDocument) {
+                        return this.handleMainTypeDocumentOnDeleted();
+                    }
                 }
             },
             activeTabName)
 
-            .then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            .then(() => this.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            .then(() => this.insertRecordsRelation());
+    }
+
+
+    private static removeRecordsRelation(document) {
+
+        if (!document) return;
+        delete document.resource.relations['records'];
     }
 
 

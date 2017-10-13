@@ -147,6 +147,15 @@
             "visible": true
         },
         {
+            "domain": [],
+            "editable": false,
+            "inverse": "NO-INVERSE",
+            "label": "Beinhaltet",
+            "name": "records",
+            "range": [],
+            "visible": true
+        },
+        {
             "domain": [
                 "Trench",
                 "Building",

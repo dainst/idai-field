@@ -46,6 +46,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private activeDocumentViewTab: string;
 
+
     constructor(route: ActivatedRoute,
                 private viewManager: ViewManager,
                 private routingHelper: RoutingHelper,
@@ -134,15 +135,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
-
-        this.datastore.get(id).then(
-            document => menu == 'edit' ? this.editDocument(document, tab) : this.selectDocumentAndAdjustContext(document, tab),
-            () => this.messages.add([M.DATASTORE_NOT_FOUND])
-        );
-    }
-
-
     /**
      * TODO since there are to many methods with 'select' in their names, try to get rid of this method or move it to MapWrapper. It is called only from there.
      * @param documentToSelect the object that should get selected
@@ -187,6 +179,206 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public getSelected(): Document {
+
+        return this.selectedDocument;
+    }
+
+
+    public deselect() {
+
+        this.selectedDocument = undefined;
+    }
+
+
+    public listenToClickEvents(): Observable<Event> {
+
+        return Observable.create(observer => {
+            this.clickEventObservers.push(observer);
+        });
+    }
+
+
+    public setQueryString(q: string) {
+
+        this.viewManager.setQueryString(q);
+
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
+            this.editGeometry = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+    }
+
+
+    public setQueryTypes(types: string[]) {
+
+        this.viewManager.setFilterTypes(types);
+
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
+            this.editGeometry = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+    }
+
+
+    public remove(document: Document) {
+
+        this.documents.splice(this.documents.indexOf(document), 1);
+    }
+
+
+    public getQuery() {
+
+        return {
+            q: this.viewManager.getQueryString(),
+            types: this.viewManager.getQueryTypes()
+        }
+    }
+
+
+    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
+
+        this.removeEmptyDocuments();
+        this.selectedDocument = newDocument;
+
+        if (geometryType == 'none') {
+            this.editDocument();
+        } else {
+            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
+            this.editGeometry = true;
+            this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
+        }
+
+        if (newDocument.resource.type != this.viewManager.getView().mainType) {
+            this.documents.unshift(<Document> newDocument);
+        }
+    }
+
+
+    public editDocument(document: Document = this.selectedDocument,
+                        activeTabName?: string) {
+
+        this.editGeometry = false;
+        ResourcesComponent.removeRecordsRelation(document);
+        if (document != this.selectedMainTypeDocument) {
+            this.selectDocumentAndAdjustContext(document);
+        }
+
+        this.doceditProxy.editDocument(document, result => {
+
+                if (result['tab']) this.activeDocumentViewTab = result['tab'];
+                return this.populateMainTypeDocuments().then(() => {
+                        this.invalidateQuerySettingsIfNecessary();
+                        this.handleDocumentSelectionOnSaved(result.document);
+                    });
+
+            }, closeReason => {
+                this.removeEmptyDocuments();
+                if (closeReason == 'deleted') {
+                    this.selectedDocument = undefined;
+                    if (document == this.selectedMainTypeDocument) {
+                        return this.handleMainTypeDocumentOnDeleted();
+                    }
+                }
+            },
+            activeTabName)
+
+            .then(() => this.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            .then(() => this.insertRecordsRelation());
+    }
+
+
+    public startEditGeometry() {
+
+        this.editGeometry = true;
+    }
+
+
+    public endEditGeometry() {
+
+        this.editGeometry = false;
+        this.populateDocumentList();
+    }
+
+
+    public createGeometry(geometryType: string) {
+
+        this.selectedDocument.resource['geometry'] = { 'type': geometryType };
+        this.startEditGeometry();
+    }
+
+
+    public isNewDocumentFromRemote(document: Document): boolean {
+
+        return this.newDocumentsFromRemote.indexOf(document) > -1;
+    }
+
+
+    public removeFromListOfNewDocumentsFromRemote(document: Document) {
+
+        let index = this.newDocumentsFromRemote.indexOf(document);
+        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
+    }
+
+
+    public isRemoteChange(changedDocument: Document): boolean {
+
+        const latestAction: Action =
+            (changedDocument.modified && changedDocument.modified.length > 0)
+            ? changedDocument.modified[changedDocument.modified.length - 1]
+            : changedDocument.created;
+
+        return latestAction && latestAction.user != this.settingsService.getUsername();
+    }
+
+
+    public solveConflicts(doc: IdaiFieldDocument) {
+
+        this.editDocument(doc, 'conflicts');
+    }
+
+
+    public startEdit(doc: IdaiFieldDocument, activeTabName?: string) {
+
+        this.editDocument(doc, activeTabName);
+    }
+
+
+    public setScrollTarget(doc: IdaiFieldDocument) {
+
+        this.scrollTarget = doc;
+    }
+
+
+    private handleChange(documentChange: DocumentChange) {
+
+        if (documentChange.type == 'deleted') {
+            console.debug('unhandled deleted document');
+            return;
+        }
+
+        let changedDocument: Document = documentChange.document;
+
+        if (!this.documents || !this.isRemoteChange(changedDocument)) return;
+        if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
+
+        if (changedDocument.resource.type == this.viewManager.getView().mainType) return this.populateMainTypeDocuments();
+
+        let oldDocuments = this.documents;
+        this.populateDocumentList().then(() => {
+            for (let doc of this.documents) {
+                if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
+                    this.newDocumentsFromRemote.push(doc);
+                }
+            }
+        });
+    }
+
+
     private adjustContext() {
 
         if (!this.selectedDocument) return;
@@ -209,7 +401,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             constraints: {
                 'resource.relations.isRecordedIn' :
-                    this.selectedDocument.resource.id
+                this.selectedDocument.resource.id
             }
 
         }).then(documents => {
@@ -221,6 +413,15 @@ export class ResourcesComponent implements AfterViewChecked {
                 );
             }
         });
+    }
+
+
+    private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
+
+        this.datastore.get(id).then(
+            document => menu == 'edit' ? this.editDocument(document, tab) : this.selectDocumentAndAdjustContext(document, tab),
+            () => this.messages.add([M.DATASTORE_NOT_FOUND])
+        );
     }
 
 
@@ -271,43 +472,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public getSelected(): Document {
-
-        return this.selectedDocument;
-    }
-
-
-    public deselect() {
-
-        this.selectedDocument = undefined;
-    }
-
-
-    private handleChange(documentChange: DocumentChange) {
-
-        if (documentChange.type == 'deleted') {
-            console.debug('unhandled deleted document');
-            return;
-        }
-
-        let changedDocument: Document = documentChange.document;
-
-        if (!this.documents || !this.isRemoteChange(changedDocument)) return;
-        if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
-
-        if (changedDocument.resource.type == this.viewManager.getView().mainType) return this.populateMainTypeDocuments();
-
-        let oldDocuments = this.documents;
-        this.populateDocumentList().then(() => {
-            for (let doc of this.documents) {
-                if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
-                    this.newDocumentsFromRemote.push(doc);
-                }
-            }
-        });
-    }
-
-
     private initializeClickEventListener() {
 
         this.renderer.listenGlobal('document', 'click', event => {
@@ -318,52 +482,57 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public listenToClickEvents(): Observable<Event> {
+    private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
 
-        return Observable.create(observer => {
-            this.clickEventObservers.push(observer);
-        });
+        if (document.resource.type == this.viewManager.getView().mainType) {
+
+            this.selectMainTypeDocument(document);
+        } else {
+
+            this.selectedDocument = document;
+            this.scrollTarget = document;
+        }
     }
 
 
-    public setQueryString(q: string) {
+    private handleMainTypeDocumentOnDeleted() {
 
-        this.viewManager.setQueryString(q);
+        this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
+        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
+        return this.populateMainTypeDocuments();
+    }
 
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
+
+    private scrollToDocument(doc: IdaiFieldDocument): boolean {
+
+        let element = document.getElementById('resource-' + doc.resource.identifier);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            return true;
+        }
+        return false;  
+    }
+
+
+    public setMode(mode: string) {
+
+        this.loading.start();
+        // The timeout is necessary to make the loading icon appear
+        setTimeout(() => {
+            this.removeEmptyDocuments();
+            this.selectedDocument = undefined;
+            this.viewManager.setMode(mode);
             this.editGeometry = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
+            this.loading.stop();
+        }, 1);
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public getCurrentFilterType()  {
 
-        this.viewManager.setFilterTypes(types);
-
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
-            this.editGeometry = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
-    }
-
-
-    public remove(document: Document) {
-
-        this.documents.splice(this.documents.indexOf(document), 1);
-    }
-
-
-    public getQuery() {
-
-        return {
-            q: this.viewManager.getQueryString(),
-            types: this.viewManager.getQueryTypes()
-        }
+        return (this.viewManager.getFilterTypes() &&
+            this.viewManager.getFilterTypes().length > 0 ?
+            this.viewManager.getFilterTypes()[0] : undefined);
     }
 
 
@@ -447,8 +616,18 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return this.fetchDocuments(ResourcesComponent.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                    this.selectedMainTypeDocument.resource.id))
+            this.selectedMainTypeDocument.resource.id))
             .then(documents => this.documents = documents);
+    }
+
+
+    private removeEmptyDocuments() {
+
+        if (!this.documents) return;
+
+        for (let document of this.documents) {
+            if (!document.resource.id) this.remove(document);
+        }
     }
 
 
@@ -457,7 +636,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (!this.viewManager.getView()) return Promise.resolve();
 
         return this.fetchDocuments(
-                ResourcesComponent.makeMainTypeQuery(this.viewManager.getView().mainType))
+            ResourcesComponent.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 return this.setSelectedMainTypeDocument();
@@ -476,55 +655,11 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
+    private handleFindErr(errWithParams: Array<string>, query: Query) {
 
-        this.removeEmptyDocuments();
-        this.selectedDocument = newDocument;
-
-        if (geometryType == 'none') {
-            this.editDocument();
-        } else {
-            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
-            this.editGeometry = true;
-            this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
-        }
-
-        if (newDocument.resource.type != this.viewManager.getView().mainType) {
-            this.documents.unshift(<Document> newDocument);
-        }
-    }
-
-
-    public editDocument(document: Document = this.selectedDocument,
-                        activeTabName?: string) {
-
-        this.editGeometry = false;
-        ResourcesComponent.removeRecordsRelation(document);
-        if (document != this.selectedMainTypeDocument) {
-            this.selectDocumentAndAdjustContext(document);
-        }
-
-        this.doceditProxy.editDocument(document, result => {
-
-                if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                return this.populateMainTypeDocuments().then(() => {
-                        this.invalidateQuerySettingsIfNecessary();
-                        this.handleDocumentSelectionOnSaved(result.document);
-                    });
-
-            }, closeReason => {
-                this.removeEmptyDocuments();
-                if (closeReason == 'deleted') {
-                    this.selectedDocument = undefined;
-                    if (document == this.selectedMainTypeDocument) {
-                        return this.handleMainTypeDocumentOnDeleted();
-                    }
-                }
-            },
-            activeTabName)
-
-            .then(() => this.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-            .then(() => this.insertRecordsRelation());
+        console.error('Error with find. Query:', query);
+        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+        this.messages.add([M.ALL_FIND_ERROR]);
     }
 
 
@@ -532,140 +667,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!document) return;
         delete document.resource.relations['records'];
-    }
-
-
-    public startEditGeometry() {
-
-        this.editGeometry = true;
-    }
-
-
-    public endEditGeometry() {
-
-        this.editGeometry = false;
-        this.populateDocumentList();
-    }
-
-
-    public createGeometry(geometryType: string) {
-
-        this.selectedDocument.resource['geometry'] = { 'type': geometryType };
-        this.startEditGeometry();
-    }
-
-
-    public isNewDocumentFromRemote(document: Document): boolean {
-
-        return this.newDocumentsFromRemote.indexOf(document) > -1;
-    }
-
-
-    public removeFromListOfNewDocumentsFromRemote(document: Document) {
-
-        let index = this.newDocumentsFromRemote.indexOf(document);
-        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
-    }
-
-
-    public isRemoteChange(changedDocument: Document): boolean {
-
-        const latestAction: Action =
-            (changedDocument.modified && changedDocument.modified.length > 0)
-            ? changedDocument.modified[changedDocument.modified.length - 1]
-            : changedDocument.created;
-
-        return latestAction && latestAction.user != this.settingsService.getUsername();
-    }
-
-
-    public solveConflicts(doc: IdaiFieldDocument) {
-
-        this.editDocument(doc, 'conflicts');
-    }
-
-
-    public startEdit(doc: IdaiFieldDocument, activeTabName?: string) {
-
-        this.editDocument(doc, activeTabName);
-    }
-
-
-    public setScrollTarget(doc: IdaiFieldDocument) {
-
-        this.scrollTarget = doc;
-    }
-
-
-    private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
-
-        if (document.resource.type == this.viewManager.getView().mainType) {
-
-            this.selectMainTypeDocument(document);
-        } else {
-
-            this.selectedDocument = document;
-            this.scrollTarget = document;
-        }
-    }
-
-
-    private handleMainTypeDocumentOnDeleted() {
-
-        this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
-        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.populateMainTypeDocuments();
-    }
-
-
-    private scrollToDocument(doc: IdaiFieldDocument): boolean {
-
-        let element = document.getElementById('resource-' + doc.resource.identifier);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            return true;
-        }
-        return false;  
-    }
-
-
-    public setMode(mode: string) {
-
-        this.loading.start();
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(() => {
-            this.removeEmptyDocuments();
-            this.selectedDocument = undefined;
-            this.viewManager.setMode(mode);
-            this.editGeometry = false;
-            this.loading.stop();
-        }, 1);
-    }
-
-
-    public getCurrentFilterType()  {
-
-        return (this.viewManager.getFilterTypes() &&
-            this.viewManager.getFilterTypes().length > 0 ?
-            this.viewManager.getFilterTypes()[0] : undefined);
-    }
-
-
-    private removeEmptyDocuments() {
-
-        if (!this.documents) return;
-
-        for (let document of this.documents) {
-            if (!document.resource.id) this.remove(document);
-        }
-    }
-
-
-    private handleFindErr(errWithParams: Array<string>, query: Query) {
-
-        console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-        this.messages.add([M.ALL_FIND_ERROR]);
     }
 
 

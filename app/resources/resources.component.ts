@@ -111,6 +111,12 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public stop() {
+
+        this.ready = false;
+    }
+
+
     public initialize(): Promise<any> {
 
         this.loading.start();

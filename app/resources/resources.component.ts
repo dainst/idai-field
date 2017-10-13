@@ -170,7 +170,7 @@ export class ResourcesComponent implements AfterViewChecked {
      * b) invalidates query settings in order to make sure
      * this.selectedDocument is part of the search hits of the document list
      * on the left hand side in the map view.
-     * 
+     *
      * @param documentToSelect
      * @param activeTabName
      * @returns {Document}
@@ -188,12 +188,33 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private adjustContext() {
 
-        if (this.selectedDocument) {
+        if (!this.selectedDocument) return;
 
-            const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
-            const res2 = this.invalidateQuerySettingsIfNecessary();
-            if (res1 || res2) this.populateDocumentList();
-        }
+        const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
+        const res2 = this.invalidateQuerySettingsIfNecessary();
+
+        let promise = Promise.resolve();
+        if (res1 || res2) promise = this.populateDocumentList();
+
+        promise.then(() => this.insertFakeRecordsRelationDocuments());
+    }
+
+
+    private insertFakeRecordsRelationDocuments() {
+
+        if (this.selectedMainTypeDocument.resource.type != 'Project') return;
+
+        this.datastore.find({
+
+            constraints: {
+                'resource.relations.isRecordedIn' :
+                    this.selectedDocument.resource.id
+            }
+
+        }).then(documents => {
+
+            // console.log("found",documents)
+        });
     }
 
 

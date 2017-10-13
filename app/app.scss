@@ -66,6 +66,7 @@ body {
 .btn-primary:disabled, .btn-primary.disabled {
   background-color: darken(rgba(85, 114, 161, 1), 10%);
   border-color: darken(rgba(85, 114, 161, 1), 10%);
+  cursor: not-allowed;
 }
 
 .btn-primary:active, .btn-primary.active {
@@ -88,6 +89,7 @@ body {
 .btn-secondary:disabled, .btn-primary.disabled {
   background-color: darken(#727b84, 10%);
   border-color: darken(#6c757d, 10%);
+  cursor: not-allowed;
 }
 
 .btn-secondary:active, .btn-secondary.active {

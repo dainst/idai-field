@@ -1,31 +1,41 @@
-<div class="modal-header" id="image-picker-modal-header">
-    <button id="add-image" *ngIf="selectedDocuments.length == 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
-        Bild hinzufügen
-    </button>
-    <button id="add-images" *ngIf="selectedDocuments.length > 1" (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
-        {{selectedDocuments.length}} Bilder hinzufügen
-    </button>
-</div>
-
-<div class="modal-body" id="image-picker-modal">
-    <search-bar *ngIf="!selectedDocuments.length"
-                [showFiltersMenu]="false"
-                (onQueryStringChanged)="setQueryString($event)">
-    </search-bar>
-    <div class="image-grid" (window:resize)="onResize($event)">
-
-        <image-grid #imageGrid
-                [nrOfColumns]="3"
-                [documents]="documents"
-                [selected]="selectedDocuments"
-                [showLinkBadges]="false"
-                (onClick)="select($event)"
-                (onImagesUploaded)="refreshGrid()"
-                (onUploadError)="showUploadErrorMsg($event)"
-        >
-        </image-grid>
+<div class="image-picker">
+    <div class="modal-header" id="image-picker-modal-header">
+        <button id="add-image" *ngIf="selectedDocuments.length == 0"
+                class="btn btn-primary disabled" disabled>
+            Bild hinzufügen
+        </button>
+        <button id="add-image" *ngIf="selectedDocuments.length == 1"
+                (click)="activeModal.close(selectedDocuments)"
+                class="btn btn-primary">
+            Bild hinzufügen
+        </button>
+        <button id="add-images" *ngIf="selectedDocuments.length > 1"
+                (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+            {{selectedDocuments.length}} Bilder hinzufügen
+        </button>
+        <button type="button" class="btn btn-secondary"
+                (click)="activeModal.dismiss('dismissedByCancel')">
+            <span class="mdi mdi-close"></span>
+        </button>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('dismissedByCancel')">Abbrechen</button>
+
+    <div class="modal-body" id="image-picker-modal">
+        <search-bar *ngIf="!selectedDocuments.length"
+                    [showFiltersMenu]="false"
+                    (onQueryStringChanged)="setQueryString($event)">
+        </search-bar>
+        <div class="image-grid" (window:resize)="onResize($event)">
+
+            <image-grid #imageGrid
+                    [nrOfColumns]="3"
+                    [documents]="documents"
+                    [selected]="selectedDocuments"
+                    [showLinkBadges]="false"
+                    (onClick)="select($event)"
+                    (onImagesUploaded)="refreshGrid()"
+                    (onUploadError)="showUploadErrorMsg($event)"
+            >
+            </image-grid>
+        </div>
+    </div>
 </div>

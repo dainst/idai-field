@@ -177,19 +177,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private selectDocument(document: IdaiFieldDocument) {
-
-        // TODO Check if this is still necessary
-        if (document && document.resource.type == this.viewManager.getView().mainType) {
-            this.selectedMainTypeDocument = document;
-            this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
-        } else {
-            this.selectedDocument = document;
-            this.scrollTarget = document;
-        }
-    }
-
-
     private selectMainTypeDocument(document: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = document;
@@ -549,7 +536,8 @@ export class ResourcesComponent implements AfterViewChecked {
             this.selectMainTypeDocument(document);
         } else {
 
-            this.selectDocument(document);
+            this.selectedDocument = document;
+            this.scrollTarget = document;
         }
     }
 

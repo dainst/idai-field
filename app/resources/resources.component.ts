@@ -171,6 +171,9 @@ export class ResourcesComponent implements AfterViewChecked {
      * this.selectedDocument is part of the search hits of the document list
      * on the left hand side in the map view.
      *
+     * The method also creates records relations (as inverse relations
+     * of isRecordedIn) for operation type resources if we are in project view.
+     *
      * @param documentToSelect
      * @param activeTabName
      * @returns {Document}

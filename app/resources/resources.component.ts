@@ -18,7 +18,6 @@ import {DoceditProxy} from './service/docedit-proxy';
     moduleId: module.id,
     templateUrl: './resources.html'
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -87,10 +86,12 @@ export class ResourcesComponent implements AfterViewChecked {
         this.initializeClickEventListener();
     }
 
+
     ngOnDestroy() {
 
         this.subscription.unsubscribe();
     }
+
 
     ngAfterViewChecked() {
 
@@ -101,16 +102,19 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+
     public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
 
         this.routingHelper.jumpToRelationTarget(this.selectedDocument, documentToSelect,
             docToSelect => this.select(docToSelect), tab);
     }
 
+
     public stop() {
 
         this.ready = false;
     }
+
 
     public initialize(): Promise<any> {
 
@@ -124,6 +128,14 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
+
+    public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
+
+        this.selectMainTypeDocument(document);
+        this.populateDocumentList();
+    }
+
+
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.datastore.get(id).then(
@@ -132,11 +144,51 @@ export class ResourcesComponent implements AfterViewChecked {
         );
     }
 
-    public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.selectMainTypeDocument(document);
-        this.populateDocumentList();
+    /**
+     * TODO since there are to many methods with 'select' in their names, try to get rid of this method or move it to MapWrapper. It is called only from there.
+     * @param documentToSelect the object that should get selected
+     */
+    public select(documentToSelect: IdaiFieldDocument) {
+
+        if (this.editGeometry && documentToSelect !=
+            this.selectedDocument) this.endEditGeometry();
+
+        if (this.isNewDocumentFromRemote(documentToSelect)) {
+            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
+        }
+
+        this.setSelected(documentToSelect);
     }
+
+
+    public setSelected(documentToSelect: Document, activeTabName?: string): Document {
+
+        this.selectedDocument = documentToSelect;
+        if (this.selectedDocument) {
+            const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
+            const res2 = this.invalidateQuerySettingsIfNecessary();
+            if (res1 || res2) this.populateDocumentList();
+        }
+
+        this.activeDocumentViewTab = activeTabName;
+
+        return this.selectedDocument;
+    }
+
+
+    private selectDocument(document: IdaiFieldDocument) {
+
+        // TODO Check if this is still necessary
+        if (document && document.resource.type == this.viewManager.getView().mainType) {
+            this.selectedMainTypeDocument = document;
+            this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
+        } else {
+            this.selectedDocument = document;
+            this.scrollTarget = document;
+        }
+    }
+
 
     private selectMainTypeDocument(document: IdaiFieldDocument) {
 
@@ -150,6 +202,52 @@ export class ResourcesComponent implements AfterViewChecked {
             this.setSelected(undefined);
         }
     }
+
+
+    private setSelectedMainTypeDocument(): Promise<any> {
+
+        if (this.mainTypeDocuments.length == 0) {
+            this.selectedMainTypeDocument = undefined;
+            return Promise.resolve();
+        }
+
+        if (this.selectedDocument) {
+            this.selectedMainTypeDocument =
+                ResourcesComponent.getMainTypeDocumentForDocument(
+                    this.selectedDocument, this.mainTypeDocuments
+                );
+            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            return Promise.resolve();
+        }
+
+        const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
+        if (!mainTypeDocumentId) {
+            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            return Promise.resolve();
+        } else {
+            return this.datastore.get(mainTypeDocumentId)
+                .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument)
+                .catch(() => {
+                    this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
+                    this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
+                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                    return Promise.resolve();
+                })
+        }
+    }
+
+
+    public getSelected(): Document {
+
+        return this.selectedDocument;
+    }
+
+
+    public deselect() {
+
+        this.selectedDocument = undefined;
+    }
+
 
     private handleChange(documentChange: DocumentChange) {
 
@@ -175,6 +273,7 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
+
     private initializeClickEventListener() {
 
         this.renderer.listenGlobal('document', 'click', event => {
@@ -184,6 +283,7 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
+
     public listenToClickEvents(): Observable<Event> {
 
         return Observable.create(observer => {
@@ -191,56 +291,47 @@ export class ResourcesComponent implements AfterViewChecked {
         });
     }
 
-    private selectDocument(document) {
 
-        // TODO Check if this is still necessary
-        if (document && document.resource.type == this.viewManager.getView().mainType) {
-            this.selectedMainTypeDocument = document;
-            this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
-        } else {
-            this.selectedDocument = document;
-            this.scrollTarget = document;
+    public setQueryString(q: string) {
+
+        this.viewManager.setQueryString(q);
+
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
+            this.editGeometry = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+    }
+
+
+    public setQueryTypes(types: string[]) {
+
+        this.viewManager.setFilterTypes(types);
+
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
+            this.editGeometry = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+    }
+
+
+    public remove(document: Document) {
+
+        this.documents.splice(this.documents.indexOf(document), 1);
+    }
+
+
+    public getQuery() {
+
+        return {
+            q: this.viewManager.getQueryString(),
+            types: this.viewManager.getQueryTypes()
         }
     }
 
-    /**
-     * TODO since there are to many methods with 'select' in their names, try to get rid of this method or move it to MapWrapper. It is called only from there.
-     * @param documentToSelect the object that should get selected
-     */
-    public select(documentToSelect: IdaiFieldDocument) {
-
-        if (this.editGeometry && documentToSelect != this.selectedDocument) this.endEditGeometry();
-
-        if (this.isNewDocumentFromRemote(documentToSelect)) {
-            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
-        }
-
-        this.setSelected(documentToSelect);
-    }
-
-    public deselect() {
-
-        this.selectedDocument = undefined;
-    }
-
-    public setSelected(documentToSelect: Document, activeTabName?: string): Document {
-
-        this.selectedDocument = documentToSelect;
-        if (this.selectedDocument) {
-            const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
-            const res2 = this.invalidateQuerySettingsIfNecessary();
-            if (res1 || res2) this.populateDocumentList();
-        }
-
-        this.activeDocumentViewTab = activeTabName;
-
-        return this.selectedDocument;
-    }
-
-    public getSelected(): Document {
-
-        return this.selectedDocument;
-    }
 
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
@@ -252,6 +343,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return typesInvalidated || queryStringInvalidated;
     }
+
 
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
@@ -265,6 +357,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return true;
     }
 
+
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
@@ -276,6 +369,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         return true;
     }
+
 
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
@@ -295,34 +389,6 @@ export class ResourcesComponent implements AfterViewChecked {
         return false;
     }
 
-    public setQueryString(q: string) {
-
-        this.viewManager.setQueryString(q);
-
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
-            this.editGeometry = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
-    }
-
-    public setQueryTypes(types: string[]) {
-
-        this.viewManager.setFilterTypes(types);
-
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
-            this.editGeometry = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
-    }
-
-    public remove(document: Document) {
-
-        this.documents.splice(this.documents.indexOf(document), 1);
-    }
 
     private populateProjectDocument(): Promise<any> {
 
@@ -372,37 +438,6 @@ export class ResourcesComponent implements AfterViewChecked {
             });
     }
 
-    private setSelectedMainTypeDocument(): Promise<any> {
-
-        if (this.mainTypeDocuments.length == 0) {
-            this.selectedMainTypeDocument = undefined;
-            return Promise.resolve();
-        }
-
-        if (this.selectedDocument) {
-            this.selectedMainTypeDocument =
-                ResourcesComponent.getMainTypeDocumentForDocument(
-                    this.selectedDocument, this.mainTypeDocuments
-                );
-            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            return Promise.resolve();
-        }
-
-        const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
-        if (!mainTypeDocumentId) {
-            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            return Promise.resolve();
-        } else {
-            return this.datastore.get(mainTypeDocumentId)
-                .then(document => this.selectedMainTypeDocument = document as IdaiFieldDocument)
-                .catch(() => {
-                    this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
-                    this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-                    return Promise.resolve();
-                })
-        }
-    }
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
@@ -421,6 +456,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.documents.unshift(<Document> newDocument);
         }
     }
+
 
     public editDocument(document: Document = this.selectedDocument, activeTabName?: string) {
 
@@ -469,11 +505,13 @@ export class ResourcesComponent implements AfterViewChecked {
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
+
     public removeFromListOfNewDocumentsFromRemote(document: Document) {
 
         let index = this.newDocumentsFromRemote.indexOf(document);
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
     }
+
 
     public isRemoteChange(changedDocument: Document): boolean {
 
@@ -485,29 +523,36 @@ export class ResourcesComponent implements AfterViewChecked {
         return latestAction && latestAction.user != this.settingsService.getUsername();
     }
 
+
     public solveConflicts(doc: IdaiFieldDocument) {
 
         this.editDocument(doc, 'conflicts');
     }
+
 
     public startEdit(doc: IdaiFieldDocument, activeTabName?: string) {
 
         this.editDocument(doc, activeTabName);
     }
 
+
     public setScrollTarget(doc: IdaiFieldDocument) {
 
         this.scrollTarget = doc;
     }
 
+
     private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
 
         if (document.resource.type == this.viewManager.getView().mainType) {
+
             this.selectMainTypeDocument(document);
         } else {
+
             this.selectDocument(document);
         }
     }
+
 
     private handleMainTypeDocumentOnDeleted() {
 
@@ -515,6 +560,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
         return this.populateMainTypeDocuments();
     }
+
 
     private scrollToDocument(doc: IdaiFieldDocument): boolean {
 
@@ -525,6 +571,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }
         return false;  
     }
+
 
     public setMode(mode: string) {
 
@@ -539,6 +586,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }, 1);
     }
 
+
     public getCurrentFilterType()  {
 
         return (this.viewManager.getFilterTypes() &&
@@ -546,13 +594,6 @@ export class ResourcesComponent implements AfterViewChecked {
             this.viewManager.getFilterTypes()[0] : undefined);
     }
 
-    public getQuery() {
-
-        return {
-            q: this.viewManager.getQueryString(),
-            types: this.viewManager.getQueryTypes()
-        }
-    }
 
     private removeEmptyDocuments() {
 
@@ -563,12 +604,14 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+
     private handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
         this.messages.add([M.ALL_FIND_ERROR]);
     }
+
 
     private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
@@ -578,6 +621,7 @@ export class ResourcesComponent implements AfterViewChecked {
             if (doc.resource.id == changedDocument.resource.id) return true;
         }
     }
+
 
     private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
 
@@ -590,12 +634,14 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
+
     private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
         const clonedQuery = JSON.parse(JSON.stringify(query));
         clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
         return clonedQuery;
     }
+
 
     private static makeMainTypeQuery(mainType: string): Query {
 

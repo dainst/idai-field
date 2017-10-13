@@ -139,7 +139,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.datastore.get(id).then(
-            document => menu == 'edit' ? this.editDocument(document, tab) : this.setSelected(document, tab),
+            document => menu == 'edit' ? this.editDocument(document, tab) : this.selectDocumentAndAdjustContext(document, tab),
             () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }
@@ -158,22 +158,42 @@ export class ResourcesComponent implements AfterViewChecked {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        this.setSelected(documentToSelect);
+        this.selectDocumentAndAdjustContext(documentToSelect);
     }
 
 
-    public setSelected(documentToSelect: Document, activeTabName?: string): Document {
+    /**
+     * Sets the this.selectedDocument (and this.activeTabName)
+     * and if necessary, also
+     * a) selects the operation type document,
+     * this.selectedDocument is recorded in, accordingly and
+     * b) invalidates query settings in order to make sure
+     * this.selectedDocument is part of the search hits of the document list
+     * on the left hand side in the map view.
+     * 
+     * @param documentToSelect
+     * @param activeTabName
+     * @returns {Document}
+     */
+    public selectDocumentAndAdjustContext(
+            documentToSelect: Document,
+            activeTabName?: string): Document {
 
         this.selectedDocument = documentToSelect;
+        this.activeDocumentViewTab = activeTabName;
+        this.adjustContext();
+        return this.selectedDocument;
+    }
+
+
+    private adjustContext() {
+
         if (this.selectedDocument) {
+
             const res1 = this.selectLinkedMainTypeDocumentForSelectedDocument();
             const res2 = this.invalidateQuerySettingsIfNecessary();
             if (res1 || res2) this.populateDocumentList();
         }
-
-        this.activeDocumentViewTab = activeTabName;
-
-        return this.selectedDocument;
     }
 
 
@@ -186,7 +206,7 @@ export class ResourcesComponent implements AfterViewChecked {
             ResourcesComponent.getMainTypeDocumentForDocument(
                 this.selectedDocument, this.mainTypeDocuments) != this.selectedMainTypeDocument) {
 
-            this.setSelected(undefined);
+            this.selectDocumentAndAdjustContext(undefined);
         }
     }
 
@@ -448,7 +468,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public editDocument(document: Document = this.selectedDocument, activeTabName?: string) {
 
         this.editGeometry = false;
-        if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.setSelected(document);
+        if (document != this.selectedDocument && document != this.selectedMainTypeDocument) this.selectDocumentAndAdjustContext(document);
 
         this.doceditProxy.editDocument(document, result => {
 

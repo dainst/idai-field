@@ -425,6 +425,7 @@ export class ResourcesComponent implements AfterViewChecked {
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
     }
 
+
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
@@ -444,6 +445,7 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(documents => this.documents = documents);
     }
 
+
     private populateMainTypeDocuments(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
@@ -455,6 +457,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 return this.setSelectedMainTypeDocument();
             });
     }
+    
 
     private fetchDocuments(query: Query): Promise<any> {
 
@@ -510,7 +513,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             .then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
     }
-    
+
 
     public startEditGeometry() {
 

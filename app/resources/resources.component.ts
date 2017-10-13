@@ -510,11 +510,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
             .then(() => this.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
     }
+    
 
     public startEditGeometry() {
 
         this.editGeometry = true;
     }
+
 
     public endEditGeometry() {
 
@@ -522,11 +524,13 @@ export class ResourcesComponent implements AfterViewChecked {
         this.populateDocumentList();
     }
 
+
     public createGeometry(geometryType: string) {
 
         this.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
     }
+
 
     public isNewDocumentFromRemote(document: Document): boolean {
 

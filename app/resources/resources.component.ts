@@ -213,7 +213,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
         }).then(documents => {
 
-            // console.log("found",documents)
+            // this.selectedDocument.resource.relations['records'] = [];
+            // for (let doc of documents) {
+            //     this.selectedDocument.resource.relations['records'].push(
+            //         doc.resource.id
+            //     );
+            // }
         });
     }
 
@@ -457,7 +462,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 return this.setSelectedMainTypeDocument();
             });
     }
-    
+
 
     private fetchDocuments(query: Query): Promise<any> {
 

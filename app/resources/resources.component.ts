@@ -48,7 +48,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
                 private datastore: IdaiFieldDatastore, // TODO remove, handle documentChanges directly in documentsManager
-                private messages: Messages, // TODO remove dependency
+                private messages: Messages, // TODO remove dependency, or otherwise remove messages dependency from the various services
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
                 private documentsManager: DocumentsManager

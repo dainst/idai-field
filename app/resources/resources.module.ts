@@ -20,7 +20,7 @@ import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.comp
 import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {SelectedManager} from './service/selected-manager';
+import {MainTypeManager} from './service/main-type-manager';
 
 @NgModule({
     imports: [
@@ -47,7 +47,7 @@ import {SelectedManager} from './service/selected-manager';
     providers: [
         ResourcesState,
         ViewManager,
-        SelectedManager,
+        MainTypeManager,
         RoutingHelper,
         DoceditProxy
     ],

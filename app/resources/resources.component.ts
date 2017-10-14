@@ -12,7 +12,7 @@ import {M} from '../m';
 import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {SelectedManager} from "./service/selected-manager";
+import {MainTypeManager} from "./service/main-type-manager";
 
 
 @Component({
@@ -32,8 +32,8 @@ export class ResourcesComponent implements AfterViewChecked {
     public documents: Array<Document>;
 
     public projectDocument: IdaiFieldDocument;
-    
-    
+
+    public selectedDocument: Document;
 
     public ready: boolean = false;
 
@@ -55,13 +55,14 @@ export class ResourcesComponent implements AfterViewChecked {
                 private settingsService: SettingsService,
                 private messages: Messages,
                 private loading: Loading,
-                private selectedManager: SelectedManager
+                private mainTypeManager: MainTypeManager
     ) {
         routingHelper.routeParams(route).subscribe(params => {
 
             this.ready = false;
 
-            this.selectedManager.init();
+            this.selectedDocument = undefined;
+            this.mainTypeManager.init();
             this.editGeometry = false;
 
             return this.initialize()
@@ -104,7 +105,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
 
-        this.routingHelper.jumpToRelationTarget(this.selectedManager.selectedDocument, documentToSelect,
+        this.routingHelper.jumpToRelationTarget(this.selectedDocument, documentToSelect,
             docToSelect => this.select(docToSelect), tab);
     }
 
@@ -120,7 +121,9 @@ export class ResourcesComponent implements AfterViewChecked {
         this.loading.start();
         return Promise.resolve()
             .then(() => this.populateProjectDocument())
-            .then(() => this.selectedManager.populateMainTypeDocuments())
+            .then(() => this.mainTypeManager.populateMainTypeDocuments(
+                this.selectedDocument
+            ))
             .then(() => this.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
@@ -128,7 +131,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.selectedManager.selectMainTypeDocument(document,()=>{this.selectDocumentAndAdjustContext(undefined);});
+        this.mainTypeManager.selectMainTypeDocument(
+            document,this.selectedDocument,()=>{this.selectDocumentAndAdjustContext(undefined);});
         this.populateDocumentList();
     }
 
@@ -149,7 +153,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public select(documentToSelect: IdaiFieldDocument) {
 
         if (this.editGeometry && documentToSelect !=
-            this.selectedManager.selectedDocument) this.endEditGeometry();
+            this.selectedDocument) this.endEditGeometry();
 
         if (this.isNewDocumentFromRemote(documentToSelect)) {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
@@ -160,12 +164,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
 
     /**
-     * Sets the this.selectedManager.selectedDocument (and this.activeTabName)
+     * Sets the this.selectedDocument (and this.activeTabName)
      * and if necessary, also
      * a) selects the operation type document,
-     * this.selectedManager.selectedDocument is recorded in, accordingly and
+     * this.selectedDocument is recorded in, accordingly and
      * b) invalidates query settings in order to make sure
-     * this.selectedManager.selectedDocument is part of the search hits of the document list
+     * this.selectedDocument is part of the search hits of the document list
      * on the left hand side in the map view.
      *
      * The method also creates records relations (as inverse relations
@@ -179,36 +183,37 @@ export class ResourcesComponent implements AfterViewChecked {
             documentToSelect: Document,
             activeTabName?: string): Document {
 
-        this.selectedManager.selectedDocument = documentToSelect;
+        this.selectedDocument = documentToSelect;
         this.activeDocumentViewTab = activeTabName;
         this.adjustContext();
-        return this.selectedManager.selectedDocument;
+        return this.selectedDocument;
     }
 
 
     private adjustContext() {
 
-        if (!this.selectedManager.selectedDocument) return;
+        if (!this.selectedDocument) return;
 
-        const res1 = this.selectedManager.selectLinkedMainTypeDocumentForSelectedDocument();
-        const res2 = this.selectedManager.invalidateQuerySettingsIfNecessary();
+        const res1 = this.mainTypeManager.
+            selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
+        const res2 = this.invalidateQuerySettingsIfNecessary();
 
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        promise.then(() => this.selectedManager.insertRecordsRelation());
+        promise.then(() => this.insertRecordsRelation());
     }
 
 
     public getSelected(): Document {
 
-        return this.selectedManager.selectedDocument;
+        return this.selectedDocument;
     }
 
 
     public deselect() {
 
-        this.selectedManager.selectedDocument = undefined;
+        this.selectedDocument = undefined;
     }
 
 
@@ -224,7 +229,10 @@ export class ResourcesComponent implements AfterViewChecked {
         if (!this.documents || !this.isRemoteChange(changedDocument)) return;
         if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
 
-        if (changedDocument.resource.type == this.viewManager.getView().mainType) return this.selectedManager.populateMainTypeDocuments();
+        if (changedDocument.resource.type == this.viewManager.getView().mainType) {
+            return this.mainTypeManager.
+                populateMainTypeDocuments(this.selectedDocument);
+        }
 
         let oldDocuments = this.documents;
         this.populateDocumentList().then(() => {
@@ -259,7 +267,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.viewManager.setQueryString(q);
 
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedManager.selectedDocument)) {
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
             this.editGeometry = false;
             this.deselect();
         }
@@ -272,7 +280,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.viewManager.setFilterTypes(types);
 
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedManager.selectedDocument)) {
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
             this.editGeometry = false;
             this.deselect();
         }
@@ -312,14 +320,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.newDocumentsFromRemote = [];
 
-        if (!this.selectedManager.selectedMainTypeDocument) {
+        if (!this.mainTypeManager.selectedMainTypeDocument) {
             this.documents = [];
             return Promise.resolve();
         }
 
         return this.fetchDocuments(ResourcesComponent.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                    this.selectedManager.selectedMainTypeDocument.resource.id))
+                    this.mainTypeManager.selectedMainTypeDocument.resource.id))
             .then(documents => this.documents = documents);
     }
 
@@ -338,7 +346,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
         this.removeEmptyDocuments();
-        this.selectedManager.selectedDocument = newDocument;
+        this.selectedDocument = newDocument;
 
         if (geometryType == 'none') {
             this.editDocument();
@@ -354,14 +362,14 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.selectedManager.selectedDocument,
+    public editDocument(document: Document = this.selectedDocument,
                         activeTabName?: string) {
 
         this.editGeometry = false;
 
-        // TODO find out what this is code for. this.selectedManager.selectedDocumentAndAdjustContext was called selectDocument before, and also did not create the records relation
-        if (document != this.selectedManager.selectedDocument &&
-                document != this.selectedManager.selectedMainTypeDocument) {
+        // TODO find out what this is code for. this.selectedDocumentAndAdjustContext was called selectDocument before, and also did not create the records relation
+        if (document != this.selectedDocument &&
+                document != this.mainTypeManager.selectedMainTypeDocument) {
 
             this.selectDocumentAndAdjustContext(document);
         }
@@ -371,24 +379,27 @@ export class ResourcesComponent implements AfterViewChecked {
         this.doceditProxy.editDocument(document, result => {
 
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                return this.selectedManager.populateMainTypeDocuments().then(() => {
-                        this.selectedManager.invalidateQuerySettingsIfNecessary();
+                return this.mainTypeManager.populateMainTypeDocuments(
+                    this.selectedDocument
+                ).then(() => {
+                        this.invalidateQuerySettingsIfNecessary();
                         this.handleDocumentSelectionOnSaved(result.document);
                     });
 
             }, closeReason => {
                 this.removeEmptyDocuments();
                 if (closeReason == 'deleted') {
-                    this.selectedManager.selectedDocument = undefined;
-                    if (document == this.selectedManager.selectedMainTypeDocument) {
-                        return this.selectedManager.handleMainTypeDocumentOnDeleted();
+                    this.selectedDocument = undefined;
+                    if (document == this.mainTypeManager.selectedMainTypeDocument) {
+                        return this.mainTypeManager.
+                            handleMainTypeDocumentOnDeleted(this.selectedDocument);
                     }
                 }
             },
             activeTabName)
 
             .then(() => this.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-            .then(() => this.selectedManager.insertRecordsRelation());
+            .then(() => this.insertRecordsRelation());
     }
 
 
@@ -414,7 +425,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public createGeometry(geometryType: string) {
 
-        this.selectedManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
+        this.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
     }
 
@@ -465,10 +476,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (document.resource.type == this.viewManager.getView().mainType) {
 
-            this.selectedManager.selectMainTypeDocument(document,()=>{this.selectDocumentAndAdjustContext(undefined);});
+            this.mainTypeManager.selectMainTypeDocument(
+                document, this.selectedDocument,
+                ()=>{this.selectDocumentAndAdjustContext(undefined);});
         } else {
 
-            this.selectedManager.selectedDocument = document;
+            this.selectedDocument = document;
             this.scrollTarget = document;
         }
     }
@@ -491,7 +504,7 @@ export class ResourcesComponent implements AfterViewChecked {
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
             this.removeEmptyDocuments();
-            this.selectedManager.selectedDocument = undefined;
+            this.selectedDocument = undefined;
             this.viewManager.setMode(mode);
             this.editGeometry = false;
             this.loading.stop();
@@ -507,6 +520,30 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public insertRecordsRelation() {
+
+        if (!this.selectedDocument) return;
+        if (this.mainTypeManager.selectedMainTypeDocument.resource.type != 'Project') return;
+
+        this.datastore.find({
+
+            constraints: {
+                'resource.relations.isRecordedIn' :
+                this.selectedDocument.resource.id
+            }
+
+        }).then(documents => {
+
+            this.selectedDocument.resource.relations['records'] = [];
+            for (let doc of documents) {
+                this.selectedDocument.resource.relations['records'].push(
+                    doc.resource.id
+                );
+            }
+        });
+    }
+
+
     private removeEmptyDocuments() {
 
         if (!this.documents) return;
@@ -514,6 +551,44 @@ export class ResourcesComponent implements AfterViewChecked {
         for (let document of this.documents) {
             if (!document.resource.id) this.remove(document);
         }
+    }
+
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    public invalidateQuerySettingsIfNecessary(): boolean {
+
+        const typesInvalidated = this.invalidateTypesIfNecessary();
+        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
+
+        return typesInvalidated || queryStringInvalidated;
+    }
+
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateTypesIfNecessary(): boolean {
+
+        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) return false;
+
+        this.viewManager.setFilterTypes([]);
+
+        return true;
+    }
+
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateQueryStringIfNecessary(): boolean {
+
+        if (this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) return false;
+
+        this.viewManager.setQueryString('');
+
+        return true;
     }
 
 

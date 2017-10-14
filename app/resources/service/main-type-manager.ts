@@ -1,18 +1,17 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {ResourcesComponent} from "../resources.component";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Injectable} from '@angular/core';
-import {ViewManager} from "./view-manager";
-import {Datastore} from "idai-components-2/datastore";
-import {Query} from 'idai-components-2/datastore';
+import {ViewManager} from './view-manager';
+import {Datastore, Query} from 'idai-components-2/datastore';
 
 @Injectable()
 /**
- *
+ * @author Thomas Kleinke
+ * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
-export class SelectedManager {
+export class MainTypeManager {
 
-    public selectedDocument: Document;
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
 
@@ -23,25 +22,25 @@ export class SelectedManager {
 
     }
 
-
     public init() {
 
-        this.selectedDocument = undefined;
         this.selectedMainTypeDocument = undefined;
         this.mainTypeDocuments = undefined;
     }
 
-    public setSelectedMainTypeDocument(): Promise<any> {
+    public setSelectedMainTypeDocument(
+        selectedDocument: IdaiFieldDocument
+    ): Promise<any> {
 
         if (this.mainTypeDocuments.length == 0) {
             this.selectedMainTypeDocument = undefined;
             return Promise.resolve();
         }
 
-        if (this.selectedDocument) {
+        if (selectedDocument) {
             this.selectedMainTypeDocument =
-                SelectedManager.getMainTypeDocumentForDocument(
-                    this.selectedDocument, this.mainTypeDocuments
+                MainTypeManager.getMainTypeDocumentForDocument(
+                    selectedDocument, this.mainTypeDocuments
                 );
             if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument =
                 this.mainTypeDocuments[0];
@@ -66,69 +65,52 @@ export class SelectedManager {
     }
 
 
-    public handleMainTypeDocumentOnDeleted() {
+    public handleMainTypeDocumentOnDeleted(
+        document: Document
+    ) {
 
         this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
         this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.populateMainTypeDocuments();
+        return this.populateMainTypeDocuments(document);
     }
 
 
-    public populateMainTypeDocuments(): Promise<any> {
+    public populateMainTypeDocuments(
+        document: Document
+    ): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
         return this.fetchDocuments(
-            SelectedManager.makeMainTypeQuery(this.viewManager.getView().mainType))
+            MainTypeManager.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-                return this.setSelectedMainTypeDocument();
+                return this.setSelectedMainTypeDocument(document as IdaiFieldDocument);
             });
-    }
-
-
-    public insertRecordsRelation() {
-
-        if (!this.selectedDocument) return;
-        if (this.selectedMainTypeDocument.resource.type != 'Project') return;
-
-        this.datastore.find({
-
-            constraints: {
-                'resource.relations.isRecordedIn' :
-                this.selectedDocument.resource.id
-            }
-
-        }).then(documents => {
-
-            this.selectedDocument.resource.relations['records'] = [];
-            for (let doc of documents) {
-                this.selectedDocument.resource.relations['records'].push(
-                    doc.resource.id
-                );
-            }
-        });
     }
 
 
     private fetchDocuments(query: Query): Promise<any> {
 
         return this.datastore.find(query)
-            .catch(errWithParams => SelectedManager.handleFindErr(errWithParams, query))
+            .catch(errWithParams => MainTypeManager.handleFindErr(errWithParams, query))
             .then(documents => {
                 return documents;
             });
     }
 
 
-    public selectMainTypeDocument(document: IdaiFieldDocument, cb) {
+    public selectMainTypeDocument(
+            mainTypeDoc: IdaiFieldDocument,
+            selectedDocument: Document
+            , cb) {
 
-        this.selectedMainTypeDocument = document;
+        this.selectedMainTypeDocument = mainTypeDoc;
         this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
 
-        if (this.selectedDocument &&
-            SelectedManager.getMainTypeDocumentForDocument(
-                this.selectedDocument, this.mainTypeDocuments) != this.selectedMainTypeDocument) {
+        if (selectedDocument &&
+            MainTypeManager.getMainTypeDocumentForDocument(
+                selectedDocument, this.mainTypeDocuments) != this.selectedMainTypeDocument) {
 
             cb();
         }
@@ -138,12 +120,14 @@ export class SelectedManager {
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    public selectLinkedMainTypeDocumentForSelectedDocument(): boolean {
+    public selectLinkedMainTypeDocumentForSelectedDocument(
+        selectedDocument: Document
+    ): boolean {
 
         if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return false;
 
-        let mainTypeDocument = SelectedManager.getMainTypeDocumentForDocument(
-            this.selectedDocument, this.mainTypeDocuments);
+        let mainTypeDocument = MainTypeManager.getMainTypeDocumentForDocument(
+            selectedDocument, this.mainTypeDocuments);
 
         if (mainTypeDocument != this.selectedMainTypeDocument) {
             this.selectedMainTypeDocument = mainTypeDocument;
@@ -151,44 +135,6 @@ export class SelectedManager {
         }
 
         return false;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    public invalidateQuerySettingsIfNecessary(): boolean {
-
-        const typesInvalidated = this.invalidateTypesIfNecessary();
-        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
-
-        return typesInvalidated || queryStringInvalidated;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateTypesIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) return false;
-
-        this.viewManager.setFilterTypes([]);
-
-        return true;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateQueryStringIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) return false;
-
-        this.viewManager.setQueryString('');
-
-        return true;
     }
 
 

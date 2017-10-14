@@ -11,9 +11,9 @@
         </div>
     </div>
     <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.getQuery().q == ''
-                        && selectedManager.selectedMainTypeDocument"
+                        && mainTypeManager.selectedMainTypeDocument"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="resourcesComponent.getCurrentFilterType()"
-                 [isRecordedIn]="selectedManager.selectedMainTypeDocument"></plus-button>
+                 [isRecordedIn]="mainTypeManager.selectedMainTypeDocument"></plus-button>
     <loading-icon></loading-icon>
 </div>

@@ -7,6 +7,7 @@ import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {ViewManager} from './service/view-manager';
 import {MainTypeManager} from "./service/main-type-manager";
+import {DocumentsManager} from './service/documents-manager';
 
 @Component({
     selector: 'map-wrapper',
@@ -21,7 +22,6 @@ import {MainTypeManager} from "./service/main-type-manager";
  */
 export class MapWrapperComponent {
 
-    @Input() documents: Array<Document>; // TODO make it Array<IdaiFieldDocument>
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() isEditing: boolean = false;
     @Input() activeTab: string;
@@ -33,7 +33,8 @@ export class MapWrapperComponent {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private messages: Messages,
-        public mainTypeManager: MainTypeManager
+        public mainTypeManager: MainTypeManager,
+        private documentsManager: DocumentsManager
     ) { }
 
     private selectedDocumentIsNew(): boolean {
@@ -66,7 +67,7 @@ export class MapWrapperComponent {
                 this.resourcesComponent.editDocument();
             } else {
                 this.resourcesComponent.endEditGeometry();
-                this.resourcesComponent.remove(this.selectedDocument);
+                this.documentsManager.remove(this.selectedDocument);
             }
         } else {
             this.resourcesComponent.endEditGeometry();

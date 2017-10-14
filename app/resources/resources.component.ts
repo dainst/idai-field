@@ -1,9 +1,11 @@
 import {AfterViewChecked, Component, Renderer} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {DocumentChange, Query} from 'idai-components-2/datastore';
-import {Action, Document} from 'idai-components-2/core';
+import {
+    IdaiFieldDocument,
+    IdaiFieldGeometry
+} from 'idai-components-2/idai-field-model';
+import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
@@ -12,7 +14,8 @@ import {M} from '../m';
 import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {MainTypeManager} from "./service/main-type-manager";
+import {MainTypeManager} from './service/main-type-manager';
+import {DocumentsManager} from './service/documents-manager';
 
 
 @Component({
@@ -29,15 +32,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public editGeometry: boolean = false;
 
-    public documents: Array<Document>;
-
     public projectDocument: IdaiFieldDocument;
 
     public selectedDocument: Document;
 
     public ready: boolean = false;
 
-    private newDocumentsFromRemote: Array<Document> = [];
+
     private scrollTarget: IdaiFieldDocument;
 
     private clickEventObservers: Array<any> = [];
@@ -55,7 +56,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 private settingsService: SettingsService,
                 private messages: Messages,
                 private loading: Loading,
-                private mainTypeManager: MainTypeManager
+                private mainTypeManager: MainTypeManager,
+                private documentsManager: DocumentsManager
     ) {
         routingHelper.routeParams(route).subscribe(params => {
 
@@ -80,7 +82,8 @@ export class ResourcesComponent implements AfterViewChecked {
         });
 
         this.subscription = datastore.documentChangesNotifications().subscribe(documentChange => {
-            this.handleChange(documentChange);
+            this.documentsManager.handleChange(
+                documentChange, this.selectedDocument);
         });
 
         this.initializeClickEventListener();
@@ -124,7 +127,7 @@ export class ResourcesComponent implements AfterViewChecked {
             .then(() => this.mainTypeManager.populateMainTypeDocuments(
                 this.selectedDocument
             ))
-            .then(() => this.populateDocumentList())
+            .then(() => this.documentsManager.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
@@ -133,7 +136,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.mainTypeManager.selectMainTypeDocument(
             document,this.selectedDocument,()=>{this.selectDocumentAndAdjustContext(undefined);});
-        this.populateDocumentList();
+        this.documentsManager.populateDocumentList();
     }
 
 
@@ -199,7 +202,7 @@ export class ResourcesComponent implements AfterViewChecked {
         const res2 = this.invalidateQuerySettingsIfNecessary();
 
         let promise = Promise.resolve();
-        if (res1 || res2) promise = this.populateDocumentList();
+        if (res1 || res2) promise = this.documentsManager.populateDocumentList();
 
         promise.then(() => this.insertRecordsRelation());
     }
@@ -214,34 +217,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public deselect() {
 
         this.selectedDocument = undefined;
-    }
-
-
-    private handleChange(documentChange: DocumentChange) {
-
-        if (documentChange.type == 'deleted') {
-            console.debug('unhandled deleted document');
-            return;
-        }
-
-        let changedDocument: Document = documentChange.document;
-
-        if (!this.documents || !this.isRemoteChange(changedDocument)) return;
-        if (ResourcesComponent.isExistingDoc(changedDocument, this.documents)) return;
-
-        if (changedDocument.resource.type == this.viewManager.getView().mainType) {
-            return this.mainTypeManager.
-                populateMainTypeDocuments(this.selectedDocument);
-        }
-
-        let oldDocuments = this.documents;
-        this.populateDocumentList().then(() => {
-            for (let doc of this.documents) {
-                if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
-                    this.newDocumentsFromRemote.push(doc);
-                }
-            }
-        });
     }
 
 
@@ -272,7 +247,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.deselect();
         }
 
-        this.populateDocumentList();
+        this.documentsManager.populateDocumentList();
     }
 
 
@@ -285,13 +260,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.deselect();
         }
 
-        this.populateDocumentList();
-    }
-
-
-    public remove(document: Document) {
-
-        this.documents.splice(this.documents.indexOf(document), 1);
+        this.documentsManager.populateDocumentList();
     }
 
 
@@ -312,40 +281,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     */
-    private populateDocumentList() {
-
-        this.newDocumentsFromRemote = [];
-
-        if (!this.mainTypeManager.selectedMainTypeDocument) {
-            this.documents = [];
-            return Promise.resolve();
-        }
-
-        return this.fetchDocuments(ResourcesComponent.makeDocsQuery(
-            {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                    this.mainTypeManager.selectedMainTypeDocument.resource.id))
-            .then(documents => this.documents = documents);
-    }
-
-
-    private fetchDocuments(query: Query): Promise<any> {
-
-        this.loading.start();
-        return this.datastore.find(query)
-            .catch(errWithParams => this.handleFindErr(errWithParams, query))
-            .then(documents => {
-                this.loading.stop(); return documents;
-            });
-    }
-
-
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
-        this.removeEmptyDocuments();
+        this.documentsManager.removeEmptyDocuments();
         this.selectedDocument = newDocument;
 
         if (geometryType == 'none') {
@@ -357,7 +295,7 @@ export class ResourcesComponent implements AfterViewChecked {
         }
 
         if (newDocument.resource.type != this.viewManager.getView().mainType) {
-            this.documents.unshift(<Document> newDocument);
+            this.documentsManager.documents.unshift(<Document> newDocument);
         }
     }
 
@@ -387,7 +325,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     });
 
             }, closeReason => {
-                this.removeEmptyDocuments();
+                this.documentsManager.removeEmptyDocuments();
                 if (closeReason == 'deleted') {
                     this.selectedDocument = undefined;
                     if (document == this.mainTypeManager.selectedMainTypeDocument) {
@@ -398,7 +336,7 @@ export class ResourcesComponent implements AfterViewChecked {
             },
             activeTabName)
 
-            .then(() => this.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
             .then(() => this.insertRecordsRelation());
     }
 
@@ -419,7 +357,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public endEditGeometry() {
 
         this.editGeometry = false;
-        this.populateDocumentList();
+        this.documentsManager.populateDocumentList();
     }
 
 
@@ -432,25 +370,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isNewDocumentFromRemote(document: Document): boolean {
 
-        return this.newDocumentsFromRemote.indexOf(document) > -1;
+        return this.documentsManager.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
 
     public removeFromListOfNewDocumentsFromRemote(document: Document) {
 
-        let index = this.newDocumentsFromRemote.indexOf(document);
-        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
-    }
-
-
-    public isRemoteChange(changedDocument: Document): boolean {
-
-        const latestAction: Action =
-            (changedDocument.modified && changedDocument.modified.length > 0)
-            ? changedDocument.modified[changedDocument.modified.length - 1]
-            : changedDocument.created;
-
-        return latestAction && latestAction.user != this.settingsService.getUsername();
+        let index = this.documentsManager.newDocumentsFromRemote.indexOf(document);
+        if (index > -1) this.documentsManager.newDocumentsFromRemote.splice(index, 1);
     }
 
 
@@ -503,7 +430,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.loading.start();
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
-            this.removeEmptyDocuments();
+            this.documentsManager.removeEmptyDocuments();
             this.selectedDocument = undefined;
             this.viewManager.setMode(mode);
             this.editGeometry = false;
@@ -544,16 +471,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private removeEmptyDocuments() {
-
-        if (!this.documents) return;
-
-        for (let document of this.documents) {
-            if (!document.resource.id) this.remove(document);
-        }
-    }
-
-
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
@@ -589,31 +506,5 @@ export class ResourcesComponent implements AfterViewChecked {
         this.viewManager.setQueryString('');
 
         return true;
-    }
-
-
-    private handleFindErr(errWithParams: Array<string>, query: Query) {
-
-        console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-        this.messages.add([M.ALL_FIND_ERROR]);
-    }
-
-
-    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
-
-        for (let doc of documents) {
-            if (!doc.resource || !changedDocument.resource) continue;
-            if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) return true;
-        }
-    }
-
-
-    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
-
-        const clonedQuery = JSON.parse(JSON.stringify(query));
-        clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
-        return clonedQuery;
     }
 }

@@ -21,6 +21,7 @@ import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {MainTypeManager} from './service/main-type-manager';
+import {DocumentsManager} from './service/documents-manager';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import {MainTypeManager} from './service/main-type-manager';
     ],
     providers: [
         ResourcesState,
+        DocumentsManager,
         ViewManager,
         MainTypeManager,
         RoutingHelper,

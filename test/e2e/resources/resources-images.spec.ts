@@ -19,6 +19,7 @@ describe('resources/images --', function() {
 
     function gotoImageTab() {
 
+        NavbarPage.clickNavigateToImages();
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickImagesTab();

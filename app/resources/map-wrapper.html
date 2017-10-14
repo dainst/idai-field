@@ -3,7 +3,7 @@
         <ul class="list-group object-list" id="objectList">
             <li *ngFor="let document of documentsManager.documents; let index=index"
                 (click)="resourcesComponent.select(document)"
-                (dblclick)="resourcesComponent.editDocument(document)"
+                (dblclick)="resourcesComponent.editDocument(document, 'fields')"
                 class="list-group-item"
                 [class.new-from-remote]="documentsManager.isNewDocumentFromRemote(document)"
                 [class.conflicted]="document['_conflicts']"
@@ -18,7 +18,7 @@
         <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && documentsManager.getQuery().q == ''
                             && mainTypeManager.selectedMainTypeDocument"
                      id="create-document-button" [placement]="'top'"
-                     [preselectedType]="resourcesComponent.getCurrentFilterType()"
+                     [preselectedType]="viewManager.getCurrentFilterType()"
                      [isRecordedIn]="mainTypeManager.selectedMainTypeDocument"></plus-button>
         <loading-icon></loading-icon>
     </div>

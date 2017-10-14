@@ -20,7 +20,7 @@ export class DocumentsManager {
     public projectDocument: IdaiFieldDocument;
     public selectedDocument: Document;
     public documents: Array<Document>;
-    public newDocumentsFromRemote: Array<Document> = [];
+    public newDocumentsFromRemote: Array<Document> = []; // TODO make private
 
 
     constructor(
@@ -87,6 +87,37 @@ export class DocumentsManager {
     }
 
 
+    /**
+     * Sets the this.selectedDocument (and this.activeTabName)
+     * and if necessary, also
+     * a) selects the operation type document,
+     * this.selectedDocument is recorded in, accordingly and
+     * b) invalidates query settings in order to make sure
+     * this.selectedDocument is part of the search hits of the document list
+     * on the left hand side in the map view.
+     *
+     * The method also creates records relations (as inverse relations
+     * of isRecordedIn) for operation type resources if we are in project view.
+     *
+     * @param documentToSelect
+     * @returns {Document}
+     */
+    public adjustContext(documentToSelect: Document) {
+
+        if (!documentToSelect) return;
+        this.selectedDocument = documentToSelect;
+
+        const res1 = this.mainTypeManager.
+        selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
+        const res2 = this.invalidateQuerySettingsIfNecessary();
+
+        let promise = Promise.resolve();
+        if (res1 || res2) promise = this.populateDocumentList();
+
+        promise.then(() => this.insertRecords());
+    }
+
+
     public handleChange(
         documentChange: DocumentChange,
         selectedDocument: Document) {
@@ -123,21 +154,6 @@ export class DocumentsManager {
         if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
             return this.insertRecordsRelation(this.selectedDocument);
         }
-    }
-
-
-    public adjustContext() {
-
-        if (!this.selectedDocument) return;
-
-        const res1 = this.mainTypeManager.
-        selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
-        const res2 = this.invalidateQuerySettingsIfNecessary();
-
-        let promise = Promise.resolve();
-        if (res1 || res2) promise = this.populateDocumentList();
-
-        promise.then(() => this.insertRecords());
     }
 
 
@@ -224,7 +240,7 @@ export class DocumentsManager {
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
-
+    // TODO inline subroutines and return undefined (void)
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */

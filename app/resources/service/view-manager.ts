@@ -15,17 +15,24 @@ import {Resource} from "idai-components-2/core";
 export class ViewManager {
 
     private mode: string; // 'map' or 'list'
-
     private query: Query;
-
     public view: ViewDefinition;
-
     private mainTypeLabel: string;
+
 
     constructor(private viewUtility: ViewUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private resourcesState: ResourcesState) {
     }
+
+
+    public getCurrentFilterType()  {
+
+        return (this.getFilterTypes() &&
+        this.getFilterTypes().length > 0 ?
+            this.getFilterTypes()[0] : undefined);
+    }
+
 
     public setMode(mode, store = true) {
 
@@ -33,25 +40,30 @@ export class ViewManager {
         if (store) this.setLastSelectedMode(mode);
     }
 
+
     public getMode() {
 
         return this.mode;
     }
+
 
     public getMainTypeLabel() {
 
         return this.mainTypeLabel;
     }
 
+
     public getView() {
 
         return this.view;
     }
 
+
     public getActiveLayersIds(mainTypeDocumentResourceId) {
 
         return this.resourcesState.getActiveLayersIds(this.view.name, mainTypeDocumentResourceId);
     }
+
 
     public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
 
@@ -59,15 +71,18 @@ export class ViewManager {
             activeLayersIds);
     }
 
+
     public removeActiveLayersIds(mainTypeDocumentId) {
 
         this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
     }
 
+
     public getQueryString() {
 
         return this.resourcesState.getLastQueryString(this.view.name);
     }
+
 
     public setQueryString(q) {
 
@@ -75,16 +90,19 @@ export class ViewManager {
         this.resourcesState.setLastQueryString(this.view.name, q);
     }
 
+
     public getQueryTypes() {
 
         if (!this.query) return undefined;
         return this.query.types;
     }
 
+
     public getFilterTypes() {
 
         return this.resourcesState.getLastSelectedTypeFilters(this.view.name);
     }
+
 
     public isSelectedDocumentMatchedByQueryString(selectedDocument): boolean {
 
@@ -104,6 +122,7 @@ export class ViewManager {
         return true;
     }
 
+
     public setFilterTypes(filterTypes) {
 
         filterTypes && filterTypes.length > 0 ?
@@ -114,6 +133,7 @@ export class ViewManager {
         this.resourcesState.setLastSelectedTypeFilters(this.view.name, filterTypes);
     }
 
+
     public isSelectedDocumentTypeInTypeFilters(selectedDocument): boolean {
 
         if (!selectedDocument) return true;
@@ -123,16 +143,19 @@ export class ViewManager {
         return false;
     }
 
+
     public setLastSelectedMainTypeDocumentId(selectedMainTypeDocumentResourceId) {
 
         this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
             selectedMainTypeDocumentResourceId);
     }
 
+
     public getLastSelectedMainTypeDocumentId() {
 
         return this.resourcesState.getLastSelectedMainTypeDocumentId(this.view.name);
     }
+
 
     public initialize(defaultMode?)  {
 
@@ -142,6 +165,7 @@ export class ViewManager {
             this.initializeQuery();
         })
     }
+
 
     public setupViewFrom(params: Params): Promise<any> {
 
@@ -153,15 +177,18 @@ export class ViewManager {
         });
     }
 
+
     public getViewNameForDocument(document) {
 
         return this.viewUtility.getViewNameForDocument(document)
     }
 
+
     public getMainTypeDocumentLabel(document) {
 
         return this.viewUtility.getMainTypeDocumentLabel(document);
     }
+
 
     private initializeView(viewName: string): Promise<any> {
 
@@ -172,6 +199,7 @@ export class ViewManager {
             }
         ).catch(() => Promise.reject(null));
     }
+
 
     private initializeMode(defaultMode?: string) {
 
@@ -186,6 +214,7 @@ export class ViewManager {
         }
     }
 
+
     private initializeQuery() {
 
         this.query = { q: this.getQueryString() };
@@ -194,6 +223,7 @@ export class ViewManager {
             this.getFilterTypes().length > 0)
             this.query.types = this.getFilterTypes();
     }
+
 
     private setQueryTypes(types) {
 
@@ -205,10 +235,12 @@ export class ViewManager {
         delete this.query.types;
     }
 
+
     private setLastSelectedMode(defaultMode) {
 
         this.resourcesState.setLastSelectedMode(this.view.name, defaultMode);
     }
+
 
     private getLastSelectedMode() {
 

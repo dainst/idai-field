@@ -8,7 +8,6 @@ import {
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {M} from '../m';
 import {ViewManager} from './service/view-manager';
@@ -94,7 +93,7 @@ export class ResourcesComponent implements AfterViewChecked {
     ngAfterViewChecked() {
 
         if (this.scrollTarget) {
-            if (this.scrollToDocument(this.scrollTarget)) {
+            if (ResourcesComponent.scrollToDocument(this.scrollTarget)) {
                 this.scrollTarget = undefined;
             }
         }
@@ -124,7 +123,10 @@ export class ResourcesComponent implements AfterViewChecked {
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
         this.mainTypeManager.selectMainTypeDocument(
-            document,this.documentsManager.selectedDocument,()=>{this.selectDocumentAndAdjustContext(undefined);});
+            document,this.documentsManager.selectedDocument,()=>{
+                this.activeDocumentViewTab = undefined;
+                this.documentsManager.deselect();
+            });
         this.documentsManager.populateDocumentList();
     }
 
@@ -132,14 +134,19 @@ export class ResourcesComponent implements AfterViewChecked {
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.datastore.get(id).then(
-            document => menu == 'edit' ? this.editDocument(document, tab) : this.selectDocumentAndAdjustContext(document, tab),
+            document => {
+                    if (menu == 'edit') this.editDocument(document, tab);
+                    else {
+                        this.activeDocumentViewTab = tab;
+                        this.documentsManager.adjustContext(document)
+                    }
+                },
             () => this.messages.add([M.DATASTORE_NOT_FOUND])
         );
     }
 
 
     /**
-     * TODO since there are to many methods with 'select' in their names, try to get rid of this method or move it to MapWrapper. It is called only from there.
      * @param documentToSelect the object that should get selected
      */
     public select(documentToSelect: IdaiFieldDocument) {
@@ -147,38 +154,11 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.editGeometry && documentToSelect !=
             this.documentsManager.selectedDocument) this.endEditGeometry();
 
+        // TODO move to documentsManager
         if (this.documentsManager.isNewDocumentFromRemote(documentToSelect)) {
             this.documentsManager.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
-
-        this.selectDocumentAndAdjustContext(documentToSelect);
-    }
-
-
-    /**
-     * Sets the this.documentsManager.selectedDocument (and this.activeTabName)
-     * and if necessary, also
-     * a) selects the operation type document,
-     * this.documentsManager.selectedDocument is recorded in, accordingly and
-     * b) invalidates query settings in order to make sure
-     * this.documentsManager.selectedDocument is part of the search hits of the document list
-     * on the left hand side in the map view.
-     *
-     * The method also creates records relations (as inverse relations
-     * of isRecordedIn) for operation type resources if we are in project view.
-     *
-     * @param documentToSelect
-     * @param activeTabName
-     * @returns {Document}
-     */
-    public selectDocumentAndAdjustContext(
-            documentToSelect: Document,
-            activeTabName?: string): Document {
-
-        this.documentsManager.selectedDocument = documentToSelect;
-        this.activeDocumentViewTab = activeTabName;
-        this.documentsManager.adjustContext();
-        return this.documentsManager.selectedDocument;
+        this.documentsManager.adjustContext(documentToSelect);
     }
 
 
@@ -241,7 +221,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (document != this.documentsManager.selectedDocument &&
                 document != this.mainTypeManager.selectedMainTypeDocument) {
 
-            this.selectDocumentAndAdjustContext(document);
+            this.documentsManager.adjustContext(document);
         }
         // -
 
@@ -269,7 +249,7 @@ export class ResourcesComponent implements AfterViewChecked {
             activeTabName)
 
             .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-            .then(() => this.documentsManager.insertRecords());
+            .then(() => this.documentsManager.insertRecords()); // TODO move this call to populateDocumentList
     }
 
 
@@ -317,7 +297,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.mainTypeManager.selectMainTypeDocument(
                 document, this.documentsManager.selectedDocument,
-                ()=>{this.selectDocumentAndAdjustContext(undefined);});
+                ()=>{
+                    this.activeDocumentViewTab = undefined;
+                    this.documentsManager.deselect();
+                });
         } else {
 
             this.documentsManager.selectedDocument = document;
@@ -340,15 +323,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public getCurrentFilterType()  {
-
-        return (this.viewManager.getFilterTypes() &&
-            this.viewManager.getFilterTypes().length > 0 ?
-            this.viewManager.getFilterTypes()[0] : undefined);
-    }
-
-
-    private scrollToDocument(doc: IdaiFieldDocument): boolean {
+    private static scrollToDocument(doc: IdaiFieldDocument): boolean {
 
         let element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {

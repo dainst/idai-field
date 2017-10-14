@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
@@ -9,6 +9,7 @@ import {Loading} from '../../widgets/loading';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {MainTypeManager} from '../service/main-type-manager';
 import {DocumentsManager} from '../service/documents-manager';
+import {ViewManager} from '../service/view-manager';
 
 @Component({
     selector: 'list',
@@ -22,8 +23,8 @@ import {DocumentsManager} from '../service/documents-manager';
  */
 export class ListComponent implements OnChanges {
 
-    @Input() documents: Array<Document>;
-    @Input() selectedMainTypeDocument: IdaiFieldDocument;
+    @Input() documents: Array<Document>; // TODO remove and use manager
+    @Input() selectedMainTypeDocument: IdaiFieldDocument; // TODO remove and use manager
     @Input() ready;
 
     public docRefTree: DocumentReference[];
@@ -37,14 +38,14 @@ export class ListComponent implements OnChanges {
         public resourcesComponent: ResourcesComponent,
         private messages: Messages,
         private loading: Loading,
-        configLoader: ConfigLoader,
+        projectConfiguration: ProjectConfiguration,
         public mainTypeManager: MainTypeManager,
-        public documentsManager: DocumentsManager
+        public documentsManager: DocumentsManager,
+        public viewManager: ViewManager
     ) {
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.typesMap = projectConfiguration.getTypesMap();
-        });
+        this.typesMap = projectConfiguration.getTypesMap();
     }
+
 
     ngOnChanges() {
 
@@ -60,6 +61,7 @@ export class ListComponent implements OnChanges {
         }, 1);
     }
 
+
     private update(): Promise<any> {
 
         if (!this.selectedMainTypeDocument) return Promise.resolve();
@@ -71,6 +73,7 @@ export class ListComponent implements OnChanges {
             { constraints: { 'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id } }
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
+
 
     private buildTreeFrom(documents: Array<Document>) {
 
@@ -97,6 +100,7 @@ export class ListComponent implements OnChanges {
         }
     }
 
+
     public toggleChildrenForId(id: string) {
 
         let index = this.childrenShownForIds.indexOf(id);
@@ -108,8 +112,10 @@ export class ListComponent implements OnChanges {
     }
 
     public childrenHiddenFor(id: string) {
+
         return this.childrenShownForIds.indexOf(id) == -1
     }
+
 
     public showRow(docRef: DocumentReference): boolean {
 
@@ -131,6 +137,7 @@ export class ListComponent implements OnChanges {
         return false;
     }
 
+
     private isDescendantPartOfResult(docRef: DocumentReference): boolean {
 
         if (this.documentsInclude(docRef.doc as IdaiFieldDocument))
@@ -145,7 +152,9 @@ export class ListComponent implements OnChanges {
         return false;
     }
 
+
     private documentsInclude(doc: IdaiFieldDocument): boolean {
+
         return this.documents.some(d => d.resource.id == doc.resource.id );
     }
 }

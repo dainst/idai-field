@@ -32,8 +32,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public editGeometry: boolean = false;
 
-    public projectDocument: IdaiFieldDocument;
-
     public ready: boolean = false;
 
     private scrollTarget: IdaiFieldDocument;
@@ -51,7 +49,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
                 private datastore: IdaiFieldDatastore,
-                private settingsService: SettingsService,
                 private messages: Messages,
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
@@ -115,7 +112,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.loading.start();
         return Promise.resolve()
-            .then(() => this.populateProjectDocument())
+            .then(() => this.documentsManager.populateProjectDocument())
             .then(() => this.mainTypeManager.populateMainTypeDocuments(
                 this.documentsManager.selectedDocument
             ))
@@ -150,8 +147,8 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.editGeometry && documentToSelect !=
             this.documentsManager.selectedDocument) this.endEditGeometry();
 
-        if (this.isNewDocumentFromRemote(documentToSelect)) {
-            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
+        if (this.documentsManager.isNewDocumentFromRemote(documentToSelect)) {
+            this.documentsManager.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
         this.selectDocumentAndAdjustContext(documentToSelect);
@@ -180,30 +177,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.documentsManager.selectedDocument = documentToSelect;
         this.activeDocumentViewTab = activeTabName;
-        this.adjustContext();
+        this.documentsManager.adjustContext();
         return this.documentsManager.selectedDocument;
     }
-
-
-    private adjustContext() {
-
-        if (!this.documentsManager.selectedDocument) return;
-
-        const res1 = this.mainTypeManager.
-            selectLinkedMainTypeDocumentForSelectedDocument(this.documentsManager.selectedDocument);
-        const res2 = this.invalidateQuerySettingsIfNecessary();
-
-        let promise = Promise.resolve();
-        if (res1 || res2) promise = this.documentsManager.populateDocumentList();
-
-        promise.then(() => {
-            if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
-                return this.insertRecordsRelation(this.documentsManager.selectedDocument);
-            } 
-        });
-    }
-
-
 
 
     private initializeClickEventListener() {
@@ -226,44 +202,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        this.viewManager.setQueryString(q);
+        if (!this.documentsManager.setQueryString(q)) this.editGeometry = false;
 
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.documentsManager.selectedDocument)) {
-            this.editGeometry = false;
-            this.documentsManager.deselect();
-        }
-
-        this.documentsManager.populateDocumentList();
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        this.viewManager.setFilterTypes(types);
-
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.documentsManager.selectedDocument)) {
-            this.editGeometry = false;
-            this.documentsManager.deselect();
-        }
-
-        this.documentsManager.populateDocumentList();
-    }
-
-
-    public getQuery() {
-
-        return {
-            q: this.viewManager.getQueryString(),
-            types: this.viewManager.getQueryTypes()
-        }
-    }
-
-
-    private populateProjectDocument(): Promise<any> {
-
-        return this.datastore.get(this.settingsService.getSelectedProject())
-            .then(document => this.projectDocument = document as IdaiFieldDocument)
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
+        if (!this.documentsManager.setQueryTypes(types)) this.editGeometry = false;
     }
 
 
@@ -306,7 +252,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 return this.mainTypeManager.populateMainTypeDocuments(
                     this.documentsManager.selectedDocument
                 ).then(() => {
-                        this.invalidateQuerySettingsIfNecessary();
+                        this.documentsManager.invalidateQuerySettingsIfNecessary();
                         this.handleDocumentSelectionOnSaved(result.document);
                     });
 
@@ -323,11 +269,7 @@ export class ResourcesComponent implements AfterViewChecked {
             activeTabName)
 
             .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-            .then(() => {
-                if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
-                    return this.insertRecordsRelation(this.documentsManager.selectedDocument);
-                }
-            });
+            .then(() => this.documentsManager.insertRecords());
     }
 
 
@@ -348,19 +290,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
         this.startEditGeometry();
-    }
-
-
-    public isNewDocumentFromRemote(document: Document): boolean {
-
-        return this.documentsManager.newDocumentsFromRemote.indexOf(document) > -1;
-    }
-
-
-    public removeFromListOfNewDocumentsFromRemote(document: Document) {
-
-        let index = this.documentsManager.newDocumentsFromRemote.indexOf(document);
-        if (index > -1) this.documentsManager.newDocumentsFromRemote.splice(index, 1);
     }
 
 
@@ -416,63 +345,6 @@ export class ResourcesComponent implements AfterViewChecked {
         return (this.viewManager.getFilterTypes() &&
             this.viewManager.getFilterTypes().length > 0 ?
             this.viewManager.getFilterTypes()[0] : undefined);
-    }
-
-
-    public insertRecordsRelation(selectedDocument: Document) {
-
-        if (!selectedDocument) return;
-        
-        this.datastore.find({
-
-            constraints: {
-                'resource.relations.isRecordedIn' :
-                selectedDocument.resource.id
-            }
-
-        }).then(documents => {
-
-            selectedDocument.resource.relations['records'] = [];
-            for (let doc of documents) {
-                selectedDocument.resource.relations['records'].push(
-                    doc.resource.id
-                );
-            }
-        });
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    public invalidateQuerySettingsIfNecessary(): boolean {
-
-        const typesInvalidated = this.invalidateTypesIfNecessary();
-        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
-
-        return typesInvalidated || queryStringInvalidated;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateTypesIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(this.documentsManager.selectedDocument)) return false;
-        this.viewManager.setFilterTypes([]);
-        return true;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateQueryStringIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentMatchedByQueryString(this.documentsManager.selectedDocument)) return false;
-        this.viewManager.setQueryString('');
-        return true;
     }
 
 

@@ -8,6 +8,7 @@ import {DocumentReference} from './document-reference';
 import {Loading} from '../../widgets/loading';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {MainTypeManager} from '../service/main-type-manager';
+import {DocumentsManager} from '../service/documents-manager';
 
 @Component({
     selector: 'list',
@@ -37,7 +38,8 @@ export class ListComponent implements OnChanges {
         private messages: Messages,
         private loading: Loading,
         configLoader: ConfigLoader,
-        public mainTypeManager: MainTypeManager
+        public mainTypeManager: MainTypeManager,
+        public documentsManager: DocumentsManager
     ) {
         configLoader.getProjectConfiguration().then(projectConfiguration => {
             this.typesMap = projectConfiguration.getTypesMap();

@@ -7,6 +7,7 @@ import {Loading} from "../../widgets/loading";
 import {Messages} from 'idai-components-2/messages';
 import {M} from "../../m";
 import {SettingsService} from '../../settings/settings-service';
+import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
 
 @Injectable()
 /**
@@ -16,10 +17,9 @@ import {SettingsService} from '../../settings/settings-service';
  */
 export class DocumentsManager {
 
+    public projectDocument: IdaiFieldDocument;
     public selectedDocument: Document;
-
     public documents: Array<Document>;
-
     public newDocumentsFromRemote: Array<Document> = [];
 
 
@@ -35,11 +35,56 @@ export class DocumentsManager {
     }
 
 
+    public getQuery() {
+
+        return {
+            q: this.viewManager.getQueryString(),
+            types: this.viewManager.getQueryTypes()
+        }
+    }
+
+
+    public setQueryString(q: string) {
+
+        this.viewManager.setQueryString(q);
+
+        let result = true;
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
+            result = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+        return result;
+    }
+
+
+    public setQueryTypes(types: string[]) {
+
+        this.viewManager.setFilterTypes(types);
+
+        let result = true;
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
+            result = false;
+            this.deselect();
+        }
+
+        this.populateDocumentList();
+        return result;
+    }
+
+
+    public removeFromListOfNewDocumentsFromRemote(document: Document) {
+
+        let index = this.newDocumentsFromRemote.indexOf(document);
+        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
+    }
+
+
     public deselect() {
 
         this.selectedDocument = undefined;
     }
-
 
 
     public handleChange(
@@ -72,6 +117,52 @@ export class DocumentsManager {
     }
 
 
+    public insertRecords() {
+
+        if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
+            return this.insertRecordsRelation(this.selectedDocument);
+        }
+    }
+
+
+    public adjustContext() {
+
+        if (!this.selectedDocument) return;
+
+        const res1 = this.mainTypeManager.
+        selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
+        const res2 = this.invalidateQuerySettingsIfNecessary();
+
+        let promise = Promise.resolve();
+        if (res1 || res2) promise = this.populateDocumentList();
+
+        promise.then(() => this.insertRecords());
+    }
+
+
+    public insertRecordsRelation(selectedDocument: Document) {
+
+        if (!selectedDocument) return;
+
+        this.datastore.find({
+
+            constraints: {
+                'resource.relations.isRecordedIn' :
+                selectedDocument.resource.id
+            }
+
+        }).then(documents => {
+
+            selectedDocument.resource.relations['records'] = [];
+            for (let doc of documents) {
+                selectedDocument.resource.relations['records'].push(
+                    doc.resource.id
+                );
+            }
+        });
+    }
+
+
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
@@ -92,6 +183,30 @@ export class DocumentsManager {
     }
 
 
+    public populateProjectDocument(): Promise<any> {
+
+        return this.datastore.get(this.settingsService.getSelectedProject())
+            .then(document => this.projectDocument = document as IdaiFieldDocument)
+            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
+    }
+
+
+    public removeEmptyDocuments() {
+
+        if (!this.documents) return;
+
+        for (let document of this.documents) {
+            if (!document.resource.id) this.remove(document);
+        }
+    }
+
+
+    public remove(document: Document) {
+
+        this.documents.splice(this.documents.indexOf(document), 1);
+    }
+
+
     public isRemoteChange(changedDocument: Document): boolean {
 
         const latestAction: Action =
@@ -103,21 +218,45 @@ export class DocumentsManager {
     }
 
 
-    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
+    public isNewDocumentFromRemote(document: Document): boolean {
 
-        for (let doc of documents) {
-            if (!doc.resource || !changedDocument.resource) continue;
-            if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) return true;
-        }
+        return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
 
-    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    public invalidateQuerySettingsIfNecessary(): boolean {
 
-        const clonedQuery = JSON.parse(JSON.stringify(query));
-        clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
-        return clonedQuery;
+        const typesInvalidated = this.invalidateTypesIfNecessary();
+        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
+
+        return typesInvalidated || queryStringInvalidated;
+    }
+
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateTypesIfNecessary(): boolean {
+
+        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(
+            this.selectedDocument)) return false;
+        this.viewManager.setFilterTypes([]);
+        return true;
+    }
+
+
+    /**
+     * @returns {boolean} true if list needs to be reloaded afterwards
+     */
+    private invalidateQueryStringIfNecessary(): boolean {
+
+        if (this.viewManager.isSelectedDocumentMatchedByQueryString(
+            this.selectedDocument)) return false;
+        this.viewManager.setQueryString('');
+        return true;
     }
 
 
@@ -140,18 +279,20 @@ export class DocumentsManager {
     }
 
 
-    public removeEmptyDocuments() {
+    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
-        if (!this.documents) return;
-
-        for (let document of this.documents) {
-            if (!document.resource.id) this.remove(document);
+        for (let doc of documents) {
+            if (!doc.resource || !changedDocument.resource) continue;
+            if (!doc.resource.id || !changedDocument.resource.id) continue;
+            if (doc.resource.id == changedDocument.resource.id) return true;
         }
     }
 
 
-    public remove(document: Document) {
+    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
-        this.documents.splice(this.documents.indexOf(document), 1);
+        const clonedQuery = JSON.parse(JSON.stringify(query));
+        clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
+        return clonedQuery;
     }
 }

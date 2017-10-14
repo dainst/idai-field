@@ -40,7 +40,7 @@ export class DocumentViewWrapperComponent {
             // relations to project document are not counted
             if (relation == 'isRecordedIn' &&
                 relations[relation].length == 1 &&
-                relations[relation][0] == this.resourcesComponent.projectDocument.resource.id) continue;
+                relations[relation][0] == this.documentsManager.projectDocument.resource.id) continue;
 
             return true;
         }

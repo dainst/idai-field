@@ -10,7 +10,7 @@
             <row [docRef]="docRef" [depth]=0 [typesMap]="typesMap"></row>
         </div>
     </div>
-    <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.getQuery().q == ''
+    <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && documentsManager.getQuery().q == ''
                         && mainTypeManager.selectedMainTypeDocument"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="resourcesComponent.getCurrentFilterType()"

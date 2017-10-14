@@ -6,6 +6,7 @@ import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {ViewManager} from './service/view-manager';
+import {SelectedManager} from "./service/selected-manager";
 
 @Component({
     selector: 'map-wrapper',
@@ -31,7 +32,8 @@ export class MapWrapperComponent {
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
-        private messages: Messages
+        private messages: Messages,
+        private selectedManager: SelectedManager
     ) { }
 
     private selectedDocumentIsNew(): boolean {

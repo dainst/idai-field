@@ -16,27 +16,27 @@
         </ul>
 
         <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && resourcesComponent.getQuery().q == ''
-                            && resourcesComponent.selectedMainTypeDocument"
+                            && selectedManager.selectedMainTypeDocument"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="resourcesComponent.getCurrentFilterType()"
-                     [isRecordedIn]="resourcesComponent.selectedMainTypeDocument"></plus-button>
+                     [isRecordedIn]="selectedManager.selectedMainTypeDocument"></plus-button>
         <loading-icon></loading-icon>
     </div>
 
-    <div [class.col-sm-9]="!selectedDocument || !selectedDocument.resource.id"
-         [class.col-sm-6]="selectedDocument && selectedDocument.resource.id" class="px-0">
+    <div [class.col-sm-9]="!selectedManager.selectedDocument || !selectedManager.selectedDocument.resource.id"
+         [class.col-sm-6]="selectedManager.selectedDocument && selectedManager.selectedDocument.resource.id" class="px-0">
         <editable-map [documents]="resourcesComponent.documents"
                       [selectedDocument]="resourcesComponent.getSelected()"
-                      [mainTypeDocument]="resourcesComponent.selectedMainTypeDocument" [isEditing]="isEditing"
+                      [mainTypeDocument]="selectedManager.selectedMainTypeDocument" [isEditing]="isEditing"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="viewManager.getView().mainType != 'Project'"
                       [update]="resourcesComponent.ready" (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 
-    <div *ngIf="selectedDocument && selectedDocument.resource.id" class="col-sm-3 document-info px-0">
+    <div *ngIf="selectedManager.selectedDocument && selectedManager.selectedDocument.resource.id" class="col-sm-3 document-info px-0">
         <document-view-wrapper
-            [selectedDocument]="selectedDocument"
+            [selectedDocument]="selectedManager.selectedDocument"
             [activeTab]="activeTab"
         ></document-view-wrapper>
     </div>

@@ -47,7 +47,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private routingHelper: RoutingHelper,
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
-                private datastore: IdaiFieldDatastore,
+                private datastore: IdaiFieldDatastore, // TODO remove, handle documentChanges directly in documentsManager
                 private messages: Messages,
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
@@ -212,7 +212,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.documentsManager.selectedDocument,
+    public editDocument(document: Document = this.documentsManager.selectedDocument, // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
                         activeTabName?: string) {
 
         this.editGeometry = false;
@@ -248,8 +248,8 @@ export class ResourcesComponent implements AfterViewChecked {
             },
             activeTabName)
 
-            .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-            .then(() => this.documentsManager.insertRecords()); // TODO move this call to populateDocumentList
+            .then(() => this.documentsManager.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+
     }
 
 
@@ -290,7 +290,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.scrollTarget = doc;
     }
 
-
+    // TODO move to documentsManager
     private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
 
         if (document.resource.type == this.viewManager.getView().mainType) {
@@ -315,7 +315,7 @@ export class ResourcesComponent implements AfterViewChecked {
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
             this.documentsManager.removeEmptyDocuments();
-            this.documentsManager.selectedDocument = undefined;
+            this.documentsManager.deselect();
             this.viewManager.setMode(mode);
             this.editGeometry = false;
             this.loading.stop();
@@ -325,7 +325,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private static scrollToDocument(doc: IdaiFieldDocument): boolean {
 
-        let element = document.getElementById('resource-' + doc.resource.identifier);
+        const element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
             return true;

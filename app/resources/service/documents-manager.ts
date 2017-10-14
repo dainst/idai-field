@@ -17,10 +17,10 @@ import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
  */
 export class DocumentsManager {
 
-    public projectDocument: IdaiFieldDocument;
-    public selectedDocument: Document;
-    public documents: Array<Document>;
-    public newDocumentsFromRemote: Array<Document> = []; // TODO make private
+    public projectDocument: IdaiFieldDocument; // TODO make private
+    public selectedDocument: Document; // TODO make private
+    public documents: Array<Document>; // TODO make private
+    private newDocumentsFromRemote: Array<Document> = [];
 
 
     constructor(
@@ -44,7 +44,7 @@ export class DocumentsManager {
     }
 
 
-    public setQueryString(q: string) {
+    public setQueryString(q: string): boolean {
 
         this.viewManager.setQueryString(q);
 
@@ -59,7 +59,7 @@ export class DocumentsManager {
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public setQueryTypes(types: string[]): boolean {
 
         this.viewManager.setFilterTypes(types);
 
@@ -101,20 +101,20 @@ export class DocumentsManager {
      *
      * @param documentToSelect
      * @returns {Document}
-     */
+     */ // TODO rename to selectDocument or setSelectedDocument
     public adjustContext(documentToSelect: Document) {
 
         if (!documentToSelect) return;
         this.selectedDocument = documentToSelect;
 
         const res1 = this.mainTypeManager.
-        selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
+            selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
         const res2 = this.invalidateQuerySettingsIfNecessary();
 
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        promise.then(() => this.insertRecords());
+        promise.then(() => this.insertRecords(this.selectedDocument));
     }
 
 
@@ -148,16 +148,16 @@ export class DocumentsManager {
     }
 
 
-    public insertRecords() {
+    private insertRecords(document: Document) {
 
         if (!this.mainTypeManager.selectedMainTypeDocument) return;
         if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
-            return this.insertRecordsRelation(this.selectedDocument);
+            return this.insertRecordsRelation(document);
         }
     }
 
 
-    public insertRecordsRelation(selectedDocument: Document) {
+    private insertRecordsRelation(selectedDocument: Document) {
 
         if (!selectedDocument) return;
 
@@ -196,7 +196,12 @@ export class DocumentsManager {
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
             this.mainTypeManager.selectedMainTypeDocument.resource.id))
-            .then(documents => this.documents = documents);
+            .then(documents => {
+                this.documents = documents;
+                for (let doc of documents) { // TODO this could be a possible performance issue, but for now I wanted have it here and make insertDocs private, until we found a better place or another method for doing it
+                    this.insertRecords(doc)
+                }
+            });
     }
 
 
@@ -224,7 +229,7 @@ export class DocumentsManager {
     }
 
 
-    public isRemoteChange(changedDocument: Document): boolean {
+    private isRemoteChange(changedDocument: Document): boolean {
 
         const latestAction: Action =
             (changedDocument.modified && changedDocument.modified.length > 0)
@@ -240,40 +245,23 @@ export class DocumentsManager {
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
-    // TODO inline subroutines and return undefined (void)
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
     public invalidateQuerySettingsIfNecessary(): boolean {
 
-        const typesInvalidated = this.invalidateTypesIfNecessary();
-        const queryStringInvalidated = this.invalidateQueryStringIfNecessary();
-
-        return typesInvalidated || queryStringInvalidated;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateTypesIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentTypeInTypeFilters(
-            this.selectedDocument)) return false;
-        this.viewManager.setFilterTypes([]);
-        return true;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    private invalidateQueryStringIfNecessary(): boolean {
-
-        if (this.viewManager.isSelectedDocumentMatchedByQueryString(
-            this.selectedDocument)) return false;
-        this.viewManager.setQueryString('');
-        return true;
+        let result = false;
+        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(
+                this.selectedDocument)) {
+            this.viewManager.setQueryString('');
+            result = true;
+        }
+        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(
+                this.selectedDocument)) {
+            this.viewManager.setFilterTypes([]);
+            result = true;
+        }
+        return result;
     }
 
 

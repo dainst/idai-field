@@ -23,9 +23,8 @@ import {ViewManager} from '../service/view-manager';
  */
 export class ListComponent implements OnChanges {
 
-    @Input() documents: Array<Document>; // TODO remove and use manager
-    @Input() selectedMainTypeDocument: IdaiFieldDocument; // TODO remove and use manager
     @Input() ready;
+    @Input() documents; // TODO this is just for a reload, replace by using an observer to document changes in documentsManager
 
     public docRefTree: DocumentReference[];
 
@@ -35,7 +34,7 @@ export class ListComponent implements OnChanges {
     
     constructor(
         private datastore: IdaiFieldDatastore,
-        public resourcesComponent: ResourcesComponent,
+        public resourcesComponent: ResourcesComponent, // TODO remove this, we only use it to access ready which we also have as input
         private messages: Messages,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
@@ -64,13 +63,14 @@ export class ListComponent implements OnChanges {
 
     private update(): Promise<any> {
 
-        if (!this.selectedMainTypeDocument) return Promise.resolve();
+        if (!this.mainTypeManager.selectedMainTypeDocument) return Promise.resolve();
 
         this.docRefTree = [];
         this.childrenShownForIds = [];
 
+        // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
         return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': this.selectedMainTypeDocument.resource.id } }
+            { constraints: { 'resource.relations.isRecordedIn': this.mainTypeManager.selectedMainTypeDocument.resource.id } }
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
 
@@ -126,6 +126,7 @@ export class ListComponent implements OnChanges {
         return this.isDescendantPartOfResult(docRef);
     }
 
+
     private isAscendantPartOfResult(docRef: DocumentReference): boolean {
 
         let parent = docRef['parent'];
@@ -153,8 +154,9 @@ export class ListComponent implements OnChanges {
     }
 
 
+    // TODO move to documentsManager
     private documentsInclude(doc: IdaiFieldDocument): boolean {
 
-        return this.documents.some(d => d.resource.id == doc.resource.id );
+        return this.documentsManager.documents.some(d => d.resource.id == doc.resource.id );
     }
 }

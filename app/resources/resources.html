@@ -86,8 +86,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <map-wrapper *ngIf="viewManager.getMode() == 'map'"
                      [isEditing]="editGeometry" [activeTab]="activeDocumentViewTab"></map-wrapper>
-        <list *ngIf="viewManager.getMode() == 'list'" [ready]="ready" [documents]="documentsManager.documents"
-              [selectedMainTypeDocument]="mainTypeManager.selectedMainTypeDocument"></list>
+        <list *ngIf="viewManager.getMode() == 'list'" [ready]="ready" [documents]="documentsManager.documents"></list>
     </div>
 
 </div>

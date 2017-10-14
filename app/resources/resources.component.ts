@@ -273,7 +273,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    // TODO move to documentsManager
+    // TODO move to documentsManager or doceditProxy
     private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
 
         if (document.resource.type == this.viewManager.getView().mainType) {

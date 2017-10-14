@@ -119,6 +119,7 @@ export class DocumentsManager {
 
     public insertRecords() {
 
+        if (!this.mainTypeManager.selectedMainTypeDocument) return;
         if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
             return this.insertRecordsRelation(this.selectedDocument);
         }

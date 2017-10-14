@@ -48,7 +48,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
                 private datastore: IdaiFieldDatastore, // TODO remove, handle documentChanges directly in documentsManager
-                private messages: Messages,
+                private messages: Messages, // TODO remove dependency
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
                 private documentsManager: DocumentsManager
@@ -130,7 +130,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.documentsManager.populateDocumentList();
     }
 
-
+    // TODO move the datastore get to documentsManager
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.datastore.get(id).then(

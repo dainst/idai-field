@@ -381,7 +381,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 if (closeReason == 'deleted') {
                     this.selectedManager.selectedDocument = undefined;
                     if (document == this.selectedManager.selectedMainTypeDocument) {
-                        return this.handleMainTypeDocumentOnDeleted();
+                        return this.selectedManager.handleMainTypeDocumentOnDeleted();
                     }
                 }
             },
@@ -474,14 +474,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private handleMainTypeDocumentOnDeleted() {
-
-        this.viewManager.removeActiveLayersIds(this.selectedManager.selectedMainTypeDocument.resource.id);
-        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.selectedManager.populateMainTypeDocuments();
-    }
-
-
     private scrollToDocument(doc: IdaiFieldDocument): boolean {
 
         let element = document.getElementById('resource-' + doc.resource.identifier);
@@ -548,11 +540,5 @@ export class ResourcesComponent implements AfterViewChecked {
         const clonedQuery = JSON.parse(JSON.stringify(query));
         clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
         return clonedQuery;
-    }
-
-
-    static makeMainTypeQuery(mainType: string): Query {
-
-        return { types: [mainType] };
     }
 }

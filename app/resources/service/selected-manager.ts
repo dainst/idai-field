@@ -66,12 +66,20 @@ export class SelectedManager {
     }
 
 
+    public handleMainTypeDocumentOnDeleted() {
+
+        this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
+        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
+        return this.populateMainTypeDocuments();
+    }
+
+
     public populateMainTypeDocuments(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
         return this.fetchDocuments(
-            ResourcesComponent.makeMainTypeQuery(this.viewManager.getView().mainType))
+            SelectedManager.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
                 return this.setSelectedMainTypeDocument();
@@ -81,6 +89,7 @@ export class SelectedManager {
 
     public insertRecordsRelation() {
 
+        if (!this.selectedDocument) return;
         if (this.selectedMainTypeDocument.resource.type != 'Project') return;
 
         this.datastore.find({
@@ -199,5 +208,11 @@ export class SelectedManager {
 
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+    }
+
+
+    static makeMainTypeQuery(mainType: string): Query {
+
+        return { types: [mainType] };
     }
 }

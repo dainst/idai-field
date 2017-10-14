@@ -84,7 +84,7 @@
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->
     <!--<div *ngIf="(view && view.mainType == 'project') || mainTypeManager.selectedMainTypeDocument || editGeometry" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <map-wrapper *ngIf="viewManager.getMode() == 'map'" [selectedDocument]="selectedDocument"
+        <map-wrapper *ngIf="viewManager.getMode() == 'map'"
                      [isEditing]="editGeometry" [activeTab]="activeDocumentViewTab"></map-wrapper>
         <list *ngIf="viewManager.getMode() == 'list'" [ready]="ready" [documents]="documentsManager.documents"
               [selectedMainTypeDocument]="mainTypeManager.selectedMainTypeDocument"></list>

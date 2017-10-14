@@ -22,7 +22,6 @@ import {DocumentsManager} from './service/documents-manager';
  */
 export class MapWrapperComponent {
 
-    @Input() selectedDocument: IdaiFieldDocument;
     @Input() isEditing: boolean = false;
     @Input() activeTab: string;
 
@@ -39,7 +38,7 @@ export class MapWrapperComponent {
 
     private selectedDocumentIsNew(): boolean {
 
-        return !this.selectedDocument.resource.id;
+        return !this.documentsManager.selectedDocument.resource.id;
     }
 
     public select(document: IdaiFieldDocument) {
@@ -56,10 +55,10 @@ export class MapWrapperComponent {
     public quitEditing(geometry: IdaiFieldGeometry) {
 
         if (geometry) {
-            this.selectedDocument.resource.geometry = geometry;
-        } else if (geometry === null || !this.selectedDocument.resource.geometry.coordinates
-                || this.selectedDocument.resource.geometry.coordinates.length == 0) {
-            delete this.selectedDocument.resource.geometry;
+            this.documentsManager.selectedDocument.resource.geometry = geometry;
+        } else if (geometry === null || !this.documentsManager.selectedDocument.resource.geometry.coordinates
+                || this.documentsManager.selectedDocument.resource.geometry.coordinates.length == 0) {
+            delete this.documentsManager.selectedDocument.resource.geometry;
         }
 
         if (this.selectedDocumentIsNew()) {
@@ -67,20 +66,20 @@ export class MapWrapperComponent {
                 this.resourcesComponent.editDocument();
             } else {
                 this.resourcesComponent.endEditGeometry();
-                this.documentsManager.remove(this.selectedDocument);
+                this.documentsManager.remove(this.documentsManager.selectedDocument);
             }
         } else {
             this.resourcesComponent.endEditGeometry();
             if (geometry !== undefined) this.save();
         }
     }
-    
+
 
 
     private save() {
 
-        this.persistenceManager.setOldVersions([this.selectedDocument]);
-        this.persistenceManager.persist(this.selectedDocument, this.settingsService.getUsername())
+        this.persistenceManager.setOldVersions([this.documentsManager.selectedDocument]);
+        this.persistenceManager.persist(this.documentsManager.selectedDocument, this.settingsService.getUsername())
             .catch(msgWithParams => this.messages.add(msgWithParams));
     }
 

@@ -16,6 +16,8 @@ import {SettingsService} from '../../settings/settings-service';
  */
 export class DocumentsManager {
 
+    public selectedDocument: Document;
+
     public documents: Array<Document>;
 
     public newDocumentsFromRemote: Array<Document> = [];
@@ -31,6 +33,13 @@ export class DocumentsManager {
     ) {
 
     }
+
+
+    public deselect() {
+
+        this.selectedDocument = undefined;
+    }
+
 
 
     public handleChange(

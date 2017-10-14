@@ -225,31 +225,13 @@ export class ResourcesComponent implements AfterViewChecked {
         }
         // -
 
-        ResourcesComponent.removeRecordsRelation(document);
+        ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
         this.doceditProxy.editDocument(document, result => {
 
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                return this.mainTypeManager.populateMainTypeDocuments(
-                    this.documentsManager.selectedDocument
-                ).then(() => {
-                        this.documentsManager.invalidateQuerySettingsIfNecessary();
-                        this.handleDocumentSelectionOnSaved(result.document);
-                    });
+                return this.handleDocumentSelectionOnSaved(result.document);
 
-            }, closeReason => {
-                this.documentsManager.removeEmptyDocuments();
-                if (closeReason == 'deleted') {
-                    this.documentsManager.selectedDocument = undefined;
-                    if (document == this.mainTypeManager.selectedMainTypeDocument) {
-                        return this.mainTypeManager.
-                            handleMainTypeDocumentOnDeleted(this.documentsManager.selectedDocument);
-                    }
-                }
-            },
-            activeTabName)
-
-            .then(() => this.documentsManager.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-
+            }, activeTabName);
     }
 
 
@@ -289,6 +271,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.scrollTarget = doc;
     }
+
 
     // TODO move to documentsManager
     private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {

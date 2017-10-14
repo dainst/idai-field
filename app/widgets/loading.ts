@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class Loading {
+export class Loading { // TODO move this to resources/service. it seems to only be used in the resources package
 
     public showIcons: boolean = false;
 

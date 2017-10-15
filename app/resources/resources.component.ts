@@ -193,14 +193,7 @@ export class ResourcesComponent implements AfterViewChecked {
                         activeTabName?: string) {
 
         this.editGeometry = false;
-
-        // TODO find out what this is code for. this.documentsManager.selectedDocumentAndAdjustContext was called selectDocument before, and also did not create the records relation
-        if (document != this.documentsManager.selectedDocument &&
-                document != this.mainTypeManager.selectedMainTypeDocument) {
-
-            this.documentsManager.setSelected(document);
-        }
-        // -
+        this.documentsManager.setSelected(document);
 
         ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
         this.doceditProxy.editDocument(document, result => {

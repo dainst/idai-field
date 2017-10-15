@@ -117,11 +117,16 @@ export class DocumentsManager {
      * The method also creates records relations (as inverse relations
      * of isRecordedIn) for operation type resources if we are in project view.
      *
-     * @param documentToSelect
+     * @param documentToSelect exits immediately if this is
+     *   a) this.selectedDocument or
+     *   b) this.mainTypeManager.selectedMainTypeDocument or
+     *   c) undefined
      * @returns {Document}
      */
     public setSelected(documentToSelect: Document) {
 
+        if (documentToSelect == this.mainTypeManager.selectedMainTypeDocument) return;
+        if (documentToSelect == this.selectedDocument) return;
         if (!documentToSelect) return;
         this.selectedDocument = documentToSelect;
 

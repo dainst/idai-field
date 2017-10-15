@@ -10,7 +10,7 @@ describe('images/image-overview/delete --', () => {
 
     beforeEach(() => {
 
-        ImageOverviewPage.get();
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
     it('delete an image in the grid view', () => {

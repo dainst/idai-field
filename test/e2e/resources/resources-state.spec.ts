@@ -33,16 +33,6 @@ describe('resources/state --', function() {
         common.resetConfigJson().then(done);
     });
 
-    function performCreateProject() {
-
-        browser.sleep(delays.shortRest * 10);
-        ProjectPage.clickProjectsBadge();
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 10);
-    }
-
     function removeResourcesStateFile() {
 
         const filePath = appDataPath + '/resources-state-' + 'abc.json';
@@ -86,7 +76,7 @@ describe('resources/state --', function() {
 
     it('restore resources state after restarting client', () => {
 
-        performCreateProject();
+        ProjectPage.performCreateProject();
 
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unkown reasons protractor cannot click to select a resource type

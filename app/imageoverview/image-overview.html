@@ -69,13 +69,13 @@
             </div>
 
             <div class="col-sm-2 text-right py-3 slider-container">
-                <span class="mdi mdi-view-grid align-middle"
+                <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
                       (click)="setGridSize(imagesState.getGridSize()-1)"></span>
-                <input #gridSize type="range" min="{{minGridSize}}"
+                <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
                        max="{{maxGridSize}}" value="{{imagesState.getGridSize()}}"
                        class="slider align-middle"
                        (change)="setGridSize(gridSize.value)">
-                <span class="mdi mdi-apps align-middle"
+                <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
                       (click)="setGridSize(imagesState.getGridSize()+1)"></span>
             </div>
         </div>

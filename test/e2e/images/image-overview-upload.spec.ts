@@ -22,7 +22,7 @@ describe('images/image-overview/upload --', function() {
 
     beforeEach(() => {
 
-        ImageOverviewPage.get();
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
     it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {

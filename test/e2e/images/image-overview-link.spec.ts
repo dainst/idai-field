@@ -43,7 +43,7 @@ describe('images/image-overview/link --', function() {
 
     beforeEach(() => {
 
-        ImageOverviewPage.get();
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
     it('link an image to a resource', () => {

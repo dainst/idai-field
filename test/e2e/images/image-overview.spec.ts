@@ -1,4 +1,4 @@
-import {browser, by, protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {ImageViewPage} from './image-view.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
@@ -12,7 +12,7 @@ describe('images/image-overview --', function() {
 
     beforeEach(() => {
 
-        ImageOverviewPage.get();
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
     it('deselect cells', () => {

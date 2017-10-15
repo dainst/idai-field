@@ -57,7 +57,6 @@ export class DoceditProxy {
 
                 this.documentEditChangeMonitor.reset();
 
-                this.documentsManager.removeEmptyDocuments();
                 if (closeReason == 'deleted') {
                     this.documentsManager.selectedDocument = undefined;
                     if (document == this.mainTypeManager.selectedMainTypeDocument) {

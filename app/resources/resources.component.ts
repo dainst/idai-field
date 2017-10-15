@@ -169,8 +169,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
-        this.documentsManager.removeEmptyDocuments();
-        this.documentsManager.selectedDocument = newDocument;
+        this.documentsManager.setSelected(newDocument);
 
         if (geometryType == 'none') {
             this.editDocument();
@@ -178,10 +177,6 @@ export class ResourcesComponent implements AfterViewChecked {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.isEditing = true;
             this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
-        }
-
-        if (newDocument.resource.type != this.viewManager.getView().mainType) {
-            this.documentsManager.documents.unshift(<Document> newDocument);
         }
     }
 
@@ -264,7 +259,6 @@ export class ResourcesComponent implements AfterViewChecked {
         this.loading.start();
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
-            this.documentsManager.removeEmptyDocuments();
             this.documentsManager.deselect();
             this.viewManager.setMode(mode);
             this.isEditing = false;

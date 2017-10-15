@@ -86,6 +86,7 @@ export class DocumentsManager {
     public deselect() {
 
         this.selectedDocument = undefined;
+        this.removeEmptyDocuments(); // TODO consider using setSelected(undefined)
     }
 
 
@@ -128,7 +129,16 @@ export class DocumentsManager {
         if (documentToSelect == this.mainTypeManager.selectedMainTypeDocument) return;
         if (documentToSelect == this.selectedDocument) return;
         if (!documentToSelect) return;
+
         this.selectedDocument = documentToSelect;
+
+        this.removeEmptyDocuments();
+        if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
+            documentToSelect.resource.type != this.viewManager.getView().mainType) {
+
+            this.documents.unshift(documentToSelect);
+        }
+
         if (this.isNewDocumentFromRemote(documentToSelect)) {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
@@ -222,7 +232,8 @@ export class DocumentsManager {
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
             this.mainTypeManager.selectedMainTypeDocument.resource.id))
-            .then(documents => this.documents = documents);
+            .then(documents => this.documents = documents)
+            .then(() => this.removeEmptyDocuments());
     }
 
 
@@ -233,8 +244,7 @@ export class DocumentsManager {
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
     }
 
-    // TODO this method should be private; the removal of empty documents should get handled entirely within DocumentsManager
-    public removeEmptyDocuments() {
+    private removeEmptyDocuments() {
 
         if (!this.documents) return;
 

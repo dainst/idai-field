@@ -233,7 +233,7 @@ export class DocumentsManager {
             .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
     }
 
-
+    // TODO this method should be private; the removal of empty documents should get handled entirely within DocumentsManager
     public removeEmptyDocuments() {
 
         if (!this.documents) return;

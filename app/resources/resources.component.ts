@@ -25,6 +25,8 @@ import {M} from "../m";
  */
 export class ResourcesComponent implements AfterViewChecked {
 
+    // TODO both ready and isEditing are for hiding the actions, whereas isEditing also controls the map mode; see if there is a unified solution, also taking loading into consideration
+
     public isEditing: boolean = false;
 
     public ready: boolean = false;

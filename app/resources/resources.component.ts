@@ -131,10 +131,6 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.editGeometry && documentToSelect !=
             this.documentsManager.selectedDocument) this.endEditGeometry();
 
-        // TODO move to documentsManager
-        if (this.documentsManager.isNewDocumentFromRemote(documentToSelect)) {
-            this.documentsManager.removeFromListOfNewDocumentsFromRemote(documentToSelect);
-        }
         this.documentsManager.setSelected(documentToSelect);
     }
 
@@ -160,7 +156,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public setQueryString(q: string) {
 
         if (!this.documentsManager.setQueryString(q)) this.editGeometry = false;
-
     }
 
 

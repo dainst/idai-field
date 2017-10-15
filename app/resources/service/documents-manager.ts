@@ -76,7 +76,7 @@ export class DocumentsManager {
     }
 
 
-    public removeFromListOfNewDocumentsFromRemote(document: Document) {
+    private removeFromListOfNewDocumentsFromRemote(document: Document) {
 
         let index = this.newDocumentsFromRemote.indexOf(document);
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
@@ -129,6 +129,9 @@ export class DocumentsManager {
         if (documentToSelect == this.selectedDocument) return;
         if (!documentToSelect) return;
         this.selectedDocument = documentToSelect;
+        if (this.isNewDocumentFromRemote(documentToSelect)) {
+            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
+        }
 
         const res1 = this.mainTypeManager.
             selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
@@ -258,7 +261,7 @@ export class DocumentsManager {
     }
 
 
-    public isNewDocumentFromRemote(document: Document): boolean {
+    private isNewDocumentFromRemote(document: Document): boolean {
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }

@@ -64,7 +64,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "o25",
             "identifier": "PE07-So-07_Z001.jpg",
             "shortDescription": "Test Layer 1",
-            "type": "Image",
+            "type": "Drawing",
             "relations": {},
             "originalFilename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,

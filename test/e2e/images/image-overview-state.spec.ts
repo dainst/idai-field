@@ -1,6 +1,7 @@
 import {browser} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {ProjectPage} from '../project.page';
+import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -45,13 +46,13 @@ describe('images/image-overview/state --', () => {
         ProjectPage.performCreateProject();
         ImageOverviewPage.get();
 
-        ImageOverviewPage.typeInSearchField('test');
-        ImageOverviewPage.clickChooseTypeFilter('image-drawing');
+        SearchBarPage.typeInSearchField('test');
+        SearchBarPage.clickChooseTypeFilter('image-drawing');
         ImageOverviewPage.clickIncreaseGridSizeButton();
 
         ImageOverviewPage.get();
-        ImageOverviewPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
-        ImageOverviewPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('test'));
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
+        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('test'));
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });
 

@@ -75,12 +75,6 @@ export class ImageOverviewPage {
         element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
     };
 
-    public static clickChooseTypeFilter(typeName: string) {
-
-        common.click(element(by.id('searchfilter')));
-        common.click(element(by.id('choose-type-option-' + typeName)));
-    };
-
     public static clickIncreaseGridSizeButton() {
 
         common.click(element(by.id('increase-grid-size-button')));
@@ -117,20 +111,9 @@ export class ImageOverviewPage {
         return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
     };
 
-    public static getSearchBarInputFieldValue() {
-
-        return ImageOverviewPage.getSearchBarInputField().getAttribute('value');
-    };
-
     public static getGridSizeSliderValue() {
 
         return element(by.id('grid-size-slider')).getAttribute('value');
-    }
-
-    public static getSelectedTypeFilterCharacter() {
-
-        browser.wait(EC.presenceOf(ImageOverviewPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        return ImageOverviewPage.getSelectedTypeFilterButton().element(by.css('.character')).getText();
     }
 
     // elements
@@ -170,16 +153,6 @@ export class ImageOverviewPage {
         return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
     };
 
-    public static getSelectedTypeFilterButton() {
-
-        return element(by.css('#filter-button type-icon'));
-    };
-
-    public static getSearchBarInputField() {
-
-        return element(by.id('object-search'));
-    };
-
     // sequences
 
     public static createDepictsRelation(identifier) {
@@ -194,11 +167,4 @@ export class ImageOverviewPage {
         NavbarPage.clickNavigateToExcavation();
         NavbarPage.clickNavigateToImages();
     }
-
-    // type in
-
-    public static typeInSearchField(text) {
-
-        return common.typeIn(ImageOverviewPage.getSearchBarInputField(), text);
-    };
 }

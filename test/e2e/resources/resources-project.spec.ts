@@ -1,14 +1,11 @@
-import {browser, protractor} from 'protractor';
+import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
-import {MapPage} from '../map/map.page';
-import {ImageOverviewPage} from "../images/image-overview.page";
+import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
-const EC = protractor.ExpectedConditions;
 const common = require('../common');
 
 /**
@@ -84,7 +81,7 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);
-        ResourcesPage.typeInIdentifierInSearchField('con');
+        SearchBarPage.typeInSearchField('con');
         browser.sleep(delays.shortRest * 5);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
@@ -126,7 +123,7 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 5);
-        ResourcesPage.typeInIdentifierInSearchField('con');
+        SearchBarPage.typeInSearchField('con');
         browser.sleep(delays.shortRest * 5);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));

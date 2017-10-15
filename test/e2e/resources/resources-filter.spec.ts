@@ -2,6 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
+import {SearchBarPage} from '../widgets/search-bar.page';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
@@ -23,10 +24,10 @@ describe('resources/filter --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
-        ResourcesPage.clickChooseTypeFilter('feature-floor');
+        SearchBarPage.clickChooseTypeFilter('feature-floor');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('feature-architecture');
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
@@ -35,10 +36,10 @@ describe('resources/filter --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
-        ResourcesPage.clickChooseTypeFilter('inscription');
+        SearchBarPage.clickChooseTypeFilter('inscription');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('all');
+        SearchBarPage.clickChooseTypeFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
@@ -49,7 +50,7 @@ describe('resources/filter --', () => {
         ResourcesPage.performCreateResource('2', 'inscription');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickChooseTypeFilter('feature');
+        SearchBarPage.clickChooseTypeFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
@@ -58,7 +59,7 @@ describe('resources/filter --', () => {
 
         const checkTypeOptions = () => {
 
-            ResourcesPage.clickChooseTypeFilter('feature');
+            SearchBarPage.clickChooseTypeFilter('feature');
             ResourcesPage.clickCreateResource();
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
@@ -69,7 +70,7 @@ describe('resources/filter --', () => {
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
 
-            ResourcesPage.clickChooseTypeFilter('processunit');
+            SearchBarPage.clickChooseTypeFilter('processunit');
             ResourcesPage.clickCreateResource();
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
@@ -80,7 +81,7 @@ describe('resources/filter --', () => {
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
 
-            ResourcesPage.clickChooseTypeFilter('all');
+            SearchBarPage.clickChooseTypeFilter('all');
             ResourcesPage.clickCreateResource();
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
@@ -101,19 +102,19 @@ describe('resources/filter --', () => {
 
         const checkTypeIcon = () => {
 
-            ResourcesPage.clickChooseTypeFilter('feature-architecture');
+            SearchBarPage.clickChooseTypeFilter('feature-architecture');
             ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('A'));
 
-            ResourcesPage.clickChooseTypeFilter('feature');
+            SearchBarPage.clickChooseTypeFilter('feature');
             browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
 
-            ResourcesPage.clickChooseTypeFilter('all');
+            SearchBarPage.clickChooseTypeFilter('all');
             browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
         };
 
         const createResourceWithPresetType = (identifier: string, selectGeometryType: boolean) => {
 
-            ResourcesPage.clickChooseTypeFilter('feature-layer');
+            SearchBarPage.clickChooseTypeFilter('feature-layer');
             ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
             ResourcesPage.clickCreateResource();
             if (selectGeometryType) ResourcesPage.clickSelectGeometryType();

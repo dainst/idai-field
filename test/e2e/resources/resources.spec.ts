@@ -1,6 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
+import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
 
@@ -44,7 +45,7 @@ describe('resources --', () => {
     it('find it by its identifier', () => {
 
         ResourcesPage.performCreateResource('1');
-        ResourcesPage.typeInIdentifierInSearchField('1');
+        SearchBarPage.typeInSearchField('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
     });
 

@@ -47,12 +47,6 @@ export class ResourcesPage {
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
     };
 
-    public static clickChooseTypeFilter(typeName) {
-
-        common.click(element(by.id('searchfilter')));
-        common.click(element(by.id('choose-type-option-' + typeName)));
-    };
-
     public static clickSelectGeometryType(type?) {
 
         let geom = 'none';
@@ -133,11 +127,6 @@ export class ResourcesPage {
         return element.all(by.css('#mainTypeSelectBox')).getText();
     };
 
-    public static getSearchBarInputFieldValue() {
-
-        return ResourcesPage.getSearchBarInputField().getAttribute('value');
-    };
-
     public static getListModeInputFieldValue(identifier, index) {
 
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
@@ -180,16 +169,6 @@ export class ResourcesPage {
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
-    };
-
-    public static getSelectedTypeFilterButton() {
-
-        return element(by.css('#filter-button type-icon'));
-    };
-
-    public static getSearchBarInputField() {
-
-        return element(by.id('object-search'));
     };
 
     public static getResourceTypeOption(typeName: string) {
@@ -262,11 +241,6 @@ export class ResourcesPage {
     };
 
     // type in
-
-    public static typeInIdentifierInSearchField(identifier) {
-
-        return common.typeIn(ResourcesPage.getSearchBarInputField(), identifier);
-    };
 
     public static typeInListModeInputField(identifier, index, inputText) {
 

@@ -1,6 +1,7 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
+import {SearchBarPage} from '../widgets/search-bar.page';
 
 const delays = require('../config/delays');
 const EC = protractor.ExpectedConditions;
@@ -51,11 +52,11 @@ describe('resources/list --', () => {
 
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        ResourcesPage.typeInIdentifierInSearchField('testf1');
+        SearchBarPage.typeInSearchField('testf1');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
 
-        ResourcesPage.typeInIdentifierInSearchField(' ');
+        SearchBarPage.typeInSearchField(' ');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });
@@ -64,11 +65,11 @@ describe('resources/list --', () => {
 
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
-        ResourcesPage.clickChooseTypeFilter('find');
+        SearchBarPage.clickChooseTypeFilter('find');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
 
-        ResourcesPage.clickChooseTypeFilter('all');
+        SearchBarPage.clickChooseTypeFilter('all');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });

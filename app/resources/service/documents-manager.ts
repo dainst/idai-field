@@ -1,10 +1,9 @@
-import {DocumentChange, Query, Datastore} from 'idai-components-2/datastore';
+import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {MainTypeManager} from "./main-type-manager";
 import {ViewManager} from './view-manager';
 import {Loading} from "../../widgets/loading";
-import {Messages} from 'idai-components-2/messages';
 import {M} from "../../m";
 import {SettingsService} from '../../settings/settings-service';
 import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
@@ -28,7 +27,6 @@ export class DocumentsManager {
         private datastore: Datastore,
         private viewManager: ViewManager,
         private loading: Loading,
-        private messages: Messages,
         private settingsService: SettingsService
     ) {
 
@@ -36,12 +34,6 @@ export class DocumentsManager {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });
-    }
-
-
-    public selected() {
-
-        return this.selectedDocument;
     }
 
 
@@ -97,13 +89,18 @@ export class DocumentsManager {
     }
 
 
+    public selected() {
+
+        return this.selectedDocument;
+    }
+
+
     public setSelectedById(resourceId: string) {
 
         return this.datastore.get(resourceId).then(
             document => {
                 return this.setSelected(document);
-            },
-            () => this.messages.add([M.DATASTORE_NOT_FOUND])
+            }
         );
     }
 
@@ -290,18 +287,17 @@ export class DocumentsManager {
 
         this.loading.start();
         return this.datastore.find(query)
-            .catch(errWithParams => this.handleFindErr(errWithParams, query))
+            .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query))
             .then(documents => {
                 this.loading.stop(); return documents;
             });
     }
 
 
-    private handleFindErr(errWithParams: Array<string>, query: Query) {
+    private static handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-        this.messages.add([M.ALL_FIND_ERROR]);
     }
 
 

@@ -1,20 +1,16 @@
 import {AfterViewChecked, Component, Renderer} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {
-    IdaiFieldDocument,
-    IdaiFieldGeometry
-} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {Loading} from '../widgets/loading';
-import {M} from '../m';
 import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
+import {M} from "../m";
 
 
 @Component({
@@ -44,7 +40,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private routingHelper: RoutingHelper,
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
-                private messages: Messages, // TODO remove dependency, or otherwise remove messages dependency from the various services
+                private messages: Messages,
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
                 private documentsManager: DocumentsManager
@@ -123,7 +119,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     else {
                         this.activeDocumentViewTab = tab;
                     }
-                });
+                }).catch( () => this.messages.add([M.DATASTORE_NOT_FOUND]));
     }
 
 

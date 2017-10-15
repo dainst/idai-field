@@ -95,7 +95,7 @@ describe('resources/state --', function() {
 
         ProjectPage.get();
         browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('B'));
 
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
@@ -208,7 +208,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('excavation-inschrift', 'feature-floor');
 
         SearchBarPage.clickChooseTypeFilter('feature-floor');
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
 
@@ -217,7 +217,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('building-befund')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
     });
@@ -290,12 +290,12 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 

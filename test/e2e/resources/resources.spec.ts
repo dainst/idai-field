@@ -73,7 +73,7 @@ describe('resources --', () => {
      * There has been a bug where clicking the new button without doing anything
      * led to leftovers of 'Neues Objekt' for every time the button was pressed.
      */
-    it('remove a new object from the list if it has not been saved', () => {
+    xit('remove a new object from the list if it has not been saved', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickCreateResource();

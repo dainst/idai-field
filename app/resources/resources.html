@@ -76,16 +76,15 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="ready && viewManager.getView() && viewManager.getView().mainType != 'Project' && !mainTypeManager.selectedMainTypeDocument && !editGeometry"
+    <div *ngIf="ready && viewManager.getView() && viewManager.getView().mainType != 'Project' && !mainTypeManager.selectedMainTypeDocument && !isEditing"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{viewManager.getMainTypeLabel()}}' anlegen...</em>
     </div>
 
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->
-    <!--<div *ngIf="(view && view.mainType == 'project') || mainTypeManager.selectedMainTypeDocument || editGeometry" class="col-lg-12 col-md-12 col-sm-12">-->
+    <!--<div *ngIf="(view && view.mainType == 'project') || mainTypeManager.selectedMainTypeDocument || isEditing" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <map-wrapper *ngIf="viewManager.getMode() == 'map'"
-                     [isEditing]="editGeometry" [activeTab]="activeDocumentViewTab"></map-wrapper>
+        <map-wrapper *ngIf="viewManager.getMode() == 'map'" [activeTab]="activeDocumentViewTab"></map-wrapper>
         <list *ngIf="viewManager.getMode() == 'list'" [ready]="ready" [documents]="documentsManager.documents"></list>
     </div>
 

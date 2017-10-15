@@ -19,7 +19,6 @@ import {DocumentsManager} from '../service/documents-manager';
 export class DocumentViewWrapperComponent {
 
     @Input() activeTab;
-    @Input() isEditing: boolean = false;
 
     constructor(
         public resourcesComponent: ResourcesComponent,

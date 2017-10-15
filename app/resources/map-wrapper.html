@@ -27,7 +27,7 @@
          [class.col-sm-6]="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id" class="px-0">
         <editable-map [documents]="documentsManager.documents"
                       [selectedDocument]="documentsManager.selectedDocument"
-                      [mainTypeDocument]="mainTypeManager.selectedMainTypeDocument" [isEditing]="isEditing"
+                      [mainTypeDocument]="mainTypeManager.selectedMainTypeDocument" [isEditing]="resourcesComponent.isEditing"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="viewManager.getView().mainType != 'Project'"
                       [update]="resourcesComponent.ready" (onSelectDocument)="select($event)"

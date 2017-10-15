@@ -22,7 +22,6 @@ import {DocumentsManager} from './service/documents-manager';
  */
 export class MapWrapperComponent {
 
-    @Input() isEditing: boolean = false;
     @Input() activeTab: string;
 
     constructor(

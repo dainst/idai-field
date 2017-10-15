@@ -39,6 +39,12 @@ export class DocumentsManager {
     }
 
 
+    public selected() {
+
+        return this.selectedDocument;
+    }
+
+
     public getQuery() {
 
         return {
@@ -91,8 +97,19 @@ export class DocumentsManager {
     }
 
 
+    public setSelectedById(resourceId: string) {
+
+        return this.datastore.get(resourceId).then(
+            document => {
+                return this.setSelected(document);
+            },
+            () => this.messages.add([M.DATASTORE_NOT_FOUND])
+        );
+    }
+
+
     /**
-     * Sets the this.selectedDocument (and this.activeTabName)
+     * Sets the this.selectedDocument
      * and if necessary, also
      * a) selects the operation type document,
      * this.selectedDocument is recorded in, accordingly and
@@ -105,8 +122,8 @@ export class DocumentsManager {
      *
      * @param documentToSelect
      * @returns {Document}
-     */ // TODO rename to selectDocument or setSelectedDocument
-    public adjustContext(documentToSelect: Document) {
+     */
+    public setSelected(documentToSelect: Document) {
 
         if (!documentToSelect) return;
         this.selectedDocument = documentToSelect;
@@ -118,7 +135,7 @@ export class DocumentsManager {
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        promise.then(() => this.insertRecords(this.selectedDocument));
+        return promise.then(() => this.insertRecords(this.selectedDocument));
     }
 
 

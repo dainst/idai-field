@@ -44,7 +44,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 private routingHelper: RoutingHelper,
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
-                private datastore: IdaiFieldDatastore, // TODO remove, handle documentChanges directly in documentsManager
                 private messages: Messages, // TODO remove dependency, or otherwise remove messages dependency from the various services
                 private loading: Loading,
                 private mainTypeManager: MainTypeManager,
@@ -88,7 +87,7 @@ export class ResourcesComponent implements AfterViewChecked {
     // TODO remove the method and perform the calls to routingHelper directly. the document selection can be done in routingHelper via documentsManager then. there should be no necessity to call the select method
     public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
 
-        this.routingHelper.jumpToRelationTarget(this.documentsManager.selectedDocument, documentToSelect,
+        this.routingHelper.jumpToRelationTarget(this.documentsManager.selected(), documentToSelect,
             docToSelect => this.select(docToSelect), tab);
     }
 
@@ -99,7 +98,7 @@ export class ResourcesComponent implements AfterViewChecked {
         return Promise.resolve()
             .then(() => this.documentsManager.populateProjectDocument())
             .then(() => this.mainTypeManager.populateMainTypeDocuments(
-                this.documentsManager.selectedDocument
+                this.documentsManager.selected()
             ))
             .then(() => this.documentsManager.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
@@ -109,26 +108,22 @@ export class ResourcesComponent implements AfterViewChecked {
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
         this.mainTypeManager.selectMainTypeDocument(
-            document,this.documentsManager.selectedDocument,()=>{
+            document,this.documentsManager.selected(),()=>{
                 this.activeDocumentViewTab = undefined;
                 this.documentsManager.deselect();
             });
         this.documentsManager.populateDocumentList();
     }
 
-    // TODO move the datastore get to documentsManager
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
-        this.datastore.get(id).then(
-            document => {
-                    if (menu == 'edit') this.editDocument(document, tab);
+        this.documentsManager.setSelectedById(id).then(
+            () => {
+                    if (menu == 'edit') this.editDocument(this.documentsManager.selected(), tab);
                     else {
                         this.activeDocumentViewTab = tab;
-                        this.documentsManager.adjustContext(document)
                     }
-                },
-            () => this.messages.add([M.DATASTORE_NOT_FOUND])
-        );
+                });
     }
 
 
@@ -144,7 +139,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (this.documentsManager.isNewDocumentFromRemote(documentToSelect)) {
             this.documentsManager.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
-        this.documentsManager.adjustContext(documentToSelect);
+        this.documentsManager.setSelected(documentToSelect);
     }
 
 
@@ -207,7 +202,7 @@ export class ResourcesComponent implements AfterViewChecked {
         if (document != this.documentsManager.selectedDocument &&
                 document != this.mainTypeManager.selectedMainTypeDocument) {
 
-            this.documentsManager.adjustContext(document);
+            this.documentsManager.setSelected(document);
         }
         // -
 

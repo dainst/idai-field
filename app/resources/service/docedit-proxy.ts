@@ -67,6 +67,8 @@ export class DoceditProxy {
                     }
                 }
 
-            }).then(() => this.documentsManager.populateDocumentList()); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            })
+            .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+            .then(() => this.documentsManager.insertRecordsIntoSelected());
     }
 }

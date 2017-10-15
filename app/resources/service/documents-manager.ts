@@ -132,7 +132,7 @@ export class DocumentsManager {
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        return promise.then(() => this.insertRecords(this.selectedDocument));
+        return promise.then(() => this.insertRecordsIntoSelected());
     }
 
 
@@ -166,11 +166,11 @@ export class DocumentsManager {
     }
 
 
-    private insertRecords(document: Document) {
+    public insertRecordsIntoSelected() {
 
         if (!this.mainTypeManager.selectedMainTypeDocument) return;
         if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
-            return this.insertRecordsRelation(document);
+            return this.insertRecordsRelation(this.selectedDocument);
         }
     }
 
@@ -214,12 +214,7 @@ export class DocumentsManager {
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
             this.mainTypeManager.selectedMainTypeDocument.resource.id))
-            .then(documents => {
-                this.documents = documents;
-                for (let doc of documents) { // TODO this could be a possible performance issue, but for now I wanted have it here and make insertDocs private, until we found a better place or another method for doing it
-                    this.insertRecords(doc)
-                }
-            });
+            .then(documents => this.documents = documents);
     }
 
 

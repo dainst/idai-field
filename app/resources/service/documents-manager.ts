@@ -32,6 +32,10 @@ export class DocumentsManager {
         private settingsService: SettingsService
     ) {
 
+        datastore.documentChangesNotifications().subscribe(documentChange => {
+            this.handleChange(
+                documentChange, this.selectedDocument);
+        });
     }
 
 
@@ -118,7 +122,7 @@ export class DocumentsManager {
     }
 
 
-    public handleChange(
+    private handleChange(
         documentChange: DocumentChange,
         selectedDocument: Document) {
 

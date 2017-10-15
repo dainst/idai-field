@@ -37,10 +37,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    private subscription;
-
     private activeDocumentViewTab: string;
-
 
     constructor(route: ActivatedRoute,
                 private viewManager: ViewManager,
@@ -75,18 +72,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 });
         });
 
-        this.subscription = datastore.documentChangesNotifications().subscribe(documentChange => {
-            this.documentsManager.handleChange(
-                documentChange, this.documentsManager.selectedDocument);
-        });
-
         this.initializeClickEventListener();
-    }
-
-
-    ngOnDestroy() {
-
-        this.subscription.unsubscribe();
     }
 
 

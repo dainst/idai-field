@@ -35,7 +35,7 @@ export class DocumentViewWrapperComponent {
 
         if (documentToSelect !=
                 this.documentsManager.selectedDocument) {
-            this.resourcesComponent.editGeometry = false;
+            this.resourcesComponent.isEditing = false;
         }
 
         this.routingHelper.jumpToRelationTarget(documentToSelect, tab);

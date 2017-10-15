@@ -65,11 +65,11 @@ export class MapWrapperComponent {
             if (geometry !== undefined) {
                 this.resourcesComponent.editDocument();
             } else {
-                this.resourcesComponent.endEditGeometry();
+                this.isEditing = false;
                 this.documentsManager.remove(this.documentsManager.selectedDocument);
             }
         } else {
-            this.resourcesComponent.endEditGeometry();
+            this.isEditing = false;
             if (geometry !== undefined) this.save();
         }
     }

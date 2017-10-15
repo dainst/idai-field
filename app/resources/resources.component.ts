@@ -25,7 +25,7 @@ import {M} from "../m";
  */
 export class ResourcesComponent implements AfterViewChecked {
 
-    public editGeometry: boolean = false;
+    public isEditing: boolean = false; // TODO minimize use here, the main place for this should be map wrapper
 
     public ready: boolean = false;
 
@@ -51,7 +51,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.documentsManager.selectedDocument = undefined;
             this.mainTypeManager.init();
-            this.editGeometry = false;
+            this.isEditing = false;
 
             return this.initialize()
                 .then(() => {
@@ -145,13 +145,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        if (!this.documentsManager.setQueryString(q)) this.editGeometry = false;
+        if (!this.documentsManager.setQueryString(q)) this.isEditing = false;
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        if (!this.documentsManager.setQueryTypes(types)) this.editGeometry = false;
+        if (!this.documentsManager.setQueryTypes(types)) this.isEditing = false;
     }
 
 
@@ -164,7 +164,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editDocument();
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
-            this.editGeometry = true;
+            this.isEditing = true;
             this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
         }
 
@@ -177,7 +177,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public editDocument(document: Document = this.documentsManager.selectedDocument, // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
                         activeTabName?: string) {
 
-        this.editGeometry = false;
+        this.isEditing = false;
         this.documentsManager.setSelected(document);
 
         ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
@@ -190,23 +190,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public startEditGeometry() {
-
-        this.editGeometry = true;
-    }
-
-
-    public endEditGeometry() { // TODO remove or put to map wrapper
-
-        this.editGeometry = false;
-        this.documentsManager.populateDocumentList();
-    }
-
-
     public createGeometry(geometryType: string) {
 
         this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
-        this.startEditGeometry();
+        this.isEditing = true;
     }
 
 
@@ -255,7 +242,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.documentsManager.removeEmptyDocuments();
             this.documentsManager.deselect();
             this.viewManager.setMode(mode);
-            this.editGeometry = false;
+            this.isEditing = false;
             this.loading.stop();
         }, 1);
     }

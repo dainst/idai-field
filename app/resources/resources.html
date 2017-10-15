@@ -22,7 +22,7 @@
 
     <div class="col-md-1">
         <div *ngIf="viewManager.getView() && viewManager.getView().mainType != 'Project'" class="row">
-            <div *ngIf="mainTypeManager.selectedMainTypeDocument" class="col-md-6">
+            <div *ngIf="!isEditing && mainTypeManager.selectedMainTypeDocument" class="col-md-6">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(mainTypeManager.selectedMainTypeDocument)">
                     <span class="mdi mdi-pencil mdi-18px"></span>
@@ -30,11 +30,11 @@
             </div>
 
             <div class="col-md-6">
-                <plus-button *ngIf="ready && this.viewManager.getQueryString() == '' && viewManager.getView().mainType != 'Project'
+                <plus-button *ngIf="!isEditing && ready && this.viewManager.getQueryString() == '' && viewManager.getView().mainType != 'Project'
                                         && viewManager.getMode() == 'map'"
                              id="create-main-type-document-button" [preselectedType]="viewManager.getView().mainType"
                              [isRecordedIn]="documentsManager.projectDocument"></plus-button>
-                <plus-button *ngIf="ready && this.viewManager.getQueryString() == '' && viewManager.getView().mainType != 'Project'
+                <plus-button *ngIf="!isEditing && ready && this.viewManager.getQueryString() == '' && viewManager.getView().mainType != 'Project'
                                         && viewManager.getMode() == 'list'"
                              id="create-main-type-document-button" [preselectedType]="viewManager.getView().mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="documentsManager.projectDocument"></plus-button>

@@ -14,7 +14,7 @@ describe('resources/messages --', () => {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
-    it('show the success msg also on route change', () => {
+    fit('show the success msg also on route change', () => {
         ResourcesPage.performCreateResource('12');
         ResourcesPage.openEditByDoubleClickResource('12');
         DoceditPage.typeInInputField('34');

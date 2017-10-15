@@ -80,13 +80,6 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    // TODO remove the method and perform the calls to routingHelper directly. the document selection can be done in routingHelper via documentsManager then. there should be no necessity to call the select method
-    public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
-
-        this.routingHelper.jumpToRelationTarget(this.documentsManager.selected(), documentToSelect,
-            docToSelect => this.select(docToSelect), tab);
-    }
-
 
     public initialize(): Promise<any> {
 
@@ -123,13 +116,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    /** // TODO after the call to this method from jumpToRelationTarget is removed, the method could go to MapWrapperComponent
+    /** // TODO move to MapWrapperComponent
      * @param documentToSelect the object that should get selected
      */
     public select(documentToSelect: IdaiFieldDocument) {
-
-        if (this.editGeometry && documentToSelect !=
-            this.documentsManager.selectedDocument) this.endEditGeometry();
 
         this.documentsManager.setSelected(documentToSelect);
     }
@@ -206,7 +196,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public endEditGeometry() {
+    public endEditGeometry() { // TODO remove or put to map wrapper
 
         this.editGeometry = false;
         this.documentsManager.populateDocumentList();

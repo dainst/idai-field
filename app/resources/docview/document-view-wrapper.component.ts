@@ -4,6 +4,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ObjectUtil} from '../../util/object-util';
 import {ProjectConfiguration} from 'idai-components-2/configuration'
 import {DocumentsManager} from '../service/documents-manager';
+import {RoutingHelper} from "../service/routing-helper";
+import {Document} from 'idai-components-2/core';
 
 @Component({
     selector: 'document-view-wrapper',
@@ -24,8 +26,21 @@ export class DocumentViewWrapperComponent {
     constructor(
         public resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
-        private documentsManager: DocumentsManager
+        private documentsManager: DocumentsManager,
+        private routingHelper: RoutingHelper
     ) { }
+
+
+    public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
+
+        if (documentToSelect !=
+                this.documentsManager.selectedDocument) {
+            this.resourcesComponent.editGeometry = false;
+        }
+
+        this.routingHelper.jumpToRelationTarget(documentToSelect, tab);
+    }
+
 
     public hasRelations() {
 

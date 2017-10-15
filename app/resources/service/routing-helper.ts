@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ViewManager} from './view-manager';
+import {DocumentsManager} from "./documents-manager";
 
 @Injectable()
 /**
@@ -18,6 +19,7 @@ export class RoutingHelper {
 
     constructor(private router: Router,
                 private viewManager: ViewManager,
+                private documentsManager: DocumentsManager,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility) {
     }
@@ -44,12 +46,12 @@ export class RoutingHelper {
         })
     }
 
-    public jumpToRelationTarget(selectedDocument, documentToSelect: Document, cb, tab?: string) {
+    public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
-            this.jumpToImageTypeRelationTarget(selectedDocument, documentToSelect);
+            this.jumpToImageTypeRelationTarget(this.documentsManager.selected(), documentToSelect);
         } else {
-            this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
+            this.jumpToResourceTypeRelationTarget(documentToSelect, tab);
         }
     }
 
@@ -64,7 +66,7 @@ export class RoutingHelper {
         );
     }
 
-    public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
+    public jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string) {
 
         this.viewManager.getViewNameForDocument(documentToSelect)
             .then(viewName => {
@@ -76,9 +78,7 @@ export class RoutingHelper {
                         return this.router.navigate(['resources', viewName,
                             documentToSelect.resource.id]);
                     }
-                } else {
-                    cb(documentToSelect);
-                }
+                } else this.documentsManager.setSelected(documentToSelect);
             });
     }
 }

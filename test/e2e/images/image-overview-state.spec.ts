@@ -1,6 +1,7 @@
 import {browser} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {ProjectPage} from '../project.page';
+import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
@@ -23,7 +24,7 @@ describe('images/image-overview/state --', () => {
 
     beforeEach(() => {
 
-        return ImageOverviewPage.get();
+        return ImageOverviewPage.getAndWaitForImageCells();
     });
 
 
@@ -53,6 +54,48 @@ describe('images/image-overview/state --', () => {
         ImageOverviewPage.get();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('test'));
+        ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
+    });
+
+
+    it('autoselect last selected type filter after returning to images overview', () => {
+
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
+
+        SearchBarPage.clickChooseTypeFilter('image-drawing');
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
+
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
+
+        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
+    });
+
+
+    it('restore query string after returning to images overview', () => {
+
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
+
+        SearchBarPage.typeInSearchField('Layer 1');
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
+
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
+
+        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('Layer 1'));
+        ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
+    });
+
+
+    it('restore grid size after returning to images overview', () => {
+
+        ImageOverviewPage.clickIncreaseGridSizeButton();
+        ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
+
+        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickNavigateToImages();
+
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });
 

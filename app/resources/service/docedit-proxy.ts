@@ -6,11 +6,6 @@ import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {DocumentsManager} from './documents-manager';
 import {MainTypeManager} from './main-type-manager';
-import {
-    IdaiFieldDocument,
-    IdaiFieldGeometry
-} from 'idai-components-2/idai-field-model';
-import {ViewManager} from './view-manager';
 
 @Injectable()
 /**
@@ -47,10 +42,10 @@ export class DoceditProxy {
                 }
                 resultCallback(result);
 
-                return this.mainTypeManager.populateMainTypeDocuments(
+                return this.mainTypeManager.populateMainTypeDocuments( // TODO this can be done with documentsManager.setSelected; if we do the todo at the bottom, we might get rid of this entirely
                         this.documentsManager.selectedDocument
                     ).then(() =>
-                        this.documentsManager.invalidateQuerySettingsIfNecessary()
+                        this.documentsManager.invalidateQuerySettingsIfNecessary() // ---------
                     );
             }
             , closeReason => {

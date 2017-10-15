@@ -3,7 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
-import {ThumbnailViewPage} from '../widgets/thumnail-view.page';
+import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 
 const delays = require('../config/delays');

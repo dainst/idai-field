@@ -15,7 +15,8 @@
             </li>
         </ul>
 
-        <plus-button *ngIf="!resourcesComponent.isEditing && resourcesComponent.ready && !loading.showIcons && documentsManager.getQuery().q == ''
+        <plus-button *ngIf="!resourcesComponent.isEditingGeometry && resourcesComponent.ready
+                            && !loading.showIcons && documentsManager.getQuery().q == ''
                             && mainTypeManager.selectedMainTypeDocument"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="viewManager.getCurrentFilterType()"
@@ -29,7 +30,7 @@
         <editable-map [documents]="documentsManager.documents"
                       [selectedDocument]="documentsManager.selectedDocument"
                       [mainTypeDocument]="mainTypeManager.selectedMainTypeDocument"
-                      [isEditing]="resourcesComponent.isEditing"
+                      [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="viewManager.getView().mainType != 'Project'"
                       [update]="resourcesComponent.ready" (onSelectDocument)="select($event, true)"

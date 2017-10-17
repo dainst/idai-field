@@ -25,9 +25,9 @@ import {M} from "../m";
  */
 export class ResourcesComponent implements AfterViewChecked {
 
-    // TODO both ready and isEditing are for hiding the actions, whereas isEditing also controls the map mode; see if there is a unified solution, also taking loading into consideration
+    // TODO both ready and isEditingGeometry are for hiding the actions, whereas isEditingGeometry also controls the map mode; see if there is a unified solution, also taking loading into consideration
 
-    public isEditing: boolean = false;
+    public isEditingGeometry: boolean = false;
 
     public ready: boolean = false;
 
@@ -53,7 +53,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.documentsManager.selectedDocument = undefined;
             this.mainTypeManager.init();
-            this.isEditing = false;
+            this.isEditingGeometry = false;
 
             return this.initialize()
                 .then(() => {
@@ -139,13 +139,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        if (!this.documentsManager.setQueryString(q)) this.isEditing = false;
+        if (!this.documentsManager.setQueryString(q)) this.isEditingGeometry = false;
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        if (!this.documentsManager.setQueryTypes(types)) this.isEditing = false;
+        if (!this.documentsManager.setQueryTypes(types)) this.isEditingGeometry = false;
     }
 
 
@@ -157,7 +157,7 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editDocument();
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
-            this.isEditing = true;
+            this.isEditingGeometry = true;
             this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
         }
     }
@@ -166,7 +166,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public editDocument(document: Document = this.documentsManager.selectedDocument, // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
                         activeTabName?: string) {
 
-        this.isEditing = false;
+        this.isEditingGeometry = false;
         this.documentsManager.setSelected(document);
 
         ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
@@ -182,7 +182,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public createGeometry(geometryType: string) {
 
         this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
-        this.isEditing = true;
+        this.isEditingGeometry = true;
     }
 
 
@@ -224,7 +224,7 @@ export class ResourcesComponent implements AfterViewChecked {
         setTimeout(() => {
             this.documentsManager.deselect();
             this.viewManager.setMode(mode);
-            this.isEditing = false;
+            this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
     }

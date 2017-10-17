@@ -26,7 +26,7 @@
             <ng-template ngbTabContent>
 
                 <geometry-view [document]="documentsManager.selectedDocument"
-                               (onEditGeometry)="resourcesComponent.isEditing = true;"
+                               (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
                                (onCreateGeometry)="resourcesComponent.createGeometry($event)">
                 </geometry-view>
             </ng-template>

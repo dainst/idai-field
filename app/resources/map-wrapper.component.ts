@@ -45,7 +45,7 @@ export class MapWrapperComponent {
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
-        this.resourcesComponent.isEditing = false;
+        this.resourcesComponent.isEditingGeometry = false;
 
         if (!document) {
             this.documentsManager.deselect();
@@ -75,11 +75,11 @@ export class MapWrapperComponent {
             if (geometry !== undefined) {
                 this.resourcesComponent.editDocument();
             } else {
-                this.resourcesComponent.isEditing = false;
+                this.resourcesComponent.isEditingGeometry = false;
                 this.documentsManager.remove(this.documentsManager.selectedDocument);
             }
         } else {
-            this.resourcesComponent.isEditing = false;
+            this.resourcesComponent.isEditingGeometry = false;
             if (geometry !== undefined) this.save();
         }
     }

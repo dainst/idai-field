@@ -10,8 +10,7 @@ const delays = require('../config/delays');
 describe('images/image-overview/upload --', function() {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
-    const imageUploadFileName = 'Aldrin_Apollo_11.jpg';
-    const imageUploadXpath = '//span[@class="badge badge-secondary"][text()="' + imageUploadFileName + '"]';
+    const imageUploadFileName: string = 'Aldrin_Apollo_11.jpg';
 
     const uploadImage = () => {
 
@@ -28,13 +27,13 @@ describe('images/image-overview/upload --', function() {
     it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {
 
         uploadImage();
-        browser.wait(EC.presenceOf(element(by.xpath(imageUploadXpath))), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier(imageUploadFileName)), delays.ECWaitTime);
     });
 
     it('do not allow uploading an image with a duplicate filename', () => {
 
         uploadImage();
-        browser.wait(EC.presenceOf(element(by.xpath(imageUploadXpath))), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier(imageUploadFileName)), delays.ECWaitTime);
         uploadImage();
         NavbarPage.awaitAlert('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
     });

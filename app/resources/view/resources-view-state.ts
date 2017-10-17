@@ -1,3 +1,6 @@
+/**
+ * @author Thomas Kleinke
+ */
 export interface ResourcesViewState {
     mainTypeDocumentId?: string;
     types?: string[];

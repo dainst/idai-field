@@ -156,7 +156,7 @@ export class ResourcesComponent implements AfterViewChecked {
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.isEditingGeometry = true;
-            this.viewManager.setMode('map', false); // TODO store option was introduced only because of this line because before refactoring the mode was not set to resources state. so the exact behaviour has to be kept. review later
+            this.viewManager.setMode('map');
         }
     }
 

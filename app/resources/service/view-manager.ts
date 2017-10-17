@@ -34,10 +34,10 @@ export class ViewManager {
     }
 
 
-    public setMode(mode, store = true) {
+    public setMode(mode: string) {
 
         this.mode = mode;
-        if (store) this.setLastSelectedMode(mode);
+        this.setLastSelectedMode(mode);
     }
 
 

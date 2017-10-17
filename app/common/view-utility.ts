@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {ConfigLoader, RelationDefinition, ViewDefinition} from 'idai-components-2/configuration';
+import {ProjectConfiguration, RelationDefinition, ViewDefinition} from 'idai-components-2/configuration';
 import {ReadDatastore} from 'idai-components-2/datastore';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
 
 @Injectable()
 /**
@@ -10,8 +9,10 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
  */
 export class ViewUtility {
 
+
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore) {}
+
 
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
@@ -35,6 +36,7 @@ export class ViewUtility {
                 return Promise.resolve(mainTypeName);
             }).catch(() => {});
     }
+
 
     public getViewNameForDocument(document: Document): Promise<string> {
 
@@ -61,6 +63,7 @@ export class ViewUtility {
              }).catch(() => {});
     }
 
+
     public getMainTypeDocuments(): Promise<Array<Document>> {
 
         let mainTypeDocuments: Array<Document> = [];
@@ -81,6 +84,7 @@ export class ViewUtility {
             );
         });
     }
+
 
     public getMainTypeDocumentLabel(document: Document): string {
 

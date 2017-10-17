@@ -15,6 +15,7 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class DoceditProxy {
 
+
     constructor(
             private modalService: NgbModal,
             private doceditActiveTabService: DoceditActiveTabService,

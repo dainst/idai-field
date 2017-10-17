@@ -12,6 +12,7 @@ import {SettingsService} from '../../settings/settings-service';
  */
 export class DocumentsManager {
 
+
     private selectedDocument: Document;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];

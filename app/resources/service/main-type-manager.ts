@@ -124,7 +124,7 @@ export class MainTypeManager {
         let mainTypeDocument = MainTypeManager.getMainTypeDocumentForDocument(
             selectedDocument, this.mainTypeDocuments);
 
-        if (mainTypeDocument != this.selectedMainTypeDocument) {
+        if (mainTypeDocument && mainTypeDocument != this.selectedMainTypeDocument) {
             this.selectedMainTypeDocument = mainTypeDocument;
             return true;
         }

@@ -95,7 +95,7 @@ describe('import --', function() {
         NavbarPage.clickNavigateToProject();
 
         ResourcesPage.clickSelectResource('trench1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(3));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
     it('abort if a relation target cannot be found and remove all imported resources & already '

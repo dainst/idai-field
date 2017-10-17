@@ -74,7 +74,6 @@ export class DoceditProxy {
 
         })
         .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-        .then(() => this.documentsManager.insertRecordsIntoSelected()) // TODO if we stay with the insertRecords functionality of documentsManager.setSelected, consider using setSelected in order to replace this and the previous line; give setSelected a forcePopulate param then, so that the requirement from previous line stays fulfilled
         .then(() => {return result; });
     }
 }

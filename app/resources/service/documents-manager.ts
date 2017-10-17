@@ -115,9 +115,6 @@ export class DocumentsManager {
      * this.selectedDocument is part of the search hits of the document list
      * on the left hand side in the map view.
      *
-     * The method also creates records relations (as inverse relations
-     * of isRecordedIn) for operation type resources if we are in project view.
-     *
      * @param documentToSelect exits immediately if this is
      *   a) this.selectedDocument or
      *   b) this.mainTypeManager.selectedMainTypeDocument or
@@ -150,7 +147,7 @@ export class DocumentsManager {
         let promise = Promise.resolve();
         if (res1 || res2) promise = this.populateDocumentList();
 
-        return promise.then(() => this.insertRecordsIntoSelected());
+        return promise;
     }
 
 
@@ -179,38 +176,6 @@ export class DocumentsManager {
                 if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
                     this.newDocumentsFromRemote.push(doc);
                 }
-            }
-        });
-    }
-
-
-    public insertRecordsIntoSelected() {
-
-        if (!this.mainTypeManager.selectedMainTypeDocument) return;
-        if (this.mainTypeManager.selectedMainTypeDocument.resource.type == 'Project') {
-            return this.insertRecordsRelation(this.selectedDocument);
-        }
-    }
-
-
-    private insertRecordsRelation(selectedDocument: Document) {
-
-        if (!selectedDocument) return;
-
-        this.datastore.find({
-
-            constraints: {
-                'resource.relations.isRecordedIn' :
-                selectedDocument.resource.id
-            }
-
-        }).then(documents => {
-
-            selectedDocument.resource.relations['records'] = [];
-            for (let doc of documents) {
-                selectedDocument.resource.relations['records'].push(
-                    doc.resource.id
-                );
             }
         });
     }

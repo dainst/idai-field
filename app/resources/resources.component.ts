@@ -166,7 +166,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.isEditingGeometry = false;
 
-        ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
         this.doceditProxy.editDocument(document, activeTabName).then(
             result => {
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
@@ -216,12 +215,5 @@ export class ResourcesComponent implements AfterViewChecked {
             return true;
         }
         return false;
-    }
-
-
-    private static removeRecordsRelation(document) {
-
-        if (!document) return;
-        delete document.resource.relations['records'];
     }
 }

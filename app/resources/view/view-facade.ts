@@ -4,13 +4,14 @@ import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {Document} from 'idai-components-2/core';
 import {ResourcesState} from './resources-state';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ViewUtility} from '../../common/view-utility';
 import {Datastore} from "idai-components-2/datastore";
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from "../../settings/settings-service";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {M} from '../../m';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {StateSerializer} from '../../common/state-serializer';
 
 @Injectable()
 /**
@@ -26,17 +27,20 @@ export class ViewFacade {
     private documentsManager: DocumentsManager;
 
     constructor(
-        private viewUtility: ViewUtility,
         private projectConfiguration: ProjectConfiguration,
-        private resourcesState: ResourcesState,
         private datastore: Datastore,
         private loading: Loading,
         private settingsService: SettingsService
     ) {
         this.viewManager = new ViewManager(
-            viewUtility,
+            new ViewUtility(
+                projectConfiguration,
+                datastore
+            ),
             projectConfiguration,
-            resourcesState
+            new ResourcesState(
+                new StateSerializer(settingsService) // TODO the fs inside might lead to problems in unit test. in that case use DI to get an instance as a constructor param here
+            )
         );
         this.mainTypeManager = new MainTypeManager(
             datastore,

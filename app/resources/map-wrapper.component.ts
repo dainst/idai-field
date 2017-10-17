@@ -8,7 +8,7 @@ import {
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
-import {ViewFacade} from './service/view-facade';
+import {ViewFacade} from './view/view-facade';
 
 @Component({
     selector: 'map-wrapper',

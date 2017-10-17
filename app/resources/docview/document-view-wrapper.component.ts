@@ -4,7 +4,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../resources.component';
 import {ObjectUtil} from '../../util/object-util';
 import {RoutingHelper} from '../service/routing-helper';
-import {ViewFacade} from '../service/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     selector: 'document-view-wrapper',

@@ -11,7 +11,7 @@ import {Loading} from '../widgets/loading';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {M} from '../m';
-import {ViewFacade} from './service/view-facade';
+import {ViewFacade} from './view/view-facade';
 
 
 @Component({

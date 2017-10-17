@@ -7,7 +7,7 @@ import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
 import {Loading} from '../../widgets/loading';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
-import {ViewFacade} from '../service/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     selector: 'list',

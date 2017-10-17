@@ -13,13 +13,13 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ResourcesState} from './service/resources-state';
+import {ResourcesState} from './view/resources-state';
 import {ThumbnailViewComponent} from './docview/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.component';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {ViewFacade} from './service/view-facade';
+import {ViewFacade} from './view/view-facade';
 
 @NgModule({
     imports: [

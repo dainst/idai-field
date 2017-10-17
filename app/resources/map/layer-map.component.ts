@@ -10,7 +10,7 @@ import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {M} from '../../m';
-import {ViewFacade} from '../service/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     moduleId: module.id,

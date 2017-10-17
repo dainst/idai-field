@@ -1,8 +1,8 @@
+import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Injectable} from '@angular/core';
-import {ViewManager} from './view-manager';
 import {Datastore, Query} from 'idai-components-2/datastore';
+import {ViewManager} from './view-manager';
 
 @Injectable()
 /**
@@ -15,12 +15,12 @@ export class MainTypeManager {
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
 
+
     constructor(
         private viewManager: ViewManager,
         private datastore: Datastore
-    ) {
+    ) {}
 
-    }
 
     public init() {
 
@@ -28,9 +28,8 @@ export class MainTypeManager {
         this.mainTypeDocuments = undefined;
     }
 
-    public setSelectedMainTypeDocument(
-        selectedDocument: IdaiFieldDocument
-    ): Promise<any> {
+
+    public setSelectedMainTypeDocument(selectedDocument: IdaiFieldDocument): Promise<any> {
 
         if (this.mainTypeDocuments.length == 0) {
             this.selectedMainTypeDocument = undefined;
@@ -65,9 +64,7 @@ export class MainTypeManager {
     }
 
 
-    public handleMainTypeDocumentOnDeleted(
-        document: Document
-    ) {
+    public handleMainTypeDocumentOnDeleted(document: Document) {
 
         this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
         this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
@@ -75,9 +72,7 @@ export class MainTypeManager {
     }
 
 
-    public populateMainTypeDocuments(
-        document: Document
-    ): Promise<any> {
+    public populateMainTypeDocuments(document: Document): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
@@ -100,10 +95,7 @@ export class MainTypeManager {
     }
 
 
-    public selectMainTypeDocument(
-            mainTypeDoc: IdaiFieldDocument,
-            selectedDocument: Document
-            , cb) {
+    public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument, selectedDocument: Document, cb: Function) {
 
         this.selectedMainTypeDocument = mainTypeDoc;
         this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
@@ -120,9 +112,7 @@ export class MainTypeManager {
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    public selectLinkedMainTypeDocumentForSelectedDocument(
-        selectedDocument: Document
-    ): boolean {
+    public selectLinkedMainTypeDocumentForSelectedDocument(selectedDocument: Document): boolean {
 
         if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return false;
 

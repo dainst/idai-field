@@ -1,12 +1,12 @@
+import {Injectable} from '@angular/core';
 import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
-import {Injectable} from '@angular/core';
-import {MainTypeManager} from "./main-type-manager";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
-import {Loading} from "../../widgets/loading";
-import {M} from "../../m";
+import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
+import {M} from '../../m';
 
 @Injectable()
 /**

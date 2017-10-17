@@ -10,7 +10,7 @@ import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
-import {M} from "../m";
+import {M} from '../m';
 
 
 @Component({
@@ -115,7 +115,7 @@ export class ResourcesComponent implements AfterViewChecked {
                     else {
                         this.activeDocumentViewTab = tab;
                     }
-                }).catch( () => this.messages.add([M.DATASTORE_NOT_FOUND]));
+                }).catch(() => this.messages.add([M.DATASTORE_NOT_FOUND]));
     }
 
 

@@ -151,10 +151,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
 
-        this.documentsManager.setSelected(newDocument);
-
         if (geometryType == 'none') {
-            this.editDocument();
+            this.editDocument(newDocument);
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
             this.isEditingGeometry = true;
@@ -167,7 +165,6 @@ export class ResourcesComponent implements AfterViewChecked {
                         activeTabName?: string) {
 
         this.isEditingGeometry = false;
-        this.documentsManager.setSelected(document);
 
         ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
         this.doceditProxy.editDocument(document, activeTabName).then(

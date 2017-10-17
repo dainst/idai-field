@@ -161,8 +161,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.documentsManager.selectedDocument, // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
-                        activeTabName?: string) {
+    public editDocument(document: Document = this.documentsManager.selectedDocument, activeTabName?: string) {
 
         this.isEditingGeometry = false;
 

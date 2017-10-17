@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
@@ -68,6 +68,8 @@ export class DoceditImageTabComponent {
         for (let targetToRemove of targetsToRemove) {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
+
+        if (targetsToRemove.length > 0) this.documentEditChangeMonitor.setChanged();
 
         if (isDepictedIn.length == 0) {
             delete this.document.resource.relations['isDepictedIn'];

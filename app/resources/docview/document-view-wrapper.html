@@ -46,8 +46,7 @@
 
                 <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
                 <relations-view *ngIf="hasRelations()" [resource]="documentsManager.selectedDocument.resource"
-                                (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
-                                        'relations')">
+                                (onRelationTargetClicked)="jumpToRelationTarget($event)">
                 </relations-view>
             </ng-template>
         </ngb-tab>
@@ -69,8 +68,7 @@
                 </div>
                 <thumbnail-view *ngIf="documentsManager.selectedDocument.resource.relations['isDepictedIn']"
                                 [imageIds]="documentsManager.selectedDocument.resource.relations['isDepictedIn']"
-                                (onRelationTargetClicked)="resourcesComponent.jumpToRelationTarget($event,
-                                        'relations')">
+                                (onRelationTargetClicked)="jumpToRelationTarget($event)">
                 </thumbnail-view>
             </ng-template>
         </ngb-tab>

@@ -1,9 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {ResourcesComponent} from '../resources.component';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ObjectUtil} from '../../util/object-util';
+import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration'
+import {ResourcesComponent} from '../resources.component';
+import {ObjectUtil} from '../../util/object-util';
 import {DocumentsManager} from '../service/documents-manager';
+import {RoutingHelper} from '../service/routing-helper';
 
 @Component({
     selector: 'document-view-wrapper',
@@ -20,11 +21,14 @@ export class DocumentViewWrapperComponent {
 
     @Input() activeTab;
 
+
     constructor(
         public resourcesComponent: ResourcesComponent,
-        private projectConfiguration: ProjectConfiguration,
-        private documentsManager: DocumentsManager
+        private documentsManager: DocumentsManager,
+        private routingHelper: RoutingHelper,
+        private projectConfiguration: ProjectConfiguration
     ) { }
+
 
     public hasRelations() {
 
@@ -45,5 +49,12 @@ export class DocumentViewWrapperComponent {
         }
 
         return false;
+    }
+
+
+    public jumpToRelationTarget(documentToSelect: Document) {
+
+        this.routingHelper.jumpToRelationTarget(this.documentsManager.selected(), documentToSelect,
+            docToSelect => this.documentsManager.setSelected(docToSelect), 'relations');
     }
 }

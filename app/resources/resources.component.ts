@@ -82,13 +82,6 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-    // TODO remove the method and perform the calls to routingHelper directly. the document selection can be done in routingHelper via documentsManager then. there should be no necessity to call the select method
-    public jumpToRelationTarget(documentToSelect: Document, tab?: string) {
-
-        this.routingHelper.jumpToRelationTarget(this.documentsManager.selected(), documentToSelect,
-            docToSelect => this.select(docToSelect), tab);
-    }
-
 
     public initialize(): Promise<any> {
 

@@ -5,7 +5,6 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
-import {DocumentsManager} from './documents-manager';
 import {ViewFacade} from './view-facade';
 
 @Injectable()
@@ -20,7 +19,6 @@ export class DoceditProxy {
             private modalService: NgbModal,
             private doceditActiveTabService: DoceditActiveTabService,
             private documentEditChangeMonitor: DocumentEditChangeMonitor,
-            private documentsManager: DocumentsManager,
             private viewFacade: ViewFacade
     ) {
     }
@@ -46,31 +44,31 @@ export class DoceditProxy {
 
             if (document.resource.type != this.viewFacade.getView().mainType) {
                 result['updateScrollTarget'] = true;
-                return this.documentsManager.setSelected(result['document'] as IdaiFieldDocument);
+                return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
             }
 
-            this.documentsManager.deselect();
+            this.viewFacade.deselect();
             this.viewFacade.selectMainTypeDocument(
                 result['document'] as IdaiFieldDocument, undefined,
                 () => {
                     result['tab'] = undefined;
-                    this.documentsManager.deselect();
+                    this.viewFacade.deselect();
                 });
-            return this.viewFacade.populateMainTypeDocuments(this.documentsManager.selected());
+            return this.viewFacade.populateMainTypeDocuments(this.viewFacade.getSelectedDocument());
         }
         , closeReason => {
 
             this.documentEditChangeMonitor.reset();
 
             if (closeReason == 'deleted') {
-                this.documentsManager.selectedDocument = undefined;
+                this.viewFacade.deselect(); // replacement for: this.documentsManager.selectedDocument = undefined;
                 if (document == this.viewFacade.getSelectedMainTypeDocument()) {
                     return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
                 }
             }
 
         })
-        .then(() => this.documentsManager.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+        .then(() => this.viewFacade.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
         .then(() => {return result; });
     }
 }

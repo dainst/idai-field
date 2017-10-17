@@ -7,7 +7,6 @@ import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
 import {Loading} from '../../widgets/loading';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
-import {DocumentsManager} from '../service/documents-manager';
 import {ViewFacade} from '../service/view-facade';
 
 @Component({
@@ -37,7 +36,6 @@ export class ListComponent implements OnChanges {
         private messages: Messages,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
-        public documentsManager: DocumentsManager,
         public viewFacade: ViewFacade
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
@@ -155,6 +153,6 @@ export class ListComponent implements OnChanges {
     // TODO move to documentsManager
     private documentsInclude(doc: IdaiFieldDocument): boolean {
 
-        return this.documentsManager.documents.some(d => d.resource.id == doc.resource.id );
+        return this.viewFacade.getDocuments().some(d => d.resource.id == doc.resource.id );
     }
 }

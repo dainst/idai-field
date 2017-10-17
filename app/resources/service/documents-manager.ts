@@ -48,7 +48,7 @@ export class DocumentsManager {
     }
 
 
-    public getQuery() {
+    public getQuery() { // TODO move to facade
 
         return {
             q: this.viewManager.getQueryString(),
@@ -236,7 +236,7 @@ export class DocumentsManager {
     }
 
 
-    private isRemoteChange(changedDocument: Document): boolean {
+    private isRemoteChange(changedDocument: Document): boolean { // TODO make static
 
         const latestAction: Action =
             (changedDocument.modified && changedDocument.modified.length > 0)

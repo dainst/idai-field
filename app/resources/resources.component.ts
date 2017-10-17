@@ -26,8 +26,6 @@ import {ViewFacade} from './service/view-facade';
  */
 export class ResourcesComponent implements AfterViewChecked {
 
-    // TODO both ready and isEditingGeometry are for hiding the actions, whereas isEditingGeometry also controls the map mode; see if there is a unified solution, also taking loading into consideration
-
     public isEditingGeometry: boolean = false;
 
     public ready: boolean = false;
@@ -37,6 +35,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private clickEventObservers: Array<any> = [];
 
     private activeDocumentViewTab: string;
+
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
@@ -58,7 +57,9 @@ export class ResourcesComponent implements AfterViewChecked {
             return this.initialize()
                 .then(() => {
                     if (params['id']) {
-                        // TODO Remove timeout (it is currently used to prevent buggy map behavior after following a relation link from image component to resources component)
+                        // The timeout is needed to prevent buggy map behavior after following a relation link from
+                        // image component to resources component and after following a conflict resolver link from
+                        // taskbar
                         setTimeout(() => {
                             this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
                         }, 100);
@@ -155,6 +156,9 @@ export class ResourcesComponent implements AfterViewChecked {
             this.editDocument(newDocument);
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
+
+            // TODO Try to use documentManager.setSelected instead
+            this.viewFacade.setSelectedDocument(newDocument);
             this.isEditingGeometry = true;
             this.viewFacade.setMode('map');
         }

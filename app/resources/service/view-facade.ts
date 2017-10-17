@@ -84,6 +84,11 @@ export class ViewFacade {
         return this.documentsManager.setSelectedById(id);
     }
 
+    public setSelectedDocument(document) {
+
+        return this.documentsManager.selectedDocument = document;
+    }
+
     public getDocuments() {
 
         return this.documentsManager.documents;

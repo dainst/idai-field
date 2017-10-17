@@ -106,6 +106,7 @@ export class ResourcesComponent implements AfterViewChecked {
         this.documentsManager.populateDocumentList();
     }
 
+
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
         this.documentsManager.setSelectedById(id).then(
@@ -115,18 +116,6 @@ export class ResourcesComponent implements AfterViewChecked {
                         this.activeDocumentViewTab = tab;
                     }
                 }).catch( () => this.messages.add([M.DATASTORE_NOT_FOUND]));
-    }
-
-
-    /** // TODO after the call to this method from jumpToRelationTarget is removed, the method could go to MapWrapperComponent
-     * @param documentToSelect the object that should get selected
-     */
-    public select(documentToSelect: IdaiFieldDocument) {
-
-        if (this.isEditing && documentToSelect !=
-            this.documentsManager.selectedDocument) this.endEditGeometry();
-
-        this.documentsManager.setSelected(documentToSelect);
     }
 
 

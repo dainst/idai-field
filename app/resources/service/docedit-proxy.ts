@@ -8,6 +8,7 @@ import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service'
 import {DocumentsManager} from './documents-manager';
 import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
+import {ViewFacade} from './view-facade';
 
 @Injectable()
 /**
@@ -22,8 +23,7 @@ export class DoceditProxy {
             private doceditActiveTabService: DoceditActiveTabService,
             private documentEditChangeMonitor: DocumentEditChangeMonitor,
             private documentsManager: DocumentsManager,
-            private mainTypeManager: MainTypeManager,
-            private viewManager: ViewManager
+            private viewFacade: ViewFacade
     ) {
     }
 
@@ -46,19 +46,19 @@ export class DoceditProxy {
                 result['tab'] = nextActiveTab;
             }
 
-            if (document.resource.type != this.viewManager.getView().mainType) {
+            if (document.resource.type != this.viewFacade.getView().mainType) {
                 result['updateScrollTarget'] = true;
                 return this.documentsManager.setSelected(result['document'] as IdaiFieldDocument);
             }
 
             this.documentsManager.deselect();
-            this.mainTypeManager.selectMainTypeDocument(
+            this.viewFacade.selectMainTypeDocument(
                 result['document'] as IdaiFieldDocument, undefined,
                 () => {
                     result['tab'] = undefined;
                     this.documentsManager.deselect();
                 });
-            return this.mainTypeManager.populateMainTypeDocuments(this.documentsManager.selected());
+            return this.viewFacade.populateMainTypeDocuments(this.documentsManager.selected());
         }
         , closeReason => {
 
@@ -66,8 +66,8 @@ export class DoceditProxy {
 
             if (closeReason == 'deleted') {
                 this.documentsManager.selectedDocument = undefined;
-                if (document == this.mainTypeManager.selectedMainTypeDocument) {
-                    return this.mainTypeManager.handleMainTypeDocumentOnDeleted(this.documentsManager.selected());
+                if (document == this.viewFacade.getSelectedMainTypeDocument()) {
+                    return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
                 }
             }
 

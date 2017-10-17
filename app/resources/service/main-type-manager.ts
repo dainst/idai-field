@@ -64,14 +64,6 @@ export class MainTypeManager {
     }
 
 
-    public handleMainTypeDocumentOnDeleted(document: Document) {
-
-        this.viewManager.removeActiveLayersIds(this.selectedMainTypeDocument.resource.id);
-        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.populateMainTypeDocuments(document);
-    }
-
-
     // TODO Why is the document needed?
     public populateMainTypeDocuments(document: Document): Promise<any> {
 

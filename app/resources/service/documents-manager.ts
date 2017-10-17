@@ -247,7 +247,7 @@ export class DocumentsManager {
     }
 
 
-    private isNewDocumentFromRemote(document: Document): boolean {
+    public isNewDocumentFromRemote(document: Document): boolean {
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }

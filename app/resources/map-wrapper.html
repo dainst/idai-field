@@ -1,14 +1,14 @@
 <div class="row map-wrapper">
     <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
         <ul class="list-group object-list" id="objectList">
-            <li *ngFor="let document of documentsManager.documents; let index=index"
+            <li *ngFor="let document of viewFacade.getDocuments(); let index=index"
                 (click)="select(document)"
                 (dblclick)="resourcesComponent.editDocument(document, 'fields')"
                 class="list-group-item"
-                [class.new-from-remote]="documentsManager.isNewDocumentFromRemote(document)"
+                [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
                 [class.conflicted]="document['_conflicts']"
-                [class.selected]="documentsManager.selectedDocument
-                    && documentsManager.selectedDocument.resource.id === document.resource.id"
+                [class.selected]="viewFacade.getSelectedDocument()
+                    && viewFacade.getSelectedDocument().resource.id === document.resource.id"
                 [id]="'resource-' + document.resource.identifier">
 
                 <document-teaser [document]="document"></document-teaser>
@@ -16,7 +16,7 @@
         </ul>
 
         <plus-button *ngIf="!resourcesComponent.isEditingGeometry && resourcesComponent.ready
-                            && !loading.showIcons && documentsManager.getQuery().q == ''
+                            && !loading.showIcons && viewFacade.getQuery().q == ''
                             && viewFacade.getSelectedMainTypeDocument()"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="viewFacade.getCurrentFilterType()"
@@ -24,11 +24,11 @@
         <loading-icon></loading-icon>
     </div>
 
-    <div [class.col-sm-9]="!documentsManager.selectedDocument || !documentsManager.selectedDocument.resource.id"
-         [class.col-sm-6]="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id"
+    <div [class.col-sm-9]="!viewFacade.getSelectedDocument() || !viewFacade.getSelectedDocument().resource.id"
+         [class.col-sm-6]="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="px-0">
-        <editable-map [documents]="documentsManager.documents"
-                      [selectedDocument]="documentsManager.selectedDocument"
+        <editable-map [documents]="viewFacade.getDocuments()"
+                      [selectedDocument]="viewFacade.getSelectedDocument()"
                       [mainTypeDocument]="viewFacade.getSelectedMainTypeDocument()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
@@ -37,7 +37,7 @@
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 
-    <div *ngIf="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id"
+    <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="col-sm-3 document-info px-0">
         <document-view-wrapper [activeTab]="activeTab"></document-view-wrapper>
     </div>

@@ -142,6 +142,18 @@ export class ViewFacade {
     }
 
 
+    public isNewDocumentFromRemote(document: Document) {
+
+        return this.documentsManager.isNewDocumentFromRemote(document);
+    }
+
+
+    public remove(document: Document) {
+
+        return this.documentsManager.remove(document);
+    }
+
+
     public getSelectedDocument() {
 
         return this.documentsManager.selected();

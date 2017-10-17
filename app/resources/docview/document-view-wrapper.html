@@ -10,7 +10,7 @@
 
                 <button class="btn btn-link"
                         id="document-view-button-edit-document"
-                        (click)="resourcesComponent.startEdit(documentsManager.selectedDocument, 'fields')">
+                        (click)="resourcesComponent.editDocument(documentsManager.selectedDocument, 'fields')">
                     <span class="mdi mdi-pencil"></span>
                 </button>
 
@@ -40,7 +40,7 @@
 
                 <button class="btn btn-link"
                         id="document-view-button-edit-document"
-                        (click)="resourcesComponent.startEdit(documentsManager.selectedDocument, 'relations')">
+                        (click)="resourcesComponent.editDocument(documentsManager.selectedDocument, 'relations')">
                     <span class="mdi mdi-pencil"></span>
                 </button>
 
@@ -59,7 +59,7 @@
             <ng-template ngbTabContent>
                 <button class="btn btn-link"
                         id="document-view-button-edit-document"
-                        (click)="resourcesComponent.startEdit(documentsManager.selectedDocument, 'images')">
+                        (click)="resourcesComponent.editDocument(documentsManager.selectedDocument, 'images')">
                     <span class="mdi mdi-pencil"></span>
                 </button>
 

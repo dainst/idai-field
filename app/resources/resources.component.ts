@@ -198,12 +198,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public startEdit(doc: IdaiFieldDocument, activeTabName?: string) {
-
-        this.editDocument(doc, activeTabName);
-    }
-
-
     public setScrollTarget(doc: IdaiFieldDocument) {
 
         this.scrollTarget = doc;

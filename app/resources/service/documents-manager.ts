@@ -12,9 +12,10 @@ import {SettingsService} from '../../settings/settings-service';
  */
 export class DocumentsManager {
 
-    public selectedDocument: Document; // TODO make private
-    public documents: Array<Document>; // TODO make private
+    private selectedDocument: Document;
+    private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
+
 
     constructor(
         private datastore: Datastore,
@@ -28,6 +29,18 @@ export class DocumentsManager {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });
+    }
+
+
+    public getDocuments() {
+
+        return this.documents;
+    }
+
+
+    public getSelectedDocument() {
+
+        return this.selectedDocument;
     }
 
 
@@ -72,12 +85,6 @@ export class DocumentsManager {
 
         this.selectedDocument = undefined;
         this.removeEmptyDocuments(); // TODO consider using setSelected(undefined)
-    }
-
-
-    public selected() {
-
-        return this.selectedDocument;
     }
 
 

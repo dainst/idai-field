@@ -173,7 +173,7 @@ export class ViewFacade {
 
     public getSelectedDocument() {
 
-        return this.documentsManager.selected();
+        return this.documentsManager.getSelectedDocument();
     }
 
 
@@ -200,7 +200,7 @@ export class ViewFacade {
 
     public getDocuments() {
 
-        return this.documentsManager.documents;
+        return this.documentsManager.getDocuments();
     }
 
 

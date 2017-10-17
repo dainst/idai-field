@@ -8,7 +8,6 @@ import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {M} from '../../m';
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -21,30 +20,18 @@ export class DocumentsManager {
     public documents: Array<Document>; // TODO make private
     private newDocumentsFromRemote: Array<Document> = [];
 
-    private viewManager: ViewManager;
-    private mainTypeManager: MainTypeManager;
-
     constructor(
         private datastore: Datastore,
         private loading: Loading,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private viewManager: ViewManager,
+        private mainTypeManager: MainTypeManager
     ) {
 
         datastore.documentChangesNotifications().subscribe(documentChange => {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });
-    }
-
-    public setMainTypeManager(mainTypeManager: MainTypeManager) {
-
-        this.mainTypeManager = mainTypeManager;
-    }
-
-
-    public setViewManager(viewManager: ViewManager) {
-
-        this.viewManager = viewManager;
     }
 
 

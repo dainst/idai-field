@@ -19,7 +19,6 @@ import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.component';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {DocumentsManager} from './service/documents-manager';
 import {ViewFacade} from './service/view-facade';
 
 @NgModule({
@@ -46,7 +45,6 @@ import {ViewFacade} from './service/view-facade';
     ],
     providers: [
         ResourcesState,
-        DocumentsManager,
         RoutingHelper,
         DoceditProxy,
         ViewFacade

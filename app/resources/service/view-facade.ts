@@ -7,6 +7,8 @@ import {ResourcesState} from './resources-state';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ViewUtility} from '../../common/view-utility';
 import {Datastore} from "idai-components-2/datastore";
+import {Loading} from '../../widgets/loading';
+import {SettingsService} from "../../settings/settings-service";
 
 @Injectable()
 /**
@@ -16,13 +18,15 @@ export class ViewFacade {
 
     private viewManager: ViewManager;
     private mainTypeManager: MainTypeManager;
+    private documentsManager: DocumentsManager;
 
     constructor(
-        private documentsManager: DocumentsManager,
         private viewUtility: ViewUtility,
         private projectConfiguration: ProjectConfiguration,
         private resourcesState: ResourcesState,
-        private datastore: Datastore
+        private datastore: Datastore,
+        private loading: Loading,
+        private settingsService: SettingsService
     ) {
         this.viewManager = new ViewManager(
             viewUtility,
@@ -33,8 +37,13 @@ export class ViewFacade {
             datastore,
             this.viewManager
         );
-        documentsManager.setViewManager(this.viewManager);
-        documentsManager.setMainTypeManager(this.mainTypeManager);
+        this.documentsManager = new DocumentsManager(
+            datastore,
+            loading,
+            settingsService,
+            this.viewManager,
+            this.mainTypeManager
+        );
     }
 
     

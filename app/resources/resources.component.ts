@@ -170,12 +170,12 @@ export class ResourcesComponent implements AfterViewChecked {
         this.documentsManager.setSelected(document);
 
         ResourcesComponent.removeRecordsRelation(document); // TODO move to persistenceManager
-        this.doceditProxy.editDocument(document, result => {
-
+        this.doceditProxy.editDocument(document, activeTabName).then(
+            result => {
                 if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                return this.handleDocumentSelectionOnSaved(result.document);
-
-            }, activeTabName);
+                if (result['updateScrollTarget']) this.scrollTarget = result['document'];
+            }
+        );
     }
 
 
@@ -195,25 +195,6 @@ export class ResourcesComponent implements AfterViewChecked {
     public setScrollTarget(doc: IdaiFieldDocument) {
 
         this.scrollTarget = doc;
-    }
-
-
-    // TODO move to documentsManager or doceditProxy
-    private handleDocumentSelectionOnSaved(document: IdaiFieldDocument) {
-
-        if (document.resource.type == this.viewManager.getView().mainType) {
-
-            this.mainTypeManager.selectMainTypeDocument(
-                document, this.documentsManager.selectedDocument,
-                ()=>{
-                    this.activeDocumentViewTab = undefined;
-                    this.documentsManager.deselect();
-                });
-        } else {
-
-            this.documentsManager.selectedDocument = document;
-            this.scrollTarget = document;
-        }
     }
 
 

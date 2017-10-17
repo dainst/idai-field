@@ -72,6 +72,7 @@ export class MainTypeManager {
     }
 
 
+    // TODO Why is the document needed?
     public populateMainTypeDocuments(document: Document): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
@@ -100,12 +101,16 @@ export class MainTypeManager {
         this.selectedMainTypeDocument = mainTypeDoc;
         this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
 
-        if (selectedDocument &&
-            MainTypeManager.getMainTypeDocumentForDocument(
-                selectedDocument, this.mainTypeDocuments) != this.selectedMainTypeDocument) {
+        if (!selectedDocument || !this.selectedMainTypeDocument) return;
 
-            cb();
+        const mainTypeDocumentForDocument
+            = MainTypeManager.getMainTypeDocumentForDocument(selectedDocument, this.mainTypeDocuments);
+
+        if (!mainTypeDocumentForDocument) {
+            return console.error('Could not find main type document for selected document', selectedDocument);
         }
+
+        if (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id) cb();
     }
 
 

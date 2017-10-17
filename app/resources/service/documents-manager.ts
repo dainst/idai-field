@@ -124,7 +124,7 @@ export class DocumentsManager {
      *   c) undefined
      * @returns {Document}
      */
-    public setSelected(documentToSelect: Document) {
+    public setSelected(documentToSelect: Document): Promise<any> {
 
         if (documentToSelect == this.mainTypeManager.selectedMainTypeDocument) return;
         if (documentToSelect == this.selectedDocument) return;

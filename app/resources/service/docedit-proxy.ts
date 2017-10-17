@@ -42,24 +42,23 @@ export class DoceditProxy {
             result['document'] = res['document'];
 
             const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-            if (['relations','images','fields']
-                    .indexOf(nextActiveTab) != -1) {
+            if (['relations','images','fields'].indexOf(nextActiveTab) != -1) {
                 result['tab'] = nextActiveTab;
             }
 
-            if (document.resource.type == this.viewManager.getView().mainType) {
-                this.documentsManager.deselect();
-                this.mainTypeManager.selectMainTypeDocument(
-                    result['document'] as IdaiFieldDocument, undefined,
-                    () => {
-                        result['tab'] = undefined;
-                        this.documentsManager.deselect();
-                    });
-                return this.mainTypeManager.populateMainTypeDocuments(this.documentsManager.selected());
-            } else {
+            if (document.resource.type != this.viewManager.getView().mainType) {
                 result['updateScrollTarget'] = true;
                 return this.documentsManager.setSelected(result['document'] as IdaiFieldDocument);
             }
+
+            this.documentsManager.deselect();
+            this.mainTypeManager.selectMainTypeDocument(
+                result['document'] as IdaiFieldDocument, undefined,
+                () => {
+                    result['tab'] = undefined;
+                    this.documentsManager.deselect();
+                });
+            return this.mainTypeManager.populateMainTypeDocuments(this.documentsManager.selected());
         }
         , closeReason => {
 

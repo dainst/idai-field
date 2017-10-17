@@ -74,7 +74,7 @@ export class DocumentsManager {
     }
 
 
-    private removeFromListOfNewDocumentsFromRemote(document: Document) {
+    private removeFromListOfNewDocumentsFromRemote(document: Document) { // TODO make generic static method
 
         let index = this.newDocumentsFromRemote.indexOf(document);
         if (index > -1) this.newDocumentsFromRemote.splice(index, 1);

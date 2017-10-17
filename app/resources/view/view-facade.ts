@@ -20,11 +20,13 @@ import {StateSerializer} from '../../common/state-serializer';
  */
 export class ViewFacade {
 
-    private projectDocument: IdaiFieldDocument;
 
     private viewManager: ViewManager;
     private mainTypeManager: MainTypeManager;
     private documentsManager: DocumentsManager;
+
+    private projectDocument: IdaiFieldDocument;
+
 
     constructor(
         private projectConfiguration: ProjectConfiguration,

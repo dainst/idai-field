@@ -25,7 +25,8 @@ export class DocumentsManager {
         private mainTypeManager: MainTypeManager
     ) {
 
-        datastore.documentChangesNotifications().subscribe(documentChange => {
+        datastore.documentChangesNotifications() // TODO make part of ReadDatastore
+            .subscribe(documentChange => {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });

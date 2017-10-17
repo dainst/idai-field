@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Datastore, Query} from 'idai-components-2/datastore';
+import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
 
 /**
@@ -15,7 +14,7 @@ export class MainTypeManager {
     public selectedMainTypeDocument: IdaiFieldDocument;
 
     constructor(
-        private datastore: Datastore,
+        private datastore: ReadDatastore,
         private viewManager: ViewManager
     ) {}
 

@@ -33,32 +33,15 @@ export class MainTypeManager {
             this.selectedMainTypeDocument = undefined;
             return Promise.resolve();
         }
+        if (!selectedDocument) return this.restoreLastSelectedMainTypeDocument();
 
-        if (selectedDocument) {
-            this.selectedMainTypeDocument =
-                MainTypeManager.getMainTypeDocumentForDocument(
-                    selectedDocument, this.mainTypeDocuments
-                );
-            if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument =
-                this.mainTypeDocuments[0];
-            return Promise.resolve();
-        }
-
-        const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
-        if (!mainTypeDocumentId) {
-            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-            return Promise.resolve();
-        } else {
-            return this.datastore.get(mainTypeDocumentId)
-                .then(document => this.selectedMainTypeDocument =
-                    document as IdaiFieldDocument)
-                .catch(() => {
-                    this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
-                    this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
-                    return Promise.resolve();
-                })
-        }
+        this.selectedMainTypeDocument =
+            MainTypeManager.getMainTypeDocumentForDocument(
+                selectedDocument, this.mainTypeDocuments
+            );
+        if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument =
+            this.mainTypeDocuments[0];
+        return Promise.resolve();
     }
 
 
@@ -123,6 +106,26 @@ export class MainTypeManager {
     }
 
 
+    private restoreLastSelectedMainTypeDocument(): Promise<any> {
+
+        const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
+        if (!mainTypeDocumentId) {
+            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            return Promise.resolve();
+        } else {
+            return this.datastore.get(mainTypeDocumentId)
+                .then(document => this.selectedMainTypeDocument =
+                    document as IdaiFieldDocument)
+                .catch(() => {
+                    this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
+                    this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
+                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                    return Promise.resolve();
+                })
+        }
+    }
+
+
     private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
 
         if (!document.resource.relations['isRecordedIn']) return undefined;
@@ -135,6 +138,7 @@ export class MainTypeManager {
     }
 
 
+
     private static handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);
@@ -142,7 +146,7 @@ export class MainTypeManager {
     }
 
 
-    static makeMainTypeQuery(mainType: string): Query {
+    private static makeMainTypeQuery(mainType: string): Query {
 
         return { types: [mainType] };
     }

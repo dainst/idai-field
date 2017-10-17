@@ -14,7 +14,8 @@ import {M} from '../../m';
 
 @Injectable()
 /**
- *
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ViewFacade {
 

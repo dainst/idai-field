@@ -22,6 +22,7 @@ import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
+import {ViewFacade} from './service/view-facade';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import {DocumentsManager} from './service/documents-manager';
         ViewManager,
         MainTypeManager,
         RoutingHelper,
-        DoceditProxy
+        DoceditProxy,
+        ViewFacade
     ],
     exports: [
         GeometryViewComponent

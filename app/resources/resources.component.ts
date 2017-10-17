@@ -1,16 +1,17 @@
 import {AfterViewChecked, Component, Renderer} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {
+    IdaiFieldDocument,
+    IdaiFieldGeometry
+} from 'idai-components-2/idai-field-model';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {Loading} from '../widgets/loading';
-import {ViewManager} from './service/view-manager';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
-import {MainTypeManager} from './service/main-type-manager';
-import {DocumentsManager} from './service/documents-manager';
 import {M} from '../m';
+import {ViewFacade} from './service/view-facade';
 
 
 @Component({
@@ -37,21 +38,20 @@ export class ResourcesComponent implements AfterViewChecked {
 
 
     constructor(route: ActivatedRoute,
-                private viewManager: ViewManager,
+                private viewFacade: ViewFacade,
                 private routingHelper: RoutingHelper,
                 private doceditProxy: DoceditProxy,
                 private renderer: Renderer,
                 private messages: Messages,
-                private loading: Loading,
-                private mainTypeManager: MainTypeManager,
-                private documentsManager: DocumentsManager
+                private loading: Loading
     ) {
         routingHelper.routeParams(route).subscribe(params => {
 
             this.ready = false;
 
-            this.documentsManager.selectedDocument = undefined;
-            this.mainTypeManager.init();
+            this.viewFacade.init();
+            this.viewFacade.deselect();
+
             this.isEditingGeometry = false;
 
             return this.initialize()
@@ -88,31 +88,31 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.loading.start();
         return Promise.resolve()
-            .then(() => this.documentsManager.populateProjectDocument())
-            .then(() => this.mainTypeManager.populateMainTypeDocuments(
-                this.documentsManager.selected()
+            .then(() => this.viewFacade.populateProjectDocument())
+            .then(() => this.viewFacade.populateMainTypeDocuments(
+                this.viewFacade.getSelectedDocument()
             ))
-            .then(() => this.documentsManager.populateDocumentList())
+            .then(() => this.viewFacade.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
 
 
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.mainTypeManager.selectMainTypeDocument(
-            document,this.documentsManager.selected(),()=>{
+        this.viewFacade.selectMainTypeDocument(
+            document,this.viewFacade.getSelectedDocument(),()=>{
                 this.activeDocumentViewTab = undefined;
-                this.documentsManager.deselect();
+                this.viewFacade.deselect();
             });
-        this.documentsManager.populateDocumentList();
+        this.viewFacade.populateDocumentList();
     }
 
 
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
-        this.documentsManager.setSelectedById(id).then(
+        this.viewFacade.setSelectedDocumentById(id).then(
             () => {
-                    if (menu == 'edit') this.editDocument(this.documentsManager.selected(), tab);
+                    if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
                     else {
                         this.activeDocumentViewTab = tab;
                     }
@@ -140,13 +140,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        if (!this.documentsManager.setQueryString(q)) this.isEditingGeometry = false;
+        if (!this.viewFacade.setQueryString(q)) this.isEditingGeometry = false;
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        if (!this.documentsManager.setQueryTypes(types)) this.isEditingGeometry = false;
+        if (!this.viewFacade.setQueryTypes(types)) this.isEditingGeometry = false;
     }
 
 
@@ -157,14 +157,15 @@ export class ResourcesComponent implements AfterViewChecked {
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
 
-            this.documentsManager.setSelected(newDocument);
+            this.viewFacade.setSelectedDocument(newDocument);
             this.isEditingGeometry = true;
-            this.viewManager.setMode('map');
+            this.viewFacade.setMode('map');
         }
     }
 
 
-    public editDocument(document: Document = this.documentsManager.selectedDocument, activeTabName?: string) {
+    public editDocument(document: Document = this.viewFacade.getSelectedDocument(), // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
+                        activeTabName?: string) {
 
         this.isEditingGeometry = false;
 
@@ -179,7 +180,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public createGeometry(geometryType: string) {
 
-        this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
+        this.viewFacade.getSelectedDocument().resource['geometry'] = { 'type': geometryType };
         this.isEditingGeometry = true;
     }
 
@@ -201,8 +202,8 @@ export class ResourcesComponent implements AfterViewChecked {
         this.loading.start();
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
-            this.documentsManager.deselect();
-            this.viewManager.setMode(mode);
+            this.viewFacade.deselect();
+            this.viewFacade.setMode(mode);
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);

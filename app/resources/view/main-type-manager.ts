@@ -10,8 +10,8 @@ import {ViewManager} from './view-manager';
  */
 export class MainTypeManager {
 
-    public mainTypeDocuments: Array<IdaiFieldDocument>;
-    public selectedMainTypeDocument: IdaiFieldDocument;
+    public mainTypeDocuments: Array<IdaiFieldDocument>; // TODO make private
+    public selectedMainTypeDocument: IdaiFieldDocument; // TODO make private
 
     constructor(
         private datastore: ReadDatastore,

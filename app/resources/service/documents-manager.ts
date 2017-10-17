@@ -132,7 +132,8 @@ export class DocumentsManager {
 
         let changedDocument: Document = documentChange.document;
 
-        if (!this.documents || !this.isRemoteChange(changedDocument)) return;
+        if (!this.documents || !DocumentsManager.isRemoteChange(changedDocument,
+                this.settingsService.getUsername())) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
         if (changedDocument.resource.type == this.viewManager.getView().mainType) {
@@ -143,7 +144,8 @@ export class DocumentsManager {
         let oldDocuments = this.documents;
         this.populateDocumentList().then(() => {
             for (let doc of this.documents) {
-                if (oldDocuments.indexOf(doc) == -1 && this.isRemoteChange(doc)) {
+                if (oldDocuments.indexOf(doc) == -1 &&
+                    DocumentsManager.isRemoteChange(doc, this.settingsService.getUsername())) {
                     this.newDocumentsFromRemote.push(doc);
                 }
             }
@@ -188,17 +190,6 @@ export class DocumentsManager {
     }
 
 
-    private isRemoteChange(changedDocument: Document): boolean { // TODO make static
-
-        const latestAction: Action =
-            (changedDocument.modified && changedDocument.modified.length > 0)
-                ? changedDocument.modified[changedDocument.modified.length - 1]
-                : changedDocument.created;
-
-        return latestAction && latestAction.user != this.settingsService.getUsername();
-    }
-
-
     public isNewDocumentFromRemote(document: Document): boolean {
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
@@ -232,6 +223,17 @@ export class DocumentsManager {
             .then(documents => {
                 this.loading.stop(); return documents;
             });
+    }
+
+
+    private static isRemoteChange(changedDocument: Document, username: string): boolean { // TODO make static
+
+        const latestAction: Action =
+            (changedDocument.modified && changedDocument.modified.length > 0)
+                ? changedDocument.modified[changedDocument.modified.length - 1]
+                : changedDocument.created;
+
+        return latestAction && latestAction.user != username;
     }
 
 

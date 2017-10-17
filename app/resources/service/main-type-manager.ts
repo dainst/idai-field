@@ -138,7 +138,6 @@ export class MainTypeManager {
     }
 
 
-
     private static handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export class Loading { // TODO move this to resources/service. it seems to only be used in the resources package
+
 
     public showIcons: boolean = false;
 
@@ -14,11 +14,13 @@ export class Loading { // TODO move this to resources/service. it seems to only 
     private timeoutReference: number;
     private showIconsDelay: boolean = false;
 
+
     public start() {
 
         this.loading++;
         this.updateIconStatus();
     }
+
 
     public stop() {
 
@@ -26,10 +28,12 @@ export class Loading { // TODO move this to resources/service. it seems to only 
         this.updateIconStatus();
     }
 
+
     public setShowIconsDelay(showIconsDelay) {
 
         this.showIconsDelay = showIconsDelay;
     }
+
 
     private updateIconStatus() {
 
@@ -40,11 +44,13 @@ export class Loading { // TODO move this to resources/service. it seems to only 
         }
     }
 
+
     private updateIconStatusWithoutDelay() {
 
         this.clearTimeout();
         this.showIcons = this.loading > 0;
     }
+
 
     private updateIconStatusWithDelay() {
 
@@ -58,6 +64,7 @@ export class Loading { // TODO move this to resources/service. it seems to only 
             this.showIcons = false;
         }
     }
+
 
     private clearTimeout() {
 

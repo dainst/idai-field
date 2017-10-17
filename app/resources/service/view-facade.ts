@@ -16,45 +16,54 @@ export class ViewFacade {
         private mainTypeManager: MainTypeManager
     ) { }
 
+    
     public init() {
 
         return this.mainTypeManager.init();
     }
+
 
     public getView() {
 
         return this.viewManager.getView();
     }
 
+
     public getMainTypeDocumentLabel(document) {
 
         return this.viewManager.getMainTypeDocumentLabel(document);
     }
+
 
     public getMainTypeLabel() {
 
         return this.viewManager.getMainTypeLabel();
     }
 
+
     public deselect() {
 
         return this.documentsManager.deselect();
     }
+
 
     public getMode() {
 
         return this.viewManager.getMode();
     }
 
+
     public getQuery() {
 
         return this.documentsManager.getQuery();
     }
 
+
     public getProjectDocument() {
 
         return this.documentsManager.projectDocument;
     }
+
 
     public handleMainTypeDocumentOnDeleted(document: Document) {
 
@@ -63,50 +72,66 @@ export class ViewFacade {
         return this.populateMainTypeDocuments(document);
     }
 
+
     public getSelectedMainTypeDocument() {
 
         return this.mainTypeManager.selectedMainTypeDocument;
     }
+
 
     public getMainTypeDocuments() {
 
         return this.mainTypeManager.mainTypeDocuments;
     }
 
+
     public getFilterTypes() {
 
         return this.viewManager.getFilterTypes();
     }
+
 
     public getQueryString() {
 
         return this.viewManager.getQueryString();
     }
 
+
     public setMode(mode) {
 
         this.viewManager.setMode(mode);
     }
+
 
     public setSelectedDocumentById(id) {
 
         return this.documentsManager.setSelectedById(id);
     }
 
+
+    public getSelectedDocument() {
+
+        return this.documentsManager.selected();
+    }
+
+
     public setSelectedDocument(document) {
 
-        return this.documentsManager.selectedDocument = document;
+        return this.documentsManager.setSelected(document);
     }
+
 
     public getDocuments() {
 
         return this.documentsManager.documents;
     }
 
+
     public setQueryString(q) {
 
         return this.documentsManager.setQueryString(q);
     }
+
 
     public setQueryTypes(types) {
 
@@ -119,10 +144,6 @@ export class ViewFacade {
         return this.viewManager.getCurrentFilterType();
     }
 
-    public getSelectedDocument() {
-
-        return this.documentsManager.selected();
-    }
 
     public selectMainTypeDocument(mainTypeDoc, selectedDocument, cb) {
 
@@ -130,15 +151,18 @@ export class ViewFacade {
             mainTypeDoc, selectedDocument, cb);
     }
 
+
     public populateProjectDocument() {
 
         return this.documentsManager.populateProjectDocument();
     }
 
+
     public populateDocumentList() {
 
         return this.documentsManager.populateDocumentList();
     }
+
 
     public populateMainTypeDocuments(selectedDocument) {
 

@@ -157,7 +157,6 @@ export class ResourcesComponent implements AfterViewChecked {
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
 
-            // TODO Try to use documentManager.setSelected instead
             this.viewFacade.setSelectedDocument(newDocument);
             this.isEditingGeometry = true;
             this.viewFacade.setMode('map');

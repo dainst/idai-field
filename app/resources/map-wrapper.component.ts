@@ -40,10 +40,17 @@ export class MapWrapperComponent {
         return !this.documentsManager.selectedDocument.resource.id;
     }
 
-    public select(document: IdaiFieldDocument) {
+    public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
-        this.resourcesComponent.select(document);
-        this.resourcesComponent.setScrollTarget(document);
+        this.resourcesComponent.isEditing = false;
+
+        if (!document) {
+            this.documentsManager.deselect();
+        } else {
+            this.documentsManager.setSelected(document);
+        }
+
+        if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
 
     /**

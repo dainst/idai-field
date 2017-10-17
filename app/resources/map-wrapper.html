@@ -2,7 +2,7 @@
     <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
         <ul class="list-group object-list" id="objectList">
             <li *ngFor="let document of documentsManager.documents; let index=index"
-                (click)="resourcesComponent.select(document)"
+                (click)="select(document)"
                 (dblclick)="resourcesComponent.editDocument(document, 'fields')"
                 class="list-group-item"
                 [class.new-from-remote]="documentsManager.isNewDocumentFromRemote(document)"
@@ -24,17 +24,20 @@
     </div>
 
     <div [class.col-sm-9]="!documentsManager.selectedDocument || !documentsManager.selectedDocument.resource.id"
-         [class.col-sm-6]="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id" class="px-0">
+         [class.col-sm-6]="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id"
+         class="px-0">
         <editable-map [documents]="documentsManager.documents"
                       [selectedDocument]="documentsManager.selectedDocument"
-                      [mainTypeDocument]="mainTypeManager.selectedMainTypeDocument" [isEditing]="resourcesComponent.isEditing"
+                      [mainTypeDocument]="mainTypeManager.selectedMainTypeDocument"
+                      [isEditing]="resourcesComponent.isEditing"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="viewManager.getView().mainType != 'Project'"
-                      [update]="resourcesComponent.ready" (onSelectDocument)="select($event)"
+                      [update]="resourcesComponent.ready" (onSelectDocument)="select($event, true)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 
-    <div *ngIf="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id" class="col-sm-3 document-info px-0">
+    <div *ngIf="documentsManager.selectedDocument && documentsManager.selectedDocument.resource.id"
+         class="col-sm-3 document-info px-0">
         <document-view-wrapper [activeTab]="activeTab"></document-view-wrapper>
     </div>
 </div>

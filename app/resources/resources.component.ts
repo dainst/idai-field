@@ -203,6 +203,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    // TODO Remove
     public endEditGeometry() {
 
         this.isEditing = false;

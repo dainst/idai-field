@@ -1,12 +1,9 @@
-import {Injectable} from '@angular/core';
 import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
-import {M} from '../../m';
 
 /**
  * @author Thomas Kleinke
@@ -15,7 +12,6 @@ import {M} from '../../m';
  */
 export class DocumentsManager {
 
-    public projectDocument: IdaiFieldDocument; // TODO make private
     public selectedDocument: Document; // TODO make private
     public documents: Array<Document>; // TODO make private
     private newDocumentsFromRemote: Array<Document> = [];
@@ -190,13 +186,6 @@ export class DocumentsManager {
             .then(() => this.removeEmptyDocuments());
     }
 
-
-    public populateProjectDocument(): Promise<any> {
-
-        return this.datastore.get(this.settingsService.getSelectedProject())
-            .then(document => this.projectDocument = document as IdaiFieldDocument)
-            .catch(err => Promise.reject([M.DATASTORE_NOT_FOUND]));
-    }
 
     private removeEmptyDocuments() {
 

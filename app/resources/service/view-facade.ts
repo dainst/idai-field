@@ -9,12 +9,16 @@ import {ViewUtility} from '../../common/view-utility';
 import {Datastore} from "idai-components-2/datastore";
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from "../../settings/settings-service";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {M} from '../../m';
 
 @Injectable()
 /**
  *
  */
 export class ViewFacade {
+
+    private projectDocument: IdaiFieldDocument;
 
     private viewManager: ViewManager;
     private mainTypeManager: MainTypeManager;
@@ -94,7 +98,7 @@ export class ViewFacade {
 
     public getProjectDocument() {
 
-        return this.documentsManager.projectDocument;
+        return this.projectDocument;
     }
 
 
@@ -209,9 +213,13 @@ export class ViewFacade {
     }
 
 
-    public populateProjectDocument() {
+    public populateProjectDocument(): Promise<any> {
 
-        return this.documentsManager.populateProjectDocument();
+        return this.datastore.get(this.settingsService.getSelectedProject())
+            .then(document => this.projectDocument = document as IdaiFieldDocument)
+            .catch(err => Promise.reject(
+                [M.DATASTORE_NOT_FOUND] // TODO do not return a key of M but instead some errWithParams
+            ));
     }
 
 

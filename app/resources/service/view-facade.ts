@@ -76,7 +76,10 @@ export class ViewFacade {
 
     public getQuery() {
 
-        return this.documentsManager.getQuery();
+        return {
+            q: this.viewManager.getQueryString(),
+            types: this.viewManager.getQueryTypes()
+        }
     }
 
 

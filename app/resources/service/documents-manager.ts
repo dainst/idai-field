@@ -48,15 +48,6 @@ export class DocumentsManager {
     }
 
 
-    public getQuery() { // TODO move to facade
-
-        return {
-            q: this.viewManager.getQueryString(),
-            types: this.viewManager.getQueryTypes()
-        }
-    }
-
-
     public setQueryString(q: string): boolean {
 
         this.viewManager.setQueryString(q);

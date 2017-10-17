@@ -25,8 +25,6 @@ import {M} from '../m';
  */
 export class ResourcesComponent implements AfterViewChecked {
 
-    // TODO both ready and isEditingGeometry are for hiding the actions, whereas isEditingGeometry also controls the map mode; see if there is a unified solution, also taking loading into consideration
-
     public isEditingGeometry: boolean = false;
 
     public ready: boolean = false;
@@ -36,6 +34,7 @@ export class ResourcesComponent implements AfterViewChecked {
     private clickEventObservers: Array<any> = [];
 
     private activeDocumentViewTab: string;
+
 
     constructor(route: ActivatedRoute,
                 private viewManager: ViewManager,

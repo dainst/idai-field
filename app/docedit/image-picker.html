@@ -31,6 +31,7 @@
                     [documents]="documents"
                     [selected]="selectedDocuments"
                     [showLinkBadges]="false"
+                    [showShortDescription]="false"
                     (onClick)="select($event)"
                     (onImagesUploaded)="refreshGrid()"
                     (onUploadError)="showUploadErrorMsg($event)"

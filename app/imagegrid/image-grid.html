@@ -4,7 +4,7 @@
         <div *ngFor="let cell of row; let cell_index = index"
              class="cell-container"
              [style.width.px]="cell['calculatedWidth'] + 1"
-             [style.height.px]="cell['calculatedHeight'] + 1">
+             [style.height.px]="cell['calculatedHeight'] + 1 + 25">
 
             <div *ngIf="cell['document'].id == 'droparea'"
                  class="droparea-container"
@@ -19,38 +19,39 @@
                  (dblclick)="onDoubleClick.emit(cell['document'])"
                  [id]="'resource-' + cell['document'].resource.identifier"
                  class="cell"
-                 [class.selected]="selected.includes(cell['document'])"
-                 [ngbTooltip]="(showTooltips) ? cellTooltip : ''"
-                 container="body"
-                 placement="{{ cell_index < (nrOfColumns/2) ? 'right-top' : 'left-top'}}">
-
-                 <ng-template #cellTooltip>
-                    <p *ngIf="cell['document'].resource.shortDescription" align="left" class="small">
-                        {{cell['document'].resource.shortDescription}}</p>
-                    <fields-view align="left" [resource]="cell['document'].resource"></fields-view>
-                 </ng-template>
+                 [class.selected]="selected.includes(cell['document'])">
                 
-                <div class="identifier"
+                <div class="icons"
                      *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
                      [style.maxWidth.px]="cell['calculatedWidth']-15">
 
-                    <span *ngIf="showIdentifier" class="badge badge-secondary">{{cell['document'].resource.identifier}}</span>
                     <span *ngIf="showLinkBadges">
-                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-                          id="related-resource-{{resourceId}}"
-                          class="badge badge-info related-resource-{{resourceId}}">
-                                 <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+                        <span *ngIf="cell['document'].resource.relations['depicts']" class="badge badge-info">
+                                 <span class="mdi mdi-link"></span>
                         </span>
                     </span>
                     <span *ngIf="showGeoIcon && cell['document'].resource.georeference"
                             class="badge badge-dark">
-                        <span class="mdi mdi-map"></span> geo
+                        <span class="mdi mdi-map"></span>
                     </span>
                 </div>
 
                 <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
+
+                <div class="identifier" *ngIf="showIdentifier" class="px-1">{{cell['document'].resource.identifier}}</div>
+                <div class="title">
+                    <div *ngIf="showLinkBadges && cell['document'].resource.relations['depicts']" class="p-2" align="right">
+                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
+                          id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">
+                                 <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+                        </span>
+                    </div>
+                    <div *ngIf="showShortDescription && cell['document'].resource.shortDescription" class="p-1">
+                        {{cell['document'].resource.shortDescription}}
+                   </div>
+                </div>
             </div>
             <div style="background-color: silver">
             </div>

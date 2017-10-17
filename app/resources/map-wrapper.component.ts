@@ -8,6 +8,7 @@ import {Loading} from '../widgets/loading';
 import {ViewManager} from './service/view-manager';
 import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
+import {ViewFacade} from "./service/view-facade";
 
 @Component({
     selector: 'map-wrapper',
@@ -27,19 +28,18 @@ export class MapWrapperComponent {
 
     constructor(
         public loading: Loading,
-        public viewManager: ViewManager,
         private resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private messages: Messages,
-        public mainTypeManager: MainTypeManager,
-        private documentsManager: DocumentsManager
+        private documentsManager: DocumentsManager,
+        private viewFacade: ViewFacade
     ) { }
 
 
     private selectedDocumentIsNew(): boolean {
 
-        return !this.documentsManager.selectedDocument.resource.id;
+        return !this.viewFacade.getSelectedDocument().resource.id;
     }
 
 
@@ -48,7 +48,7 @@ export class MapWrapperComponent {
         this.resourcesComponent.isEditingGeometry = false;
 
         if (!document) {
-            this.documentsManager.deselect();
+            this.viewFacade.deselect();
         } else {
             this.documentsManager.setSelected(document);
         }

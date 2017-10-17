@@ -114,6 +114,11 @@ export class ViewFacade {
     }
 
 
+    public getCurrentFilterType() {
+
+        return this.viewManager.getCurrentFilterType();
+    }
+
     public getSelectedDocument() {
 
         return this.documentsManager.selected();

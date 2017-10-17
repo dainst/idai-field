@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
+import {Document} from 'idai-components-2/core';
+
 @Injectable()
 /**
  *
@@ -52,6 +54,13 @@ export class ViewFacade {
     public getProjectDocument() {
 
         return this.documentsManager.projectDocument;
+    }
+
+    public handleMainTypeDocumentOnDeleted(document: Document) {
+
+        this.viewManager.removeActiveLayersIds(this.mainTypeManager.selectedMainTypeDocument.resource.id);
+        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
+        return this.populateMainTypeDocuments(document);
     }
 
     public getSelectedMainTypeDocument() {

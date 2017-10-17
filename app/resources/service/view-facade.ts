@@ -15,7 +15,7 @@ export class ViewFacade {
         private viewManager: ViewManager,
         private mainTypeManager: MainTypeManager
     ) { }
-
+    
     
     public init() {
 
@@ -70,6 +70,18 @@ export class ViewFacade {
         this.viewManager.removeActiveLayersIds(this.mainTypeManager.selectedMainTypeDocument.resource.id);
         this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
         return this.populateMainTypeDocuments(document);
+    }
+
+
+    public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
+
+        return this.viewManager.setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds);
+    }
+
+
+    public getActiveLayersIds(mainTypeDocumentResourceId) {
+
+        return this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
     }
 
 
@@ -167,5 +179,17 @@ export class ViewFacade {
     public populateMainTypeDocuments(selectedDocument) {
 
         return this.mainTypeManager.populateMainTypeDocuments(selectedDocument);
+    }
+
+
+    public setupViewFrom(params) {
+
+        return this.viewManager.setupViewFrom(params);
+    }
+
+
+    public getViewNameForDocument(document: Document) {
+
+        return this.viewManager.getViewNameForDocument(document);
     }
 }

@@ -5,8 +5,6 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
-import {ViewManager} from './service/view-manager';
-import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
 import {ViewFacade} from "./service/view-facade";
 

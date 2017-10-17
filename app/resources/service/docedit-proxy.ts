@@ -6,8 +6,6 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {DocumentsManager} from './documents-manager';
-import {MainTypeManager} from './main-type-manager';
-import {ViewManager} from './view-manager';
 import {ViewFacade} from './view-facade';
 
 @Injectable()

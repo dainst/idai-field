@@ -1,15 +1,14 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
 import {Loading} from '../../widgets/loading';
 import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
-import {MainTypeManager} from '../service/main-type-manager';
 import {DocumentsManager} from '../service/documents-manager';
-import {ViewManager} from '../service/view-manager';
+import {ViewFacade} from '../service/view-facade';
 
 @Component({
     selector: 'list',
@@ -38,9 +37,8 @@ export class ListComponent implements OnChanges {
         private messages: Messages,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
-        public mainTypeManager: MainTypeManager,
         public documentsManager: DocumentsManager,
-        public viewManager: ViewManager
+        public viewFacade: ViewFacade
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
     }
@@ -63,14 +61,14 @@ export class ListComponent implements OnChanges {
 
     private update(): Promise<any> {
 
-        if (!this.mainTypeManager.selectedMainTypeDocument) return Promise.resolve();
+        if (!this.viewFacade.getSelectedMainTypeDocument()) return Promise.resolve();
 
         this.docRefTree = [];
         this.childrenShownForIds = [];
 
         // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
         return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': this.mainTypeManager.selectedMainTypeDocument.resource.id } }
+            { constraints: { 'resource.relations.isRecordedIn': this.viewFacade.getSelectedMainTypeDocument().resource.id } }
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
 

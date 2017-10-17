@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ViewManager} from './view-manager';
+import {ViewFacade} from './view-facade';
 
 @Injectable()
 /**
@@ -17,7 +18,7 @@ export class RoutingHelper {
     private currentRoute;
 
     constructor(private router: Router,
-                private viewManager: ViewManager,
+                private viewFacade: ViewFacade,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility) {
     }
@@ -38,7 +39,7 @@ export class RoutingHelper {
 
             this.location.replaceState('resources/' + params['view']);
 
-            this.viewManager.setupViewFrom(params).then(() => {
+            this.viewFacade.setupViewFrom(params).then(() => {
                 observer.next(params);
             });
         })
@@ -66,9 +67,9 @@ export class RoutingHelper {
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
-        this.viewManager.getViewNameForDocument(documentToSelect)
+        this.viewFacade.getViewNameForDocument(documentToSelect)
             .then(viewName => {
-                if (viewName != this.viewManager.getView().name) {
+                if (viewName != this.viewFacade.getView().name) {
                     if (tab) {
                         return this.router.navigate(['resources', viewName,
                             documentToSelect.resource.id, 'view', tab]);

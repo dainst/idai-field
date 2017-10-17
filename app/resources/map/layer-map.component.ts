@@ -10,7 +10,7 @@ import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {BlobMaker} from '../../imagestore/blob-maker';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {M} from '../../m';
-import {ViewManager} from '../service/view-manager';
+import {ViewFacade} from '../service/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -35,7 +35,7 @@ export class LayerMapComponent extends MapComponent {
                 protected messages: Messages,
                 protected imagestore: Imagestore,
                 private imageTypeUtility: ImageTypeUtility,
-                private viewManager: ViewManager,
+                private viewFacade: ViewFacade,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -209,7 +209,7 @@ export class LayerMapComponent extends MapComponent {
             activeLayersIds.push(this.activeLayers[i].document.resource.id);
         }
 
-        this.viewManager.setActiveLayersIds(this.mainTypeDocument.resource.id, activeLayersIds);
+        this.viewFacade.setActiveLayersIds(this.mainTypeDocument.resource.id, activeLayersIds);
     }
 
     /**
@@ -220,7 +220,7 @@ export class LayerMapComponent extends MapComponent {
         var activeLayersIds: Array<string>;
 
         if (this.mainTypeDocument) {
-            activeLayersIds = this.viewManager.getActiveLayersIds(this.mainTypeDocument.resource.id);
+            activeLayersIds = this.viewFacade.getActiveLayersIds(this.mainTypeDocument.resource.id);
         }
 
         if (!activeLayersIds) {

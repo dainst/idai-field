@@ -185,14 +185,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    // TODO Remove
-    public endEditGeometry() {
-
-        this.isEditing = false;
-        this.documentsManager.populateDocumentList();
-    }
-
-
     public createGeometry(geometryType: string) {
 
         this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };

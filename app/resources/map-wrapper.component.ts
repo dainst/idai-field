@@ -6,7 +6,7 @@ import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {ViewManager} from './service/view-manager';
-import {MainTypeManager} from "./service/main-type-manager";
+import {MainTypeManager} from './service/main-type-manager';
 import {DocumentsManager} from './service/documents-manager';
 
 @Component({
@@ -24,6 +24,7 @@ export class MapWrapperComponent {
 
     @Input() activeTab: string;
 
+
     constructor(
         public loading: Loading,
         public viewManager: ViewManager,
@@ -35,10 +36,12 @@ export class MapWrapperComponent {
         private documentsManager: DocumentsManager
     ) { }
 
+
     private selectedDocumentIsNew(): boolean {
 
         return !this.documentsManager.selectedDocument.resource.id;
     }
+
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
@@ -52,6 +55,7 @@ export class MapWrapperComponent {
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
+
 
     /**
      * @param geometry
@@ -71,15 +75,14 @@ export class MapWrapperComponent {
             if (geometry !== undefined) {
                 this.resourcesComponent.editDocument();
             } else {
-                this.resourcesComponent.endEditGeometry();
+                this.resourcesComponent.isEditing = false;
                 this.documentsManager.remove(this.documentsManager.selectedDocument);
             }
         } else {
-            this.resourcesComponent.endEditGeometry();
+            this.resourcesComponent.isEditing = false;
             if (geometry !== undefined) this.save();
         }
     }
-
 
 
     private save() {

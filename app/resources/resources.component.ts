@@ -179,16 +179,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public startEditGeometry() {
-
-        this.isEditing = true;
-    }
-
-
     public createGeometry(geometryType: string) {
 
         this.documentsManager.selectedDocument.resource['geometry'] = { 'type': geometryType };
-        this.startEditGeometry();
+        this.isEditing = true;
     }
 
 

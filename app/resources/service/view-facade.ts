@@ -176,6 +176,21 @@ export class ViewFacade {
     }
 
 
+    /**
+     * Sets the this.selectedDocument
+     * and if necessary, also
+     * a) selects the operation type document,
+     * this.selectedDocument is recorded in, accordingly and
+     * b) invalidates query settings in order to make sure
+     * this.selectedDocument is part of the search hits of the document list
+     * on the left hand side in the map view.
+     *
+     * @param documentToSelect exits immediately if this is
+     *   a) this.selectedDocument or
+     *   b) this.mainTypeManager.selectedMainTypeDocument or
+     *   c) undefined
+     * @returns {Document}
+     */
     public setSelectedDocument(document) {
 
         return this.documentsManager.setSelected(document);

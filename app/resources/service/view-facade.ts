@@ -3,6 +3,10 @@ import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {Document} from 'idai-components-2/core';
+import {ResourcesState} from './resources-state';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ViewUtility} from '../../common/view-utility';
+import {Datastore} from "idai-components-2/datastore";
 
 @Injectable()
 /**
@@ -10,12 +14,29 @@ import {Document} from 'idai-components-2/core';
  */
 export class ViewFacade {
 
+    private viewManager: ViewManager;
+    private mainTypeManager: MainTypeManager;
+
     constructor(
         private documentsManager: DocumentsManager,
-        private viewManager: ViewManager,
-        private mainTypeManager: MainTypeManager
-    ) { }
-    
+        private viewUtility: ViewUtility,
+        private projectConfiguration: ProjectConfiguration,
+        private resourcesState: ResourcesState,
+        private datastore: Datastore
+    ) {
+        this.viewManager = new ViewManager(
+            viewUtility,
+            projectConfiguration,
+            resourcesState
+        );
+        this.mainTypeManager = new MainTypeManager(
+            datastore,
+            this.viewManager
+        );
+        documentsManager.setViewManager(this.viewManager);
+        documentsManager.setMainTypeManager(this.mainTypeManager);
+    }
+
     
     public init() {
 

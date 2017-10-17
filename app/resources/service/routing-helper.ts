@@ -4,7 +4,6 @@ import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
-import {ViewManager} from './view-manager';
 import {ViewFacade} from './view-facade';
 
 @Injectable()

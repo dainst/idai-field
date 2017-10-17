@@ -21,11 +21,11 @@ export class DocumentsManager {
     public documents: Array<Document>; // TODO make private
     private newDocumentsFromRemote: Array<Document> = [];
 
+    private viewManager: ViewManager;
+    private mainTypeManager: MainTypeManager;
 
     constructor(
-        private mainTypeManager: MainTypeManager,
         private datastore: Datastore,
-        private viewManager: ViewManager,
         private loading: Loading,
         private settingsService: SettingsService
     ) {
@@ -34,6 +34,17 @@ export class DocumentsManager {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });
+    }
+
+    public setMainTypeManager(mainTypeManager: MainTypeManager) {
+
+        this.mainTypeManager = mainTypeManager;
+    }
+
+
+    public setViewManager(viewManager: ViewManager) {
+
+        this.viewManager = viewManager;
     }
 
 

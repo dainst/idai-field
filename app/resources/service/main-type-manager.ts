@@ -4,7 +4,6 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -15,10 +14,9 @@ export class MainTypeManager {
     public mainTypeDocuments: Array<IdaiFieldDocument>;
     public selectedMainTypeDocument: IdaiFieldDocument;
 
-
     constructor(
-        private viewManager: ViewManager,
-        private datastore: Datastore
+        private datastore: Datastore,
+        private viewManager: ViewManager
     ) {}
 
 

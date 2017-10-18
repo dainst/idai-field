@@ -45,7 +45,7 @@ export class ImageOverviewComponent implements OnInit {
     // TODO move this to image-grid component
     public resourceIdentifiers: string[] = [];
 
-    public maxGridSize: number = 12;
+    public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
     public minGridSize: number = 2;
 
 

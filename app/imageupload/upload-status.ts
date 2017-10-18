@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core';
 export class UploadStatus {
 
     private totalImages: number;
-    private uploadedImages: number;
+    private handledImages: number;
 
     public getTotalImages(): number {
 
@@ -19,13 +19,13 @@ export class UploadStatus {
         this.totalImages = totalImages;
     }
 
-    public getUploadedImages(): number {
+    public getHandledImages(): number {
 
-        return this.uploadedImages;
+        return this.handledImages;
     }
 
-    public setUploadedImages(uploadedImages: number) {
+    public setHandledImages(handledImages: number) {
 
-        this.uploadedImages = uploadedImages;
+        this.handledImages = handledImages;
     }
 }

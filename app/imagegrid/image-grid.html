@@ -40,7 +40,7 @@
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
 
-                <div class="identifier" *ngIf="showIdentifier" class="px-1">{{cell['document'].resource.identifier}}</div>
+                <div class="identifier" *ngIf="showIdentifier" class="px-1 bg-white">{{cell['document'].resource.identifier}}</div>
                 <div class="title">
                     <div *ngIf="showLinkBadges && cell['document'].resource.relations['depicts']" class="p-2" align="right">
                         <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"

@@ -216,6 +216,13 @@ export class ResourcesComponent implements AfterViewChecked {
                 for (let msgWithParams of uploadResult.messages) {
                     this.messages.add(msgWithParams);
                 }
+
+                if (uploadResult.uploadedImages == 1) {
+                    this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
+                } else if (uploadResult.uploadedImages > 1) {
+                    this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+                        document.resource.identifier]);
+                }
             }
         )
     }

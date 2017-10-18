@@ -32,7 +32,8 @@ export class ViewFacade {
         private projectConfiguration: ProjectConfiguration,
         private datastore: Datastore,
         private loading: Loading,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private stateSerializer: StateSerializer
     ) {
         this.viewManager = new ViewManager(
             new ViewUtility(
@@ -41,7 +42,7 @@ export class ViewFacade {
             ),
             projectConfiguration,
             new ResourcesState(
-                new StateSerializer(settingsService) // TODO the fs inside might lead to problems in unit test. in that case use DI to get an instance as a constructor param here
+                stateSerializer
             )
         );
         this.mainTypeManager = new MainTypeManager(

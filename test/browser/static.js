@@ -65,4 +65,3 @@ var Static = (function () {
     return Static;
 }());
 exports.Static = Static;
-//# sourceMappingURL=static.js.map

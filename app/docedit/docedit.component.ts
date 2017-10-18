@@ -100,7 +100,7 @@ export class DoceditComponent {
             .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
     }
 
-    private changeActiveTab(event) {
+    public changeActiveTab(event) {
 
         this.activeTabService.setActiveTab(
             event.nextId.replace('docedit-','').replace('-tab',''));

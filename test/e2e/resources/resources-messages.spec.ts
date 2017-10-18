@@ -25,7 +25,7 @@ describe('resources/messages --', () => {
     });
     
     it('warn if identifier is missing', () => {
-        ResourcesPage.performCreateResource('');
+        ResourcesPage.performCreateResource('', 'feature', 'Text', 1);
 
         NavbarPage.awaitAlert('identifier', false)
     });

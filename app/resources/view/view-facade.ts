@@ -116,6 +116,9 @@ export class ViewFacade {
         return this.populateMainTypeDocuments(document);
     }
 
+    public setLastSelectedMainTypeDocumentId(documentId) {
+        this.viewManager.setLastSelectedMainTypeDocumentId(documentId);
+    }
 
     public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
 
@@ -263,8 +266,14 @@ export class ViewFacade {
     }
 
 
-    public getViewNameForDocument(document: Document) {
+    public getViewNameForDocument(document: Document): Promise <string> {
 
         return this.viewManager.getViewNameForDocument(document);
+    }
+
+
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
+
+        return this.viewManager.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
     }
 }

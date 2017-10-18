@@ -27,7 +27,6 @@ export class MainTypeManager {
 
 
     public setSelectedMainTypeDocument(selectedDocument: IdaiFieldDocument): Promise<any> {
-
         if (this.mainTypeDocuments.length == 0) {
             this.selectedMainTypeDocument = undefined;
             return Promise.resolve();
@@ -38,6 +37,7 @@ export class MainTypeManager {
             MainTypeManager.getMainTypeDocumentForDocument(
                 selectedDocument, this.mainTypeDocuments
             );
+
         if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument =
             this.mainTypeDocuments[0];
         return Promise.resolve();

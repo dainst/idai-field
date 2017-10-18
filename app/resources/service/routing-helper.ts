@@ -81,4 +81,15 @@ export class RoutingHelper {
                 }
             });
     }
+
+    public jumpToMainTypeHomeView(document: Document) {
+        this.viewFacade.getMainTypeHomeViewNameForMainTypeName(document.resource.type).then(viewName => {
+            if (viewName != this.viewFacade.getView().name) {
+                this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
+                    this.viewFacade.selectMainTypeDocument(document, null, () => {});
+                    this.viewFacade.populateDocumentList();
+                });
+            }
+        });
+    }
 }

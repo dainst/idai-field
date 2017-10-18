@@ -178,13 +178,19 @@ export class ViewManager {
 
     public getViewNameForDocument(document) {
 
-        return this.viewUtility.getViewNameForDocument(document)
+        return this.viewUtility.getViewNameForDocument(document);
     }
 
 
     public getMainTypeDocumentLabel(document) {
 
         return this.viewUtility.getMainTypeDocumentLabel(document);
+    }
+
+
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
+
+        return this.viewUtility.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
     }
 
 

@@ -6,6 +6,8 @@ import {SettingsService} from '../settings/settings-service';
 import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
 import {ViewFacade} from './view/view-facade';
+import {RoutingHelper} from './service/routing-helper';
+
 
 @Component({
     selector: 'map-wrapper',
@@ -29,6 +31,7 @@ export class MapWrapperComponent {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private messages: Messages,
+        private routingHelper: RoutingHelper,
         private viewFacade: ViewFacade
     ) { }
 
@@ -50,6 +53,10 @@ export class MapWrapperComponent {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
+    }
+
+    public selectInProjectView(document: IdaiFieldDocument) {
+        this.routingHelper.jumpToMainTypeHomeView(document);
     }
 
 

@@ -63,6 +63,19 @@ export class ViewUtility {
              }).catch(() => {});
     }
 
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
+        let viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
+        let viewName: string;
+        for (let view of viewDefinitions) {
+            if (view.mainType == mainTypeName) {
+                viewName = view.name;
+                break;
+            }
+        }
+
+        return Promise.resolve(viewName);
+    }
+
 
     public getMainTypeDocuments(): Promise<Array<Document>> {
 

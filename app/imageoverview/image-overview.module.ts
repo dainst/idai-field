@@ -8,7 +8,6 @@ import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
-import {UploadStatus} from '../imagegrid/upload-status';
 import {ImagesState} from './images-state';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
@@ -22,7 +21,7 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
         WidgetsModule,
         IdaiDocumentsModule,
         IdaiWidgetsModule,
-        ImageGridModule,
+        ImageGridModule
     ],
     declarations: [
         ImageOverviewComponent,
@@ -34,7 +33,6 @@ import {RemoveLinkModalComponent} from './remove-link-modal.component';
         RemoveLinkModalComponent
     ],
     providers: [
-        UploadStatus,
         ImagesState
     ]
 })

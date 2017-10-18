@@ -7,7 +7,8 @@
     </div>
     <div id="list-body">
         <div *ngFor="let docRef of docRefTree">
-            <row [docRef]="docRef" [depth]=0 [typesMap]="typesMap"></row>
+            <row [docRef]="docRef" [depth]=0 [typesMap]="typesMap"
+                 (drop)="resourcesComponent.uploadImages($event, docRef.doc)"></row>
         </div>
     </div>
     <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && viewFacade.getQuery().q == ''

@@ -6,13 +6,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
-import {ImagePickerComponent} from '../docedit/image-picker.component';
-import {ImageGridComponent} from "./image-grid.component";
-import {UploadModalComponent} from "./upload-modal.component";
-import {DropAreaComponent} from "./drop-area.component";
-import {ImageGridBuilder} from "./image-grid-builder";
-import {Imagestore} from "../imagestore/imagestore";
-import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component";
+import {ImageGridComponent} from './image-grid.component';
+import {DropAreaComponent} from './drop-area.component';
+import {ImageGridBuilder} from './image-grid-builder';
+import {Imagestore} from '../imagestore/imagestore';
+import {ImageUploadModule} from '../imageupload/image-upload.module';
 
 @NgModule({
     imports: [
@@ -22,13 +20,12 @@ import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component
         IdaiWidgetsModule,
         IdaiDocumentsModule,
         RouterModule,
-        IdaiMessagesModule
+        IdaiMessagesModule,
+        ImageUploadModule
     ],
     declarations: [
         ImageGridComponent,
-        UploadModalComponent,
-        DropAreaComponent,
-        ImageTypePickerModalComponent
+        DropAreaComponent
     ],
     providers: [
         {
@@ -41,10 +38,6 @@ import {ImageTypePickerModalComponent} from "./image-type-picker-modal.component
     ],
     exports: [
         ImageGridComponent, // export necessary?
-    ],
-    entryComponents: [
-        UploadModalComponent,
-        ImageTypePickerModalComponent
     ]
 })
 

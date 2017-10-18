@@ -68,7 +68,7 @@
                 </div>
                 <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
                                 [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                                [update]="updateThumbnails" (onRelationTargetClicked)="jumpToRelationTarget($event)">
                 </thumbnail-view>
             </ng-template>
         </ngb-tab>

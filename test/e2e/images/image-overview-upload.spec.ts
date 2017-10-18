@@ -1,4 +1,4 @@
-import {browser, by, element, protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
 

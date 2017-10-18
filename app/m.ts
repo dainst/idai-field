@@ -103,12 +103,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Resources Package
 
+    public static RESOURCES_SUCCESS_IMAGE_UPLOADED: string = 'resources/success/imageimported';
+    public static RESOURCES_SUCCESS_IMAGES_UPLOADED: string = 'resources/success/imagesimported';
+    public static RESOURCES_SUCCESS_PROJECT_DELETED: string = 'resources/success/projectdeleted';
     public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
     public static RESOURCES_ERROR_PROJECT_NAME_EXISTS: string = 'resources/error/projectnamexists';
     public static RESOURCES_ERROR_PROJECT_NAME_NOT_SAME: string = 'resources/error/projectnamenotsame';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST: string = 'resources/error/oneprojectmustexist';
-    public static RESOURCES_SUCCESS_PROJECT_DELETED: string = 'resources/success/projectdeleted';
     public static RESOURCES_ERROR_PROJECT_DELETED: string = 'resources/error/projectdeleted';
 
     // Keys END /////////////////////////////////
@@ -532,6 +534,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.RESOURCES_SUCCESS_PROJECT_DELETED] = {
             content: 'Das Projekt wurde gelöscht.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_SUCCESS_IMAGE_UPLOADED] = {
+            content: 'Ein Bild wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_SUCCESS_IMAGES_UPLOADED] = {
+            content: '{0} Bilder wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
             level: 'success',
             params: [],
             hidden: false

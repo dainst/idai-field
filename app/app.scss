@@ -1,27 +1,28 @@
-@import "variables";
+@import 'variables';
 
-@import "idai-components-2";
-@import "bootstrap";
-@import "materialdesignicons";
+@import 'idai-components-2';
+@import 'bootstrap';
+@import 'materialdesignicons';
 
-$roboto-font-path: "../fonts/";
-@import "roboto-fontface";
+$roboto-font-path: '../fonts/';
+@import 'roboto-fontface';
 
-@import "navbar";
-@import "taskbar";
-@import "projects";
-@import "desktop/info-window";
-@import "spinner";
-@import "buttons";
-@import "resources/resources";
-@import "import/import";
-@import "export/export";
-@import "settings/settings";
-@import "imageview/imageview";
+@import 'navbar';
+@import 'taskbar';
+@import 'projects';
+@import 'desktop/info-window';
+@import 'spinner';
+@import 'buttons';
+@import 'resources/resources';
+@import 'import/import';
+@import 'export/export';
+@import 'settings/settings';
+@import 'imageview/imageview';
 @import 'widgets/widgets';
 @import 'docedit/docedit';
 @import 'imagegrid/image-grid';
 @import 'imageoverview/image-overview';
+@import 'imageupload/image-upload';
 
 html {
   position: relative;
@@ -124,9 +125,9 @@ messages {
 
 /* override needed for buttons to look good in chrome with bootstrap 4 */
 button,
-html [type="button"],
-[type="reset"],
-[type="submit"] {
+html [type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: none;
 }
 

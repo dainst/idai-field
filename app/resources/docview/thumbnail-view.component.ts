@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
@@ -20,12 +20,12 @@ export class ThumbnailViewComponent implements OnChanges {
     public documents: IdaiFieldImageDocument[];
 
     @Input() imageIds: string[];
+    @Input() update: boolean;
 
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
     constructor(
-        private datastore: Datastore,
-        private el: ElementRef
+        private datastore: Datastore
     ) {}
 
     public onResize() {
@@ -42,7 +42,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
     ngOnChanges() {
 
-        if (!this.imageIds) return;
+        if (!this.update || !this.imageIds) return;
 
         this.documents = [];
         let promise = Promise.resolve();

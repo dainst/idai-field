@@ -4,6 +4,7 @@
             <li *ngFor="let document of viewFacade.getDocuments(); let index=index"
                 (click)="select(document)"
                 (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+                (drop)="uploadImages($event, document)"
                 class="list-group-item"
                 [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
                 [class.conflicted]="document['_conflicts']"
@@ -41,6 +42,8 @@
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="col-sm-3 document-info px-0">
-        <document-view-wrapper [activeTab]="activeTab"></document-view-wrapper>
+        <document-view-wrapper [activeTab]="activeTab" [updateThumbnails]="updateThumbnails"
+                               (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
+        </document-view-wrapper>
     </div>
 </div>

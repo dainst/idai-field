@@ -1,12 +1,9 @@
 import {Params} from '@angular/router';
-import {
-    ProjectConfiguration,
-    ViewDefinition
-} from 'idai-components-2/configuration';
+import {Resource} from 'idai-components-2/core';
+import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
+import {Query} from 'idai-components-2/datastore';
 import {ViewUtility} from '../../common/view-utility';
 import {ResourcesState} from './resources-state';
-import {Query} from 'idai-components-2/datastore';
-import {Resource} from 'idai-components-2/core';
 
 /**
  * @author Daniel de Oliveira
@@ -230,6 +227,7 @@ export class ViewManager {
 
         this.query.types = types;
     }
+
 
     private deleteQueryTypes() {
 

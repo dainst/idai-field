@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
+import {Document} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {Datastore} from 'idai-components-2/datastore';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
-import {Document} from 'idai-components-2/core';
 import {ResourcesState} from './resources-state';
 import {ViewUtility} from '../../common/view-utility';
-import {Datastore} from "idai-components-2/datastore";
 import {Loading} from '../../widgets/loading';
-import {SettingsService} from "../../settings/settings-service";
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {M} from '../../m';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
+import {M} from '../../m';
 
 @Injectable()
 /**

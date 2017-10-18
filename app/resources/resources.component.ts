@@ -9,6 +9,7 @@ import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {M} from '../m';
 import {ViewFacade} from './view/view-facade';
+import {ImageUploader} from '../imageupload/image-uploader';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewFacade: ViewFacade,
                 private routingHelper: RoutingHelper,
                 private doceditProxy: DoceditProxy,
+                private imageUploader: ImageUploader,
                 private renderer: Renderer,
                 private messages: Messages,
                 private loading: Loading
@@ -204,6 +206,18 @@ export class ResourcesComponent implements AfterViewChecked {
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
+    }
+
+
+    public uploadImages(event: Event, document: IdaiFieldDocument) {
+
+        this.imageUploader.startUpload(event, document.resource.id).then(
+            uploadResult => {
+                for (let msgWithParams of uploadResult.messages) {
+                    this.messages.add(msgWithParams);
+                }
+            }
+        )
     }
 
 

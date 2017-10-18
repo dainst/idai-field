@@ -39,7 +39,12 @@ export class ImageUploader {
     ) {}
 
 
-    public startUpload(event: Event): Promise<ImageUploadResult> {
+    /**
+     * @param event The event containing the images to upload (can be drag event or event from file input element)
+     * @param depictsRelationTargetId If this parameter is set, each of the newly created image documents will contain
+     *  a depicts relation to the resource specified by the id.
+     */
+    public startUpload(event: Event, depictsRelationTargetId?: string): Promise<ImageUploadResult> {
 
         const uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
@@ -57,7 +62,7 @@ export class ImageUploader {
         return this.chooseType(files.length)
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-                return this.uploadFiles(files, type, uploadResult).then(result => {
+                return this.uploadFiles(files, type, uploadResult, depictsRelationTargetId).then(result => {
                     uploadModalRef.close();
                     return Promise.resolve(result);
                 });
@@ -86,8 +91,8 @@ export class ImageUploader {
     }
 
 
-    private uploadFiles(files: Array<File>, type: IdaiType,
-                        uploadResult: ImageUploadResult): Promise<ImageUploadResult> {
+    private uploadFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
+                        depictsRelationTargetId?: string): Promise<ImageUploadResult> {
 
         if (!files) return Promise.resolve(uploadResult);
 
@@ -104,7 +109,7 @@ export class ImageUploader {
                 promise = promise.then(() => this.isDuplicateFilename(file.name))
                     .then(isDuplicateFilename => {
                         if (!isDuplicateFilename) {
-                            return this.uploadFile(file, type);
+                            return this.uploadFile(file, type, depictsRelationTargetId);
                         } else {
                             duplicateFilenames.push(file.name);
                         }
@@ -142,14 +147,14 @@ export class ImageUploader {
     }
 
 
-    private uploadFile(file: File, type: IdaiType): Promise<any> {
+    private uploadFile(file: File, type: IdaiType, depictsRelationTargetId?: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
-                    that.createImageDocument(file, type)
+                    that.createImageDocument(file, type, depictsRelationTargetId)
                         .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
                         .then(() => resolve())
                         .catch(error => {
@@ -169,14 +174,14 @@ export class ImageUploader {
     }
 
 
-    private createImageDocument(file: File, type: IdaiType): Promise<any> {
+    private createImageDocument(file: File, type: IdaiType, depictsRelationTargetId?: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                let doc = {
+                const doc = {
                     resource: {
                         identifier: file.name,
                         type: type.name,
@@ -186,6 +191,9 @@ export class ImageUploader {
                         relations: {}
                     }
                 };
+
+                if (depictsRelationTargetId) doc.resource.relations['depicts'] = [depictsRelationTargetId];
+
                 this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
                     .then(result => resolve(result))
                     .catch(error => reject(error));

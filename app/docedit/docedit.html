@@ -42,10 +42,11 @@
                         (click)="cancel()">
                     <span class="mdi mdi-close"></span>
                 </button>
-                <button class="btn btn-success pull-right"
+                <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
                         style="float: right;"
-                        (click)="save(true);">
+                        [class.disabled]="!documentEditChangeMonitor.isChanged()"
+                        (click)="!documentEditChangeMonitor.isChanged() || save(true);">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>

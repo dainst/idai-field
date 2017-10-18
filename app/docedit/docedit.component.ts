@@ -64,10 +64,10 @@ export class DoceditComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
+        public documentEditChangeMonitor: DocumentEditChangeMonitor,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDatastore,

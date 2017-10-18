@@ -97,6 +97,12 @@ body {
   background-color: saturate(#6c757d, 10%);
 }
 
+.btn-success:disabled, .btn-success.disabled {
+  background-color: darken(#6ca378, 10%);
+  border-color: darken(#6ca378, 10%);
+  cursor: not-allowed;
+}
+
 .md-form {
   margin-bottom: 0 !important;
 }

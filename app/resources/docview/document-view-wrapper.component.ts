@@ -18,7 +18,8 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class DocumentViewWrapperComponent {
 
-    @Input() activeTab;
+    @Input() activeTab: string;
+    @Input() updateThumbnails: boolean;
 
 
     constructor(

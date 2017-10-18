@@ -209,9 +209,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public uploadImages(event: Event, document: IdaiFieldDocument) {
+    public uploadImages(event: Event, document: IdaiFieldDocument): Promise<any> {
 
-        this.imageUploader.startUpload(event, document.resource.id).then(
+        return this.imageUploader.startUpload(event, document.resource.id).then(
             uploadResult => {
                 for (let msgWithParams of uploadResult.messages) {
                     this.messages.add(msgWithParams);

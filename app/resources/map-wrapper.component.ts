@@ -22,6 +22,8 @@ export class MapWrapperComponent {
 
     @Input() activeTab: string;
 
+    private updateThumbnails: boolean = true;
+
 
     constructor(
         public loading: Loading,
@@ -78,6 +80,13 @@ export class MapWrapperComponent {
             this.resourcesComponent.isEditingGeometry = false;
             if (geometry !== undefined) this.save();
         }
+    }
+
+
+    public uploadImages(event: Event, document: IdaiFieldDocument) {
+
+        this.updateThumbnails = false;
+        this.resourcesComponent.uploadImages(event, document).then(() => this.updateThumbnails = true);
     }
 
 

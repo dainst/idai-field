@@ -229,10 +229,9 @@ export class ViewFacade {
     }
 
 
-    public selectMainTypeDocument(mainTypeDoc, selectedDocument, cb) {
+    public selectMainTypeDocument(mainTypeDoc) {
 
-        return this.mainTypeManager.selectMainTypeDocument(
-            mainTypeDoc, selectedDocument, cb);
+        return this.mainTypeManager.selectMainTypeDocument(mainTypeDoc);
     }
 
 
@@ -243,6 +242,12 @@ export class ViewFacade {
             .catch(err => Promise.reject(
                 [M.DATASTORE_NOT_FOUND] // TODO do not return a key of M but instead some errWithParams
             ));
+    }
+
+
+    public isRecordedInSelectedMainTypeDocument(document: Document): boolean { // TODO remove param and use selecteDocument
+
+        return this.mainTypeManager.isRecordedInSelectedMainTypeDocument(document);
     }
 
 

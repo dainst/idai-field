@@ -95,7 +95,7 @@ export class RoutingHelper {
         if (viewName == this.viewFacade.getView().name) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-            this.viewFacade.selectMainTypeDocument(document, null, () => {});
+            this.viewFacade.selectMainTypeDocument(document);
             this.viewFacade.populateDocumentList();
         });
 

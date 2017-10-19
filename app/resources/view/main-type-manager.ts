@@ -52,22 +52,11 @@ export class MainTypeManager {
             });
     }
 
-    // TODO remove cb param
-    public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument, selectedDocument: Document, cb: Function) {
+
+    public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = mainTypeDoc;
         this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
-
-        if (!selectedDocument || !this.selectedMainTypeDocument) return;
-
-        const mainTypeDocumentForDocument
-            = MainTypeManager.getMainTypeDocumentForDocument(selectedDocument, this.mainTypeDocuments);
-
-        if (!mainTypeDocumentForDocument) {
-            return console.error('Could not find main type document for selected document', selectedDocument);
-        }
-
-        if (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id) cb();
     }
 
 
@@ -110,7 +99,26 @@ export class MainTypeManager {
     }
 
 
+    public isRecordedInSelectedMainTypeDocument(document: Document): boolean {
+
+        if (document) return false;
+        if (!this.selectedMainTypeDocument) return false;
+
+        const mainTypeDocumentForDocument
+            = MainTypeManager.getMainTypeDocumentForDocument(document, this.mainTypeDocuments);
+
+        if (!mainTypeDocumentForDocument) {
+            console.error('Could not find main type document for selected document', document);
+            return false;
+        }
+
+        return (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id);
+    }
+
+
     private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
+
+        if (!mainTypeDocuments) return undefined;
 
         if (!document.resource.relations['isRecordedIn']) return undefined;
 

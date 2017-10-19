@@ -49,12 +49,11 @@ export class DoceditProxy {
             }
 
             this.viewFacade.deselect();
-            this.viewFacade.selectMainTypeDocument(
-                result['document'] as IdaiFieldDocument, undefined,
-                () => {
-                    result['tab'] = undefined;
-                    this.viewFacade.deselect();
-                });
+            this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
+            if (!this.viewFacade.isRecordedInSelectedMainTypeDocument(this.viewFacade.getSelectedDocument())) { // TODO necessary?
+                result['tab'] = undefined;
+                this.viewFacade.deselect();
+            }
             return this.viewFacade.populateMainTypeDocuments();
         }
         , closeReason => {

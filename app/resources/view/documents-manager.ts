@@ -4,6 +4,7 @@ import {MainTypeManager} from './main-type-manager';
 import {ViewManager} from './view-manager';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
+import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 /**
  * @author Thomas Kleinke
@@ -130,16 +131,14 @@ export class DocumentsManager {
     }
 
 
-    private handleChange(
-        documentChange: DocumentChange,
-        selectedDocument: Document) {
+    private handleChange(documentChange: DocumentChange, selectedDocument: Document) {
 
         if (documentChange.type == 'deleted') {
             console.debug('unhandled deleted document');
             return;
         }
 
-        let changedDocument: Document = documentChange.document;
+        const changedDocument: Document = documentChange.document;
 
         if (!this.documents || !DocumentsManager.isRemoteChange(changedDocument,
                 this.settingsService.getUsername())) return;
@@ -237,11 +236,7 @@ export class DocumentsManager {
 
     private static isRemoteChange(changedDocument: Document, username: string): boolean { // TODO make static
 
-        const latestAction: Action =
-            (changedDocument.modified && changedDocument.modified.length > 0)
-                ? changedDocument.modified[changedDocument.modified.length - 1]
-                : changedDocument.created;
-
+        const latestAction: Action = ChangeHistoryUtil.getLastModified(changedDocument);
         return latestAction && latestAction.user != username;
     }
 

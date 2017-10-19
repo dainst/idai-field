@@ -343,6 +343,9 @@ export class PouchdbDatastore {
                     this.fulltextIndexer.put(document);
                     documentChange.document = document;
                     this.notifyDocumentChangesObservers(documentChange);
+                }).catch(err => {
+                    console.error('Error while trying to index changed document with id ' + change.id +
+                        ' from remote', err);
                 });
             }).on('complete', info => {
                 // console.debug('changes stream was canceled', info);

@@ -211,7 +211,7 @@ export class ViewFacade {
     }
 
 
-    public setQueryString(q) {
+    public setQueryString(q) { // TODO make unique access points: setQuery, getQuery, get rid of the other methods
 
         return this.documentsManager.setQueryString(q);
     }

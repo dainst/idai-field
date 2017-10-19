@@ -239,9 +239,13 @@ export class ViewFacade {
     }
 
 
-    public isRecordedInSelectedMainTypeDocument(document: Document): boolean { // TODO remove param and use selecteDocument
+    public isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
 
-        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(document);
+        if (!this.documentsManager.getSelectedDocument()) return false;
+
+        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
+            this.documentsManager.getSelectedDocument()
+        );
     }
 
 

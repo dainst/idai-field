@@ -75,7 +75,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
 
         this.viewFacade.selectMainTypeDocument(document);
-        if (!this.viewFacade.isRecordedInSelectedMainTypeDocument(document)) {
+        if (!this.viewFacade.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
             this.activeDocumentViewTab = undefined;
             this.viewFacade.deselect();
         }

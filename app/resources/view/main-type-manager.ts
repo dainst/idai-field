@@ -81,9 +81,17 @@ export class MainTypeManager {
 
     private restoreLastSelectedMainTypeDocument(): Promise<any> {
 
+        const selectFirstMainTypeDocumentFromList = () => {
+            if (this.mainTypeDocuments && this.mainTypeDocuments.length > 0) {
+                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            } else {
+                console.warn("cannot set selectedMainTypeDocument because mainTypeDocuments is empty")
+            }
+        };
+
         const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
         if (!mainTypeDocumentId) {
-            this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+            selectFirstMainTypeDocumentFromList();
             return Promise.resolve();
         } else {
             return this.datastore.get(mainTypeDocumentId)
@@ -92,7 +100,7 @@ export class MainTypeManager {
                 .catch(() => {
                     this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
                     this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-                    this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+                    selectFirstMainTypeDocumentFromList();
                     return Promise.resolve();
                 })
         }

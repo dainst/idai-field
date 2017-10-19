@@ -34,37 +34,44 @@ export class DoceditProxy {
 
         const result: any = {};
 
-        return doceditRef.result.then(res => {
-
-            result['document'] = res['document'];
-
-            const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-            if (['relations','images','fields'].indexOf(nextActiveTab) != -1) {
-                result['tab'] = nextActiveTab;
-            }
-
-            if (document.resource.type != this.viewFacade.getView().mainType) {
-                result['updateScrollTarget'] = true;
-                return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
-            }
-
-            this.viewFacade.deselect();
-            this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
-            return this.viewFacade.populateMainTypeDocuments();
-        }
-        , closeReason => {
-
-            this.documentEditChangeMonitor.reset();
-
-            if (closeReason == 'deleted') {
-                this.viewFacade.deselect(); // replacement for: this.documentsManager.selectedDocument = undefined;
-                if (document == this.viewFacade.getSelectedMainTypeDocument()) {
-                    return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
-                }
-            }
-
-        })
+        return doceditRef.result.then(
+            res => this.handleSaveResult(document, result, res),
+            closeReason => this.handleClosed(document, closeReason)
+        )
         .then(() => this.viewFacade.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
         .then(() => {return result; });
+    }
+
+
+    private handleSaveResult(document, result, res) {
+
+        result['document'] = res['document'];
+
+        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
+        if (['relations','images','fields'].indexOf(nextActiveTab) != -1) {
+            result['tab'] = nextActiveTab;
+        }
+
+        if (document.resource.type != this.viewFacade.getView().mainType) {
+            result['updateScrollTarget'] = true;
+            return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
+        }
+
+        this.viewFacade.deselect();
+        this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
+        return this.viewFacade.populateMainTypeDocuments();
+    }
+
+
+    private handleClosed(document, closeReason) {
+
+        this.documentEditChangeMonitor.reset();
+
+        if (closeReason == 'deleted') {
+            this.viewFacade.deselect(); // replacement for: this.documentsManager.selectedDocument = undefined;
+            if (document == this.viewFacade.getSelectedMainTypeDocument()) {
+                return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
+            }
+        }
     }
 }

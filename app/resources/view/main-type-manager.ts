@@ -19,13 +19,6 @@ export class MainTypeManager {
     ) {}
 
 
-    public init() {
-
-        this.selectedMainTypeDocument = undefined;
-        this.mainTypeDocuments = undefined;
-    }
-
-
     public populateMainTypeDocuments(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();

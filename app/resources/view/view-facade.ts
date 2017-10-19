@@ -59,12 +59,6 @@ export class ViewFacade {
     }
 
     
-    public init() {
-
-        return this.mainTypeManager.init();
-    }
-
-
     public getView() {
 
         return this.viewManager.getView();

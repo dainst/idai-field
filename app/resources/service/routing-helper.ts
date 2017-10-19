@@ -57,7 +57,6 @@ export class RoutingHelper {
 
     private initializeViewFacade(): Promise<any> {
 
-        this.viewFacade.init();
         this.viewFacade.deselect();
 
         this.loading.start();

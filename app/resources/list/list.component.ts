@@ -59,14 +59,14 @@ export class ListComponent implements OnChanges {
 
     private update(): Promise<any> {
 
-        if (!this.viewFacade.getSelectedMainTypeDocument()) return Promise.resolve();
+        if (!this.viewFacade.getSelectedOperationTypeDocument()) return Promise.resolve();
 
         this.docRefTree = [];
         this.childrenShownForIds = [];
 
         // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
         return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': this.viewFacade.getSelectedMainTypeDocument().resource.id } }
+            { constraints: { 'resource.relations.isRecordedIn': this.viewFacade.getSelectedOperationTypeDocument().resource.id } }
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
 

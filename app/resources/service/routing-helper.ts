@@ -62,7 +62,7 @@ export class RoutingHelper {
         this.loading.start();
         return Promise.resolve()
             .then(() => this.viewFacade.populateProjectDocument())
-            .then(() => this.viewFacade.populateMainTypeDocuments())
+            .then(() => this.viewFacade.populateOperationTypeDocuments())
             .then(() => this.viewFacade.populateDocumentList())
             .then(() => this.loading.stop());
     }
@@ -111,7 +111,7 @@ export class RoutingHelper {
 
     public jumpToMainTypeHomeView(document: Document) {
 
-        const viewName = this.viewFacade.getMainTypeHomeViewNameForMainTypeName(document.resource.type)
+        const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type)
         if (viewName == this.viewFacade.getView().name) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]).then(() => {

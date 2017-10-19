@@ -10,6 +10,7 @@ import {SettingsService} from '../../settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     selector: 'row',
@@ -34,7 +35,8 @@ export class RowComponent {
         private validator: Validator,
         private datastore: IdaiFieldDatastore,
         public resourcesComponent: ResourcesComponent,
-        public listComponent: ListComponent
+        public listComponent: ListComponent,
+        public viewFacade: ViewFacade
     ) {  }
 
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {

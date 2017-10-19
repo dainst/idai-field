@@ -3,18 +3,18 @@
 
     <div class="col-md-3">
         <div *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project'">
-            <select id="mainTypeSelectBox" *ngIf="viewFacade.getSelectedMainTypeDocument()"
-                    class="form-control" [ngModel]="viewFacade.getSelectedMainTypeDocument()"
+            <select id="mainTypeSelectBox" *ngIf="viewFacade.getSelectedOperationTypeDocument()"
+                    class="form-control" [ngModel]="viewFacade.getSelectedOperationTypeDocument()"
                     (ngModelChange)="chooseMainTypeDocumentOption($event)">
-                <option *ngFor="let document of viewFacade.getMainTypeDocuments()" [ngValue]="document">
-                    {{viewFacade.getMainTypeDocumentLabel(document)}}
+                <option *ngFor="let document of viewFacade.getOperationTypeDocuments()" [ngValue]="document">
+                    {{viewFacade.getOperationTypeDocumentLabel(document)}}
                 </option>
             </select>
             <select id="mainTypeSelectBoxSubstitute"
-                    *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project' && !viewFacade.getSelectedMainTypeDocument()"
+                    *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project' && !viewFacade.getSelectedOperationTypeDocument()"
                     class="form-control" disabled>
                 <option>
-                    {{viewFacade.getMainTypeLabel()}} anlegen ➔
+                    {{viewFacade.getOperationTypeLabel()}} anlegen ➔
                 </option>
             </select>
         </div>
@@ -22,9 +22,9 @@
 
     <div class="col-md-1">
         <div *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project'" class="row">
-            <div *ngIf="!isEditingGeometry && viewFacade.getSelectedMainTypeDocument()" class="col-md-6">
+            <div *ngIf="!isEditingGeometry && viewFacade.getSelectedOperationTypeDocument()" class="col-md-6">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
-                     (click)="editDocument(viewFacade.getSelectedMainTypeDocument())">
+                     (click)="editDocument(viewFacade.getSelectedOperationTypeDocument())">
                     <span class="mdi mdi-pencil mdi-18px"></span>
                 </div>
             </div>
@@ -77,9 +77,9 @@
      (drop)="false">
 
     <div *ngIf="ready && viewFacade.getView() && viewFacade.getView().mainType != 'Project'
-            && !viewFacade.getSelectedMainTypeDocument() && !isEditingGeometry"
+            && !viewFacade.getSelectedOperationTypeDocument() && !isEditingGeometry"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Sie müssen zuerst eine Ressource vom Typ '{{viewFacade.getMainTypeLabel()}}' anlegen...</em>
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{viewFacade.getOperationTypeLabel()}}' anlegen...</em>
     </div>
 
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->

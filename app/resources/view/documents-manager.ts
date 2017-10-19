@@ -1,6 +1,6 @@
 import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
-import {MainTypeManager} from './main-type-manager';
+import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
@@ -24,7 +24,7 @@ export class DocumentsManager {
         private loading: Loading,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
-        private mainTypeManager: MainTypeManager
+        private operationTypeDocumentsManager: OperationTypeDocumentsManager
     ) {
 
         datastore.documentChangesNotifications() // TODO make part of ReadDatastore
@@ -103,7 +103,7 @@ export class DocumentsManager {
 
     public setSelected(documentToSelect: Document): Promise<any> {
 
-        if (documentToSelect == this.mainTypeManager.selectedMainTypeDocument) return;
+        if (documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return;
         if (documentToSelect == this.selectedDocument) return;
         if (!documentToSelect) return;
 
@@ -120,8 +120,8 @@ export class DocumentsManager {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        const res1 = this.mainTypeManager.
-            selectLinkedMainTypeDocumentForSelectedDocument(this.selectedDocument);
+        const res1 = this.operationTypeDocumentsManager.
+            selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
         const res2 = this.invalidateQuerySettingsIfNecessary();
 
         let promise = Promise.resolve();
@@ -145,7 +145,7 @@ export class DocumentsManager {
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
         if (changedDocument.resource.type == this.viewManager.getView().mainType) {
-            return this.mainTypeManager.populateMainTypeDocuments();
+            return this.operationTypeDocumentsManager.populate();
         }
 
         let oldDocuments = this.documents;
@@ -168,14 +168,14 @@ export class DocumentsManager {
 
         this.newDocumentsFromRemote = [];
 
-        if (!this.mainTypeManager.selectedMainTypeDocument) {
+        if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
             this.documents = [];
             return Promise.resolve();
         }
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-            this.mainTypeManager.selectedMainTypeDocument.resource.id))
+            this.operationTypeDocumentsManager.getSelectedDocument().resource.id))
             .then(documents => this.documents = documents)
             .then(() => this.removeEmptyDocuments());
     }

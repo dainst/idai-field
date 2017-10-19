@@ -59,7 +59,7 @@ export class DoceditProxy {
 
         this.viewFacade.deselect();
         this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
-        return this.viewFacade.populateMainTypeDocuments();
+        return this.viewFacade.populateOperationTypeDocuments();
     }
 
 
@@ -69,7 +69,7 @@ export class DoceditProxy {
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect(); // replacement for: this.documentsManager.selectedDocument = undefined;
-            if (document == this.viewFacade.getSelectedMainTypeDocument()) {
+            if (document == this.viewFacade.getSelectedOperationTypeDocument()) {
                 return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
             }
         }

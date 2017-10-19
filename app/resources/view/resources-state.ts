@@ -13,6 +13,7 @@ export class ResourcesState {
 
     constructor(private serializer: StateSerializer) {}
 
+
     public initialize(): Promise<any> {
 
         if (this._) return Promise.resolve();
@@ -21,17 +22,20 @@ export class ResourcesState {
             .then(resourcesStateMap => this._ = resourcesStateMap);
     }
 
-    public setLastSelectedMainTypeDocumentId(viewName: string, id: string) {
+
+    public setLastSelectedOperationTypeDocumentId(viewName: string, id: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mainTypeDocumentId = id;
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
-    public getLastSelectedMainTypeDocumentId(viewName: string): string {
+
+    public getLastSelectedOperationTypeDocumentId(viewName: string): string {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocumentId;
     }
+
 
     public setLastSelectedMode(viewName: string, mode: string) {
 
@@ -40,10 +44,12 @@ export class ResourcesState {
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
+
     public getLastSelectedMode(viewName: string) {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
+
 
     public setLastQueryString(viewName: string, q: string) {
 
@@ -52,11 +58,13 @@ export class ResourcesState {
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
+
     public getLastQueryString(viewName: string) {
 
         if (!this._) return '';
         return (!this._[viewName] || !this._[viewName].q) ? '' : this._[viewName].q;
     }
+
 
     public setLastSelectedTypeFilters(viewName: string, types: string[]) {
 
@@ -65,11 +73,13 @@ export class ResourcesState {
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
+
     public getLastSelectedTypeFilters(viewName: string): string[] {
 
         if (!this._) return undefined;
         return (!this._[viewName]) ? undefined : this._[viewName].types;
     }
+
 
     public setActiveLayersIds(viewName: string, mainTypeDocumentId: string, activeLayersIds: string[]) {
 
@@ -79,11 +89,13 @@ export class ResourcesState {
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
+
     public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
 
         return (!this._[viewName] || !this._[viewName].layerIds )
             ? undefined : this._[viewName].layerIds[mainTypeDocumentId];
     }
+
 
     public removeActiveLayersIds(viewName: string, mainTypeDocumentId: string) {
 
@@ -92,6 +104,7 @@ export class ResourcesState {
         delete this._[viewName].layerIds[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
+
 
     public clear() {
         this._ = {};

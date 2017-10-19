@@ -44,7 +44,7 @@ export class ViewManager {
     }
 
 
-    public getMainTypeLabel() {
+    public getOperationTypeLabel() {
 
         return this.mainTypeLabel;
     }
@@ -141,16 +141,16 @@ export class ViewManager {
     }
 
 
-    public setLastSelectedMainTypeDocumentId(selectedMainTypeDocumentResourceId) {
+    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId) {
 
-        this.resourcesState.setLastSelectedMainTypeDocumentId(this.view.name,
+        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.view.name,
             selectedMainTypeDocumentResourceId);
     }
 
 
-    public getLastSelectedMainTypeDocumentId() {
+    public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getLastSelectedMainTypeDocumentId(this.view.name);
+        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.view.name);
     }
 
 
@@ -180,15 +180,15 @@ export class ViewManager {
     }
 
 
-    public getMainTypeDocumentLabel(document) {
+    public getOperationTypeDocumentLabel(document) {
 
-        return this.viewUtility.getMainTypeDocumentLabel(document);
+        return this.viewUtility.getOperationTypeDocumentLabel(document);
     }
 
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
+    public getOperationTypeHomeViewName(operationTypeName: string): string {
 
-        return this.viewUtility.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
+        return this.viewUtility.getOperationTypeHomeViewName(operationTypeName);
     }
 
 

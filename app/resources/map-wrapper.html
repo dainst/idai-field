@@ -20,10 +20,10 @@
 
         <plus-button *ngIf="!resourcesComponent.isEditingGeometry && resourcesComponent.ready
                             && !loading.showIcons && viewFacade.getQuery().q == ''
-                            && viewFacade.getSelectedMainTypeDocument()"
+                            && viewFacade.getSelectedOperationTypeDocument()"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="viewFacade.getCurrentFilterType()"
-                     [isRecordedIn]="viewFacade.getSelectedMainTypeDocument()"></plus-button>
+                     [isRecordedIn]="viewFacade.getSelectedOperationTypeDocument()"></plus-button>
         <loading-icon></loading-icon>
     </div>
 
@@ -32,7 +32,7 @@
          class="px-0">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
-                      [mainTypeDocument]="viewFacade.getSelectedMainTypeDocument()"
+                      [mainTypeDocument]="viewFacade.getSelectedOperationTypeDocument()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="viewFacade.getView().mainType != 'Project'"

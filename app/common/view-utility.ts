@@ -64,7 +64,7 @@ export class ViewUtility {
     }
 
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
+    public getOperationTypeHomeViewName(mainTypeName: string): string {
 
         const viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
         let viewName: string;
@@ -101,7 +101,7 @@ export class ViewUtility {
     }
 
 
-    public getMainTypeDocumentLabel(document: Document): string {
+    public getOperationTypeDocumentLabel(document: Document): string {
 
         if (document.resource.shortDescription) {
             return document.resource.shortDescription + ' (' + document.resource.identifier + ')';

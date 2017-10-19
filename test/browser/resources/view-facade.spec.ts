@@ -33,7 +33,7 @@ export function main() {
         });
 
         let viewFacade: ViewFacade;
-        let mainTypeDocument1: Document;
+        let operationTypeDocument1: Document;
         let document1: Document;
         let datastore: IdaiFieldDatastore;
 
@@ -46,13 +46,13 @@ export function main() {
                 datastore = new CachedPouchdbDatastore(result.datastore, result.documentCache);
 
                 const projectDocument = Static.doc('testdb','testdb','Project','testdb');
-                mainTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');
-                mainTypeDocument1.resource.relations['isRecordedIn'] = ['testdb'];
+                operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');
+                operationTypeDocument1.resource.relations['isRecordedIn'] = ['testdb'];
                 document1 = Static.doc('find1','find1','Find');
-                document1.resource.relations['isRecordedIn'] = [mainTypeDocument1.resource.id];
+                document1.resource.relations['isRecordedIn'] = [operationTypeDocument1.resource.id];
 
                 datastore.create(projectDocument)
-                    .then(() => datastore.create(mainTypeDocument1))
+                    .then(() => datastore.create(operationTypeDocument1))
                     .then(() => datastore.create(document1))
                     .then(() => {done();});
             }
@@ -90,7 +90,7 @@ export function main() {
 
 
         beforeEach(done =>
-            viewFacade.populateMainTypeDocuments().then(() => { done();})
+            viewFacade.populateOperationTypeDocuments().then(() => { done();})
         );
 
 

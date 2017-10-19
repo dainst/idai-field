@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Datastore} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {MainTypeManager} from './main-type-manager';
+import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
@@ -22,7 +22,7 @@ export class ViewFacade {
 
 
     private viewManager: ViewManager;
-    private mainTypeManager: MainTypeManager;
+    private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
     private projectDocument: IdaiFieldDocument;
@@ -45,7 +45,7 @@ export class ViewFacade {
                 stateSerializer
             )
         );
-        this.mainTypeManager = new MainTypeManager(
+        this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
             datastore,
             this.viewManager
         );
@@ -54,7 +54,7 @@ export class ViewFacade {
             loading,
             settingsService,
             this.viewManager,
-            this.mainTypeManager
+            this.operationTypeDocumentsManager
         );
     }
 
@@ -65,15 +65,15 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeDocumentLabel(document) {
+    public getOperationTypeDocumentLabel(document) {
 
-        return this.viewManager.getMainTypeDocumentLabel(document);
+        return this.viewManager.getOperationTypeDocumentLabel(document);
     }
 
 
-    public getMainTypeLabel() {
+    public getOperationTypeLabel() {
 
-        return this.viewManager.getMainTypeLabel();
+        return this.viewManager.getOperationTypeLabel();
     }
 
 
@@ -106,9 +106,9 @@ export class ViewFacade {
 
     public handleMainTypeDocumentOnDeleted(document: Document) {
 
-        this.viewManager.removeActiveLayersIds(this.mainTypeManager.selectedMainTypeDocument.resource.id);
-        this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.populateMainTypeDocuments();
+        this.viewManager.removeActiveLayersIds(this.operationTypeDocumentsManager.getSelectedDocument().resource.id);
+        this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
+        return this.populateOperationTypeDocuments();
     }
 
 
@@ -124,15 +124,15 @@ export class ViewFacade {
     }
 
 
-    public getSelectedMainTypeDocument() {
+    public getSelectedOperationTypeDocument() {
 
-        return this.mainTypeManager.selectedMainTypeDocument;
+        return this.operationTypeDocumentsManager.getSelectedDocument();
     }
 
 
-    public getMainTypeDocuments() {
+    public getOperationTypeDocuments() {
 
-        return this.mainTypeManager.mainTypeDocuments;
+        return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
@@ -225,7 +225,7 @@ export class ViewFacade {
 
     public selectMainTypeDocument(mainTypeDoc) {
 
-        return this.mainTypeManager.selectMainTypeDocument(mainTypeDoc);
+        return this.operationTypeDocumentsManager.select(mainTypeDoc);
     }
 
 
@@ -241,7 +241,7 @@ export class ViewFacade {
 
     public isRecordedInSelectedMainTypeDocument(document: Document): boolean { // TODO remove param and use selecteDocument
 
-        return this.mainTypeManager.isRecordedInSelectedMainTypeDocument(document);
+        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(document);
     }
 
 
@@ -260,9 +260,9 @@ export class ViewFacade {
      *
      * @returns {Promise<any>}
      */
-    public populateMainTypeDocuments() {
+    public populateOperationTypeDocuments() {
 
-        return this.mainTypeManager.populateMainTypeDocuments();
+        return this.operationTypeDocumentsManager.populate();
     }
 
 
@@ -278,8 +278,8 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
+    public getOperationTypeHomeViewName(operationTypeName: string): string {
 
-        return this.viewManager.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
+        return this.viewManager.getOperationTypeHomeViewName(operationTypeName);
     }
 }

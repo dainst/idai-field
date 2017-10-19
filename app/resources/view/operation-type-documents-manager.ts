@@ -8,10 +8,10 @@ import {ViewManager} from './view-manager';
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class MainTypeManager {
+export class OperationTypeDocumentsManager {
 
-    public mainTypeDocuments: Array<IdaiFieldDocument>; // TODO make private
-    public selectedMainTypeDocument: IdaiFieldDocument; // TODO make private
+    private documents: Array<IdaiFieldDocument>;
+    private selectedDocument: IdaiFieldDocument;
 
     constructor(
         private datastore: ReadDatastore,
@@ -19,42 +19,54 @@ export class MainTypeManager {
     ) {}
 
 
-    public populateMainTypeDocuments(): Promise<any> {
+    public getDocuments() {
+
+        return this.documents;
+    }
+
+
+    public getSelectedDocument() {
+
+        return this.selectedDocument;
+    }
+
+
+    public populate(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
         return this.fetchDocuments(
-            MainTypeManager.makeMainTypeQuery(this.viewManager.getView().mainType))
+            OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
-                this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-                if (this.mainTypeDocuments.length == 0) {
-                    this.selectedMainTypeDocument = undefined;
+                this.documents = documents as Array<IdaiFieldDocument>;
+                if (this.documents.length == 0) {
+                    this.selectedDocument = undefined;
                     return;
                 }
-                return this.restoreLastSelectedMainTypeDocument();
+                return this.restoreLastSelectedOperationTypeDocument();
             });
     }
 
 
-    public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument) {
+    public select(document: IdaiFieldDocument) {
 
-        this.selectedMainTypeDocument = mainTypeDoc;
-        this.viewManager.setLastSelectedMainTypeDocumentId(this.selectedMainTypeDocument.resource.id);
+        this.selectedDocument = document;
+        this.viewManager.setLastSelectedOperationTypeDocumentId(this.selectedDocument.resource.id);
     }
 
 
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    public selectLinkedMainTypeDocumentForSelectedDocument(selectedDocument: Document): boolean {
+    public selectLinkedOperationTypeDocumentForSelectedDocument(selectedDocument: Document): boolean {
 
-        if (!this.mainTypeDocuments || this.mainTypeDocuments.length == 0) return false;
+        if (!this.documents || this.documents.length == 0) return false;
 
-        let mainTypeDocument = MainTypeManager.getMainTypeDocumentForDocument(
-            selectedDocument, this.mainTypeDocuments);
+        let operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
+            selectedDocument, this.documents);
 
-        if (mainTypeDocument && mainTypeDocument != this.selectedMainTypeDocument) {
-            this.selectedMainTypeDocument = mainTypeDocument;
+        if (operationTypeDocument && operationTypeDocument != this.selectedDocument) {
+            this.selectedDocument = operationTypeDocument;
             return true;
         }
 
@@ -62,55 +74,55 @@ export class MainTypeManager {
     }
 
 
-    public isRecordedInSelectedMainTypeDocument(document: Document): boolean {
+    public isRecordedInSelectedOperationTypeDocument(document: Document): boolean {
 
         if (document) return false;
-        if (!this.selectedMainTypeDocument) return false;
+        if (!this.selectedDocument) return false;
 
-        const mainTypeDocumentForDocument
-            = MainTypeManager.getMainTypeDocumentForDocument(document, this.mainTypeDocuments);
+        const operationTypeDocumentForDocument
+            = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
 
-        if (!mainTypeDocumentForDocument) {
+        if (!operationTypeDocumentForDocument) {
             console.error('Could not find main type document for selected document', document);
             return false;
         }
 
-        return (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id);
+        return (operationTypeDocumentForDocument.resource.id != this.selectedDocument.resource.id);
     }
 
 
     private fetchDocuments(query: Query): Promise<any> {
 
         return this.datastore.find(query)
-            .catch(errWithParams => MainTypeManager.handleFindErr(errWithParams, query))
+            .catch(errWithParams => OperationTypeDocumentsManager.handleFindErr(errWithParams, query))
             .then(documents => {
                 return documents;
             });
     }
 
 
-    private restoreLastSelectedMainTypeDocument(): Promise<any> {
+    private restoreLastSelectedOperationTypeDocument(): Promise<any> {
 
-        const selectFirstMainTypeDocumentFromList = () => {
-            if (this.mainTypeDocuments && this.mainTypeDocuments.length > 0) {
-                this.selectedMainTypeDocument = this.mainTypeDocuments[0];
+        const selectFirstOperationTypeDocumentFromList = () => {
+            if (this.documents && this.documents.length > 0) {
+                this.selectedDocument = this.documents[0];
             } else {
                 console.warn("cannot set selectedMainTypeDocument because mainTypeDocuments is empty")
             }
         };
 
-        const mainTypeDocumentId = this.viewManager.getLastSelectedMainTypeDocumentId();
+        const mainTypeDocumentId = this.viewManager.getLastSelectedOperationTypeDocumentId();
         if (!mainTypeDocumentId) {
-            selectFirstMainTypeDocumentFromList();
+            selectFirstOperationTypeDocumentFromList();
             return Promise.resolve();
         } else {
             return this.datastore.get(mainTypeDocumentId)
-                .then(document => this.selectedMainTypeDocument =
+                .then(document => this.selectedDocument =
                     document as IdaiFieldDocument)
                 .catch(() => {
                     this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
-                    this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-                    selectFirstMainTypeDocumentFromList();
+                    this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
+                    selectFirstOperationTypeDocumentFromList();
                     return Promise.resolve();
                 })
         }

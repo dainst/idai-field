@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ViewFacade} from '../view/view-facade';
+import {Loading} from '../../widgets/loading';
 
 @Injectable()
 /**
@@ -20,7 +21,8 @@ export class RoutingHelper {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private imageTypeUtility: ImageTypeUtility) {
+                private imageTypeUtility: ImageTypeUtility,
+                private loading: Loading) {
     }
 
 
@@ -41,10 +43,29 @@ export class RoutingHelper {
 
             this.location.replaceState('resources/' + params['view']);
 
-            this.viewFacade.setupView(params['view'], params['id']).then(() => {
-                observer.next(params);
-            });
-        })
+            this.viewFacade.setupView(params['view'], params['id'])
+                .then(() => this.initializeViewFacade())
+                .then(() => {observer.next(params);})
+                .catch(msgWithParams => {
+                    if (msgWithParams) console.error(
+                        "got msgWithParams in RoutingHelper#setRoute: ",msgWithParams);
+                });
+            }
+        );
+    }
+
+
+    private initializeViewFacade(): Promise<any> {
+
+        this.viewFacade.init();
+        this.viewFacade.deselect();
+
+        this.loading.start();
+        return Promise.resolve()
+            .then(() => this.viewFacade.populateProjectDocument())
+            .then(() => this.viewFacade.populateMainTypeDocuments())
+            .then(() => this.viewFacade.populateDocumentList())
+            .then(() => this.loading.stop());
     }
 
 

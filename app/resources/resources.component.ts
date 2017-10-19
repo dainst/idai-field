@@ -26,7 +26,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isEditingGeometry: boolean = false;
 
-    public ready: boolean = false;
+    public ready: boolean = true; // TODO remove, lets work on loading
 
     private scrollTarget: IdaiFieldDocument;
 
@@ -45,30 +45,18 @@ export class ResourcesComponent implements AfterViewChecked {
                 private loading: Loading
     ) {
         routingHelper.routeParams(route).subscribe(params => {
-
-            this.ready = false;
-
-
             this.isEditingGeometry = false;
 
-            return this.initializeViewFacade() // TODO move this to routing helper
-                .then(() => {
-                    if (params['id']) {
-
-                        // The timeout is needed to prevent buggy map behavior after following a relation link from
-                        // image component to resources component and after following a conflict resolver link from
-                        // taskbar
-                        setTimeout(() => {
-                            this.selectDocumentFromParams(params['id'], params['menu'], params['tab']).then(() => {
-                            })
-                        }, 100);
-                    }
-                })
-                .catch(msgWithParams => {
-                    if (msgWithParams) this.messages.add(msgWithParams);
-                });
+            if (params['id']) {
+                // The timeout is needed to prevent buggy map behavior after following a relation link from
+                // image component to resources component and after following a conflict resolver link from
+                // taskbar
+                setTimeout(() => {
+                    this.selectDocumentFromParams(params['id'], params['menu'], params['tab']).then(() => {
+                    })
+                }, 100);
+            }
         });
-
         this.initializeClickEventListener();
     }
 
@@ -82,19 +70,6 @@ export class ResourcesComponent implements AfterViewChecked {
         }
     }
 
-
-    public initializeViewFacade(): Promise<any> {
-
-        this.viewFacade.init();
-        this.viewFacade.deselect();
-
-        this.loading.start();
-        return Promise.resolve()
-            .then(() => this.viewFacade.populateProjectDocument())
-            .then(() => this.viewFacade.populateMainTypeDocuments())
-            .then(() => this.viewFacade.populateDocumentList())
-            .then(() => (this.ready = true) && this.loading.stop());
-    }
 
 
     public chooseMainTypeDocumentOption(document: IdaiFieldDocument) {
@@ -110,7 +85,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
-        return this.viewFacade.setSelectedDocumentById(id).then(
+        return this.viewFacade.setSelectedDocumentById(id).then( // <- TODO move this to routing helper
             () => {
                     if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
                     else {

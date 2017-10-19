@@ -43,16 +43,6 @@ export class MainTypeManager {
     }
 
 
-    private fetchDocuments(query: Query): Promise<any> {
-
-        return this.datastore.find(query)
-            .catch(errWithParams => MainTypeManager.handleFindErr(errWithParams, query))
-            .then(documents => {
-                return documents;
-            });
-    }
-
-
     public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument) {
 
         this.selectedMainTypeDocument = mainTypeDoc;
@@ -76,6 +66,33 @@ export class MainTypeManager {
         }
 
         return false;
+    }
+
+
+    public isRecordedInSelectedMainTypeDocument(document: Document): boolean {
+
+        if (document) return false;
+        if (!this.selectedMainTypeDocument) return false;
+
+        const mainTypeDocumentForDocument
+            = MainTypeManager.getMainTypeDocumentForDocument(document, this.mainTypeDocuments);
+
+        if (!mainTypeDocumentForDocument) {
+            console.error('Could not find main type document for selected document', document);
+            return false;
+        }
+
+        return (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id);
+    }
+
+
+    private fetchDocuments(query: Query): Promise<any> {
+
+        return this.datastore.find(query)
+            .catch(errWithParams => MainTypeManager.handleFindErr(errWithParams, query))
+            .then(documents => {
+                return documents;
+            });
     }
 
 
@@ -104,23 +121,6 @@ export class MainTypeManager {
                     return Promise.resolve();
                 })
         }
-    }
-
-
-    public isRecordedInSelectedMainTypeDocument(document: Document): boolean {
-
-        if (document) return false;
-        if (!this.selectedMainTypeDocument) return false;
-
-        const mainTypeDocumentForDocument
-            = MainTypeManager.getMainTypeDocumentForDocument(document, this.mainTypeDocuments);
-
-        if (!mainTypeDocumentForDocument) {
-            console.error('Could not find main type document for selected document', document);
-            return false;
-        }
-
-        return (mainTypeDocumentForDocument.resource.id != this.selectedMainTypeDocument.resource.id);
     }
 
 

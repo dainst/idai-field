@@ -14,17 +14,17 @@ export class NavbarPage {
 
     public static clickNavigateToExcavation() {
 
-        return common.click(element.all(by.css('.nav-link')).get(1));
+        return common.click(element.all(by.css('.nav-link')).get(2));
     };
 
     public static clickNavigateToBuilding() {
 
-        return common.click(element.all(by.css('.nav-link')).get(2));
+        return common.click(element.all(by.css('.nav-link')).get(3));
     };
 
     public static clickNavigateToImages() {
 
-        return common.click(element.all(by.css('.nav-link')).get(4));
+        return common.click(element.all(by.css('.nav-link')).get(6));
     };
 
     public static clickConflictsButton() {

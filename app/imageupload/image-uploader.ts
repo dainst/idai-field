@@ -25,7 +25,7 @@ export interface ImageUploadResult {
  */
 export class ImageUploader {
 
-    private static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'bmp', 'png', 'gif'];
+    private static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
 
 
     public constructor(

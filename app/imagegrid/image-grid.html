@@ -40,8 +40,8 @@
                      [style.width.px]="cell['calculatedWidth']"
                      [style.height.px]="cell['calculatedHeight']">
 
-                <div class="identifier" *ngIf="showIdentifier" class="px-1 bg-white">{{cell['document'].resource.identifier}}</div>
-                <div class="title">
+                <div class="identifier" *ngIf="showIdentifier" class="px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
+                <div class="title" [class.small]="nrOfColumns > 5">
                     <div *ngIf="showLinkBadges && cell['document'].resource.relations['depicts']" class="p-2" align="right">
                         <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
                           id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">

@@ -55,7 +55,7 @@ export class DoceditProxy {
                     result['tab'] = undefined;
                     this.viewFacade.deselect();
                 });
-            return this.viewFacade.populateMainTypeDocuments(this.viewFacade.getSelectedDocument());
+            return this.viewFacade.populateMainTypeDocuments();
         }
         , closeReason => {
 

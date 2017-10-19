@@ -90,7 +90,7 @@ export function main() {
 
 
         beforeEach(done =>
-            viewFacade.populateMainTypeDocuments(document1).then(() => {done();})
+            viewFacade.populateMainTypeDocuments().then(() => { done();})
         );
 
 

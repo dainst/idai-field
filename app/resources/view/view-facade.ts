@@ -114,12 +114,9 @@ export class ViewFacade {
 
         this.viewManager.removeActiveLayersIds(this.mainTypeManager.selectedMainTypeDocument.resource.id);
         this.viewManager.setLastSelectedMainTypeDocumentId(undefined);
-        return this.populateMainTypeDocuments(document);
+        return this.populateMainTypeDocuments();
     }
 
-    public setLastSelectedMainTypeDocumentId(documentId) {
-        this.viewManager.setLastSelectedMainTypeDocumentId(documentId);
-    }
 
     public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
 
@@ -255,9 +252,18 @@ export class ViewFacade {
     }
 
 
-    public populateMainTypeDocuments(selectedDocument) {
+    /**
+     * Based on the current view, populates the operation type documents and also
+     * sets the selectedMainTypeDocument to either
+     *   a) the last selected one for that view if any or
+     *   b) the first element of the operation type documents it is not set
+     *      and operation type documents length > 1
+     *
+     * @returns {Promise<any>}
+     */
+    public populateMainTypeDocuments() {
 
-        return this.mainTypeManager.populateMainTypeDocuments(selectedDocument);
+        return this.mainTypeManager.populateMainTypeDocuments();
     }
 
 

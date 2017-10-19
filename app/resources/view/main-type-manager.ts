@@ -26,26 +26,7 @@ export class MainTypeManager {
     }
 
 
-    public setSelectedMainTypeDocument(selectedDocument: IdaiFieldDocument): Promise<any> {
-        if (this.mainTypeDocuments.length == 0) {
-            this.selectedMainTypeDocument = undefined;
-            return Promise.resolve();
-        }
-        if (!selectedDocument) return this.restoreLastSelectedMainTypeDocument();
-
-        this.selectedMainTypeDocument =
-            MainTypeManager.getMainTypeDocumentForDocument(
-                selectedDocument, this.mainTypeDocuments
-            );
-
-        if (!this.selectedMainTypeDocument) this.selectedMainTypeDocument =
-            this.mainTypeDocuments[0];
-        return Promise.resolve();
-    }
-
-
-    // TODO Why is the document needed?
-    public populateMainTypeDocuments(document: Document): Promise<any> {
+    public populateMainTypeDocuments(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
@@ -53,7 +34,11 @@ export class MainTypeManager {
             MainTypeManager.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
                 this.mainTypeDocuments = documents as Array<IdaiFieldDocument>;
-                return this.setSelectedMainTypeDocument(document as IdaiFieldDocument);
+                if (this.mainTypeDocuments.length == 0) {
+                    this.selectedMainTypeDocument = undefined;
+                    return;
+                }
+                return this.restoreLastSelectedMainTypeDocument();
             });
     }
 

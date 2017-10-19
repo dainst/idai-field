@@ -145,8 +145,7 @@ export class DocumentsManager {
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
         if (changedDocument.resource.type == this.viewManager.getView().mainType) {
-            return this.mainTypeManager.
-            populateMainTypeDocuments(selectedDocument);
+            return this.mainTypeManager.populateMainTypeDocuments();
         }
 
         let oldDocuments = this.documents;

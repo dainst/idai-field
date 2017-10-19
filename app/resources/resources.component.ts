@@ -48,19 +48,19 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.ready = false;
 
-            this.viewFacade.init();
-            this.viewFacade.deselect();
 
             this.isEditingGeometry = false;
 
-            return this.initialize()
+            return this.initializeViewFacade()
                 .then(() => {
                     if (params['id']) {
+
                         // The timeout is needed to prevent buggy map behavior after following a relation link from
                         // image component to resources component and after following a conflict resolver link from
                         // taskbar
                         setTimeout(() => {
-                            this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
+                            this.selectDocumentFromParams(params['id'], params['menu'], params['tab']).then(() => {
+                            })
                         }, 100);
                     }
                 })
@@ -83,14 +83,15 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public initialize(): Promise<any> {
+    public initializeViewFacade(): Promise<any> {
+
+        this.viewFacade.init();
+        this.viewFacade.deselect();
 
         this.loading.start();
         return Promise.resolve()
             .then(() => this.viewFacade.populateProjectDocument())
-            .then(() => this.viewFacade.populateMainTypeDocuments(
-                this.viewFacade.getSelectedDocument()
-            ))
+            .then(() => this.viewFacade.populateMainTypeDocuments())
             .then(() => this.viewFacade.populateDocumentList())
             .then(() => (this.ready = true) && this.loading.stop());
     }
@@ -109,7 +110,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
 
-        this.viewFacade.setSelectedDocumentById(id).then(
+        return this.viewFacade.setSelectedDocumentById(id).then(
             () => {
                     if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
                     else {

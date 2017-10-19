@@ -63,8 +63,10 @@ export class ViewUtility {
              }).catch(() => {});
     }
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
-        let viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
+
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
+
+        const viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
         let viewName: string;
         for (let view of viewDefinitions) {
             if (view.mainType == mainTypeName) {
@@ -73,7 +75,7 @@ export class ViewUtility {
             }
         }
 
-        return Promise.resolve(viewName);
+        return viewName;
     }
 
 

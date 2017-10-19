@@ -52,7 +52,7 @@ export class MainTypeManager {
             });
     }
 
-
+    // TODO remove cb param
     public selectMainTypeDocument(mainTypeDoc: IdaiFieldDocument, selectedDocument: Document, cb: Function) {
 
         this.selectedMainTypeDocument = mainTypeDoc;

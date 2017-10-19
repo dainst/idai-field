@@ -16,11 +16,13 @@ export class RoutingHelper {
 
     private currentRoute;
 
+
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility) {
     }
+
 
     public routeParams(route: ActivatedRoute) {
 
@@ -28,6 +30,7 @@ export class RoutingHelper {
             this.setRoute(route, observer);
         });
     }
+
 
     private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
 
@@ -44,6 +47,7 @@ export class RoutingHelper {
         })
     }
 
+
     public jumpToRelationTarget(selectedDocument, documentToSelect: Document, cb, tab?: string) {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
@@ -52,6 +56,7 @@ export class RoutingHelper {
             this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
         }
     }
+
 
     public jumpToImageTypeRelationTarget(selectedDocument: Document, documentToSelect: Document) {
 
@@ -63,6 +68,7 @@ export class RoutingHelper {
             { queryParams: { from: this.currentRoute } }
         );
     }
+
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
@@ -82,14 +88,16 @@ export class RoutingHelper {
             });
     }
 
+
     public jumpToMainTypeHomeView(document: Document) {
-        this.viewFacade.getMainTypeHomeViewNameForMainTypeName(document.resource.type).then(viewName => {
-            if (viewName != this.viewFacade.getView().name) {
-                this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-                    this.viewFacade.selectMainTypeDocument(document, null, () => {});
-                    this.viewFacade.populateDocumentList();
-                });
-            }
+
+        const viewName = this.viewFacade.getMainTypeHomeViewNameForMainTypeName(document.resource.type)
+        if (viewName == this.viewFacade.getView().name) return;
+
+        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
+            this.viewFacade.selectMainTypeDocument(document, null, () => {});
+            this.viewFacade.populateDocumentList();
         });
+
     }
 }

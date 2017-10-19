@@ -165,7 +165,7 @@ export class ViewManager {
     }
 
 
-    public setupViewFrom(params: Params): Promise<any> {
+    public setupViewFrom(params: Params): Promise<any> { // TODO viewManager should not know about Params
 
         return ((!this.view || params['view'] != this.view.name)
             ? this.initializeView(params['view']) : Promise.resolve()).then(() => {
@@ -188,7 +188,7 @@ export class ViewManager {
     }
 
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
 
         return this.viewUtility.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
     }

@@ -279,7 +279,7 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): Promise <string> {
+    public getMainTypeHomeViewNameForMainTypeName(mainTypeName: string): string {
 
         return this.viewManager.getMainTypeHomeViewNameForMainTypeName(mainTypeName);
     }

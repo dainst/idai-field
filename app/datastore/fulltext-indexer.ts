@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document, Action} from 'idai-components-2/core';
 import {ChangeHistoryUtil} from '../model/change-history-util';
 import {ResultSets} from '../util/result-sets';
 
@@ -32,6 +32,13 @@ export class FulltextIndexer {
     }
 
     public put(doc: Document, skipRemoval: boolean = false) {
+
+        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
+        if (!lastModified) {
+            console.warn('FulltextIndexer: Failed to index document. ' +
+                'The document does not contain a created/modified action.', doc);
+            return;
+        }
 
         if (!skipRemoval) this.remove(doc);
         if (!this.index[doc.resource.type]) {

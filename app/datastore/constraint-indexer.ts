@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document, Action} from 'idai-components-2/core';
 import {ObjectUtil} from '../util/object-util';
 import {ChangeHistoryUtil} from '../model/change-history-util';
 
@@ -109,9 +109,16 @@ export class ConstraintIndexer {
 
     private addToIndex(doc: Document, path: string, target: string) {
 
+        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
+        if (!lastModified) {
+            console.warn('ConstraintIndexer: Failed to index document. ' +
+                'The document does not contain a created/modified action.', doc);
+            return;
+        }
+
         if (!this.index[path][target]) this.index[path][target] = {};
         this.index[path][target][doc.resource.id] = {
-            date: ChangeHistoryUtil.getLastModified(doc).date,
+            date: lastModified.date,
             identifier: doc.resource['identifier']
         };
     }

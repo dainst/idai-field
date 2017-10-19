@@ -184,7 +184,8 @@ export class PouchdbDatastore {
      * @returns {Document} the typed Document
      */
     private createDocFromResult(result: any): Document {
-        result.created.date = new Date(result.created.date);
+
+        if (result.created) result.created.date = new Date(result.created.date);
         if (result.modified) for (let modified of result.modified) {
             modified.date = new Date(modified.date);
         }

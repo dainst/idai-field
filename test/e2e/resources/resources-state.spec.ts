@@ -152,6 +152,25 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
+    it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
+        ResourcesPage.performCreateResource('building1', 'building');
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.performCreateResource('floor1', 'feature-floor');
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.clickGoToMainTypeViewByIdentifier('building1')
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1')
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+    });
+
     it('select correct main type document after click on relation link', () => {
 
         ResourcesPage.performCreateResource('building1', 'building');

@@ -62,6 +62,11 @@ export class ResourcesPage {
         return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
     };
 
+    public static clickGoToMainTypeViewByIdentifier(identifier) {
+
+        return common.click(element(by.css('#resource-'+identifier + ' .selectInMainTypeViewBtn')));
+    }
+
     public static clickSelectResource(identifier) {
 
         return common.click(element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'

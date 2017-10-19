@@ -12,7 +12,7 @@
                     && viewFacade.getSelectedDocument().resource.id === document.resource.id"
                 [id]="'resource-' + document.resource.identifier">
 
-                <span class="selectInMainTypeViewBtn mdi mdi-arrow-right-drop-circle text-muted mt-2 mr-2 float-right" (click)="selectInProjectView(document)" *ngIf="viewFacade.getView().mainType == 'Project'"></span>
+                <span class="selectInMainTypeViewBtn mdi mdi-arrow-right-drop-circle text-muted mt-2 mr-2 float-right" (click)="selectInMainTypeView(document)" *ngIf="viewFacade.getView().mainType == 'Project'"></span>
 
                 <document-teaser [document]="document"></document-teaser>
             </li>

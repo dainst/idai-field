@@ -57,7 +57,7 @@ export class MapWrapperComponent {
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
 
-    public selectInProjectView(document: IdaiFieldDocument) {
+    public selectInMainTypeView(document: IdaiFieldDocument) {
         this.routingHelper.jumpToMainTypeHomeView(document);
     }
 

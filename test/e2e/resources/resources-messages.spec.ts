@@ -17,7 +17,7 @@ describe('resources/messages --', () => {
     it('show the success msg also on route change', () => {
         ResourcesPage.performCreateResource('12');
         ResourcesPage.openEditByDoubleClickResource('12');
-        DoceditPage.typeInInputField('34');
+        DoceditPage.typeInInputField('identifier', '34');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
 
@@ -25,7 +25,7 @@ describe('resources/messages --', () => {
     });
     
     it('warn if identifier is missing', () => {
-        ResourcesPage.performCreateResource('', 'feature', 'Text', 1);
+        ResourcesPage.performCreateResource('', 'feature', 'shortDescription', 'Text');
 
         NavbarPage.awaitAlert('identifier', false)
     });

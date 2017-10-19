@@ -213,7 +213,7 @@ describe('resources/syncing --', function() {
             return updateTestDoc(testDocument);
         }).then(() => {
             browser.sleep(delays.shortRest * 10);
-            DoceditPage.typeInInputField('Testfund' + nr + '_alternative2', 1);
+            DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
             DoceditPage.clickSaveDocument();
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();

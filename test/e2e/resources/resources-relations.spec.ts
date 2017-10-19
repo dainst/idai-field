@@ -42,7 +42,7 @@ describe('resources/relations --', () => {
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         ResourcesPage.openEditByDoubleClickResource('2');
         DoceditPage.clickFieldsTab();
-        DoceditPage.typeInInputField('123');
+        DoceditPage.typeInInputField('identifier', '123');
         DoceditPage.clickSaveDocument();
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });

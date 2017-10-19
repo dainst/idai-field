@@ -189,15 +189,15 @@ export class ResourcesPage {
 
     // sequences
 
-    public static performCreateResource(identifier: string, typeName?: string, inputFieldText?: string,
-                                                   inputFieldIndex?: number, skipGeometry?: boolean) {
+    public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
+                                                   inputFieldText?: string, skipGeometry?: boolean) {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
-        DoceditPage.typeInInputField(identifier);
-        if (inputFieldText && inputFieldIndex) {
-            DoceditPage.typeInInputField(inputFieldText, inputFieldIndex);
+        DoceditPage.typeInInputField('identifier', identifier);
+        if (inputFieldName && inputFieldText) {
+            DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument();
@@ -208,7 +208,7 @@ export class ResourcesPage {
 
         ResourcesPage.clickCreateMainTypeResource();
         ResourcesPage.clickSelectGeometryType();
-        DoceditPage.typeInInputField(identifier);
+        DoceditPage.typeInInputField('identifier', identifier);
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);

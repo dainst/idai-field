@@ -166,7 +166,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
         
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1')
+        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });

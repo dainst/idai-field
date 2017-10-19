@@ -66,7 +66,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
         DocumentViewPage.performEditDocument();
-        DoceditPage.typeInInputField('1b');
+        DoceditPage.typeInInputField('identifier', '1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
     });
 
@@ -101,7 +101,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
-        DoceditPage.typeInInputField('2');
+        DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
         browser.sleep(1000);
@@ -113,7 +113,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
-        DoceditPage.typeInInputField('2');
+        DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1')});
@@ -124,7 +124,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
-        DoceditPage.typeInInputField('2');
+        DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
         expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
@@ -151,7 +151,7 @@ describe('resources --', () => {
     it('should edit a main type resource', () => {
 
         ResourcesPage.clickEditMainTypeResource();
-        DoceditPage.typeInInputField('newIdentifier');
+        DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest * 10);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
@@ -175,7 +175,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
 
-        DoceditPage.clickSelectOption(57, 1); // TODO we should avoid working with magic numbers. let's use meaningful css selectors instead
+        DoceditPage.clickSelectOption('hasWallType', 1);
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         DocumentViewPage.performEditDocument();

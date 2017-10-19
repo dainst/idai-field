@@ -18,13 +18,13 @@ describe('widgets/document-view', function() {
     });
 
     it('show the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 'feature-architecture', '100', 3);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getFieldName(0).then(val => {
-            expect(val).toBe('Fläche in m2'); // with the correct field label
+        DocumentViewPage.getFieldName(0).then(value => {
+            expect(value).toBe('Fläche in m2'); // with the correct field label
         });
-        DocumentViewPage.getFieldValue(0).then(val => {
-            expect(val).toBe('100');
+        DocumentViewPage.getFieldValue(0).then(value => {
+            expect(value).toBe('100');
         });
     });
 
@@ -32,7 +32,7 @@ describe('widgets/document-view', function() {
      * Addresses an issue where fields were shown double.
      */
     it('show only the fields present in the object', function() {
-        ResourcesPage.performCreateResource('1', 'feature-architecture', '100', 6);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
@@ -42,11 +42,11 @@ describe('widgets/document-view', function() {
     it('show the relations present in the object', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(1).then(val => {
-            expect(val).toBe('Liegt in'); // with the correct relation label
+        DocumentViewPage.getRelationName(1).then(value => {
+            expect(value).toBe('Liegt in'); // with the correct relation label
         });
-        DocumentViewPage.getRelationValue(1).then(val => {
-            expect(val).toBe('2');
+        DocumentViewPage.getRelationValue(1).then(value => {
+            expect(value).toBe('2');
         });
     });
 

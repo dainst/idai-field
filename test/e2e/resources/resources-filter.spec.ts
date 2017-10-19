@@ -118,7 +118,7 @@ describe('resources/filter --', () => {
             ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
             ResourcesPage.clickCreateResource();
             if (selectGeometryType) ResourcesPage.clickSelectGeometryType();
-            DoceditPage.typeInInputField(identifier);
+            DoceditPage.typeInInputField('identifier', identifier);
             ResourcesPage.scrollUp();
             DoceditPage.clickSaveDocument();
             browser.sleep(delays.shortRest);

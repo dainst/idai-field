@@ -102,7 +102,7 @@ describe('resources/map --', function() {
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
             function() {
                 MapPage.clickMapOption('ok');
-                DoceditPage.typeInInputField(identifier);
+                DoceditPage.typeInInputField('identifier', identifier);
                 ResourcesPage.scrollUp();
                 DoceditPage.clickSaveDocument();
             });

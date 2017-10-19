@@ -86,11 +86,11 @@ export class DoceditPage {
         element(by.id('choose-type-option-' + typeName)).click();
     };
 
-    public static clickSelectOption(inputFieldNr, optionIndex) {
+    public static clickSelectOption(fieldName: string, optionIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + inputFieldNr + ' select'))),
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' select'))),
             delays.ECWaitTime);
-        element.all(by.css('#edit-form-element-' + inputFieldNr + ' select option')).get(optionIndex).click();
+        element.all(by.css('#edit-form-element-' + fieldName + ' select option')).get(optionIndex).click();
     };
 
     // get text
@@ -110,21 +110,11 @@ export class DoceditPage {
 
     // type in
 
-    /**
-     * @param text
-     * @param inputFieldNr 0 for identifier,
-     *   1 for shortDescription, 2 - n for other fields
-     */
-    public static typeInInputField = function(text, inputFieldNr?: number) {
+    public static typeInInputField = function(fieldName: string, text: string) {
 
-        if (inputFieldNr == undefined) inputFieldNr = 0;
-
-        // element-2, 0, 1 and 2 are type, id, geometries
-        inputFieldNr += 3;
-
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + inputFieldNr + ' input'))),
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' input'))),
             delays.ECWaitTime);
-        common.typeIn(element(by.css('#edit-form-element-' + inputFieldNr + ' input')), text);
+        common.typeIn(element(by.css('#edit-form-element-' + fieldName + ' input')), text);
     };
 
     public static typeInIdentifierInConfirmDeletionInputField(identifier) {

@@ -16,7 +16,7 @@ describe('resources/list --', () => {
 
     it('show newly created resource in list view', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
 
         ResourcesPage.getListModeInputFieldValue('1', 0).then(inputValue => expect(inputValue).toEqual('1'));
 
@@ -25,8 +25,8 @@ describe('resources/list --', () => {
 
     it('save changes on input field blur', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
-        ResourcesPage.performCreateResource('2', 'feature-architecture', 'Resource 2', 1, true);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
+        ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
 
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
@@ -36,9 +36,9 @@ describe('resources/list --', () => {
 
     it('restore identifier from database if a duplicate identifier is typed in', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'Resource 1', 1, true);
-        ResourcesPage.performCreateResource('2', 'feature-architecture', 'Resource 2', 1, true);
-        ResourcesPage.performCreateResource('3', 'feature-architecture', 'Resource 3', 1, true);
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
+        ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
+        ResourcesPage.performCreateResource('3', 'feature-architecture', 'shortDescription', 'Resource 3', true);
 
         ResourcesPage.typeInListModeInputField('2', 0, '1');
         ResourcesPage.getListModeInputField('3', 0).click();

@@ -69,9 +69,7 @@ if (env && env.indexOf('test') !== -1) { // is environment 'test'
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow;
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-electron.app.on('ready', function createWindow() {
+function createWindow() {
 
     const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
     const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
@@ -105,21 +103,25 @@ electron.app.on('ready', function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
-});
+}
 
-// Quit when all windows are closed.
-electron.app.on('window-all-closed', function () {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        electron.app.quit();
-    }
-});
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+electron.app.on('ready', createWindow);
 
-electron.app.on('activate', function () {
+electron.app.on('activate', function() {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
         createWindow();
+    }
+});
+
+// Quit when all windows are closed.
+electron.app.on('window-all-closed', function() {
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+        electron.app.quit();
     }
 });

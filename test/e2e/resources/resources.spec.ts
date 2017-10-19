@@ -169,6 +169,26 @@ describe('resources --', () => {
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('A'));
     });
 
+    it('should delete invalid fields when changing the type of a resource to its parent type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.performEditDocument();
+
+        DoceditPage.clickSelectOption(57, 1); // TODO we should avoid working with magic numbers. let's use meaningful css selectors instead
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        DocumentViewPage.performEditDocument();
+        DoceditPage.clickTypeSwitcherButton();
+        DoceditPage.clickTypeSwitcherOption('feature');
+        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
+            'gehen: Mauertyp');
+        NavbarPage.clickCloseMessage();
+        DoceditPage.clickSaveDocument();
+        DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
+        browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
+    });
+
     it('should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');

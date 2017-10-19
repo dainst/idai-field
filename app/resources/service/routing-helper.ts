@@ -41,7 +41,7 @@ export class RoutingHelper {
 
             this.location.replaceState('resources/' + params['view']);
 
-            this.viewFacade.setupViewFrom(params).then(() => {
+            this.viewFacade.setupView(params['view'], params['id']).then(() => {
                 observer.next(params);
             });
         })

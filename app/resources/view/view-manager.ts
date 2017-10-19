@@ -1,4 +1,3 @@
-import {Params} from '@angular/router';
 import {Resource} from 'idai-components-2/core';
 import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
@@ -165,13 +164,12 @@ export class ViewManager {
     }
 
 
-    public setupViewFrom(params: Params): Promise<any> { // TODO viewManager should not know about Params
+    public setupView(viewName: string, defaultMode: string): Promise<any> {
 
-        return ((!this.view || params['view'] != this.view.name)
-            ? this.initializeView(params['view']) : Promise.resolve()).then(() => {
+        return ((!this.view || viewName != this.view.name)
+            ? this.initializeView(viewName) : Promise.resolve()).then(() => {
 
-            let defaultMode = params['id'] ? 'map' : undefined;
-            return this.initialize(defaultMode);
+            return this.initialize(defaultMode ? 'map' : undefined);
         });
     }
 

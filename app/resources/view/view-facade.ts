@@ -272,9 +272,9 @@ export class ViewFacade {
     }
 
 
-    public setupViewFrom(params) {
+    public setupView(viewName: string, defaultMode: string) {
 
-        return this.viewManager.setupViewFrom(params);
+        return this.viewManager.setupView(viewName, defaultMode);
     }
 
 

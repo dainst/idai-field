@@ -51,7 +51,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.isEditingGeometry = false;
 
-            return this.initializeViewFacade()
+            return this.initializeViewFacade() // TODO move this to routing helper
                 .then(() => {
                     if (params['id']) {
 

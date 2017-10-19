@@ -83,7 +83,7 @@ export function main() {
                 stateSerializer
             );
 
-            viewFacade.setupViewFrom({view:'excavation'})
+            viewFacade.setupView('excavation', undefined)
                 .then(() => viewFacade.populateProjectDocument())
                 .then(() => {done();});
         });

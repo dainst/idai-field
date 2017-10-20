@@ -190,12 +190,6 @@ export class ViewManager {
     }
 
 
-    public getDocumentLabel(document) { // TODO remove method
-
-        return this.views.getDocumentLabel(document);
-    }
-
-
     public getOperationTypeHomeViewName(operationTypeName: string): string {
 
         return this.views.getViewNameForMainTypeName(operationTypeName);

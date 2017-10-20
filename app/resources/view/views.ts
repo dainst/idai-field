@@ -132,14 +132,4 @@ export class Views {
             );
         });
     }
-
-
-    public getDocumentLabel(document: Document): string {
-
-        if (document.resource.shortDescription) {
-            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
-        } else {
-            return document.resource.identifier;
-        }
-    }
 }

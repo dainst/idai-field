@@ -99,13 +99,6 @@ export class ViewFacade {
     }
 
 
-    public getOperationTypeDocumentLabel(document) {
-
-        if (this.isInOverview()) throw "calling getOperationTypeDocumentLabel/1 is forbidden when isInOverview";
-        return this.viewManager.getDocumentLabel(document);
-    }
-
-
     public getOperationTypeLabel() {
 
         if (this.isInOverview()) throw "calling getOperationTypeLabel is forbidden when isInOverview";

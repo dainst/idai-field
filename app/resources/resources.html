@@ -7,7 +7,7 @@
                     class="form-control" [ngModel]="viewFacade.getSelectedOperationTypeDocument()"
                     (ngModelChange)="chooseOperationTypeDocumentOption($event)">
                 <option *ngFor="let document of viewFacade.getOperationTypeDocuments()" [ngValue]="document">
-                    {{viewFacade.getOperationTypeDocumentLabel(document)}}
+                    {{getDocumentLabel(document)}}
                 </option>
             </select>
             <select id="mainTypeSelectBoxSubstitute"

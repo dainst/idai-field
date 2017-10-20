@@ -91,7 +91,7 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    // TODO remove duplication with viewUtility, but put the method somewhere else, viewUtility
+    // TODO remove duplication with resources component, put to util package
     public getDocumentLabel(document: Document): string {
 
         if (document.resource.shortDescription) {

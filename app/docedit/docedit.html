@@ -33,43 +33,45 @@
     </ng-template>
 
     <section id="document-edit-wrapper">
-        <header>
-            <h1 class="overview-document-heading">
-
-                <button *ngIf="showBackButton" class="btn btn-primary"
-                        id="document-edit-button-goto-view"
-                        style="float: right;"
-                        (click)="cancel()">
-                    <span class="mdi mdi-close"></span>
+        <header class="overview-document-heading d-flex justify-content-between">
+            <div id="type-switcher-button-container">
+                <type-switcher-button [type]="clonedDocument.resource.type"
+                                  (onTypeChanged)="changeType($event)">
+                </type-switcher-button>
+            </div>
+            
+            <div *ngIf="projectConfiguration && clonedDocument"
+                  class="docedit-header-label text-truncate">
+                <small>
+                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
+                    <span *ngIf="clonedDocument.resource.id">bearbeiten</span>
+                    <span *ngIf="!clonedDocument.resource.id">anlegen</span>
+                </small><br>
+                <strong>{{clonedDocument.resource.identifier}}</strong>
+                
+            </div>
+            <div>
+                <button *ngIf="clonedDocument && clonedDocument.resource.id
+                            && clonedDocument.resource.type != 'Project'"
+                        class="btn btn-danger pull-right" id="document-edit-button-delete-document"
+                         (click)="openDeleteModal(deleteModal);">
+                    <span class="mdi mdi-delete"></span>
+                    <span class="button-label">Löschen</span>
                 </button>
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
-                        style="float: right;"
                         [class.disabled]="!documentEditChangeMonitor.isChanged()"
                         (click)="!documentEditChangeMonitor.isChanged() || save(true);">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
-                <button *ngIf="clonedDocument && clonedDocument.resource.id
-                            && clonedDocument.resource.type != 'Project'"
-                        class="btn btn-danger pull-right" id="document-edit-button-delete-document"
-                        style="float: right;" (click)="openDeleteModal(deleteModal);">
-                    <span class="mdi mdi-delete"></span>
-                    <span class="button-label">Löschen</span>
+                <button *ngIf="showBackButton" class="btn btn-primary"
+                        id="document-edit-button-goto-view"
+                        
+                        (click)="cancel()">
+                    <span class="mdi mdi-close"></span>
                 </button>
-                <div id="type-switcher-button-container">
-                    <type-switcher-button [type]="clonedDocument.resource.type"
-                                          (onTypeChanged)="changeType($event)">
-                    </type-switcher-button>
-                </div>
-                <div *ngIf="projectConfiguration && clonedDocument"
-                      class="docedit-header-label">
-                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
-                    <strong>{{clonedDocument.resource.identifier}}</strong>
-                    <span *ngIf="clonedDocument.resource.id">bearbeiten</span>
-                    <span *ngIf="!clonedDocument.resource.id">anlegen</span>
-                </div>
-            </h1>
+            </div>
         </header>
         <main>
 

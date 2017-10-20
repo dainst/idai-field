@@ -17,15 +17,13 @@ export class ViewManager {
     private mainTypeLabel: string;
 
 
-    constructor(private viewUtility: Views,
-                private projectConfiguration: ProjectConfiguration,
-                private resourcesState: ResourcesState) {
+    constructor(private views: Views, private resourcesState: ResourcesState) {
     }
 
 
     public getOperationViews() {
 
-        return this.viewUtility.getOperationViews();
+        return this.views.getOperationViews();
     }
 
 
@@ -39,7 +37,7 @@ export class ViewManager {
 
     public getOperationTypeDocuments() {
 
-        return this.viewUtility.getOperationTypeDocuments();
+        return this.views.getOperationTypeDocuments();
     }
 
 
@@ -188,19 +186,19 @@ export class ViewManager {
 
     public getViewNameForDocument(document) {
 
-        return this.viewUtility.getViewNameForDocument(document);
+        return this.views.getViewNameForDocument(document);
     }
 
 
-    public getDocumentLabel(document) {
+    public getDocumentLabel(document) { // TODO remove method
 
-        return this.viewUtility.getDocumentLabel(document);
+        return this.views.getDocumentLabel(document);
     }
 
 
     public getOperationTypeHomeViewName(operationTypeName: string): string {
 
-        return this.viewUtility.getViewNameForMainTypeName(operationTypeName);
+        return this.views.getViewNameForMainTypeName(operationTypeName);
     }
 
 
@@ -208,8 +206,8 @@ export class ViewManager {
 
         return Promise.resolve().then(
             () => {
-                this.view = this.projectConfiguration.getView(viewName);
-                this.mainTypeLabel = this.projectConfiguration.getLabelForType(this.view.mainType);
+                this.view = this.views.getView(viewName);
+                this.mainTypeLabel = this.views.getLabelForType(this.view);
             }
         ).catch(() => Promise.reject(null));
     }

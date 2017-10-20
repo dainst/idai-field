@@ -67,7 +67,7 @@
                             [(ngModel)]="mainTypeDocumentId">
                         <option value="">Keine Zuordnung</option>
                         <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
-                            {{viewUtility.getDocumentLabel(document)}}
+                            {{getDocumentLabel(document)}}
                         </option>
                     </select>
 

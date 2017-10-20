@@ -50,7 +50,6 @@ export class ViewFacade {
                 projectConfiguration,
                 datastore
             ),
-            projectConfiguration,
             new ResourcesState(
                 stateSerializer
             )

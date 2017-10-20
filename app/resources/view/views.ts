@@ -29,6 +29,18 @@ export class Views {
     }
 
 
+    public getView(viewName) {
+
+        return this.projectConfiguration.getView(viewName);
+    }
+
+
+    public getLabelForType(view) {
+
+        return this.projectConfiguration.getLabelForType(view.mainType);
+    }
+
+
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
         const relations = document.resource.relations['isRecordedIn'];

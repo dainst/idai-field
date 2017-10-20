@@ -101,6 +101,18 @@ export class ImportComponent {
             });
     }
 
+
+    // TODO remove duplication with viewUtility, but put the method somewhere else, viewUtility
+    public getDocumentLabel(document: Document): string {
+
+        if (document.resource.shortDescription) {
+            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
+        } else {
+            return document.resource.identifier;
+        }
+    }
+
+
     public isReady(): boolean {
 
         switch (this.sourceType) {

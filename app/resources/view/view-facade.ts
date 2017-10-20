@@ -96,7 +96,7 @@ export class ViewFacade {
 
     public getOperationTypeDocumentLabel(document) {
 
-        if (this.isInOverview()) throw "calling getOperationTypeDocumentLabel is forbidden when isInOverview";
+        if (this.isInOverview()) throw "calling getOperationTypeDocumentLabel/1 is forbidden when isInOverview";
         return this.viewManager.getOperationTypeDocumentLabel(document);
     }
 
@@ -254,8 +254,8 @@ export class ViewFacade {
 
 
     public selectOperationTypeDocument(mainTypeDoc) {
-        // TODO add guard: do nothing (or better: throw exception) when isInOverview
 
+        if (this.isInOverview()) throw "calling selectOperationTypeDocument/1 is forbidden when isInOverview";
         return this.operationTypeDocumentsManager.select(mainTypeDoc);
     }
 
@@ -297,7 +297,7 @@ export class ViewFacade {
      */
     public populateOperationTypeDocuments() {
 
-        // TODO do nothing if if isInOverview
+        // TODO do nothing if if isInOverview, or better: throw exception
         return this.operationTypeDocumentsManager.populate();
     }
 

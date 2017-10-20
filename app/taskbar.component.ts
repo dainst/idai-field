@@ -1,9 +1,9 @@
-import {Component, ViewChild, ElementRef, Renderer} from '@angular/core';
+import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {SettingsService} from './settings/settings-service';
-import {ViewUtility} from './common/view-utility';
+import {ViewFacade} from './resources/view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +27,7 @@ export class TaskbarComponent {
     constructor(private datastore: IdaiFieldDatastore,
                 private settings: SettingsService,
                 private router: Router,
-                private viewUtility: ViewUtility,
+                private viewFacade: ViewFacade,
                 private elementRef: ElementRef,
                 private renderer: Renderer) {
 
@@ -57,7 +57,7 @@ export class TaskbarComponent {
 
         let viewName: string;
 
-        this.viewUtility.getViewNameForDocument(document)
+        this.viewFacade.getViewNameForDocument(document)
             .then(name => {
                 viewName = name;
                 return this.router.navigate(['resources', viewName]);

@@ -1,10 +1,10 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ReadDatastore, Query} from 'idai-components-2/datastore';
+import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../imagestore/imagestore';
@@ -16,7 +16,7 @@ import {ImagesState} from './images-state';
 import {M} from '../m';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ViewUtility} from '../common/view-utility';
+import {ViewFacade} from '../resources/view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -50,7 +50,7 @@ export class ImageOverviewComponent implements OnInit {
 
 
     constructor(
-        public viewUtility: ViewUtility,
+        public viewFacade: ViewFacade,
         private router: Router,
         private datastore: ReadDatastore,
         private modalService: NgbModal,
@@ -61,7 +61,7 @@ export class ImageOverviewComponent implements OnInit {
         private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState
     ) {
-        this.viewUtility.getOperationTypeDocuments().then(
+        this.viewFacade.getAllOperationTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );
@@ -74,10 +74,12 @@ export class ImageOverviewComponent implements OnInit {
         });
     }
 
+
     public ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imagesState.getGridSize();
     }
+
 
     public setGridSize(size) {
 
@@ -88,10 +90,23 @@ export class ImageOverviewComponent implements OnInit {
         }
     }
 
+
+    // TODO remove duplication with viewUtility, but put the method somewhere else, viewUtility
+    public getDocumentLabel(document: Document): string {
+
+        if (document.resource.shortDescription) {
+            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
+        } else {
+            return document.resource.identifier;
+        }
+    }
+
+
     public onResize() {
 
         this.imageGrid._onResize();
     }
+
 
     public refreshGrid() {
 
@@ -117,11 +132,13 @@ export class ImageOverviewComponent implements OnInit {
         this.fetchDocuments();
     }
 
+
     public resetSearch() {
 
         this.imagesState.setQuery(this.getDefaultQuery());
         this.imagesState.setMainTypeDocumentFilterOption('');
     }
+
 
     /**
      * @param document the object that should be selected
@@ -137,6 +154,7 @@ export class ImageOverviewComponent implements OnInit {
         this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
     }
 
+
     /**
      * @param documentToSelect the object that should be navigated to if the preconditions
      *   to change the selection are met.
@@ -149,10 +167,12 @@ export class ImageOverviewComponent implements OnInit {
         );
     }
 
+
     public clearSelection() {
 
         this.selected = [];
     }
+
 
     public openDeleteModal(modal) {
 
@@ -160,6 +180,7 @@ export class ImageOverviewComponent implements OnInit {
             if (result == 'delete') this.deleteSelected();
         });
     }
+
 
     public openLinkModal() {
 
@@ -175,6 +196,7 @@ export class ImageOverviewComponent implements OnInit {
         }, () => {}); // do nothing on dismiss
     }
 
+
     public openRemoveLinkModal() {
 
         // TODO remove entries from resource identifiers necessary?
@@ -189,6 +211,7 @@ export class ImageOverviewComponent implements OnInit {
             , () => {}); // do nothing on dismiss
     }
 
+
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
         this.imagesState.setMainTypeDocumentFilterOption(filterOption);
@@ -196,6 +219,7 @@ export class ImageOverviewComponent implements OnInit {
 
         this.fetchDocuments();
     }
+
 
     private setQueryConstraints() {
 
@@ -214,6 +238,7 @@ export class ImageOverviewComponent implements OnInit {
                 this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'KNOWN' };
         }
     }
+
 
     /**
      * Populates the document list with all documents from
@@ -239,6 +264,7 @@ export class ImageOverviewComponent implements OnInit {
                 this.cacheIdsOfConnectedResources(this.documents);
             });
     }
+
 
     /**
      * @param documents Documents with depicts relation
@@ -296,6 +322,7 @@ export class ImageOverviewComponent implements OnInit {
         });
     }
 
+
     private cacheIdsOfConnectedResources(documents: Array<Document>) {
 
         for (let doc of documents) {
@@ -308,6 +335,7 @@ export class ImageOverviewComponent implements OnInit {
         }
     }
 
+
     private deleteSelected() {
 
         this.deleteSelectedImageDocuments().then(
@@ -317,6 +345,7 @@ export class ImageOverviewComponent implements OnInit {
                 this.updateTotalImageCount();
             });
     }
+
 
     private deleteSelectedImageDocuments(): Promise<any> {
         
@@ -343,6 +372,7 @@ export class ImageOverviewComponent implements OnInit {
             );
         });
     }
+
 
     private addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
 
@@ -376,6 +406,7 @@ export class ImageOverviewComponent implements OnInit {
         });
     }
 
+
     private removeRelationsOnSelectedDocuments() {
 
         const promises = [];
@@ -391,6 +422,7 @@ export class ImageOverviewComponent implements OnInit {
         return Promise.all(promises);
     }
 
+
     private doSelectedDocumentsContainDepictsRelations(): boolean {
 
         for (let document of this.selected) {
@@ -402,6 +434,7 @@ export class ImageOverviewComponent implements OnInit {
         return false;
     }
 
+
     private getDefaultQuery(): Query {
 
         return {
@@ -409,6 +442,7 @@ export class ImageOverviewComponent implements OnInit {
             types: this.imageTypeUtility.getProjectImageTypeNames()
         };
     }
+
 
     private updateTotalImageCount() {
 

@@ -7,7 +7,7 @@ import {OperationTypeDocumentsManager} from './operation-type-documents-manager'
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
-import {ViewUtility} from '../../common/view-utility';
+import {Views} from './views';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
@@ -46,7 +46,7 @@ export class ViewFacade {
         private stateSerializer: StateSerializer
     ) {
         this.viewManager = new ViewManager(
-            new ViewUtility(
+            new Views(
                 projectConfiguration,
                 datastore
             ),
@@ -80,6 +80,12 @@ export class ViewFacade {
 
         if (!this.viewManager.getView()) return;
         return this.viewManager.getView().name;
+    }
+
+
+    public getOperationViews() {
+
+        return this.viewManager.getOperationViews();
     }
 
 
@@ -164,6 +170,12 @@ export class ViewFacade {
     public getOperationTypeDocuments() {
 
         return this.operationTypeDocumentsManager.getDocuments();
+    }
+
+
+    public getAllOperationTypeDocuments() {
+
+        return this.viewManager.getOperationTypeDocuments();
     }
 
 

@@ -7,11 +7,26 @@ import {ReadDatastore} from 'idai-components-2/datastore';
 /**
  * @author Thomas Kleinke
  */
-export class ViewUtility {
+export class Views {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore) {}
+
+
+    public getOperationViews() {
+
+        if (!this.projectConfiguration.getViewsList()) return undefined;
+
+        let views = [];
+        for (let view of this.projectConfiguration.getViewsList()) {
+
+            if (view.name == 'project') continue;
+            views.push(view);
+        }
+        if (views.length < 1) return undefined;
+        return views;
+    }
 
 
     public getMainTypeNameForDocument(document: Document): Promise<string> {

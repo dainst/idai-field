@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ConfigLoader, ViewDefinition} from 'idai-components-2/configuration';
+import {ViewFacade} from './resources/view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
     public views: Array<ViewDefinition>;
     public activeRoute: string;
 
-    constructor(private configLoader: ConfigLoader,
+    constructor(private viewFacade: ViewFacade,
                 router: Router) {
 
         router.events.subscribe(() => this.activeRoute = router.url);
@@ -25,13 +26,12 @@ export class NavbarComponent implements OnInit {
 
     public ngOnInit() {
 
-        this.configLoader.getProjectConfiguration()
-            .then(projectConfiguration => this.views = projectConfiguration.getViewsList())
-            .catch(() => { this.views = []; });
+        this.views = this.viewFacade.getOperationViews();
     }
 
     public isActiveRoute(route: string) {
 
+        if (!this.activeRoute) return;
         return this.activeRoute.startsWith(route);
     }
 }

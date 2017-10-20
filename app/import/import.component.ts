@@ -25,9 +25,9 @@ import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {RelationsCompleter} from './relations-completer';
 import {SettingsService} from '../settings/settings-service';
-import {ViewUtility} from '../common/view-utility';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
+import {ViewFacade} from '../resources/view/view-facade';
 
 
 @Component({
@@ -63,10 +63,10 @@ export class ImportComponent {
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private configLoader: ConfigLoader,
-        private viewUtility: ViewUtility,
+        private viewFacade: ViewFacade,
         private modalService: NgbModal
     ) {
-        this.viewUtility.getOperationTypeDocuments().then(
+        this.viewFacade.getAllOperationTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );

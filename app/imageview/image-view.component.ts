@@ -7,12 +7,12 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Imagestore} from '../imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ViewUtility} from '../common/view-utility';
 import {ObjectUtil} from '../util/object-util';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
+import {ViewFacade} from '../resources/view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -37,7 +37,7 @@ export class ImageViewComponent implements OnInit {
         private router: Router,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private viewUtility: ViewUtility,
+        private viewFacade: ViewFacade,
         private doceditActiveTabService: DoceditActiveTabService
     ) {
         this.route.queryParams.subscribe(queryParams => {
@@ -53,7 +53,7 @@ export class ImageViewComponent implements OnInit {
 
     public jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
 
-        this.viewUtility.getViewNameForDocument(documentToJumpTo)
+        this.viewFacade.getViewNameForDocument(documentToJumpTo)
             .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id,
                 'view', 'images']));
     }

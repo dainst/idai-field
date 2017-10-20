@@ -1,7 +1,7 @@
 import {Resource} from 'idai-components-2/core';
 import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
-import {ViewUtility} from '../../common/view-utility';
+import {Views} from './views';
 import {ResourcesState} from './resources-state';
 
 /**
@@ -17,9 +17,15 @@ export class ViewManager {
     private mainTypeLabel: string;
 
 
-    constructor(private viewUtility: ViewUtility,
+    constructor(private viewUtility: Views,
                 private projectConfiguration: ProjectConfiguration,
                 private resourcesState: ResourcesState) {
+    }
+
+
+    public getOperationViews() {
+
+        return this.viewUtility.getOperationViews();
     }
 
 
@@ -28,6 +34,12 @@ export class ViewManager {
         return (this.getFilterTypes() &&
         this.getFilterTypes().length > 0 ?
             this.getFilterTypes()[0] : undefined);
+    }
+
+
+    public getOperationTypeDocuments() {
+
+        return this.viewUtility.getOperationTypeDocuments();
     }
 
 

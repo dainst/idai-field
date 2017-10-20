@@ -31,7 +31,7 @@
                     <option value=""><em>Alle Bilder</em></option>
                     <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>
                     <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
-                        {{viewUtility.getDocumentLabel(document)}}
+                        {{getDocumentLabel(document)}}
                     </option>
                 </select>
             </div>

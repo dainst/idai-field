@@ -2,7 +2,7 @@
      class="row bg-light py-2">
 
     <div class="col-md-3">
-        <div *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project'">
+        <div *ngIf="!viewFacade.isInOverview()">
             <select id="mainTypeSelectBox" *ngIf="viewFacade.getSelectedOperationTypeDocument()"
                     class="form-control" [ngModel]="viewFacade.getSelectedOperationTypeDocument()"
                     (ngModelChange)="chooseMainTypeDocumentOption($event)">
@@ -11,7 +11,7 @@
                 </option>
             </select>
             <select id="mainTypeSelectBoxSubstitute"
-                    *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project' && !viewFacade.getSelectedOperationTypeDocument()"
+                    *ngIf="!viewFacade.isInOverview() && !viewFacade.getSelectedOperationTypeDocument()"
                     class="form-control" disabled>
                 <option>
                     {{viewFacade.getOperationTypeLabel()}} anlegen ➔
@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-md-1">
-        <div *ngIf="viewFacade.getView() && viewFacade.getView().mainType != 'Project'" class="row">
+        <div *ngIf="!viewFacade.isInOverview()" class="row">
             <div *ngIf="!isEditingGeometry && viewFacade.getSelectedOperationTypeDocument()" class="col-md-6">
                 <div id="edit-main-type-document-button" class="circular-button type-button"
                      (click)="editDocument(viewFacade.getSelectedOperationTypeDocument())">
@@ -30,11 +30,11 @@
             </div>
 
             <div class="col-md-6">
-                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && viewFacade.getView().mainType != 'Project'
+                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'map'"
                              id="create-main-type-document-button" [preselectedType]="viewFacade.getView().mainType"
                              [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
-                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && viewFacade.getView().mainType != 'Project'
+                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'list'"
                              id="create-main-type-document-button" [preselectedType]="viewFacade.getView().mainType"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
@@ -76,8 +76,7 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="ready && viewFacade.getView() && viewFacade.getView().mainType != 'Project'
-            && !viewFacade.getSelectedOperationTypeDocument() && !isEditingGeometry"
+    <div *ngIf="ready && !viewFacade.isInOverview() && !viewFacade.getSelectedOperationTypeDocument() && !isEditingGeometry"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Sie müssen zuerst eine Ressource vom Typ '{{viewFacade.getOperationTypeLabel()}}' anlegen...</em>
     </div>

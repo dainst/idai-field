@@ -91,7 +91,7 @@ export class RoutingHelper {
 
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
-
+        // TODO do it inside viewFacade, in order to get rid of getView()
         this.viewFacade.getViewNameForDocument(documentToSelect)
             .then(viewName => {
                 if (viewName != this.viewFacade.getView().name) {
@@ -110,7 +110,7 @@ export class RoutingHelper {
 
 
     public jumpToMainTypeHomeView(document: Document) {
-
+        // TODO do it inside viewFacade, in order to get rid of getView()
         const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type)
         if (viewName == this.viewFacade.getView().name) return;
 

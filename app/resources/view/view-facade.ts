@@ -15,6 +15,16 @@ import {M} from '../../m';
 
 @Injectable()
 /**
+ * Manages an overview of operation type resources
+ * and different views for each operation type.
+ *
+ * In the overview the document list contains the operation type resources.
+ * In the operation type views the list contains resources recorded in
+ * one selected operation type resource.
+ *
+ * Apart from that, each view behaves the same in that the document list
+ * can get filteres etc.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -58,8 +68,14 @@ export class ViewFacade {
         );
     }
 
+
+    public isInOverview() {
+
+        return this.getView() && this.getView().mainType == 'Project';
+    }
+
     
-    public getView() {
+    public getView() { // TODO possible to make private? replace by getMainType()
 
         return this.viewManager.getView();
     }
@@ -179,17 +195,16 @@ export class ViewFacade {
 
 
     /**
-     * Sets the this.selectedDocument
+     * Sets the this.documentsManager.selectedDocument
      * and if necessary, also
      * a) selects the operation type document,
-     * this.selectedDocument is recorded in, accordingly and
+     * this.documntsManager.selectedDocument is recorded in, accordingly and
      * b) invalidates query settings in order to make sure
-     * this.selectedDocument is part of the search hits of the document list
-     * on the left hand side in the map view.
+     * this.documentsManager.selectedDocument is part of the search hits of the document list.
      *
-     * @param documentToSelect exits immediately if this is
-     *   a) this.selectedDocument or
-     *   b) this.mainTypeManager.selectedMainTypeDocument or
+     * @param document exits immediately if this is
+     *   a) the same as this.documentsManager.selectedDocument or
+     *   b) the same as this.mainTypeManager.selectedMainTypeDocument or
      *   c) undefined
      * @returns {Document}
      */

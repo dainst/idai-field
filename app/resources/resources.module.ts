@@ -20,6 +20,13 @@ import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.comp
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {ViewFacade} from './view/view-facade';
+import {Views} from './view/views';
+import {IdaiFieldDatastore} from '../model/idai-field-datastore';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {SettingsService} from '../settings/settings-service';
+import {Loading} from '../widgets/loading';
+import {StateSerializer} from '../common/state-serializer';
+import {Datastore} from 'idai-components-2/datastore';
 
 @NgModule({
     imports: [
@@ -47,7 +54,28 @@ import {ViewFacade} from './view/view-facade';
         ResourcesState,
         RoutingHelper,
         DoceditProxy,
-        ViewFacade
+        ViewFacade,
+        Views,
+        {
+            provide: ViewFacade,
+            useFactory: function(
+                projectConfiguration: ProjectConfiguration,
+                datastore: IdaiFieldDatastore,
+                loading: Loading,
+                settingsService: SettingsService,
+                stateSerializer: StateSerializer
+            ) {
+
+                return new ViewFacade(
+                    projectConfiguration,
+                    datastore,
+                    loading,
+                    settingsService,
+                    stateSerializer
+                );
+            },
+            deps: [ProjectConfiguration, Datastore, Loading, SettingsService, StateSerializer]
+        },
     ],
     exports: [
         GeometryViewComponent

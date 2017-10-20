@@ -30,7 +30,6 @@ import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {ImageTypeUtility} from './docedit/image-type-utility';
-import {Views} from './resources/view/views';
 import {PouchdbManager} from './datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './datastore/sample-data-loader';
@@ -179,7 +178,6 @@ let pconf = undefined;
         },
         { provide: MD, useClass: M},
         ImageTypeUtility,
-        Views,
         DoceditActiveTabService,
         StateSerializer
     ],

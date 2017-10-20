@@ -297,6 +297,7 @@ export class ViewFacade {
      */
     public populateOperationTypeDocuments() {
 
+        // TODO do nothing if if isInOverview
         return this.operationTypeDocumentsManager.populate();
     }
 

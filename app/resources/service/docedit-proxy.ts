@@ -52,7 +52,7 @@ export class DoceditProxy {
             result['tab'] = nextActiveTab;
         }
 
-        if (document.resource.type != this.viewFacade.getMainType()) { // TODO replace by using isInOverview()
+        if (this.isDocumentListItem(document)) {
             result['updateScrollTarget'] = true;
             return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
         }
@@ -60,6 +60,12 @@ export class DoceditProxy {
         this.viewFacade.deselect();
         this.viewFacade.selectOperationTypeDocument(result['document'] as IdaiFieldDocument);
         return this.viewFacade.populateOperationTypeDocuments();
+    }
+
+
+    private isDocumentListItem(document: Document) {
+
+        return document.resource.type != this.viewFacade.getMainType();
     }
 
 

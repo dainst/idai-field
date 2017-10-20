@@ -180,15 +180,15 @@ export class ViewManager {
     }
 
 
-    public getOperationTypeDocumentLabel(document) {
+    public getDocumentLabel(document) {
 
-        return this.viewUtility.getOperationTypeDocumentLabel(document);
+        return this.viewUtility.getDocumentLabel(document);
     }
 
 
     public getOperationTypeHomeViewName(operationTypeName: string): string {
 
-        return this.viewUtility.getOperationTypeHomeViewName(operationTypeName);
+        return this.viewUtility.getViewNameForMainTypeName(operationTypeName);
     }
 
 

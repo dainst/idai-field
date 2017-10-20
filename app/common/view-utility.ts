@@ -64,7 +64,7 @@ export class ViewUtility {
     }
 
 
-    public getOperationTypeHomeViewName(mainTypeName: string): string {
+    public getViewNameForMainTypeName(mainTypeName: string): string {
 
         const viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
         let viewName: string;
@@ -79,7 +79,13 @@ export class ViewUtility {
     }
 
 
-    public getMainTypeDocuments(): Promise<Array<Document>> {
+    /**
+     * Gets a list of all the documents of types declared in the views array
+     * of project documentation, except for the Project type document.
+     *
+     * @returns
+     */
+    public getOperationTypeDocuments(): Promise<Array<Document>> {
 
         let mainTypeDocuments: Array<Document> = [];
         let promises: Array<Promise<Array<Document>>> = [];
@@ -101,7 +107,7 @@ export class ViewUtility {
     }
 
 
-    public getOperationTypeDocumentLabel(document: Document): string {
+    public getDocumentLabel(document: Document): string {
 
         if (document.resource.shortDescription) {
             return document.resource.shortDescription + ' (' + document.resource.identifier + ')';

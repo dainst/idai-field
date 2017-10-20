@@ -97,7 +97,7 @@ export class ViewFacade {
     public getOperationTypeDocumentLabel(document) {
 
         if (this.isInOverview()) throw "calling getOperationTypeDocumentLabel/1 is forbidden when isInOverview";
-        return this.viewManager.getOperationTypeDocumentLabel(document);
+        return this.viewManager.getDocumentLabel(document);
     }
 
 

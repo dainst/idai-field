@@ -66,7 +66,7 @@ export class ImportComponent {
         private viewUtility: ViewUtility,
         private modalService: NgbModal
     ) {
-        this.viewUtility.getMainTypeDocuments().then(
+        this.viewUtility.getOperationTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );

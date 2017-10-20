@@ -111,13 +111,9 @@ export class RoutingHelper {
 
     public jumpToMainTypeHomeView(document: Document) {
 
-        const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type)
+        const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type);
         if (viewName == this.viewFacade.getViewName()) return;
 
-        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-            this.viewFacade.selectOperationTypeDocument(document);
-            this.viewFacade.populateDocumentList();
-        });
-
+        this.router.navigate(['resources', viewName, document.resource.id]);
     }
 }

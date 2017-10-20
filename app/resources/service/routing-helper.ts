@@ -91,10 +91,10 @@ export class RoutingHelper {
 
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
-        // TODO do it inside viewFacade, in order to get rid of getView()
+
         this.viewFacade.getViewNameForDocument(documentToSelect)
             .then(viewName => {
-                if (viewName != this.viewFacade.getMainType()) {
+                if (viewName != this.viewFacade.getViewName()) {
                     if (tab) {
                         return this.router.navigate(['resources', viewName,
                             documentToSelect.resource.id, 'view', tab]);
@@ -110,9 +110,9 @@ export class RoutingHelper {
 
 
     public jumpToMainTypeHomeView(document: Document) {
-        // TODO do it inside viewFacade, in order to get rid of getView()
+
         const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type)
-        if (viewName == this.viewFacade.getMainType()) return;
+        if (viewName == this.viewFacade.getViewName()) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
             this.viewFacade.selectOperationTypeDocument(document);

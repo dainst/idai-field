@@ -71,13 +71,15 @@ export class ViewFacade {
 
     public isInOverview() {
 
-        return this.getView() && this.getView().mainType == 'Project';
+        return this.viewManager.getView() &&
+            this.viewManager.getView().mainType == 'Project';
     }
 
     
-    public getView() { // TODO remove
+    public getViewName() {
 
-        return this.viewManager.getView();
+        if (!this.viewManager.getView()) return;
+        return this.viewManager.getView().name;
     }
 
 

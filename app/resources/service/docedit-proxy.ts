@@ -52,7 +52,7 @@ export class DoceditProxy {
             result['tab'] = nextActiveTab;
         }
 
-        if (document.resource.type != this.viewFacade.getMainType()) {
+        if (document.resource.type != this.viewFacade.getMainType()) { // TODO replace by using isInOverview()
             result['updateScrollTarget'] = true;
             return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
         }

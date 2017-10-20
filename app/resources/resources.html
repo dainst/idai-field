@@ -5,7 +5,7 @@
         <div *ngIf="!viewFacade.isInOverview()">
             <select id="mainTypeSelectBox" *ngIf="viewFacade.getSelectedOperationTypeDocument()"
                     class="form-control" [ngModel]="viewFacade.getSelectedOperationTypeDocument()"
-                    (ngModelChange)="chooseMainTypeDocumentOption($event)">
+                    (ngModelChange)="chooseOperationTypeDocumentOption($event)">
                 <option *ngFor="let document of viewFacade.getOperationTypeDocuments()" [ngValue]="document">
                     {{viewFacade.getOperationTypeDocumentLabel(document)}}
                 </option>
@@ -14,7 +14,7 @@
                     *ngIf="!viewFacade.isInOverview() && !viewFacade.getSelectedOperationTypeDocument()"
                     class="form-control" disabled>
                 <option>
-                    {{viewFacade.getOperationTypeLabel()}} anlegen ➔
+                    {{viewFacade.getMainTypeLabel()}} anlegen ➔
                 </option>
             </select>
         </div>
@@ -32,11 +32,11 @@
             <div class="col-md-6">
                 <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'map'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getView().mainType"
+                             id="create-main-type-document-button" [preselectedType]="viewFacade.getMainType()"
                              [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
                 <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'list'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getView().mainType"
+                             id="create-main-type-document-button" [preselectedType]="viewFacade.getMainType()"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
     <div class="col-md-4 mr-md-auto">
         <search-bar *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
-                    [relationRangeType]="viewFacade.getView().mainType"
+                    [relationRangeType]="viewFacade.getMainType()"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
         </search-bar>
     </div>
@@ -78,7 +78,7 @@
 
     <div *ngIf="ready && !viewFacade.isInOverview() && !viewFacade.getSelectedOperationTypeDocument() && !isEditingGeometry"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Sie müssen zuerst eine Ressource vom Typ '{{viewFacade.getOperationTypeLabel()}}' anlegen...</em>
+        <em>Sie müssen zuerst eine Ressource vom Typ '{{viewFacade.getMainTypeLabel()}}' anlegen...</em>
     </div>
 
     <!-- TODO: hide map/list if no main type document is selected when a solution is found for properly initializing the map afterwards -->

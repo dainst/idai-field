@@ -44,7 +44,7 @@ export class ViewManager {
     }
 
 
-    public getOperationTypeLabel() {
+    public getMainTypeLabel() {
 
         return this.mainTypeLabel;
     }

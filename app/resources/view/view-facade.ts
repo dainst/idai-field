@@ -75,9 +75,20 @@ export class ViewFacade {
     }
 
     
-    public getView() { // TODO possible to make private? replace by getMainType()
+    public getView() { // TODO remove
 
         return this.viewManager.getView();
+    }
+
+
+    /**
+     * @returns the main type of the currently selected view.
+     * This is either 'Project' or one of the operation types names.
+     */
+    public getMainType(): string {
+
+        if (!this.viewManager.getView()) return undefined;
+        return this.viewManager.getView().mainType;
     }
 
 
@@ -89,7 +100,7 @@ export class ViewFacade {
 
     public getOperationTypeLabel() {
 
-        return this.viewManager.getOperationTypeLabel();
+        return this.viewManager.getMainTypeLabel();
     }
 
 
@@ -238,7 +249,7 @@ export class ViewFacade {
     }
 
 
-    public selectMainTypeDocument(mainTypeDoc) {
+    public selectOperationTypeDocument(mainTypeDoc) {
 
         return this.operationTypeDocumentsManager.select(mainTypeDoc);
     }

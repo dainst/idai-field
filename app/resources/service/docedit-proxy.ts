@@ -52,13 +52,13 @@ export class DoceditProxy {
             result['tab'] = nextActiveTab;
         }
 
-        if (document.resource.type != this.viewFacade.getView().mainType) {
+        if (document.resource.type != this.viewFacade.getMainType()) {
             result['updateScrollTarget'] = true;
             return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
         }
 
         this.viewFacade.deselect();
-        this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
+        this.viewFacade.selectOperationTypeDocument(result['document'] as IdaiFieldDocument);
         return this.viewFacade.populateOperationTypeDocuments();
     }
 

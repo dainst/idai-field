@@ -25,6 +25,11 @@ export function main() {
             }],
             "views": [
                 {
+                    "label": "Übersicht",
+                    "mainType": "Project",
+                    "name": "project"
+                },
+                {
                     "label": "Ausgrabung",
                     "mainType": "Trench",
                     "name": "excavation"
@@ -59,7 +64,7 @@ export function main() {
         );
 
 
-        beforeEach(done => {
+        beforeEach(() => {
 
             const loading =
                 jasmine.createSpyObj('loading', ['start', 'stop']);
@@ -82,28 +87,40 @@ export function main() {
                 settingsService,
                 stateSerializer
             );
-
-            viewFacade.setupView('excavation', undefined)
-                .then(() => viewFacade.populateProjectDocument())
-                .then(() => {done();});
         });
-
-
-        beforeEach(done =>
-            viewFacade.populateOperationTypeDocuments().then(() => { done();})
-        );
 
 
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-        it('do basic stuff',
+        function setupView(name) {
+            return viewFacade.setupView(name, undefined)
+                .then(() => viewFacade.populateProjectDocument())
+                .then(() => viewFacade.populateOperationTypeDocuments())
+                .then(() => viewFacade.populateDocumentList());
+        }
+
+
+        it('populate document list in operations view',
             (done) => {
-                viewFacade.populateDocumentList().then(() => {
-                    expect(viewFacade.getDocuments().length).toBe(1);
-                    expect(viewFacade.getDocuments()[0].resource.identifier).toBe('find1');
-                    done();
-                });
+                setupView('excavation')
+                    .then(() => {
+                        expect(viewFacade.getDocuments().length).toBe(1);
+                        expect(viewFacade.getDocuments()[0].resource.identifier).toBe('find1');
+                        done();
+                    });
+            }
+        );
+
+
+        it('populate document list in operations overview',
+            (done) => {
+                setupView('project')
+                    .then(() => {
+                        expect(viewFacade.getDocuments().length).toBe(1);
+                        expect(viewFacade.getDocuments()[0].resource.identifier).toBe('trench1');
+                        done();
+                    });
             }
         );
     })

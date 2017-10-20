@@ -39,6 +39,7 @@ export class OperationTypeDocumentsManager {
             OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getView().mainType))
             .then(documents => {
                 this.documents = documents as Array<IdaiFieldDocument>;
+
                 if (this.documents.length == 0) {
                     this.selectedDocument = undefined;
                     return;

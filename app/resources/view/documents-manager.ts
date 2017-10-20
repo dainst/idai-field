@@ -4,6 +4,7 @@ import {OperationTypeDocumentsManager} from './operation-type-documents-manager'
 import {ViewManager} from './view-manager';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 /**
@@ -13,7 +14,7 @@ import {ChangeHistoryUtil} from '../../model/change-history-util';
  */
 export class DocumentsManager {
 
-
+    public projectDocument: Document;
     private selectedDocument: Document;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
@@ -27,11 +28,19 @@ export class DocumentsManager {
         private operationTypeDocumentsManager: OperationTypeDocumentsManager
     ) {
 
-        datastore.documentChangesNotifications() // TODO make part of ReadDatastore
+        datastore.documentChangesNotifications()
             .subscribe(documentChange => {
             this.handleChange(
                 documentChange, this.selectedDocument);
         });
+    }
+
+    public populateProjectDocument() {
+
+        return this.datastore.get(this.settingsService.getSelectedProject())
+            .then(document => this.projectDocument = document as IdaiFieldDocument)
+            .catch(() => {console.log("cannot find project document");
+                return Promise.reject(undefined)});
     }
 
 
@@ -87,7 +96,7 @@ export class DocumentsManager {
     public deselect() {
 
         this.selectedDocument = undefined;
-        this.removeEmptyDocuments(); // TODO consider using setSelected(undefined)
+        this.removeEmptyDocuments();
     }
 
 
@@ -167,15 +176,21 @@ export class DocumentsManager {
     public populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
+        this.documents = [];
 
-        if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
-            this.documents = [];
-            return Promise.resolve();
+        let mainTypeDocument;
+        if (this.viewManager.isInOverview()) {
+            mainTypeDocument = this.projectDocument;
+        } else {
+            if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
+                return Promise.resolve();
+            }
+            mainTypeDocument = this.operationTypeDocumentsManager.getSelectedDocument();
         }
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-            this.operationTypeDocumentsManager.getSelectedDocument().resource.id))
+                mainTypeDocument.resource.id))
             .then(documents => this.documents = documents)
             .then(() => this.removeEmptyDocuments());
     }
@@ -233,7 +248,7 @@ export class DocumentsManager {
     }
 
 
-    private static isRemoteChange(changedDocument: Document, username: string): boolean { // TODO make static
+    private static isRemoteChange(changedDocument: Document, username: string): boolean {
 
         const latestAction: Action = ChangeHistoryUtil.getLastModified(changedDocument);
         return latestAction && latestAction.user != username;

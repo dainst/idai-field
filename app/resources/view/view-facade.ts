@@ -11,7 +11,6 @@ import {Views} from './views';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
-import {M} from '../../m';
 
 @Injectable()
 /**
@@ -34,8 +33,6 @@ export class ViewFacade {
     private viewManager: ViewManager;
     private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
-
-    private projectDocument: IdaiFieldDocument;
 
 
     constructor(
@@ -70,8 +67,7 @@ export class ViewFacade {
 
     public isInOverview() {
 
-        return this.viewManager.getView() &&
-            this.viewManager.getView().mainType == 'Project';
+        return this.viewManager.isInOverview();
     }
 
     
@@ -129,7 +125,7 @@ export class ViewFacade {
 
     public getProjectDocument() {
 
-        return this.projectDocument;
+        return this.documentsManager.projectDocument;
     }
 
 
@@ -266,11 +262,7 @@ export class ViewFacade {
 
     public populateProjectDocument(): Promise<any> {
 
-        return this.datastore.get(this.settingsService.getSelectedProject())
-            .then(document => this.projectDocument = document as IdaiFieldDocument)
-            .catch(err => Promise.reject(
-                [M.DATASTORE_NOT_FOUND] // TODO do not return a key of M but instead some errWithParams
-            ));
+        return this.documentsManager.populateProjectDocument();
     }
 
 
@@ -297,11 +289,13 @@ export class ViewFacade {
      *   b) the first element of the operation type documents it is not set
      *      and operation type documents length > 1
      *
+     * Does nothing if isInOverview()
+     *
      * @returns {Promise<any>}
      */
     public populateOperationTypeDocuments() {
 
-        // TODO do nothing if if isInOverview, or better: throw exception
+        if (this.isInOverview()) return Promise.resolve(undefined);
         return this.operationTypeDocumentsManager.populate();
     }
 

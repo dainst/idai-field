@@ -21,6 +21,12 @@ export class ViewManager {
     }
 
 
+    public isInOverview() {
+
+        return this.getView() && this.getView().mainType == 'Project';
+    }
+
+
     public getOperationViews() {
 
         return this.views.getOperationViews();

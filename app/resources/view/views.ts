@@ -1,6 +1,4 @@
-import {Document} from 'idai-components-2/core';
 import {ViewDefinition} from 'idai-components-2/configuration';
-import {Datastore} from 'idai-components-2/datastore';
 
 /**
  * @author Thomas Kleinke

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Datastore} from 'idai-components-2/datastore';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';

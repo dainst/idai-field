@@ -18,6 +18,7 @@ import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../model/model-util';
+import {DocumentsManager} from './documents-manager';
 
 @Component({
     moduleId: module.id,
@@ -35,7 +36,7 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public documents: Array<IdaiFieldImageDocument>;
+
     public mainTypeDocuments: Array<Document> = [];
 
     public totalImageCount: number;
@@ -43,8 +44,7 @@ export class ImageOverviewComponent implements OnInit {
     public selected: Array<IdaiFieldImageDocument> = [];
     public depictsRelationsSelected: boolean = false;
 
-    // TODO move this to image-grid component
-    public resourceIdentifiers: string[] = [];
+
 
     public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
     public minGridSize: number = 2;
@@ -63,7 +63,8 @@ export class ImageOverviewComponent implements OnInit {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
-        private imagesState: ImagesState
+        private imagesState: ImagesState,
+        private documentsManager: DocumentsManager
     ) {
         this.viewFacade.getAllOperationTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
@@ -73,10 +74,13 @@ export class ImageOverviewComponent implements OnInit {
         this.imagesState.initialize().then(() => {
             if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
             this.setQueryConstraints();
-            this.fetchDocuments();
+            this.documentsManager.fetchDocuments();
             this.updateTotalImageCount();
         });
     }
+
+
+    public getDocuments = () => this.documentsManager.getDocuments();
 
 
     public ngOnInit() {
@@ -103,7 +107,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public refreshGrid() {
 
-        this.fetchDocuments();
+        this.documentsManager.fetchDocuments();
         this.updateTotalImageCount();
     }
 
@@ -113,7 +117,7 @@ export class ImageOverviewComponent implements OnInit {
         query.q = q;
         this.imagesState.setQuery(query);
 
-        this.fetchDocuments();
+        this.documentsManager.fetchDocuments();
     }
 
     public setQueryTypes(types: string[]) {
@@ -122,7 +126,7 @@ export class ImageOverviewComponent implements OnInit {
         query.types = types;
         this.imagesState.setQuery(query);
 
-        this.fetchDocuments();
+        this.documentsManager.fetchDocuments();
     }
 
 
@@ -210,7 +214,7 @@ export class ImageOverviewComponent implements OnInit {
         this.imagesState.setMainTypeDocumentFilterOption(filterOption);
         this.setQueryConstraints();
 
-        this.fetchDocuments();
+        this.documentsManager.fetchDocuments();
     }
 
 
@@ -233,108 +237,12 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     */
-    private fetchDocuments() {
-
-        const query: Query = this.imagesState.getQuery();
-
-        return this.datastore.find(query)
-            .catch(errWithParams => {
-                console.error('ERROR with find using query', query);
-                if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-            }).then(documents => {
-                if (!documents || documents.length == 0) return Promise.resolve([]);
-                if (['', 'UNLINKED'].indexOf(this.imagesState.getMainTypeDocumentFilterOption()) == -1) {
-                    return this.applyLinkFilter(documents);
-                } else {
-                    return Promise.resolve(documents);
-                }
-            }).then(filteredDocuments => {
-                this.documents = filteredDocuments as Array<IdaiFieldImageDocument>;
-                this.cacheIdsOfConnectedResources(this.documents);
-            });
-    }
-
-
-    /**
-     * @param documents Documents with depicts relation
-     * @returns Documents which are linked to the main type resource selected in filter box:
-     * 1. Documents which are linked to a resource which contains an isRecordedIn relation to the main type resource
-     * 2. Documents which are directly linked to the main type resource
-     */
-    private applyLinkFilter(documents: Array<Document>): Promise<Array<Document>> {
-
-        const documentMap: { [id: string]: Document } = {};
-        const promises: Array<Promise<Document>> = [];
-        const mainTypeDocumentId: string = this.imagesState.getMainTypeDocumentFilterOption();
-
-        for (let document of documents) {
-            documentMap[document.resource.id] = document;
-            for (let targetId of document.resource.relations['depicts']) {
-                promises.push(this.datastore.get(targetId));
-            }
-        }
-
-        let targetDocuments: Array<Document>;
-
-        return Promise.all(promises).then(targetDocs => {
-            targetDocuments = targetDocs;
-
-            return this.datastore.find({
-                q: '',
-                constraints: { 'resource.relations.isRecordedIn': mainTypeDocumentId }
-            });
-        }).then(recordedDocuments => {
-            const filteredDocuments: Array<Document> = [];
-
-            for (let targetDocument of targetDocuments) {
-                if (recordedDocuments.indexOf(targetDocument) > -1) {
-                    for (let imageId of targetDocument.resource.relations['isDepictedIn']) {
-                        const imageDocument = documentMap[imageId];
-                        if (imageDocument && filteredDocuments.indexOf(imageDocument) == -1) {
-                            filteredDocuments.push(imageDocument);
-                        }
-                    }
-                }
-            }
-
-            const result: Array<Document> = [];
-
-            for (let document of documents) {
-                if (filteredDocuments.indexOf(document) > -1 ||
-                        // Add images directly linked to the main type document
-                        document.resource.relations['depicts'].indexOf(mainTypeDocumentId) > -1) {
-                    result.push(document);
-                }
-            }
-
-            return Promise.resolve(result);
-        });
-    }
-
-
-    private cacheIdsOfConnectedResources(documents: Array<Document>) {
-
-        for (let doc of documents) {
-            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                for (let resourceId of doc.resource.relations['depicts']) {
-                    this.datastore.get(resourceId).then(result => {
-                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                    });
-                }
-        }
-    }
-
-
     private deleteSelected() {
 
         this.deleteSelectedImageDocuments().then(
             () => {
                 this.clearSelection();
-                this.fetchDocuments();
+                this.documentsManager.fetchDocuments();
                 this.updateTotalImageCount();
             });
     }
@@ -354,8 +262,7 @@ export class ImageOverviewComponent implements OnInit {
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
                 ).then(() => {
-                    this.documents.splice(
-                        this.documents.indexOf(document), 1);
+                    this.documentsManager.remove(document);
                 })
             }
 
@@ -369,7 +276,7 @@ export class ImageOverviewComponent implements OnInit {
 
     private addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
 
-        this.resourceIdentifiers[targetDocument.resource.id] = targetDocument.resource.identifier;
+        this.documentsManager.cacheIdentifier(targetDocument);
 
         return new Promise<any>((resolve, reject) => {
 

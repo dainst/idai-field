@@ -81,7 +81,7 @@
         </div>
 
         <div id="image-count-badge" class="badge badge-secondary">
-            {{documents ? documents.length - 1 : 0}} von {{totalImageCount}}
+            {{getDocuments() ? getDocuments().length - 1 : 0}} von {{totalImageCount}}
             <span *ngIf="totalImageCount == 1">Bild wird</span>
             <span *ngIf="totalImageCount != 1">Bildern werden</span>
             angezeigt
@@ -90,7 +90,7 @@
         <div (window:resize)="onResize($event)">
             <image-grid #imageGrid
                     [nrOfColumns]="imagesState.getGridSize()"
-                    [documents]="documents"
+                    [documents]="getDocuments()"
                     [resourceIdentifiers]="resourceIdentifiers"
                     [selected]="selected"
                     [showDropArea]="true"

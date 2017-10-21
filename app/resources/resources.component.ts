@@ -26,7 +26,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isEditingGeometry: boolean = false;
 
-    public ready: boolean = true; // TODO remove, lets work on loading
+    public ready: boolean = true; // TODO remove, lets make use of loading instead
 
     private scrollTarget: IdaiFieldDocument;
 
@@ -150,7 +150,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.viewFacade.getSelectedDocument(), // TODO can we change it somehow, that both resources component and list component can work directly with doceditProxy?
+    public editDocument(document: Document = this.viewFacade.getSelectedDocument(),
                         activeTabName?: string) {
 
         this.isEditingGeometry = false;

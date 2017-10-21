@@ -74,9 +74,9 @@ export class DoceditProxy {
         this.documentEditChangeMonitor.reset();
 
         if (closeReason == 'deleted') {
-            this.viewFacade.deselect(); // replacement for: this.documentsManager.selectedDocument = undefined;
+            this.viewFacade.deselect();
             if (document == this.viewFacade.getSelectedOperationTypeDocument()) {
-                return this.viewFacade.handleMainTypeDocumentOnDeleted(this.viewFacade.getSelectedDocument());
+                return this.viewFacade.handleMainTypeDocumentOnDeleted();
             }
         }
     }

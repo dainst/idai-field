@@ -1,10 +1,13 @@
 import {Resource} from 'idai-components-2/core';
-import {ProjectConfiguration, ViewDefinition} from 'idai-components-2/configuration';
+import {ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
 import {Views} from './views';
 import {ResourcesState} from './resources-state';
 
 /**
+ * Holds and provides acces to the current view, which is one of the views from this.views,
+ * as well as serializes all of its state so it can be restored later.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -17,7 +20,9 @@ export class ViewManager {
     private mainTypeLabel: string;
 
 
-    constructor(private views: Views, private resourcesState: ResourcesState) {
+    constructor(
+        private views: Views,
+        private resourcesState: ResourcesState) {
     }
 
 
@@ -27,23 +32,11 @@ export class ViewManager {
     }
 
 
-    public getOperationViews() {
-
-        return this.views.getOperationViews();
-    }
-
-
     public getCurrentFilterType()  {
 
         return (this.getFilterTypes() &&
         this.getFilterTypes().length > 0 ?
             this.getFilterTypes()[0] : undefined);
-    }
-
-
-    public getOperationTypeDocuments() {
-
-        return this.views.getOperationTypeDocuments();
     }
 
 
@@ -151,9 +144,8 @@ export class ViewManager {
 
         if (!selectedDocument) return true;
 
-        if (!this.getQueryTypes() || this.getQueryTypes().indexOf(selectedDocument.resource.type) != -1) return true;
-
-        return false;
+        return (!this.getQueryTypes() ||
+            this.getQueryTypes().indexOf(selectedDocument.resource.type) != -1);
     }
 
 
@@ -187,18 +179,6 @@ export class ViewManager {
 
             return this.initialize(defaultMode ? 'map' : undefined);
         });
-    }
-
-
-    public getViewNameForDocument(document) {
-
-        return this.views.getViewNameForDocument(document);
-    }
-
-
-    public getOperationTypeHomeViewName(operationTypeName: string): string {
-
-        return this.views.getViewNameForMainTypeName(operationTypeName);
     }
 
 

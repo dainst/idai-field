@@ -44,6 +44,13 @@ export class MapWrapperComponent {
     }
 
 
+    public getIsRecordedInTarget() {
+
+        if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
+        return this.viewFacade.getSelectedOperationTypeDocument();
+    }
+
+
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
@@ -61,6 +68,13 @@ export class MapWrapperComponent {
         this.routingHelper.jumpToMainTypeHomeView(document);
     }
 
+
+    public showPlusButton() {
+
+        return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
+            && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
+            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperationTypeDocument()));
+    }
 
     /**
      * @param geometry

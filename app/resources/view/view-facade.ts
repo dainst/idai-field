@@ -30,6 +30,7 @@ import {StateSerializer} from '../../common/state-serializer';
 export class ViewFacade {
 
 
+    private views: Views;
     private viewManager: ViewManager;
     private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
@@ -42,11 +43,12 @@ export class ViewFacade {
         private settingsService: SettingsService,
         private stateSerializer: StateSerializer
     ) {
+        this.views = new Views(
+            projectConfiguration,
+            datastore
+        );
         this.viewManager = new ViewManager(
-            new Views(
-                projectConfiguration,
-                datastore
-            ),
+            this.views,
             new ResourcesState(
                 stateSerializer
             )
@@ -80,7 +82,7 @@ export class ViewFacade {
 
     public getOperationViews() {
 
-        return this.viewManager.getOperationViews();
+        return this.views.getOperationViews();
     }
 
 
@@ -129,7 +131,7 @@ export class ViewFacade {
     }
 
 
-    public handleMainTypeDocumentOnDeleted(document: Document) {
+    public handleMainTypeDocumentOnDeleted() {
 
         this.viewManager.removeActiveLayersIds(this.operationTypeDocumentsManager.getSelectedDocument().resource.id);
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
@@ -151,19 +153,21 @@ export class ViewFacade {
 
     public getSelectedOperationTypeDocument() {
 
+        if (this.isInOverview()) throw "calling getSelectedOperationTypeDocument is forbidden when isInOverview";
         return this.operationTypeDocumentsManager.getSelectedDocument();
     }
 
 
     public getOperationTypeDocuments() {
 
+        if (this.isInOverview()) throw "calling getOperationTypeDocuments is forbidden when isInOverview";
         return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
     public getAllOperationTypeDocuments() {
 
-        return this.viewManager.getOperationTypeDocuments();
+        return this.views.getOperationTypeDocuments();
     }
 
 
@@ -235,7 +239,7 @@ export class ViewFacade {
     }
 
 
-    public setQueryString(q) { // TODO make unique access points: setQuery, getQuery, get rid of the other methods
+    public setQueryString(q) {
 
         return this.documentsManager.setQueryString(q);
     }
@@ -268,6 +272,7 @@ export class ViewFacade {
 
     public isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
 
+        if (this.isInOverview()) throw "calling isSelectedDocumentRecordedInSelectedOperationTypeDocument is forbidden when isInOverview";
         if (!this.documentsManager.getSelectedDocument()) return false;
 
         return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
@@ -308,12 +313,12 @@ export class ViewFacade {
 
     public getViewNameForDocument(document: Document): Promise <string> {
 
-        return this.viewManager.getViewNameForDocument(document);
+        return this.views.getViewNameForDocument(document);
     }
 
 
     public getOperationTypeHomeViewName(operationTypeName: string): string {
 
-        return this.viewManager.getOperationTypeHomeViewName(operationTypeName);
+        return this.views.getViewNameForMainTypeName(operationTypeName);
     }
 }

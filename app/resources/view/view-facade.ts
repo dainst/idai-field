@@ -329,8 +329,8 @@ export class ViewFacade {
     }
 
 
-    private static err(fnName, positive = true) {
-        const notMarker = positive ? '' : '! ';
-        return "calling "+fnName+" is forbidden when "+notMarker+"isInOverview";
+    private static err(fnName, notAllowedWhenIsInOverview = true) {
+        const notMarker = notAllowedWhenIsInOverview ? '' : '! ';
+        return "calling "+fnName+" is forbidden when " + notMarker + "isInOverview";
     }
 }

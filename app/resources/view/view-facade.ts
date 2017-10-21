@@ -39,10 +39,7 @@ export class ViewFacade {
         private stateSerializer: StateSerializer,
         private viewsList: any
     ) {
-        this.views = new Views(
-            datastore,
-            viewsList
-        );
+        this.views = new Views(viewsList);
         this.viewManager = new ViewManager(
             this.views,
             new ResourcesState(
@@ -161,9 +158,31 @@ export class ViewFacade {
     }
 
 
+    // As discussed in #6707, should we really base this on views?
+    // It seems way better to ask to ProjectConfiguration for Operation Type Documents
+    // and the fetch them outside the facade.
     public getAllOperationTypeDocuments() {
 
-        return this.views.getOperationTypeDocuments();
+        const viewMainTypes = this.views.getOperationViews()
+            .map(view => {return view.mainType});
+
+        let mainTypeDocuments: Array<Document> = [];
+        let promises: Array<Promise<Array<Document>>> = [];
+
+        return Promise.resolve().then(() => {
+
+            for (let viewMainType of viewMainTypes) {
+                if (viewMainType == 'Project') continue;
+                let promise = this.datastore.find({ q: '', types: [viewMainType] })
+                    .then(documents => mainTypeDocuments = mainTypeDocuments.concat(documents));
+                promises.push(promise);
+            }
+
+            return Promise.all(promises).then(
+                () => Promise.resolve(mainTypeDocuments),
+                msgWithParams => Promise.reject(msgWithParams)
+            );
+        });
     }
 
 

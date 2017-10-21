@@ -61,6 +61,13 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public getIsRecordedInTarget() {
+
+        if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
+        return this.viewFacade.getSelectedOperationTypeDocument();
+    }
+
+
     // TODO remove duplication with image overview. put to util package
     public getDocumentLabel(document: Document): string {
 

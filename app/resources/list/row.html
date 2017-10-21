@@ -5,7 +5,7 @@
     <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
          [class.font-weight-bold]="depth == 0">
         <div class="plus-button-wrapper">
-            <plus-button [isRecordedIn]="viewFacade.getSelectedOperationTypeDocument()" [liesWithin]="docRef.doc"
+            <plus-button [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()" [liesWithin]="docRef.doc"
                      [preselectedGeometryType]="'none'" (dblclick)="$event.stopPropagation();"></plus-button>
         </div>
 

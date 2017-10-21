@@ -21,7 +21,7 @@
         <plus-button *ngIf="showPlusButton()"
                      id="create-document-button" [placement]="'top'"
                      [preselectedType]="viewFacade.getCurrentFilterType()"
-                     [isRecordedIn]="getIsRecordedInTarget()"></plus-button>
+                     [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"></plus-button>
         <loading-icon></loading-icon>
     </div>
 
@@ -30,7 +30,7 @@
          class="px-0">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
-                      [mainTypeDocument]="getIsRecordedInTarget()"
+                      [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="!viewFacade.isInOverview()"

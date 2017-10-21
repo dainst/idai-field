@@ -39,6 +39,7 @@ export class RowComponent {
         public viewFacade: ViewFacade
     ) {  }
 
+
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         return this.datastore.get(document.resource.id, { skip_cache: true })

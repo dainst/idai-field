@@ -44,13 +44,6 @@ export class MapWrapperComponent {
     }
 
 
-    public getIsRecordedInTarget() {
-
-        if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
-        return this.viewFacade.getSelectedOperationTypeDocument();
-    }
-
-
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;

@@ -11,10 +11,9 @@
                  (drop)="resourcesComponent.uploadImages($event, docRef.doc)"></row>
         </div>
     </div>
-    <plus-button *ngIf="resourcesComponent.ready && !loading.showIcons && viewFacade.getQuery().q == ''
-                        && viewFacade.getSelectedOperationTypeDocument()"
+    <plus-button *ngIf="showPlusButton()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="viewFacade.getCurrentFilterType()"
-                 [isRecordedIn]="viewFacade.getSelectedOperationTypeDocument()"></plus-button>
+                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"></plus-button>
     <loading-icon></loading-icon>
 </div>

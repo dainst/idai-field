@@ -32,7 +32,7 @@ export class ListComponent implements OnChanges {
     
     constructor(
         private datastore: IdaiFieldDatastore,
-        public resourcesComponent: ResourcesComponent, // TODO remove this, we only use it to access ready which we also have as input
+        public resourcesComponent: ResourcesComponent,
         private messages: Messages,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
@@ -57,16 +57,27 @@ export class ListComponent implements OnChanges {
     }
 
 
+    public showPlusButton() {
+
+        if (this.resourcesComponent.ready && !this.loading.showIcons && this.viewFacade.getQuery().q == '') {
+            if (this.viewFacade.isInOverview()) return true;
+            if (this.viewFacade.getSelectedOperationTypeDocument()) return true;
+        }
+
+        return false;
+    }
+
+
     private update(): Promise<any> {
 
-        if (!this.viewFacade.getSelectedOperationTypeDocument()) return Promise.resolve();
+        if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
 
         this.docRefTree = [];
         this.childrenShownForIds = [];
 
         // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
         return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': this.viewFacade.getSelectedOperationTypeDocument().resource.id } }
+            { constraints: { 'resource.relations.isRecordedIn': this.resourcesComponent.getIsRecordedInTarget().resource.id } }
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
 

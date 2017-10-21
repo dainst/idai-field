@@ -46,28 +46,15 @@ export class RoutingHelper {
 
             this.location.replaceState('resources/' + params['view']);
 
+            this.loading.start();
             this.viewFacade.setupView(params['view'], params['id'])
-                .then(() => this.initializeViewFacade())
-                .then(() => {observer.next(params);})
+                .then(() => {this.loading.stop(); observer.next(params);})
                 .catch(msgWithParams => {
                     if (msgWithParams) console.error(
                         "got msgWithParams in GeneralRoutingHelper#setRoute: ",msgWithParams);
                 });
             }
         );
-    }
-
-
-    private initializeViewFacade(): Promise<any> {
-
-        this.viewFacade.deselect();
-
-        this.loading.start();
-        return Promise.resolve()
-            .then(() => this.viewFacade.populateProjectDocument())
-            .then(() => this.viewFacade.populateOperationTypeDocuments())
-            .then(() => this.viewFacade.populateDocumentList())
-            .then(() => this.loading.stop());
     }
 
 

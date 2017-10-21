@@ -88,17 +88,10 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-        function setupView(name) {
-            return viewFacade.setupView(name, undefined)
-                .then(() => viewFacade.populateProjectDocument())
-                .then(() => viewFacade.populateOperationTypeDocuments())
-                .then(() => viewFacade.populateDocumentList());
-        }
-
 
         it('populate document list in operations view',
             (done) => {
-                setupView('excavation')
+                viewFacade.setupView('excavation', undefined)
                     .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
                         expect(viewFacade.getDocuments()[0].resource.identifier).toBe('find1');
@@ -110,7 +103,7 @@ export function main() {
 
         it('populate document list in operations overview',
             (done) => {
-                setupView('project')
+                viewFacade.setupView('project', undefined)
                     .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
                         expect(viewFacade.getDocuments()[0].resource.identifier).toBe('trench1');

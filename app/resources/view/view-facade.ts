@@ -260,12 +260,6 @@ export class ViewFacade {
     }
 
 
-    public populateProjectDocument(): Promise<any> {
-
-        return this.documentsManager.populateProjectDocument();
-    }
-
-
     public isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
 
         if (this.isInOverview()) throw "calling isSelectedDocumentRecordedInSelectedOperationTypeDocument is forbidden when isInOverview";
@@ -290,20 +284,23 @@ export class ViewFacade {
      *   b) the first element of the operation type documents it is not set
      *      and operation type documents length > 1
      *
-     * Does nothing if isInOverview()
-     *
      * @returns {Promise<any>}
      */
     public populateOperationTypeDocuments() {
 
-        if (this.isInOverview()) return Promise.resolve(undefined);
+        if (this.isInOverview()) throw "calling populateOperationTypeDocuments is forbidden when isInOverview";
         return this.operationTypeDocumentsManager.populate();
     }
 
 
     public setupView(viewName: string, defaultMode: string) {
 
-        return this.viewManager.setupView(viewName, defaultMode);
+        return this.viewManager.setupView(viewName, defaultMode)
+            .then(() => this.documentsManager.populateProjectDocument())
+            .then(() => {
+                if (!this.isInOverview()) return this.populateOperationTypeDocuments()
+            })
+            .then(() => this.populateDocumentList())
     }
 
 

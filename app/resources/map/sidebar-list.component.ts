@@ -3,6 +3,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {RoutingHelper} from "../service/routing-helper";
 
 @Component({
     selector: 'sidebar-list',
@@ -19,10 +20,17 @@ export class SidebarListComponent {
     @Input() activeTab: string;
 
     constructor(
-        public loading: Loading,
         public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade
+        public viewFacade: ViewFacade,
+        private routingHelper: RoutingHelper,
+        private loading: Loading
     ) { }
+
+
+    public selectInMainTypeView(document: IdaiFieldDocument) {
+
+        this.routingHelper.jumpToMainTypeHomeView(document);
+    }
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {

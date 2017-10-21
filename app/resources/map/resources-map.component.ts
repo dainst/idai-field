@@ -43,12 +43,6 @@ export class MapWrapperComponent {
     }
 
 
-    public selectInMainTypeView(document: IdaiFieldDocument) {
-
-        this.routingHelper.jumpToMainTypeHomeView(document);
-    }
-
-
     /**
      * @param geometry
      *   <code>null</code> indicates geometry should get deleted.

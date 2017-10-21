@@ -22,7 +22,6 @@ export class DocumentsManager {
 
     constructor(
         private datastore: Datastore,
-        private loading: Loading, // TODO get rid of loading dependency
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: OperationTypeDocumentsManager
@@ -241,12 +240,8 @@ export class DocumentsManager {
 
     private fetchDocuments(query: Query): Promise<any> {
 
-        this.loading.start();
         return this.datastore.find(query)
-            .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query))
-            .then(documents => {
-                this.loading.stop(); return documents;
-            });
+            .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
     }
 
 

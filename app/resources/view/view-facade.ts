@@ -5,7 +5,6 @@ import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {Views} from './views';
-import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
 
@@ -34,7 +33,6 @@ export class ViewFacade {
 
     constructor(
         private datastore: Datastore, // TODO use read datastore
-        private loading: Loading,
         private settingsService: SettingsService,
         private stateSerializer: StateSerializer,
         private viewsList: any
@@ -52,7 +50,6 @@ export class ViewFacade {
         );
         this.documentsManager = new DocumentsManager(
             datastore,
-            loading,
             settingsService,
             this.viewManager,
             this.operationTypeDocumentsManager

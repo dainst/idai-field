@@ -59,7 +59,6 @@ import {Datastore} from 'idai-components-2/datastore';
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDatastore,
-                loading: Loading,
                 settingsService: SettingsService,
                 stateSerializer: StateSerializer
             ) {
@@ -72,13 +71,12 @@ import {Datastore} from 'idai-components-2/datastore';
 
                 return new ViewFacade(
                     datastore,
-                    loading,
                     settingsService,
                     stateSerializer,
                     views
                 );
             },
-            deps: [ProjectConfiguration, Datastore, Loading, SettingsService, StateSerializer]
+            deps: [ProjectConfiguration, Datastore, SettingsService, StateSerializer]
         },
     ],
     exports: [

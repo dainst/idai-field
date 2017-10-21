@@ -73,11 +73,6 @@ export function main() {
 
         beforeEach(() => {
 
-            const loading =
-                jasmine.createSpyObj('loading', ['start', 'stop']);
-            loading.start.and.returnValue(Promise.resolve());
-            loading.stop.and.returnValue(Promise.resolve());
-
             const settingsService =
                 jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject']);
             settingsService.getUsername.and.returnValue('user');
@@ -89,7 +84,6 @@ export function main() {
 
             viewFacade = new ViewFacade(
                 datastore,
-                loading,
                 settingsService,
                 stateSerializer,
                 viewsList

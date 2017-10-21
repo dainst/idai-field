@@ -6,11 +6,12 @@ import {ReadDatastore} from 'idai-components-2/datastore';
 @Injectable()
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class Views {
 
 
-    constructor(private projectConfiguration: ProjectConfiguration,
+    constructor(private projectConfiguration: ProjectConfiguration, // TODO remove dependency
                 private datastore: ReadDatastore) {}
 
 
@@ -38,56 +39,6 @@ export class Views {
     public getLabelForType(view) {
 
         return this.projectConfiguration.getLabelForType(view.mainType);
-    }
-
-
-    public getMainTypeNameForDocument(document: Document): Promise<string> {
-
-        const relations = document.resource.relations['isRecordedIn'];
-        if (relations && relations.length > 0) {
-            return this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type);
-        } else return Promise.resolve()
-            .then(() => {
-
-                let relationDefinitions: Array<RelationDefinition>
-                    = this.projectConfiguration.getRelationDefinitions(document.resource.type);
-                let mainTypeName: string;
-
-                for (let relationDefinition of relationDefinitions) {
-                    if (relationDefinition.name == 'isRecordedIn') {
-                        mainTypeName = relationDefinition.range[0];
-                        break;
-                    }
-                }
-
-                return Promise.resolve(mainTypeName);
-            }).catch(() => {});
-    }
-
-
-    public getViewNameForDocument(document: Document): Promise<string> {
-
-        if (document.resource.type == 'Project') return Promise.resolve('project');
-
-        let mainTypeName: string;
-
-        return this.getMainTypeNameForDocument(document)
-            .then(name => {
-                mainTypeName = name;
-                return Promise.resolve();
-            }).then(() => {
-                let viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
-                let viewName: string;
-
-                for (let view of viewDefinitions) {
-                    if (view.mainType == mainTypeName) {
-                        viewName = view.name;
-                        break;
-                    }
-                }
-
-                return Promise.resolve(viewName);
-             }).catch(() => {});
     }
 
 

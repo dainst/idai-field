@@ -13,6 +13,7 @@ import {ImageContainer} from '../imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
 import {ViewFacade} from '../resources/view/view-facade';
+import {GeneralRoutingHelper} from '../common/general-routing-helper';
 
 @Component({
     moduleId: module.id,
@@ -38,7 +39,8 @@ export class ImageViewComponent implements OnInit {
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private viewFacade: ViewFacade,
-        private doceditActiveTabService: DoceditActiveTabService
+        private doceditActiveTabService: DoceditActiveTabService,
+        private generalRoutingHelper: GeneralRoutingHelper
     ) {
         this.route.queryParams.subscribe(queryParams => {
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
@@ -53,7 +55,8 @@ export class ImageViewComponent implements OnInit {
 
     public jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
 
-        this.viewFacade.getViewNameForDocument(documentToJumpTo)
+        this.generalRoutingHelper.getMainTypeNameForDocument(documentToJumpTo)
+            .then(mainTypeName => this.viewFacade.getMainTypeHomeViewName(mainTypeName))
             .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id,
                 'view', 'images']));
     }

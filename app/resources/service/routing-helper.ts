@@ -6,6 +6,7 @@ import {Document} from 'idai-components-2/core';
 import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ViewFacade} from '../view/view-facade';
 import {Loading} from '../../widgets/loading';
+import {GeneralRoutingHelper} from '../../common/general-routing-helper';
 
 @Injectable()
 /**
@@ -22,7 +23,9 @@ export class RoutingHelper {
                 private viewFacade: ViewFacade,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility,
-                private loading: Loading) {
+                private loading: Loading,
+                private generalRoutingHelper: GeneralRoutingHelper
+    ) {
     }
 
 
@@ -48,7 +51,7 @@ export class RoutingHelper {
                 .then(() => {observer.next(params);})
                 .catch(msgWithParams => {
                     if (msgWithParams) console.error(
-                        "got msgWithParams in RoutingHelper#setRoute: ",msgWithParams);
+                        "got msgWithParams in GeneralRoutingHelper#setRoute: ",msgWithParams);
                 });
             }
         );
@@ -92,7 +95,8 @@ export class RoutingHelper {
 
     public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
-        this.viewFacade.getViewNameForDocument(documentToSelect)
+        this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect)
+            .then(mainTypeName => this.viewFacade.getMainTypeHomeViewName(mainTypeName))
             .then(viewName => {
                 if (viewName != this.viewFacade.getViewName()) {
                     if (tab) {
@@ -111,7 +115,7 @@ export class RoutingHelper {
 
     public jumpToMainTypeHomeView(document: Document) {
 
-        const viewName = this.viewFacade.getOperationTypeHomeViewName(document.resource.type);
+        const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
         if (viewName == this.viewFacade.getViewName()) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]);

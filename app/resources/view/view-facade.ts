@@ -310,14 +310,8 @@ export class ViewFacade {
     }
 
 
-    public getViewNameForDocument(document: Document): Promise <string> {
+    public getMainTypeHomeViewName(mainTypeName: string): string {
 
-        return this.views.getViewNameForDocument(document);
-    }
-
-
-    public getOperationTypeHomeViewName(operationTypeName: string): string {
-
-        return this.views.getViewNameForMainTypeName(operationTypeName);
+        return this.views.getViewNameForMainTypeName(mainTypeName);
     }
 }

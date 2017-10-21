@@ -4,6 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {SettingsService} from './settings/settings-service';
 import {ViewFacade} from './resources/view/view-facade';
+import {GeneralRoutingHelper} from './common/general-routing-helper';
 
 @Component({
     moduleId: module.id,
@@ -29,7 +30,9 @@ export class TaskbarComponent {
                 private router: Router,
                 private viewFacade: ViewFacade,
                 private elementRef: ElementRef,
-                private renderer: Renderer) {
+                private renderer: Renderer,
+                private routingHelper: GeneralRoutingHelper
+    ) {
 
         this.fetchConflicts();
         this.subscribeForChanges();
@@ -53,16 +56,18 @@ export class TaskbarComponent {
         }
     }
 
-    public openConflictResolver(document: Document) {
+    public openConflictResolver(document: Document) { // TODO move to routing helper
 
         let viewName: string;
 
-        this.viewFacade.getViewNameForDocument(document)
-            .then(name => {
-                viewName = name;
-                return this.router.navigate(['resources', viewName]);
-            }).then(() => {
-            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts'])
+        this.routingHelper.getMainTypeNameForDocument(document).then(mainTypeName =>
+            this.viewFacade.getMainTypeHomeViewName(mainTypeName)
+        ).then(name => {
+            viewName = name;
+            return this.router.navigate(['resources', viewName]);
+        }).then(() => {
+            this.router.navigate(['resources', viewName,
+                document.resource.id, 'edit', 'conflicts']);
         });
     }
 

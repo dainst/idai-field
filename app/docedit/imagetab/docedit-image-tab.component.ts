@@ -2,10 +2,10 @@ import {Component, Input, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
+import {IdaiFieldDatastore} from '../../datastore/idai-field-datastore';
 import {ImagePickerComponent} from './image-picker.component';
-import {ImageGridComponent} from '../imagegrid/image-grid.component';
+import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 
 @Component({
     selector: 'docedit-image-tab',

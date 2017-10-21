@@ -3,10 +3,10 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {ImageTypeUtility} from './image-type-utility';
-import {ImageGridComponent} from '../imagegrid/image-grid.component';
-import {M} from '../m';
+import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
+import {ImageTypeUtility} from '../image-type-utility';
+import {ImageGridComponent} from '../../imagegrid/image-grid.component';
+import {M} from '../../m';
 
 @Component({
     selector: 'image-picker',

@@ -1,6 +1,4 @@
-import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Datastore} from 'idai-components-2/datastore';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {ViewManager} from './view-manager';
@@ -11,7 +9,6 @@ import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
 
-@Injectable()
 /**
  * Manages an overview of operation type resources
  * and different views for each operation type.
@@ -36,15 +33,15 @@ export class ViewFacade {
 
 
     constructor(
-        private projectConfiguration: ProjectConfiguration,
-        private datastore: Datastore,
+        private datastore: Datastore, // TODO use read datastore
         private loading: Loading,
         private settingsService: SettingsService,
-        private stateSerializer: StateSerializer
+        private stateSerializer: StateSerializer,
+        private viewsList: any
     ) {
         this.views = new Views(
-            projectConfiguration,
-            datastore
+            datastore,
+            viewsList
         );
         this.viewManager = new ViewManager(
             this.views,

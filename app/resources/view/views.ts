@@ -1,9 +1,7 @@
-import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration, RelationDefinition, ViewDefinition} from 'idai-components-2/configuration';
-import {ReadDatastore} from 'idai-components-2/datastore';
+import {ViewDefinition} from 'idai-components-2/configuration';
+import {Datastore} from 'idai-components-2/datastore';
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -11,16 +9,18 @@ import {ReadDatastore} from 'idai-components-2/datastore';
 export class Views {
 
 
-    constructor(private projectConfiguration: ProjectConfiguration, // TODO remove dependency
-                private datastore: ReadDatastore) {}
+    constructor(
+        private datastore: Datastore,
+        private _: any
+    ) {}
 
 
     public getOperationViews() {
 
-        if (!this.projectConfiguration.getViewsList()) return undefined;
+        if (!this._) return undefined;
 
         let views = [];
-        for (let view of this.projectConfiguration.getViewsList()) {
+        for (let view of this._) {
 
             if (view.name == 'project') continue;
             views.push(view);
@@ -32,19 +32,25 @@ export class Views {
 
     public getView(viewName) {
 
-        return this.projectConfiguration.getView(viewName);
+        for (let view of this._) {
+            if (view.name == viewName) return view;
+        }
+        return undefined;
     }
 
 
-    public getLabelForType(view) {
+    public getLabelForType(mainType) {
 
-        return this.projectConfiguration.getLabelForType(view.mainType);
+        for (let view of this._) {
+            if (view.mainType == mainType) return view.mainTypeLabel;
+        }
+        return undefined;
     }
 
 
     public getViewNameForMainTypeName(mainTypeName: string): string {
 
-        const viewDefinitions: Array<ViewDefinition> = this.projectConfiguration.getViewsList();
+        const viewDefinitions: Array<ViewDefinition> = this._;
         let viewName: string;
         for (let view of viewDefinitions) {
             if (view.mainType == mainTypeName) {
@@ -70,7 +76,7 @@ export class Views {
 
         return Promise.resolve().then(() => {
 
-            for (let view of this.projectConfiguration.getViewsList()) {
+            for (let view of this._) {
                 if (view.mainType == 'Project') continue;
                 let promise = this.datastore.find({ q: '', types: [view.mainType] })
                     .then(documents => mainTypeDocuments = mainTypeDocuments.concat(documents));

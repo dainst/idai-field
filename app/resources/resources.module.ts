@@ -54,8 +54,6 @@ import {Datastore} from 'idai-components-2/datastore';
         ResourcesState,
         RoutingHelper,
         DoceditProxy,
-        ViewFacade,
-        Views,
         {
             provide: ViewFacade,
             useFactory: function(
@@ -66,12 +64,18 @@ import {Datastore} from 'idai-components-2/datastore';
                 stateSerializer: StateSerializer
             ) {
 
+                const views = projectConfiguration.getViewsList();
+                for (let view of views) {
+                    view['mainTypeLabel'] =
+                        projectConfiguration.getLabelForType(view.mainType);
+                }
+
                 return new ViewFacade(
-                    projectConfiguration,
                     datastore,
                     loading,
                     settingsService,
-                    stateSerializer
+                    stateSerializer,
+                    views
                 );
             },
             deps: [ProjectConfiguration, Datastore, Loading, SettingsService, StateSerializer]

@@ -17,25 +17,20 @@ export function main() {
 
     describe('ViewFacade', () => {
 
-        const projectConfiguration = new ProjectConfiguration({
-            "types" : [{
-                "type" : "Trench",
-                "label" : "Schnitt",
-                "color": "blue"
-            }],
-            "views": [
-                {
-                    "label": "Übersicht",
-                    "mainType": "Project",
-                    "name": "project"
-                },
-                {
-                    "label": "Ausgrabung",
-                    "mainType": "Trench",
-                    "name": "excavation"
-                }
-            ]
-        });
+        const viewsList = [
+            {
+                "mainTypeLabel": "Projekt",
+                "label": "Übersicht",
+                "mainType": "Project",
+                "name": "project"
+            },
+            {
+                "mainTypeLabel": "Schnitt",
+                "label": "Ausgrabung",
+                "mainType": "Trench",
+                "name": "excavation"
+            }
+        ];
 
         let viewFacade: ViewFacade;
         let operationTypeDocument1: Document;
@@ -81,11 +76,11 @@ export function main() {
             stateSerializer.store.and.returnValue(Promise.resolve());
 
             viewFacade = new ViewFacade(
-                projectConfiguration,
                 datastore,
                 loading,
                 settingsService,
-                stateSerializer
+                stateSerializer,
+                viewsList
             );
         });
 

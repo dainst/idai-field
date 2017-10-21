@@ -17,6 +17,7 @@ import {M} from '../m';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
+import {ModelUtil} from '../model/model-util';
 
 @Component({
     moduleId: module.id,
@@ -47,6 +48,9 @@ export class ImageOverviewComponent implements OnInit {
 
     public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
     public minGridSize: number = 2;
+
+
+    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
 
 
     constructor(
@@ -87,17 +91,6 @@ export class ImageOverviewComponent implements OnInit {
             this.imagesState.setGridSize(parseInt(size));
             this.imageGrid.nrOfColumns = parseInt(size);
             this.imageGrid.calcGrid();
-        }
-    }
-
-
-    // TODO remove duplication with resources component, put to util package
-    public getDocumentLabel(document: Document): string {
-
-        if (document.resource.shortDescription) {
-            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
-        } else {
-            return document.resource.identifier;
         }
     }
 

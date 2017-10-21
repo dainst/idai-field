@@ -28,6 +28,7 @@ import {SettingsService} from '../settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
+import {ModelUtil} from '../model/model-util';
 
 
 @Component({
@@ -53,6 +54,9 @@ export class ImportComponent {
     public url: string;
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId: string = '';
+
+    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
+
 
     constructor(
         private messages: Messages,
@@ -99,17 +103,6 @@ export class ImportComponent {
                 if(uploadModalRef) uploadModalRef.close();
                 this.showImportResult(importReport)
             });
-    }
-
-
-    // TODO remove duplication with image overview and resources component. put to util package
-    public getDocumentLabel(document: Document): string {
-
-        if (document.resource.shortDescription) {
-            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
-        } else {
-            return document.resource.identifier;
-        }
     }
 
 

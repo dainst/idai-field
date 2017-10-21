@@ -10,6 +10,7 @@ import {DoceditProxy} from './service/docedit-proxy';
 import {M} from '../m';
 import {ViewFacade} from './view/view-facade';
 import {ImageUploader} from '../imageupload/image-uploader';
+import {ModelUtil} from '../model/model-util';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class ResourcesComponent implements AfterViewChecked {
     private clickEventObservers: Array<any> = [];
 
     private activeDocumentViewTab: string;
+
+    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
 
 
     constructor(route: ActivatedRoute,
@@ -68,15 +71,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    // TODO remove duplication with image overview. put to util package
-    public getDocumentLabel(document: Document): string {
 
-        if (document.resource.shortDescription) {
-            return document.resource.shortDescription + ' (' + document.resource.identifier + ')';
-        } else {
-            return document.resource.identifier;
-        }
-    }
 
 
     ngAfterViewChecked() {

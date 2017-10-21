@@ -10,7 +10,7 @@ export class Views {
 
 
     constructor(
-        private datastore: Datastore,
+        private datastore: Datastore, // TODO get rid of dependency
         private _: any
     ) {}
 
@@ -69,7 +69,7 @@ export class Views {
      *
      * @returns
      */
-    public getOperationTypeDocuments(): Promise<Array<Document>> {
+    public getOperationTypeDocuments(): Promise<Array<Document>> { // TODO return just the operatonTypeNames. There is no reason at all why fetching the docs should be the responsibiltiy of views
 
         let mainTypeDocuments: Array<Document> = [];
         let promises: Array<Promise<Array<Document>>> = [];

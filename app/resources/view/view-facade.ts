@@ -92,7 +92,7 @@ export class ViewFacade {
 
     public getOperationTypeLabel() {
 
-        if (this.isInOverview()) throw "calling getOperationTypeLabel is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
         return this.viewManager.getMainTypeLabel();
     }
 
@@ -146,14 +146,14 @@ export class ViewFacade {
 
     public getSelectedOperationTypeDocument() {
 
-        if (this.isInOverview()) throw "calling getSelectedOperationTypeDocument is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('getSelectedOperationTypeDocument');
         return this.operationTypeDocumentsManager.getSelectedDocument();
     }
 
 
     public getOperationTypeDocuments() {
 
-        if (this.isInOverview()) throw "calling getOperationTypeDocuments is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeDocuments');
         return this.operationTypeDocumentsManager.getDocuments();
     }
 
@@ -274,14 +274,14 @@ export class ViewFacade {
 
     public selectOperationTypeDocument(mainTypeDoc) {
 
-        if (this.isInOverview()) throw "calling selectOperationTypeDocument/1 is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument/1');
         return this.operationTypeDocumentsManager.select(mainTypeDoc);
     }
 
 
     public isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
 
-        if (this.isInOverview()) throw "calling isSelectedDocumentRecordedInSelectedOperationTypeDocument is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('isSelectedDocumentRecordedInSelectedOperationTypeDocument');
         if (!this.documentsManager.getSelectedDocument()) return false;
 
         return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
@@ -307,7 +307,7 @@ export class ViewFacade {
      */
     public populateOperationTypeDocuments() {
 
-        if (this.isInOverview()) throw "calling populateOperationTypeDocuments is forbidden when isInOverview";
+        if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
         return this.operationTypeDocumentsManager.populate();
     }
 
@@ -326,5 +326,11 @@ export class ViewFacade {
     public getMainTypeHomeViewName(mainTypeName: string): string {
 
         return this.views.getViewNameForMainTypeName(mainTypeName);
+    }
+
+
+    private static err(fnName, positive = true) {
+        const notMarker = positive ? '' : '! ';
+        return "calling "+fnName+" is forbidden when "+notMarker+"isInOverview";
     }
 }

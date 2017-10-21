@@ -22,7 +22,7 @@ export class DocumentsManager {
 
     constructor(
         private datastore: Datastore,
-        private loading: Loading,
+        private loading: Loading, // TODO get rid of loading dependency
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: OperationTypeDocumentsManager

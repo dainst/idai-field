@@ -87,12 +87,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.viewFacade.selectOperationTypeDocument(document);
-        if (!this.viewFacade.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
-            this.activeDocumentViewTab = undefined;
-            this.viewFacade.deselect();
-        }
-        this.viewFacade.populateDocumentList();
+        this.viewFacade.selectOperationTypeDocument(document).then(isMatched =>  {
+            if (!isMatched) this.activeDocumentViewTab = undefined;
+        });
     }
 
 

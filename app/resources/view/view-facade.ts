@@ -272,21 +272,23 @@ export class ViewFacade {
     }
 
 
-    public selectOperationTypeDocument(mainTypeDoc) {
+    /**
+     * @param mainTypeDoc
+     * @returns true if isSelectedDocumentRecordedInSelectedOperationTypeDocument
+     */
+    public selectOperationTypeDocument(mainTypeDoc): Promise<boolean> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument/1');
-        return this.operationTypeDocumentsManager.select(mainTypeDoc);
-    }
+        this.operationTypeDocumentsManager.select(mainTypeDoc);
 
-
-    public isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
-
-        if (this.isInOverview()) throw ViewFacade.err('isSelectedDocumentRecordedInSelectedOperationTypeDocument');
-        if (!this.documentsManager.getSelectedDocument()) return false;
-
-        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
-            this.documentsManager.getSelectedDocument()
-        );
+        return this.populateDocumentList().then(() => {
+            if (!this.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
+                this.documentsManager.deselect();
+                return false;
+            } {
+                return true;
+            }
+        })
     }
 
 
@@ -326,6 +328,16 @@ export class ViewFacade {
     public getMainTypeHomeViewName(mainTypeName: string): string {
 
         return this.views.getViewNameForMainTypeName(mainTypeName);
+    }
+
+
+    private isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
+
+        if (!this.documentsManager.getSelectedDocument()) return false;
+
+        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
+            this.documentsManager.getSelectedDocument()
+        );
     }
 
 

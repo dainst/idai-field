@@ -58,8 +58,9 @@ export class DoceditProxy {
         }
 
         this.viewFacade.deselect();
-        this.viewFacade.selectOperationTypeDocument(result['document'] as IdaiFieldDocument);
-        return this.viewFacade.populateOperationTypeDocuments();
+        return this.viewFacade.selectOperationTypeDocument(result['document'] as IdaiFieldDocument).then(() =>
+            this.viewFacade.populateOperationTypeDocuments()
+        )
     }
 
 

@@ -133,7 +133,6 @@ export function main() {
             (done) => {
                 viewFacade.setupView('excavation', undefined)
                     .then(() => viewFacade.selectOperationTypeDocument(operationTypeDocument2))
-                    .then(() => viewFacade.populateDocumentList()) // TODO adjust viewFacade so that this call is not necessary
                     .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
                         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');

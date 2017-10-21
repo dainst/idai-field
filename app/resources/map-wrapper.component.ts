@@ -63,7 +63,7 @@ export class MapWrapperComponent {
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
-    
+
 
     public selectInMainTypeView(document: IdaiFieldDocument) {
 

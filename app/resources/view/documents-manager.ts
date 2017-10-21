@@ -112,7 +112,9 @@ export class DocumentsManager {
 
     public setSelected(documentToSelect: Document): Promise<any> {
 
-        if (documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return;
+        if (!this.viewManager.isInOverview() &&
+            documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return;
+
         if (documentToSelect == this.selectedDocument) return;
         if (!documentToSelect) return;
 

@@ -15,8 +15,12 @@ export class DocumentsManager { // TODO make module for imageoverview
 
     private documents: Array<IdaiFieldImageDocument>;
 
+    public selected: Array<IdaiFieldImageDocument>  = [];
+
     // TODO move this to image-grid component
     private resourceIdentifiers: string[] = [];
+
+    private depictsRelationsSelected: boolean = false;
 
 
     constructor(
@@ -28,9 +32,21 @@ export class DocumentsManager { // TODO make module for imageoverview
     }
 
 
-    public getDocuments() {
+    public getSelected(): Array<IdaiFieldImageDocument> {
+
+        return this.selected
+    }
+
+
+    public getDocuments(): Array<IdaiFieldImageDocument> {
 
         return this.documents;
+    }
+
+
+    public getDepictsRelationSelected(): boolean {
+
+        return this.depictsRelationsSelected;
     }
 
 
@@ -45,6 +61,39 @@ export class DocumentsManager { // TODO make module for imageoverview
 
         this.documents.splice(
             this.documents.indexOf(document), 1);
+    }
+
+
+    /**
+     * @param document the object that should be selected
+     */
+    public select(document: IdaiFieldImageDocument) {
+
+        if (this.selected.indexOf(document) == -1) {
+            this.selected.push(document);
+        } else {
+            this.selected.splice(this.selected.indexOf(document), 1);
+        }
+
+        this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
+    }
+
+
+    private doSelectedDocumentsContainDepictsRelations(): boolean {
+
+        for (let document of this.selected) {
+            if (document.resource.relations['depicts'] && document.resource.relations['depicts'].length > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public clearSelection() {
+
+        this.selected = [];
     }
 
 

@@ -48,6 +48,8 @@ import {ImageViewModule} from './imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {GeneralRoutingHelper} from './common/general-routing-helper';
 import {DocumentsManager} from "./imageoverview/documents-manager";
+import {ImageOverviewFacade} from './imageoverview/imageoverview-facade';
+import {PersistenceHelper} from './imageoverview/service/persistence-helper';
 
 const remote = require('electron').remote;
 
@@ -183,7 +185,9 @@ let pconf = undefined;
         DoceditActiveTabService,
         StateSerializer,
         GeneralRoutingHelper,
-        DocumentsManager
+        DocumentsManager,
+        ImageOverviewFacade,
+        PersistenceHelper
     ],
     bootstrap: [ AppComponent ]
 })

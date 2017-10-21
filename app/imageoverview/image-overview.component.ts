@@ -6,19 +6,15 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {PersistenceManager} from 'idai-components-2/persist';
-import {Imagestore} from '../imagestore/imagestore';
 import {LinkModalComponent} from './link-modal.component';
-import {SettingsService} from '../settings/settings-service';
-import {ObjectUtil} from '../util/object-util';
 import {ImageTypeUtility} from '../docedit/image-type-utility';
 import {ImagesState} from './images-state';
-import {M} from '../m';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../model/model-util';
-import {DocumentsManager} from './documents-manager';
+import {ImageOverviewFacade} from './imageoverview-facade';
+import {PersistenceHelper} from './service/persistence-helper';
 
 @Component({
     moduleId: module.id,
@@ -36,21 +32,21 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-
     public mainTypeDocuments: Array<Document> = [];
-
     public totalImageCount: number;
-
-    public selected: Array<IdaiFieldImageDocument> = [];
-    public depictsRelationsSelected: boolean = false;
-
-
 
     public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
     public minGridSize: number = 2;
 
 
+    // provide access to static function
     public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
+
+    // for clean and refactor safe template
+    public getDocuments = () => this.imageOverviewFacade.getDocuments();
+    public getSelected = () => this.imageOverviewFacade.getSelected();
+    public select = (document) => this.imageOverviewFacade.select(document);
+    public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
 
     constructor(
@@ -59,12 +55,10 @@ export class ImageOverviewComponent implements OnInit {
         private datastore: ReadDatastore,
         private modalService: NgbModal,
         private messages: Messages,
-        private imagestore: Imagestore,
-        private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
         private imageTypeUtility: ImageTypeUtility,
-        private imagesState: ImagesState,
-        private documentsManager: DocumentsManager
+        private imagesState: ImagesState, // TODO hide behind facade
+        private imageOverviewFacade: ImageOverviewFacade,
+        private persistenceHelper: PersistenceHelper
     ) {
         this.viewFacade.getAllOperationTypeDocuments().then(
             documents => this.mainTypeDocuments = documents,
@@ -74,13 +68,10 @@ export class ImageOverviewComponent implements OnInit {
         this.imagesState.initialize().then(() => {
             if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
             this.setQueryConstraints();
-            this.documentsManager.fetchDocuments();
+            this.imageOverviewFacade.fetchDocuments();
             this.updateTotalImageCount();
         });
     }
-
-
-    public getDocuments = () => this.documentsManager.getDocuments();
 
 
     public ngOnInit() {
@@ -107,9 +98,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public refreshGrid() {
 
-        this.documentsManager.fetchDocuments();
+        this.imageOverviewFacade.fetchDocuments();
         this.updateTotalImageCount();
     }
+
 
     public setQueryString(q: string) {
 
@@ -117,8 +109,9 @@ export class ImageOverviewComponent implements OnInit {
         query.q = q;
         this.imagesState.setQuery(query);
 
-        this.documentsManager.fetchDocuments();
+        this.imageOverviewFacade.fetchDocuments();
     }
+
 
     public setQueryTypes(types: string[]) {
 
@@ -126,7 +119,7 @@ export class ImageOverviewComponent implements OnInit {
         query.types = types;
         this.imagesState.setQuery(query);
 
-        this.documentsManager.fetchDocuments();
+        this.imageOverviewFacade.fetchDocuments();
     }
 
 
@@ -134,21 +127,6 @@ export class ImageOverviewComponent implements OnInit {
 
         this.imagesState.setQuery(this.getDefaultQuery());
         this.imagesState.setMainTypeDocumentFilterOption('');
-    }
-
-
-    /**
-     * @param document the object that should be selected
-     */
-    public select(document: IdaiFieldImageDocument) {
-
-        if (this.selected.indexOf(document) == -1) {
-            this.selected.push(document);
-        } else {
-            this.selected.splice(this.selected.indexOf(document), 1);
-        }
-
-        this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
     }
 
 
@@ -165,12 +143,6 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public clearSelection() {
-
-        this.selected = [];
-    }
-
-
     public openDeleteModal(modal) {
 
         this.modalService.open(modal).result.then(result => {
@@ -183,9 +155,9 @@ export class ImageOverviewComponent implements OnInit {
 
         this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
             if (targetDoc) {
-                this.addRelationsToSelectedDocuments(targetDoc)
+                this.persistenceHelper.addRelationsToSelectedDocuments(targetDoc)
                     .then(() => {
-                        this.clearSelection();
+                        this.imageOverviewFacade.clearSelection();
                     }).catch(msgWithParams => {
                         this.messages.add(msgWithParams);
                     });
@@ -200,9 +172,9 @@ export class ImageOverviewComponent implements OnInit {
 
         this.modalService.open(RemoveLinkModalComponent)
             .result.then( () => {
-                this.removeRelationsOnSelectedDocuments().then(() => {
+                this.persistenceHelper.removeRelationsOnSelectedDocuments().then(() => {
                     this.imageGrid.calcGrid();
-                    this.clearSelection();
+                    this.imageOverviewFacade.clearSelection();
                 })
             }
             , () => {}); // do nothing on dismiss
@@ -214,7 +186,7 @@ export class ImageOverviewComponent implements OnInit {
         this.imagesState.setMainTypeDocumentFilterOption(filterOption);
         this.setQueryConstraints();
 
-        this.documentsManager.fetchDocuments();
+        this.imageOverviewFacade.fetchDocuments();
     }
 
 
@@ -239,99 +211,12 @@ export class ImageOverviewComponent implements OnInit {
 
     private deleteSelected() {
 
-        this.deleteSelectedImageDocuments().then(
+        this.persistenceHelper.deleteSelectedImageDocuments().then(
             () => {
-                this.clearSelection();
-                this.documentsManager.fetchDocuments();
+                this.imageOverviewFacade.clearSelection();
+                this.imageOverviewFacade.fetchDocuments();
                 this.updateTotalImageCount();
             });
-    }
-
-
-    private deleteSelectedImageDocuments(): Promise<any> {
-        
-        return new Promise<any>((resolve, reject) => {
-
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let document of this.selected) {
-                promise = promise.then(
-                    () => this.imagestore.remove(document.resource.id),
-                    msgWithParams => reject(msgWithParams)
-                ).then(
-                    () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
-                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
-                ).then(() => {
-                    this.documentsManager.remove(document);
-                })
-            }
-
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
-            );
-        });
-    }
-
-
-    private addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
-
-        this.documentsManager.cacheIdentifier(targetDocument);
-
-        return new Promise<any>((resolve, reject) => {
-
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let imageDocument of this.selected) {
-                const oldVersion = JSON.parse(JSON.stringify(imageDocument));
-
-                const depictsEl = ObjectUtil.takeOrMake(imageDocument,
-                    'resource.relations.depicts', []);
-
-                if (depictsEl.indexOf(targetDocument.resource.id) == -1) {
-                    depictsEl.push(targetDocument.resource.id);
-                }
-
-                promise = promise.then(
-                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
-                            [oldVersion]),
-                    msgWithParams => reject(msgWithParams)
-                );
-            }
-
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
-            );
-        });
-    }
-
-
-    private removeRelationsOnSelectedDocuments() {
-
-        const promises = [];
-        for (let document of this.selected) {
-
-            const oldVersion = JSON.parse(JSON.stringify(document));
-            delete document.resource.relations['depicts'];
-
-            promises.push(this.persistenceManager.persist(
-                document, this.settingsService.getUsername(),
-                oldVersion));
-        }
-        return Promise.all(promises);
-    }
-
-
-    private doSelectedDocumentsContainDepictsRelations(): boolean {
-
-        for (let document of this.selected) {
-            if (document.resource.relations['depicts'] && document.resource.relations['depicts'].length > 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 

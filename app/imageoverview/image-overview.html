@@ -1,7 +1,7 @@
 <ng-template #deleteModal let-c="close">
     <div class="modal-body">
-        <p *ngIf="selected.length > 1">Möchten Sie die {{selected.length}} markierten Bilder wirklich löschen?</p>
-        <p *ngIf="selected.length == 1">Möchten Sie das markierte Bild wirklich löschen?</p>
+        <p *ngIf="getSelected().length > 1">Möchten Sie die {{getSelected().length}} markierten Bilder wirklich löschen?</p>
+        <p *ngIf="getSelected().length == 1">Möchten Sie das markierte Bild wirklich löschen?</p>
     </div>
     <div class="modal-footer">
         <button type="button" id="delete-images-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
@@ -17,14 +17,14 @@
          (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!selected.length" class="col-sm-7 py-2">
+            <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
                 <search-bar *ngIf="imagesState.getQuery()" [q]="imagesState.getQuery().q"
-                            [types]="imagesState.getQuery().types" [parentType]="'Image'" [hidden]="selected.length"
+                            [types]="imagesState.getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
             </div>
 
-            <div *ngIf="!selected.length" class="col-sm-3 py-2">
+            <div *ngIf="!getSelected().length" class="col-sm-3 py-2">
                 <select id="main-type-document-filter-select" class="form-control"
                         [ngModel]="imagesState.mainTypeDocumentFilterOption"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
@@ -36,7 +36,7 @@
                 </select>
             </div>
 
-            <div *ngIf="selected.length" class="col-sm-10 py-2">
+            <div *ngIf="getSelected().length" class="col-sm-10 py-2">
                 <div id="image-overview-buttons" class="btn-toolbar">
                     <div class="btn-group mr-2" role="group">
                         <button type="button" id="delete-images" class="btn btn-danger"
@@ -92,7 +92,7 @@
                     [nrOfColumns]="imagesState.getGridSize()"
                     [documents]="getDocuments()"
                     [resourceIdentifiers]="resourceIdentifiers"
-                    [selected]="selected"
+                    [selected]="getSelected()"
                     [showDropArea]="true"
                     [showGeoIcon]="true"
                     [showTooltips]="true"

@@ -1,7 +1,6 @@
 import {Static} from '../static';
 import {CachedPouchdbDatastore} from '../../../app/datastore/cached-pouchdb-datastore';
 import {ViewFacade} from '../../../app/resources/view/view-facade';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../../../app/datastore/idai-field-datastore';
 import {Document} from 'idai-components-2/core';
 
@@ -34,7 +33,10 @@ export function main() {
 
         let viewFacade: ViewFacade;
         let operationTypeDocument1: Document;
+        let operationTypeDocument2: Document;
         let document1: Document;
+        let document2: Document;
+        let document3: Document;
         let datastore: IdaiFieldDatastore;
 
 
@@ -47,13 +49,23 @@ export function main() {
 
                 const projectDocument = Static.doc('testdb','testdb','Project','testdb');
                 operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');
+                operationTypeDocument2 = Static.doc('trench2','trench2','Trench','t2');
                 operationTypeDocument1.resource.relations['isRecordedIn'] = ['testdb'];
+                operationTypeDocument2.resource.relations['isRecordedIn'] = ['testdb'];
+
                 document1 = Static.doc('find1','find1','Find');
                 document1.resource.relations['isRecordedIn'] = [operationTypeDocument1.resource.id];
+                document2 = Static.doc('find2','find2','Find');
+                document2.resource.relations['isRecordedIn'] = [operationTypeDocument1.resource.id];
+                document3 = Static.doc('find3','find3','Find');
+                document3.resource.relations['isRecordedIn'] = [operationTypeDocument2.resource.id];
 
                 datastore.create(projectDocument)
                     .then(() => datastore.create(operationTypeDocument1))
+                    .then(() => datastore.create(operationTypeDocument2))
                     .then(() => datastore.create(document1))
+                    .then(() => datastore.create(document2))
+                    .then(() => datastore.create(document3))
                     .then(() => {done();});
             }
         );
@@ -93,8 +105,10 @@ export function main() {
             (done) => {
                 viewFacade.setupView('excavation', undefined)
                     .then(() => {
-                        expect(viewFacade.getDocuments().length).toBe(1);
-                        expect(viewFacade.getDocuments()[0].resource.identifier).toBe('find1');
+                        expect(viewFacade.getDocuments().length).toBe(2);
+                        const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
+                        expect(identifiers).toContain('find1');
+                        expect(identifiers).toContain('find2');
                         done();
                     });
             }
@@ -105,8 +119,50 @@ export function main() {
             (done) => {
                 viewFacade.setupView('project', undefined)
                     .then(() => {
+                        expect(viewFacade.getDocuments().length).toBe(2);
+                        const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
+                        expect(identifiers).toContain('trench1');
+                        expect(identifiers).toContain('trench2');
+                        done();
+                    });
+            }
+        );
+
+
+        it('select operations type document operations view',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.selectOperationTypeDocument(operationTypeDocument2))
+                    .then(() => viewFacade.populateDocumentList()) // TODO adjust viewFacade so that this call is not necessary
+                    .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
-                        expect(viewFacade.getDocuments()[0].resource.identifier).toBe('trench1');
+                        expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
+                        done();
+                    });
+            }
+        );
+
+
+        it('search in operations view',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.setQueryString('find2'))
+                    .then(() => {
+                        expect(viewFacade.getDocuments().length).toBe(1);
+                        expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find2');
+                        done();
+                    });
+            }
+        );
+
+
+        it('search in operations overview',
+            (done) => {
+                viewFacade.setupView('project', undefined)
+                    .then(() => viewFacade.setQueryString('trench2'))
+                    .then(() => {
+                        expect(viewFacade.getDocuments().length).toBe(1);
+                        expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
                         done();
                     });
             }

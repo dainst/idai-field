@@ -110,6 +110,7 @@ export class ViewManager {
     }
 
 
+    // TODO this is bad. it replicates the mechanisum of contraintIndexer. see #6709
     public isSelectedDocumentMatchedByQueryString(selectedDocument): boolean {
 
         if (!selectedDocument || this.getQueryString() == '') return true;

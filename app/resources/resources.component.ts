@@ -128,7 +128,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString(q: string) {
 
-        if (!this.viewFacade.setQueryString(q)) this.isEditingGeometry = false;
+        this.viewFacade.setQueryString(q)
+            .then(isMatched => {
+                if (!isMatched) this.isEditingGeometry = false;
+            })
     }
 
 

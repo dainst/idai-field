@@ -254,13 +254,13 @@ export class ViewFacade {
     }
 
 
-    public setQueryString(q) {
+    public setQueryString(q): Promise<boolean> {
 
         return this.documentsManager.setQueryString(q);
     }
 
 
-    public setQueryTypes(types) {
+    public setQueryTypes(types) { // TODO make it return a promise
 
         return this.documentsManager.setQueryTypes(types);
     }

@@ -56,7 +56,7 @@ export class DocumentsManager {
     }
 
 
-    public setQueryString(q: string): boolean {
+    public setQueryString(q: string): Promise<boolean> {
 
         this.viewManager.setQueryString(q);
 
@@ -66,8 +66,8 @@ export class DocumentsManager {
             this.deselect();
         }
 
-        this.populateDocumentList();
-        return result;
+        return this.populateDocumentList()
+            .then(() => Promise.resolve(result));
     }
 
 

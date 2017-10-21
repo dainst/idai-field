@@ -27,6 +27,7 @@ import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {StateSerializer} from '../common/state-serializer';
 import {Datastore} from 'idai-components-2/datastore';
+import {SidebarListComponent} from './sidebar-list.component';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import {Datastore} from 'idai-components-2/datastore';
         RowComponent,
         PlusButtonComponent,
         ThumbnailViewComponent,
-        DocumentViewWrapperComponent
+        DocumentViewWrapperComponent,
+        SidebarListComponent
     ],
     providers: [
         ResourcesState,

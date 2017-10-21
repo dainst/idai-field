@@ -1,28 +1,6 @@
 <div class="row map-wrapper">
     <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
-        <ul class="list-group object-list" id="objectList">
-            <li *ngFor="let document of viewFacade.getDocuments(); let index=index"
-                (click)="select(document)"
-                (dblclick)="resourcesComponent.editDocument(document, 'fields')"
-                (drop)="uploadImages($event, document)"
-                class="list-group-item"
-                [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-                [class.conflicted]="document['_conflicts']"
-                [class.selected]="viewFacade.getSelectedDocument()
-                    && viewFacade.getSelectedDocument().resource.id === document.resource.id"
-                [id]="'resource-' + document.resource.identifier">
-
-                <span class="selectInMainTypeViewBtn mdi mdi-arrow-right-drop-circle text-muted mt-2 mr-2 float-right" (click)="selectInMainTypeView(document)" *ngIf="viewFacade.isInOverview()"></span>
-
-                <document-teaser [document]="document"></document-teaser>
-            </li>
-        </ul>
-
-        <plus-button *ngIf="showPlusButton()"
-                     id="create-document-button" [placement]="'top'"
-                     [preselectedType]="viewFacade.getCurrentFilterType()"
-                     [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"></plus-button>
-        <loading-icon></loading-icon>
+        <sidebar-list></sidebar-list>
     </div>
 
     <div [class.col-sm-9]="!viewFacade.getSelectedDocument() || !viewFacade.getSelectedDocument().resource.id"

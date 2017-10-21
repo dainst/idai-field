@@ -1,13 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {PersistenceManager} from 'idai-components-2/persist';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../settings/settings-service';
 import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
 import {ViewFacade} from './view/view-facade';
 import {RoutingHelper} from './service/routing-helper';
-
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 
 @Component({
     selector: 'map-wrapper',
@@ -44,32 +43,11 @@ export class MapWrapperComponent {
     }
 
 
-    public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
-
-        this.resourcesComponent.isEditingGeometry = false;
-
-        if (!document) {
-            this.viewFacade.deselect();
-        } else {
-            this.viewFacade.setSelectedDocument(document);
-        }
-
-        if (autoScroll) this.resourcesComponent.setScrollTarget(document);
-    }
-
-
     public selectInMainTypeView(document: IdaiFieldDocument) {
 
         this.routingHelper.jumpToMainTypeHomeView(document);
     }
 
-
-    public showPlusButton() {
-
-        return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
-            && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
-            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperationTypeDocument()));
-    }
 
     /**
      * @param geometry

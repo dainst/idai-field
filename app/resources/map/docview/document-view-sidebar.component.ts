@@ -1,22 +1,22 @@
 import {Component, Input} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {ResourcesComponent} from '../resources.component';
-import {ObjectUtil} from '../../util/object-util';
-import {RoutingHelper} from '../service/routing-helper';
-import {ViewFacade} from '../view/view-facade';
+import {ResourcesComponent} from '../../resources.component';
+import {ObjectUtil} from '../../../util/object-util';
+import {RoutingHelper} from '../../service/routing-helper';
+import {ViewFacade} from '../../view/view-facade';
 
 @Component({
-    selector: 'document-view-wrapper',
+    selector: 'document-view-sidebar',
     moduleId: module.id,
-    templateUrl: './document-view-wrapper.html'
+    templateUrl: './document-view-sidebar.html'
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class DocumentViewWrapperComponent {
+export class DocumentViewSidebarComponent {
 
     @Input() activeTab: string;
     @Input() updateThumbnails: boolean;

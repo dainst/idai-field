@@ -4,13 +4,13 @@ import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {Document} from 'idai-components-2/core';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {Imagestore} from '../../imagestore/imagestore';
-import {ImageContainer} from '../../imagestore/image-container';
-import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
-import {BlobMaker} from '../../imagestore/blob-maker';
-import {ImageTypeUtility} from '../../docedit/image-type-utility';
-import {M} from '../../m';
-import {ViewFacade} from '../view/view-facade';
+import {Imagestore} from '../../../imagestore/imagestore';
+import {ImageContainer} from '../../../imagestore/image-container';
+import {IdaiFieldImageDocument} from '../../../model/idai-field-image-document';
+import {BlobMaker} from '../../../imagestore/blob-maker';
+import {ImageTypeUtility} from '../../../docedit/image-type-utility';
+import {M} from '../../../m';
+import {ViewFacade} from '../../view/view-facade';
 
 @Component({
     moduleId: module.id,

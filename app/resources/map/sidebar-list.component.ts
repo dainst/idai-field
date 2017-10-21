@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {ResourcesComponent} from './resources.component';
-import {Loading} from '../widgets/loading';
-import {ViewFacade} from './view/view-facade';
+import {ResourcesComponent} from '../resources.component';
+import {Loading} from '../../widgets/loading';
+import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 
 @Component({

@@ -1,4 +1,4 @@
-<div class="row map-wrapper">
+<div class="row resources-map">
     <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
         <sidebar-list></sidebar-list>
     </div>
@@ -18,8 +18,8 @@
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="col-sm-3 document-info px-0">
-        <document-view-wrapper [activeTab]="activeTab" [updateThumbnails]="updateThumbnails"
+        <document-view-sidebar [activeTab]="activeTab" [updateThumbnails]="updateThumbnails"
                                (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
-        </document-view-wrapper>
+        </document-view-sidebar>
     </div>
 </div>

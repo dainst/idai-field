@@ -4,13 +4,13 @@
  * @author Thomas Kleinke
  */
 
-@import 'map/map';
-@import 'map-wrapper';
-@import 'docview/geometry-view';
+@import 'map/map/map';
+@import 'map/resources-map';
+@import 'map/docview/geometry-view';
 @import 'list/list';
 @import 'list/row';
-@import 'docview/thumbnail-view';
-@import 'docview/document-view-wrapper';
+@import 'map/docview/thumbnail-view';
+@import 'map/docview/document-view-sidebar';
 
 #objectOverview {
   overflow: hidden;

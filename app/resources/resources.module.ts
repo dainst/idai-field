@@ -5,18 +5,18 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {ResourcesComponent} from './resources.component';
-import {GeometryViewComponent} from './docview/geometry-view.component';
-import {EditableMapComponent} from './map/editable-map.component';
-import {MapWrapperComponent} from './map-wrapper.component';
+import {GeometryViewComponent} from './map/docview/geometry-view.component';
+import {EditableMapComponent} from './map/map/editable-map.component';
+import {MapWrapperComponent} from './map/resources-map.component';
 import {ListComponent} from './list/list.component';
 import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
 import {ResourcesState} from './view/resources-state';
-import {ThumbnailViewComponent} from './docview/thumbnail-view.component';
+import {ThumbnailViewComponent} from './map/docview/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
-import {DocumentViewWrapperComponent} from './docview/document-view-wrapper.component';
+import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.component';
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {ViewFacade} from './view/view-facade';
@@ -27,7 +27,7 @@ import {SettingsService} from '../settings/settings-service';
 import {Loading} from '../widgets/loading';
 import {StateSerializer} from '../common/state-serializer';
 import {Datastore} from 'idai-components-2/datastore';
-import {SidebarListComponent} from './sidebar-list.component';
+import {SidebarListComponent} from './map/sidebar-list.component';
 
 @NgModule({
     imports: [
@@ -49,7 +49,7 @@ import {SidebarListComponent} from './sidebar-list.component';
         RowComponent,
         PlusButtonComponent,
         ThumbnailViewComponent,
-        DocumentViewWrapperComponent,
+        DocumentViewSidebarComponent,
         SidebarListComponent
     ],
     providers: [

@@ -115,7 +115,7 @@ export function main() {
         );
 
 
-        it('populate document list in operations overview',
+        it('operations overview: populate document list',
             (done) => {
                 viewFacade.setupView('project', undefined)
                     .then(() => {
@@ -129,7 +129,7 @@ export function main() {
         );
 
 
-        it('select operations type document operations view',
+        it('operations view: select operations type document',
             (done) => {
                 viewFacade.setupView('excavation', undefined)
                     .then(() => viewFacade.selectOperationTypeDocument(operationTypeDocument2))
@@ -143,7 +143,7 @@ export function main() {
         );
 
 
-        it('search in operations view',
+        it('operations view: search',
             (done) => {
                 viewFacade.setupView('excavation', undefined)
                     .then(() => viewFacade.setQueryString('find2'))
@@ -156,13 +156,69 @@ export function main() {
         );
 
 
-        it('search in operations overview',
+        it('operations overview: search',
             (done) => {
                 viewFacade.setupView('project', undefined)
                     .then(() => viewFacade.setQueryString('trench2'))
                     .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
                         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
+                        done();
+                    });
+            }
+        );
+
+
+        it('operations view: set selected, query invalidated',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.setQueryString('find1'))
+                    .then(() => viewFacade.setSelectedDocument(document2))
+                    .then(() => {
+                        expect(viewFacade.getQueryString()).toEqual('');
+                        expect(viewFacade.getDocuments().length).toBe(2);
+                        done();
+                    });
+            }
+        );
+
+
+        it('operations view: set selected in operations view, query not invalidated',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.setQueryString('find1'))
+                    .then(() => viewFacade.setSelectedDocument(document1))
+                    .then(() => {
+                        expect(viewFacade.getQueryString()).toEqual('find1');
+                        expect(viewFacade.getDocuments().length).toBe(1);
+                        done();
+                    });
+            }
+        );
+
+
+        it('operations view: query matches selection',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.setSelectedDocument(document1))
+                    .then(() => viewFacade.setQueryString('find1'))
+                    .then(match => {
+                        expect(match).toEqual(true);
+                        expect(viewFacade.getSelectedDocument()).toBe(document1);
+                        done();
+                    });
+            }
+        );
+
+
+        it('operations view: query does not match selection, deselect',
+            (done) => {
+                viewFacade.setupView('excavation', undefined)
+                    .then(() => viewFacade.setSelectedDocument(document1))
+                    .then(() => viewFacade.setQueryString('find2'))
+                    .then(match => {
+                        expect(match).toEqual(false);
+                        expect(viewFacade.getSelectedDocument()).toBe(undefined);
                         done();
                     });
             }

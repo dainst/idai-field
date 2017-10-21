@@ -330,6 +330,7 @@ export class ViewFacade {
 
 
     private static err(fnName, notAllowedWhenIsInOverview = true) {
+        
         const notMarker = notAllowedWhenIsInOverview ? '' : '! ';
         return "calling "+fnName+" is forbidden when " + notMarker + "isInOverview";
     }

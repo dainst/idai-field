@@ -15,6 +15,7 @@ import {M} from '../m';
 import {ViewFacade} from '../resources/view/view-facade';
 import {GeneralRoutingHelper} from '../common/general-routing-helper';
 
+
 @Component({
     moduleId: module.id,
     templateUrl: './image-view.html'
@@ -24,11 +25,13 @@ import {GeneralRoutingHelper} from '../common/general-routing-helper';
  */
 export class ImageViewComponent implements OnInit {
 
+
     protected image: ImageContainer = {};
     protected activeTab: string;
 
     private originalNotFound = false;
     private comingFrom = undefined;
+
 
     constructor(
         private route: ActivatedRoute,
@@ -47,25 +50,31 @@ export class ImageViewComponent implements OnInit {
         });
     }
 
+
     ngOnInit() {
 
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
     }
 
-    public jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
 
-        this.generalRoutingHelper.getMainTypeNameForDocument(documentToJumpTo)
-            .then(mainTypeName => this.viewFacade.getMainTypeHomeViewName(mainTypeName))
-            .then(viewName => this.router.navigate(['resources', viewName, documentToJumpTo.resource.id,
-                'view', 'images']));
+    public async jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
+
+        const viewName = await this.viewFacade
+            .getMainTypeHomeViewName(await this.generalRoutingHelper
+                .getMainTypeNameForDocument(documentToJumpTo));
+
+        this.router.navigate(['resources', viewName,
+            documentToJumpTo.resource.id, 'view', 'images']);
     }
+
 
     public deselect() {
 
         if (this.comingFrom) this.router.navigate(this.comingFrom);
         else this.router.navigate(['images']);
     }
+
 
     public startEdit(doc: IdaiFieldDocument, tabName: string) {
 
@@ -119,6 +128,7 @@ export class ImageViewComponent implements OnInit {
         }.bind(this));
     }
 
+
     private setNextDocumentViewActiveTab() {
 
         const nextActiveTab = this.doceditActiveTabService.getActiveTab();
@@ -126,6 +136,7 @@ export class ImageViewComponent implements OnInit {
             this.activeTab = nextActiveTab;
         }
     }
+
 
     private getRouteParams(callback) {
 

@@ -80,23 +80,22 @@ export class RoutingHelper {
     }
 
 
-    public jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
+    public async jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
-        this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect)
-            .then(mainTypeName => this.viewFacade.getMainTypeHomeViewName(mainTypeName))
-            .then(viewName => {
-                if (viewName != this.viewFacade.getViewName()) {
-                    if (tab) {
-                        return this.router.navigate(['resources', viewName,
-                            documentToSelect.resource.id, 'view', tab]);
-                    } else {
-                        return this.router.navigate(['resources', viewName,
-                            documentToSelect.resource.id]);
-                    }
-                } else {
-                    cb(documentToSelect);
-                }
-            });
+        const viewName = await this.viewFacade.getMainTypeHomeViewName(
+            await this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect));
+
+        if (viewName != this.viewFacade.getViewName()) {
+            if (tab) {
+                return this.router.navigate(['resources', viewName,
+                    documentToSelect.resource.id, 'view', tab]);
+            } else {
+                return this.router.navigate(['resources', viewName,
+                    documentToSelect.resource.id]);
+            }
+        } else {
+            cb(documentToSelect);
+        }
     }
 
 

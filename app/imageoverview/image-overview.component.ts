@@ -178,14 +178,13 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    private deleteSelected() {
+    private async deleteSelected() {
 
-        this.persistenceHelper.deleteSelectedImageDocuments().then(
-            () => {
-                this.imageOverviewFacade.clearSelection();
-                this.imageOverviewFacade.fetchDocuments();
-                this.updateTotalImageCount();
-            });
+        await this.persistenceHelper.deleteSelectedImageDocuments();
+
+        this.imageOverviewFacade.clearSelection();
+        this.imageOverviewFacade.fetchDocuments();
+        this.updateTotalImageCount();
     }
 
 

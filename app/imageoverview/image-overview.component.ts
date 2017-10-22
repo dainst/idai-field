@@ -38,12 +38,12 @@ export class ImageOverviewComponent implements OnInit {
 
 
     // provide access to static function
-    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
+    public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
 
     // for clean and refactor safe template
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
     public getSelected = () => this.imageOverviewFacade.getSelected();
-    public select = (document) => this.imageOverviewFacade.select(document);
+    public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
     public getQuery = () => this.imageOverviewFacade.getQuery();
@@ -78,11 +78,13 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public setGridSize(size) {
+    public setGridSize(size: string) {
 
-        if (size >= this.minGridSize && size <= this.maxGridSize) {
-            this.imageOverviewFacade.setGridSize(parseInt(size));
-            this.imageGrid.nrOfColumns = parseInt(size);
+        const _size = parseInt(size);
+
+        if (_size >= this.minGridSize && _size <= this.maxGridSize) {
+            this.imageOverviewFacade.setGridSize(_size);
+            this.imageGrid.nrOfColumns = _size;
             this.imageGrid.calcGrid();
         }
     }
@@ -132,7 +134,7 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public openDeleteModal(modal) {
+    public openDeleteModal(modal: any) {
 
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') this.deleteSelected();

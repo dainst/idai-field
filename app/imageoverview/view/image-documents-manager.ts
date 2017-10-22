@@ -1,8 +1,6 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {ViewFacade} from '../../resources/view/view-facade';
-import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
@@ -11,14 +9,14 @@ import {Injectable} from '@angular/core';
 /**
  *
  */
-export class ImageDocumentsManager { // TODO make module for imageoverview
+export class ImageDocumentsManager {
 
     private documents: Array<IdaiFieldImageDocument>;
 
     public selected: Array<IdaiFieldImageDocument>  = [];
 
     // TODO move this to image-grid component
-    private resourceIdentifiers: string[] = [];
+    private resourceIdentifiers: {[id: string]: string} = {};
 
     private depictsRelationsSelected: boolean = false;
 
@@ -51,7 +49,10 @@ export class ImageDocumentsManager { // TODO make module for imageoverview
 
     public cacheIdentifier(document: Document) {
 
-        this.resourceIdentifiers[document.resource.id] =
+        if (!document.resource.id) return;
+        const resourceId = document.resource.id;
+
+        this.resourceIdentifiers[resourceId] =
             document.resource.identifier;
     }
 
@@ -148,6 +149,8 @@ export class ImageDocumentsManager { // TODO make module for imageoverview
         const mainTypeDocumentId: string = this.imagesState.getMainTypeDocumentFilterOption();
 
         for (let document of documents) {
+            if (!document.resource.id) continue;
+
             documentMap[document.resource.id] = document;
             for (let targetId of document.resource.relations['depicts']) {
                 promises.push(this.datastore.get(targetId));

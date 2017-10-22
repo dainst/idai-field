@@ -57,9 +57,9 @@ export class ImageOverviewFacade {
     }
 
 
-    public setGridSize(size) {
+    public setGridSize(size: number) {
 
-        this.imagesState.setGridSize(parseInt(size));
+        this.imagesState.setGridSize(size);
     }
 
 

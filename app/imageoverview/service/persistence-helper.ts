@@ -21,9 +21,7 @@ export class PersistenceHelper {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private imagestore: Imagestore
-    ) {
-
-    }
+    ) {}
 
 
     public deleteSelectedImageDocuments(): Promise<any> {
@@ -33,8 +31,11 @@ export class PersistenceHelper {
             let promise: Promise<any> = new Promise<any>((res) => res());
 
             for (let document of this.imageOverviewFacade.getSelected()) {
+                if (!document.resource.id) continue;
+                const resourceId = document.resource.id;
+
                 promise = promise.then(
-                    () => this.imagestore.remove(document.resource.id),
+                    () => this.imagestore.remove(resourceId),
                     msgWithParams => reject(msgWithParams)
                 ).then(
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),

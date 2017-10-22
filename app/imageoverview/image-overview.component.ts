@@ -134,11 +134,9 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public openDeleteModal(modal: any) {
+    public async openDeleteModal(modal: any) {
 
-        this.modalService.open(modal).result.then(result => {
-            if (result == 'delete') this.deleteSelected();
-        });
+        if (await this.modalService.open(modal).result == 'delete') this.deleteSelected();
     }
 
 
@@ -188,9 +186,9 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    private updateTotalImageCount() {
+    private async updateTotalImageCount() {
 
-        this.datastore.find(this.imageOverviewFacade.getDefaultQuery())
-            .then(documents => this.totalImageCount = documents.length);
+        this.totalImageCount = (await this.datastore.find(
+            this.imageOverviewFacade.getDefaultQuery())).length;
     }
 }

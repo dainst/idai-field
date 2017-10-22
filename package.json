@@ -6,7 +6,6 @@
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
-    "postinstall": "node_modules/electron-builder install-app-deps",
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
     "build": "gulp create-configs && gulp compile",
     "convert-sass": "gulp convert-sass",

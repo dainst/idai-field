@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
-import {StateSerializer} from '../common/state-serializer';
+import {StateSerializer} from '../../common/state-serializer';
 
 @Injectable()
 /**

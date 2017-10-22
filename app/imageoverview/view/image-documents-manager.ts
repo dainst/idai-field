@@ -1,8 +1,8 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
 import {Query, ReadDatastore} from 'idai-components-2/datastore';
-import {ViewFacade} from '../resources/view/view-facade';
-import {ImageTypeUtility} from '../docedit/image-type-utility';
+import {ViewFacade} from '../../resources/view/view-facade';
+import {ImageTypeUtility} from '../../docedit/image-type-utility';
 import {ImagesState} from './images-state';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
@@ -11,7 +11,7 @@ import {Injectable} from '@angular/core';
 /**
  *
  */
-export class DocumentsManager { // TODO make module for imageoverview
+export class ImageDocumentsManager { // TODO make module for imageoverview
 
     private documents: Array<IdaiFieldImageDocument>;
 
@@ -25,7 +25,6 @@ export class DocumentsManager { // TODO make module for imageoverview
 
     constructor(
         public viewFacade: ViewFacade,
-        private imageTypeUtility: ImageTypeUtility,
         private imagesState: ImagesState,
         private datastore: ReadDatastore
     ) {
@@ -44,7 +43,7 @@ export class DocumentsManager { // TODO make module for imageoverview
     }
 
 
-    public getDepictsRelationSelected(): boolean {
+    public getDepictsRelationsSelected(): boolean {
 
         return this.depictsRelationsSelected;
     }

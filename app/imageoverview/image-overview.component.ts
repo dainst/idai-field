@@ -4,16 +4,14 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {Query, ReadDatastore} from 'idai-components-2/datastore';
+import {ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {LinkModalComponent} from './link-modal.component';
-import {ImageTypeUtility} from '../docedit/image-type-utility';
-import {ImagesState} from './images-state';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../model/model-util';
-import {ImageOverviewFacade} from './imageoverview-facade';
+import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 
 @Component({
@@ -32,7 +30,7 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public mainTypeDocuments: Array<Document> = [];
+    public operationTypeDocuments: Array<Document> = [];
     public totalImageCount: number;
 
     public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
@@ -47,6 +45,10 @@ export class ImageOverviewComponent implements OnInit {
     public getSelected = () => this.imageOverviewFacade.getSelected();
     public select = (document) => this.imageOverviewFacade.select(document);
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
+    public getGridSize = () => this.imageOverviewFacade.getGridSize();
+    public getQuery = () => this.imageOverviewFacade.getQuery();
+    public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
+    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
 
 
     constructor(
@@ -55,19 +57,15 @@ export class ImageOverviewComponent implements OnInit {
         private datastore: ReadDatastore,
         private modalService: NgbModal,
         private messages: Messages,
-        private imageTypeUtility: ImageTypeUtility,
-        private imagesState: ImagesState, // TODO hide behind facade
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceHelper: PersistenceHelper
     ) {
         this.viewFacade.getAllOperationTypeDocuments().then(
-            documents => this.mainTypeDocuments = documents,
+            documents => this.operationTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );
 
-        this.imagesState.initialize().then(() => {
-            if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
-            this.setQueryConstraints();
+        this.imageOverviewFacade.initialize().then(() => {
             this.imageOverviewFacade.fetchDocuments();
             this.updateTotalImageCount();
         });
@@ -76,14 +74,14 @@ export class ImageOverviewComponent implements OnInit {
 
     public ngOnInit() {
 
-        this.imageGrid.nrOfColumns = this.imagesState.getGridSize();
+        this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
     }
 
 
     public setGridSize(size) {
 
         if (size >= this.minGridSize && size <= this.maxGridSize) {
-            this.imagesState.setGridSize(parseInt(size));
+            this.imageOverviewFacade.setGridSize(parseInt(size));
             this.imageGrid.nrOfColumns = parseInt(size);
             this.imageGrid.calcGrid();
         }
@@ -105,32 +103,23 @@ export class ImageOverviewComponent implements OnInit {
 
     public setQueryString(q: string) {
 
-        const query: Query = this.imagesState.getQuery();
-        query.q = q;
-        this.imagesState.setQuery(query);
-
-        this.imageOverviewFacade.fetchDocuments();
+        this.imageOverviewFacade.setQueryString(q);
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        const query: Query = this.imagesState.getQuery();
-        query.types = types;
-        this.imagesState.setQuery(query);
-
-        this.imageOverviewFacade.fetchDocuments();
+        this.imageOverviewFacade.setQueryTypes(types);
     }
 
 
     public resetSearch() {
 
-        this.imagesState.setQuery(this.getDefaultQuery());
-        this.imagesState.setMainTypeDocumentFilterOption('');
+        this.imageOverviewFacade.resetSearch();
     }
 
 
-    /**
+    /** // TODO factor out to a routing helper for the imageoverview package
      * @param documentToSelect the object that should be navigated to if the preconditions
      *   to change the selection are met.
      */
@@ -183,29 +172,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
-        this.imagesState.setMainTypeDocumentFilterOption(filterOption);
-        this.setQueryConstraints();
-
-        this.imageOverviewFacade.fetchDocuments();
-    }
-
-
-    private setQueryConstraints() {
-
-        const query: Query = this.imagesState.getQuery();
-
-        switch(this.imagesState.getMainTypeDocumentFilterOption()) {
-            case '':
-                delete query.constraints;
-                break;
-
-            case 'UNLINKED':
-                this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'UNKNOWN' };
-                break;
-
-            default:
-                this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'KNOWN' };
-        }
+        this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
     }
 
 
@@ -220,18 +187,9 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    private getDefaultQuery(): Query {
-
-        return {
-            q: '',
-            types: this.imageTypeUtility.getProjectImageTypeNames()
-        };
-    }
-
-
     private updateTotalImageCount() {
 
-        this.datastore.find(this.getDefaultQuery())
+        this.datastore.find(this.imageOverviewFacade.getDefaultQuery())
             .then(documents => this.totalImageCount = documents.length);
     }
 }

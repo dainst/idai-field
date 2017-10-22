@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {ObjectUtil} from '../../util/object-util';
-import {ImageOverviewFacade} from '../imageoverview-facade';
+import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {SettingsService} from '../../settings/settings-service';
 import {Imagestore} from '../../imagestore/imagestore';
 import {M} from '../../m';

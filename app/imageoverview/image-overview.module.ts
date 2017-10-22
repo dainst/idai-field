@@ -8,7 +8,7 @@ import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
-import {ImagesState} from './images-state';
+import {ImagesState} from './view/images-state';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 

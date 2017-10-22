@@ -18,19 +18,19 @@
 
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
-                <search-bar *ngIf="imagesState.getQuery()" [q]="imagesState.getQuery().q"
-                            [types]="imagesState.getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
+                <search-bar *ngIf="getQuery()" [q]="getQuery().q"
+                            [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
             </div>
 
             <div *ngIf="!getSelected().length" class="col-sm-3 py-2">
                 <select id="main-type-document-filter-select" class="form-control"
-                        [ngModel]="imagesState.mainTypeDocumentFilterOption"
+                        [ngModel]="mainTypeDocumentFilterOption"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
                     <option value=""><em>Alle Bilder</em></option>
                     <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>
-                    <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
+                    <option *ngFor="let document of operationTypeDocuments" value="{{document.resource.id}}">
                         {{getDocumentLabel(document)}}
                     </option>
                 </select>
@@ -47,7 +47,7 @@
                         </button>
                     </div>
                     <div class="btn-group mr-2" role="group">
-                        <button *ngIf="depictsRelationsSelected" type="button" id="remove-link-btn"
+                        <button *ngIf="getDepictsRelationsSelected()" type="button" id="remove-link-btn"
                                 class="btn btn-danger" (click)="openRemoveLinkModal()"
                                 placement="bottom" container="body"
                                 ngbTooltip="Verknüpfungen entfernen">
@@ -70,13 +70,13 @@
 
             <div class="col-sm-2 text-right py-3 slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
-                      (click)="setGridSize(imagesState.getGridSize()-1)"></span>
+                      (click)="setGridSize(getGridSize()-1)"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
-                       max="{{maxGridSize}}" value="{{imagesState.getGridSize()}}"
+                       max="{{maxGridSize}}" value="{{getGridSize()}}"
                        class="slider align-middle"
                        (change)="setGridSize(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
-                      (click)="setGridSize(imagesState.getGridSize()+1)"></span>
+                      (click)="setGridSize(getGridSize()+1)"></span>
             </div>
         </div>
 
@@ -89,7 +89,7 @@
 
         <div (window:resize)="onResize($event)">
             <image-grid #imageGrid
-                    [nrOfColumns]="imagesState.getGridSize()"
+                    [nrOfColumns]="getGridSize()"
                     [documents]="getDocuments()"
                     [resourceIdentifiers]="resourceIdentifiers"
                     [selected]="getSelected()"

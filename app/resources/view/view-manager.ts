@@ -3,6 +3,8 @@ import {ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
 import {Views} from './views';
 import {ResourcesState} from './resources-state';
+import {Document} from 'idai-components-2/core';
+import {query} from '@angular/core/src/animation/dsl';
 
 /**
  * Holds and provides acces to the current view, which is one of the views from this.views,
@@ -14,7 +16,7 @@ import {ResourcesState} from './resources-state';
  */
 export class ViewManager {
 
-    private mode: string; // 'map' or 'list'
+    private mode: string|undefined; // 'map' or 'list' or undefined
     private query: Query;
     public view: ViewDefinition;
     private mainTypeLabel: string;
@@ -34,9 +36,11 @@ export class ViewManager {
 
     public getCurrentFilterType()  {
 
-        return (this.getFilterTypes() &&
-        this.getFilterTypes().length > 0 ?
-            this.getFilterTypes()[0] : undefined);
+        const filterTypes = this.getFilterTypes();
+        if (!filterTypes) return undefined;
+
+        return (filterTypes.length > 0 ?
+            filterTypes[0] : undefined);
     }
 
 
@@ -65,22 +69,23 @@ export class ViewManager {
     }
 
 
-    public getActiveLayersIds(mainTypeDocumentResourceId) {
+    public getActiveLayersIds(mainTypeDocumentResourceId: string) {
 
         return this.resourcesState.getActiveLayersIds(this.view.name, mainTypeDocumentResourceId);
     }
 
 
-    public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
+    public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
         this.resourcesState.setActiveLayersIds(this.view.name, mainTypeDocumentResourceId,
             activeLayersIds);
     }
 
 
-    public removeActiveLayersIds(mainTypeDocumentId) {
+    public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
 
-        this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
+        if (mainTypeDocumentId)
+            this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
     }
 
 
@@ -90,7 +95,7 @@ export class ViewManager {
     }
 
 
-    public setQueryString(q) {
+    public setQueryString(q: string) {
 
         this.query.q = q;
         this.resourcesState.setLastQueryString(this.view.name, q);
@@ -111,11 +116,13 @@ export class ViewManager {
 
 
     // TODO this is bad. it replicates the mechanisum of contraintIndexer. see #6709
-    public isSelectedDocumentMatchedByQueryString(selectedDocument): boolean {
+    public isSelectedDocumentMatchedByQueryString(selectedDocument: Document|undefined): boolean {
 
-        if (!selectedDocument || this.getQueryString() == '') return true;
+        const queryString = this.getQueryString();
+        if (!queryString) return true;
+        if (!selectedDocument || queryString == '') return true;
 
-        const tokens: Array<string> = this.getQueryString().split(' ');
+        const tokens: Array<string> = queryString.split(' ');
         const resource: Resource = selectedDocument.resource;
 
         for (let token of tokens) {
@@ -130,7 +137,7 @@ export class ViewManager {
     }
 
 
-    public setFilterTypes(filterTypes) {
+    public setFilterTypes(filterTypes: any) {
 
         filterTypes && filterTypes.length > 0 ?
             this.setQueryTypes(filterTypes) :
@@ -141,16 +148,19 @@ export class ViewManager {
     }
 
 
-    public isSelectedDocumentTypeInTypeFilters(selectedDocument): boolean {
+    public isSelectedDocumentTypeInTypeFilters(selectedDocument: Document|undefined): boolean {
 
         if (!selectedDocument) return true;
+        const queryTypes = this.getQueryTypes();
+        if (!queryTypes) return true;
 
-        return (!this.getQueryTypes() ||
-            this.getQueryTypes().indexOf(selectedDocument.resource.type) != -1);
+        return (queryTypes.indexOf(selectedDocument.resource.type) != -1);
     }
 
 
-    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId) {
+    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId: string|undefined) {
+
+        if (!selectedMainTypeDocumentResourceId) return;
 
         this.resourcesState.setLastSelectedOperationTypeDocumentId(this.view.name,
             selectedMainTypeDocumentResourceId);
@@ -163,7 +173,7 @@ export class ViewManager {
     }
 
 
-    public initialize(defaultMode?)  {
+    public initialize(defaultMode?: any)  {
 
         return this.resourcesState.initialize().then(() => {
 
@@ -212,13 +222,15 @@ export class ViewManager {
 
         this.query = { q: this.getQueryString() };
 
-        if (this.getFilterTypes() &&
-            this.getFilterTypes().length > 0)
+        const filterTypes = this.getFilterTypes();
+        if (!filterTypes) return;
+
+        if (filterTypes.length > 0)
             this.query.types = this.getFilterTypes();
     }
 
 
-    private setQueryTypes(types) {
+    private setQueryTypes(types: any) {
 
         this.query.types = types;
     }
@@ -230,7 +242,7 @@ export class ViewManager {
     }
 
 
-    private setLastSelectedMode(defaultMode) {
+    private setLastSelectedMode(defaultMode: string) {
 
         this.resourcesState.setLastSelectedMode(this.view.name, defaultMode);
     }

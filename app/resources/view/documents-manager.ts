@@ -15,7 +15,7 @@ import {ChangeHistoryUtil} from '../../model/change-history-util';
 export class DocumentsManager {
 
     public projectDocument: Document;
-    private selectedDocument: Document;
+    private selectedDocument: Document|undefined;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
 
@@ -29,8 +29,9 @@ export class DocumentsManager {
 
         datastore.documentChangesNotifications()
             .subscribe(documentChange => {
-            this.handleChange(
-                documentChange, this.selectedDocument);
+
+                if (this.selectedDocument) this.handleChange(
+                    documentChange, this.selectedDocument);
         });
     }
 
@@ -109,13 +110,13 @@ export class DocumentsManager {
     }
 
 
-    public setSelected(documentToSelect: Document): Promise<any> {
+    public setSelected(documentToSelect: Document): Promise<any|undefined> {
 
         if (!this.viewManager.isInOverview() &&
-            documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return;
+            documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return Promise.resolve(undefined);
 
-        if (documentToSelect == this.selectedDocument) return;
-        if (!documentToSelect) return;
+        if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
+        if (!documentToSelect) return Promise.resolve(undefined);
 
         this.selectedDocument = documentToSelect;
 
@@ -142,6 +143,8 @@ export class DocumentsManager {
 
 
     private handleChange(documentChange: DocumentChange, selectedDocument: Document) {
+
+        if (!documentChange || !documentChange.document) return;
 
         if (documentChange.type == 'deleted') {
             console.debug('unhandled deleted document');
@@ -179,19 +182,21 @@ export class DocumentsManager {
         this.newDocumentsFromRemote = [];
         this.documents = [];
 
-        let mainTypeDocument;
+        let isRecordedInTarget;
         if (this.viewManager.isInOverview()) {
-            mainTypeDocument = this.projectDocument;
+            isRecordedInTarget = this.projectDocument;
         } else {
             if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
                 return Promise.resolve();
             }
-            mainTypeDocument = this.operationTypeDocumentsManager.getSelectedDocument();
+            isRecordedInTarget = this.operationTypeDocumentsManager.getSelectedDocument();
         }
+        if (!isRecordedInTarget) return Promise.reject("no isRecordedInTarget in populate doc list");
+        if (!isRecordedInTarget.resource.id) return Promise.reject("no id in populate doc list");
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                mainTypeDocument.resource.id))
+                isRecordedInTarget.resource.id))
             .then(documents => this.documents = documents)
             .then(() => this.removeEmptyDocuments());
     }
@@ -266,6 +271,8 @@ export class DocumentsManager {
             if (!doc.resource.id || !changedDocument.resource.id) continue;
             if (doc.resource.id == changedDocument.resource.id) return true;
         }
+
+        return false;
     }
 
 

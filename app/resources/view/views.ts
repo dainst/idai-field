@@ -27,7 +27,7 @@ export class Views {
     }
 
 
-    public getView(viewName) {
+    public getView(viewName: string) {
 
         for (let view of this._) {
             if (view.name == viewName) return view;
@@ -36,7 +36,7 @@ export class Views {
     }
 
 
-    public getLabelForType(mainType) {
+    public getLabelForType(mainType: any) {
 
         for (let view of this._) {
             if (view.mainType == mainType) return view.mainTypeLabel;
@@ -45,10 +45,10 @@ export class Views {
     }
 
 
-    public getViewNameForMainTypeName(mainTypeName: string): string {
+    public getViewNameForMainTypeName(mainTypeName: string): string|undefined {
 
         const viewDefinitions: Array<ViewDefinition> = this._;
-        let viewName: string;
+        let viewName: string|undefined = undefined;
         for (let view of viewDefinitions) {
             if (view.mainType == mainTypeName) {
                 viewName = view.name;

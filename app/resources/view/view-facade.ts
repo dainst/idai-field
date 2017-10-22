@@ -7,6 +7,7 @@ import {ResourcesState} from './resources-state';
 import {Views} from './views';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 /**
  * Manages an overview of operation type resources
@@ -80,7 +81,7 @@ export class ViewFacade {
      * @returns the main type of the currently selected view.
      * This is either 'Project' or one of the operation types names.
      */
-    public getMainType(): string {
+    public getMainType(): string|undefined {
 
         if (!this.viewManager.getView()) return undefined;
         return this.viewManager.getView().mainType;
@@ -123,19 +124,23 @@ export class ViewFacade {
 
     public handleMainTypeDocumentOnDeleted() {
 
-        this.viewManager.removeActiveLayersIds(this.operationTypeDocumentsManager.getSelectedDocument().resource.id);
+        const selectedDocument = this.operationTypeDocumentsManager.getSelectedDocument();
+        if (!selectedDocument) return;
+        if (!selectedDocument.resource.id) return
+
+        this.viewManager.removeActiveLayersIds(selectedDocument.resource.id);
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
         return this.populateOperationTypeDocuments();
     }
 
 
-    public setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds) {
+    public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
         return this.viewManager.setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds);
     }
 
 
-    public getActiveLayersIds(mainTypeDocumentResourceId) {
+    public getActiveLayersIds(mainTypeDocumentResourceId: string) {
 
         return this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
     }
@@ -195,13 +200,13 @@ export class ViewFacade {
     }
 
 
-    public setMode(mode) {
+    public setMode(mode: string) {
 
         this.viewManager.setMode(mode);
     }
 
 
-    public setSelectedDocumentById(id) {
+    public setSelectedDocumentById(id: string) {
 
         return this.documentsManager.setSelectedById(id);
     }
@@ -239,7 +244,7 @@ export class ViewFacade {
      *   c) undefined
      * @returns {Document}
      */
-    public setSelectedDocument(document) {
+    public setSelectedDocument(document: Document) {
 
         return this.documentsManager.setSelected(document);
     }
@@ -251,13 +256,13 @@ export class ViewFacade {
     }
 
 
-    public setQueryString(q): Promise<boolean> {
+    public setQueryString(q: string): Promise<boolean> {
 
         return this.documentsManager.setQueryString(q);
     }
 
 
-    public setQueryTypes(types) { // TODO make it return a promise
+    public setQueryTypes(types: string[]) { // TODO make it return a promise, like setQueryString
 
         return this.documentsManager.setQueryTypes(types);
     }
@@ -273,10 +278,10 @@ export class ViewFacade {
      * @param mainTypeDoc
      * @returns true if isSelectedDocumentRecordedInSelectedOperationTypeDocument
      */
-    public selectOperationTypeDocument(mainTypeDoc): Promise<boolean> {
+    public selectOperationTypeDocument(mainTypeDoc: Document): Promise<boolean> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument/1');
-        this.operationTypeDocumentsManager.select(mainTypeDoc);
+        this.operationTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
         return this.populateDocumentList().then(() => {
             if (!this.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
@@ -322,8 +327,9 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeHomeViewName(mainTypeName: string): string {
+    public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 
+        if (!mainTypeName) return undefined;
         return this.views.getViewNameForMainTypeName(mainTypeName);
     }
 
@@ -338,7 +344,7 @@ export class ViewFacade {
     }
 
 
-    private static err(fnName, notAllowedWhenIsInOverview = true) {
+    private static err(fnName: string, notAllowedWhenIsInOverview = true) {
         
         const notMarker = notAllowedWhenIsInOverview ? '' : '! ';
         return "calling "+fnName+" is forbidden when " + notMarker + "isInOverview";

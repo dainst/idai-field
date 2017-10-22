@@ -31,7 +31,7 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedOperationTypeDocumentId(viewName: string): string {
+    public getLastSelectedOperationTypeDocumentId(viewName: string): string|undefined {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocumentId;
     }
@@ -45,7 +45,7 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedMode(viewName: string) {
+    public getLastSelectedMode(viewName: string): string|undefined {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
@@ -74,7 +74,7 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedTypeFilters(viewName: string): string[] {
+    public getLastSelectedTypeFilters(viewName: string): string[]|undefined {
 
         if (!this._) return undefined;
         return (!this._[viewName]) ? undefined : this._[viewName].types;
@@ -85,15 +85,23 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         if (!this._[viewName].layerIds) this._[viewName].layerIds = {};
-        this._[viewName].layerIds[mainTypeDocumentId] = activeLayersIds;
+
+        const layerIds = this._[viewName].layerIds;
+        if (!layerIds) return;
+
+        layerIds[mainTypeDocumentId] = activeLayersIds;
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
 
-    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
+    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[]|undefined {
 
-        return (!this._[viewName] || !this._[viewName].layerIds )
-            ? undefined : this._[viewName].layerIds[mainTypeDocumentId];
+        if (!this._[viewName] || !this._[viewName].layerIds) return;
+
+        const layerIds = this._[viewName].layerIds;
+        if (!layerIds) return;
+
+        return layerIds[mainTypeDocumentId];
     }
 
 
@@ -101,12 +109,16 @@ export class ResourcesState {
 
         if (!this._[viewName] || !this._[viewName].layerIds) return;
 
-        delete this._[viewName].layerIds[mainTypeDocumentId];
+        const layerIds = this._[viewName].layerIds;
+        if (!layerIds) return;
+
+        delete layerIds[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
 
     public clear() {
+
         this._ = {};
     }
 }

@@ -11,7 +11,7 @@ import {ViewManager} from './view-manager';
 export class OperationTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
-    private selectedDocument: IdaiFieldDocument;
+    private selectedDocument: IdaiFieldDocument|undefined;
 
     constructor(
         private datastore: ReadDatastore,
@@ -75,7 +75,7 @@ export class OperationTypeDocumentsManager {
     }
 
 
-    public isRecordedInSelectedOperationTypeDocument(document: Document): boolean {
+    public isRecordedInSelectedOperationTypeDocument(document: Document|undefined): boolean {
 
         if (document) return false;
         if (!this.selectedDocument) return false;
@@ -130,15 +130,17 @@ export class OperationTypeDocumentsManager {
     }
 
 
-    private static getMainTypeDocumentForDocument(document: Document, mainTypeDocuments): IdaiFieldDocument {
+    private static getMainTypeDocumentForDocument(document: Document|undefined,
+                                                  mainTypeDocuments: Document[]): IdaiFieldDocument|undefined {
 
         if (!mainTypeDocuments) return undefined;
 
+        if (!document) return undefined;
         if (!document.resource.relations['isRecordedIn']) return undefined;
 
         for (let documentId of document.resource.relations['isRecordedIn']) {
             for (let mainTypeDocument of mainTypeDocuments) {
-                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument;
+                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument as IdaiFieldDocument;
             }
         }
     }

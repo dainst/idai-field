@@ -24,16 +24,16 @@ before_install:
 - export PATH="$HOME/.yarn/bin:$PATH"
 install:
 - nvm install 8
-- yarn install --force
-- yarn add electron-builder@next --dev
+- npm install --force
+- npm add electron-builder@next --dev
 before_script:
 - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8;
   echo ok )& fi
 - sleep 3
 script:
 - npm rebuild node-sass
-- yarn run build
-- yarn run package-mac
+- npm run build
+- npm run package-mac
 deploy:
   skip_cleanup: true
   provider: releases

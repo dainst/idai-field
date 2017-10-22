@@ -31,21 +31,20 @@ export class OperationTypeDocumentsManager {
     }
 
 
-    public populate(): Promise<any> {
+    public async populate(): Promise<any> {
 
         if (!this.viewManager.getView()) return Promise.resolve();
 
-        return this.fetchDocuments(
+        const documents = await this.fetchDocuments(
             OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getView().mainType))
-            .then(documents => {
-                this.documents = documents as Array<IdaiFieldDocument>;
 
-                if (this.documents.length == 0) {
-                    this.selectedDocument = undefined;
-                    return;
-                }
-                return this.restoreLastSelectedOperationTypeDocument();
-            });
+        this.documents = documents as Array<IdaiFieldDocument>;
+
+        if (this.documents.length == 0) {
+            this.selectedDocument = undefined;
+            return;
+        }
+        return this.restoreLastSelectedOperationTypeDocument();
     }
 
 

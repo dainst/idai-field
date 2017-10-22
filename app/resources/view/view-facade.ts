@@ -122,15 +122,15 @@ export class ViewFacade {
     }
 
 
-    public handleMainTypeDocumentOnDeleted() {
+    public async handleMainTypeDocumentOnDeleted() {
 
         const selectedDocument = this.operationTypeDocumentsManager.getSelectedDocument();
         if (!selectedDocument) return;
-        if (!selectedDocument.resource.id) return
+        if (!selectedDocument.resource.id) return;
 
         this.viewManager.removeActiveLayersIds(selectedDocument.resource.id);
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
-        return this.populateOperationTypeDocuments();
+        await this.populateOperationTypeDocuments();
     }
 
 
@@ -278,19 +278,19 @@ export class ViewFacade {
      * @param mainTypeDoc
      * @returns true if isSelectedDocumentRecordedInSelectedOperationTypeDocument
      */
-    public selectOperationTypeDocument(mainTypeDoc: Document): Promise<boolean> {
+    public async selectOperationTypeDocument(mainTypeDoc: Document): Promise<boolean> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument/1');
         this.operationTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
-        return this.populateDocumentList().then(() => {
-            if (!this.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
-                this.documentsManager.deselect();
-                return false;
-            } {
-                return true;
-            }
-        })
+        await this.populateDocumentList();
+
+        if (!this.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
+            this.documentsManager.deselect();
+            return false;
+        } {
+            return true;
+        }
     }
 
 
@@ -309,21 +309,20 @@ export class ViewFacade {
      *
      * @returns {Promise<any>}
      */
-    public populateOperationTypeDocuments() {
+    public async populateOperationTypeDocuments() {
 
         if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
-        return this.operationTypeDocumentsManager.populate();
+        await this.operationTypeDocumentsManager.populate();
     }
 
 
-    public setupView(viewName: string, defaultMode: string) {
+    public async setupView(viewName: string, defaultMode: string) {
 
-        return this.viewManager.setupView(viewName, defaultMode)
-            .then(() => this.documentsManager.populateProjectDocument())
-            .then(() => {
-                if (!this.isInOverview()) return this.populateOperationTypeDocuments()
-            })
-            .then(() => this.populateDocumentList())
+        await this.viewManager.setupView(viewName, defaultMode);
+        await this.documentsManager.populateProjectDocument();
+
+        if (!this.isInOverview()) await this.populateOperationTypeDocuments();
+        await this.populateDocumentList();
     }
 
 

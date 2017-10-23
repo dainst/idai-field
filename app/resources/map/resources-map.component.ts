@@ -1,12 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {SettingsService} from '../../settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingHelper} from '../service/routing-helper';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 
 @Component({
     selector: 'resources-map',
@@ -28,12 +27,11 @@ export class MapWrapperComponent {
 
     constructor(
         public loading: Loading,
-        private resourcesComponent: ResourcesComponent,
+        public viewFacade: ViewFacade,
+        public resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
-        private messages: Messages,
-        private routingHelper: RoutingHelper,
-        private viewFacade: ViewFacade
+        private messages: Messages
     ) { }
 
 

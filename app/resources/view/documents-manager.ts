@@ -113,10 +113,11 @@ export class DocumentsManager {
     public setSelected(documentToSelect: Document): Promise<any|undefined> {
 
         if (!this.viewManager.isInOverview() &&
-            documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) return Promise.resolve(undefined);
+                documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) {
+            return Promise.resolve(undefined);
+        }
 
         if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
-        if (!documentToSelect) return Promise.resolve(undefined);
 
         this.selectedDocument = documentToSelect;
 
@@ -219,6 +220,8 @@ export class DocumentsManager {
 
 
     public isNewDocumentFromRemote(document: Document): boolean {
+
+        if (!document) return false;
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }

@@ -12,7 +12,8 @@
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="!viewFacade.isInOverview()"
-                      [update]="resourcesComponent.ready" (onSelectDocument)="select($event, true)"
+                      [update]="resourcesComponent.ready"
+                      (onSelectDocument)="viewFacade.setSelectedDocument($event, true)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 

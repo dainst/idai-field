@@ -14,7 +14,6 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
 import {ViewFacade} from '../resources/view/view-facade';
 import {GeneralRoutingHelper} from '../common/general-routing-helper';
-import {Document} from 'idai-components-2/core';
 
 
 @Component({
@@ -95,6 +94,7 @@ export class ImageViewComponent implements OnInit {
         doceditModalComponent.setDocument(doc);
     }
 
+
     public hasRelations() {
 
         if (!this.image) return false;
@@ -103,32 +103,35 @@ export class ImageViewComponent implements OnInit {
         return !ObjectUtil.isEmpty(this.image.document.resource.relations);
     }
 
+
     protected fetchDocAndImage() {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(function(id: string) {
+        this.getRouteParams(async function(id: string) {
             this.id = id;
-            this.datastore.get(id).then(
-                (doc: Document) => {
-                    this.image.document = doc;
+
+            try {
+                const doc = await this.datastore.get(id);
+                this.image.document = doc;
+
+                try {
                     // read original (empty if not present)
-                    this.imagestore.read(doc.resource.id, false, false)
-                        .then((url: any) => {
-                            if (!url || url == '') this.originalNotFound = true;
-                            this.image.imgSrc = url;
-                        })
+                    let url = await this.imagestore.read(doc.resource.id, false, false);
+                    if (!url || url == '') this.originalNotFound = true;
+                    this.image.imgSrc = url;
+
                         // read thumb
-                        .then(() => this.imagestore.read(doc.resource.id, false, true))
-                        .then((url: any) => this.image.thumbSrc = url)
-                        .catch(() => {
-                            this.image.imgSrc = BlobMaker.blackImg;
-                            this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
-                        });
-                },
-                () => {
-                    console.error("Fatal error: could not load document for id ", id);
-                });
+                    url = await this.imagestore.read(doc.resource.id, false, true);
+                    this.image.thumbSrc = url
+
+                } catch (e) {
+                    this.image.imgSrc = BlobMaker.blackImg;
+                    this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
+                }
+            } catch (e) {
+                console.error("Fatal error: could not load document for id ", id);
+            }
         }.bind(this));
     }
 

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from './settings-service';
 import {M} from '../m';
-import {Settings, SyncTarget} from './settings';
+import {Settings} from './settings';
 
 const ip = require('ip');
 
@@ -16,14 +16,17 @@ const ip = require('ip');
  */
 export class SettingsComponent implements OnInit {
 
+
     public settings: Settings;
     public ready: boolean = false;
     public saving: boolean = false;
     public ipAddress: string = ip.address();
 
+
     constructor(private settingsService: SettingsService,
                 private messages: Messages) {
     }
+
 
     ngOnInit() {
 
@@ -33,9 +36,12 @@ export class SettingsComponent implements OnInit {
         });
     }
 
+
     public toggleSync() {
+
         this.settings.isSyncActive = !this.settings.isSyncActive;
     }
+
 
     public save() {
 

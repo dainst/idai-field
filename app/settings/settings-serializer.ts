@@ -13,7 +13,7 @@ export class SettingsSerializer {
 
         return new Promise((resolve,reject) => {
 
-            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err, content) => {
+            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -26,11 +26,12 @@ export class SettingsSerializer {
         });
     }
 
+
     public store(settings: Settings): Promise<any> {
 
         if (!settings) return Promise.resolve(undefined);
 
-        let configToWrite = {};
+        let configToWrite: any = {};
 
         if (settings.isSyncActive) {
             configToWrite['isSyncActive'] = settings.isSyncActive;
@@ -56,10 +57,11 @@ export class SettingsSerializer {
         return this.writeConfigFile(configToWrite);
     }
 
+
     private writeConfigFile(config: any): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config), err => {
+            fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config), (err: any) => {
                 if (err) {
                     reject(err);
                 } else {

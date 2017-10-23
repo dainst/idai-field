@@ -8,6 +8,7 @@ import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {AppState} from '../app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../m';
+import {Observer} from 'rxjs/Observer';
 
 const app = require('electron').remote.app;
 
@@ -26,13 +27,15 @@ const app = require('electron').remote.app;
  */
 export class SettingsService {
 
+
     private syncStatusObservers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
-    private currentSyncTimeout;
+    private currentSyncTimeout: any;
 
     public ready: Promise<any>;
+
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
@@ -40,12 +43,13 @@ export class SettingsService {
                 private messages: Messages) {
     }
 
+
     public init() {
 
         this.ready = this.settingsSerializer.load()
             .then(settings => this.updateSettings(settings))
-            .then(() => this.pouchdbManager.setProject(this.getSelectedProject()))
-            .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false))
+            .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
+            .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
             .then(() => {
                 if (this.settings.isSyncActive)
                     return this.startSync();
@@ -54,15 +58,18 @@ export class SettingsService {
         return this.ready;
     }
 
-    public getSelectedProject(): string {
+
+    public getSelectedProject(): string|undefined {
         
         if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
     }
+
 
     public getUsername(): string {
 
         return this.settings.username;
     }
+
 
     /**
      * Sets, validates and persists the settings state.
@@ -86,8 +93,8 @@ export class SettingsService {
         this.appState.setCurrentUser(settings.username);
         this.appState.setImagestorePath(settings.imagestorePath);
 
-        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject())
-            .catch(errWithParams => {
+        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
+            .catch((errWithParams: any) => {
                 if (errWithParams.length > 0 && errWithParams[0] == ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
                 } else {
@@ -155,15 +162,15 @@ export class SettingsService {
         return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
 
             // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.syncStatusObservers.forEach(o => o.next('connected')), 500);
+            const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);
 
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
-                this.syncStatusObservers.forEach(o => o.next('disconnected'));
+                this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
-            syncState.onChange.subscribe(() => this.syncStatusObservers.forEach(o => o.next('changed')));
+            syncState.onChange.subscribe(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed')));
         });
     }
 
@@ -187,7 +194,7 @@ export class SettingsService {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
-        this.syncStatusObservers.forEach(o => o.next('disconnected'));
+        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
     }
 
     private makeProjectDoc(name: string) {
@@ -206,7 +213,7 @@ export class SettingsService {
         };
     }
 
-    private static validateAddress(address) {
+    private static validateAddress(address: any) {
 
         if (address == '') return true;
 
@@ -233,12 +240,12 @@ export class SettingsService {
      */
     public syncStatusChanges(): Observable<string> {
 
-        return Observable.create(observer => {
-            this.syncStatusObservers.push(observer);
+        return Observable.create((o: Observer<any>) => {
+            this.syncStatusObservers.push(o as never);
         });
     }
 
-    private static makeUrlFromSyncTarget(serverSetting) {
+    private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
 

@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from 'idai-components-2/configuration';
 
 @Component({
     moduleId: module.id,

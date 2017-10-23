@@ -25,7 +25,7 @@ export class DoceditProxy {
     }
 
 
-    public editDocument(document: Document, activeTabName?: string): Promise<any> {
+    public async editDocument(document: Document, activeTabName?: string): Promise<any> {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
@@ -34,12 +34,12 @@ export class DoceditProxy {
 
         const result: any = {};
 
-        return doceditRef.result.then(
+        await doceditRef.result.then(
             res => this.handleSaveResult(document, result, res),
             closeReason => this.handleClosed(document, closeReason)
-        )
-        .then(() => this.viewFacade.populateDocumentList()) // do this in every case, since this is also the trigger for the map to get repainted with updated documents
-        .then(() => {return result; });
+        );
+        await this.viewFacade.populateDocumentList(); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+        return result;
     }
 
 

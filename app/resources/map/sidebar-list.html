@@ -3,7 +3,7 @@
         <li *ngFor="let document of viewFacade.getDocuments(); let index=index"
             (click)="select(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"
-            (drop)="uploadImages($event, document)"
+            (drop)="mapWrapperComponent.uploadImages($event, document)"
             class="list-group-item"
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"

@@ -36,7 +36,9 @@ gulp.task('copy-fonts-convert-sass', ['convert-sass'], function () {
 //
 gulp.task('create-configs', function (callback) {
 
-    fs.access('./config/Configuration.json', fs.F_OK, function(err) {
+    var path = './config/Configuration.json';
+
+    fs.access(path, fs.F_OK, function(err) {
         if (err) {
             fs.createReadStream(path + '.template').pipe(fs.createWriteStream(path));
         } else {

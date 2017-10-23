@@ -198,7 +198,7 @@ export class ViewManager {
         return Promise.resolve().then(
             () => {
                 this.view = this.views.getView(viewName);
-                this.mainTypeLabel = this.views.getLabelForType(this.view);
+                this.mainTypeLabel = this.views.getLabelForType(this.view.mainType);
             }
         ).catch(() => Promise.reject(null));
     }

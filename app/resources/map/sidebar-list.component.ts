@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {RoutingHelper} from "../service/routing-helper";
+import {RoutingHelper} from '../service/routing-helper';
 import {MapWrapperComponent} from './resources-map.component';
 
 @Component({

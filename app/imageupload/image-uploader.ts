@@ -10,6 +10,7 @@ import {M} from '../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../util/extension-util';
 import {UploadStatus} from './upload-status';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 
 export interface ImageUploadResult {
 
@@ -58,7 +59,7 @@ export class ImageUploader {
         if (result[1]) uploadResult.messages.push([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS, result[1]]);
         if (result[0] == 0) return Promise.resolve(uploadResult);
 
-        let uploadModalRef;
+        let uploadModalRef: any;
         return this.chooseType(files.length)
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
@@ -164,7 +165,7 @@ export class ImageUploader {
                 }
             })(this);
             reader.onerror = () => {
-                return (error) => {
+                return (error: any) => {
                     console.error(error);
                     reject([M.IMAGES_ERROR_FILEREADER, file.name]);
                 }
@@ -181,14 +182,17 @@ export class ImageUploader {
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                const doc = {
+                const doc: IdaiFieldImageDocument = {
                     resource: {
                         identifier: file.name,
+                        shortDescription: '',
                         type: type.name,
                         originalFilename: file.name,
                         width: img.width,
                         height: img.height,
-                        relations: {}
+                        relations: {
+                            depicts: []
+                        }
                     }
                 };
 
@@ -202,7 +206,9 @@ export class ImageUploader {
     }
 
 
-    private static getFiles(event: Event) {
+    private static getFiles(_event: Event) {
+
+        const event = _event as any;
 
         if (!event) return [];
         let files = [];

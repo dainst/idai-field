@@ -7,7 +7,6 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
     moduleId: module.id,
     templateUrl: './description-view.html'
 })
-
 /**
  * @author Jan G. Wieners
  */

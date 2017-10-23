@@ -15,6 +15,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
  */
 export class DocumentPickerComponent implements OnChanges {
 
+
     @Input() relationName: string;
     @Input() relationRangeType: string;
 
@@ -24,6 +25,7 @@ export class DocumentPickerComponent implements OnChanges {
     public documents: Array<IdaiFieldDocument>;
     protected query: Query = {};
 
+
     constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration) {
 
@@ -31,16 +33,19 @@ export class DocumentPickerComponent implements OnChanges {
         this.fetchDocuments();
     }
 
+
     ngOnChanges() {
 
         this.fetchDocuments();
     }
+
 
     public setQueryString(q: string) {
 
         this.query.q = q;
         this.fetchDocuments();
     }
+
 
     public setQueryTypes(types: string[]) {
 
@@ -51,6 +56,7 @@ export class DocumentPickerComponent implements OnChanges {
         }
         this.fetchDocuments();
     }
+
 
     /**
      * Populates the document list with all documents
@@ -67,6 +73,7 @@ export class DocumentPickerComponent implements OnChanges {
                 },
                 err => console.error(err));
     }
+
 
     private filterNotAllowedRelationDomainTypes(
             documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {

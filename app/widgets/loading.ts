@@ -11,7 +11,7 @@ export class Loading { // TODO move this to resources/service. it seems to only 
     public showIcons: boolean = false;
 
     private loading: number = 0;
-    private timeoutReference: number;
+    private timeoutReference: number|undefined;
     private showIconsDelay: boolean = false;
 
 
@@ -29,7 +29,7 @@ export class Loading { // TODO move this to resources/service. it seems to only 
     }
 
 
-    public setShowIconsDelay(showIconsDelay) {
+    public setShowIconsDelay(showIconsDelay: boolean) {
 
         this.showIconsDelay = showIconsDelay;
     }

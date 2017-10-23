@@ -16,6 +16,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 private datastore: IdaiFieldDatastore,
                 private settingsService: SettingsService) { }
 
+
     importDoc(doc: Document): Promise<any> {
 
         let document: IdaiFieldDocument = doc as IdaiFieldDocument;

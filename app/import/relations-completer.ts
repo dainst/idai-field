@@ -14,6 +14,7 @@ export class RelationsCompleter {
                 private configLoader: ConfigLoader) {
     }
 
+
     /**
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
      * @param resourceIds The ids of the resources whose relations are to be considered
@@ -22,6 +23,7 @@ export class RelationsCompleter {
 
         return this.alterInverseRelations('create', resourceIds);
     }
+
 
     /**
      * Iterates over all relations of the given resources and removes the corresponding inverse relations of the
@@ -32,6 +34,7 @@ export class RelationsCompleter {
 
         return this.alterInverseRelations('remove', resourceIds);
     }
+
 
     /**
      * Iterates over all relations of the given resources and either creates or removes the corresponding inverse
@@ -57,6 +60,7 @@ export class RelationsCompleter {
             );
         });
     }
+
 
     /**
      * Creates/removes inverse relations for a single resource.
@@ -95,6 +99,7 @@ export class RelationsCompleter {
         });
     }
 
+
     /**
      * Either adds (in mode 'create') oder removes (in mode 'remove') an relation.
      * @param mode Can be either 'create' or 'remove'
@@ -115,9 +120,9 @@ export class RelationsCompleter {
                             promise = this.removeRelation(resource, targetDocument, relationName);
                             break;
                     }
-                    promise.then(
+                    (promise as any).then(
                         () => resolve(),
-                        err => reject(err)
+                        (err: any) => reject(err)
                     )
                 }, () => {
                     switch (mode) {
@@ -133,6 +138,7 @@ export class RelationsCompleter {
         });
     }
 
+
     private createRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -141,8 +147,8 @@ export class RelationsCompleter {
 
             let relations = targetDocument.resource.relations[relationName];
             if (!relations) relations = [];
-            if (relations.indexOf(resource.id) == -1) {
-                relations.push(resource.id);
+            if (relations.indexOf(resource.id as any) == -1) {
+                relations.push(resource.id as any);
                 targetDocument.resource.relations[relationName] = relations;
                 this.datastore.update(targetDocument).then(
                     doc => resolve(),
@@ -152,15 +158,16 @@ export class RelationsCompleter {
         });
     }
 
+
     private removeRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let relations = targetDocument.resource.relations[relationName];
-            if (!relations || relations.indexOf(resource.id) == -1) {
+            if (!relations || relations.indexOf(resource.id as any) == -1) {
                 resolve();
             } else {
-                relations.splice(relations.indexOf(resource.id), 1);
+                relations.splice(relations.indexOf(resource.id as any), 1);
                 targetDocument.resource.relations[relationName] = relations;
                 this.datastore.update(targetDocument).then(
                     doc => resolve(),

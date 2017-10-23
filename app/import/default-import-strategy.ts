@@ -12,8 +12,10 @@ import {M} from '../m';
  */
 export class DefaultImportStrategy implements ImportStrategy {
 
+
     constructor(private validator: Validator, private datastore: Datastore, private settingsService: SettingsService,
                 private configLoader: ConfigLoader, private mainTypeDocumentId?: string) { }
+
 
     importDoc(document: Document): Promise<any> {
 
@@ -30,6 +32,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             );
     }
 
+
     private setMainTypeDocumentRelation(document: Document): Promise<any> {
 
         if (!this.mainTypeDocumentId || this.mainTypeDocumentId == '') return Promise.resolve();
@@ -39,7 +42,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         return this.configLoader.getProjectConfiguration()
             .then(projectConfig => {
                 projectConfiguration = projectConfig;
-                return this.datastore.get(this.mainTypeDocumentId);
+                return this.datastore.get(this.mainTypeDocumentId as any);
             }).then(mainTypeDocument => {
                 if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type,
                         mainTypeDocument.resource.type, 'isRecordedIn')) {
@@ -51,8 +54,8 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
 
-                if (relations['isRecordedIn'].indexOf(this.mainTypeDocumentId) == -1) {
-                    relations['isRecordedIn'].push(this.mainTypeDocumentId);
+                if (relations['isRecordedIn'].indexOf(this.mainTypeDocumentId as any) == -1) {
+                    relations['isRecordedIn'].push(this.mainTypeDocumentId as any);
                 }
 
                 return Promise.resolve();

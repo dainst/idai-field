@@ -50,12 +50,12 @@ export class ImportComponent {
 
     public sourceType: string = 'file';
     public format: string = 'native';
-    public file: File;
-    public url: string;
+    public file: File|undefined;
+    public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId: string = '';
 
-    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
+    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
     constructor(
@@ -78,13 +78,13 @@ export class ImportComponent {
 
     public startImport() {
 
-        const reader: Reader = ImportComponent.createReader(this.sourceType, this.file, this.url, this.http);
-        const parser: Parser = ImportComponent.createParser(this.format);
-        const importStrategy: ImportStrategy = ImportComponent.createImportStrategy(this.format, this.validator,
+        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any, this.url as any, this.http);
+        const parser: Parser|undefined = ImportComponent.createParser(this.format);
+        const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format, this.validator,
             this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
-        const relationsStrategy: RelationsStrategy
+        const relationsStrategy: RelationsStrategy|undefined
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
-        const rollbackStrategy: RollbackStrategy
+        const rollbackStrategy: RollbackStrategy|undefined
             = ImportComponent.createRollbackStrategy(this.format, this.datastore);
 
         this.messages.clear();
@@ -92,12 +92,12 @@ export class ImportComponent {
             return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
         }
 
-        let uploadModalRef = undefined;
+        let uploadModalRef: any = undefined;
         let uploadReady = false;
         setTimeout(() => {
             if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
         }, 200);
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy, rollbackStrategy, this.datastore)
+        this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy, this.datastore)
             .then(importReport => {
                 uploadReady = true;
                 if(uploadModalRef) uploadModalRef.close();
@@ -106,7 +106,7 @@ export class ImportComponent {
     }
 
 
-    public isReady(): boolean {
+    public isReady(): boolean|undefined {
 
         switch (this.sourceType) {
             case 'file':
@@ -126,7 +126,7 @@ export class ImportComponent {
 
     private static createImportStrategy(format: string, validator: Validator, datastore: CachedPouchdbDatastore,
                                         settingsService: SettingsService, configLoader: ConfigLoader,
-                                        mainTypeDocumentId: string): ImportStrategy {
+                                        mainTypeDocumentId: string): ImportStrategy|undefined {
 
         switch (format) {
             case 'native':
@@ -139,7 +139,7 @@ export class ImportComponent {
         }
     }
 
-    private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy {
+    private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy|undefined {
 
         switch (format) {
             case 'native':
@@ -151,7 +151,7 @@ export class ImportComponent {
         }
     }
 
-    private static createRollbackStrategy(format: string, datastore: CachedPouchdbDatastore): RollbackStrategy {
+    private static createRollbackStrategy(format: string, datastore: CachedPouchdbDatastore): RollbackStrategy|undefined {
 
         switch (format) {
             case 'native':
@@ -163,29 +163,8 @@ export class ImportComponent {
         }
     }
 
-    private static createReader(sourceType: string, file: File, url: string, http: Http): Reader {
 
-        switch (sourceType) {
-            case 'file':
-                return new FileSystemReader(file);
-            case 'http':
-                return new HttpReader(url, http);
-        }
-    }
-
-    private static createParser(format: string): Parser {
-
-        switch (format) {
-            case 'native':
-                return new NativeJsonlParser();
-            case 'idig':
-                return new IdigCsvParser();
-            case 'geojson':
-                return new GeojsonParser();
-        }
-    }
-
-    public selectFile(event) {
+    public selectFile(event: any) {
 
         let files = event.target.files;
 
@@ -195,6 +174,7 @@ export class ImportComponent {
             this.file = files[0];
         }
     }
+
 
     private showImportResult(importReport: ImportReport) {
 
@@ -206,6 +186,7 @@ export class ImportComponent {
         }
     }
 
+
     private showSuccessMessage(importedResourcesIds: string[]) {
 
         if (importedResourcesIds.length == 1) {
@@ -215,10 +196,35 @@ export class ImportComponent {
         }
     }
 
+
     private showMessages(messages: string[][]) {
 
         for (let msgWithParams of messages) {
             this.messages.add(msgWithParams);
+        }
+    }
+
+
+    private static createReader(sourceType: string, file: File, url: string, http: Http): Reader|undefined {
+
+        switch (sourceType) {
+            case 'file':
+                return new FileSystemReader(file);
+            case 'http':
+                return new HttpReader(url, http);
+        }
+    }
+
+
+    private static createParser(format: string): Parser|undefined {
+
+        switch (format) {
+            case 'native':
+                return new NativeJsonlParser();
+            case 'idig':
+                return new IdigCsvParser();
+            case 'geojson':
+                return new GeojsonParser();
         }
     }
 }

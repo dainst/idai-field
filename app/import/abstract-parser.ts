@@ -16,7 +16,7 @@ export abstract class AbstractParser implements Parser {
         return this.warnings;
     }
 
-    protected addToWarnings(keyOfM) {
+    protected addToWarnings(keyOfM: any) {
 
         for (let msgWithParams of this.warnings) {
             if (msgWithParams[0] == keyOfM) return;

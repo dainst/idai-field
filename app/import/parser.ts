@@ -9,6 +9,7 @@ export interface Parser {
      */
     parse(content:string): Observable<Document>;
 
+
     /**
      * Returns the warnings (each one a msgWithParams) which occurred during the last parsing process.
      */

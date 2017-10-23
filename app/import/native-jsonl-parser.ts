@@ -2,6 +2,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {M} from '../m';
 import {AbstractParser} from './abstract-parser';
+import {Observer} from 'rxjs/Observer';
 
 /**
  * @author Sebastian Cuy
@@ -9,14 +10,16 @@ import {AbstractParser} from './abstract-parser';
  */
 export class NativeJsonlParser extends AbstractParser {
 
+
     public parse(content: string): Observable<Document> {
         
         this.warnings = [];
-        return Observable.create(observer => {
+        return Observable.create((observer: Observer<any>) => {
             NativeJsonlParser.parseContent(content, observer, NativeJsonlParser.makeDoc);
             observer.complete();
         });
     }
+
 
     private static makeDoc(line: string) {
         
@@ -25,6 +28,7 @@ export class NativeJsonlParser extends AbstractParser {
 
         return { resource: resource };
     }
+
 
     private static parseContent(content: string, observer: any, makeDocFun: Function) {
 

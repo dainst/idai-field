@@ -35,7 +35,7 @@ export class Importer {
     private objectReaderFinished: boolean;
     private currentImportWithError: boolean;
     private importReport: ImportReport;
-    private resolvePromise: (any) => any;
+    private resolvePromise: (any: any) => any;
 
     private importStrategy: ImportStrategy;
     private relationsStrategy: RelationsStrategy;
@@ -138,7 +138,7 @@ export class Importer {
         this.importStrategy.importDoc(doc)
             .then(() => {
 
-                this.importReport.importedResourcesIds.push(doc.resource.id);
+                this.importReport.importedResourcesIds.push(doc.resource.id as any);
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);

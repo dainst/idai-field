@@ -9,6 +9,7 @@ export interface RelationsStrategy {
      */
     completeInverseRelations(resourceIds: string[]): Promise<any>;
 
+
     /**
      *
      * @param resourceIds: Ids of the imported resources

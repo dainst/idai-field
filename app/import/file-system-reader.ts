@@ -11,7 +11,9 @@ import {M} from "../m";
  */
 export class FileSystemReader implements Reader {
 
+
     constructor(private file: File) {}
+
 
     /**
      * Read content of file

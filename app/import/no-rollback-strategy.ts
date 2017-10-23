@@ -5,6 +5,7 @@ import {RollbackStrategy} from './rollback-strategy'
  */
 export class NoRollbackStrategy implements RollbackStrategy {
 
+
     public rollback(resourceIds: string[]): Promise<any> {
 
         return new Promise<any>((resolve) => { resolve(); });

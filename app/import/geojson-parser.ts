@@ -3,6 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {M} from '../m';
 import {AbstractParser} from './abstract-parser';
 import {ObjectUtil} from '../util/object-util';
+import {Observer} from 'rxjs/Observer';
 
 export interface Geojson {
     type: string,
@@ -17,6 +18,7 @@ export interface Geojson {
  */
 export class GeojsonParser extends AbstractParser {
 
+
     /**
      * The content json must be of a certain structure to
      * get accepted. Any deviance of this structure will lead
@@ -28,7 +30,7 @@ export class GeojsonParser extends AbstractParser {
     public parse(content: string): Observable<Document> {
 
         this.warnings = [];
-        return Observable.create(observer => {
+        return Observable.create((observer: Observer<any>) => {
             let content_: Geojson;
             try {
                 content_ = JSON.parse(content) as Geojson;
@@ -44,7 +46,8 @@ export class GeojsonParser extends AbstractParser {
         });
     }
 
-    private iterateDocs(content: Geojson, observer) {
+
+    private iterateDocs(content: Geojson, observer: Observer<any>) {
 
         const identifiers: string[] = [];
 
@@ -57,11 +60,12 @@ export class GeojsonParser extends AbstractParser {
         this.addDuplicateIdentifierWarnings(identifiers);
     }
 
+
     private static validate(content: Geojson) {
 
         const supportedGeometryTypes = ['Point', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'];
 
-        function structErr(text) {
+        function structErr(text: any) {
             return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, text];
         }
         if (content.type != 'FeatureCollection') {
@@ -90,6 +94,7 @@ export class GeojsonParser extends AbstractParser {
         }
     }
 
+
     private addDuplicateIdentifierWarnings(identifiers: string[]) {
 
         const duplicateIdentifiers: string[] = ObjectUtil.getDuplicateValues(identifiers);
@@ -100,7 +105,8 @@ export class GeojsonParser extends AbstractParser {
         }
     }
 
-    private static makeDoc(feature) {
+
+    private static makeDoc(feature: any) {
 
         return {
             resource: {

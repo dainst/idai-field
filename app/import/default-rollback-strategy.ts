@@ -6,7 +6,9 @@ import {Datastore} from 'idai-components-2/datastore';
  */
 export class DefaultRollbackStrategy implements RollbackStrategy {
 
+
     constructor(private datastore: Datastore) { }
+
 
     public rollback(resourceIds: string[]): Promise<any> {
 
@@ -18,6 +20,7 @@ export class DefaultRollbackStrategy implements RollbackStrategy {
 
         return Promise.all(promises);
     }
+
 
     private deleteResource(resourceId: string): Promise<any> {
 

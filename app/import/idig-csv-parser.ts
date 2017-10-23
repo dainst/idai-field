@@ -3,6 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {M} from '../m';
 import {Document} from 'idai-components-2/core';
 import {AbstractParser} from './abstract-parser';
+import {Observer} from 'rxjs/Observer';
 
 /**
  * @author Sebastian Cuy
@@ -10,6 +11,7 @@ import {AbstractParser} from './abstract-parser';
  * @author Thomas Kleinke
  */
 export class IdigCsvParser extends AbstractParser {
+
 
     private static MANDATORY_FIELDS: string[] = ['IdentifierUUID', 'Type'];
     private static MANUALLY_MAPPED_FIELDS: string[] = ['Identifier', 'Title'];
@@ -31,7 +33,6 @@ export class IdigCsvParser extends AbstractParser {
         'RelationAttachments', 'RelationIsAfter', 'RelationIsAfterUUID', 'RelationIsBefore',
         'RelationIsBeforeUUID', 'RightsDeleted', 'RightsLocked', 'RightsSidelined', 'RightsStatus',
         'RightsTrashed', 'SectionNumber', 'Storage'
-
     ];
     private static RELATION_FIELDS: string[] = [
         'Relation', 'Relation_uuid',
@@ -46,13 +47,13 @@ export class IdigCsvParser extends AbstractParser {
 
         this.warnings = [];
 
-        return Observable.create(observer => {
+        return Observable.create((observer: Observer<any>) => {
 
-            let errorCallback = e => observer.error([M.IMPORT_FAILURE_INVALIDCSV, e.row]);
+            let errorCallback = (e: any) => observer.error([M.IMPORT_FAILURE_INVALIDCSV, e.row]);
 
-            let completeCallback = result => {
-                result.errors.forEach( e => errorCallback(e) );
-                result.data.forEach( (object, i) => {
+            let completeCallback = (result: any) => {
+                result.errors.forEach( (e: any) => errorCallback(e) );
+                result.data.forEach( (object: any, i:any) => {
                     let msgWithParams = this.checkExistenceOfMandatoryFields(object, i + 1);
                     if (msgWithParams != undefined) {
                         observer.error(msgWithParams);
@@ -82,13 +83,14 @@ export class IdigCsvParser extends AbstractParser {
 
     }
 
+
     /**
      * @param object an iDig object
      * @param lineNumber
      * @returns {any} msgWithParams for the first occurence of a missing field
      */
     private checkExistenceOfMandatoryFields(object: any, lineNumber: number): any {
-        let msgWithParams = undefined;
+        let msgWithParams: any = undefined;
         IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
                 if (!msgWithParams) msgWithParams = [M.IMPORT_FAILURE_MANDATORYCSVFIELDMISSING,lineNumber,mandatoryField];
@@ -97,14 +99,16 @@ export class IdigCsvParser extends AbstractParser {
         return msgWithParams;
     }
 
-    private identifier(object) {
+
+    private identifier(object: any) {
         if (object['Identifier'] != undefined)
             return object['Identifier'];
         else
             return object['IdentifierUUID'];
     }
 
-    private documentFrom(object, lineNumber: number): Document {
+
+    private documentFrom(object: any, lineNumber: number): Document {
 
         let doc: IdaiFieldDocument = {
             resource: {
@@ -124,7 +128,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private map(object, doc, lineNumber: number): Document {
+    private map(object: any, doc: any, lineNumber: number): Document {
 
         Object.keys(object).forEach( field => {
             if (IdigCsvParser.IGNORED_FIELDS.indexOf(field) == -1) {
@@ -141,26 +145,31 @@ export class IdigCsvParser extends AbstractParser {
         return doc;
     }
 
-    private isRelation(field) {
+
+    private isRelation(field: any) {
         return (IdigCsvParser.RELATION_FIELDS.indexOf(field) != -1);
     }
 
-    private hasContent(object, field) {
+
+    private hasContent(object: any, field: any) {
         return (object[field] != undefined && object[field] != '');
     }
 
-    private relationName(relation) {
+
+    private relationName(relation: any) {
         var relN = relation.substring(0, relation.indexOf('UUID'));
         var relN = relN.replace('Relation', '');
         if (relN == '') return 'Relation';
         else return relN;
     }
 
-    private isMappableRelation(relation) {
+
+    private isMappableRelation(relation: any) {
         return (relation.indexOf('UUID') != -1) && (this.relationName(relation) != 'Relation');
     }
 
-    private mapRelationField(object, resource, relation) {
+
+    private mapRelationField(object: any, resource: any, relation: any) {
 
         if (this.hasContent(object, relation)) {
             if (this.isMappableRelation(relation)) {
@@ -170,19 +179,21 @@ export class IdigCsvParser extends AbstractParser {
         }
     };
 
-    private mapGeometryField(object, resource, lineNumber: number) {
+
+    private mapGeometryField(object: any, resource: any, lineNumber: number) {
 
         if (this.hasContent(object, IdigCsvParser.GEOMETRY_FIELD)) {
             let geometryString = object[IdigCsvParser.GEOMETRY_FIELD];
-            let geometry: IdaiFieldGeometry = this.parseGeometryString(geometryString, lineNumber);
+            let geometry: IdaiFieldGeometry|null = this.parseGeometryString(geometryString, lineNumber);
             if (geometry) resource.geometry = geometry;
         }
     }
 
-    private parseGeometryString(geometryString, lineNumber: number): IdaiFieldGeometry {
+
+    private parseGeometryString(geometryString: any, lineNumber: number): IdaiFieldGeometry|null {
 
         geometryString = geometryString.toLowerCase();
-        let geometry: IdaiFieldGeometry = null;
+        let geometry: IdaiFieldGeometry|null = null;
 
         if (geometryString.startsWith('point')) {
             geometry = this.parsePointGeometryString(geometryString, lineNumber);
@@ -194,6 +205,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return geometry;
     }
+
 
     private parsePointGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
@@ -208,6 +220,7 @@ export class IdigCsvParser extends AbstractParser {
         return geometry;
     }
 
+
     private parsePolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
         let geometry: IdaiFieldGeometry = { type: 'Polygon', coordinates: [] };
@@ -220,6 +233,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return geometry;
     }
+
 
     private parseMultiPolygonGeometryString(geometryString: string, lineNumber: number): IdaiFieldGeometry {
 
@@ -237,6 +251,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return geometry;
     }
+
 
     private parsePoint(coordinatesString: string, lineNumber: number): number[] {
 
@@ -256,6 +271,7 @@ export class IdigCsvParser extends AbstractParser {
         return point;
     }
 
+
     private parsePolygon(coordinatesString: string, lineNumber: number): number[][][] {
 
         let polygon: number[][][] = [[]];
@@ -272,6 +288,7 @@ export class IdigCsvParser extends AbstractParser {
         return polygon;
     }
 
+
     /**
      * Copies a field if it is neither mandatory nor marked as
      * manually mapped.
@@ -280,7 +297,7 @@ export class IdigCsvParser extends AbstractParser {
      * @param resource
      * @param field
      */
-    private copyField(object, resource, field) {
+    private copyField(object: any, resource: any, field: any) {
 
         if (IdigCsvParser.MANDATORY_FIELDS.indexOf(field) == -1 &&
             IdigCsvParser.MANUALLY_MAPPED_FIELDS.indexOf(field) == -1) {

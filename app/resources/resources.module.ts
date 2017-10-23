@@ -20,11 +20,9 @@ import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.
 import {RoutingHelper} from './service/routing-helper';
 import {DoceditProxy} from './service/docedit-proxy';
 import {ViewFacade} from './view/view-facade';
-import {Views} from './view/views';
 import {IdaiFieldDatastore} from '../model/idai-field-datastore';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../settings/settings-service';
-import {Loading} from '../widgets/loading';
 import {StateSerializer} from '../common/state-serializer';
 import {Datastore} from 'idai-components-2/datastore';
 import {SidebarListComponent} from './map/sidebar-list.component';

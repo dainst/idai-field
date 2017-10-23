@@ -152,7 +152,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
-    fit('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
+    it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
         ResourcesPage.performCreateResource('building1', 'building');
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.performCreateResource('architecture1', 'feature-architecture');

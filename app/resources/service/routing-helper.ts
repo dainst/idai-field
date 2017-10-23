@@ -104,6 +104,8 @@ export class RoutingHelper {
         const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
         if (viewName == this.viewFacade.getViewName()) return;
 
-        this.router.navigate(['resources', viewName, document.resource.id]);
+        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
+            this.viewFacade.selectOperationTypeDocument(document);
+        });
     }
 }

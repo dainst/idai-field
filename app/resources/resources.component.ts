@@ -49,6 +49,7 @@ export class ResourcesComponent implements AfterViewChecked {
     ) {
         routingHelper.routeParams(route).subscribe(params => {
             this.isEditingGeometry = false;
+            this.viewFacade.setSelectedDocument(undefined);
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from

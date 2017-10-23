@@ -92,7 +92,7 @@ export class PersistenceHelper {
         for (let document of this.imageOverviewFacade.getSelected()) {
 
             const oldVersion = JSON.parse(JSON.stringify(document));
-            delete document.resource.relations['depicts'];
+            delete document.resource.relations.depicts;
 
             promises.push(this.persistenceManager.persist(
                 document, this.settingsService.getUsername(),

@@ -82,7 +82,8 @@ export class ImageDocumentsManager {
     private doSelectedDocumentsContainDepictsRelations(): boolean {
 
         for (let document of this.selected) {
-            if (document.resource.relations['depicts'] && document.resource.relations['depicts'].length > 0) {
+            if (document.resource.relations.depicts &&
+                    document.resource.relations.depicts.length > 0) {
                 return true;
             }
         }
@@ -123,11 +124,13 @@ export class ImageDocumentsManager {
     }
 
 
-    private cacheIdsOfConnectedResources(documents: Array<Document>) {
+    private cacheIdsOfConnectedResources(documents: Array<IdaiFieldImageDocument>) {
 
         for (let doc of documents) {
-            if (doc.resource.relations['depicts'] && doc.resource.relations['depicts'].constructor === Array)
-                for (let resourceId of doc.resource.relations['depicts']) {
+            if (doc.resource.relations.depicts &&
+                    doc.resource.relations.depicts.constructor === Array)
+
+                for (let resourceId of doc.resource.relations.depicts) {
                     this.datastore.get(resourceId).then(result => {
                         this.resourceIdentifiers[resourceId] = result.resource.identifier;
                     });

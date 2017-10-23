@@ -10631,11 +10631,6 @@
     ],
     "views": [
         {
-            "label": "Übersicht",
-            "mainType": "Project",
-            "name": "project"
-        },
-        {
             "label": "Ausgrabung",
             "mainType": "Trench",
             "name": "excavation"

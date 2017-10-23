@@ -66,6 +66,11 @@ import {SidebarListComponent} from './map/sidebar-list.component';
             ) {
 
                 const views = projectConfiguration.getViewsList();
+                views.unshift({
+                    "label": "Übersicht",
+                    "mainType": "Project",
+                    "name": "project"
+                });
                 for (let view of views) {
                     view['mainTypeLabel'] =
                         projectConfiguration.getLabelForType(view.mainType);

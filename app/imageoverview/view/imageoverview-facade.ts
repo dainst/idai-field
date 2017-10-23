@@ -63,6 +63,12 @@ export class ImageOverviewFacade {
     }
 
 
+    public getResourceIdentifiers() {
+
+        return this.imageDocumentsManager.getResourceIdentifiers();
+    }
+
+
     public setQueryString(q: string) {
 
         const query: Query = this.imagesState.getQuery();

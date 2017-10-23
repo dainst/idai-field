@@ -33,7 +33,7 @@ export class ImageOverviewComponent implements OnInit {
     public operationTypeDocuments: Array<Document> = [];
     public totalImageCount: number;
 
-    public maxGridSize: number = 6; // TODO before increasing this, make sure there is a solution to display the info box properly, or that it gets hidden automatically if images get too small or there are too many columns
+    public maxGridSize: number = 12;
     public minGridSize: number = 2;
 
 
@@ -49,6 +49,7 @@ export class ImageOverviewComponent implements OnInit {
     public getQuery = () => this.imageOverviewFacade.getQuery();
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
+    public getResourceIdentifiers = () => this.imageOverviewFacade.getResourceIdentifiers();
 
 
     constructor(

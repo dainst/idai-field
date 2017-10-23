@@ -29,6 +29,12 @@ export class ImageDocumentsManager {
     }
 
 
+    public getResourceIdentifiers() {
+
+        return this.resourceIdentifiers;
+    }
+
+
     public getSelected(): Array<IdaiFieldImageDocument> {
 
         return this.selected

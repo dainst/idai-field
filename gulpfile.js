@@ -33,8 +33,6 @@ gulp.task('compile', ['convert-sass'], function () {
     ])
         .pipe(gulp.dest('fonts'));
 
-    // templates
-    gulp.src('node_modules/idai-components-2/src/templates/**/*').pipe(gulp.dest('src/templates/'));
 
     // sources
     gulp

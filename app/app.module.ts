@@ -151,7 +151,15 @@ let pconf = undefined;
 
                     return configLoader.getProjectConfiguration().then(pc => {
                         pconf = pc;
-                    }).catch(() => {}) // errors are handled in AppComponent
+                    }).catch(msgsWithParams => {
+
+                        msgsWithParams.forEach(msg => {
+                            console.error("err in project configuration", msg)
+                        });
+                        if (msgsWithParams.length > 1) {
+                            console.error('num errors in project configuration', msgsWithParams.length);
+                        }
+                    })
                     .then(() => settingsService.init());
                 }
             }

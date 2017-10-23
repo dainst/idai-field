@@ -2,10 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {SettingsService} from './settings/settings-service';
-import {M} from './m';
-
-const remote = require('electron').remote;
 
 @Component({
     moduleId: module.id,
@@ -17,10 +13,10 @@ const remote = require('electron').remote;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-    constructor(private configLoader: ConfigLoader,
-                private router: Router,
+
+    constructor(private router: Router,
                 private messages: Messages) {
 
         // To get rid of stale messages when changing routes.
@@ -36,25 +32,8 @@ export class AppComponent implements OnInit {
         });
 
         AppComponent.preventDefaultDragAndDropBehavior();
-
-        // this.settingsService.init();
     }
 
-    ngOnInit() {
-
-        this.configLoader.getProjectConfiguration().then(
-            projectConfiguration => {
-                if (!projectConfiguration.getProjectIdentifier()) {
-                    this.messages.add([M.APP_NO_PROJECT_IDENTIFIER]);
-                }
-            }
-        ).catch(msgsWithParams => {
-
-            const count = msgsWithParams.length;
-            msgsWithParams.forEach(msg => this.messages.add(msg));
-            if (count > 1) this.messages.add([M.APP_ERRORS_IN_CONFIG, count]);
-        });
-    }
 
     private static preventDefaultDragAndDropBehavior() {
 

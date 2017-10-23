@@ -29,7 +29,7 @@ export class GeneralRoutingHelper {
 
                 let relationDefinitions: Array<RelationDefinition>
                     = this.projectConfiguration.getRelationDefinitions(document.resource.type);
-                let mainTypeName: string;
+                let mainTypeName: string = '';
 
                 for (let relationDefinition of relationDefinitions) {
                     if (relationDefinition.name == 'isRecordedIn') {

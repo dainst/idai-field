@@ -25,7 +25,7 @@ export class StateSerializer {
 
             if (this.settingsService.getSelectedProject() == 'test') return resolve({});
 
-            fs.readFile(this.getFilePath(stateType), 'utf-8', (err, content) => {
+            fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     resolve({});
                 } else {
@@ -45,7 +45,7 @@ export class StateSerializer {
 
             if (this.settingsService.getSelectedProject() == 'test') return resolve();
 
-            fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject), err => {
+            fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject), (err: any) => {
                 if (err) {
                     reject(err);
                 } else {

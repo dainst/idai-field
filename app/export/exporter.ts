@@ -20,7 +20,7 @@ export class Exporter {
 
             this.datastore.find({}).then(
                 documents => {
-                    fs.writeFile(filePath, serializer.serialize(documents), (err) => {
+                    fs.writeFile(filePath, serializer.serialize(documents), (err: any) => {
                         if (err) {
                             reject([M.EXPORT_WRITE_ERROR, filePath]);
                         } else {

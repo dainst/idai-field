@@ -25,7 +25,7 @@ export class DropAreaComponent {
     ) {}
 
 
-    public onDragOver(event) {
+    public onDragOver(event: any) {
 
         if (this.dragOverActive) return;
 
@@ -35,14 +35,14 @@ export class DropAreaComponent {
     }
 
 
-    public onDragLeave(event) {
+    public onDragLeave(event: any) {
 
         this.dragOverActive = false;
         event.target.classList.remove('dragover');
     }
 
 
-    public onDrop(event) {
+    public onDrop(event: any) {
 
         event.preventDefault();
         this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
@@ -50,7 +50,7 @@ export class DropAreaComponent {
     }
 
 
-    public onSelectImages(event) {
+    public onSelectImages(event: any) {
 
         this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
     }

@@ -7,23 +7,26 @@ import {M} from '../m';
 
 const {dialog} = require('electron').remote;
 
+
 @Component({
     moduleId: module.id,
     templateUrl: './export.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
 export class ExportComponent {
 
+
     private format: string = 'native';
     private running: boolean;
+
 
     constructor(
         private messages: Messages,
         private exporter: Exporter
     ) {}
+
 
     public startExport() {
 
@@ -34,11 +37,11 @@ export class ExportComponent {
                 this.running = true;
                 this.messages.add([M.EXPORT_START]);
 
-                return this.exporter.exportResources(filePath, this.getSerializer()).then(
+                return this.exporter.exportResources(filePath, this.getSerializer() as any).then(
                     () => {
                         this.running = false;
                         this.messages.add([M.EXPORT_SUCCESS]);
-                    }, msgWithParams => {
+                    }, (msgWithParams: any) => {
                         this.running = false;
                         this.messages.add(msgWithParams);
                     }
@@ -46,6 +49,7 @@ export class ExportComponent {
             }
         )
     }
+
 
     private chooseFilepath(): Promise<string> {
 
@@ -57,7 +61,8 @@ export class ExportComponent {
         });
     }
 
-    private getSerializer(): Serializer {
+
+    private getSerializer(): Serializer|undefined {
 
         switch (this.format) {
             case 'native':
@@ -65,7 +70,8 @@ export class ExportComponent {
         }
     }
 
-    private getFileFilters(): Array<any> {
+
+    private getFileFilters(): Array<any>|undefined {
 
         switch (this.format) {
             case 'native':

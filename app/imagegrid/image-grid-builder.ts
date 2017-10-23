@@ -60,7 +60,7 @@ export class ImageGridBuilder {
     /**
      * @returns {Promise<any>} cellsWithMessages
      */
-    private calcRow(rowIndex, calculatedHeight, nrOfColumns) {
+    private calcRow(rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
 
         const promises = [];
         for (let i = 0; i < nrOfColumns; i++) {
@@ -78,7 +78,7 @@ export class ImageGridBuilder {
     }
 
 
-    private static newCell(document, calculatedHeight): ImageContainer {
+    private static newCell(document: any, calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
         const image = document.resource as IdaiFieldImageResource;
@@ -89,14 +89,14 @@ export class ImageGridBuilder {
     }
 
 
-    private calculatedHeight(rowIndex, nrOfColumns, gridWidth) {
+    private calculatedHeight(rowIndex: any, nrOfColumns: any, gridWidth: any) {
 
         const rowWidth = Math.ceil(gridWidth - this.paddingRight);
         return rowWidth / ImageGridBuilder.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
     }
 
 
-    private nrOfRows(nrOfColumns) {
+    private nrOfRows(nrOfColumns: any) {
 
         return Math.ceil(this.documents.length / nrOfColumns);
     }
@@ -105,7 +105,7 @@ export class ImageGridBuilder {
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
      */
-    private static calcNaturalRowWidth(documents, nrOfColumns, rowIndex) {
+    private static calcNaturalRowWidth(documents: any, nrOfColumns: any, rowIndex: any) {
 
         let naturalRowWidth = 0;
         for (let columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
@@ -123,7 +123,7 @@ export class ImageGridBuilder {
     /**
      * @returns {Promise<any>} cellWithMsg
      */
-    private getImg(document, cell): Promise<any> {
+    private getImg(document: any, cell: any): Promise<any> {
 
         return new Promise<any>((resolve) => {
             if (document.id == 'droparea') return resolve({cell: cell});
@@ -144,15 +144,15 @@ export class ImageGridBuilder {
     }
 
 
-    private static splitCellsAndMessages(rowPromises) {
+    private static splitCellsAndMessages(rowPromises: any) {
 
         return Promise.all(rowPromises).then(
             rows => {
-                const rows_ = [];
-                const errsWithParams = [];
+                const rows_: any[] = [];
+                const errsWithParams: any[] = [];
                 rows.forEach(row => {
-                    const row_ = [];
-                    (row as any).forEach(cell => {
+                    const row_: any[] = [];
+                    (row as any).forEach((cell: any) => {
                         if (cell.errWithParams) errsWithParams.push(cell.errWithParams);
                         row_.push(cell.cell);
                     });

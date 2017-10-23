@@ -7,6 +7,7 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
 import {M} from '../m';
 
+
 @Component({
     selector: 'image-grid',
     moduleId: module.id,
@@ -18,6 +19,7 @@ import {M} from '../m';
  * @author Thomas Kleinke
  */
 export class ImageGridComponent implements OnChanges {
+
 
     @Input() nrOfColumns: number = 1;
     @Input() documents: IdaiFieldImageDocument[];
@@ -34,10 +36,11 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
+
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridOnResizeRunning = false;
     // to be able to reset the timeout on multiple onResize calls
-    private calcGridOnResizeTimeoutRef = undefined;
+    private calcGridOnResizeTimeoutRef: any = undefined;
 
     // it should be avoided that while being in an image overview and thumbs are missing,
     // that the missing images messages is shown more than once, as it would happen
@@ -48,6 +51,7 @@ export class ImageGridComponent implements OnChanges {
 
     private rows = [];
 
+
     constructor(
         private el: ElementRef,
         private imageGridBuilder: ImageGridBuilder,
@@ -55,14 +59,16 @@ export class ImageGridComponent implements OnChanges {
     ) {
     }
 
-    public getIdentifier(id: string): string {
+
+    public getIdentifier(id: string): string|undefined {
 
         if (!this.resourceIdentifiers ||
             (Object.keys(this.resourceIdentifiers).length < 1)) {
                 return undefined;
         }
-        return this.resourceIdentifiers[id];
+        return this.resourceIdentifiers[id as any];
     }
+
 
     ngOnChanges(changes: SimpleChanges) {
 
@@ -70,6 +76,7 @@ export class ImageGridComponent implements OnChanges {
         if (this.showDropArea) this.insertStubForDropArea();
         this.calcGrid();
     }
+
 
     public calcGrid() {
 
@@ -90,19 +97,21 @@ export class ImageGridComponent implements OnChanges {
         });
     }
 
+
     public _onResize() {
 
-        clearTimeout(this.calcGridOnResizeTimeoutRef);
+        clearTimeout(this.calcGridOnResizeTimeoutRef as any);
         this.calcGridOnResizeTimeoutRef = setTimeout(() => {
             // we just jump out and do not store the recalc request. this could possibly be improved
             if (this.calcGridOnResizeRunning) return;
 
             this.calcGridOnResizeRunning = true;
-            this.calcGrid().then(() => {
+            (this.calcGrid() as any).then(() => {
                 this.calcGridOnResizeRunning = false;
             });
         }, 500);
     }
+
 
     private showImagesNotFoundMessage(result: ImageGridBuilderResult) {
 
@@ -115,6 +124,7 @@ export class ImageGridComponent implements OnChanges {
             this.imagesNotFoundMessageDisplayed = true;
         }
     }
+
 
     // insert stub document for first cell that will act as drop area for uploading images
     private insertStubForDropArea() {

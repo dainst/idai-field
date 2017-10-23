@@ -12,6 +12,7 @@
  */
 export abstract class ReadImagestore {
 
+
     /**
      * Loads an image from the mediastore and generates a blob. Returns an url through which it is accessible.
      *

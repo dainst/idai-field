@@ -10,7 +10,9 @@ interface NI { createFromBuffer(key: any): any; }
  */
 export class Converter {
 
-    public convert(data) {
+
+    public convert(data: any) {
+
         let img = (nativeImage as NI).createFromBuffer(Buffer.from(data));
         img = img.resize({height: 320});
         return img.toJPEG(60);

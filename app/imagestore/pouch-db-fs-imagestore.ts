@@ -6,6 +6,7 @@ import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 
+
 @Injectable()
 /**
  * A hybrid image store that uses the file system to store the original images
@@ -13,8 +14,9 @@ import {ImagestoreErrors} from './imagestore-errors';
  */
 export class PouchDbFsImagestore implements Imagestore {
 
-    private projectPath: string = undefined;
-    private db = undefined;
+
+    private projectPath: string|undefined = undefined;
+    private db: any = undefined;
 
     constructor(
         private converter: Converter,
@@ -24,7 +26,7 @@ export class PouchDbFsImagestore implements Imagestore {
         this.db = pouchdbManager.getDb();
     }
 
-    public getPath(): string {
+    public getPath(): string|undefined {
 
         return this.projectPath;
     }
@@ -83,7 +85,7 @@ export class PouchDbFsImagestore implements Imagestore {
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
 
-        return readFun(key).then(data => {
+        return readFun(key).then((data: any) => {
 
             if (data == undefined) {
                 console.error('data read was undefined for', key, 'thumbnails was', thumb);
@@ -91,13 +93,14 @@ export class PouchDbFsImagestore implements Imagestore {
             }
             return this.blobMaker.makeBlob(data, sanitizeAfter);
 
-        }).catch(err => {
+        }).catch((err: any) => {
             // missing file is ok for originals
             if (err.code == 'ENOENT' && !thumb) return Promise.resolve('');
 
             return Promise.reject([ImagestoreErrors.NOT_FOUND]);
         });
     }
+
 
     /**
      * @param key the identifier for the data
@@ -108,6 +111,7 @@ export class PouchDbFsImagestore implements Imagestore {
         return this.write(key, data, true, true);
     }
 
+
     /**
      * @param key the identifier for the data to be removed
      */
@@ -117,10 +121,10 @@ export class PouchDbFsImagestore implements Imagestore {
             fs.unlink(this.projectPath + key, () => {
                 // errors are ignored on purpose, original file may be missing due to syncing
                 this.db.get(key)
-                    .then(result => result._rev)
-                    .then(rev => this.db.removeAttachment(key, 'thumb', rev))
+                    .then((result: any) => result._rev)
+                    .then((rev: any) => this.db.removeAttachment(key, 'thumb', rev))
                     .then(() => resolve())
-                    .catch(err => {
+                    .catch((err: any) => {
                         console.error(err);
                         console.error(key);
                         return reject([ImagestoreErrors.GENERIC_ERROR])
@@ -129,7 +133,8 @@ export class PouchDbFsImagestore implements Imagestore {
         });
     }
 
-    private write(key, data, update, documentExists): Promise<any> {
+
+    private write(key: any, data: any, update: any, documentExists: any): Promise<any> {
 
         let flag = update ? 'w' : 'wx';
         return new Promise((resolve, reject) => {
@@ -142,7 +147,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 else {
                     const buffer = this.converter.convert(data);
 
-                    let blob;
+                    let blob: any;
                     if (typeof Blob !== 'undefined') {
                         blob = new Blob([buffer]);  // electron runtime environment
                     } else {
@@ -151,15 +156,15 @@ export class PouchDbFsImagestore implements Imagestore {
 
                     let promise;
                     if (documentExists) {
-                        promise = this.db.get(key).then(doc => doc._rev);
+                        promise = this.db.get(key).then((doc: any) => doc._rev);
                     } else {
                         promise = Promise.resolve();
                     }
 
-                    promise.then(rev => {
+                    promise.then((rev: any) => {
                         return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg')
                     }).then(() => resolve()
-                    ).catch(err => {
+                    ).catch((err: any) => {
                         console.error(err);
                         console.error(key);
                         reject([ImagestoreErrors.GENERIC_ERROR])
@@ -168,6 +173,7 @@ export class PouchDbFsImagestore implements Imagestore {
             });
         });
     }
+
 
     private readOriginal(key: string): Promise<ArrayBuffer> {
 
@@ -179,6 +185,7 @@ export class PouchDbFsImagestore implements Imagestore {
             });
         });
     }
+
 
     private readThumb(key: string): Promise<ArrayBuffer> {
 

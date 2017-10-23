@@ -17,7 +17,9 @@ export class BlobMaker {
 
     constructor(private sanitizer:DomSanitizer) { };
 
-    public makeBlob(data, sanitizeAfter) {
+
+    public makeBlob(data: any, sanitizeAfter: any) {
+
         const url = URL.createObjectURL(new Blob([data]));
         const safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         if (sanitizeAfter) {

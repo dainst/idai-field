@@ -55,6 +55,8 @@ describe('images/image-overview/state --', () => {
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('test'));
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
+
+        // TODO Add check for main type document filter select
     });
 
 
@@ -98,5 +100,7 @@ describe('images/image-overview/state --', () => {
 
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });
+
+    // TODO Write test for main type document filter select
 
 });

@@ -8,6 +8,7 @@ import {ResultSets} from '../util/result-sets';
  */
 export class FulltextIndexer {
 
+
     private fieldsToIndex = ['identifier', 'shortDescription'];
 
     private index: {
@@ -21,15 +22,18 @@ export class FulltextIndexer {
         }
     };
 
+
     constructor() {
 
         this.setUp();
     }
 
+
     public clear() {
 
         this.setUp();
     }
+
 
     public put(doc: Document, skipRemoval: boolean = false) {
 
@@ -44,20 +48,21 @@ export class FulltextIndexer {
         if (!this.index[doc.resource.type]) {
             this.index[doc.resource.type] = {'*' : { } };
         }
-        this.index[doc.resource.type]['*'][doc.resource.id] = {
+        this.index[doc.resource.type]['*'][doc.resource.id as any] = {
             date: ChangeHistoryUtil.getLastModified(doc).date,
             identifier: doc.resource['identifier']
-        };
+        } as any;
 
         for (let field of this.fieldsToIndex) {
             if (!doc.resource[field] || doc.resource[field] == '') continue;
 
             for (let token of doc.resource[field].split(' ')) {
-                this.indexToken(doc.resource.id, token,
+                this.indexToken(doc.resource.id as any, token,
                     doc.resource.type, doc);
             }
         }
     }
+
 
     private indexToken(id: string, token: string, type: string, doc: Document) {
 
@@ -70,9 +75,10 @@ export class FulltextIndexer {
             this.index[type][accumulator][id] = {
                 date: ChangeHistoryUtil.getLastModified(doc).date,
                 identifier: doc.resource['identifier']
-            };
+            } as any;
         }
     }
+
 
     public remove(doc: any) {
 
@@ -85,6 +91,7 @@ export class FulltextIndexer {
             }
         }
     }
+
 
     /**
      * @param s search string, which gets tokenized, so that the result will include
@@ -107,8 +114,9 @@ export class FulltextIndexer {
                 )
             }
         }
-        return resultSets.intersect(item => item.id);
+        return resultSets.intersect((item: any) => item.id);
     }
+
 
     private getForToken(token: string, types: string[]): Array<any> {
 
@@ -118,8 +126,9 @@ export class FulltextIndexer {
             this._get(resultSets, token.toLowerCase(), type);
         }
 
-        return resultSets.unify(item => item.id);
+        return resultSets.unify((item: any) => item.id);
     }
+
 
     private _get(resultSets: ResultSets, s: string, type: string) {
 
@@ -134,6 +143,7 @@ export class FulltextIndexer {
             })
         );
     }
+
 
     private setUp() {
 

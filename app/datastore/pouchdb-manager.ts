@@ -18,9 +18,9 @@ const remote = require('electron').remote;
  */
 export class PouchdbManager {
 
-    private db = undefined;
-    private dbProxy: PouchdbProxy = undefined;
-    private name: string = undefined;
+    private db: any = undefined;
+    private dbProxy: PouchdbProxy|undefined = undefined;
+    private name: string|undefined = undefined;
     private syncHandles = [];
 
     private resolveDbReady = undefined;
@@ -31,9 +31,10 @@ export class PouchdbManager {
         private fulltextIndexer: FulltextIndexer,
         private documentCache: DocumentCache) {
 
-        let dbReady = new Promise(resolve => this.resolveDbReady = resolve);
+        let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
     }
+
 
     public setProject(name: string) {
 
@@ -53,11 +54,12 @@ export class PouchdbManager {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.createPouchDBObject(name));
         }
         if (name == 'test') {
-            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name));
+            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any));
         }
 
         rdy.then(() => this.index());
     }
+
 
     /**
      * Setup peer-to-peer syncing between this datastore and target.
@@ -69,20 +71,21 @@ export class PouchdbManager {
         let fullUrl = url + '/' + this.name;
         console.log('start syncing');
 
-        return this.getDb().ready().then(db => {
+        return (this.getDb() as any).ready().then((db: any) => {
             let sync = db.sync(fullUrl, { live: true, retry: false });
-            this.syncHandles.push(sync);
+            this.syncHandles.push(sync as never);
             return {
                 url: url,
                 cancel: () => {
                     sync.cancel();
-                    this.syncHandles.splice(this.syncHandles.indexOf(sync), 1);
+                    this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
                 },
-                onError: Observable.create(obs => sync.on('error', err => obs.next(err))),
-                onChange: Observable.create(obs => sync.on('change', () => obs.next()))
+                onError: Observable.create((obs: any) => sync.on('error', (err: any) => obs.next(err))),
+                onChange: Observable.create((obs: any) => sync.on('change', () => obs.next()))
             };
         });
     }
+
 
     public stopSync() {
 
@@ -90,20 +93,22 @@ export class PouchdbManager {
 
         for (let handle of this.syncHandles) {
             console.debug('stop sync', handle);
-            handle.cancel();
+            (handle as any).cancel();
         }
         this.syncHandles = [];
     }
+
 
     /**
      * Gets the database object.
      * @returns {PouchdbProxy} a proxy that automatically hands over method
      *  calls to the actual PouchDB instance as soon as it is available
      */
-    public getDb(): PouchdbProxy {
+    public getDb(): PouchdbProxy|undefined {
 
         return this.dbProxy;
     }
+
 
     /**
      * Destroys the db named dbName, if it is not the currently selected active database
@@ -117,6 +122,7 @@ export class PouchdbManager {
         return this.createPouchDBObject(dbName).destroy();
     }
 
+
     /**
      * Creates a new database. Unless specified specifically
      * with remote.getGlobal('switches').destroy_before_create set to true,
@@ -124,7 +130,7 @@ export class PouchdbManager {
      * and not overwritten.
      *
      */
-    public createDb(name: string, doc) {
+    public createDb(name: string, doc: any) {
 
         let db = this.createPouchDBObject(name);
 
@@ -143,9 +149,10 @@ export class PouchdbManager {
             );
     }
 
+
     private index() {
 
-        return this.db.allDocs({include_docs: true, conflicts: true},(err, resultDocs) => {
+        return this.db.allDocs({include_docs: true, conflicts: true},(err: any, resultDocs: any) => {
             this.constraintIndexer.clear();
             this.fulltextIndexer.clear();
             this.documentCache.clear();
@@ -159,9 +166,10 @@ export class PouchdbManager {
                 this.documentCache.set(row.doc);
             }
 
-            this.resolveDbReady(this.db)
+            (this.resolveDbReady as any)(this.db)
         })
     }
+
 
     private createPouchDBObject(name: string): any {
 
@@ -170,7 +178,8 @@ export class PouchdbManager {
         return this.db;
     }
 
-    private static isDesignDoc(row) {
+
+    private static isDesignDoc(row: any) {
 
         return row.id.indexOf('_') == 0
     }

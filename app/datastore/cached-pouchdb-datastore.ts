@@ -14,7 +14,9 @@ import {DocumentCache} from "./document-cache";
  */
 export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
+
     private autoCacheUpdate: boolean = true;
+
 
     constructor(private datastore: PouchdbDatastore, private documentCache: DocumentCache) {
 
@@ -25,7 +27,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
                     const document = documentChange.document;
 
                     // explicitly assign by value in order for changes to be detected by angular
-                    if (this.autoCacheUpdate && document && document.resource && this.documentCache.get(document.resource.id)) {
+                    if (this.autoCacheUpdate && document && document.resource && this.documentCache.get(document.resource.id as any)) {
                         console.debug('change detected', document);
                         this.reassign(document);
                     }
@@ -33,6 +35,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
             });
     }
+
 
     /**
      * Implements {@link IdaiFieldDatastore#create}
@@ -46,6 +49,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(createdDocument => this.documentCache.set(createdDocument));
     }
 
+
     /**
      * Implements {@link IdaiFieldDatastore#update}
      *
@@ -56,14 +60,15 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
 
         return this.datastore.update(document)
             .then(updatedDocument => {
-                if (!this.documentCache.get(document.resource.id)) {
+                if (!this.documentCache.get(document.resource.id as any)) {
                     return this.documentCache.set(updatedDocument);
                 } else {
                     this.reassign(updatedDocument);
-                    return this.documentCache.get(document.resource.id);
+                    return this.documentCache.get(document.resource.id as any);
                 }
         });
     }
+
 
     public remove(doc: Document): Promise<any> {
 
@@ -71,18 +76,21 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(() => this.documentCache.remove(doc.resource.id));
     }
 
+
     public documentChangesNotifications(): Observable<DocumentChange> {
 
         return this.datastore.documentChangesNotifications();
     }
 
+
     public get(id: string, options?: Object): Promise<Document> {
 
-        if ((!options || !options['skip_cache']) && this.documentCache.get(id)) {
+        if ((!options || !(options as any)['skip_cache']) && this.documentCache.get(id)) {
             return Promise.resolve(this.documentCache.get(id));
         }
         return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
     }
+
 
     /**
      * Implements {@link ReadDatastore#find}
@@ -96,7 +104,8 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
             .then(result => this.replaceAllWithCached(result));
     }
 
-    private replaceAllWithCached(results) {
+
+    private replaceAllWithCached(results: any) {
 
         let ps = [];
         for (let id of results) {
@@ -104,6 +113,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         }
         return Promise.all(ps);
     }
+
 
     /**
      * Implements {@link IdaiFieldDatastore#getRevision}
@@ -117,6 +127,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.fetchRevision(docId, revisionId);
     }
 
+
     /**
      * Implements {@link IdaiFieldDatastore#removeRevision}
      *
@@ -129,14 +140,16 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
         return this.datastore.removeRevision(docId, revisionId);
     }
 
+
     public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
         this.autoCacheUpdate = autoCacheUpdate;
     }
 
+
     private reassign(doc: Document) {
 
-        if (!doc['_conflicts']) delete this.documentCache.get(doc.resource.id)['_conflicts'];
-        Object.assign(this.documentCache.get(doc.resource.id), doc);
+        if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
+        Object.assign(this.documentCache.get(doc.resource.id as any), doc);
     }
 }

@@ -1,5 +1,8 @@
+/// <reference path="express-import" />
+
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';
+
 import {PouchdbDatastore} from './pouchdb-datastore';
 
 const expressPouchDB = require('express-pouchdb');
@@ -15,6 +18,7 @@ declare function emit(key: any, value?: any): void;
  * @author Thomas Kleinke
  */
 export class PouchdbServerDatastore extends PouchdbDatastore {
+
 
     protected setupServer(): Promise<any> {
         return new Promise((resolve, reject) => {

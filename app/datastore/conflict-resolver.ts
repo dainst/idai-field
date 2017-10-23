@@ -10,5 +10,5 @@ export abstract class ConflictResolver {
     abstract tryToSolveConflict(
         latestRevision: Document,
         conflictedRevision: Document,
-        previousRevision: Document);
+        previousRevision: Document): any;
 }

@@ -10,6 +10,7 @@ import {FulltextIndexer} from './fulltext-indexer';
 import {AppState} from '../app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from "./conflict-resolver";
+import {Observer} from 'rxjs/Observer';
 
 /**
  * @author Sebastian Cuy
@@ -58,9 +59,9 @@ export class PouchdbDatastore {
                 if (!document.resource.id) {
                     document.resource.id = IdGenerator.generateId();
                 }
-                document['_id'] = document.resource.id;
+                (document as any)['_id'] = document.resource.id;
             })
-            .then(() => this.performPut(document, resetFun, err =>
+            .then(() => this.performPut(document, resetFun, (err: any) =>
                 Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
             ));
     }
@@ -78,9 +79,9 @@ export class PouchdbDatastore {
         const resetFun = this.resetDocOnErr(document);
 
         return this.fetch(document.resource.id).then(() => {
-                document['_id'] = document.resource.id;
+            (document as any)['_id'] = document.resource.id;
             }).catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
-            .then(() => this.performPut(document, resetFun, err => {
+            .then(() => this.performPut(document, resetFun, (err: any) => {
                 if (err.name && err.name == 'conflict') {
                     return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
                 } else {
@@ -99,7 +100,7 @@ export class PouchdbDatastore {
             return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
         }
 
-        this.deletedOnes.push(doc.resource.id);
+        this.deletedOnes.push(doc.resource.id as never);
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to
         // issues that are theoretically possible because we cannot know
@@ -111,18 +112,20 @@ export class PouchdbDatastore {
 
         return this.fetch(doc.resource.id).then(
             docFromGet => this.db.remove(docFromGet)
-                .catch(err => Promise.reject([DatastoreErrors.GENERIC_ERROR, err])),
+                .catch((err: any) => Promise.reject([DatastoreErrors.GENERIC_ERROR, err])),
             () => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND])
         );
     }
 
+
     public removeRevision(docId: string, revisionId: string): Promise<any> {
 
         return this.db.remove(docId, revisionId)
-            .catch(err => {
+            .catch((err: any) => {
                 return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
             });
     }
+
 
     /**
      * @param query
@@ -145,14 +148,16 @@ export class PouchdbDatastore {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
-            .then(result => this.createDocFromResult(result) )
-            .catch(err => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]));
+            .then((result: any) => this.createDocFromResult(result) )
+            .catch((err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]));
     }
+
 
     public fetchRevision(resourceId: string, revisionId: string) {
 
         return this.fetch(resourceId, { rev: revisionId });
     }
+
 
     public findConflicted(): Promise<Document[]> {
 
@@ -161,20 +166,23 @@ export class PouchdbDatastore {
             conflicts: true,
             descending: true
         })
-            .then(result => result.rows.map(result => result.doc))
+            .then((result: any) => result.rows.map((result: any) => result.doc))
     }
+
 
     public documentChangesNotifications(): Observable<DocumentChange> {
 
-        return Observable.create(observer => {
-            this.documentChangesObservers.push(observer);
+        return Observable.create((observer: Observer<any>) => {
+            this.documentChangesObservers.push(observer as never);
         });
     }
+
 
     protected setupServer() {
 
         return Promise.resolve();
     }
+
 
     /**
      * Creates a typed Document from an untyped PouchDB result.
@@ -192,37 +200,41 @@ export class PouchdbDatastore {
         return result;
     }
 
+
     private perform(query: Query): Promise<any> {
 
         return this.db.ready()
             .then(() => {
-                const resultSets: ResultSets = this.performThem(query.constraints);
+                const resultSets: ResultSets|undefined = this.performThem(query.constraints);
                 if (PouchdbDatastore.isEmpty(query) && resultSets) return resultSets;
                 else return this.performFulltext(query, resultSets ? resultSets : new ResultSets());
             })
-            .then(resultSets => this.generateOrderedResultList(resultSets));
+            .then((resultSets: any) => this.generateOrderedResultList(resultSets));
     }
+
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
         const q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
-        const types: string[] = query.types ? query.types : undefined;
-        resultSets.add(this.fulltextIndexer.get(q, types));
+        const types: string[]|undefined = query.types ? query.types : undefined;
+        resultSets.add(this.fulltextIndexer.get(q, types as any));
         return resultSets;
     }
 
+
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
-        return resultSets.intersect(e => e.id)
-            .sort((a,b) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
-            .map(e => e['id']);
+        return resultSets.intersect((e: any) => e.id)
+            .sort((a: any,b: any) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
+            .map((e: any) => e['id']);
     }
+
 
     /**
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints): ResultSets {
+    private performThem(constraints: any): ResultSets|undefined {
 
         if (!constraints) return undefined;
 
@@ -239,6 +251,7 @@ export class PouchdbDatastore {
         return resultSets;
     }
 
+
     /**
      * @param doc
      * @return resolve when document with the given resource id does not exist already, reject otherwise
@@ -251,39 +264,43 @@ export class PouchdbDatastore {
         } else return Promise.resolve();
     }
 
+
     private notifyDocumentChangesObservers(documentChange: DocumentChange) {
 
         if (!this.documentChangesObservers) return;
         this.removeClosedObservers();
 
-        this.documentChangesObservers.forEach(observer => {
+        this.documentChangesObservers.forEach((observer: any) => {
             if (observer && (observer.next != undefined)) observer.next(documentChange);
         });
     }
 
+
     private removeClosedObservers() {
 
-        const observersToDelete = [];
+        const observersToDelete: any[] = [];
         for (let i = 0; i < this.documentChangesObservers.length; i++) {
-            if (this.documentChangesObservers[i].closed) observersToDelete.push(this.documentChangesObservers[i]);
+            if ((this.documentChangesObservers[i] as any).closed) observersToDelete.push(this.documentChangesObservers[i]);
         }
         for (let observerToDelete of observersToDelete) {
-            let i = this.documentChangesObservers.indexOf(observerToDelete);
+            let i = this.documentChangesObservers.indexOf(observerToDelete as never);
             this.documentChangesObservers.splice(i, 1);
         }
     }
 
-    private performPut(document, resetFun, errFun) {
+
+    private performPut(document: any, resetFun: any, errFun: any) {
 
         return this.db.put(document, { force: true })
-            .then(result => this.processPutResult(document, result))
-            .catch(err => {
+            .then((result: any) => this.processPutResult(document, result))
+            .catch((err: any) => {
                 resetFun(document);
                 return errFun(err);
             })
     }
 
-    private processPutResult(document, result): Promise<Document> {
+
+    private processPutResult(document: any, result: any): Promise<Document> {
 
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
@@ -292,29 +309,31 @@ export class PouchdbDatastore {
         return this.fetch(document.resource.id);
     }
 
+
     private resetDocOnErr(original: Document) {
 
         const created = JSON.parse(JSON.stringify(original.created));
         const modified = JSON.parse(JSON.stringify(original.modified));
         const id = original.resource.id;
         return function(document: Document) {
-            delete document['_id'];
+            delete (document as any)['_id'];
             document.resource.id = id;
             document.created = created;
             document.modified = modified;
         }
     }
 
+
     private setupChangesEmitter(): void {
 
-        this.db.ready().then(db => {
+        this.db.ready().then((db: any) => {
 
             db.changes({
                 live: true,
                 include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
                 conflicts: true,
                 since: 'now'
-            }).on('change', change => {
+            }).on('change', (change: any) => {
                 // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
                 // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
                 // TODO do further investigation, maybe file an issue for pouchdb
@@ -327,7 +346,7 @@ export class PouchdbDatastore {
                     resourceId: change.id
                 };
 
-                if (change.deleted || this.deletedOnes.indexOf(change.id) != -1) {
+                if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}} as Document);
                     this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
                     documentChange.type = 'deleted'; // for the same reason we use deletedOnes
@@ -347,13 +366,14 @@ export class PouchdbDatastore {
                     console.error('Error while trying to index changed document with id ' + change.id +
                         ' from remote', err);
                 });
-            }).on('complete', info => {
+            }).on('complete', (info: any) => {
                 // console.debug('changes stream was canceled', info);
-            }).on('error', err => {
+            }).on('error', (err: any) => {
                 console.error('changes stream errored', err);
             });
         });
     }
+
 
     // TODO Move to query interface (make query a class if necessary)
     private static isEmpty(query: Query) {

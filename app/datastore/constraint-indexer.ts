@@ -7,6 +7,7 @@ import {ChangeHistoryUtil} from '../model/change-history-util';
  */
 export class ConstraintIndexer {
 
+
     private index: {
         [path: string]: {
             [resourceId: string]: {
@@ -18,7 +19,8 @@ export class ConstraintIndexer {
         }
     };
 
-    constructor(private pathsDefinitions) {
+
+    constructor(private pathsDefinitions: any) {
 
         const validationError = ConstraintIndexer.validatePathsDefinitions(pathsDefinitions);
         if (validationError) throw validationError;
@@ -26,10 +28,12 @@ export class ConstraintIndexer {
         this.setUp();
     }
 
+
     public clear() {
 
         this.setUp();
     }
+
 
     public put(doc: Document, skipRemoval: boolean = false) {
 
@@ -43,8 +47,8 @@ export class ConstraintIndexer {
 
         for (let pathDef of this.pathsDefinitions) {
             for (let key of Object.keys(this.index[pathDef.path])) {
-                if (this.index[pathDef.path][key][doc.resource.id]) {
-                    delete this.index[pathDef.path][key][doc.resource.id];
+                if (this.index[pathDef.path][key][doc.resource.id as any]) {
+                    delete this.index[pathDef.path][key][doc.resource.id as any];
                 }
             }
         }
@@ -69,7 +73,8 @@ export class ConstraintIndexer {
         }
     }
 
-    private putFor(pathDef, doc: Document) {
+
+    private putFor(pathDef: any, doc: Document) {
 
         const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
 
@@ -99,6 +104,7 @@ export class ConstraintIndexer {
         }
     }
 
+
     private hasIndex(path: string) {
 
         for (let pd of this.pathsDefinitions) {
@@ -106,6 +112,7 @@ export class ConstraintIndexer {
         }
         return false;
     }
+
 
     private addToIndex(doc: Document, path: string, target: string) {
 
@@ -117,13 +124,13 @@ export class ConstraintIndexer {
         }
 
         if (!this.index[path][target]) this.index[path][target] = {};
-        this.index[path][target][doc.resource.id] = {
+        this.index[path][target][doc.resource.id as any] = {
             date: lastModified.date,
             identifier: doc.resource['identifier']
-        };
+        } as any;
     }
 
-    private static validatePathsDefinitions(pathsDefinitions): string {
+    private static validatePathsDefinitions(pathsDefinitions: any): string|undefined {
 
         const types = ['match', 'contain', 'exist'];
 

@@ -1,4 +1,4 @@
 export abstract class AbstractSampleDataLoader {
 
-    abstract go(db, project: string): Promise<any>;
+    abstract go(db: any, project: string): Promise<any>;
 }

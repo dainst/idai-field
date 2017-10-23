@@ -26,7 +26,7 @@
 
             <div *ngIf="!getSelected().length" class="col-sm-3 py-2">
                 <select id="main-type-document-filter-select" class="form-control"
-                        [ngModel]="mainTypeDocumentFilterOption"
+                        [ngModel]="getMainTypeDocumentFilterOption()"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
                     <option value=""><em>Alle Bilder</em></option>
                     <option value="UNLINKED"><em>Unverknüpfte Bilder</em></option>

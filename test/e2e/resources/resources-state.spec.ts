@@ -152,7 +152,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
-    it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
+    fit('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
         ResourcesPage.performCreateResource('building1', 'building');
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
@@ -169,6 +169,12 @@ describe('resources/state --', function() {
         ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.performCreateResource('trench2', 'trench');
+        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench2');
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
     });
 
     it('select correct main type document after click on relation link', () => {

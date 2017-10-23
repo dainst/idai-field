@@ -163,28 +163,21 @@ export class ViewFacade {
     // As discussed in #6707, should we really base this on views?
     // It seems way better to ask to ProjectConfiguration for Operation Type Documents
     // and the fetch them outside the facade.
-    public getAllOperationTypeDocuments() {
+    public async getAllOperationTypeDocuments() {
 
         const viewMainTypes = this.views.getOperationViews()
             .map(view => {return view.mainType});
 
         let mainTypeDocuments: Array<Document> = [];
-        let promises: Array<Promise<Array<Document>>> = [];
 
-        return Promise.resolve().then(() => {
+        for (let viewMainType of viewMainTypes) {
+            if (viewMainType == 'Project') continue;
 
-            for (let viewMainType of viewMainTypes) {
-                if (viewMainType == 'Project') continue;
-                let promise = this.datastore.find({ q: '', types: [viewMainType] })
-                    .then(documents => mainTypeDocuments = mainTypeDocuments.concat(documents));
-                promises.push(promise);
-            }
+            mainTypeDocuments = mainTypeDocuments.concat(
+                await this.datastore.find({ q: '', types: [viewMainType] }));
+        }
 
-            return Promise.all(promises).then(
-                () => Promise.resolve(mainTypeDocuments),
-                msgWithParams => Promise.reject(msgWithParams)
-            );
-        });
+        return mainTypeDocuments;
     }
 
 

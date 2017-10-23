@@ -27,13 +27,11 @@ export class DocumentsManager {
         private operationTypeDocumentsManager: OperationTypeDocumentsManager
     ) {
 
-        datastore.documentChangesNotifications()
-            .subscribe(documentChange => {
-
-                if (this.selectedDocument) this.handleChange(
-                    documentChange, this.selectedDocument);
+        datastore.documentChangesNotifications().subscribe(documentChange => {
+            if (this.selectedDocument) this.handleChange(documentChange);
         });
     }
+
 
     public populateProjectDocument() {
 
@@ -143,7 +141,7 @@ export class DocumentsManager {
     }
 
 
-    private handleChange(documentChange: DocumentChange, selectedDocument: Document) {
+    private handleChange(documentChange: DocumentChange) {
 
         if (!documentChange || !documentChange.document) return;
 
@@ -225,6 +223,7 @@ export class DocumentsManager {
 
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
+
 
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards

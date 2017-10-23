@@ -71,9 +71,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-
-
-
     ngAfterViewChecked() {
 
         if (this.scrollTarget) {
@@ -82,7 +79,6 @@ export class ResourcesComponent implements AfterViewChecked {
             }
         }
     }
-
 
 
     public chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {

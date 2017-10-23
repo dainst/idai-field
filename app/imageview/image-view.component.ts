@@ -14,6 +14,7 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
 import {ViewFacade} from '../resources/view/view-facade';
 import {GeneralRoutingHelper} from '../common/general-routing-helper';
+import {Document} from 'idai-components-2/core';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class ImageViewComponent implements OnInit {
     protected activeTab: string;
 
     private originalNotFound = false;
-    private comingFrom = undefined;
+    private comingFrom: Array<any>|undefined = undefined;
 
 
     constructor(
@@ -96,6 +97,9 @@ export class ImageViewComponent implements OnInit {
 
     public hasRelations() {
 
+        if (!this.image) return false;
+        if (!this.image.document) return false;
+
         return !ObjectUtil.isEmpty(this.image.document.resource.relations);
     }
 
@@ -103,20 +107,20 @@ export class ImageViewComponent implements OnInit {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(function(id) {
+        this.getRouteParams(function(id: string) {
             this.id = id;
             this.datastore.get(id).then(
-                doc => {
+                (doc: Document) => {
                     this.image.document = doc;
                     // read original (empty if not present)
                     this.imagestore.read(doc.resource.id, false, false)
-                        .then(url => {
+                        .then((url: any) => {
                             if (!url || url == '') this.originalNotFound = true;
                             this.image.imgSrc = url;
                         })
                         // read thumb
                         .then(() => this.imagestore.read(doc.resource.id, false, true))
-                        .then(url => this.image.thumbSrc = url)
+                        .then((url: any) => this.image.thumbSrc = url)
                         .catch(() => {
                             this.image.imgSrc = BlobMaker.blackImg;
                             this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
@@ -138,7 +142,7 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    private getRouteParams(callback) {
+    private getRouteParams(callback: Function) {
 
         this.route.params.forEach((params: Params) => {
             this.activeTab = params['tab'];

@@ -12,7 +12,6 @@ import {SettingsService} from '../settings/settings-service';
     moduleId: module.id,
     templateUrl: './georeference-view.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -22,6 +21,7 @@ export class GeoreferenceViewComponent {
 
     @ViewChild('worldfileInput') worldfileInput: ElementRef;
 
+
     constructor(
         private persistenceManager: PersistenceManager,
         private messages: Messages,
@@ -29,28 +29,31 @@ export class GeoreferenceViewComponent {
         private settingsService: SettingsService
     ) {}
 
-    public onSelectFile(event) {
 
-        var files = event.target.files;
+    public onSelectFile(event: any) {
+
+        const files = event.target.files;
         if (files && files.length > 0) {
             this.readFile(files[0]);
         }
     }
 
-    public openDeleteModal(modal) {
+
+    public openDeleteModal(modal: any) {
 
         this.modalService.open(modal).result.then(result => {
             if (result == 'delete') this.deleteGeoreference();
         });
     }
 
+
     private readFile(file: File) {
 
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onloadend = (that => {
             return () => {
                 this.worldfileInput.nativeElement.value = '';
-                var worldfileContent = reader.result.split("\n");
+                const worldfileContent = reader.result.split("\n");
                 that.importWorldfile(worldfileContent, file);
             }
         })(this);
@@ -62,10 +65,11 @@ export class GeoreferenceViewComponent {
         reader.readAsText(file);
     }
 
+
     private importWorldfile(worldfileContent: string[], file: File) {
 
-        worldfileContent = this.removeEmptyLines(worldfileContent);
-        if (this.worldFileContentIsValid(worldfileContent)) {
+        worldfileContent = GeoreferenceViewComponent.removeEmptyLines(worldfileContent);
+        if (GeoreferenceViewComponent.worldFileContentIsValid(worldfileContent)) {
             this.document.resource.georeference = this.createGeoreference(worldfileContent);
             this.save().then(
                 () => this.messages.add([M.IMAGES_SUCCESS_WORLDFILE_UPLOADED]),
@@ -75,65 +79,23 @@ export class GeoreferenceViewComponent {
         }
     }
 
-    private removeEmptyLines(worldfileContent: string[]): string[] {
-
-        var result: string[] = [];
-
-        for (let i in worldfileContent) {
-            if (worldfileContent[i].length > 0) {
-                result.push(worldfileContent[i]);
-            }
-        }
-
-        return result;
-    }
-
-    private worldFileContentIsValid(worldfileContent: string[]): boolean {
-
-        if (worldfileContent.length != 6) {
-            return false;
-        }
-
-        for (let i in worldfileContent) {
-            var number = parseFloat(worldfileContent[i]);
-            if (isNaN(number)) return false;
-        }
-
-        return true;
-    }
 
     private createGeoreference(worldfileContent: string[]): IdaiFieldGeoreference {
 
-        var width: number = parseInt(this.document.resource.width);
-        var height: number = parseInt(this.document.resource.height);
+        const width: number = parseInt(this.document.resource.width);
+        const height: number = parseInt(this.document.resource.height);
 
-        var topLeftCoordinates: [number, number] = this.computeLatLng(0, 0, worldfileContent);
-        var topRightCoordinates: [number, number] = this.computeLatLng(width - 1, 0, worldfileContent);
-        var bottomLeftCoordinates: [number, number] = this.computeLatLng(0, height - 1, worldfileContent);
+        const topLeftCoordinates: [number, number] = GeoreferenceViewComponent.computeLatLng(0, 0, worldfileContent);
+        const topRightCoordinates: [number, number] = GeoreferenceViewComponent.computeLatLng(width - 1, 0, worldfileContent);
+        const bottomLeftCoordinates: [number, number] = GeoreferenceViewComponent.computeLatLng(0, height - 1, worldfileContent);
 
-        var georeference: IdaiFieldGeoreference = {
+        return {
             topLeftCoordinates: topLeftCoordinates,
             topRightCoordinates: topRightCoordinates,
             bottomLeftCoordinates: bottomLeftCoordinates
         };
-
-        return georeference;
     }
 
-    private computeLatLng(imageX: number, imageY: number, worldfileContent: string[]): [number, number] {
-
-        var latPosition: number = parseFloat(worldfileContent[3]) * imageY;
-        var latRotation: number = parseFloat(worldfileContent[1]) * imageX;
-        var latTranslation: number = parseFloat(worldfileContent[5]);
-        var lat: number = latPosition + latRotation + latTranslation;
-
-        var lngPosition: number = parseFloat(worldfileContent[0]) * imageX;
-        var lngRotation: number = parseFloat(worldfileContent[2]) * imageY;
-        var lngTranslation: number = parseFloat(worldfileContent[4]);
-        var lng: number = lngPosition + lngRotation + lngTranslation;
-
-        return [ lat, lng ];
-    }
 
     private deleteGeoreference() {
 
@@ -143,6 +105,7 @@ export class GeoreferenceViewComponent {
             () => this.messages.add([M.IMAGES_SUCCESS_GEOREFERENCE_DELETED]),
             msgWithParams => this.messages.add(msgWithParams));
     }
+
 
     private save(): Promise<any> {
 
@@ -156,4 +119,48 @@ export class GeoreferenceViewComponent {
         });
     }
 
+
+    private static removeEmptyLines(worldfileContent: string[]): string[] {
+
+        const result: string[] = [];
+
+        for (let i in worldfileContent) {
+            if (worldfileContent[i].length > 0) {
+                result.push(worldfileContent[i]);
+            }
+        }
+
+        return result;
+    }
+
+
+    private static worldFileContentIsValid(worldfileContent: string[]): boolean {
+
+        if (worldfileContent.length != 6) {
+            return false;
+        }
+
+        for (let i in worldfileContent) {
+            const number = parseFloat(worldfileContent[i]);
+            if (isNaN(number)) return false;
+        }
+
+        return true;
+    }
+
+
+    private static computeLatLng(imageX: number, imageY: number, worldfileContent: string[]): [number, number] {
+
+        const latPosition: number = parseFloat(worldfileContent[3]) * imageY;
+        const latRotation: number = parseFloat(worldfileContent[1]) * imageX;
+        const latTranslation: number = parseFloat(worldfileContent[5]);
+        const lat: number = latPosition + latRotation + latTranslation;
+
+        const lngPosition: number = parseFloat(worldfileContent[0]) * imageX;
+        const lngRotation: number = parseFloat(worldfileContent[2]) * imageY;
+        const lngTranslation: number = parseFloat(worldfileContent[4]);
+        const lng: number = lngPosition + lngRotation + lngTranslation;
+
+        return [ lat, lng ];
+    }
 }

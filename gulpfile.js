@@ -32,20 +32,15 @@ gulp.task('copy-fonts-convert-sass', ['convert-sass'], function () {
     .pipe(gulp.dest('fonts'));
 });
 
-function createConfig(path) {
+// Creates config files if they do not exist already
+//
+gulp.task('create-configs', function (callback) {
 
-    fs.access(path, fs.F_OK, function(err) {
+    fs.access('./config/Configuration.json', fs.F_OK, function(err) {
         if (err) {
             fs.createReadStream(path + '.template').pipe(fs.createWriteStream(path));
         } else {
             console.log('Will not create ' + path + ' from template because file already exists.');
         }
     });
-}
-
-// Creates config files if they do not exist already
-//
-gulp.task('create-configs', function (callback) {
-
-    createConfig('./config/Configuration.json');
 });

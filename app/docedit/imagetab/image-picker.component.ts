@@ -8,17 +8,18 @@ import {ImageTypeUtility} from '../image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../m';
 
+
 @Component({
     selector: 'image-picker',
     moduleId: module.id,
     templateUrl: './image-picker.html'
 })
-
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
 export class ImagePickerComponent {
+
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
@@ -27,6 +28,7 @@ export class ImagePickerComponent {
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
 
     private query: Query = { q: '' };
+
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -38,10 +40,12 @@ export class ImagePickerComponent {
         this.fetchDocuments(this.query);
     }
 
+
     public setDocument(document: IdaiFieldDocument) {
 
         this.document = document;
     }
+
 
     public setQueryString(q: string) {
 
@@ -49,10 +53,12 @@ export class ImagePickerComponent {
         this.fetchDocuments(this.query);
     }
 
+
     public onResize() {
 
         this.imageGrid._onResize();
     }
+
 
     /**
      * @param document the object that should be selected
@@ -62,6 +68,7 @@ export class ImagePickerComponent {
         if (this.selectedDocuments.indexOf(document) == -1) this.selectedDocuments.push(document);
         else this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
     }
+
 
     /**
      * Populates the document list with all documents from
@@ -89,6 +96,7 @@ export class ImagePickerComponent {
             });
     }
 
+
     private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)
             : Array<IdaiFieldImageDocument> {
 
@@ -99,7 +107,7 @@ export class ImagePickerComponent {
 
         for (let imageDocument of imageDocuments) {
 
-            if (relationTargets.indexOf(imageDocument.resource.id) == -1) {
+            if (relationTargets.indexOf(imageDocument.resource.id as any) == -1) {
                 resultDocuments.push(imageDocument);
             }
         }

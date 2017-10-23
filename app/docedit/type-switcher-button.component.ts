@@ -20,17 +20,20 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
     @Output() onTypeChanged: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('popover') private popover;
+    @ViewChild('popover') private popover: any;
 
     private typesTreeList: Array<IdaiType>;
 
+
     constructor(private configLoader: ConfigLoader,
                 private messages: Messages) {}
+
 
     ngOnChanges() {
 
         this.initializeTypes().catch(msgWithParams => this.messages.add(msgWithParams));
     }
+
 
     public isTypeSwitchingPossible(): boolean {
 
@@ -40,11 +43,13 @@ export class TypeSwitcherButtonComponent implements OnChanges{
             && this.typesTreeList[0].children.length > 0;
     }
 
+
     public chooseType(type: IdaiType) {
 
         this.type = type.name;
         this.onTypeChanged.emit(type.name);
     }
+
 
     private initializeTypes(): Promise<any> {
 
@@ -58,7 +63,8 @@ export class TypeSwitcherButtonComponent implements OnChanges{
         });
     }
 
-    private handleClick(event) {
+
+    private handleClick(event: any) {
 
         if (!this.popover) return;
 

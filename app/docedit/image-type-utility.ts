@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
 
+
 @Injectable()
 /**
  * @author Thomas Kleinke
@@ -8,13 +9,16 @@ import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
  */
 export class ImageTypeUtility {
 
+
     constructor(private projectConfiguration: ProjectConfiguration) {}
+
 
     public isImageType(typeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
         return (type.name == 'Image' || (type.parentType && type.parentType.name == 'Image'));
     }
+
 
     public getProjectImageTypes(): any {
 
@@ -34,6 +38,7 @@ export class ImageTypeUtility {
 
         return projectImageTypes;
     }
+
 
     public getProjectImageTypeNames(): string[] {
 

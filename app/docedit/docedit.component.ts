@@ -15,12 +15,12 @@ import {ObjectUtil} from '../util/object-util';
 import {M} from '../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 
+
 @Component({
     selector: 'detail-modal',
     moduleId: module.id,
     templateUrl: './docedit.html'
 })
-
 /**
  * Uses the document edit forms of idai-components-2 and adds styling
  * and navigation items like save and back buttons and modals
@@ -31,6 +31,7 @@ import {DoceditActiveTabService} from './docedit-active-tab-service';
  * @author Thomas Kleinke
  */
 export class DoceditComponent {
+
 
     /**
      * The original unmodified version of the document
@@ -62,6 +63,7 @@ export class DoceditComponent {
      */
     private inspectedRevisionsIds: string[];
 
+
     constructor(
         public activeModal: NgbActiveModal,
         public documentEditChangeMonitor: DocumentEditChangeMonitor,
@@ -83,6 +85,7 @@ export class DoceditComponent {
         });
     }
 
+
     /**
      * @param document
      */
@@ -100,11 +103,13 @@ export class DoceditComponent {
             .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
     }
 
-    public changeActiveTab(event) {
+
+    public changeActiveTab(event: any) {
 
         this.activeTabService.setActiveTab(
             event.nextId.replace('docedit-','').replace('-tab',''));
     };
+
 
     public changeType(newType: string) {
 
@@ -113,6 +118,7 @@ export class DoceditComponent {
         this.showTypeChangeFieldsWarning();
         this.showTypeChangeRelationsWarning();
     }
+
 
     private showTypeChangeFieldsWarning() {
 
@@ -130,6 +136,7 @@ export class DoceditComponent {
         }
     }
 
+
     private showTypeChangeRelationsWarning() {
 
         const invalidRelationFields: string[]
@@ -145,6 +152,7 @@ export class DoceditComponent {
             this.messages.add([M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING, invalidRelationFieldsLabels.join(', ')]);
         }
     }
+
 
     /**
      * @param viaSaveButton if true, it is assumed the call for save came directly
@@ -169,6 +177,7 @@ export class DoceditComponent {
             .catch(msgWithParams => this.messages.add(msgWithParams))
     }
 
+
     /**
      * Removes fields that have become invalid after a type change.
      */
@@ -183,6 +192,7 @@ export class DoceditComponent {
             delete this.clonedDocument.resource[fieldName];
         }
     }
+
 
     /**
      * Removes relation fields that have become invalid after a type change.
@@ -199,17 +209,20 @@ export class DoceditComponent {
         }
     }
 
+
     public showModal() {
 
         this.dialog = this.modalService.open(this.modalTemplate);
     }
 
-    public openDeleteModal(modal) {
+
+    public openDeleteModal(modal: any) {
 
         this.modalService.open(modal).result.then(decision => {
             if (decision == 'delete') this.deleteDoc();
         });
     }
+
 
     public getRelationDefinitions() {
 
@@ -217,6 +230,7 @@ export class DoceditComponent {
 
         return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
     }
+
 
     public cancel() {
 
@@ -227,9 +241,10 @@ export class DoceditComponent {
         }
     }
 
+
     private handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
 
-        this.removeInspectedRevisions(this.clonedDocument.resource.id)
+        this.removeInspectedRevisions(this.clonedDocument.resource.id as any)
             .then(latestRevision => {
                 this.clonedDocument = latestRevision;
                 this.documentEditChangeMonitor.reset();
@@ -238,14 +253,15 @@ export class DoceditComponent {
                     this.activeTabService.setActiveTab('conflicts');
                     this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
                 } else {
-                    return this.closeModalAfterSave(latestRevision.resource.id, viaSaveButton);
+                    return this.closeModalAfterSave(latestRevision.resource.id as any, viaSaveButton);
                 }
             }).catch(msgWithParams => {
                 this.messages.add(msgWithParams);
             });
     }
 
-    private handleSaveError(errorWithParams) {
+
+    private handleSaveError(errorWithParams: any) {
 
         if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
             this.handleDeletedConflict();
@@ -255,6 +271,7 @@ export class DoceditComponent {
         }
         return Promise.resolve(undefined);
     }
+
 
     private closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
 
@@ -267,6 +284,7 @@ export class DoceditComponent {
                 this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
             });
     }
+
 
     /**
      * @param resourceId
@@ -286,6 +304,7 @@ export class DoceditComponent {
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
+
     private handleDeletedConflict() {
 
         this.modalService.open(
@@ -295,13 +314,15 @@ export class DoceditComponent {
         }).catch(() => {});
     }
 
+
     private makeClonedDocAppearNew() {
 
         // make the doc appear 'new' ...
         delete this.clonedDocument.resource.id; // ... for persistenceManager
-        delete this.clonedDocument['_id'];      // ... for pouchdbdatastore
-        delete this.clonedDocument['_rev'];
+        delete (this.clonedDocument as any)['_id'];      // ... for pouchdbdatastore
+        delete (this.clonedDocument as any)['_rev'];
     }
+
 
     private deleteDoc() {
 
@@ -316,7 +337,7 @@ export class DoceditComponent {
             });
     }
 
-    private removeImageWithImageStore(document): Promise<any> {
+    private removeImageWithImageStore(document: any): Promise<any> {
 
         if (this.imageTypeUtility.isImageType(document.resource.type)) {
             if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
@@ -328,10 +349,10 @@ export class DoceditComponent {
         }
     }
 
-    private removeWithPersistenceManager(document) {
+    private removeWithPersistenceManager(document: any): Promise<any> {
 
         return this.persistenceManager.remove(document, this.settingsService.getUsername())
-            .catch(removeError => {
+            .catch((removeError:any):any => {
                 if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
                     return Promise.reject([M.DOCEDIT_DELETE_ERROR]);
                 }
@@ -341,8 +362,8 @@ export class DoceditComponent {
     private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,
                                        documentAfterSave: IdaiFieldDocument): boolean {
 
-        const conflictsBeforeSave: string[] = documentBeforeSave['_conflicts'];
-        const conflictsAfterSave: string[] =  documentAfterSave['_conflicts'];
+        const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
+        const conflictsAfterSave: string[] =  (documentAfterSave as any)['_conflicts'];
 
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;

@@ -18,12 +18,14 @@ import {ImageGridComponent} from '../../imagegrid/image-grid.component';
  */
 export class DoceditImageTabComponent {
 
+
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
 
     public selected: IdaiFieldImageDocument[] = [];
 
     @Input() document: IdaiFieldDocument;
+
 
     constructor(
         private datastore: IdaiFieldDatastore,
@@ -32,6 +34,7 @@ export class DoceditImageTabComponent {
     ) {
     }
 
+
     ngOnChanges() {
 
         if (!this.document) return;
@@ -39,6 +42,7 @@ export class DoceditImageTabComponent {
             this.loadImages();
         }
     }
+
 
     /**
      * @param document the object that should be selected
@@ -49,10 +53,12 @@ export class DoceditImageTabComponent {
         else this.selected.splice(this.selected.indexOf(document), 1);
     }
 
+
     public clearSelection() {
 
         this.selected = [];
     }
+
 
     public removeLinks() {
 
@@ -80,19 +86,21 @@ export class DoceditImageTabComponent {
         }
     }
 
+
     private loadImages() {
 
-        const imageDocPromises = [];
+        const imageDocPromises: any[] = [];
         this.documents = [];
         this.document.resource.relations['isDepictedIn'].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
-        Promise.all(imageDocPromises).then(docs => {
+        Promise.all(imageDocPromises as any).then(docs => {
             this.documents = docs as Array<IdaiFieldImageDocument>;
             this.clearSelection();
         });
     }
+
 
     private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
 
@@ -100,8 +108,8 @@ export class DoceditImageTabComponent {
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
 
         for (let i in imageDocuments) {
-            if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
-                relations.push(imageDocuments[i].resource.id);
+            if (relations.indexOf(imageDocuments[i].resource.id as any) == -1) {
+                relations.push(imageDocuments[i].resource.id as any);
             }
         }
 
@@ -110,12 +118,14 @@ export class DoceditImageTabComponent {
         this.loadImages();
     }
 
+
     public onResize() {
 
         if (!this.documents || this.documents.length == 0) return; // TODO code duplicated - move it to _onResize
 
         this.imageGrid._onResize();
     }
+
 
     public openImagePicker() {
 

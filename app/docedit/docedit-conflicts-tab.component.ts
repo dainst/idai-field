@@ -20,17 +20,17 @@ const moment = require('moment');
     selector: 'docedit-conflicts-tab',
     templateUrl: './docedit-conflicts-tab.html'
 })
-
 export class DoceditConflictsTabComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
     @Input() inspectedRevisionsIds: string[];
 
     private conflictedRevisions: Array<IdaiFieldDocument>;
-    private selectedRevision: IdaiFieldDocument;
+    private selectedRevision: IdaiFieldDocument|undefined;
     private differingFields: any[];
     private relationTargets: { [targetId: string]: IdaiFieldDocument };
     private ready: boolean;
+
 
     constructor(
         private datastore: IdaiFieldDatastore,
@@ -39,6 +39,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private persistenceManager: PersistenceManager) {}
 
+
     ngOnChanges() {
 
         this.ready = false;
@@ -46,10 +47,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
         this.selectedRevision = undefined;
         let promises: Array<Promise<any>> = [];
 
-        for (let revisionId of this.document['_conflicts']) {
+        for (let revisionId of (this.document as any)['_conflicts']) {
             if (this.inspectedRevisionsIds.indexOf(revisionId) > -1) continue;
 
-            promises.push(this.datastore.getRevision(this.document.resource.id, revisionId).then(
+            promises.push(this.datastore.getRevision(this.document.resource.id as any, revisionId).then(
                 revision => this.conflictedRevisions.push(revision),
                 () => this.messages.add([M.DATASTORE_NOT_FOUND])
             ));
@@ -66,6 +67,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         });
     }
 
+
     public setSelectedRevision(revision: IdaiFieldDocument) {
 
         this.selectedRevision = revision;
@@ -77,9 +79,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
         );
     }
 
+
     private createDiff(revision: IdaiFieldDocument): Promise<any[]> {
 
-        let differingFields = [];
+        let differingFields: any[] = [];
 
         let differingFieldsNames: string[]
             = IdaiFieldDiffUtility.findDifferingFields(this.document.resource, revision.resource);
@@ -125,6 +128,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
     
     public solveConflict() {
+
+        if (!this.selectedRevision) return;
         
         for (let field of this.differingFields) {
             if (field.rightSideWinning) {
@@ -161,10 +166,12 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let index = this.conflictedRevisions.indexOf(revision);
         this.conflictedRevisions.splice(index, 1);
 
-        this.inspectedRevisionsIds.push(revision['_rev']);
+        this.inspectedRevisionsIds.push((revision as any)['_rev']);
     }
 
     private fetchRelationTargets() {
+
+        if (!this.selectedRevision) return;
 
         this.relationTargets = {};
 
@@ -175,6 +182,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
     }
+
 
     private fetchRelationTargetsOfField(resource: IdaiFieldResource, fieldName: string) {
 
@@ -187,6 +195,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
     }
+
 
     public getTargetIdentifiers(targetIds: string[]): string {
 
@@ -201,6 +210,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         return result;
     }
+
 
     public getWinningSide(): string {
 
@@ -220,6 +230,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         return winningSide;
     }
 
+
     public setWinningSide(rightSideWinning: boolean) {
 
         for (let field of this.differingFields) {
@@ -227,16 +238,18 @@ export class DoceditConflictsTabComponent implements OnChanges {
         }
     }
 
+
     public setWinningSideForField(field: any, rightSideWinning: boolean) {
 
         field.rightSideWinning = rightSideWinning;
     }
 
+
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
 
         revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
-            const date1: Date = new Date(a.modified[a.modified.length-1].date);
-            const date2: Date = new Date(b.modified[b.modified.length-1].date);
+            const date1: Date = new Date((a.modified as any)[(a.modified as any).length-1].date);
+            const date2: Date = new Date((b.modified as any)[(b.modified as any).length-1].date);
             if (date1 < date2) {
                 return -1;
             } else if (date1 > date2) {
@@ -247,19 +260,23 @@ export class DoceditConflictsTabComponent implements OnChanges {
         });
     }
 
+
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
+        const revision_: any = revision;
+
         let latestAction: Action;
-        if (revision['modified'] && revision['modified'].length > 0) {
-            latestAction = revision['modified'][revision['modified'].length - 1];
+        if (revision_['modified'] && revision_['modified'].length > 0) {
+            latestAction = revision_['modified'][revision_['modified'].length - 1];
         } else {
-            latestAction = revision['created'];
+            latestAction = revision_['created'] as any;
         }
-        const date: Date = new Date(latestAction.date);
+        const date: Date = new Date(latestAction.date as any);
         moment.locale('de');
 
         return latestAction.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
+
 
     public getFieldContent(field: any, revision: IdaiFieldDocument): string {
 

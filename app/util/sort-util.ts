@@ -13,7 +13,7 @@ export class SortUtil {
      * @param b another string
      * @returns {number} -1 if a < b, 1 if a > b, 0 if a == b
      */
-    public static alnumCompare(a, b): number {
+    public static alnumCompare(a: any, b: any): number {
 
         let arrayA = SortUtil.makeAlNumArray(a);
         let arrayB = SortUtil.makeAlNumArray(b);
@@ -56,7 +56,7 @@ export class SortUtil {
      * @param b
      * @returns {number}
      */
-    public static compare(a, b): number {
+    public static compare(a: any, b: any): number {
         if (a > b)
             return 1;
         if (a < b)
@@ -70,19 +70,20 @@ export class SortUtil {
      * @param compareFunction the compare function to wrap
      * @returns {(a:any, b:any)=>number} the new compare function
      */
-    public static compareDescending(compareFunction) {
+    public static compareDescending(compareFunction: Function) {
 
-        return (a, b) => {
+        return (a: any, b: any) => {
             return compareFunction(a, b) * -1;
         };
     }
 
+
     // split string and convert numbers to be able to sort alphabetic
     // and numeric parts of the string separately
-    private static makeAlNumArray(s) {
+    private static makeAlNumArray(s: any) {
 
         return s.split(/(\d+)/)
-            .map(s => /^\d+$/.test(s) ? parseInt(s) : s);
+            .map((s: any) => /^\d+$/.test(s) ? parseInt(s) : s);
     }
 
 }

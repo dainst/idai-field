@@ -5,6 +5,7 @@
  */
 export class ExtensionUtil {
 
+
     /**
      * @param files
      * @param supportedFileTypes
@@ -15,7 +16,7 @@ export class ExtensionUtil {
     public static reportUnsupportedFileTypes(files: Array<File>, supportedFileTypes: Array<string>): Array<any> {
 
         const uniqueUnsupportedExts = ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).reduce(function(c, p) {
-            if (c.indexOf(p) < 0) c.push(p);
+            if (c.indexOf(p as never) < 0) c.push(p as never);
             return c;
         }, []);
 
@@ -26,11 +27,14 @@ export class ExtensionUtil {
         return result;
     }
 
+
     public static ofUnsupportedExtension(file: File, supportedFileTypes: Array<string>) {
 
         let ext = file.name.split('.').pop();
+        if (!ext) return undefined;
         if (supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
+
 
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {
 

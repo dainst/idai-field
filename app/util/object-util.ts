@@ -4,6 +4,7 @@
  */
 export class ObjectUtil {
 
+
     public static getElForPathIn(object: any, path: string) {
 
         let result = object;
@@ -14,12 +15,13 @@ export class ObjectUtil {
         return result;
     }
 
+
     public static takeOrMake(object: Object, path: string, val: any) {
 
         if (ObjectUtil.getElForPathIn(object, path)) return ObjectUtil.getElForPathIn(object, path);
-        let result = object;
+        let result: any = object;
         let last;
-        let lastSegment;
+        let lastSegment: any;
         for (let segment of path.split('.')) {
             if (!result[segment]) result[segment] = { };
             last = result;
@@ -29,15 +31,18 @@ export class ObjectUtil {
         return last[lastSegment] = val;
     }
 
+
     public static cloneObject(object: Object): Object {
 
         return JSON.parse(JSON.stringify(object));
     }
 
+
     public static isEmpty(object: Object): boolean {
 
         return Object.keys(object).length == 0;
     }
+
 
     public static getDuplicateValues(array: any[]): any[] {
 
@@ -55,6 +60,7 @@ export class ObjectUtil {
         return result;
     }
 
+
     public static removeDuplicateValues(array: any[]): any[] {
 
         const result: any[] = [];
@@ -66,6 +72,7 @@ export class ObjectUtil {
         return result;
     }
 
+
     public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];
@@ -75,11 +82,14 @@ export class ObjectUtil {
 
                 if (fieldsToIgnore && fieldsToIgnore.indexOf(fieldName) > -1) continue;
 
-                if (!ObjectUtil.compare(object1[fieldName], object2[fieldName])) differingFieldsNames.push(fieldName);
+                if (!ObjectUtil.compare(
+                    (object1 as any)[fieldName],
+                    (object2 as any)[fieldName])) differingFieldsNames.push(fieldName);
             }
         }
         return differingFieldsNames;
     }
+
 
     public static compare(value1: any, value2: any): boolean {
 
@@ -100,10 +110,12 @@ export class ObjectUtil {
         }
     }
 
+
     private static compareObjects(object1: Object, object2: Object): boolean {
 
         return JSON.stringify(object1) == JSON.stringify(object2);
     }
+
 
     private static compareFields(field1: any, field2: any): boolean {
 
@@ -114,6 +126,7 @@ export class ObjectUtil {
 
         return field1 === field2;
     }
+
 
     private static compareArrays(array1: any[], array2: any[]): boolean {
 
@@ -130,6 +143,7 @@ export class ObjectUtil {
         return true;
     }
 
+
     private static isInArray(array: any[], value: any): boolean {
 
         for (let element of array) {
@@ -138,6 +152,7 @@ export class ObjectUtil {
 
         return false;
     }
+
 
     private static getType(value: any): string {
 

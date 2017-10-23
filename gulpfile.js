@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
-var typescript = require('gulp-typescript');
 var fs = require('fs');
 
 // compile sass and concatenate to single css file in build dir
@@ -24,26 +23,13 @@ gulp.task('convert-sass', function () {
         .pipe(gulp.dest('app'));
 });
 
-const tscConfig = require('./tsconfig.json');
-gulp.task('compile', ['convert-sass'], function () {
+gulp.task('copy-fonts-convert-sass', ['convert-sass'], function () {
     // fonts
     gulp.src([
         'node_modules/roboto-fontface/fonts/**/*',
         'node_modules/mdi/fonts/**/*'
     ])
-        .pipe(gulp.dest('fonts'));
-
-
-    // sources
-    gulp
-        .src('app/**/*.ts')
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('app/'));
-    // test sources
-    return gulp
-        .src('test/**/*.ts')
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('test/'));
+    .pipe(gulp.dest('fonts'));
 });
 
 function createConfig(path) {

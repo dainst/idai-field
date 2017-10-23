@@ -7,7 +7,7 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
-    "build": "gulp create-configs && gulp compile",
+    "build": "gulp create-configs && gulp copy-fonts-convert-sass && tsc",
     "convert-sass": "gulp convert-sass",
     "start": "electron . dev",
     "test": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json && karma start test/browser/config/karma.conf.js",
@@ -97,7 +97,6 @@
     "gulp-concat": "2.6.0",
     "gulp-replace": "0.5.4",
     "gulp-sass": "3.1.0",
-    "gulp-typescript": "3.1.4",
     "gulp-uglify": "1.5.1",
     "gulp-webserver": "0.9.1",
     "jasmine": "2.5.2",

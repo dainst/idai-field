@@ -18,7 +18,7 @@ import {M} from '../../m';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent {
+export class ImagePickerComponent implements OnInit {
 
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
@@ -38,6 +38,14 @@ export class ImagePickerComponent {
         private imageTypeUtility: ImageTypeUtility
     ) {
         this.fetchDocuments(this.query);
+    }
+
+
+    public ngOnInit() {
+        
+        this.el.nativeElement.parentElement.parentElement.addEventListener('transitionend', (event: any) => {
+            if (event.propertyName == 'transform') this.onResize();
+        });
     }
 
 

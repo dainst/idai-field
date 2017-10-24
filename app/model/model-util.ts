@@ -18,6 +18,7 @@ export class ModelUtil {
 
         if (!document.resource) return false;
         if (!document.resource.id) return false;
+        if (!document.resource.identifier) return false;
         if (!document.resource.relations) return false;
         if (!document.created) return false;
 

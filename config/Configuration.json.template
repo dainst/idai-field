@@ -157,50 +157,6 @@
         },
         {
             "domain": [
-                "Trench",
-                "Building",
-                "Survey",
-                "Place"
-            ],
-            "editable": false,
-            "inverse": "NO-INVERSE",
-            "label": "Gehört zu",
-            "name": "isRecordedIn",
-            "range": [
-                "Project"
-            ],
-            "visible": false
-        },
-        {
-            "domain": [
-                "Trench",
-                "Building",
-                "Survey"
-            ],
-            "inverse": "includes",
-            "label": "Liegt in",
-            "name": "liesWithin",
-            "range": [
-                "Place"
-            ],
-            "sameMainTypeResource": true
-        },
-        {
-            "domain": [
-                "Place"
-            ],
-            "inverse": "liesWithin",
-            "label": "Enthält",
-            "name": "includes",
-            "range": [
-                "Trench",
-                "Building",
-                "Survey"
-            ],
-            "sameMainTypeResource": true
-        },
-        {
-            "domain": [
                 "Find",
                 "Brick",
                 "Bone",

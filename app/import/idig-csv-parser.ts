@@ -119,7 +119,7 @@ export class IdigCsvParser extends AbstractParser {
                 identifier: '' + this.identifier(object) + ' (imported item nr. ' + lineNumber + ')',
                 type: object['Type'],
                 shortDescription: object['Title'],
-                relations: {}
+                relations: { isRecordedIn: []}
             }
         };
 

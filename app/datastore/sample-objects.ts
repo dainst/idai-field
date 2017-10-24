@@ -6,7 +6,9 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "test",
             "identifier": "test",
             "shortDescription": "Testprojekt",
-            "relations": {},
+            "relations": {
+                "isRecordedIn": []
+            },
             "type": "Project"
         }
     },
@@ -65,10 +67,12 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "PE07-So-07_Z001.jpg",
             "shortDescription": "Test Layer 1",
             "type": "Drawing",
-            "relations": {},
             "originalFilename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
             "width" : 3513,
+            "relations": {
+                "isRecordedIn" : []
+            },
             "georeference": {
                 "bottomLeftCoordinates": [39.1411810096, 27.1892609283],
                 "topLeftCoordinates": [39.1412672328, 27.1892609283],
@@ -82,7 +86,9 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "mapLayerTest2.png",
             "shortDescription": "Test Layer 2",
             "type": "Image",
-            "relations": {},
+            "relations": {
+                "isRecordedIn" : []
+            },
             "originalFilename" : "mapLayerTest2.png",
             "height" : 782,
             "width" : 748,

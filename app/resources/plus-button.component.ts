@@ -143,9 +143,14 @@ export class PlusButtonComponent implements OnChanges {
 
         if (type.name == 'Image') return false;
 
-        if (this.isRecordedIn && !projectConfiguration.isAllowedRelationDomainType(type.name,
-                this.isRecordedIn.resource.type, 'isRecordedIn')) {
-            return false;
+        if (this.isRecordedIn) {
+            if (this.isRecordedIn.resource.type == 'Project' && type.isAbstract) {
+                return false;
+            }
+            if (!projectConfiguration.isAllowedRelationDomainType(type.name,
+                    this.isRecordedIn.resource.type, 'isRecordedIn')) {
+                return false;
+            }
         }
 
         if (this.liesWithin && !projectConfiguration.isAllowedRelationDomainType(type.name,

@@ -24,7 +24,7 @@ import {BlobMaker} from './imagestore/blob-maker';
 import {Converter} from './imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './settings/settings.module';
-import {AppConfigurator} from 'idai-components-2/idai-field-model';
+import {IdaiFieldAppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './settings/settings-service';
 import {PouchdbServerDatastore} from './datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './taskbar.component';
@@ -138,12 +138,12 @@ let pconf = undefined;
         Messages,
         BlobMaker,
         Converter,
-        AppConfigurator,
+        IdaiFieldAppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [AppConfigurator, ConfigLoader, SettingsService],
-            useFactory: function(appConfigurator: AppConfigurator, configLoader: ConfigLoader, settingsService: SettingsService) {
+            deps: [IdaiFieldAppConfigurator, ConfigLoader, SettingsService],
+            useFactory: function(appConfigurator: IdaiFieldAppConfigurator, configLoader: ConfigLoader, settingsService: SettingsService) {
 
                 return() => {
                     const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');

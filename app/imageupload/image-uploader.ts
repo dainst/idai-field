@@ -191,7 +191,8 @@ export class ImageUploader {
                         width: img.width,
                         height: img.height,
                         relations: {
-                            depicts: []
+                            depicts: [],
+                            isRecordedIn: []
                         }
                     }
                 };

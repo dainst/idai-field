@@ -21,7 +21,7 @@ export function main() {
                     identifier: identifier,
                     shortDescription: shortDescription,
                     type: 'Find',
-                    relations: {}
+                    relations: { isRecordedIn: []}
                 },
                 modified: [ { date: new Date(), user: user } ],
                 created: { date: new Date(), user: user }

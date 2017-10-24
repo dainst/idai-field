@@ -43,7 +43,10 @@ export class ImagePickerComponent implements OnInit {
 
     public ngOnInit() {
         
-        this.el.nativeElement.parentElement.parentElement.addEventListener('transitionend', (event: any) => {
+        // Listen for transformation of modal to capture finished 
+        // resizing and invoke recalculation of imageGrid
+        let modalEl = this.el.nativeElement.parentElement.parentElement;
+        modalEl.addEventListener('transitionend', (event: any) => {
             if (event.propertyName == 'transform') this.onResize();
         });
     }

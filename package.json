@@ -57,7 +57,7 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.4.34",
+    "idai-components-2": "1.4.35",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",

@@ -11,6 +11,7 @@ import {AppState} from '../app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from "./conflict-resolver";
 import {Observer} from 'rxjs/Observer';
+import {ModelUtil} from '../model/model-util';
 
 /**
  * @author Sebastian Cuy
@@ -358,10 +359,15 @@ export class PouchdbDatastore {
                     document = fetchedDoc;
                     // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
                 }).then(() => {
-                    this.constraintIndexer.put(document);
-                    this.fulltextIndexer.put(document);
-                    documentChange.document = document;
-                    this.notifyDocumentChangesObservers(documentChange);
+                    if (!ModelUtil.hasNecessaryFields(document)) {
+                        console.warn('Failed to index document from remote. One or more necessary fields are missing.',
+                            document);
+                    } else {
+                        this.constraintIndexer.put(document);
+                        this.fulltextIndexer.put(document);
+                        documentChange.document = document;
+                        this.notifyDocumentChangesObservers(documentChange);
+                    }
                 }).catch(err => {
                     console.error('Error while trying to index changed document with id ' + change.id +
                         ' from remote', err);

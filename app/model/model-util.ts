@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2/core';
 
 /**
- * @author: ?
+ * @author: Thomas Kleinke
  */
 export class ModelUtil {
 
@@ -12,5 +12,15 @@ export class ModelUtil {
         } else {
             return document.resource.identifier;
         }
+    }
+
+    public static hasNecessaryFields(document: Document): boolean {
+
+        if (!document.resource) return false;
+        if (!document.resource.id) return false;
+        if (!document.resource.relations) return false;
+        if (!document.created) return false;
+
+        return true;
     }
 }

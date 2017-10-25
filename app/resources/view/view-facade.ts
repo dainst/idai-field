@@ -28,7 +28,7 @@ export class ViewFacade {
 
     private views: OperationViews;
     private viewManager: ViewManager;
-    private operationTypeDocumentsManager: MainTypeDocumentsManager;
+    private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -45,7 +45,7 @@ export class ViewFacade {
                 stateSerializer
             )
         );
-        this.operationTypeDocumentsManager = new MainTypeDocumentsManager(
+        this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,
             this.viewManager
         );
@@ -53,7 +53,7 @@ export class ViewFacade {
             datastore,
             settingsService,
             this.viewManager,
-            this.operationTypeDocumentsManager
+            this.mainTypeDocumentsManager
         );
     }
 
@@ -135,7 +135,7 @@ export class ViewFacade {
 
     public async handleMainTypeDocumentOnDeleted() {
 
-        const selectedDocument = this.operationTypeDocumentsManager.getSelectedDocument();
+        const selectedDocument = this.mainTypeDocumentsManager.getSelectedDocument();
         if (!selectedDocument) return;
         if (!selectedDocument.resource.id) return;
 
@@ -160,14 +160,14 @@ export class ViewFacade {
     public getSelectedMainTypeDocument() {
 
         if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
-        return this.operationTypeDocumentsManager.getSelectedDocument();
+        return this.mainTypeDocumentsManager.getSelectedDocument();
     }
 
 
     public getMainTypeDocuments() {
 
         if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
-        return this.operationTypeDocumentsManager.getDocuments();
+        return this.mainTypeDocumentsManager.getDocuments();
     }
 
 
@@ -282,7 +282,7 @@ export class ViewFacade {
     public async selectMainTypeDocument(mainTypeDoc: Document): Promise<boolean> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument/1');
-        this.operationTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
+        this.mainTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
         await this.populateDocumentList();
 
@@ -313,7 +313,7 @@ export class ViewFacade {
     public async populateMainTypeDocuments() {
 
         if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
-        await this.operationTypeDocumentsManager.populate();
+        await this.mainTypeDocumentsManager.populate();
     }
 
 
@@ -331,7 +331,7 @@ export class ViewFacade {
 
         if (!this.documentsManager.getSelectedDocument()) return false;
 
-        return this.operationTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
+        return this.mainTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
             this.documentsManager.getSelectedDocument()
         );
     }

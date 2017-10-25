@@ -277,7 +277,7 @@ export class ViewFacade {
 
     /**
      * @param mainTypeDoc
-     * @returns true if isSelectedDocumentRecordedInSelectedOperationTypeDocument
+     * @returns true if isSelectedDocumentRecordedInSelectedMainTypeDocument
      */
     public async selectMainTypeDocument(mainTypeDoc: Document): Promise<boolean> {
 
@@ -286,7 +286,7 @@ export class ViewFacade {
 
         await this.populateDocumentList();
 
-        if (!this.isSelectedDocumentRecordedInSelectedOperationTypeDocument()) {
+        if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
             return false;
         } {
@@ -327,7 +327,7 @@ export class ViewFacade {
     }
 
 
-    private isSelectedDocumentRecordedInSelectedOperationTypeDocument(): boolean {
+    private isSelectedDocumentRecordedInSelectedMainTypeDocument(): boolean {
 
         if (!this.documentsManager.getSelectedDocument()) return false;
 

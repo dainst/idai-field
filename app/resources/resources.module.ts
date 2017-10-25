@@ -7,7 +7,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/docview/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
-import {MapWrapperComponent} from './map/resources-map.component';
+import {ResourcesMapComponent} from './map/resources-map.component';
 import {ListComponent} from './list/list.component';
 import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
@@ -42,7 +42,7 @@ import {SidebarListComponent} from './map/sidebar-list.component';
         ResourcesComponent,
         GeometryViewComponent,
         EditableMapComponent,
-        MapWrapperComponent,
+        ResourcesMapComponent,
         ListComponent,
         RowComponent,
         PlusButtonComponent,

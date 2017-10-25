@@ -18,8 +18,7 @@ import {ViewFacade} from '../view/view-facade';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-// TODO Rename to ResourcesMapComponent?
-export class MapWrapperComponent {
+export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 

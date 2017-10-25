@@ -4,7 +4,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingHelper} from '../service/routing-helper';
-import {MapWrapperComponent} from './resources-map.component';
+import {ResourcesMapComponent} from './resources-map.component';
 
 @Component({
     selector: 'sidebar-list',
@@ -22,7 +22,7 @@ export class SidebarListComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public mapWrapperComponent: MapWrapperComponent,    // TODO Check if it's possible to get rid of the dependency
+        public mapWrapperComponent: ResourcesMapComponent,    // TODO Check if it's possible to get rid of the dependency
         public viewFacade: ViewFacade,
         private routingHelper: RoutingHelper,
         private loading: Loading

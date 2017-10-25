@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {Datastore} from 'idai-components-2/datastore';
+import {ReadDatastore} from 'idai-components-2/datastore';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
@@ -33,7 +33,7 @@ export class ViewFacade {
 
 
     constructor(
-        private datastore: Datastore, // TODO use read datastore
+        private datastore: ReadDatastore,
         private settingsService: SettingsService,
         private stateSerializer: StateSerializer,
         private viewsList: any

@@ -1,8 +1,7 @@
-import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
+import {ReadDatastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
-import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
@@ -21,7 +20,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: Datastore,
+        private datastore: ReadDatastore,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: MainTypeDocumentsManager

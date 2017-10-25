@@ -8,7 +8,7 @@ import {ViewManager} from './view-manager';
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class OperationTypeDocumentsManager {
+export class MainTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
     private selectedDocument: IdaiFieldDocument|undefined;
@@ -36,7 +36,7 @@ export class OperationTypeDocumentsManager {
         if (!this.viewManager.getViewName()) return Promise.resolve();
 
         const documents = await this.fetchDocuments(
-            OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
+            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
 
         this.documents = documents as Array<IdaiFieldDocument>;
 
@@ -62,7 +62,7 @@ export class OperationTypeDocumentsManager {
 
         if (!this.documents || this.documents.length == 0) return false;
 
-        let operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
+        let operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.selectedDocument) {
@@ -80,7 +80,7 @@ export class OperationTypeDocumentsManager {
         if (!this.selectedDocument) return false;
 
         const operationTypeDocumentForDocument
-            = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
+            = MainTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
 
         if (!operationTypeDocumentForDocument) {
             console.error('Could not find main type document for selected document', document);
@@ -94,7 +94,7 @@ export class OperationTypeDocumentsManager {
     private fetchDocuments(query: Query): Promise<any> {
 
         return this.datastore.find(query)
-            .catch(errWithParams => OperationTypeDocumentsManager.handleFindErr(errWithParams, query))
+            .catch(errWithParams => MainTypeDocumentsManager.handleFindErr(errWithParams, query))
             .then(documents => {
                 return documents;
             });

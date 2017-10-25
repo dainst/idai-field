@@ -1,10 +1,10 @@
 import {Document} from 'idai-components-2/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
+import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
-import {Views} from './views';
+import {OperationViews} from './operation-views';
 import {SettingsService} from '../../settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -26,9 +26,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 export class ViewFacade {
 
 
-    private views: Views;
+    private views: OperationViews;
     private viewManager: ViewManager;
-    private operationTypeDocumentsManager: OperationTypeDocumentsManager;
+    private operationTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -38,14 +38,14 @@ export class ViewFacade {
         private stateSerializer: StateSerializer,
         private viewsList: any
     ) {
-        this.views = new Views(viewsList);
+        this.views = new OperationViews(viewsList);
         this.viewManager = new ViewManager(
             this.views,
             new ResourcesState(
                 stateSerializer
             )
         );
-        this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
+        this.operationTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,
             this.viewManager
         );
@@ -71,7 +71,7 @@ export class ViewFacade {
     }
 
 
-    public getOperationViews() {
+    public getOperationSubtypeViews() {
 
         return this.views.getOperationViews();
     }
@@ -95,13 +95,13 @@ export class ViewFacade {
         if (!mainTypeName) return undefined;
         if (mainTypeName == 'Project') return 'project';
 
-        return this.views.getViewNameForOperationTypeName(mainTypeName);
+        return this.views.getViewNameForOperationSubtype(mainTypeName);
     }
 
 
-    public getOperationTypeLabel() {
+    public getMainTypeLabel() {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
+        if (this.isInOverview()) throw ViewFacade.err('getMainTypeLabel');
         return this.viewManager.getMainTypeLabel();
     }
 
@@ -141,7 +141,7 @@ export class ViewFacade {
 
         this.viewManager.removeActiveLayersIds(selectedDocument.resource.id);
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
-        await this.populateOperationTypeDocuments();
+        await this.populateMainTypeDocuments();
     }
 
 
@@ -157,24 +157,21 @@ export class ViewFacade {
     }
 
 
-    public getSelectedOperationTypeDocument() {
+    public getSelectedMainTypeDocument() {
 
-        if (this.isInOverview()) throw ViewFacade.err('getSelectedOperationTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
         return this.operationTypeDocumentsManager.getSelectedDocument();
     }
 
 
-    public getOperationTypeDocuments() {
+    public getMainTypeDocuments() {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
         return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
-    // As discussed in #6707, should we really base this on views?
-    // It seems way better to ask to ProjectConfiguration for Operation Type Documents
-    // and the fetch them outside the facade.
-    public async getAllOperationTypeDocuments() {
+    public async getAllOperationSubtypeWithViewDocuments() {
 
         const viewMainTypes = this.views.getOperationViews()
             .map(view => {return view.operationSubtype});
@@ -282,9 +279,9 @@ export class ViewFacade {
      * @param mainTypeDoc
      * @returns true if isSelectedDocumentRecordedInSelectedOperationTypeDocument
      */
-    public async selectOperationTypeDocument(mainTypeDoc: Document): Promise<boolean> {
+    public async selectMainTypeDocument(mainTypeDoc: Document): Promise<boolean> {
 
-        if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument/1');
+        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument/1');
         this.operationTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
         await this.populateDocumentList();
@@ -313,9 +310,9 @@ export class ViewFacade {
      *
      * @returns {Promise<any>}
      */
-    public async populateOperationTypeDocuments() {
+    public async populateMainTypeDocuments() {
 
-        if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
         await this.operationTypeDocumentsManager.populate();
     }
 
@@ -325,7 +322,7 @@ export class ViewFacade {
         await this.viewManager.setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
-        if (!this.isInOverview()) await this.populateOperationTypeDocuments();
+        if (!this.isInOverview()) await this.populateMainTypeDocuments();
         await this.populateDocumentList();
     }
 

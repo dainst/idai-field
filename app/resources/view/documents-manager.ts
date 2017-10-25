@@ -1,6 +1,6 @@
 import {Datastore, DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
-import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
+import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {Loading} from '../../widgets/loading';
 import {SettingsService} from '../../settings/settings-service';
@@ -24,7 +24,7 @@ export class DocumentsManager {
         private datastore: Datastore,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
-        private operationTypeDocumentsManager: OperationTypeDocumentsManager
+        private operationTypeDocumentsManager: MainTypeDocumentsManager
     ) {
 
         datastore.documentChangesNotifications().subscribe(documentChange => {

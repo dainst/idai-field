@@ -1,7 +1,7 @@
 import {Resource} from 'idai-components-2/core';
 import {ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
-import {Views} from './views';
+import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
 import {Document} from 'idai-components-2/core';
 import {query} from '@angular/core/src/animation/dsl';
@@ -24,7 +24,7 @@ export class ViewManager {
     private viewName: string;
 
     constructor(
-        private views: Views,
+        private views: OperationViews,
         private resourcesState: ResourcesState) {
     }
 
@@ -206,7 +206,13 @@ export class ViewManager {
         return Promise.resolve().then(
             () => {
                 this.viewName = viewName;
-                this.mainTypeLabel = this.views.getLabelForName(this.viewName);
+
+                if (viewName == 'project') {
+                    this.mainTypeLabel = 'Projekt';
+                } else {
+                    this.mainTypeLabel = this.views.getLabelForName(this.viewName);
+                }
+
             }
         ).catch(() => Promise.reject(null));
     }

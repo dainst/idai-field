@@ -64,14 +64,9 @@ import {SidebarListComponent} from './map/sidebar-list.component';
             ) {
 
                 const views = projectConfiguration.getViewsList();
-                // views.unshift({
-                //     label: "Übersicht",
-                //     operationSubtype: "Project",
-                //     name: "project"
-                // });
                 for (let view of views) {
-                    view['mainTypeLabel'] =
-                        projectConfiguration.getLabelForType(view.operationSubtype); // TODO do this with preprocessor
+                    view['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
+                        projectConfiguration.getLabelForType(view.operationSubtype);
                 }
 
                 return new ViewFacade(

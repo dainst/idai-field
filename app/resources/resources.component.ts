@@ -68,7 +68,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public getIsRecordedInTarget() {
 
         if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
-        return this.viewFacade.getSelectedOperationTypeDocument();
+        return this.viewFacade.getSelectedMainTypeDocument();
     }
 
 
@@ -84,7 +84,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.viewFacade.selectOperationTypeDocument(document).then(isMatched =>  {
+        this.viewFacade.selectMainTypeDocument(document).then(isMatched =>  {
             if (!isMatched) this.activeDocumentViewTab = undefined;
         });
     }

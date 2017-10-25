@@ -4,7 +4,7 @@ import {ViewDefinition} from 'idai-components-2/configuration';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class Views { // TODO get rid of everything project and Project, then rename to OperationViews
+export class OperationViews {
 
 
     constructor(
@@ -19,7 +19,6 @@ export class Views { // TODO get rid of everything project and Project, then ren
         let views = [];
         for (let view of this._) {
 
-            if (view.name == 'project') continue;
             views.push(view);
         }
         if (views.length < 1) return [];
@@ -47,8 +46,6 @@ export class Views { // TODO get rid of everything project and Project, then ren
 
     public getLabelForName(name: any) {
 
-        if (name == 'project') return 'Übersicht';
-
         for (let view of this._) {
             if (view.name == name) return view.mainTypeLabel;
         }
@@ -58,8 +55,6 @@ export class Views { // TODO get rid of everything project and Project, then ren
 
     public getTypeForName(name: any) {
 
-        if (name == 'project') return 'Übersicht';
-
         for (let view of this._) {
             if (view.name == name) return view.operationSubtype;
         }
@@ -67,12 +62,12 @@ export class Views { // TODO get rid of everything project and Project, then ren
     }
 
 
-    public getViewNameForOperationTypeName(operationTypeName: string): string|undefined {
+    public getViewNameForOperationSubtype(operationSubtypeName: string): string|undefined {
 
         const viewDefinitions: Array<ViewDefinition> = this._;
         let viewName: string|undefined = undefined;
         for (let view of viewDefinitions) {
-            if (view.operationSubtype == operationTypeName) {
+            if (view.operationSubtype == operationSubtypeName) {
                 viewName = view.name;
                 break;
             }

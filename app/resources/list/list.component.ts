@@ -61,7 +61,7 @@ export class ListComponent implements OnChanges {
 
         if (this.resourcesComponent.ready && !this.loading.showIcons && this.viewFacade.getQuery().q == '') {
             if (this.viewFacade.isInOverview()) return true;
-            if (this.viewFacade.getSelectedOperationTypeDocument()) return true;
+            if (this.viewFacade.getSelectedMainTypeDocument()) return true;
         }
 
         return false;

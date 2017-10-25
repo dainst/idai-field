@@ -120,7 +120,7 @@ export function main() {
         it('operations view: select operations type document',
             (done) => {
                 viewFacade.setupView('excavation', undefined)
-                    .then(() => viewFacade.selectOperationTypeDocument(operationTypeDocument2))
+                    .then(() => viewFacade.selectMainTypeDocument(operationTypeDocument2))
                     .then(() => {
                         expect(viewFacade.getDocuments().length).toBe(1);
                         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');

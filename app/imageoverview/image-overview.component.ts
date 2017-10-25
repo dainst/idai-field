@@ -61,7 +61,7 @@ export class ImageOverviewComponent implements OnInit {
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceHelper: PersistenceHelper
     ) {
-        this.viewFacade.getAllOperationTypeDocuments().then(
+        this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
             documents => this.operationTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );

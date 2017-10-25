@@ -53,6 +53,6 @@ export class SidebarListComponent {
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
         && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
-        && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperationTypeDocument()));
+        && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument()));
     }
 }

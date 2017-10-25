@@ -105,7 +105,7 @@ export class RoutingHelper {
         if (viewName == this.viewFacade.getCurrentViewName()) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-            this.viewFacade.selectOperationTypeDocument(document);
+            this.viewFacade.selectMainTypeDocument(document);
         });
     }
 }

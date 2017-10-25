@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
     public ngOnInit() {
 
-        this.views = this.viewFacade.getOperationViews();
+        this.views = this.viewFacade.getOperationSubtypeViews();
     }
 
     public isActiveRoute(route: string) {

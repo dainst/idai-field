@@ -35,7 +35,7 @@ export class DocumentsManager {
 
     public populateProjectDocument() {
 
-        return this.datastore.get(this.settingsService.getSelectedProject())
+        return this.datastore.get(this.settingsService.getSelectedProject() as any)
             .then(document => this.projectDocument = document as IdaiFieldDocument)
             .catch(() => {console.log("cannot find project document");
                 return Promise.reject(undefined)});
@@ -121,7 +121,7 @@ export class DocumentsManager {
 
         this.removeEmptyDocuments();
         if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
-            documentToSelect.resource.type != this.viewManager.getView().mainType) {
+            documentToSelect.resource.type != this.viewManager.getViewType()) {
 
             this.documents.unshift(documentToSelect);
         }
@@ -156,7 +156,7 @@ export class DocumentsManager {
                 this.settingsService.getUsername())) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
-        if (changedDocument.resource.type == this.viewManager.getView().mainType) {
+        if (changedDocument.resource.type == this.viewManager.getViewType()) {
             return this.operationTypeDocumentsManager.populate();
         }
 

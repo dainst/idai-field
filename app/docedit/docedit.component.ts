@@ -80,8 +80,9 @@ export class DoceditComponent {
 
         this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
 
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.projectConfiguration = projectConfiguration;
+        (configLoader.getProjectConfiguration() as any)
+            .then((projectConfiguration: ProjectConfiguration) => {
+                this.projectConfiguration = projectConfiguration;
         });
     }
 

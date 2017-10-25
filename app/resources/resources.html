@@ -32,11 +32,11 @@
             <div class="col-md-6">
                 <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'map'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getMainType()"
+                             id="create-main-type-document-button" [preselectedType]="viewFacade.getCurrentViewMainType()"
                              [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
                 <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
                                         && viewFacade.getMode() == 'list'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getMainType()"
+                             id="create-main-type-document-button" [preselectedType]="viewFacade.getCurrentViewMainType()"
                              [preselectedGeometryType]="'none'" [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
     <div class="col-md-4 mr-md-auto">
         <search-bar *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
-                    [relationRangeType]="viewFacade.getMainType()"
+                    [relationRangeType]="viewFacade.getCurrentViewMainType()"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
         </search-bar>
     </div>

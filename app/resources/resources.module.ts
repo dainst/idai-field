@@ -64,14 +64,14 @@ import {SidebarListComponent} from './map/sidebar-list.component';
             ) {
 
                 const views = projectConfiguration.getViewsList();
-                views.unshift({
-                    "label": "Übersicht",
-                    "mainType": "Project",
-                    "name": "project"
-                });
+                // views.unshift({
+                //     label: "Übersicht",
+                //     operationSubtype: "Project",
+                //     name: "project"
+                // });
                 for (let view of views) {
                     view['mainTypeLabel'] =
-                        projectConfiguration.getLabelForType(view.mainType);
+                        projectConfiguration.getLabelForType(view.operationSubtype); // TODO do this with preprocessor
                 }
 
                 return new ViewFacade(

@@ -33,10 +33,10 @@ export class OperationTypeDocumentsManager {
 
     public async populate(): Promise<any> {
 
-        if (!this.viewManager.getView()) return Promise.resolve();
+        if (!this.viewManager.getViewName()) return Promise.resolve();
 
         const documents = await this.fetchDocuments(
-            OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getView().mainType))
+            OperationTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
 
         this.documents = documents as Array<IdaiFieldDocument>;
 

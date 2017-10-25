@@ -64,10 +64,10 @@ export class ViewFacade {
     }
 
     
-    public getViewName() {
+    public getCurrentViewName() {
 
-        if (!this.viewManager.getView()) return;
-        return this.viewManager.getView().name;
+        if (!this.viewManager.getViewName()) return;
+        return this.viewManager.getViewName();
     }
 
 
@@ -81,10 +81,21 @@ export class ViewFacade {
      * @returns the main type of the currently selected view.
      * This is either 'Project' or one of the operation types names.
      */
-    public getMainType(): string|undefined {
+    public getCurrentViewMainType(): string|undefined {
 
-        if (!this.viewManager.getView()) return undefined;
-        return this.viewManager.getView().mainType;
+        if (!this.viewManager.getViewName()) return undefined;
+        if (this.viewManager.getViewName() == 'project') return 'Project';
+
+        return this.viewManager.getViewType();
+    }
+
+
+    public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
+
+        if (!mainTypeName) return undefined;
+        if (mainTypeName == 'Project') return 'project';
+
+        return this.views.getViewNameForOperationTypeName(mainTypeName);
     }
 
 
@@ -166,7 +177,7 @@ export class ViewFacade {
     public async getAllOperationTypeDocuments() {
 
         const viewMainTypes = this.views.getOperationViews()
-            .map(view => {return view.mainType});
+            .map(view => {return view.operationSubtype});
 
         let mainTypeDocuments: Array<Document> = [];
 
@@ -316,13 +327,6 @@ export class ViewFacade {
 
         if (!this.isInOverview()) await this.populateOperationTypeDocuments();
         await this.populateDocumentList();
-    }
-
-
-    public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
-
-        if (!mainTypeName) return undefined;
-        return this.views.getViewNameForMainTypeName(mainTypeName);
     }
 
 

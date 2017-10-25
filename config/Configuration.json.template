@@ -10588,17 +10588,17 @@
     "views": [
         {
             "label": "Ausgrabung",
-            "mainType": "Trench",
+            "operationSubtype": "Trench",
             "name": "excavation"
         },
         {
             "label": "Bauaufnahme",
-            "mainType": "Building",
+            "operationSubtype": "Building",
             "name": "building"
         },
         {
             "label": "Survey",
-            "mainType": "Survey",
+            "operationSubtype": "Survey",
             "name": "survey"
         }
     ]

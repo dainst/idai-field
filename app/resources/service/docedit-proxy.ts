@@ -66,7 +66,7 @@ export class DoceditProxy {
 
     private isDocumentListItem(document: Document) {
 
-        return document.resource.type != this.viewFacade.getMainType();
+        return document.resource.type != this.viewFacade.getCurrentViewMainType();
     }
 
 

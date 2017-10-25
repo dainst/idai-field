@@ -85,7 +85,7 @@ export class RoutingHelper {
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect));
 
-        if (viewName != this.viewFacade.getViewName()) {
+        if (viewName != this.viewFacade.getCurrentViewName()) {
             if (tab) {
                 return this.router.navigate(['resources', viewName,
                     documentToSelect.resource.id, 'view', tab]);
@@ -102,7 +102,7 @@ export class RoutingHelper {
     public jumpToMainTypeHomeView(document: Document) {
 
         const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
-        if (viewName == this.viewFacade.getViewName()) return;
+        if (viewName == this.viewFacade.getCurrentViewName()) return;
 
         this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
             this.viewFacade.selectOperationTypeDocument(document);

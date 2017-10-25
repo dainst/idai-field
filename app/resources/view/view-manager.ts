@@ -18,9 +18,10 @@ export class ViewManager {
 
     private mode: string|undefined; // 'map' or 'list' or undefined
     private query: Query;
-    public view: ViewDefinition;
+    // public view: ViewDefinition;
     private mainTypeLabel: string;
 
+    private viewName: string;
 
     constructor(
         private views: Views,
@@ -30,7 +31,13 @@ export class ViewManager {
 
     public isInOverview() {
 
-        return this.getView() && this.getView().mainType == 'Project';
+        return this.viewName == 'project';
+    }
+
+
+    public getViewName() {
+
+        return this.viewName;
     }
 
 
@@ -63,21 +70,22 @@ export class ViewManager {
     }
 
 
-    public getView() {
+    public getViewType() {
 
-        return this.view;
+        if (this.isInOverview()) return 'Project';
+        return this.views.getTypeForName(this.viewName);
     }
 
 
     public getActiveLayersIds(mainTypeDocumentResourceId: string) {
 
-        return this.resourcesState.getActiveLayersIds(this.view.name, mainTypeDocumentResourceId);
+        return this.resourcesState.getActiveLayersIds(this.viewName, mainTypeDocumentResourceId);
     }
 
 
     public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
-        this.resourcesState.setActiveLayersIds(this.view.name, mainTypeDocumentResourceId,
+        this.resourcesState.setActiveLayersIds(this.viewName, mainTypeDocumentResourceId,
             activeLayersIds);
     }
 
@@ -85,20 +93,20 @@ export class ViewManager {
     public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
 
         if (mainTypeDocumentId)
-            this.resourcesState.removeActiveLayersIds(this.view.name, mainTypeDocumentId);
+            this.resourcesState.removeActiveLayersIds(this.viewName, mainTypeDocumentId);
     }
 
 
     public getQueryString() {
 
-        return this.resourcesState.getLastQueryString(this.view.name);
+        return this.resourcesState.getLastQueryString(this.viewName);
     }
 
 
     public setQueryString(q: string) {
 
         this.query.q = q;
-        this.resourcesState.setLastQueryString(this.view.name, q);
+        this.resourcesState.setLastQueryString(this.viewName, q);
     }
 
 
@@ -111,7 +119,7 @@ export class ViewManager {
 
     public getFilterTypes() {
 
-        return this.resourcesState.getLastSelectedTypeFilters(this.view.name);
+        return this.resourcesState.getLastSelectedTypeFilters(this.viewName);
     }
 
 
@@ -144,7 +152,7 @@ export class ViewManager {
             this.deleteQueryTypes();
 
         if (filterTypes && filterTypes.length == 0) delete this.query.types;
-        this.resourcesState.setLastSelectedTypeFilters(this.view.name, filterTypes);
+        this.resourcesState.setLastSelectedTypeFilters(this.viewName, filterTypes);
     }
 
 
@@ -162,14 +170,14 @@ export class ViewManager {
 
         if (!selectedMainTypeDocumentResourceId) return;
 
-        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.view.name,
+        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.viewName,
             selectedMainTypeDocumentResourceId);
     }
 
 
     public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.view.name);
+        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.viewName);
     }
 
 
@@ -185,7 +193,7 @@ export class ViewManager {
 
     public setupView(viewName: string, defaultMode: string): Promise<any> {
 
-        return ((!this.view || viewName != this.view.name)
+        return ((!this.viewName || viewName != this.viewName)
             ? this.initializeView(viewName) : Promise.resolve()).then(() => {
 
             return this.initialize(defaultMode ? 'map' : undefined);
@@ -197,8 +205,8 @@ export class ViewManager {
 
         return Promise.resolve().then(
             () => {
-                this.view = this.views.getView(viewName);
-                this.mainTypeLabel = this.views.getLabelForType(this.view.mainType);
+                this.viewName = viewName;
+                this.mainTypeLabel = this.views.getLabelForName(this.viewName);
             }
         ).catch(() => Promise.reject(null));
     }
@@ -244,12 +252,12 @@ export class ViewManager {
 
     private setLastSelectedMode(defaultMode: string) {
 
-        this.resourcesState.setLastSelectedMode(this.view.name, defaultMode);
+        this.resourcesState.setLastSelectedMode(this.viewName, defaultMode);
     }
 
 
     private getLastSelectedMode() {
 
-        return this.resourcesState.getLastSelectedMode(this.view.name);
+        return this.resourcesState.getLastSelectedMode(this.viewName);
     }
 }

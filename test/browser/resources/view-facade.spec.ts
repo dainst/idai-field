@@ -18,15 +18,9 @@ export function main() {
 
         const viewsList = [
             {
-                "mainTypeLabel": "Projekt",
-                "label": "Übersicht",
-                "mainType": "Project",
-                "name": "project"
-            },
-            {
                 "mainTypeLabel": "Schnitt",
                 "label": "Ausgrabung",
-                "mainType": "Trench",
+                "operationSubtype": "Trench",
                 "name": "excavation"
             }
         ];

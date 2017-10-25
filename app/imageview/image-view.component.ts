@@ -76,22 +76,23 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public startEdit(doc: IdaiFieldDocument, tabName: string) {
+    public async startEdit(doc: IdaiFieldDocument, tabName: string) {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
         const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
+        doceditModalComponent.setDocument(doc);
 
-        doceditModalRef.result.then(result => {
+        try {
+            const result = await doceditModalRef.result;
             if (result.document) this.image.document = result.document;
             this.setNextDocumentViewActiveTab();
-        }, closeReason => {
+        } catch (closeReason) {
+
             this.documentEditChangeMonitor.reset();
             if (closeReason == 'deleted') this.deselect();
-        });
-
-        doceditModalComponent.setDocument(doc);
+        }
     }
 
 

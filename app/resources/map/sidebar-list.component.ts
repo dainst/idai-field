@@ -20,6 +20,12 @@ export class SidebarListComponent {
 
     @Input() activeTab: string;
 
+    // for clean and refactor safe template, and to help find usages
+    public jumpToMainTypeHomeView = (document: IdaiFieldDocument) =>
+        this.routingHelper.jumpToMainTypeHomeView(document);
+
+
+
     constructor(
         public resourcesComponent: ResourcesComponent,
         public mapWrapperComponent: ResourcesMapComponent,    // TODO Check if it's possible to get rid of the dependency
@@ -27,12 +33,6 @@ export class SidebarListComponent {
         private routingHelper: RoutingHelper,
         private loading: Loading
     ) { }
-
-
-    public selectInMainTypeView(document: IdaiFieldDocument) {
-
-        this.routingHelper.jumpToMainTypeHomeView(document);
-    }
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {

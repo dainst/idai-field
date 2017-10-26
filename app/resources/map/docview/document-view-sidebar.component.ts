@@ -21,10 +21,9 @@ export class DocumentViewSidebarComponent {
     @Input() activeTab: string;
     @Input() updateThumbnails: boolean;
 
-    // for clean and refactor safe template, and to help find usages non-dynamically
+    // for clean and refactor safe template, and to help find usages
     public jumpToRelationTarget = (documentToSelect: Document) =>
-        this.routingHelper.jumpToRelationTarget(documentToSelect,
-            docToSelect => this.viewFacade.setSelectedDocument(docToSelect), 'relations');
+        this.routingHelper.jumpToRelationTarget(documentToSelect, 'relations');
 
 
     constructor(

@@ -29,7 +29,7 @@ export class RoutingHelper {
     }
 
 
-    // Currently used in ResourcesComponent
+    // For ResourcesComponent
     public routeParams(route: ActivatedRoute) {
 
         return Observable.create(observer => {
@@ -50,13 +50,15 @@ export class RoutingHelper {
     }
 
 
-    // Currently used from DocumentViewSidebar
-    public jumpToRelationTarget(documentToSelect: Document, cb, tab?: string) {
+    // Currently used from DocumentViewSidebar and ImageViewComponent
+    public jumpToRelationTarget(documentToSelect: Document, tab?: string,
+                                comingFromOutsideOverviewComponent: boolean = false) {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
         } else {
-            this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
+            this.jumpToResourceTypeRelationTarget(
+                documentToSelect, tab, comingFromOutsideOverviewComponent);
         }
     }
 
@@ -75,12 +77,17 @@ export class RoutingHelper {
     }
 
 
-    private async jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
+    private async jumpToResourceTypeRelationTarget(
+        documentToSelect: Document,
+        tab?: string,
+        comingFromOutsideOverviewComponent: boolean = false) {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect));
 
-        if (viewName != this.viewFacade.getCurrentViewName()) {
+        if (comingFromOutsideOverviewComponent ||
+            viewName != this.viewFacade.getCurrentViewName()) {
+
             if (tab) {
                 return this.router.navigate(['resources', viewName,
                     documentToSelect.resource.id, 'view', tab]);
@@ -89,7 +96,8 @@ export class RoutingHelper {
                     documentToSelect.resource.id]);
             }
         } else {
-            cb(documentToSelect);
+
+            this.viewFacade.setSelectedDocument(documentToSelect)
         }
     }
 

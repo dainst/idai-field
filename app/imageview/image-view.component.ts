@@ -12,8 +12,7 @@ import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
-import {ViewFacade} from '../resources/view/view-facade';
-import {GeneralRoutingHelper} from '../common/general-routing-helper';
+import {RoutingHelper} from '../resources/service/routing-helper';
 
 
 @Component({
@@ -32,6 +31,10 @@ export class ImageViewComponent implements OnInit {
     private originalNotFound = false;
     private comingFrom: Array<any>|undefined = undefined;
 
+    // for clean and refactor safe template, and to help find usages
+    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument)  =>
+        this.routingHelper.jumpToRelationTarget(documentToJumpTo, undefined, true);
+
 
     constructor(
         private route: ActivatedRoute,
@@ -41,9 +44,8 @@ export class ImageViewComponent implements OnInit {
         private router: Router,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private viewFacade: ViewFacade,
         private doceditActiveTabService: DoceditActiveTabService,
-        private generalRoutingHelper: GeneralRoutingHelper
+        private routingHelper: RoutingHelper
     ) {
         this.route.queryParams.subscribe(queryParams => {
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
@@ -55,17 +57,6 @@ export class ImageViewComponent implements OnInit {
 
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
-    }
-
-
-    public async jumpToRelationTarget(documentToJumpTo: IdaiFieldDocument) {
-
-        const viewName = await this.viewFacade
-            .getMainTypeHomeViewName(await this.generalRoutingHelper
-                .getMainTypeNameForDocument(documentToJumpTo));
-
-        this.router.navigate(['resources', viewName,
-            documentToJumpTo.resource.id, 'view', 'images']);
     }
 
 

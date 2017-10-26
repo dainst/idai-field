@@ -22,13 +22,12 @@ export class DocumentViewSidebarComponent {
     @Input() updateThumbnails: boolean;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToSelect: Document) =>
-        this.routingHelper.jumpToRelationTarget(documentToSelect, 'relations');
+    public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
 
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        private routingHelper: RoutingService,
+        private routingService: RoutingService,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade
     ) { }

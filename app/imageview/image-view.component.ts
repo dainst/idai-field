@@ -32,8 +32,7 @@ export class ImageViewComponent implements OnInit {
     private comingFrom: Array<any>|undefined = undefined;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument)  =>
-        this.routingHelper.jumpToRelationTarget(documentToJumpTo, undefined, true);
+    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument)  => this.routingService.jumpToRelationTarget(documentToJumpTo, undefined, true);
 
 
     constructor(
@@ -45,7 +44,7 @@ export class ImageViewComponent implements OnInit {
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private doceditActiveTabService: DoceditActiveTabService,
-        private routingHelper: RoutingService
+        private routingService: RoutingService
     ) {
         this.route.queryParams.subscribe(queryParams => {
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');

@@ -19,7 +19,7 @@ import {ReadDatastore} from 'idai-components-2/datastore';
  */
 export class RoutingService {
 
-    private currentRoute: any;
+    private currentRoute: any; // TODO get rid of this
 
 
     constructor(private router: Router,
@@ -58,6 +58,7 @@ export class RoutingService {
     public jumpToRelationTarget(documentToSelect: Document, tab?: string,
                                 comingFromOutsideOverviewComponent: boolean = false) {
 
+        // TODO we really have two separate public methods instead of this check
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
         } else {
@@ -96,11 +97,12 @@ export class RoutingService {
     private jumpToImageTypeRelationTarget(documentToSelect: Document) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-
-        if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
-            this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
+        if (selectedDocument) {
+            if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
+                this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
+            }
         }
+
         this.router.navigate(
             ['images', documentToSelect.resource.id, 'show', 'relations'],
             { queryParams: { from: this.currentRoute } }
@@ -148,7 +150,7 @@ export class RoutingService {
                 .then(() => {this.loading.stop(); observer.next(params);})
                 .catch(msgWithParams => {
                     if (msgWithParams) console.error(
-                        "got msgWithParams in GeneralRoutingHelper#setRoute: ",msgWithParams);
+                        "got msgWithParams in GeneralRoutingService#setRoute: ",msgWithParams);
                 });
         });
     }

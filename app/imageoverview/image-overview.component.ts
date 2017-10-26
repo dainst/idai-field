@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -13,6 +12,7 @@ import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
+import {RoutingService} from '../common/routing-service';
 
 @Component({
     moduleId: module.id,
@@ -50,16 +50,17 @@ export class ImageOverviewComponent implements OnInit {
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
     public getResourceIdentifiers = () => this.imageOverviewFacade.getResourceIdentifiers();
+    public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect);
 
 
     constructor(
         public viewFacade: ViewFacade,
-        private router: Router,
         private datastore: ReadDatastore,
         private modalService: NgbModal,
         private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,
-        private persistenceHelper: PersistenceHelper
+        private persistenceHelper: PersistenceHelper,
+        private routingService: RoutingService
     ) {
         this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
             documents => this.operationTypeDocuments = documents,
@@ -119,19 +120,6 @@ export class ImageOverviewComponent implements OnInit {
     public resetSearch() {
 
         this.imageOverviewFacade.resetSearch();
-    }
-
-
-    /** // TODO factor out to a routing helper for the imageoverview package
-     * @param documentToSelect the object that should be navigated to if the preconditions
-     *   to change the selection are met.
-     */
-    public navigateTo(documentToSelect: IdaiFieldImageDocument) {
-
-        this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show'],
-            { queryParams: { from: 'images' } }
-        );
     }
 
 

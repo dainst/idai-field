@@ -97,7 +97,7 @@
                     [showGeoIcon]="true"
                     [showTooltips]="true"
                     (onClick)="select($event)"
-                    (onDoubleClick)="navigateTo($event)"
+                    (onDoubleClick)="jumpToRelationTarget($event)"
                     (onImagesUploaded)="resetSearch(); refreshGrid();">
             </image-grid>
         </div>

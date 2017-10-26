@@ -22,7 +22,7 @@ export class SidebarListComponent {
 
     // for clean and refactor safe template, and to help find usages
     public jumpToMainTypeHomeView = (document: IdaiFieldDocument) =>
-        this.routingHelper.jumpToMainTypeHomeView(document);
+        this.routingService.jumpToMainTypeHomeView(document);
 
 
 
@@ -30,7 +30,7 @@ export class SidebarListComponent {
         public resourcesComponent: ResourcesComponent,
         public mapWrapperComponent: ResourcesMapComponent,    // TODO Check if it's possible to get rid of the dependency
         public viewFacade: ViewFacade,
-        private routingHelper: RoutingService,
+        private routingService: RoutingService,
         private loading: Loading
     ) { }
 
@@ -52,7 +52,7 @@ export class SidebarListComponent {
     public showPlusButton() { // TODO check if this is a duplication with the one from resources component
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
-        && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
-        && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument()));
+            && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
+            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument()));
     }
 }

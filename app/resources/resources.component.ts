@@ -40,14 +40,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
-                private routingHelper: RoutingService,
+                private routingService: RoutingService,
                 private doceditProxy: DoceditProxy,
                 private imageUploader: ImageUploader,
                 private renderer: Renderer,
                 private messages: Messages,
                 private loading: Loading
     ) {
-        routingHelper.routeParams(route).subscribe(params => {
+        routingService.routeParams(route).subscribe(params => {
             this.isEditingGeometry = false;
             this.viewFacade.setSelectedDocument(undefined);
 

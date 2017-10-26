@@ -35,6 +35,7 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
             && !hasRelationConflicts) return updatedLatestRevision;
     }
 
+
     private static resolveFieldConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
                                   previousRevision: IdaiFieldDocument): number {
 
@@ -60,15 +61,17 @@ export class IdaiFieldConflictResolver extends ConflictResolver {
         return unresolvedConflicts;
     }
 
+
     private static hasRelationConflicts(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument): boolean {
 
         return (IdaiFieldDiffUtility.findDifferingRelations
                 (latestRevision.resource, conflictedRevision.resource).length > 0);
     }
 
+
     private static determineWinningRevisionForField(latestRevision: IdaiFieldDocument, conflictedRevision: IdaiFieldDocument,
                                              previousRevision: IdaiFieldDocument,
-                                             fieldName: string): IdaiFieldDocument {
+                                             fieldName: string): IdaiFieldDocument|undefined {
 
         if (ObjectUtil.compare(latestRevision.resource[fieldName], previousRevision.resource[fieldName])) {
             return conflictedRevision;

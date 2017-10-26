@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
 
@@ -72,7 +72,7 @@ export class RelationsCompleter {
 
             this.datastore.get(resourceId).then(
                 document => {
-                    this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+                    (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: ProjectConfiguration) => {
 
                         let promise: Promise<any> = new Promise<any>((res) => res());
 
@@ -81,7 +81,7 @@ export class RelationsCompleter {
                                 for (let targetId of document.resource.relations[relationName]) {
                                     promise = promise.then(
                                         () => this.alterRelation(mode, document.resource, targetId,
-                                            projectConfiguration.getInverseRelations(relationName)),
+                                            projectConfiguration.getInverseRelations(relationName) as any),
                                         err => reject(err)
                                     );
                                 }

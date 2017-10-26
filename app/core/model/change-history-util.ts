@@ -31,7 +31,7 @@ export class ChangeHistoryUtil {
 
         if (document.modified && document.modified.length > 0) {
             return document.modified[document.modified.length - 1];
-        } else return document.created;
+        } else return document.created as any;
     }
 
     private static getCombinedChangeHistory(documents: Array<Document>) {
@@ -48,8 +48,8 @@ export class ChangeHistoryUtil {
     private static sortChangeHistory(changeHistory: Array<Action>) {
 
         changeHistory.sort((action1, action2) => {
-            const date1 = new Date(action1.date);
-            const date2 = new Date(action2.date);
+            const date1 = new Date(action1.date as any);
+            const date2 = new Date(action2.date as any);
 
             if (date1 < date2) return -1;
             if (date2 < date1) return 1;

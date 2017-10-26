@@ -26,7 +26,7 @@ export class IdaiFieldValidator extends Validator {
 
             this.validateIdentifier(doc).then(
                 () => {
-                    let msgWithParams = IdaiFieldValidator.validateGeometry(doc.resource.geometry);
+                    let msgWithParams = IdaiFieldValidator.validateGeometry(doc.resource.geometry as any);
                     if (!msgWithParams) {
                         resolve();
                     } else {
@@ -54,7 +54,7 @@ export class IdaiFieldValidator extends Validator {
             });
     }
 
-    private static validateGeometry(geometry: IdaiFieldGeometry): Array<string> {
+    private static validateGeometry(geometry: IdaiFieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
 
@@ -152,7 +152,7 @@ export class IdaiFieldValidator extends Validator {
         return true;
     }
 
-    private static isDuplicate(result, doc) {
+    private static isDuplicate(result: any, doc: any) {
         return result.resource.id != doc.resource.id;
     }
 }

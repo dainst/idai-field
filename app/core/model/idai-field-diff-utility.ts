@@ -17,6 +17,7 @@ export class IdaiFieldDiffUtility {
         return ObjectUtil.removeDuplicateValues(differingFieldsNames);
     }
 
+
     public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         let differingRelationNames: string[]

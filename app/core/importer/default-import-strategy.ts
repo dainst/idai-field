@@ -39,11 +39,11 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         let projectConfiguration: ProjectConfiguration;
 
-        return this.configLoader.getProjectConfiguration()
-            .then(projectConfig => {
+        return (this.configLoader.getProjectConfiguration() as any)
+            .then((projectConfig: ProjectConfiguration) => {
                 projectConfiguration = projectConfig;
                 return this.datastore.get(this.mainTypeDocumentId as any);
-            }).then(mainTypeDocument => {
+            }).then((mainTypeDocument: any) => {
                 if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type,
                         mainTypeDocument.resource.type, 'isRecordedIn')) {
                     return Promise.reject([M.IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,

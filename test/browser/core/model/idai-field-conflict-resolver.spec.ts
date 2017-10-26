@@ -1,5 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldConflictResolver} from '../../../app/core/model/idai-field-conflict-resolver';
+import {IdaiFieldConflictResolver} from '../../../../app/core/model/idai-field-conflict-resolver';
 
 /**
  * @author Daniel de Oliveira

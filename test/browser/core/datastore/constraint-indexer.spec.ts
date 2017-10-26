@@ -1,4 +1,4 @@
-import {ConstraintIndexer} from "../../../app/core/datastore/constraint-indexer";
+import {ConstraintIndexer} from "../../../../app/core/datastore/constraint-indexer";
 
 /**
  * @author Daniel de Oliveira

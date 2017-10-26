@@ -34,7 +34,7 @@ import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './core/datastore/sample-data-loader';
 import {ConstraintIndexer} from './core/datastore/constraint-indexer';
 import {FulltextIndexer} from './core/datastore/fulltext-indexer';
-import {DocumentCache} from './core/datastore/document-cache';
+import {DocumentCache} from './core/datastore/idai-field-document-cache';
 import {AppState} from './core/settings/app-state';
 import {ConflictResolvingExtension} from './core/datastore/conflict-resolving-extension';
 import {IdaiFieldConflictResolver} from './core/model/idai-field-conflict-resolver';

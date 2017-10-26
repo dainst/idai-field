@@ -1,4 +1,4 @@
-import {NativeJsonlSerializer} from '../../../app/core/exporter/native-jsonl-serializer';
+import {NativeJsonlSerializer} from '../../../../app/core/exporter/native-jsonl-serializer';
 import {Document} from 'idai-components-2/core';
 
 /**

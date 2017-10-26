@@ -1,6 +1,6 @@
-import {GeojsonParser} from '../../../app/core/importer/geojson-parser';
+import {GeojsonParser} from '../../../../app/core/importer/geojson-parser';
 import {Document} from 'idai-components-2/core';
-import {M} from '../../../app/m';
+import {M} from '../../../../app/m';
 
 /**
  * @author Daniel de Oliveira

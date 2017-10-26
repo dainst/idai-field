@@ -1,6 +1,6 @@
-import {Static} from '../static';
-import {IdaiFieldDatastore} from '../../../app/core/datastore/idai-field-datastore';
-import {ViewFacade} from '../../../app/components/resources/view/view-facade';
+import {Static} from '../../static';
+import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
+import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
 
 

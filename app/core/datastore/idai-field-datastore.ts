@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {PouchdbDatastore} from './pouchdb-datastore';
-import {DocumentCache} from "./document-cache";
+import {DocumentCache} from "./idai-field-document-cache";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model'
 import {IdaiFieldReadDatastore} from './idai-field-read-datastore';
 
@@ -17,11 +17,8 @@ import {IdaiFieldReadDatastore} from './idai-field-read-datastore';
  * 1) A document cache for faster access and also to allow
  *    for clients to work with references to documents.
  *
- * 2) Returns fully checked (TODO)
- *    instances of IdaiFieldDocument, so that the rest of the app can rely
- *    that the declared fields are present.
- *
- * 3) Checks for duplicate resource.identifier (TODO move up from PouchDbDatastore)
+ * 2) Returns fully checked instances of IdaiFieldDocument, so that the rest
+ *    of the app can rely that the declared fields are present.
  *
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -42,9 +39,11 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
                     const document = documentChange.document;
 
                     // explicitly assign by value in order for changes to be detected by angular
-                    if (this.autoCacheUpdate && document && document.resource && this.documentCache.get(document.resource.id as any)) {
+                    if (this.autoCacheUpdate && document && document.resource &&
+                            this.documentCache.get(document.resource.id as any)) {
                         console.debug('change detected', document);
-                        this.reassign(document as IdaiFieldDocument); // TODO check if all declared fields exist on upcast
+                        this.reassign(IdaiFieldDatastore.
+                            convertToIdaiFieldDocument(document));
                     }
                 }
 
@@ -58,10 +57,11 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
      * @param document
      * @returns
      */
-    public create(document: Document): Promise<Document> {
+    public async create(document: Document): Promise<Document> {
 
-        return this.datastore.create(document)
-            .then(createdDocument => this.documentCache.set(createdDocument));
+        const createdDocument = await this.datastore.create(document);
+        return this.documentCache.set(IdaiFieldDatastore.
+            convertToIdaiFieldDocument(createdDocument));
     }
 
 
@@ -71,17 +71,21 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
      * @param document
      * @returns
      */
-    public update(document: Document): Promise<Document> {
+    public async update(document: Document): Promise<Document> {
 
-        return this.datastore.update(document)
-            .then(updatedDocument => {
-                if (!this.documentCache.get(document.resource.id as any)) {
-                    return this.documentCache.set(updatedDocument);
-                } else {
-                    this.reassign(updatedDocument as IdaiFieldDocument);
-                    return this.documentCache.get(document.resource.id as any);
-                }
-        });
+        const updatedDocument = await this.datastore.update(document);
+
+        if (!this.documentCache.get(document.resource.id as any)) {
+
+            return this.documentCache.set(IdaiFieldDatastore.
+                convertToIdaiFieldDocument(updatedDocument));
+
+        } else {
+
+            this.reassign(IdaiFieldDatastore.convertToIdaiFieldDocument(
+                updatedDocument));
+            return this.documentCache.get(document.resource.id as any);
+        }
     }
 
 
@@ -91,29 +95,30 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
             .then(() => this.documentCache.remove(doc.resource.id));
     }
 
-
+    // TODO we must not delegate the call but instead return a new Observable. Then we notify from within the subscription made in the constructors. This is necessary in order to make sure clients always get fully checked instances of IdaiFieldDocuments. Add unit test for it.
     public documentChangesNotifications(): Observable<DocumentChange> {
 
         return this.datastore.documentChangesNotifications();
     }
 
 
-    // TODO upcast Document from datastore to IdaiFieldDocument and check if all declared fields exist
-    public get(id: string, options?: Object): Promise<IdaiFieldDocument> {
 
-        if ((!options || !(options as any)['skip_cache']) && this.documentCache.get(id)) {
-            return Promise.resolve(this.documentCache.get(id));
+    public async get(id: string, options?: {skip_cache: boolean}): Promise<IdaiFieldDocument> {
+
+        if ((!options || !options.skip_cache) && this.documentCache.get(id)) {
+            return this.documentCache.get(id);
         }
-        return this.datastore.fetch(id).then(doc => this.documentCache.set(doc));
+
+        return this.documentCache.set(IdaiFieldDatastore.convertToIdaiFieldDocument(
+            await this.datastore.fetch(id)));
     }
 
 
-    // TODO upcast Document[] from datastore to IdaiFieldDocument[] and check if all declared fields exist on every document
     /**
      * Implements {@link ReadDatastore#find}
      *
      * @param query
-     * @returns {Promise<TResult2|TResult1>}
+     * @returns {Promise<IdaiFieldDocument[]>}
      */
     public find(query: Query):Promise<IdaiFieldDocument[]> {
 
@@ -122,33 +127,24 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
     }
 
 
-    private replaceAllWithCached(results: any) {
-
-        let ps = [];
-        for (let id of results) {
-            ps.push(this.get(id));
-        }
-        return Promise.all(ps);
-    }
-
-
-    // TODO upcast Document from datastore to IdaiFieldDocument and check if all declared fields exist
     /**
-     * Implements {@link IdaiFieldDatastore#getRevision}
+     * Implements {@link IdaiFieldReadDatastore#getRevision}
+     *
+     * Fetches a specific revision directly from the underlying datastore layer.
+     * Bypasses the cache and alway returns a new instance.
      *
      * @param docId
      * @param revisionId
      * @returns {Promise<IdaiFieldDocument>}
      */
-    public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
+    public async getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
 
-        return this.datastore.fetchRevision(docId, revisionId);
+        return IdaiFieldDatastore.convertToIdaiFieldDocument(
+            await this.datastore.fetchRevision(docId, revisionId));
     }
 
 
     /**
-     * Implements {@link IdaiFieldDatastore#removeRevision}
-     *
      * @param docId
      * @param revisionId
      * @returns {Promise<any>}
@@ -169,5 +165,26 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
 
         if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
         Object.assign(this.documentCache.get(doc.resource.id as any), doc);
+    }
+
+
+    private replaceAllWithCached(results: any) {
+
+        let ps = [];
+        for (let id of results) {
+            ps.push(this.get(id));
+        }
+        return Promise.all(ps);
+    }
+
+
+    private static convertToIdaiFieldDocument(doc: Document): IdaiFieldDocument {
+
+        const document = doc as IdaiFieldDocument;
+
+        if (!document.resource.identifier) document.resource.identifier = '';
+        if (!document.resource.relations.isRecordedIn) document.resource.relations.isRecordedIn = [];
+
+        return document;
     }
 }

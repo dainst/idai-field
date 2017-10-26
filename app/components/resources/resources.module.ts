@@ -20,7 +20,7 @@ import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.
 import {RoutingService} from '../routing-service';
 import {DoceditProxy} from './service/docedit-proxy';
 import {ViewFacade} from './view/view-facade';
-import {IdaiFieldDatastore} from '../../core/model/idai-field-datastore';
+import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
 import {StateSerializer} from '../../common/state-serializer';

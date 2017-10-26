@@ -1,12 +1,13 @@
-import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
-import {Datastore, Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
+import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class ImagePickerComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        private datastore: Datastore,
+        private datastore: IdaiFieldImageReadDatastore,
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility
     ) {
@@ -94,9 +95,9 @@ export class ImagePickerComponent implements OnInit {
         this.query.types = this.imageTypeUtility.getProjectImageTypeNames();
 
         return this.datastore.find(this.query)
-            .catch(msgWithParams => this.messages.add(msgWithParams)
-            ).then(documents => {
-                this.documents = this.filterOutAlreadyLinkedImageDocuments(documents as Array<IdaiFieldImageDocument>);
+            // .catch(msgWithParams => this.messages.add(msgWithParams)
+            .then(documents => {
+                this.documents = this.filterOutAlreadyLinkedImageDocuments(documents);
             })
             .catch(errWithParams => {
                 console.error('error in find with query', this.query);
@@ -108,8 +109,8 @@ export class ImagePickerComponent implements OnInit {
     }
 
 
-    private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)
-            : Array<IdaiFieldImageDocument> {
+    private filterOutAlreadyLinkedImageDocuments(imageDocuments: IdaiFieldImageDocument[])
+            : IdaiFieldImageDocument[] {
 
         let relationTargets = this.document.resource.relations['isDepictedIn'];
         if (!relationTargets) return imageDocuments;

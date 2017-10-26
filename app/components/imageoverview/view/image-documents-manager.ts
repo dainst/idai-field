@@ -1,9 +1,10 @@
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {Query, ReadDatastore} from 'idai-components-2/datastore';
+import {ReadDatastore, Query} from 'idai-components-2/datastore';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
+import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
 
 @Injectable()
 /**
@@ -24,6 +25,7 @@ export class ImageDocumentsManager {
     constructor(
         public viewFacade: ViewFacade,
         private imagesState: ImagesState,
+        private imageDatastore: IdaiFieldImageReadDatastore,
         private datastore: ReadDatastore
     ) {
     }
@@ -112,7 +114,7 @@ export class ImageDocumentsManager {
 
         const query: Query = this.imagesState.getQuery();
 
-        return this.datastore.find(query)
+        return this.imageDatastore.find(query)
             .catch(errWithParams => {
                 console.error('ERROR with find using query', query);
                 if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
@@ -124,7 +126,7 @@ export class ImageDocumentsManager {
                     return Promise.resolve(documents);
                 }
             }).then(filteredDocuments => {
-                this.documents = filteredDocuments as Array<IdaiFieldImageDocument>;
+                this.documents = filteredDocuments;
                 this.cacheIdsOfConnectedResources(this.documents);
             });
     }
@@ -151,7 +153,7 @@ export class ImageDocumentsManager {
      * 1. Documents which are linked to a resource which contains an isRecordedIn relation to the main type resource
      * 2. Documents which are directly linked to the main type resource
      */
-    private applyLinkFilter(documents: Array<Document>): Promise<Array<Document>> {
+    private applyLinkFilter(documents: Array<Document>): Promise<Array<IdaiFieldImageDocument>> {
 
         const documentMap: { [id: string]: Document } = {};
         const promises: Array<Promise<Document>> = [];

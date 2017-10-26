@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Datastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
@@ -13,6 +12,7 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
+import {IdaiFieldImageReadDatastore} from '../../core/imagestore/idai-field-image-read-datastore';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class ImageViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: Datastore,
+        private datastore: IdaiFieldImageReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,
@@ -99,11 +99,13 @@ export class ImageViewComponent implements OnInit {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(async function(id: string) {
-            this.id = id;
+        this.getRouteParams(async (id: string) => {
+            // this.id = id;
 
             try {
                 const doc = await this.datastore.get(id);
+                if (!doc.resource.id) return;
+
                 this.image.document = doc;
 
                 try {
@@ -123,7 +125,7 @@ export class ImageViewComponent implements OnInit {
             } catch (e) {
                 console.error("Fatal error: could not load document for id ", id);
             }
-        }.bind(this));
+        });
     }
 
 

@@ -46,6 +46,7 @@ import {ExportModule} from './components/export/export.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
+import {IdaiFieldImageReadDatastore} from './core/imagestore/idai-field-image-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -187,7 +188,8 @@ let pconf = undefined;
         { provide: MD, useClass: M},
         ImageTypeUtility,
         DoceditActiveTabService,
-        StateSerializer
+        StateSerializer,
+        IdaiFieldImageReadDatastore
     ],
     bootstrap: [ AppComponent ]
 })

@@ -3,9 +3,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
 import {ImagePickerComponent} from './image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
+import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -18,7 +18,6 @@ import {ImageGridComponent} from '../../imagegrid/image-grid.component';
  */
 export class DoceditImageTabComponent {
 
-
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
 
@@ -28,7 +27,7 @@ export class DoceditImageTabComponent {
 
 
     constructor(
-        private datastore: IdaiFieldDatastore,
+        private datastore: IdaiFieldImageReadDatastore,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {

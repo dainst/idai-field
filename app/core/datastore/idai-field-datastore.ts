@@ -115,15 +115,14 @@ export class IdaiFieldDatastore implements IdaiFieldReadDatastore, Datastore {
 
 
     /**
-     * Implements {@link ReadDatastore#find}
+     * Implements {@link IdaiFieldReadDatastore#find}
      *
      * @param query
      * @returns {Promise<IdaiFieldDocument[]>}
      */
-    public find(query: Query):Promise<IdaiFieldDocument[]> {
+    public async find(query: Query):Promise<IdaiFieldDocument[]> {
 
-        return this.datastore.findIds(query)
-            .then(result => this.replaceAllWithCached(result));
+        return this.replaceAllWithCached(await this.datastore.findIds(query));
     }
 
 

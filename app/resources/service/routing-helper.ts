@@ -29,6 +29,7 @@ export class RoutingHelper {
     }
 
 
+    // Currently used in ResourcesComponent
     public routeParams(route: ActivatedRoute) {
 
         return Observable.create(observer => {
@@ -37,38 +38,32 @@ export class RoutingHelper {
     }
 
 
-    private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
+    // Currently used from SidebarListComponent
+    public jumpToMainTypeHomeView(document: Document) {
 
-        route.params.subscribe(params => {
+        const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
+        if (viewName == this.viewFacade.getCurrentViewName()) return;
 
-            this.currentRoute = undefined;
-            if (params['view']) this.currentRoute = 'resources/' + params['view'];
-
-            this.location.replaceState('resources/' + params['view']);
-
-            this.loading.start();
-            this.viewFacade.setupView(params['view'], params['id'])
-                .then(() => {this.loading.stop(); observer.next(params);})
-                .catch(msgWithParams => {
-                    if (msgWithParams) console.error(
-                        "got msgWithParams in GeneralRoutingHelper#setRoute: ",msgWithParams);
-                });
-            }
-        );
+        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
+            this.viewFacade.selectMainTypeDocument(document);
+        });
     }
 
 
-    public jumpToRelationTarget(selectedDocument, documentToSelect: Document, cb, tab?: string) {
+    // Currently used from DocumentViewSidebar
+    public jumpToRelationTarget(documentToSelect: Document, cb, tab?: string) {
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
-            this.jumpToImageTypeRelationTarget(selectedDocument, documentToSelect);
+            this.jumpToImageTypeRelationTarget(documentToSelect);
         } else {
             this.jumpToResourceTypeRelationTarget(cb, documentToSelect, tab);
         }
     }
 
 
-    public jumpToImageTypeRelationTarget(selectedDocument: Document, documentToSelect: Document) {
+    private jumpToImageTypeRelationTarget(documentToSelect: Document) {
+
+        const selectedDocument = this.viewFacade.getSelectedDocument();
 
         if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
             this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
@@ -80,7 +75,7 @@ export class RoutingHelper {
     }
 
 
-    public async jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
+    private async jumpToResourceTypeRelationTarget(cb, documentToSelect: Document, tab?: string) {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect));
@@ -99,13 +94,23 @@ export class RoutingHelper {
     }
 
 
-    public jumpToMainTypeHomeView(document: Document) {
+    // For ResourcesComponent
+    private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
 
-        const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
-        if (viewName == this.viewFacade.getCurrentViewName()) return;
+        route.params.subscribe(params => {
 
-        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-            this.viewFacade.selectMainTypeDocument(document);
+            this.currentRoute = undefined;
+            if (params['view']) this.currentRoute = 'resources/' + params['view'];
+
+            this.location.replaceState('resources/' + params['view']);
+
+            this.loading.start();
+            this.viewFacade.setupView(params['view'], params['id'])
+                .then(() => {this.loading.stop(); observer.next(params);})
+                .catch(msgWithParams => {
+                    if (msgWithParams) console.error(
+                        "got msgWithParams in GeneralRoutingHelper#setRoute: ",msgWithParams);
+                });
         });
     }
 }

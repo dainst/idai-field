@@ -54,7 +54,7 @@ export class DocumentViewSidebarComponent {
 
     public jumpToRelationTarget(documentToSelect: Document) {
 
-        this.routingHelper.jumpToRelationTarget(this.viewFacade.getSelectedDocument(), documentToSelect,
+        this.routingHelper.jumpToRelationTarget(documentToSelect,
             docToSelect => this.viewFacade.setSelectedDocument(docToSelect), 'relations');
     }
 }

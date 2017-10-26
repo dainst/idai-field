@@ -100,7 +100,7 @@ export class DoceditComponent {
 
         this.persistenceManager.setOldVersions([this.document]);
 
-        this.datastore.find({ q: '', constraints: { 'resource.relations.isRecordedIn': document.resource.id }})
+        this.datastore.find({ q: '', constraints: { 'resource.relations.isRecordedIn': document.resource.id }} as any)
             .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
     }
 

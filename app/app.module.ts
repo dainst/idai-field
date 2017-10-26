@@ -47,6 +47,7 @@ import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-s
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {IdaiFieldImageReadDatastore} from './core/imagestore/idai-field-image-read-datastore';
+import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -135,6 +136,7 @@ let pconf = undefined;
         { provide: ReadDatastore, useExisting: Datastore },
         { provide: IdaiFieldDatastore, useExisting: Datastore },
         { provide: CachedPouchdbDatastore, useExisting: Datastore },
+        { provide: IdaiFieldReadDatastore, useExisting: Datastore },
         Messages,
         BlobMaker,
         Converter,

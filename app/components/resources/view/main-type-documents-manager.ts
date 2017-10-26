@@ -2,6 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
+import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
 
 /**
  * @author Thomas Kleinke
@@ -14,7 +15,7 @@ export class MainTypeDocumentsManager {
     private selectedDocument: IdaiFieldDocument|undefined;
 
     constructor(
-        private datastore: ReadDatastore,
+        private datastore: IdaiFieldReadDatastore,
         private viewManager: ViewManager
     ) {}
 
@@ -35,10 +36,8 @@ export class MainTypeDocumentsManager {
 
         if (!this.viewManager.getViewName()) return Promise.resolve();
 
-        const documents = await this.fetchDocuments(
-            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
-
-        this.documents = documents as Array<IdaiFieldDocument>;
+        this.documents = await this.fetchDocuments(
+            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));;
 
         if (this.documents.length == 0) {
             this.selectedDocument = undefined;
@@ -93,7 +92,7 @@ export class MainTypeDocumentsManager {
 
     private fetchDocuments(query: Query): Promise<any> {
 
-        return this.datastore.find(query)
+        return this.datastore.find(query as any)
             .catch(errWithParams => MainTypeDocumentsManager.handleFindErr(errWithParams, query))
             .then(documents => {
                 return documents;

@@ -9,6 +9,7 @@ import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore'
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
 import {M} from '../../m';
+import {IdaiFieldReadDatastore} from '../../core/datastore/idai-field-read-datastore';
 
 const moment = require('moment');
 
@@ -33,7 +34,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
 
     constructor(
-        private datastore: IdaiFieldDatastore,
+        private datastore: IdaiFieldReadDatastore,
         private messages: Messages,
         private configLoader: ConfigLoader,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
@@ -89,7 +90,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let differingRelationsNames: string[]
             = IdaiFieldDiffUtility.findDifferingRelations(this.document.resource, revision.resource);
 
-        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+        return (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
 
             for (let fieldName of differingFieldsNames) {
                 let type: string;

@@ -1,6 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ReadDatastore} from "idai-components-2/datastore";
-import {SyncState} from "./sync-state";
+import {ReadDatastore, Query} from "idai-components-2/datastore";
 
 /**
  * The interface for datastores supporting
@@ -11,9 +10,10 @@ import {SyncState} from "./sync-state";
  */
 export abstract class IdaiFieldReadDatastore extends ReadDatastore {
 
+
     /* find
      *
-     * In addition to {@link Datastore#find}, {@link IdaiFieldDatastore#find}
+     * In addition to {@link Datastore#find}, {@link IdaiFieldReadDatastore#find}
      * has some extra specifications:
      *
      * The find method accepts the following constraints:
@@ -26,6 +26,8 @@ export abstract class IdaiFieldReadDatastore extends ReadDatastore {
      * If two documents have the exact same lastModified, there is no second sort criterium
      * so the order between them is unspecified.
      */
+    public abstract find(query: Query):Promise<IdaiFieldDocument[]>;
+
 
     /**
      * get
@@ -43,13 +45,4 @@ export abstract class IdaiFieldReadDatastore extends ReadDatastore {
      *     [DOCUMENT_NOT_FOUND] - in case of error
      */
     abstract getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument>;
-
-    /**
-     * @param resourceId
-     * @param revisionId
-     * @returns
-     *   Rejects with
-     *     [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-     */
-    abstract removeRevision(resourceId: string, revisionId: string): Promise<any>;
 }

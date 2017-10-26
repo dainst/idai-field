@@ -5,6 +5,8 @@ import {Observable} from 'rxjs';
 import {IdaiFieldDatastore} from './idai-field-datastore';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from "./document-cache";
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model'
+import {IdaiFieldReadDatastore} from './idai-field-read-datastore';
 
 @Injectable()
 /**
@@ -12,7 +14,8 @@ import {DocumentCache} from "./document-cache";
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CachedPouchdbDatastore implements IdaiFieldDatastore {
+export class CachedPouchdbDatastore implements
+    IdaiFieldDatastore, IdaiFieldReadDatastore {
 
 
     private autoCacheUpdate: boolean = true;
@@ -29,7 +32,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
                     // explicitly assign by value in order for changes to be detected by angular
                     if (this.autoCacheUpdate && document && document.resource && this.documentCache.get(document.resource.id as any)) {
                         console.debug('change detected', document);
-                        this.reassign(document);
+                        this.reassign(document as IdaiFieldDocument); // TODO check if all declared fields exist on upcast
                     }
                 }
 
@@ -63,7 +66,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
                 if (!this.documentCache.get(document.resource.id as any)) {
                     return this.documentCache.set(updatedDocument);
                 } else {
-                    this.reassign(updatedDocument);
+                    this.reassign(updatedDocument as IdaiFieldDocument);
                     return this.documentCache.get(document.resource.id as any);
                 }
         });
@@ -83,7 +86,8 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
 
-    public get(id: string, options?: Object): Promise<Document> {
+    // TODO upcast Document from datastore to IdaiFieldDocument and check if all declared fields exist
+    public get(id: string, options?: Object): Promise<IdaiFieldDocument> {
 
         if ((!options || !(options as any)['skip_cache']) && this.documentCache.get(id)) {
             return Promise.resolve(this.documentCache.get(id));
@@ -92,13 +96,14 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
 
+    // TODO upcast Document[] from datastore to IdaiFieldDocument[] and check if all declared fields exist on every document
     /**
      * Implements {@link ReadDatastore#find}
      *
      * @param query
      * @returns {Promise<TResult2|TResult1>}
      */
-    public find(query: Query):Promise<Document[]> {
+    public find(query: Query):Promise<IdaiFieldDocument[]> {
 
         return this.datastore.findIds(query)
             .then(result => this.replaceAllWithCached(result));
@@ -115,6 +120,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
 
+    // TODO upcast Document from datastore to IdaiFieldDocument and check if all declared fields exist
     /**
      * Implements {@link IdaiFieldDatastore#getRevision}
      *
@@ -122,7 +128,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
      * @param revisionId
      * @returns {Promise<IdaiFieldDocument>}
      */
-    public getRevision(docId: string, revisionId: string): Promise<Document> {
+    public getRevision(docId: string, revisionId: string): Promise<IdaiFieldDocument> {
 
         return this.datastore.fetchRevision(docId, revisionId);
     }
@@ -147,7 +153,7 @@ export class CachedPouchdbDatastore implements IdaiFieldDatastore {
     }
 
 
-    private reassign(doc: Document) {
+    private reassign(doc: IdaiFieldDocument) {
 
         if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
         Object.assign(this.documentCache.get(doc.resource.id as any), doc);

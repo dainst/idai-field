@@ -5,6 +5,7 @@ import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
+import {IdaiFieldReadDatastore} from "../../../core/datastore/idai-field-read-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -20,7 +21,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: ReadDatastore,
+        private datastore: IdaiFieldReadDatastore,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: MainTypeDocumentsManager
@@ -35,7 +36,7 @@ export class DocumentsManager {
     public populateProjectDocument() {
 
         return this.datastore.get(this.settingsService.getSelectedProject() as any)
-            .then(document => this.projectDocument = document as IdaiFieldDocument)
+            .then(document => this.projectDocument = document)
             .catch(() => {console.log("cannot find project document");
                 return Promise.reject(undefined)});
     }
@@ -246,7 +247,7 @@ export class DocumentsManager {
 
     private fetchDocuments(query: Query): Promise<any> {
 
-        return this.datastore.find(query)
+        return this.datastore.find(query as any)
             .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
     }
 

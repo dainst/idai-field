@@ -21,8 +21,8 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class ListComponent implements OnChanges {
 
-    @Input() ready;
-    @Input() documents; // TODO this is just for a reload, replace by using an observer to document changes in documentsManager
+    @Input() ready: boolean;
+    @Input() documents: IdaiFieldDocument[]; // TODO this is just for a reload, replace by using an observer to document changes in documentsManager
 
     public docRefTree: DocumentReference[];
 
@@ -77,24 +77,24 @@ export class ListComponent implements OnChanges {
 
         // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
         return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': this.resourcesComponent.getIsRecordedInTarget().resource.id } }
+            { constraints: { 'resource.relations.isRecordedIn': (this.resourcesComponent.getIsRecordedInTarget() as any).resource.id } } as any
         ).then(resultDocs => this.buildTreeFrom(resultDocs));
     }
 
 
-    private buildTreeFrom(documents: Array<Document>) {
+    private buildTreeFrom(documents: Array<IdaiFieldDocument>) {
 
         let docRefMap: {[type: string]: DocumentReference} = {};
 
         // initialize docRefMap to make sure it is fully populated before building the tree
         for (let doc of documents) {
             let docRef: DocumentReference = { doc: doc, children: [] };
-            docRefMap[doc.resource.id] = docRef;
+            docRefMap[doc.resource.id as any] = docRef;
         }
 
         // build tree from liesWithin relations
         for (let doc of documents) {
-            let docRef = docRefMap[doc.resource.id];
+            let docRef = docRefMap[doc.resource.id as any];
             if (!doc.resource.relations['liesWithin']) {
                 this.docRefTree.push(docRef);
             } else {
@@ -127,7 +127,7 @@ export class ListComponent implements OnChanges {
     public showRow(docRef: DocumentReference): boolean {
 
         if (docRef['parent']
-                && !this.childrenHiddenFor(docRef['parent'].doc.resource.id)
+                && !this.childrenHiddenFor((docRef['parent'] as any).doc.resource.id as any)
                 && this.isAscendantPartOfResult(docRef))
             return true;
         return this.isDescendantPartOfResult(docRef);
@@ -153,8 +153,8 @@ export class ListComponent implements OnChanges {
         else
             for (let child of docRef['children'])
                 if (this.isDescendantPartOfResult(child)) {
-                    if (this.childrenHiddenFor(docRef.doc.resource.id))
-                        this.toggleChildrenForId(docRef.doc.resource.id);
+                    if (this.childrenHiddenFor(docRef.doc.resource.id as any))
+                        this.toggleChildrenForId(docRef.doc.resource.id as any);
                     return true;
                 }
         return false;

@@ -13,6 +13,10 @@ import {ReadDatastore} from 'idai-components-2/datastore';
 
 @Injectable()
 /**
+ * Centralizes access to the Router.
+ * Has knowledge about how to route into as well as route within
+ * bigger components like ResourcesComponent (via ViewFacade).
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy

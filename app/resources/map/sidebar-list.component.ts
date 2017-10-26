@@ -21,8 +21,7 @@ export class SidebarListComponent {
     @Input() activeTab: string;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToMainTypeHomeView = (document: IdaiFieldDocument) =>
-        this.routingService.jumpToMainTypeHomeView(document);
+    public jumpToMainTypeHomeView = (document: IdaiFieldDocument) => this.routingService.jumpToMainTypeHomeView(document);
 
 
 

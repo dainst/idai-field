@@ -1,10 +1,10 @@
 import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
-import {SettingsService} from './settings/settings-service';
-import {ViewFacade} from './resources/view/view-facade';
-import {RoutingService} from './common/routing-service';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {SettingsService} from '../settings/settings-service';
+import {ViewFacade} from '../resources/view/view-facade';
+import {RoutingService} from '../common/routing-service';
 
 @Component({
     moduleId: module.id,

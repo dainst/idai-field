@@ -7,9 +7,9 @@
 $roboto-font-path: '../fonts/';
 @import 'roboto-fontface';
 
-@import 'navbar';
-@import 'taskbar';
-@import 'projects';
+@import 'navbar/navbar';
+@import 'navbar/taskbar';
+@import 'navbar/projects';
 @import 'desktop/info-window';
 @import 'spinner';
 @import 'buttons';

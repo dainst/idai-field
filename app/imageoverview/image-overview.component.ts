@@ -40,7 +40,7 @@ export class ImageOverviewComponent implements OnInit {
     // provide access to static function
     public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
 
-    // for clean and refactor safe template
+    // for clean and refactor safe template, and to help find usages non-dynamically
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
     public getSelected = () => this.imageOverviewFacade.getSelected();
     public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);

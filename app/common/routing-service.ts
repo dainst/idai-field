@@ -142,7 +142,7 @@ export class RoutingService {
     // For ResourcesComponent
     private setRoute(route: ActivatedRoute, observer: Observer<any>) { // we need a setter because the route must come from the componenent it is bound to
 
-        route.params.subscribe(params => {
+        route.params.subscribe(async (params) => {
 
             this.currentRoute = undefined;
             if (params['view']) this.currentRoute = 'resources/' + params['view'];
@@ -150,12 +150,14 @@ export class RoutingService {
             this.location.replaceState('resources/' + params['view']);
 
             this.loading.start();
-            this.viewFacade.setupView(params['view'], params['id'])
-                .then(() => {this.loading.stop(); observer.next(params);})
-                .catch(msgWithParams => {
-                    if (msgWithParams) console.error(
-                        "got msgWithParams in GeneralRoutingService#setRoute: ",msgWithParams);
-                });
+            try {
+                await this.viewFacade.setupView(params['view'], params['id']);
+                this.loading.stop();
+                observer.next(params);
+            } catch (msgWithParams) {
+                if (msgWithParams) console.error(
+                    "got msgWithParams in GeneralRoutingService#setRoute: ",msgWithParams);
+            }
         });
     }
 }

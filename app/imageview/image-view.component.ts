@@ -12,7 +12,7 @@ import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../m';
-import {RoutingHelper} from '../resources/service/routing-helper';
+import {RoutingService} from '../common/routing-service';
 
 
 @Component({
@@ -45,7 +45,7 @@ export class ImageViewComponent implements OnInit {
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private doceditActiveTabService: DoceditActiveTabService,
-        private routingHelper: RoutingHelper
+        private routingHelper: RoutingService
     ) {
         this.route.queryParams.subscribe(queryParams => {
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');

@@ -4,7 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from './datastore/idai-field-datastore';
 import {SettingsService} from './settings/settings-service';
 import {ViewFacade} from './resources/view/view-facade';
-import {GeneralRoutingHelper} from './common/general-routing-helper';
+import {RoutingService} from './common/routing-service';
 
 @Component({
     moduleId: module.id,
@@ -18,6 +18,7 @@ import {GeneralRoutingHelper} from './common/general-routing-helper';
  */
 export class TaskbarComponent {
 
+
     public connected = false;
     public conflicts: Array<Document> = [];
 
@@ -25,13 +26,14 @@ export class TaskbarComponent {
 
     private cancelClickListener: Function;
 
+
     constructor(private datastore: IdaiFieldDatastore,
                 private settings: SettingsService,
                 private router: Router,
                 private viewFacade: ViewFacade,
                 private elementRef: ElementRef,
                 private renderer: Renderer,
-                private routingHelper: GeneralRoutingHelper
+                private routingService: RoutingService
     ) {
 
         this.fetchConflicts();
@@ -46,6 +48,7 @@ export class TaskbarComponent {
         });
     }
 
+
     public togglePopover() {
 
         if (this.popover.isOpen()) {
@@ -56,11 +59,12 @@ export class TaskbarComponent {
         }
     }
 
+
     public openConflictResolver(document: Document) { // TODO move to routing helper
 
         let viewName: string;
 
-        this.routingHelper.getMainTypeNameForDocument(document).then(mainTypeName =>
+        this.routingService.getMainTypeNameForDocument(document).then(mainTypeName =>
             this.viewFacade.getMainTypeHomeViewName(mainTypeName)
         ).then(name => {
             viewName = name;
@@ -71,12 +75,14 @@ export class TaskbarComponent {
         });
     }
 
+
     private subscribeForChanges(): void {
 
         this.datastore.documentChangesNotifications().subscribe(() => {
             this.fetchConflicts();
         });
     }
+
 
     private fetchConflicts() {
 
@@ -85,6 +91,7 @@ export class TaskbarComponent {
         });
     }
 
+
     private startClickListener(): Function {
 
         return this.renderer.listenGlobal('document', 'click', event => {
@@ -92,12 +99,14 @@ export class TaskbarComponent {
         });
     }
 
+
     private closePopover() {
 
         this.popover.close();
         this.cancelClickListener();
         this.cancelClickListener = undefined;
     }
+
 
     private handleClick(event) {
 

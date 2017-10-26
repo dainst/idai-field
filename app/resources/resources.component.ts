@@ -5,7 +5,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {Loading} from '../widgets/loading';
-import {RoutingHelper} from './service/routing-helper';
+import {RoutingService} from '../common/routing-service';
 import {DoceditProxy} from './service/docedit-proxy';
 import {M} from '../m';
 import {ViewFacade} from './view/view-facade';
@@ -40,7 +40,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
-                private routingHelper: RoutingHelper,
+                private routingHelper: RoutingService,
                 private doceditProxy: DoceditProxy,
                 private imageUploader: ImageUploader,
                 private renderer: Renderer,

@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../util/object-util';
-import {RoutingHelper} from '../../service/routing-helper';
+import {RoutingService} from '../../../common/routing-service';
 import {ViewFacade} from '../../view/view-facade';
 
 @Component({
@@ -28,7 +28,7 @@ export class DocumentViewSidebarComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        private routingHelper: RoutingHelper,
+        private routingHelper: RoutingService,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade
     ) { }

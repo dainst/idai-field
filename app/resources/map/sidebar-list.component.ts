@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingHelper} from '../service/routing-helper';
+import {RoutingService} from '../../common/routing-service';
 import {ResourcesMapComponent} from './resources-map.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class SidebarListComponent {
         public resourcesComponent: ResourcesComponent,
         public mapWrapperComponent: ResourcesMapComponent,    // TODO Check if it's possible to get rid of the dependency
         public viewFacade: ViewFacade,
-        private routingHelper: RoutingHelper,
+        private routingHelper: RoutingService,
         private loading: Loading
     ) { }
 

@@ -3,10 +3,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
-import {ImageTypeUtility} from '../../docedit/image-type-utility';
-import {ViewFacade} from '../view/view-facade';
-import {Loading} from '../../widgets/loading';
-import {GeneralRoutingHelper} from '../../common/general-routing-helper';
+import {ImageTypeUtility} from '../docedit/image-type-utility';
+import {ViewFacade} from '../resources/view/view-facade';
+import {Loading} from '../widgets/loading';
+import {Observer} from 'rxjs/Observer';
+import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {ReadDatastore} from 'idai-components-2/datastore';
+
 
 @Injectable()
 /**
@@ -14,9 +17,9 @@ import {GeneralRoutingHelper} from '../../common/general-routing-helper';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class RoutingHelper {
+export class RoutingService {
 
-    private currentRoute;
+    private currentRoute: any;
 
 
     constructor(private router: Router,
@@ -24,7 +27,8 @@ export class RoutingHelper {
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility,
                 private loading: Loading,
-                private generalRoutingHelper: GeneralRoutingHelper
+                private projectConfiguration: ProjectConfiguration,
+                private datastore: ReadDatastore
     ) {
     }
 
@@ -32,7 +36,7 @@ export class RoutingHelper {
     // For ResourcesComponent
     public routeParams(route: ActivatedRoute) {
 
-        return Observable.create(observer => {
+        return Observable.create((observer: Observer<any>) => {
             this.setRoute(route, observer);
         });
     }
@@ -63,9 +67,36 @@ export class RoutingHelper {
     }
 
 
+    public getMainTypeNameForDocument(document: Document): Promise<string> {
+
+        const relations = document.resource.relations['isRecordedIn'];
+        if (relations && relations.length > 0) {
+            return this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type);
+        } else return Promise.resolve()
+            .then(() => { // TODO exract method and rename to what it does accordingly and add doc why this special treatment is needed
+
+                const relationDefinitions: Array<RelationDefinition>|undefined
+                    = this.projectConfiguration.getRelationDefinitions(document.resource.type);
+                let mainTypeName: string = '';
+
+                if (relationDefinitions) {
+                    for (let relationDefinition of relationDefinitions) {
+                        if (relationDefinition.name == 'isRecordedIn') {
+                            mainTypeName = relationDefinition.range[0];
+                            break;
+                        }
+                    }
+                }
+
+                return Promise.resolve(mainTypeName);
+            }).catch(() => {});
+    }
+
+
     private jumpToImageTypeRelationTarget(documentToSelect: Document) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
 
         if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
             this.currentRoute += '/' + selectedDocument.resource.id + '/show/images';
@@ -83,7 +114,7 @@ export class RoutingHelper {
         comingFromOutsideOverviewComponent: boolean = false) {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
-            await this.generalRoutingHelper.getMainTypeNameForDocument(documentToSelect));
+            await this.getMainTypeNameForDocument(documentToSelect));
 
         if (comingFromOutsideOverviewComponent ||
             viewName != this.viewFacade.getCurrentViewName()) {
@@ -103,7 +134,7 @@ export class RoutingHelper {
 
 
     // For ResourcesComponent
-    private setRoute(route: ActivatedRoute, observer) { // we need a setter because the route must come from the componenent it is bound to
+    private setRoute(route: ActivatedRoute, observer: Observer<any>) { // we need a setter because the route must come from the componenent it is bound to
 
         route.params.subscribe(params => {
 

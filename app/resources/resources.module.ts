@@ -17,7 +17,7 @@ import {ResourcesState} from './view/resources-state';
 import {ThumbnailViewComponent} from './map/docview/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.component';
-import {RoutingHelper} from './service/routing-helper';
+import {RoutingService} from '../common/routing-service';
 import {DoceditProxy} from './service/docedit-proxy';
 import {ViewFacade} from './view/view-facade';
 import {IdaiFieldDatastore} from '../model/idai-field-datastore';
@@ -52,7 +52,7 @@ import {SidebarListComponent} from './map/sidebar-list.component';
     ],
     providers: [
         ResourcesState,
-        RoutingHelper,
+        RoutingService,
         DoceditProxy,
         {
             provide: ViewFacade,

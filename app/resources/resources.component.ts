@@ -82,11 +82,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
+    public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.viewFacade.selectMainTypeDocument(document).then(isMatched =>  {
-            if (!isMatched) this.activeDocumentViewTab = undefined;
-        });
+        const isMatched = this.viewFacade.selectMainTypeDocument(document);
+        if (!isMatched) this.activeDocumentViewTab = undefined;
     }
 
 
@@ -120,12 +119,10 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public setQueryString(q: string) {
+    public async setQueryString(q: string) {
 
-        this.viewFacade.setQueryString(q)
-            .then(isMatched => {
-                if (!isMatched) this.isEditingGeometry = false;
-            })
+        const isMatched = this.viewFacade.setQueryString(q);
+        if (!isMatched) this.isEditingGeometry = false;
     }
 
 
@@ -149,17 +146,15 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public editDocument(document: Document = this.viewFacade.getSelectedDocument(),
+    public async editDocument(document: Document = this.viewFacade.getSelectedDocument(),
                         activeTabName?: string) {
 
         this.isEditingGeometry = false;
 
-        this.doceditProxy.editDocument(document, activeTabName).then(
-            result => {
-                if (result['tab']) this.activeDocumentViewTab = result['tab'];
-                if (result['updateScrollTarget']) this.scrollTarget = result['document'];
-            }
-        );
+        const result = await this.doceditProxy.editDocument(document, activeTabName);
+
+        if (result['tab']) this.activeDocumentViewTab = result['tab'];
+        if (result['updateScrollTarget']) this.scrollTarget = result['document'];
     }
 
 

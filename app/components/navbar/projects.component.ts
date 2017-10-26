@@ -4,7 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {DoceditComponent} from "../docedit/docedit.component";
-import {PouchdbManager} from "../../core/datastore/pouchdb-manager";
+import {PouchdbManager} from "../../core/datastore/core/pouchdb-manager";
 const remote = require('electron').remote;
 
 @Component({

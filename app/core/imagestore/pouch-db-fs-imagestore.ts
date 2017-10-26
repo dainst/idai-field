@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import {BlobMaker} from './blob-maker';
 import {Converter} from './converter';
 import {Imagestore} from './imagestore';
-import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 
 

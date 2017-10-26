@@ -2,7 +2,7 @@ import {Query, DocumentChange, Datastore} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {PouchdbDatastore} from './pouchdb-datastore';
+import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {DocumentCache} from "./idai-field-document-cache";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model'
 import {IdaiFieldReadDatastore} from './idai-field-read-datastore';

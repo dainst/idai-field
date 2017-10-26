@@ -1,4 +1,4 @@
-import {FulltextIndexer} from '../../../../app/core/datastore/fulltext-indexer';
+import {FulltextIndexer} from '../../../../app/core/datastore/core/fulltext-indexer';
 
 /**
  * @author Daniel de Oliveira

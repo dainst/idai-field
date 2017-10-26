@@ -1,6 +1,6 @@
 import {Document, Action} from 'idai-components-2/core';
-import {ChangeHistoryUtil} from '../model/change-history-util';
-import {ResultSets} from '../../util/result-sets';
+import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {ResultSets} from '../../../util/result-sets';
 
 /**
  * @author Daniel de Oliveira

@@ -6,8 +6,8 @@ import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
 import {FulltextIndexer} from "./fulltext-indexer";
-import {DocumentCache} from "./idai-field-document-cache";
-import {ModelUtil} from '../model/model-util';
+import {DocumentCache} from "../idai-field-document-cache";
+import {ModelUtil} from '../../model/model-util';
 const remote = require('electron').remote;
 
 @Injectable()

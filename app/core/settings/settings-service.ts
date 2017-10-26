@@ -4,7 +4,7 @@ import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
-import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';

@@ -1,8 +1,8 @@
-import {ConstraintIndexer} from '../../app/core/datastore/constraint-indexer';
-import {FulltextIndexer} from '../../app/core/datastore/fulltext-indexer';
-import {PouchdbManager} from '../../app/core/datastore/pouchdb-manager';
+import {ConstraintIndexer} from '../../app/core/datastore/core/constraint-indexer';
+import {FulltextIndexer} from '../../app/core/datastore/core/fulltext-indexer';
+import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {DocumentCache} from '../../app/core/datastore/idai-field-document-cache';
-import {PouchdbDatastore} from '../../app/core/datastore/pouchdb-datastore';
+import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {Document} from 'idai-components-2/core';
 
 

@@ -17,7 +17,7 @@ import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagest
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
-import {PouchdbManager} from '../../app/core/datastore/pouchdb-manager';
+import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {DocumentCache} from '../../app/core/datastore/idai-field-document-cache';
 
 // helper functions for converting strings to ArrayBuffers and vice versa

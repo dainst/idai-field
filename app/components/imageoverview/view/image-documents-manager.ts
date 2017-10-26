@@ -4,7 +4,7 @@ import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
-import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
+import {IdaiFieldImageReadDatastore} from '../../../core/datastore/idai-field-image-read-datastore';
 
 @Injectable()
 /**

@@ -1,6 +1,6 @@
 import {Document, Action} from 'idai-components-2/core';
-import {ObjectUtil} from '../../util/object-util';
-import {ChangeHistoryUtil} from '../model/change-history-util';
+import {ObjectUtil} from '../../../util/object-util';
+import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 /**
  * @author Daniel de Oliveira

@@ -7,7 +7,7 @@ import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-docum
 import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
-import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
+import {IdaiFieldImageReadDatastore} from '../../../core/datastore/idai-field-image-read-datastore';
 
 
 @Component({

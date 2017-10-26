@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ConflictResolvingExtension} from '../../../../app/core/datastore/conflict-resolving-extension';
+import {ConflictResolvingExtension} from '../../../../app/core/datastore/core/conflict-resolving-extension';
 
 /**
  * @author Daniel de Oliveira

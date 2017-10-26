@@ -3,15 +3,15 @@ import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from '../../util/result-sets';
-import {SortUtil} from '../../util/sort-util';
+import {ResultSets} from '../../../util/result-sets';
+import {SortUtil} from '../../../util/sort-util';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
-import {AppState} from '../settings/app-state';
+import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from "./conflict-resolver";
 import {Observer} from 'rxjs/Observer';
-import {ModelUtil} from '../model/model-util';
+import {ModelUtil} from '../../model/model-util';
 
 /**
  * @author Sebastian Cuy

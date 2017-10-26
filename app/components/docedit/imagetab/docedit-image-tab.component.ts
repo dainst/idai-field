@@ -5,7 +5,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImagePickerComponent} from './image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiFieldImageReadDatastore} from '../../../core/imagestore/idai-field-image-read-datastore';
+import {IdaiFieldImageReadDatastore} from '../../../core/datastore/idai-field-image-read-datastore';
 
 @Component({
     selector: 'docedit-image-tab',

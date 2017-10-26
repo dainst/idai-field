@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDiffUtility} from './idai-field-diff-utility';
 import {ObjectUtil} from '../../util/object-util';
-import {ConflictResolver} from '../datastore/conflict-resolver';
+import {ConflictResolver} from '../datastore/core/conflict-resolver';
 
 @Injectable()
 /**

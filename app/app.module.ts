@@ -19,7 +19,6 @@ import {Imagestore} from './core/imagestore/imagestore';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {ImageOverviewModule} from './components/imageoverview/image-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
-import {CachedPouchdbDatastore} from './core/datastore/cached-pouchdb-datastore';
 import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
@@ -115,15 +114,15 @@ let pconf = undefined;
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
-            provide: Datastore,
+            provide: IdaiFieldDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer,
                                  documentCache: DocumentCache,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
-                                 conflictResolver: ConflictResolver): Datastore {
-                return new CachedPouchdbDatastore(
+                                 conflictResolver: ConflictResolver): IdaiFieldDatastore {
+                return new IdaiFieldDatastore(
                     new PouchdbServerDatastore(pouchdbManager,
                         constraintIndexer, fulltextIndexer,
                         appState, autoConflictResolvingExtension, conflictResolver),
@@ -133,10 +132,9 @@ let pconf = undefined;
                 FulltextIndexer, DocumentCache,
                 AppState, ConflictResolvingExtension, ConflictResolver]
         },
-        { provide: ReadDatastore, useExisting: Datastore },
-        { provide: IdaiFieldDatastore, useExisting: Datastore },
-        { provide: CachedPouchdbDatastore, useExisting: Datastore },
-        { provide: IdaiFieldReadDatastore, useExisting: Datastore },
+        { provide: Datastore, useExisting: IdaiFieldDatastore },
+        { provide: ReadDatastore, useExisting: IdaiFieldDatastore },
+        { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
         Messages,
         BlobMaker,
         Converter,

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {CachedPouchdbDatastore} from '../../../app/core/datastore/cached-pouchdb-datastore';
+import {IdaiFieldDatastore} from '../../../app/core/datastore/idai-field-datastore';
 import {DocumentCache} from '../../../app/core/datastore/document-cache';
 
 /**
@@ -7,9 +7,9 @@ import {DocumentCache} from '../../../app/core/datastore/document-cache';
  */
 export function main() {
 
-    describe('CachedPouchdbDatastore', () => {
+    describe('IdaiFieldDatastore', () => {
 
-        let datastore: CachedPouchdbDatastore;
+        let datastore: IdaiFieldDatastore;
 
         function doc(sd, identifier?): Document {
             return {
@@ -45,7 +45,7 @@ export function main() {
                 });
                 mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
 
-                datastore = new CachedPouchdbDatastore(mockdb, new DocumentCache());
+                datastore = new IdaiFieldDatastore(mockdb, new DocumentCache());
             }
         );
 

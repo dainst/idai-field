@@ -1,7 +1,6 @@
 import {Static} from '../static';
-import {CachedPouchdbDatastore} from '../../../app/core/datastore/cached-pouchdb-datastore';
-import {ViewFacade} from '../../../app/components/resources/view/view-facade';
 import {IdaiFieldDatastore} from '../../../app/core/datastore/idai-field-datastore';
+import {ViewFacade} from '../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
 
 
@@ -39,7 +38,7 @@ export function main() {
                 spyOn(console, 'debug'); // suppress console.debug
 
                 const result = Static.createPouchdbDatastore('testdb');
-                datastore = new CachedPouchdbDatastore(result.datastore, result.documentCache);
+                datastore = new IdaiFieldDatastore(result.datastore, result.documentCache);
 
                 const projectDocument = Static.doc('testdb','testdb','Project','testdb');
                 operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');

@@ -13,7 +13,7 @@ import {NativeJsonlParser} from '../../core/importer/native-jsonl-parser';
 import {IdigCsvParser} from '../../core/importer/idig-csv-parser';
 import {GeojsonParser} from '../../core/importer/geojson-parser';
 import {M} from '../../m';
-import {CachedPouchdbDatastore} from '../../core/datastore/cached-pouchdb-datastore';
+import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 import {ImportStrategy} from '../../core/importer/import-strategy';
 import {DefaultImportStrategy} from '../../core/importer/default-import-strategy';
 import {MergeGeometriesImportStrategy} from '../../core/importer/merge-geometries-import-strategy';
@@ -61,7 +61,7 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private datastore: CachedPouchdbDatastore,
+        private datastore: IdaiFieldDatastore,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
@@ -124,7 +124,7 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private static createImportStrategy(format: string, validator: Validator, datastore: CachedPouchdbDatastore,
+    private static createImportStrategy(format: string, validator: Validator, datastore: IdaiFieldDatastore,
                                         settingsService: SettingsService, configLoader: ConfigLoader,
                                         mainTypeDocumentId: string): ImportStrategy|undefined {
 
@@ -151,7 +151,7 @@ export class ImportComponent {
         }
     }
 
-    private static createRollbackStrategy(format: string, datastore: CachedPouchdbDatastore): RollbackStrategy|undefined {
+    private static createRollbackStrategy(format: string, datastore: IdaiFieldDatastore): RollbackStrategy|undefined {
 
         switch (format) {
             case 'native':

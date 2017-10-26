@@ -5,7 +5,7 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {CachedPouchdbDatastore} from '../datastore/cached-pouchdb-datastore';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {M} from '../../m';
 
 
@@ -41,7 +41,7 @@ export class Importer {
     private relationsStrategy: RelationsStrategy;
     private rollbackStrategy: RollbackStrategy;
 
-    private datastore: CachedPouchdbDatastore;
+    private datastore: IdaiFieldDatastore;
 
 
     private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
@@ -84,7 +84,7 @@ export class Importer {
      */
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
                            relationsStrategy: RelationsStrategy,
-                           rollbackStrategy: RollbackStrategy, datastore: CachedPouchdbDatastore): Promise<ImportReport> {
+                           rollbackStrategy: RollbackStrategy, datastore: IdaiFieldDatastore): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 

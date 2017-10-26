@@ -47,14 +47,13 @@ export class RoutingService {
 
 
     // Currently used from SidebarListComponent
-    public jumpToMainTypeHomeView(document: Document) {
+    public async jumpToMainTypeHomeView(document: Document) {
 
         const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
         if (viewName == this.viewFacade.getCurrentViewName()) return;
 
-        this.router.navigate(['resources', viewName, document.resource.id]).then(() => {
-            this.viewFacade.selectMainTypeDocument(document);
-        });
+        await this.router.navigate(['resources', viewName, document.resource.id]);
+        this.viewFacade.selectMainTypeDocument(document);
     }
 
 

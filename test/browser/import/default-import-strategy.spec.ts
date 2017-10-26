@@ -1,5 +1,5 @@
-import {DefaultImportStrategy} from '../../../app/import/default-import-strategy';
-import {ImportStrategy} from '../../../app/import/import-strategy';
+import {DefaultImportStrategy} from '../../../app/core/importer/default-import-strategy';
+import {ImportStrategy} from '../../../app/core/importer/import-strategy';
 
 
 /**

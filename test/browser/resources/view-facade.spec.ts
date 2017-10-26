@@ -1,7 +1,7 @@
 import {Static} from '../static';
-import {CachedPouchdbDatastore} from '../../../app/datastore/cached-pouchdb-datastore';
-import {ViewFacade} from '../../../app/resources/view/view-facade';
-import {IdaiFieldDatastore} from '../../../app/datastore/idai-field-datastore';
+import {CachedPouchdbDatastore} from '../../../app/core/datastore/cached-pouchdb-datastore';
+import {ViewFacade} from '../../../app/components/resources/view/view-facade';
+import {IdaiFieldDatastore} from '../../../app/core/datastore/idai-field-datastore';
 import {Document} from 'idai-components-2/core';
 
 

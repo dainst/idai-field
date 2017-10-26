@@ -1,5 +1,5 @@
-import {MergeGeometriesImportStrategy} from '../../../app/import/merge-geometries-import-strategy';
-import {ImportStrategy} from '../../../app/import/import-strategy';
+import {MergeGeometriesImportStrategy} from '../../../app/core/importer/merge-geometries-import-strategy';
+import {ImportStrategy} from '../../../app/core/importer/import-strategy';
 
 
 /**

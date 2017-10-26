@@ -7,22 +7,22 @@
 $roboto-font-path: '../fonts/';
 @import 'roboto-fontface';
 
-@import 'navbar/navbar';
-@import 'navbar/taskbar';
-@import 'navbar/projects';
+@import 'components/navbar/navbar';
+@import 'components/navbar/taskbar';
+@import 'components/navbar/projects';
 @import 'desktop/info-window';
 @import 'spinner';
 @import 'buttons';
-@import 'resources/resources';
-@import 'import/import';
-@import 'export/export';
-@import 'settings/settings';
-@import 'imageview/imageview';
+@import 'components/resources/resources';
+@import 'components/import/import';
+@import 'components/export/export';
+@import 'components/settings/settings';
+@import 'components/imageview/imageview';
 @import 'widgets/widgets';
-@import 'docedit/docedit';
-@import 'imagegrid/image-grid';
-@import 'imageoverview/image-overview';
-@import 'imageupload/image-upload';
+@import 'components/docedit/docedit';
+@import 'components/imagegrid/image-grid';
+@import 'components/imageoverview/image-overview';
+@import 'components/imageupload/image-upload';
 
 html {
   position: relative;

@@ -1,8 +1,8 @@
 import {Routes,RouterModule} from '@angular/router';
-import {ResourcesComponent} from './resources/resources.component';
-import {ImportComponent} from './import/import.component';
-import {ExportComponent} from'./export/export.component';
-import {SettingsComponent} from './settings/settings.component';
+import {ResourcesComponent} from './components/resources/resources.component';
+import {ImportComponent} from './components/import/import.component';
+import {ExportComponent} from'./components/export/export.component';
+import {SettingsComponent} from './components/settings/settings.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },

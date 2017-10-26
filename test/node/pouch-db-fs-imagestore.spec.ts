@@ -1,4 +1,4 @@
-import {ImagestoreErrors} from '../../app/imagestore/imagestore-errors';
+import {ImagestoreErrors} from '../../app/core/imagestore/imagestore-errors';
 /**
  * @author Sebastian Cuy
  */
@@ -12,13 +12,13 @@ Module.prototype.require = function() {
     return originalRequire.apply(this, arguments);
 };
 
-import {PouchDbFsImagestore} from '../../app/imagestore/pouch-db-fs-imagestore';
+import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
-import {PouchdbManager} from '../../app/datastore/pouchdb-manager';
-import {DocumentCache} from '../../app/datastore/document-cache';
+import {PouchdbManager} from '../../app/core/datastore/pouchdb-manager';
+import {DocumentCache} from '../../app/core/datastore/document-cache';
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {

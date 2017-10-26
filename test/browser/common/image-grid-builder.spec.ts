@@ -1,4 +1,4 @@
-import {ImageGridBuilder} from '../../../app/imagegrid/image-grid-builder';
+import {ImageGridBuilder} from '../../../app/components/imagegrid/image-grid-builder';
 
 /**
  * @author Daniel de Oliveira

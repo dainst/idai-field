@@ -4,7 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {M} from '../../m';
 import {IdaiFieldGeoreference} from '../../core/model/idai-field-georeference';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../../core/settings/settings-service';
 
 
 @Component({

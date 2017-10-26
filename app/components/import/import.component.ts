@@ -24,7 +24,7 @@ import {RollbackStrategy} from '../../core/importer/rollback-strategy';
 import {DefaultRollbackStrategy} from '../../core/importer/default-rollback-strategy';
 import {NoRollbackStrategy} from '../../core/importer/no-rollback-strategy';
 import {RelationsCompleter} from '../../core/importer/relations-completer';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../../core/settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';

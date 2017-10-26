@@ -8,7 +8,7 @@ import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../../core/settings/settings-service';
 import {ImageTypeUtility} from './image-type-utility';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';

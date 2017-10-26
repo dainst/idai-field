@@ -6,7 +6,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
 import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
 import {M} from '../../../m';
-import {SettingsService} from '../../../service/settings-service';
+import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";

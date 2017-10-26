@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 
 /**

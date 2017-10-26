@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
-import {Settings} from '../../service/settings';
+import {Settings} from '../../core/settings/settings';
 
 const ip = require('ip');
 

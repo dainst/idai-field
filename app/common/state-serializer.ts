@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SettingsService} from '../service/settings-service';
+import {SettingsService} from '../core/settings/settings-service';
 
 const remote = require('electron').remote;
 const fs = remote.require('fs');

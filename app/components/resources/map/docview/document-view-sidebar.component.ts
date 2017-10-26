@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
-import {RoutingService} from '../../../../service/routing-service';
+import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
 
 @Component({

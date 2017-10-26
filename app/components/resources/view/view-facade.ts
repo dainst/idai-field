@@ -5,7 +5,7 @@ import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {OperationViews} from './operation-views';
-import {SettingsService} from '../../../service/settings-service';
+import {SettingsService} from '../../../core/settings/settings-service';
 import {StateSerializer} from '../../../common/state-serializer';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 

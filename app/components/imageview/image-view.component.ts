@@ -12,7 +12,7 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
-import {RoutingService} from '../../service/routing-service';
+import {RoutingService} from '../routing-service';
 
 
 @Component({

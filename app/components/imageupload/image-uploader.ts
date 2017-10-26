@@ -5,7 +5,7 @@ import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';

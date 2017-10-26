@@ -25,7 +25,7 @@ import {Converter} from './core/imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/idai-field-model';
-import {SettingsService} from './service/settings-service';
+import {SettingsService} from './core/settings/settings-service';
 import {PouchdbServerDatastore} from './core/datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';

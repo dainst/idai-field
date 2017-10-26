@@ -12,7 +12,7 @@ import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
-import {RoutingService} from '../../service/routing-service';
+import {RoutingService} from '../routing-service';
 
 @Component({
     moduleId: module.id,

@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingService} from '../../../service/routing-service';
+import {RoutingService} from '../../routing-service';
 import {ResourcesMapComponent} from './resources-map.component';
 
 @Component({

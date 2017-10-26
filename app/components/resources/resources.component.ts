@@ -5,7 +5,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {Loading} from '../../widgets/loading';
-import {RoutingService} from '../../service/routing-service';
+import {RoutingService} from '../routing-service';
 import {DoceditProxy} from './service/docedit-proxy';
 import {M} from '../../m';
 import {ViewFacade} from './view/view-facade';

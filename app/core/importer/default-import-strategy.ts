@@ -3,7 +3,7 @@ import {Validator} from 'idai-components-2/persist';
 import {Datastore} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ImportStrategy} from './import-strategy';
-import {SettingsService} from '../../service/settings-service';
+import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 
 /**

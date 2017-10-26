@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
-import {Imagestore} from '../core/imagestore/imagestore';
+import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
-import {PouchdbManager} from '../core/datastore/pouchdb-manager';
-import {AppState} from '../app-state';
-import {ImagestoreErrors} from '../core/imagestore/imagestore-errors';
-import {M} from '../m';
+import {PouchdbManager} from '../datastore/pouchdb-manager';
+import {AppState} from '../../app-state';
+import {ImagestoreErrors} from '../imagestore/imagestore-errors';
+import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
 
 const app = require('electron').remote.app;

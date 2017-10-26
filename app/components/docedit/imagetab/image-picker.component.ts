@@ -4,7 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {Datastore, Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ImageTypeUtility} from '../image-type-utility';
+import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
 

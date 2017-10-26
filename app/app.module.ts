@@ -29,7 +29,7 @@ import {SettingsService} from './core/settings/settings-service';
 import {PouchdbServerDatastore} from './core/datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {ImageTypeUtility} from './components/docedit/image-type-utility';
+import {ImageTypeUtility} from './common/image-type-utility';
 import {PouchdbManager} from './core/datastore/pouchdb-manager';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './core/datastore/sample-data-loader';

@@ -8,7 +8,7 @@ import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
-import {ImageTypeUtility} from '../../../docedit/image-type-utility';
+import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {M} from '../../../../m';
 import {ViewFacade} from '../../view/view-facade';
 

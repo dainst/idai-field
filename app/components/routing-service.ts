@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
-import {ImageTypeUtility} from './docedit/image-type-utility';
+import {ImageTypeUtility} from '../common/image-type-utility';
 import {ViewFacade} from './resources/view/view-facade';
 import {Loading} from '../widgets/loading';
 import {Observer} from 'rxjs/Observer';

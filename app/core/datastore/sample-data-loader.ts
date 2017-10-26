@@ -4,7 +4,7 @@ import {ConfigLoader} from 'idai-components-2/configuration';
 import {DOCS} from './sample-objects';
 import {Converter} from '../imagestore/converter';
 import {AbstractSampleDataLoader} from './abstract-sample-data-loader';
-import {AppState} from '../../app-state';
+import {AppState} from '../settings/app-state';
 
 
 @Injectable()

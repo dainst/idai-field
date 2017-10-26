@@ -5,7 +5,7 @@ import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/pouchdb-manager';
-import {AppState} from '../../app-state';
+import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';

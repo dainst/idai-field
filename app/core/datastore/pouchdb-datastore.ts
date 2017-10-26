@@ -7,7 +7,7 @@ import {ResultSets} from '../../util/result-sets';
 import {SortUtil} from '../../util/sort-util';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
-import {AppState} from '../../app-state';
+import {AppState} from '../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from "./conflict-resolver";
 import {Observer} from 'rxjs/Observer';

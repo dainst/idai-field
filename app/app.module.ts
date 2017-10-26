@@ -36,7 +36,7 @@ import {SampleDataLoader} from './core/datastore/sample-data-loader';
 import {ConstraintIndexer} from './core/datastore/constraint-indexer';
 import {FulltextIndexer} from './core/datastore/fulltext-indexer';
 import {DocumentCache} from './core/datastore/document-cache';
-import {AppState} from './app-state';
+import {AppState} from './core/settings/app-state';
 import {ConflictResolvingExtension} from './core/datastore/conflict-resolving-extension';
 import {IdaiFieldConflictResolver} from './core/model/idai-field-conflict-resolver';
 import {ConflictResolver} from './core/datastore/conflict-resolver';

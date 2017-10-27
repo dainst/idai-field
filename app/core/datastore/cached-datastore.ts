@@ -20,8 +20,10 @@ import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
  * 1) A document cache for faster access and also to allow
  *    for clients to work with references to documents.
  *
- * 2) Returns fully checked instances of IdaiFieldDocument, so that the rest
- *    of the app can rely that the declared fields are present.
+ * 2) Returns fully checked instances of
+ *    IdaiFieldDocument and IdaiFieldImageDocument respectively,
+ *    so that the rest of the app can rely that the declared
+ *    fields are present.
  *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -57,7 +59,7 @@ export class CachedDatastore<T extends Document>
 
 
     /**
-     * Implements {@link CachedDatastore#create}
+     * Implements {@link Datastore#create}
      *
      * @param document
      * @returns
@@ -71,7 +73,7 @@ export class CachedDatastore<T extends Document>
 
 
     /**
-     * Implements {@link CachedDatastore#update}
+     * Implements {@link Datastore#update}
      *
      * @param document
      * @returns

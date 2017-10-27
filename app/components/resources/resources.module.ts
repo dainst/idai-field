@@ -66,8 +66,8 @@ import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 
                 const views = projectConfiguration.getViewsList();
                 for (let view of views) {
-                    view['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
-                        projectConfiguration.getLabelForType(view.operationSubtype);
+                    (view as any)['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
+                        projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }
 
                 return new ViewFacade(

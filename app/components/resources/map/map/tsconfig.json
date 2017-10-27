@@ -7,11 +7,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ]
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "lib": ["es2015", "dom"]
   }
 }

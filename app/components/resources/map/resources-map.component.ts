@@ -37,7 +37,10 @@ export class ResourcesMapComponent {
 
     private selectedDocumentIsNew(): boolean {
 
-        return !this.viewFacade.getSelectedDocument().resource.id;
+        const selectedDoc = this.viewFacade.getSelectedDocument();
+        if (!selectedDoc) return false;
+
+        return !selectedDoc.resource.id;
     }
 
 
@@ -48,11 +51,14 @@ export class ResourcesMapComponent {
      */
     public quitEditing(geometry: IdaiFieldGeometry) {
 
+        const selectedDoc = this.viewFacade.getSelectedDocument();
+        if (!selectedDoc) return;
+
         if (geometry) {
-            this.viewFacade.getSelectedDocument().resource.geometry = geometry;
-        } else if (geometry === null || !this.viewFacade.getSelectedDocument().resource.geometry.coordinates
-                || this.viewFacade.getSelectedDocument().resource.geometry.coordinates.length == 0) {
-            delete this.viewFacade.getSelectedDocument().resource.geometry;
+            selectedDoc.resource.geometry = geometry;
+        } else if (geometry === null || !selectedDoc.resource.geometry.coordinates
+                || selectedDoc.resource.geometry.coordinates.length == 0) {
+            delete selectedDoc.resource.geometry;
         }
 
         if (this.selectedDocumentIsNew()) {
@@ -60,7 +66,7 @@ export class ResourcesMapComponent {
                 this.resourcesComponent.editDocument();
             } else {
                 this.resourcesComponent.isEditingGeometry = false;
-                this.viewFacade.remove(this.viewFacade.getSelectedDocument());
+                this.viewFacade.remove(selectedDoc);
             }
         } else {
             this.resourcesComponent.isEditingGeometry = false;
@@ -78,8 +84,11 @@ export class ResourcesMapComponent {
 
     private save() {
 
-        this.persistenceManager.setOldVersions([this.viewFacade.getSelectedDocument()]);
-        this.persistenceManager.persist(this.viewFacade.getSelectedDocument(), this.settingsService.getUsername())
+        const selectedDoc = this.viewFacade.getSelectedDocument();
+        if (!selectedDoc) return;
+
+        this.persistenceManager.setOldVersions([selectedDoc]);
+        this.persistenceManager.persist(selectedDoc, this.settingsService.getUsername())
             .catch(msgWithParams => this.messages.add(msgWithParams));
     }
 

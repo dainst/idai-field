@@ -29,13 +29,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public ready: boolean = true; // TODO remove, lets make use of loading instead
 
-    private scrollTarget: IdaiFieldDocument;
+    private scrollTarget: IdaiFieldDocument|undefined;
 
     private clickEventObservers: Array<any> = [];
 
     private activeDocumentViewTab: string;
 
-    public getDocumentLabel = (document) => ModelUtil.getDocumentLabel(document);
+    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
     constructor(route: ActivatedRoute,
@@ -47,9 +47,9 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private loading: Loading
     ) {
-        routingService.routeParams(route).subscribe(params => {
+        routingService.routeParams(route).subscribe((params: any) => {
             this.isEditingGeometry = false;
-            this.viewFacade.setSelectedDocument(undefined);
+            this.viewFacade.setSelectedDocument(undefined as any);
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
@@ -85,7 +85,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
         const isMatched = this.viewFacade.selectMainTypeDocument(document);
-        if (!isMatched) this.activeDocumentViewTab = undefined;
+        if (!isMatched) this.activeDocumentViewTab = undefined as any;
     }
 
 
@@ -95,7 +95,7 @@ export class ResourcesComponent implements AfterViewChecked {
             () => {
                     if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
                     else {
-                        this.activeDocumentViewTab = tab;
+                        this.activeDocumentViewTab = tab as any;
                     }
                 }).catch(() => this.messages.add([M.DATASTORE_NOT_FOUND]));
     }
@@ -103,7 +103,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private initializeClickEventListener() {
 
-        this.renderer.listenGlobal('document', 'click', event => {
+        this.renderer.listenGlobal('document', 'click', (event: any) => {
             for (let clickEventObserver of this.clickEventObservers) {
                 clickEventObserver.next(event);
             }
@@ -113,7 +113,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public listenToClickEvents(): Observable<Event> {
 
-        return Observable.create(observer => {
+        return Observable.create((observer: any) => {
             this.clickEventObservers.push(observer);
         });
     }
@@ -146,12 +146,12 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public async editDocument(document: Document = this.viewFacade.getSelectedDocument(),
+    public async editDocument(document: Document|undefined = this.viewFacade.getSelectedDocument(),
                         activeTabName?: string) {
 
         this.isEditingGeometry = false;
 
-        const result = await this.doceditProxy.editDocument(document, activeTabName);
+        const result = await this.doceditProxy.editDocument(document as any, activeTabName);
 
         if (result['tab']) this.activeDocumentViewTab = result['tab'];
         if (result['updateScrollTarget']) this.scrollTarget = result['document'];
@@ -160,7 +160,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public createGeometry(geometryType: string) {
 
-        this.viewFacade.getSelectedDocument().resource['geometry'] = { 'type': geometryType };
+        (this.viewFacade.getSelectedDocument() as any).resource['geometry'] = { 'type': geometryType };
         this.isEditingGeometry = true;
     }
 

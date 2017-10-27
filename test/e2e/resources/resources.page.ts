@@ -193,9 +193,6 @@ export class ResourcesPage {
 
     public static getResourceTypeOption(typeName: string) {
 
-        browser.wait(EC.visibilityOf(
-            element(by.id('choose-type-option-' + typeName))),
-            delays.ECWaitTime);
         return element(by.id('choose-type-option-' + typeName));
     }
 

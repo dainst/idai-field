@@ -25,10 +25,10 @@ export class PlusButtonComponent implements OnChanges {
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
 
-    @ViewChild('popover') private popover;
+    @ViewChild('popover') private popover: any;
 
     private typesTreeList: Array<IdaiType>;
-    private type: string;
+    private type: string|undefined;
 
     constructor(
         private elementRef: ElementRef,
@@ -43,7 +43,10 @@ export class PlusButtonComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.configLoader.getProjectConfiguration()
+        const pconf = this.configLoader.getProjectConfiguration();
+        if (!pconf) return;
+
+        pconf
             .then(projectConfiguration => this.initializeTypesTreeList(projectConfiguration))
             .catch(() => {});
     }
@@ -89,7 +92,7 @@ export class PlusButtonComponent implements OnChanges {
         if (this.preselectedGeometryType) this.startDocumentCreation();
     }
 
-    private handleClick(event) {
+    private handleClick(event: any) {
 
         if (!this.popover) return;
 
@@ -133,8 +136,8 @@ export class PlusButtonComponent implements OnChanges {
 
         let relations: Relations = {};
 
-        if (this.isRecordedIn) relations['isRecordedIn'] = [this.isRecordedIn.resource.id];
-        if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id];
+        if (this.isRecordedIn) relations['isRecordedIn'] = [this.isRecordedIn.resource.id] as any;
+        if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id] as any;
 
         return relations;
     }

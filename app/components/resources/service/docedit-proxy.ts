@@ -43,7 +43,7 @@ export class DoceditProxy {
     }
 
 
-    private handleSaveResult(document, result, res) {
+    private handleSaveResult(document: any, result: any, res: any) {
 
         result['document'] = res['document'];
 
@@ -70,7 +70,7 @@ export class DoceditProxy {
     }
 
 
-    private handleClosed(document, closeReason) {
+    private handleClosed(document: any, closeReason: any) {
 
         this.documentEditChangeMonitor.reset();
 

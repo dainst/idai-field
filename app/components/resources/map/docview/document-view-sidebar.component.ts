@@ -35,13 +35,16 @@ export class DocumentViewSidebarComponent {
 
     public hasRelations() {
 
-        const relations: any = this.viewFacade.getSelectedDocument().resource.relations;
+        const selectedDoc = this.viewFacade.getSelectedDocument();
+        if (!selectedDoc) return false;
+
+        const relations: any = selectedDoc.resource.relations;
         if (ObjectUtil.isEmpty(relations)) return false;
 
         for (let relation of Object.keys(relations)) {
 
             // invisible relations are not counted
-            if (!this.projectConfiguration.isVisibleRelation(relation,this.viewFacade.getSelectedDocument().resource.type)) continue;
+            if (!this.projectConfiguration.isVisibleRelation(relation,selectedDoc.resource.type)) continue;
 
             // relations to project document are not counted
             if (relation == 'isRecordedIn' &&

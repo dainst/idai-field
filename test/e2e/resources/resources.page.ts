@@ -139,11 +139,17 @@ export class ResourcesPage {
 
     public static getCreateDocumentButtonTypeCharacter() {
 
+        browser.wait(EC.visibilityOf(
+            element(by.css('#create-document-button div.type-icon'))),
+            delays.ECWaitTime);
         return element(by.css('#create-document-button div.type-icon')).getText();
     }
 
     public static getListModeTypeLabel(identifier) {
 
+        browser.wait(EC.visibilityOf(
+            element(by.css('#resource-' + identifier + ' .list-type-label'))),
+            delays.ECWaitTime);
         return element(by.css('#resource-' + identifier + ' .list-type-label')).getText();
     }
 
@@ -156,16 +162,25 @@ export class ResourcesPage {
 
     public static getListItemEls() {
 
+        browser.wait(EC.visibilityOf(
+            element.all(by.css('#objectList .list-group-item')).first()),
+            delays.ECWaitTime);
         return element.all(by.css('.list-group-item'));
     };
 
     public static getListItemMarkedNewEl() {
 
+        browser.wait(EC.visibilityOf(
+            element(by.css('#objectList .list-group-item .new'))),
+            delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item .new'));
     };
 
     public static getListItemMarkedNewEls() {
 
+        browser.wait(EC.visibilityOf(
+            element.all(by.css('#objectList .list-group-item .new')).first()),
+            delays.ECWaitTime);
         return element.all(by.css('#objectList .list-group-item .new'));
     };
 
@@ -178,11 +193,17 @@ export class ResourcesPage {
 
     public static getResourceTypeOption(typeName: string) {
 
+        browser.wait(EC.visibilityOf(
+            element(by.id('choose-type-option-' + typeName))),
+            delays.ECWaitTime);
         return element(by.id('choose-type-option-' + typeName));
     }
 
     public static getCreateDocumentButtonTypeIcon() {
 
+        browser.wait(EC.visibilityOf(
+            element(by.css('#create-document-button .type-icon'))),
+            delays.ECWaitTime);
         return element(by.css('#create-document-button .type-icon'));
     }
 

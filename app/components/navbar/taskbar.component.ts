@@ -23,7 +23,7 @@ export class TaskbarComponent {
     public connected = false;
     public conflicts: Array<Document> = [];
 
-    @ViewChild('popover') private popover;
+    @ViewChild('popover') private popover: any;
 
     private cancelClickListener: Function;
 
@@ -68,7 +68,7 @@ export class TaskbarComponent {
         this.routingService.getMainTypeNameForDocument(document).then(mainTypeName =>
             this.viewFacade.getMainTypeHomeViewName(mainTypeName)
         ).then(name => {
-            viewName = name;
+            viewName = name as any;
             return this.router.navigate(['resources', viewName]);
         }).then(() => {
             this.router.navigate(['resources', viewName,
@@ -95,7 +95,7 @@ export class TaskbarComponent {
 
     private startClickListener(): Function {
 
-        return this.renderer.listenGlobal('document', 'click', event => {
+        return this.renderer.listenGlobal('document', 'click', (event: any) => {
             this.handleClick(event);
         });
     }
@@ -105,11 +105,11 @@ export class TaskbarComponent {
 
         this.popover.close();
         this.cancelClickListener();
-        this.cancelClickListener = undefined;
+        this.cancelClickListener = undefined as any;
     }
 
 
-    private handleClick(event) {
+    private handleClick(event: any) {
 
         let target = event.target;
         let inside = false;

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ConfigLoader, IdaiType} from 'idai-components-2/configuration';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 
 @Component({
     selector: 'type-picker-modal',
@@ -19,10 +19,8 @@ export class ImageTypePickerModalComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
-        configLoader: ConfigLoader
+        projectConfiguration: ProjectConfiguration
     ) {
-        configLoader.getProjectConfiguration().then(projectConfiguration => {
-            this.imageType = projectConfiguration.getTypesTree()['Image'];
-        });
+        this.imageType = projectConfiguration.getTypesTree()['Image'];
     }
 }

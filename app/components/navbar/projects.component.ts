@@ -38,7 +38,7 @@ export class ProjectsComponent implements OnInit {
 
         this.settingsService.ready.then(() => {
             this.ready = true;
-            this.selectedProject = this.settingsService.getSelectedProject();
+            this.selectedProject = this.settingsService.getSelectedProject() as any;
             this.projects = this.settingsService.getSettings().dbs.slice(0);
         });
     }
@@ -87,7 +87,7 @@ export class ProjectsComponent implements OnInit {
 
     public editProject() {
 
-        this.pouchdbManager.getDb().get(this.selectedProject).then(document => {
+        (this.pouchdbManager.getDb() as any).get(this.selectedProject).then(document => {
             const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
             doceditRef.componentInstance.setDocument(document);
         });

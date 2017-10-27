@@ -162,25 +162,16 @@ export class ResourcesPage {
 
     public static getListItemEls() {
 
-        browser.wait(EC.visibilityOf(
-            element.all(by.css('#objectList .list-group-item')).first()),
-            delays.ECWaitTime);
         return element.all(by.css('.list-group-item'));
     };
 
     public static getListItemMarkedNewEl() {
 
-        browser.wait(EC.visibilityOf(
-            element(by.css('#objectList .list-group-item .new'))),
-            delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item .new'));
     };
 
     public static getListItemMarkedNewEls() {
 
-        browser.wait(EC.visibilityOf(
-            element.all(by.css('#objectList .list-group-item .new')).first()),
-            delays.ECWaitTime);
         return element.all(by.css('#objectList .list-group-item .new'));
     };
 

@@ -3,7 +3,7 @@
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';
 
-import {PouchdbDatastore} from './pouchdb-datastore';
+import {PouchdbDatastore} from './core/pouchdb-datastore';
 
 const expressPouchDB = require('express-pouchdb');
 import {Injectable} from '@angular/core';

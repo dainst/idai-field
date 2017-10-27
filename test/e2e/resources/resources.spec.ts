@@ -132,6 +132,7 @@ describe('resources --', () => {
 
     it('should create a new main type resource', () => {
 
+        browser.sleep(delays.shortRest * 50);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newTrench'));

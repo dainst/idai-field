@@ -1,9 +1,9 @@
-import {IdaiFieldRelations} from "idai-components-2/idai-field-model";
+import {Relations} from "idai-components-2/core";
 
 /**
  * @author Daniel de Oliveira
  */
-export interface IdaiFieldImageRelations extends IdaiFieldRelations {
+export interface IdaiFieldImageRelations extends Relations {
 
     depicts: string[];
 }

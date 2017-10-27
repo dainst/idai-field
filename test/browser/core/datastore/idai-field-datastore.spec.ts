@@ -8,7 +8,7 @@ import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
 /**
  * @author Daniel de Oliveira
  */
-export function main() {
+export function main() { // TODO add specs for the distinction IdaiFieldDocument / IdaiFieldImageDocument
 
     describe('CachedDatastore', () => {
 

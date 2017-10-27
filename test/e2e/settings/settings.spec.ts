@@ -58,7 +58,7 @@ describe('settings --', function() {
         NavbarPage.clickCloseMessage(1);
 
         NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest * 50);
+        browser.sleep(delays.shortRest * 50); // TODO replace by wait for el im clickUploadArea
         ImageOverviewPage.clickUploadArea();
         ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);

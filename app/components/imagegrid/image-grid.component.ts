@@ -131,14 +131,16 @@ export class ImageGridComponent implements OnChanges {
 
         if (this.documents &&
             this.documents.length > 0 &&
+            this.documents[0] &&
+            this.documents[0].id &&
             this.documents[0].id == 'droparea') return;
 
         if (!this.documents) this.documents = [];
 
         this.documents.unshift(<IdaiFieldImageDocument>{
             id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '',
-                width: 1, height: 1, relations: {} }
+            resource: { identifier: '', shortDescription:'', type: '', originalFilename: '',
+                width: 1, height: 1, relations: { depicts: [] } }
         });
     }
 }

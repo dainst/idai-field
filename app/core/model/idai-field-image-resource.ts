@@ -1,8 +1,11 @@
-import {IdaiFieldResource} from 'idai-components-2/idai-field-model';
 import {IdaiFieldGeoreference} from './idai-field-georeference';
 import {IdaiFieldImageRelations} from './idai-field-image-relations';
+import {Resource} from 'idai-components-2/core';
 
-export interface IdaiFieldImageResource extends IdaiFieldResource {
+export interface IdaiFieldImageResource extends Resource {
+
+    identifier: string;
+    shortDescription: string;
 
     originalFilename: string;
     width: number;

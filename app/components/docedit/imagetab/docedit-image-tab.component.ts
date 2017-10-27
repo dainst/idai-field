@@ -5,7 +5,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImagePickerComponent} from './image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiFieldImageReadDatastore} from '../../../core/datastore/idai-field-image-read-datastore';
+import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -27,7 +27,7 @@ export class DoceditImageTabComponent {
 
 
     constructor(
-        private datastore: IdaiFieldImageReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {

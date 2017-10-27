@@ -7,7 +7,7 @@ import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-docum
 import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
-import {IdaiFieldImageReadDatastore} from '../../../core/datastore/idai-field-image-read-datastore';
+import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class ImagePickerComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        private datastore: IdaiFieldImageReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldImageDocument>,
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility
     ) {

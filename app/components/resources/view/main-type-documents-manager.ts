@@ -15,7 +15,7 @@ export class MainTypeDocumentsManager {
     private selectedDocument: IdaiFieldDocument|undefined;
 
     constructor(
-        private datastore: IdaiFieldReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
         private viewManager: ViewManager
     ) {}
 

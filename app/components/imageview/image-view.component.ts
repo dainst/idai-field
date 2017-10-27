@@ -12,7 +12,8 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageReadDatastore} from '../../core/datastore/idai-field-image-read-datastore';
+import {IdaiFieldReadDatastore} from "../../core/datastore/idai-field-read-datastore";
+import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ImageViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: IdaiFieldImageReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldImageDocument>,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,
@@ -106,7 +107,7 @@ export class ImageViewComponent implements OnInit {
                 const doc = await this.datastore.get(id);
                 if (!doc.resource.id) return;
 
-                this.image.document = doc;
+                this.image.document = doc as any;
 
                 try {
                     // read original (empty if not present)

@@ -21,7 +21,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: IdaiFieldReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: MainTypeDocumentsManager

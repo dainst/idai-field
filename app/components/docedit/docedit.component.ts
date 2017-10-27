@@ -7,13 +7,14 @@ import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuratio
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../core/datastore/cached-datastore';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
+import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 
 
 @Component({

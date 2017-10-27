@@ -6,8 +6,9 @@ import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
 import {Loading} from '../../../widgets/loading';
-import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../core/datastore/cached-datastore';
 import {ViewFacade} from '../view/view-facade';
+import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
 
 @Component({
     selector: 'list',

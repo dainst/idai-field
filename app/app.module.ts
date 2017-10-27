@@ -10,7 +10,7 @@ import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
-import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
+import {CachedDatastore} from './core/datastore/cached-datastore';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -23,7 +23,8 @@ import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/idai-field-model';
+import {IdaiFieldAppConfigurator, IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Document} from 'idai-components-2/core';
 import {SettingsService} from './core/settings/settings-service';
 import {PouchdbServerDatastore} from './core/datastore/core/pouchdb-server-datastore';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
@@ -34,7 +35,7 @@ import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {SampleDataLoader} from './core/datastore/core/sample-data-loader';
 import {ConstraintIndexer} from './core/datastore/core/constraint-indexer';
 import {FulltextIndexer} from './core/datastore/core/fulltext-indexer';
-import {DocumentCache} from './core/datastore/idai-field-document-cache';
+import {DocumentCache} from './core/datastore/document-cache';
 import {AppState} from './core/settings/app-state';
 import {ConflictResolvingExtension} from './core/datastore/core/conflict-resolving-extension';
 import {IdaiFieldConflictResolver} from './core/model/idai-field-conflict-resolver';
@@ -45,8 +46,9 @@ import {ExportModule} from './components/export/export.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
-import {IdaiFieldImageReadDatastore} from './core/datastore/idai-field-image-read-datastore';
 import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
+import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
+import {IdaiFieldImageDocument} from './core/model/idai-field-image-document';
 
 const remote = require('electron').remote;
 
@@ -77,68 +79,6 @@ let pconf = undefined;
         ProjectsComponent
     ],
     providers: [
-        AppState,
-        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
-        ConflictResolvingExtension,
-        SettingsService,
-        {
-            provide: ConstraintIndexer,
-            useFactory: function() {
-                return new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                    { path: 'resource.relations.liesWithin', type: 'contain' },
-                    { path: 'resource.relations.depicts', type: 'exist' },
-                    { path: 'resource.identifier', type: 'match' },
-                    { path: '_conflicts', type: 'exist' }
-                ]);
-            }
-        },
-        FulltextIndexer,
-        DocumentCache,
-        SampleDataLoader,
-        { provide: PouchdbManager, useFactory: function(
-                sampleDataLoader: SampleDataLoader,
-                constraintIndexer: ConstraintIndexer,
-                fulltextIndexer: FulltextIndexer,
-                documentCache: DocumentCache
-            ){
-                return new PouchdbManager(
-                    sampleDataLoader,
-                    constraintIndexer,
-                    fulltextIndexer,
-                    documentCache);
-            },
-            deps: [SampleDataLoader, ConstraintIndexer, FulltextIndexer, DocumentCache]
-        },
-        { provide: Imagestore, useClass: PouchDbFsImagestore },
-        { provide: ReadImagestore, useExisting: Imagestore },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        {
-            provide: IdaiFieldDatastore,
-            useFactory: function(pouchdbManager: PouchdbManager,
-                                 constraintIndexer: ConstraintIndexer,
-                                 fulltextIndexer: FulltextIndexer,
-                                 documentCache: DocumentCache,
-                                 appState: AppState,
-                                 autoConflictResolvingExtension: ConflictResolvingExtension,
-                                 conflictResolver: ConflictResolver): IdaiFieldDatastore {
-                return new IdaiFieldDatastore(
-                    new PouchdbServerDatastore(pouchdbManager,
-                        constraintIndexer, fulltextIndexer,
-                        appState, autoConflictResolvingExtension, conflictResolver),
-                    documentCache);
-            },
-            deps: [PouchdbManager, ConstraintIndexer,
-                FulltextIndexer, DocumentCache,
-                AppState, ConflictResolvingExtension, ConflictResolver]
-        },
-        { provide: Datastore, useExisting: IdaiFieldDatastore },
-        { provide: ReadDatastore, useExisting: IdaiFieldDatastore },
-        { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
-        Messages,
-        BlobMaker,
-        Converter,
-        IdaiFieldAppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
@@ -160,10 +100,72 @@ let pconf = undefined;
                             console.error('num errors in project configuration', msgsWithParams.length);
                         }
                     })
-                    .then(() => settingsService.init());
+                        .then(() => settingsService.init());
                 }
             }
         },
+        AppState,
+        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
+        ConflictResolvingExtension,
+        SettingsService,
+        {
+            provide: ConstraintIndexer,
+            useFactory: function() {
+                return new ConstraintIndexer([
+                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.relations.depicts', type: 'exist' },
+                    { path: 'resource.identifier', type: 'match' },
+                    { path: '_conflicts', type: 'exist' }
+                ]);
+            }
+        },
+        ImageTypeUtility,
+        FulltextIndexer,
+        DocumentCache,
+        SampleDataLoader,
+        { provide: PouchdbManager, useFactory: function(
+                sampleDataLoader: SampleDataLoader,
+                constraintIndexer: ConstraintIndexer,
+                fulltextIndexer: FulltextIndexer
+            ){
+                return new PouchdbManager(
+                    sampleDataLoader,
+                    constraintIndexer,
+                    fulltextIndexer);
+            },
+            deps: [SampleDataLoader, ConstraintIndexer, FulltextIndexer]
+        },
+        { provide: Imagestore, useClass: PouchDbFsImagestore },
+        { provide: ReadImagestore, useExisting: Imagestore },
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        {
+            provide: IdaiFieldDatastore,
+            useFactory: function(pouchdbManager: PouchdbManager,
+                                 constraintIndexer: ConstraintIndexer,
+                                 fulltextIndexer: FulltextIndexer,
+                                 documentCache: DocumentCache<IdaiFieldDocument>,
+                                 appState: AppState,
+                                 autoConflictResolvingExtension: ConflictResolvingExtension,
+                                 imageTypeUtility: ImageTypeUtility,
+                                 conflictResolver: ConflictResolver): CachedDatastore<IdaiFieldDocument> {
+                return new CachedDatastore(
+                    new PouchdbServerDatastore(pouchdbManager,
+                        constraintIndexer, fulltextIndexer,
+                        appState, autoConflictResolvingExtension, conflictResolver),
+                    documentCache, imageTypeUtility);
+            },
+            deps: [PouchdbManager, ConstraintIndexer,
+                FulltextIndexer, DocumentCache,
+                AppState, ConflictResolvingExtension, ImageTypeUtility, ConflictResolver]
+        },
+        { provide: Datastore, useExisting: IdaiFieldDatastore },
+        { provide: ReadDatastore, useExisting: IdaiFieldDatastore },
+        { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
+        Messages,
+        BlobMaker,
+        Converter,
+        IdaiFieldAppConfigurator,
         ConfigLoader,
         {
             provide: ProjectConfiguration,
@@ -180,16 +182,14 @@ let pconf = undefined;
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDatastore) {
+            useFactory: function(configLoader: ConfigLoader, datastore: CachedDatastore<IdaiFieldDocument>) {
                 return new IdaiFieldValidator(configLoader, datastore);
             },
             deps: [ConfigLoader, ReadDatastore]
         },
         { provide: MD, useClass: M},
-        ImageTypeUtility,
         DoceditActiveTabService,
-        StateSerializer,
-        IdaiFieldImageReadDatastore
+        StateSerializer
     ],
     bootstrap: [ AppComponent ]
 })

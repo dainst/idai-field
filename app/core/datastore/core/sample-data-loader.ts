@@ -23,8 +23,8 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
 
     public go(db: any, project: string): Promise<any> {
 
-        return this.configLoader.getProjectConfiguration()
-            .then(config => this.loadSampleObjects(db, config))
+        return (this.configLoader.getProjectConfiguration() as any)
+            .then((config: any) => this.loadSampleObjects(db, config))
             .then(() => this.loadSampleImages(db, project));
     }
 

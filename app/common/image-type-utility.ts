@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
+import {ProjectConfiguration, IdaiType, ConfigLoader} from 'idai-components-2/configuration'
 
 
 @Injectable()

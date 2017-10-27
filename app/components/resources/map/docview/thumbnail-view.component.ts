@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@ang
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
-import {IdaiFieldImageReadDatastore} from '../../../../core/datastore/idai-field-image-read-datastore';
+import {IdaiFieldReadDatastore} from '../../../../core/datastore/idai-field-read-datastore';
 
 @Component({
     selector: 'thumbnail-view',
@@ -26,7 +26,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
 
     constructor(
-        private datastore: IdaiFieldImageReadDatastore
+        private datastore: IdaiFieldReadDatastore<IdaiFieldImageDocument>
     ) {}
 
 
@@ -53,7 +53,7 @@ export class ThumbnailViewComponent implements OnChanges {
         for (let id of this.imageIds) {
             promise = promise.then(() => this.datastore.get(id))
                 .then(doc => {
-                    this.documents.push(doc);
+                    this.documents.push(doc as any);
                 });
         }
 

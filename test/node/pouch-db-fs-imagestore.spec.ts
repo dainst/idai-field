@@ -18,7 +18,7 @@ import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../app/core/datastore/idai-field-document-cache';
+import {DocumentCache} from '../../app/core/datastore/document-cache';
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
@@ -49,7 +49,7 @@ describe('PouchDbFsImagestore', () => {
         mockConfigProvider.getProjectConfiguration.and.callFake(()=>{return {}});
         const mockConstraintIndexer = jasmine.createSpyObj('mockConstraintIndexer',['update', 'clear']);
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
-        manager = new PouchdbManager(mockConfigProvider, mockConstraintIndexer, mockFulltextIndexer, new DocumentCache());
+        manager = new PouchdbManager(mockConfigProvider, mockConstraintIndexer, mockFulltextIndexer);
         manager.setProject('unittest');
 
         store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager);

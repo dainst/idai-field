@@ -6,8 +6,10 @@ import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
 import {FulltextIndexer} from "./fulltext-indexer";
-import {DocumentCache} from "../idai-field-document-cache";
+import {DocumentCache} from "../document-cache";
 import {ModelUtil} from '../../model/model-util';
+import {Document} from 'idai-components-2/core';
+import {ImageTypeUtility} from '../../../common/image-type-utility';
 const remote = require('electron').remote;
 
 @Injectable()
@@ -29,8 +31,7 @@ export class PouchdbManager {
     constructor(
         private sampleDataLoader: AbstractSampleDataLoader,
         private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer,
-        private documentCache: DocumentCache) {
+        private fulltextIndexer: FulltextIndexer) {
 
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -156,7 +157,6 @@ export class PouchdbManager {
         return this.db.allDocs({include_docs: true, conflicts: true},(err: any, resultDocs: any) => {
             this.constraintIndexer.clear();
             this.fulltextIndexer.clear();
-            this.documentCache.clear();
 
             for (let row of resultDocs.rows) {
                 if (PouchdbManager.isDesignDoc(row)) continue;
@@ -168,8 +168,6 @@ export class PouchdbManager {
 
                 this.constraintIndexer.put(row.doc, true);
                 this.fulltextIndexer.put(row.doc, true);
-
-                this.documentCache.set(row.doc);
             }
 
             (this.resolveDbReady as any)(this.db)

@@ -4,13 +4,14 @@ import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
-import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../core/datastore/cached-datastore';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";
 import {ViewFacade} from '../view/view-facade';
+import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
 
 @Component({
     selector: 'row',
@@ -42,7 +43,7 @@ export class RowComponent {
 
     private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
-        return this.datastore.get(document.resource.id, { skip_cache: true })
+        return this.datastore.get(document.resource.id as any, { skip_cache: true })
             .then(
                 latestRevision => {
                     document.resource.identifier = latestRevision.resource.identifier;

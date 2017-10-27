@@ -1,14 +1,16 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
-import {DocumentCache} from '../../../../app/core/datastore/idai-field-document-cache';
+import {CachedDatastore} from '../../../../app/core/datastore/cached-datastore';
+import {DocumentCache} from '../../../../app/core/datastore/document-cache';
 import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
+import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
+import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('IdaiFieldDatastore', () => {
+    describe('CachedDatastore', () => {
 
         let datastore: IdaiFieldDatastore;
         let mockdb: any;
@@ -40,31 +42,37 @@ export function main() {
 
             mockdb = jasmine.createSpyObj('mockdb',
                     ['findIds', 'documentChangesNotifications', 'create', 'update', 'fetch', 'fetchRevision']);
-                mockdb.update.and.callFake(function(dd){
-                    // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
-                    dd.resource.id = '1';
-                    dd['_rev'] = '2';
-                    return Promise.resolve(dd);
-                });
-                mockdb.findIds.and.callFake(function() {
-                    const d = doc('sd1');
-                    d.resource.id = '1';
-                    return Promise.resolve(['1']);
-                });
-                mockdb.create.and.callFake(function(dd) {
-                    // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
-                    dd.resource.id = '1';
-                    return Promise.resolve(dd);
-                });
-                // mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
-                mockdb.documentChangesNotifications.and.returnValues({subscribe: (cb) =>
-                        documentChangesNotificationsCallback = cb}
-                    );
 
+            mockdb.update.and.callFake(function(dd){
+                // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
+                dd.resource.id = '1';
+                dd['_rev'] = '2';
+                return Promise.resolve(dd);
+            });
+            mockdb.findIds.and.callFake(function() {
+                const d = doc('sd1');
+                d.resource.id = '1';
+                return Promise.resolve(['1']);
+            });
+            mockdb.create.and.callFake(function(dd) {
+                // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
+                dd.resource.id = '1';
+                return Promise.resolve(dd);
+            });
+            // mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
+            mockdb.documentChangesNotifications.and.returnValues({subscribe: (cb) =>
+                    documentChangesNotificationsCallback = cb}
+                );
 
-                datastore = new IdaiFieldDatastore(mockdb, new DocumentCache());
-            }
-        );
+            const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
+                ['isImageType']);
+            mockImageTypeUtility.isImageType.and.returnValue(false);
+
+            datastore = new IdaiFieldDatastore(
+                mockdb,
+                new DocumentCache<IdaiFieldDocument>(),
+                mockImageTypeUtility);
+        });
 
 
         it('should add missing fields on get, bypassing cache', async (done) => {

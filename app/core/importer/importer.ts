@@ -5,8 +5,9 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {CachedDatastore} from '../datastore/cached-datastore';
 import {M} from '../../m';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 
 
 export interface ImportReport {

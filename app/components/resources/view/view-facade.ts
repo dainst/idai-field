@@ -34,7 +34,7 @@ export class ViewFacade {
 
 
     constructor(
-        private datastore: IdaiFieldReadDatastore,
+        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
         private settingsService: SettingsService,
         private stateSerializer: StateSerializer,
         private viewsList: any

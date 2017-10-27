@@ -13,7 +13,7 @@ import {NativeJsonlParser} from '../../core/importer/native-jsonl-parser';
 import {IdigCsvParser} from '../../core/importer/idig-csv-parser';
 import {GeojsonParser} from '../../core/importer/geojson-parser';
 import {M} from '../../m';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../core/datastore/cached-datastore';
 import {ImportStrategy} from '../../core/importer/import-strategy';
 import {DefaultImportStrategy} from '../../core/importer/default-import-strategy';
 import {MergeGeometriesImportStrategy} from '../../core/importer/merge-geometries-import-strategy';
@@ -29,6 +29,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
+import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 
 
 @Component({

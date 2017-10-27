@@ -2,6 +2,7 @@ import {ConfigLoader} from 'idai-components-2/configuration'
 import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {M} from '../../m';
+import {CachedDatastore} from '../datastore/cached-datastore';
 import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 
 

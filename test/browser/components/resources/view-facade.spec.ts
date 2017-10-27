@@ -1,7 +1,8 @@
 import {Static} from '../../static';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../../app/core/datastore/cached-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
 
 
 /**
@@ -37,8 +38,12 @@ export function main() {
             done => {
                 spyOn(console, 'debug'); // suppress console.debug
 
+                const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
+                    ['isImageType']);
+                mockImageTypeUtility.isImageType.and.returnValue(false);
+
                 const result = Static.createPouchdbDatastore('testdb');
-                datastore = new IdaiFieldDatastore(result.datastore, result.documentCache);
+                datastore = new IdaiFieldDatastore(result.datastore, result.documentCache, mockImageTypeUtility);
 
                 const projectDocument = Static.doc('testdb','testdb','Project','testdb');
                 operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');

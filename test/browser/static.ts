@@ -1,9 +1,10 @@
 import {ConstraintIndexer} from '../../app/core/datastore/core/constraint-indexer';
 import {FulltextIndexer} from '../../app/core/datastore/core/fulltext-indexer';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../app/core/datastore/idai-field-document-cache';
+import {DocumentCache} from '../../app/core/datastore/document-cache';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
 
 
 /**
@@ -22,9 +23,9 @@ export class Static {
         const fulltextIndexer = new FulltextIndexer();
 
 
-        let documentCache = new DocumentCache();
+        let documentCache = new DocumentCache<IdaiFieldDocument>();
         let pouchdbManager = new PouchdbManager
-            (undefined, constraintIndexer, fulltextIndexer, documentCache);
+            (undefined, constraintIndexer, fulltextIndexer);
 
         const appState = jasmine.createSpyObj('appState', ['getCurrentUser']);
         const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',

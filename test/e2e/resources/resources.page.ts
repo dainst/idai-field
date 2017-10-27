@@ -198,9 +198,6 @@ export class ResourcesPage {
 
     public static getCreateDocumentButtonTypeIcon() {
 
-        browser.wait(EC.visibilityOf(
-            element(by.css('#create-document-button .type-icon'))),
-            delays.ECWaitTime);
         return element(by.css('#create-document-button .type-icon'));
     }
 

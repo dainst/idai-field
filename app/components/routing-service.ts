@@ -60,6 +60,8 @@ export class RoutingService {
     public jumpToRelationTarget(documentToSelect: Document, tab?: string,
                                 comingFromOutsideOverviewComponent: boolean = false) {
 
+        if (comingFromOutsideOverviewComponent) this.currentRoute = undefined; // TODO see also comment below. it feels actually a bit unfortunate have this kind of state (this.currentRoute) here at all at all.
+
         // TODO we really have two separate public methods instead of this check
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);

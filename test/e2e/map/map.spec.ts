@@ -3,8 +3,10 @@ import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
+import {NavbarPage} from "../navbar.page";
 
 const delays = require('../config/delays');
+const request = require('request');
 
 
 describe('resources/map --', function() {
@@ -120,10 +122,19 @@ describe('resources/map --', function() {
         createDoc(identifier, geometryType, mapClickCallback);
         DocumentViewPage.clickReeditGeometry();
     }
-    
-    beforeEach(function() {
-        ResourcesPage.get();
-        browser.sleep(3000);
+
+    beforeAll(function() {
+        // ResourcesPage.get();
+        // browser.sleep(3000);
+    });
+
+
+    beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        request.post('http://localhost:3003/reset', {form:{key:'value'}});
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest);
     });
 
     it('create a new item with point geometry', function() {

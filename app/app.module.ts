@@ -49,6 +49,7 @@ import {StateSerializer} from './common/state-serializer';
 import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
 import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
 import {IdaiFieldImageDocument} from './core/model/idai-field-image-document';
+import {DocumentCacheWithControl} from "./core/datastore/document-cache-with-control";
 
 const remote = require('electron').remote;
 
@@ -100,7 +101,7 @@ let pconf = undefined;
                             console.error('num errors in project configuration', msgsWithParams.length);
                         }
                     })
-                        .then(() => settingsService.init());
+                    .then(() => settingsService.init());
                 }
             }
         },
@@ -122,7 +123,7 @@ let pconf = undefined;
         },
         ImageTypeUtility,
         FulltextIndexer,
-        DocumentCache,
+        DocumentCacheWithControl,
         SampleDataLoader,
         { provide: PouchdbManager, useFactory: function(
                 sampleDataLoader: SampleDataLoader,
@@ -144,7 +145,7 @@ let pconf = undefined;
             useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer,
-                                 documentCache: DocumentCache<IdaiFieldDocument>,
+                                 documentCache: DocumentCacheWithControl<IdaiFieldDocument>,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  imageTypeUtility: ImageTypeUtility,
@@ -156,7 +157,7 @@ let pconf = undefined;
                     documentCache, imageTypeUtility);
             },
             deps: [PouchdbManager, ConstraintIndexer,
-                FulltextIndexer, DocumentCache,
+                FulltextIndexer, DocumentCacheWithControl,
                 AppState, ConflictResolvingExtension, ImageTypeUtility, ConflictResolver]
         },
         { provide: Datastore, useExisting: IdaiFieldDatastore },

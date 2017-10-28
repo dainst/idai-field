@@ -19,8 +19,13 @@ export class ImageOverviewPage {
     public static getAndWaitForImageCells() {
 
         ImageOverviewPage.get();
-        browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.')
+        ImageOverviewPage.waitForCells();
     };
+
+    public static waitForCells() {
+
+        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.');
+    }
 
     // click
 

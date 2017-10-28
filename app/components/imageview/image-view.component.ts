@@ -48,6 +48,7 @@ export class ImageViewComponent implements OnInit {
         private routingService: RoutingService
     ) {
         this.route.queryParams.subscribe(queryParams => {
+            console.log("queryparams",queryParams['from'])
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
         });
     }
@@ -61,6 +62,8 @@ export class ImageViewComponent implements OnInit {
 
 
     public deselect() {
+
+        console.log("deselect",this.comingFrom)
 
         if (this.comingFrom) this.router.navigate(this.comingFrom);
         else this.router.navigate(['images']);

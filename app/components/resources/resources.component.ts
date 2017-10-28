@@ -47,7 +47,10 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private loading: Loading
     ) {
+        loading.start();
         routingService.routeParams(route).subscribe((params: any) => {
+            loading.stop();
+
             this.isEditingGeometry = false;
             this.viewFacade.setSelectedDocument(undefined as any);
 

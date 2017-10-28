@@ -30,7 +30,6 @@ export class RoutingService {
                 private viewFacade: ViewFacade,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility,
-                private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore
     ) {
@@ -148,14 +147,12 @@ export class RoutingService {
 
             this.location.replaceState('resources/' + params['view']);
 
-            this.loading.start();
             try {
                 await this.viewFacade.setupView(params['view'], params['id']);
-                this.loading.stop();
                 observer.next(params);
             } catch (msgWithParams) {
                 if (msgWithParams) console.error(
-                    "got msgWithParams in GeneralRoutingService#setRoute: ",msgWithParams);
+                    "got msgWithParams in GeneralRoutingService#setRoute: ", msgWithParams);
             }
         });
     }

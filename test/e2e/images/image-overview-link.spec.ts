@@ -45,11 +45,13 @@ describe('images/image-overview/link --', function() {
     }
 
     beforeEach(() => {
+        browser.sleep(delays.shortRest * 5);
         NavbarPage.performNavigateToSettings();
         request.post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 5);
         NavbarPage.clickNavigateToImages();
         ImageOverviewPage.waitForCells();
+        browser.sleep(delays.shortRest * 5);
     });
 
     it('link an image to a resource', () => {
@@ -73,7 +75,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false);
     });
 
-    it('unlink two images from a resource', () => {
+    fit('unlink two images from a resource', () => {
 
         createTwo();
         unlink();

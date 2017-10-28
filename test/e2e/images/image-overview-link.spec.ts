@@ -41,6 +41,7 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.getCell(0).click();
         ImageOverviewPage.clickUnlinkButton();
         ImageOverviewPage.clickConfirmUnlinkButton();
+        browser.sleep(delays.shortRest * 5);
     }
 
     beforeEach(() => {
@@ -71,7 +72,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false);
     });
 
-    it('unlink two images from a resource', () => {
+    fit('unlink two images from a resource', () => {
 
         createTwo();
         unlink();

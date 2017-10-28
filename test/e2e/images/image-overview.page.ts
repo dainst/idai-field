@@ -171,5 +171,6 @@ export class ImageOverviewPage {
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
         NavbarPage.clickNavigateToExcavation();
         NavbarPage.clickNavigateToImages();
+        browser.sleep(delays.shortRest * 5);
     }
 }

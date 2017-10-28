@@ -61,7 +61,8 @@ describe('images/image-overview/link --', function() {
     it('link two images to a resource', () => {
 
         createTwo();
-        expectLinkBadgePresence(true, 2)
+        expectLinkBadgePresence(true, 2);
+        browser.sleep(1000);
     });
 
     it('unlink an image from a resource', () => {

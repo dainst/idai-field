@@ -26,7 +26,7 @@
                      [style.maxWidth.px]="cell['calculatedWidth']-15">
 
                     <span *ngIf="showLinkBadges">
-                        <span *ngIf="cell['document'].resource.relations['depicts']" class="badge badge-info">
+                        <span *ngIf="cell['document'].resource.relations.depicts.length > 0" class="badge badge-info">
                                  <span class="mdi mdi-link"></span>
                         </span>
                     </span>
@@ -42,7 +42,7 @@
 
                 <div class="identifier" *ngIf="showIdentifier" class="px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
                 <div class="title" [class.small]="nrOfColumns > 5">
-                    <div *ngIf="showLinkBadges && cell['document'].resource.relations['depicts']" class="p-2" align="right">
+                    <div *ngIf="showLinkBadges && cell['document'].resource.relations.depicts.length > 0" class="p-2" align="right">
                         <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
                           id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">
                                  <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}

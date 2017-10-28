@@ -45,7 +45,7 @@ export class DoceditPage {
                         return new Promise(function(resolve) {
                             setTimeout(function() {
                                 resolve();
-                            }, delays.veryShortRest);
+                            }, delays.shortRest);
                         })
                     }
                 )

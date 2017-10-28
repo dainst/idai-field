@@ -64,11 +64,10 @@ export class PersistenceHelper {
             for (let imageDocument of this.imageOverviewFacade.getSelected()) {
                 const oldVersion = JSON.parse(JSON.stringify(imageDocument));
 
-                const depictsEl = ObjectUtil.takeOrMake(imageDocument,
-                    'resource.relations.depicts', []);
+                const depictsEl = imageDocument.resource.relations.depicts;
 
-                if (depictsEl.indexOf(targetDocument.resource.id) == -1) {
-                    depictsEl.push(targetDocument.resource.id);
+                if (depictsEl.indexOf(targetDocument.resource.id as any) == -1) {
+                    depictsEl.push(targetDocument.resource.id as any);
                 }
 
                 promise = promise.then(
@@ -92,7 +91,7 @@ export class PersistenceHelper {
         for (let document of this.imageOverviewFacade.getSelected()) {
 
             const oldVersion = JSON.parse(JSON.stringify(document));
-            delete document.resource.relations.depicts;
+            document.resource.relations.depicts = [];
 
             promises.push(this.persistenceManager.persist(
                 document, this.settingsService.getUsername(),

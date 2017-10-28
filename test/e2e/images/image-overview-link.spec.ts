@@ -65,7 +65,7 @@ describe('images/image-overview/link --', function() {
         browser.sleep(1000);
     });
 
-    it('unlink an image from a resource', () => {
+    fit('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();

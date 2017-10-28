@@ -26,7 +26,7 @@ fdescribe('resources --', () => {
         require('request').post('http://localhost:3003/reset', {});
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        // browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 10);
     });
 
     it('should delete a main type resource', () => {

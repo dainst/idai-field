@@ -10,7 +10,7 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('images/image-overview --', function() {
+fdescribe('images/image-overview --', function() {
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
@@ -22,9 +22,9 @@ describe('images/image-overview --', function() {
     });
 
 
-    beforeEach(() => {
+    beforeAll(() => {
 
-        // ImageOverviewPage.getAndWaitForImageCells();
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
 

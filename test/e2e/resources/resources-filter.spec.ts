@@ -16,7 +16,7 @@ let delays = require('../config/delays');
 describe('resources/filter --', () => {
 
     beforeEach(() => {
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);

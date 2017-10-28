@@ -7,7 +7,7 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('images/image-overview/upload --', function() {
+fdescribe('images/image-overview/upload --', function() {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
     const imageUploadFileName: string = 'Aldrin_Apollo_11.jpg';

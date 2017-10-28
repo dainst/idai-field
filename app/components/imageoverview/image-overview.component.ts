@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -72,6 +72,7 @@ export class ImageOverviewComponent implements OnInit {
             this.updateTotalImageCount();
         });
     }
+
 
 
     public ngOnInit() {

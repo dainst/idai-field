@@ -67,6 +67,7 @@ describe('images/image-overview/link --', function() {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();
+        browser.sleep(1000);
         expectLinkBadgePresence(false);
     });
 
@@ -74,6 +75,7 @@ describe('images/image-overview/link --', function() {
 
         createTwo();
         unlink();
+        browser.sleep(1000);
         expectLinkBadgePresence(false, 2);
     });
 

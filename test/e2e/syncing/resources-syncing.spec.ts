@@ -215,9 +215,11 @@ describe('resources/syncing --', function() {
             browser.sleep(delays.shortRest * 10);
             DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
             DoceditPage.clickSaveDocument();
+            browser.sleep(delays.shortRest * 10);
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();
             DoceditPage.clickSaveDocument();
+            browser.sleep(delays.shortRest * 50);
             expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
                 .not.toContain('conflicted');
             done();

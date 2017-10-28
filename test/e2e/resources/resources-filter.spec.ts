@@ -3,6 +3,7 @@ import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {NavbarPage} from "../navbar.page";
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
@@ -15,9 +16,11 @@ let delays = require('../config/delays');
 describe('resources/filter --', () => {
 
     beforeEach(() => {
-
-        ResourcesPage.get();
+        NavbarPage.clickNavigateToImages();
+        require('request').post('http://localhost:3003/reset', {});
+        NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+        // browser.sleep(delays.shortRest);
     });
 
     it('show only resources of the selected type', () => {

@@ -16,6 +16,7 @@ describe('images/image-overview/delete --', () => {
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToImages();
         ImageOverviewPage.waitForCells();
+        browser.sleep(delays.shortRest * 20);
     });
 
     it('delete an image in the grid view', () => {

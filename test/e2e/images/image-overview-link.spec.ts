@@ -72,7 +72,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false);
     });
 
-    fit('unlink two images from a resource', () => {
+    it('unlink two images from a resource', () => {
 
         createTwo();
         unlink();

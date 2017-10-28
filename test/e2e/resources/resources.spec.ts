@@ -13,7 +13,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+fdescribe('resources --', () => {
 
     // beforeEach(() => {
     //
@@ -164,6 +164,7 @@ describe('resources --', () => {
 
         DoceditPage.clickSelectOption('hasWallType', 1);
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
@@ -172,6 +173,7 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
@@ -194,6 +196,7 @@ describe('resources --', () => {
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('E'));
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('2');

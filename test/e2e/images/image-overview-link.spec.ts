@@ -8,7 +8,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-describe('images/image-overview/link --', function() {
+fdescribe('images/image-overview/link --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'c1';
@@ -45,13 +45,8 @@ describe('images/image-overview/link --', function() {
     }
 
     beforeEach(() => {
-        browser.sleep(delays.shortRest * 5);
-        NavbarPage.performNavigateToSettings();
-        request.post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 5);
-        NavbarPage.clickNavigateToImages();
-        ImageOverviewPage.waitForCells();
-        browser.sleep(delays.shortRest * 5);
+
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
     it('link an image to a resource', () => {
@@ -67,7 +62,7 @@ describe('images/image-overview/link --', function() {
         browser.sleep(1000);
     });
 
-    fit('unlink an image from a resource', () => {
+    it('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();
@@ -75,7 +70,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false);
     });
 
-    fit('unlink two images from a resource', () => {
+    it('unlink two images from a resource', () => {
 
         createTwo();
         unlink();

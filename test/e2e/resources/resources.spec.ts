@@ -13,7 +13,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+fdescribe('resources --', () => {
 
     // beforeEach(() => {
     //
@@ -26,7 +26,7 @@ describe('resources --', () => {
         require('request').post('http://localhost:3003/reset', {});
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest);
+        // browser.sleep(delays.shortRest);
     });
 
     it('should delete a main type resource', () => {
@@ -88,7 +88,6 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
-        browser.sleep(1000);
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
     });
 
@@ -137,6 +136,7 @@ describe('resources --', () => {
 
     it('should edit a main type resource', () => {
 
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickEditMainTypeResource();
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();

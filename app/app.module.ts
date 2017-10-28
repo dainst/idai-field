@@ -161,7 +161,13 @@ let pconf = undefined;
         { provide: Datastore, useExisting: IdaiFieldDatastore },
         { provide: ReadDatastore, useExisting: IdaiFieldDatastore },
         { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
-        Messages,
+        {
+            provide: Messages,
+            useFactory: function(md: MD) {
+                return new Messages(md, remote.getGlobal('switches').messages_timeout);
+            },
+            deps: [MD]
+        },
         BlobMaker,
         Converter,
         AppController,

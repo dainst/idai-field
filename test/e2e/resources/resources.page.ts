@@ -207,7 +207,6 @@ export class ResourcesPage {
         }
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
     };
 
     public static performCreateMainTypeResource(identifier: string) {

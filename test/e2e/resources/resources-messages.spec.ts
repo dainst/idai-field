@@ -3,7 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 
 
-fdescribe('resources/messages --', () => {
+describe('resources/messages --', () => {
 
     beforeEach(() => {
         ResourcesPage.get();

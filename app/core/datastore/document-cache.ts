@@ -28,4 +28,10 @@ export class DocumentCache<T extends Document> {
 
         delete this._[resourceId];
     }
+
+
+    public resetForE2E() {
+
+        this._ = { };
+    }
 }

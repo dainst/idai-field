@@ -36,7 +36,7 @@ export class PouchdbManager {
     }
 
 
-    public resetTest() {
+    public resetForE2E() {
 
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
 

@@ -24,7 +24,6 @@ import {Converter} from './core/imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
 import {IdaiFieldAppConfigurator, IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Document} from 'idai-components-2/core';
 import {SettingsService} from './core/settings/settings-service';
 import {PouchdbServerDatastore} from './core/datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
@@ -48,8 +47,7 @@ import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
 import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
-import {IdaiFieldImageDocument} from './core/model/idai-field-image-document';
-import {DocumentCacheWithControl} from "./core/datastore/document-cache-with-control";
+import {AppController} from "./app-controller";
 
 const remote = require('electron').remote;
 
@@ -123,7 +121,6 @@ let pconf = undefined;
         },
         ImageTypeUtility,
         FulltextIndexer,
-        DocumentCacheWithControl,
         SampleDataLoader,
         { provide: PouchdbManager, useFactory: function(
                 sampleDataLoader: SampleDataLoader,
@@ -140,12 +137,13 @@ let pconf = undefined;
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        DocumentCache,
         {
             provide: IdaiFieldDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
                                  constraintIndexer: ConstraintIndexer,
                                  fulltextIndexer: FulltextIndexer,
-                                 documentCache: DocumentCacheWithControl<IdaiFieldDocument>,
+                                 documentCache: DocumentCache<IdaiFieldDocument>,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  imageTypeUtility: ImageTypeUtility,
@@ -157,7 +155,7 @@ let pconf = undefined;
                     documentCache, imageTypeUtility);
             },
             deps: [PouchdbManager, ConstraintIndexer,
-                FulltextIndexer, DocumentCacheWithControl,
+                FulltextIndexer, DocumentCache,
                 AppState, ConflictResolvingExtension, ImageTypeUtility, ConflictResolver]
         },
         { provide: Datastore, useExisting: IdaiFieldDatastore },
@@ -166,6 +164,7 @@ let pconf = undefined;
         Messages,
         BlobMaker,
         Converter,
+        AppController,
         IdaiFieldAppConfigurator,
         ConfigLoader,
         {

@@ -1,4 +1,4 @@
-/// <reference path="express-import" />
+/// <reference path="core/datastore/express-import" />
 
 import {Injectable} from "@angular/core";
 import * as express from 'express';
@@ -6,28 +6,31 @@ import * as express from 'express';
 const remote = require('electron').remote;
 const expressPouchDB = require('express-pouchdb');
 
-import {DocumentCache} from "./document-cache";
-import {PouchdbManager} from "./core/pouchdb-manager";
 import {Document} from 'idai-components-2/core';
+import {ResourcesState} from "./components/resources/view/resources-state";
+import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
+import {DocumentCache} from "./core/datastore/document-cache";
 
 @Injectable()
 /**
  * @author Daniel de Oliveira
  */
-export class DocumentCacheWithControl<T extends Document> extends DocumentCache<T> {
+export class AppController {
 
-    constructor(private pouchdbManager: PouchdbManager) {
-        super();
-        this.setupServer();
+    constructor(
+        private pouchdbManager: PouchdbManager,
+        private resourcesState: ResourcesState,
+        private documentCache: DocumentCache<Document>) {
     }
 
-    private setupServer(): Promise<any> {
+    public setupServer(): Promise<any> {
         return new Promise((resolve, reject) => {
 
             const control = express();
             control.post('/reset', (req: any, res: any) => {
-                this._ = { };
-                this.pouchdbManager.resetTest();
+                this.pouchdbManager.resetForE2E();
+                this.resourcesState.resetForE2E();
+                this.documentCache.resetForE2E();
                 res.send('done');
             });
             control.listen(3003, function() {
@@ -36,5 +39,4 @@ export class DocumentCacheWithControl<T extends Document> extends DocumentCache<
             });
         })
     }
-
 }

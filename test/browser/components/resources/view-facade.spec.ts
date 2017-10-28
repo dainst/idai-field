@@ -3,6 +3,7 @@ import {CachedDatastore} from '../../../../app/core/datastore/cached-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
+import {ResourcesState} from "../../../../app/components/resources/view/resources-state";
 
 
 /**
@@ -83,7 +84,7 @@ export function main() {
             viewFacade = new ViewFacade(
                 datastore,
                 settingsService,
-                stateSerializer,
+                new ResourcesState(stateSerializer),
                 viewsList
             );
         });

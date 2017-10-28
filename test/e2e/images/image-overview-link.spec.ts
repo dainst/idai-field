@@ -1,10 +1,12 @@
 import {by, browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
+import {NavbarPage} from "../navbar.page";
 
 const path = require('path');
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
+const request = require('request');
 
 describe('images/image-overview/link --', function() {
 
@@ -42,8 +44,11 @@ describe('images/image-overview/link --', function() {
     }
 
     beforeEach(() => {
-
-        ImageOverviewPage.getAndWaitForImageCells();
+        NavbarPage.performNavigateToSettings();
+        request.post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToImages();
+        ImageOverviewPage.waitForCells();
     });
 
     it('link an image to a resource', () => {

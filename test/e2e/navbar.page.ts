@@ -84,11 +84,4 @@ export class NavbarPage {
         common.click(element(by.id('taskbar-dropdown')));
         common.click(element(by.id('settings-button')));
     };
-
-
-    public static performNavigateToImport() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        common.click(element(by.id('import-button')));
-    };
 }

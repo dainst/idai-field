@@ -14,20 +14,11 @@ const EC = protractor.ExpectedConditions;
  */
 describe('import --', function() {
 
-    beforeAll(function() {
+    beforeEach(function() {
 
         ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
-
-    beforeEach(() => {
-        NavbarPage.clickNavigateToImages();
-        require('request').post('http://localhost:3003/reset', {});
-        NavbarPage.performNavigateToImport();
-        // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest * 10);
-    });
-
 
     let importIt = function(url, mainTypeDocumentOption = 0) {
 

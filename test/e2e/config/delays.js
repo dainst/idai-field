@@ -30,7 +30,7 @@ delayPromises(promisesDelay);
 
 var ECWaitTime = 20000;
 var shortRest = 200;
-var veryShortRest = 10;
+var veryShortRest = 20;
 
 
 module.exports = {

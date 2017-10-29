@@ -21,12 +21,13 @@ fdescribe('resources/state --', function() {
     beforeAll(() => {
        removeResourcesStateFile();
        ProjectPage.get();
+       browser.sleep(delays.shortRest*2);
     });
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);    
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
     });

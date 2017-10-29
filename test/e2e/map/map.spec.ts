@@ -125,9 +125,9 @@ fdescribe('resources/map --', function() {
     }
 
     beforeAll(function() {
+        ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        // ResourcesPage.get();
-        browser.sleep(1500);
+        browser.sleep(750);
     });
 
 

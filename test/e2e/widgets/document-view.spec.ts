@@ -14,7 +14,7 @@ const delays = require('../config/delays');
  */
 fdescribe('widgets/document-view', function() {
 
-    beforeEach(function() {
+    beforeAll(() => {
 
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         browser.sleep(750);

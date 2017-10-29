@@ -12,18 +12,21 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('resources/images --', function() {
+fdescribe('resources/images --', function() {
 
-    // beforeEach(function() {
-    //     ResourcesPage.get();
-    // });
+    beforeAll(() => {
+
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
+        browser.sleep(750);
+    });
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest * 4);
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest);
     });
 
 

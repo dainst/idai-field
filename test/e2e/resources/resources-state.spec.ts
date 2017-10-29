@@ -16,7 +16,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+describe('resources/state --', function() { 
 
     beforeAll(() => {
        removeResourcesStateFile();

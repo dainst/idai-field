@@ -42,19 +42,6 @@ fdescribe('import --', function() {
         ImportPage.clickStartImportButton();
     };
 
-    it('import a valid iDAI.field JSONL file via HTTP', () => {
-
-        importIt('./test/test-data/importer-test-ok.jsonl');
-        browser.sleep(2000);
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickSelectMainTypeDocument(0);
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
-    });
-
     it('delete already imported iDAI.field documents if an error occurs', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
@@ -67,6 +54,20 @@ fdescribe('import --', function() {
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
+    });
+
+
+    it('import a valid iDAI.field JSONL file via HTTP', () => {
+
+        importIt('./test/test-data/importer-test-ok.jsonl');
+        browser.sleep(1000);
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickSelectMainTypeDocument(0);
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
 
     it('abort if an empty geometry is found', () => {

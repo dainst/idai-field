@@ -1,14 +1,5 @@
 // use higher values to slow down tests for debugging
-var promisesDelay;
-
-// TODO this is deprecated
-const syncingTestsActive = (process.argv.length > 5 && process.argv[5] == '--suite=syncing');
-if (syncingTestsActive) {
-    promisesDelay = 150;
-} else {
-    promisesDelay = 0;
-}
-
+var promisesDelay = 0;
 
 function delayPromises(milliseconds) {
     var executeFunction = browser.driver.controlFlow().execute;

@@ -83,10 +83,10 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                                 const blob = this.converter.convert(fs.readFileSync(path + file));
                                 promises.push(
                                     db.get(file)
-                                        .then((doc: any) => {
-                                                        db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
-                                                            .then(() => resolve())
-                                        })
+                                        .then((doc: any) =>
+                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
+                                                .catch((putAttachmentErr: any) => Promise.reject("putAttachmentErr:"+putAttachmentErr))
+                                        , (dbGetErr: any) => Promise.reject("dbGetErr:"+dbGetErr))
                                 );
                             }
                         });

@@ -4,6 +4,7 @@ import {DocumentViewPage} from '../widgets/document-view.page';
 
 import {ResourcesPage} from '../resources/resources.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {NavbarPage} from '../navbar.page';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
@@ -14,7 +15,39 @@ const delays = require('../config/delays');
 fdescribe('widgets/document-view', function() {
 
     beforeEach(function() {
-        ResourcesPage.get();
+        browser.sleep(1000);
+    });
+
+    beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        require('request').post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest * 10);
+        NavbarPage.clickNavigateToExcavation();
+        // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+        browser.sleep(delays.shortRest * 5);
+    });
+
+
+    /**
+     * Addresses an issue where relations were shown double.
+     */
+    it('show only relations present in the object', function() {
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(2);
+        });
+    });
+
+    it('show the relations present in the object', function() {
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
+        DocumentViewPage.getRelationName(1).then(value => {
+            expect(value).toBe('Liegt in'); // with the correct relation label
+        });
+        DocumentViewPage.getRelationValue(1).then(value => {
+            expect(value).toBe('2');
+        });
     });
 
     it('show the fields present in the object', function() {
@@ -36,28 +69,6 @@ fdescribe('widgets/document-view', function() {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
-        });
-    });
-
-    it('show the relations present in the object', function() {
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(1).then(value => {
-            expect(value).toBe('Liegt in'); // with the correct relation label
-        });
-        DocumentViewPage.getRelationValue(1).then(value => {
-            expect(value).toBe('2');
-        });
-    });
-
-    /**
-     * Addresses an issue where relations were shown double.
-     */
-    it('show only relations present in the object', function() {
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(2);
         });
     });
 

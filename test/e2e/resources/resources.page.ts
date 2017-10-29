@@ -201,6 +201,7 @@ export class ResourcesPage {
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
+        DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);

@@ -16,8 +16,9 @@ fdescribe('import --', function() {
 
     beforeAll(function() {
 
-        ImportPage.get();
+        // ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
+        browser.sleep(1000);
     });
 
 

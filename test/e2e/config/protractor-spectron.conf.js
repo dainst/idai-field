@@ -70,7 +70,7 @@ exports.config = {
 
                     if (errLogs.length > 0) {
 
-                        console.log('--- There has been at least one browser console error!');
+                        console.log('--- There has been at least one browser console error (Spec'+spec.fullName+')!');
 
                         browserLogs.forEach(function(log){
                             if (log.level.value_ > 900) { // it's an error log

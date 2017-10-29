@@ -66,42 +66,46 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
     private loadDirectory(db: any, path: any, dest: any): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            const promises: any[] = [];
-            fs.readdir(path, (err, files) => {
 
-                if (files) {
-                    files.forEach(file => {
-                        if (!fs.statSync(path + file).isDirectory()) {
+            setTimeout(() => {
 
-                            // write original
-                            fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+                const promises: any[] = [];
+                fs.readdir(path, (err, files) => {
 
-                            // write thumb
-                            const blob = this.converter.convert(fs.readFileSync(path + file));
-                            promises.push(
-                                db.get(file)
-                                    .then((doc: any) => {
-                                        return new Promise<any>((resolve) => {
-                                            setTimeout(() =>
-                                                    db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
-                                                        .then(() => resolve())
-                                                , 20)
+                    if (files) {
+                        files.forEach(file => {
+                            if (!fs.statSync(path + file).isDirectory()) {
 
+                                // write original
+                                fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+
+                                // write thumb
+                                const blob = this.converter.convert(fs.readFileSync(path + file));
+                                promises.push(
+                                    db.get(file)
+                                        .then((doc: any) => {
+                                            return new Promise<any>((resolve) => {
+                                                setTimeout(() =>
+                                                        db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
+                                                            .then(() => resolve())
+                                                    , 20)
+
+                                            })
                                         })
-                                    })
-                            );
-                        }
-                    });
-                }
+                                );
+                            }
+                        });
+                    }
 
-                Promise.all(promises).then(()=>{
-                    console.debug('Successfully put samples from ' + path + ' to ' + dest );
-                    resolve();
-                }).catch(err => {
-                    console.error('Problem when storing sample images', err);
-                    reject(err);
+                    Promise.all(promises).then(()=>{
+                        console.debug('Successfully put samples from ' + path + ' to ' + dest );
+                        resolve();
+                    }).catch(err => {
+                        console.error('Problem when storing sample images', err);
+                        reject(err);
+                    });
                 });
-            });
+            }, 100)
         });
     }
 

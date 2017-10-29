@@ -74,7 +74,7 @@ export class ImportComponent {
         this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
-        );
+        ); console.error("hello")
     }
 
     public startImport() {

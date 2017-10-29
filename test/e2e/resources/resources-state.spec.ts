@@ -1,4 +1,4 @@
-import {browser, protractor} from 'protractor';
+import {browser, element, protractor, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -16,15 +16,21 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+fdescribe('resources/state --', function() {
 
     beforeAll(() => {
        removeResourcesStateFile();
+       ProjectPage.get();
     });
 
     beforeEach(() => {
-        return ProjectPage.get();
+        NavbarPage.performNavigateToSettings();
+        require('request').post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);    
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest);
     });
+
 
     const appDataPath = browser.params.appDataPath;
 
@@ -42,11 +48,11 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToImages();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         ImageOverviewPage.createDepictsRelation('trench1');
-        browser.sleep(2000);
+        browser.sleep(delays.shortRest);
     }
 
     function clickDepictsRelationLink() {

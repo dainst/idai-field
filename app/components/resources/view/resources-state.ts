@@ -14,6 +14,12 @@ export class ResourcesState {
     constructor(private serializer: StateSerializer) {}
 
 
+    public resetForE2E() {
+
+        this._ = { };
+    }
+
+
     public initialize(): Promise<any> {
 
         if (this._) return Promise.resolve();

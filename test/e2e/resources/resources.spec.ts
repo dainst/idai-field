@@ -15,10 +15,18 @@ let delays = require('../config/delays');
  */
 describe('resources --', () => {
 
-    beforeEach(() => {
+    // beforeEach(() => {
+    //
+    //     ResourcesPage.get();
+    //
+    // });
 
-        ResourcesPage.get();
+    beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        require('request').post('http://localhost:3003/reset', {});
+        NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+        browser.sleep(delays.shortRest * 10);
     });
 
     it('should delete a main type resource', () => {
@@ -68,32 +76,8 @@ describe('resources --', () => {
         DocumentViewPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
-    });
-
-    /**
-     * There has been a bug where clicking the new button without doing anything
-     * led to leftovers of 'Neues Objekt' for every time the button was pressed.
-     */
-    xit('remove a new object from the list if it has not been saved', () => {
-
-        ResourcesPage.performCreateResource('1');
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
-        ResourcesPage.clickSelectGeometryType('point');
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
-        ResourcesPage.clickSelectGeometryType('point');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
-        ResourcesPage.scrollUp();
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
-        ResourcesPage.clickSelectResource('1');
-        browser.wait(EC.presenceOf(element(by.id('document-view'))), delays.ECWaitTime);
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
-        ResourcesPage.clickSelectGeometryType();
         DoceditPage.clickCloseEdit();
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+        ResourcesPage.clickDiscardInModal();
     });
 
     it('should save changes via dialog modal', () => {
@@ -104,7 +88,6 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
-        browser.sleep(1000);
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
     });
 
@@ -128,6 +111,8 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
         expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
     });
 
     it('should create a new main type resource', () => {
@@ -151,6 +136,7 @@ describe('resources --', () => {
 
     it('should edit a main type resource', () => {
 
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickEditMainTypeResource();
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
@@ -178,6 +164,7 @@ describe('resources --', () => {
 
         DoceditPage.clickSelectOption('hasWallType', 1);
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
@@ -186,6 +173,7 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
@@ -208,9 +196,36 @@ describe('resources --', () => {
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
+        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('E'));
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+    });
+
+    /**
+     * There has been a bug where clicking the new button without doing anything
+     * led to leftovers of 'Neues Objekt' for every time the button was pressed.
+     */
+    xit('remove a new object from the list if it has not been saved', () => {
+
+        ResourcesPage.performCreateResource('1');
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType('point');
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType('point');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
+        ResourcesPage.scrollUp();
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
+        ResourcesPage.clickSelectResource('1');
+        browser.wait(EC.presenceOf(element(by.id('document-view'))), delays.ECWaitTime);
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType();
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 });

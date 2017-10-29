@@ -24,7 +24,6 @@ import {Converter} from './core/imagestore/converter';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
 import {IdaiFieldAppConfigurator, IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Document} from 'idai-components-2/core';
 import {SettingsService} from './core/settings/settings-service';
 import {PouchdbServerDatastore} from './core/datastore/pouchdb-server-datastore';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
@@ -48,7 +47,7 @@ import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
 import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
-import {IdaiFieldImageDocument} from './core/model/idai-field-image-document';
+import {AppController} from "./app-controller";
 
 const remote = require('electron').remote;
 
@@ -100,7 +99,7 @@ let pconf = undefined;
                             console.error('num errors in project configuration', msgsWithParams.length);
                         }
                     })
-                        .then(() => settingsService.init());
+                    .then(() => settingsService.init());
                 }
             }
         },
@@ -122,7 +121,6 @@ let pconf = undefined;
         },
         ImageTypeUtility,
         FulltextIndexer,
-        DocumentCache,
         SampleDataLoader,
         { provide: PouchdbManager, useFactory: function(
                 sampleDataLoader: SampleDataLoader,
@@ -139,6 +137,7 @@ let pconf = undefined;
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        DocumentCache,
         {
             provide: IdaiFieldDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
@@ -162,9 +161,16 @@ let pconf = undefined;
         { provide: Datastore, useExisting: IdaiFieldDatastore },
         { provide: ReadDatastore, useExisting: IdaiFieldDatastore },
         { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
-        Messages,
+        {
+            provide: Messages,
+            useFactory: function(md: MD) {
+                return new Messages(md, remote.getGlobal('switches').messages_timeout);
+            },
+            deps: [MD]
+        },
         BlobMaker,
         Converter,
+        AppController,
         IdaiFieldAppConfigurator,
         ConfigLoader,
         {

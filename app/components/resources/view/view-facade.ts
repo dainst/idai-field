@@ -36,15 +36,13 @@ export class ViewFacade {
     constructor(
         private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
         private settingsService: SettingsService,
-        private stateSerializer: StateSerializer,
+        private resourcesState: ResourcesState,
         private viewsList: any
     ) {
         this.views = new OperationViews(viewsList);
         this.viewManager = new ViewManager(
             this.views,
-            new ResourcesState(
-                stateSerializer
-            )
+            resourcesState,
         );
         this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,

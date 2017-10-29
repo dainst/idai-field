@@ -61,7 +61,7 @@ import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDatastore,
                 settingsService: SettingsService,
-                stateSerializer: StateSerializer
+                resourcesState: ResourcesState
             ) {
 
                 const views = projectConfiguration.getViewsList();
@@ -73,11 +73,11 @@ import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
                 return new ViewFacade(
                     datastore,
                     settingsService,
-                    stateSerializer,
+                    resourcesState,
                     views
                 );
             },
-            deps: [ProjectConfiguration, Datastore, SettingsService, StateSerializer]
+            deps: [ProjectConfiguration, Datastore, SettingsService, ResourcesState]
         },
     ],
     exports: [

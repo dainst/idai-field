@@ -1,10 +1,12 @@
 import {by, browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
+import {NavbarPage} from "../navbar.page";
 
 const path = require('path');
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
+const request = require('request');
 
 describe('images/image-overview/link --', function() {
 
@@ -39,6 +41,7 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.getCell(0).click();
         ImageOverviewPage.clickUnlinkButton();
         ImageOverviewPage.clickConfirmUnlinkButton();
+        browser.sleep(delays.shortRest * 5);
     }
 
     beforeEach(() => {
@@ -55,13 +58,15 @@ describe('images/image-overview/link --', function() {
     it('link two images to a resource', () => {
 
         createTwo();
-        expectLinkBadgePresence(true, 2)
+        expectLinkBadgePresence(true, 2);
+        browser.sleep(1000);
     });
 
     it('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();
+        browser.sleep(1000);
         expectLinkBadgePresence(false);
     });
 
@@ -69,6 +74,7 @@ describe('images/image-overview/link --', function() {
 
         createTwo();
         unlink();
+        browser.sleep(1000);
         expectLinkBadgePresence(false, 2);
     });
 

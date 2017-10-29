@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -50,7 +50,7 @@ export class ImageOverviewComponent implements OnInit {
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
     public getResourceIdentifiers = () => this.imageOverviewFacade.getResourceIdentifiers();
-    public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect);
+    public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect, undefined, true);
 
 
     constructor(
@@ -72,6 +72,7 @@ export class ImageOverviewComponent implements OnInit {
             this.updateTotalImageCount();
         });
     }
+
 
 
     public ngOnInit() {

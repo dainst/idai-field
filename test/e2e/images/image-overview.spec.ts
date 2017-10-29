@@ -2,6 +2,8 @@ import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {ImageViewPage} from './image-view.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
+import {NavbarPage} from "../navbar.page";
+const request = require('request');
 
 const path = require('path');
 
@@ -11,9 +13,20 @@ const delays = require('../config/delays');
 describe('images/image-overview --', function() {
 
     beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        request.post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToImages();
+        ImageOverviewPage.waitForCells();
+        browser.sleep(delays.shortRest * 20);
+    });
+
+
+    beforeAll(() => {
 
         ImageOverviewPage.getAndWaitForImageCells();
     });
+
 
     it('deselect cells', () => {
 
@@ -36,11 +49,12 @@ describe('images/image-overview --', function() {
                     cells[middle].click();
                     expect(cells[middle].getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
                     cells[middle].click();
-                    expect(cells[middle].getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass);
+                    expect(cells[middle].getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass)
                 }
             }
         });
     });
+
 
     it('deselect images by clicking the corresponding button', () => {
 
@@ -49,6 +63,7 @@ describe('images/image-overview --', function() {
         ImageOverviewPage.clickDeselectButton();
         expect(ImageOverviewPage.getCell(0).getAttribute('class')).not.toMatch(ImageOverviewPage.selectedClass);
     });
+
 
     it('navigate from overview to view, and back to overview', () => {
 

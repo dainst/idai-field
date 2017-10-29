@@ -6,10 +6,8 @@ import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
 import {FulltextIndexer} from "./fulltext-indexer";
-import {DocumentCache} from "../document-cache";
 import {ModelUtil} from '../../model/model-util';
-import {Document} from 'idai-components-2/core';
-import {ImageTypeUtility} from '../../../common/image-type-utility';
+
 const remote = require('electron').remote;
 
 @Injectable()
@@ -35,6 +33,15 @@ export class PouchdbManager {
 
         let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
+    }
+
+
+    public resetForE2E() {
+
+        let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
+
+        Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
+        this.setProject('test');
     }
 
 
@@ -106,9 +113,9 @@ export class PouchdbManager {
      * @returns {PouchdbProxy} a proxy that automatically hands over method
      *  calls to the actual PouchDB instance as soon as it is available
      */
-    public getDb(): PouchdbProxy|undefined {
+    public getDb(): PouchdbProxy {
 
-        return this.dbProxy;
+        return this.dbProxy as any;
     }
 
 
@@ -159,6 +166,7 @@ export class PouchdbManager {
             this.fulltextIndexer.clear();
 
             for (let row of resultDocs.rows) {
+
                 if (PouchdbManager.isDesignDoc(row)) continue;
 
                 if (!ModelUtil.hasNecessaryFields(row.doc)) {

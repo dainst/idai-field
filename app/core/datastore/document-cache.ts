@@ -9,7 +9,7 @@ import {Document} from 'idai-components-2/core';
 export class DocumentCache<T extends Document> {
 
 
-    private _: { [resourceId: string]: T } = { };
+    protected _: { [resourceId: string]: T } = { };
 
 
     public set(doc: T) {
@@ -30,8 +30,8 @@ export class DocumentCache<T extends Document> {
     }
 
 
-    // public clear() {
-    //
-    //     this._ = { };
-    // }
+    public resetForE2E() {
+
+        this._ = { };
+    }
 }

@@ -18,6 +18,12 @@ export class ImagesState {
     constructor(private serializer: StateSerializer) {}
 
 
+    public resetForE2E() {
+
+        this.initialized = true;
+    }
+
+
     public initialize(): Promise<any> {
 
         if (this.initialized) return Promise.resolve();

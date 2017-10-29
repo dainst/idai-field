@@ -16,7 +16,8 @@ export class ImageTypeUtility {
     public isImageType(typeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
-        return (type.name == 'Image' || (type.parentType && type.parentType.name == 'Image'));
+
+        return (type.name == 'Image' || (type.parentType && type.parentType.name && type.parentType.name == 'Image'));
     }
 
 

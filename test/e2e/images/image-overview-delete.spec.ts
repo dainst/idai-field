@@ -1,5 +1,7 @@
 import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
+import {NavbarPage} from "../navbar.page";
+const request = require('request');
 
 const path = require('path');
 
@@ -9,8 +11,12 @@ const delays = require('../config/delays');
 describe('images/image-overview/delete --', () => {
 
     beforeEach(() => {
-
-        ImageOverviewPage.getAndWaitForImageCells();
+        NavbarPage.performNavigateToSettings();
+        request.post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToImages();
+        ImageOverviewPage.waitForCells();
+        browser.sleep(delays.shortRest * 20);
     });
 
     it('delete an image in the grid view', () => {

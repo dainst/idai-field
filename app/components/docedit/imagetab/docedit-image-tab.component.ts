@@ -77,7 +77,7 @@ export class DoceditImageTabComponent {
         if (targetsToRemove.length > 0) this.documentEditChangeMonitor.setChanged();
 
         if (isDepictedIn.length == 0) {
-            delete this.document.resource.relations['isDepictedIn'];
+            this.document.resource.relations['isDepictedIn'] = [];
             this.documents = [];
             this.clearSelection();
         } else {

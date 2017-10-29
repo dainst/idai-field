@@ -64,7 +64,7 @@ export class CachedDatastore<T extends Document>
      * @param document
      * @returns
      */
-    public async create(document: Document): Promise<Document> {
+    public async create(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
 
         const createdDocument = await this.datastore.create(document);
         return this.documentCache.set(this.
@@ -78,7 +78,7 @@ export class CachedDatastore<T extends Document>
      * @param document
      * @returns
      */
-    public async update(document: Document): Promise<Document> {
+    public async update(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
 
         const updatedDocument = await this.datastore.update(document);
 
@@ -96,7 +96,7 @@ export class CachedDatastore<T extends Document>
     }
 
 
-    public remove(doc: Document): Promise<any> {
+    public remove(doc: Document): Promise<any> { // TODO return promise undefined
 
         return this.datastore.remove(doc)
             .then(() => this.documentCache.remove(doc.resource.id));
@@ -155,7 +155,7 @@ export class CachedDatastore<T extends Document>
      * @param revisionId
      * @returns {Promise<any>}
      */
-    public removeRevision(docId: string, revisionId: string): Promise<any> {
+    public removeRevision(docId: string, revisionId: string): Promise<any> { // TODO remove promise undefined
 
         return this.datastore.removeRevision(docId, revisionId);
     }

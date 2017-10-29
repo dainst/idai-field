@@ -27,7 +27,7 @@ fdescribe('resources/state --', function() {
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
         NavbarPage.clickNavigateToProject();
         browser.sleep(delays.shortRest);
     });
@@ -49,11 +49,11 @@ fdescribe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
         NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
         ImageOverviewPage.createDepictsRelation('trench1');
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
     }
 
     function clickDepictsRelationLink() {

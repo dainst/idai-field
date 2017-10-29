@@ -55,9 +55,10 @@ exports.config = {
         var ProgressReporter = function() {
 
             this.specStarted = function(spec) {
-                setTimeout(function() {
-                    process.stdout.write("SPEC " + spec.fullName + " ")
-                },20)
+                setTimeout( // to show spec done first
+                    function() {
+                        process.stdout.write("SPEC " + spec.fullName + " ")
+                    },20)
 
             };
 

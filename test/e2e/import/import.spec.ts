@@ -12,23 +12,23 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('import --', function() {
+fdescribe('import --', function() {
 
-    beforeEach(function() {
+    beforeAll(function() {
 
         ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
 
-    // beforeEach(() => {
-    //     NavbarPage.performNavigateToSettings();
-    //     browser.sleep(delays.shortRest * 5);
-    //     require('request').post('http://localhost:3003/reset', {});
-    //     NavbarPage.performNavigateToImport();
-    //     // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-    //     browser.sleep(delays.shortRest * 20);
-    // });
+    beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        browser.sleep(delays.shortRest * 50);
+        require('request').post('http://localhost:3003/reset', {});
+        NavbarPage.performNavigateToImport();
+        // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+        browser.sleep(delays.shortRest * 20);
+    });
 
 
     let importIt = function(url, mainTypeDocumentOption = 0) {

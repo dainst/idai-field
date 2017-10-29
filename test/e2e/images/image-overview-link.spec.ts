@@ -8,7 +8,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-describe('images/image-overview/link --', function() {
+fdescribe('images/image-overview/link --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'c1';
@@ -41,12 +41,24 @@ describe('images/image-overview/link --', function() {
         ImageOverviewPage.getCell(0).click();
         ImageOverviewPage.clickUnlinkButton();
         ImageOverviewPage.clickConfirmUnlinkButton();
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
     }
 
-    beforeEach(() => {
+
+    beforeAll(() => {
 
         ImageOverviewPage.getAndWaitForImageCells();
+        browser.sleep(delays.shortRest * 3);
+    });
+
+
+    beforeEach(() => {
+        NavbarPage.performNavigateToSettings();
+        request.post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToImages();
+        ImageOverviewPage.waitForCells();
+        browser.sleep(delays.shortRest);
     });
 
     it('link an image to a resource', () => {
@@ -59,14 +71,14 @@ describe('images/image-overview/link --', function() {
 
         createTwo();
         expectLinkBadgePresence(true, 2);
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
     });
 
     it('unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         expectLinkBadgePresence(false);
     });
 
@@ -74,7 +86,7 @@ describe('images/image-overview/link --', function() {
 
         createTwo();
         unlink();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         expectLinkBadgePresence(false, 2);
     });
 

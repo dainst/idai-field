@@ -10,7 +10,14 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('images/image-overview --', function() {
+fdescribe('images/image-overview --', function() {
+
+    beforeAll(() => {
+
+        ImageOverviewPage.getAndWaitForImageCells();
+        browser.sleep(delays.shortRest * 3);
+    });
+
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
@@ -18,13 +25,7 @@ describe('images/image-overview --', function() {
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToImages();
         ImageOverviewPage.waitForCells();
-        browser.sleep(delays.shortRest * 20);
-    });
-
-
-    beforeAll(() => {
-
-        ImageOverviewPage.getAndWaitForImageCells();
+        browser.sleep(delays.shortRest);
     });
 
 

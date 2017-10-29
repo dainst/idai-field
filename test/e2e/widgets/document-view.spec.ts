@@ -21,10 +21,10 @@ fdescribe('widgets/document-view', function() {
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest * 5);
         NavbarPage.clickNavigateToExcavation();
         // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
     });
 
 

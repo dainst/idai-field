@@ -84,13 +84,8 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                                 promises.push(
                                     db.get(file)
                                         .then((doc: any) => {
-                                            return new Promise<any>((resolve) => {
-                                                setTimeout(() =>
                                                         db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
                                                             .then(() => resolve())
-                                                    , 20)
-
-                                            })
                                         })
                                 );
                             }
@@ -105,7 +100,7 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                         reject(err);
                     });
                 });
-            }, 100)
+            }, 20)
         });
     }
 

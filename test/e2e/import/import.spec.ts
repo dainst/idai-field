@@ -23,8 +23,8 @@ fdescribe('import --', function() {
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
-        browser.sleep(delays.shortRest * 50);
         require('request').post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest * 10);
         NavbarPage.performNavigateToImport();
         // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
         browser.sleep(delays.shortRest * 20);

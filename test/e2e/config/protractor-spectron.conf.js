@@ -59,7 +59,28 @@ exports.config = {
             };
 
             this.specDone = function(spec) {
-                console.log(spec.status.toUpperCase())
+                console.log(spec.status.toUpperCase());
+
+                browser.manage().logs().get('browser').then(function(browserLogs) {
+
+                    if (browserLogs.map(function (log)
+                        {return log.level.value}).filter(function (value) { return (value > 900)})
+                        .length > 0) {
+
+                        console.log('There has been at least one browser console error!');
+
+                        browserLogs.forEach(function(log){
+                            if (log.level.value > 900) { // it's an error log
+                                console.log("===> ERROR message: ",log.message);
+                            } else {
+                                console.log("Log message: ",log.message);
+                            }
+                        });
+                    }
+
+
+                });
+
             }
         };
         jasmine.getEnv().addReporter(new ProgressReporter());

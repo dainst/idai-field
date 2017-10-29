@@ -15,7 +15,9 @@ const delays = require('../config/delays');
 fdescribe('widgets/document-view', function() {
 
     beforeEach(function() {
-        browser.sleep(1000);
+
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
+        browser.sleep(250);
     });
 
     beforeEach(() => {
@@ -23,7 +25,6 @@ fdescribe('widgets/document-view', function() {
         require('request').post('http://localhost:3003/reset', {});
         browser.sleep(delays.shortRest * 5);
         NavbarPage.clickNavigateToExcavation();
-        // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
         browser.sleep(delays.shortRest);
     });
 

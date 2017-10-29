@@ -16,19 +16,17 @@ fdescribe('import --', function() {
 
     beforeAll(function() {
 
-        // ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(1000);
+        browser.sleep(250);
     });
 
 
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest * 5);
         NavbarPage.performNavigateToImport();
-        // browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest * 20);
+        browser.sleep(delays.shortRest);
     });
 
 

@@ -17,7 +17,7 @@ fdescribe('widgets/document-view', function() {
     beforeEach(function() {
 
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(250);
+        browser.sleep(750);
     });
 
     beforeEach(() => {
@@ -25,7 +25,7 @@ fdescribe('widgets/document-view', function() {
         require('request').post('http://localhost:3003/reset', {});
         browser.sleep(delays.shortRest * 5);
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
     });
 
 

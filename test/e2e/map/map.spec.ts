@@ -9,7 +9,7 @@ const delays = require('../config/delays');
 const request = require('request');
 
 
-describe('resources/map --', function() {
+fdescribe('resources/map --', function() {
 
     function setPolygon() {
         return Promise.resolve()

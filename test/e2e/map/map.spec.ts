@@ -1,13 +1,14 @@
-import {browser} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {NavbarPage} from "../navbar.page";
+const EC = protractor.ExpectedConditions;
+
 
 const delays = require('../config/delays');
 const request = require('request');
-
 
 fdescribe('resources/map --', function() {
 
@@ -124,8 +125,9 @@ fdescribe('resources/map --', function() {
     }
 
     beforeAll(function() {
+        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         // ResourcesPage.get();
-        // browser.sleep(3000);
+        browser.sleep(750);
     });
 
 

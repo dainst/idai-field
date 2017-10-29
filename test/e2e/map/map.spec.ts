@@ -10,7 +10,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-fdescribe('resources/map --', function() {
+describe('resources/map --', function() {
 
     function setPolygon() {
         return Promise.resolve()

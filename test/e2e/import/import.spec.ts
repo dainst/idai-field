@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-fdescribe('import --', function() {
+describe('import --', function() {
 
     beforeAll(function() {
 

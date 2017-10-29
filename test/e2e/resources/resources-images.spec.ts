@@ -12,7 +12,7 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-fdescribe('resources/images --', function() {
+describe('resources/images --', function() {
 
     beforeAll(() => {
 

@@ -12,7 +12,7 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-fdescribe('widgets/document-view', function() {
+describe('widgets/document-view', function() {
 
     beforeAll(() => {
 

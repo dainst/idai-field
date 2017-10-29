@@ -85,7 +85,8 @@ export class SampleDataLoader implements AbstractSampleDataLoader {
                                     db.get(file)
                                         .then((doc: any) =>
                                             db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
-                                                .catch((putAttachmentErr: any) => Promise.reject("putAttachmentErr:"+putAttachmentErr))
+                                                .catch((putAttachmentErr: any) =>
+                                                    Promise.reject("putAttachmentErr:"+putAttachmentErr))
                                         , (dbGetErr: any) => Promise.reject("dbGetErr:"+dbGetErr))
                                 );
                             }

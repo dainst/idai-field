@@ -49,11 +49,11 @@ fdescribe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest * 2);
         NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest * 2);
         ImageOverviewPage.createDepictsRelation('trench1');
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest * 2);
     }
 
     function clickDepictsRelationLink() {

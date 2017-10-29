@@ -46,7 +46,7 @@ fdescribe('import --', function() {
     it('import a relation and add the corresponding inverse relation', () => {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
-        browser.sleep(2000);
+        browser.sleep(1000);
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
@@ -135,7 +135,7 @@ fdescribe('import --', function() {
 
         importIt('./test/test-data/importer-test-no-trench.jsonl', 1);
 
-        browser.sleep(2000);
+        browser.sleep(1000);
         NavbarPage.clickNavigateToExcavation();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);

@@ -11,7 +11,7 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('widgets/document-view', function() {
+fdescribe('widgets/document-view', function() {
 
     beforeEach(function() {
         ResourcesPage.get();

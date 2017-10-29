@@ -21,7 +21,7 @@ fdescribe('resources/state --', function() {
     beforeAll(() => {
        removeResourcesStateFile();
        ProjectPage.get();
-       browser.sleep(delays.shortRest*4);
+       browser.sleep(delays.shortRest*2);
     });
 
     beforeEach(() => {

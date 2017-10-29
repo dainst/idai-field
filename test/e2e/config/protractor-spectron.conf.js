@@ -71,7 +71,11 @@ exports.config = {
 
                         browserLogs.forEach(function(log){
                             if (log.level.value > 900) { // it's an error log
-                                console.log("===> ERROR message: ",log.message);
+                                if (log.message.indexOf('Failed to load resource: the server responded ' +
+                                        'with a status of 404 (Not Found)') !== -1) {
+                                    
+                                    console.log("===> ERROR message: ",log.message);
+                                }
                             } else {
                                 console.log("Log message: ",log.message);
                             }

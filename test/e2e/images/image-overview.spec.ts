@@ -10,7 +10,7 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-fdescribe('images/image-overview --', function() {
+describe('images/image-overview --', function() {
 
     beforeAll(() => {
 

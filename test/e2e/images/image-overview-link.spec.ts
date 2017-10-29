@@ -8,7 +8,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-fdescribe('images/image-overview/link --', function() {
+describe('images/image-overview/link --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'c1';

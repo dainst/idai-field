@@ -63,23 +63,26 @@ exports.config = {
 
                 browser.manage().logs().get('browser').then(function(browserLogs) {
 
-                    if (browserLogs.filter(function (log) { return (log.level.value > 900 && (log.message.
-                        indexOf('Failed to load resource') == -1))})
-                        .length > 0) {
+                    var errLogs = browserLogs.filter(function (log) {
+                        return (log.level.value_ > 900 && (log.message.
+                            indexOf('Failed to load resource') === -1))});
+
+
+                    if (errLogs.length > 0) {
 
                         console.log('--- There has been at least one browser console error!');
 
                         browserLogs.forEach(function(log){
-                            if (log.level.value > 900) { // it's an error log
+                            if (log.level.value_ > 900) { // it's an error log
                                 if (log.message.
-                                    indexOf('Failed to load resource') == -1) {
+                                    indexOf('Failed to load resource') === -1) {
 
-                                    console.log("===> ERROR message: ",log.message);
+                                    console.log("===> critical ERROR message: ",log.message);
                                 } else {
-                                    console.log("(Uncritical) Error message: ",log.message);
+                                    console.log("(uncritical) Error message: ",log.message);
                                 }
                             } else {
-                                console.log("Log message: ",log.message);
+                                // console.log("Log message: ",log.message);
                             }
                         });
                     }

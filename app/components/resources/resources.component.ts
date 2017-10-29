@@ -47,7 +47,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private loading: Loading
     ) {
-        loading.start();
+        loading.start(); console.log("hi")
         routingService.routeParams(route).subscribe((params: any) => {
             loading.stop();
 

@@ -63,8 +63,8 @@ exports.config = {
 
                 browser.manage().logs().get('browser').then(function(browserLogs) {
 
-                    if (browserLogs.filter(function (log) { return (log.level.value > 900 && log.message.
-                        indexOf('Failed to load resource: the server responded') === -1)})
+                    if (browserLogs.filter(function (log) { return (log.level.value > 900 && (log.message.
+                        indexOf('Failed to load resource') == -1))})
                         .length > 0) {
 
                         console.log('--- There has been at least one browser console error!');
@@ -72,7 +72,7 @@ exports.config = {
                         browserLogs.forEach(function(log){
                             if (log.level.value > 900) { // it's an error log
                                 if (log.message.
-                                    indexOf('Failed to load resource: the server responded') === -1) {
+                                    indexOf('Failed to load resource') == -1) {
 
                                     console.log("===> ERROR message: ",log.message);
                                 } else {

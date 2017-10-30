@@ -43,9 +43,19 @@ export class NavbarPage {
         element.all(by.css('#projectSelectBox option')).get(option).click();
     };
 
-    public static clickCloseMessage(index = 0) {
+    public static clickCloseMessage(index = 0) { // TODO remove this, use clickCloseAllMessages
 
         common.click(element(by.css('#message-' + index + ' button')));
+    };
+
+    public static clickCloseAllMessages() {
+
+        browser.wait(EC.presenceOf(element.all(by.css('.alert button')).first()), delays.ECWaitTime);
+        element.all(by.css('.alert button')).then(buttonEls=>{
+            for (let buttonEl of buttonEls.reverse()) {
+                buttonEl.click();
+            }
+        })
     };
 
     // await
@@ -65,7 +75,7 @@ export class NavbarPage {
     public static getMessageText() {
 
         browser.sleep(200);
-        browser.ignoreSynchronization = true;
+        browser.ignoreSynchronization = true; // TODO this should not be necessary anymore, success manages in tests can get clicked away
         let text =  element(by.id('message-0')).getText();
         browser.ignoreSynchronization = false;
         return text;

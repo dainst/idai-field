@@ -1,7 +1,8 @@
 <document-view [document]="viewFacade.getSelectedDocument()" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
                (onDeselect)="viewFacade.deselect()">
 
-    <ngb-tabset activeId="document-view-{{activeTab}}-tab">>
+    <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
+                (tabChange)="onTabChange($event)">
         <ngb-tab id="document-view-fields-tab">
             <ng-template ngbTabTitle>
                 <span class="mdi mdi-format-list-bulleted"></span>

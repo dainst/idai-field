@@ -33,8 +33,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    private activeDocumentViewTab: string;
-
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
@@ -88,7 +86,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
         const isMatched = this.viewFacade.selectMainTypeDocument(document);
-        if (!isMatched) this.activeDocumentViewTab = undefined as any;
+        if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
     }
 
 
@@ -98,7 +96,7 @@ export class ResourcesComponent implements AfterViewChecked {
             () => {
                     if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
                     else {
-                        this.activeDocumentViewTab = tab as any;
+                        this.viewFacade.setActiveDocumentViewTab(tab);
                     }
                 }).catch(() => this.messages.add([M.DATASTORE_NOT_FOUND]));
     }
@@ -156,7 +154,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         const result = await this.doceditProxy.editDocument(document as any, activeTabName);
 
-        if (result['tab']) this.activeDocumentViewTab = result['tab'];
+        if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
         if (result['updateScrollTarget']) this.scrollTarget = result['document'];
     }
 
@@ -195,20 +193,24 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public uploadImages(event: Event, document: IdaiFieldDocument): Promise<any> {
 
-        return this.imageUploader.startUpload(event, document).then(
-            uploadResult => {
-                for (let msgWithParams of uploadResult.messages) {
-                    this.messages.add(msgWithParams);
-                }
+        return this.imageUploader.startUpload(event, document).then(uploadResult => {
 
-                if (uploadResult.uploadedImages == 1) {
-                    this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-                } else if (uploadResult.uploadedImages > 1) {
-                    this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
-                        document.resource.identifier]);
-                }
+            if (uploadResult.uploadedImages > 0) {
+                this.viewFacade.setActiveDocumentViewTab('images');
+                this.viewFacade.setSelectedDocument(document);
             }
-        )
+
+            for (let msgWithParams of uploadResult.messages) {
+                this.messages.add(msgWithParams);
+            }
+
+            if (uploadResult.uploadedImages == 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
+            } else if (uploadResult.uploadedImages > 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+                    document.resource.identifier]);
+            }
+        });
     }
 
 

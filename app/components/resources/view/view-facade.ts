@@ -105,6 +105,18 @@ export class ViewFacade {
     }
 
 
+    public getActiveDocumentViewTab(): string|undefined {
+
+        return this.viewManager.getActiveDocumentViewTab();
+    }
+
+
+    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
+
+        this.viewManager.setActiveDocumentViewTab(activeDocumentViewTab);
+    }
+
+
     public deselect() {
 
         return this.documentsManager.deselect();

@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../../resources.component';
@@ -18,8 +19,9 @@ import {ViewFacade} from '../../view/view-facade';
  */
 export class DocumentViewSidebarComponent {
 
-    @Input() activeTab: string;
     @Input() updateThumbnails: boolean;
+
+    @ViewChild('tabs') tabs: NgbTabset;
 
     // for clean and refactor safe template, and to help find usages
     public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
@@ -31,6 +33,12 @@ export class DocumentViewSidebarComponent {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade
     ) { }
+
+
+    public onTabChange(event: any) {
+
+        this.viewFacade.setActiveDocumentViewTab(event['nextId'].replace('document-view-', '').replace('-tab', ''));
+    }
 
 
     public hasRelations() {

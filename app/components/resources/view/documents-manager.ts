@@ -95,6 +95,7 @@ export class DocumentsManager {
 
         this.selectedDocument = undefined;
         this.removeEmptyDocuments();
+        this.viewManager.setActiveDocumentViewTab(undefined);
     }
 
 
@@ -116,6 +117,8 @@ export class DocumentsManager {
         }
 
         if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
+
+        if (!documentToSelect) this.viewManager.setActiveDocumentViewTab(undefined);
 
         this.selectedDocument = documentToSelect;
 

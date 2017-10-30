@@ -20,6 +20,7 @@ export class ViewManager {
     private query: Query;
     // public view: ViewDefinition;
     private mainTypeLabel: string;
+    private activeDocumentViewTab: string|undefined;
 
     private viewName: string;
 
@@ -67,6 +68,18 @@ export class ViewManager {
     public getMainTypeLabel() {
 
         return this.mainTypeLabel;
+    }
+
+
+    public getActiveDocumentViewTab(): string|undefined {
+
+        return this.activeDocumentViewTab;
+    }
+
+
+    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
+
+        this.activeDocumentViewTab = activeDocumentViewTab;
     }
 
 
@@ -187,7 +200,9 @@ export class ViewManager {
 
             this.initializeMode(defaultMode);
             this.initializeQuery();
-        })
+
+            this.activeDocumentViewTab = undefined;
+        });
     }
 
 

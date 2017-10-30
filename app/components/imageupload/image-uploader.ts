@@ -68,7 +68,7 @@ export class ImageUploader {
                     uploadModalRef.close();
                     return Promise.resolve(result);
                 });
-            }).catch(() => {});
+            }).catch(() => Promise.resolve(uploadResult));
     }
 
 

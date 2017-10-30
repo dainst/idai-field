@@ -35,12 +35,10 @@ export class ResourcesMapComponent {
     ) { }
 
 
-    private selectedDocumentIsNew(): boolean {
+    public select(document: IdaiFieldDocument) {
 
-        const selectedDoc = this.viewFacade.getSelectedDocument();
-        if (!selectedDoc) return false;
-
-        return !selectedDoc.resource.id;
+        this.viewFacade.setSelectedDocument(document);
+        this.resourcesComponent.setScrollTarget(document);
     }
 
 
@@ -92,4 +90,12 @@ export class ResourcesMapComponent {
             .catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
+
+    private selectedDocumentIsNew(): boolean {
+
+        const selectedDoc = this.viewFacade.getSelectedDocument();
+        if (!selectedDoc) return false;
+
+        return !selectedDoc.resource.id;
+    }
 }

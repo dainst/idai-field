@@ -13,7 +13,7 @@
                       [projectDocument]="resourcesComponent.projectDocument"
                       [stayInBounds]="!viewFacade.isInOverview()"
                       [update]="resourcesComponent.ready"
-                      (onSelectDocument)="viewFacade.setSelectedDocument($event, true)"
+                      (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 

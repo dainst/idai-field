@@ -2,6 +2,15 @@
     <div *ngIf="fileCount >= 100" class="text-center alert alert-warning">
        Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
     </div>
+    <div *ngIf="depictsRelationTarget" class="text-center alert alert-info">
+        <span *ngIf="fileCount == 1">
+            Das importierte Bild wird mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b> verknüpft.
+        </span>
+        <span *ngIf="fileCount > 1">
+            Die importierten Bilder werden mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b>
+            verknüpft.
+        </span>
+    </div>
     <p *ngIf="imageType.children && imageType.children.length > 0">Bitte wählen Sie den gewünschten Typ aus.</p>
     <ul *ngIf="imageType.children && imageType.children.length > 0" class="list-group">
         <li [ngClass]="{'abstract-idai-type': imageType.isAbstract}" class="list-group-item popover-item"

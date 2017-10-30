@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 import {ReadDatastore} from 'idai-components-2/datastore';
 import {PersistenceManager} from 'idai-components-2/persist';
@@ -45,7 +46,7 @@ export class ImageUploader {
      * @param depictsRelationTargetId If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the resource specified by the id.
      */
-    public startUpload(event: Event, depictsRelationTargetId?: string): Promise<ImageUploadResult> {
+    public startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         const uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
@@ -60,10 +61,10 @@ export class ImageUploader {
         if (result[0] == 0) return Promise.resolve(uploadResult);
 
         let uploadModalRef: any;
-        return this.chooseType(files.length)
+        return this.chooseType(files.length, depictsRelationTarget)
             .then(type => {
                 uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-                return this.uploadFiles(files, type, uploadResult, depictsRelationTargetId).then(result => {
+                return this.uploadFiles(files, type, uploadResult, depictsRelationTarget).then(result => {
                     uploadModalRef.close();
                     return Promise.resolve(result);
                 });
@@ -71,12 +72,12 @@ export class ImageUploader {
     }
 
 
-    private chooseType(fileCount: number): Promise<IdaiType> {
+    private chooseType(fileCount: number, depictsRelationTarget?: Document): Promise<IdaiType> {
 
         return new Promise((resolve, reject) => {
 
             const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
-            if ((imageType.children && imageType.children.length > 0) || fileCount >= 100) {
+            if ((imageType.children && imageType.children.length > 0) || fileCount >= 100 || depictsRelationTarget) {
                 const modal: NgbModalRef
                     = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
 
@@ -85,6 +86,7 @@ export class ImageUploader {
                     closeReason => reject());
 
                 modal.componentInstance.fileCount = fileCount;
+                modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
             } else {
                 resolve(imageType);
             }
@@ -93,7 +95,7 @@ export class ImageUploader {
 
 
     private uploadFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
-                        depictsRelationTargetId?: string): Promise<ImageUploadResult> {
+                        depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return Promise.resolve(uploadResult);
 
@@ -110,7 +112,7 @@ export class ImageUploader {
                 promise = promise.then(() => this.isDuplicateFilename(file.name))
                     .then(isDuplicateFilename => {
                         if (!isDuplicateFilename) {
-                            return this.uploadFile(file, type, depictsRelationTargetId);
+                            return this.uploadFile(file, type, depictsRelationTarget);
                         } else {
                             duplicateFilenames.push(file.name);
                         }
@@ -148,14 +150,14 @@ export class ImageUploader {
     }
 
 
-    private uploadFile(file: File, type: IdaiType, depictsRelationTargetId?: string): Promise<any> {
+    private uploadFile(file: File, type: IdaiType, depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
-                    that.createImageDocument(file, type, depictsRelationTargetId)
+                    that.createImageDocument(file, type, depictsRelationTarget)
                         .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
                         .then(() => resolve())
                         .catch(error => {
@@ -175,7 +177,7 @@ export class ImageUploader {
     }
 
 
-    private createImageDocument(file: File, type: IdaiType, depictsRelationTargetId?: string): Promise<any> {
+    private createImageDocument(file: File, type: IdaiType, depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -197,7 +199,9 @@ export class ImageUploader {
                     }
                 };
 
-                if (depictsRelationTargetId) doc.resource.relations['depicts'] = [depictsRelationTargetId];
+                if (depictsRelationTarget && depictsRelationTarget.resource.id) {
+                    doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
+                }
 
                 this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
                     .then(result => resolve(result))

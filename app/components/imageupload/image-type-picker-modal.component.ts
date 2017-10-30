@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 
 @Component({
@@ -14,6 +15,7 @@ import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 export class ImageTypePickerModalComponent {
 
     public fileCount: number;
+    public depictsRelationTarget: Document;
 
     private imageType: IdaiType;
 

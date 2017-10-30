@@ -58,7 +58,7 @@ global.switches = {
 };
 
 if (env && env.indexOf('test') !== -1) { // is environment 'test'
-    global.switches.messages_timeout = 200;
+    global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
 }

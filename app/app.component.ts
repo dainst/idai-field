@@ -3,6 +3,8 @@ import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
 import {AppController} from "./app-controller";
 
+const remote = require('electron').remote;
+
 @Component({
     moduleId: module.id,
     selector: 'idai-field-app',
@@ -15,6 +17,7 @@ import {AppController} from "./app-controller";
  */
 export class AppComponent {
 
+    public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     constructor(private router: Router,
                 private messages: Messages,

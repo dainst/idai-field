@@ -11,7 +11,7 @@ describe('resources/messages --', () => {
 
     it('create a new object of first listed type ', () => {
         ResourcesPage.performCreateResource('12');
-        // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
     it('show the success msg also on route change', () => {
@@ -21,7 +21,7 @@ describe('resources/messages --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
 
-        // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
     
     it('warn if identifier is missing', () => {
@@ -41,6 +41,6 @@ describe('resources/messages --', () => {
         ResourcesPage.performCreateResource('120');
         ResourcesPage.performCreateResource('12');
 
-        // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 });

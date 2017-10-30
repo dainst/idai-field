@@ -55,14 +55,17 @@ exports.config = {
         var ProgressReporter = function() {
 
             this.specStarted = function(spec) {
+
                 setTimeout( // to show spec done first
                     function() {
                         process.stdout.write("SPEC " + spec.fullName + " ")
                     },20)
 
+
             };
 
             this.specDone = function(spec) {
+
                 console.log(spec.status.toUpperCase());
 
                 browser.manage().logs().get('browser').then(function(browserLogs) {

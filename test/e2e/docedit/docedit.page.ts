@@ -1,4 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
+import {NavbarPage} from '../navbar.page';
 
 let common = require('../common.js');
 let delays = require('../config/delays');
@@ -44,6 +45,7 @@ export class DoceditPage {
                     function() {
                         return new Promise(function(resolve) {
                             setTimeout(function() {
+                                NavbarPage.clickCloseMessage();
                                 resolve();
                             }, delays.shortRest);
                         })

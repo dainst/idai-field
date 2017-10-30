@@ -2,19 +2,19 @@ import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
+import {Document} from 'idai-components-2/core';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {CachedDatastore} from '../../core/datastore/cached-datastore';
+import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
 
 
 @Component({
@@ -73,7 +73,7 @@ export class DoceditComponent {
         private validator: Validator,
         private settingsService: SettingsService,
         private modalService: NgbModal,
-        private datastore: IdaiFieldDatastore,
+        private datastore: IdaiFieldDatastore<Document>,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,

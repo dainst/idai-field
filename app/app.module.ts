@@ -10,7 +10,7 @@ import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
-import {CachedDatastore} from './core/datastore/cached-datastore';
+import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -46,7 +46,6 @@ import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-s
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {IdaiFieldReadDatastore} from './core/datastore/idai-field-read-datastore';
-import {IdaiFieldDatastore} from './core/datastore/idai-field-datastore';
 import {AppController} from "./app-controller";
 
 const remote = require('electron').remote;
@@ -147,8 +146,8 @@ let pconf = undefined;
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  imageTypeUtility: ImageTypeUtility,
-                                 conflictResolver: ConflictResolver): CachedDatastore<IdaiFieldDocument> {
-                return new CachedDatastore(
+                                 conflictResolver: ConflictResolver): IdaiFieldDatastore<IdaiFieldDocument> {
+                return new IdaiFieldDatastore(
                     new PouchdbServerDatastore(pouchdbManager,
                         constraintIndexer, fulltextIndexer,
                         appState, autoConflictResolvingExtension, conflictResolver),
@@ -188,7 +187,7 @@ let pconf = undefined;
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader: ConfigLoader, datastore: CachedDatastore<IdaiFieldDocument>) {
+            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDatastore<IdaiFieldDocument>) {
                 return new IdaiFieldValidator(configLoader, datastore);
             },
             deps: [ConfigLoader, ReadDatastore]

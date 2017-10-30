@@ -1,10 +1,9 @@
 import {Static} from '../../static';
-import {CachedDatastore} from '../../../../app/core/datastore/cached-datastore';
+import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
 import {ResourcesState} from "../../../../app/components/resources/view/resources-state";
-
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 /**
  * This is a subsystem test.
@@ -32,7 +31,7 @@ export function main() {
         let document1: Document;
         let document2: Document;
         let document3: Document;
-        let datastore: IdaiFieldDatastore;
+        let datastore: IdaiFieldDatastore<IdaiFieldDocument>;
 
 
         beforeEach(

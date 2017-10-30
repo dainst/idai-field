@@ -1,18 +1,18 @@
 import {Document} from 'idai-components-2/core';
-import {CachedDatastore} from '../../../../app/core/datastore/cached-datastore';
+import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
 import {DocumentCache} from '../../../../app/core/datastore/document-cache';
 import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
 import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
+
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() { // TODO add specs for the distinction IdaiFieldDocument / IdaiFieldImageDocument
 
-    describe('CachedDatastore', () => {
+    describe('IdaiFieldDatastore', () => {
 
-        let datastore: IdaiFieldDatastore;
+        let datastore: IdaiFieldDatastore<Document>;
         let mockdb: any;
         let documentChangesNotificationsCallback;
 

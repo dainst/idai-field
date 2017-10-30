@@ -33,7 +33,7 @@ export abstract class IdaiFieldReadDatastore<T extends Document> extends ReadDat
     /**
      * get
      *
-     * In addition to {@link Datastore#get}, {@link CachedDatastore#get}
+     * In addition to {@link Datastore#get}, {@link IdaiFieldDatastore#get}
      * has some extra specifications:
      *
      * options can be

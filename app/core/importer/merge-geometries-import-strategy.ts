@@ -2,10 +2,9 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
-import {CachedDatastore} from '../datastore/cached-datastore';
+import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 
 /**
  * @author Daniel de Oliveira
@@ -14,7 +13,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
 export class MergeGeometriesImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator,
-                private datastore: IdaiFieldDatastore,
+                private datastore: IdaiFieldDatastore<IdaiFieldDocument>,
                 private settingsService: SettingsService) { }
 
 

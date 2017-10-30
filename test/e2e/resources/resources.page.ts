@@ -196,7 +196,7 @@ export class ResourcesPage {
     // sequences
 
     public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
-                                                   inputFieldText?: string, skipGeometry?: boolean) {
+                                                   inputFieldText?: string, skipGeometry?: boolean, clickMsgAway: boolean = true) {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
@@ -207,7 +207,7 @@ export class ResourcesPage {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
         ResourcesPage.scrollUp();
-        DoceditPage.clickSaveDocument();
+        DoceditPage.clickSaveDocument(clickMsgAway);
     };
 
     public static performCreateMainTypeResource(identifier: string) {

@@ -37,7 +37,7 @@ export class DoceditPage {
         common.click(element(by.id('docedit-conflicts-tab')));
     };
 
-    public static clickSaveDocument = function() {
+    public static clickSaveDocument = function(clickMsgAway = true) {
 
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {
@@ -45,7 +45,7 @@ export class DoceditPage {
                     function() {
                         return new Promise(function(resolve) {
                             setTimeout(function() {
-                                NavbarPage.clickCloseMessage();
+                                if (clickMsgAway) NavbarPage.clickCloseMessage();
                                 resolve();
                             }, delays.shortRest);
                         })

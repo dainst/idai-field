@@ -1,13 +1,11 @@
-import {Query, DocumentChange, ReadDatastore} from 'idai-components-2/datastore';
+import {DocumentChange, Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from "./document-cache";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ImageTypeUtility} from '../../../common/image-type-utility';
-import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
-import {DocumentConverter} from "./document-converter";
+import {DocumentConverter} from './document-converter';
 
 
 @Injectable()
@@ -42,7 +40,7 @@ export abstract class CachedReadDatastore<T extends Document>
         protected documentConverter: DocumentConverter,
         private typeClassName: string) {
 
-        console.debug("constructing cached datastore for "+typeClassName);
+        console.debug('constructing cached datastore for '+typeClassName);
 
 
         this.datastore.documentChangesNotifications().subscribe(documentChange => {
@@ -105,14 +103,14 @@ export abstract class CachedReadDatastore<T extends Document>
 
 
     /**
-     * Implements {@link IdaiFieldReadDatastore#getRevision}
-     *
      * Fetches a specific revision directly from the underlying datastore layer.
      * Bypasses the cache and alway returns a new instance.
      *
      * @param docId
      * @param revisionId
-     * @returns {Promise<IdaiFieldDocument>}
+     * @returns
+     *   Rejects with
+     *     [DOCUMENT_NOT_FOUND] - in case of error
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 

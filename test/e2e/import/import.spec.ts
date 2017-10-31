@@ -1,4 +1,4 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
@@ -14,19 +14,26 @@ const EC = protractor.ExpectedConditions;
  */
 describe('import --', function() {
 
+
+    let index = 0;
+
     beforeAll(function() {
 
+        ImportPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(750);
     });
 
 
     beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 5);
-        NavbarPage.performNavigateToImport();
-        browser.sleep(delays.shortRest);
+
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.performNavigateToImport();
+            browser.sleep(delays.shortRest);
+        }
+        index++;
     });
 
 
@@ -41,10 +48,11 @@ describe('import --', function() {
         ImportPage.clickStartImportButton();
     };
 
+
     it('import a relation and add the corresponding inverse relation', () => {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
@@ -62,6 +70,7 @@ describe('import --', function() {
         ResourcesPage.clickSelectResource('trench1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
+
 
     it('delete already imported iDAI.field documents if an error occurs', () => {
 
@@ -81,7 +90,7 @@ describe('import --', function() {
     it('import a valid iDAI.field JSONL file via HTTP', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickSelectMainTypeDocument(0);
 
@@ -91,11 +100,13 @@ describe('import --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
 
+
     it('abort if an empty geometry is found', () => {
 
         importIt('./test/test-data/importer-test-empty-geometry.jsonl');
         NavbarPage.awaitAlert('nicht definiert', false);
     });
+
 
     it('abort if a geometry with invalid coordinates is found', () => {
 
@@ -103,11 +114,13 @@ describe('import --', function() {
         NavbarPage.awaitAlert('sind nicht valide', false);
     });
 
+
     it('abort if a geometry with an unsupported type is found', () => {
 
         importIt('./test/test-data/importer-test-unsupported-geometry-type.jsonl');
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
+
 
     it('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', () => {
@@ -129,11 +142,12 @@ describe('import --', function() {
         });
     });
 
+
     it('link imported resources to an existing main type resource', () => {
 
         importIt('./test/test-data/importer-test-no-trench.jsonl', 1);
 
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
@@ -141,6 +155,7 @@ describe('import --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
     });
+
 
     it('abort if a resource must not be linked to an existing main type resource', () => {
 

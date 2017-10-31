@@ -66,6 +66,12 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
             deps: [PouchdbManager, ConstraintIndexer,
                 FulltextIndexer, AppState, ConflictResolvingExtension, ConflictResolver]
         },
+
+
+        // basic datastore making no assumptions about idai-field.
+        // makes no guarantees about available constraints
+        // knows only Document
+        // provides caching
         {
             provide: DocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
@@ -76,11 +82,32 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
             },
             deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
         },
-        { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
-        { provide: Datastore, useExisting: DocumentDatastore },
-        { provide: IdaiFieldDatastore, useExisting: DocumentDatastore },
-        { provide: IdaiFieldReadDatastore, useExisting: DocumentDatastore },
-        { provide: ReadDatastore, useExisting: DocumentDatastore },
+        { provide: DocumentReadDatastore, useExisting: DocumentDatastore }, // read-only version of it
+        { provide: Datastore, useExisting: DocumentDatastore },        // used by components, no further assumptions
+        { provide: ReadDatastore, useExisting: DocumentDatastore },    // used by components, no further assumptions, read-only version of the previous one
+
+
+        // basic idai-field datastore
+        // knows only Document
+        // guarantees that identifier, liesWithin, isRecordedIn constraints are available
+        // provides caching
+        {
+            provide: IdaiFieldDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 documentCache: DocumentCache<Document>,
+                                 documentConverter: DocumentConverter,
+            ): IdaiFieldDatastore {
+                return new IdaiFieldDatastore(pouchdbDatastore, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
+        },
+        { provide: IdaiFieldReadDatastore, useExisting: IdaiFieldDatastore },
+
+
+        // idai-field datastore
+        // knows IdaiFieldDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // guarantees that identifier, liesWithin, isRecordedIn constraints are available
+        // provides caching
         {
             provide: IdaiFieldDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
@@ -91,7 +118,13 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
             },
             deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
         },
-        { provide: IdaiFieldDocumentReadDatastore, useExisting: IdaiFieldDocumentDatastore },
+        { provide: IdaiFieldDocumentReadDatastore, useExisting: IdaiFieldDocumentDatastore }, // read-only version of it
+
+
+        // idai-field datastore
+        // knows IdaiFieldImageDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // guarantees that identifier constraint is available
+        // provides caching
         {
             provide: IdaiFieldImageDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
@@ -102,7 +135,9 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
                 },
             deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
         },
-        { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore },
+        { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
+
+
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
         ConflictResolvingExtension,
         {

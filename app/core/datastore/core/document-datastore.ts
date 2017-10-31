@@ -14,6 +14,15 @@ export class DocumentDatastore extends CachedDatastore<Document> {
         documentCache: DocumentCache<Document>,
         documentConverter: DocumentConverter) {
 
-        super(datastore, documentCache, documentConverter, 'Document');
+        super(datastore, documentCache, documentConverter, 'Document / components');
+    }
+
+
+    // TODO make that if trying to use unknown constraints leads to an exception
+    public find(query: any): Promise<Document[]> {
+
+        return super.find(query).then(result => {
+            return result;
+        })
     }
 }

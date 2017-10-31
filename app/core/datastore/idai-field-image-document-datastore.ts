@@ -23,6 +23,7 @@ export class IdaiFieldImageDocumentDatastore
     // TODO intercept and handle every call that tries to access or modify non image documents
 
     // TODO make that query is only for image document types. throw exception if tried otherwise
+    // TODO throw error if constraints except identifier are used
     public find(query: any): Promise<IdaiFieldImageDocument[]> {
 
         return super.find(query).then(result => {

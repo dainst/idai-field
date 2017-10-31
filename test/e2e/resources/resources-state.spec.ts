@@ -18,15 +18,33 @@ const common = require('../common');
  */
 describe('resources/state --', function() {
 
+    const appDataPath = browser.params.appDataPath;
+
+    let index = 0;
+
+
+    beforeAll(() => {
+        ProjectPage.get();
+    });
+
+
+    beforeEach(() => {
+
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest * 1.5);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 1.5);
+        }
+        index++;
+    });
+
+
     beforeAll(() => {
        removeResourcesStateFile();
     });
 
-    beforeEach(() => {
-        return ProjectPage.get();
-    });
-
-    const appDataPath = browser.params.appDataPath;
 
     afterEach(done => {
 
@@ -42,11 +60,9 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        browser.sleep(1000);
         NavbarPage.clickNavigateToImages();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         ImageOverviewPage.createDepictsRelation('trench1');
-        browser.sleep(2000);
     }
 
     function clickDepictsRelationLink() {
@@ -102,12 +118,16 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation2'));
     });
 
+
     it('switch from image to map view after click on depicts relation link', () => {
+
+        ProjectPage.get();
 
         createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
+
 
     it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
@@ -120,6 +140,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
+
     it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
@@ -131,6 +152,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
     });
+
 
     it('switch views after click on relation link', () => {
 
@@ -152,6 +174,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
     });
 
+
     it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
         ResourcesPage.performCreateResource('building1', 'building');
         NavbarPage.clickNavigateToBuilding();
@@ -161,7 +184,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickGoToMainTypeViewByIdentifier('building1')
+        ResourcesPage.clickGoToMainTypeViewByIdentifier('building1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
         
@@ -176,6 +199,7 @@ describe('resources/state --', function() {
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
     });
+
 
     it('select correct main type document after click on relation link', () => {
 
@@ -197,6 +221,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
+
 
     it('autoselect last selected main type document on switching views', () => {
 
@@ -220,6 +245,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
     });
+
 
     it('autoselect last selected type filter on switching views', () => {
 
@@ -247,6 +273,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
     });
 
+
     it('autoselect last selected view mode on switching views', () => {
 
         ResourcesPage.clickListModeButton();
@@ -260,6 +287,7 @@ describe('resources/state --', function() {
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
     });
+
 
     it('restore search bar input field after switching views', () => {
 
@@ -282,6 +310,7 @@ describe('resources/state --', function() {
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('abc'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
+
 
     it('keep query string in search bar input field on switching view modes', () => {
 
@@ -306,6 +335,7 @@ describe('resources/state --', function() {
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
     });
+
 
     it('keep type filter on switching view modes', () => {
 

@@ -31,6 +31,7 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
     providers: [
         // TODO place app state here, its a direct dependency of this package
         { provide: SampleDataLoader, useClass: IdaiFieldSampleDataLoader },
+
         { provide: PouchdbManager, useFactory: function(
             sampleDataLoader: SampleDataLoader,
             constraintIndexer: ConstraintIndexer,
@@ -43,14 +44,10 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
         },
             deps: [SampleDataLoader, ConstraintIndexer, FulltextIndexer]
         },
-        DocumentCache,
-        {
-            provide: DocumentConverter,
-            useFactory: function(imageTypeUtility: ImageTypeUtility): DocumentConverter {
-                return new IdaiFieldDocumentConverter(imageTypeUtility);
-            },
-            deps: [ImageTypeUtility] // TODO make abstract base class TypeUtility to not depend on common here directly
-        },
+
+        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
+        ConflictResolvingExtension,
+
         {
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
@@ -68,8 +65,12 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
         },
 
 
+        FulltextIndexer,
+        DocumentCache,
+
+
         // basic datastore making no assumptions about idai-field.
-        // makes no guarantees about available constraints
+        // makes no guarantees about available constraints, rejects constraint queries
         // knows only Document
         // provides caching
         {
@@ -85,6 +86,28 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore }, // read-only version of it
         { provide: Datastore, useExisting: DocumentDatastore },        // used by components, no further assumptions
         { provide: ReadDatastore, useExisting: DocumentDatastore },    // used by components, no further assumptions, read-only version of the previous one
+
+
+
+        {
+            provide: ConstraintIndexer,
+            useFactory: function() {
+                return new ConstraintIndexer([
+                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.relations.depicts', type: 'exist' },
+                    { path: 'resource.identifier', type: 'match' },
+                    { path: '_conflicts', type: 'exist' }
+                ]);
+            }
+        },
+        {
+            provide: DocumentConverter,
+            useFactory: function(imageTypeUtility: ImageTypeUtility): DocumentConverter {
+                return new IdaiFieldDocumentConverter(imageTypeUtility);
+            },
+            deps: [ImageTypeUtility] // TODO make abstract base class TypeUtility to not depend on common here directly
+        },
 
 
         // basic idai-field datastore
@@ -136,23 +159,6 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
             deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
-
-
-        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
-        ConflictResolvingExtension,
-        {
-            provide: ConstraintIndexer,
-            useFactory: function() {
-                return new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                    { path: 'resource.relations.liesWithin', type: 'contain' },
-                    { path: 'resource.relations.depicts', type: 'exist' },
-                    { path: 'resource.identifier', type: 'match' },
-                    { path: '_conflicts', type: 'exist' }
-                ]);
-            }
-        },
-        FulltextIndexer
     ]
 })
 

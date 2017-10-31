@@ -1,4 +1,4 @@
-/// <reference path="core/datastore/express-import" />
+/// <reference path="desktop/express-import" />
 
 import {Injectable} from "@angular/core";
 import * as express from 'express';
@@ -9,7 +9,7 @@ const expressPouchDB = require('express-pouchdb');
 import {Document} from 'idai-components-2/core';
 import {ResourcesState} from "./components/resources/view/resources-state";
 import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
-import {DocumentCache} from "./core/datastore/document-cache";
+import {DocumentCache} from "./core/datastore/core/document-cache";
 import {ImagesState} from "./components/imageoverview/view/images-state";
 
 @Injectable()

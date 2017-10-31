@@ -6,8 +6,9 @@ import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../resources.component';
 import {DocumentReference} from './document-reference';
 import {Loading} from '../../../widgets/loading';
-import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../core/datastore/core/cached-datastore';
 import {ViewFacade} from '../view/view-facade';
+import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
 
 @Component({
     selector: 'list',
@@ -31,7 +32,7 @@ export class ListComponent implements OnChanges {
     private childrenShownForIds: string[];
     
     constructor(
-        private datastore: IdaiFieldDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
         private messages: Messages,
         private loading: Loading,

@@ -5,7 +5,7 @@ import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
-import {IdaiFieldReadDatastore} from "../../../core/datastore/idai-field-read-datastore";
+import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -21,13 +21,13 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentReadDatastore,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: MainTypeDocumentsManager
     ) {
 
-        datastore.documentChangesNotifications().subscribe(documentChange => {
+        datastore.documentChangesNotifications().subscribe((documentChange: any) => {
             if (this.selectedDocument) this.handleChange(documentChange);
         });
     }

@@ -5,8 +5,9 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {CachedDatastore} from '../datastore/core/cached-datastore';
 import {M} from '../../m';
+import {DocumentDatastore} from "../datastore/core/document-datastore";
 
 
 export interface ImportReport {
@@ -41,7 +42,7 @@ export class Importer {
     private relationsStrategy: RelationsStrategy;
     private rollbackStrategy: RollbackStrategy;
 
-    private datastore: IdaiFieldDatastore<Document>;
+    private datastore: DocumentDatastore;
 
 
     private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
@@ -84,7 +85,7 @@ export class Importer {
      */
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
                            relationsStrategy: RelationsStrategy,
-                           rollbackStrategy: RollbackStrategy, datastore: IdaiFieldDatastore<Document>): Promise<ImportReport> {
+                           rollbackStrategy: RollbackStrategy, datastore: DocumentDatastore): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 

@@ -8,7 +8,7 @@ import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {StateSerializer} from '../../../common/state-serializer';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 
 /**
  * Manages an overview of operation type resources
@@ -34,7 +34,7 @@ export class ViewFacade {
 
 
     constructor(
-        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentReadDatastore,
         private settingsService: SettingsService,
         private resourcesState: ResourcesState,
         private viewsList: any

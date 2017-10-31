@@ -9,5 +9,10 @@
     "removeComments": false,
     "noImplicitAny": false,
     "lib": ["es2015", "dom"]
-  }
+  },
+  "exclude": [
+    "../node_modules",
+    "../dist",
+    "../release"
+  ]
 }

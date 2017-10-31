@@ -1,8 +1,10 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
-import {DocumentCache} from '../../../../app/core/datastore/document-cache';
+import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
+import {DocumentCache} from '../../../../app/core/datastore/core/document-cache';
 import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
 import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
+import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
+import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-field-document-converter";
 
 
 /**
@@ -10,9 +12,9 @@ import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
  */
 export function main() { // TODO add specs for the distinction IdaiFieldDocument / IdaiFieldImageDocument
 
-    describe('IdaiFieldDatastore', () => {
+    describe('CachedDatastore', () => {
 
-        let datastore: IdaiFieldDatastore<Document>;
+        let datastore: IdaiFieldDocumentDatastore;
         let mockdb: any;
         let documentChangesNotificationsCallback;
 
@@ -68,10 +70,11 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
                 ['isImageType']);
             mockImageTypeUtility.isImageType.and.returnValue(false);
 
-            datastore = new IdaiFieldDatastore(
+
+            datastore = new IdaiFieldDocumentDatastore(
                 mockdb,
                 new DocumentCache<IdaiFieldDocument>(),
-                mockImageTypeUtility);
+                new IdaiFieldDocumentConverter(mockImageTypeUtility));
         });
 
 

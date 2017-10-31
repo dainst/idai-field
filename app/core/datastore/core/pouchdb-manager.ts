@@ -1,7 +1,7 @@
 import * as PouchDB from "pouchdb";
 import {PouchdbProxy} from "./pouchdb-proxy";
 import {Injectable} from "@angular/core";
-import {AbstractSampleDataLoader} from "./abstract-sample-data-loader";
+import {SampleDataLoader} from "./sample-data-loader";
 import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "./constraint-indexer";
@@ -27,7 +27,7 @@ export class PouchdbManager {
     private resolveDbReady = undefined;
 
     constructor(
-        private sampleDataLoader: AbstractSampleDataLoader,
+        private sampleDataLoader: SampleDataLoader,
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer) {
 

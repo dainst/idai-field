@@ -28,7 +28,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../core/datastore/core/cached-datastore';
+import {DocumentDatastore} from "../../core/datastore/core/document-datastore";
 
 
 @Component({
@@ -61,7 +62,7 @@ export class ImportComponent {
     constructor(
         private messages: Messages,
         private importer: Importer,
-        private datastore: IdaiFieldDatastore<Document>,
+        private datastore: DocumentDatastore,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
@@ -124,7 +125,7 @@ export class ImportComponent {
         this.url = undefined;
     }
 
-    private static createImportStrategy(format: string, validator: Validator, datastore: IdaiFieldDatastore<Document>,
+    private static createImportStrategy(format: string, validator: Validator, datastore: DocumentDatastore,
                                         settingsService: SettingsService, configLoader: ConfigLoader,
                                         mainTypeDocumentId: string): ImportStrategy|undefined {
 
@@ -151,7 +152,7 @@ export class ImportComponent {
         }
     }
 
-    private static createRollbackStrategy(format: string, datastore: IdaiFieldDatastore<Document>): RollbackStrategy|undefined {
+    private static createRollbackStrategy(format: string, datastore: DocumentDatastore): RollbackStrategy|undefined {
 
         switch (format) {
             case 'native':

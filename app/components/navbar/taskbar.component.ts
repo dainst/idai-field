@@ -1,11 +1,12 @@
 import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../core/datastore/core/cached-datastore';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ViewFacade} from '../resources/view/view-facade';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocumentDatastore} from "../../core/datastore/idai-field-document-datastore";
 
 @Component({
     moduleId: module.id,
@@ -28,7 +29,7 @@ export class TaskbarComponent {
     private cancelClickListener: Function;
 
 
-    constructor(private datastore: IdaiFieldDatastore<IdaiFieldDocument>,
+    constructor(private datastore: IdaiFieldDocumentDatastore,
                 private settings: SettingsService,
                 private router: Router,
                 private viewFacade: ViewFacade,

@@ -1,7 +1,11 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ReadDatastore, Query} from "idai-components-2/datastore";
-import {Document} from "idai-components-2/core";
 
+
+// TODO transfer this apidoc to the corresponding places
+
+// import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+// import {ReadDatastore, Query} from "idai-components-2/datastore";
+// import {Document} from "idai-components-2/core";
+//
 /**
  * The interface for datastores supporting
  * the idai-field application.
@@ -9,7 +13,7 @@ import {Document} from "idai-components-2/core";
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export abstract class IdaiFieldReadDatastore<T extends Document> extends ReadDatastore {
+// export abstract class UnusedIdaiFieldReadDatastore<T extends Document> extends ReadDatastore {
 
 
     /* find
@@ -27,13 +31,13 @@ export abstract class IdaiFieldReadDatastore<T extends Document> extends ReadDat
      * If two documents have the exact same lastModified, there is no second sort criterium
      * so the order between them is unspecified.
      */
-    public abstract find(query: Query):Promise<T[]>;
+    // public abstract find(query: Query):Promise<T[]>;
 
 
     /**
      * get
      *
-     * In addition to {@link Datastore#get}, {@link IdaiFieldDatastore#get}
+     * In addition to {@link Datastore#get}, {@link CachedDatastore#get}
      * has some extra specifications:
      *
      * options can be
@@ -45,5 +49,5 @@ export abstract class IdaiFieldReadDatastore<T extends Document> extends ReadDat
      *   Rejects with
      *     [DOCUMENT_NOT_FOUND] - in case of error
      */
-    abstract getRevision(docId: string, revisionId: string): Promise<T>;
-}
+    // abstract getRevision(docId: string, revisionId: string): Promise<T>;
+// }

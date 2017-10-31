@@ -7,7 +7,7 @@ import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-docum
 import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
-import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-field-image-document-read-datastore";
 
 
 @Component({
@@ -34,7 +34,7 @@ export class ImagePickerComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        private datastore: IdaiFieldReadDatastore<IdaiFieldImageDocument>,
+        private datastore: IdaiFieldImageDocumentReadDatastore,
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility
     ) {
@@ -43,7 +43,7 @@ export class ImagePickerComponent implements OnInit {
 
 
     public ngOnInit() {
-        
+
         // Listen for transformation of modal to capture finished 
         // resizing and invoke recalculation of imageGrid
         let modalEl = this.el.nativeElement.parentElement.parentElement;

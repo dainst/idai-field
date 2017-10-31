@@ -18,7 +18,7 @@ import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../app/core/datastore/document-cache';
+import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {

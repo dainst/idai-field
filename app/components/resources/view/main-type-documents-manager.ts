@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query, ReadDatastore} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
-import {IdaiFieldReadDatastore} from '../../../core/datastore/idai-field-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -15,7 +15,7 @@ export class MainTypeDocumentsManager {
     private selectedDocument: IdaiFieldDocument|undefined;
 
     constructor(
-        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentReadDatastore,
         private viewManager: ViewManager
     ) {}
 

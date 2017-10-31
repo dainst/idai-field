@@ -15,13 +15,30 @@ let delays = require('../config/delays');
  */
 describe('resources/filter --', () => {
 
-    beforeEach(() => {
+    let index = 0;
+
+
+    beforeAll(() => {
+
+        browser.sleep(delays.shortRest);
         NavbarPage.performNavigateToSettings();
-        require('request').post('http://localhost:3003/reset', {});
         NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        // browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest);
     });
+
+
+    beforeEach(() => {
+
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+            browser.sleep(delays.shortRest);
+        }
+        index++;
+    });
+
 
     it('show only resources of the selected type', () => {
 
@@ -35,6 +52,7 @@ describe('resources/filter --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
+
     it('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -47,6 +65,7 @@ describe('resources/filter --', () => {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
+
     it('filter by parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -57,6 +76,7 @@ describe('resources/filter --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
+
 
     it('show correct types in plus type menu after choosing type filter', () => {
 
@@ -100,6 +120,7 @@ describe('resources/filter --', () => {
         ResourcesPage.clickListModeButton();
         checkTypeOptions();
     });
+
 
     it('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 

@@ -10,5 +10,10 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "lib": ["es2015", "dom"]
-  }
+  },
+  "exclude": [
+    "../node_modules",
+    "../dist",
+    "../release"
+  ]
 }

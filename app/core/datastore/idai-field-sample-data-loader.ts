@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {DOCS} from './sample-objects';
+import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../imagestore/converter';
-import {AbstractSampleDataLoader} from './core/abstract-sample-data-loader';
+import {SampleDataLoader} from './core/sample-data-loader';
 import {AppState} from '../settings/app-state';
 
 
@@ -13,7 +13,7 @@ import {AppState} from '../settings/app-state';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class SampleDataLoader implements AbstractSampleDataLoader {
+export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
 
     constructor(private converter: Converter,

@@ -9,6 +9,11 @@ import {Document} from 'idai-components-2/core';
 export class DocumentCache<T extends Document> {
 
 
+    constructor() {
+
+        console.debug("constructing document cache");
+    }
+
     protected _: { [resourceId: string]: T } = { };
 
 

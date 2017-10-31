@@ -3,7 +3,8 @@ import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
-import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
+import {CachedDatastore} from '../datastore/core/cached-datastore';
+import {DocumentDatastore} from "../datastore/core/document-datastore";
 
 
 /**
@@ -12,7 +13,7 @@ import {IdaiFieldDatastore} from '../datastore/idai-field-datastore';
  */
 export class IdaiFieldValidator extends Validator {
 
-    constructor(configLoader: ConfigLoader, private datastore: IdaiFieldDatastore<Document>) {
+    constructor(configLoader: ConfigLoader, private datastore: DocumentDatastore) {
         super(configLoader);
     }
 

@@ -4,13 +4,14 @@ import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
-import {IdaiFieldDatastore} from '../../../core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../core/datastore/core/cached-datastore';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";
 import {ViewFacade} from '../view/view-facade';
+import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
 
 @Component({
     selector: 'row',
@@ -33,7 +34,7 @@ export class RowComponent {
         private settingsService: SettingsService,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private validator: Validator,
-        private datastore: IdaiFieldDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
         public listComponent: ListComponent,
         public viewFacade: ViewFacade

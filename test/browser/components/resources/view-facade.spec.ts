@@ -1,9 +1,11 @@
 import {Static} from '../../static';
-import {IdaiFieldDatastore} from '../../../../app/core/datastore/idai-field-datastore';
+import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';
 import {ResourcesState} from "../../../../app/components/resources/view/resources-state";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
+import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-field-document-converter";
 
 /**
  * This is a subsystem test.
@@ -31,7 +33,7 @@ export function main() {
         let document1: Document;
         let document2: Document;
         let document3: Document;
-        let datastore: IdaiFieldDatastore<IdaiFieldDocument>;
+        let datastore: CachedDatastore<IdaiFieldDocument>;
 
 
         beforeEach(
@@ -43,7 +45,8 @@ export function main() {
                 mockImageTypeUtility.isImageType.and.returnValue(false);
 
                 const result = Static.createPouchdbDatastore('testdb');
-                datastore = new IdaiFieldDatastore(result.datastore, result.documentCache, mockImageTypeUtility);
+                datastore = new IdaiFieldDocumentDatastore(
+                    result.datastore, result.documentCache, new IdaiFieldDocumentConverter(mockImageTypeUtility));
 
                 const projectDocument = Static.doc('testdb','testdb','Project','testdb');
                 operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');

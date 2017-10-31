@@ -1,4 +1,4 @@
-/// <reference path="express-import" />
+/// <reference path="../../desktop/express-import" />
 
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';

@@ -12,8 +12,8 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldReadDatastore} from "../../core/datastore/idai-field-read-datastore";
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
+import {IdaiFieldImageDocumentReadDatastore} from "../../core/datastore/idai-field-image-document-read-datastore";
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ImageViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: IdaiFieldReadDatastore<IdaiFieldImageDocument>,
+        private datastore: IdaiFieldImageDocumentReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,

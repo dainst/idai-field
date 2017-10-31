@@ -5,11 +5,11 @@ import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {PersistenceManager} from 'idai-components-2/persist';
-import {IdaiFieldDatastore} from '../../core/datastore/idai-field-datastore'
+import {CachedDatastore} from '../../core/datastore/core/cached-datastore'
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
 import {M} from '../../m';
-import {IdaiFieldReadDatastore} from '../../core/datastore/idai-field-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
 
 const moment = require('moment');
 
@@ -34,7 +34,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
 
     constructor(
-        private datastore: IdaiFieldReadDatastore<IdaiFieldDocument>,
+        private datastore: IdaiFieldDocumentReadDatastore,
         private messages: Messages,
         private configLoader: ConfigLoader,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,

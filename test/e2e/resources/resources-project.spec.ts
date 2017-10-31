@@ -12,23 +12,27 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/project --', function() {
+fdescribe('resources/project --', function() {
+
+    const appDataPath = browser.params.appDataPath;
+
 
     beforeAll(() => {
        removeResourcesStateFile();
     });
 
+
     beforeEach(() => {
         return ProjectPage.get();
     });
 
-    const appDataPath = browser.params.appDataPath;
-
+    
     afterEach(done => {
 
         removeResourcesStateFile();
         common.resetConfigJson().then(done);
     });
+
 
     function performCreateProject() {
 
@@ -40,11 +44,13 @@ describe('resources/project --', function() {
         browser.sleep(delays.shortRest * 10);
     }
 
+
     function removeResourcesStateFile() {
 
         const filePath = appDataPath + '/resources-state-' + 'abc.json';
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
+
 
     it('create & switch project', () => {
 
@@ -101,6 +107,7 @@ describe('resources/project --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 
+
     it('delete project', () => {
 
         performCreateProject();
@@ -132,6 +139,7 @@ describe('resources/project --', function() {
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
     });
 
+
     it('do not create a project of an already existing name', () => {
 
         ProjectPage.clickProjectsBadge();
@@ -141,6 +149,7 @@ describe('resources/project --', function() {
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
     });
+
 
     it ('do not delete last project', () => {
 

@@ -13,9 +13,7 @@ describe('resources/relations --', () => {
     let index = 0;
 
     beforeAll(function() {
-        browser.sleep(delays.shortRest);
-        NavbarPage.performNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.get();
         browser.sleep(delays.shortRest);
     });
 

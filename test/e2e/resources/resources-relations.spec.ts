@@ -10,10 +10,25 @@ const delays = require('../config/delays');
 
 describe('resources/relations --', () => {
 
-    beforeEach(function() {
+    let index = 0;
 
-        ResourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
+    beforeAll(function() {
+        browser.sleep(delays.shortRest);
+        NavbarPage.performNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest);
+    });
+
+    beforeEach(() => {
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+            browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+            browser.sleep(delays.shortRest);
+        }
+        index++;
     });
 
     it('create links for relations', () => {
@@ -34,6 +49,8 @@ describe('resources/relations --', () => {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
         expect(DoceditRelationsTabPage.getRelationButtonText(0, 0, 0)).toEqual('2');
+        DoceditPage.clickCloseEdit();
+
     });
 
     it('edit a resource that contains a relation', () => {

@@ -124,6 +124,8 @@ describe('resources/map --', function() {
         DocumentViewPage.clickReeditGeometry();
     }
 
+    let index = 0;
+
     beforeAll(function() {
         ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
@@ -132,11 +134,14 @@ describe('resources/map --', function() {
 
 
     beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        request.post('http://localhost:3003/reset', {form:{key:'value'}});
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest);
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            request.post('http://localhost:3003/reset', {form:{key:'value'}});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+            browser.sleep(delays.shortRest);
+        }
+        index++;
     });
 
     it('create a new item with point geometry', function() {

@@ -45,9 +45,10 @@ export class DoceditPage {
                     function() {
                         return new Promise(function(resolve) {
                             setTimeout(function() {
-                                if (clickMsgAway) NavbarPage.clickCloseAllMessages();
-                                resolve();
-                            }, delays.shortRest);
+                                if (clickMsgAway)
+                                    NavbarPage.clickCloseAllMessages().then(() => resolve());
+                                else resolve();
+                            }, delays.shortRest / 10);
                         })
                     }
                 )

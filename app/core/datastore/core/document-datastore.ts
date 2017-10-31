@@ -2,7 +2,6 @@ import {CachedDatastore} from "./cached-datastore";
 import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from "./pouchdb-datastore";
 import {DocumentCache} from "./document-cache";
-import {ImageTypeUtility} from "../../../common/image-type-utility";
 import {DocumentConverter} from "./document-converter";
 
 /**

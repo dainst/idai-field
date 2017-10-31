@@ -28,7 +28,6 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {CachedDatastore} from '../../core/datastore/core/cached-datastore';
 import {DocumentDatastore} from "../../core/datastore/core/document-datastore";
 
 

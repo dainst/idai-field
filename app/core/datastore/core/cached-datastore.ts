@@ -3,7 +3,6 @@ import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from "./document-cache";
-import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {CachedReadDatastore} from "./cached-read-datastore";
 import {DocumentConverter} from "./document-converter";
 

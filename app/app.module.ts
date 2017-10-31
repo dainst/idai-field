@@ -36,8 +36,8 @@ import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-s
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {StateSerializer} from './common/state-serializer';
 import {AppController} from "./app-controller";
-import {DocumentDatastore} from "./core/datastore/core/document-datastore";
 import {DatastoreModule} from "./core/datastore/datastore.module";
+import {IdaiFieldDocumentDatastore} from "./core/datastore/idai-field-document-datastore";
 
 
 const remote = require('electron').remote;
@@ -128,7 +128,7 @@ let pconf = undefined;
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader: ConfigLoader, datastore: DocumentDatastore) {
+            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDocumentDatastore) {
                 return new IdaiFieldValidator(configLoader, datastore);
             },
             deps: [ConfigLoader, ReadDatastore]

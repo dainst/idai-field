@@ -1,7 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../app/core/datastore/core/document-cache';
-import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
 import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
 import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
 import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-field-document-converter";

@@ -24,6 +24,8 @@ import {IdaiFieldDocumentConverter} from "./idai-field-document-converter";
 import {IdaiFieldSampleDataLoader} from "./idai-field-sample-data-loader";
 import {SampleDataLoader} from "./core/sample-data-loader";
 import {IdaiFieldConflictResolver} from "../model/idai-field-conflict-resolver";
+import {IdaiFieldDatastore} from "./idai-field-datastore";
+import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
 
 @NgModule({
     providers: [
@@ -76,6 +78,8 @@ import {IdaiFieldConflictResolver} from "../model/idai-field-conflict-resolver";
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },
+        { provide: IdaiFieldDatastore, useExisting: DocumentDatastore },
+        { provide: IdaiFieldReadDatastore, useExisting: DocumentDatastore },
         { provide: ReadDatastore, useExisting: DocumentDatastore },
         {
             provide: IdaiFieldDocumentDatastore,

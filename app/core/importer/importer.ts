@@ -5,7 +5,6 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {CachedDatastore} from '../datastore/core/cached-datastore';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/core/document-datastore";
 

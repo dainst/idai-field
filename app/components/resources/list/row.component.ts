@@ -1,10 +1,9 @@
-import {Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {PersistenceManager, Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
-import {CachedDatastore} from '../../../core/datastore/core/cached-datastore';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';

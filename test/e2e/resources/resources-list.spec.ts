@@ -1,4 +1,4 @@
-import {browser, protractor} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -8,11 +8,27 @@ const EC = protractor.ExpectedConditions;
 
 describe('resources/list --', () => {
 
-    beforeEach(() => {
+    let index = 0;
 
+
+    beforeAll(function() {
         ResourcesPage.get();
         ResourcesPage.clickListModeButton();
     });
+
+
+    beforeEach(() => {
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+            ResourcesPage.clickListModeButton();
+            browser.sleep(delays.shortRest);
+        }
+        index++;
+    });
+    
 
     it('show newly created resource in list view', () => {
 
@@ -23,6 +39,7 @@ describe('resources/list --', () => {
         ResourcesPage.getListModeInputFieldValue('1', 1).then(inputValue => expect(inputValue).toEqual('Resource 1'));
     });
 
+
     it('save changes on input field blur', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
@@ -31,8 +48,10 @@ describe('resources/list --', () => {
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
 
-        // TODO comment in possible? expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        NavbarPage.clickCloseAllMessages();
     });
+
 
     it('restore identifier from database if a duplicate identifier is typed in', () => {
 
@@ -48,6 +67,7 @@ describe('resources/list --', () => {
         ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
     });
 
+
     it('perform a fulltext search', () => {
 
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
@@ -60,6 +80,7 @@ describe('resources/list --', () => {
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });
+
 
     it('perform a type filter search', () => {
 

@@ -36,12 +36,12 @@ describe('resources/project --', function() {
 
     function performCreateProject() {
 
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest );
         ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest);
     }
 
 
@@ -63,7 +63,7 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToProject();
         //
 
-        browser.sleep(200);
+        browser.sleep(delays.shortRest);
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
 
@@ -81,14 +81,14 @@ describe('resources/project --', function() {
         NavbarPage.clickSelectProject(1);
         ResourcesPage.get();
 
-        browser.sleep(delays.shortRest * 20);
+        browser.sleep(delays.shortRest);
 
         NavbarPage.performNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
         SearchBarPage.typeInSearchField('con');
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 
@@ -101,7 +101,7 @@ describe('resources/project --', function() {
 
         ResourcesPage.get();
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest);
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
@@ -122,16 +122,16 @@ describe('resources/project --', function() {
 
         ProjectPage.typeInProjectName('abc');
         ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
 
         ResourcesPage.get();
-        browser.sleep(delays.shortRest * 10);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToProject();
-        browser.sleep(delays.shortRest * 15);
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
         SearchBarPage.typeInSearchField('con');
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
 

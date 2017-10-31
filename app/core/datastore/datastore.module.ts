@@ -56,7 +56,7 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  conflictResolver: ConflictResolver): PouchdbDatastore {
-                return new PouchdbServerDatastore(pouchdbManager,
+                return new PouchdbServerDatastore(pouchdbManager, // Provides fauxton
                     constraintIndexer, fulltextIndexer,
                     appState, autoConflictResolvingExtension, conflictResolver);
             },
@@ -65,8 +65,38 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
         },
 
 
-        FulltextIndexer,
         DocumentCache,
+
+        // It is important to note that we only have one instance of a pouchdbdatastore and
+        // only one instance of a document cache running, however, we have different 'wrapper'
+        // objects which are basically all instances of CachedDatastore with litte extensions
+        // to make sure the correct queries (constraints, correct types of objects) are issued
+        // and only the documents of the correct types are returned.
+
+
+        // All of these datastore 'wrappers' come with the full set of constraints, however, since the
+        // constraints are configured directly in the PouchdbDatastore.
+
+        FulltextIndexer,
+        {
+            provide: ConstraintIndexer,
+            useFactory: function() {
+                return new ConstraintIndexer([
+                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    { path: 'resource.relations.liesWithin', type: 'contain' },
+                    { path: 'resource.relations.depicts', type: 'exist' },
+                    { path: 'resource.identifier', type: 'match' },
+                    { path: '_conflicts', type: 'exist' }
+                ]);
+            }
+        },
+
+        // It is only that each one of them
+        // lets client work with different assumptions, which correspond to the Document types working with.
+        // There are two datastore handling Document, the first one of which does not allow for constraint queries,
+        // whereas the second one allows for it. Then there are two datastores handling IdaiFieldDocument
+        // and IdaiFieldImageDocument respectively, providing the constraints which fit the document type
+        // and returning fully checked instances of the documents.
 
 
         // basic datastore making no assumptions about idai-field.
@@ -88,19 +118,6 @@ import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
         { provide: ReadDatastore, useExisting: DocumentDatastore },    // used by components, no further assumptions, read-only version of the previous one
 
 
-
-        {
-            provide: ConstraintIndexer,
-            useFactory: function() {
-                return new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                    { path: 'resource.relations.liesWithin', type: 'contain' },
-                    { path: 'resource.relations.depicts', type: 'exist' },
-                    { path: 'resource.identifier', type: 'match' },
-                    { path: '_conflicts', type: 'exist' }
-                ]);
-            }
-        },
         {
             provide: DocumentConverter,
             useFactory: function(imageTypeUtility: ImageTypeUtility): DocumentConverter {

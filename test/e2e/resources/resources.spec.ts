@@ -15,19 +15,14 @@ let delays = require('../config/delays');
  */
 describe('resources --', () => {
 
-    // beforeEach(() => {
-    //
-    //     ResourcesPage.get();
-    //
-    // });
-
     beforeEach(() => {
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
+        browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest * 10);
     });
+
 
     it('should delete a main type resource', () => {
 
@@ -50,12 +45,14 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
+
     it('find it by its identifier', () => {
 
         ResourcesPage.performCreateResource('1');
         SearchBarPage.typeInSearchField('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
     });
+
 
     it('should delete a resource', () => {
 
@@ -69,6 +66,7 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 
+
     it('not reflect changes in overview in realtime', () => {
 
         ResourcesPage.performCreateResource('1a');
@@ -79,6 +77,7 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
     });
+
 
     it('should save changes via dialog modal', () => {
 
@@ -91,6 +90,7 @@ describe('resources --', () => {
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
     });
 
+
     it('should discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
@@ -101,6 +101,7 @@ describe('resources --', () => {
         ResourcesPage.clickDiscardInModal();
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1')});
     });
+
 
     it('should cancel dialog modal', () => {
 
@@ -115,9 +116,9 @@ describe('resources --', () => {
         ResourcesPage.clickDiscardInModal();
     });
 
+
     it('should create a new main type resource', () => {
 
-        browser.sleep(delays.shortRest * 50);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newTrench'));
@@ -136,11 +137,9 @@ describe('resources --', () => {
 
     it('should edit a main type resource', () => {
 
-        browser.sleep(delays.shortRest);
         ResourcesPage.clickEditMainTypeResource();
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest * 10);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
 
@@ -164,7 +163,7 @@ describe('resources --', () => {
 
         DoceditPage.clickSelectOption('hasWallType', 1);
         DoceditPage.clickSaveDocument();
-        browser.sleep(1000);
+        browser.sleep(delays.shortRest);
         DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
@@ -173,7 +172,6 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
@@ -196,7 +194,6 @@ describe('resources --', () => {
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        browser.sleep(1000);
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('E'));
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('2');

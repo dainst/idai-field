@@ -14,6 +14,8 @@ const delays = require('../config/delays');
  */
 describe('resources/images --', function() {
 
+    let index = 0;
+
     beforeAll(() => {
 
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
@@ -21,12 +23,16 @@ describe('resources/images --', function() {
     });
 
     beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 4);
-        NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
-        browser.sleep(delays.shortRest);
+
+        if (index > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest * 4);
+            NavbarPage.clickNavigateToExcavation();
+            browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+            browser.sleep(delays.shortRest);
+        }
+        index++;
     });
 
 

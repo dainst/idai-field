@@ -70,6 +70,16 @@ export abstract class CachedReadDatastore<T extends Document>
 
 
 
+    /**
+     * Implements {@link ReadDatastore#get}
+     *
+     * It supports the following options
+     * not specified in ReadDatastore:  { skip_cache: boolean }
+     *
+     * @param {string} id
+     * @param {{skip_cache: boolean}} options
+     * @returns {Promise<T extends Document>}
+     */
     public async get(id: string, options?: {skip_cache: boolean}): Promise<T> {
 
         if ((!options || !options.skip_cache) && this.documentCache.get(id)) {
@@ -82,7 +92,7 @@ export abstract class CachedReadDatastore<T extends Document>
 
 
     /**
-     * Implements {@link IdaiFieldReadDatastore#find}
+     * Implements {@link ReadDatastore#find}
      *
      * @param query
      * @returns {Promise<IdaiFieldDocument[]>}

@@ -28,7 +28,7 @@ describe('resources/list --', () => {
         }
         index++;
     });
-    
+
 
     it('show newly created resource in list view', () => {
 

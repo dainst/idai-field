@@ -35,16 +35,6 @@
 
 
     /**
-     * get
-     *
-     * In addition to {@link Datastore#get}, {@link CachedDatastore#get}
-     * has some extra specifications:
-     *
-     * options can be
-     *   { skip_cache: true }
-     */
-
-    /**
      * @returns
      *   Rejects with
      *     [DOCUMENT_NOT_FOUND] - in case of error

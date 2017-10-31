@@ -13,7 +13,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/filter --', () => {
+fdescribe('resources/filter --', () => {
 
     let index = 0;
 

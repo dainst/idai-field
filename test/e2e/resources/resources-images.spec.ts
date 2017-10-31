@@ -18,8 +18,8 @@ describe('resources/images --', function() {
 
     beforeAll(() => {
 
+        ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(750);
     });
 
     beforeEach(() => {

@@ -26,7 +26,7 @@ fdescribe('resources/project --', function() {
         return ProjectPage.get();
     });
 
-    
+
     afterEach(done => {
 
         removeResourcesStateFile();

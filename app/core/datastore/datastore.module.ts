@@ -98,7 +98,7 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
         // NOTE: When choosing a datastore instance one should always try to use the most
         // specific instance. For example if you need read acces to only IdaiFieldImageDocuments,
         // choose IdaiFieldImageDocumentReadDatastore. Avoid using Datastore and ReadDatastore.
-        // The use of theses interfaces is restricted to components-2 internal use.
+        // They are for components-2 internal use.
 
 
         // basic idai-field datastore

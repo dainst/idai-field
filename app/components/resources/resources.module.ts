@@ -18,7 +18,7 @@ import {ThumbnailViewComponent} from './map/docview/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.component';
 import {RoutingService} from '../routing-service';
-import {DoceditProxy} from './service/docedit-proxy';
+import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -51,7 +51,7 @@ import {IdaiFieldDocumentDatastore} from "../../core/datastore/idai-field-docume
     providers: [
         ResourcesState,
         RoutingService,
-        DoceditProxy,
+        DoceditLauncher,
         {
             provide: ViewFacade,
             useFactory: function(

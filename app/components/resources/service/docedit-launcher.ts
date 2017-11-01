@@ -13,7 +13,7 @@ import {ViewFacade} from '../view/view-facade';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class DoceditProxy {
+export class DoceditLauncher {
 
 
     constructor(

@@ -6,7 +6,7 @@ import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
-import {DoceditProxy} from './service/docedit-proxy';
+import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../../m';
 import {ViewFacade} from './view/view-facade';
 import {ImageUploader} from '../imageupload/image-uploader';
@@ -39,7 +39,7 @@ export class ResourcesComponent implements AfterViewChecked {
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
                 private routingService: RoutingService,
-                private doceditProxy: DoceditProxy,
+                private doceditProxy: DoceditLauncher,
                 private imageUploader: ImageUploader,
                 private renderer: Renderer,
                 private messages: Messages,

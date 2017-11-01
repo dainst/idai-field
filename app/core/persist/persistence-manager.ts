@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Datastore, Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
 import {Document, Resource} from 'idai-components-2/core';
-import {ProjectConfiguration, ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ConnectedDocsResolver} from './connected-docs-resolver';
 import {M} from "../../m";
+import {DocumentDatastore} from "../datastore/document-datastore";
 
 @Injectable()
 /**
@@ -27,7 +28,7 @@ export class PersistenceManager {
 
 
     constructor(
-        private datastore: Datastore,
+        private datastore: DocumentDatastore,
         private configLoader: ConfigLoader
     ) {
         this.ready = new Promise<string>(resolve => {

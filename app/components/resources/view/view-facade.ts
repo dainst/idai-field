@@ -1,12 +1,10 @@
 import {Document} from 'idai-components-2/core';
-import {ReadDatastore} from 'idai-components-2/datastore';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {StateSerializer} from '../../../common/state-serializer';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 

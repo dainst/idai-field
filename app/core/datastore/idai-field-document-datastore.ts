@@ -2,15 +2,14 @@ import {PouchdbDatastore} from "./core/pouchdb-datastore";
 import {DocumentCache} from "./core/document-cache";
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentConverter} from "./core/document-converter";
-import {IdaiFieldDatastore} from "./idai-field-datastore";
+import {DocumentDatastore} from "./document-datastore";
 import {CachedDatastore} from "./core/cached-datastore";
 
 /**
  * @author Daniel de Oliveira
  */
 export class IdaiFieldDocumentDatastore
-    extends CachedDatastore<IdaiFieldDocument>
-    implements IdaiFieldDatastore {
+    extends CachedDatastore<IdaiFieldDocument> {
 
     constructor(
         datastore: PouchdbDatastore,

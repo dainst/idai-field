@@ -12,7 +12,6 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from "../../core/datastore/idai-field-image-document-read-datastore";
 
 

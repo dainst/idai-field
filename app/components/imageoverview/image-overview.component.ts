@@ -13,6 +13,7 @@ import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {RoutingService} from '../routing-service';
+import {DocumentReadDatastore} from "../../core/datastore/document-read-datastore";
 
 @Component({
     moduleId: module.id,
@@ -55,7 +56,7 @@ export class ImageOverviewComponent implements OnInit {
 
     constructor(
         public viewFacade: ViewFacade,
-        private datastore: ReadDatastore,
+        private datastore: DocumentReadDatastore,
         private modalService: NgbModal,
         private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,

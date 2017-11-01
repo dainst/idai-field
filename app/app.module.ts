@@ -39,6 +39,7 @@ import {AppController} from "./app-controller";
 import {DatastoreModule} from "./core/datastore/datastore.module";
 import {IdaiFieldDocumentDatastore} from "./core/datastore/idai-field-document-datastore";
 import {PersistenceManager} from "./core/persist/persistence-manager";
+import {DocumentDatastore} from "./core/datastore/document-datastore";
 
 
 const remote = require('electron').remote;
@@ -132,11 +133,12 @@ let pconf = undefined;
             useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDocumentDatastore) {
                 return new IdaiFieldValidator(configLoader, datastore);
             },
-            deps: [ConfigLoader, ReadDatastore]
+            deps: [ConfigLoader, DocumentDatastore]
         },
         { provide: MD, useClass: M},
         DoceditActiveTabService,
-        StateSerializer
+        StateSerializer,
+        ImageTypeUtility
     ],
     bootstrap: [ AppComponent ]
 })

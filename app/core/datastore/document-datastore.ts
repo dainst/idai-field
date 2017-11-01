@@ -1,24 +1,22 @@
 import {Document} from 'idai-components-2/core';
 import {CachedDatastore} from "./core/cached-datastore";
-import {IdaiFieldReadDatastore} from "./idai-field-read-datastore";
+import {DocumentReadDatastore} from "./document-read-datastore";
 import {PouchdbDatastore} from "./core/pouchdb-datastore";
 import {DocumentCache} from "./core/document-cache";
 import {DocumentConverter} from "./core/document-converter";
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 /**
  * @author Daniel de Oliveira
  */
-export class IdaiFieldDatastore
-    extends CachedDatastore<Document>
-    implements IdaiFieldReadDatastore {
+export class DocumentDatastore
+    extends CachedDatastore<Document> {
 
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<Document>,
         documentConverter: DocumentConverter) {
 
-        super(datastore, documentCache, documentConverter, 'Document / idai-field');
+        super(datastore, documentCache, documentConverter, 'Document');
     }
 
     // TODO make that query is only for image document types. throw exception if tried otherwise

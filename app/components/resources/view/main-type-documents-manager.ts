@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Query, ReadDatastore} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
 import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 

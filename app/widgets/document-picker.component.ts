@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Datastore, Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {DocumentDatastore} from "../core/datastore/document-datastore";
 
 @Component({
     selector: 'document-picker',
@@ -26,7 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     protected query: Query = {};
 
 
-    constructor(private datastore: Datastore,
+    constructor(private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration) {
 
         this.query = {};

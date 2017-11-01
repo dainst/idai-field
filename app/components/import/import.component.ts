@@ -28,14 +28,13 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {DocumentDatastore} from "../../core/datastore/core/document-datastore";
+import {DocumentDatastore} from "../../core/datastore/document-datastore";
 
 
 @Component({
     moduleId: module.id,
     templateUrl: './import.html'
 })
-
 /**
  * Delegates calls to the Importer, waits for
  * the import to finish and extracts the importReport
@@ -45,7 +44,6 @@ import {DocumentDatastore} from "../../core/datastore/core/document-datastore";
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-
 export class ImportComponent {
 
     public sourceType: string = 'file';

@@ -8,7 +8,7 @@ import {ViewFacade} from './resources/view/view-facade';
 import {Loading} from '../widgets/loading';
 import {Observer} from 'rxjs/Observer';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
-import {ReadDatastore} from 'idai-components-2/datastore';
+import {DocumentReadDatastore} from "../core/datastore/document-read-datastore";
 
 
 @Injectable()
@@ -31,7 +31,7 @@ export class RoutingService {
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility,
                 private projectConfiguration: ProjectConfiguration,
-                private datastore: ReadDatastore
+                private datastore: DocumentReadDatastore
     ) {
     }
 

@@ -1,9 +1,8 @@
-import {ReadDatastore, DocumentChange, Query} from 'idai-components-2/datastore';
+import {DocumentChange, Query} from 'idai-components-2/datastore';
 import {Action, Document} from 'idai-components-2/core';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
 

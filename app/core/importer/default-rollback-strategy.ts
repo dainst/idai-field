@@ -1,5 +1,5 @@
 import {RollbackStrategy} from './rollback-strategy'
-import {Datastore} from 'idai-components-2/datastore';
+import {DocumentDatastore} from "../datastore/document-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -7,7 +7,7 @@ import {Datastore} from 'idai-components-2/datastore';
 export class DefaultRollbackStrategy implements RollbackStrategy {
 
 
-    constructor(private datastore: Datastore) { }
+    constructor(private datastore: DocumentDatastore) { }
 
 
     public rollback(resourceIds: string[]): Promise<any> {

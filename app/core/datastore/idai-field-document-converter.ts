@@ -3,7 +3,9 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {Injectable} from "@angular/core";
 
+@Injectable()
 /**
  * @author Daniel de Oliveira
  */

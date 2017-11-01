@@ -89,16 +89,21 @@ export abstract class CachedReadDatastore<T extends Document>
     }
 
 
+
     /**
-     * Implements {@link ReadDatastore#find}
+     * find(query: Query):Promise<T[]>;
      *
-     * @param query
-     * @returns {Promise<IdaiFieldDocument[]>}
+     * In addition to {@link ReadDatastore#find}, {@link CachedReadDatastore#find}
+     * has some extra specifications:
+     *
+     * find returns the documents in order.
+     * It sorts the objects by lastModified (as per the modified array) descending.
+     * If two documents have the exact same lastModified, there is no second sort criterium
+     * so the order between them is unspecified.
      */
     public async find(query: Query):Promise<T[]> {
 
-        const result = await this.replaceAllWithCached(await this.datastore.findIds(query));
-        return result;
+        return this.replaceAllWithCached(await this.datastore.findIds(query));
     }
 
 

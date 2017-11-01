@@ -6,7 +6,7 @@ import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
 import {M} from '../../m';
-import {DocumentDatastore} from "../datastore/core/document-datastore";
+import {DocumentDatastore} from "../datastore/document-datastore";
 
 
 export interface ImportReport {
@@ -15,8 +15,6 @@ export interface ImportReport {
     warnings: string[][],
     importedResourcesIds: string[]
 }
-
-
 @Injectable()
 /**
  * The Importer's responsibility is to read resources from jsonl files
@@ -63,7 +61,9 @@ export class Importer {
         this.rollbackStrategy = rollbackStrategy;
     }
 
+
     constructor() { }
+
 
     /**
      * Returns a promise which resolves to an importReport object with detailed information about the import,
@@ -122,6 +122,7 @@ export class Importer {
         });
     }
 
+
     /**
      * Calls itself recursively as long as <code>docsToUpdate</code>
      * is not empty.
@@ -155,6 +156,7 @@ export class Importer {
             });
     }
 
+
     private finishImport(): Promise<any> {
 
         this.inUpdateDocumentLoop = false;
@@ -185,6 +187,7 @@ export class Importer {
             )
         }
     }
+
 
     private performRollback(): Promise<any> {
 

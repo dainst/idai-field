@@ -1,10 +1,10 @@
 import {Document} from 'idai-components-2/core';
 import {Validator} from 'idai-components-2/persist';
-import {Datastore} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ImportStrategy} from './import-strategy';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
+import {DocumentDatastore} from "../datastore/document-datastore";
 
 /**
  * @author Daniel de Oliveira
@@ -13,7 +13,7 @@ import {M} from '../../m';
 export class DefaultImportStrategy implements ImportStrategy {
 
 
-    constructor(private validator: Validator, private datastore: Datastore, private settingsService: SettingsService,
+    constructor(private validator: Validator, private datastore: DocumentDatastore, private settingsService: SettingsService,
                 private configLoader: ConfigLoader, private mainTypeDocumentId?: string) { }
 
 

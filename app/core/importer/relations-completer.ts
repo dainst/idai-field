@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Datastore} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
+import {DocumentDatastore} from "../datastore/document-datastore";
 
 /**
  * @author Thomas Kleinke
@@ -10,7 +10,7 @@ import {M} from '../../m';
 @Injectable()
 export class RelationsCompleter {
 
-    constructor(private datastore: Datastore,
+    constructor(private datastore: DocumentDatastore,
                 private configLoader: ConfigLoader) {
     }
 

@@ -1,10 +1,11 @@
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ReadDatastore, Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/datastore';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-field-image-document-read-datastore";
+import {DocumentReadDatastore} from "../../../core/datastore/document-read-datastore";
 
 @Injectable()
 /**
@@ -26,7 +27,7 @@ export class ImageDocumentsManager {
         public viewFacade: ViewFacade,
         private imagesState: ImagesState,
         private imageDatastore: IdaiFieldImageDocumentReadDatastore,
-        private datastore: ReadDatastore
+        private datastore: DocumentReadDatastore
     ) {
     }
 

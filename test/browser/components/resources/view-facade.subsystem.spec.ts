@@ -16,7 +16,7 @@ import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-fi
  */
 export function main() {
 
-    describe('ViewFacade', () => {
+    describe('ViewFacade/Subsystem', () => {
 
         const viewsList = [
             {

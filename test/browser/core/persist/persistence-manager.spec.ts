@@ -223,7 +223,7 @@ export function main() {
             }, err => { fail(err); done(); });
         });
 
-        
+
         it('should add two relations of the same type', done => {
 
             doc.resource.relations['BelongsTo'] = ['2', '3'];

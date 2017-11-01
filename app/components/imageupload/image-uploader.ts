@@ -3,7 +3,6 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration';
 import {ReadDatastore} from 'idai-components-2/datastore';
-import {PersistenceManager} from 'idai-components-2/persist';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -12,6 +11,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
+import {PersistenceManager} from "../../core/persist/persistence-manager";
 
 export interface ImageUploadResult {
 

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {PersistenceManager, Validator} from 'idai-components-2/persist';
+import {Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
@@ -11,6 +11,7 @@ import {ListComponent} from "./list.component";
 import {DocumentReference} from "./document-reference";
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
+import {PersistenceManager} from "../../../core/persist/persistence-manager";
 
 @Component({
     selector: 'row',

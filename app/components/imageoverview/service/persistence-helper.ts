@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {PersistenceManager} from 'idai-components-2/persist';
 import {ObjectUtil} from '../../../util/object-util';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
+import {PersistenceManager} from "../../../core/persist/persistence-manager";
 
 @Injectable()
 /**

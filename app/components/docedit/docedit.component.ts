@@ -4,7 +4,7 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
-import {PersistenceManager, Validator} from 'idai-components-2/persist';
+import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -14,6 +14,7 @@ import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {IdaiFieldDatastore} from "../../core/datastore/idai-field-datastore";
+import {PersistenceManager} from "../../core/persist/persistence-manager";
 
 
 @Component({
@@ -31,7 +32,6 @@ import {IdaiFieldDatastore} from "../../core/datastore/idai-field-datastore";
  * @author Thomas Kleinke
  */
 export class DoceditComponent {
-
 
     /**
      * The original unmodified version of the document
@@ -177,6 +177,7 @@ export class DoceditComponent {
             )
             .catch(msgWithParams => this.messages.add(msgWithParams))
     }
+
 
     /**
      * Removes fields that have become invalid after a type change.
@@ -337,6 +338,7 @@ export class DoceditComponent {
             });
     }
 
+
     private removeImageWithImageStore(document: any): Promise<any> {
 
         if (this.imageTypeUtility.isImageType(document.resource.type)) {
@@ -349,6 +351,7 @@ export class DoceditComponent {
         }
     }
 
+
     private removeWithPersistenceManager(document: any): Promise<any> {
 
         return this.persistenceManager.remove(document, this.settingsService.getUsername())
@@ -358,6 +361,7 @@ export class DoceditComponent {
                 }
             });
     }
+
 
     private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,
                                        documentAfterSave: IdaiFieldDocument): boolean {

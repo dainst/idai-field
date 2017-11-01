@@ -113,6 +113,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST: string = 'resources/error/oneprojectmustexist';
     public static RESOURCES_ERROR_PROJECT_DELETED: string = 'resources/error/projectdeleted';
 
+    // Persist Package
+
+    public static PERSISTENCE_ERROR_TARGETNOTFOUND: string = 'persist/error/targetnotfound';
+
     // Keys END /////////////////////////////////
 
     public msgs : { [id: string]: Message } = {};
@@ -553,6 +557,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_PROJECT_DELETED] = {
             content: 'Beim Löschen des Projektes ist ein Fehler aufgetreten.',
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PERSISTENCE_ERROR_TARGETNOTFOUND]={
+            content: 'Die Ressource wurde erfolgreich gespeichert. Relationen wurden aufgrund fehlender Zielressourcen '
+            + 'nicht aktualisiert.',
+            level: 'warning',
             params: [],
             hidden: false
         };

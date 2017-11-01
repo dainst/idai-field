@@ -1,10 +1,10 @@
 import {Component, Input, ViewChild, ElementRef} from '@angular/core';
-import {PersistenceManager} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {M} from '../../m';
 import {IdaiFieldGeoreference} from '../../core/model/idai-field-georeference';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from '../../core/settings/settings-service';
+import {PersistenceManager} from "../../core/persist/persistence-manager";
 
 
 @Component({

@@ -4,12 +4,11 @@ import {Action} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {PersistenceManager} from 'idai-components-2/persist';
-import {CachedDatastore} from '../../core/datastore/core/cached-datastore'
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
 import {M} from '../../m';
 import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
+import {PersistenceManager} from "../../core/persist/persistence-manager";
 
 const moment = require('moment');
 

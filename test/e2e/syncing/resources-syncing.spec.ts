@@ -23,7 +23,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('resources/syncing --', function() {
+fdescribe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -181,24 +181,37 @@ describe('resources/syncing --', function() {
             });
     });
 
-    it('show changes made in other db', done => {
+
+    it('show changes made in other db', async (done) => {
         const nr = '4';
 
-        return createOneDocument(nr)
-            .then(testDocument => {
-                testDocument.resource.shortDescription = 'altered';
-                return updateTestDoc(testDocument);
-            })
-            .then(() => {
-                NavbarPage.performNavigateToSettings();
-                NavbarPage.clickNavigateToExcavation();
-                browser.sleep(delays.shortRest * 10);
-                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    expect(text).toContain('altered');
+        let retries = 0;
+        const waitForText = () => {
+            ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
+                if (retries == 5) {
+                    fail('5 retries and no result');
+                    return done();
+                }
+                if(text.indexOf('altered') !== -1) {
                     done();
-                })
-            });
+                } else {
+                    browser.sleep(delays.shortRest);
+                    retries++;
+                    waitForText();
+                }
+            })
+        };
+
+        const testDocument = await createOneDocument(nr);
+        testDocument.resource.shortDescription = 'altered';
+        await updateTestDoc(testDocument);
+
+
+        NavbarPage.performNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        waitForText();
     });
+
 
     it('resolve a save conflict via conflict resolver', done => {
         const nr = '5';

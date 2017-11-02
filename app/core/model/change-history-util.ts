@@ -25,16 +25,20 @@ export class ChangeHistoryUtil {
         mainDocument.modified = changeHistory;
     }
 
+
     // TODO make sure callers which work with date get a string instead of a date
     // as soon as document model is changed
     public static getLastModified(document: Document): Action {
 
         if (document.modified && document.modified.length > 0) {
             return document.modified[document.modified.length - 1];
-        } else return document.created as any;
+        } else {
+            return document.created as any;
+        }
     }
 
-    private static getCombinedChangeHistory(documents: Array<Document>) {
+
+    private static getCombinedChangeHistory(documents: Array<Document>): Array<Action> {
 
         const changeHistory: Array<Action> = [];
 
@@ -44,6 +48,7 @@ export class ChangeHistoryUtil {
 
         return changeHistory;
     }
+
 
     private static sortChangeHistory(changeHistory: Array<Action>) {
 
@@ -56,6 +61,7 @@ export class ChangeHistoryUtil {
             return 0;
         });
     }
+
 
     private static addActionsToChangeHistory(changeHistory: Array<Action>, document: Document) {
 
@@ -70,11 +76,10 @@ export class ChangeHistoryUtil {
                 }
             }
         }
-
-        return changeHistory;
     }
 
-    private static isInChangeHistory(action: Action, changeHistory: Array<Action>) {
+
+    private static isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
 
         for (let actionToCompare of changeHistory) {
             if (ChangeHistoryUtil.isSameAction(action, actionToCompare)) return true;
@@ -83,9 +88,9 @@ export class ChangeHistoryUtil {
         return false;
     }
 
-    private static isSameAction(action1: Action, action2: Action) {
+
+    private static isSameAction(action1: Action, action2: Action): boolean {
 
         return action1.date == action2.date && action1.user == action2.user;
     }
-
 }

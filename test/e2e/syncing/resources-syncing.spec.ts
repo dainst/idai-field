@@ -181,49 +181,58 @@ describe('resources/syncing --', function() {
             });
     });
 
-    it('show changes made in other db', done => {
+
+    it('show changes made in other db', async (done) => {
         const nr = '4';
 
-        return createOneDocument(nr)
-            .then(testDocument => {
-                testDocument.resource.shortDescription = 'altered';
-                return updateTestDoc(testDocument);
-            })
-            .then(() => {
-                NavbarPage.performNavigateToSettings();
-                NavbarPage.clickNavigateToExcavation();
-                browser.sleep(delays.shortRest * 10);
-                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    expect(text).toContain('altered');
+        let retries = 0;
+        const waitForText = () => {
+            ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
+                if (retries == 5) {
+                    fail('5 retries and no result');
+                    return done();
+                }
+                if(text.indexOf('altered') !== -1) {
                     done();
-                })
-            });
+                } else {
+                    browser.sleep(delays.shortRest);
+                    retries++;
+                    waitForText();
+                }
+            })
+        };
+
+        const testDocument = await createOneDocument(nr);
+        testDocument.resource.shortDescription = 'altered';
+        await updateTestDoc(testDocument);
+
+
+        NavbarPage.performNavigateToSettings();
+        NavbarPage.clickNavigateToExcavation();
+        waitForText();
     });
 
-    it('resolve a save conflict via conflict resolver', done => {
+
+    it('resolve a save conflict via conflict resolver', async (done) => {
+
         const nr = '5';
         let testDocument;
 
-        return createOneDocument(nr).then(document => {
-            testDocument = document;
-            ResourcesPage.clickSelectResource('testf' + nr);
-            return DocumentViewPage.performEditDocument();
-        }).then(() => {
-            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
-            return updateTestDoc(testDocument);
-        }).then(() => {
-            browser.sleep(delays.shortRest * 10);
-            DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
-            DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortRest * 10);
-            DoceditPage.clickChooseRightRevision();
-            DoceditPage.clickSolveConflictButton();
-            DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortRest * 50);
-            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
-                .not.toContain('conflicted');
-            done();
-        }).catch(err => { fail(err); done(); });
+        const document = await createOneDocument(nr);
+        testDocument = document;
+        ResourcesPage.clickSelectResource('testf' + nr);
+        await DocumentViewPage.performEditDocument();
+        testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
+        await updateTestDoc(testDocument);
+        DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
+        DoceditPage.clickSaveDocument();
+        DoceditPage.clickChooseRightRevision();
+        DoceditPage.clickSolveConflictButton();
+        DoceditPage.clickSaveDocument();
+        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+            .not.toContain('conflicted');
+
+        done();
     });
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {

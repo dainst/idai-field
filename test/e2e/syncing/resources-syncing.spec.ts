@@ -31,6 +31,7 @@ describe('resources/syncing --', function() {
 
     let db, server, changes;
 
+
     function makeDoc(id, identifier, shortDescription) {
         return {
             _id: id,
@@ -56,6 +57,7 @@ describe('resources/syncing --', function() {
         };
     }
 
+
     function setupTestDB() {
 
         return new Promise(resolve => {
@@ -72,11 +74,13 @@ describe('resources/syncing --', function() {
         }).then(newDb => db = newDb);
     }
 
+
     function tearDownTestDB() {
 
         return db.destroy()
             .then(() => server.close());
     }
+
 
     function setConfigJson(): Promise<any> {
 
@@ -92,29 +96,37 @@ describe('resources/syncing --', function() {
         });
     }
 
+
     beforeAll(done => {
 
         browser.sleep(delays.shortRest * 10);
         setupTestDB().then(done);
     });
 
+
     afterAll(done => {
 
         tearDownTestDB().then(done);
     });
 
+
     beforeEach(done => {
+
         setConfigJson().then(()=>{
             SettingsPage.get().then(done);
         });
     });
 
+
     afterEach(done => {
+
         if (changes) changes.cancel();
         common.resetConfigJson().then(done);
     });
 
+
     function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
 
         if (additionalFieldName && additionalFieldValue) {
@@ -132,7 +144,9 @@ describe('resources/syncing --', function() {
             });
     }
 
+
     function createAlternateDocument(nr) {
+
         const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr + '_alternative');
         testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
 
@@ -144,11 +158,13 @@ describe('resources/syncing --', function() {
             });
     }
 
+
     function createEventualConflict(nr) {
 
         return createOneDocument(nr)
             .then(() => createAlternateDocument(nr));
     }
+
 
     function updateTestDoc(testDocument) {
 
@@ -156,6 +172,7 @@ describe('resources/syncing --', function() {
             testDocument._rev = result.rev;
         }).catch(err => console.error('Failure while updating test doc', err));
     }
+
 
     it('resource created in client should be synced to other db', done => {
 
@@ -169,7 +186,9 @@ describe('resources/syncing --', function() {
             }).catch(err => { fail(err); done(); });
     });
 
+
     it('show resource created in other db', done => {
+
         const nr = '3';
 
         return createOneDocument(nr)
@@ -183,6 +202,7 @@ describe('resources/syncing --', function() {
 
 
     it('show changes made in other db', async (done) => {
+
         const nr = '4';
 
         let retries = 0;
@@ -235,6 +255,7 @@ describe('resources/syncing --', function() {
         done();
     });
 
+
     it('detect an eventual conflict and mark the corresponding resource list item', done => {
         const nr = '7';
 
@@ -249,7 +270,9 @@ describe('resources/syncing --', function() {
             });
     });
 
+
     it('open conflict resolver via taskbar', done => {
+
         const nr = '8';
 
         createEventualConflict(nr).then(() => {
@@ -260,7 +283,9 @@ describe('resources/syncing --', function() {
         });
     });
 
+
     it('open conflict resolver via conflict button in document view', done => {
+
         const nr = '9';
 
         createEventualConflict(nr).then(() => {
@@ -270,7 +295,9 @@ describe('resources/syncing --', function() {
         });
     });
 
+
     it('resolve an eventual conflict via conflict resolver', done => {
+
         const nr = '10';
 
         createEventualConflict(nr).then(() => {

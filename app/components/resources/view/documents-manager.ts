@@ -154,7 +154,7 @@ export class DocumentsManager {
 
         const changedDocument: Document = documentChange.document;
 
-        if (!this.documents || !DocumentsManager.isRemoteChange(changedDocument,
+        if (!this.documents || !ChangeHistoryUtil.isRemoteChange(changedDocument,
                 this.settingsService.getUsername())) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
@@ -166,7 +166,7 @@ export class DocumentsManager {
         this.populateDocumentList().then(() => {
             for (let doc of this.documents) {
                 if (oldDocuments.indexOf(doc) == -1 &&
-                    DocumentsManager.isRemoteChange(doc, this.settingsService.getUsername())) {
+                    ChangeHistoryUtil.isRemoteChange(doc, this.settingsService.getUsername())) {
                     this.newDocumentsFromRemote.push(doc);
                 }
             }
@@ -251,13 +251,6 @@ export class DocumentsManager {
 
         return this.datastore.find(query as any)
             .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
-    }
-
-
-    private static isRemoteChange(changedDocument: Document, username: string): boolean {
-
-        const latestAction: Action = ChangeHistoryUtil.getLastModified(changedDocument);
-        return latestAction && latestAction.user != username;
     }
 
 

@@ -38,6 +38,14 @@ export class ChangeHistoryUtil {
     }
 
 
+    public static isRemoteChange(document: Document, username: string): boolean {
+
+        const latestAction: Action = ChangeHistoryUtil.getLastModified(document);
+
+        return latestAction && latestAction.user != username;
+    }
+
+
     private static getCombinedChangeHistory(documents: Array<Document>): Array<Action> {
 
         const changeHistory: Array<Action> = [];

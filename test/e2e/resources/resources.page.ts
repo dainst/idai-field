@@ -69,8 +69,7 @@ export class ResourcesPage {
 
     public static clickSelectResource(identifier) {
 
-        return common.click(element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
-            + identifier + '"]')));
+        return common.click(element(by.id('resource-' + identifier)));
     };
 
     public static clickMapModeButton() {

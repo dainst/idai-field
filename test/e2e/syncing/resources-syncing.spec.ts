@@ -47,11 +47,11 @@ describe('resources/syncing --', function() {
                 'type': 'Find'
             },
             created: {
-                'user': 'anonymous',
+                'user': 'testuser',
                 'date': '2017-07-24T16:01:10.843Z'
             },
             modified: [{
-                'user': 'anonymous',
+                'user': 'testuser',
                 'date': '2017-07-24T16:01:10.843Z'
             }]
         };

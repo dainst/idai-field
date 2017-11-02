@@ -2,9 +2,9 @@ import {Datastore} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
-import {DocumentCache} from "./document-cache";
-import {CachedReadDatastore} from "./cached-read-datastore";
-import {DocumentConverter} from "./document-converter";
+import {DocumentCache} from './document-cache';
+import {CachedReadDatastore} from './cached-read-datastore';
+import {DocumentConverter} from './document-converter';
 
 
 @Injectable()
@@ -65,14 +65,9 @@ export abstract class CachedDatastore<T extends Document>
         const updatedDocument = await this.datastore.update(document);
 
         if (!this.documentCache.get(document.resource.id as any)) {
-
-            return this.documentCache.set(this.documentConverter.
-                convertToIdaiFieldDocument<T>(updatedDocument));
-
+            return this.documentCache.set(this.documentConverter.convertToIdaiFieldDocument<T>(updatedDocument));
         } else {
-
-            this.reassign(this.documentConverter.convertToIdaiFieldDocument<T>(
-                updatedDocument));
+            this.reassign(this.documentConverter.convertToIdaiFieldDocument<T>(updatedDocument));
             return this.documentCache.get(document.resource.id as any);
         }
     }

@@ -2,6 +2,7 @@ import {Query, DatastoreErrors, DocumentChange} from 'idai-components-2/datastor
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from '../../../util/result-sets';
 import {SortUtil} from '../../../util/sort-util';
@@ -9,8 +10,7 @@ import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
 import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
-import {ConflictResolver} from "./conflict-resolver";
-import {Observer} from 'rxjs/Observer';
+import {ConflictResolver} from './conflict-resolver';
 import {ModelUtil} from '../../model/model-util';
 
 /**
@@ -27,8 +27,9 @@ export class PouchdbDatastore {
     // despite them beeing deleted in remove before. When they
     // pop up in 'change', they do not have the deleted property.
     // So in order to identify them as to remove from the indices
-    // they are marked "manually".
+    // they are marked 'manually'.
     private deletedOnes = [];
+
 
     constructor(
         private pouchdbManager: PouchdbManager,
@@ -46,6 +47,7 @@ export class PouchdbDatastore {
 
         this.setupServer().then(() => this.setupChangesEmitter());
     }
+
 
     /**
      * @param document
@@ -67,6 +69,7 @@ export class PouchdbDatastore {
             ));
     }
 
+
     /**
      * @param document
      * @returns {Promise<Document>} newest revision of the document fetched from db
@@ -81,7 +84,7 @@ export class PouchdbDatastore {
 
         return this.fetch(document.resource.id).then(() => {
             (document as any)['_id'] = document.resource.id;
-            }).catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
+        }).catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
             .then(() => this.performPut(document, resetFun, (err: any) => {
                 if (err.name && err.name == 'conflict') {
                     return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
@@ -90,6 +93,7 @@ export class PouchdbDatastore {
                 }
             }));
     }
+
 
     /**
      * @param doc

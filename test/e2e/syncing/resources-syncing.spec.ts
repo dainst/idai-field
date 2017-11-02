@@ -213,30 +213,26 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('resolve a save conflict via conflict resolver', done => {
+    it('resolve a save conflict via conflict resolver', async (done) => {
+
         const nr = '5';
         let testDocument;
 
-        return createOneDocument(nr).then(document => {
-            testDocument = document;
-            ResourcesPage.clickSelectResource('testf' + nr);
-            return DocumentViewPage.performEditDocument();
-        }).then(() => {
-            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
-            return updateTestDoc(testDocument);
-        }).then(() => {
-            browser.sleep(delays.shortRest * 10);
-            DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
-            DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortRest * 10);
-            DoceditPage.clickChooseRightRevision();
-            DoceditPage.clickSolveConflictButton();
-            DoceditPage.clickSaveDocument();
-            browser.sleep(delays.shortRest * 50);
-            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
-                .not.toContain('conflicted');
-            done();
-        }).catch(err => { fail(err); done(); });
+        const document = await createOneDocument(nr);
+        testDocument = document;
+        ResourcesPage.clickSelectResource('testf' + nr);
+        await DocumentViewPage.performEditDocument();
+        testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
+        await updateTestDoc(testDocument);
+        DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
+        DoceditPage.clickSaveDocument();
+        DoceditPage.clickChooseRightRevision();
+        DoceditPage.clickSolveConflictButton();
+        DoceditPage.clickSaveDocument();
+        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+            .not.toContain('conflicted');
+
+        done();
     });
 
     it('detect an eventual conflict and mark the corresponding resource list item', done => {

@@ -1,11 +1,11 @@
-import {Static} from '../../static';
-import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
-import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-field-document-converter";
-import {PersistenceManager} from "../../../../app/core/persist/persistence-manager";
-import {ProjectConfiguration} from "idai-components-2/configuration";
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {Static} from '../../static';
+import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
+import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
+import {PersistenceManager} from '../../../../app/core/persist/persistence-manager';
 
 /**
  * This is a subsystem test.
@@ -83,8 +83,7 @@ export function main() {
 
 
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
-
-
+        
 
         xit('delete document with recordedInDoc which is connected to yet another doc',
             async (done) => {
@@ -93,14 +92,12 @@ export function main() {
                 document2 = Static.doc('find1','find1','Find','f1');
                 document2.resource.relations['isRecordedIn'] = ['t1'];
                 document2.resource.relations['BelongsTo'] = ['f2'];
-                document3 = Static.doc('find2','find1','Find','f2');
+                document3 = Static.doc('find2','find2','Find','f2');
                 document3.resource.relations['Contains'] = ['f1'];
-
-
+                
                 await datastore.create(document1);
                 await datastore.create(document2);
                 await datastore.create(document3);
-
 
                 await persistenceManager.remove(document1,'user',[document1]);
 
@@ -111,7 +108,6 @@ export function main() {
                 // TODO fix
                 expect(docs[0].resource.relations['Contains']).not.toBeDefined();
                 console.log(docs[0].resource.relations);
-
 
 
                 done();

@@ -1,10 +1,9 @@
-import {DocumentChange, Query, ReadDatastore} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {Query, ReadDatastore} from 'idai-components-2/datastore';
+import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
-import {DocumentCache} from "./document-cache";
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {DocumentCache} from './document-cache';
 import {DocumentConverter} from './document-converter';
 
 
@@ -40,32 +39,32 @@ export abstract class CachedReadDatastore<T extends Document>
         protected documentConverter: DocumentConverter,
         private typeClassName: string) {
 
-        console.debug('constructing cached datastore for '+typeClassName);
+        console.debug('constructing cached datastore for ' + typeClassName);
 
+        this.datastore.remoteChangesNotifications().subscribe(document => {
 
-        this.datastore.documentChangesNotifications().subscribe(documentChange => {
+            if (!this.autoCacheUpdate) return;
+            if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
 
-            if (documentChange.type != 'changed') return;
-
-            const document = documentChange.document;
+            console.debug('change detected', document);
 
             // explicitly assign by value in order for changes to be detected by angular
-            if (this.autoCacheUpdate && document && document.resource &&
-                this.documentCache.get(document.resource.id as any)) {
-                console.debug('change detected', document);
-                this.reassign(this.documentConverter.
-                convertToIdaiFieldDocument<T>(document));
-            }
+            this.reassign(this.documentConverter.convertToIdaiFieldDocument<T>(document));
         });
     }
 
 
-    // TODO we must not delegate the call but instead return a new Observable. Then we notify from within the subscription made in the constructors. This is necessary in order to make sure clients always get fully checked instances of IdaiFieldDocuments. Add unit test for it.
-    public documentChangesNotifications(): Observable<DocumentChange> {
+    public allChangesAndDeletionsNotifications(): Observable<void> {
 
-        return this.datastore.documentChangesNotifications();
+        return this.datastore.allChangesAndDeletionsNotifications();
     }
 
+
+    // TODO we must not delegate the call but instead return a new Observable. Then we notify from within the subscription made in the constructors. This is necessary in order to make sure clients always get fully checked instances of IdaiFieldDocuments. Add unit test for it.
+    public remoteChangesNotifications(): Observable<Document> {
+
+        return this.datastore.remoteChangesNotifications();
+    }
 
 
     /**

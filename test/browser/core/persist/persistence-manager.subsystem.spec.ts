@@ -69,6 +69,7 @@ export function main() {
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.documentCache, new IdaiFieldDocumentConverter(mockImageTypeUtility));
 
+                result.appState.setCurrentUser('anonymous');
 
                 const mockConfigLoader = jasmine.createSpyObj('mockConfigLoader',
                     ['getProjectConfiguration']);
@@ -85,7 +86,7 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
         
 
-        xit('delete document with recordedInDoc which is connected to yet another doc',
+        it('delete document with recordedInDoc which is connected to yet another doc',
             async (done) => {
 
                 document1 = Static.doc('trench1','trench1','Trench','t1');
@@ -102,13 +103,9 @@ export function main() {
                 await persistenceManager.remove(document1,'user',[document1]);
 
                 const docs = await datastore.find({});
+
                 expect(docs.length).toBe(1);
-
-
-                // TODO fix
                 expect(docs[0].resource.relations['Contains']).not.toBeDefined();
-                console.log(docs[0].resource.relations);
-
 
                 done();
             }

@@ -1,10 +1,10 @@
-import {DocumentChange, Query} from 'idai-components-2/datastore';
-import {Action, Document} from 'idai-components-2/core';
+import {Query} from 'idai-components-2/datastore';
+import {Document} from 'idai-components-2/core';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
-import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 
 /**
  * @author Thomas Kleinke
@@ -26,8 +26,8 @@ export class DocumentsManager {
         private operationTypeDocumentsManager: MainTypeDocumentsManager
     ) {
 
-        datastore.documentChangesNotifications().subscribe((documentChange: any) => {
-            if (this.selectedDocument) this.handleChange(documentChange);
+        datastore.remoteChangesNotifications().subscribe(changedDocument => {
+            this.handleChange(changedDocument);
         });
     }
 
@@ -36,7 +36,7 @@ export class DocumentsManager {
 
         return this.datastore.get(this.settingsService.getSelectedProject() as any)
             .then(document => this.projectDocument = document)
-            .catch(() => {console.log("cannot find project document");
+            .catch(() => {console.log('cannot find project document');
                 return Promise.reject(undefined)});
     }
 
@@ -143,19 +143,9 @@ export class DocumentsManager {
     }
 
 
-    private handleChange(documentChange: DocumentChange) {
+    private handleChange(changedDocument: Document) {
 
-        if (!documentChange || !documentChange.document) return;
-
-        if (documentChange.type == 'deleted') {
-            console.debug('unhandled deleted document');
-            return;
-        }
-
-        const changedDocument: Document = documentChange.document;
-
-        if (!this.documents || !ChangeHistoryUtil.isRemoteChange(changedDocument,
-                this.settingsService.getUsername())) return;
+        if (!changedDocument || !this.documents) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
         if (changedDocument.resource.type == this.viewManager.getViewType()) {
@@ -192,8 +182,8 @@ export class DocumentsManager {
             }
             isRecordedInTarget = this.operationTypeDocumentsManager.getSelectedDocument();
         }
-        if (!isRecordedInTarget) return Promise.reject("no isRecordedInTarget in populate doc list");
-        if (!isRecordedInTarget.resource.id) return Promise.reject("no id in populate doc list");
+        if (!isRecordedInTarget) return Promise.reject('no isRecordedInTarget in populate doc list');
+        if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},

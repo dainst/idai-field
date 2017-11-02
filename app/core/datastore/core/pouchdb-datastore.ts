@@ -1,4 +1,4 @@
-import {Query, DatastoreErrors, DocumentChange} from 'idai-components-2/datastore';
+import {Query, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
@@ -12,6 +12,7 @@ import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ModelUtil} from '../../model/model-util';
+import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 /**
  * @author Sebastian Cuy
@@ -21,7 +22,8 @@ import {ModelUtil} from '../../model/model-util';
 export class PouchdbDatastore {
 
     protected db: any;
-    private documentChangesObservers = [];
+    private allChangesAndDeletionsObservers = [];
+    private remoteChangesObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
     // despite them beeing deleted in remove before. When they
@@ -175,10 +177,18 @@ export class PouchdbDatastore {
     }
 
 
-    public documentChangesNotifications(): Observable<DocumentChange> {
+    public allChangesAndDeletionsNotifications(): Observable<void> {
 
-        return Observable.create((observer: Observer<any>) => {
-            this.documentChangesObservers.push(observer as never);
+        return Observable.create((observer: Observer<void>) => {
+            this.allChangesAndDeletionsObservers.push(observer as never);
+        });
+    }
+
+
+    public remoteChangesNotifications(): Observable<Document> {
+
+        return Observable.create((observer: Observer<Document>) => {
+            this.remoteChangesObservers.push(observer as never);
         });
     }
 
@@ -270,26 +280,39 @@ export class PouchdbDatastore {
     }
 
 
-    private notifyDocumentChangesObservers(documentChange: DocumentChange) {
+    private notifyAllChangesAndDeletionsObservers() {
 
-        if (!this.documentChangesObservers) return;
-        this.removeClosedObservers();
+        if (!this.allChangesAndDeletionsObservers) return;
 
-        this.documentChangesObservers.forEach((observer: any) => {
-            if (observer && (observer.next != undefined)) observer.next(documentChange);
+        this.removeClosedObservers(this.allChangesAndDeletionsObservers);
+
+        this.allChangesAndDeletionsObservers.forEach((observer: any) => {
+            if (observer && (observer.next != undefined)) observer.next();
         });
     }
 
 
-    private removeClosedObservers() {
+    private notifyRemoteChangesObservers(document: Document) {
+
+        if (!this.remoteChangesObservers) return;
+
+        this.removeClosedObservers(this.remoteChangesObservers);
+
+        this.remoteChangesObservers.forEach((observer: any) => {
+            if (observer && (observer.next != undefined)) observer.next(document);
+        });
+    }
+
+
+    private removeClosedObservers(observers: Array<any>) {
 
         const observersToDelete: any[] = [];
-        for (let i = 0; i < this.documentChangesObservers.length; i++) {
-            if ((this.documentChangesObservers[i] as any).closed) observersToDelete.push(this.documentChangesObservers[i]);
+        for (let i = 0; i < observers.length; i++) {
+            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
         }
         for (let observerToDelete of observersToDelete) {
-            let i = this.documentChangesObservers.indexOf(observerToDelete as never);
-            this.documentChangesObservers.splice(i, 1);
+            let i = observers.indexOf(observerToDelete as never);
+            observers.splice(i, 1);
         }
     }
 
@@ -346,16 +369,11 @@ export class PouchdbDatastore {
                 if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
 
-                const documentChange: DocumentChange = {
-                    type: change.deleted ? 'deleted' : 'changed',
-                    resourceId: change.id
-                };
-
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
                     this.constraintIndexer.remove({resource: {id: change.id}} as Document);
                     this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
-                    documentChange.type = 'deleted'; // for the same reason we use deletedOnes
-                    return this.notifyDocumentChangesObservers(documentChange);
+                    this.notifyAllChangesAndDeletionsObservers();
+                    return;
                 }
 
                 let document: Document;
@@ -367,10 +385,12 @@ export class PouchdbDatastore {
                         console.warn('Failed to index document from remote. One or more necessary fields are missing.',
                             document);
                     } else {
+                        if (!ChangeHistoryUtil.isRemoteChange(document, this.appState.getCurrentUser())) return;
+
                         this.constraintIndexer.put(document);
                         this.fulltextIndexer.put(document);
-                        documentChange.document = document;
-                        this.notifyDocumentChangesObservers(documentChange);
+                        this.notifyRemoteChangesObservers(document);
+                        this.notifyAllChangesAndDeletionsObservers();
                     }
                 }).catch(err => {
                     console.error('Error while trying to index changed document with id ' + change.id +

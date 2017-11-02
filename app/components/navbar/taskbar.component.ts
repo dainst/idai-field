@@ -4,7 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ViewFacade} from '../resources/view/view-facade';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldDocumentDatastore} from "../../core/datastore/idai-field-document-datastore";
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +27,7 @@ export class TaskbarComponent {
     private cancelClickListener: Function;
 
 
-    constructor(private datastore: IdaiFieldDocumentDatastore,
+    constructor(private datastore: DocumentReadDatastore,
                 private settings: SettingsService,
                 private router: Router,
                 private viewFacade: ViewFacade,
@@ -78,7 +78,7 @@ export class TaskbarComponent {
 
     private subscribeForChanges(): void {
 
-        this.datastore.documentChangesNotifications().subscribe(() => {
+        this.datastore.allChangesAndDeletionsNotifications().subscribe(() => {
             this.fetchConflicts();
         });
     }
@@ -86,7 +86,7 @@ export class TaskbarComponent {
 
     private fetchConflicts() {
 
-        this.datastore.find({constraints: {'_conflicts': 'KNOWN'}}).then(result => {
+        this.datastore.find({ constraints: { '_conflicts': 'KNOWN' } }).then(result => {
             this.conflicts = result;
         });
     }

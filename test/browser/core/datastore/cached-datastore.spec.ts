@@ -1,9 +1,9 @@
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../app/core/datastore/core/document-cache';
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
-import {IdaiFieldDocumentConverter} from "../../../../app/core/datastore/idai-field-document-converter";
+import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
 
 
 /**
@@ -15,7 +15,7 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
 
         let datastore: IdaiFieldDocumentDatastore;
         let mockdb: any;
-        let documentChangesNotificationsCallback;
+        let remoteChangesNotificationsCallback;
 
         function doc(sd, identifier?): Document {
 
@@ -42,9 +42,9 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
             spyOn(console, 'debug'); // suppress console.debug
 
             mockdb = jasmine.createSpyObj('mockdb',
-                    ['findIds', 'documentChangesNotifications', 'create', 'update', 'fetch', 'fetchRevision']);
+                    ['findIds', 'remoteChangesNotifications', 'create', 'update', 'fetch', 'fetchRevision']);
 
-            mockdb.update.and.callFake(function(dd){
+            mockdb.update.and.callFake(function(dd) {
                 // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
                 dd.resource.id = '1';
                 dd['_rev'] = '2';
@@ -60,9 +60,9 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
                 dd.resource.id = '1';
                 return Promise.resolve(dd);
             });
-            // mockdb.documentChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
-            mockdb.documentChangesNotifications.and.returnValues({subscribe: (cb) =>
-                    documentChangesNotificationsCallback = cb}
+            // mockdb.remoteChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
+            mockdb.remoteChangesNotifications.and.returnValues({subscribe: (cb) =>
+                    remoteChangesNotificationsCallback = cb}
                 );
 
             const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
@@ -182,19 +182,19 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
         });
 
 
-        it('should add missing fields on documentChangesNotifications with reassign', async (done) => {
+        it('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
 
             await datastore.create({resource: { // trigger caching of document
                 id: '1',
                 val: 'a',
                 relations: {}
             }} as any);
-            documentChangesNotificationsCallback(
-                {type: 'changed', document: {resource: { // trigger reassigning of document
+            remoteChangesNotificationsCallback(
+                {resource: { // trigger reassigning of document
                     id: '1',
                     val: 'b',
                     relations: {}
-                }}} as any);
+                }} as any);
 
             const document = await datastore.get('1'); // fetch from cache
             expect(document.resource['val']).toEqual('b');

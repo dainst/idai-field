@@ -1,9 +1,8 @@
 import {Document} from 'idai-components-2/core';
-import {CachedDatastore} from "./core/cached-datastore";
-import {DocumentReadDatastore} from "./document-read-datastore";
-import {PouchdbDatastore} from "./core/pouchdb-datastore";
-import {DocumentCache} from "./core/document-cache";
-import {DocumentConverter} from "./core/document-converter";
+import {CachedDatastore} from './core/cached-datastore';
+import {PouchdbDatastore} from './core/pouchdb-datastore';
+import {DocumentCache} from './core/document-cache';
+import {DocumentConverter} from './core/document-converter';
 
 /**
  * @author Daniel de Oliveira

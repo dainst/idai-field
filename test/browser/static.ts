@@ -1,10 +1,11 @@
+import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConstraintIndexer} from '../../app/core/datastore/core/constraint-indexer';
 import {FulltextIndexer} from '../../app/core/datastore/core/fulltext-indexer';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
+import {AppState} from '../../app/core/settings/app-state';
 
 
 /**
@@ -27,7 +28,7 @@ export class Static {
         let pouchdbManager = new PouchdbManager
             (undefined, constraintIndexer, fulltextIndexer);
 
-        const appState = jasmine.createSpyObj('appState', ['getCurrentUser']);
+        const appState = new AppState();
         const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
             ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
         conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
@@ -42,7 +43,8 @@ export class Static {
 
         return {
             datastore: datastore,
-            documentCache: documentCache
+            documentCache: documentCache,
+            appState: appState
         }
     }
 

@@ -125,7 +125,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+    async function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
 
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
 
@@ -133,15 +133,32 @@ describe('resources/syncing --', function() {
             testDocument.resource[additionalFieldName] = additionalFieldValue;
         }
 
-        return db.put(testDocument).then(result => {
-                testDocument['_rev'] = result.rev;
-                return browser.sleep(delays.shortRest * 10);
-            })
-            .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(delays.shortRest * 10))
-            .then(() => {
-                return Promise.resolve(testDocument);
-            });
+        const result = await db.put(testDocument);
+        testDocument['_rev'] = result.rev;
+
+        NavbarPage.clickNavigateToExcavation();
+        return new Promise<any>((resolve, reject) => {
+
+            let retries = 0;
+            const waitForItem = () => {
+
+                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
+                    if(text.indexOf('Testfund'+nr) !== -1) {
+                        return resolve(testDocument);
+                    } else {
+                        return reject('missing text')
+                    }
+                }, () => {
+                    if (retries == 20) {
+                        return reject('20 retries and no result');
+                    }
+                    browser.sleep(delays.shortRest);
+                    retries++;
+                    waitForItem();
+                })
+            };
+            waitForItem();
+        });
     }
 
 

@@ -156,7 +156,7 @@ export class PersistenceManager {
                 let promise: Promise<any> = Promise.resolve();
 
                 for (let doc of recordedInDocs) {
-                    promise = promise.then(() => this.remove(doc, user, []));
+                    promise = promise.then(() => this.removeDocument(doc, user, []));
                 }
 
                 return promise.then(() => this.removeDocument(document, user, oldVersions));

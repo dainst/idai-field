@@ -3,8 +3,8 @@ import {Query} from 'idai-components-2/datastore';
 import {Document, Resource} from 'idai-components-2/core';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ConnectedDocsResolver} from './connected-docs-resolver';
-import {M} from "../../m";
-import {DocumentDatastore} from "../datastore/document-datastore";
+import {M} from '../../m';
+import {DocumentDatastore} from '../datastore/document-datastore';
 
 @Injectable()
 /**
@@ -232,6 +232,7 @@ export class PersistenceManager {
             if (!document.modified || document.modified.constructor !== Array)
                 document.modified = [];
             document.modified.push({ user: user, date: new Date() });
+
             return this.datastore.update(document);
         } else {
             document.created = { user: user, date: new Date() };

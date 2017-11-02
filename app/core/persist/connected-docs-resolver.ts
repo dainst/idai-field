@@ -11,6 +11,7 @@ export class ConnectedDocsResolver {
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
+
     /**
      * The method returns a set of the target documents which need an update.
      * The target documents will have set their relations accordingly.
@@ -32,9 +33,11 @@ export class ConnectedDocsResolver {
         return this.compare(targetDocuments, copyOfTargetDocuments);
     }
 
-    private compare(targetDocuments: any, copyOfTargetDocuments: any) {
+
+    private compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
         
         const docsToUpdate = [];
+
         for (let i in targetDocuments) {
             let same = true;
 
@@ -52,8 +55,10 @@ export class ConnectedDocsResolver {
 
             if (!same) docsToUpdate.push(targetDocuments[i]);
         }
+
         return docsToUpdate;
     }
+
 
     private pruneInverseRelations(resourceId: string, targetDocument: Document, keepAllNoInverseRelations: boolean) {
 
@@ -67,6 +72,7 @@ export class ConnectedDocsResolver {
         }
     }
 
+
     private removeRelation(resourceId: string, relations: any, relation: string): boolean {
         
         const index = relations[relation].indexOf(resourceId);
@@ -77,6 +83,7 @@ export class ConnectedDocsResolver {
 
         return true;
     }
+
 
     private setInverseRelations(document: Document, targetDocument: Document) {
 

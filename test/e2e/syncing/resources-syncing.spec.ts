@@ -123,10 +123,10 @@ describe('resources/syncing --', function() {
 
         return db.put(testDocument).then(result => {
                 testDocument['_rev'] = result.rev;
-                return browser.sleep(delays.shortRest);
+                return browser.sleep(delays.shortRest * 10);
             })
             .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(delays.shortRest))
+            .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => {
                 return Promise.resolve(testDocument);
             });
@@ -235,33 +235,19 @@ describe('resources/syncing --', function() {
         done();
     });
 
-
-    it('detect an eventual conflict and mark the corresponding resource list item', async (done) => {
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
         const nr = '7';
 
-        let retries = 0;
-        const waitForConflicted = (conflicted: boolean = false) => {
-            ResourcesPage.getListItemEl('testf' + nr).getAttribute('class').then(attr => {
-                if (retries == 10) {
-                    fail('5 retries and no result');
-                    return done();
-                }
-                if((!conflicted && attr.indexOf('conflicted') === -1) || (attr.indexOf('conflicted') !== -1)) {
-                    done();
-                } else {
-                    browser.sleep(delays.shortRest);
-                    retries++;
-                    waitForConflicted(conflicted);
-                }
+        return createOneDocument(nr)
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
             })
-        };
-
-        await createOneDocument(nr);
-        waitForConflicted(false);
-        await createAlternateDocument(nr);
-        waitForConflicted(true);
+            .then(() => createAlternateDocument(nr))
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
+                done();
+            });
     });
-
 
     it('open conflict resolver via taskbar', done => {
         const nr = '8';
@@ -274,7 +260,6 @@ describe('resources/syncing --', function() {
         });
     });
 
-
     it('open conflict resolver via conflict button in document view', done => {
         const nr = '9';
 
@@ -284,7 +269,6 @@ describe('resources/syncing --', function() {
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
-
 
     it('resolve an eventual conflict via conflict resolver', done => {
         const nr = '10';

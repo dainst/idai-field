@@ -68,7 +68,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('perform a fulltext search', () => {
+    xit('perform a fulltext search', () => {
 
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
@@ -82,7 +82,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('perform a type filter search', () => {
+    xit('perform a type filter search', () => {
 
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 

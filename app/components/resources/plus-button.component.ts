@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
+import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {Relations} from 'idai-components-2/core';
 import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
@@ -24,6 +24,10 @@ export class PlusButtonComponent implements OnChanges {
     @Input() liesWithin: IdaiFieldDocument;
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
+    @Input() skipFormAndReturnNewDocument: boolean = false;
+
+    @Output() documentRequested: EventEmitter<IdaiFieldDocument> =
+        new EventEmitter<IdaiFieldDocument>();
 
     @ViewChild('popover') private popover: any;
 
@@ -61,8 +65,8 @@ export class PlusButtonComponent implements OnChanges {
                 'type': this.type
             }
         };
-
-        this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
+        if (this.skipFormAndReturnNewDocument) this.documentRequested.emit(newDocument);
+        else this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
     }
 
     public reset() {

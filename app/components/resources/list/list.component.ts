@@ -7,6 +7,7 @@ import {DocumentReference} from './document-reference';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
+import {PersistenceManager} from "../../../core/persist/persistence-manager";
 
 @Component({
     selector: 'list',
@@ -35,6 +36,7 @@ export class ListComponent implements OnChanges {
         private messages: Messages,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
+        private persistenceManager: PersistenceManager,
         public viewFacade: ViewFacade
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
@@ -64,6 +66,15 @@ export class ListComponent implements OnChanges {
         }
 
         return false;
+    }
+
+
+    public createNewDocument(newDoc: IdaiFieldDocument) {
+        newDoc.resource.identifier = "Neues Dokument";
+        this.persistenceManager.persist(newDoc).then(() => {
+            // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
+            this.resourcesComponent.chooseOperationTypeDocumentOption((this.resourcesComponent.getIsRecordedInTarget() as IdaiFieldDocument))
+        });
     }
 
 

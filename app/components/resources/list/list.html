@@ -13,6 +13,8 @@
     <plus-button *ngIf="showPlusButton()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="viewFacade.getCurrentFilterType()"
-                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"></plus-button>
+                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
+                 [skipFormAndReturnNewDocument]="true"
+                 (documentRequested)="createNewDocument($event)"></plus-button>
     <loading-icon></loading-icon>
 </div>

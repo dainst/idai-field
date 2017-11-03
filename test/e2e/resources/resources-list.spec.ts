@@ -30,7 +30,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('show newly created resource in list view', () => {
+    xit('show newly created resource in list view', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
 
@@ -40,7 +40,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('save changes on input field blur', () => {
+    xit('save changes on input field blur', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
@@ -53,7 +53,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('restore identifier from database if a duplicate identifier is typed in', () => {
+    xit('restore identifier from database if a duplicate identifier is typed in', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);

@@ -66,7 +66,13 @@ export class RowComponent {
 
         this.validator.validate(document)
             .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]))
-            .then(() => this.messages.add([M.DOCEDIT_SAVE_SUCCESS]))
+            .then(() => {
+                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+                // new document 
+                if (!oldVersion.resource.id) {
+                    this.viewFacade.populateDocumentList();
+                }
+            })
             .catch(msgWithParams => {
                 this.messages.add(msgWithParams);
                 return this.restoreIdentifier(document);

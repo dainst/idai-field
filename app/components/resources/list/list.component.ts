@@ -28,7 +28,7 @@ export class ListComponent implements OnChanges {
 
     public typesMap: { [type: string]: IdaiType };
 
-    private childrenShownForIds: string[];
+    private childrenShownForIds: string[] = [];
     
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
@@ -46,14 +46,17 @@ export class ListComponent implements OnChanges {
     ngOnChanges() {
 
         if (!this.ready) return;
-
         this.loading.start();
 
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
-            this.update()
-                .catch(msgWithParams => this.messages.add(msgWithParams))
-                .then(() => this.loading.stop());
+            
+            if (this.viewFacade.getDocuments() && this.viewFacade.getDocuments().length > 0) {
+
+                if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve(); 
+                this.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
+            }
+            this.loading.stop();
         }, 1);
     }
 
@@ -70,29 +73,29 @@ export class ListComponent implements OnChanges {
 
 
     public createNewDocument(newDoc: IdaiFieldDocument) {
-        newDoc.resource.identifier = "Neues Dokument";
-        this.persistenceManager.persist(newDoc).then(() => {
-            // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
-            this.resourcesComponent.chooseOperationTypeDocumentOption((this.resourcesComponent.getIsRecordedInTarget() as IdaiFieldDocument))
-        });
+        var docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
+
+        for (let doc of docs) {
+            if (!doc.resource.id) {
+                docs.splice(docs.indexOf(doc),1);
+                break;
+            }
+        }
+        docs.push(newDoc)
+
+        // if newDoc as parent, ensure that it's children are shown 
+        if (newDoc.resource.relations['liesWithin']) {
+            const parentDocId = newDoc.resource.relations['liesWithin'][0];
+            if (parentDocId && this.childrenShownForIds.indexOf(parentDocId) == -1) this.childrenShownForIds.push(parentDocId);
+        }
+        
+        this.buildTreeFrom(docs, true);  
     }
 
 
-    private update(): Promise<any> {
-
-        if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
-
+    private buildTreeFrom(documents: Array<IdaiFieldDocument>, keepShownChildren?: boolean) {
         this.docRefTree = [];
-        this.childrenShownForIds = [];
-
-        // TODO now that we already have that functionality centralized in a service, here we should work with documentsManager.populateList. get rid of datastore depedency afterwards
-        return this.datastore.find(
-            { constraints: { 'resource.relations.isRecordedIn': (this.resourcesComponent.getIsRecordedInTarget() as any).resource.id } } as any
-        ).then(resultDocs => this.buildTreeFrom(resultDocs));
-    }
-
-
-    private buildTreeFrom(documents: Array<IdaiFieldDocument>) {
+        if (!keepShownChildren) this.childrenShownForIds = [];
 
         let docRefMap: {[type: string]: DocumentReference} = {};
 
@@ -128,7 +131,7 @@ export class ListComponent implements OnChanges {
         }
     }
 
-    public childrenHiddenFor(id: string) {
+    public childrenHiddenFor(id: string): boolean {
 
         return this.childrenShownForIds.indexOf(id) == -1
     }
@@ -158,7 +161,7 @@ export class ListComponent implements OnChanges {
 
     private isDescendantPartOfResult(docRef: DocumentReference): boolean {
 
-        if (this.documentsInclude(docRef.doc as IdaiFieldDocument))
+        if (this.documentsInclude(docRef.doc as IdaiFieldDocument) || !docRef.doc.resource.id)
             return true;
         else
             for (let child of docRef['children'])

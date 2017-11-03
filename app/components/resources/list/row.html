@@ -5,11 +5,16 @@
     <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
          [class.font-weight-bold]="depth == 0">
         <div class="plus-button-wrapper">
-            <plus-button [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()" [liesWithin]="docRef.doc"
-                     [preselectedGeometryType]="'none'" (dblclick)="$event.stopPropagation();"></plus-button>
+            <plus-button *ngIf="docRef.doc.resource.id"
+                         [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()" 
+                         [liesWithin]="docRef.doc"
+                         [preselectedGeometryType]="'none'"
+                         (dblclick)="$event.stopPropagation();"
+                         [skipFormAndReturnNewDocument]="true"
+                         (documentRequested)="listComponent.createNewDocument($event)"></plus-button>
         </div>
 
-        <span class="list-type-label">{{typesMap[docRef.doc.resource.type].label}}</span><br>
+        <span class="list-type-label" [class.text-info]="!docRef.doc.resource.id">{{typesMap[docRef.doc.resource.type].label}}</span><br>
         <span *ngIf="docRef.children.length > 0"
                 (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
                 class="btn btn-sm btn-link p-0">
@@ -27,7 +32,7 @@
 
     </div>
     <div class="col-md-4">
-        <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)"
+        <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)" *ngIf="docRef.doc.resource.id"
                (keyup)="markAsChanged()" (dblclick)="$event.stopPropagation();" class="form-control form-control-sm">
     </div>
     <div class="col-md-2">

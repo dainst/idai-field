@@ -122,7 +122,7 @@ describe('resources/filter --', () => {
     });
 
 
-    it('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    xit('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         const checkTypeIcon = () => {
 

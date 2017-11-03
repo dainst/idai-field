@@ -125,6 +125,29 @@ describe('resources/syncing --', function() {
     });
 
 
+
+    // old version, if new one is stable for some time, remove it
+    //
+    // function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+    //
+    //     const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
+    //
+    //     if (additionalFieldName && additionalFieldValue) {
+    //         testDocument.resource[additionalFieldName] = additionalFieldValue;
+    //     }
+    //
+    //     return db.put(testDocument).then(result => {
+    //         testDocument['_rev'] = result.rev;
+    //         return browser.sleep(delays.shortRest * 10);
+    //     })
+    //         .then(() => NavbarPage.clickNavigateToExcavation())
+    //         .then(() => browser.sleep(delays.shortRest * 10))
+    //         .then(() => {
+    //             return Promise.resolve(testDocument);
+    //         });
+    // }
+
+    // new version
     async function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
 
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);

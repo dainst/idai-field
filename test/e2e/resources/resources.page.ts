@@ -181,6 +181,8 @@ export class ResourcesPage {
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
+
+
     public static getResourceTypeOption(typeName: string) {
 
         return element(by.id('choose-type-option-' + typeName));
@@ -190,6 +192,21 @@ export class ResourcesPage {
 
         return element(by.css('#create-document-button .type-icon'));
     }
+
+    // type in
+
+    public static typeInListModeInputField(identifier, index, inputText) {
+
+        return common.typeIn(this.getListModeInputField(identifier, index), inputText);
+    };
+
+    public static typeInNewResourceAndHitEnterInList (inputText) {
+  
+        browser.wait(EC.visibilityOf(element(by.css('#new-resource input'))), delays.ECWaitTime);
+        common.typeIn(element(by.css('#new-resource input')), inputText);
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    };
+
 
 
     // sequences
@@ -208,6 +225,12 @@ export class ResourcesPage {
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument(clickMsgAway);
     };
+
+    public static performCreateResourceInList(identifier: string, typeName: string) {
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType(typeName);
+        ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+    }
 
     public static performCreateMainTypeResource(identifier: string) {
 
@@ -250,10 +273,4 @@ export class ResourcesPage {
         return browser.executeScript('window.scrollTo(0,0);');
     };
 
-    // type in
-
-    public static typeInListModeInputField(identifier, index, inputText) {
-
-        return common.typeIn(this.getListModeInputField(identifier, index), inputText);
-    };
 }

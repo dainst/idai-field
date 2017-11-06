@@ -30,13 +30,11 @@ describe('resources/list --', () => {
     });
 
 
-    xit('show newly created resource in list view', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
+    it('show newly created resource in list view', () => {
 
+        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         ResourcesPage.getListModeInputFieldValue('1', 0).then(inputValue => expect(inputValue).toEqual('1'));
-
-        ResourcesPage.getListModeInputFieldValue('1', 1).then(inputValue => expect(inputValue).toEqual('Resource 1'));
     });
 
 
@@ -45,8 +43,8 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
 
-        ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
-        ResourcesPage.getListModeInputField('2', 0).click();
+        ResourcesPage.typeInListModeInputField('resource-1', 1, 'Changed resource 1');
+        ResourcesPage.getListModeInputField('resource-2', 0).click();
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         NavbarPage.clickCloseAllMessages();
@@ -59,8 +57,8 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
         ResourcesPage.performCreateResource('3', 'feature-architecture', 'shortDescription', 'Resource 3', true);
 
-        ResourcesPage.typeInListModeInputField('2', 0, '1');
-        ResourcesPage.getListModeInputField('3', 0).click();
+        ResourcesPage.typeInListModeInputField('resource-2', 0, '1');
+        ResourcesPage.getListModeInputField('resource-3', 0).click();
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 

@@ -312,7 +312,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('keep query string in search bar input field on switching view modes', () => {
+    xit('keep query string in search bar input field on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
         SearchBarPage.typeInSearchField('testf1');

@@ -38,27 +38,27 @@ describe('resources/list --', () => {
     });
 
 
-    xit('save changes on input field blur', () => {
+    it('save changes on input field blur', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
-        ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
+        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
 
-        ResourcesPage.typeInListModeInputField('resource-1', 1, 'Changed resource 1');
-        ResourcesPage.getListModeInputField('resource-2', 0).click();
+        ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
+        ResourcesPage.getListModeInputField('2', 0).click();
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         NavbarPage.clickCloseAllMessages();
     });
 
 
-    xit('restore identifier from database if a duplicate identifier is typed in', () => {
+    it('restore identifier from database if a duplicate identifier is typed in', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'shortDescription', 'Resource 1', true);
-        ResourcesPage.performCreateResource('2', 'feature-architecture', 'shortDescription', 'Resource 2', true);
-        ResourcesPage.performCreateResource('3', 'feature-architecture', 'shortDescription', 'Resource 3', true);
+        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
+        ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
 
-        ResourcesPage.typeInListModeInputField('resource-2', 0, '1');
-        ResourcesPage.getListModeInputField('resource-3', 0).click();
+        ResourcesPage.typeInListModeInputField('2', 0, '1');
+        ResourcesPage.getListModeInputField('3', 0).click();
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 
@@ -66,30 +66,22 @@ describe('resources/list --', () => {
     });
 
 
-    xit('perform a fulltext search', () => {
+    it('perform a fulltext search', () => {
 
+        SearchBarPage.typeInSearchField('context');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
 
         SearchBarPage.typeInSearchField('testf1');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
-
-        SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });
 
 
-    xit('perform a type filter search', () => {
-
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+    it('perform a type filter search', () => {
 
         SearchBarPage.clickChooseTypeFilter('find');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
-
-        SearchBarPage.clickChooseTypeFilter('all');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
     });
 });

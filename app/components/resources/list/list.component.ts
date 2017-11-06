@@ -50,7 +50,6 @@ export class ListComponent implements OnChanges {
 
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {
-            
             if (this.viewFacade.getDocuments() && this.viewFacade.getDocuments().length > 0) {
 
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve(); 
@@ -74,7 +73,7 @@ export class ListComponent implements OnChanges {
 
     public createNewDocument(newDoc: IdaiFieldDocument) {
         var docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-
+        // TODO do it with dom elements
         for (let doc of docs) {
             if (!doc.resource.id) {
                 docs.splice(docs.indexOf(doc),1);
@@ -94,6 +93,7 @@ export class ListComponent implements OnChanges {
 
 
     private buildTreeFrom(documents: Array<IdaiFieldDocument>, keepShownChildren?: boolean) {
+
         this.docRefTree = [];
         if (!keepShownChildren) this.childrenShownForIds = [];
 
@@ -105,21 +105,45 @@ export class ListComponent implements OnChanges {
             docRefMap[doc.resource.id as any] = docRef;
         }
 
-        // build tree from liesWithin relations
-        for (let doc of documents) {
-            let docRef = docRefMap[doc.resource.id as any];
-            if (!doc.resource.relations['liesWithin']) {
-                this.docRefTree.push(docRef);
-            } else {
-                for (let parentId of doc.resource.relations['liesWithin']) {
-                    if (!docRefMap[parentId]) continue;
-                    docRefMap[parentId]['children'].push(docRef);
-                    docRef['parent'] = docRefMap[parentId];
+        this.getMissingParents(docRefMap).then(() => {
+            // build tree from liesWithin relations
+            for (let docId in docRefMap) {
+                let doc = docRefMap[docId].doc;
+                let docRef = docRefMap[doc.resource.id as any];
+
+                if (!doc.resource.relations['liesWithin']) {
+                    this.docRefTree.push(docRef);
+                } else {
+                    for (let parentId of doc.resource.relations['liesWithin']) {
+                        docRefMap[parentId]['children'].push(docRef);
+                        docRef['parent'] = docRefMap[parentId];
+                    }
                 }
             }
-        }
+        });
     }
 
+    public getMissingParents(docRefMap: {[type: string]: DocumentReference}): Promise<any> {
+        let promises: Array<Promise<any>> = [];
+
+        for (let docId in docRefMap) {
+            let doc = docRefMap[docId].doc;
+
+            if (!doc.resource.relations['liesWithin'] || doc.resource.relations['liesWithin'].length < 1) continue; 
+            for (let parentId of doc.resource.relations['liesWithin']) {
+                if (!docRefMap[parentId]) {
+                    promises.push(this.datastore.get(parentId).then((pdoc) => {
+                        docRefMap[parentId] = { doc: pdoc, children: [] };
+                        this.childrenShownForIds.push(parentId);
+                        if (pdoc.resource.relations['liesWithin'] && pdoc.resource.relations['liesWithin'].length > 0)
+                            promises.push(this.getMissingParents(docRefMap));
+                    }));
+                };
+            }
+        }
+
+        return Promise.all(promises);
+    }
 
     public toggleChildrenForId(id: string) {
 

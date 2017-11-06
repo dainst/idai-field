@@ -52,8 +52,12 @@ export class RowComponent {
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
-    public markAsChanged() {
-        this.documentEditChangeMonitor.setChanged();
+    public markAsChanged(event: any) {
+        if (event.keyCode == 13) {
+            this.save(this.docRef.doc as IdaiFieldDocument);
+        } else {
+            this.documentEditChangeMonitor.setChanged();
+        }
     }
 
     public save(document: IdaiFieldDocument) {

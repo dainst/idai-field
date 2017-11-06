@@ -27,13 +27,13 @@
 
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="docRef.doc.resource.identifier" (blur)="save(docRef.doc)" (keyup)="markAsChanged()"
+        <input [(ngModel)]="docRef.doc.resource.identifier" (blur)="save(docRef.doc)" (keyup)="markAsChanged($event)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
     <div class="col-md-4">
         <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)" *ngIf="docRef.doc.resource.id"
-               (keyup)="markAsChanged()" (dblclick)="$event.stopPropagation();" class="form-control form-control-sm">
+               (keyup)="markAsChanged($event)" (dblclick)="$event.stopPropagation();" class="form-control form-control-sm">
     </div>
     <div class="col-md-2">
         

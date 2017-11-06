@@ -73,7 +73,7 @@ export class ListComponent implements OnChanges {
 
     public createNewDocument(newDoc: IdaiFieldDocument) {
         var docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-        // TODO do it with dom elements
+        
         for (let doc of docs) {
             if (!doc.resource.id) {
                 docs.splice(docs.indexOf(doc),1);

@@ -63,6 +63,8 @@ describe('resources/list --', () => {
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 
         ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
+        NavbarPage.clickCloseAllMessages();
+
     });
 
 

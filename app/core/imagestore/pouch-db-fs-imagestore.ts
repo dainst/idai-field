@@ -85,12 +85,15 @@ export class PouchDbFsImagestore implements Imagestore {
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
 
+
         return readFun(key).then((data: any) => {
 
             if (data == undefined) {
                 console.error('data read was undefined for', key, 'thumbnails was', thumb);
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
+
+            if (thumb && data.size == 2) return Promise.reject("thumb broken");
 
             return this.blobMaker.makeBlob(data, sanitizeAfter);
 

@@ -91,13 +91,28 @@ export class PouchDbFsImagestore implements Imagestore {
                 console.error('data read was undefined for', key, 'thumbnails was', thumb);
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
+
             return this.blobMaker.makeBlob(data, sanitizeAfter);
 
         }).catch((err: any) => {
-            // missing file is ok for originals
-            if (err.code == 'ENOENT' && !thumb) return Promise.resolve('');
 
-            return Promise.reject([ImagestoreErrors.NOT_FOUND]);
+            // missing file is ok for originals
+            // if (err.code == 'ENOENT' && !thumb) return Promise.resolve(''); // code before temp fix was added
+            if (!thumb) return Promise.resolve('');
+
+            // return Promise.reject([ImagestoreErrors.NOT_FOUND]); // code before temp fix was added
+
+            // temporary fix
+            // if thumb and original present then recreate thumb
+            return this.readOriginal(key).then((data: any) => {
+
+                console.debug("recreate thumb");
+                return this.putAttachment(data, key, true)
+                    .then(() => this.read(key, sanitizeAfter));
+
+            }).catch((err: any) => {
+                return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
+            });
         });
     }
 
@@ -145,25 +160,9 @@ export class PouchDbFsImagestore implements Imagestore {
                     reject([ImagestoreErrors.GENERIC_ERROR]);
                 }
                 else {
-                    const buffer = this.converter.convert(data);
 
-                    let blob: any;
-                    if (typeof Blob !== 'undefined') {
-                        blob = new Blob([buffer]);  // electron runtime environment
-                    } else {
-                        blob = Buffer.from(buffer); // jasmine node tests
-                    }
-
-                    let promise;
-                    if (documentExists) {
-                        promise = this.db.get(key).then((doc: any) => doc._rev);
-                    } else {
-                        promise = Promise.resolve();
-                    }
-
-                    promise.then((rev: any) => {
-                        return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg')
-                    }).then(() => resolve()
+                    this.putAttachment(data, key, documentExists)
+                        .then(() => resolve()
                     ).catch((err: any) => {
                         console.error(err);
                         console.error(key);
@@ -173,6 +172,31 @@ export class PouchDbFsImagestore implements Imagestore {
             });
         });
     }
+
+
+    private putAttachment(data: any, key: any, documentExists: boolean) {
+
+        const buffer = this.converter.convert(data);
+
+        let blob: any;
+        if (typeof Blob !== 'undefined') {
+            blob = new Blob([buffer]);  // electron runtime environment
+        } else {
+            blob = Buffer.from(buffer); // jasmine node tests
+        }
+
+        let promise;
+        if (documentExists) {
+            promise = this.db.get(key).then((doc: any) => doc._rev);
+        } else {
+            promise = Promise.resolve();
+        }
+
+        return promise.then((rev: any) => {
+            return this.db.putAttachment(key, 'thumb', rev, blob, 'image/jpeg')
+        });
+    }
+
 
 
     private readOriginal(key: string): Promise<ArrayBuffer> {

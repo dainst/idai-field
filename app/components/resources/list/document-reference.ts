@@ -7,6 +7,7 @@ import {Document} from "idai-components-2/core";
  * @author Sebastian Cuy
  */
 export interface DocumentReference {
+
     doc: Document;
     parent?: DocumentReference;
     children: DocumentReference[];

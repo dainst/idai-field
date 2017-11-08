@@ -8,7 +8,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-describe('images/image-overview/link --', function() {
+fdescribe('images/image-overview/link --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'c1';
@@ -90,7 +90,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false, 2);
     });
 
-    it('use main type document filter', () => {
+    xit('use main type document filter', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
 

@@ -22,8 +22,6 @@ export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 
-    private updateThumbnails: boolean = true;
-
 
     constructor(
         public loading: Loading,

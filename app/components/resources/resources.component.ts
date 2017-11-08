@@ -9,7 +9,6 @@ import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../../m';
 import {ViewFacade} from './view/view-facade';
-import {ImageUploader} from '../imageupload/image-uploader';
 import {ModelUtil} from '../../core/model/model-util';
 
 
@@ -40,7 +39,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditProxy: DoceditLauncher,
-                private imageUploader: ImageUploader,
                 private renderer: Renderer,
                 private messages: Messages,
                 private loading: Loading
@@ -188,29 +186,6 @@ export class ResourcesComponent implements AfterViewChecked {
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
-    }
-
-
-    public uploadImages(event: Event, document: IdaiFieldDocument): Promise<any> {
-
-        return this.imageUploader.startUpload(event, document).then(uploadResult => {
-
-            if (uploadResult.uploadedImages > 0) {
-                this.viewFacade.setActiveDocumentViewTab('images');
-                this.viewFacade.setSelectedDocument(document);
-            }
-
-            for (let msgWithParams of uploadResult.messages) {
-                this.messages.add(msgWithParams);
-            }
-
-            if (uploadResult.uploadedImages == 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-            } else if (uploadResult.uploadedImages > 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
-                    document.resource.identifier]);
-            }
-        });
     }
 
 

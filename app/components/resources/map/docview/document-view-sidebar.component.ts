@@ -7,6 +7,9 @@ import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ImageUploader} from "../../../imageupload/image-uploader";
+import {M} from "../../../../m";
+import {Messages} from 'idai-components-2/messages';
 
 
 @Component({
@@ -21,9 +24,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
  */
 export class DocumentViewSidebarComponent {
 
-    @Input() updateThumbnails: boolean;
-
     @ViewChild('tabs') tabs: NgbTabset;
+
+    public updateThumbnails: boolean;
 
     // for clean and refactor safe template, and to help find usages
     public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
@@ -33,14 +36,37 @@ export class DocumentViewSidebarComponent {
         public resourcesComponent: ResourcesComponent,
         private routingService: RoutingService,
         private projectConfiguration: ProjectConfiguration,
-        private viewFacade: ViewFacade
+        private viewFacade: ViewFacade,
+        private imageUploader: ImageUploader,
+        private messages: Messages
     ) { }
 
 
     public uploadImages(event: Event, document: IdaiFieldDocument) {
 
         this.updateThumbnails = false;
-        this.resourcesComponent.uploadImages(event, document).then(() => this.updateThumbnails = true);
+
+        this.imageUploader.startUpload(event, document).then(uploadResult => {
+
+            if (uploadResult.uploadedImages > 0) {
+                this.viewFacade.setActiveDocumentViewTab('images');
+                this.viewFacade.setSelectedDocument(document);
+            }
+
+            for (let msgWithParams of uploadResult.messages) {
+                this.messages.add(msgWithParams);
+            }
+
+            if (uploadResult.uploadedImages == 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
+            } else if (uploadResult.uploadedImages > 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+                    document.resource.identifier]);
+            }
+
+            this.updateThumbnails = true;
+        });
+
     }
 
 

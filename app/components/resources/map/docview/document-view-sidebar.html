@@ -65,7 +65,7 @@
                         <span class="mdi mdi-pencil"></span>
                     </button>
 
-                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']" class="empty-tab-info">
+                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
                         Keine Bilder vorhanden.
                         <br><br>
                         Ziehe Bilder per Drag'n'Drop hier auf die Schrift

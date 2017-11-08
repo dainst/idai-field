@@ -20,7 +20,6 @@ export class ThumbnailViewComponent implements OnChanges {
     public documents: IdaiFieldImageDocument[];
 
     @Input() imageIds: string[];
-    @Input() update: boolean;
 
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
@@ -46,7 +45,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
     ngOnChanges() {
 
-        if (!this.update || !this.imageIds) return;
+        if (!this.imageIds) return;
 
         this.documents = [];
         let promise = Promise.resolve();

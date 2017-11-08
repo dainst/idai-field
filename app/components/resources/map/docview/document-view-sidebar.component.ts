@@ -26,8 +26,6 @@ export class DocumentViewSidebarComponent {
 
     @ViewChild('tabs') tabs: NgbTabset;
 
-    public updateThumbnails: boolean;
-
     // for clean and refactor safe template, and to help find usages
     public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
 
@@ -43,8 +41,6 @@ export class DocumentViewSidebarComponent {
 
 
     public uploadImages(event: Event, document: IdaiFieldDocument) {
-
-        this.updateThumbnails = false;
 
         this.imageUploader.startUpload(event, document).then(uploadResult => {
 
@@ -63,8 +59,6 @@ export class DocumentViewSidebarComponent {
                 this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
                     document.resource.identifier]);
             }
-
-            this.updateThumbnails = true;
         });
 
     }

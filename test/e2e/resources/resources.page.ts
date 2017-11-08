@@ -181,7 +181,11 @@ export class ResourcesPage {
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
     };
 
+    public static isListMode() {
 
+        let listBtn = element(by.css('#list-mode-button.active'));
+        return listBtn.isPresent();
+    }
 
     public static getResourceTypeOption(typeName: string) {
 

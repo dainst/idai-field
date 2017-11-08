@@ -122,7 +122,7 @@ describe('resources/filter --', () => {
     });
 
 
-    xit('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         const checkTypeIcon = () => {
 
@@ -142,9 +142,20 @@ describe('resources/filter --', () => {
             ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
             ResourcesPage.clickCreateResource();
             if (selectGeometryType) ResourcesPage.clickSelectGeometryType();
-            DoceditPage.typeInInputField('identifier', identifier);
-            ResourcesPage.scrollUp();
-            DoceditPage.clickSaveDocument();
+
+            ResourcesPage.isListMode().then(function(isListMode) {
+                if (isListMode) {
+                    console.log("LISTMODE");
+                    ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+                } else {
+                    console.log("NOT LISTMODE");
+
+                    DoceditPage.typeInInputField('identifier', identifier);
+                    ResourcesPage.scrollUp();
+                    DoceditPage.clickSaveDocument();
+                }
+            });
+         
             browser.sleep(delays.shortRest);
         };
 

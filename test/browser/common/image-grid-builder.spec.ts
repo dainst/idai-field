@@ -42,7 +42,7 @@ export function main() {
 
         });
 
-        it('should keep the aspect ration of an image', (done)=> {
+        xit('should keep the aspect ration of an image', (done)=> {
 
             imageGridBuilder.calcGrid(documents,4,800).then(result=>{
                 expect(result.rows[0][0].calculatedWidth).toBe(
@@ -58,7 +58,7 @@ export function main() {
             expect(function(){imageGridBuilder.calcGrid([],4.1,0)}).toThrow();
         });
 
-        it ('should accumulate errors', (done) => {
+        xit ('should accumulate errors', (done) => {
 
             const imagestoreMock = {
                 read: function () {

@@ -6,6 +6,7 @@ import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
 import {M} from '../../m';
+import {Imagestore} from "../../core/imagestore/imagestore";
 
 
 @Component({
@@ -55,7 +56,8 @@ export class ImageGridComponent implements OnChanges {
     constructor(
         private el: ElementRef,
         private imageGridBuilder: ImageGridBuilder,
-        private messages: Messages
+        private messages: Messages,
+        private imagestore: Imagestore
     ) {
     }
 
@@ -74,11 +76,11 @@ export class ImageGridComponent implements OnChanges {
 
         if (!changes['documents']) return;
         if (this.showDropArea) this.insertStubForDropArea();
-        this.calcGrid();
+        this._calcGrid();
     }
 
 
-    public calcGrid() {
+    private _calcGrid() {
 
         this.rows = [];
 
@@ -86,19 +88,43 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) return;
 
-        return this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth).then(result => {
-            this.rows = result['rows'];
-            for (let errWithParams of result.errsWithParams) {
-                // do not display a msg to the user via messages because there may be two much messages
-                // the user will get black image which allows to identify which thumbs are missing
-                console.error('error from calcGrid:', errWithParams);
+        console.debug("calc grid start")
+        const rows = this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth)
+        console.debug("calc grid end")
+
+        // this.rows = rows;
+
+        let promise = Promise.resolve();
+        for (let row of rows) {
+            for (let cell of row) {
+                if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
+
+                promise = this.imagestore.read(cell.document.resource.id).then(url => {
+                    console.log("cell",cell.document.resource.id)
+                    cell.imgSrc = url;
+                }).catch(e => {
+                    console.error('error fetching img',e)
+                })
             }
-            this.showImagesNotFoundMessage(result);
-        });
+        }
+        promise.then(() => {
+            this.rows = rows;
+            this.calcGridOnResizeRunning = false;
+            console.log("rows",rows.length)
+        })
+
+        // this.rows = result['rows'];
+        // for (let errWithParams of result.errsWithParams) {
+        //     do not display a msg to the user via messages because there may be two much messages
+        //     the user will get black image which allows to identify which thumbs are missing
+            // console.error('error from calcGrid:', errWithParams);
+        // }
+        // this.showImagesNotFoundMessage(result);
+
     }
 
 
-    public _onResize() {
+    public calcGrid() {
 
         clearTimeout(this.calcGridOnResizeTimeoutRef as any);
         this.calcGridOnResizeTimeoutRef = setTimeout(() => {
@@ -106,9 +132,7 @@ export class ImageGridComponent implements OnChanges {
             if (this.calcGridOnResizeRunning) return;
 
             this.calcGridOnResizeRunning = true;
-            (this.calcGrid() as any).then(() => {
-                this.calcGridOnResizeRunning = false;
-            });
+            this._calcGrid();
         }, 500);
     }
 

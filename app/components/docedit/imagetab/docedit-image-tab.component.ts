@@ -122,7 +122,7 @@ export class DoceditImageTabComponent {
 
         if (!this.documents || this.documents.length == 0) return; // TODO code duplicated - move it to _onResize
 
-        this.imageGrid._onResize();
+        this.imageGrid.calcGrid();
     }
 
 

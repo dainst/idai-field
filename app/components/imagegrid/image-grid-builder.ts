@@ -28,7 +28,7 @@ export class ImageGridBuilder {
      */
     constructor(
         private imagestore: Imagestore,
-        private showAllAtOnce: boolean = false
+        private showAllAtOnce: boolean = true
     ) { }
 
 
@@ -40,20 +40,21 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): Promise<ImageGridBuilderResult> {
+    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
-        return new Promise((resolve)=>{
             this.documents = documents;
-            if (!this.documents) resolve([]);
+            if (!this.documents) return [];
 
-            const rowPromises = [];
-            for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
-                rowPromises.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
+            const rows = [];
+            for (let i = 0; i < Math.min(this.nrOfRows(nrOfColumns),5); i++) {
+                const row = this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns)
+                // console.debug("calc row",JSON.stringify(row))
+                rows.push(row);
             }
-            resolve(ImageGridBuilder.splitCellsAndMessages(rowPromises));
-        });
+            // resolve(ImageGridBuilder.splitCellsAndMessages(rowPromises));
+            return rows;
     }
 
 
@@ -62,19 +63,19 @@ export class ImageGridBuilder {
      */
     private calcRow(rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
 
-        const promises = [];
+        const row = [];
         for (let i = 0; i < nrOfColumns; i++) {
 
             const document = this.documents[rowIndex * nrOfColumns + i];
             if (!document) break;
 
-            promises.push(
+            row.push(
                 this.getImg(document,
                     ImageGridBuilder.newCell(document, calculatedHeight)
                 )
             );
         }
-        return Promise.all(promises);
+        return row;
     }
 
 
@@ -125,42 +126,9 @@ export class ImageGridBuilder {
      */
     private getImg(document: any, cell: any): Promise<any> {
 
-        return new Promise<any>((resolve) => {
-            if (document.id == 'droparea') return resolve({cell: cell});
+        if (document.id == 'droparea') return cell;
 
-            if (!this.showAllAtOnce) resolve({cell: cell});
-            this.imagestore.read(document.resource.id).then(url => {
-                if (this.showAllAtOnce) resolve({cell: cell});
-                cell.imgSrc = url;
-            }).catch(errWithParams => {
-                cell.imgSrc = BlobMaker.blackImg;
-
-                if (errWithParams && errWithParams.length == 1) {
-                    errWithParams.push(document.resource.id);
-                }
-                resolve({cell: cell, errWithParams: errWithParams});
-            });
-        })
+        cell.imgSrc = BlobMaker.blackImg;
+        return cell;
     }
-
-
-    private static splitCellsAndMessages(rowPromises: any) {
-
-        return Promise.all(rowPromises).then(
-            rows => {
-                const rows_: any[] = [];
-                const errsWithParams: any[] = [];
-                rows.forEach(row => {
-                    const row_: any[] = [];
-                    (row as any).forEach((cell: any) => {
-                        if (cell.errWithParams) errsWithParams.push(cell.errWithParams);
-                        row_.push(cell.cell);
-                    });
-                    rows_.push(row_);
-                });
-                return {rows: rows_, errsWithParams: errsWithParams};
-            }
-        );
-    }
-
 }

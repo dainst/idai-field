@@ -63,10 +63,10 @@ export class ImageOverviewComponent implements OnInit {
         private persistenceHelper: PersistenceHelper,
         private routingService: RoutingService
     ) {
-        this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
-            documents => this.operationTypeDocuments = documents,
-            msgWithParams => messages.add(msgWithParams)
-        );
+        // this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
+        //     documents => this.operationTypeDocuments = documents,
+        //     msgWithParams => messages.add(msgWithParams)
+        // );
 
         this.imageOverviewFacade.initialize().then(() => {
             this.imageOverviewFacade.fetchDocuments();
@@ -96,7 +96,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public onResize() {
 
-        this.imageGrid._onResize();
+        this.imageGrid.calcGrid();
     }
 
 
@@ -179,7 +179,7 @@ export class ImageOverviewComponent implements OnInit {
 
     private async updateTotalImageCount() {
 
-        this.totalImageCount = (await this.datastore.find(
-            this.imageOverviewFacade.getDefaultQuery())).length;
+        // this.totalImageCount = (await this.datastore.find(
+        //     this.imageOverviewFacade.getDefaultQuery())).length;
     }
 }

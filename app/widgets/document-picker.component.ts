@@ -26,6 +26,8 @@ export class DocumentPickerComponent implements OnChanges {
     public documents: Array<IdaiFieldDocument>;
     protected query: Query = {};
 
+    private fetchDocsRunning = false;
+
 
     constructor(private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration) {
@@ -63,14 +65,20 @@ export class DocumentPickerComponent implements OnChanges {
      * Populates the document list with all documents
      * from the datastore which match the current query.
      */
-    public fetchDocuments() {
+    public fetchDocuments() { // TODO make private
 
+        if (this.fetchDocsRunning) return;
+        this.fetchDocsRunning = true;
+
+        console.debug("doc picker fetch docs")
         this.datastore.find(this.query)
             .then(
                 documents => {
+                    console.debug("doc picker fetch docs end")
                     this.documents =
                         this.filterNotAllowedRelationDomainTypes(
                             documents as Array<IdaiFieldDocument>)
+                    this.fetchDocsRunning = false;
                 },
                 err => console.error(err));
     }

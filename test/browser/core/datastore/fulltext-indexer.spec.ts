@@ -10,6 +10,7 @@ export function main() {
 
         let fi;
 
+
         function doc(id, identifier, type, shortDescription = 'short') {
             return {
                 resource: {
@@ -31,14 +32,17 @@ export function main() {
             }
         }
 
+
         function item(id, identifier?) {
             if (!identifier) identifier = 'identifier' + id;
             return {id: id, date: '2018-01-01', identifier: identifier};
         }
 
+
         beforeEach(() => {
             fi = new FulltextIndexer();
         });
+
 
         it('match one with with different search terms', () => {
             fi.put(doc('1', 'identifier1', 'type'));
@@ -48,6 +52,7 @@ export function main() {
                 .toEqual([item('1')]);
         });
 
+
         it('match two with the same search term', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             fi.put(doc('2', 'identifier2', 'type'));
@@ -55,11 +60,13 @@ export function main() {
                 .toEqual([item('1'), item('2')]);
         });
 
+
         it('match in all types', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('identifier', undefined))
                 .toEqual([item('1')]);
         });
+
 
         it('match in multiple selected types', () => {
             fi.put(doc('1', 'identifier1', 'type1'));
@@ -69,17 +76,20 @@ export function main() {
                 .toEqual([item('1'), item('2')]);
         });
 
+
         it('do not match search term', () => {
             fi.put(doc('1', 'iden', 'type'));
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
         });
 
+
         it('do not match search in type', () => {
             fi.put(doc('1', 'iden', 'type1'));
             expect(fi.get('identifier', ['type2']))
                 .toEqual([]);
         });
+
 
         it('match one with two search terms', () => {
             fi.put(doc('1', 'identifier1', 'type', 'a short description'));
@@ -89,16 +99,19 @@ export function main() {
                 .toEqual([item('1')]);
         });
 
+
         it('ignore additional spaces', () => {
             fi.put(doc('1', 'identifier1', 'type', 'a short description'));
             expect(fi.get(' a    short  description  ', ['type']))
                 .toEqual([item('1')]);
         });
 
+
         it('no types present', () => {
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
         });
+
 
         it('clear', () => {
             fi.put(doc('1', 'identifier1', 'type'));
@@ -106,6 +119,7 @@ export function main() {
             expect(fi.get('identifier', ['type']))
                 .toEqual([]);
         });
+
 
         it('remove', () => {
             const d = doc('1', 'identifier1', 'type');
@@ -115,11 +129,13 @@ export function main() {
                 .toEqual([]);
         });
 
+
         it('search *', () => {
             fi.put(doc('1', 'identifier1', 'type'));
             expect(fi.get('*', ['type']))
                 .toEqual([item('1')]);
         });
+
 
         it('index other field', () => {
             const d = doc('1', 'identifier1', 'type');
@@ -127,6 +143,7 @@ export function main() {
             expect(fi.get('short', ['type']))
                 .toEqual([item('1')]);
         });
+
 
         it('tokenize fields', () => {
             const d = doc('1', 'hello token', 'type');
@@ -137,6 +154,7 @@ export function main() {
                 .toEqual([item('1','hello token')]);
         });
 
+
         it('find case insensitive', () => {
             fi.put(doc('1', 'Hello', 'type'));
             fi.put(doc('2', 'something', 'type'));
@@ -146,7 +164,9 @@ export function main() {
                 .toEqual([item('2','something')]);
         });
 
+
         it('put overwrite', () => {
+
             const d = doc('1', 'identifier1', 'type');
             fi.put(d);
             d['resource']['identifier'] = 'identifier2';
@@ -157,7 +177,9 @@ export function main() {
                 .toEqual([item('1','identifier2')]);
         });
 
+
         it('shortDescription empty', () => {
+
             const d = doc('1', 'identifier1', 'type');
             d['resource']['shortDescription'] = '';
             fi.put(d);
@@ -171,6 +193,19 @@ export function main() {
             fi.put(d);
             expect(fi.get('short', ['type']))
                 .toEqual([]);
+        });
+
+
+
+
+
+        it('do a placeholder search', () => {
+
+            fi.put(doc('1', 'Hello-A-0059', 'type'));
+            fi.put(doc('2', 'Hello-B-0059', 'type'));
+            fi.put(doc('3', 'Hella-C-0059', 'type'));
+
+            console.log(JSON.stringify(fi.get('Hello-.-005', ['type'])));
         });
     });
 }

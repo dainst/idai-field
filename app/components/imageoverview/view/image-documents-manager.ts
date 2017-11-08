@@ -115,20 +115,22 @@ export class ImageDocumentsManager {
 
         const query: Query = this.imagesState.getQuery();
 
+        console.debug("fetch docs")
         return this.imageDatastore.find(query)
             .catch(errWithParams => {
                 console.error('ERROR with find using query', query);
                 if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
             }).then(documents => {
                 if (!documents || documents.length == 0) return Promise.resolve([]);
-                if (['', 'UNLINKED'].indexOf(this.imagesState.getMainTypeDocumentFilterOption()) == -1) {
-                    return this.applyLinkFilter(documents);
-                } else {
+                // if (['', 'UNLINKED'].indexOf(this.imagesState.getMainTypeDocumentFilterOption()) == -1) {
+                //     return this.applyLinkFilter(documents);
+                // } else {
                     return Promise.resolve(documents);
-                }
+                // }
             }).then(filteredDocuments => {
-                this.documents = filteredDocuments;
-                this.cacheIdsOfConnectedResources(this.documents);
+                console.debug("fetch docs end")
+                this.documents = filteredDocuments as any;
+                // this.cacheIdsOfConnectedResources(this.documents);
             });
     }
 

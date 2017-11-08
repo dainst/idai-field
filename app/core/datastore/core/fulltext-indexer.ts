@@ -132,6 +132,31 @@ export class FulltextIndexer {
 
     private _get(resultSets: ResultSets, s: string, type: string) {
 
+        const position = s.indexOf('.');
+        if (position !== -1) {
+            // placeholder search
+
+            const str = "abcdefghijklmnopqrstuvwxyz";
+            for(let i=0; i<str.length; i++)
+            {
+                let nextChar = str.charAt(i);
+                const replaced = s.replace('.',nextChar);
+
+                if (!this.index[type] || !this.index[type][replaced]) continue;
+
+                resultSets.add(
+                    Object.keys(this.index[type][replaced]).map(id => {
+                        return { id: id,
+                            date: this.index[type][replaced][id].date,
+                            identifier: this.index[type][replaced][id].identifier
+                        };
+                    })
+                );
+
+            }
+            return;
+        }
+
         if (!this.index[type] || !this.index[type][s]) return;
 
         resultSets.add(

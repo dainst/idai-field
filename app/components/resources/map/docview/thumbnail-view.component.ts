@@ -34,7 +34,7 @@ export class ThumbnailViewComponent implements OnChanges {
 
         if (!this.documents || this.documents.length == 0) return;
 
-        this.imageGrid._onResize();
+        this.imageGrid.calcGrid();
     }
 
 

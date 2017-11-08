@@ -68,7 +68,7 @@ export class ImagePickerComponent implements OnInit {
 
     public onResize() {
 
-        this.imageGrid._onResize();
+        this.imageGrid.calcGrid();
     }
 
 

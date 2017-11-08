@@ -27,7 +27,6 @@ export class SidebarListComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public mapWrapperComponent: ResourcesMapComponent,    // TODO Check if it's possible to get rid of the dependency
         public viewFacade: ViewFacade,
         private routingService: RoutingService,
         private loading: Loading

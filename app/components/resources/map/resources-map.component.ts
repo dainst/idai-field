@@ -73,13 +73,6 @@ export class ResourcesMapComponent {
     }
 
 
-    public uploadImages(event: Event, document: IdaiFieldDocument) {
-
-        this.updateThumbnails = false;
-        this.resourcesComponent.uploadImages(event, document).then(() => this.updateThumbnails = true);
-    }
-
-
     private save() {
 
         const selectedDoc = this.viewFacade.getSelectedDocument();

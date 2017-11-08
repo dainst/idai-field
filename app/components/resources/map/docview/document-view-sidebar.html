@@ -58,19 +58,26 @@
                               [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"></span>
             </ng-template>
             <ng-template ngbTabContent>
-                <button class="btn btn-link"
-                        id="document-view-button-edit-document"
-                        (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
-                    <span class="mdi mdi-pencil"></span>
-                </button>
+                <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
+                    <button class="btn btn-link"
+                            id="document-view-button-edit-document"
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
 
-                <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']" class="empty-tab-info">
-                    Keine Bilder vorhanden.
+                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']" class="empty-tab-info">
+                        Keine Bilder vorhanden.
+                        <br><br>
+                        Ziehe Bilder per Drag'n'Drop hier auf die Schrift
+                        (oder bereits vorhandene Bilder), um neue Bilder hinzuzufügen, oder klicke auf
+                        den Stift, um bereits vorhandene Bilder zu verknüpfen.
+                        <br><br><br><br><br><br><br><br><br>
+                    </div>
+                    <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                    [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                    [update]="updateThumbnails" (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                    </thumbnail-view>
                 </div>
-                <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                [update]="updateThumbnails" (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                </thumbnail-view>
             </ng-template>
         </ngb-tab>
     </ngb-tabset>

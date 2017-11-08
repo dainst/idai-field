@@ -6,6 +6,8 @@ import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+
 
 @Component({
     selector: 'document-view-sidebar',
@@ -33,6 +35,13 @@ export class DocumentViewSidebarComponent {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade
     ) { }
+
+
+    public uploadImages(event: Event, document: IdaiFieldDocument) {
+
+        this.updateThumbnails = false;
+        this.resourcesComponent.uploadImages(event, document).then(() => this.updateThumbnails = true);
+    }
 
 
     public onTabChange(event: any) {

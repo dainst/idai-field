@@ -19,8 +19,7 @@
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="col-sm-3 document-info px-0">
-        <document-view-sidebar [updateThumbnails]="updateThumbnails"
-                               (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
+        <document-view-sidebar [updateThumbnails]="updateThumbnails">
         </document-view-sidebar>
     </div>
 </div>

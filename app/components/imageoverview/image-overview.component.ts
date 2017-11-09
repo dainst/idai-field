@@ -50,7 +50,6 @@ export class ImageOverviewComponent implements OnInit {
     public getQuery = () => this.imageOverviewFacade.getQuery();
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
-    public getResourceIdentifiers = () => this.imageOverviewFacade.getResourceIdentifiers();
     public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect, undefined, true);
 
 

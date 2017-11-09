@@ -17,9 +17,6 @@ export class ImageDocumentsManager {
 
     public selected: Array<IdaiFieldImageDocument>  = [];
 
-    // TODO move this to image-grid component
-    private resourceIdentifiers: {[id: string]: string} = {};
-
     private depictsRelationsSelected: boolean = false;
 
 
@@ -29,12 +26,6 @@ export class ImageDocumentsManager {
         private imageDatastore: IdaiFieldImageDocumentReadDatastore,
         private datastore: DocumentReadDatastore
     ) {
-    }
-
-
-    public getResourceIdentifiers() {
-
-        return this.resourceIdentifiers;
     }
 
 
@@ -53,16 +44,6 @@ export class ImageDocumentsManager {
     public getDepictsRelationsSelected(): boolean {
 
         return this.depictsRelationsSelected;
-    }
-
-
-    public cacheIdentifier(document: Document) {
-
-        if (!document.resource.id) return;
-        const resourceId = document.resource.id;
-
-        this.resourceIdentifiers[resourceId] =
-            document.resource.identifier;
     }
 
 
@@ -130,23 +111,7 @@ export class ImageDocumentsManager {
             }).then(filteredDocuments => {
                 console.debug("fetch docs end")
                 this.documents = filteredDocuments as any;
-                // this.cacheIdsOfConnectedResources(this.documents);
             });
-    }
-
-
-    private cacheIdsOfConnectedResources(documents: Array<IdaiFieldImageDocument>) {
-
-        for (let doc of documents) {
-            if (doc.resource.relations.depicts &&
-                    doc.resource.relations.depicts.constructor === Array)
-
-                for (let resourceId of doc.resource.relations.depicts) {
-                    this.datastore.get(resourceId).then(result => {
-                        this.resourceIdentifiers[resourceId] = result.resource.identifier;
-                    });
-                }
-        }
     }
 
 

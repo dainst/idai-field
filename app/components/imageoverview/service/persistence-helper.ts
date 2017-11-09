@@ -55,8 +55,6 @@ export class PersistenceHelper {
 
     public addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
 
-        this.imageOverviewFacade.cacheIdentifier(targetDocument);
-
         return new Promise<any>((resolve, reject) => {
 
             let promise: Promise<any> = new Promise<any>((res) => res());

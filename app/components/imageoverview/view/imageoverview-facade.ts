@@ -63,12 +63,6 @@ export class ImageOverviewFacade {
     }
 
 
-    public getResourceIdentifiers() {
-
-        return this.imageDocumentsManager.getResourceIdentifiers();
-    }
-
-
     public setQueryString(q: string) {
 
         const query: Query = this.imagesState.getQuery();
@@ -114,12 +108,6 @@ export class ImageOverviewFacade {
     public getDocuments(): Array<IdaiFieldImageDocument> {
 
         return this.imageDocumentsManager.getDocuments();
-    }
-
-
-    public cacheIdentifier(document: Document) {
-
-        return this.imageDocumentsManager.cacheIdentifier(document);
     }
 
 

@@ -7,6 +7,7 @@ import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document
 import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from "../../core/imagestore/imagestore";
+import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
 
 
 @Component({
@@ -21,10 +22,8 @@ import {Imagestore} from "../../core/imagestore/imagestore";
  */
 export class ImageGridComponent implements OnChanges {
 
-
     @Input() nrOfColumns: number = 1;
     @Input() documents: IdaiFieldImageDocument[];
-    @Input() resourceIdentifiers: string[] = [];
     @Input() selected: IdaiFieldImageDocument[] = [];
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
@@ -37,6 +36,7 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
+    public resourceIdentifiers: {[id: string]: string} = {};
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridOnResizeRunning = false;
@@ -57,8 +57,23 @@ export class ImageGridComponent implements OnChanges {
         private el: ElementRef,
         private imageGridBuilder: ImageGridBuilder,
         private messages: Messages,
-        private imagestore: Imagestore
+        private imagestore: Imagestore,
+        private datastore: IdaiFieldDocumentReadDatastore
     ) {
+    }
+
+
+    public async onCellMouseEnter(doc: IdaiFieldImageDocument) {
+
+        if (!this.showLinkBadges) return;
+
+        for (let depictsRelId of doc.resource.relations.depicts) {
+
+            if (!this.resourceIdentifiers[depictsRelId]) {
+                const target = await this.datastore.get(depictsRelId);
+                this.resourceIdentifiers[depictsRelId] = target.resource.identifier;
+            }
+        }
     }
 
 

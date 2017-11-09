@@ -132,30 +132,28 @@ export class FulltextIndexer {
 
     private _get(resultSets: ResultSets, s: string, type: string) {
 
-        const position = s.indexOf('.');
-        if (position !== -1) {
-            // placeholder search
-
-            const str = "abcdefghijklmnopqrstuvwxyz";
-            for(let i=0; i<str.length; i++)
-            {
-                let nextChar = str.charAt(i);
-                const replaced = s.replace('.',nextChar);
-
-                if (!this.index[type] || !this.index[type][replaced]) continue;
-
-                resultSets.add(
-                    Object.keys(this.index[type][replaced]).map(id => {
-                        return { id: id,
-                            date: this.index[type][replaced][id].date,
-                            identifier: this.index[type][replaced][id].identifier
-                        };
-                    })
-                );
-
-            }
-            return;
+        const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
+        if (hasPlaceholder) {
+            return this.getWithPlaceholder(resultSets, s, type, tokens);
         }
+
+        this.addKeyToResultSets(resultSets, type, s);
+    }
+
+
+    private getWithPlaceholder(resultSets: any, s: string, type: string, tokens: string) {
+
+        for(let i=0; i<tokens.length; i++)
+        {
+            let nextChar = tokens.charAt(i);
+            const replaced = s.replace('['+tokens+']',nextChar);
+
+            this.addKeyToResultSets(resultSets, type, replaced);
+        }
+    }
+
+
+    private addKeyToResultSets(resultSets: any, type: string, s: string) {
 
         if (!this.index[type] || !this.index[type][s]) return;
 
@@ -173,5 +171,18 @@ export class FulltextIndexer {
     private setUp() {
 
         this.index = { };
+    }
+
+
+    private static extractReplacementTokens(s: string) {
+
+        const positionOpen = s.indexOf('[');
+        const positionClose = s.indexOf(']');
+        if (positionOpen !== -1 && positionClose !== -1 && positionOpen < positionClose) {
+            const str = s.substr(positionOpen+1, positionClose-positionOpen-1);
+            return {hasPlaceholder: true, tokens: str};
+        } else {
+            return {hasPlaceholder: false, tokens: ''};
+        }
     }
 }

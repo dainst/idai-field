@@ -182,9 +182,9 @@ export function main() {
 
             const d = doc('1', 'identifier1', 'type');
             d['resource']['shortDescription'] = '';
-            fi.put(d);
             expect(fi.get('short', ['type']))
                 .toEqual([]);
+            fi.put(d);
             d['resource']['shortDescription'] = undefined;
             fi.put(d);
             expect(fi.get('short', ['type']))
@@ -196,16 +196,17 @@ export function main() {
         });
 
 
-
-
-
         it('do a placeholder search', () => {
 
-            fi.put(doc('1', 'Hello-A-0059', 'type'));
-            fi.put(doc('2', 'Hello-B-0059', 'type'));
-            fi.put(doc('3', 'Hella-C-0059', 'type'));
+            fi.put(doc('1', 'Hello-A-0033', 'type'));
+            fi.put(doc('2', 'Hello-A-0021', 'type'));
+            fi.put(doc('3', 'Hello-A-0059', 'type'));
 
-            console.log(JSON.stringify(fi.get('Hello-.-005', ['type'])));
+            const results = fi.get('Hello-A-00[23]', ['type']).map(result => result.identifier);
+            expect(results.length).toBe(2);
+
+            expect(results).toContain('Hello-A-0033');
+            expect(results).toContain('Hello-A-0021');
         });
     });
 }

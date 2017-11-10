@@ -21,61 +21,26 @@ export function main() {
             }
         }];
 
+
         beforeEach(function () {
-            const imagestoreMock = {
-                read: function() {
-                    return {
-                        then: function(callback) {
-                            callback('url');
-                            return {
-                                catch: function(callback) {
-                                    callback('err')
-                                }
-                            }
-                        }
-                    }
-                }
-            };
 
             imageGridBuilder = new ImageGridBuilder();
-
         });
 
-        xit('should keep the aspect ration of an image', (done)=> {
 
-            imageGridBuilder.calcGrid(documents,4,800).then(result=>{
-                expect(result.rows[0][0].calculatedWidth).toBe(
-                    result.rows[0][0].calculatedHeight * 2
-                );
-                done();
-            });
+        it('should keep the aspect ration of an image', ()=> {
+
+            const {rows, rowsTotal, imgsShown} = imageGridBuilder.calcGrid(documents,4,800);
+
+            expect(rows[0][0].calculatedWidth).toBe(
+                rows[0][0].calculatedHeight * 2
+            );
         });
 
 
         it('should throw when nrOfColumns not integer', () => {
 
             expect(function(){imageGridBuilder.calcGrid([],4.1,0)}).toThrow();
-        });
-
-        xit ('should accumulate errors', (done) => {
-
-            const imagestoreMock = {
-                read: function () {
-                    return new Promise<any>((resolve,reject) => {
-                        reject(['error']);
-                    });
-                }
-            };
-
-            imageGridBuilder = new ImageGridBuilder();
-
-            imageGridBuilder.calcGrid(documents,4,800).then(result=>{
-                expect(result.rows[0][0].document.resource.identifier).toBe('ob1');
-                expect(result.errsWithParams.length).toBe(1);
-                expect(result.errsWithParams[0]).toContain('error');
-                expect(result.errsWithParams[0]).toContain('o1');
-                done();
-            });
         });
     })
 }

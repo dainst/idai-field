@@ -22,37 +22,15 @@
                  class="cell"
                  [class.selected]="selected.includes(cell['document'])">
                 
-                <div class="icons"
-                     *ngIf="cell['calculatedWidth'] > 30 && cell['calculatedHeight'] > 30"
-                     [style.maxWidth.px]="cell['calculatedWidth']-15">
-
-                    <span *ngIf="showLinkBadges">
-                        <span *ngIf="cell['document'].resource.relations.depicts.length > 0" class="badge badge-info">
-                                 <span class="mdi mdi-link"></span>
-                        </span>
-                    </span>
-                    <span *ngIf="showGeoIcon && cell['document'].resource.georeference"
-                            class="badge badge-dark">
-                        <span class="mdi mdi-map"></span>
-                    </span>
-                </div>
-
-                <img *ngIf="cell.imgSrc" [src]="cell.imgSrc"
-                     [style.width.px]="cell['calculatedWidth']"
-                     [style.height.px]="cell['calculatedHeight']">
-
-                <div class="identifier" *ngIf="showIdentifier" class="px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
-                <div class="title" [class.small]="nrOfColumns > 5">
-                    <div *ngIf="showLinkBadges && cell['document'].resource.relations.depicts.length > 0" class="p-2" align="right">
-                        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-                          id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">
-                                 <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
-                        </span>
-                    </div>
-                    <div *ngIf="showShortDescription && cell['document'].resource.shortDescription" class="p-1">
-                        {{cell['document'].resource.shortDescription}}
-                   </div>
-                </div>
+                <image-grid-cell
+                        [cell]="cell"
+                        [nrOfColumns]="nrOfColumns"
+                        [resourceIdentifiers]="resourceIdentifiers"
+                        [showLinkBadges]="showLinkBadges"
+                        [showIdentifier]="showIdentifier"
+                        [showShortDescription]="showShortDescription"
+                        [showGeoIcon]="showGeoIcon">
+                </image-grid-cell>
             </div>
             <div style="background-color: silver">
             </div>

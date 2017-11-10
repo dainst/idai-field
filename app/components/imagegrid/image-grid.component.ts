@@ -40,9 +40,9 @@ export class ImageGridComponent implements OnChanges {
     public moreRowsMsg: string|undefined = undefined;
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
-    private calcGridOnResizeRunning = false;
+    private calcGridRunning = false;
     // to be able to reset the timeout on multiple onResize calls
-    private calcGridOnResizeTimeoutRef: any = undefined;
+    private calcGridTimeoutRef: any = undefined;
 
     // it should be avoided that while being in an image overview and thumbs are missing,
     // that the missing images messages is shown more than once, as it would happen
@@ -85,17 +85,17 @@ export class ImageGridComponent implements OnChanges {
         }
     }
 
-    
+
     public calcGrid() {
 
-        clearTimeout(this.calcGridOnResizeTimeoutRef as any);
-        this.calcGridOnResizeTimeoutRef = setTimeout(async () => {
+        clearTimeout(this.calcGridTimeoutRef as any);
+        this.calcGridTimeoutRef = setTimeout(async () => {
             // we just jump out and do not store the recalc request. this could possibly be improved
-            if (this.calcGridOnResizeRunning) return;
+            if (this.calcGridRunning) return;
 
-            this.calcGridOnResizeRunning = true;
+            this.calcGridRunning = true;
             await this._calcGrid();
-            this.calcGridOnResizeRunning = false;
+            this.calcGridRunning = false;
         }, 500);
     }
 

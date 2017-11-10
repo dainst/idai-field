@@ -92,7 +92,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!changes['documents']) return;
         if (this.showDropArea) this.insertStubForDropArea();
-        this._calcGrid();
+        this._calcGrid(); // TODO use calcGrid()
     }
 
 
@@ -126,8 +126,6 @@ export class ImageGridComponent implements OnChanges {
         } else {
             this.moreRowsMsg = undefined;
         }
-
-
 
         console.debug("fetching images for grid start");
         let promise = Promise.resolve();

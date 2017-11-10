@@ -92,7 +92,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!changes['documents']) return;
         if (this.showDropArea) this.insertStubForDropArea();
-        this._calcGrid(); // TODO use calcGrid()
+        this.calcGrid();
     }
 
 
@@ -118,14 +118,6 @@ export class ImageGridComponent implements OnChanges {
         if (!this.documents) return;
 
         const {rows, rowsTotal, imgsShown} = this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth);
-        if (rowsTotal > 5) {
-            this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
-                + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
-                + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
-                + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
-        } else {
-            this.moreRowsMsg = undefined;
-        }
 
         console.debug("fetching images for grid start");
         let promise = Promise.resolve();
@@ -134,7 +126,7 @@ export class ImageGridComponent implements OnChanges {
                 if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
 
                 promise = this.imagestore.read(cell.document.resource.id).then(url => {
-                    console.log("cell",cell.document.resource.id)
+                    console.log("cell",cell.document.resource.id);
                     cell.imgSrc = url;
                 }).catch(e => {
                     console.error('error fetching img',e)
@@ -144,8 +136,17 @@ export class ImageGridComponent implements OnChanges {
         promise.then(() => {
             this.rows = rows;
             this.calcGridOnResizeRunning = false;
-            console.debug("fetching images for grid end")
-            console.log("rows",rows.length)
+
+            console.debug("fetching images for grid end");
+
+            if (rowsTotal > 5) {
+                this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
+                    + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
+                    + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
+                    + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
+            } else {
+                this.moreRowsMsg = undefined;
+            }
         })
 
         // this.rows = result['rows'];

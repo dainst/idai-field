@@ -2,6 +2,9 @@ import {DocumentReference} from './document-reference';
 import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
+/**
+ *
+ */
 export class ListTree {
 
 	private documents: IdaiFieldDocument[] = [];
@@ -9,9 +12,12 @@ export class ListTree {
     public docRefTree: DocumentReference[];
     private docRefMap: {[type: string]: DocumentReference} = {};
 
+
     constructor(private datastore: IdaiFieldDocumentDatastore) {}
 
+
 	public buildTreeFrom(documents: Array<IdaiFieldDocument>, keepShownChildren?: boolean) {
+
 		this.documents = documents;
 
         this.docRefTree = [];
@@ -29,6 +35,24 @@ export class ListTree {
             this.buildTreeFromLiesWithinRelations()
         );
     }
+
+
+    public toggleChildrenForId(id: string) {
+
+        const index = this.childrenShownForIds.indexOf(id);
+        if (index != -1) {
+            this.childrenShownForIds.splice(index, 1);
+        } else {
+            this.childrenShownForIds.push(id);
+        }
+    }
+
+
+    public childrenHiddenFor(id: string): boolean {
+
+        return this.childrenShownForIds.indexOf(id) == -1
+    }
+
 
     private getMissingParents(): Promise<any> {
 
@@ -53,6 +77,7 @@ export class ListTree {
         return Promise.all(promises);
     }
 
+
     private buildTreeFromLiesWithinRelations() {
 
         for (let docId in this.docRefMap) {
@@ -75,22 +100,5 @@ export class ListTree {
     private documentsInclude(doc: IdaiFieldDocument): boolean {
 
         return this.documents.some(d => d.resource.id == doc.resource.id );
-    }
-
-
-    public toggleChildrenForId(id: string) {
-
-        const index = this.childrenShownForIds.indexOf(id);
-        if (index != -1) {
-            this.childrenShownForIds.splice(index, 1);
-        } else {
-            this.childrenShownForIds.push(id);
-        }
-    }
-
-
-    public childrenHiddenFor(id: string): boolean {
-
-        return this.childrenShownForIds.indexOf(id) == -1
     }
 }

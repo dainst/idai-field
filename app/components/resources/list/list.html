@@ -6,7 +6,7 @@
         <div class="col-md-2">Optionen</div>
     </div>
     <div id="list-body">
-        <div *ngFor="let docRef of docRefTree">
+        <div *ngFor="let docRef of listTree.docRefTree">
             <row [docRef]="docRef" [depth]=0 [typesMap]="typesMap"></row>
         </div>
     </div>

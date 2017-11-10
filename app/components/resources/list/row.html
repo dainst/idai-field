@@ -1,7 +1,7 @@
-<div *ngIf="listComponent.showRow(docRef)"
+<div 
         id="{{docRef.doc.resource.id ? 'resource-'+docRef.doc.resource.identifier : 'new-resource'}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)"
         class="row py-3 list-row" [class.bg-light]="depth == 0"
-        [class.no-search-result]="!listComponent.documentsInclude(docRef.doc)">
+        [class.no-search-result]="!listComponent.listTree.documentsInclude(docRef.doc)">
     <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
          [class.font-weight-bold]="depth == 0">
         <div class="plus-button-wrapper">
@@ -16,10 +16,10 @@
 
         <span class="list-type-label" [class.text-info]="!docRef.doc.resource.id">{{typesMap[docRef.doc.resource.type].label}}</span><br>
         <span *ngIf="docRef.children.length > 0"
-                (click)="listComponent.toggleChildrenForId(docRef.doc.resource.id)"
+                (click)="listComponent.listTree.toggleChildrenForId(docRef.doc.resource.id)"
                 class="btn btn-sm btn-link p-0">
-             <span class="mdi h5" [class.mdi-chevron-down]="!listComponent.childrenHiddenFor(docRef.doc.resource.id)"
-                   [class.mdi-chevron-right]="listComponent.childrenHiddenFor(docRef.doc.resource.id)"></span>
+             <span class="mdi h5" [class.mdi-chevron-down]="!listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)"
+                   [class.mdi-chevron-right]="listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)"></span>
         </span>
         <small class="text-muted" *ngIf="docRef.children.length > 0">
             {{docRef.children.length}}
@@ -46,6 +46,6 @@
 </div>
 
 <div *ngFor="let childDoc of docRef['children']"
-     [hidden]="listComponent.childrenHiddenFor(docRef.doc.resource.id)">
+     [hidden]="listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)">
     <row [docRef]="childDoc" [depth]=depth+1 [typesMap]="typesMap"></row>
 </div>

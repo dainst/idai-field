@@ -26,10 +26,6 @@ install:
 - npm add electron-builder@next --dev
 - npm add jquery
 - npm add popper.js
-before_script:
-- if [ "${TRAVIS_OS_NAME}" = "osx" ]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8;
-  echo ok )& fi
-- sleep 3
 script:
 - npm rebuild node-sass
 - npm run build

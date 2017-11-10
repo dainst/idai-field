@@ -7,7 +7,6 @@ import {ChangeHistoryUtil} from '../../model/change-history-util';
  */
 export class ConstraintIndexer {
 
-
     private index: {
         [path: string]: {
             [resourceId: string]: {
@@ -43,6 +42,7 @@ export class ConstraintIndexer {
         }
     }
 
+
     public remove(doc: Document) {
 
         for (let pathDef of this.pathsDefinitions) {
@@ -53,6 +53,7 @@ export class ConstraintIndexer {
             }
         }
     }
+
 
     public get(path: string, matchTerm: string): any {
 
@@ -130,6 +131,16 @@ export class ConstraintIndexer {
         } as any;
     }
 
+
+    private setUp() {
+
+        this.index = { };
+        for (let pathDefinition of this.pathsDefinitions) {
+            this.index[pathDefinition.path] = { };
+        }
+    }
+
+
     private static validatePathsDefinitions(pathsDefinitions: any): string|undefined {
 
         const types = ['match', 'contain', 'exist'];
@@ -140,13 +151,5 @@ export class ConstraintIndexer {
         }
 
         return undefined;
-    }
-
-    private setUp() {
-
-        this.index = { };
-        for (let pathDefinition of this.pathsDefinitions) {
-            this.index[pathDefinition.path] = { };
-        }
     }
 }

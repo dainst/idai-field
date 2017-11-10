@@ -28,14 +28,17 @@ export function main() {
             }
         }
 
+
         function item(id, identifier?) {
             if (!identifier) identifier = 'identifier' + id;
             return {id: id, date: '2018-01-01', identifier: identifier};
         }
 
+
         beforeEach(() => {
             spyOn(console, 'warn');
         });
+
 
         it('multiple docs are recorded in another', () => {
 
@@ -54,6 +57,7 @@ export function main() {
                 .toEqual([item('2'), item('3')]);
         });
 
+
         function docWithMultipleConstraintTargets() {
             const docs = [
                 doc('1')
@@ -65,6 +69,7 @@ export function main() {
             return docs;
         }
 
+
         it('one doc is recorded in multiple others', () => {
 
             docWithMultipleConstraintTargets();
@@ -74,6 +79,7 @@ export function main() {
             expect(ci.get('resource.relations.isRecordedIn', '3'))
                 .toEqual([item('1')]);
         });
+
 
         function docWithMultipleConstraints() {
             const docs = [
@@ -91,6 +97,7 @@ export function main() {
             return docs;
         }
 
+
         it('works for multiple constrains', () => {
 
             docWithMultipleConstraints();
@@ -100,6 +107,7 @@ export function main() {
             expect(ci.get('resource.relations.isRecordedIn', '2'))
                 .toEqual([item('1')]);
         });
+
 
         it('index also works if doc does not have the field', () => {
 
@@ -116,6 +124,7 @@ export function main() {
                 .toEqual([ ]);
         });
 
+
         function docWithIdentifier() {
             const docs = [
                 doc('1')
@@ -128,6 +137,7 @@ export function main() {
             return docs;
         }
 
+
         it('work with non arrays', () => {
 
             docWithIdentifier();
@@ -135,6 +145,7 @@ export function main() {
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([item('1')]);
         });
+
 
         it('clear index', () => {
 
@@ -146,6 +157,7 @@ export function main() {
                 .toEqual([ ]);
         });
 
+
         it('ask for non existing index', () => {
 
             ci = new ConstraintIndexer([ ]);
@@ -153,6 +165,7 @@ export function main() {
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual(undefined);
         });
+
 
         it('ask without constraints', () => {
 
@@ -162,6 +175,7 @@ export function main() {
                 .toEqual(undefined);
         });
 
+
         it('ask for one existing index and one nonexisting index', () => {
 
             ci = new ConstraintIndexer([{ path: 'resource.identifier', type: 'contain' }]);
@@ -169,6 +183,7 @@ export function main() {
             expect(ci.get('resource.identifier', 'identifier1'))
                 .toEqual([ ]);
         });
+
 
         it('remove doc', () => {
 
@@ -184,6 +199,7 @@ export function main() {
                 .toEqual([ ]);
         });
 
+
         it('remove where one doc was recorded in multiple docs for the same constraint', () => {
 
             const doc = docWithMultipleConstraintTargets()[0];
@@ -195,6 +211,7 @@ export function main() {
             expect(ci.get('resource.relations.isRecordedIn', '3'))
                 .toEqual([ ]);
         });
+
 
         it('update docs where the relations change', () => {
 
@@ -220,6 +237,7 @@ export function main() {
                 .toEqual([item('1','identifier2')]);
         });
 
+
         it('query for unknown', () => {
 
             const docs = [
@@ -235,6 +253,7 @@ export function main() {
             expect(ci.get('resource.relations.liesWithin', 'UNKNOWN'))
                 .toEqual([item('2')]);
         });
+
 
         it('query for existing or not', () => {
 
@@ -254,11 +273,13 @@ export function main() {
                 .toEqual([item('2')]);
         });
 
+
         it('throw error if type is undefined', () => {
 
             expect(() => {new ConstraintIndexer([{ path: 'testpath' }])}).toThrow();
         });
 
+        
         it('throw error if type is unknown', () => {
 
             expect(() => {new ConstraintIndexer([{ path: 'testpath', type: 'unknown' }])}).toThrow();

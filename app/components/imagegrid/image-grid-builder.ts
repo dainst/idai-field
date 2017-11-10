@@ -65,17 +65,6 @@ export class ImageGridBuilder {
     }
 
 
-    private static newCell(document: any, calculatedHeight: any): ImageContainer {
-
-        const cell: ImageContainer = {};
-        const image = document.resource as IdaiFieldImageResource;
-        cell.document = document;
-        cell.calculatedWidth = image.width * calculatedHeight / image.height;
-        cell.calculatedHeight = calculatedHeight;
-        return cell;
-    }
-
-
     private calculatedHeight(rowIndex: any, nrOfColumns: any, gridWidth: any) {
 
         const rowWidth = Math.ceil(gridWidth - this.paddingRight);
@@ -111,5 +100,16 @@ export class ImageGridBuilder {
 
         const gridSlotsTotal = rowsShown * nrOfColumns - 1;
         return Math.min(gridSlotsTotal, documents.length);
+    }
+
+
+    private static newCell(document: any, calculatedHeight: any): ImageContainer {
+
+        const cell: ImageContainer = {};
+        const image = document.resource as IdaiFieldImageResource;
+        cell.document = document;
+        cell.calculatedWidth = image.width * calculatedHeight / image.height;
+        cell.calculatedHeight = calculatedHeight;
+        return cell;
     }
 }

@@ -29,7 +29,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
     @Input() showDropArea: boolean = false;
-    @Input() showGeoIcon: boolean = false;
+    @Input() showGeoIcon: boolean = false; // TODO why is this configurable? it seems that it would do not harm to show it always
     @Input() showTooltips: boolean = false;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();

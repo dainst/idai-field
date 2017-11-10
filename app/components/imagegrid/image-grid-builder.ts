@@ -2,12 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldImageResource} from '../../core/model/idai-field-image-resource';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
-import {Imagestore} from '../../core/imagestore/imagestore';
 
-export interface ImageGridBuilderResult {
-    rows: any;
-    errsWithParams: any;
-}
 
 /**
  * @author Daniel de Oliveira
@@ -15,21 +10,11 @@ export interface ImageGridBuilderResult {
  */
 export class ImageGridBuilder {
 
-
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 20;
     private documents: Array<Document>;
 
-
-    /**
-     * @param imagestore
-     * @param showAllAtOnce if true, all images are shown at once.
-     *   if false, images are shown as soon as they are loaded
-     */
-    constructor(
-        private imagestore: Imagestore,
-        private showAllAtOnce: boolean = true
-    ) { }
+    private static maxRows = 5;
 
 
     /**
@@ -44,17 +29,19 @@ export class ImageGridBuilder {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
-            this.documents = documents;
-            if (!this.documents) return [];
+        this.documents = documents;
+        if (!this.documents) return [];
 
-            const rows = [];
-            for (let i = 0; i < Math.min(this.nrOfRows(nrOfColumns),5); i++) {
-                const row = this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns)
-                // console.debug("calc row",JSON.stringify(row))
-                rows.push(row);
-            }
-            // resolve(ImageGridBuilder.splitCellsAndMessages(rowPromises));
-            return rows;
+        const rowsShown = Math.min(this.nrOfRows(nrOfColumns), ImageGridBuilder.maxRows);
+        const rows = [];
+        for (let i = 0; i < rowsShown; i++) {
+            rows.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
+        }
+        return {
+            rows: rows,
+            rowsTotal: this.nrOfRows(nrOfColumns),
+            imgsShown: ImageGridBuilder.calcImgsShown(documents, nrOfColumns, rowsShown)
+        };
     }
 
 
@@ -69,11 +56,10 @@ export class ImageGridBuilder {
             const document = this.documents[rowIndex * nrOfColumns + i];
             if (!document) break;
 
-            row.push(
-                this.getImg(document,
-                    ImageGridBuilder.newCell(document, calculatedHeight)
-                )
-            );
+            const cell = ImageGridBuilder.newCell(document, calculatedHeight);
+            if ((document as any)['id'] !== 'droparea') cell.imgSrc = BlobMaker.blackImg;
+
+            row.push(cell);
         }
         return row;
     }
@@ -121,14 +107,9 @@ export class ImageGridBuilder {
     }
 
 
-    /**
-     * @returns {Promise<any>} cellWithMsg
-     */
-    private getImg(document: any, cell: any): Promise<any> {
+    private static calcImgsShown(documents: any, nrOfColumns: any, rowsShown: any) {
 
-        if (document.id == 'droparea') return cell;
-
-        cell.imgSrc = BlobMaker.blackImg;
-        return cell;
+        const gridSlotsTotal = rowsShown * nrOfColumns - 1;
+        return Math.min(gridSlotsTotal, documents.length);
     }
 }

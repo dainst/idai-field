@@ -37,8 +37,7 @@ export function main() {
                 }
             };
 
-            imageGridBuilder = new ImageGridBuilder(
-                <any> imagestoreMock, true);
+            imageGridBuilder = new ImageGridBuilder();
 
         });
 
@@ -68,8 +67,7 @@ export function main() {
                 }
             };
 
-            imageGridBuilder = new ImageGridBuilder(
-                <any> imagestoreMock, true);
+            imageGridBuilder = new ImageGridBuilder();
 
             imageGridBuilder.calcGrid(documents,4,800).then(result=>{
                 expect(result.rows[0][0].document.resource.identifier).toBe('ob1');

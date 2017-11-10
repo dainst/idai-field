@@ -28,13 +28,7 @@ import {ImageUploadModule} from '../imageupload/image-upload.module';
         DropAreaComponent
     ],
     providers: [
-        {
-            provide: ImageGridBuilder,
-            useFactory: (imageStore: Imagestore) => {
-                return new ImageGridBuilder(imageStore, true);
-            },
-            deps: [Imagestore]
-        },
+        ImageGridBuilder
     ],
     exports: [
         ImageGridComponent, // export necessary?

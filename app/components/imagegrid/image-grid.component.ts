@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {ImageGridBuilder, ImageGridBuilderResult} from './image-grid-builder';
+import {ImageGridBuilder} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from "../../core/imagestore/imagestore";
 import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
@@ -37,6 +37,7 @@ export class ImageGridComponent implements OnChanges {
     @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
 
     public resourceIdentifiers: {[id: string]: string} = {};
+    public moreRowsMsg: string|undefined = undefined;
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridOnResizeRunning = false;
@@ -55,7 +56,7 @@ export class ImageGridComponent implements OnChanges {
 
     constructor(
         private el: ElementRef,
-        private imageGridBuilder: ImageGridBuilder,
+        private imageGridBuilder: ImageGridBuilder, // TODO create with new, not via DI
         private messages: Messages,
         private imagestore: Imagestore,
         private datastore: IdaiFieldDocumentReadDatastore
@@ -95,6 +96,19 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
+    public calcGrid() {
+
+        clearTimeout(this.calcGridOnResizeTimeoutRef as any);
+        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
+            // we just jump out and do not store the recalc request. this could possibly be improved
+            if (this.calcGridOnResizeRunning) return;
+
+            this.calcGridOnResizeRunning = true;
+            this._calcGrid();
+        }, 500);
+    }
+
+
     private _calcGrid() {
 
         this.rows = [];
@@ -103,12 +117,19 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) return;
 
-        console.debug("calc grid start")
-        const rows = this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth)
-        console.debug("calc grid end")
+        const {rows, rowsTotal, imgsShown} = this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth);
+        if (rowsTotal > 5) {
+            this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
+                + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
+                + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
+                + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
+        } else {
+            this.moreRowsMsg = undefined;
+        }
 
-        // this.rows = rows;
 
+
+        console.debug("fetching images for grid start");
         let promise = Promise.resolve();
         for (let row of rows) {
             for (let cell of row) {
@@ -125,6 +146,7 @@ export class ImageGridComponent implements OnChanges {
         promise.then(() => {
             this.rows = rows;
             this.calcGridOnResizeRunning = false;
+            console.debug("fetching images for grid end")
             console.log("rows",rows.length)
         })
 
@@ -139,20 +161,7 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    public calcGrid() {
-
-        clearTimeout(this.calcGridOnResizeTimeoutRef as any);
-        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
-            // we just jump out and do not store the recalc request. this could possibly be improved
-            if (this.calcGridOnResizeRunning) return;
-
-            this.calcGridOnResizeRunning = true;
-            this._calcGrid();
-        }, 500);
-    }
-
-
-    private showImagesNotFoundMessage(result: ImageGridBuilderResult) {
+    private showImagesNotFoundMessage(result: any) {
 
         if (result.errsWithParams &&
             result.errsWithParams.length &&

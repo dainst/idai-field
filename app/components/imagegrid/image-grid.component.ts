@@ -99,55 +99,37 @@ export class ImageGridComponent implements OnChanges {
     public calcGrid() {
 
         clearTimeout(this.calcGridOnResizeTimeoutRef as any);
-        this.calcGridOnResizeTimeoutRef = setTimeout(() => {
+        this.calcGridOnResizeTimeoutRef = setTimeout(async () => {
             // we just jump out and do not store the recalc request. this could possibly be improved
             if (this.calcGridOnResizeRunning) return;
 
             this.calcGridOnResizeRunning = true;
-            this._calcGrid();
+            await this._calcGrid();
+            this.calcGridOnResizeRunning = false;
         }, 500);
     }
 
 
-    private _calcGrid() {
+    private async _calcGrid() {
 
+        if (!this.documents) return Promise.resolve();
+
+        const {rows, rowsTotal, imgsShown} = this.imageGridBuilder.calcGrid(
+            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
+
+        this.moreRowsMsg = undefined;
         this.rows = [];
-
-        let clientWidth = this.el.nativeElement.children[0].clientWidth;
-
-        if (!this.documents) return;
-
-        const {rows, rowsTotal, imgsShown} = this.imageGridBuilder.calcGrid(this.documents, this.nrOfColumns, clientWidth);
-
         console.debug("fetching images for grid start");
-        let promise = Promise.resolve();
-        for (let row of rows) {
-            for (let cell of row) {
-                if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
+        await this.loadImgs(rows);
+        console.debug("fetching images for grid end");
+        this.rows = rows;
 
-                promise = this.imagestore.read(cell.document.resource.id).then(url => {
-                    console.log("cell",cell.document.resource.id);
-                    cell.imgSrc = url;
-                }).catch(e => {
-                    console.error('error fetching img',e)
-                })
-            }
+        if (rowsTotal > 5) {
+            this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
+                + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
+                + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
+                + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
         }
-        promise.then(() => {
-            this.rows = rows;
-            this.calcGridOnResizeRunning = false;
-
-            console.debug("fetching images for grid end");
-
-            if (rowsTotal > 5) {
-                this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
-                    + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
-                    + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
-                    + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
-            } else {
-                this.moreRowsMsg = undefined;
-            }
-        })
 
         // this.rows = result['rows'];
         // for (let errWithParams of result.errsWithParams) {
@@ -157,6 +139,26 @@ export class ImageGridComponent implements OnChanges {
         // }
         // this.showImagesNotFoundMessage(result);
 
+    }
+
+
+    private loadImgs(rows: any) {
+
+        let promise: any = Promise.resolve();
+        for (let row of rows) {
+            for (let cell of row) {
+                if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
+
+                promise = promise.then(() =>
+                    this.imagestore.read(cell.document.resource.id).then(url =>
+                        cell.imgSrc = url
+                    ).catch(e => {
+                        console.error('error fetching img',e)
+                    })
+                )
+            }
+        }
+        return promise;
     }
 
 

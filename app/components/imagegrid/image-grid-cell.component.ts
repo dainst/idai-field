@@ -20,6 +20,7 @@ export class ImageGridCellComponent {
     @Input() resourceIdentifiers: {[id: string]: string} = {};
     @Input() nrOfColumns: number = 0;
 
+
     public getIdentifier(id: string): string|undefined {
 
         if (!this.resourceIdentifiers ||

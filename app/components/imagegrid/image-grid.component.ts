@@ -64,6 +64,14 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
+    ngOnChanges(changes: SimpleChanges) {
+
+        if (!changes['documents']) return;
+        if (this.showDropArea) this.insertStubForDropArea();
+        this.calcGrid();
+    }
+
+
     public async onCellMouseEnter(doc: IdaiFieldImageDocument) {
 
         if (!this.showLinkBadges) return;
@@ -77,18 +85,7 @@ export class ImageGridComponent implements OnChanges {
         }
     }
 
-
-
-
-
-    ngOnChanges(changes: SimpleChanges) {
-
-        if (!changes['documents']) return;
-        if (this.showDropArea) this.insertStubForDropArea();
-        this.calcGrid();
-    }
-
-
+    
     public calcGrid() {
 
         clearTimeout(this.calcGridOnResizeTimeoutRef as any);

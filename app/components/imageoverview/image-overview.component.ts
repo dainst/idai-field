@@ -1,9 +1,8 @@
-import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {ReadDatastore} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {LinkModalComponent} from './link-modal.component';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
@@ -13,7 +12,6 @@ import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {RoutingService} from '../routing-service';
-import {DocumentReadDatastore} from "../../core/datastore/document-read-datastore";
 
 @Component({
     moduleId: module.id,
@@ -55,24 +53,14 @@ export class ImageOverviewComponent implements OnInit {
 
     constructor(
         public viewFacade: ViewFacade,
-        private datastore: DocumentReadDatastore,
         private modalService: NgbModal,
         private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceHelper: PersistenceHelper,
         private routingService: RoutingService
     ) {
-        // this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
-        //     documents => this.operationTypeDocuments = documents,
-        //     msgWithParams => messages.add(msgWithParams)
-        // );
-
-        this.imageOverviewFacade.initialize().then(() => {
-            this.imageOverviewFacade.fetchDocuments();
-            this.updateTotalImageCount();
-        });
+        this.imageOverviewFacade.initialize();
     }
-
 
 
     public ngOnInit() {
@@ -102,7 +90,6 @@ export class ImageOverviewComponent implements OnInit {
     public refreshGrid() {
 
         this.imageOverviewFacade.fetchDocuments();
-        this.updateTotalImageCount();
     }
 
 
@@ -172,13 +159,5 @@ export class ImageOverviewComponent implements OnInit {
 
         this.imageOverviewFacade.clearSelection();
         this.imageOverviewFacade.fetchDocuments();
-        this.updateTotalImageCount();
-    }
-
-
-    private async updateTotalImageCount() {
-
-        // this.totalImageCount = (await this.datastore.find(
-        //     this.imageOverviewFacade.getDefaultQuery())).length;
     }
 }

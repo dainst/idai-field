@@ -29,7 +29,7 @@ export class ImageOverviewFacade {
         return this.imagesState.initialize().then(() => {
             if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
             this.setQueryConstraints();
-        });
+        }).then(() => this.fetchDocuments());
     }
 
 

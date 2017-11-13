@@ -78,13 +78,6 @@
             </div>
         </div>
 
-        <!--<div id="image-count-badge" class="badge badge-secondary">-->
-            <!--{{getDocuments() ? getDocuments().length - 1 : 0}} von {{totalImageCount}}-->
-            <!--<span *ngIf="totalImageCount == 1">Bild wird</span>-->
-            <!--<span *ngIf="totalImageCount != 1">Bildern werden</span>-->
-            <!--angezeigt-->
-        <!--</div>-->
-
         <div (window:resize)="onResize($event)">
             <image-grid #imageGrid
                     [nrOfColumns]="getGridSize()"
@@ -98,6 +91,5 @@
                     (onImagesUploaded)="resetSearch(); refreshGrid();">
             </image-grid>
         </div>
-
     </div>
 </div>

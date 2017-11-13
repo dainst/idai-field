@@ -29,9 +29,6 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public operationTypeDocuments: Array<Document> = [];
-    public totalImageCount: number;
-
     public maxGridSize: number = 12;
     public minGridSize: number = 2;
 
@@ -47,16 +44,13 @@ export class ImageOverviewComponent implements OnInit {
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
     public getQuery = () => this.imageOverviewFacade.getQuery();
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
-    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
+
     public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect, undefined, true);
 
 
     constructor(
         public viewFacade: ViewFacade,
-        private modalService: NgbModal,
-        private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,
-        private persistenceHelper: PersistenceHelper,
         private routingService: RoutingService
     ) {
         this.imageOverviewFacade.initialize();
@@ -111,53 +105,8 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async openDeleteModal(modal: any) {
-
-        if (await this.modalService.open(modal).result == 'delete') this.deleteSelected();
-    }
-
-
-    public openLinkModal() {
-
-        this.modalService.open(LinkModalComponent).result.then( (targetDoc: IdaiFieldDocument) => {
-            if (targetDoc) {
-                this.persistenceHelper.addRelationsToSelectedDocuments(targetDoc)
-                    .then(() => {
-                        this.imageOverviewFacade.clearSelection();
-                    }).catch(msgWithParams => {
-                        this.messages.add(msgWithParams);
-                    });
-            }
-        }, () => {}); // do nothing on dismiss
-    }
-
-
-    public openRemoveLinkModal() {
-
-        // TODO remove entries from resource identifiers necessary?
-
-        this.modalService.open(RemoveLinkModalComponent)
-            .result.then( async () => {
-                await this.persistenceHelper.removeRelationsOnSelectedDocuments();
-                this.imageOverviewFacade.clearSelection();
-                await this.imageOverviewFacade.fetchDocuments();
-                this.imageGrid.calcGrid();
-            }
-            , () => {}); // do nothing on dismiss
-    }
-
-
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
         this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
-    }
-
-
-    private async deleteSelected() {
-
-        await this.persistenceHelper.deleteSelectedImageDocuments();
-
-        this.imageOverviewFacade.clearSelection();
-        this.imageOverviewFacade.fetchDocuments();
     }
 }

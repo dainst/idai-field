@@ -147,6 +147,15 @@
             "visible": true
         },
         {
+            "domain": [],
+            "editable": false,
+            "inverse": "NO-INVERSE",
+            "label": "Beinhaltet",
+            "name": "records",
+            "range": [],
+            "visible": true
+        },
+        {
             "domain": [
                 "Find",
                 "Brick",
@@ -167,8 +176,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Drilling",
-                "Sample"
+                "Drilling"
             ],
             "inverse": "includes",
             "label": "Liegt in",
@@ -223,8 +231,7 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Drilling",
-                "Sample"
+                "Drilling"
             ],
             "sameMainTypeResource": true
         },
@@ -612,6 +619,19 @@
                     "visible": true
                 },
                 {
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich",
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Niveau",
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "Level",
+                        "it": "Livello"
+                    },
+                    "name": "hasLevel",
+                    "visible": false
+                },
+                {
                     "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z.B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'",
                     "descriptions": {
                         "de": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z.B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
@@ -744,6 +764,28 @@
                         "W-O",
                         "WNW-OSO",
                         "WSW-ONO"
+                    ],
+                    "visible": true
+                },
+                {
+                    "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung.",
+                    "descriptions": {
+                        "de": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+                    },
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Bodenart",
+                    "labels": {
+                        "de": "Bodenart",
+                        "en": "soil type"
+                    },
+                    "name": "hasSoilType",
+                    "valuelist": [
+                        "Lehm",
+                        "Mergel",
+                        "Sand",
+                        "Schluff",
+                        "Ton"
                     ],
                     "visible": true
                 }
@@ -963,12 +1005,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -991,8 +1031,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -1145,7 +1183,7 @@
                         "en": "height",
                         "it": "l'altezza"
                     },
-                    "name": "hasDimensionHeight",
+                    "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
@@ -1230,6 +1268,49 @@
                         "en": "description"
                     },
                     "name": "hasDescription",
+                    "visible": true
+                },
+                {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich",
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Niveau",
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "Level",
+                        "it": "Livello"
+                    },
+                    "name": "hasLevel",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
                     "visible": true
                 },
                 {
@@ -1766,14 +1847,11 @@
                     },
                     "name": "hasManufactoring",
                     "valuelist": [
-                        "Dickwandig",
-                        "Dünnwandig",
                         "Gebrannt",
                         "Hart gebrannt",
                         "Luftgetrocknet",
                         "Oberfläche glatt",
                         "Oberfläche rau",
-                        "Sekundär gebrannt",
                         "Weich gebrannt"
                     ],
                     "visible": true
@@ -1814,12 +1892,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -1842,8 +1918,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -1926,36 +2000,6 @@
         {
             "fields": [
                 {
-                    "description": "Freies Beschreibungsfeld",
-                    "descriptions": {
-                        "de": "Freies Beschreibungsfeld"
-                    },
-                    "editable": true,
-                    "inputType": "text",
-                    "label": "Beschreibung",
-                    "labels": {
-                        "de": "Beschreibung",
-                        "en": "description"
-                    },
-                    "name": "hasDescription",
-                    "visible": true
-                },
-                {
-                    "description": "Angabe des EPSG Codes (siehe www.spacialreference.org, z.B. 3004)",
-                    "descriptions": {
-                        "de": "Angabe des EPSG Codes (siehe www.spacialreference.org, z.B. 3004)"
-                    },
-                    "editable": true,
-                    "inputType": "unsignedInt",
-                    "label": "EPSG Code",
-                    "labels": {
-                        "de": "EPSG Code",
-                        "en": "EPSG code"
-                    },
-                    "name": "hasEPSGId",
-                    "visible": true
-                },
-                {
                     "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung.",
                     "descriptions": {
                         "de": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
@@ -1992,20 +2036,6 @@
                         "en": "Longitude"
                     },
                     "name": "hasLongitude",
-                    "visible": true
-                },
-                {
-                    "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen. z.B. http://www.klass-archaeologie.uni-muenchen.de/forschung/projekte1/d-projekte-laufend/meninx/index.html",
-                    "descriptions": {
-                        "de": "Hinweis auf eine externe Projektseite mit weiteren Informationen. z.B. http://www.klass-archaeologie.uni-muenchen.de/forschung/projekte1/d-projekte-laufend/meninx/index.html"
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Projekt URL",
-                    "labels": {
-                        "de": "Projekt URL"
-                    },
-                    "name": "hasProjectURI",
                     "visible": true
                 }
             ],
@@ -2092,6 +2122,21 @@
                         "en": "history"
                     },
                     "name": "hasHistory",
+                    "visible": false
+                },
+                {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
                     "visible": false
                 },
                 {
@@ -2384,14 +2429,11 @@
                     "valuelist": [
                         "Andesit",
                         "Basalt",
-                        "Feldspat",
                         "Flint",
-                        "Glimmer",
                         "Granit",
                         "Kalk",
                         "Kalkmörtel",
                         "Kalkstein",
-                        "Kalzit",
                         "Kreide",
                         "Marmor",
                         "Pophyr",
@@ -2613,25 +2655,18 @@
                     "name": "hasTypeOfWood",
                     "valuelist": [
                         "Ahorn",
-                        "Apfel",
                         "Birke",
-                        "Birne",
                         "Buche",
                         "Eibe",
                         "Eiche",
-                        "Erle",
                         "Esche",
-                        "Fichte",
                         "Kastanie",
                         "Kiefer",
                         "Kirsche",
                         "Lerche",
                         "Linde",
-                        "Nußbaum",
-                        "Pappel",
                         "Tanne",
                         "Ulme",
-                        "Weide",
                         "Zeder"
                     ],
                     "visible": true
@@ -2795,23 +2830,6 @@
                     "visible": false
                 },
                 {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Art der Steinblöcke",
-                    "labels": {
-                        "de": "Art der Steinblöcke",
-                        "en": "Type of block processing"
-                    },
-                    "name": "hasBlockProcessing",
-                    "valuelist": [
-                        "Bruchsteine",
-                        "Hausteine",
-                        "Lesesteine",
-                        "Werksteine"
-                    ],
-                    "visible": true
-                },
-                {
                     "description": "Bearbeitung des Blockes/Bearbeitungsspuren",
                     "descriptions": {
                         "de": "Bearbeitung des Blockes/Bearbeitungsspuren"
@@ -2826,35 +2844,47 @@
                     },
                     "name": "hasBlockTreatment",
                     "valuelist": [
-                        "bossiert",
-                        "bruchbau",
                         "fein geglättet",
                         "gespitzt",
-                        "gestockt",
                         "grob behauen",
                         "grob geglättet",
-                        "scharriert",
                         "unbehauen"
                     ],
                     "visible": true
                 },
                 {
+                    "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange.",
+                    "descriptions": {
+                        "de": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+                    },
                     "editable": true,
                     "inputType": "checkboxes",
-                    "label": "Mauerwerksverband",
+                    "label": "Farbe und Intensität",
                     "labels": {
-                        "de": "Mauerwerksverband",
-                        "en": "Brickwork"
+                        "de": "Farbe und Intensität",
+                        "en": "color"
                     },
-                    "name": "hasBrickwork",
+                    "name": "hasColor",
                     "valuelist": [
-                        "Binderverband",
-                        "Blockverband",
-                        "Flämischer Verband",
-                        "Holländischer Verband",
-                        "Kreuzverband",
-                        "Läuferverband",
-                        "Märkischer Verband"
+                        "beige",
+                        "blass-",
+                        "blau",
+                        "braun",
+                        "cremefarben",
+                        "dunkel-",
+                        "gelb",
+                        "grau",
+                        "grün",
+                        "hell-",
+                        "leuchtend-",
+                        "ocker",
+                        "orange",
+                        "rosa",
+                        "rot",
+                        "schwarz",
+                        "türkis",
+                        "violett",
+                        "weiss"
                     ],
                     "visible": true
                 },
@@ -3079,12 +3109,7 @@
                     "valuelist": [
                         "Außenmauer",
                         "Befestigugsmauer",
-                        "Blockmauerwerk",
-                        "Bruchsteinmauer",
-                        "Fachwerk",
-                        "Feldsteinmauer",
-                        "Grenzmauer",
-                        "Ziegelmauer"
+                        "Grenzmauer"
                     ],
                     "visible": true
                 }
@@ -3192,6 +3217,36 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
+                    "visible": true
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -3221,6 +3276,26 @@
                     },
                     "name": "hasSupervisor",
                     "visible": true
+                },
+                {
+                    "description": "Welches Koordinatensystem wird verwendet? (UTM, Gauß Krüger...)",
+                    "descriptions": {
+                        "de": "Welches Koordinatensystem wird verwendet? (UTM, Gauß Krüger...)"
+                    },
+                    "editable": false,
+                    "inputType": "multiselect",
+                    "label": "Koordinatenreferenzsystem (CRS)",
+                    "labels": {
+                        "de": "Koordinatenreferenzsystem (CRS)",
+                        "en": "CRS"
+                    },
+                    "name": "hasCRS",
+                    "valuelist": [
+                        "Gauß Krüger",
+                        "UTM",
+                        "WGS 84 (4326)"
+                    ],
+                    "visible": false
                 },
                 {
                     "editable": true,
@@ -3347,9 +3422,9 @@
                     "visible": false
                 }
             ],
-            "label": "Maßnahme",
+            "label": "Untersuchung",
             "labels": {
-                "de": "Maßnahme",
+                "de": "Untersuchung",
                 "en": "Operation"
             },
             "type": "Operation"
@@ -3478,26 +3553,11 @@
                         "Oberfläche abgewaschen",
                         "Oberfläche verhärtet",
                         "fest",
-                        "flüssig",
-                        "gut formbar",
                         "hart",
                         "lehmig",
                         "locker",
-                        "mittel bindend",
-                        "mittel formbar",
-                        "nicht bindend",
-                        "nicht formbar",
                         "porös",
-                        "sandig",
-                        "schwach bindend",
-                        "schwach formbar",
-                        "sehr gut formbar",
-                        "sehr hart",
-                        "sehr schwach formbar",
-                        "sehr weich",
-                        "stark bindend",
-                        "steif",
-                        "weich"
+                        "sandig"
                     ],
                     "visible": true
                 },
@@ -3543,6 +3603,32 @@
                     "visible": true
                 },
                 {
+                    "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)",
+                    "descriptions": {
+                        "de": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
+                    },
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+                    "labels": {
+                        "de": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+                        "en": "feature form"
+                    },
+                    "name": "hasFeatureForm",
+                    "valuelist": [
+                        "U-förmig",
+                        "annähernd",
+                        "kesselförmig",
+                        "oval",
+                        "rechteckig",
+                        "rund",
+                        "trichterförmig",
+                        "unregelmäßig",
+                        "wannenförmig"
+                    ],
+                    "visible": true
+                },
+                {
                     "editable": true,
                     "inputType": "dropdown",
                     "label": "Bezeichnung bzw. Klassifikation Schicht",
@@ -3573,27 +3659,11 @@
                     },
                     "name": "hasSoilType",
                     "valuelist": [
-                        "Feinsand",
-                        "Feinstsand",
-                        "Grobsand",
                         "Lehm",
-                        "Lehmiger Sand",
-                        "Lehmiger Schluff",
-                        "Lehmiger Ton",
                         "Mergel",
-                        "Mittlerer Sand",
                         "Sand",
-                        "Sandiger Lehm",
-                        "Sandiger Schluff",
-                        "Sandiger Ton",
                         "Schluff",
-                        "Schluffiger Lehm",
-                        "Schluffiger Sand",
-                        "Schluffiger Ton",
-                        "Ton",
-                        "Toniger Lehm",
-                        "Toniger Sand",
-                        "Toniger Schluff"
+                        "Ton"
                     ],
                     "visible": true
                 }
@@ -3653,6 +3723,21 @@
                         "en": "start date"
                     },
                     "name": "hasBeginningDate",
+                    "visible": true
+                },
+                {
+                    "description": "Farbe des Sediments.",
+                    "descriptions": {
+                        "de": "Farbe des Sediments."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Farbe des Bodens",
+                    "labels": {
+                        "de": "Farbe des Bodens",
+                        "en": "color soil"
+                    },
+                    "name": "hasColorSoil",
                     "visible": true
                 },
                 {
@@ -3731,6 +3816,49 @@
                     "visible": false
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich",
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Niveau",
+                    "labels": {
+                        "de": "Niveau",
+                        "en": "Level",
+                        "it": "Livello"
+                    },
+                    "name": "hasLevel",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
+                    "visible": true
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -3770,42 +3898,6 @@
                     "visible": false
                 },
                 {
-                    "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange.",
-                    "descriptions": {
-                        "de": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-                    },
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Farbe und Intensität",
-                    "labels": {
-                        "de": "Farbe und Intensität",
-                        "en": "color"
-                    },
-                    "name": "hasColor",
-                    "valuelist": [
-                        "beige",
-                        "blass-",
-                        "blau",
-                        "braun",
-                        "cremefarben",
-                        "dunkel-",
-                        "gelb",
-                        "grau",
-                        "grün",
-                        "hell-",
-                        "leuchtend-",
-                        "ocker",
-                        "orange",
-                        "rosa",
-                        "rot",
-                        "schwarz",
-                        "türkis",
-                        "violett",
-                        "weiss"
-                    ],
-                    "visible": true
-                },
-                {
                     "editable": true,
                     "inputType": "dating",
                     "label": "Datierung",
@@ -3817,6 +3909,26 @@
                     "name": "hasDating",
                     "valuelist": [
                         "Dating"
+                    ],
+                    "visible": true
+                },
+                {
+                    "description": "Angabe der Objekthöhe",
+                    "descriptions": {
+                        "de": "Angabe der Objekthöhe"
+                    },
+                    "editable": true,
+                    "inputType": "dimension",
+                    "label": "Höhe",
+                    "labels": {
+                        "de": "Höhe",
+                        "en": "height",
+                        "it": "l'altezza"
+                    },
+                    "name": "hasDimensionHight",
+                    "position_values": [
+                        "Maximale Ausdehnung",
+                        "Minimale Ausdehnung"
                     ],
                     "visible": true
                 },
@@ -3877,75 +3989,6 @@
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Bestimmung der Grenzen des Befundes (z.B. unscharf, klar...)",
-                    "descriptions": {
-                        "de": "Bestimmung der Grenzen des Befundes (z.B. unscharf, klar...)"
-                    },
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Grenzen der Stratigrafischen Einheit",
-                    "labels": {
-                        "de": "Grenzen der Stratigrafischen Einheit",
-                        "en": "Feature borders"
-                    },
-                    "name": "hasFeatureBorders",
-                    "valuelist": [
-                        "deutlich",
-                        "diffus",
-                        "eben",
-                        "erahnbar",
-                        "erkennbar",
-                        "etwas verwaschen",
-                        "fließend",
-                        "geneigt",
-                        "gezackt",
-                        "regelmäßig",
-                        "scharf",
-                        "sehr deutlich",
-                        "undeutlich",
-                        "uneben",
-                        "unklar",
-                        "unregelmäßig",
-                        "verwaschen",
-                        "wellig"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)",
-                    "descriptions": {
-                        "de": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-                    },
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-                    "labels": {
-                        "de": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-                        "en": "feature form"
-                    },
-                    "name": "hasFeatureForm",
-                    "valuelist": [
-                        "Befundrest",
-                        "U-förmig",
-                        "V-förmig",
-                        "annähernd",
-                        "formlos",
-                        "halbmondförmig",
-                        "kesselförmig",
-                        "langgezogen",
-                        "oval",
-                        "rechteckig",
-                        "regelmäßig",
-                        "rund",
-                        "sanduhrförmig",
-                        "trapezförmig",
-                        "trichterförmig",
-                        "unregelmäßig",
-                        "wannenförmig"
                     ],
                     "visible": true
                 },
@@ -4196,26 +4239,11 @@
                         "Oberfläche abgewaschen",
                         "Oberfläche verhärtet",
                         "fest",
-                        "flüssig",
-                        "gut formbar",
                         "hart",
                         "lehmig",
                         "locker",
-                        "mittel bindend",
-                        "mittel formbar",
-                        "nicht bindend",
-                        "nicht formbar",
                         "porös",
-                        "sandig",
-                        "schwach bindend",
-                        "schwach formbar",
-                        "sehr gut formbar",
-                        "sehr hart",
-                        "sehr schwach formbar",
-                        "sehr weich",
-                        "stark bindend",
-                        "steif",
-                        "weich"
+                        "sandig"
                     ],
                     "visible": true
                 },
@@ -4250,15 +4278,12 @@
                     },
                     "name": "hasFloorClassification",
                     "valuelist": [
-                        "Bastmatten",
-                        "Korkboden",
                         "Mosaik",
                         "Opus sectile",
                         "Opus signinum",
                         "Pflaster",
                         "Stampflehm",
                         "Terrazzo",
-                        "Webmatten",
                         "Ziegel"
                     ],
                     "visible": true
@@ -4369,6 +4394,21 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Sprache",
@@ -4376,6 +4416,21 @@
                         "de": "Sprache"
                     },
                     "name": "hasLanguage",
+                    "visible": true
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
                     "visible": true
                 },
                 {
@@ -4602,6 +4657,21 @@
         {
             "fields": [
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -4734,6 +4804,21 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
                     "description": "Beschreibung ob Fundplatz rezent beschädigungen ausgesetzt war. Z.B.\nSteinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden",
                     "descriptions": {
                         "de": "Beschreibung ob Fundplatz rezent beschädigungen ausgesetzt war. Z.B.\nSteinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden"
@@ -4746,6 +4831,21 @@
                         "en": "modern intervention"
                     },
                     "name": "hasModernIntervention",
+                    "visible": true
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
                     "visible": true
                 },
                 {
@@ -4986,6 +5086,36 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
+                    "visible": true
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -5221,6 +5351,54 @@
                     },
                     "name": "hasDecorationDescription",
                     "visible": true
+                },
+                {
+                    "description": "Durchmesser des Gefäßbodens.",
+                    "descriptions": {
+                        "de": "Durchmesser des Gefäßbodens."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Durchmesser Boden",
+                    "labels": {
+                        "de": "Durchmesser Boden",
+                        "en": "diameter base",
+                        "it": "Diametro fondo"
+                    },
+                    "name": "hasDiameterBase",
+                    "visible": false
+                },
+                {
+                    "description": "Durchmesser am Bauchbereich, am zentralen Mittelteil, des Gefäßes.",
+                    "descriptions": {
+                        "de": "Durchmesser am Bauchbereich, am zentralen Mittelteil, des Gefäßes."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Durchmesser Bauch",
+                    "labels": {
+                        "de": "Durchmesser Bauch",
+                        "en": "diameter belly",
+                        "it": "Diametro corpo"
+                    },
+                    "name": "hasDiameterBelly",
+                    "visible": false
+                },
+                {
+                    "description": "Durchmesser des Gefäßhalses.",
+                    "descriptions": {
+                        "de": "Durchmesser des Gefäßhalses."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedFloat",
+                    "label": "Durchmesser Hals",
+                    "labels": {
+                        "de": "Durchmesser Hals",
+                        "en": "diameter neck",
+                        "it": "Diametro collo"
+                    },
+                    "name": "hasDiameterNeck",
+                    "visible": false
                 },
                 {
                     "description": "Beschreibung der Struktur und der Porösität des Bruches.",
@@ -5618,14 +5796,11 @@
                     },
                     "name": "hasManufactoring",
                     "valuelist": [
-                        "Dickwandig",
-                        "Dünnwandig",
                         "Gebrannt",
                         "Hart gebrannt",
                         "Luftgetrocknet",
                         "Oberfläche glatt",
                         "Oberfläche rau",
-                        "Sekundär gebrannt",
                         "Weich gebrannt"
                     ],
                     "visible": true
@@ -5709,6 +5884,28 @@
                     "visible": true
                 },
                 {
+                    "description": "Welcher Art ist die vorliegende Keramik/das vorliegende Keramikgefäß.",
+                    "descriptions": {
+                        "de": "Welcher Art ist die vorliegende Keramik/das vorliegende Keramikgefäß."
+                    },
+                    "editable": false,
+                    "inputType": "radio",
+                    "label": "Art der Keramik",
+                    "labels": {
+                        "de": "Art der Keramik",
+                        "en": "pottery type",
+                        "it": "Denominazione"
+                    },
+                    "name": "hasPotteryType",
+                    "valuelist": [
+                        "Dickwandig",
+                        "Dünnwandig",
+                        "Hochgebrannt",
+                        "sekundär gebrannt"
+                    ],
+                    "visible": false
+                },
+                {
                     "editable": true,
                     "inputType": "radio",
                     "label": "Keramikart Ware",
@@ -5768,12 +5965,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -5796,8 +5991,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -6010,6 +6203,23 @@
                         "zylindrische Flasche"
                     ],
                     "visible": true
+                },
+                {
+                    "editable": false,
+                    "inputType": "checkboxes",
+                    "label": "Ware",
+                    "labels": {
+                        "de": "Ware",
+                        "en": "ware"
+                    },
+                    "name": "hasWare",
+                    "valuelist": [
+                        "Drehscheibenkeramik",
+                        "Kochware",
+                        "Transportware",
+                        "schwarze Lepnaja Keramik"
+                    ],
+                    "visible": false
                 }
             ],
             "label": "Keramik",
@@ -6092,27 +6302,11 @@
                     },
                     "name": "hasSoilType",
                     "valuelist": [
-                        "Feinsand",
-                        "Feinstsand",
-                        "Grobsand",
                         "Lehm",
-                        "Lehmiger Sand",
-                        "Lehmiger Schluff",
-                        "Lehmiger Ton",
                         "Mergel",
-                        "Mittlerer Sand",
                         "Sand",
-                        "Sandiger Lehm",
-                        "Sandiger Schluff",
-                        "Sandiger Ton",
                         "Schluff",
-                        "Schluffiger Lehm",
-                        "Schluffiger Sand",
-                        "Schluffiger Ton",
-                        "Ton",
-                        "Toniger Lehm",
-                        "Toniger Sand",
-                        "Toniger Schluff"
+                        "Ton"
                     ],
                     "visible": true
                 }
@@ -6128,42 +6322,6 @@
         {
             "color": "#339900",
             "fields": [
-                {
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bestattungsart - Anzahl",
-                    "labels": {
-                        "de": "Bestattungsart - Anzahl"
-                    },
-                    "name": "hasAmountIndividuals",
-                    "valuelist": [
-                        "Doppelbestattung",
-                        "Dreifachbestattung",
-                        "Einzebestattung",
-                        "Grabdeponat",
-                        "Kollektivbestattung",
-                        "Massengrab",
-                        "Mehrfachbestattung",
-                        "Unsicher bzw. unbestimmbar",
-                        "Wiedergängerbestattung"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bestattungsfolge (Primär/Sekundär)",
-                    "labels": {
-                        "de": "Bestattungsfolge (Primär/Sekundär)"
-                    },
-                    "name": "hasBurialCharacteristic",
-                    "valuelist": [
-                        "Primäre Bestattung",
-                        "Sekundäre Bestattung",
-                        "Unsicher bzw. unbestimmbar"
-                    ],
-                    "visible": true
-                },
                 {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
@@ -6226,19 +6384,44 @@
                     "visible": true
                 },
                 {
+                    "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)",
+                    "descriptions": {
+                        "de": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
+                    },
                     "editable": true,
                     "inputType": "checkboxes",
-                    "label": "Bestattungsform",
+                    "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
                     "labels": {
-                        "de": "Bestattungsform"
+                        "de": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+                        "en": "feature form"
+                    },
+                    "name": "hasFeatureForm",
+                    "valuelist": [
+                        "U-förmig",
+                        "annähernd",
+                        "kesselförmig",
+                        "oval",
+                        "rechteckig",
+                        "rund",
+                        "trichterförmig",
+                        "unregelmäßig",
+                        "wannenförmig"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Merkmal des Grabes",
+                    "labels": {
+                        "de": "Merkmal des Grabes"
                     },
                     "name": "hasGraveFeature",
                     "valuelist": [
                         "Brandbestattung",
-                        "Kenotaph",
                         "Körperbestattung",
-                        "Ossuar",
-                        "Teil-Körperbestattung"
+                        "Primäre Bestattung",
+                        "Sekundäre Bestattung"
                     ],
                     "visible": true
                 },
@@ -6256,119 +6439,13 @@
                     },
                     "name": "hasGraveType",
                     "valuelist": [
-                        "Baumsargbestattung",
-                        "Brandgrubengrab",
-                        "Brandschüttung",
-                        "Doliengrab",
-                        "Dolmen",
                         "Erdgrab",
                         "Felsgrab",
-                        "Felsnieschengrab",
-                        "Flachgrab",
-                        "Ganggrab",
                         "Gemauertes Grab",
-                        "Glockengrab",
-                        "Gruft",
-                        "Hügelgrab",
-                        "Mausoleum",
-                        "Megalithgrab",
-                        "Schachthöhlengrab",
                         "Steineinfassung",
                         "Steinplattengrab",
                         "Urnengrab",
                         "Ziegelplattengrab"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Position der Arme",
-                    "labels": {
-                        "de": "Position der Arme"
-                    },
-                    "name": "hasPositionArms",
-                    "valuelist": [
-                        "Unsicher bzw. unbestimmbar",
-                        "am Kinn",
-                        "an den Seiten",
-                        "auf dem Bauch",
-                        "auf dem Becken",
-                        "auf der Brust",
-                        "ungleichmäßig"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Position der Beine",
-                    "labels": {
-                        "de": "Position der Beine"
-                    },
-                    "name": "hasPositionLegs",
-                    "valuelist": [
-                        "Beine angewinkelt",
-                        "Beinhocker",
-                        "Extremhocker",
-                        "Hocker",
-                        "Unsicher bzw. unbestimmbar",
-                        "gestreckt"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Lage des/der Verstorbenen",
-                    "labels": {
-                        "de": "Lage des/der Verstorbenen"
-                    },
-                    "name": "hasPositioningIndividuals",
-                    "valuelist": [
-                        "Bauchlage",
-                        "Rückenlage",
-                        "Seitenlage, links",
-                        "Seitenlage, rechts",
-                        "Unsicher bzw. unbestimmbar"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung.",
-                    "descriptions": {
-                        "de": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-                    },
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bodenart",
-                    "labels": {
-                        "de": "Bodenart",
-                        "en": "soil type"
-                    },
-                    "name": "hasSoilType",
-                    "valuelist": [
-                        "Feinsand",
-                        "Feinstsand",
-                        "Grobsand",
-                        "Lehm",
-                        "Lehmiger Sand",
-                        "Lehmiger Schluff",
-                        "Lehmiger Ton",
-                        "Mergel",
-                        "Mittlerer Sand",
-                        "Sand",
-                        "Sandiger Lehm",
-                        "Sandiger Schluff",
-                        "Sandiger Ton",
-                        "Schluff",
-                        "Schluffiger Lehm",
-                        "Schluffiger Sand",
-                        "Schluffiger Ton",
-                        "Ton",
-                        "Toniger Lehm",
-                        "Toniger Sand",
-                        "Toniger Schluff"
                     ],
                     "visible": true
                 }
@@ -6442,40 +6519,6 @@
                         "Wadenbein (Fibula)",
                         "Wirbel",
                         "Zahn"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "radio",
-                    "label": "Grobe Einordnung der Knochen",
-                    "labels": {
-                        "de": "Grobe Einordnung der Knochen"
-                    },
-                    "name": "hasBoneType",
-                    "valuelist": [
-                        "Elfenbein",
-                        "Horn",
-                        "Menschenknochen",
-                        "Tierknochen"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)",
-                    "labels": {
-                        "de": "Verbrennungsgrad der Knochen (nach Wahl 1982)",
-                        "en": "Burning Grade (Wahl 1982)"
-                    },
-                    "name": "hasBurningGrade",
-                    "valuelist": [
-                        "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig",
-                        "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz",
-                        "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau",
-                        "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig",
-                        "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß"
                     ],
                     "visible": true
                 },
@@ -6557,6 +6600,22 @@
                         "Ziegenartige (z. B. Schaf, Ziege)"
                     ],
                     "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "radio",
+                    "label": "Grobe Einordnung der Knochen",
+                    "labels": {
+                        "de": "Grobe Einordnung der Knochen"
+                    },
+                    "name": "hasWhatHadBones",
+                    "valuelist": [
+                        "Elfenbein",
+                        "Horn",
+                        "Menschenknochen",
+                        "Tierknochen"
+                    ],
+                    "visible": true
                 }
             ],
             "label": "Knochen",
@@ -6613,6 +6672,36 @@
                         "en": "description"
                     },
                     "name": "hasDescription",
+                    "visible": true
+                },
+                {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
                     "visible": true
                 },
                 {
@@ -6722,7 +6811,7 @@
                         "en": "height",
                         "it": "l'altezza"
                     },
-                    "name": "hasDimensionHeight",
+                    "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
@@ -6977,6 +7066,36 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
+                    "visible": true
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -7004,7 +7123,6 @@
                     "valuelist": [
                         "Abhub",
                         "Bohrung",
-                        "Laufspur",
                         "Planum",
                         "Profil",
                         "Sondage"
@@ -7309,12 +7427,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -7337,8 +7453,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -7458,7 +7572,7 @@
                     },
                     "name": "hasTerracottaType",
                     "valuelist": [
-                        "Kalyptere"
+                        "Kalypter"
                     ],
                     "visible": true
                 },
@@ -7609,6 +7723,21 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
                     "description": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen.",
                     "descriptions": {
                         "de": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen."
@@ -7621,6 +7750,21 @@
                         "en": "mark description"
                     },
                     "name": "hasMarkDescription",
+                    "visible": true
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
                     "visible": true
                 },
                 {
@@ -7724,14 +7868,10 @@
                     },
                     "name": "hasBlockTreatment",
                     "valuelist": [
-                        "bossiert",
-                        "bruchbau",
                         "fein geglättet",
                         "gespitzt",
-                        "gestockt",
                         "grob behauen",
                         "grob geglättet",
-                        "scharriert",
                         "unbehauen"
                     ],
                     "visible": true
@@ -7910,7 +8050,7 @@
                         "en": "height",
                         "it": "l'altezza"
                     },
-                    "name": "hasDimensionHeight",
+                    "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
@@ -8273,26 +8413,11 @@
                         "Oberfläche abgewaschen",
                         "Oberfläche verhärtet",
                         "fest",
-                        "flüssig",
-                        "gut formbar",
                         "hart",
                         "lehmig",
                         "locker",
-                        "mittel bindend",
-                        "mittel formbar",
-                        "nicht bindend",
-                        "nicht formbar",
                         "porös",
-                        "sandig",
-                        "schwach bindend",
-                        "schwach formbar",
-                        "sehr gut formbar",
-                        "sehr hart",
-                        "sehr schwach formbar",
-                        "sehr weich",
-                        "stark bindend",
-                        "steif",
-                        "weich"
+                        "sandig"
                     ],
                     "visible": true
                 },
@@ -8318,6 +8443,32 @@
                     "visible": true
                 },
                 {
+                    "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)",
+                    "descriptions": {
+                        "de": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
+                    },
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+                    "labels": {
+                        "de": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+                        "en": "feature form"
+                    },
+                    "name": "hasFeatureForm",
+                    "valuelist": [
+                        "U-förmig",
+                        "annähernd",
+                        "kesselförmig",
+                        "oval",
+                        "rechteckig",
+                        "rund",
+                        "trichterförmig",
+                        "unregelmäßig",
+                        "wannenförmig"
+                    ],
+                    "visible": true
+                },
+                {
                     "editable": true,
                     "inputType": "dropdown",
                     "label": "Klassifikation Sonstiges",
@@ -8327,59 +8478,11 @@
                     },
                     "name": "hasOtherClassification",
                     "valuelist": [
-                        "Abfallgrube",
                         "Brunnen",
                         "Feuerstelle",
-                        "Graben",
                         "Grube",
-                        "Kalkbrennofen",
-                        "Keramikofen",
-                        "Materialentnahmegrube",
-                        "Ofen",
                         "Pfosten",
-                        "Pfostenstandspur",
-                        "Rennfeuerofen",
-                        "Schmelzofen",
-                        "Spitzgraben",
-                        "Wasserreservoir"
-                    ],
-                    "visible": true
-                },
-                {
-                    "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung.",
-                    "descriptions": {
-                        "de": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-                    },
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bodenart",
-                    "labels": {
-                        "de": "Bodenart",
-                        "en": "soil type"
-                    },
-                    "name": "hasSoilType",
-                    "valuelist": [
-                        "Feinsand",
-                        "Feinstsand",
-                        "Grobsand",
-                        "Lehm",
-                        "Lehmiger Sand",
-                        "Lehmiger Schluff",
-                        "Lehmiger Ton",
-                        "Mergel",
-                        "Mittlerer Sand",
-                        "Sand",
-                        "Sandiger Lehm",
-                        "Sandiger Schluff",
-                        "Sandiger Ton",
-                        "Schluff",
-                        "Schluffiger Lehm",
-                        "Schluffiger Sand",
-                        "Schluffiger Ton",
-                        "Ton",
-                        "Toniger Lehm",
-                        "Toniger Sand",
-                        "Toniger Schluff"
+                        "Pfostenstandspur"
                     ],
                     "visible": true
                 }
@@ -8464,27 +8567,11 @@
                     },
                     "name": "hasSoilType",
                     "valuelist": [
-                        "Feinsand",
-                        "Feinstsand",
-                        "Grobsand",
                         "Lehm",
-                        "Lehmiger Sand",
-                        "Lehmiger Schluff",
-                        "Lehmiger Ton",
                         "Mergel",
-                        "Mittlerer Sand",
                         "Sand",
-                        "Sandiger Lehm",
-                        "Sandiger Schluff",
-                        "Sandiger Ton",
                         "Schluff",
-                        "Schluffiger Lehm",
-                        "Schluffiger Sand",
-                        "Schluffiger Ton",
-                        "Ton",
-                        "Toniger Lehm",
-                        "Toniger Sand",
-                        "Toniger Schluff"
+                        "Ton"
                     ],
                     "visible": true
                 }
@@ -8625,7 +8712,7 @@
                         "Georadar",
                         "LIDAR",
                         "Luft- oder Satellitenbilder",
-                        "Quadratisch",
+                        "Quadranten",
                         "Regelmäßig",
                         "Seismik"
                     ],
@@ -8643,6 +8730,21 @@
         {
             "color": "#5c5c8a",
             "fields": [
+                {
+                    "description": "Spezifizierung, ob das Steinobjekt mit einem Relief oder einer Inschrift verziert ist, z.B. 'Inschriftenträger'",
+                    "descriptions": {
+                        "de": "Spezifizierung, ob das Steinobjekt mit einem Relief oder einer Inschrift verziert ist, z.B. 'Inschriftenträger'"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Träger",
+                    "labels": {
+                        "de": "Träger",
+                        "en": "carrier"
+                    },
+                    "name": "hasCarrier",
+                    "visible": true
+                },
                 {
                     "description": "Zweck bzw. Verwendung des Objekts.",
                     "descriptions": {
@@ -8803,14 +8905,11 @@
                     "valuelist": [
                         "Andesit",
                         "Basalt",
-                        "Feldspat",
                         "Flint",
-                        "Glimmer",
                         "Granit",
                         "Kalk",
                         "Kalkmörtel",
                         "Kalkstein",
-                        "Kalzit",
                         "Kreide",
                         "Marmor",
                         "Pophyr",
@@ -8926,12 +9025,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -8954,8 +9051,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -9042,106 +9137,38 @@
                     "visible": true
                 },
                 {
-                    "description": "Name der Münzeinheit, z.B. 'Tetradrachme'",
+                    "description": "Legende, mit welcher die Vorderseite der Münze beschriftet ist, z.B. 'DN CONSTAN'",
                     "descriptions": {
-                        "de": "Name der Münzeinheit, z.B. 'Tetradrachme'"
+                        "de": "Legende, mit welcher die Vorderseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
                     },
                     "editable": true,
                     "inputType": "dropdown",
-                    "label": "Nominalwert (Stückelung)",
+                    "label": "Legende Vorderseite",
                     "labels": {
-                        "de": "Nominalwert (Stückelung)",
-                        "en": "Denomination"
+                        "de": "Legende Vorderseite",
+                        "en": "front side legend"
                     },
-                    "name": "hasDenomination",
+                    "name": "hasFrontLegend",
                     "valuelist": [
-                        "1 1/2 Skripula",
-                        "1 1/2 Solidus",
-                        "1/2 Stater (Hemistater)",
-                        "1/30 Drachme",
-                        "1/4  Stater (Tetarte)",
-                        "1/4 Einheit",
-                        "1/5 Drachme",
-                        "2 Solidus",
-                        "3 Solidus",
-                        "4 1/2 Solidus",
-                        "60 As",
-                        "9 Siliqua",
-                        "9 Solidus",
-                        "AE Gross",
-                        "AE Klein",
-                        "AE Medium",
-                        "Aes 1",
-                        "Aes 2",
-                        "Aes 3",
-                        "Aes 3-4",
-                        "Aes 4",
-                        "Antoninian",
-                        "Argenteus",
-                        "As",
-                        "Aureus",
-                        "Aureus²",
-                        "Aureus¹",
-                        "Bruchteil",
-                        "Cistophor",
-                        "Denar",
-                        "Denar (serratus)",
-                        "Didrachme",
-                        "Diobol",
-                        "Distater",
-                        "Doppelter Sesterz",
-                        "Drachme",
-                        "Dupondius",
-                        "Gold-mehrfaches",
-                        "Grosser Aes 2",
-                        "Halber Solidus",
-                        "Hekte (1/6 Stater)",
-                        "Hemidrachme",
-                        "Hemiobol",
-                        "Kleiner Aes 2",
-                        "Kontorniat",
-                        "Litra",
-                        "Medaillon",
-                        "Miliarense (leicht)",
-                        "Miliarense (schwer)",
-                        "Obolus",
-                        "Quadrans",
-                        "Quinar",
-                        "Quinar Aureus",
-                        "Reduzierte Siliqua",
-                        "Reduzierter Aes 2",
-                        "Semis",
-                        "Semissis",
-                        "Semuncia",
-                        "Sesterz",
-                        "Sextans",
-                        "Silber-Mehrfaches",
-                        "Siliqua",
-                        "Solidus",
-                        "Stater",
-                        "Tetradrachme",
-                        "Tremissis",
-                        "Triens",
-                        "Uncia",
-                        "Unsicher bzw. unbestimmbar",
-                        "Victoriatus"
+                        "DN Constantin"
                     ],
                     "visible": true
                 },
                 {
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Herstellungstechnik",
-                    "labels": {
-                        "de": "Herstellungstechnik",
-                        "en": "Manufacturing method"
+                    "description": "Motiv, welches auf der Vorderseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'",
+                    "descriptions": {
+                        "de": "Motiv, welches auf der Vorderseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
                     },
-                    "name": "hasManufacturingMethodCoin",
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Motiv Vorderseite",
+                    "labels": {
+                        "de": "Motiv Vorderseite",
+                        "en": "front side motive"
+                    },
+                    "name": "hasFrontSideMotive",
                     "valuelist": [
-                        "Gegossen",
-                        "Geprägt",
-                        "Plattiert",
-                        "Unsicher bzw. unbestimmbar"
+                        "behelmte Athenabüste"
                     ],
                     "visible": true
                 },
@@ -9163,9 +9190,7 @@
                         "Kupfer",
                         "Messing",
                         "Silber",
-                        "Stahl",
                         "Unsicher bzw. unbestimmbar",
-                        "Zink",
                         "Zinn"
                     ],
                     "visible": true
@@ -9184,258 +9209,22 @@
                     },
                     "name": "hasMint",
                     "valuelist": [
-                        "Abdera",
-                        "Abydos",
-                        "Afrika",
-                        "Agrigent",
-                        "Aigai (Vergina)",
-                        "Aiolis",
-                        "Aitolischer Bund",
-                        "Akanthus",
-                        "Akkon",
-                        "Alabanda",
                         "Alexandria",
-                        "Alexandria Troas",
-                        "Alexandrien",
-                        "Amasra",
-                        "Amathus",
                         "Ambianum (Amiens)",
-                        "Ambracia",
-                        "Amiens",
-                        "Amisus",
-                        "Amphipolis",
-                        "Amrit",
-                        "Anaktorio",
-                        "Antiochia",
                         "Antiochia (Antakya)",
-                        "Antiochia am Orontes",
-                        "Apameia Kibotos",
-                        "Apameia am Orontes",
-                        "Apollonia",
-                        "Apulien",
                         "Aquileia",
-                        "Archaiischer Bund",
                         "Arelate (Arles)",
-                        "Argos",
-                        "Argos Amphilochicum",
-                        "Arles",
-                        "Arpi",
-                        "Aruad",
-                        "Asia Minor",
-                        "Asien",
-                        "Aspendos",
-                        "Assos",
-                        "Astibus",
-                        "Athen",
-                        "Aydın",
-                        "Babylon",
                         "Barcino (Barcelona)",
-                        "Beirut",
-                        "Bozcaada",
-                        "Byblos",
-                        "Byzantion",
-                        "Böotien",
-                        "Caesaraugusta",
-                        "Caesarea in Kappadokien",
-                        "Cales",
                         "Camulodunum (Colchester)",
-                        "Canosa di Puglia",
-                        "Carnuntum",
                         "Carthago (Tunis)",
-                        "Catania",
-                        "Caulonia",
-                        "Chalcedon",
-                        "Chalkida",
-                        "Chalkidiki",
-                        "Chersones",
-                        "Chios",
-                        "Colchester",
                         "Colonia Agrippina (Köln)",
-                        "Colonia Patricia",
-                        "Comitatenses",
                         "Constantinopolis (Istanbul)",
-                        "Crotone",
-                        "Cyme",
-                        "Damaskus",
-                        "Diesseitiges Gallian / Norditalien",
-                        "Dionysopolis",
-                        "Dyrrhachium",
-                        "Ekbatana",
-                        "Elea",
-                        "Elis",
-                        "Emerita",
-                        "Empüries",
-                        "Ephesos",
-                        "Eretria",
-                        "Erythrai",
-                        "Etrurien",
-                        "Euböa",
-                        "Foça",
-                        "Gallien",
-                        "Gela",
                         "Germe",
-                        "Gortyn",
-                        "Halikarnassos",
-                        "Harran",
                         "Heraclea",
-                        "Herakleia",
-                        "Herakleia Pontike",
-                        "Himera",
-                        "Hispanien",
-                        "Hispanien-Punisch",
-                        "Histria",
-                        "Homs",
-                        "Ibiza",
-                        "Idalion",
-                        "Italien",
-                        "Italien (Südosten)",
-                        "Kabile",
-                        "Kamarina",
-                        "Karien",
-                        "Karthago",
-                        "Karystos",
-                        "Kelenderis",
-                        "Kertsch",
-                        "Klazomenai",
-                        "Knidos",
-                        "Kolchis",
                         "Kolophon",
-                        "Konstantinopel",
-                        "Korfu",
-                        "Korinth",
-                        "Korinthischer Bund",
-                        "Kos",
-                        "Kydonia",
-                        "Kyrenaika",
-                        "Kyrene",
-                        "Kyzikos",
-                        "Köln",
-                        "Lampsakos",
-                        "Laodikeia am Lykos",
-                        "Lapta",
-                        "Larissa",
-                        "Larnaka",
-                        "Latakia",
-                        "Lefkada",
-                        "Lentini",
-                        "Lete",
-                        "Locri",
-                        "Locri Opuntii (Opus)",
-                        "Londinium",
-                        "Lucera",
-                        "Lugdunum",
-                        "Lydien",
-                        "Lykien",
-                        "Lysimacheia",
-                        "Lyttos",
-                        "Magnesia am Mäander",
-                        "Mainz",
-                        "Makedonien",
-                        "Makedonien (1. Region)",
-                        "Mangalia",
-                        "Marmetini",
-                        "Maroneia",
-                        "Marseille",
-                        "Mediolanum",
-                        "Megalopoli",
-                        "Memphis",
-                        "Messene",
-                        "Messina",
-                        "Metapont",
-                        "Milas",
-                        "Milet",
-                        "Mithymna",
-                        "Mittelitalien",
-                        "Myriandrus",
-                        "Myrina",
-                        "Mytilini",
-                        "Narbo",
-                        "Naxos",
-                        "Neapel",
-                        "Nessebar",
-                        "Nikomedia",
-                        "Nisibis",
-                        "Nuceria",
-                        "Olbia",
-                        "Oreus",
-                        "Oria",
-                        "Ostia Antica",
-                        "Ouranoupolis",
-                        "Paestum",
-                        "Paphos",
-                        "Parion",
-                        "Paros",
-                        "Pella",
-                        "Peloponnes",
+                        "Nicomedia",
                         "Pergamon",
-                        "Perge",
-                        "Persien",
-                        "Phanagoria",
-                        "Phaselis",
-                        "Phokis",
-                        "Priene",
-                        "Prusias ad Hypium",
-                        "Ravenna",
-                        "Reggio Calabria",
-                        "Republik Zypern",
-                        "Rhodos",
-                        "Rom",
-                        "Rouen",
-                        "Salamis",
-                        "Samos",
-                        "Sardes",
-                        "Sardinien",
-                        "Segesta",
-                        "Seleukia Pieria",
-                        "Seleukia am Tigris",
-                        "Selinus",
-                        "Sestos",
-                        "Side",
-                        "Sidon",
-                        "Sikyon",
-                        "Sinop",
-                        "Sirmium",
-                        "Sisak",
-                        "Sizilien",
-                        "Sizilien 2 (Republican period)",
-                        "Sizilisch-Punisch",
-                        "Smyrna",
-                        "Sofia",
-                        "Soloi",
-                        "Sosopol",
-                        "Susa (Persien)",
-                        "Sybaris",
-                        "Syrakus",
-                        "Syrien",
-                        "Südgallische Münzstätte",
-                        "Tanagra",
-                        "Taras",
-                        "Tarraco",
-                        "Tarsus",
-                        "Tegea",
-                        "Temnus",
-                        "Teos",
-                        "Terina",
-                        "Tessin",
-                        "Thasos",
-                        "Thessalische Liga",
-                        "Thessalonica",
-                        "Thessaloniki",
-                        "Thiva",
-                        "Thrakien",
-                        "Thurioi",
-                        "Thyrrheium",
-                        "Trier",
-                        "Tripoli (Libanon)",
-                        "Tyros",
-                        "Unsicher bzw. unbestimmbar",
-                        "Viminatium",
-                        "Vindobona",
-                        "Warna",
-                        "Zancle",
-                        "Äegina",
-                        "Äeneas",
-                        "Äetolien"
+                        "Thessalonica"
                     ],
                     "visible": true
                 },
@@ -9466,6 +9255,45 @@
                     "visible": true
                 },
                 {
+                    "description": "Name der Münzeinheit, z.B. 'Tetradrachme'",
+                    "descriptions": {
+                        "de": "Name der Münzeinheit, z.B. 'Tetradrachme'"
+                    },
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Nominal",
+                    "labels": {
+                        "de": "Nominal",
+                        "en": "nominal"
+                    },
+                    "name": "hasNominal",
+                    "valuelist": [
+                        "As",
+                        "Aureus",
+                        "Denar",
+                        "Didrachme",
+                        "Drachme",
+                        "Dupondius",
+                        "Follis",
+                        "Maiorina",
+                        "Multipla",
+                        "Nummus",
+                        "Quadrans",
+                        "Quadrigatus",
+                        "Quinar",
+                        "Semis",
+                        "Semissis",
+                        "Sesterz",
+                        "Solidus",
+                        "Statemon",
+                        "Stater",
+                        "Tetradrachme",
+                        "Tremissis",
+                        "Triens"
+                    ],
+                    "visible": true
+                },
+                {
                     "description": "Herkunftsort",
                     "descriptions": {
                         "de": "Herkunftsort"
@@ -9485,12 +9313,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -9513,13 +9339,47 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
                         "Südägäis",
                         "Ägypten"
+                    ],
+                    "visible": true
+                },
+                {
+                    "description": "Legende, mit welcher die Rückseite der Münze beschriftet ist, z.B. 'DN CONSTAN'",
+                    "descriptions": {
+                        "de": "Legende, mit welcher die Rückseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
+                    },
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Legende Rückseite",
+                    "labels": {
+                        "de": "Legende Rückseite",
+                        "en": "reverse side legend"
+                    },
+                    "name": "hasReverseSideLegend",
+                    "valuelist": [
+                        "DN Constantin"
+                    ],
+                    "visible": true
+                },
+                {
+                    "description": "Motiv, welches auf der Rückseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'",
+                    "descriptions": {
+                        "de": "Motiv, welches auf der Rückseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
+                    },
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Motiv Rückseite",
+                    "labels": {
+                        "de": "Motiv Rückseite",
+                        "en": "reverse side motive"
+                    },
+                    "name": "hasReverseSideMotive",
+                    "valuelist": [
+                        "behelmte Athenabüste"
                     ],
                     "visible": true
                 },
@@ -9684,6 +9544,36 @@
                     "visible": true
                 },
                 {
+                    "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs.",
+                    "descriptions": {
+                        "de": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
+                    },
+                    "editable": false,
+                    "inputType": "unsignedInt",
+                    "label": "Identifikator",
+                    "labels": {
+                        "de": "Identifikator",
+                        "en": "identifier"
+                    },
+                    "name": "hasIdentify",
+                    "visible": false
+                },
+                {
+                    "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc...",
+                    "descriptions": {
+                        "de": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Nummer",
+                    "labels": {
+                        "de": "Nummer",
+                        "en": "number"
+                    },
+                    "name": "hasNumber",
+                    "visible": true
+                },
+                {
                     "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
                     "descriptions": {
                         "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
@@ -9844,7 +9734,7 @@
                         "en": "height",
                         "it": "l'altezza"
                     },
-                    "name": "hasDimensionHeight",
+                    "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
@@ -10063,7 +9953,6 @@
                     "valuelist": [
                         "Landesamt",
                         "Museum",
-                        "Privatbesitz",
                         "Regionalverwaltung",
                         "Restaurierungswerkstatt",
                         "Staatsbesitz"
@@ -10146,17 +10035,6 @@
                     "visible": true
                 },
                 {
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Beschreibungsfeld zum Aufbau des Putzes",
-                    "labels": {
-                        "de": "Beschreibungsfeld zum Aufbau des Putzes",
-                        "en": "composition/structure"
-                    },
-                    "name": "hasComposition",
-                    "visible": true
-                },
-                {
                     "description": "Beschreibung der Bemalung des Putzes",
                     "descriptions": {
                         "de": "Beschreibung der Bemalung des Putzes"
@@ -10186,6 +10064,17 @@
                         "it": "Decorazione"
                     },
                     "name": "hasDecorationPattern",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibungsfeld zum Aufbau des Putzes",
+                    "labels": {
+                        "de": "Beschreibungsfeld zum Aufbau des Putzes",
+                        "en": "composition/structure"
+                    },
+                    "name": "composition/hasStructure",
                     "visible": true
                 },
                 {
@@ -10312,7 +10201,7 @@
                         "en": "height",
                         "it": "l'altezza"
                     },
-                    "name": "hasDimensionHeight",
+                    "name": "hasDimensionHight",
                     "position_values": [
                         "Maximale Ausdehnung",
                         "Minimale Ausdehnung"
@@ -10482,9 +10371,7 @@
                         "Kupfer",
                         "Messing",
                         "Silber",
-                        "Stahl",
                         "Unsicher bzw. unbestimmbar",
-                        "Zink",
                         "Zinn"
                     ],
                     "visible": true
@@ -10579,12 +10466,10 @@
                         "Attisch",
                         "Britannien",
                         "Chios",
-                        "Deutschland",
                         "Ephesos",
                         "Etruskisch",
                         "Gallien",
                         "Ionien",
-                        "Irland",
                         "Italien",
                         "Kampanisch",
                         "Karthagisch",
@@ -10607,8 +10492,6 @@
                         "Rhodos",
                         "Samos",
                         "Sizilien",
-                        "Skandinavien",
-                        "Slawisch",
                         "Spanien",
                         "Syrien",
                         "Südtunesisch",
@@ -10705,21 +10588,18 @@
     "views": [
         {
             "label": "Ausgrabung",
-            "name": "excavation",
-            "mainType": "Trench",
-            "operationSubtype": "Trench"
+            "operationSubtype": "Trench",
+            "name": "excavation"
         },
         {
             "label": "Bauaufnahme",
-            "name": "Building",
-            "mainType": "Building",
-            "operationSubtype": "Building"
+            "operationSubtype": "Building",
+            "name": "building"
         },
         {
             "label": "Survey",
-            "name": "survey",
-            "mainType": "Survey", 
-            "operationSubtype": "Survey"
+            "operationSubtype": "Survey",
+            "name": "survey"
         }
     ]
 }

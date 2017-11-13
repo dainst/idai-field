@@ -2,14 +2,14 @@ import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-docum
 import {Query} from 'idai-components-2/datastore';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
-import {Document} from 'idai-components-2/core';
 import {Injectable} from '@angular/core';
 import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-field-image-document-read-datastore";
-import {DocumentReadDatastore} from "../../../core/datastore/document-read-datastore";
+
 
 @Injectable()
 /**
- *
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ImageDocumentsManager {
 
@@ -23,8 +23,7 @@ export class ImageDocumentsManager {
     constructor(
         public viewFacade: ViewFacade,
         private imagesState: ImagesState,
-        private imageDatastore: IdaiFieldImageDocumentReadDatastore,
-        private datastore: DocumentReadDatastore
+        private imageDatastore: IdaiFieldImageDocumentReadDatastore
     ) {
     }
 
@@ -72,6 +71,8 @@ export class ImageDocumentsManager {
     private doSelectedDocumentsContainDepictsRelations(): boolean {
 
         for (let document of this.selected) {
+
+            // TODO make sure the DAO always returns docs with depicts, then simplify here
             if (document.resource.relations.depicts &&
                     document.resource.relations.depicts.length > 0) {
                 return true;
@@ -92,84 +93,19 @@ export class ImageDocumentsManager {
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
      */
-    public fetchDocuments() {
+    public async fetchDocuments() {
 
         const query: Query = this.imagesState.getQuery();
 
-        console.debug("fetch docs",query)
-        return this.imageDatastore.find(query)
-            .catch(errWithParams => {
-                console.error('ERROR with find using query', query);
-                if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
-            }).then(documents => {
-                if (!documents || documents.length == 0) return Promise.resolve([]);
-                // if (['', 'UNLINKED'].indexOf(this.imagesState.getMainTypeDocumentFilterOption()) == -1) {
-                //     return this.applyLinkFilter(documents);
-                // } else {
-                    return Promise.resolve(documents);
-                // }
-            }).then(filteredDocuments => {
-                console.debug("fetch docs end")
-                this.documents = filteredDocuments as any;
-            });
-    }
-
-
-    /**
-     * @param documents Documents with depicts relation
-     * @returns Documents which are linked to the main type resource selected in filter box:
-     * 1. Documents which are linked to a resource which contains an isRecordedIn relation to the main type resource
-     * 2. Documents which are directly linked to the main type resource
-     */
-    private applyLinkFilter(documents: Array<Document>): Promise<Array<IdaiFieldImageDocument>> {
-
-        const documentMap: { [id: string]: Document } = {};
-        const promises: Array<Promise<Document>> = [];
-        const mainTypeDocumentId: string = this.imagesState.getMainTypeDocumentFilterOption();
-
-        for (let document of documents) {
-            if (!document.resource.id) continue;
-
-            documentMap[document.resource.id] = document;
-            for (let targetId of document.resource.relations['depicts']) {
-                promises.push(this.datastore.get(targetId));
-            }
+        console.debug("fetch docs",query);
+        let documents;
+        try {
+            console.debug("fetch docs end");
+            documents =
+            this.documents = await this.imageDatastore.find(query);
+        } catch (errWithParams) {
+            console.error('ERROR with find using query', query);
+            if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);
         }
-
-        let targetDocuments: Array<Document>;
-
-        return Promise.all(promises).then(targetDocs => {
-            targetDocuments = targetDocs;
-
-            return this.datastore.find({
-                q: '',
-                constraints: { 'resource.relations.isRecordedIn': mainTypeDocumentId }
-            });
-        }).then(recordedDocuments => {
-            const filteredDocuments: Array<Document> = [];
-
-            for (let targetDocument of targetDocuments) {
-                if (recordedDocuments.indexOf(targetDocument) > -1) {
-                    for (let imageId of targetDocument.resource.relations['isDepictedIn']) {
-                        const imageDocument = documentMap[imageId];
-                        if (imageDocument && filteredDocuments.indexOf(imageDocument) == -1) {
-                            filteredDocuments.push(imageDocument);
-                        }
-                    }
-                }
-            }
-
-            const result: Array<Document> = [];
-
-            for (let document of documents) {
-                if (filteredDocuments.indexOf(document) > -1 ||
-                    // Add images directly linked to the main type document
-                    document.resource.relations['depicts'].indexOf(mainTypeDocumentId) > -1) {
-                    result.push(document);
-                }
-            }
-
-            return Promise.resolve(result);
-        });
     }
 }

@@ -238,23 +238,6 @@ export function main() {
         });
 
 
-        it('query for unknown', () => {
-
-            const docs = [
-                doc('1'),
-                doc('2')
-            ];
-            docs[0].resource.relations['liesWithin'] = ['3'];
-
-            ci = new ConstraintIndexer([{ path: 'resource.relations.liesWithin', type: 'contain' }]);
-            ci.put(docs[0]);
-            ci.put(docs[1]);
-
-            expect(ci.get('resource.relations.liesWithin', 'UNKNOWN'))
-                .toEqual([item('2')]);
-        });
-
-
         it('query for existing or not', () => {
 
             const docs = [
@@ -283,6 +266,26 @@ export function main() {
         it('throw error if type is unknown', () => {
 
             expect(() => {new ConstraintIndexer([{ path: 'testpath', type: 'unknown' }])}).toThrow();
+        });
+
+
+        it('contain with an empty array', () => {
+
+            const docs = [
+                doc('1'),
+                doc('2')
+            ];
+            docs[0].resource.relations['depicts'] = [];
+            docs[1].resource.relations['depicts'] = ['1'];
+
+            ci = new ConstraintIndexer([{ path: 'resource.relations.depicts', type: 'exist' }]);
+            ci.put(docs[0]);
+            ci.put(docs[1]);
+
+            expect(ci.get('resource.relations.depicts', 'KNOWN'))
+                .toEqual([item('2')]);
+            expect(ci.get('resource.relations.depicts', 'UNKNOWN'))
+                .toEqual([item('1')]);
         });
 
 

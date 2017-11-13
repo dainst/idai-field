@@ -96,7 +96,7 @@ export class ImageDocumentsManager {
 
         const query: Query = this.imagesState.getQuery();
 
-        console.debug("fetch docs")
+        console.debug("fetch docs",query)
         return this.imageDatastore.find(query)
             .catch(errWithParams => {
                 console.error('ERROR with find using query', query);

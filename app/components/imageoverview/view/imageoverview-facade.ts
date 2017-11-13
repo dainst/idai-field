@@ -149,16 +149,18 @@ export class ImageOverviewFacade {
         const query: Query = this.imagesState.getQuery();
 
         switch(this.imagesState.getMainTypeDocumentFilterOption()) {
-            case '':
-                delete query.constraints;
-                break;
 
             case 'UNLINKED':
                 this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'UNKNOWN' };
                 break;
 
-            default:
+            case 'LINKED':
                 this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'KNOWN' };
+                break;
+
+            // case 'ALL':
+            default:
+                delete query.constraints;
         }
     }
 }

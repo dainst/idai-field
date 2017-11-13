@@ -150,11 +150,11 @@ export class ImageOverviewComponent implements OnInit {
         // TODO remove entries from resource identifiers necessary?
 
         this.modalService.open(RemoveLinkModalComponent)
-            .result.then( () => {
-                this.persistenceHelper.removeRelationsOnSelectedDocuments().then(() => {
-                    this.imageGrid.calcGrid();
-                    this.imageOverviewFacade.clearSelection();
-                })
+            .result.then( async () => {
+                await this.persistenceHelper.removeRelationsOnSelectedDocuments();
+                this.imageOverviewFacade.clearSelection();
+                await this.imageOverviewFacade.fetchDocuments();
+                this.imageGrid.calcGrid();
             }
             , () => {}); // do nothing on dismiss
     }

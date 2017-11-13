@@ -79,12 +79,13 @@ export class ConstraintIndexer {
 
         const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
 
-        if (!elForPath) {
-            return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
-        }
-
         switch(pathDef.type) {
             case 'exist':
+
+                if (!elForPath || !elForPath.length || elForPath.length === 0) {
+                    return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
+                }
+
                 // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
                 if (doc.resource.type == 'Project') {
                     this.addToIndex(doc, pathDef.path, 'UNKNOWN');
@@ -98,6 +99,7 @@ export class ConstraintIndexer {
                 break;
 
             case 'contain':
+                if (!elForPath) break;
                 for (let target of elForPath) {
                     this.addToIndex(doc, pathDef.path, target);
                 }

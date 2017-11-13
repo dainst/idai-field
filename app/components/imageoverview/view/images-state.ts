@@ -54,7 +54,13 @@ export class ImagesState {
 
     public getMainTypeDocumentFilterOption(): string {
 
-        return this.mainTypeDocumentFilterOption;
+        if (!this.mainTypeDocumentFilterOption) return 'ALL';
+
+        const result = this.mainTypeDocumentFilterOption;
+        if (['LINKED','UNLINKED'].indexOf(this.mainTypeDocumentFilterOption) !== -1) {
+            return result;
+        }
+        return 'ALL';
     }
 
 

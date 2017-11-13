@@ -24,6 +24,7 @@ export class ImageOverviewTaskbarComponent {
 
     public getSelected = () => this.imageOverviewFacade.getSelected();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
+    public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
     constructor(
         public viewFacade: ViewFacade,

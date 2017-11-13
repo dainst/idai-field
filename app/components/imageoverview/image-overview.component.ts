@@ -40,7 +40,6 @@ export class ImageOverviewComponent implements OnInit {
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
     public getSelected = () => this.imageOverviewFacade.getSelected();
     public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
-    public clearSelection = () => this.imageOverviewFacade.clearSelection();
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
     public getQuery = () => this.imageOverviewFacade.getQuery();
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();

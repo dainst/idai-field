@@ -11,7 +11,7 @@ import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {M} from '../../../../m';
 import {ViewFacade} from '../../view/view-facade';
-import {DocumentReadDatastore} from "../../../../core/datastore/document-read-datastore";
+import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 
 @Component({
     moduleId: module.id,
@@ -32,6 +32,7 @@ export class LayerMapComponent extends MapComponent {
 
     private layersUpdate: boolean = false;
 
+
     constructor(protected datastore: DocumentReadDatastore,
                 protected messages: Messages,
                 protected imagestore: Imagestore,
@@ -41,6 +42,7 @@ export class LayerMapComponent extends MapComponent {
 
         super(configLoader);
     }
+
 
     protected updateMap(changes: SimpleChanges): Promise<any> {
 
@@ -57,6 +59,7 @@ export class LayerMapComponent extends MapComponent {
             });
     }
 
+
     private updateLayers(): Promise<any> {
 
         return this.initializeLayers()
@@ -69,6 +72,7 @@ export class LayerMapComponent extends MapComponent {
                 }
             });
     }
+
 
     private initializeLayers(): Promise<any> {
 
@@ -90,6 +94,7 @@ export class LayerMapComponent extends MapComponent {
                 this.layersList = this.getLayersAsList(layersMap);
             });
     }
+
 
     private makeLayersForDocuments(documents: Array<Document>): Promise<{ [id: string]: ImageContainer }> {
 
@@ -116,6 +121,7 @@ export class LayerMapComponent extends MapComponent {
             return Promise.resolve(layersMap);
         });
     }
+
 
     private makeLayerForImageResource(document: Document, zIndex: number): Promise<ImageContainer> {
 
@@ -145,6 +151,7 @@ export class LayerMapComponent extends MapComponent {
         });
     }
 
+
     private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
 
         for (let layer of this.getLayersAsList(this.layersMap)) {
@@ -153,6 +160,7 @@ export class LayerMapComponent extends MapComponent {
             }
         }
     }
+
 
     private initializePanes() {
 
@@ -166,6 +174,7 @@ export class LayerMapComponent extends MapComponent {
         }
     }
 
+
     private addLayerToMap(layer: ImageContainer) {
 
         let georef = layer.document.resource.georeference;
@@ -177,6 +186,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.activeLayers.push(layer);
     }
+
 
     public toggleLayer(layer: ImageContainer) {
 
@@ -191,6 +201,7 @@ export class LayerMapComponent extends MapComponent {
         this.saveActiveLayersIdsInResourcesState();
     }
 
+
     public isActiveLayer(layer: ImageContainer): boolean {
 
         for (let activeLayer of this.activeLayers) {
@@ -199,6 +210,7 @@ export class LayerMapComponent extends MapComponent {
 
         return false;
     }
+
 
     private saveActiveLayersIdsInResourcesState() {
 
@@ -212,6 +224,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.viewFacade.setActiveLayersIds(this.mainTypeDocument.resource.id, activeLayersIds);
     }
+
 
     /**
      * @return true if active layers were added from resources state, otherwise false
@@ -242,6 +255,7 @@ export class LayerMapComponent extends MapComponent {
         return true;
     }
 
+
     private removeLayersFromActiveLayers(newActiveLayerIds: string[]) {
 
         let activeLayersToRemove: Array<ImageContainer> = [];
@@ -257,6 +271,7 @@ export class LayerMapComponent extends MapComponent {
         }
     }
 
+
     public focusLayer(layer: ImageContainer) {
 
         let georeference = layer.document.resource.georeference;
@@ -268,6 +283,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.map.fitBounds(bounds);
     }
+
 
     public getLayersAsList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {
 
@@ -281,6 +297,7 @@ export class LayerMapComponent extends MapComponent {
 
         return layersList.sort((layer1, layer2) => layer1.zIndex - layer2.zIndex);
     }
+
 
     public getLayerLabel(layer: ImageContainer): string {
 

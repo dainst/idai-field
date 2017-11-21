@@ -2,16 +2,19 @@
     <div class="modal-header" id="image-picker-modal-header">
         <button id="add-image" *ngIf="selectedDocuments.length == 0"
                 class="btn btn-primary disabled" disabled>
-            Bild hinzufügen
+            <span class="mdi mdi-link"></span>
+            Bild verknüpfen
         </button>
         <button id="add-image" *ngIf="selectedDocuments.length == 1"
                 (click)="activeModal.close(selectedDocuments)"
                 class="btn btn-primary">
-            Bild hinzufügen
+            <span class="mdi mdi-link"></span>
+            Bild verknüpfen
         </button>
         <button id="add-images" *ngIf="selectedDocuments.length > 1"
                 (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
-            {{selectedDocuments.length}} Bilder hinzufügen
+            <span class="mdi mdi-link"></span>
+            {{selectedDocuments.length}} Bilder verknüpfen
         </button>
         <button type="button" class="btn btn-secondary"
                 (click)="activeModal.dismiss('dismissedByCancel')">

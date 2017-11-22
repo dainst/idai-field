@@ -12,7 +12,7 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageDocumentReadDatastore} from "../../core/datastore/idai-field-image-document-read-datastore";
+import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-field-image-document-read-datastore';
 
 
 @Component({
@@ -32,7 +32,8 @@ export class ImageViewComponent implements OnInit {
     private comingFrom: Array<any>|undefined = undefined;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument)  => this.routingService.jumpToRelationTarget(documentToJumpTo, undefined, true);
+    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument) => this.routingService.jumpToRelationTarget(
+        documentToJumpTo, undefined, true);
 
 
     constructor(
@@ -47,7 +48,6 @@ export class ImageViewComponent implements OnInit {
         private routingService: RoutingService
     ) {
         this.route.queryParams.subscribe(queryParams => {
-            console.log("queryparams",queryParams['from'])
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
         });
     }
@@ -61,8 +61,6 @@ export class ImageViewComponent implements OnInit {
 
 
     public deselect() {
-
-        console.log("deselect",this.comingFrom)
 
         if (this.comingFrom) this.router.navigate(this.comingFrom);
         else this.router.navigate(['images']);
@@ -103,7 +101,6 @@ export class ImageViewComponent implements OnInit {
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
         this.getRouteParams(async (id: string) => {
-            // this.id = id;
 
             try {
                 const doc = await this.datastore.get(id);
@@ -117,16 +114,15 @@ export class ImageViewComponent implements OnInit {
                     if (!url || url == '') this.originalNotFound = true;
                     this.image.imgSrc = url;
 
-                        // read thumb
+                    // read thumb
                     url = await this.imagestore.read(doc.resource.id, false, true);
-                    this.image.thumbSrc = url
-
-                } catch (e) {
+                    this.image.thumbSrc = url;
+                } catch(e) {
                     this.image.imgSrc = BlobMaker.blackImg;
                     this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
                 }
-            } catch (e) {
-                console.error("Fatal error: could not load document for id ", id);
+            } catch(e) {
+                console.error('Fatal error: could not load document for id ', id);
             }
         });
     }

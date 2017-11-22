@@ -86,9 +86,7 @@ export class TaskbarComponent {
 
     private fetchConflicts() {
 
-        console.debug("taskbar fetch conflicts")
         this.datastore.find({ constraints: { '_conflicts': 'KNOWN' } }).then(result => {
-            console.debug("taskbar fetch conflicts end")
             this.conflicts = result;
         });
     }

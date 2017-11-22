@@ -14,9 +14,9 @@ import {ImagestoreErrors} from './imagestore-errors';
  */
 export class PouchDbFsImagestore implements Imagestore {
 
-
     private projectPath: string|undefined = undefined;
     private db: any = undefined;
+
 
     constructor(
         private converter: Converter,
@@ -26,11 +26,13 @@ export class PouchDbFsImagestore implements Imagestore {
         this.db = pouchdbManager.getDb();
     }
 
+    
     public getPath(): string|undefined {
 
         return this.projectPath;
     }
 
+    
     public setPath(imagestorePath: string, projectName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -59,6 +61,7 @@ export class PouchDbFsImagestore implements Imagestore {
         });
     }
 
+    
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
@@ -69,6 +72,7 @@ export class PouchDbFsImagestore implements Imagestore {
         return this.write(key, data, false, documentExists);
     }
 
+    
     /**
      * Implements {@link ReadImagestore#read}
      *
@@ -85,7 +89,6 @@ export class PouchDbFsImagestore implements Imagestore {
         let readFun = this.readOriginal.bind(this);
         if (thumb) readFun = this.readThumb.bind(this);
 
-
         return readFun(key).then((data: any) => {
 
             if (data == undefined) {
@@ -93,7 +96,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
 
-            if (thumb && data.size == 2) return Promise.reject("thumb broken");
+            if (thumb && data.size == 2) return Promise.reject('thumb broken');
 
             return this.blobMaker.makeBlob(data, sanitizeAfter);
 
@@ -109,7 +112,7 @@ export class PouchDbFsImagestore implements Imagestore {
             // if thumb and original present then recreate thumb
             return this.readOriginal(key).then((data: any) => {
 
-                console.debug("recreate thumb");
+                console.debug('recreate thumb');
                 return this.putAttachment(data, key, true)
                     .then(() => this.read(key, sanitizeAfter));
 
@@ -200,8 +203,7 @@ export class PouchDbFsImagestore implements Imagestore {
         });
     }
 
-
-
+    
     private readOriginal(key: string): Promise<ArrayBuffer> {
 
         let path = this.projectPath + key;

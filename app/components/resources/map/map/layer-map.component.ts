@@ -79,6 +79,7 @@ export class LayerMapComponent extends MapComponent {
         const query: Query = { q: '' };
 
         query.types = this.imageTypeUtility.getProjectImageTypeNames();
+        // TODO use constraint to only get images with georeference
         return this.datastore.find(query)
             .catch(errWithParams => {
                 console.error('error in find with query', query);

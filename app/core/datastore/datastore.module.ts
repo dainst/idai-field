@@ -62,6 +62,7 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
                     { path: 'resource.relations.liesWithin', type: 'contain' },
                     { path: 'resource.relations.depicts', type: 'exist' },
                     { path: 'resource.identifier', type: 'match' },
+                    { path: 'resource.georeference', type: 'exist' },
                     { path: '_conflicts', type: 'exist' }
                 ]);
             }

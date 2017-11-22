@@ -2,7 +2,6 @@ import {Component, SimpleChanges} from '@angular/core';
 import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
-import {Document} from 'idai-components-2/core';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
@@ -11,7 +10,7 @@ import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {M} from '../../../../m';
 import {ViewFacade} from '../../view/view-facade';
-import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 
 @Component({
     moduleId: module.id,
@@ -33,7 +32,7 @@ export class LayerMapComponent extends MapComponent {
     private layersUpdate: boolean = false;
 
 
-    constructor(protected datastore: DocumentReadDatastore,
+    constructor(protected datastore: IdaiFieldImageDocumentReadDatastore,
                 protected messages: Messages,
                 protected imagestore: Imagestore,
                 private imageTypeUtility: ImageTypeUtility,
@@ -76,10 +75,12 @@ export class LayerMapComponent extends MapComponent {
 
     private initializeLayers(): Promise<any> {
 
-        const query: Query = { q: '' };
+        const query: Query = {
+            q: '',
+            types: this.imageTypeUtility.getProjectImageTypeNames(),
+            constraints: { 'resource.georeference': 'KNOWN' }
+        };
 
-        query.types = this.imageTypeUtility.getProjectImageTypeNames();
-        // TODO use constraint to only get images with georeference
         return this.datastore.find(query)
             .catch(errWithParams => {
                 console.error('error in find with query', query);
@@ -88,7 +89,7 @@ export class LayerMapComponent extends MapComponent {
                 }
                 this.messages.add([M.ALL_FIND_ERROR]);
                 Promise.reject(undefined);
-            }).then(documents => this.makeLayersForDocuments(documents as Array<Document>))
+            }).then(documents => this.makeLayersForDocuments(documents as Array<IdaiFieldImageDocument>))
             .then(layersMap => {
                 this.removeOldLayersFromMap(layersMap);
                 this.layersMap = layersMap;
@@ -97,7 +98,8 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private makeLayersForDocuments(documents: Array<Document>): Promise<{ [id: string]: ImageContainer }> {
+    private makeLayersForDocuments(documents: Array<IdaiFieldImageDocument>)
+            : Promise<{ [id: string]: ImageContainer }> {
 
         let layersMap: { [id: string]: ImageContainer } = {};
 
@@ -105,13 +107,11 @@ export class LayerMapComponent extends MapComponent {
         let promises: Array<Promise<ImageContainer>> = [];
 
         for (let doc of documents) {
-            if (doc.resource['georeference']) {
-                if (this.layersMap[doc.resource.id]) {
-                    layersMap[doc.resource.id] = this.layersMap[doc.resource.id];
-                } else {
-                    let promise = this.makeLayerForImageResource(doc, zIndex++);
-                    promises.push(promise);
-                }
+            if (this.layersMap[doc.resource.id]) {
+                layersMap[doc.resource.id] = this.layersMap[doc.resource.id];
+            } else {
+                let promise = this.makeLayerForImageResource(doc, zIndex++);
+                promises.push(promise);
             }
         }
 
@@ -124,11 +124,11 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private makeLayerForImageResource(document: Document, zIndex: number): Promise<ImageContainer> {
+    private makeLayerForImageResource(document: IdaiFieldImageDocument, zIndex: number): Promise<ImageContainer> {
 
         return new Promise<ImageContainer>(resolve => {
             const imgContainer: ImageContainer = {
-                document: (<IdaiFieldImageDocument>document),
+                document: document,
                 zIndex: zIndex
             };
 
@@ -147,7 +147,8 @@ export class LayerMapComponent extends MapComponent {
                         });
                     }
                 }, () => {
-                    console.error("makeLayerForImageResource, original image not found in imagestore for document", document);
+                    console.error('Error in makeLayerForImageResource: Original image not found in imagestore for ' +
+                        'document:', document);
                 });
         });
     }

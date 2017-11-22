@@ -82,7 +82,7 @@ export class ConstraintIndexer {
         switch(pathDef.type) {
             case 'exist':
 
-                if (!elForPath || !elForPath.length || elForPath.length === 0) {
+                if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
                     return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
                 }
 

@@ -296,22 +296,6 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('detect an eventual conflict and mark the corresponding resource list item', done => {
-
-        const nr = '7';
-
-        return createOneDocument(nr)
-            .then(() => {
-                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
-                return createAlternateDocument(nr);
-            })
-            .then(() => {
-                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
-                done();
-            });
-    });
-
-
     it('open conflict resolver via taskbar', done => {
 
         const nr = '8';

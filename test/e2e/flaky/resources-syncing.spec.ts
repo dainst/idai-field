@@ -158,6 +158,21 @@ xdescribe('resources/syncing --', function() {
         }).catch(err => { fail(err); done(); });
     });
 
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
+
+        const nr = '7';
+
+        return createOneDocument(nr)
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+                return createAlternateDocument(nr);
+            })
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
+                done();
+            });
+    });
+
     function createAlternateDocumentForAutoResolving(nr, additionalFieldName, additionalFieldValue) {
         const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
         testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';

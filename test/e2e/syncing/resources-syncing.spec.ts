@@ -296,7 +296,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('detect an eventual conflict and mark the corresponding resource list item', done => {
+    xit('detect an eventual conflict and mark the corresponding resource list item', done => {
         const nr = '7';
 
         return createOneDocument(nr)

@@ -128,6 +128,19 @@ xdescribe('resources/syncing --', function() {
             });
     }
 
+    function createAlternateDocument(nr) {
+
+        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr + '_alternative');
+        testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
+
+        return db.put(testDocumentAlternative, { force: true })
+            .then(() => {
+                NavbarPage.performNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                return browser.sleep(delays.shortRest * 10);
+            });
+    }
+
     function updateTestDoc(testDocument) {
 
         return db.put(testDocument).then(result => {

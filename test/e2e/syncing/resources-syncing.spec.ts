@@ -148,7 +148,8 @@ describe('resources/syncing --', function() {
     // }
 
     // new version
-    async function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+    async function createOneDocument(nr: string, additionalFieldName?: string,
+                                     additionalFieldValue?: string): Promise<any> {
 
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
 
@@ -166,15 +167,14 @@ describe('resources/syncing --', function() {
             const waitForItem = () => {
 
                 ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    if(text.indexOf('Testfund'+nr) !== -1) {
+                    if (text.indexOf('Testfund' + nr) !== -1) {
                         return resolve(testDocument);
                     } else {
-                        return reject('missing text')
+                        return reject('missing text');
                     }
                 }, () => {
-                    if (retries == 20) {
-                        return reject('20 retries and no result');
-                    }
+                    if (retries == 20) return reject('20 retries and no result');
+
                     browser.sleep(delays.shortRest);
                     retries++;
                     waitForItem();
@@ -296,14 +296,15 @@ describe('resources/syncing --', function() {
     });
 
 
-    xit('detect an eventual conflict and mark the corresponding resource list item', done => {
+    it('detect an eventual conflict and mark the corresponding resource list item', done => {
+
         const nr = '7';
 
         return createOneDocument(nr)
             .then(() => {
                 expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+                return createAlternateDocument(nr);
             })
-            .then(() => createAlternateDocument(nr))
             .then(() => {
                 expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
                 done();

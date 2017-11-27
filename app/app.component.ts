@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2/messages';
-import {AppController} from "./app-controller";
+import {AppController} from './app-controller';
+import {ReadImagestore} from './core/imagestore/read-imagestore';
 
 const remote = require('electron').remote;
 
@@ -21,7 +22,8 @@ export class AppComponent {
 
     constructor(private router: Router,
                 private messages: Messages,
-                appController: AppController) {
+                appController: AppController,
+                imagestore: ReadImagestore) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -30,7 +32,8 @@ export class AppComponent {
         // { router.navigate(['target']); messages.add(['some']); }
         //
         router.events.subscribe((event: Event) => {
-            if(event instanceof NavigationStart) {
+            if (event instanceof NavigationStart) {
+                imagestore.revokeAll();
                 this.messages.clear();
             }
         });

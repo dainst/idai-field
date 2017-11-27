@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
-import {BlobMaker} from './blob-maker';
+import {BlobMaker, BlobMakerResult} from './blob-maker';
 import {Converter} from './converter';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
@@ -11,11 +11,17 @@ import {ImagestoreErrors} from './imagestore-errors';
 /**
  * A hybrid image store that uses the file system to store the original images
  * but keeps thumbnails as PouchDB attachments in order to be able to sync them.
+ *
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class PouchDbFsImagestore implements Imagestore {
 
     private projectPath: string|undefined = undefined;
     private db: any = undefined;
+
+    private thumbBlobUrls: { [key: string]: BlobMakerResult } = {};
+    private originalBlobUrls: { [key: string]: BlobMakerResult } = {};
 
 
     constructor(
@@ -86,8 +92,13 @@ export class PouchDbFsImagestore implements Imagestore {
      */
     public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string> {
 
-        let readFun = this.readOriginal.bind(this);
-        if (thumb) readFun = this.readThumb.bind(this);
+        if (thumb) console.log('read THUMB ' + key);
+        if (!thumb) console.log('read ORIGINAL ' + key);
+
+        const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
+        const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
+
+        if (blobUrls[key]) this.revoke(key, thumb);
 
         return readFun(key).then((data: any) => {
 
@@ -98,7 +109,9 @@ export class PouchDbFsImagestore implements Imagestore {
 
             if (thumb && data.size == 2) return Promise.reject('thumb broken');
 
-            return this.blobMaker.makeBlob(data, sanitizeAfter);
+            blobUrls[key] = this.blobMaker.makeBlob(data, sanitizeAfter);
+
+            return blobUrls[key].url;
 
         }).catch((err: any) => {
 
@@ -120,6 +133,36 @@ export class PouchDbFsImagestore implements Imagestore {
                 return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
             });
         });
+    }
+
+
+    public revoke(key: string, thumb: boolean) {
+
+        console.log('revoke ' + key);
+
+        const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
+
+        if (!blobUrls[key]) {
+            console.warn('Cannot revoke blob url for key ' + key + '. Blob url not found.');
+            return;
+        }
+
+        BlobMaker.revokeBlob(blobUrls[key].revokeUrl);
+        delete blobUrls[key];
+    }
+
+
+    public revokeAll() {
+
+        console.log('revoke all');
+
+        for (let key of Object.keys(this.originalBlobUrls)) {
+            this.revoke(key, false);
+        }
+
+        for (let key of Object.keys(this.thumbBlobUrls)) {
+            this.revoke(key, true);
+        }
     }
 
 

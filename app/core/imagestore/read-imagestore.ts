@@ -3,6 +3,7 @@
  * the storage of general binary data
  *
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  *
  * The errors with which the methods reject, like NOT_FOUND,
  * are constants of {@link ImagestoreErrors}, so NOT_FOUND really
@@ -25,4 +26,21 @@ export abstract class ReadImagestore {
      *     [EMPTY] - in case the retrieved image data is undefined
      */
     abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string>;
+
+
+    /**
+     * Revokes an image blob url which was previously created by calling read.
+     * Should be called as soon as the image is no longer displayed to allow the garbage collector to remove
+     * the image data from memory.
+     * @param key must be an identifier of an existing file in the mediastore
+     * @param thumb If true, the blob url of the thumb image will be revoked (instead of the original image).
+     *              References to thumb & original image blobs are stored separately.
+     */
+    abstract revoke(key: string, thumb: boolean): void;
+
+
+    /**
+     * Revokes all image blob urls of both thumb & original images.
+     */
+    abstract revokeAll(): void;
 }

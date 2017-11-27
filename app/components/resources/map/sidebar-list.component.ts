@@ -4,7 +4,6 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../routing-service';
-import {ResourcesMapComponent} from './resources-map.component';
 
 @Component({
     selector: 'sidebar-list',
@@ -22,7 +21,6 @@ export class SidebarListComponent {
 
     // for clean and refactor safe template, and to help find usages
     public jumpToMainTypeHomeView = (document: IdaiFieldDocument) => this.routingService.jumpToMainTypeHomeView(document);
-
 
 
     constructor(

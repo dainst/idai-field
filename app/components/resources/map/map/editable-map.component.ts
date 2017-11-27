@@ -20,6 +20,7 @@ declare global {
     }
 }
 
+
 @Component({
     moduleId: module.id,
     selector: 'editable-map',
@@ -52,6 +53,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private selectedPolygon: L.Polygon;
 
     private drawMode: string = 'None';
+
 
     protected updateMap(changes: SimpleChanges): Promise<any> {
 
@@ -90,11 +92,13 @@ export class EditableMapComponent extends LayerMapComponent {
         });
     }
 
+
     @HostListener('document:keyup', ['$event'])
     public handleKeyEvent(event: KeyboardEvent) {
 
         if (event.key == 'Escape') this.finishDrawing();
     }
+
 
     private editExistingGeometry() {
 
@@ -111,11 +115,13 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     private startPolygonCreation() {
 
         this.setupPolygonCreation();
         this.addPolygon();
     }
+
 
     private startPolygonEditing() {  
 
@@ -133,6 +139,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.setSelectedPolygon(this.editablePolygons[0]);
         }
     }  
+
 
     private setupPolygonCreation() {  
 
@@ -152,6 +159,7 @@ export class EditableMapComponent extends LayerMapComponent {
         });
     }
 
+
     private setupEditablePolygon(polygon: L.Polygon) {
 
         const mapComponent = this;
@@ -159,6 +167,7 @@ export class EditableMapComponent extends LayerMapComponent {
             mapComponent.setSelectedPolygon(this);
         });
     }
+
 
     private setSelectedPolygon(polygon: L.Polygon) {
 
@@ -170,6 +179,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.selectedPolygon = polygon;
     }
 
+
     private removePolygon(polygon: L.Polygon) {
 
         polygon.pm.disable();
@@ -177,11 +187,13 @@ export class EditableMapComponent extends LayerMapComponent {
         this.removeElement(polygon, this.editablePolygons);
     }
 
+
     private startPolylineCreation() {
 
         this.setupPolylineCreation();
         this.addPolyline();
     }
+
 
     private startPolylineEditing() {
 
@@ -200,6 +212,7 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     private setupPolylineCreation() {
 
         const mapComponent = this;
@@ -217,6 +230,7 @@ export class EditableMapComponent extends LayerMapComponent {
         });
     }
 
+
     private setupEditablePolyline(polyline: L.Polyline) {
 
         const mapComponent = this;
@@ -224,6 +238,7 @@ export class EditableMapComponent extends LayerMapComponent {
             mapComponent.setSelectedPolyline(this);
         });
     }
+
 
     private setSelectedPolyline(polyline: L.Polyline) {
 
@@ -240,6 +255,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.selectedPolyline = polyline;
     }
 
+
     private removePolyline(polyline: L.Polyline) {
 
         polyline.pm.disable();
@@ -247,10 +263,12 @@ export class EditableMapComponent extends LayerMapComponent {
         this.removeElement(polyline, this.editablePolylines);
     }
 
+
     private startPointCreation() {
 
         this.createEditableMarker(this.map.getCenter());
     }
+
 
     private startPointEditing() {
 
@@ -261,6 +279,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editableMarker.dragging.enable();
         this.editableMarker.setZIndexOffset(1000);
     }
+
 
     private createEditableMarker(position: L.LatLng) {
 
@@ -273,6 +292,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editableMarker.addTo(this.map);
     }
 
+
     private setEditableMarkerPosition(position: L.LatLng) {
 
         if (!this.editableMarker) {
@@ -282,15 +302,18 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     public addPolygon() {
 
         this.addPolyLayer('Poly');
     }
 
+
     public addPolyline() {
 
         this.addPolyLayer('Line');
     }
+
 
     private addPolyLayer(drawMode: string) {
 
@@ -309,6 +332,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.drawMode = drawMode;
     }
 
+
     private finishDrawing() {
 
         if (this.drawMode == 'Line' && this.map.pm.Draw.Line._layer.getLatLngs().length >= 2) {
@@ -319,6 +343,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.drawMode = 'None';
     }
+
 
     public deleteGeometry() {
 
@@ -342,6 +367,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.resetEditing();
         }
     }
+
 
     public finishEditing() {
 
@@ -374,6 +400,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.onQuitEditing.emit(geometry);
     }
 
+
     public abortEditing() {
 
         this.fadeInMapElements();
@@ -381,6 +408,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.onQuitEditing.emit(undefined);
     }
+
 
     private resetEditing() {
 
@@ -413,6 +441,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.hideMousePositionCoordinates();
     }
 
+
     private fadeOutMapElements() {
 
         for (let i in this.polygons) {
@@ -438,6 +467,7 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     private fadeInMapElements() {
 
         for (let i in this.polygons) {
@@ -458,7 +488,6 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-
     protected clickOnMap(clickPosition: L.LatLng) {
 
         if (!this.selectedDocument) return;
@@ -473,6 +502,7 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     protected select(document: IdaiFieldDocument): boolean {
 
         if (!this.isEditing) {
@@ -483,12 +513,14 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     protected deselect() {
 
         if (!this.isEditing) {
             this.onSelectDocument.emit(null);
         }
     }
+
 
     private removeElement(element: any, list: Array<any>) {
 
@@ -499,23 +531,29 @@ export class EditableMapComponent extends LayerMapComponent {
         }
     }
 
+
     public getEditorType(): string {
 
         if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
-                || !this.selectedDocument.resource.geometry)
+                || !this.selectedDocument.resource.geometry) {
             return 'none';
+        }
 
-        if (this.selectedDocument.resource.geometry.type == 'Polygon' ||
-            this.selectedDocument.resource.geometry.type == 'MultiPolygon')
+        if (this.selectedDocument.resource.geometry.type == 'Polygon'
+                || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
             return 'polygon';
+        }
 
-        if (this.selectedDocument.resource.geometry.type == 'LineString' ||
-            this.selectedDocument.resource.geometry.type == 'MultiLineString')
+        if (this.selectedDocument.resource.geometry.type == 'LineString'
+                || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
             return 'polyline';
+        }
 
-        if (this.selectedDocument.resource.geometry.type == 'Point')
+        if (this.selectedDocument.resource.geometry.type == 'Point') {
             return 'point';
+        }
     }
+
 
     private showMousePositionCoordinates() {
 
@@ -523,12 +561,14 @@ export class EditableMapComponent extends LayerMapComponent {
         this.map.addEventListener('mouseout', () => this.mousePositionCoordinates = undefined);
     }
 
+
     private hideMousePositionCoordinates() {
 
         this.map.off('mousemove');
         this.map.off('mouseout');
         this.mousePositionCoordinates = undefined;
     }
+
 
     private updateMousePositionCoordinates(latLng: L.LatLng) {
 

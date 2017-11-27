@@ -5,7 +5,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {PersistenceManager} from '../../../core/persist/persistence-manager';
 
 
 @Component({

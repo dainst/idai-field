@@ -167,9 +167,9 @@ export class LayerMapComponent extends MapComponent {
     private initializePanes() {
 
         for (let layer of this.layersList) {
-            var id = layer.document.resource.id;
+            const id = layer.document.resource.id;
             if (!this.panes[id]) {
-                var pane = this.map.createPane(id);
+                const pane = this.map.createPane(id);
                 pane.style.zIndex = String(layer.zIndex);
                 this.panes[id] = pane;
             }
@@ -192,7 +192,7 @@ export class LayerMapComponent extends MapComponent {
 
     public toggleLayer(layer: ImageContainer) {
 
-        var index = this.activeLayers.indexOf(layer);
+        const index = this.activeLayers.indexOf(layer);
         if (index == -1) {
             this.addLayerToMap(layer);
         } else {
@@ -218,9 +218,9 @@ export class LayerMapComponent extends MapComponent {
 
         if (!this.mainTypeDocument) return;
 
-        var activeLayersIds: Array<string> = [];
+        const activeLayersIds: Array<string> = [];
 
-        for (var i in this.activeLayers) {
+        for (let i in this.activeLayers) {
             activeLayersIds.push(this.activeLayers[i].document.resource.id);
         }
 
@@ -233,7 +233,7 @@ export class LayerMapComponent extends MapComponent {
      */
     private setActiveLayersFromResourcesState(): boolean {
 
-        var activeLayersIds: Array<string>;
+        let activeLayersIds: Array<string>;
 
         if (this.mainTypeDocument) {
             activeLayersIds = this.viewFacade.getActiveLayersIds(this.mainTypeDocument.resource.id);
@@ -246,7 +246,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.removeLayersFromActiveLayers(activeLayersIds);
 
-        for (var i in activeLayersIds) {
+        for (let i in activeLayersIds) {
             let layerId = activeLayersIds[i];
             let layer = this.layersMap[layerId];
             if (!layer) continue;

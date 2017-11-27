@@ -14,6 +14,7 @@ export class GeometryHelper {
         return coordinates;
     }
 
+
     public static getCoordinatesFromPolygon(polygon: L.Polygon): number[][][] {
 
         let coordinates = [];
@@ -29,6 +30,7 @@ export class GeometryHelper {
         return coordinates;
     }
 
+
     public static getCoordinatesFromPolylines(polylines: Array<L.Polyline>): number[][][] {
 
         let coordinates = [];
@@ -39,6 +41,7 @@ export class GeometryHelper {
 
         return coordinates;
     }
+
 
     public static getCoordinatesFromPolyline(polyline: L.Polyline): number[][] {
 

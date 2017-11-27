@@ -42,11 +42,11 @@ describe('PouchDbFsImagestore', () => {
 
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
-        mockBlobMaker.makeBlob.and.callFake((data)=>{return data});
+        mockBlobMaker.makeBlob.and.callFake(data => { return { url: data }; });
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
-        mockConverter.convert.and.callFake((data)=>{return data});
+        mockConverter.convert.and.callFake(data => { return data; });
         const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
-        mockConfigProvider.getProjectConfiguration.and.callFake(()=>{return {}});
+        mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
         const mockConstraintIndexer = jasmine.createSpyObj('mockConstraintIndexer',['update', 'clear']);
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
         manager = new PouchdbManager(mockConfigProvider, mockConstraintIndexer, mockFulltextIndexer);

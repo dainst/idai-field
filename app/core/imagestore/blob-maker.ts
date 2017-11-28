@@ -1,5 +1,5 @@
 import {Injectable, SecurityContext} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Injectable()
 /**
@@ -26,7 +26,7 @@ export class BlobMaker {
         return {
             url: url,
             safeResourceUrl: safeResourceUrl,
-            sanitizedSafeResourceUrl: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl)
+            sanitizedSafeResourceUrl: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl) as string
         };
     }
 
@@ -41,6 +41,6 @@ export class BlobMaker {
 export interface BlobUrlSet {
 
     url: string;
-    safeResourceUrl: string;
+    safeResourceUrl: SafeResourceUrl;
     sanitizedSafeResourceUrl: string;
 }

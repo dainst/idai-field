@@ -5,6 +5,7 @@ import {Converter} from './converter';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
+import {SafeResourceUrl} from '@angular/platform-browser';
 
 
 @Injectable()
@@ -90,7 +91,7 @@ export class PouchDbFsImagestore implements Imagestore {
      *   (thumb == false) because missing files in the filesystem can be a
      *   normal result of syncing.
      */
-    public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string> {
+    public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string | SafeResourceUrl> {
 
         if (thumb) console.log('read THUMB ' + key);
         if (!thumb) console.log('read ORIGINAL ' + key);
@@ -98,7 +99,7 @@ export class PouchDbFsImagestore implements Imagestore {
         const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
         const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
 
-        if (blobUrls[key]) PouchDbFsImagestore.getUrl(blobUrls[key], sanitizeAfter);
+        if (blobUrls[key]) return Promise.resolve(PouchDbFsImagestore.getUrl(blobUrls[key], sanitizeAfter));
 
         return readFun(key).then((data: any) => {
 
@@ -111,7 +112,7 @@ export class PouchDbFsImagestore implements Imagestore {
 
             blobUrls[key] = this.blobMaker.makeBlob(data);
 
-            return sanitizeAfter ? blobUrls[key].sanitizedSafeResourceUrl : blobUrls[key].safeResourceUrl;
+            return PouchDbFsImagestore.getUrl(blobUrls[key], sanitizeAfter);
 
         }).catch((err: any) => {
 
@@ -265,7 +266,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
 
-    private static getUrl(blobUrlSet: BlobUrlSet, sanitizeAfter: boolean = false) {
+    private static getUrl(blobUrlSet: BlobUrlSet, sanitizeAfter: boolean = false): string | SafeResourceUrl {
 
         return sanitizeAfter ? blobUrlSet.sanitizedSafeResourceUrl : blobUrlSet.safeResourceUrl;
     }

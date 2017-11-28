@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
-import {BlobMaker, BlobMakerResult} from './blob-maker';
+import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {Converter} from './converter';
 import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
@@ -20,8 +20,8 @@ export class PouchDbFsImagestore implements Imagestore {
     private projectPath: string|undefined = undefined;
     private db: any = undefined;
 
-    private thumbBlobUrls: { [key: string]: BlobMakerResult } = {};
-    private originalBlobUrls: { [key: string]: BlobMakerResult } = {};
+    private thumbBlobUrls: { [key: string]: BlobUrlSet } = {};
+    private originalBlobUrls: { [key: string]: BlobUrlSet } = {};
 
 
     constructor(
@@ -98,7 +98,7 @@ export class PouchDbFsImagestore implements Imagestore {
         const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
         const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
 
-        if (blobUrls[key]) this.revoke(key, thumb);
+        if (blobUrls[key]) PouchDbFsImagestore.getUrl(blobUrls[key], sanitizeAfter);
 
         return readFun(key).then((data: any) => {
 
@@ -109,9 +109,9 @@ export class PouchDbFsImagestore implements Imagestore {
 
             if (thumb && data.size == 2) return Promise.reject('thumb broken');
 
-            blobUrls[key] = this.blobMaker.makeBlob(data, sanitizeAfter);
+            blobUrls[key] = this.blobMaker.makeBlob(data);
 
-            return blobUrls[key].url;
+            return sanitizeAfter ? blobUrls[key].sanitizedSafeResourceUrl : blobUrls[key].safeResourceUrl;
 
         }).catch((err: any) => {
 
@@ -147,7 +147,7 @@ export class PouchDbFsImagestore implements Imagestore {
             return;
         }
 
-        BlobMaker.revokeBlob(blobUrls[key].revokeUrl);
+        BlobMaker.revokeBlob(blobUrls[key].url);
         delete blobUrls[key];
     }
 
@@ -262,5 +262,11 @@ export class PouchDbFsImagestore implements Imagestore {
     private readThumb(key: string): Promise<ArrayBuffer> {
 
         return this.db.getAttachment(key, 'thumb');
+    }
+
+
+    private static getUrl(blobUrlSet: BlobUrlSet, sanitizeAfter: boolean = false) {
+
+        return sanitizeAfter ? blobUrlSet.sanitizedSafeResourceUrl : blobUrlSet.safeResourceUrl;
     }
 }

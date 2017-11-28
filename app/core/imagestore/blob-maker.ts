@@ -18,16 +18,16 @@ export class BlobMaker {
     constructor(private sanitizer: DomSanitizer) {};
 
 
-    public makeBlob(data: any, sanitizeAfter: boolean): any {
+    public makeBlob(data: any): any {
 
         const url = URL.createObjectURL(new Blob([data]));
         const safeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
-        if (sanitizeAfter) {
-            return { url: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl), revokeUrl: url };
-        } else {
-            return { url: safeResourceUrl, revokeUrl: url };
-        }
+        return {
+            url: url,
+            safeResourceUrl: safeResourceUrl,
+            sanitizedSafeResourceUrl: this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeResourceUrl)
+        };
     }
 
 
@@ -38,8 +38,9 @@ export class BlobMaker {
 }
 
 
-export interface BlobMakerResult {
+export interface BlobUrlSet {
 
     url: string;
-    revokeUrl: string;
+    safeResourceUrl: string;
+    sanitizedSafeResourceUrl: string;
 }

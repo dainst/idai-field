@@ -42,7 +42,7 @@ describe('PouchDbFsImagestore', () => {
 
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
-        mockBlobMaker.makeBlob.and.callFake(data => { return { url: data }; });
+        mockBlobMaker.makeBlob.and.callFake(data => { return { safeResourceUrl: data }; });
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
         mockConverter.convert.and.callFake(data => { return data; });
         const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
@@ -78,7 +78,7 @@ describe('PouchDbFsImagestore', () => {
         });
     });
 
-    xit('should read a file', (done) => {
+    it('should read a file', (done) => {
 
         store.create('test_read', str2ab('qwer'))
             .then(() => { return store.read('test_read',false,false); })

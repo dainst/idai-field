@@ -93,7 +93,7 @@ export class LayerMapComponent extends MapComponent {
             .then(layersMap => {
                 this.removeOldLayersFromMap(layersMap);
                 this.layersMap = layersMap;
-                this.layersList = this.getLayersAsList(layersMap);
+                this.layersList = LayerMapComponent.convertToList(layersMap);
             });
     }
 
@@ -156,7 +156,7 @@ export class LayerMapComponent extends MapComponent {
 
     private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
 
-        for (let layer of this.getLayersAsList(this.layersMap)) {
+        for (let layer of LayerMapComponent.convertToList(this.layersMap)) {
             if (!newLayersMap[layer.document.resource.id] && this.isActiveLayer(layer)) {
                 this.map.removeLayer(layer.object);
             }
@@ -287,7 +287,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public getLayersAsList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {
+    private static convertToList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {
 
         let layersList: Array<ImageContainer> = [];
 

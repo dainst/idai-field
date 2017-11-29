@@ -57,6 +57,13 @@ export class LayerManager {
     }
 
 
+    public reset() {
+
+        this.layers = [];
+        this.activeLayerIds = [];
+    }
+
+
     public isActiveLayer(resourceId: string): boolean {
 
         return this.activeLayerIds.indexOf(resourceId) > -1;

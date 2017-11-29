@@ -31,6 +31,8 @@ export class LayerMapComponent extends MapComponent {
                 configLoader: ConfigLoader) {
 
         super(configLoader);
+
+        this.layerManager.reset();
     }
 
 

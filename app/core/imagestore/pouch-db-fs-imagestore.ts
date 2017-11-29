@@ -139,14 +139,9 @@ export class PouchDbFsImagestore implements Imagestore {
 
     public revoke(key: string, thumb: boolean) {
 
-        console.log('revoke ' + key);
-
         const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
 
-        if (!blobUrls[key]) {
-            console.warn('Cannot revoke blob url for key ' + key + '. Blob url not found.');
-            return;
-        }
+        if (!blobUrls[key]) return;
 
         BlobMaker.revokeBlob(blobUrls[key].url);
         delete blobUrls[key];
@@ -154,8 +149,6 @@ export class PouchDbFsImagestore implements Imagestore {
 
 
     public revokeAll() {
-
-        console.log('revoke all');
 
         for (let key of Object.keys(this.originalBlobUrls)) {
             this.revoke(key, false);

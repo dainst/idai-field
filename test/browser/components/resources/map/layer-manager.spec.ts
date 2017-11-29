@@ -30,9 +30,6 @@ export function main() {
             const mockDatastore = jasmine.createSpyObj('datastore', ['find']);
             mockDatastore.find.and.returnValue(Promise.resolve(layerDocuments));
 
-            const mockImagestore = jasmine.createSpyObj('imagestore', ['read']);
-            mockImagestore.read.and.returnValue(Promise.resolve('image-url'));
-
             const mockImageTypeUtility = jasmine.createSpyObj('imageTypeUtility',
                 ['getProjectImageTypeNames']);
             mockImageTypeUtility.getProjectImageTypeNames.and.returnValue(['Image']);
@@ -40,7 +37,7 @@ export function main() {
             mockViewFacade = jasmine.createSpyObj('viewFacade',
                 ['getActiveLayersIds', 'setActiveLayersIds']);
 
-            layerManager = new LayerManager(mockDatastore, mockImagestore, mockImageTypeUtility, mockViewFacade);
+            layerManager = new LayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
         });
 
 
@@ -51,8 +48,8 @@ export function main() {
             const { layers, activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
 
             expect(layers.length).toBe(2);
-            expect(layers[0].document.resource.id).toEqual('l1');
-            expect(layers[1].document.resource.id).toEqual('l2');
+            expect(layers[0].resource.id).toEqual('l1');
+            expect(layers[1].resource.id).toEqual('l2');
 
             expect(activeLayersChange.added.length).toBe(0);
             expect(activeLayersChange.removed.length).toBe(0);
@@ -68,11 +65,12 @@ export function main() {
             const { activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
 
             expect(activeLayersChange.added.length).toBe(1);
-            expect(activeLayersChange.added[0].document.resource.id).toEqual('l2');
+            expect(activeLayersChange.added[0]).toEqual('l2');
             expect(activeLayersChange.removed.length).toBe(0);
 
             done();
         });
+
 
         it('add and remove correct layers when initializing with different resources states',
                 async done => {
@@ -86,12 +84,13 @@ export function main() {
             const { activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
 
             expect(activeLayersChange.added.length).toBe(1);
-            expect(activeLayersChange.added[0].document.resource.id).toEqual('l1');
+            expect(activeLayersChange.added[0]).toEqual('l1');
             expect(activeLayersChange.removed.length).toBe(1);
-            expect(activeLayersChange.removed[0].document.resource.id).toEqual('l2');
+            expect(activeLayersChange.removed[0]).toEqual('l2');
 
             done();
         });
+
 
         it('add or remove no layers if the layers are initialized with the same resources state again',
             async done => {

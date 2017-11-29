@@ -25,6 +25,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {LayerManager} from './map/map/layer-manager';
+import {LayerImageProvider} from './map/map/layer-image-provider';
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import {LayerManager} from './map/map/layer-manager';
         RoutingService,
         DoceditLauncher,
         LayerManager,
+        LayerImageProvider,
         {
             provide: ViewFacade,
             useFactory: function(

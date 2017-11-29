@@ -95,7 +95,7 @@ export class ResourcesState {
         const layerIds = this._[viewName].layerIds;
         if (!layerIds) return;
 
-        layerIds[mainTypeDocumentId] = activeLayersIds;
+        layerIds[mainTypeDocumentId] = activeLayersIds.slice(0);
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
@@ -120,11 +120,5 @@ export class ResourcesState {
 
         delete layerIds[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
-    }
-
-
-    public clear() {
-
-        this._ = {};
     }
 }

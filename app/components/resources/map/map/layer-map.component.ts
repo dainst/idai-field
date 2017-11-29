@@ -3,7 +3,9 @@ import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {ActiveLayersChange, LayerManager, LayersInitializationResult} from './layer-manager';
+import {ActiveLayersChange, LayerManager} from './layer-manager';
+import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
+import {LayerImageProvider} from './layer-image-provider';
 
 @Component({
     moduleId: module.id,
@@ -12,17 +14,19 @@ import {ActiveLayersChange, LayerManager, LayersInitializationResult} from './la
 })
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class LayerMapComponent extends MapComponent {
 
-    public layers: Array<ImageContainer> = [];
+    public layers: Array<IdaiFieldImageDocument> = [];
 
-    protected panes: { [id: string]: any } = {};
-
+    private panes: { [resourceId: string]: any } = {};
+    private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
     private layersUpdate: boolean = false;
 
 
     constructor(private layerManager: LayerManager,
+                private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
                 configLoader: ConfigLoader) {
 
@@ -30,6 +34,22 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public isActiveLayer = (layer: IdaiFieldImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
+
+
+    public toggleLayer(layer: IdaiFieldImageDocument) {
+
+        if (this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument)) {
+            this.addLayerToMap(layer.resource.id);
+        } else {
+            this.removeLayerFromMap(layer.resource.id);
+        }
+    }
+
+
+    /**
+     * Called by MapComponent.ngOnChange
+     */
     protected updateMap(changes: SimpleChanges): Promise<any> {
 
         if (changes['documents'] && changes['documents'].currentValue) this.layersUpdate = true;
@@ -48,10 +68,9 @@ export class LayerMapComponent extends MapComponent {
 
     private async updateLayers(): Promise<any> {
 
-        const { layers, activeLayersChange } = await this.layerManager.initializeLayers(this.mainTypeDocument);
+        this.layerImageProvider.reset();
 
-        console.log('layers', layers);
-        console.log('activeLayersChange', activeLayersChange);
+        const { layers, activeLayersChange } = await this.layerManager.initializeLayers(this.mainTypeDocument);
 
         this.layers = layers;
         this.initializePanes();
@@ -61,65 +80,71 @@ export class LayerMapComponent extends MapComponent {
 
     private handleActiveLayersChange(change: ActiveLayersChange) {
 
-        for (let layer of change.removed) {
-            this.removeLayerFromMap(layer);
+        for (let layerId of change.removed) {
+            this.removeLayerFromMap(layerId);
         }
 
-        for (let layer of change.added) {
-            this.addLayerToMap(layer);
+        for (let layerId of change.added) {
+            this.addLayerToMap(layerId);
         }
     }
 
 
     private initializePanes() {
 
+        let zIndex = 0;
+
         for (let layer of this.layers) {
-            const id = layer.document.resource.id;
+            const id = layer.resource.id;
             if (!this.panes[id]) {
                 const pane = this.map.createPane(id);
-                pane.style.zIndex = String(layer.zIndex);
+                pane.style.zIndex = String(zIndex++);
                 this.panes[id] = pane;
             }
         }
     }
 
 
-    private addLayerToMap(layer: ImageContainer) {
+    private async addLayerToMap(resourceId: string) {
 
-        let georef = layer.document.resource.georeference;
-        layer.object = L.imageOverlay(layer.imgSrc,
-            [georef.topLeftCoordinates,
-            georef.topRightCoordinates,
-            georef.bottomLeftCoordinates],
-            { pane: layer.document.resource.id }).addTo(this.map);
+        const layerDocument: IdaiFieldImageDocument = this.getLayer(resourceId);
+        const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
+
+        const georeference = layerDocument.resource.georeference;
+        this.imageOverlays[resourceId] = L.imageOverlay(imageContainer.imgSrc,
+            [georeference.topLeftCoordinates,
+             georeference.topRightCoordinates,
+             georeference.bottomLeftCoordinates],
+            { pane: layerDocument.resource.id }).addTo(this.map);
     }
 
 
-    private removeLayerFromMap(layer: ImageContainer) {
+    private async removeLayerFromMap(resourceId: string) {
 
-        this.map.removeLayer(layer.object);
-    }
-
-
-    public toggleLayer(layer: ImageContainer) {
-
-        const index = this.layerManager.activeLayers.indexOf(layer);
-        if (index == -1) {
-            this.addLayerToMap(layer);
-            this.layerManager.activeLayers.push(layer);
-        } else {
-            this.layerManager.activeLayers.splice(index, 1);
-            this.map.removeLayer(layer.object);
+        const imageOverlay = this.imageOverlays[resourceId];
+        if (!imageOverlay) {
+            console.warn('Failed to remove image ' + resourceId + ' from map. Image overlay not found.');
+            return;
         }
 
-        // TODO call from layer manager
-        this.layerManager.saveActiveLayersIdsInResourcesState(this.mainTypeDocument);
+        this.map.removeLayer(imageOverlay);
     }
 
 
-    public focusLayer(layer: ImageContainer) {
+    private getLayer(resourceId: string): IdaiFieldImageDocument | undefined {
 
-        let georeference = layer.document.resource.georeference;
+        for (let layer of this.layers) {
+            if (layer.resource.id == resourceId) return layer;
+        }
+
+        return undefined;
+    }
+
+
+
+    public focusLayer(layer: IdaiFieldImageDocument) {
+
+        let georeference = layer.resource.georeference;
         let bounds = [];
 
         bounds.push(L.latLng(georeference.topLeftCoordinates));
@@ -130,21 +155,18 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public getLayerLabel(layer: ImageContainer): string {
+    public getLayerLabel(layer: IdaiFieldImageDocument): string {
 
         let label: string;
 
-        if (layer.document.resource.shortDescription && layer.document.resource.shortDescription != '') {
-            label = layer.document.resource.shortDescription;
+        if (layer.resource.shortDescription && layer.resource.shortDescription != '') {
+            label = layer.resource.shortDescription;
         } else {
-            label = layer.document.resource.identifier;
+            label = layer.resource.identifier;
         }
 
         if (label.length > 48) label = label.substring(0, 45) + '...';
 
         return label;
     }
-
-
-    public isActiveLayer = (layer: ImageContainer) => this.layerManager.isActiveLayer(layer);
 }

@@ -32,8 +32,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
-
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
@@ -43,7 +41,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private loading: Loading
     ) {
-        loading.start(); 
+        loading.start();
         routingService.routeParams(route).subscribe((params: any) => {
             loading.stop();
 
@@ -62,6 +60,9 @@ export class ResourcesComponent implements AfterViewChecked {
         });
         this.initializeClickEventListener();
     }
+
+
+    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
     public getIsRecordedInTarget() {

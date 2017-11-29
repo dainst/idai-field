@@ -23,7 +23,8 @@ import {ViewFacade} from './view/view-facade';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/sidebar-list.component';
-import {IdaiFieldDocumentDatastore} from "../../core/datastore/idai-field-document-datastore";
+import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
+import {LayerManager} from './map/map/layer-manager';
 
 @NgModule({
     imports: [
@@ -52,6 +53,7 @@ import {IdaiFieldDocumentDatastore} from "../../core/datastore/idai-field-docume
         ResourcesState,
         RoutingService,
         DoceditLauncher,
+        LayerManager,
         {
             provide: ViewFacade,
             useFactory: function(

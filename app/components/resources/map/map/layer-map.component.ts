@@ -1,16 +1,9 @@
 import {Component, SimpleChanges} from '@angular/core';
 import {MapComponent} from 'idai-components-2/idai-field-map';
-import {Query} from 'idai-components-2/datastore';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
-import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
-import {BlobMaker} from '../../../../core/imagestore/blob-maker';
-import {ImageTypeUtility} from '../../../../common/image-type-utility';
-import {M} from '../../../../m';
-import {ViewFacade} from '../../view/view-facade';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
+import {ActiveLayersChange, LayerManager, LayersInitializationResult} from './layer-manager';
 
 @Component({
     moduleId: module.id,
@@ -22,21 +15,15 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/id
  */
 export class LayerMapComponent extends MapComponent {
 
-    public layersList: Array<ImageContainer> = [];
-    protected layersMap: { [id: string]: ImageContainer } = {};
-
-    protected activeLayers: Array<ImageContainer> = [];
+    public layers: Array<ImageContainer> = [];
 
     protected panes: { [id: string]: any } = {};
 
     private layersUpdate: boolean = false;
 
 
-    constructor(protected datastore: IdaiFieldImageDocumentReadDatastore,
+    constructor(private layerManager: LayerManager,
                 protected messages: Messages,
-                protected imagestore: Imagestore,
-                private imageTypeUtility: ImageTypeUtility,
-                private viewFacade: ViewFacade,
                 configLoader: ConfigLoader) {
 
         super(configLoader);
@@ -59,114 +46,34 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private updateLayers(): Promise<any> {
+    private async updateLayers(): Promise<any> {
 
-        return this.initializeLayers()
-            .then(() => {
-                this.initializePanes();
-                if (!this.setActiveLayersFromResourcesState() && this.activeLayers.length == 0
-                        && this.layersList.length > 0) {
-                    this.addLayerToMap(this.layersList[0]);
-                    this.saveActiveLayersIdsInResourcesState();
-                }
-            });
+        const { layers, activeLayersChange } = await this.layerManager.initializeLayers(this.mainTypeDocument);
+
+        console.log('layers', layers);
+        console.log('activeLayersChange', activeLayersChange);
+
+        this.layers = layers;
+        this.initializePanes();
+        this.handleActiveLayersChange(activeLayersChange);
     }
 
 
-    private initializeLayers(): Promise<any> {
+    private handleActiveLayersChange(change: ActiveLayersChange) {
 
-        const query: Query = {
-            q: '',
-            types: this.imageTypeUtility.getProjectImageTypeNames(),
-            constraints: { 'resource.georeference': 'KNOWN' }
-        };
-
-        return this.datastore.find(query)
-            .catch(errWithParams => {
-                console.error('error in find with query', query);
-                if (errWithParams.length == 2) {
-                    console.error('error in find, cause', errWithParams[1]);
-                }
-                this.messages.add([M.ALL_FIND_ERROR]);
-                Promise.reject(undefined);
-            }).then(documents => this.makeLayersForDocuments(documents as Array<IdaiFieldImageDocument>))
-            .then(layersMap => {
-                this.removeOldLayersFromMap(layersMap);
-                this.layersMap = layersMap;
-                this.layersList = LayerMapComponent.convertToList(layersMap);
-            });
-    }
-
-
-    private makeLayersForDocuments(documents: Array<IdaiFieldImageDocument>)
-            : Promise<{ [id: string]: ImageContainer }> {
-
-        let layersMap: { [id: string]: ImageContainer } = {};
-
-        let zIndex: number = 0;
-        let promises: Array<Promise<ImageContainer>> = [];
-
-        for (let doc of documents) {
-            if (this.layersMap[doc.resource.id]) {
-                layersMap[doc.resource.id] = this.layersMap[doc.resource.id];
-            } else {
-                let promise = this.makeLayerForImageResource(doc, zIndex++);
-                promises.push(promise);
-            }
+        for (let layer of change.removed) {
+            this.removeLayerFromMap(layer);
         }
 
-        return Promise.all(promises).then(imgContainers => {
-            for (let imgContainer of imgContainers) {
-                layersMap[imgContainer.document.resource.id] = imgContainer;
-            }
-            return Promise.resolve(layersMap);
-        });
-    }
-
-
-    private makeLayerForImageResource(document: IdaiFieldImageDocument, zIndex: number): Promise<ImageContainer> {
-
-        return new Promise<ImageContainer>(resolve => {
-            const imgContainer: ImageContainer = {
-                document: document,
-                zIndex: zIndex
-            };
-
-            this.imagestore.read(document.resource.id, true, false)
-                .then(url => {
-                    if (url != '') {
-                        imgContainer.imgSrc = url;
-                        resolve(imgContainer);
-                    } else {
-                        this.imagestore.read(document.resource.id, true, true).then(thumbnailUrl => {
-                            imgContainer.imgSrc = thumbnailUrl;
-                            resolve(imgContainer);
-                        }).catch(() => {
-                            imgContainer.imgSrc = BlobMaker.blackImg;
-                            resolve(imgContainer);
-                        });
-                    }
-                }, () => {
-                    console.error('Error in makeLayerForImageResource: Original image not found in imagestore for ' +
-                        'document:', document);
-                });
-        });
-    }
-
-
-    private removeOldLayersFromMap(newLayersMap: { [id: string]: ImageContainer }) {
-
-        for (let layer of LayerMapComponent.convertToList(this.layersMap)) {
-            if (!newLayersMap[layer.document.resource.id] && this.isActiveLayer(layer)) {
-                this.map.removeLayer(layer.object);
-            }
+        for (let layer of change.added) {
+            this.addLayerToMap(layer);
         }
     }
 
 
     private initializePanes() {
 
-        for (let layer of this.layersList) {
+        for (let layer of this.layers) {
             const id = layer.document.resource.id;
             if (!this.panes[id]) {
                 const pane = this.map.createPane(id);
@@ -185,92 +92,28 @@ export class LayerMapComponent extends MapComponent {
             georef.topRightCoordinates,
             georef.bottomLeftCoordinates],
             { pane: layer.document.resource.id }).addTo(this.map);
+    }
 
-        this.activeLayers.push(layer);
+
+    private removeLayerFromMap(layer: ImageContainer) {
+
+        this.map.removeLayer(layer.object);
     }
 
 
     public toggleLayer(layer: ImageContainer) {
 
-        const index = this.activeLayers.indexOf(layer);
+        const index = this.layerManager.activeLayers.indexOf(layer);
         if (index == -1) {
             this.addLayerToMap(layer);
+            this.layerManager.activeLayers.push(layer);
         } else {
-            this.activeLayers.splice(index, 1);
+            this.layerManager.activeLayers.splice(index, 1);
             this.map.removeLayer(layer.object);
         }
 
-        this.saveActiveLayersIdsInResourcesState();
-    }
-
-
-    public isActiveLayer(layer: ImageContainer): boolean {
-
-        for (let activeLayer of this.activeLayers) {
-            if (layer.document.resource.id == activeLayer.document.resource.id) return true;
-        }
-
-        return false;
-    }
-
-
-    private saveActiveLayersIdsInResourcesState() {
-
-        if (!this.mainTypeDocument) return;
-
-        const activeLayersIds: Array<string> = [];
-
-        for (let i in this.activeLayers) {
-            activeLayersIds.push(this.activeLayers[i].document.resource.id);
-        }
-
-        this.viewFacade.setActiveLayersIds(this.mainTypeDocument.resource.id, activeLayersIds);
-    }
-
-
-    /**
-     * @return true if active layers were added from resources state, otherwise false
-     */
-    private setActiveLayersFromResourcesState(): boolean {
-
-        let activeLayersIds: Array<string>;
-
-        if (this.mainTypeDocument) {
-            activeLayersIds = this.viewFacade.getActiveLayersIds(this.mainTypeDocument.resource.id);
-        }
-
-        if (!activeLayersIds) {
-            this.removeLayersFromActiveLayers([]);
-            return false;
-        }
-
-        this.removeLayersFromActiveLayers(activeLayersIds);
-
-        for (let i in activeLayersIds) {
-            let layerId = activeLayersIds[i];
-            let layer = this.layersMap[layerId];
-            if (!layer) continue;
-
-            if (!this.isActiveLayer(layer)) this.addLayerToMap(layer);
-        }
-
-        return true;
-    }
-
-
-    private removeLayersFromActiveLayers(newActiveLayerIds: string[]) {
-
-        let activeLayersToRemove: Array<ImageContainer> = [];
-        for (let activeLayer of this.activeLayers) {
-            if (newActiveLayerIds.indexOf(activeLayer.document.resource.id) == -1) {
-                activeLayersToRemove.push(activeLayer);
-            }
-        }
-
-        for (let layerToRemove of activeLayersToRemove) {
-            this.activeLayers.splice(this.activeLayers.indexOf(layerToRemove), 1);
-            this.map.removeLayer(layerToRemove.object);
-        }
+        // TODO call from layer manager
+        this.layerManager.saveActiveLayersIdsInResourcesState(this.mainTypeDocument);
     }
 
 
@@ -284,20 +127,6 @@ export class LayerMapComponent extends MapComponent {
         bounds.push(L.latLng(georeference.bottomLeftCoordinates));
 
         this.map.fitBounds(bounds);
-    }
-
-
-    private static convertToList(layersMap: { [id: string]: ImageContainer }): Array<ImageContainer> {
-
-        let layersList: Array<ImageContainer> = [];
-
-        for (let i in layersMap) {
-            if (layersMap.hasOwnProperty(i)) {
-                layersList.push(layersMap[i]);
-            }
-        }
-
-        return layersList.sort((layer1, layer2) => layer1.zIndex - layer2.zIndex);
     }
 
 
@@ -315,4 +144,7 @@ export class LayerMapComponent extends MapComponent {
 
         return label;
     }
+
+
+    public isActiveLayer = (layer: ImageContainer) => this.layerManager.isActiveLayer(layer);
 }

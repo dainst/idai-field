@@ -37,9 +37,6 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public isActiveLayer = (layer: IdaiFieldImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
-
-
     public toggleLayer(layer: IdaiFieldImageDocument) {
 
         if (this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument)) {
@@ -142,22 +139,5 @@ export class LayerMapComponent extends MapComponent {
         bounds.push(L.latLng(georeference.bottomLeftCoordinates));
 
         this.map.fitBounds(bounds);
-    }
-
-
-    // TODO remove this. check if ModelUtil.getDocumentLabel can be adjusted, the trimming should be done via css
-    public getLayerLabel(layer: IdaiFieldImageDocument): string {
-
-        let label: string;
-
-        if (layer.resource.shortDescription && layer.resource.shortDescription != '') {
-            label = layer.resource.shortDescription;
-        } else {
-            label = layer.resource.identifier;
-        }
-
-        if (label.length > 48) label = label.substring(0, 45) + '...';
-
-        return label;
     }
 }

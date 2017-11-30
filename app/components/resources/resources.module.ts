@@ -26,6 +26,7 @@ import {SidebarListComponent} from './map/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
+import {LayerMenuComponent} from './map/map/layer-menu.component';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import {LayerImageProvider} from './map/map/layer-image-provider';
         GeometryViewComponent,
         EditableMapComponent,
         ResourcesMapComponent,
+        LayerMenuComponent,
         ListComponent,
         RowComponent,
         PlusButtonComponent,

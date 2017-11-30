@@ -1,26 +1,6 @@
 <div id="map-container"></div>
 
-<div *ngIf="layers.length > 0">
-    <div *ngIf="!layerMenuVisible" id="layer-button" class="btn btn-primary"
-         (mouseenter)="layerMenuVisible = true;"><span class="mdi mdi-layers mdi-18px"></span></div>
-    <div *ngIf="layerMenuVisible" id="layer-menu" class="card card-block form-group"
-         (mouseleave)="layerMenuVisible = false;">
-        <div *ngFor="let layer of layers" class="layer-entry">
-            <span *ngIf="isActiveLayer(layer)">
-                <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Karte ausblenden"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                      data-toggle="tooltip" title="Karte fokussieren" (click)="focusLayer(layer)"></span>
-            </span>
-            <span *ngIf="!isActiveLayer(layer)">
-                <span class="mdi mdi-eye-off layer-menu-button layer-inactive" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Karte anzeigen"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive"></span>
-            </span>
-            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
-        </div>
-    </div>
-</div>
+<layer-menu [layers]="layers" (onToggleLayer)="toggleLayer($event)" (onFocusLayer)="focusLayer($event)"></layer-menu>
 
 <div *ngIf="isEditing">
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge badge-secondary">

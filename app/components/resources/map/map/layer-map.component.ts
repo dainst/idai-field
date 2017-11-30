@@ -67,8 +67,6 @@ export class LayerMapComponent extends MapComponent {
 
     private async updateLayers(): Promise<any> {
 
-        if (!this.mainTypeDocument) return;
-
         this.layerImageProvider.reset();
 
         const { layers, activeLayersChange } =

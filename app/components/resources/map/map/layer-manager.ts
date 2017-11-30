@@ -35,7 +35,7 @@ export class LayerManager {
         private viewFacade: ViewFacade) {}
 
 
-    public async initializeLayers(mainTypeDocument: IdaiFieldDocument): Promise<LayersInitializationResult> {
+    public async initializeLayers(mainTypeDocument?: IdaiFieldDocument): Promise<LayersInitializationResult> {
 
         try {
             return {
@@ -67,7 +67,7 @@ export class LayerManager {
     /**
      * @returns true if the layer has been activated, false if the layer has been deactivated
      */
-    public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument): boolean {
+    public toggleLayer(resourceId: string, mainTypeDocument?: IdaiFieldDocument): boolean {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             ListUtil.remove(this.activeLayerIds, resourceId) :
@@ -79,9 +79,10 @@ export class LayerManager {
     }
 
 
-    private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ListDiffResult {
+    private fetchActiveLayersFromResourcesState(mainTypeDocument?: IdaiFieldDocument): ListDiffResult {
 
-        const newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
+        const newActiveLayerIds = mainTypeDocument ?
+            this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id) : [];
         const oldActiveLayerIds = this.activeLayerIds.slice(0);
         this.activeLayerIds = newActiveLayerIds;
 

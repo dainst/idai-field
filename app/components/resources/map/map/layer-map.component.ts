@@ -75,8 +75,6 @@ export class LayerMapComponent extends MapComponent {
         const { layers, activeLayersChange } =
             await this.layerManager.initializeLayers(this.mainTypeDocument);
 
-        console.log("HIER",activeLayersChange);
-
         this.layers = layers;
         this.initializePanes();
         this.handleActiveLayersChange(activeLayersChange);

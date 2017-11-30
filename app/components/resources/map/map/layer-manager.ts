@@ -5,19 +5,14 @@ import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
+import {IdDiffResult, IdDiffTool} from './id-diff-tool';
+
 
 export interface LayersInitializationResult {
 
     layers: Array<IdaiFieldImageDocument>,
-    activeLayersChange: ActiveLayersChange
+    activeLayersChange: IdDiffResult
 }
-
-export interface ActiveLayersChange {
-
-    added: Array<string>,
-    removed: Array<string>
-}
-
 
 @Injectable()
 /**
@@ -88,15 +83,18 @@ export class LayerManager {
     /**
      * @return true if active layers were added from resources state, otherwise false
      */
-    private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ActiveLayersChange {
+    private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): IdDiffResult {
 
         let newActiveLayerIds: Array<string>;
 
-        if (mainTypeDocument) {
+        if (mainTypeDocument) { // TODO why not throw if !mainTypeDocument?
             newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
-        }
+            if (!newActiveLayerIds) newActiveLayerIds = []; // TODO make that we get that from viewFacade instead of undefined
 
-        return LayerManager.updateLayers(this.activeLayerIds, newActiveLayerIds);
+            const result = IdDiffTool.transduce(this.activeLayerIds, newActiveLayerIds);
+            this.activeLayerIds = newActiveLayerIds;
+            return result;
+        }
     }
 
 
@@ -124,53 +122,5 @@ export class LayerManager {
 
         this.activeLayerIds.splice(index, 1);
         this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
-    }
-
-
-    /**
-     * Removes all layers from the given layers array which are not matched by newLayerIds.
-     * Adds all layers to the given layers array which are matched by newLayerIds. New layers are taken from the
-     * layersMap.
-     */
-    private static updateLayers(layerIds: string[], newLayerIds: string[]): ActiveLayersChange {
-
-        return {
-            removed: newLayerIds ? LayerManager.reduceLayers(layerIds, newLayerIds) :
-                LayerManager.reduceLayers(layerIds, []),
-            added: newLayerIds ? LayerManager.addLayers(layerIds, newLayerIds) : []
-        };
-    }
-
-
-    // TODO convert to pure function, do not manipulate layerIds
-    private static addLayers(layerIds: string[], newLayerIds: string[]): Array<string> {
-
-        return newLayerIds
-            .filter(layerId => layerIds.indexOf(layerId) == -1)
-            .map(layerId => {
-                layerIds.push(layerId);
-                return layerId;
-            });
-    }
-
-
-    /**
-     * Removes layers from layers array which are not matched by newLayerIds
-     * @returns the removed layers
-     */
-    private static reduceLayers(layerIds: string[], newLayerIds: string[]): Array<string> {
-
-        const removedLayerIds: string[] = [];
-
-        for (let layerId of layerIds) {
-            if (newLayerIds.indexOf(layerId) > -1) continue;
-            removedLayerIds.push(layerId);
-        }
-
-        for (let layerToRemove of removedLayerIds) {
-            layerIds.splice(layerIds.indexOf(layerToRemove), 1);
-        }
-
-        return removedLayerIds;
     }
 }

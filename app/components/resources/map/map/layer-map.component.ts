@@ -3,9 +3,10 @@ import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {ActiveLayersChange, LayerManager} from './layer-manager';
+import {LayerManager} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
+import {IdDiffResult} from './id-diff-tool';
 
 @Component({
     moduleId: module.id,
@@ -74,13 +75,15 @@ export class LayerMapComponent extends MapComponent {
         const { layers, activeLayersChange } =
             await this.layerManager.initializeLayers(this.mainTypeDocument);
 
+        console.log("HIER",activeLayersChange);
+
         this.layers = layers;
         this.initializePanes();
         this.handleActiveLayersChange(activeLayersChange);
     }
 
 
-    private handleActiveLayersChange(change: ActiveLayersChange) {
+    private handleActiveLayersChange(change: IdDiffResult) {
 
         change.removed.forEach(layerId => this.removeLayerFromMap(layerId));
         change.added.forEach(layerId => this.addLayerToMap(layerId));

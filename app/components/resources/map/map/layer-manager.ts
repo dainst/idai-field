@@ -49,7 +49,7 @@ export class LayerManager {
                 activeLayersChange: this.setActiveLayersFromResourcesState(mainTypeDocument)
             };
         } catch (e) {
-            console.log("error with datastore.find",e);
+            console.error("error with datastore.find",e);
         }
     }
 

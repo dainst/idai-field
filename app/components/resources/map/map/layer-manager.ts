@@ -92,20 +92,18 @@ export class LayerManager {
     }
 
 
-    private static add(list: string[], item: string) {
+    private static add(list: string[], item: string): string[] {
 
-        if (list.indexOf(item) > -1) return list;
-        list.push(item);
-        return list;
+        return (list.indexOf(item) > -1) ? list : list.concat([item]);
     }
 
 
-    private static remove(list: string[], item: string) {
+    private static remove(list: string[], item: string): string[] {
 
-        const index: number = list.indexOf(item);
-        if (index == -1) return list;
-        list.splice(index, 1);
-        return list;
-
+        const _list = list.slice(0);
+        const index: number = _list.indexOf(item);
+        if (index == -1) return _list;
+        _list.splice(index, 1);
+        return _list;
     }
 }

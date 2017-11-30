@@ -141,7 +141,6 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-
     public focusLayer(layer: IdaiFieldImageDocument) {
 
         let georeference = layer.resource.georeference;
@@ -155,6 +154,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    // TODO remove this. check if ModelUtil.getDocumentLabel can be adjusted, the trimming should be done via css
     public getLayerLabel(layer: IdaiFieldImageDocument): string {
 
         let label: string;

@@ -65,9 +65,6 @@ export class LayerManager {
     }
 
 
-    /**
-     * @returns true if the layer has been activated, false if the layer has been deactivated
-     */
     public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?

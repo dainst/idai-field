@@ -52,19 +52,18 @@ export class LayerMapComponent extends MapComponent {
     /**
      * Called by MapComponent.ngOnChange
      */
-    protected updateMap(changes: SimpleChanges): Promise<any> {
+    protected async updateMap(changes: SimpleChanges): Promise<any> {
 
         if (changes['documents'] && changes['documents'].currentValue) this.layersUpdate = true;
 
         if (!this.update) return Promise.resolve();
 
-        return super.updateMap(changes)
-            .then(() => {
-                if (this.layersUpdate) {
-                    this.layersUpdate = false;
-                    return this.updateLayers();
-                }
-            });
+        await super.updateMap(changes);
+
+        if (this.layersUpdate) {
+            this.layersUpdate = false;
+            return this.updateLayers();
+        }
     }
 
 
@@ -72,7 +71,8 @@ export class LayerMapComponent extends MapComponent {
 
         this.layerImageProvider.reset();
 
-        const { layers, activeLayersChange } = await this.layerManager.initializeLayers(this.mainTypeDocument);
+        const { layers, activeLayersChange } =
+            await this.layerManager.initializeLayers(this.mainTypeDocument);
 
         this.layers = layers;
         this.initializePanes();

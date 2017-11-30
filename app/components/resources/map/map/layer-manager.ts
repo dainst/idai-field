@@ -108,21 +108,6 @@ export class LayerManager {
     }
 
 
-    /**
-     * Removes all layers from the given layers array which are not matched by newLayerIds.
-     * Adds all layers to the given layers array which are matched by newLayerIds. New layers are taken from the
-     * layersMap.
-     */
-    private static updateLayers(layerIds: string[], newLayerIds: string[]): ActiveLayersChange {
-
-        return {
-            removed: newLayerIds ? LayerManager.reduceLayers(layerIds, newLayerIds) :
-                LayerManager.reduceLayers(layerIds, []),
-            added: newLayerIds ? LayerManager.addLayers(layerIds, newLayerIds) : []
-        };
-    }
-
-    
     private activateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
 
         if (this.activeLayerIds.indexOf(resourceId) > -1) return;
@@ -139,6 +124,21 @@ export class LayerManager {
 
         this.activeLayerIds.splice(index, 1);
         this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
+    }
+
+
+    /**
+     * Removes all layers from the given layers array which are not matched by newLayerIds.
+     * Adds all layers to the given layers array which are matched by newLayerIds. New layers are taken from the
+     * layersMap.
+     */
+    private static updateLayers(layerIds: string[], newLayerIds: string[]): ActiveLayersChange {
+
+        return {
+            removed: newLayerIds ? LayerManager.reduceLayers(layerIds, newLayerIds) :
+                LayerManager.reduceLayers(layerIds, []),
+            added: newLayerIds ? LayerManager.addLayers(layerIds, newLayerIds) : []
+        };
     }
 
 

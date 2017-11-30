@@ -123,17 +123,15 @@ export class LayerManager {
     }
 
 
+    // TODO convert to pure function, do not manipulate layerIds
     private static addLayers(layerIds: string[], newLayerIds: string[]): Array<string> {
 
-        const addedLayerIds: string[] = [];
-
-        for (let layerId of newLayerIds) {
-            if (layerIds.indexOf(layerId) > -1) continue;
-            addedLayerIds.push(layerId);
-            layerIds.push(layerId);
-        }
-
-        return addedLayerIds;
+        return newLayerIds
+            .filter(layerId => layerIds.indexOf(layerId) == -1)
+            .map(layerId => {
+                layerIds.push(layerId);
+                return layerId;
+            });
     }
 
 

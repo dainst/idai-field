@@ -70,13 +70,12 @@ export class LayerManager {
 
         if (!mainTypeDocument) throw 'mainTypeDocument must not be undefined';
 
-        if (this.isActiveLayer(resourceId)) {
-            this.deactivateLayer(resourceId, mainTypeDocument);
-            return false;
-        } else {
-            this.activateLayer(resourceId, mainTypeDocument);
-            return true;
-        }
+        this.activeLayerIds = this.isActiveLayer(resourceId) ?
+            LayerManager.remove(this.activeLayerIds, resourceId) :
+            LayerManager.add(this.activeLayerIds, resourceId);
+
+        this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
+        return this.isActiveLayer(resourceId);
     }
 
 
@@ -93,27 +92,20 @@ export class LayerManager {
     }
 
 
-    private saveActiveLayersIdsInResourcesState(mainTypeDocument: IdaiFieldDocument) {
+    private static add(list: string[], item: string) {
 
-        this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
+        if (list.indexOf(item) > -1) return list;
+        list.push(item);
+        return list;
     }
 
 
-    private activateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
+    private static remove(list: string[], item: string) {
 
-        if (this.activeLayerIds.indexOf(resourceId) > -1) return;
+        const index: number = list.indexOf(item);
+        if (index == -1) return list;
+        list.splice(index, 1);
+        return list;
 
-        this.activeLayerIds.push(resourceId);
-        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
-    }
-
-
-    private deactivateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
-
-        const index: number = this.activeLayerIds.indexOf(resourceId);
-        if (index == -1) return;
-
-        this.activeLayerIds.splice(index, 1);
-        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
     }
 }

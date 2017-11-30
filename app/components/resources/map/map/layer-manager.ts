@@ -36,22 +36,21 @@ export class LayerManager {
         private viewFacade: ViewFacade) {}
 
 
-    /**
-     * @returns layers to be removed from the map
-     */
     public async initializeLayers(mainTypeDocument: IdaiFieldDocument): Promise<LayersInitializationResult> {
 
-        // TODO Error handling
-        this.layers = await this.datastore.find({
-            q: '',
-            types: this.imageTypeUtility.getProjectImageTypeNames(),
-            constraints: { 'resource.georeference': 'KNOWN' }
-        });
-
-        return {
-            layers: this.layers,
-            activeLayersChange: this.setActiveLayersFromResourcesState(mainTypeDocument)
-        };
+        try {
+            this.layers = await this.datastore.find({
+                q: '',
+                types: this.imageTypeUtility.getProjectImageTypeNames(),
+                constraints: { 'resource.georeference': 'KNOWN' }
+            });
+            return {
+                layers: this.layers,
+                activeLayersChange: this.setActiveLayersFromResourcesState(mainTypeDocument)
+            };
+        } catch (e) {
+            console.log("error with datastore.find",e);
+        }
     }
 
 

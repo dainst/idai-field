@@ -36,14 +36,12 @@ export class LayerManager {
      */
     public async initializeLayers(mainTypeDocument: IdaiFieldDocument): Promise<LayersInitializationResult> {
 
-        const query: Query = {
+        // TODO Error handling
+        this.layers = await this.datastore.find({
             q: '',
             types: this.imageTypeUtility.getProjectImageTypeNames(),
             constraints: { 'resource.georeference': 'KNOWN' }
-        };
-
-        // TODO Error handling
-        this.layers = await this.datastore.find(query);
+        });
 
         return {
             layers: this.layers,

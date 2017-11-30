@@ -86,9 +86,18 @@ export class LayerManager {
         this.activeLayerIds = newActiveLayerIds;
 
         return {
-            removed: oldActiveLayerIds.filter(item => newActiveLayerIds.indexOf(item) === -1),
-            added: newActiveLayerIds.filter(item => oldActiveLayerIds.indexOf(item) === -1),
+            removed: LayerManager.subtract(oldActiveLayerIds, newActiveLayerIds),
+            added: LayerManager.subtract(newActiveLayerIds, oldActiveLayerIds),
         };
+    }
+
+
+    /**
+     * Generate a new list with elements which are contained in l but not in r
+     */
+    private static subtract(l: string[], r: string[]): string[] {
+
+        return l.filter(item => r.indexOf(item) === -1);
     }
 
 

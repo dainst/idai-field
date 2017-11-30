@@ -100,12 +100,12 @@ export class ResourcesState {
     }
 
 
-    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[]|undefined {
+    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
 
-        if (!this._[viewName] || !this._[viewName].layerIds) return;
+        if (!this._[viewName] || !this._[viewName].layerIds) return [];
 
         const layerIds = this._[viewName].layerIds;
-        if (!layerIds) return;
+        if (!layerIds) return [];
 
         return layerIds[mainTypeDocumentId];
     }

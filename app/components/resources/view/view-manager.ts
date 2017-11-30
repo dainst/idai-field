@@ -90,7 +90,7 @@ export class ViewManager {
     }
 
 
-    public getActiveLayersIds(mainTypeDocumentResourceId: string) {
+    public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
         return this.resourcesState.getActiveLayersIds(this.viewName, mainTypeDocumentResourceId);
     }

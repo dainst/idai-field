@@ -73,6 +73,8 @@ export class LayerManager {
      */
     public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument): boolean {
 
+        if (!mainTypeDocument) throw 'mainTypeDocument must not be undefined';
+
         if (this.isActiveLayer(resourceId)) {
             this.deactivateLayer(resourceId, mainTypeDocument);
             return false;
@@ -83,31 +85,20 @@ export class LayerManager {
     }
 
 
-    /**
-     * @return true if active layers were added from resources state, otherwise false
-     */
     private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ListDiffResult {
 
-        let newActiveLayerIds: Array<string>;
+        const newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
+        const oldActiveLayerIds = this.activeLayerIds.slice(0);
+        this.activeLayerIds = newActiveLayerIds;
 
-        if (mainTypeDocument) { // TODO why not throw if !mainTypeDocument?
-            newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
-            if (!newActiveLayerIds) newActiveLayerIds = []; // TODO make that we get that from viewFacade instead of undefined
-
-            const oldActiveLayerIds = this.activeLayerIds.slice(0);
-            this.activeLayerIds = newActiveLayerIds;
-
-            return {
-                removed: oldActiveLayerIds.filter(item => newActiveLayerIds.indexOf(item) === -1),
-                added: newActiveLayerIds.filter(item => oldActiveLayerIds.indexOf(item) === -1),
-            };
-        }
+        return {
+            removed: oldActiveLayerIds.filter(item => newActiveLayerIds.indexOf(item) === -1),
+            added: newActiveLayerIds.filter(item => oldActiveLayerIds.indexOf(item) === -1),
+        };
     }
 
 
     private saveActiveLayersIdsInResourcesState(mainTypeDocument: IdaiFieldDocument) {
-
-        if (!mainTypeDocument) return;
 
         this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
     }

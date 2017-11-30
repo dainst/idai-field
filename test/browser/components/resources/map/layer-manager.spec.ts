@@ -36,14 +36,13 @@ export function main() {
 
             mockViewFacade = jasmine.createSpyObj('viewFacade',
                 ['getActiveLayersIds', 'setActiveLayersIds']);
+            mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
             layerManager = new LayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
         });
 
 
         it('initialize layers', async done => {
-
-            mockViewFacade.getActiveLayersIds.and.returnValue(undefined);
 
             const { layers, activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
 

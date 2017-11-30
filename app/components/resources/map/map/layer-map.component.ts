@@ -3,10 +3,10 @@ import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {LayerManager} from './layer-manager';
+import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
-import {IdDiffResult} from './id-diff-tool';
+
 
 @Component({
     moduleId: module.id,
@@ -70,6 +70,8 @@ export class LayerMapComponent extends MapComponent {
 
     private async updateLayers(): Promise<any> {
 
+        if (!this.mainTypeDocument) return;
+
         this.layerImageProvider.reset();
 
         const { layers, activeLayersChange } =
@@ -81,7 +83,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private handleActiveLayersChange(change: IdDiffResult) {
+    private handleActiveLayersChange(change: ListDiffResult) {
 
         change.removed.forEach(layerId => this.removeLayerFromMap(layerId));
         change.added.forEach(layerId => this.addLayerToMap(layerId));
@@ -103,7 +105,8 @@ export class LayerMapComponent extends MapComponent {
 
     private async addLayerToMap(resourceId: string) {
 
-        const layerDocument: IdaiFieldImageDocument = this.getLayer(resourceId);
+        const layerDocument: IdaiFieldImageDocument = this.layers.find(layer => layer.resource.id == resourceId);
+        if (!layerDocument) return;
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
         const georeference = layerDocument.resource.georeference;
@@ -124,16 +127,6 @@ export class LayerMapComponent extends MapComponent {
         }
 
         this.map.removeLayer(imageOverlay);
-    }
-
-
-    private getLayer(resourceId: string): IdaiFieldImageDocument | undefined {
-
-        for (let layer of this.layers) {
-            if (layer.resource.id == resourceId) return layer;
-        }
-
-        return undefined;
     }
 
 

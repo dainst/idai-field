@@ -160,7 +160,7 @@ export class ViewFacade {
     }
 
 
-    public getActiveLayersIds(mainTypeDocumentResourceId: string) {
+    public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
         return this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
     }

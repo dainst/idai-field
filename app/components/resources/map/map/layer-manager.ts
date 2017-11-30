@@ -26,9 +26,7 @@ export interface ListDiffResult {
  */
 export class LayerManager {
 
-    private layers: Array<IdaiFieldImageDocument> = [];
     private activeLayerIds: Array<string> = [];
-
 
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
@@ -39,13 +37,12 @@ export class LayerManager {
     public async initializeLayers(mainTypeDocument: IdaiFieldDocument): Promise<LayersInitializationResult> {
 
         try {
-            this.layers = await this.datastore.find({
-                q: '',
-                types: this.imageTypeUtility.getProjectImageTypeNames(),
-                constraints: { 'resource.georeference': 'KNOWN' }
-            });
             return {
-                layers: this.layers,
+                layers: await this.datastore.find({
+                    q: '',
+                    types: this.imageTypeUtility.getProjectImageTypeNames(),
+                    constraints: { 'resource.georeference': 'KNOWN' }
+                }),
                 activeLayersChange: this.setActiveLayersFromResourcesState(mainTypeDocument)
             };
         } catch (e) {
@@ -56,7 +53,6 @@ export class LayerManager {
 
     public reset() {
 
-        this.layers = [];
         this.activeLayerIds = [];
     }
 

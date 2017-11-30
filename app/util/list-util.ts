@@ -20,10 +20,6 @@ export class ListUtil {
 
     public static remove(list: string[], item: string): string[] {
 
-        const _list = list.slice(0);
-        const index: number = _list.indexOf(item);
-        if (index == -1) return _list;
-        _list.splice(index, 1);
-        return _list;
+        return list.filter(itm => itm != item);
     }
 }

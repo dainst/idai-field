@@ -82,13 +82,8 @@ export class LayerMapComponent extends MapComponent {
 
     private handleActiveLayersChange(change: ActiveLayersChange) {
 
-        for (let layerId of change.removed) {
-            this.removeLayerFromMap(layerId);
-        }
-
-        for (let layerId of change.added) {
-            this.addLayerToMap(layerId);
-        }
+        change.removed.forEach(layerId => this.removeLayerFromMap(layerId));
+        change.added.forEach(layerId => this.addLayerToMap(layerId));
     }
 
 

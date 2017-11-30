@@ -37,10 +37,10 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public toggleLayer(layer: IdaiFieldImageDocument) {
+    public async toggleLayer(layer: IdaiFieldImageDocument) {
 
         if (this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument)) {
-            this.addLayerToMap(layer.resource.id);
+            await this.addLayerToMap(layer.resource.id);
         } else {
             this.removeLayerFromMap(layer.resource.id);
         }
@@ -115,7 +115,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private async removeLayerFromMap(resourceId: string) {
+    private removeLayerFromMap(resourceId: string) {
 
         const imageOverlay = this.imageOverlays[resourceId];
         if (!imageOverlay) {

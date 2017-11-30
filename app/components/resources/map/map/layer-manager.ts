@@ -44,10 +44,10 @@ export class LayerManager {
                     types: this.imageTypeUtility.getProjectImageTypeNames(),
                     constraints: { 'resource.georeference': 'KNOWN' }
                 }),
-                activeLayersChange: this.setActiveLayersFromResourcesState(mainTypeDocument)
+                activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)
             };
-        } catch (e) {
-            console.error("error with datastore.find",e);
+        } catch(e) {
+            console.error('error with datastore.find', e);
         }
     }
 
@@ -69,18 +69,17 @@ export class LayerManager {
      */
     public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument): boolean {
 
-        if (!mainTypeDocument) throw 'mainTypeDocument must not be undefined';
-
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             ListUtil.remove(this.activeLayerIds, resourceId) :
             ListUtil.add(this.activeLayerIds, resourceId);
 
-        this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
+        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
+
         return this.isActiveLayer(resourceId);
     }
 
 
-    private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ListDiffResult {
+    private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ListDiffResult {
 
         const newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
         const oldActiveLayerIds = this.activeLayerIds.slice(0);

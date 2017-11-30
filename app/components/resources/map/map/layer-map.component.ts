@@ -105,8 +105,10 @@ export class LayerMapComponent extends MapComponent {
 
     private async addLayerToMap(resourceId: string) {
 
-        const layerDocument: IdaiFieldImageDocument = this.layers.find(layer => layer.resource.id == resourceId);
+        const layerDocument: IdaiFieldImageDocument
+            = this.layers.find(layer => layer.resource.id == resourceId);
         if (!layerDocument) return;
+
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
         const georeference = layerDocument.resource.georeference;

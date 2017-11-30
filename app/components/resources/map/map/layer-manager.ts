@@ -1,18 +1,23 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Query} from 'idai-components-2/datastore';
 import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
-import {IdDiffResult, IdDiffTool} from './id-diff-tool';
 
 
 export interface LayersInitializationResult {
 
     layers: Array<IdaiFieldImageDocument>,
-    activeLayersChange: IdDiffResult
+    activeLayersChange: ListDiffResult
 }
+
+export interface ListDiffResult {
+
+    added: Array<string>,
+    removed: Array<string>
+}
+
 
 @Injectable()
 /**
@@ -81,7 +86,7 @@ export class LayerManager {
     /**
      * @return true if active layers were added from resources state, otherwise false
      */
-    private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): IdDiffResult {
+    private setActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument): ListDiffResult {
 
         let newActiveLayerIds: Array<string>;
 
@@ -89,9 +94,13 @@ export class LayerManager {
             newActiveLayerIds = this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id);
             if (!newActiveLayerIds) newActiveLayerIds = []; // TODO make that we get that from viewFacade instead of undefined
 
-            const result = IdDiffTool.transduce(this.activeLayerIds, newActiveLayerIds);
+            const oldActiveLayerIds = this.activeLayerIds.slice(0);
             this.activeLayerIds = newActiveLayerIds;
-            return result;
+
+            return {
+                removed: oldActiveLayerIds.filter(item => newActiveLayerIds.indexOf(item) === -1),
+                added: newActiveLayerIds.filter(item => oldActiveLayerIds.indexOf(item) === -1),
+            };
         }
     }
 

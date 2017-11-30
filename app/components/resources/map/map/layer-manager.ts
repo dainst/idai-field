@@ -122,6 +122,25 @@ export class LayerManager {
         };
     }
 
+    
+    private activateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
+
+        if (this.activeLayerIds.indexOf(resourceId) > -1) return;
+
+        this.activeLayerIds.push(resourceId);
+        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
+    }
+
+
+    private deactivateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
+
+        const index: number = this.activeLayerIds.indexOf(resourceId);
+        if (index == -1) return;
+
+        this.activeLayerIds.splice(index, 1);
+        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
+    }
+
 
     // TODO convert to pure function, do not manipulate layerIds
     private static addLayers(layerIds: string[], newLayerIds: string[]): Array<string> {
@@ -153,24 +172,5 @@ export class LayerManager {
         }
 
         return removedLayerIds;
-    }
-
-
-    private activateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
-
-        if (this.activeLayerIds.indexOf(resourceId) > -1) return;
-
-        this.activeLayerIds.push(resourceId);
-        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
-    }
-
-
-    private deactivateLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument) {
-
-        const index: number = this.activeLayerIds.indexOf(resourceId);
-        if (index == -1) return;
-
-        this.activeLayerIds.splice(index, 1);
-        this.saveActiveLayersIdsInResourcesState(mainTypeDocument);
     }
 }

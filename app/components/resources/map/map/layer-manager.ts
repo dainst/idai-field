@@ -4,6 +4,7 @@ import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
+import {ListUtil} from '../../../../util/list-util';
 
 
 export interface LayersInitializationResult {
@@ -71,8 +72,8 @@ export class LayerManager {
         if (!mainTypeDocument) throw 'mainTypeDocument must not be undefined';
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            LayerManager.remove(this.activeLayerIds, resourceId) :
-            LayerManager.add(this.activeLayerIds, resourceId);
+            ListUtil.remove(this.activeLayerIds, resourceId) :
+            ListUtil.add(this.activeLayerIds, resourceId);
 
         this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
         return this.isActiveLayer(resourceId);
@@ -86,33 +87,8 @@ export class LayerManager {
         this.activeLayerIds = newActiveLayerIds;
 
         return {
-            removed: LayerManager.subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: LayerManager.subtract(newActiveLayerIds, oldActiveLayerIds),
+            removed: ListUtil.subtract(oldActiveLayerIds, newActiveLayerIds),
+            added: ListUtil.subtract(newActiveLayerIds, oldActiveLayerIds),
         };
-    }
-
-
-    /**
-     * Generate a new list with elements which are contained in l but not in r
-     */
-    private static subtract(l: string[], r: string[]): string[] {
-
-        return l.filter(item => r.indexOf(item) === -1);
-    }
-
-
-    private static add(list: string[], item: string): string[] {
-
-        return (list.indexOf(item) > -1) ? list : list.concat([item]);
-    }
-
-
-    private static remove(list: string[], item: string): string[] {
-
-        const _list = list.slice(0);
-        const index: number = _list.indexOf(item);
-        if (index == -1) return _list;
-        _list.splice(index, 1);
-        return _list;
     }
 }

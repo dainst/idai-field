@@ -39,7 +39,9 @@ export class LayerMapComponent extends MapComponent {
 
     public async toggleLayer(layer: IdaiFieldImageDocument) {
 
-        if (this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument)) {
+        this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument);
+
+        if (this.layerManager.isActiveLayer(layer.resource.id)) {
             await this.addLayerToMap(layer.resource.id);
         } else {
             this.removeLayerFromMap(layer.resource.id);

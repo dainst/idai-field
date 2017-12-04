@@ -65,18 +65,13 @@ export class LayerManager {
     }
 
 
-    /**
-     * @returns true if the layer has been activated, false if the layer has been deactivated
-     */
-    public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined): boolean {
+    public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             ListUtil.remove(this.activeLayerIds, resourceId) :
             ListUtil.add(this.activeLayerIds, resourceId);
 
         if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
-
-        return this.isActiveLayer(resourceId);
     }
 
 

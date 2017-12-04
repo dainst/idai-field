@@ -139,7 +139,7 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
         });
 
 
-        it('should limit documents on find', async (done) => {
+        it('should limit the number of documents returned on find', async (done) => {
 
             await datastore.create({resource: {
                 id: '1',

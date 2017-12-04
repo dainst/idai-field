@@ -139,6 +139,29 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
         });
 
 
+        it('should limit documents on find', async (done) => {
+
+            await datastore.create({resource: {
+                id: '1',
+                relations: {}
+            }} as any);
+
+            await datastore.create({resource: {
+                id: '2',
+                relations: {}
+            }} as any);
+
+            mockdb.findIds.and.returnValues(Promise.resolve(['1', '2']));
+
+            const { documents, totalCount } = await datastore.find({ 'limit': 1 });
+            expect(documents.length).toBe(1);
+            expect(totalCount).toBe(2);
+            verifyIsIdaiFieldDocument(documents[0]);
+            done();
+        });
+
+
+
         it('should add missing fields on create', async (done) => {
 
             await datastore.create({resource: { // trigger caching of document

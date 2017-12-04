@@ -1,10 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Query, ReadDatastore} from 'idai-components-2/datastore';
+import {Query, ReadDatastore, FindResult} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {DocumentConverter} from './document-converter';
+
+
+export interface IdaiFieldFindResult<T extends Document> extends FindResult {
+
+    documents: Array<T>
+}
 
 
 @Injectable()
@@ -26,9 +32,7 @@ import {DocumentConverter} from './document-converter';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export abstract class CachedReadDatastore<T extends Document>
-    implements ReadDatastore {
-
+export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
     private autoCacheUpdate: boolean = true;
 
@@ -77,7 +81,7 @@ export abstract class CachedReadDatastore<T extends Document>
      * @param {{skip_cache: boolean}} options
      * @returns {Promise<T extends Document>}
      */
-    public async get(id: string, options?: {skip_cache: boolean}): Promise<T> {
+    public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
 
         if ((!options || !options.skip_cache) && this.documentCache.get(id)) {
             return this.documentCache.get(id);
@@ -86,7 +90,6 @@ export abstract class CachedReadDatastore<T extends Document>
         return this.documentCache.set(this.documentConverter.convertToIdaiFieldDocument<T>(
             await this.datastore.fetch(id)));
     }
-
 
 
     /**
@@ -100,9 +103,15 @@ export abstract class CachedReadDatastore<T extends Document>
      * If two documents have the exact same lastModified, there is no second sort criterium
      * so the order between them is unspecified.
      */
-    public async find(query: Query):Promise<T[]> {
+    public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
-        return this.replaceAllWithCached(await this.datastore.findIds(query));
+        const ids: string[] = await this.datastore.findIds(query);
+        const documents: Array<T> = await this.getDocumentsForIds(ids, query.limit);
+
+        return {
+            documents: documents,
+            totalCount: ids.length
+        };
     }
 
 
@@ -136,12 +145,15 @@ export abstract class CachedReadDatastore<T extends Document>
     }
 
 
-    protected replaceAllWithCached(results: any) {
+    protected getDocumentsForIds(ids: string[], limit?: number): Promise<Array<T>> {
 
-        let ps = [];
-        for (let id of results) {
-            ps.push(this.get(id));
+        const promises: Array<Promise<T>> = [];
+
+        for (let id of ids) {
+            promises.push(this.get(id));
+            if (limit && promises.length == limit) break;
         }
-        return Promise.all(ps);
+
+        return Promise.all(promises);
     }
 }

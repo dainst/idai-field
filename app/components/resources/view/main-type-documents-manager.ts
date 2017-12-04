@@ -94,8 +94,8 @@ export class MainTypeDocumentsManager {
 
         return this.datastore.find(query as any)
             .catch(errWithParams => MainTypeDocumentsManager.handleFindErr(errWithParams, query))
-            .then(documents => {
-                return documents;
+            .then(result => {
+                if (result) return result.documents;
             });
     }
 

@@ -117,7 +117,7 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
                 }
             }));
 
-            const documents = await datastore.find({}); // fetch from mockdb
+            const documents = (await datastore.find({})).documents; // fetch from mockdb
             expect(documents.length).toBe(1);
             verifyIsIdaiFieldDocument(documents[0]);
             done();
@@ -132,7 +132,7 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
             }} as any);
             mockdb.findIds.and.returnValues(Promise.resolve(['1']));
 
-            const documents = await datastore.find({}); // fetch from cache
+            const documents = (await datastore.find({})).documents; // fetch from cache
             expect(documents.length).toBe(1);
             verifyIsIdaiFieldDocument(documents[0]);
             done();
@@ -209,10 +209,10 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
 
             await datastore.create(doc1);
             try {
-                const result = await datastore.find({q: 'sd1'}); // mockdb returns other instance
-                expect((result[0] as Document).resource['identifier']).toBe('identifier1');
+                const documents = (await datastore.find({ q: 'sd1' })).documents; // mockdb returns other instance
+                expect((documents[0]).resource['identifier']).toBe('identifier1');
                 doc1.resource['shortDescription'] = 's4';
-                expect((result[0] as Document).resource['shortDescription']).toBe('s4');
+                expect((documents[0]).resource['shortDescription']).toBe('s4');
                 done();
             } catch (error) {
                 fail(error);
@@ -234,10 +234,10 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
                })
                .then(() => datastore.find({q: 'sd1'})) // mockdb returns other instance
                .then(result => {
-                   expect((result[0] as Document)['_rev']).toBe('2');
-                   expect((result[0] as Document).resource['identifier']).toBe('identifier_');
+                   expect((result.documents[0])['_rev']).toBe('2');
+                   expect((result.documents[0]).resource['identifier']).toBe('identifier_');
                    doc2.resource['shortDescription'] = 's4';
-                   expect((result[0] as Document).resource['shortDescription']).toBe('s4');
+                   expect((result.documents[0]).resource['shortDescription']).toBe('s4');
                    done();
                }).catch(err => {
                fail(err);

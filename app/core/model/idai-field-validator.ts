@@ -45,7 +45,7 @@ export class IdaiFieldValidator extends Validator {
                     'resource.identifier' : doc.resource.identifier
                 }
             }).then(result => {
-                if (result && result.length > 0 && IdaiFieldValidator.isDuplicate(result[0], doc)) {
+                if (result.totalCount > 0 && IdaiFieldValidator.isDuplicate(result.documents[0], doc)) {
                     return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
                 }
                 return Promise.resolve();

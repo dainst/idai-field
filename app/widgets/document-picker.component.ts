@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {DocumentDatastore} from "../core/datastore/document-datastore";
+import {IdaiFieldDocumentDatastore} from '../core/datastore/idai-field-document-datastore';
 
 @Component({
     selector: 'document-picker',
@@ -16,12 +16,10 @@ import {DocumentDatastore} from "../core/datastore/document-datastore";
  */
 export class DocumentPickerComponent implements OnChanges {
 
-
     @Input() relationName: string;
     @Input() relationRangeType: string;
 
-    @Output() documentSelected: EventEmitter<IdaiFieldDocument> =
-        new EventEmitter<IdaiFieldDocument>();
+    @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
     protected query: Query = {};
@@ -29,7 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     private fetchDocsRunning = false;
 
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: IdaiFieldDocumentDatastore,
                 private projectConfiguration: ProjectConfiguration) {
 
         this.query = {};
@@ -70,22 +68,18 @@ export class DocumentPickerComponent implements OnChanges {
         if (this.fetchDocsRunning) return;
         this.fetchDocsRunning = true;
 
-        console.debug("doc picker fetch docs")
+        console.debug('doc picker fetch docs');
         this.datastore.find(this.query)
-            .then(
-                documents => {
-                    console.debug("doc picker fetch docs end")
-                    this.documents =
-                        this.filterNotAllowedRelationDomainTypes(
-                            documents as Array<IdaiFieldDocument>)
-                    this.fetchDocsRunning = false;
-                },
-                err => console.error(err));
+            .then(result => {
+                console.debug('doc picker fetch docs end');
+                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
+                this.fetchDocsRunning = false;
+            },
+            err => console.error(err));
     }
 
 
-    private filterNotAllowedRelationDomainTypes(
-            documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private filterNotAllowedRelationDomainTypes(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
 
         const result: Array<IdaiFieldDocument> = [];
 

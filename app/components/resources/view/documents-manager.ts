@@ -240,6 +240,7 @@ export class DocumentsManager {
     private fetchDocuments(query: Query): Promise<any> {
 
         return this.datastore.find(query as any)
+            .then(result => result.documents)
             .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
     }
 

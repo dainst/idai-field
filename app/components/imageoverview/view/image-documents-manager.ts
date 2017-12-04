@@ -98,7 +98,7 @@ export class ImageDocumentsManager {
 
         console.debug('fetch docs', query);
         try {
-            this.documents = await this.imageDatastore.find(query);
+            this.documents = (await this.imageDatastore.find(query)).documents;
             console.debug('fetch docs end');
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);

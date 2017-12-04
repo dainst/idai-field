@@ -1,6 +1,5 @@
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {DocumentReadDatastore} from "./document-read-datastore";
-import {CachedReadDatastore} from "./core/cached-read-datastore";
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {CachedReadDatastore} from './core/cached-read-datastore';
 
 /**
  * @author Daniel de Oliveira

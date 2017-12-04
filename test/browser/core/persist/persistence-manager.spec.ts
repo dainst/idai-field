@@ -99,7 +99,7 @@ export function main() {
             return new Promise(resolve => {
                 const findResultCopy = findResult;
                 findResult = [];
-                resolve(findResultCopy);
+                resolve({ documents: findResultCopy });
             });
         };
 

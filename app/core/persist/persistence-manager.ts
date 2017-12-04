@@ -217,7 +217,8 @@ export class PersistenceManager {
             constraints: { 'resource.relations.isRecordedIn': document.resource.id }
         };
 
-        return this.datastore.find(query);
+        return this.datastore.find(query)
+            .then(result => result.documents);
     }
 
 

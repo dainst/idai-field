@@ -91,7 +91,7 @@ export function main() {
                 delete document3.resource.relations['Contains'];
                 await datastore.update(document3);
 
-                const docs = await datastore.find({});
+                const docs = (await datastore.find({})).documents;
                 expect(docs.length).toBe(1);
 
                 expect(docs[0].resource.relations['Contains']).not.toBeDefined();

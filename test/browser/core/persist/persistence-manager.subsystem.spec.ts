@@ -102,7 +102,7 @@ export function main() {
 
                 await persistenceManager.remove(document1,'user',[document1]);
 
-                const docs = await datastore.find({});
+                const docs = (await datastore.find({})).documents;
 
                 expect(docs.length).toBe(1);
                 expect(docs[0].resource.relations['Contains']).not.toBeDefined();

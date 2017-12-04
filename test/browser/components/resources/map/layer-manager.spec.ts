@@ -28,7 +28,7 @@ export function main() {
         beforeEach(() => {
 
             const mockDatastore = jasmine.createSpyObj('datastore', ['find']);
-            mockDatastore.find.and.returnValue(Promise.resolve(layerDocuments));
+            mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
 
             const mockImageTypeUtility = jasmine.createSpyObj('imageTypeUtility',
                 ['getProjectImageTypeNames']);

@@ -191,7 +191,7 @@ export class ViewFacade {
             if (viewMainType == 'Project') continue;
 
             mainTypeDocuments = mainTypeDocuments.concat(
-                await this.datastore.find({ q: '', types: [viewMainType] }));
+                (await this.datastore.find({ q: '', types: [viewMainType] })).documents);
         }
 
         return mainTypeDocuments;

@@ -96,8 +96,8 @@ export class ImagePickerComponent implements OnInit {
 
         return this.datastore.find(this.query)
             // .catch(msgWithParams => this.messages.add(msgWithParams)
-            .then(documents => {
-                this.documents = this.filterOutAlreadyLinkedImageDocuments(documents);
+            .then(result => {
+                this.documents = this.filterOutAlreadyLinkedImageDocuments(result.documents);
             })
             .catch(errWithParams => {
                 console.error('error in find with query', this.query);
@@ -109,8 +109,8 @@ export class ImagePickerComponent implements OnInit {
     }
 
 
-    private filterOutAlreadyLinkedImageDocuments(imageDocuments: IdaiFieldImageDocument[])
-            : IdaiFieldImageDocument[] {
+    private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)
+            : Array<IdaiFieldImageDocument> {
 
         let relationTargets = this.document.resource.relations['isDepictedIn'];
         if (!relationTargets) return imageDocuments;

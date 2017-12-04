@@ -14,21 +14,19 @@ export class Exporter {
 
     constructor(private datastore: Datastore) {}
 
+
     public exportResources(filePath: string, serializer: Serializer): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-
-            this.datastore.find({}).then(
-                documents => {
-                    fs.writeFile(filePath, serializer.serialize(documents), (err: any) => {
-                        if (err) {
-                            reject([M.EXPORT_WRITE_ERROR, filePath]);
-                        } else {
-                            resolve();
-                        }
-                    });
-                }, () => reject([M.ALL_FIND_ERROR])
-            );
-        });
+        return this.datastore.find({}).then(
+            result => {
+                fs.writeFile(filePath, serializer.serialize(result.documents), (err: any) => {
+                    if (err) {
+                        return Promise.reject([M.EXPORT_WRITE_ERROR, filePath]);
+                    } else {
+                        return Promise.resolve();
+                    }
+                });
+            }, () => Promise.reject([M.ALL_FIND_ERROR])
+        );
     }
 }

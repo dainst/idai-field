@@ -146,7 +146,7 @@ export class ImageUploader {
             constraints: {
                 'resource.identifier' : filename
             }
-        }).then(result => result && result.length > 0);
+        }).then(result => result.totalCount > 0);
     }
 
 

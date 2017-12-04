@@ -36,7 +36,8 @@ export function main() {
             mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
 
             mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
-            mockDatastore.find.and.callFake(() => Promise.resolve([originalDoc]));
+            mockDatastore.find.and.callFake(
+                () => Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
             mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
 
             mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);

@@ -13,8 +13,8 @@ import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {DocumentDatastore} from "../../core/datastore/document-datastore";
-import {PersistenceManager} from "../../core/persist/persistence-manager";
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {PersistenceManager} from '../../core/persist/persistence-manager';
 
 
 @Component({
@@ -101,7 +101,7 @@ export class DoceditComponent {
         this.persistenceManager.setOldVersions([this.document]);
 
         this.datastore.find({ q: '', constraints: { 'resource.relations.isRecordedIn': document.resource.id }} as any)
-            .then(documents => this.isRecordedInResourcesCount = documents ? documents.length : 0);
+            .then(result => this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0);
     }
 
 

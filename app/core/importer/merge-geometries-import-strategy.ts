@@ -26,9 +26,9 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 constraints: {
                     'resource.identifier' : document.resource.identifier
                 }
-            }).then(existingDocuments => {
-                if (existingDocuments.length > 0) {
-                    existingDocument = existingDocuments[0] as IdaiFieldDocument;
+            }).then(result => {
+                if (result.totalCount > 0) {
+                    existingDocument = result.documents[0] as IdaiFieldDocument;
                 } else {
                     return Promise.reject([M.IMPORT_FAILURE_MISSING_RESOURCE, document.resource.identifier]);
                 }

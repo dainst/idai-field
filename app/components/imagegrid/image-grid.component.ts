@@ -1,13 +1,10 @@
-import {
-    Component, EventEmitter, Input, OnChanges, SimpleChanges, Output,
-    ElementRef
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {ImageGridBuilder} from './image-grid-builder';
 import {M} from '../../m';
-import {Imagestore} from "../../core/imagestore/imagestore";
-import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
+import {Imagestore} from '../../core/imagestore/imagestore';
+import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
 
 
 @Component({
@@ -108,10 +105,9 @@ export class ImageGridComponent implements OnChanges {
             this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
 
         this.moreRowsMsg = undefined;
-        this.rows = [];
-        console.debug("fetching images for grid start");
-        await this.loadImgs(rows);
-        console.debug("fetching images for grid end");
+        console.debug('fetching images for grid start');
+        await this.loadImages(rows);
+        console.debug('fetching images for grid end');
         this.rows = rows;
 
         if (rowsTotal > 5) {
@@ -121,18 +117,11 @@ export class ImageGridComponent implements OnChanges {
                 + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
         }
 
-        // this.rows = result['rows'];
-        // for (let errWithParams of result.errsWithParams) {
-        //     do not display a msg to the user via messages because there may be two much messages
-        //     the user will get black image which allows to identify which thumbs are missing
-            // console.error('error from calcGrid:', errWithParams);
-        // }
-        // this.showImagesNotFoundMessage(result);
-
+        // TODO Show error message if one or more images were not found (possibly using method showImagesNotFoundMessage)
     }
 
 
-    private loadImgs(rows: any) {
+    private loadImages(rows: any) {
 
         let promise: any = Promise.resolve();
         for (let row of rows) {
@@ -143,7 +132,7 @@ export class ImageGridComponent implements OnChanges {
                     this.imagestore.read(cell.document.resource.id).then(url =>
                         cell.imgSrc = url
                     ).catch(e => {
-                        console.error('error fetching img',e)
+                        console.error('error fetching image', e)
                     })
                 )
             }
@@ -165,7 +154,9 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    // insert stub document for first cell that will act as drop area for uploading images
+    /**
+     * Insert stub document for first cell that will act as drop area for uploading images
+     */
     private insertStubForDropArea() {
 
         if (this.documents &&

@@ -1,9 +1,9 @@
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
+import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
+import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
-import {Injectable} from '@angular/core';
-import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-field-image-document-read-datastore";
+import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
 
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ImageDocumentsManager {
 
     public getSelected(): Array<IdaiFieldImageDocument> {
 
-        return this.selected
+        return this.selected;
     }
 
 
@@ -48,8 +48,7 @@ export class ImageDocumentsManager {
 
     public remove(document: IdaiFieldImageDocument) {
 
-        this.documents.splice(
-            this.documents.indexOf(document), 1);
+        this.documents.splice(this.documents.indexOf(document), 1);
     }
 
 
@@ -97,12 +96,10 @@ export class ImageDocumentsManager {
 
         const query: Query = this.imagesState.getQuery();
 
-        console.debug("fetch docs",query);
-        let documents;
+        console.debug('fetch docs', query);
         try {
-            console.debug("fetch docs end");
-            documents =
             this.documents = await this.imageDatastore.find(query);
+            console.debug('fetch docs end');
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);
             if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);

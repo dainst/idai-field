@@ -1,9 +1,8 @@
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
+import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
+import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImagesState} from './images-state';
-import {Document} from 'idai-components-2/core';
-import {Injectable} from '@angular/core';
 import {ImageDocumentsManager} from './image-documents-manager';
 
 
@@ -19,14 +18,13 @@ export class ImageOverviewFacade {
         private imageDocumentsManager: ImageDocumentsManager,
         private imagesState: ImagesState,
         private imageTypeUtility: ImageTypeUtility
-    ) {
-
-    }
+    ) {}
 
 
     public initialize() {
 
         return this.imagesState.initialize().then(() => {
+            console.log('imagesState initialized!');
             if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
             this.setQueryConstraints();
         }).then(() => this.fetchDocuments());
@@ -53,7 +51,7 @@ export class ImageOverviewFacade {
 
     public getMainTypeDocumentFilterOption() {
 
-        return this.imagesState.getMainTypeDocumentFilterOption()
+        return this.imagesState.getMainTypeDocumentFilterOption();
     }
 
 

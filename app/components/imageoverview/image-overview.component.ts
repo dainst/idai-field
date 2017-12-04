@@ -1,16 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {Messages} from 'idai-components-2/messages';
-import {LinkModalComponent} from './link-modal.component';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
-import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
-import {PersistenceHelper} from './service/persistence-helper';
 import {RoutingService} from '../routing-service';
 
 @Component({
@@ -44,7 +38,9 @@ export class ImageOverviewComponent implements OnInit {
     public getQuery = () => this.imageOverviewFacade.getQuery();
     public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
 
-    public jumpToRelationTarget = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect, undefined, true);
+    public jumpToRelationTarget
+        = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
+            undefined, true);
 
 
     constructor(

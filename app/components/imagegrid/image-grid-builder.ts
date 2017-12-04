@@ -14,8 +14,6 @@ export class ImageGridBuilder {
     private paddingRight: number = 20;
     private documents: Array<Document>;
 
-    private static maxRows = 5;
-
 
     /**
      * @param documents
@@ -32,16 +30,12 @@ export class ImageGridBuilder {
         this.documents = documents;
         if (!this.documents) return [];
 
-        const rowsShown = Math.min(this.nrOfRows(nrOfColumns), ImageGridBuilder.maxRows);
         const rows = [];
-        for (let i = 0; i < rowsShown; i++) {
+        for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
             rows.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
         }
-        return {
-            rows: rows,
-            rowsTotal: this.nrOfRows(nrOfColumns),
-            imgsShown: ImageGridBuilder.calcImgsShown(documents, nrOfColumns, rowsShown)
-        };
+
+        return rows;
     }
 
 
@@ -51,6 +45,7 @@ export class ImageGridBuilder {
     private calcRow(rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
 
         const row = [];
+
         for (let i = 0; i < nrOfColumns; i++) {
 
             const document = this.documents[rowIndex * nrOfColumns + i];
@@ -61,6 +56,7 @@ export class ImageGridBuilder {
 
             row.push(cell);
         }
+
         return row;
     }
 
@@ -72,7 +68,7 @@ export class ImageGridBuilder {
     }
 
 
-    private nrOfRows(nrOfColumns: any) {
+    private nrOfRows(nrOfColumns: number): number {
 
         return Math.ceil(this.documents.length / nrOfColumns);
     }
@@ -84,6 +80,7 @@ export class ImageGridBuilder {
     private static calcNaturalRowWidth(documents: any, nrOfColumns: any, rowIndex: any) {
 
         let naturalRowWidth = 0;
+
         for (let columnIndex = 0; columnIndex < nrOfColumns; columnIndex++) {
             const document = documents[rowIndex * nrOfColumns + columnIndex];
             if (!document) {
@@ -92,14 +89,8 @@ export class ImageGridBuilder {
             }
             naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
         }
+
         return naturalRowWidth;
-    }
-
-
-    private static calcImgsShown(documents: any, nrOfColumns: any, rowsShown: any) {
-
-        const gridSlotsTotal = rowsShown * nrOfColumns - 1;
-        return Math.min(gridSlotsTotal, documents.length);
     }
 
 
@@ -110,6 +101,7 @@ export class ImageGridBuilder {
         cell.document = document;
         cell.calculatedWidth = image.width * calculatedHeight / image.height;
         cell.calculatedHeight = calculatedHeight;
+
         return cell;
     }
 }

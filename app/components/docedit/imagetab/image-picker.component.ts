@@ -21,14 +21,16 @@ import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-
  */
 export class ImagePickerComponent implements OnInit {
 
-
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+
     public documents: IdaiFieldImageDocument[];
 
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
 
     private query: Query = { q: '' };
+
+    private static documentLimit: number = 6;
 
 
     constructor(
@@ -93,6 +95,7 @@ export class ImagePickerComponent implements OnInit {
         if (!this.query) this.query = {};
 
         this.query.types = this.imageTypeUtility.getProjectImageTypeNames();
+        this.query.limit = ImagePickerComponent.documentLimit;
 
         return this.datastore.find(this.query)
             // .catch(msgWithParams => this.messages.add(msgWithParams)

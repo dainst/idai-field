@@ -33,6 +33,7 @@ export class ImageOverviewComponent implements OnInit {
     // for clean and refactor safe template, and to help find usages
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
     public getSelected = () => this.imageOverviewFacade.getSelected();
+    public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
     public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
     public getQuery = () => this.imageOverviewFacade.getQuery();
@@ -65,7 +66,7 @@ export class ImageOverviewComponent implements OnInit {
         if (_size >= this.minGridSize && _size <= this.maxGridSize) {
             this.imageOverviewFacade.setGridSize(_size);
             this.imageGrid.nrOfColumns = _size;
-            this.imageGrid.calcGrid();
+            this.refreshGrid();
         }
     }
 

@@ -14,6 +14,7 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-
 export class ImageDocumentsManager {
 
     private documents: Array<IdaiFieldImageDocument>;
+    private totalDocumentCount: number;
 
     public selected: Array<IdaiFieldImageDocument>  = [];
 
@@ -37,6 +38,12 @@ export class ImageDocumentsManager {
     public getDocuments(): Array<IdaiFieldImageDocument> {
 
         return this.documents;
+    }
+
+
+    public getTotalDocumentCount(): number {
+
+        return this.totalDocumentCount;
     }
 
 
@@ -92,13 +99,16 @@ export class ImageDocumentsManager {
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
      */
-    public async fetchDocuments() {
+    public async fetchDocuments(limit: number) {
 
-        const query: Query = this.imagesState.getQuery();
+        const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
+        query.limit = limit;
 
         console.debug('fetch docs', query);
         try {
-            this.documents = (await this.imageDatastore.find(query)).documents;
+            const {documents, totalCount} = await this.imageDatastore.find(query);
+            this.documents = documents;
+            this.totalDocumentCount = totalCount;
             console.debug('fetch docs end');
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);

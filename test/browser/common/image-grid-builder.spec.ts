@@ -30,11 +30,9 @@ export function main() {
 
         it('should keep the aspect ration of an image', ()=> {
 
-            const {rows, rowsTotal, imgsShown} = imageGridBuilder.calcGrid(documents,4,800);
+            const rows = imageGridBuilder.calcGrid(documents,4,800);
 
-            expect(rows[0][0].calculatedWidth).toBe(
-                rows[0][0].calculatedHeight * 2
-            );
+            expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight * 2);
         });
 
 

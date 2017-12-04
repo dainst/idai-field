@@ -22,6 +22,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() nrOfColumns: number = 1;
     @Input() documents: IdaiFieldImageDocument[];
     @Input() selected: IdaiFieldImageDocument[] = [];
+    @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
@@ -93,6 +94,8 @@ export class ImageGridComponent implements OnChanges {
             this.calcGridRunning = true;
             await this._calcGrid();
             this.calcGridRunning = false;
+
+            this.updateSearchResultsInfoMessage();
         }, 500);
     }
 
@@ -101,7 +104,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) return Promise.resolve();
 
-        const {rows, rowsTotal, imgsShown} = this.imageGridBuilder.calcGrid(
+        const rows = this.imageGridBuilder.calcGrid(
             this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
 
         this.moreRowsMsg = undefined;
@@ -109,13 +112,6 @@ export class ImageGridComponent implements OnChanges {
         await this.loadImages(rows);
         console.debug('fetching images for grid end');
         this.rows = rows;
-
-        if (rowsTotal > 5) {
-            this.moreRowsMsg = 'Es werden die ersten ' + imgsShown
-                + ' von insgesamt ' + (this.documents.length - 1) + ' Suchtreffern angezeigt. '
-                + 'Schränke die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
-                + (this.nrOfColumns < 12 ? ' oder erhöhe den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.' : '.')
-        }
 
         // TODO Show error message if one or more images were not found (possibly using method showImagesNotFoundMessage)
     }
@@ -151,6 +147,19 @@ export class ImageGridComponent implements OnChanges {
             this.messages.add([M.IMAGES_N_NOT_FOUND]);
             this.imagesNotFoundMessageDisplayed = true;
         }
+    }
+
+
+    private updateSearchResultsInfoMessage() {
+
+        if (!this.documents || !this.totalDocumentCount) return;
+        if (this.totalDocumentCount <= (this.documents.length - 1)) return;
+
+        this.moreRowsMsg = 'Es werden die ersten ' + (this.documents.length - 1)
+            + ' von insgesamt ' + this.totalDocumentCount + ' Suchtreffern angezeigt. '
+            + 'Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
+            + (this.nrOfColumns < 12 ? ' oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.'
+                : '.');
     }
 
 

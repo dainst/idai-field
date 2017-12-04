@@ -14,6 +14,8 @@ import {ImageDocumentsManager} from './image-documents-manager';
  */
 export class ImageOverviewFacade {
 
+    private static MAX_ROWS: number = 5;
+
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
         private imagesState: ImagesState,
@@ -109,6 +111,12 @@ export class ImageOverviewFacade {
     }
 
 
+    public getTotalDocumentCount(): number {
+
+        return this.imageDocumentsManager.getTotalDocumentCount();
+    }
+
+
     public remove(document: IdaiFieldImageDocument) {
 
         return this.imageDocumentsManager.remove(document);
@@ -129,7 +137,7 @@ export class ImageOverviewFacade {
 
     public fetchDocuments() {
 
-        return this.imageDocumentsManager.fetchDocuments();
+        return this.imageDocumentsManager.fetchDocuments(ImageOverviewFacade.MAX_ROWS * this.getGridSize() - 1);
     }
 
 

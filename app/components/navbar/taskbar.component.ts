@@ -67,7 +67,7 @@ export class TaskbarComponent {
 
     private fetchConflicts() {
 
-        this.datastore.find({ constraints: { '_conflicts': 'KNOWN' } }).then(result => {
+        this.datastore.find({ constraints: { 'conflicts:exist': 'KNOWN' } }).then(result => {
             this.conflicts = result.documents;
         });
     }

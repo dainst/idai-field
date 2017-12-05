@@ -49,12 +49,14 @@ export function main() {
             docs[0].resource.relations['isRecordedIn'] = ['1'];
             docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-            ci = new ConstraintIndexer([{ path: 'resource.relations.isRecordedIn', type: 'contain' }]);
+            ci = new ConstraintIndexer({
+                'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
+            });
+
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('resource.relations.isRecordedIn', '1'))
-                .toEqual([item('2'), item('3')]);
+            expect(ci.get('isRecordedIn:contain', '1')).toEqual([item('2'), item('3')]);
         });
 
 
@@ -64,7 +66,10 @@ export function main() {
             ];
             docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-            ci = new ConstraintIndexer([{ path: 'resource.relations.isRecordedIn', type: 'contain' }]);
+            ci = new ConstraintIndexer({
+                'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
+            });
+
             ci.put(docs[0]);
             return docs;
         }
@@ -74,25 +79,25 @@ export function main() {
 
             docWithMultipleConstraintTargets();
 
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([item('1')]);
-            expect(ci.get('resource.relations.isRecordedIn', '3'))
-                .toEqual([item('1')]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([item('1')]);
+            expect(ci.get('isRecordedIn:contain', '3')).toEqual([item('1')]);
         });
 
 
         function docWithMultipleConstraints() {
+
             const docs = [
                 doc('1')
             ];
             docs[0].resource.relations['isRecordedIn'] = ['2'];
             docs[0].resource.relations['liesWithin'] = ['3'];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.relations.liesWithin', type: 'contain' } ,
-                { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                { path: 'resource.identifier', type: 'match' }
-            ]);
+            ci = new ConstraintIndexer({
+                'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+                'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                'identifier:match': { path: 'resource.identifier', type: 'match' }
+            });
+
             ci.put(docs[0]);
             return docs;
         }
@@ -102,10 +107,8 @@ export function main() {
 
             docWithMultipleConstraints();
 
-            expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual([item('1')]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([item('1')]);
+            expect(ci.get('liesWithin:contain', '3')).toEqual([item('1')]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([item('1')]);
         });
 
 
@@ -115,24 +118,26 @@ export function main() {
                 doc('1')
             ];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.relations.liesWithin', type: 'contain' }
-            ]);
+            ci = new ConstraintIndexer({
+                'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+            });
+
             ci.put(docs[0]);
 
-            expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual([ ]);
+            expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
         });
 
 
         function docWithIdentifier() {
+
             const docs = [
                 doc('1')
             ];
 
-            ci = new ConstraintIndexer([
-                { path: 'resource.identifier', type: 'match' }
-            ]);
+            ci = new ConstraintIndexer({
+                'identifier:match': { path: 'resource.identifier', type: 'match' }
+            });
+
             ci.put(docs[0]);
             return docs;
         }
@@ -142,8 +147,7 @@ export function main() {
 
             docWithIdentifier();
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([item('1')]);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([item('1')]);
         });
 
 
@@ -153,35 +157,33 @@ export function main() {
 
             ci.clear();
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([ ]);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
         });
 
 
         it('ask for non existing index', () => {
 
-            ci = new ConstraintIndexer([ ]);
+            ci = new ConstraintIndexer({});
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual(undefined);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual(undefined);
         });
 
 
         it('ask without constraints', () => {
 
-            ci = new ConstraintIndexer([ ]);
+            ci = new ConstraintIndexer({});
 
-            expect(ci.get(undefined))
-                .toEqual(undefined);
+            expect(ci.get(undefined)).toEqual(undefined);
         });
 
 
         it('ask for one existing index and one nonexisting index', () => {
 
-            ci = new ConstraintIndexer([{ path: 'resource.identifier', type: 'contain' }]);
+            ci = new ConstraintIndexer({
+                'identifier:contain': { path: 'resource.identifier', type: 'contain' }
+            });
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([ ]);
+            expect(ci.get('identifier:contain', 'identifier1')).toEqual([ ]);
         });
 
 
@@ -191,12 +193,9 @@ export function main() {
 
             ci.remove(doc);
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([ ]);
-            expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual([ ]);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
+            expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
         });
 
 
@@ -206,10 +205,8 @@ export function main() {
 
             ci.remove(doc);
 
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '3'))
-                .toEqual([ ]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
+            expect(ci.get('isRecordedIn:contain', '3')).toEqual([ ]);
         });
 
 
@@ -222,18 +219,15 @@ export function main() {
             doc.resource.identifier = 'identifier2';
             ci.put(doc);
 
-            expect(ci.get('resource.identifier', 'identifier1'))
-                .toEqual([ ]);
-            expect(ci.get('resource.relations.isRecordedIn', '2'))
-                .toEqual([ ]);
-            expect(ci.get('resource.relations.liesWithin', '3'))
-                .toEqual([ ]);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
+            expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
 
-            expect(ci.get('resource.identifier', 'identifier2'))
+            expect(ci.get('identifier:match', 'identifier2'))
                 .toEqual([item('1','identifier2')]);
-            expect(ci.get('resource.relations.isRecordedIn', '4'))
+            expect(ci.get('isRecordedIn:contain', '4'))
                 .toEqual([item('1','identifier2')]);
-            expect(ci.get('resource.relations.liesWithin', '5'))
+            expect(ci.get('liesWithin:contain', '5'))
                 .toEqual([item('1','identifier2')]);
         });
 
@@ -246,26 +240,23 @@ export function main() {
             ];
             docs[0]['_conflicts'] = ['1-other'];
 
-            ci = new ConstraintIndexer([{ path: '_conflicts', type: 'exist' }]);
+            ci = new ConstraintIndexer({
+                'conflicts:exist': { path: '_conflicts', type: 'exist' }
+            });
+
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('_conflicts', 'KNOWN'))
-                .toEqual([item('1')]);
-            expect(ci.get('_conflicts', 'UNKNOWN'))
-                .toEqual([item('2')]);
-        });
-
-
-        it('throw error if type is undefined', () => {
-
-            expect(() => {new ConstraintIndexer([{ path: 'testpath' }])}).toThrow();
+            expect(ci.get('conflicts:exist', 'KNOWN')).toEqual([item('1')]);
+            expect(ci.get('conflicts:exist', 'UNKNOWN')).toEqual([item('2')]);
         });
 
         
         it('throw error if type is unknown', () => {
 
-            expect(() => {new ConstraintIndexer([{ path: 'testpath', type: 'unknown' }])}).toThrow();
+            expect(() => {
+                new ConstraintIndexer({ 'name': { path: 'testpath', type: 'unknown' }})
+            }).toThrow();
         });
 
 
@@ -278,14 +269,15 @@ export function main() {
             docs[0].resource.relations['depicts'] = [];
             docs[1].resource.relations['depicts'] = ['1'];
 
-            ci = new ConstraintIndexer([{ path: 'resource.relations.depicts', type: 'exist' }]);
+            ci = new ConstraintIndexer({
+                'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
+            });
+
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('resource.relations.depicts', 'KNOWN'))
-                .toEqual([item('2')]);
-            expect(ci.get('resource.relations.depicts', 'UNKNOWN'))
-                .toEqual([item('1')]);
+            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([item('2')]);
+            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([item('1')]);
         });
 
 

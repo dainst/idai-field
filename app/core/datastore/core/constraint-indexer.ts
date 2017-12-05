@@ -2,12 +2,21 @@ import {Document, Action} from 'idai-components-2/core';
 import {ObjectUtil} from '../../../util/object-util';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 
+
+export interface IndexDefinition {
+
+    path: string;
+    type: string;
+}
+
+
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ConstraintIndexer {
 
-    private index: {
+    private containIndex: {
         [path: string]: {
             [resourceId: string]: {
                 [resourceId: string]: {
@@ -18,10 +27,29 @@ export class ConstraintIndexer {
         }
     };
 
+    private matchIndex: {
+        [path: string]: {
+            [resourceId: string]: {
+                date: Date,
+                identifier: string
+            }
+        }
+    };
 
-    constructor(private pathsDefinitions: any) {
+    private existIndex: {
+        [path: string]: {
+            [resourceId: string]: {
+                date: Date,
+                identifier: string
+            }
+        }
+    };
 
-        const validationError = ConstraintIndexer.validatePathsDefinitions(pathsDefinitions);
+
+    constructor(private indexDefinitions: { [name: string]: IndexDefinition }) {
+
+        const validationError
+            = ConstraintIndexer.validateIndexDefinitions(this.convertToList(this.indexDefinitions));
         if (validationError) throw validationError;
 
         this.setUp();
@@ -37,32 +65,36 @@ export class ConstraintIndexer {
     public put(doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) this.remove(doc);
-        for (let pathDef of this.pathsDefinitions) {
-            this.putFor(pathDef, doc);
+        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+            this.putFor(indexDefinition, doc);
         }
     }
 
 
     public remove(doc: Document) {
 
-        for (let pathDef of this.pathsDefinitions) {
-            for (let key of Object.keys(this.index[pathDef.path])) {
-                if (this.index[pathDef.path][key][doc.resource.id as any]) {
-                    delete this.index[pathDef.path][key][doc.resource.id as any];
+        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+            const index: any = this.getIndex(indexDefinition);
+
+            for (let key of Object.keys(index[indexDefinition.path])) {
+                if (index[indexDefinition.path][key][doc.resource.id as any]) {
+                    delete index[indexDefinition.path][key][doc.resource.id as any];
                 }
             }
         }
     }
 
 
-    public get(path: string, matchTerm: string): any {
+    public get(indexName: string, matchTerm: string): any {
 
-        if (!this.hasIndex(path)) {
-            console.warn('ignoring unknown constraint "' + path + '"');
+        const indexDefinition: IndexDefinition = this.indexDefinitions[indexName];
+
+        if (!indexDefinition) {
+            console.warn('Ignoring unknown constraint "' + indexName + '".');
             return undefined;
         }
 
-        const result = this.index[path][matchTerm];
+        const result = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
         if (result) {
             return Object.keys(result).map(id => new Object({
                 id: id,
@@ -75,49 +107,39 @@ export class ConstraintIndexer {
     }
 
 
-    private putFor(pathDef: any, doc: Document) {
+    private putFor(indexDefinition: IndexDefinition, doc: Document) {
 
-        const elForPath = ObjectUtil.getElForPathIn(doc, pathDef.path);
+        const elForPath = ObjectUtil.getElForPathIn(doc, indexDefinition.path);
 
-        switch(pathDef.type) {
+        switch(indexDefinition.type) {
             case 'exist':
-
                 if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return this.addToIndex(doc, pathDef.path, 'UNKNOWN');
+                    return this.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
                 }
 
                 // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
                 if (doc.resource.type == 'Project') {
-                    this.addToIndex(doc, pathDef.path, 'UNKNOWN');
+                    this.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
                 } else {
-                    this.addToIndex(doc, pathDef.path, 'KNOWN');
+                    this.addToIndex(this.existIndex, doc, indexDefinition.path, 'KNOWN');
                 }
                 break;
 
             case 'match':
-                this.addToIndex(doc, pathDef.path, elForPath);
+                this.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath);
                 break;
 
             case 'contain':
                 if (!elForPath) break;
                 for (let target of elForPath) {
-                    this.addToIndex(doc, pathDef.path, target);
+                    this.addToIndex(this.containIndex, doc, indexDefinition.path, target);
                 }
                 break;
         }
     }
 
 
-    private hasIndex(path: string) {
-
-        for (let pd of this.pathsDefinitions) {
-            if (pd.path == path) return true;
-        }
-        return false;
-    }
-
-
-    private addToIndex(doc: Document, path: string, target: string) {
+    private addToIndex(index: any, doc: Document, path: string, target: string) {
 
         const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
         if (!lastModified) {
@@ -126,32 +148,60 @@ export class ConstraintIndexer {
             return;
         }
 
-        if (!this.index[path][target]) this.index[path][target] = {};
-        this.index[path][target][doc.resource.id as any] = {
+        if (!index[path][target]) index[path][target] = {};
+        index[path][target][doc.resource.id as any] = {
             date: lastModified.date,
             identifier: doc.resource['identifier']
-        } as any;
+        };
     }
 
 
     private setUp() {
 
-        this.index = { };
-        for (let pathDefinition of this.pathsDefinitions) {
-            this.index[pathDefinition.path] = { };
+        this.containIndex = {};
+        this.matchIndex = {};
+        this.existIndex = {};
+
+        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+            this.getIndex(indexDefinition)[indexDefinition.path] = {};
         }
     }
 
 
-    private static validatePathsDefinitions(pathsDefinitions: any): string|undefined {
+    private static validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
 
         const types = ['match', 'contain', 'exist'];
 
-        for (let pathsDefinition of pathsDefinitions) {
-            if (!pathsDefinition.type) return 'paths definition type is undefined';
-            if (types.indexOf(pathsDefinition.type) == -1) return 'invalid paths definition type';
+        for (let indexDefinition of indexDefinitions) {
+            if (!indexDefinition.type) return 'Index definition type is undefined';
+            if (types.indexOf(indexDefinition.type) == -1) return 'Invalid paths definition type';
         }
 
         return undefined;
+    }
+
+
+    private convertToList(indexDefinitions: { [name: string]: IndexDefinition }): Array<IndexDefinition> {
+
+        const result: Array<IndexDefinition> = [];
+
+        for (let i in indexDefinitions) {
+            if (indexDefinitions.hasOwnProperty(i)) result.push(indexDefinitions[i]);
+        }
+
+        return result;
+    }
+
+
+    private getIndex(indexDefinition: IndexDefinition): any {
+
+        switch (indexDefinition.type) {
+            case 'contain':
+                return this.containIndex;
+            case 'match':
+                return this.matchIndex;
+            case 'exist':
+                return this.existIndex;
+        }
     }
 }

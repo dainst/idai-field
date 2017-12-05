@@ -267,7 +267,7 @@ export class DocumentsManager {
     private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
         const clonedQuery = JSON.parse(JSON.stringify(query));
-        clonedQuery.constraints = { 'resource.relations.isRecordedIn': mainTypeDocumentResourceId };
+        clonedQuery.constraints = { 'isRecordedIn:contain': mainTypeDocumentResourceId };
         return clonedQuery;
     }
 }

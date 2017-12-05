@@ -214,7 +214,7 @@ export class PersistenceManager {
 
         const query: Query = {
             q: '',
-            constraints: { 'resource.relations.isRecordedIn': document.resource.id }
+            constraints: { 'isRecordedIn:contain': document.resource.id }
         };
 
         return this.datastore.find(query)

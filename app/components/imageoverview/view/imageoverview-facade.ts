@@ -157,11 +157,11 @@ export class ImageOverviewFacade {
         switch(this.imagesState.getMainTypeDocumentFilterOption()) {
 
             case 'UNLINKED':
-                this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'UNKNOWN' };
+                this.imagesState.getQuery().constraints = { 'depicts:exist': 'UNKNOWN' };
                 break;
 
             case 'LINKED':
-                this.imagesState.getQuery().constraints = { 'resource.relations.depicts': 'KNOWN' };
+                this.imagesState.getQuery().constraints = { 'depicts:exist': 'KNOWN' };
                 break;
 
             // case 'ALL':

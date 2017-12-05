@@ -57,14 +57,14 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
         {
             provide: ConstraintIndexer,
             useFactory: function() {
-                return new ConstraintIndexer([
-                    { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                    { path: 'resource.relations.liesWithin', type: 'contain' },
-                    { path: 'resource.relations.depicts', type: 'exist' },
-                    { path: 'resource.identifier', type: 'match' },
-                    { path: 'resource.georeference', type: 'exist' },
-                    { path: '_conflicts', type: 'exist' }
-                ]);
+                return new ConstraintIndexer({
+                    'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                    'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+                    'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
+                    'identifier:match': { path: 'resource.identifier', type: 'match' },
+                    'georeference:exist': { path: 'resource.georeference', type: 'exist' },
+                    'conflicts:exist': { path: '_conflicts', type: 'exist' }
+                });
             }
         },
         DocumentCache,

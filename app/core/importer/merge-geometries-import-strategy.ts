@@ -24,7 +24,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
 
         return this.datastore.find({
                 constraints: {
-                    'resource.identifier' : document.resource.identifier
+                    'identifier:match' : document.resource.identifier
                 }
             }).then(result => {
                 if (result.totalCount > 0) {

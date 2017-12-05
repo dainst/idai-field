@@ -42,7 +42,7 @@ export class IdaiFieldValidator extends Validator {
 
         return this.datastore.find({
                 constraints: {
-                    'resource.identifier' : doc.resource.identifier
+                    'identifier:match' : doc.resource.identifier
                 }
             }).then(result => {
                 if (result.totalCount > 0 && IdaiFieldValidator.isDuplicate(result.documents[0], doc)) {

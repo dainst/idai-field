@@ -16,13 +16,12 @@ export class Static {
 
     public static createPouchdbDatastore(dbname) {
 
-        const constraintIndexer = new ConstraintIndexer([
-            { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            { path: 'resource.relations.liesWithin', type: 'contain' },
-            { path: 'resource.identifier', type: 'match' }
-        ]);
+        const constraintIndexer = new ConstraintIndexer({
+            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+            'identifier:match': { path: 'resource.identifier', type: 'match' }
+        });
         const fulltextIndexer = new FulltextIndexer();
-
 
         let documentCache = new DocumentCache<IdaiFieldDocument>();
         let pouchdbManager = new PouchdbManager

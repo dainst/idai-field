@@ -144,7 +144,7 @@ export class ImageUploader {
 
         return this.datastore.find({
             constraints: {
-                'resource.identifier' : filename
+                'identifier:match' : filename
             }
         }).then(result => result.totalCount > 0);
     }

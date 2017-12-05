@@ -397,7 +397,7 @@ export function main() {
             const q: Query = {
                 q: 'blub',
                 constraints: {
-                    'resource.relations.isRecordedIn' : 'id1'
+                    'isRecordedIn:contain' : 'id1'
                 }
             };
 
@@ -432,8 +432,8 @@ export function main() {
             const q: Query = {
                 q: 'blub',
                 constraints: {
-                    'resource.relations.isRecordedIn' : 'id1',
-                    'resource.relations.liesWithin' : 'id2'
+                    'isRecordedIn:contain' : 'id1',
+                    'liesWithin:contain' : 'id2'
                 }
             };
 
@@ -454,7 +454,7 @@ export function main() {
                 );
         });
 
-        it('should filter with unknown constraint ', function(done) {
+        it('should filter with unknown constraint', function(done) {
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
 
@@ -492,7 +492,7 @@ export function main() {
                 q: 'blub',
                 constraints: {
                     'unknown' : 'id1',
-                    'resource.relations.liesWithin' : 'id1'
+                    'liesWithin:contain' : 'id1'
                 }
             };
 
@@ -526,7 +526,7 @@ export function main() {
                 const q: Query = {
                     q: 'blub',
                     constraints: {
-                        'resource.relations.isRecordedIn' : 'id1'
+                        'isRecordedIn:contain' : 'id1'
                     }
                 };
 

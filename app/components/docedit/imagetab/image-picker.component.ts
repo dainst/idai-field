@@ -30,7 +30,7 @@ export class ImagePickerComponent implements OnInit {
 
     private query: Query = { q: '' };
 
-    private static documentLimit: number = 6;
+    private static documentLimit: number = 24;
 
 
     constructor(

@@ -1,11 +1,8 @@
 import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {Document} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ViewFacade} from '../resources/view/view-facade';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {ImageTypeUtility} from '../../common/image-type-utility';
 
 @Component({
     moduleId: module.id,
@@ -19,7 +16,6 @@ import {ImageTypeUtility} from '../../common/image-type-utility';
  */
 export class TaskbarComponent {
 
-
     public connected = false;
     public conflicts: Array<Document> = [];
 
@@ -30,13 +26,9 @@ export class TaskbarComponent {
 
     constructor(private datastore: DocumentReadDatastore,
                 private settings: SettingsService,
-                private router: Router,
-                private viewFacade: ViewFacade,
                 private elementRef: ElementRef,
                 private renderer: Renderer,
-                private routingService: RoutingService,
-                private imageTypeUtility: ImageTypeUtility
-    ) {
+                private routingService: RoutingService) {
 
         this.fetchConflicts();
         this.subscribeForChanges();
@@ -51,6 +43,9 @@ export class TaskbarComponent {
     }
 
 
+    public openConflictResolver = (document: Document) => this.routingService.jumpToConflictResolver(document);
+
+
     public togglePopover() {
 
         if (this.popover.isOpen()) {
@@ -59,20 +54,6 @@ export class TaskbarComponent {
             this.popover.open();
             this.cancelClickListener = this.startClickListener();
         }
-    }
-
-
-    public openConflictResolver(document: Document) { // TODO move to routing helper
-
-        if (this.imageTypeUtility.isImageType(document.resource.type)) {
-            return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
-        }
-
-        this.routingService.getMainTypeNameForDocument(document).then(mainTypeName =>
-            this.viewFacade.getMainTypeHomeViewName(mainTypeName)
-        ).then(viewName => {
-            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
-        });
     }
 
 

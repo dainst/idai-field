@@ -2,13 +2,12 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 import {Document} from 'idai-components-2/core';
+import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
 import {ImageTypeUtility} from '../common/image-type-utility';
 import {ViewFacade} from './resources/view/view-facade';
-import {Loading} from '../widgets/loading';
-import {Observer} from 'rxjs/Observer';
-import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
-import {DocumentReadDatastore} from "../core/datastore/document-read-datastore";
+import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 
 
 @Injectable()
@@ -72,6 +71,20 @@ export class RoutingService {
     }
 
 
+    public jumpToConflictResolver(document: Document) {
+
+        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+            return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+        } else {
+            this.getMainTypeNameForDocument(document).then(mainTypeName =>
+                this.viewFacade.getMainTypeHomeViewName(mainTypeName)
+            ).then(viewName => {
+                this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
+            });
+        }
+    }
+
+
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
         const relations = document.resource.relations['isRecordedIn'];
@@ -114,10 +127,8 @@ export class RoutingService {
     }
 
 
-    private async jumpToResourceTypeRelationTarget(
-        documentToSelect: Document,
-        tab?: string,
-        comingFromOutsideOverviewComponent: boolean = false) {
+    private async jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string,
+                                                   comingFromOutsideOverviewComponent: boolean = false) {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.getMainTypeNameForDocument(documentToSelect));
@@ -154,7 +165,7 @@ export class RoutingService {
                 observer.next(params);
             } catch (msgWithParams) {
                 if (msgWithParams) console.error(
-                    "got msgWithParams in GeneralRoutingService#setRoute: ", msgWithParams);
+                    'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
             }
         });
     }

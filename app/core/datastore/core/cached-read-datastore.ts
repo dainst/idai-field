@@ -86,7 +86,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+        this.documentConverter.validate([document.resource.type], this.typeClass);
 
         return this.documentCache.set(this.documentConverter.
             convertToIdaiFieldDocument<T>(document));
@@ -108,7 +108,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
-        query.types = this.documentConverter.validateTypes(query.types, this.typeClass);
+        query.types = this.documentConverter.validate(query.types, this.typeClass);
 
         const ids: string[] = await this.datastore.findIds(query);
         const documents: Array<T> = await this.getDocumentsForIds(ids, query.limit);

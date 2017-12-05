@@ -17,6 +17,35 @@ export class IdaiFieldDocumentConverter extends DocumentConverter {
     }
 
 
+    public validateTypes(types: string[]|undefined, typeClass: string): string[]|undefined {
+
+        if (typeClass == 'IdaiFieldImageDocument') {
+
+            if (!types) {
+                types = this.imageTypeUtility.getImageTypeNames();
+            } else {
+                types.forEach(type => {
+                    if (!this.imageTypeUtility.isImageType(type))
+                        throw "Wrong type: not all specified types are image types"
+                });
+            }
+            return types;
+
+        } else if (typeClass == 'IdaiFieldDocument') {
+
+            if (!types) {
+                types = this.imageTypeUtility.getNonImageTypeNames();
+            } else {
+                types.forEach(type => {
+                    if (this.imageTypeUtility.isImageType(type))
+                        throw "Wrong type: image types not allowed in query"
+                });
+            }
+            return types;
+        }
+    }
+
+
     public proveIsCorrectType(doc: Document, typeClass: string): void {
 
         if (typeClass == 'IdaiFieldImageDocument') {

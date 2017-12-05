@@ -41,8 +41,9 @@ export function main() {
                 spyOn(console, 'debug'); // suppress console.debug
 
                 const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                    ['isImageType']);
+                    ['isImageType', 'getNonImageTypeNames']);
                 mockImageTypeUtility.isImageType.and.returnValue(false);
+                mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Trench','Find']);
 
                 const result = Static.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(

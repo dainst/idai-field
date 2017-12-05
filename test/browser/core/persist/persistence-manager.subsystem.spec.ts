@@ -6,6 +6,7 @@ import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datast
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
 import {PersistenceManager} from '../../../../app/core/persist/persistence-manager';
+import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 
 /**
  * This is a subsystem test.
@@ -61,13 +62,10 @@ export function main() {
             () => {
                 spyOn(console, 'debug'); // suppress console.debug
 
-                const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                    ['isImageType']);
-                mockImageTypeUtility.isImageType.and.returnValue(false);
-
                 const result = Static.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
-                    result.datastore, result.documentCache, new IdaiFieldDocumentConverter(mockImageTypeUtility));
+                    result.datastore, result.documentCache,
+                    new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');
 

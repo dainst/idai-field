@@ -48,8 +48,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             if (!this.autoCacheUpdate) return;
             if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
 
-            console.debug('change detected', document);
-
             // explicitly assign by value in order for changes to be detected by angular
             this.reassign(this.documentConverter.
                 convertToIdaiFieldDocument<T>(document));
@@ -105,8 +103,12 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * It sorts the objects by lastModified (as per the modified array) descending.
      * If two documents have the exact same lastModified, there is no second sort criterium
      * so the order between them is unspecified.
+     *
+     * @throws if query contains types incopatible with T
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
+
+        query.types = this.documentConverter.validateTypes(query.types, this.typeClass);
 
         const ids: string[] = await this.datastore.findIds(query);
         const documents: Array<T> = await this.getDocumentsForIds(ids, query.limit);

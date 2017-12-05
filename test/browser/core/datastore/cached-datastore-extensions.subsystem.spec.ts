@@ -29,9 +29,10 @@ export function main() {
 
         let converter;
         let documentCache;
-        let datastore;
         let image0;
         let trench0;
+        let idaiFieldImageDocumentDatastore;
+        let idaiFieldDocumentDatastore;
 
 
         function failOnWrongErr(err) {
@@ -44,19 +45,23 @@ export function main() {
         beforeEach(async done => {
 
             spyOn(console, 'debug'); // suppress console.debug
+            spyOn(console, 'error'); // TODO remove
 
             const result = Static.createPouchdbDatastore('testdb');
-            datastore = result.datastore;
+            const datastore = result.datastore;
             documentCache = result.documentCache;
             converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
 
             image0 = Static.doc('Image','Image','Image','image0');
             trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
-            await new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter).create(image0);
-            await new IdaiFieldDocumentDatastore(
-                datastore, documentCache, converter).create(trench0);
+            idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
+                datastore, documentCache, converter);
+            idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+                datastore, documentCache, converter);
+
+            await idaiFieldImageDocumentDatastore.create(image0);
+            await idaiFieldDocumentDatastore.create(trench0);
             done();
         });
 
@@ -68,12 +73,10 @@ export function main() {
         }, 5000);
 
 
-        it('throw when creating an image type with IdaiFieldDocumentDatastore', async done => {
+        it('IdaiFieldDocumentDatastore - throw when creating an image type', async done => {
 
-            datastore = new IdaiFieldDocumentDatastore(datastore, documentCache,
-                converter);
             try {
-                await datastore.create(image0);
+                await idaiFieldDocumentDatastore.create(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -82,12 +85,10 @@ export function main() {
         });
 
 
-        it('throw when creating a non image type with IdaiFieldImageDocumentDatastore', async done => {
+        it('IdaiFieldImageDocumentDatastore - throw when creating a non image type', async done => {
 
-            datastore = new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.create(trench0);
+                await idaiFieldImageDocumentDatastore.create(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -96,12 +97,10 @@ export function main() {
         });
 
 
-        it('throw when updating an image type with IdaiFieldDocumentDatastore', async done => {
+        it('IdaiFieldDocumentDatastore - throw when updating an image type', async done => {
 
-            datastore = new IdaiFieldDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.update(image0);
+                await idaiFieldDocumentDatastore.update(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -110,12 +109,10 @@ export function main() {
         });
 
 
-        it('throw when updating a non image type with IdaiFieldImageDocumentDatastore', async done => {
+        it('IdaiFieldImageDocumentDatastore - throw when updating a non image type', async done => {
 
-            datastore = new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.update(trench0);
+                await idaiFieldImageDocumentDatastore.update(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -124,12 +121,10 @@ export function main() {
         });
 
 
-        it('throw when deleting an image type with IdaiFieldDocumentDatastore', async done => {
+        it('IdaiFieldDocumentDatastore - throw when deleting an image type', async done => {
 
-            datastore = new IdaiFieldDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.remove(image0);
+                await idaiFieldDocumentDatastore.remove(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -138,12 +133,10 @@ export function main() {
         });
 
 
-        it('throw when deleting a non image type with IdaiFieldImageDocumentDatastore', async done => {
+        it('IdaiFieldImageDocumentDatastore - throw when deleting a non image type', async done => {
 
-            datastore = new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.remove(trench0);
+                await idaiFieldImageDocumentDatastore.remove(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -152,12 +145,10 @@ export function main() {
         });
 
 
-        it('throw when getting an image type with IdaiFieldDocumentDatastore', async done => {
+        it('IdaiFieldDocumentDatastore - throw when getting an image type', async done => {
 
-            datastore = new IdaiFieldDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.get('image0', { skip_cache: true });
+                await idaiFieldDocumentDatastore.get('image0', { skip_cache: true });
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -166,15 +157,65 @@ export function main() {
         });
 
 
-        it('throw when getting a non image type with IdaiFieldImageDocumentDatastore', async done => {
+        it('IdaiFieldImageDocumentDatastore - throw when getting a non image type', async done => {
 
-            datastore = new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter);
             try {
-                await datastore.get('trench0', { skip_cache: true });
+                await idaiFieldImageDocumentDatastore.get('trench0', { skip_cache: true });
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        // ----------------
+
+        it('IdaiFieldDocumentDatastore - throw when find called with image type ', async done => {
+
+            try {
+                await idaiFieldDocumentDatastore.find({types: ['Image']});
+                fail();
+            } catch (expected) {
+                failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        it('IdaiFieldImageDocumentDatastore - throw when find called with non image type ', async done => {
+
+            try {
+                await idaiFieldImageDocumentDatastore.find({types: ['Trench']});
+                fail();
+            } catch (expected) {
+                failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        it('IdaiFieldImageDocumentDatastore - return only image type documents when called without types', async done => {
+
+            try {
+                const result = await idaiFieldImageDocumentDatastore.find({});
+                expect(result.documents.length).toBe(1);
+                expect(result.documents[0].resource.id).toEqual('image0');
+            } catch (expected) {
+                fail();
+            }
+            done();
+        });
+
+
+        it('IdaiFieldDocumentDatastore - return only non image type documents when called without types', async done => {
+
+            try {
+                const result = await idaiFieldDocumentDatastore.find({});
+                expect(result.documents.length).toBe(1);
+                expect(result.documents[0].resource.id).toEqual('trench0');
+            } catch (expected) {
+                fail();
             }
             done();
         });

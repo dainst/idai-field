@@ -31,8 +31,8 @@ export function main() {
             mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
 
             const mockImageTypeUtility = jasmine.createSpyObj('imageTypeUtility',
-                ['getProjectImageTypeNames']);
-            mockImageTypeUtility.getProjectImageTypeNames.and.returnValue(['Image']);
+                ['getImageTypeNames']);
+            mockImageTypeUtility.getImageTypeNames.and.returnValue(['Image']);
 
             mockViewFacade = jasmine.createSpyObj('viewFacade',
                 ['getActiveLayersIds', 'setActiveLayersIds']);

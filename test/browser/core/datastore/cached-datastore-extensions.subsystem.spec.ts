@@ -22,10 +22,6 @@ export function main() {
                 'fields': []
             },
             {
-                'type': 'Find',
-                'fields': []
-            },
-            {
                 'type': 'Image',
                 'fields': []
             }
@@ -35,26 +31,23 @@ export function main() {
 
     describe('CachedDatastoreExtensions/Subsystem', () => {
 
-        let document1: Document;
-        let document2: Document;
-        let document3: Document;
-
         let datastore: any;
-        let imageTypeUtility;
+        let converter;
         let result;
 
 
         function failOnWrongErr(err) {
 
+            if (!err) fail("Wrong Err - undefined");
             if (err.indexOf('Wrong') === -1) fail('Wrong Err');
         }
 
 
-        beforeEach(
-            () => {
-                spyOn(console, 'debug'); // suppress console.debug
+        beforeEach(() => {
 
-                imageTypeUtility = new ImageTypeUtility(projectConfiguration);
+            spyOn(console, 'debug'); // suppress console.debug
+
+                converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
                 result = Static.createPouchdbDatastore('testdb');
             }
         );
@@ -63,14 +56,13 @@ export function main() {
         afterEach(async done => {
 
             new PouchDB('testdb').destroy().then(() => {done()})
-
         }, 5000);
 
 
         it('throw when creating an image type with IdaiFieldDocumentDatastore', async done => {
 
             datastore = new IdaiFieldDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.create(Static.doc('Img','Img','Image','img'));
                 fail();
@@ -84,7 +76,7 @@ export function main() {
         it('throw when creating a non image type with IdaiFieldImageDocumentDatastore', async done => {
 
             datastore = new IdaiFieldImageDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.create(Static.doc('trench1','trench1','Trench','t1'));
                 fail();
@@ -98,7 +90,7 @@ export function main() {
         it('throw when updating an image type with IdaiFieldDocumentDatastore', async done => {
 
             datastore = new IdaiFieldDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.update(Static.doc('Img','Img','Image','img'));
                 fail();
@@ -112,7 +104,7 @@ export function main() {
         it('throw when updating a non image type with IdaiFieldImageDocumentDatastore', async done => {
 
             datastore = new IdaiFieldImageDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.update(Static.doc('trench1','trench1','Trench','t1'));
                 fail();
@@ -126,7 +118,7 @@ export function main() {
         it('throw when deleting an image type with IdaiFieldDocumentDatastore', async done => {
 
             datastore = new IdaiFieldDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.remove(Static.doc('Img','Img','Image','img'));
                 fail();
@@ -141,7 +133,7 @@ export function main() {
         it('throw when deleting a non image type with IdaiFieldImageDocumentDatastore', async done => {
 
             datastore = new IdaiFieldImageDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.remove(Static.doc('trench1','trench1','Trench','t1'));
                 fail();
@@ -156,11 +148,11 @@ export function main() {
         it('throw when getting an image type with IdaiFieldDocumentDatastore', async done => {
 
             const ds2 = new IdaiFieldImageDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             await ds2.create(Static.doc('Img','Img','Image','img1'));
 
             datastore = new IdaiFieldDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.get('img1', { skip_cache: true });
                 fail();
@@ -174,11 +166,11 @@ export function main() {
         it('throw when getting a non image type with IdaiFieldImageDocumentDatastore', async done => {
 
             const ds2 = new IdaiFieldDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             await ds2.create(Static.doc('trench1','trench1','Trench','t1'));
 
             datastore = new IdaiFieldImageDocumentDatastore(result.datastore, result.documentCache,
-                new IdaiFieldDocumentConverter(imageTypeUtility));
+                converter);
             try {
                 await datastore.get('t1', { skip_cache: true });
                 fail();

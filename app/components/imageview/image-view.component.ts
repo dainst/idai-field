@@ -13,7 +13,6 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-field-image-document-read-datastore';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 
 
 @Component({
@@ -67,13 +66,13 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public async startEdit(doc: IdaiFieldImageDocument, tabName: string = 'fields') {
+    public async startEdit(tabName: string = 'fields') {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
         const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(doc);
+        doceditModalComponent.setDocument(this.image.document);
 
         try {
             const result = await doceditModalRef.result;
@@ -119,7 +118,7 @@ export class ImageViewComponent implements OnInit {
                     this.image.thumbSrc = url;
 
                     if (menu == 'edit') {
-                        await this.startEdit(doc, tab);
+                        await this.startEdit(tab);
                     } else if (tab) {
                         this.activeTab = tab;
                     }

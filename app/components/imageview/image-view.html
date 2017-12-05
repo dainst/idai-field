@@ -14,7 +14,7 @@
 
     <div *ngIf="image.document" class="col-md-3 px-0 document-info">
         <document-view [document]="image.document" (onDeselect)="deselect()"
-                       (onSolveConflicts)="startEdit(image.document, 'conflicts')">
+                       (onSolveConflicts)="startEdit('conflicts')">
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">
                 <ngb-tab id="document-view-fields-tab">
                     <ng-template ngbTabTitle>
@@ -23,7 +23,7 @@
                     <ng-template ngbTabContent>
                         <button class="btn btn-link"
                                 id="document-view-button-edit-document"
-                                (click)="startEdit(image.document)">
+                                (click)="startEdit()">
                             <span class="mdi mdi-pencil"></span>
                         </button>
 
@@ -49,7 +49,7 @@
 
                         <button class="btn btn-link"
                                 id="document-view-button-edit-document"
-                                (click)="startEdit(image.document, 'relations')">
+                                (click)="startEdit('relations')">
                             <span class="mdi mdi-pencil"></span>
                         </button>
 

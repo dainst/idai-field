@@ -34,6 +34,8 @@ export function main() {
         let converter;
         let documentCache;
         let datastore;
+        let image0;
+        let trench0;
 
 
         function failOnWrongErr(err) {
@@ -52,12 +54,13 @@ export function main() {
             datastore = result.datastore;
             documentCache = result.documentCache;
 
+            image0 = Static.doc('Image','Image','Image','image0');
+            trench0 = Static.doc('Trench','Trench','Trench','trench0');
+
             await new IdaiFieldImageDocumentDatastore(
-                datastore, documentCache, converter).
-                    create(Static.doc('Image','Image','Image','image0'));
+                datastore, documentCache, converter).create(image0);
             await new IdaiFieldDocumentDatastore(
-                datastore, documentCache, converter).
-                    create(Static.doc('Trench','Trench','Trench','trench0'));
+                datastore, documentCache, converter).create(trench0);
             done();
         });
 
@@ -73,7 +76,7 @@ export function main() {
             datastore = new IdaiFieldDocumentDatastore(datastore, documentCache,
                 converter);
             try {
-                await datastore.create(Static.doc('Img','Img','Image','img'));
+                await datastore.create(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -87,7 +90,7 @@ export function main() {
             datastore = new IdaiFieldImageDocumentDatastore(
                 datastore, documentCache, converter);
             try {
-                await datastore.create(Static.doc('trench1','trench1','Trench','t1'));
+                await datastore.create(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -101,7 +104,7 @@ export function main() {
             datastore = new IdaiFieldDocumentDatastore(
                 datastore, documentCache, converter);
             try {
-                await datastore.update(Static.doc('Img','Img','Image','img'));
+                await datastore.update(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -115,7 +118,7 @@ export function main() {
             datastore = new IdaiFieldImageDocumentDatastore(
                 datastore, documentCache, converter);
             try {
-                await datastore.update(Static.doc('trench1','trench1','Trench','t1'));
+                await datastore.update(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -129,7 +132,7 @@ export function main() {
             datastore = new IdaiFieldDocumentDatastore(
                 datastore, documentCache, converter);
             try {
-                await datastore.remove(Static.doc('Img','Img','Image','img'));
+                await datastore.remove(image0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
@@ -143,7 +146,7 @@ export function main() {
             datastore = new IdaiFieldImageDocumentDatastore(
                 datastore, documentCache, converter);
             try {
-                await datastore.remove(Static.doc('trench1','trench1','Trench','t1'));
+                await datastore.remove(trench0);
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);

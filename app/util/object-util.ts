@@ -4,7 +4,6 @@
  */
 export class ObjectUtil {
 
-
     public static getElForPathIn(object: any, path: string) {
 
         let result = object;
@@ -41,6 +40,18 @@ export class ObjectUtil {
     public static isEmpty(object: Object): boolean {
 
         return Object.keys(object).length == 0;
+    }
+
+
+    public static getValues<T>(map: { [key: string]: T }): Array<T> {
+
+        const result: Array<T> = [];
+
+        for (let i in map) {
+            if (map.hasOwnProperty(i)) result.push(map[i]);
+        }
+
+        return result;
     }
 
 

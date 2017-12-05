@@ -49,7 +49,7 @@ export class ConstraintIndexer {
     constructor(private indexDefinitions: { [name: string]: IndexDefinition }) {
 
         const validationError
-            = ConstraintIndexer.validateIndexDefinitions(this.convertToList(this.indexDefinitions));
+            = ConstraintIndexer.validateIndexDefinitions(ObjectUtil.getValues(this.indexDefinitions));
         if (validationError) throw validationError;
 
         this.setUp();
@@ -65,7 +65,7 @@ export class ConstraintIndexer {
     public put(doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) this.remove(doc);
-        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
             this.putFor(indexDefinition, doc);
         }
     }
@@ -73,7 +73,7 @@ export class ConstraintIndexer {
 
     public remove(doc: Document) {
 
-        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
             const index: any = this.getIndex(indexDefinition);
 
             for (let key of Object.keys(index[indexDefinition.path])) {
@@ -162,7 +162,7 @@ export class ConstraintIndexer {
         this.matchIndex = {};
         this.existIndex = {};
 
-        for (let indexDefinition of this.convertToList(this.indexDefinitions)) {
+        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
             this.getIndex(indexDefinition)[indexDefinition.path] = {};
         }
     }
@@ -178,18 +178,6 @@ export class ConstraintIndexer {
         }
 
         return undefined;
-    }
-
-
-    private convertToList(indexDefinitions: { [name: string]: IndexDefinition }): Array<IndexDefinition> {
-
-        const result: Array<IndexDefinition> = [];
-
-        for (let i in indexDefinitions) {
-            if (indexDefinitions.hasOwnProperty(i)) result.push(indexDefinitions[i]);
-        }
-
-        return result;
     }
 
 

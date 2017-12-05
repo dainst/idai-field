@@ -7,9 +7,6 @@ import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {IdaiFieldImageDocumentDatastore} from '../../../../app/core/datastore/idai-field-image-document-datastore';
 
 /**
- * This is a subsystem test.
- * The use of mocks is intentionally reduced.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -49,10 +46,10 @@ export function main() {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
             const result = Static.createPouchdbDatastore('testdb');
             datastore = result.datastore;
             documentCache = result.documentCache;
+            converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
 
             image0 = Static.doc('Image','Image','Image','image0');
             trench0 = Static.doc('Trench','Trench','Trench','trench0');
@@ -67,7 +64,8 @@ export function main() {
 
         afterEach(async done => {
 
-            new PouchDB('testdb').destroy().then(() => {done()})
+            await new PouchDB('testdb').destroy();
+            done();
         }, 5000);
 
 

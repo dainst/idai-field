@@ -17,8 +17,4 @@ export class IdaiFieldDocumentDatastore
 
         super(datastore, documentCache, documentConverter, 'IdaiFieldDocument');
     }
-
-    // TODO intercept and handle every call that tries to access or modify non image documents
-
-    // TODO make that find query is only for idai field document types (non image). throw exception if tried otherwise
 }

@@ -34,19 +34,19 @@ export abstract class CachedDatastore<T extends Document>
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<T>,
         documentConverter: DocumentConverter,
-        typeClassName: string) {
+        typeClass: string) {
 
-        super(datastore, documentCache, documentConverter, typeClassName);
+        super(datastore, documentCache, documentConverter, typeClass);
     }
 
 
     /**
      * Implements {@link Datastore#create}
-     *
-     * @param document
-     * @returns
+     * @throws if document is not of type T, determined by resource.type
      */
     public async create(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
+
+        this.documentConverter.proveIsCorrectType(document, this.typeClass);
 
         const createdDocument = await this.datastore.create(document);
         return this.documentCache.set(this.documentConverter.
@@ -56,27 +56,34 @@ export abstract class CachedDatastore<T extends Document>
 
     /**
      * Implements {@link Datastore#update}
-     *
-     * @param document
-     * @returns
+     * @throws if document is not of type T, determined by resource.type
      */
     public async update(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
+
+        this.documentConverter.proveIsCorrectType(document, this.typeClass);
 
         const updatedDocument = await this.datastore.update(document);
 
         if (!this.documentCache.get(document.resource.id as any)) {
-            return this.documentCache.set(this.documentConverter.convertToIdaiFieldDocument<T>(updatedDocument));
+            return this.documentCache.set(this.documentConverter.
+                convertToIdaiFieldDocument<T>(updatedDocument));
         } else {
-            this.reassign(this.documentConverter.convertToIdaiFieldDocument<T>(updatedDocument));
+            this.reassign(this.documentConverter.
+                convertToIdaiFieldDocument<T>(updatedDocument));
             return this.documentCache.get(document.resource.id as any);
         }
     }
 
 
-    public remove(doc: Document): Promise<any> { // TODO return promise undefined
+    /**
+     * @throws if document is not of type T, determined by resource.type
+     */
+    public remove(document: Document): Promise<any> { // TODO return promise undefined
 
-        return this.datastore.remove(doc)
-            .then(() => this.documentCache.remove(doc.resource.id));
+        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+
+        return this.datastore.remove(document)
+            .then(() => this.documentCache.remove(document.resource.id));
     }
 
 

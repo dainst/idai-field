@@ -5,5 +5,9 @@ import {Document} from 'idai-components-2/core';
  */
 export abstract class DocumentConverter {
 
-    public abstract convertToIdaiFieldDocument<T>(doc: Document): T;
+    public abstract convertToIdaiFieldDocument<T>(
+        doc: Document): T;
+
+
+    public abstract proveIsCorrectType(doc: Document, typeClass: string): void;
 }

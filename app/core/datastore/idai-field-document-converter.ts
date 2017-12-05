@@ -12,10 +12,23 @@ import {Injectable} from "@angular/core";
 export class IdaiFieldDocumentConverter extends DocumentConverter {
 
     constructor(private imageTypeUtility: ImageTypeUtility) {
+
         super();
     }
 
-    public convertToIdaiFieldDocument<T extends Document>(doc: Document): T {
+
+    public proveIsCorrectType(doc: Document, typeClass: string): void {
+
+        if (typeClass == 'IdaiFieldImageDocument') {
+            if (!this.imageTypeUtility.isImageType(doc.resource.type)) throw "Wrong type class: must be IdaiFieldImageDocument";
+        } else if (typeClass == 'IdaiFieldDocument') {
+            if (this.imageTypeUtility.isImageType(doc.resource.type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
+        }
+    }
+
+
+    public convertToIdaiFieldDocument<T extends Document>(
+            doc: Document): T {
 
         if (this.imageTypeUtility.isImageType(doc.resource.type)) {
             const d = doc as IdaiFieldImageDocument;

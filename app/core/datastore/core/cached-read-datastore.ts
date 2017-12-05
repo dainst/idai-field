@@ -41,9 +41,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         protected datastore: PouchdbDatastore,
         protected documentCache: DocumentCache<T>,
         protected documentConverter: DocumentConverter,
-        private typeClassName: string) {
-
-        console.debug('constructing cached datastore for ' + typeClassName);
+        protected typeClass: string) {
 
         this.datastore.remoteChangesNotifications().subscribe(document => {
 
@@ -53,7 +51,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             console.debug('change detected', document);
 
             // explicitly assign by value in order for changes to be detected by angular
-            this.reassign(this.documentConverter.convertToIdaiFieldDocument<T>(document));
+            this.reassign(this.documentConverter.
+                convertToIdaiFieldDocument<T>(document));
         });
     }
 
@@ -77,6 +76,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * It supports the following options
      * not specified in ReadDatastore:  { skip_cache: boolean }
      *
+     * @throws if fetched doc is not of type T, determined by resource.type
      * @param {string} id
      * @param {{skip_cache: boolean}} options
      * @returns {Promise<T extends Document>}
@@ -87,8 +87,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             return this.documentCache.get(id);
         }
 
-        return this.documentCache.set(this.documentConverter.convertToIdaiFieldDocument<T>(
-            await this.datastore.fetch(id)));
+        const document = await this.datastore.fetch(id);
+        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+
+        return this.documentCache.set(this.documentConverter.
+            convertToIdaiFieldDocument<T>(document));
     }
 
 
